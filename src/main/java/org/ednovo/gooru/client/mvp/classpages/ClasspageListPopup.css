@@ -28,7 +28,7 @@
 	text-align: left;
 	float: left;
 	text-decoration: none !important;
-	padding: 9px 5px 8px 32px;
+	padding: 9px 5px 8px 32px !important;
 	color: #515151;
 	font-size: 12px;
 	cursor: pointer;
@@ -40,6 +40,7 @@
 	background-color: #cfe3f1 !important;
 	color: #515151;
 	opacity: 1;
+	width:100%;
 }
 .classpageListTitle{
 	float: left;
@@ -170,5 +171,5 @@
 	padding: 6px;
 	font-family: Tahoma, sans-serif !important;
 	text-transform: uppercase;
-	height: 17px;
+	
 }

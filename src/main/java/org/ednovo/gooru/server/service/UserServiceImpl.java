@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.UserService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
@@ -43,8 +43,10 @@ import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.CustomFieldDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
@@ -59,11 +61,9 @@ import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +97,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	private static final String PROFILE = "profile";
 	
 	private static final String USER_META_ACTIVE_FLAG = "&userMetaActiveFlag=1";
+	
+	
+	public static final String FIELDS="fields";
+	public static final String DATASOURCE="dataSource";
+	public static final String GRANULARITY="granularity";
+	public static final String GROUPBY="groupBy";
+	public static final String LOGICALKey="logicalOperatorPrefix";
+	
 
 	@Override
 	public UserDo getEmailId(String emailId) {
@@ -169,7 +177,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public V2UserDo getV2UserProfileDetails(String gooruUid) {
 		V2UserDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, userUid, getLoggedInSessionToken());
+		System.out.println("urlval::"+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -367,7 +376,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
-		System.out.println("getUserProfileV2Details..."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -618,6 +626,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken(),offset,limit);
+		getLogger().info("-- user based tags url -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeTagsContent(jsonRep);
@@ -795,10 +804,211 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			JSONObject jsonObject=jsonRep.getJsonObject();
 			resetToken = jsonObject.getString("isValidToken");
 			}catch(JSONException e){}
-				
 		}
-		return resetToken;
+		return resetToken;																																																																																																																																																																																																								
 	}
-	
-	
+	@Override
+	public UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount() {
+		JsonRepresentation jsonRep = null;
+		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDoObj = null;
+		if(jsonRep!=null){
+			try {
+				userDashBoardCommonInfoDoObj=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return userDashBoardCommonInfoDoObj;
+	}
+	public String createJsonPayloadObject(String userId,String resourceTypeId){
+		JSONObject jsonDataObject=new JSONObject(); 
+		try {
+			jsonDataObject.put(FIELDS, "publishedCollection");
+			jsonDataObject.put(DATASOURCE, "content");
+			jsonDataObject.put(GRANULARITY, "");
+			jsonDataObject.put(GROUPBY, "creatorUid");
+			
+			
+			JSONArray filterArray = new JSONArray();
+			JSONObject filterObject = new JSONObject();
+			JSONArray fieldsArray = new JSONArray();
+			JSONObject fieldsObjectOne = new JSONObject();
+			JSONObject fieldsObjectTwo = new JSONObject();
+			JSONObject fieldsObjectThree = new JSONObject();
+			JSONObject paginationObject = new JSONObject();
+			
+			JSONArray agreegationsArray = new JSONArray();
+			JSONObject aggregationsObject = new JSONObject();
+			
+			JSONArray orderArray = new JSONArray();
+			
+			fieldsObjectOne.put("type","selector");
+			fieldsObjectOne.put("valueType","String");
+			fieldsObjectOne.put("fieldName","creatorUid");
+			fieldsObjectOne.put("operator","eq");
+			fieldsObjectOne.put("value",userId);
+			
+			fieldsObjectTwo.put("type","selector");
+			fieldsObjectTwo.put("valueType","String");
+			fieldsObjectTwo.put("fieldName","sharing");
+			fieldsObjectTwo.put("operator","eq");
+			fieldsObjectTwo.put("value","public");
+			
+			fieldsObjectThree.put("type","selector");
+			fieldsObjectThree.put("valueType","Long");
+			fieldsObjectThree.put("fieldName","resourceTypeId");
+			fieldsObjectThree.put("operator","eq");
+			fieldsObjectThree.put("value",resourceTypeId);
+			
+			fieldsArray.put(fieldsObjectOne);
+			fieldsArray.put(fieldsObjectTwo);
+			fieldsArray.put(fieldsObjectThree);
+			
+			
+			filterObject.put(LOGICALKey, "AND");
+			filterObject.put(FIELDS, fieldsArray);
+			filterArray.put(filterObject);
+			
+			
+			aggregationsObject.put("field1", "gooruOid");
+			aggregationsObject.put("formula","count");
+			aggregationsObject.put("name","publishedCollection");
+			aggregationsObject.put("requestValues","field1");
+			
+			agreegationsArray.put(aggregationsObject);
+			
+			paginationObject.put("offset","0");
+			paginationObject.put("limit",10);
+			paginationObject.put("order",orderArray);
+			
+			
+			
+			jsonDataObject.put("filter", filterArray);
+			jsonDataObject.put("aggregations", agreegationsArray);
+			jsonDataObject.put("pagination", paginationObject);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("jsonDataObject.toString() here is:::::::"+jsonDataObject.toString());
+		return jsonDataObject.toString();
+	}
+
+	@Override
+	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		System.out.println("url::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeMapData(jsonRep,operator);
+	}
+	public String createProfileJsonPayloadObject(String fieldVal,String startDate,String endDate,String operator){
+		JSONObject jsonMainDataObject=new JSONObject(); 
+		try {
+			jsonMainDataObject.put("fields", "");
+			jsonMainDataObject.put("dataSource","rawdata");
+			jsonMainDataObject.put("granularity","month");
+			
+			JSONArray filterArray=new JSONArray();
+			JSONObject filterObj=new JSONObject();
+			filterObj.put("logicalOperatorPrefix", "AND");
+			
+			JSONArray filterArrayVales=new JSONArray();
+			
+			JSONObject firstFilterVal=new JSONObject();
+			firstFilterVal.put("type", "selector");
+			firstFilterVal.put("valueType", "string");
+			firstFilterVal.put("fieldName", "eventName");
+			firstFilterVal.put("operator", operator);
+			firstFilterVal.put("value", fieldVal);
+			filterArrayVales.put(firstFilterVal);
+			
+			JSONObject secondFilterVal=new JSONObject();
+			secondFilterVal.put("type", "selector");
+			secondFilterVal.put("valueType", "Date");
+			secondFilterVal.put("fieldName", "eventTime");
+			secondFilterVal.put("operator", "ge");
+			secondFilterVal.put("value", startDate);
+			secondFilterVal.put("format", "yyyy-MM-dd");
+			filterArrayVales.put(secondFilterVal);
+			
+			JSONObject thiredFilterVal=new JSONObject();
+			thiredFilterVal.put("type", "selector");
+			thiredFilterVal.put("valueType", "Date");
+			thiredFilterVal.put("fieldName", "eventTime");
+			thiredFilterVal.put("operator", "le");
+			thiredFilterVal.put("value", endDate);
+			thiredFilterVal.put("format", "yyyy-MM-dd");
+			filterArrayVales.put(thiredFilterVal);
+		
+			JSONObject fourthFilterVal=new JSONObject();
+			fourthFilterVal.put("type", "selector");
+			fourthFilterVal.put("valueType", "String");
+			fourthFilterVal.put("fieldName", "gooruUId");
+			fourthFilterVal.put("operator", "eq");
+			fourthFilterVal.put("value", getLoggedInUserUid());
+			filterArrayVales.put(fourthFilterVal);
+			
+			filterObj.put("fields", filterArrayVales);
+			filterArray.put(filterObj);
+			jsonMainDataObject.put("filter", filterArray);
+			
+			JSONArray aggregationsArray=new JSONArray();
+			JSONObject aggregationObj=new JSONObject();
+			aggregationObj.put("field1", "eventName");
+			aggregationObj.put("formula", "count");
+			aggregationObj.put("name", "eventCount");
+			aggregationObj.put("requestValues", "field1");
+			aggregationsArray.put(aggregationObj);
+			
+			jsonMainDataObject.put("aggregations", aggregationsArray);
+			jsonMainDataObject.put("groupBy","eventName,eventTime");
+			
+			JSONObject paginationObj=new JSONObject();
+			paginationObj.put("offset", 0);
+			paginationObj.put("limit", 10);
+			JSONArray offsetArray=new JSONArray();
+			paginationObj.put("order",offsetArray);
+			
+			jsonMainDataObject.put("pagination",paginationObj);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonMainDataObject.toString();
+	}
+	public Map<String, Integer> deserializeMapData(JsonRepresentation jsonRep,String operator) {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+		try{
+			JSONArray posts = jsonRep.getJsonObject().getJSONArray("content");
+			for(int i=0;i<posts.length();i++){
+				JSONObject obj=posts.getJSONObject(i);
+				Iterator<String> keys = obj.keys();
+				int j=0;
+		        while( keys.hasNext() ){
+		            String key = (String)keys.next();
+		            if( obj.get(key) instanceof JSONArray ){
+		            	int size=obj.getJSONArray(key).length();
+		            	if(operator.equalsIgnoreCase("in") && size>=2){
+		            		result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount")+obj.getJSONArray(key).getJSONObject(1).getInt("eventCount"));
+		            	}else{
+		            		result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount"));
+		            	}
+		            }
+		            j++;
+		        }
+			}
+		}catch(JSONException e){
+			e.getStackTrace();
+		}
+	}
+		return result;
+ }
 }

@@ -36,12 +36,14 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPrese
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
@@ -77,7 +79,9 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
+import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -93,6 +97,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResou
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
+import org.simpleframework.http.parse.AddressParser;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -101,8 +106,19 @@ import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AppInjector.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 @GinModules({ AppModule.class, ServiceModule.class })
 public interface AppInjector extends ServiceInjector {
@@ -230,6 +246,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
+	
+	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
 
@@ -250,4 +268,13 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LusdLibraryPresenter> getLusdLibraryPresenter();
 	
 	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
+	
+	AsyncProvider<AnalyticsInfoContainerPresenter> getAnalyticsInfoContainerPresenter();
+
+	AsyncProvider<TagsTabPresenter> getTagsTabPresenter();
+	
+	AsyncProvider<UserDashBoardPresenter> getUserDashBoardPresenter();
+	
+	
+
 }

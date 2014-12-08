@@ -52,7 +52,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -388,8 +387,10 @@ public class AddResourceContainerView extends
 					.arrow());
 			folderContainer.add(arrowLabel);
 			floderName = new Label();
+			
 			floderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
+			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
 			folderContainer.add(floderName);
 		}
 
@@ -446,6 +447,7 @@ public class AddResourceContainerView extends
 			folderName = new Label();
 			folderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
+			folderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
 			folderContainer.add(folderName);
 		}
 
@@ -510,8 +512,7 @@ public class AddResourceContainerView extends
 					"display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style",
 					"display: inline-block;");
-			createCollectionbuttonsContainer.getElement().setAttribute("style",
-					"margin-left: 36px;margin-top: 10px;");
+			createCollectionbuttonsContainer.getElement().setAttribute("style",	"text-align:center;margin-top: 10px;");
 		}
 		if (folderListDo != null) {
 			List<FolderDo> foldersArrayList = folderListDo.getSearchResult();
@@ -779,8 +780,7 @@ public class AddResourceContainerView extends
 				.addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
 				"height: 135px !important;margin-left: 46px;overflow: auto;");
-		floderTreeContainer.getElement().setAttribute("style",
-				"height: 135px !important");
+		floderTreeContainer.getElement().setAttribute("style","height: 135px !important");
 		cancelButton.setVisible(false);
 		enableSuccessView.setVisible(false);
 		buttonsContainer.setVisible(true);
@@ -792,7 +792,7 @@ public class AddResourceContainerView extends
 		addContent.removeStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
-				"height: 275px !important;border: 1px solid #ddd;margin-left: 44px;overflow: auto;");
+				"height: 275px !important;border: 1px solid #ddd;margin-left: 2%;margin-top:2%;overflow: auto; width:95%");
 		floderTreeContainer.getElement().setAttribute("style",
 				"height: 275px !important");
 		cancelButton.setVisible(true);

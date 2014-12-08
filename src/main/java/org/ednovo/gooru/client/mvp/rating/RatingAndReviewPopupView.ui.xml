@@ -4,50 +4,69 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="ratingandreview.css"/>
-	<g:HTMLPanel styleName="{style.popup} userInput">
-            <g:HTMLPanel styleName="{style.popupInner}">
-                <g:HTMLPanel styleName="{style.popupHeader}">
-                    <g:HTML styleName="{style.truncate}"  ui:field="lblResourceTitle"></g:HTML>
-                    <g:Label styleName="{style.closeButton}" ui:field="closeButton"></g:Label>
-                </g:HTMLPanel>
-               <g:ScrollPanel ui:field="reviewScrollPanel">
-                <g:HTMLPanel styleName="{style.popupContent}">
-                    <g:HTMLPanel styleName="{style.ratingVisualizations}">
-                        <g:HTMLPanel styleName="{style.distribution} {style.barGraph}">
-                            <g:Label styleName="{style.userNameLbl}" ui:field="ratingDistributionLbl"></g:Label>
-                            <g:HTMLPanel ui:field="panelRatingLabels" styleName="{style.panelRatingLabels}">
-                                <g:Label styleName="{style.label}" ui:field="excellentLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="veryGoodLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="goodLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="fairLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="poorLbl"></g:Label>
-                                <br/>
-                             </g:HTMLPanel>
-                             <g:HTMLPanel ui:field="panelRatingValues" styleName="{style.panelRatingValues}">
-                                	<g:HTMLPanel styleName="{style.bar}" ui:field="dataFive"></g:HTMLPanel> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> <g:Label ui:field="verygoodScore" styleName="{style.count}"></g:Label>
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> <g:Label ui:field="goodScore" styleName="{style.count}"></g:Label>
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> <g:Label ui:field="fairScore" styleName="{style.count}"></g:Label>
-                                	<br />
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
-                                	<br />
-                             </g:HTMLPanel>
-                        </g:HTMLPanel>
-                        <g:Label styleName="{style.userNameLbl}" ui:field="avgLbl"></g:Label>
-                         <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
-                         <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button>
+<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.PopupMainVSmall}">
+            <g:HTMLPanel styleName="{res.css.popupInnerGrey}">
+                <g:HTMLPanel styleName="{res.css.popupgreyHeader}">
+                    <g:HTMLPanel styleName="row">
+                    	<g:HTML styleName="col-md-8 col-xs-8"  ui:field="lblResourceTitle"></g:HTML>
+                    	<g:HTMLPanel styleName="col-md-4 col-xs-4 {res.css.closeContainer}">
+                    		<g:Label styleName="{res.css.closeButton}" ui:field="closeButton"></g:Label>    
+                    	</g:HTMLPanel>
+                    	<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>    
                     </g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.userRating}" ui:field="userRatingContainer">
-					   <g:Label styleName="{style.rateMsg}" ui:field="rateMsg"></g:Label>
-					   <!-- <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button> -->
-					</g:HTMLPanel>
+                 </g:HTMLPanel>
+               <g:ScrollPanel ui:field="reviewScrollPanel">
+                <g:HTMLPanel>
+                    <g:HTMLPanel>
+                        <g:HTMLPanel styleName="{res.css.reviewsContent}">
+                            <g:HTMLPanel styleName="col-md-6 col-sm-6 ratingDistribution">
+                            <g:Label styleName="{res.css.rHeader}" ui:field="ratingDistributionLbl"></g:Label>
+                            <g:HTMLPanel ui:field="panelRatingLabels" styleName="col-md-4 col-xs-4 {res.css.panelRatingLabels}">
+                                <g:Label styleName="{res.css.ratingLabel}" ui:field="excellentLbl"></g:Label>
+                                <g:Label styleName="{res.css.ratingLabel}" ui:field="veryGoodLbl"></g:Label>
+                                <g:Label styleName="{res.css.ratingLabel}" ui:field="goodLbl"></g:Label>
+                                <g:Label styleName="{res.css.ratingLabel}" ui:field="fairLbl"></g:Label>
+                                <g:Label styleName="{res.css.ratingLabel}" ui:field="poorLbl"></g:Label>
+                             </g:HTMLPanel>
+                             <g:HTMLPanel ui:field="panelRatingValues" styleName="col-md-8 col-xs-8  {res.css.panelRatingValues}">
+                                	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
+                                	   <g:HTMLPanel styleName="{res.css.bar}" ui:field="dataFive"></g:HTMLPanel> 
+                                	   <g:Label ui:field="excellentScore" styleName="{res.css.count}"></g:Label>
+                                	</g:HTMLPanel>
+									<g:HTMLPanel styleName="{res.css.ratingLabel}" >
+										<g:HTMLPanel styleName="{res.css.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> 
+                                		<g:Label ui:field="verygoodScore" styleName="{res.css.count}"></g:Label>
+									</g:HTMLPanel>													                                
+                                   	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
+                                   		<g:HTMLPanel styleName="{res.css.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> 
+                                   		<g:Label ui:field="goodScore" styleName="{res.css.count}"></g:Label>    
+                                   	</g:HTMLPanel>
+                                   	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
+                                   		<g:HTMLPanel styleName="{res.css.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> 
+                                   		<g:Label ui:field="fairScore" styleName="{res.css.count}"></g:Label>    
+                                   	</g:HTMLPanel>
+                                   	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
+                                   		<g:HTMLPanel styleName="{res.css.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> 
+                                   		<g:Label ui:field="poorScore" styleName="{res.css.count}"></g:Label>
+                                   	</g:HTMLPanel>
+                                  	
+                             </g:HTMLPanel>
+                             <g:HTMLPanel styleName="clearfix"> </g:HTMLPanel>
+                        </g:HTMLPanel>
+                        <g:HTMLPanel styleName="col-md-6 col-sm-6 AvgRate">
+                       		<g:Label styleName="{res.css.rHeader}" ui:field="avgLbl"></g:Label>
+                         	<g:FlowPanel ui:field="ratingWidgetPanel" styleName="{res.css.ratingStars}"></g:FlowPanel>
+                         	<g:Button styleName="secondary" ui:field="rateResourceBtn"></g:Button>
+                        </g:HTMLPanel>
+                        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+                       	</g:HTMLPanel>
+						<g:HTMLPanel styleName="{style.userRating}" ui:field="userRatingContainer">
+					   		<g:Label styleName="{style.rateMsg}" ui:field="rateMsg"></g:Label>
+					  		 <!-- <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button> -->
+						</g:HTMLPanel>
+                    </g:HTMLPanel>
                     <g:VerticalPanel ui:field="reviewsContainer">
                     </g:VerticalPanel>
                 </g:HTMLPanel>

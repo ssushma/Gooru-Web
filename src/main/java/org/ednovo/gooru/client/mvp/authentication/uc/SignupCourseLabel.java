@@ -30,6 +30,7 @@ import java.util.Set;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -45,8 +46,19 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
 /**
- * @author DOTS
+ * 
+ * @fileName : SignupCourseLabel.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public abstract class SignupCourseLabel extends FlowPanel implements ClickHandler {
 	
@@ -79,7 +91,8 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 		addDomHandler(this, ClickEvent.getType());
 		this.profileDo = profileDo;
-		this.addStyleName(SignUpCBundle.INSTANCE.css().courseOption());
+		this.addStyleName(LoginPopUpCBundle.INSTANCE.css().courseOption());
+
 		final Image courseImage = new Image(imageUrl);
 		courseImage.setAltText(codeName);
 		courseImage.setTitle(codeName);
@@ -108,17 +121,35 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		
 		this.add(courseImage);
 		HTMLPanel coursePanel = new HTMLPanel("");
-		coursePanel.addStyleName(SignUpCBundle.INSTANCE.css().title());
+		coursePanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().title());
 		
 		codeName = codeName.contains("English Language Arts") ? codeName.replaceAll("English Language Arts", "ELA") : codeName;
 		Label courseLabel = new Label(codeName.trim().length() >= 20 ? codeName.trim().substring(0, 17) + "..." : codeName.trim());
-		courseLabel.addStyleName(SignUpCBundle.INSTANCE.css().verticallyCentered());
+		courseLabel.addStyleName("verticallyCentered");
 		coursePanel.add(courseLabel);
 		this.add(coursePanel);
 		
 		setCodeDo(codeId);
 	}
-
+	/**
+	 * 
+	 * @function setCodeDo 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param codeId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setCodeDo(int codeId) {
 		profileCodeDoSet = new HashSet<ProfileCodeDo>();
 		ProfileCodeDo profileCodeDo = new ProfileCodeDo();
@@ -130,16 +161,16 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 	
 	@Override
 	public void onClick(ClickEvent event) {
-		if(this.getStyleName().toString().contains("selected")){
+		if(this.getStyleName().toString().contains("collectionSelected")){
 			deleteCourse(codeDo);
-			this.removeStyleName(SignUpCBundle.INSTANCE.css().selected());
+			this.removeStyleName(LoginPopUpCBundle.INSTANCE.css().collectionSelected());
 			selectCourseLabel(false);
 			showErrorMessage(false);
 		} else {
 			if(getCourseCount()<5) {
 				selectCourseLabel(true);
 				addCourse(profileCodeDoSet);
-				this.addStyleName(SignUpCBundle.INSTANCE.css().selected());
+				this.addStyleName(LoginPopUpCBundle.INSTANCE.css().collectionSelected());
 				showErrorMessage(false);
 			} else {
 				showErrorMessage(true);
@@ -147,7 +178,25 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		}
 	}
 	
-
+	/**
+	 * 
+	 * @function addCourse 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param profileCodeDoSet
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void addCourse(Set<ProfileCodeDo> profileCodeDoSet) {
 		AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDoSet, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override
@@ -155,7 +204,25 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 			}
 		});
 	}
-
+	/**
+	 * 
+	 * @function deleteCourse 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param codeDo
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void deleteCourse(CodeDo codeDo) {
 		AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override

@@ -2,29 +2,46 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="createCollectionStyle" src="CreateCollectionPopUp.css"/>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
 
-	<g:HTMLPanel styleName="{createCollectionStyle.shelfItemContentDiv}">
-	<g:HTMLPanel>
-		<g:HTMLPanel styleName="{createCollectionStyle.btnStandardsContainer}">
-		<g:Button styleName="secondary {createCollectionStyle.btnStandardsStyle}" ui:field="commonStandards"></g:Button>
-			</g:HTMLPanel>
-			<g:HTMLPanel>
-		<g:Button styleName="secondary {createCollectionStyle.btnStandardsStyle}" ui:field="texasKnowledge"></g:Button>
-			</g:HTMLPanel>
-			<g:HTMLPanel>
-		<g:Button styleName="secondary {createCollectionStyle.btnStandardsStyle}" ui:field="ngss"></g:Button>
-			</g:HTMLPanel>
-			<g:HTMLPanel>
-		<g:Button styleName="secondary {createCollectionStyle.btnStandardsStyle}"  ui:field="californiaStandards"></g:Button>
-			</g:HTMLPanel>
+	<g:HTMLPanel styleName="{res1.css.standarBodyContainer}">
+		<g:Button styleName="secondary" ui:field="commonStandards"></g:Button>
+		<g:Button styleName="secondary" ui:field="texasKnowledge"></g:Button>
+		<g:Button styleName="secondary" ui:field="ngss"></g:Button>
+		<g:Button styleName="secondary"  ui:field="californiaStandards"></g:Button>
+		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{res1.css.listGroup}">
+		<g:HTMLPanel styleName="col-md-2 col-sm-2 searchStandard1">
+		    <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
+		        <g:Label styleName="{res1.css.menu_icon}" ui:field="subjects">Select subjects....</g:Label>
+					<uc:UlPanel  ui:field="levelOneStandards" styleName="list-unstyled standeredList"/>        
+		    </g:HTMLPanel>
+			    
+		</g:HTMLPanel>    
+		<g:HTMLPanel styleName="col-md-4 col-sm-4 searchStandard2">
+		      <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
+		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="grade">Select grades....</g:Label>
+				<uc:UlPanel  ui:field="levelTwoStandards"  styleName="list-unstyled standeredList"/>	    
+		    </g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{createCollectionStyle.dropContainer}">
-		<g:HTMLPanel styleName="{createCollectionStyle.dropOverContainer}" ui:field="levelOneStandards"/>
-		<g:HTMLPanel styleName="{createCollectionStyle.dropOverContainerSecondlevel}" ui:field="levelTwoStandards"/>
-		<g:HTMLPanel styleName="{createCollectionStyle.dropOverContainer}" ui:field="levelThreeStandards"/>
-		<g:HTMLPanel styleName="{createCollectionStyle.dropOverContainerLastlevel}" ui:field="levelFourStandards"/>
+		<g:HTMLPanel styleName="col-md-2 col-sm-2 searchStandard3">
+		    <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
+		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="course">Select course....</g:Label>
+				<uc:UlPanel  ui:field="levelThreeStandards" styleName="list-unstyled standeredList"/>	    
+		    </g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="addBtnOuterContainer"><g:Button styleName="primary {createCollectionStyle.addBtnStyle}" ui:field="addBtn">Add</g:Button></g:HTMLPanel>
+		<g:HTMLPanel styleName="col-md-4 col-sm-4 searchStandard4">
+		    <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
+		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="standard">Select course....</g:Label>
+				<uc:UlPanel  ui:field="levelFourStandards" styleName="list-unstyled standeredList"/>	    
+		    </g:HTMLPanel>
+		</g:HTMLPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="clearfix"/>
+		<uc:PPanel styleName="text-right">
+		    <g:Button styleName="secondary" ui:field="addBtn">Add</g:Button>
+		</uc:PPanel>
 		
 	</g:HTMLPanel>
 </ui:UiBinder>

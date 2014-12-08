@@ -462,6 +462,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void setCollectionDoAndType(CollectionDo collectionDo, String clickType) {
 		this.collectionDo = collectionDo;
 		this.clickType=clickType;
+		getView().setCollectionDo(collectionDo);
 		getView().setPopup(clickType);
 	}
 

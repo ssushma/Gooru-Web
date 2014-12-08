@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,8 @@ import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
+import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -103,7 +106,9 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText, panelGooruStories;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
-	@UiField Label lblHeading, lblSubHeading; 
+	@UiField H2Panel lblHeading;
+	@UiField PPanel  lblSubHeading;
+	
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright, achGooruStories;//achDataPolicy
@@ -124,6 +129,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public AppSuggestBox txtSearch;
 	
 	String jsonDataString = null;
+	
+	boolean isGetLibApiCalling = false;
 	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
@@ -174,7 +181,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 		    @Override
 		    public void onWindowScroll(ScrollEvent event) {
-		    	getEditSearchTxtBox().hideSuggestionList();   	
+		    	getEditSearchTxtBox().hideSuggestionList(); 
+		    	if (panelPartnerLibraries.getWidgetCount() <= 0 && !isGetLibApiCalling){
+		    		System.out.println("Window.getScrollTop() : "+Window.getScrollTop());
+		    		getUiHandlers().generatePartnerLibraries();
+		    		isGetLibApiCalling= true;
+		    	}
 			}
 		});
 		
@@ -185,13 +197,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		gooruPanel.setVisible(false);
 		setIds();
 		
-		
 		generateSubjectsData();
 		generateCourseData();
 		
 		generateStandardLibraries();
 		generateDistrictLibraries();
-		generatePartnerLibraries();
+//		generatePartnerLibraries();
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
 	//	StringUtil.consoleLog("emailId..in home."+emailId);
@@ -215,7 +226,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				}
 			});
 		}
-	
 
 		
 		
@@ -245,6 +255,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		});
 		
+		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
 //		error.show();
@@ -254,13 +265,13 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	
 	
 	/**
-	 * @function generatePartnerLibraries 
+	 * @function displayPartnerLibraries 
 	 * 
 	 * @created_date : Aug 12, 2014
 	 * 
 	 * @description
 	 * 
-	 * 
+	 * @param : ArrayList<LibraryUserDo> partnersList
 	 * 
 	 * @return : void
 	 *
@@ -270,26 +281,24 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 *
 	 * 
 	*/
-	
-	private void generatePartnerLibraries() {
-		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
-			@Override
-			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
-				if (partnersList != null){
-					for(int i=0;i<partnersList.size();i++) {
-						final LibraryUserDo libraryUserDo = partnersList.get(i);
-						PeListPanel pTag = new PeListPanel();
-						Anchor anchor = new Anchor();
-						anchor.setText(libraryUserDo.getDisplayName());
-						String url = "#"+libraryUserDo.getUsername();
-						anchor.setHref(url);
-						pTag.add(anchor);
-						panelPartnerLibraries.add(pTag);
-					}
-				}
+	@Override
+	public void displayPartnerLibraries(ArrayList<LibraryUserDo> partnersList) {
+		isGetLibApiCalling = false;
+		if (partnersList != null){
+			for(int i=0;i<partnersList.size();i++) {
+				final LibraryUserDo libraryUserDo = partnersList.get(i);
+				PeListPanel pTag = new PeListPanel();
+				Anchor anchor = new Anchor();
+				anchor.setText(libraryUserDo.getDisplayName());
+				String url = "#"+libraryUserDo.getUsername();
+				anchor.setHref(url);
+				pTag.add(anchor);
+				panelPartnerLibraries.add(pTag);
 			}
-		});
+		}
 	}
+	
+	
 	/**
 	 * 
 	 * @function generateDistrictLibraries 
@@ -627,8 +636,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		}else{
 			btnSignUp.setVisible(false);
 		}
-		
-		
 		Window.enableScrolling(true);
 	}
 
@@ -801,7 +808,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 	}
 	@UiHandler("achPrivacy")
@@ -816,7 +822,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		};
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 	}
 //	@UiHandler("achDataPolicy")
@@ -835,7 +840,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				//No need to set.
 			}
 		};
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.show();
 

@@ -3,10 +3,11 @@
 	/* height: 78px; */
 	padding: 5px;
 	margin: 5px;
-	width: 80px;
+	width: 90px;
 	/* margin-bottom: 10px; */
 	list-style-type: none;
 	cursor: pointer;
+	box-sizing: content-box;
 }
 .resource-container-tooltip{
 	list-style-type: none;
@@ -47,11 +48,12 @@
 	/* height: 78px; */
 	padding: 5px;
 	margin: 5px;
-	width: 80px;
+	width: 90px;
 	/* margin-bottom: 10px; */
 	list-style-type: none;
 	cursor: pointer;
 	position: relative;
+	box-sizing: content-box;
 }
 .collection-home-thumbnail{
 	/* float: left; */

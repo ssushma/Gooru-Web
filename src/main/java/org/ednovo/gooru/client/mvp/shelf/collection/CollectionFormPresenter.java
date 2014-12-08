@@ -163,7 +163,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 						//String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 						params1.put("id", result.getGooruOid());
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
-						Window.alert("here changing place url");
+						//Window.alert("here changing place url");
 						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
 						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 					}
@@ -355,6 +355,11 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 	@Override
 	protected final void revealInParent() {
 		RevealRootPopupContentEvent.fire(this, this);
+	}
+	
+	@Override
+	public void prepareFromRequest(PlaceRequest request) {
+		super.prepareFromRequest(request);
 	}
 
 	public ShelfServiceAsync getShelfService() {

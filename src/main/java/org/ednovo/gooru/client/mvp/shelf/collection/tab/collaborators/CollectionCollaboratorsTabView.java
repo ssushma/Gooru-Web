@@ -215,10 +215,8 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		lblAddCollaborator.getElement().setAttribute("alt",i18n.GL0941());
 		lblAddCollaborator.getElement().setAttribute("title",i18n.GL0941());
 		
-		lblCollaboratorsDesc.setText(i18n.GL0942());
 		lblCollaboratorsDesc.getElement().setId("lblCollaboratorsDesc");
-		lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL0942());
-		lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL0942());
+		
 		
 		lblInviteCollaborators.setText(i18n.GL0943());
 		lblInviteCollaborators.getElement().setId("lblInviteCollaborators");
@@ -565,6 +563,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	public void displayView(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		setLabelsAndIds();
+		modifyStaticText(collectionDo.getCollectionType());
 		overAllCollabCount = 0;
 		setInviteButtonEnable(overAllCollabCount);
 
@@ -601,6 +600,17 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 //			panelEditMode.add(suggestBox);
 		}
 		
+	}
+	public void modifyStaticText(String collectionType){
+		if(collectionType!=null&&collectionType.equals("quiz")){
+			lblCollaboratorsDesc.setText(i18n.GL3035());
+			lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL3035());
+			lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL3035());
+		}else{
+			lblCollaboratorsDesc.setText(i18n.GL0942());
+			lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL0942());
+			lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL0942());
+		}
 	}
 	private void updateCollabCount(int count, String type) {
 //		collectionDo.getMeta().setCollaboratorCount(count);
@@ -887,7 +897,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
 	}

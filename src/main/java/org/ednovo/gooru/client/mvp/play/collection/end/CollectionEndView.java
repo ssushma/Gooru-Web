@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
@@ -47,6 +48,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlaye
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
+import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
@@ -92,6 +94,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -106,17 +109,26 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
 	@UiField
-	FlowPanel frameContainer,dataInsightsPanel;
+	FlowPanel frameContainer;
+	@UiField SectionTag dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
-					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments;
-	@UiField HTMLPanel addComment,loginMessaging;
+					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
+	@UiField HTMLPanel addComment,loginMessaging,commentssection,switchContainer;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField Image userPhoto,collectionThumbnail,nextCollectionThumbnail;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn;
+	
+	@UiField InlineLabel requiredLabel,optionalLabel;
+	
+	@UiField SimpleCheckBox changeAssignmentStatusButton;
+	
+	@Inject
+	private ResourceServiceAsync resourceService;
+	
 	/*@UiField Frame insightsFrame;*/
 	private String languageObjectiveValue;
 	private CollectionDo collectionDo=null;
@@ -311,6 +323,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		this.collectionDo = collectionDo;
 		//showPopupAfterGmailSignin();
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
+		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz"))?i18n.GL3044():i18n.GL2083();
+		headingText.setText(message);
 //		setCollectionGoal(collectionDo.getGoals());
 //		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
@@ -325,6 +339,91 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //		}else{
 //			setUserName(collectionDo.getUser().getUsernameDisplay());
 //		}
+		
+		if (collectionDo.getMeta() !=null)
+		{
+			if(collectionDo.getMeta().getPermissions() != null)
+			{
+			if (collectionDo.getMeta().getPermissions().toString().contains("edit") || collectionDo.getMeta().isIsCollaborator()){
+				switchContainer.setVisible(true);
+				if(collectionDo.getSettings() != null)
+				{
+					if(collectionDo.getSettings().getComment() != null)
+					{
+						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on"))
+						{
+							commentField.setEnabled(true);
+							commentssection.getElement().getStyle().setOpacity(1);
+							changeAssignmentStatusButton.setChecked(true);
+						}
+						else
+						{
+							commentField.setEnabled(false);
+							postCommentBtn.setEnabled(false);
+							postCommentBtn.removeStyleName(PRIMARY_STYLE);
+							postCommentBtn.addStyleName(SECONDARY_STYLE);
+							postCommentBtn.addStyleName(DISABLED_STYLE);
+							commentssection.getElement().getStyle().setOpacity(0.5);
+							changeAssignmentStatusButton.setChecked(false);
+						}
+					}
+					else
+					{
+						commentField.setEnabled(true);
+						postCommentBtn.removeStyleName(SECONDARY_STYLE);
+						postCommentBtn.removeStyleName(DISABLED_STYLE);
+						postCommentBtn.addStyleName(PRIMARY_STYLE);
+						commentssection.getElement().getStyle().setOpacity(1);
+						changeAssignmentStatusButton.setChecked(true);
+					}
+				}
+				else
+				{
+					commentField.setEnabled(true);
+					commentssection.getElement().getStyle().setOpacity(1);
+					changeAssignmentStatusButton.setChecked(true);
+				}
+				
+				
+				
+			}
+			else
+			{				
+				if(collectionDo.getSettings() != null)
+				{
+					if(collectionDo.getSettings().getComment() != null)
+					{
+						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-off"))
+						{
+							commentssection.setVisible(false);
+						}
+						else
+						{
+							commentssection.setVisible(true);
+						}
+						
+					}
+					
+				}
+				else
+				{
+					commentssection.setVisible(true);
+				}			
+				
+				switchContainer.setVisible(false);	
+			}
+			}
+			else
+			{
+				switchContainer.setVisible(false);	
+			}
+		}
+		else
+		{
+			switchContainer.setVisible(false);	
+		}
+		
+		
 		setViewCount(collectionDo.getViews());
 		getAverageReaction();
 		//renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
@@ -564,10 +663,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("471px");
-				successPopupVc.show();
+				//successPopupVc.setWidth("500px");
+				
 				successPopupVc.center();
+				successPopupVc.show();
+			
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -623,14 +723,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		int clientHeight=Window.getClientHeight();
 		if(clientHeight>625){
 			clientHeight=625;
-			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
 		}else{
-			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
 		}
 		successPopupVc.show();
 		int left = (Window.getClientWidth() - 500) >> 1;
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
-	    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
+	   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
 		params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -1481,5 +1581,64 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			avgReactionImage.setText("-");
 			avgReactionImage.setStyleName(playerStyle.timeTextBig());
 		}
+	}
+	@UiHandler("changeAssignmentStatusButton")
+	public void clickOnStatusChangeBtn(ClickEvent event) {
+		if (changeAssignmentStatusButton.isChecked()){
+		getUiHandlers().updateCommentsStatus("turn-on");
+		}
+		else{
+		getUiHandlers().updateCommentsStatus("turn-off");
+		}
+	}
+	
+	public ResourceServiceAsync getResourceService() {
+		return resourceService;
+	}
+
+	public void setResourceService(ResourceServiceAsync resourceService) {
+		this.resourceService = resourceService;
+	}
+	
+	@Override
+	public void changeCommentsButton(CollectionDo result) {
+		if(result.getSettings()!=null)
+		{
+			if(result.getSettings().getComment()!=null)
+			{
+				if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
+				{
+					requiredLabel.removeStyleName(playerStyle.mutedText());
+					optionalLabel.removeStyleName(playerStyle.mutedText());								
+					commentField.setEnabled(true);
+					commentssection.getElement().getStyle().setOpacity(1);
+					changeAssignmentStatusButton.setChecked(true);
+				}
+				else
+				{
+					requiredLabel.setStyleName(playerStyle.mutedText());
+					optionalLabel.setStyleName(playerStyle.mutedText());								
+					commentField.setEnabled(false);
+					postCommentBtn.setEnabled(false);
+					postCommentBtn.removeStyleName(PRIMARY_STYLE);
+					postCommentBtn.addStyleName(SECONDARY_STYLE);
+					postCommentBtn.addStyleName(DISABLED_STYLE);
+					commentssection.getElement().getStyle().setOpacity(0.5);
+					changeAssignmentStatusButton.setChecked(false);
+				}
+				
+			}
+			else
+			{
+				requiredLabel.setStyleName(playerStyle.mutedText());
+				optionalLabel.setStyleName(playerStyle.mutedText());
+			}
+		}
+		else
+		{
+			requiredLabel.setStyleName(playerStyle.mutedText());
+			optionalLabel.setStyleName(playerStyle.mutedText());
+		}
+		
 	}
 }

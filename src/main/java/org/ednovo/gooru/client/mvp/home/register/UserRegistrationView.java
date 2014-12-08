@@ -377,7 +377,7 @@ public class UserRegistrationView extends
 				}
 				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("600px", "300px");
+			
 				termsAndPolicyVc.center();
 			}
 		});
@@ -391,7 +391,6 @@ public class UserRegistrationView extends
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("600px", "300px");
 				copyRightPolicy.center();
 			}
 		});

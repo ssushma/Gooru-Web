@@ -63,6 +63,11 @@
 	
 }
 
+.collectionThumbnail1{
+		height: 91px;
+		width: 127px;
+}
+
 .collectionPPPThumbnail {
 	float: left;
 	height: 91px;
@@ -73,8 +78,8 @@
 }
 
 .collectionThumbnails {
-	width: 120px;
-	height: 90px;
+	width: 120px !important;
+	height: 90px !important;
 	border-left:7px solid #1076BB;
 }
 
@@ -543,13 +548,14 @@
 }
 
 .paginationUc {
-	background-color: white;
-	border: 1px solid #DDDDDD;
-	border-radius: 4px 4px 4px 4px;
-	padding: 7px 10px;
-	cursor: pointer;
-	margin: 0 5px 0 0;
-	color: #1076bb;
+background-color: white;
+border: 1px solid #ddd;
+border-radius: 4px 4px 4px 4px;
+padding: 7px 10px;
+cursor: pointer;
+margin: 0 5px 5px 0;
+color: #1076bb;
+float: left;
 }
 
 .separator {
@@ -764,6 +770,7 @@
 	width: 235px;
 	padding: 5px;
 	text-align: left;
+	box-sizing:content-box;
 }
 
 .textBoxWithPlaceholderText {
@@ -806,6 +813,7 @@
 	border-radius: 6px 6px 0px 0px;
 	height: 21px;
 	padding: 4px;
+	box-sizing:content-box;
 }
 
 .yearListStyle {
@@ -835,6 +843,7 @@
 	border-radius: 0px 0px 6px 6px;
 	height: 21px;
 	padding: 4px;
+	box-sizing: content-box;
 }
 
 .gooruDateBox {
@@ -850,7 +859,9 @@
 	float: left;
 	/* margin-bottom: 22px; */
 	padding: 2px;
-	width: 308px;
+/* 	width: 308px; */
+	width: 100%;
+	margin-bottom: 10px;
 }
 
 .gooruDateText {
@@ -1779,4 +1790,8 @@ button.emailSecondary:hover {
 
 .privacyAlignStyle{
 	margin-right: 2px;
+}
+
+.paddingClear{
+	padding:0;
 }

@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.dnd.DropBox;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
+import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
@@ -138,6 +139,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	ShelfListCBundle res;
 
 	@UiField
+	SearchCBundle res1;
+
+	@UiField
 	SimplePanel dragImageSimPanel;
 
 	@UiField
@@ -211,7 +215,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	private TreeItem previousTreeChildSelectedItem = new TreeItem();
 	
-	@UiField Label folderLabel, collectionLabel;
+	@UiField Label folderLabel, collectionLabel,assessmentLabel;
 	
 	private PlaceRequest searchRequest = null;
 	
@@ -228,6 +232,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	private static final String ID = "id";
 
 	private static final String FOLDER = "folder";
+	private static final String TYPE = "type";
 	
 	private static final String SCOLLECTION = "scollection";
 	
@@ -237,7 +242,10 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	 */
 	public ShelfListView() {
 		res = ShelfListCBundle.INSTANCE;
+		res1=SearchCBundle.INSTANCE;
 		res.css().ensureInjected();
+		res1.css().ensureInjected();
+		
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		newCollectionShelf.setLabel(i18n.GL0993());
@@ -273,6 +281,10 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		collectionLabel.getElement().setId("lblCollectionLabel");
 		collectionLabel.getElement().setAttribute("alt", i18n.GL0645());
 		collectionLabel.getElement().setAttribute("title", i18n.GL0645());
+		assessmentLabel.setText(i18n.GL3007());
+		assessmentLabel.getElement().setId("lblAssessmentLabel");
+		assessmentLabel.getElement().setAttribute("alt", i18n.GL3007());
+		assessmentLabel.getElement().setAttribute("title", i18n.GL3007());
 		organizelbl.getElement().setInnerText(i18n.GL0180());
 		organizelbl.getElement().setId("pnlOrganizelbl");
 		organizelbl.getElement().setAttribute("alt", i18n.GL0180());
@@ -318,12 +330,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		});
 		myShelfVerPanelHolder.add(myShelfVerPanel);
 		
-		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+/*		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		  
+*/		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
+/*		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  shelfFocPanel.getElement().setAttribute("style", "position:relative;");
@@ -334,11 +346,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		  }
 		  else
 		  {
-			  shelfFocPanel.getElement().setAttribute("style", "position:fixed;");
-		  }
+*/			  shelfFocPanel.getElement().setAttribute("style", "position:fixed;");
+//		  }
 		
 		folderLabel.addClickHandler(new CreateNewFolder());
-		collectionLabel.addClickHandler(new CreateNewCollection());
+		collectionLabel.addClickHandler(new CreateNewCollection(null));
+		assessmentLabel.addClickHandler(new CreateNewCollection("assessment"));
 		
 		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
 			organizeButtonPanel.getElement().getStyle().clearMarginTop();
@@ -358,8 +371,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		} else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)) {
 			shelfFocPanel.setStyleName(res.css().shelfPanelForShelf());
 		} else {
-			shelfFocPanel.setStyleName(res.css().shelfPanel());
-			shelfFocPanel.addStyleName("mediaCssToHide");
+			shelfFocPanel.setStyleName(res1.css().rightPanel());
+			shelfFocPanel.addStyleName("hidden-xs hidden-sm");
 		}
 	}
 
@@ -1526,8 +1539,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				}
 			};
 			folderPopupUc.setGlassEnabled(true);
-			folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-			folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() + (110), Window.getScrollTop() + 50);
+			/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+			folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() + (110), Window.getScrollTop() + 50);*/
 			Window.enableScrolling(false);
 			folderPopupUc.show();
 		}
@@ -1561,12 +1574,20 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	}
 	
 	public class CreateNewCollection implements ClickHandler {
+		private String collectionType=null;
+		public CreateNewCollection(String collectionType){
+			this.collectionType=collectionType;
+		}
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 			final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 			final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 			Map<String, String> params = new HashMap<String, String>();
+			if(collectionType!=null){
+				params.put(TYPE, collectionType);
+			}
 			if(o3!=null) {
 				params.put(O1_LEVEL, o1);
 				params.put(O2_LEVEL, o2);
@@ -1583,7 +1604,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				params.put("folderId", o1);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
 			} else {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
 			}
 			Window.enableScrolling(false);
 			

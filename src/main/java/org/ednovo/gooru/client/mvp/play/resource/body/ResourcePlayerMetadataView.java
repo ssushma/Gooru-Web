@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
@@ -93,16 +94,16 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView{
 
-	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
-	@UiField
-	static FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
+	@UiField FlowPanel tagsButtonContainer;
+	@UiField SectionTag resourceWidgetContainer;
+	@UiField FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
+	@UiField HTMLPanel singleEmoticsContainer,ratingsContainer;
+	@UiField SectionTag collectionContainer;
 	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
-	@UiField
-	static ResourcePlayerMetadataBundle playerStyle;
+	@UiField ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
 	
 //	@UiField(provided = true)
@@ -168,7 +169,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	int currentRating=0;
 	
-	public HTMLPanel getCollectionContainer(){
+	public SectionTag getCollectionContainer(){
 		return collectionContainer;
 	}
 	
@@ -726,7 +727,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 
 	@Override
-	public FlowPanel getResourceWidgetContainer(){
+	public SectionTag getResourceWidgetContainer(){
 		return resourceWidgetContainer;
 	}
 
@@ -1365,25 +1366,25 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 		if(result!=null){
 			setStyle();
-			currentRating = result.getScore();
-			if(result.getScore()==1){
+			currentRating = result.getScore()!= null && result.getScore() > 0 ? result.getScore() : 0;
+			if(currentRating==1){
 				starValue.setVisible(true);
 				starValue.setText(POOR);
 				setStarRatingValue(1); 
-			}else if(result.getScore()==2){
+			}else if(currentRating==2){
 				starValue.setVisible(true);
 				starValue.setText(FAIR);
 				setStarRatingValue(2); 
-			}else if(result.getScore()==3){
+			}else if(currentRating==3){
 				starValue.setVisible(true);
 				starValue.setText(GOOD);
 				setStarRatingValue(3);
-			}else if(result.getScore()==4){
+			}else if(currentRating==4){
 				starValue.setVisible(true);
 				starValue.setText(VERY_GOOD);
 				setStarRatingValue(4);
 				
-			}else if(result.getScore()==5){
+			}else if(currentRating==5){
 				starValue.setVisible(true);
 				starValue.setText(EXCELLENT);
 				setStarRatingValue(5);
@@ -1838,8 +1839,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 								}
 							};
 							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
-							success.setHeight("253px");
-							success.setWidth("450px");
+							/*success.setHeight("253px");
+							success.setWidth("450px");*/
 							success.setPopupTitle(i18n.GL1795());
 							success.setDescText(i18n.GL1796());
 							success.enableTaggingImage();

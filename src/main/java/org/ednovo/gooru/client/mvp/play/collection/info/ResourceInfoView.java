@@ -211,10 +211,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		standardsText.getElement().setAttribute("alt",i18n.GL1877());
 		standardsText.getElement().setAttribute("title",i18n.GL1877());
 
-		collectionsText.getElement().setInnerHTML(i18n.GL0620());
 		collectionsText.getElement().setId("pnlCollectionsText");
-		collectionsText.getElement().setAttribute("alt",i18n.GL0620());
-		collectionsText.getElement().setAttribute("title",i18n.GL0620());
 		
 		hideText.setText(i18n.GL0592());
 		hideText.getElement().setId("lblHideText");
@@ -509,8 +506,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setGrades(gradesdetails);
 			}
 		
+		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+		{
 		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
+		}
+		else
+		{
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+		}
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
 		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
@@ -2207,8 +2212,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 								}
 							};
 							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
-							success.setHeight("253px");
-							success.setWidth("450px");
+						/*	success.setHeight("253px");
+							success.setWidth("450px");*/
 							success.setPopupTitle(i18n.GL1795());
 							success.setDescText(i18n.GL1796());
 							success.enableTaggingImage();
@@ -2297,5 +2302,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public void insertHideButtonAtLast(){
 		resouceInfoContainer.add(hideButton);
 		hideImageLabel.getElement().setAttribute("style", "transform: rotate(0deg);-ms-transform: rotate(0deg);-webkit-transform: rotate(0deg);padding-top:10px;");
+	}
+
+	@Override
+	public void setCollectionType(String collectionType) {
+		String message=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3043():i18n.GL0620();
+		collectionsText.getElement().setInnerHTML(message);
+		collectionsText.getElement().setAttribute("alt",message);
+		collectionsText.getElement().setAttribute("title",message);
+		
 	}
 }

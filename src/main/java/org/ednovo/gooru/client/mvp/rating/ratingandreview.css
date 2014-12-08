@@ -616,4 +616,6 @@ fieldset {
 .posValue{
 	margin-left: 10px;
 }
-
+.displayInlineBLock{
+	display:inline-block;
+}

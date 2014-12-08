@@ -17,9 +17,9 @@
 		}
 
 		.improveGooruHeaderBg {
-		width: 100%;
-		height: 39px;
-		background-color: rgb(81, 81, 81);
+			width: 100%;
+			height: 39px;
+			background-color: rgb(81, 81, 81);
 		}
 
 		.improveGooruHeaderTitle {
@@ -74,7 +74,7 @@
 		text-align: left;
 		font-weight: bold;
 		margin-top: 8px;
-		<!-- float: left; -->
+		/* float: left; */
 		width: 385px;
 		}
 
@@ -84,7 +84,7 @@
 		line-height: 120%;
 		color: #515151;
 		text-align: left;
-		<!-- padding: 0px 0px 15px 15px; margin-left: -14px; width: 394px; -->
+		/* padding: 0px 0px 15px 15px; margin-left: -14px; width: 394px; */
 		}
 
 		.improveGooruBlueTextDesc1 {
@@ -130,7 +130,7 @@
 		}
 
 		.improveGooruLinkOuter {
-			float: right; <!-- margin: 85px 15px 2px 5px; -->
+			float: right; /* margin: 85px 15px 2px 5px; */
 			width: 235px !important;
 			margin-top: 70px;
 		}
@@ -165,7 +165,7 @@
 		.improveGooruOuterDivContainer {
 		float: left;
 		width: 227px;
-		<!-- height: 498px; -->
+		/* height: 498px; */
 		}
 
 		.imporoveMainContainer {
@@ -189,7 +189,7 @@
 		}
 
 		}
-		.improveGooruContneOuter {<!-- padding-left: 10px; -->
+		.improveGooruContneOuter {/* padding-left: 10px; */
 		}
 
 		.improveGooruLearnmoreText {
@@ -253,80 +253,73 @@
 		margin-left: -12px;
 		}
 	</ui:style>
-	<g:HTMLPanel styleName="{style.improveGooruContainer}">
-		<g:HTMLPanel styleName="{style.improveGooruInnerDiv}">
-			<g:HTMLPanel styleName="{style.improveGooruHeaderBg}">
-				<g:Label styleName="{style.improveGooruHeaderTitle}"
-					ui:field="headertext"></g:Label>
-				<g:HTMLPanel styleName="{style.improveGooruCloseBtnContainer}">
-					<panel:HTMLEventPanel
-						styleName="{style.improveGooruBtnSprite} {style.improveGooruCloseBtn}"
-						ui:field="closeButton"></panel:HTMLEventPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.imporoveMainContainer}">
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+	
+	<g:HTMLPanel styleName="{res.css.PopupMainSmall}">
+		<g:HTMLPanel styleName="{res.css.popupInnerGrey}">
+			<g:HTMLPanel styleName="{res.css.popupgreyHeader}">
+			    <g:HTMLPanel styleName="row">
+			    <g:HTMLPanel styleName="col-md-8 col-xs-8">
+			    	<g:Label ui:field="headertext"></g:Label>    
+			    </g:HTMLPanel>    
+			 <g:HTMLPanel styleName="col-md-4 col-sm-4 {res.css.closeContainer}">
+				<panel:HTMLEventPanel styleName="{res.css.closeButton}"	ui:field="closeButton"></panel:HTMLEventPanel>
+			</g:HTMLPanel>
+				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.improveGooruOuterDivContainer}">
-				<g:Label styleName="{style.improveGooruDesc}" ui:field="subtext"></g:Label>
-				<g:Label styleName="{style.improveGooruDescriptionx}"
-					ui:field="goorutext"></g:Label>
+			<g:HTMLPanel styleName="{res.css.whatNew}">
+			<g:HTMLPanel styleName="col-md-4 col-sm-4 {res.css.whatLeft}">
+				<g:Label styleName="{res.css.improveGooruDesc}" ui:field="subtext"></g:Label>
+				<g:Label styleName="{res.css.improveGooruDescriptionx}" ui:field="goorutext"></g:Label>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.improvedGooruPopupLine}"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.improveGooruInnerDivContainer}">
-				<g:HTMLPanel>
-					<g:Label styleName="{style.improveGooruSubHeading}"
-						ui:field="headersubtext"></g:Label>
-				</g:HTMLPanel>
-				
-				<!-- First -->
-				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
+			
+			<g:HTMLPanel styleName="col-md-8 col-sm-8 {res.css.whatRight} {res.css.borderLeft}">
+				<g:Label styleName="{res.css.improveGooruSubHeading}"	ui:field="headersubtext"></g:Label>
+					<!-- First -->
+				<g:HTMLPanel styleName="improveGooruContneOuterDiv">
+					<g:HTMLPanel styleName="improveGooruContneOuter">
+						<g:Label styleName="{res.css.improveGooruBlueText}"
 							ui:field="lblTitleFive"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
+						<g:InlineLabel styleName="{res.css.improveGooruBlueTextDesc}"
 							ui:field="aboutFive"></g:InlineLabel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
+						<g:Anchor styleName="improveGooruHyperlinkText"
 							ui:field="descLinkFive" target="_blank"></g:Anchor>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- Second -->
-				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
-							ui:field="lblnavigation"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
+				<g:HTMLPanel styleName="improveGooruContneOuterDiv">
+					<g:HTMLPanel styleName="improveGooruContneOuter">
+						<g:Label styleName="{res.css.improveGooruBlueText}"	ui:field="lblnavigation"></g:Label>
+						<g:InlineLabel styleName="{res.css.improveGooruBlueTextDesc}"
 							ui:field="aboutNavigation"></g:InlineLabel>
 							<g:HTMLPanel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
-							ui:field="descLinkNavigation" target="_blank"></g:Anchor>
+						<g:Anchor styleName="improveGooruHyperlinkText"		ui:field="descLinkNavigation" target="_blank"></g:Anchor>
 							</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- Third -->
-				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
-							ui:field="lblTitleSix"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
-							ui:field="aboutSix"></g:InlineLabel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
-							ui:field="descLinkSix" target="_blank"></g:Anchor>
+				<g:HTMLPanel styleName="improveGooruContneOuterDiv">
+					<g:HTMLPanel styleName="improveGooruContneOuter">
+						<g:Label styleName="{res.css.improveGooruBlueText}"		ui:field="lblTitleSix"></g:Label>
+						<g:InlineLabel styleName="{res.css.improveGooruBlueTextDesc}"	ui:field="aboutSix"></g:InlineLabel>
+						<g:Anchor styleName="improveGooruHyperlinkText"		ui:field="descLinkSix" target="_blank"></g:Anchor>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- Fourth -->
-				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
-							ui:field="lblTitleSeven"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
-							ui:field="aboutSeven"></g:InlineLabel>
-							<g:HTMLPanel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
-							ui:field="descLinkSeven" target="_blank"></g:Anchor>
-							</g:HTMLPanel>
+				<g:HTMLPanel styleName="improveGooruContneOuterDiv">
+					<g:HTMLPanel styleName="improveGooruContneOuter">
+						<g:Label styleName="improveGooruBlueText"	ui:field="lblTitleSeven"></g:Label>
+						<g:InlineLabel styleName="{res.css.improveGooruBlueTextDesc}"		ui:field="aboutSeven"></g:InlineLabel>
+						<g:HTMLPanel>
+						<g:Anchor styleName="improveGooruHyperlinkText"	ui:field="descLinkSeven" target="_blank"></g:Anchor>
+					</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				
+			 </g:HTMLPanel>
+			 </g:HTMLPanel>	
+			 <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				<!-- <g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
 					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
 						<g:Label styleName="{style.improveGooruBlueText}"
@@ -338,14 +331,12 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel> -->
 
-				<g:HTMLPanel styleName="{style.improveGooruLinkOuter}"
-					ui:field="GooruLinkOutercontainer">
-					<g:HTML styleName="{style.improveGooruLinkDesc}" ui:field="questiontxt"></g:HTML>
-					<g:Anchor ui:field="lblSupportLink" 
-						target="_blank" styleName="{style.improveGooruSupportLinkDesc}"></g:Anchor>
+				<g:HTMLPanel styleName="{res.css.improveGooruLinkDesc}"		ui:field="GooruLinkOutercontainer">
+				   <g:InlineLabel ui:field="questiontxt"></g:InlineLabel>
+				   <g:Anchor ui:field="lblSupportLink" 	target="_blank" styleName="improveGooruSupportLinkDesc"></g:Anchor>    
 				</g:HTMLPanel>
 
-			</g:HTMLPanel>
+			
 			<!-- <panel:HTMLEventPanel styleName="{style.improveGooruSupportLinkDesc}" 
 				ui:field="supportlinklbl">support@goorulearning.org</panel:HTMLEventPanel> -->
 		</g:HTMLPanel>

@@ -113,9 +113,13 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	Anchor forgotPwd,ancSignUp;
 
 	@UiField
-	Label cancelButton,lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
+	Label cancelButton,lblPleaseWait,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
 
+	@UiField
+	Anchor  swithUrlLbl, swithToEmbedLbl;
+	
 	@UiField InlineLabel lblPii,toUsText;
+	
 	@UiField Anchor ancprivacy;
 	
 	private boolean isPrivate = false;
@@ -880,7 +884,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}

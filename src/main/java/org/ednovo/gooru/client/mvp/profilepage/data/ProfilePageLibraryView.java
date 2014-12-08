@@ -132,7 +132,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		int firstWidgetCount = leftNav.getWidgetCount();
 		final ArrayList<ProfileLibraryDo> folderList = profileLibraryListDo.getSearchResult();
 		for(int i = 0; i<folderList.size(); i++) {
-			LeftMenuItemView leftMenuItemView = new LeftMenuItemView(folderList.get(i));
+			final LeftMenuItemView leftMenuItemView = new LeftMenuItemView(folderList.get(i));
 			leftNav.add(leftMenuItemView);
 			leftMenuItemView.setWidgetCount(leftNav.getWidgetCount()+1);
 			leftMenuItemView.setType(folderList.get(i).getType());
@@ -151,13 +151,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
-		}
-		
-		final Iterator<Widget> widgets = leftNav.iterator();
-		
-		while (widgets.hasNext()) {
-			final Widget widget = widgets.next();
-			final LeftMenuItemView leftMenuItemView = ((LeftMenuItemView) widget);
 			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -171,8 +164,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 						widgetTxt.removeStyleName(style.active());
 						widgetTxt.removeStyleName(style.open());
 					}
-					widget.addStyleName(style.open());
-					widget.addStyleName(style.active());
+					leftMenuItemView.addStyleName(style.open());
+					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
 					if(leftMenuItemView.getType().equals("scollection")) {
 						getPresenter().getProfileLibraryCollection(unitListId, false);

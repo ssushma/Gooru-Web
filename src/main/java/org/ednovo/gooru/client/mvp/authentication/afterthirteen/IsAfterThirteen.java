@@ -27,7 +27,21 @@ package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
 import com.gwtplatform.mvp.client.PopupView;
-
+/**
+ * 
+ * @fileName : IsAfterThirteen.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface IsAfterThirteen extends PopupView, IsViewWithHandlers<SignUpAfterThirteenUiHandler>{
 	public void displayView();
 }

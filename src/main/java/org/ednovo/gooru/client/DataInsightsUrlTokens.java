@@ -24,6 +24,21 @@
  ******************************************************************************/
 package org.ednovo.gooru.client;
 
+/**
+ * 
+ * @fileName : DataInsightsUrlTokens.java
+ *
+ * @description : 
+ *	URL tokens for accessing the iframed ui.
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface DataInsightsUrlTokens {
 	String STUDYPLAYER_PREVIOUS_DATA="dashboard/#/collection/{0}/user/{1}?session_token={2}";
 	

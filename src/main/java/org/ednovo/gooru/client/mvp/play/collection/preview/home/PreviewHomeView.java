@@ -266,7 +266,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				curosalPanel.add(previewResourceView);
 			}
 			if(resourcesSize>4){
-				new ResourceCurosal(nextButton, previousButton, curosalPanel, resourcesSize, 145);
+				new ResourceCurosal(nextButton, previousButton, curosalPanel, resourcesSize, 145,null);
 			}
 			String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 			String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
@@ -402,11 +402,9 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
-			successPopupVc.show();
+		//	successPopupVc.setWidth("500px");
 			successPopupVc.center();
-			
+			successPopupVc.show();
 			Map<String,String> params = new HashMap<String,String>();
 			params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 			if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
@@ -494,8 +492,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+			//successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}

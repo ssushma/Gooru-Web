@@ -466,7 +466,6 @@
 	width: 204px;
 	float: left;
 }
-
 .inputContainer{
 	padding: 8px;
 }
@@ -562,7 +561,7 @@
     background: url(images/folders/panel/edit-smaller-icon.png) 14px no-repeat;
 }
 
-.collectionToolTipLabel:hover,.folderToolTipLabel:hover, .mycollectionsToolTipLabel:hover {
+.collectionToolTipLabel:hover,.folderToolTipLabel:hover, .mycollectionsToolTipLabel:hover, .dashBoardToolTipLabel:hover {
 	background-color: #cfe3f1;
 }
 .partnerLibraryDivInfo{
@@ -572,4 +571,9 @@
 .districtLibrayCOntainerInfo{
 	/* position: fixed !important; */
 	z-index: 0;
+}
+.dashBoardToolTipLabel{
+	padding: 6px;
+    cursor: pointer;
+    padding-left: 10px;
 }

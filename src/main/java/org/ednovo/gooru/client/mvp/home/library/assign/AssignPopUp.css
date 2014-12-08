@@ -18,7 +18,6 @@
 	
 }
 .directionsDiv{
-	width: 20%;
 	float: left;
 	padding-top: 4px; 
 
@@ -92,7 +91,7 @@
 }
 .dropdownContainer{
 	background-color:rgb(255,255,255);
-	width:310px;
+/* 	width:310px; */
 	height:28px;
 	border-color:rgb(221,221,221);
 	border-width:1px;
@@ -103,8 +102,8 @@
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:1px;
 	border-style:solid;
-	position: absolute;
-	margin-left: 98px;
+/* 	position: absolute;
+	margin-left: 98px; */
 }
 .classpageContainerFont{
 	font-family:Arial, Helvetica, sans-serif;
@@ -116,6 +115,7 @@
 	float:left;
 	margin-bottom:10px;
 	margin-left:25px;
+	width:100%;
 }
 
 .labelTitlePrivateText{
@@ -133,7 +133,7 @@
 	line-height:120%;
 	color:rgb(81,81,81);
 	text-align: center;
-	width: 445px;
+	/* width: 445px; */
 }
 
 .placeHolderText{
@@ -543,9 +543,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndC
 	padding: 15px;
 }
 .heightClasspagecontainer{
-	height:155px;
+/* 	height:155px; */
 	margin-right: auto;
 	display: inline-block;
+	width:100%;
 }
 .contentTitle {
 	color: #fff;
@@ -974,6 +975,7 @@ button.LoginText {
 	font-size: 12px;
 	font-weight: normal;
 }
+
 .directionsChrLimit{
 	font-size: 12px;
 	float: right;
@@ -981,4 +983,7 @@ button.LoginText {
 	font-weight: normal;
 	color: #999;
 	margin-top: 10px;
+}
+.marginTop{
+	margin-top:10px;
 }

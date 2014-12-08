@@ -41,4 +41,6 @@ public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginS
 	public void triggerCollectionShareDataEvent(String collectionId,String itemType, String shareType, boolean confirmStatus) ;
 	
 	public void getAvgReaction();
+
+	public void updateCommentsStatus(String string);
 }

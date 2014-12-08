@@ -68,14 +68,16 @@ public class ForgotPasswordVc extends PopupPanel {
 	
 	@UiField
 	TextBox forgotEmailIdTxtBox;
-	@UiField HTMLEventPanel cancelButton;
-	
+		
 	@UiField(provided = true)
 	LoginPopUpCBundle res;
 	
 	@UiField Label lblLoginHeading,lblDisplayTextMessage,lblTextMessageInfomation,errorMessage,
 	queriesText;
 
+	@UiField
+	Anchor cancelButton;
+	
 	@UiField InlineLabel pleaseContactLbl;
 
 	//private AppPopUp appPopUp;
@@ -120,7 +122,6 @@ public class ForgotPasswordVc extends PopupPanel {
 		pleaseContactLbl.getElement().setAttribute("title",i18n.GL1145());
 		
 		this.center();
-		this.setSize("502px", "390px");
 		lblLoginHeading.setHeight("16px");
 		lblLoginHeading.setText(i18n.GL0063());
 		lblLoginHeading.getElement().setId("lblLoginHeading");
@@ -138,7 +139,6 @@ public class ForgotPasswordVc extends PopupPanel {
 		lblTextMessageInfomation.getElement().setAttribute("alt",i18n.GL0435());
 		lblTextMessageInfomation.getElement().setAttribute("title",i18n.GL0435());
 		
-		forgotEmailIdTxtBox.setWidth("341px");
 		forgotEmailIdTxtBox.getElement().setAttribute("placeholder",i18n.GL0434());
 		forgotEmailIdTxtBox.setFocus(true);
 		errorMessage.setVisible(false);

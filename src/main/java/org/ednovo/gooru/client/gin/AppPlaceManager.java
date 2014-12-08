@@ -43,8 +43,19 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AppPlaceManager.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 @Singleton
 public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager {

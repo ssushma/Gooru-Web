@@ -62,11 +62,11 @@ public abstract class ConfirmationPopupVc extends Composite {
 	@UiField
 	FlowPanel buttonContainer;
 	
-	private static RemoveResourcePopupVcUiBinder uiBinder = GWT.create(RemoveResourcePopupVcUiBinder.class);
+	private static ConfirmationPopupVcUiBinder uiBinder = GWT.create(ConfirmationPopupVcUiBinder.class);
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface RemoveResourcePopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
+	interface ConfirmationPopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
 	}
 
 	/**

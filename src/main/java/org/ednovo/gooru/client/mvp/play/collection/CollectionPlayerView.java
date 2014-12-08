@@ -49,8 +49,11 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -72,7 +75,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPlayerUiHandlers> implements IsCollectionPlayerView{
 	
 	
-	@UiField FlowPanel playerBodyContainer,navigationContainer;
+	@UiField FlowPanel playerBodyContainer,navigationContainer,playerContent,menuContent,headerFixedContainer;
 	
 	@UiField StudyPlayerHeaderView headerView;
 	
@@ -82,7 +85,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
 	
-	@UiField Anchor viewAnchor;
+	@UiField Anchor viewAnchor,menuButton;
 	
 	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
 	
@@ -100,7 +103,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	private boolean  isFlagButtonActive=false;
 	
+	private String collectionType=null;
+	
 	private static final String STUDY_PLAYER ="studyPlayer";
+	
 	
 	GlobalTooltipWithButton globalTooltipWithButton,logOutToolTip;
 	
@@ -140,6 +146,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
 		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());*/
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
+		menuButton.addClickHandler(new ShowAuthorContainerEvent());
+		menuButton.addTouchStartHandler(new ShowAuthorContainerTouchEvent());
 		setAutoHideOnNavigationEventEnabled(true);
 		hidePlayerButtons(true,null);
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
@@ -166,7 +174,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  {
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
-			  headerView.getElement().setAttribute("style", "position:fixed;");
+			 // headerView.getElement().setAttribute("style", "position:fixed;");
 			  
 		  }
 		  setUiText();
@@ -177,7 +185,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void onIpadCloseClick(ClickEvent clickEvent){
 		 ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
-		  headerView.getElement().setAttribute("style", "position:fixed;");
+		 // headerView.getElement().setAttribute("style", "position:fixed;");
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
 		  CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
 		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
@@ -187,7 +195,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void onAndriodCloseClick(ClickEvent clickEvent){
 		 ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
-		  headerView.getElement().setAttribute("style", "position:fixed;");
+		 // headerView.getElement().setAttribute("style", "position:fixed;");
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
 		  CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
 		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
@@ -225,6 +233,14 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public FlowPanel getPlayerBodyContainer() {
 		return playerBodyContainer;
+	}
+	
+	public FlowPanel getHeaderFixedContainer(){
+		return headerFixedContainer;
+	}
+	
+	public FlowPanel getNavigationContainer(){
+		return navigationContainer;
 	}
 
 	public FlowPanel getResourceAnimationContainer() {
@@ -660,7 +676,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				headerView.getAuthorContainer().setVisible(false);
 			}else{
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
-				headerView.displayAuthorName();
+				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
 			}
 			//headerView.getFlagButton().setVisible(!isHidePlayerButtons);
@@ -674,7 +690,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 	
 	public void updateAuthorDetails(){
-		headerView.displayAuthorName();
+		headerView.displayAuthorName(getCollectionType());
 	}
 	
 	public void scrollStudyPage(){
@@ -682,6 +698,9 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 	public void setUiText()
 	{
+		  menuContent.getElement().setId("menu");
+		  playerContent.getElement().setId("page");
+		  menuButton.getElement().setId("toggle-menu");
 		  androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
 		  closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
 		  ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
@@ -721,4 +740,42 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
 	}
 
+	
+	public void addClonedMenuContent(FlowPanel rightPanelElement){
+		menuContent.clear();
+		if(rightPanelElement!=null){
+			menuContent.add(rightPanelElement);
+		}
+	}
+	
+	private class ShowAuthorContainerEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			invokeShowHideMenuContainer();
+		}
+	}
+	private class ShowAuthorContainerTouchEvent implements TouchStartHandler{
+		@Override
+		public void onTouchStart(TouchStartEvent event) {
+			invokeShowHideMenuContainer();
+		}
+	}
+	
+	public static native void invokeShowHideMenuContainer() /*-{
+    	$wnd.showAuthorContianer();
+	}-*/;
+	
+	public FlowPanel menuContent(){
+		return menuContent;
+	}
+
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
 }
+

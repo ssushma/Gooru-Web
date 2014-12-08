@@ -1,0 +1,345 @@
+.LoginpopupMain{
+	width:100%;
+}	
+.PopupMainExtraLarge{
+	width:100%;
+}
+
+.PopupMainVVSmall{
+	width:100%;
+}
+.PopupMainVSmall{
+	width:100%;
+}
+.PopupMainV1Small{
+	width:100%;	
+}	
+.LoginpopupContent {
+    padding: 10px 15px;
+}
+
+.gConnectButton{
+	padding:16px 16px 15px 45px;
+}
+.subheader{
+	text-align:center;
+}
+.signInContainer{
+	padding:25px 25px;
+}
+.popupContentLeaveRegistration {
+
+    padding: 40px 15px;
+
+}
+.SignUp-green-h1 {
+
+    font-size: 18px;
+
+}
+.SignUp-h2{
+	font-size:15px;
+}
+
+.leaveRegistrationButtonContainer button{
+	margin-bottom:15px;
+}
+.leaveRegistrationButtonContainer .primary{
+	margin-left:0;
+}
+
+.PopupMainMedium{
+	width:100%;
+
+}
+
+.PopupMainSmall{
+		width:100%;
+}
+
+.PopupMainLarge{
+	width:100%;
+}
+
+
+
+.PopupMainMedium .text{
+	text-align:center;
+
+
+}
+
+.lblCollectionProgress{
+	text-align:center;
+}
+.lblCollectionProgressDetails{
+	text-align:center;
+}
+
+.SliderHolderNext{
+	right:-25px;
+	
+}
+.SliderHolderPrev{
+	left:-25px;
+	
+}
+.courseContainer {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+.shareSelection{
+	margin:10px 10px;
+}
+.improveGooruLinkDesc{
+	text-align:center;
+	font-size:11px;
+	padding:10px 0;
+
+}
+.improveGooruLinkDesc a{
+	color:#4d9645;
+}
+.improveGooruDesc{
+	display:none;
+}
+.improveGooruDescriptionx{
+	padding-left:0;
+	text-align:center;
+	margin-bottom:15px;
+	padding-bottom:15px;
+	border-bottom:1px solid #dddddd;
+}
+
+.borderLeft{
+	border-left:none;
+}
+.whatLeft{
+	width:100%;
+}
+.whatRight{
+	width:100%;
+}
+.emailSelection{
+	margin:5px 5px;
+}
+.emailSelection .lables{
+	text-align:left;
+}
+.addSelection .lables{
+	text-align:left;
+}
+.assignContainer .lables {
+	margin-bottom:5px;
+    text-align: left;
+}
+.standarBodyContainer button{
+	display:block;
+	width:100%;
+	margin-bottom:8px;
+}
+
+.standarBodyContainer .scrollBar{
+	height:auto;
+}
+.listGroup .col-md-2, .listGroup .col-md-4{
+	height:auto;
+}
+.listGroup .col-md-2, .listGroup .col-md-4{
+	border-right:0;
+}
+.ratingDistribution{
+	width:100%;
+	text-align:center;
+	margin-bottom:15px;
+
+}
+.AvgRate{
+	width:100%;
+	text-align:center;
+}
+.leftFlagPanel{
+	height:auto;
+}
+
+.leftFlagPanel .leftFlagMenu{
+	width:1%;
+	display:table-cell;
+	overflow:hidden;
+	position:relative;
+}
+ .normalText{}
+ .flagbuttonDeSelected{}
+ .rightFlagPanel{}
+.firstInputGroup{}
+.childUserInfoContainer{}
+.childInputGroup{}
+.parentsAccount{}
+.contentDescr{}
+.orContainerDown{}
+
+.reviewsContent{}
+.bar{}
+ .count{}
+ .panelRatingLabels{}
+ .reviewContainer{}
+ .reviewContainerHeader{}
+  .date{}
+  .review{}
+  .ratingLabel{}
+   .panelRatingValues{}  
+ .rHeader{}
+ .ratingStars{}
+.overRideBlueButton{}
+.collectionFormCancelButton{}
+.actionField{}
+.sharenEmbedContainer{}
+.addButtonContainer{}
+.lblDontHaveGoogleAccount{}
+.loginPopupGlassStyle{}
+.LoginPopUpgreensmall{}
+.LoginpopupInner{}
+.haveAccountContainer{}
+.LoginPopUpgreen{}
+.logInput{}
+.loginPopupbtnContainer{}
+.haveAccount{}
+.closeContainer{}
+.divider{}
+.processing{}
+.questionHover{}
+.form-control{}
+.LoginpopupHeader{}
+ .lnkSignUpWithEmail{}
+.dividerText{}
+.whyGoogle{}
+.forgotPasswordLink{}
+ .closeButton{} 
+
+ .policyTextLine{}
+ .roleOptionImage{}
+ .selectGrades{}
+ .contactUs{}
+ .subjectOptionScience{}
+ .Grades{}
+ .inputGroup{}
+ .subjectOption{}
+ .leaveRegistrationBottomContainer{}
+ .policyTextHeade{}
+ .courseOption{}
+ .forgotPasswordText{}
+ .popupInnerforgotPassword{}
+ .PopupContent{}
+.popupInnerGrey{}
+ .popupgreyFooter{}
+ .userInfoContainer{}
+ .sampleReportSliderHolder{}
+ .paragraph{}
+ .roleOption{}
+ .roleLabel{}
+.active{}
+ .greyBGContainer{}
+ .popupFooter{}
+.textContentDiv{}
+ .popupgreenHeader{}
+ .subjectOptionELA{}
+ .selectCourses{}
+.PopupInner{}
+ .popupgreyHeader{}
+ .subjectOptionSS{}
+  .termsSubTitle{}
+  .popupContentScroll{}
+  .forgotPasswordTextBoxContainer{}
+  .popupContentGrey{}
+  .leaveRegistarionFooterText{}
+  .popupInnerLeaveReg{}
+ .privacyLinkText{}
+.subjectOptionMath{}
+ .termsTextLine{}
+ .termsTextLine{}
+ .forgotPasswordDescription{}
+  .lastUpdated{}
+.otherRole{}
+.popupContentforgotPassword{}
+.disabled{}
+.GreenHeader{}
+.teacherRole{}
+.forgotPasswordButtonContainer{}
+.parentRole{}
+.secondary{}
+ .noOverflow{}
+.termsOfUserMessageText{}
+ .studentRole{}
+ .title{}
+ .privacyCloseButton{}
+.teacherRoleSelected{}
+.studentRoleSelected{}
+.parentRoleSelected{}
+.otherRoleSelected{} 
+.forgotPasswordErrorMessage{} 
+.sceinceActive{}
+.mathActive{}
+.ssActive{}
+.elaActive{}
+.subj{} 
+.menu-icon{}
+.activeGrade{}
+.collectionSelected{}
+.PopupMainVSmall{}
+.contentDesc{}
+.dontWorrkText{}
+.popupcornerBg{}
+.whatNew{}
+.whatLeft{}
+.whatRight{}
+.borderLeft{}
+.improveGooruDescriptionx{}
+.improveGooruLinkDesc{}
+.improveGooruSubHeading{}
+.improveGooruBlueText{}
+.improveGooruBlueTextDesc{}
+.loginShareContainer{}
+.collectionSel{}  
+ .formViewButtonContainer{}  
+ .addTagsContent{}
+ .AddTagesPopup-levelType{}
+ .AddTagesPopup-selected{}
+ .AddTagesPopup-li{}
+  .AddTagesPopup-levelnumbers{}
+  .standardsCont{}
+ .AddTagesPopup-okcancel{}
+ .addQuestionStandard{}
+  .AddTagesPopup-h5{}
+.emailContainer{}
+.lblNoteTxt{}   
+.classPageEmailButtonCancel{}  
+.remixContainer{} 
+.labels{}  
+    .h1{}
+   .forgotPasswordBottomContainer{}
+   .forgotPasswordSuccessText{}
+   .popupInner{}
+   
+   .popupHeader{}
+   .forgotPasswordSuccessPopupContent{}
+   .forgotPasswordSuceessButtonContainer{}
+   .footerText{}
+   .btnSubmit{}
+   .popup{}
+  .forgetImgBG{}
+  
+   
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+ 
+ 
+  
+ 	
+

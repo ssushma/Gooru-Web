@@ -225,7 +225,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		return resourceLink;
 	}
 	public void setCollectionImage(String thumbnailUrl){
-		System.out.println("helloo"+thumbnailUrl);
 		collectionThumbnail.setUrl(thumbnailUrl);
 	}
 	public void setCollectionGoal(String collectionGoal){
@@ -334,10 +333,10 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("471px");
-				successPopupVc.show();
+			//	successPopupVc.setWidth("500px");
 				successPopupVc.center();
+				successPopupVc.show();
+		
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -388,20 +387,20 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				int clientHeight=Window.getClientHeight();
 				//successPopupVc.setWidth("500px");
 				//successPopupVc.setHeight("658px");
-				/*if(clientHeight>625){
+				if(clientHeight>625){
 					clientHeight=625;
-					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
-				}else{
-					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+					//successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;overflow-x:hidden;overflow-y:scroll");
+				}/*else{
+					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;overflow-x:hidden;overflow-y:scroll");
 				}*/
 				successPopupVc.show();
 				int left = (Window.getClientWidth() - 500) >> 1;
 			    int top = (Window.getClientHeight() - clientHeight) >> 1;
-			    successPopupVc.setHeight("658px");
+			  //  successPopupVc.setHeight("658px");
 			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
 
-				//successPopupVc.center();
-				//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				successPopupVc.center();
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 				
 //				if(!successPopupVc.isVisible()){
 //					successPopupVc.show();
@@ -476,10 +475,11 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("471px");
+			//successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
+			
+			
 		}
 		if(assign!=null && assign.equals("yes") && emailId!=null){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {

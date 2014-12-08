@@ -49,7 +49,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-
+/**
+ * 
+ * @fileName : LeaveRegistrationPopUpUc.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class LeaveRegistrationPopUpUc extends PopupPanel{
 
 	private static LeaveRegistrationPopUpUcUiBinder uiBinder = GWT
@@ -64,7 +78,9 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
-	Label lblCancel, lblTitle, lblHeading, lblSubHeading,quriesText;
+	Label lblTitle, lblHeading, lblSubHeading,quriesText;
+	@UiField
+    Anchor	lblCancel;
 	@UiField
 	Button btnLeave, btnContinue;
 	@UiField InlineLabel pleaseContactText;
@@ -86,7 +102,6 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		childDob = dob;
 		this.setGlassEnabled(true);
 		this.center();
-		this.setSize("502px", "352px");
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		//this.getElement().setAttribute("style", "width:502px;height:352px;z-index:98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
@@ -95,7 +110,25 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		
 		setUiAndIds();
 	}
-
+	/**
+	 * 
+	 * @function setUiAndIds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUiAndIds() {
 		lblTitle.setText(i18n.GL0480()
 				+ i18n.GL_SPL_QUESTION());

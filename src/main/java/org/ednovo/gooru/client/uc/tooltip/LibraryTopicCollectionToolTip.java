@@ -23,11 +23,11 @@ import com.google.gwt.user.client.ui.Widget;
 public class LibraryTopicCollectionToolTip extends Composite {
 	
 	
-	public interface DiscoverToolTipUiBinder extends UiBinder<Widget, LibraryTopicCollectionToolTip>{
+	public interface LibraryTopicCollectionToolTipUiBinder extends UiBinder<Widget, LibraryTopicCollectionToolTip>{
 		
 	}
 	
-	public static DiscoverToolTipUiBinder discoverToolTipUiBinder=GWT.create(DiscoverToolTipUiBinder.class);
+	public static LibraryTopicCollectionToolTipUiBinder discoverToolTipUiBinder=GWT.create(LibraryTopicCollectionToolTipUiBinder.class);
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	

@@ -58,7 +58,21 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewCloseHandler;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
-
+/**
+ * 
+ * @fileName : SignUpCompleteProfileView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class SignUpCompleteProfileView extends
 		PopupViewWithUiHandlers<SignUpCompleteProfileUiHandler> implements
 		IsSignUpCompleteProfile {
@@ -75,8 +89,10 @@ public class SignUpCompleteProfileView extends
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
-	Label lblCancel, lblTitle, lblHeading, lblSubHeading, lblchangePassword,
+	Label lblTitle, lblHeading, lblSubHeading, lblchangePassword,
 			userName,lblUpdating,quriesText,pleaseContactText;
+	@UiField
+	Anchor  lblCancel; 
 	@UiField
 	Image profileImage;
 	@UiField Anchor supportLink;
@@ -124,7 +140,25 @@ public class SignUpCompleteProfileView extends
 		setUiAndIds();
 		appPopUp.center();
 	}
-
+	/**
+	 * 
+	 * @function setUiAndIds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUiAndIds() {
 		lblTitle.setText(i18n.GL0481()
 				+ i18n.GL_SPL_EXCLAMATION());
@@ -402,7 +436,25 @@ public class SignUpCompleteProfileView extends
 			}
 		});
 	}
-
+	/**
+	 * 
+	 * @function validateUserInput 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public boolean validateUserInput() {
 		String firstName = txtFirstName.getText().trim();
 		String lastName = txtlastName.getText().trim();
@@ -486,6 +538,21 @@ public class SignUpCompleteProfileView extends
 	public Label getUpdateButton() {
 		return lblUpdating;
 	}
+	/**
+	 * 
+	 * @fileName : SignUpCompleteProfileView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
+	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override

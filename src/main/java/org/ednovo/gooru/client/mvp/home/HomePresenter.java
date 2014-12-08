@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +50,7 @@ import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderHandler;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -57,9 +60,11 @@ import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -74,6 +79,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -118,6 +124,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
 	
+	PreFilterPopup preFilter = null;
+	
 	SignUpAfterThirteenPresenter signUpAfterThirteenPresenter=null;
 	private SearchDo<ResourceSearchResultDo> resourceSearchDo = new SearchDo<ResourceSearchResultDo>();
 
@@ -155,6 +163,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	private static final String ERROR = "error";
 	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
 	
 	private String parentGooruUID;
 	
@@ -166,6 +183,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
 	
+//	PreFilterPopup preFilter = new PreFilterPopup();
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
@@ -175,9 +194,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy) {
+	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.userRegistrationPresenter = userRegistrationPresenter;
 		this.signUpCompletePresenter = signUpCompletePresenter;
@@ -192,7 +212,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			}
 		});
 		
-		
+		HeaderUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
 		
 	}
 	
@@ -591,6 +611,55 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}
 		return autoKeyWordSuggestionAsyncCallback;
 	}
+	/**
+	 * @description This class is used to show the pre-filter search popup
+	 * @author search team
+	 * @date 27-Nov-2014
+	 *
+	 */
+	public class showPrefilterPopup implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			if(preFilter!=null && preFilter.isShowing()){
+				preFilter.hide();
+			}else{
+				preFilter =	new PreFilterPopup();
+				HeaderUc.setPrefilterObj(preFilter);
+				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
+				preFilter.show();
+				preFilter.setAutoHideEnabled(true);
+				
+				preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						preFilter.ShowSTandardsPanel().clear();
+						isCCSSAvailable = true;
+						isNGSSAvailable = true;
+						isCAAvailable = true;
+						addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+						//addStandardsPresenter.loadDataFrompresnter();
+						preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
+						addStandardsPresenter.callDefaultStandardsLoad();
+						addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+						addStandardsPresenter.getAddBtn().setVisible(false);
+						if(addStandardsPresenter.getAddBtn().isEnabled()){
+//							HeaderUc.setPrefilterObj(preFilter,addStandardsPresenter.setStandardsVal());
+						}
+						
+						
+					}
+				});
+			}
+			
+		}
+		
+	}
 
 	
 	@Override
@@ -598,5 +667,16 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
 			getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
 	}
-
+	@Override
+	public void generatePartnerLibraries() {
+		System.out.println("In Home View ....");
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+			@Override
+			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
+				if (partnersList != null){
+					getView().displayPartnerLibraries(partnersList);
+				}
+			}
+		});
+	}
 }

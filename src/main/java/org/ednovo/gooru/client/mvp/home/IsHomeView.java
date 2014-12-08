@@ -27,9 +27,12 @@
  */
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 
 import com.google.gwt.user.client.ui.Button;
 
@@ -77,5 +80,7 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	*/
 	
 	Button getBtnSignUp();
+
+	void displayPartnerLibraries(ArrayList<LibraryUserDo> partnersList);
 	
 }

@@ -1,9 +1,5 @@
 @charset "utf-8";
 /* CSS Document */
-html{
-	width:760px;
-	overflow:auto !important;
-}
 
 .container{
 	width:960px;
@@ -26,28 +22,26 @@ html{
 	height: 95%;
 }
 .blocksmall{
-	width: 960px;
-	box-sizing: border-box;
-	background: #fff;
+	float: left;
+	padding: 10px 10px;
+	width: 100%;
+	background: #ffffff;
 	border-bottom: 1px solid #ddd;
+	position: relative;
 }
 .whitebg{}
 .navigationWrapper{}
 .animationWrapper{}
+
 .loginStatus{
-	margin-right:50px;
+	
 }
 .collectionItem {
     margin: 5px;
 }
 
-.leftPanel{
-	width:75%;
-}
 
-.rightPanel{
-	width:25%;
-}
+
 .ojectimg{
 	width:150px;
 }
@@ -86,12 +80,109 @@ html{
 	min-height:100%;
 }
 .rightPanel{
-	width:25%;
+	
 }
 .leftPanel{
-	width:75%;
+	
 }
 .playerBodyContainer{
 	width:100%;
 }
 
+
+
+.player-resource-title{
+	
+}
+.resourceCountStyle{
+	
+}
+.fixedContainer{
+	position:relative;
+}
+.bodyContent{
+	padding-top:0px;
+}
+.greybackground{
+	
+}
+.collectionImageContainer{
+	margin-bottom:25px;
+}
+
+.collectionImage{
+	
+}
+.buttonsContainer{
+	
+}
+.collectionbuttons{
+	
+}
+.logStatus{
+	display: inline-block;
+}
+.closeButton{
+	right:50px;
+}
+.bodysection{
+	
+}
+.narrationPopup {
+	width:90%;
+}
+.narrationPopupContainer{
+	right:0px;
+}
+.resource-info-metadata-wrapper{
+
+}
+.resource-info-metadata-innerwrapper{
+	
+}
+.resource-info-collections-wrapper{
+	
+}
+.playerResourcesRightSection {
+
+}
+.collection-thumbnail{
+}
+.timespend{
+	margin-bottom:0;
+	display:block;
+}
+.collectionEndImageContainer{
+	display: block;
+    float: none;
+    height: 160px;
+    margin: 0 auto 25px;
+    position: relative;
+    width: 220px;
+}
+.playRight{
+	 display: block;
+    float: none;
+}
+.playBlockTop{
+	text-align:center;
+}
+.endButtonsContainer{
+	text-align:center;
+}
+.endButtonsContainer buttons{
+	float:none;
+}
+.whatsnext .smallTxt{
+	text-align:left;
+}
+.whatsnext{
+}
+
+.whatsnext .bigTxt{
+}
+
+.whatsnext .smallerTxt{
+}
+.endPageIframe{
+}

@@ -44,6 +44,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.WhiteSpace;
+import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -258,7 +260,8 @@ public class StudentSignUpUc extends PopupPanel{
 		
 		txtConfirmPassword.setPlaceholder(i18n.GL0427());
 		txtConfirmPassword.getElement().setId("pswConfirmPassword");
-		
+		passwordValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
+		passwordValidUc.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		lblQuestionMark.setText(i18n.GL_SPL_QUESTION());
 		lblQuestionMark.getElement().setId("lblQuestionMark");
 		lblQuestionMark.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
@@ -395,7 +398,6 @@ public class StudentSignUpUc extends PopupPanel{
 		};
 		
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);
 	
@@ -419,7 +421,6 @@ public class StudentSignUpUc extends PopupPanel{
 		};
 		
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 	
@@ -443,11 +444,24 @@ public class StudentSignUpUc extends PopupPanel{
 		};
 		
 		copyRightPolicy.show();
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}
-	
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -459,6 +473,21 @@ public class StudentSignUpUc extends PopupPanel{
 			}	
 		}
 	}
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOut implements MouseOutHandler{
 
 		@Override
@@ -529,6 +558,21 @@ public class StudentSignUpUc extends PopupPanel{
 		return isValid;
 
 	}
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
