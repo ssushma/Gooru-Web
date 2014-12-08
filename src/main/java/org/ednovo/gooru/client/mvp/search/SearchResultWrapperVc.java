@@ -580,7 +580,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		getSearchShareVc().setData(searchResultDo);
 	
 		if(searchResultDo.getResourceTags() != null){
-			tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+searchResultDo.getResourceTags().size()+i18n.GL_SPL_CLOSE_SMALL_BRACKET()); 
+			if(!searchResultDo.getResourceTags().isEmpty()){
+				tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+searchResultDo.getResourceTags().size()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+			}
 		}
 		
 		if(rootWebUrl.contains("collection-search")){
