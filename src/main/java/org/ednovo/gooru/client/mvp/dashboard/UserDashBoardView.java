@@ -195,6 +195,5 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	@Override
 	public void setProfileReationsData(ProfileRatingsReactionsDO result) {
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
-
 	}
 }
