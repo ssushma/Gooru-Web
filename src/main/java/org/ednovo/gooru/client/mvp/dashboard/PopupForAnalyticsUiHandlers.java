@@ -25,61 +25,25 @@
 package org.ednovo.gooru.client.mvp.dashboard;
 
 /**
- * @fileName : IsUserSettingsView.java
+ * @fileName : PopupForAnalyticsUiHandlers.java
  *
  * @description : 
  *
- *
  * @version : 1.0
  *
- * @date: Apr 18, 2013
+ * @date: Dec 8, 2014
  *
  * @Author Gooru Team
  *
  * @Reviewer: 
  */
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
+import com.google.gwt.event.shared.EventHandler;
 
-import java.util.Map;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
-import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
-
-public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
-
-	void dispalyDashBoardHomePage();
-	
+public interface PopupForAnalyticsUiHandlers extends BaseUiHandlers, EventHandler {
 	/**
-	 * This method is used to set profile analytics flagged count data.
-	 * @param result
+	 * This method is used to set popup data.
 	 */
-	void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics view count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsViewsChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics shared count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsSharedChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics add to collection count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
-
-	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
-	/**
-	 * This method is used to set profile analytics Ratings data.
-	 * @param result
-	 */
-	void setProfileRatingsData(ProfileRatingsReactionsDO result);
-	/**
-	 * This method is used to set profile analytics Reactions data.
-	 * @param result
-	 */
-	void setProfileReationsData(ProfileRatingsReactionsDO result);
+	void setPopupData();
 }

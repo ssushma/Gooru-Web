@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPrese
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
@@ -97,7 +98,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResou
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
-import org.simpleframework.http.parse.AddressParser;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -264,6 +264,6 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<UserDashBoardPresenter> getUserDashBoardPresenter();
 	
-	
+	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
 
 }

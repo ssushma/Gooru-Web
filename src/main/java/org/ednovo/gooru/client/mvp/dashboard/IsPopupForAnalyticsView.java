@@ -24,62 +24,25 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
 
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+
+import com.gwtplatform.mvp.client.PopupView;
 /**
- * @fileName : IsUserSettingsView.java
+ * @fileName : IsPopupForAnalyticsView.java
  *
  * @description : 
  *
- *
  * @version : 1.0
  *
- * @date: Apr 18, 2013
+ * @date: Dec 8, 2014
  *
  * @Author Gooru Team
  *
  * @Reviewer: 
  */
-
-
-import java.util.Map;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
-import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
-
-public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
-
-	void dispalyDashBoardHomePage();
-	
-	/**
-	 * This method is used to set profile analytics flagged count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics view count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsViewsChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics shared count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsSharedChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics add to collection count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
-
-	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
-	/**
-	 * This method is used to set profile analytics Ratings data.
-	 * @param result
-	 */
-	void setProfileRatingsData(ProfileRatingsReactionsDO result);
-	/**
-	 * This method is used to set profile analytics Reactions data.
-	 * @param result
-	 */
-	void setProfileReationsData(ProfileRatingsReactionsDO result);
+public interface IsPopupForAnalyticsView extends PopupView, IsViewWithHandlers<PopupForAnalyticsUiHandlers>{
+		/**
+		 * This method is used to set popup data
+		 */
+		 void setPopupData();
 }

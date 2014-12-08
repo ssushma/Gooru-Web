@@ -25,61 +25,44 @@
 package org.ednovo.gooru.client.mvp.dashboard;
 
 /**
- * @fileName : IsUserSettingsView.java
+ * @fileName : PopupForAnalyticsPresenter.java
  *
  * @description : 
  *
- *
  * @version : 1.0
  *
- * @date: Apr 18, 2013
+ * @date: Dec 8, 2014
  *
  * @Author Gooru Team
  *
  * @Reviewer: 
  */
+import javax.inject.Inject;
 
+import com.google.gwt.event.shared.EventBus;
+import com.gwtplatform.mvp.client.PopupView;
+import com.gwtplatform.mvp.client.PresenterWidget;
 
-import java.util.Map;
+public class PopupForAnalyticsPresenter extends PresenterWidget<IsPopupForAnalyticsView> implements PopupForAnalyticsUiHandlers {
+		 public interface MyView extends PopupView {
+		 }
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
-import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
+		 /**
+		  * Constructor
+		 * @param eventBus
+		 * @param view
+		 */
+		@Inject
+		 public PopupForAnalyticsPresenter(EventBus eventBus, IsPopupForAnalyticsView view) {
+				super(eventBus, view);
+				getView().setUiHandlers(this);
+		 }
 
-public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
-
-	void dispalyDashBoardHomePage();
-	
-	/**
-	 * This method is used to set profile analytics flagged count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics view count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsViewsChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics shared count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsSharedChatData(Map<String, Integer> result);
-	/**
-	 * This method is used to set profile analytics add to collection count data.
-	 * @param result
-	 */
-	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
-
-	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
-	/**
-	 * This method is used to set profile analytics Ratings data.
-	 * @param result
-	 */
-	void setProfileRatingsData(ProfileRatingsReactionsDO result);
-	/**
-	 * This method is used to set profile analytics Reactions data.
-	 * @param result
-	 */
-	void setProfileReationsData(ProfileRatingsReactionsDO result);
+		/* (non-Javadoc)
+		 * @see org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsUiHandlers#setPopupData()
+		 */
+		@Override
+		public void setPopupData() {
+			getView().setPopupData();
+		}
 }
