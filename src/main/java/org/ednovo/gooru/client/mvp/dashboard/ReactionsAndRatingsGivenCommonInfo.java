@@ -136,12 +136,12 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 			ratingLabelVeryGood.getElement().getStyle().clearWidth();
 			ratingLabelExcellent.getElement().getStyle().clearWidth();
 		
-			smallHeaderTextLbl.setText("Reactions Given");
-			ratingLblPoor.setText("I need help");
+			smallHeaderTextLbl.setText(i18n.GL3052());
+			ratingLblPoor.setText(i18n.GL0585());
 			ratingorReactionImgPoor.setUrl("../images/profileimages/emotics1.png");
-			ratingLabelFair.setText("I don’t understand");
+			ratingLabelFair.setText(i18n.GL0584());
 			ratingorReactionImgFair.setUrl("../images/profileimages/emotics2.png");
-			ratingLabelGood.setText("Meh");
+			ratingLabelGood.setText(i18n.GL0583());
 			ratingorReactionImgGood.setUrl("../images/profileimages/emotics3.png");
 			ratingLabelVeryGood.setText("I understand");
 			ratingorReactionImgVeryGood.setUrl("../images/profileimages/emotics4.png");

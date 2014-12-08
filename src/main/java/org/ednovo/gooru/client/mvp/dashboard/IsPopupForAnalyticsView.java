@@ -42,7 +42,23 @@ import com.gwtplatform.mvp.client.PopupView;
  */
 public interface IsPopupForAnalyticsView extends PopupView, IsViewWithHandlers<PopupForAnalyticsUiHandlers>{
 		/**
-		 * This method is used to set popup data
+		 * 
+		 * @function setPopupData 
+		 * 
+		 * @created_date : 08-Dec-2014
+		 * 
+		 * @description
+		 * 
+		 * 
+		 * @parm(s) : 
+		 * 
+		 * @return : void
+		 *
+		 * @throws : <Mentioned if any exceptions>
+		 *
+		 * 
+		 *
+		 *
 		 */
 		 void setPopupData();
 }
