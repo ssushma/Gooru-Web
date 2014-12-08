@@ -37,14 +37,19 @@ package org.ednovo.gooru.client.mvp.dashboard;
  *
  * @Reviewer: 
  */
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -63,13 +68,15 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 			UiBinder<Widget, PopupForAnalyticsView> {
 	}
 	
-	@UiField Label titleTextlbl;
+	@UiField Label titleTextlbl,leftSideText,rightSideText;
 	@UiField Button btnHighToLow,btnLowToHigh;
 	@UiField HTMLPanel pnlItemsContainer;
 	@UiField ScrollPanel pnlScrollPanel;
+	@UiField Anchor lnkClose;
 	
 	PopupPanel popup=new PopupPanel();
-	
+	 MessageProperties i18n = GWT.create(MessageProperties.class);
+	 
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -80,12 +87,20 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 		popup.add(uiBinder.createAndBindUi(this));
 		popup.setGlassEnabled(true);
 		popup.setAutoHideEnabled(true);
-		btnHighToLow.setText("High to Low");
-		btnLowToHigh.setText("Low to High");
+		popup.setGlassStyleName("");
+		btnHighToLow.setText(i18n.GL3050());
+		btnLowToHigh.setText(i18n.GL3051());
 		pnlScrollPanel.addScrollHandler(new ScrollHandler() {
 			@Override
 			public void onScroll(ScrollEvent event) {
-				System.out.println("scrolled");
+
+			}
+		});
+		lnkClose.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				popup.hide();
+				Window.enableScrolling(true);
 			}
 		});
 	}
@@ -123,8 +138,24 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 	 * @see org.ednovo.gooru.client.mvp.dashboard.IsPopupForAnalyticsView#setPopupData()
 	 */
 	@Override
-	public void setPopupData() {
-		titleTextlbl.setText("Pass the text");
+	public void setPopupData(String isEndorsedOrRemixed,String isReactionOrRatings) {
+		if(isEndorsedOrRemixed!=null){
+			boolean isEndorsed=Boolean.parseBoolean(isEndorsedOrRemixed);
+			if(isEndorsed){
+				titleTextlbl.setText(i18n.GL3052());
+				
+			}else{
+				titleTextlbl.setText(i18n.GL3053());
+			}
+		}
+		if(isReactionOrRatings!=null){
+			boolean isRatings=Boolean.parseBoolean(isReactionOrRatings);
+			if(isRatings){
+				titleTextlbl.setText(i18n.GL3054());
+			}else{
+				titleTextlbl.setText(i18n.GL3055());
+			}
+		}
 	}
 	
 	/**
