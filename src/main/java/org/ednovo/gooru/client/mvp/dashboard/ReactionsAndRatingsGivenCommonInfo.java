@@ -143,9 +143,9 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 			ratingorReactionImgFair.setUrl("../images/profileimages/emotics2.png");
 			ratingLabelGood.setText(i18n.GL0583());
 			ratingorReactionImgGood.setUrl("../images/profileimages/emotics3.png");
-			ratingLabelVeryGood.setText("I understand");
+			ratingLabelVeryGood.setText(i18n.GL0582());
 			ratingorReactionImgVeryGood.setUrl("../images/profileimages/emotics4.png");
-			ratingLabelExcellent.setText("I can explain");
+			ratingLabelExcellent.setText(i18n.GL0581());
 			ratingorReactionImgExcellent.setUrl("../images/profileimages/emotics5.png");
 		
 			int totalCount=result.getCountOfMeh()+result.getCountOfINeedHelp()+result.getCountOfIDoNotUnderstand()+result.getCountOfICanUnderstand()+result.getCountOfICanExplain();

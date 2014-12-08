@@ -69,7 +69,11 @@ public abstract class ViewsRemixWidgetView extends Composite {
 	
 	
 	int position = 0;
-	
+	/**
+	 * 
+	 * @param publishedCollectionsInfoDo
+	 * @param remixOrViews
+	 */
 	public ViewsRemixWidgetView(PublishedCollectionsInfoDo publishedCollectionsInfoDo, String remixOrViews) {
 		initWidget(uiBinder.createAndBindUi(this));
 
