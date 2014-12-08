@@ -6,50 +6,14 @@
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
-
 	<ui:style field="style" src="dashboard.css"/>
-	<!-- <ui:style field="Settings" src="Setting-page.css"
-		type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
-	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
-		field="res" />
-	<ui:with
-		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
-		field="ccb" />  -->
 	<g:HTMLPanel ui:field="remixedAndEndorsedPnl">
 		<div class="{style.whiteBg}">
-
-<div class="{style.panelBox}">
-<g:Label styleName="{style.smallHeader}" ui:field="titleLbl"></g:Label>
-
-<div class="{style.collectionBlock}">
-<g:Label styleName="{style.collHead}" ui:field="collectionNameLbl"></g:Label>
-<g:Label styleName="{style.collSmallHead}" ui:field="countNoOfEndorsements"><span></span> </g:Label>
-
-</div>
-
-
-<div class="{style.collectionBlock}">
-<div class="{style.collHead}">British History</div>
-<div class="{style.collSmallHead}"><span>19</span> endorsments</div>
-
-</div>
-
-
-
-<div class="{style.collectionBlock}">
-<div class="{style.collHead}">Enter the Cell</div>
-<div class="{style.collSmallHead}"><span>17</span> endorsments</div>
-
-</div>
-
-<div class="{style.moreLink}"><a href="#">View all endorsed collections</a></div>
-
-
-
-</div>
-
-
-</div>
+				<div class="{style.panelBox}">
+					<g:Label styleName="{style.smallHeader}" ui:field="titleLbl"></g:Label>
+					<g:HTMLPanel ui:field="topEndorsementsPanel"></g:HTMLPanel>
+					<div class="{style.moreLink}"><a href="#">View all endorsed collections</a></div>
+				</div>
+		</div>
 	</g:HTMLPanel>
-	
 </ui:UiBinder>

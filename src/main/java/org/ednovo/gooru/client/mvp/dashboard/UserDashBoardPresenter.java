@@ -145,6 +145,19 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 			}
 		});
 		
+		AppClientFactory.getInjector().getUserService().getTopViewedCollectionsInfo("0", "3", new AsyncCallback<UserDashBoardCommonInfoDO>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getTopViewedCOllectionsData(result);
+			}
+		});
+		
 		getView().dispalyDashBoardHomePage();
 		}else{
 			

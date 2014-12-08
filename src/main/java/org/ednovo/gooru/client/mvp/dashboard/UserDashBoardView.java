@@ -82,9 +82,6 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		ResourceAddedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(132)),new Label("Resources Added")));
 		endorsementsGivenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(26)),new Label("endorsements given")));
-		topEndorsedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Endorsed Collections","Roman Poets","23 endorsments"));
-		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
-
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
 		profileActivityBreakDown.add(profileAnalyticChat.createChart());
@@ -166,5 +163,11 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	public void setProfileReationsData(ProfileRatingsReactionsDO result) {
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
 
+	}
+
+	@Override
+	public void getTopViewedCOllectionsData(UserDashBoardCommonInfoDO result) {
+		topEndorsedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Endorsed Collections",result));
+		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections",result));
 	}
 }

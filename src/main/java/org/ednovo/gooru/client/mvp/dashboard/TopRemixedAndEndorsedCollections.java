@@ -25,11 +25,15 @@
 package org.ednovo.gooru.client.mvp.dashboard;
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -52,7 +56,9 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 	private static TopRemixedAndEndorsedCollectionsUiBinder uiBinder = GWT
 			.create(TopRemixedAndEndorsedCollectionsUiBinder.class);
 	
-	@UiField Label collectionNameLbl,countNoOfEndorsements,titleLbl;
+	@UiField Label titleLbl;
+	
+	@UiField HTMLPanel topEndorsementsPanel;
 
 	interface TopRemixedAndEndorsedCollectionsUiBinder extends
 			UiBinder<Widget, TopRemixedAndEndorsedCollections> {
@@ -67,12 +73,73 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 	@Inject
 	public TopRemixedAndEndorsedCollections() {
 		initWidget(uiBinder.createAndBindUi(this));
+		DashBoardCBundle.INSTANCE.css().ensureInjected();
 	}
-
-	public TopRemixedAndEndorsedCollections(String title, String collName,String totalEndorsements) {
+	public TopRemixedAndEndorsedCollections(String title, UserDashBoardCommonInfoDO userDashBoardCommonInfoDO) {
 		initWidget(uiBinder.createAndBindUi(this));
-		titleLbl.setText(title);
-		collectionNameLbl.setText(collName);
-		countNoOfEndorsements.setText(totalEndorsements);
+		DashBoardCBundle.INSTANCE.css().ensureInjected();
+		if(title.contains("Top Endorsed Collections")){
+			titleLbl.setText(title);
+		if(userDashBoardCommonInfoDO.getContent().size()>0){
+			for(int i=0;i<3;i++){
+				HTMLPanel collectionBlockPanel = new HTMLPanel("");
+				Label collectionNameLbl = new Label();
+				HTMLPanel collectionSmallHeadPanel = new HTMLPanel("");
+				InlineLabel countNoOfEndorsements = new InlineLabel();
+				Label endorsementsTextLabel = new Label();
+				
+				collectionNameLbl.setText(userDashBoardCommonInfoDO.getContent().get(i).getTitle());
+				collectionNameLbl.setStyleName(DashBoardCBundle.INSTANCE.css().collHead());
+				
+				countNoOfEndorsements.setText(userDashBoardCommonInfoDO.getContent().get(i).getTopViewedCollection());
+				endorsementsTextLabel.setText(i18n.GL3060());
+				endorsementsTextLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+				
+				collectionSmallHeadPanel.add(countNoOfEndorsements);
+				collectionSmallHeadPanel.add(endorsementsTextLabel);
+				collectionSmallHeadPanel.setStyleName(DashBoardCBundle.INSTANCE.css().collSmallHead());
+				
+				
+				collectionBlockPanel.add(collectionNameLbl);
+				collectionBlockPanel.add(collectionSmallHeadPanel);
+				collectionBlockPanel.setStyleName(DashBoardCBundle.INSTANCE.css().collectionBlock());
+				
+				topEndorsementsPanel.add(collectionBlockPanel);
+				
+			}
+			
+		}
+		}else if(title.contains("Top Remixed Collections")){
+			titleLbl.setText(title);
+			if(userDashBoardCommonInfoDO.getContent().size()>0){
+				for(int i=0;i<3;i++){
+					HTMLPanel collectionBlockPanel = new HTMLPanel("");
+					Label collectionNameLbl = new Label();
+					HTMLPanel collectionSmallHeadPanel = new HTMLPanel("");
+					InlineLabel countNoOfEndorsements = new InlineLabel();
+					Label endorsementsTextLabel = new Label();
+					
+					collectionNameLbl.setText(userDashBoardCommonInfoDO.getContent().get(i).getTitle());
+					collectionNameLbl.setStyleName(DashBoardCBundle.INSTANCE.css().collHead());
+					
+					countNoOfEndorsements.setText(userDashBoardCommonInfoDO.getContent().get(i).getTopViewedCollection());
+					endorsementsTextLabel.setText(i18n.GL3061());
+					endorsementsTextLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+					
+					collectionSmallHeadPanel.add(countNoOfEndorsements);
+					collectionSmallHeadPanel.add(endorsementsTextLabel);
+					collectionSmallHeadPanel.setStyleName(DashBoardCBundle.INSTANCE.css().collSmallHead());
+					
+					
+					collectionBlockPanel.add(collectionNameLbl);
+					collectionBlockPanel.add(collectionSmallHeadPanel);
+					collectionBlockPanel.setStyleName(DashBoardCBundle.INSTANCE.css().collectionBlock());
+					
+					topEndorsementsPanel.add(collectionBlockPanel);
+					
+				}
+				
+			}
+		}
 	}
 }
