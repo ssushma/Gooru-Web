@@ -120,7 +120,11 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator,AsyncCallback<Map<String, Integer>> callback);
   
    void getUsersPublishedCollectionsCount(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+
+   void getFiveStarRatedResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
    
+   void getFiveStarReviewdResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+  
    void getProfileAnalyticsRatings(AsyncCallback<ProfileRatingsReactionsDO> callback);
 
 }

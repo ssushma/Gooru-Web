@@ -23,22 +23,6 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
-/**
-
-
-*
-* @description : 
-*
-* @version :1.0
-*
-* @date: APR 19 2013
-   	
-* @Author Gooru Team
-* 
-* Reviewer Gooru Team
-*
-*/
-import java.util.Map;
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
@@ -53,7 +37,21 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-
+/**
+ * 
+ * @fileName : ReactionsAndRatingsGivenCommonInfo.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 	private static ReactionsAndRatingsGivenCommonInfoUiBinder uiBinder = GWT
 			.create(ReactionsAndRatingsGivenCommonInfoUiBinder.class);
@@ -76,7 +74,11 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
 	}
-
+	/**
+	 * 
+	 * @param textLbl
+	 * @param result
+	 */
 	public ReactionsAndRatingsGivenCommonInfo(String textLbl,ProfileRatingsReactionsDO result) {
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
@@ -128,6 +130,12 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 			ratingLabelGood.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
 			ratingLabelVeryGood.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
 			ratingLabelExcellent.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
+			ratingLblPoor.getElement().getStyle().clearWidth();
+			ratingLabelFair.getElement().getStyle().clearWidth();
+			ratingLabelGood.getElement().getStyle().clearWidth();
+			ratingLabelVeryGood.getElement().getStyle().clearWidth();
+			ratingLabelExcellent.getElement().getStyle().clearWidth();
+		
 			smallHeaderTextLbl.setText("Reactions Given");
 			ratingLblPoor.setText("I need help");
 			ratingorReactionImgPoor.setUrl("../images/profileimages/emotics1.png");

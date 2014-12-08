@@ -50,8 +50,19 @@ import com.googlecode.gwt.serialization.JsonReader;
 import com.googlecode.gwt.serialization.JsonWriter;
 
 /**
- * @author Search Team
  * 
+ * @fileName : ContributorsView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class ContributorsView extends
 		BaseViewWithHandlers<ContributorsUiHandlers> implements

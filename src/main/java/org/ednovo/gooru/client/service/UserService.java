@@ -241,6 +241,11 @@ public interface UserService extends BaseService {
 	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator);
 
     UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
+
+    UserDashBoardCommonInfoDO getFiveStarRatedResources();
     
+    UserDashBoardCommonInfoDO getFiveStarReviewdResources();
+
     ProfileRatingsReactionsDO getProfileAnalyticsRatings();
+
 }

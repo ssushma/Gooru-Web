@@ -42,9 +42,85 @@ import org.ednovo.gooru.client.child.IsChildView;
  * @Reviewer:
  */
 public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
+	/**
+	 * 
+	 * @function updateDirection 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param directionText
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateDirection(String directionText);
+	/**
+	 * 
+	 * @function updateDueDate 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param dueDate
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateDueDate(String dueDate);
+	/**
+	 * 
+	 * @function removeClasspageItemWidget 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void removeClasspageItemWidget();
+	/**
+	 * 
+	 * @function updateCollectionStatus 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param readStatus
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateCollectionStatus(String readStatus);
 	
 	/**

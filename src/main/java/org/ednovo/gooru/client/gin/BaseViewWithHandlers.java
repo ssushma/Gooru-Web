@@ -31,8 +31,19 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 /**
- * @author Search Team
  * 
+ * @fileName : BaseViewWithHandlers.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class BaseViewWithHandlers<H extends BaseUiHandlers> extends ViewWithUiHandlers<H> implements IsViewWithHandlers<H> {
 

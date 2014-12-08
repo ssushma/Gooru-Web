@@ -27,7 +27,21 @@ package org.ednovo.gooru.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-
+/**
+ * 
+ * @fileName : GooruCBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface GooruCBundle extends ClientBundle {
 	
 	static final GooruCBundle INSTANCE = GWT.create(GooruCBundle.class);

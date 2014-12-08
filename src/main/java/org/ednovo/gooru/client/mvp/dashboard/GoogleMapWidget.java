@@ -40,7 +40,6 @@ package org.ednovo.gooru.client.mvp.dashboard;
 */
 
 
-import org.ednovo.gooru.client.util.HeatMapLayerWidget;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;

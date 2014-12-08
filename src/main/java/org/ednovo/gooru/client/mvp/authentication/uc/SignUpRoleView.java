@@ -47,7 +47,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : SignUpRoleView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class SignUpRoleView extends PopupPanel{
 
 	@UiField Label lblTitle, lblCancel,teachLbl,studentLbl,parentLbl,otherLbl;
@@ -147,7 +161,25 @@ public class SignUpRoleView extends PopupPanel{
 		this.center();
 		
 	}
-
+	/**
+	 * 
+	 * @function closeSignUpRoleView 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void closeSignUpRoleView() {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		Window.enableScrolling(true);
@@ -159,14 +191,42 @@ public class SignUpRoleView extends PopupPanel{
 	public void onCancelClick(ClickEvent clickEvent) {
 		closeSignUpRoleView();
 	}
-
+	/**
+	 * 
+	 * @fileName : SignUpRoleView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class TeacherRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			userRole = "Teacher";
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : SignUpRoleView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class StudentRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -199,7 +259,6 @@ public class SignUpRoleView extends PopupPanel{
 	 * @param type 
 	 * 
 	 */
-	
 	public void checkUserAvailability(String userName, String type) {
 		AppClientFactory.getInjector().getUserService().getEmailId(userName, type, new SimpleAsyncCallback<UserDo>()
 		{
