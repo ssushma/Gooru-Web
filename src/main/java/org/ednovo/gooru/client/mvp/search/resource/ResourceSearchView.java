@@ -116,13 +116,7 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				if(AppClientFactory.isAnonymous()){
-					new LoginPopupUc();
-				}else{
-					getUiHandlers().setTagsWidget(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,resourceSearchResultVc.isTagsPanelOpen(),resourceSearchResultVc.getAddTagsTab());
-				}
-				
+				getUiHandlers().setTagsWidget(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,resourceSearchResultVc.isTagsPanelOpen(),resourceSearchResultVc.getAddTagsTab());
 			}
 		});
 		
