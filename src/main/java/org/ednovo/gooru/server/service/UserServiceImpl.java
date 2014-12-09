@@ -828,7 +828,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount() {
 		JsonRepresentation jsonRep = null;
 		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlDataParameterValue);
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlDataParameterValue);
 		System.out.println("getUsersPublishedCollectionsCount url::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1029,7 +1030,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval) {
 		JsonRepresentation jsonRep = null;
 		String urlparameters = getTopViewedCollectionPayloadObject(offsetval, limitval);
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);
+		/*String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);*/
+		String url = "http://www.goorulearning.org/insights/api/v2/query?sessionToken=419c6c56-5295-11e4-8d6c-123141016e2a&data="+urlparameters;
 		System.out.println("getTopViewedCollectionsInfo:::::"+url);
 		JsonResponseRepresentation jsonRespRep	= ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonRespRep.getJsonRepresentation();
