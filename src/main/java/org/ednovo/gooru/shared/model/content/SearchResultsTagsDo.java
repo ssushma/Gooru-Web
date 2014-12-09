@@ -32,20 +32,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class SearchRatingsDo implements Serializable {
+public class SearchResultsTagsDo implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; 
+
+	private Integer count;
+
+	private String label;
 	
-	private Integer count=0;
-	private double average=0.0;
-	private Integer reviewCount=0;
-	
-	public SearchRatingsDo(){
-	}
-	
+	private String tagUid;
+
 	/**
 	 * @return the count
 	 */
@@ -61,25 +60,32 @@ public class SearchRatingsDo implements Serializable {
 	}
 
 	/**
-	 * @return the average
+	 * @return the label
 	 */
-	public double getAverage() {
-		return average;
+	public String getLabel() {
+		return label;
 	}
 
 	/**
-	 * @param average the average to set
+	 * @param label the label to set
 	 */
-	public void setAverage(double average) {
-		this.average = average;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
-	public Integer getReviewCount() {
-		return reviewCount;
+	/**
+	 * @return the tagUid
+	 */
+	public String getTagUid() {
+		return tagUid;
 	}
 
-	public void setReviewCount(Integer reviewCount) {
-		this.reviewCount = reviewCount;
+	/**
+	 * @param tagUid the tagUid to set
+	 */
+	public void setTagUid(String tagUid) {
+		this.tagUid = tagUid;
 	}
+
 
 }
