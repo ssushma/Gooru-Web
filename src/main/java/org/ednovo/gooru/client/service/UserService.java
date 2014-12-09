@@ -247,5 +247,7 @@ public interface UserService extends BaseService {
     UserDashBoardCommonInfoDO getFiveStarReviewdResources();
 
     ProfileRatingsReactionsDO getProfileAnalyticsRatings();
+    
+    UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval);
 
 }
