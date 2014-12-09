@@ -91,18 +91,6 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
 		profileActivityBreakDown.add(profileAnalyticChat.createChart());
-		topEndorsedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().clickedOnMoreButton("true", null);
-			}
-		});
-		topRemixedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().clickedOnMoreButton("false",null);
-			}
-		});
 	}
 
 	/* (non-Javadoc)
@@ -217,7 +205,19 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 */
 	@Override
 	public void getTopViewedCOllectionsData(UserDashBoardCommonInfoDO result) {
-		topEndorsedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Endorsed Collections",result));
-		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections",result));
+		topEndorsedCollectionsWidget.add(topEndorsedCollection=new TopRemixedAndEndorsedCollections("Top Endorsed Collections",result));
+		topEndorsedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().clickedOnMoreButton("true", null);
+			}
+		});
+		topRemixedCollectionsWidget.add(topRemixedCollection=new TopRemixedAndEndorsedCollections("Top Remixed Collections",result));
+		topRemixedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().clickedOnMoreButton("false",null);
+			}
+		});
 	}
 }

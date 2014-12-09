@@ -116,9 +116,6 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	 *
 	 */
 	void displayDashBoardPage() {
-		
-		if(!AppClientFactory.isAnonymous()){
-		
 		AppClientFactory.getInjector().getUserService().getUsersPublishedCollectionsCount(new AsyncCallback<UserDashBoardCommonInfoDO>() {
 			@Override
 			public void onSuccess(UserDashBoardCommonInfoDO result) {
@@ -161,17 +158,20 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 		});
 		
 		getView().dispalyDashBoardHomePage();
-		}else{
-			
-		}
+		
 	}
 
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
-		displayDashBoardPage();
-		setData();
+		if(!AppClientFactory.isAnonymous()){
+			displayDashBoardPage();
+			setData();
+		}else{
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
+		
 	}
 	/**
 	 * 

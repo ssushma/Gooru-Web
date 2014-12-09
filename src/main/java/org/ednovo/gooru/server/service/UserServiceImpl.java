@@ -1047,9 +1047,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		
 		JSONObject jsonDataObject = new JSONObject();
 		try{
-			
-		
-		
 		JSONArray filterArray = new JSONArray();
 		JSONObject filterObject = new JSONObject();
 		JSONArray fieldsArray = new JSONArray();
@@ -1105,7 +1102,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		
 		jsonDataObject.put("pagination", paginationsObject);
 		
-		System.out.println("here :::::"+jsonDataObject.toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -1114,7 +1110,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+
 		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1227,7 +1225,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileRatingsJsonPayloadObject());
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileRatingsJsonPayloadObject());
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileRatingsJsonPayloadObject());
 		//String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileRatingsJsonPayloadObject();
 		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
