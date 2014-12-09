@@ -1424,7 +1424,7 @@ public class HeaderUc extends Composite implements
 		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
-		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1");
+		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		params.put("pageNum", "1");
 		params.put("pageSize", "8");
 		
