@@ -60,5 +60,5 @@ public interface IsPopupForAnalyticsView extends PopupView, IsViewWithHandlers<P
 		 *
 		 *
 		 */
-		 void setPopupData();
+		 void setPopupData(String isEndorsedOrRemixed,String isReactionOrRatings);
 }

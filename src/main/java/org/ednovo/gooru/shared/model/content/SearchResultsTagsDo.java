@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,30 +23,69 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.dashboard;
 
+package org.ednovo.gooru.shared.model.content;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-/**
- * 
- * @fileName : UserDashBoardUiHandlers.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+import java.io.Serializable;
 
-public interface UserDashBoardUiHandlers extends BaseUiHandlers{
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
+public class SearchResultsTagsDo implements Serializable {
+
 	/**
-	 * This method is used to handle the click event on view more.
+	 * 
 	 */
-	void clickedOnMoreButton(String isEndorsedOrRemixed,String isReactionOrRatings);
+	private static final long serialVersionUID = 1L; 
+
+	private Integer count;
+
+	private String label;
 	
+	private String tagUid;
+
+	/**
+	 * @return the count
+	 */
+	public Integer getCount() {
+		return count;
+	}
+
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	/**
+	 * @return the tagUid
+	 */
+	public String getTagUid() {
+		return tagUid;
+	}
+
+	/**
+	 * @param tagUid the tagUid to set
+	 */
+	public void setTagUid(String tagUid) {
+		this.tagUid = tagUid;
+	}
+
+
 }

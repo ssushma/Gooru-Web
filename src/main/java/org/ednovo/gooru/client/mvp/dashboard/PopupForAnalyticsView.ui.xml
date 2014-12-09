@@ -2,16 +2,15 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 	<ui:style field="style" src="dashboard.css"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
 	<div class="{style.popupWrapper}">
 		<div class="{style.PopupMainSmall}">
 			<div class="{style.popupInnerGrey}">
 				<div class="{style.popupgreyHeader}">
 					<div class="row">
-					<g:Label styleName="col-md-8 col-xs-8" ui:field="titleTextlbl"></g:Label>
-						<div class="col-md-4 col-xs-4 closeContainer">
-							<a href="#" class="closeButton"></a>
-						</div>
+						<g:Label styleName="{style.MainHeader}" ui:field="titleTextlbl"></g:Label>
+					    <div class="{style.closeContainer}"><g:Anchor ui:field="lnkClose" styleName="{style.closeButton}"></g:Anchor></div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -22,225 +21,15 @@
 					</div>
 					<div class="{style.colHeadBlock}">
 						<div class="col6">
-							<div class="{style.smallHeader}">Collection</div>
+							<g:Label styleName="{style.smallHeader}"  ui:field="leftSideText" text="{i18n.GL0645}"></g:Label>
 						</div>
 						<div class="col6">
-							<div class="{style.smallHeader}">Endorsements</div>
+							<g:Label styleName="{style.smallHeader}"  ui:field="rightSideText" text="{i18n.GL3056}"></g:Label>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 					<g:ScrollPanel styleName="{style.scrollPanel}"  ui:field="pnlScrollPanel">
 					<g:HTMLPanel styleName="{style.collectionsEndo}" ui:field="pnlItemsContainer">
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									Dogs
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>23</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div> 
-						<div class="{style.collListBlock}">
-							<div class="col6">
-								<div class="{style.collHead}">
-									<img src="images/folder.png" />
-									British History
-								</div>
-							</div>
-							<div class="col6">
-								<div class="{style.collSmallHead}">
-									<span>19</span>
-									endorsments
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div>
 					</g:HTMLPanel>
 					</g:ScrollPanel>
 				</div>

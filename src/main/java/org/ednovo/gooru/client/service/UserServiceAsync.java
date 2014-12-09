@@ -126,5 +126,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void getFiveStarReviewdResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
   
    void getProfileAnalyticsRatings(AsyncCallback<ProfileRatingsReactionsDO> callback);
+   
+   void getTopViewedCollectionsInfo(String offsetval,String limitval,AsyncCallback<UserDashBoardCommonInfoDO> callback);
 
 }

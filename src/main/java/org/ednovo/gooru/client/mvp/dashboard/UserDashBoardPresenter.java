@@ -116,10 +116,6 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	 *
 	 */
 	void displayDashBoardPage() {
-		
-		
-		if(!AppClientFactory.isAnonymous()){
-		
 		AppClientFactory.getInjector().getUserService().getUsersPublishedCollectionsCount(new AsyncCallback<UserDashBoardCommonInfoDO>() {
 			@Override
 			public void onSuccess(UserDashBoardCommonInfoDO result) {
@@ -148,18 +144,34 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 			}
 		});
 		
+		AppClientFactory.getInjector().getUserService().getTopViewedCollectionsInfo("0", "3", new AsyncCallback<UserDashBoardCommonInfoDO>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getTopViewedCOllectionsData(result);
+			}
+		});
+		
 		getView().dispalyDashBoardHomePage();
-		}else{
-			
-		}
+		
 	}
 
 	@Override
 	public void onBind() {
 		super.onBind();
 		Window.enableScrolling(true);
-		displayDashBoardPage();
-		setData();
+		if(!AppClientFactory.isAnonymous()){
+			displayDashBoardPage();
+			setData();
+		}else{
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
+		
 	}
 	/**
 	 * 
@@ -271,9 +283,9 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	}
 
 	@Override
-	public void clickedOnMoreButton() {
+	public void clickedOnMoreButton(String isEndorsedOrRemixed,String isReactionOrRatings) {
 		Window.enableScrolling(false);
-		popupForAnalyticsPresenter.setPopupData();
+		popupForAnalyticsPresenter.setPopupData(isEndorsedOrRemixed,isReactionOrRatings);
 		addToPopupSlot(popupForAnalyticsPresenter);
 	}
 }

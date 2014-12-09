@@ -250,5 +250,6 @@ public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiH
 	 *
 	 */
 	void setProfileReationsData(ProfileRatingsReactionsDO result);
+	void getTopViewedCOllectionsData(UserDashBoardCommonInfoDO result);
 
 }

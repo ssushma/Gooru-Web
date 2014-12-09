@@ -86,22 +86,24 @@ public class FiveStarRatings extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		fiveStarRatedLbl.setText("5-Star Rated Resources");
+		fiveStarRatedLbl.setText(i18n.GL3062());
 		fivestarImage.setUrl("../images/profileimages/rating.png");
 		iCanExplainImage.setUrl("../images/profileimages/iconBig.png");
-		icanExplainLbl.setText("I Can Explain");
-		reactionResourcesLbl.setText("Reaction Resources");
+		icanExplainLbl.setText(i18n.GL0581());
+		reactionResourcesLbl.setText(i18n.GL3063());
 		if(val.equalsIgnoreCase("fivestarRatings")){
 				for(int i=0; i<3; i++){
 				HTMLPanel resourceBlockPanel = new HTMLPanel("");
 				HTMLPanel CollectionHeadPanel = new HTMLPanel("");
+				HTMLPanel resourceNamePnl = new HTMLPanel("");
+				if(userDashBoardCommonInfoDOObject.getContent().get(i).getCategory()!=null){
 				HTMLPanel imagePanel = new HTMLPanel("");
 				Image resourceImagePnl = new Image();
-				HTMLPanel resourceNamePnl = new HTMLPanel("");
 				resourceImagePnl.setStyleName(getResourceTypeImage(userDashBoardCommonInfoDOObject.getContent().get(i).getCategory()));
 				imagePanel.add(resourceImagePnl);
-				resourceNamePnl.add(new Label(userDashBoardCommonInfoDOObject.getContent().get(i).getTitle()));
 				CollectionHeadPanel.add(imagePanel);
+				}
+				resourceNamePnl.add(new Label(userDashBoardCommonInfoDOObject.getContent().get(i).getTitle()));
 				CollectionHeadPanel.add(resourceNamePnl);
 				CollectionHeadPanel.setStyleName(DashBoardCBundle.INSTANCE.css().collHead());
 				resourceBlockPanel.add(CollectionHeadPanel);
@@ -110,21 +112,23 @@ public class FiveStarRatings extends Composite{
 			}
 			ratingsHeaderPnl.setVisible(true);
 			reactionsHeaderPnl.setVisible(false);
-			viewAllLbl.setText("View all ratings");
+			viewAllLbl.setText(i18n.GL3064());
 		}else if(val.equalsIgnoreCase("fivestarReviews")){
 			ratingsHeaderPnl.setVisible(false);
 			reactionsHeaderPnl.setVisible(true);
-			viewAllLbl.setText("View all reviews");
+			viewAllLbl.setText(i18n.GL3065());
 			for(int i=0;i<3;i++){
 				HTMLPanel resourceBlockPanel = new HTMLPanel("");
 				HTMLPanel CollectionHeadPanel = new HTMLPanel("");
+				HTMLPanel resourceNamePnl = new HTMLPanel("");
+				if(userDashBoardCommonInfoDOObject.getContent().get(i).getCategory()!=null){
 				HTMLPanel imagePanel = new HTMLPanel("");
 				Image resourceImagePnl = new Image();
-				HTMLPanel resourceNamePnl = new HTMLPanel("");
 				resourceImagePnl.setStyleName(getResourceTypeImage(userDashBoardCommonInfoDOObject.getContent().get(i).getCategory()));
 				imagePanel.add(resourceImagePnl);
-				resourceNamePnl.add(new Label(userDashBoardCommonInfoDOObject.getContent().get(i).getTitle()));
 				CollectionHeadPanel.add(imagePanel);
+				}
+				resourceNamePnl.add(new Label(userDashBoardCommonInfoDOObject.getContent().get(i).getTitle()));
 				CollectionHeadPanel.add(resourceNamePnl);
 				CollectionHeadPanel.setStyleName(DashBoardCBundle.INSTANCE.css().collHead());
 				resourceBlockPanel.add(CollectionHeadPanel);
@@ -190,5 +194,12 @@ public class FiveStarRatings extends Composite{
 		else {
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceTypeInfo();
 		}
+	}
+	/**
+	 * This method will return the view more label
+	 * @return
+	 */
+	public Anchor getViewAllLabel(){
+		return viewAllLbl;
 	}
 }
