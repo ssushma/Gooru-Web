@@ -31,6 +31,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -56,13 +57,13 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 	private static TopRemixedAndEndorsedCollectionsUiBinder uiBinder = GWT
 			.create(TopRemixedAndEndorsedCollectionsUiBinder.class);
 	
+
 	@UiField Label titleLbl;
-	
 	@UiField HTMLPanel topEndorsementsPanel;
+	@UiField Anchor clickOnMorelbl;
 
 	interface TopRemixedAndEndorsedCollectionsUiBinder extends
 			UiBinder<Widget, TopRemixedAndEndorsedCollections> {
-
 	}
 	
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -70,16 +71,26 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 	public interface Binder extends UiBinder<Widget, TopRemixedAndEndorsedCollections> {
 	}
 
+	/**
+	 *  Constructor
+	 */
 	@Inject
 	public TopRemixedAndEndorsedCollections() {
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
 	}
+	/**
+	 * Parameter constructor
+	 * @param title
+	 * @param collName
+	 * @param totalEndorsements
+	 */
 	public TopRemixedAndEndorsedCollections(String title, UserDashBoardCommonInfoDO userDashBoardCommonInfoDO) {
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
 		if(title.contains("Top Endorsed Collections")){
 			titleLbl.setText(title);
+			clickOnMorelbl.setText(i18n.GL3060());
 		if(userDashBoardCommonInfoDO.getContent().size()>0){
 			for(int i=0;i<3;i++){
 				HTMLPanel collectionBlockPanel = new HTMLPanel("");
@@ -92,7 +103,7 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 				collectionNameLbl.setStyleName(DashBoardCBundle.INSTANCE.css().collHead());
 				
 				countNoOfEndorsements.setText(userDashBoardCommonInfoDO.getContent().get(i).getTopViewedCollection());
-				endorsementsTextLabel.setText(i18n.GL3060());
+				endorsementsTextLabel.setText(i18n.GL3056());
 				endorsementsTextLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 				
 				collectionSmallHeadPanel.add(countNoOfEndorsements);
@@ -111,6 +122,7 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 		}
 		}else if(title.contains("Top Remixed Collections")){
 			titleLbl.setText(title);
+			clickOnMorelbl.setText(i18n.GL3066());
 			if(userDashBoardCommonInfoDO.getContent().size()>0){
 				for(int i=0;i<3;i++){
 					HTMLPanel collectionBlockPanel = new HTMLPanel("");
@@ -141,5 +153,12 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 				
 			}
 		}
+	}
+	/**
+	 * This will return the view more label
+	 * @return
+	 */
+	public Anchor getClickOnMorelbl(){
+		return clickOnMorelbl;
 	}
 }

@@ -67,6 +67,7 @@ public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiH
 	 *
 	 */
 	void dispalyDashBoardHomePage();
+	
 	/**
 	 * 
 	 * @function setProfileAnalyticsFlaggedChatData 

@@ -22,11 +22,11 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.dashboard;
-
+package org.ednovo.gooru.client.mvp.dashboard.util;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.PublishedCollectionsInfoDo;
 
-import com.google.gwt.core.shared.GWT;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -34,12 +34,11 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 /**
  * 
- * @fileName : GoogleMapWidget.java
+ * @fileName : ViewsRemixWidgetView.java
  *
- * @description : 
+ * @description : This is a widget used for iterating profile page user remixes details and Users' views details. 
  *
  *
  * @version : 1.0
@@ -50,34 +49,42 @@ import com.google.inject.Inject;
  *
  * @Reviewer:
  */
-public class GoogleMapWidget extends Composite{
-	private static GoogleMapWidgetUiBinder uiBinder = GWT
-			.create(GoogleMapWidgetUiBinder.class);
-	
-	@UiField Label collectionCountNum,collectionCountText,cityNameLblLeft,cityNameLblRight;
-	@UiField InlineLabel percentageLblLeft,percentageLblRight;
-	@UiField  HTMLPanel graphContainer;
+public abstract class ViewsRemixWidgetView extends Composite {
 
-	interface GoogleMapWidgetUiBinder extends
-			UiBinder<Widget, GoogleMapWidget> {
+	private static ViewsRemixWidgetViewUiBinder uiBinder = GWT.create(ViewsRemixWidgetViewUiBinder.class);
 
+	interface ViewsRemixWidgetViewUiBinder extends UiBinder<Widget, ViewsRemixWidgetView> {
 	}
 	
-	public MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	public interface Binder extends UiBinder<Widget, GoogleMapWidget> {
-	}
+	public MessageProperties i18N = GWT.create(MessageProperties.class);
 
-	@Inject
-	public GoogleMapWidget() {
+	
+	PublishedCollectionsInfoDo publishedCollectionsInfoDoGlobal = new PublishedCollectionsInfoDo();
+		
+	@UiField Label labelValue;
+	
+	@UiField InlineLabel countLbl;
+	
+	@UiField HTMLPanel collTitle;
+	
+	
+	int position = 0;
+	/**
+	 * 
+	 * @param publishedCollectionsInfoDo
+	 * @param remixOrViews
+	 */
+	public ViewsRemixWidgetView(PublishedCollectionsInfoDo publishedCollectionsInfoDo, String remixOrViews) {
 		initWidget(uiBinder.createAndBindUi(this));
-		collectionCountNum.setText("1,432");
-		collectionCountText.setText("Collections Published");
-		cityNameLblLeft.setText("California");
-		percentageLblLeft.setText("40%");
-		cityNameLblRight.setText("Arizona");
-		percentageLblRight.setText("20%");
-		//graphContainer.add(new HeatMapLayerWidget());
+
+		this.publishedCollectionsInfoDoGlobal=publishedCollectionsInfoDo;
+		
+		labelValue.setText(remixOrViews);
+		countLbl.setText(publishedCollectionsInfoDo.getViewsCount().toString());
+		collTitle.setTitle(publishedCollectionsInfoDo.getTitle());
 	}
+	
+
+	
 	
 }

@@ -12,7 +12,7 @@
 				<div class="{style.panelBox}">
 					<g:Label styleName="{style.smallHeader}" ui:field="titleLbl"></g:Label>
 					<g:HTMLPanel ui:field="topEndorsementsPanel"></g:HTMLPanel>
-					<div class="{style.moreLink}"><a href="#">View all endorsed collections</a></div>
+					<div class="{style.moreLink}"><g:Anchor ui:field="clickOnMorelbl"></g:Anchor></div>
 				</div>
 		</div>
 	</g:HTMLPanel>

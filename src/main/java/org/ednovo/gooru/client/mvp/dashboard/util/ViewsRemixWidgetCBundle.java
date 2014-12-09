@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * Copyright 2013 Ednovo d
+/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,30 +23,44 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.dashboard;
+package org.ednovo.gooru.client.mvp.dashboard.util;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
 /**
  * 
- * @fileName : UserDashBoardUiHandlers.java
+ * @fileName : ViewsRemixWidgetCBundle.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 07-Dec-2014
+ * @date: 08-Dec-2014
  *
  * @Author Gooru Team
  *
  * @Reviewer:
  */
-
-public interface UserDashBoardUiHandlers extends BaseUiHandlers{
-	/**
-	 * This method is used to handle the click event on view more.
-	 */
-	void clickedOnMoreButton(String isEndorsedOrRemixed,String isReactionOrRatings);
+public interface ViewsRemixWidgetCBundle extends ClientBundle{
 	
+	static final ViewsRemixWidgetCBundle INSTANCE = GWT.create(ViewsRemixWidgetCBundle.class);
+	
+	public interface  ViewsRemixWidgetCss extends CssResource{
+		
+		String collListBlock();
+		String col6();
+		String collHead();
+		String collSmallHead();
+		String clearfix();
+	}
+	@NotStrict
+	@Source("ViewsRemixWidget.css")
+	ViewsRemixWidgetCss css();
+
 }

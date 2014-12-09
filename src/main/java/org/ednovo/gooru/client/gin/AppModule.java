@@ -70,7 +70,10 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
+import org.ednovo.gooru.client.mvp.dashboard.IsPopupForAnalyticsView;
 import org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsView;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter.IsUserDashBoardProxy;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardView;
@@ -595,6 +598,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
 		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
-
+		bindPresenterWidget(PopupForAnalyticsPresenter.class,IsPopupForAnalyticsView.class, PopupForAnalyticsView.class);
 	}
 }

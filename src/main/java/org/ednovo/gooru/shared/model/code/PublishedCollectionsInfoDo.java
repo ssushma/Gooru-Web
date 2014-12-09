@@ -40,10 +40,12 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	
 	private Integer resourceTypeId;
 	
+	private Integer viewsCount;
+	
 	private String title;
 	
 	private String category;
-	
+
 	private String gooruOid;
 	
 	private String thumbnail;
@@ -52,7 +54,10 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	
 	private String topViewedCollection;
 	
-	private Integer viewsCount;
+	private Integer ratingsCount;
+	
+	private Integer reactionsCount;
+	
 	
 	public String getGooruOid() {
 		return gooruOid;
@@ -84,14 +89,6 @@ public class PublishedCollectionsInfoDo implements Serializable {
 
 	public void setTopViewedCollection(String topViewedCollection) {
 		this.topViewedCollection = topViewedCollection;
-	}
-
-	public Integer getViewsCount() {
-		return viewsCount;
-	}
-
-	public void setViewsCount(Integer viewsCount) {
-		this.viewsCount = viewsCount;
 	}
 
 	public PublishedCollectionsInfoDo(){
@@ -134,4 +131,29 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public Integer getViewsCount() {
+		return viewsCount;
+	}
+
+	public void setViewsCount(Integer viewsCount) {
+		this.viewsCount = viewsCount;
+	}
+
+	public Integer getRatingsCount() {
+		return ratingsCount;
+	}
+
+	public void setRatingsCount(Integer ratingsCount) {
+		this.ratingsCount = ratingsCount;
+	}
+
+	public Integer getReactionsCount() {
+		return reactionsCount;
+	}
+
+	public void setReactionsCount(Integer reactionsCount) {
+		this.reactionsCount = reactionsCount;
+	}
+	
 }
