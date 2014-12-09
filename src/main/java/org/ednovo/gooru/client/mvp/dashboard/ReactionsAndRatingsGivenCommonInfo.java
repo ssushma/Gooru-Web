@@ -82,6 +82,11 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 	public ReactionsAndRatingsGivenCommonInfo(String textLbl,ProfileRatingsReactionsDO result) {
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
+		countLblPoor.setText("(0)");
+		countLblFair.setText("(0)");
+		countLblGood.setText("(0)");
+		countLblVeryGood.setText("(0)");
+		countLblExcellent.setText("(0)");
 		
 		if(textLbl.equalsIgnoreCase("ratings")){
 			ratingsOrReviewsBlock.setStyleName(DashBoardCBundle.INSTANCE.css().ratingOutBlock());
@@ -101,28 +106,29 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 			ratingorReactionImgVeryGood.setUrl("../images/profileimages/rating4.png");
 			ratingLabelExcellent.setText("Excellent");
 			ratingorReactionImgExcellent.setUrl("../images/profileimages/rating5.png");
-			
-			int totalCount=result.getCountOfRating1()+result.getCountOfRating2()+result.getCountOfRating3()+result.getCountOfRating4()+result.getCountOfRating5();
-			float widthVal1=(((float)result.getCountOfRating1()/(float)totalCount)*100);
-			dataOne.getElement().getStyle().setWidth(widthVal1, Unit.PCT);
-			countLblPoor.setText("("+result.getCountOfRating1()+")");
-			
-			float widthVal2=(((float)result.getCountOfRating2()/(float)totalCount)*100);
-			dataTwo.getElement().getStyle().setWidth(widthVal2, Unit.PCT);
-			countLblFair.setText("("+result.getCountOfRating2()+")");
-			
-			float widthVal3=(((float)result.getCountOfRating3()/(float)totalCount)*100);
-			dataThree.getElement().getStyle().setWidth(widthVal3, Unit.PCT);
-			countLblGood.setText("("+result.getCountOfRating3()+")");
-			
-			float widthVal4=(((float)result.getCountOfRating4()/(float)totalCount)*100);
-			dataFour.getElement().getStyle().setWidth(widthVal4, Unit.PCT);
-			countLblVeryGood.setText("("+result.getCountOfRating4()+")");
-			
-			float widthVal5=(((float)result.getCountOfRating5()/(float)totalCount)*100);
-			dataFive.getElement().getStyle().setWidth(widthVal5, Unit.PCT);
-			countLblExcellent.setText("("+result.getCountOfRating5()+")");
-			
+			int totalCount=0;
+			if(result!=null){
+				totalCount=result.getCountOfRating1()+result.getCountOfRating2()+result.getCountOfRating3()+result.getCountOfRating4()+result.getCountOfRating5();
+				float widthVal1=(((float)(result!=null?result.getCountOfRating1():0)/(float)totalCount)*100);
+				dataOne.getElement().getStyle().setWidth(widthVal1, Unit.PCT);
+				countLblPoor.setText("("+result.getCountOfRating1()+")");
+				
+				float widthVal2=(((float)result.getCountOfRating2()/(float)totalCount)*100);
+				dataTwo.getElement().getStyle().setWidth(widthVal2, Unit.PCT);
+				countLblFair.setText("("+result.getCountOfRating2()+")");
+				
+				float widthVal3=(((float)result.getCountOfRating3()/(float)totalCount)*100);
+				dataThree.getElement().getStyle().setWidth(widthVal3, Unit.PCT);
+				countLblGood.setText("("+result.getCountOfRating3()+")");
+				
+				float widthVal4=(((float)result.getCountOfRating4()/(float)totalCount)*100);
+				dataFour.getElement().getStyle().setWidth(widthVal4, Unit.PCT);
+				countLblVeryGood.setText("("+result.getCountOfRating4()+")");
+				
+				float widthVal5=(((float)result.getCountOfRating5()/(float)totalCount)*100);
+				dataFive.getElement().getStyle().setWidth(widthVal5, Unit.PCT);
+				countLblExcellent.setText("("+result.getCountOfRating5()+")");
+			}
 		}else if(textLbl.equalsIgnoreCase("reactions")){
 			ratingsOrReviewsBlock.setStyleName(DashBoardCBundle.INSTANCE.css().reactionOutBlock());
 			ratingLblPoor.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
@@ -147,27 +153,28 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 			ratingorReactionImgVeryGood.setUrl("../images/profileimages/emotics4.png");
 			ratingLabelExcellent.setText(i18n.GL0581());
 			ratingorReactionImgExcellent.setUrl("../images/profileimages/emotics5.png");
-		
-			int totalCount=result.getCountOfMeh()+result.getCountOfINeedHelp()+result.getCountOfIDoNotUnderstand()+result.getCountOfICanUnderstand()+result.getCountOfICanExplain();
-			float widthVal1=(((float)result.getCountOfINeedHelp()/(float)totalCount)*100);
-			dataOne.getElement().getStyle().setWidth(widthVal1, Unit.PCT);
-			countLblPoor.setText("("+result.getCountOfINeedHelp()+")");
-			
-			float widthVal2=(((float)result.getCountOfIDoNotUnderstand()/(float)totalCount)*100);
-			dataTwo.getElement().getStyle().setWidth(widthVal2, Unit.PCT);
-			countLblFair.setText("("+result.getCountOfIDoNotUnderstand()+")");
-			
-			float widthVal3=(((float)result.getCountOfMeh()/(float)totalCount)*100);
-			dataThree.getElement().getStyle().setWidth(widthVal3, Unit.PCT);
-			countLblGood.setText("("+result.getCountOfMeh()+")");
-			
-			float widthVal4=(((float)result.getCountOfICanUnderstand()/(float)totalCount)*100);
-			dataFour.getElement().getStyle().setWidth(widthVal4, Unit.PCT);
-			countLblVeryGood.setText("("+result.getCountOfICanUnderstand()+")");
-			
-			float widthVal5=(((float)result.getCountOfICanExplain()/(float)totalCount)*100);
-			dataFive.getElement().getStyle().setWidth(widthVal5, Unit.PCT);
-			countLblExcellent.setText("("+result.getCountOfICanExplain()+")");
+			if(result!=null){
+				int totalCount=result.getCountOfMeh()+result.getCountOfINeedHelp()+result.getCountOfIDoNotUnderstand()+result.getCountOfICanUnderstand()+result.getCountOfICanExplain();
+				float widthVal1=(((float)result.getCountOfINeedHelp()/(float)totalCount)*100);
+				dataOne.getElement().getStyle().setWidth(widthVal1, Unit.PCT);
+				countLblPoor.setText("("+result.getCountOfINeedHelp()+")");
+				
+				float widthVal2=(((float)result.getCountOfIDoNotUnderstand()/(float)totalCount)*100);
+				dataTwo.getElement().getStyle().setWidth(widthVal2, Unit.PCT);
+				countLblFair.setText("("+result.getCountOfIDoNotUnderstand()+")");
+				
+				float widthVal3=(((float)result.getCountOfMeh()/(float)totalCount)*100);
+				dataThree.getElement().getStyle().setWidth(widthVal3, Unit.PCT);
+				countLblGood.setText("("+result.getCountOfMeh()+")");
+				
+				float widthVal4=(((float)result.getCountOfICanUnderstand()/(float)totalCount)*100);
+				dataFour.getElement().getStyle().setWidth(widthVal4, Unit.PCT);
+				countLblVeryGood.setText("("+result.getCountOfICanUnderstand()+")");
+				
+				float widthVal5=(((float)result.getCountOfICanExplain()/(float)totalCount)*100);
+				dataFive.getElement().getStyle().setWidth(widthVal5, Unit.PCT);
+				countLblExcellent.setText("("+result.getCountOfICanExplain()+")");
+			}
 		}
 	}
 }

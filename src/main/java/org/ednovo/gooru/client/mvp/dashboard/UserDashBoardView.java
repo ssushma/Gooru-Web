@@ -203,8 +203,8 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 * This method is used to set the count of comments,reviews written and ratings
 	 */
 	public void setProfileRatingsData(ProfileRatingsReactionsDO result) {
-		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getCommentCount())),new Label("Comments Made")));
-		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getReviewCount())),new Label("Reviews Written")));
+		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result!=null?result.getCommentCount():0)),new Label("Comments Made")));
+		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result!=null?result.getReviewCount():0)),new Label("Reviews Written")));
 		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings",result));
 	}
 

@@ -842,6 +842,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return userDashBoardCommonInfoDoObj;
 	}
+	/**
+	 * This method is used to frame json string
+	 * @param userId
+	 * @param resourceTypeId
+	 * @return
+	 */
 	public String createJsonPayloadObject(String userId,String resourceTypeId){
 		JSONObject jsonDataObject=new JSONObject(); 
 		try {
@@ -932,13 +938,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				e.printStackTrace();
 			}
 		}
-		
 		return userDashBoardCommonInfoDOObject;
 	}
 	
 	@Override
 	public UserDashBoardCommonInfoDO getFiveStarReviewdResources() {
-		// TODO Auto-generated method stub
 		JsonRepresentation jsonRep = null;
 		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfICanExplain",
 				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
@@ -953,11 +957,28 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			}catch(Exception e){
 				
 			}
-			
 		}
 		return userDashBoardCommonInfoDO;
 	}
 	
+	/**
+	 * This method is used to frame json string.
+	 * @param fields
+	 * @param content
+	 * @param granularity
+	 * @param groupBy
+	 * @param logicalKey
+	 * @param selector
+	 * @param stringval
+	 * @param countofratings
+	 * @param operatorval
+	 * @param valueone
+	 * @param creatoruserId
+	 * @param eqval
+	 * @param creatoruid
+	 * @param desc
+	 * @return
+	 */
 	public String createJsonRatingsPayloadObject(String fields,String content,String granularity,String groupBy,String logicalKey,String selector,String stringval,
 			String countofratings,String operatorval,String valueone,String creatoruserId,String eqval,String creatoruid,String desc){
 		JSONObject jsondataobject= null;
@@ -1016,7 +1037,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		
 		jsondataobject.put(PAGINATION, paginationobject);
 		}
- catch (JSONException e) {
+		catch (JSONException e) {
 			e.printStackTrace();
 
 		}
@@ -1026,6 +1047,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.UserService#getTheAnalyticsFlaggedMonthlyData(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
@@ -1035,6 +1059,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeMapData(jsonRep,operator);
 	}
+	/**
+	 * This method is used to frame json string.
+	 * @param fieldVal
+	 * @param startDate
+	 * @param endDate
+	 * @param operator
+	 * @return
+	 */
 	public String createProfileJsonPayloadObject(String fieldVal,String startDate,String endDate,String operator){
 		JSONObject jsonMainDataObject=new JSONObject(); 
 		try {
@@ -1110,6 +1142,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return jsonMainDataObject.toString();
 	}
+	/**
+	 * This method is used to deserialize flagged,view,shared and add to collection response.
+	 * @param jsonRep
+	 * @param operator
+	 * @return
+	 */
 	public Map<String, Integer> deserializeMapData(JsonRepresentation jsonRep,String operator) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -1139,6 +1177,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return result;
  }
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.UserService#getProfileAnalyticsRatings()
+	 */
 	@Override
 	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
 		JsonRepresentation jsonRep = null;
@@ -1148,16 +1189,20 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		ProfileRatingsReactionsDO profileRatingsReactionsDO = null;
-		if(jsonRep!=null){
 			try {
-				System.out.println(jsonRep.getJsonObject().getJSONArray("content").get(0).toString());;
-				profileRatingsReactionsDO=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").get(0).toString(), ProfileRatingsReactionsDO.class);
-			} catch (JSONException e) {
+				if(jsonRep!=null && jsonRep.getJsonObject().getJSONArray("content").length()>0){
+					System.out.println(jsonRep.getJsonObject().getJSONArray("content").get(0).toString());;
+					profileRatingsReactionsDO=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").get(0).toString(), ProfileRatingsReactionsDO.class);
+					}
+				} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}
 		return profileRatingsReactionsDO;
 	}
+	/**
+	 * This method is used to create a json sting for profile ratings.
+	 * @return
+	 */
 	public String createProfileRatingsJsonPayloadObject(){
 		JSONObject jsonMainDataObject=new JSONObject(); 
 		try {
@@ -1200,6 +1245,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return jsonMainDataObject.toString();
 	}
+	/**
+	 * This method is used to frame json sting based on the give map.
+	 * @param payLoad
+	 * @return
+	 */
 	public JSONObject getPayLoadObj(Map<String,String> payLoad){
 		JSONObject objVal=null;
 		try{
@@ -1210,5 +1260,4 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}catch(Exception e){	}
 		return objVal;
 	}
-
 }
