@@ -829,6 +829,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlDataParameterValue);
 		System.out.println("getUsersPublishedCollectionsCount url::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1025,11 +1026,95 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		
 	}
 
-
+	@Override
+	public UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval) {
+		JsonRepresentation jsonRep = null;
+		String urlparameters = getTopViewedCollectionPayloadObject(offsetval, limitval);
+		/*String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);*/
+		String url = "http://www.goorulearning.org/insights/api/v2/query?sessionToken=419c6c56-5295-11e4-8d6c-123141016e2a&data="+urlparameters;
+		System.out.println("getTopViewedCollectionsInfo:::::"+url);
+		JsonResponseRepresentation jsonRespRep	= ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonRespRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
+		if(jsonRep!= null){
+			try{
+				userDashBoardCommonInfoDO = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			}catch(Exception e){
+				
+			}
+		}
+		return userDashBoardCommonInfoDO;
+	}
+	public String getTopViewedCollectionPayloadObject(String offset,String limit){
+		
+		JSONObject jsonDataObject = new JSONObject();
+		try{
+		JSONArray filterArray = new JSONArray();
+		JSONObject filterObject = new JSONObject();
+		JSONArray fieldsArray = new JSONArray();
+		JSONObject fieldsObjectOne = new JSONObject();
+		JSONObject fieldsObjectTwo = new JSONObject();
+		JSONArray agreegationsArray = new JSONArray();
+		JSONObject aggregationsObject = new JSONObject();
+		JSONObject paginationsObject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		
+		
+		jsonDataObject.put("fields","title,gooruOid,viewsCount,thumbnail,description");
+		jsonDataObject.put("dataSource","rawdata,content");
+		jsonDataObject.put("granularity","");
+		jsonDataObject.put("groupBy","gooruOid");
+		jsonDataObject.put("orderBy","topViewedCollection");
+		
+		filterObject.put("logicalOperatorPrefix", "AND");
+		
+		fieldsObjectOne.put("type", "selector");
+		fieldsObjectOne.put("valueType", "string");
+		fieldsObjectOne.put("fieldName", "eventName");
+		fieldsObjectOne.put("operator", "eq");
+		fieldsObjectOne.put("value", "collection.play");
+		
+		fieldsObjectTwo.put("type", "selector");
+		fieldsObjectTwo.put("valueType", "string");
+		fieldsObjectTwo.put("fieldName", "gooruUId");
+		fieldsObjectTwo.put("operator", "eq");
+		fieldsObjectTwo.put("value", getLoggedInUserUid());
+		
+		fieldsArray.put(fieldsObjectOne);
+		fieldsArray.put(fieldsObjectTwo);
+		
+		filterObject.put("fields", fieldsArray);
+		
+		filterArray.put(filterObject);
+		
+		jsonDataObject.put("filter", filterArray);
+		
+		aggregationsObject.put("field1", "eventName");
+		aggregationsObject.put("formula", "count");
+		aggregationsObject.put("name", "topViewedCollection");
+		aggregationsObject.put("requestValues", "field1");
+		
+		agreegationsArray.put(aggregationsObject);
+		
+		jsonDataObject.put("aggregations", agreegationsArray);
+		
+		paginationsObject.put("offset", offset);
+		paginationsObject.put("limit", limit);
+		paginationsObject.put("order", orderArray);
+		
+		jsonDataObject.put("pagination", paginationsObject);
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return jsonDataObject.toString();
+	}
 	@Override
 	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+
 		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1143,6 +1228,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileRatingsJsonPayloadObject());
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileRatingsJsonPayloadObject());
 		//String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileRatingsJsonPayloadObject();
 		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
