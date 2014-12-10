@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressCBundle" field="res"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	 <g:HTMLPanel>
+ 	 <g:HTMLPanel styleName="{res.css.maincontainer}">
+ 	 <g:HTMLPanel>
+ 	 <g:Label styleName="{res.css.summary_title}"  text="{i18n.GL1586}"></g:Label>
+ 	 <g:HTMLPanel><g:InlineLabel ui:field="collectionTitlelbl"></g:InlineLabel> (<g:InlineLabel ui:field="resourceCountlbl"></g:InlineLabel>  resources | <g:InlineLabel ui:field="questionCountlbl"></g:InlineLabel>  questions)</g:HTMLPanel>
+ 	 </g:HTMLPanel>
+ 	 <g:HTMLPanel styleName="{res.css.resource_monitor_header_title}">
+		      <g:HTMLPanel styleName="{res.css.floatLeft}"><g:InlineLabel styleName="{res.css.correct_legend_one}" ></g:InlineLabel><g:InlineLabel styleName="correct-one {res.css.correct_incorrect_text}"  text="{i18n.GL2267}"></g:InlineLabel></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.floatLeft}"><g:InlineLabel styleName="{res.css.correct_legend_other}"></g:InlineLabel><g:InlineLabel styleName="correct-other {res.css.correct_incorrect_text}"  text="{i18n.GL2268}"></g:InlineLabel></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.floatLeft}"><g:InlineLabel styleName="{res.css.incorrect_legend}"></g:InlineLabel><g:InlineLabel styleName="incorrect-ans {res.css.correct_incorrect_text}"  text="{i18n.GL2269}"></g:InlineLabel></g:HTMLPanel>
+	 </g:HTMLPanel>
+ 	 <g:HTMLPanel>
+ 	 <g:Label styleName="{res.css.narrowreportText}" text="{i18n.GL2266}"></g:Label>
+	 <g:ListBox ui:field="filterDropDown" styleName="{res.css.filterDropDown}">
+	 </g:ListBox>
+	 <g:HTMLPanel ui:field="scrollForCollectionProgress">
+	 <g:VerticalPanel ui:field="htmlpnlProgress"/>
+	 </g:HTMLPanel>
+	 </g:HTMLPanel>
+	 </g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

@@ -38,6 +38,8 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterHandler;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
@@ -119,6 +121,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	}
 	public interface Style extends CssResource {
 		String active();
+		String arrowLable();
+		String arrowLableTransform();
 	}
 
 	/*@UiField
@@ -145,7 +149,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
-	HTMLPanel /*contentpanel,*/oerPanel;
+	HTMLPanel /*contentpanel,*/oerPanel,aggregatorPanel;
 
 	@UiField(provided = true)
 	AppSuggestBox sourceSgstBox;
@@ -176,6 +180,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	
 	@UiField
 	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl,accessModeLbl;
+	
+	@UiField Label arrowLblCategory,arrowLblSubject,arrowLblGrade,arrowLblstandard,arrowLblratings,arrowLblsource,arrowLblaggregator,arrowLblaccess;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
@@ -264,6 +270,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				standardPrefListElement.add(str);
 		 }
 		}
+		
+		
 		final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
 		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
@@ -409,6 +417,24 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		filtersText.getElement().setId("lblFiltersText");
 		filtersText.getElement().setAttribute("alt",i18n.GL0719());
 		filtersText.getElement().setAttribute("title",i18n.GL0719());
+		
+		categoryPanelUc.setVisible(true);
+		arrowLblCategory.setStyleName(style.arrowLable());
+		subjectPanelUc.setVisible(true);
+		arrowLblSubject.setStyleName(style.arrowLable());
+		gradePanelUc.setVisible(true);
+		arrowLblGrade.setStyleName(style.arrowLable());
+		standardPanelUc.setVisible(true);
+		arrowLblstandard.setStyleName(style.arrowLable());
+		ratingPanelUc.setVisible(true);
+		reviewPanelUc.setVisible(true);
+		arrowLblratings.setStyleName(style.arrowLable());
+		sourcePanelUc.setVisible(false);
+		arrowLblsource.setStyleName(style.arrowLableTransform());
+		aggregatorPanel.setVisible(false);
+		arrowLblaggregator.setStyleName(style.arrowLableTransform());
+		accessModePanel.setVisible(false);
+		arrowLblaccess.setStyleName(style.arrowLableTransform());
 		
 		/*resourceLinkLbl.setText(i18n.GL0174());
 		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
@@ -621,6 +647,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardToolTip.getElement().setId("epnlStandardToolTip");
 		standardsNotFoundLbl.getElement().setId("lblStandardsNotFoundLbl");
 		standardContainerFloPanel.getElement().setId("fpnlStandardContainerFloPanel");
+		
+		AppClientFactory.getEventBus().addHandler(SearchFilterEvent.TYPE, handler);
 	}
 	
 
@@ -800,10 +828,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				chkNotFriendly.setValue(false);	
 			}
 		}		
-		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")){
+		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")||value.equalsIgnoreCase("zerostar")){
 			chkNotFriendly.setText("");
 			chkNotFriendly.addStyleName(value.toLowerCase());
-		}
 			
 			if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
 			{
@@ -811,8 +838,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				if(ratingsAlreadyexisting.contains(","))
 				{
 					String[] arrRatings = ratingsAlreadyexisting.split(",");
+			
 					for(int i=0;i<arrRatings.length;i++)
-					{		
+					{	
 						if(arrRatings[i].equalsIgnoreCase("5") && value.equalsIgnoreCase("fivestar"))
 						{
 							chkNotFriendly.setValue(true);
@@ -830,6 +858,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							chkNotFriendly.setValue(true);
 						}
 						else if(arrRatings[i].equalsIgnoreCase("1") && value.equalsIgnoreCase("onestar"))
+						{
+							chkNotFriendly.setValue(true);
+						}
+						else if(arrRatings[i].equalsIgnoreCase("0") && value.equalsIgnoreCase("zerostar"))
 						{
 							chkNotFriendly.setValue(true);
 						}
@@ -857,8 +889,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					{
 						chkNotFriendly.setValue(true);
 					}
+					else if(ratingsAlreadyexisting.equalsIgnoreCase("0") && value.equalsIgnoreCase("zerostar"))
+					{
+						chkNotFriendly.setValue(true);
+					}
 				}
 			}
+			
+		}
+		
 			
 		
 		disclosurePanelVc.add(chkNotFriendly);
@@ -1099,7 +1138,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			oerPanel.setVisible(true);
 			
 			//Ratings panel
-			for(int i=5;i>0;i--){
+			for(int i=5;i>=0;i--){
 				String starVal = "five";
 				if(i==4)
 				{
@@ -1116,6 +1155,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				else if(i==1)
 				{
 					starVal="one";
+				}
+				else if(i==0)
+				{
+					starVal="zero";
 				}
 				renderCheckBox(ratingPanelUc, i+"", starVal+"star");
 			}
@@ -1910,4 +1953,188 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
 	}
+	/**
+	 * SearchFilterHandler handles update/Remove the Search filters.
+	 */
+	SearchFilterHandler handler = new SearchFilterHandler() {
+		
+		@Override
+		public void getSearchFilters(String filterName, String panel) {
+			if (filterName != null) {
+				//if(resourceSearch){
+				if(panel.equals("subjectPanel")){
+					removeSelectedFilter(subjectPanelUc, filterName);
+				}
+				if(panel.equals("gradePanel")){
+					removeSelectedFilter(gradePanelUc, filterName);
+				}
+				if(panel.equals("standPanel"))
+				{
+					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
+				
+			}
+		}
+        /**
+         * Remove the selected search filter (grade/subject) from left panel and search results when user click on 'X'.
+         * @param subjectPanelUc {@link HTMLPanel} 
+         * @param filterName {@link String} grade/subject search filter name 
+         */
+		private void removeSelectedFilter(HTMLPanel subjectPanelUc,
+				String filterName) {
+			for(int i=0;i<subjectPanelUc.getWidgetCount();i++){
+				Widget filterWidget = subjectPanelUc.getWidget(i);
+				if (filterWidget instanceof CheckBox) {
+					CheckBox filterCheckBox = (CheckBox) filterWidget;
+					if ((filterCheckBox.getName().equals(filterName))) {	
+						filterCheckBox.setValue(false);
+					}
+				}
+			}
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+		}
+	};
+	/**
+	 * Remove the selected standards from left panel and search results when user click on 'X'.
+	 * @param flowPanel {@link FlowPanel}
+	 * @param filters {@link String} standards filter name 
+	 */
+	private void removeSelectedStandards(FlowPanel flowPanel, String[] filters){
+		Iterator<Widget> widgets = flowPanel.iterator();
+		String filterCodes = "";
+		for (String filter : filters) {
+			boolean exist = false;
+			while (widgets.hasNext()) {
+				Widget filterWidget = widgets.next();
+				if (filterWidget instanceof FilterLabelVc && filter.equals(((FilterLabelVc) filterWidget).getSourceText())) {
+					exist = true;
+				} else if (filterWidget instanceof DownToolTipWidgetUc && filter.equals(((FilterLabelVc) ((DownToolTipWidgetUc) filterWidget).getWidget()).getSourceText())) {
+					exist = true;
+				}
+				if (exist) {
+					filterWidget.removeFromParent();
+					//flowPanel.removeFromParent();
+					AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+				}
+			}
+		}
+	}
+	@UiHandler("arrowLblCategory")
+	public void onCategoryArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(categoryPanelUc.isVisible())
+		{
+			categoryPanelUc.setVisible(false);
+			arrowLblCategory.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			categoryPanelUc.setVisible(true);
+			arrowLblCategory.setStyleName(style.arrowLable());
+		}
+	}
+	@UiHandler("arrowLblSubject")
+	public void onSubjectArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(subjectPanelUc.isVisible())
+		{
+			subjectPanelUc.setVisible(false);
+			arrowLblSubject.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			subjectPanelUc.setVisible(true);
+			arrowLblSubject.setStyleName(style.arrowLable());
+		}
+	}
+	@UiHandler("arrowLblGrade")
+	public void onGradeArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(gradePanelUc.isVisible())
+		{
+			gradePanelUc.setVisible(false);
+			arrowLblGrade.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			gradePanelUc.setVisible(true);
+			arrowLblGrade.setStyleName(style.arrowLable());
+		}
+	}
+	@UiHandler("arrowLblstandard")
+	public void onStandardsArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(standardPanelUc.isVisible())
+		{
+			standardPanelUc.setVisible(false);
+			arrowLblstandard.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			standardPanelUc.setVisible(true);
+			arrowLblstandard.setStyleName(style.arrowLable());
+		}
+	}
+	@UiHandler("arrowLblratings")
+	public void onRatingsArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(ratingPanelUc.isVisible())
+		{
+			ratingPanelUc.setVisible(false);
+			reviewPanelUc.setVisible(false);
+			arrowLblratings.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			ratingPanelUc.setVisible(true);
+			reviewPanelUc.setVisible(true);
+			arrowLblratings.setStyleName(style.arrowLable());
+		}
+	}
+	@UiHandler("arrowLblsource")
+	public void onSourceArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(sourcePanelUc.isVisible())
+		{
+			sourcePanelUc.setVisible(false);
+			arrowLblsource.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			sourcePanelUc.setVisible(true);
+			arrowLblsource.setStyleName(style.arrowLable());
+		}
+	}
+	@UiHandler("arrowLblaggregator")
+	public void onAggregatorArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(aggregatorPanel.isVisible())
+		{
+			aggregatorPanel.setVisible(false);
+			arrowLblaggregator.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			aggregatorPanel.setVisible(true);
+			arrowLblaggregator.setStyleName(style.arrowLable());
+		}
+	}
+	@UiHandler("arrowLblaccess")
+	public void onAccessArrowLabelclick(ClickEvent clickEvent) 
+	{
+		if(accessModePanel.isVisible())
+		{
+			accessModePanel.setVisible(false);
+			arrowLblaccess.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			accessModePanel.setVisible(true);
+			arrowLblaccess.setStyleName(style.arrowLable());
+		}
+	}
+	
+	
+	
 }
+

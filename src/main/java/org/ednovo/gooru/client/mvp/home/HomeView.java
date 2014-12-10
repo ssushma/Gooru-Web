@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +108,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText, panelGooruStories;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
-	@UiField Label lblHeading, lblSubHeading; 
+	@UiField Label lblHeading, lblSubHeading, lblCopyRight; 
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright, achGooruStories;//achDataPolicy
@@ -279,6 +280,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		};
 		
 		RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
+		Date todaysYear = new Date();
+		String copyRightTxt = i18n.GL1246() + "" + (todaysYear.getYear() + 1900);
+		System.out.println("copyRight : "+copyRightTxt);
+		
+		lblCopyRight.setText(copyRightTxt);
+		lblCopyRight.getElement().setId("lblCopyRightYearText");
+		lblCopyRight.getElement().setAttribute("alt",copyRightTxt);
+		lblCopyRight.getElement().setAttribute("title",copyRightTxt);
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
@@ -1011,20 +1020,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				isArrowIcon=true;
 			}else{
 				isArrowIcon=true;
-				System.out.println("else::");
-				if(preFilter==null){
+				//if(preFilter==null){
 					preFilter =	new PreFilterPopup();
 					preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
 						
 						@Override
 						public void onClick(ClickEvent event) {
 							preFilter.ShowSTandardsPanel().clear();
-							/*isCCSSAvailable = true;
-							isNGSSAvailable = true;
-							isCAAvailable = true;
-							addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);*/
 							getAddStandards();
-							//addStandardsPresenter.loadDataFrompresnter();
 							preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 							
 							addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
@@ -1032,12 +1035,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 							
 						}
 					});
-				}
+				//}
 				HeaderUc.setPrefilterObj(preFilter);
 				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
+				preFilter.setFilter();
 				preFilter.show();
 				preFilter.hidePlanels();
-//				preFilter.setAutoHideEnabled(true);
 				ClickHandler handler = new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {

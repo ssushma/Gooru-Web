@@ -19,10 +19,9 @@
 		}
 		
 		.PageNotify {
-			margin: 0px 0 0 207px;
+			margin: 0px 0 0 4px;
 			width: 596px;
 			display: inline-block;
-
 		}
 		.notifyLink {
 			color: #4E9746;
@@ -114,14 +113,15 @@
 		.searchResultPanel {
 		    clear: both;
 		    height: 34px;
+			margin-left: 205px;
 		   <!--  margin: 20px auto 0; -->
-		    width: 796px;
+		    width: 612px;
 		}
 		
 		.searchResult {
 			color: #515151;
 			<!-- float: left; -->
-			margin: 32px 0 0 204px;
+			margin: 32px 0 0 6px;
 			display: inline-block;
 			padding-bottom: 10px;
 			
@@ -216,6 +216,10 @@
 			width:22px;
 			margin-right:5px;
 		}
+		.prefilterPanel{
+			margin-left: 5px;
+		    margin-bottom: 30px;
+		}
 
 	</ui:style>
 	<g:HTMLPanel styleName="{style.searchTotalContainer}">
@@ -223,6 +227,7 @@
 		<g:FlowPanel styleName="" ui:field="panelSearchPage">
 			<g:FlowPanel styleName="{style.searchResultPanel}">
 				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
+				<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
 				<g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
 					<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
 					<g:Button styleName="{style.secondaryResourceSearchBtn}" ui:field="resourceSearchBtn"/>

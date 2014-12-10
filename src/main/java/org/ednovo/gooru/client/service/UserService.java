@@ -238,6 +238,14 @@ public interface UserService extends BaseService {
 	
 	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
 	
+	/**
+	 * This method is used to get the count of flagged,views,shared and add to collection count in the profile analytics.
+	 * @param fieldVal
+	 * @param StartDate
+	 * @param endDate
+	 * @param operator
+	 * @return
+	 */
 	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator);
 
     UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
@@ -246,6 +254,10 @@ public interface UserService extends BaseService {
     
     UserDashBoardCommonInfoDO getFiveStarReviewdResources();
 
+    /**
+     * This method is used to get the review and comments count in the profile analytics.
+     * @return
+     */
     ProfileRatingsReactionsDO getProfileAnalyticsRatings();
     
     UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval);

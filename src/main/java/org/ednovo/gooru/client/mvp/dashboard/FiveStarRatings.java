@@ -158,40 +158,44 @@ public class FiveStarRatings extends Composite{
 	 *
 	 */
 	public String getResourceTypeImage(String resourceType){
-		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfo();
-		}else if(resourceType.equalsIgnoreCase("Interactive")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceTypeInfo();
-		}
-		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();		
-		}
-		else if(resourceType.equalsIgnoreCase("Slide")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
-		}
-		else if(resourceType.equalsIgnoreCase("Textbook")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
-		}
-		else if(resourceType.equalsIgnoreCase("Question")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceTypeInfo();
-		}
-		else if(resourceType.equalsIgnoreCase("lesson")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().lessonResourceTypeInfo();
-			
-		}else if(resourceType.equalsIgnoreCase("Handout")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
-		} else if(resourceType.equalsIgnoreCase("text")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
-		}
-		else if(resourceType.equalsIgnoreCase("image")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
-		}
-		else if(resourceType.equalsIgnoreCase("audio")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceTypeInfo();
-		}else if(resourceType.equalsIgnoreCase("exam")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();
-		}
-		else {
+		if(resourceType!=null){
+			if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfo();
+			}else if(resourceType.equalsIgnoreCase("Interactive")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceTypeInfo();
+			}
+			else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();		
+			}
+			else if(resourceType.equalsIgnoreCase("Slide")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
+			}
+			else if(resourceType.equalsIgnoreCase("Textbook")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+			}
+			else if(resourceType.equalsIgnoreCase("Question")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceTypeInfo();
+			}
+			else if(resourceType.equalsIgnoreCase("lesson")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().lessonResourceTypeInfo();
+				
+			}else if(resourceType.equalsIgnoreCase("Handout")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+			} else if(resourceType.equalsIgnoreCase("text")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+			}
+			else if(resourceType.equalsIgnoreCase("image")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
+			}
+			else if(resourceType.equalsIgnoreCase("audio")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceTypeInfo();
+			}else if(resourceType.equalsIgnoreCase("exam")){
+				return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();
+			}
+			else {
+				return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceTypeInfo();
+			}
+		}else {
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceTypeInfo();
 		}
 	}
