@@ -1952,62 +1952,26 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiHandler("arrowLblCategory")
 	public void onCategoryArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(categoryPanelUc.isVisible())
-		{
-			categoryPanelUc.setVisible(false);
-			arrowLblCategory.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			categoryPanelUc.setVisible(true);
-			arrowLblCategory.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(categoryPanelUc,arrowLblCategory);
 	}
 	@UiHandler("arrowLblSubject")
 	public void onSubjectArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(subjectPanelUc.isVisible())
-		{
-			subjectPanelUc.setVisible(false);
-			arrowLblSubject.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			subjectPanelUc.setVisible(true);
-			arrowLblSubject.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(subjectPanelUc,arrowLblSubject);
 	}
 	@UiHandler("arrowLblGrade")
 	public void onGradeArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(gradePanelUc.isVisible())
-		{
-			gradePanelUc.setVisible(false);
-			arrowLblGrade.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			gradePanelUc.setVisible(true);
-			arrowLblGrade.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(gradePanelUc,arrowLblGrade);
 	}
 	@UiHandler("arrowLblstandard")
 	public void onStandardsArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(standardPanelUc.isVisible())
-		{
-			standardPanelUc.setVisible(false);
-			arrowLblstandard.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			standardPanelUc.setVisible(true);
-			arrowLblstandard.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(standardPanelUc,arrowLblstandard);
 	}
 	@UiHandler("arrowLblratings")
 	public void onRatingsArrowLabelclick(ClickEvent clickEvent) 
-	{
+	{		
 		if(ratingPanelUc.isVisible())
 		{
 			ratingPanelUc.setVisible(false);
@@ -2024,43 +1988,30 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiHandler("arrowLblsource")
 	public void onSourceArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(sourcePanelUc.isVisible())
-		{
-			sourcePanelUc.setVisible(false);
-			arrowLblsource.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			sourcePanelUc.setVisible(true);
-			arrowLblsource.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(sourcePanelUc,arrowLblsource);
 	}
 	@UiHandler("arrowLblaggregator")
 	public void onAggregatorArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(aggregatorPanel.isVisible())
-		{
-			aggregatorPanel.setVisible(false);
-			arrowLblaggregator.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			aggregatorPanel.setVisible(true);
-			arrowLblaggregator.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(aggregatorPanel,arrowLblaggregator);
 	}
 	@UiHandler("arrowLblaccess")
 	public void onAccessArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(accessModePanel.isVisible())
+		setVisibilityValues(accessModePanel,arrowLblaccess);
+	}
+	
+	public void setVisibilityValues(HTMLPanel panelToHide, Label lblTotranform)
+	{
+		if(panelToHide.isVisible())
 		{
-			accessModePanel.setVisible(false);
-			arrowLblaccess.setStyleName(style.arrowLableTransform());
+			panelToHide.setVisible(false);
+			lblTotranform.setStyleName(style.arrowLableTransform());
 		}
 		else
 		{
-			accessModePanel.setVisible(true);
-			arrowLblaccess.setStyleName(style.arrowLable());
+			panelToHide.setVisible(true);
+			lblTotranform.setStyleName(style.arrowLable());
 		}
 	}
 	
