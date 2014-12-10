@@ -259,9 +259,11 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			if(!(stdCode!=null || grades!=null || subjects!=null)){
 				System.out.println("ININININ");
 				standardsConatiner.setVisible(false);
+				flowpanel.getElement().setAttribute("style", "margin-top: 0px;");
 			}else{
 				System.out.println("else::");
 				standardsConatiner.setVisible(true);
+				flowpanel.getElement().setAttribute("style", "margin-top: 10px;");
 			}
 			
 		}
