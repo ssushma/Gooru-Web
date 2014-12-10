@@ -1020,20 +1020,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				isArrowIcon=true;
 			}else{
 				isArrowIcon=true;
-				System.out.println("else::");
-				if(preFilter==null){
+				//if(preFilter==null){
 					preFilter =	new PreFilterPopup();
 					preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
 						
 						@Override
 						public void onClick(ClickEvent event) {
 							preFilter.ShowSTandardsPanel().clear();
-							/*isCCSSAvailable = true;
-							isNGSSAvailable = true;
-							isCAAvailable = true;
-							addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);*/
 							getAddStandards();
-							//addStandardsPresenter.loadDataFrompresnter();
 							preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 							
 							addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
@@ -1041,12 +1035,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 							
 						}
 					});
-				}
+				//}
 				HeaderUc.setPrefilterObj(preFilter);
 				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
+				preFilter.setFilter();
 				preFilter.show();
 				preFilter.hidePlanels();
-//				preFilter.setAutoHideEnabled(true);
 				ClickHandler handler = new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
