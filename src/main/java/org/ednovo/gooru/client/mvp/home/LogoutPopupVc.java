@@ -134,7 +134,7 @@ public class LogoutPopupVc extends Composite{
 	public void userLogout(ClickEvent clickEvent) {
 //		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 //		StringUtil.clearCookies("google-refresh-token", "/", ".www.goorulearning.org");
-		Cookies.removeCookie("gooru-version");
+		StringUtil.clearCookies("gooru-version", "/", "");
 		AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
 
 			@Override
