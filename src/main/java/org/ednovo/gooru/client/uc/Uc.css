@@ -51,14 +51,14 @@
 }
 
 .closeLabelSearch {
-	background: -moz-linear-gradient(center top, #4C98CC, #4C98CC) repeat
+	background: -moz-linear-gradient(center top, #88bbe1, #88bbe1) repeat
 		scroll 0 0 transparent;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
-		to(#4C98CC));
-	background: -webkit-linear-gradient(top, #4C98CC, #4C98CC);
-	background-image: -ms-linear-gradient(top, #4C98CC, #4C98CC);
-	background: -o-linear-gradient(top, #4C98CC, #4C98CC);
-	background-color: #4C98CC;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#88bbe1),
+		to(#88bbe1));
+	background: -webkit-linear-gradient(top, #88bbe1, #88bbe1);
+	background-image: -ms-linear-gradient(top, #88bbe1, #88bbe1);
+	background: -o-linear-gradient(top, #88bbe1, #88bbe1);
+	background-color: #88bbe1;
 	border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 	-moz-border-radius: 3px 3px 3px 3px;
