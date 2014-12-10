@@ -163,9 +163,9 @@ public class PreFilterPopup extends PopupPanel {
 		// TODO Auto-generated method stub
 		for(int i=0;i<stringArray.length;i++){
 			gradeCheckBox= new CheckBox();
-			if(stringArray.equals(elementaryGrades)){
+			/*if(stringArray.equals(elementaryGrades)){
 				gradeCheckBox.setName("K");
-			}
+			}*/
 			gradeCheckBox.setName(stringArray[i]);
 			gradeCheckBox.setText(stringArray[i]);
 			gradeCheckBox.setStyleName(CssTokens.FILTER_CHECKBOX);
@@ -199,77 +199,32 @@ public class PreFilterPopup extends PopupPanel {
 		
 		String eleGrade = getSelectedFilter(eleGradePanelUc);
 		if (!eleGrade.isEmpty()) {
-			eleGrade="K-4";
 			filterGrade+=eleGrade;
 		}
 		String midGrade = getSelectedFilter(middleGradePanelUc);
 		System.out.println("selected grade:"+midGrade);
 		if (!midGrade.isEmpty()) {
-			if(midGrade.contains("4")){
-				elemGrade="K-4";
-			}else{
-				midGrade="5-8";
-			}
-			if(midGrade.contains("4")&&(midGrade.contains("5") || midGrade.contains("6") || midGrade.contains("7") || midGrade.contains("8"))){
-				midGrade="5-8";
-			}
 			if(filterGrade.equals("")){
 				if(elemGrade.isEmpty()){
 					filterGrade+=midGrade;
-				}else if(midGrade.equals("5-8")){
-					filterGrade+=elemGrade+","+midGrade;
-				}else{
-					filterGrade+=elemGrade;
 				}
 				
 			}else {
-				if(elemGrade.isEmpty()){
-					filterGrade+=","+midGrade;
-				}else{
-					if(midGrade.equals("5-8")){
-						filterGrade+=","+midGrade;
-					}
-					
-				}
+				filterGrade+=","+midGrade;
 				
 			}
 		}
 		String highGrade = getSelectedFilter(highrGradePanelUc);
 		System.out.println("selected grade:"+highGrade);
 		if (!highGrade.isEmpty()) {
-			String higher="";
-			if(highGrade.contains("13+")){
-				higher="H";
-			}else{
-				highGrade="9-12";
-			}
-			if(highGrade.contains("13+")&&(highGrade.contains("9") || highGrade.contains("10") || highGrade.contains("11") || highGrade.contains("12"))){
-				highGrade="9-12";
-			}
-			
 			if(filterGrade.equals("")){
-				if(higher.equals("")){
-					filterGrade+=highGrade;
-				}else if(highGrade.equals("9-12")){
-					filterGrade+=highGrade+","+higher;
-				}else{
-					filterGrade+=higher;
-				}
+				filterGrade+=highGrade;
 			}else{
-				if(higher.isEmpty()){
-					filterGrade+=","+highGrade;
-				}else{
-					if(highGrade.isEmpty()){
-						filterGrade+=","+higher;
-					}else{
-						filterGrade+=","+highGrade+","+higher;
-					}
-					
-				}
+				filterGrade+=","+highGrade;
 			}
 		}
 		if(filterGrade!=null && !filterGrade.equals("")){
-			System.out.println("INININ:"+filterGrade);
+			System.out.println("filtergrade:"+filterGrade);
 			filterMap.put(IsSearchView.GRADE_FLT, filterGrade);
 		}
 		String selectedSubject = getSelectedFilter(subjectPanelUc, "~~");
