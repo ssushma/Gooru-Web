@@ -24,10 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
+import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -74,7 +77,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	/*@UiField
 	SearchBarVc searchBarVc;*/
 	@UiField
-	FlowPanel flowpanel;
+	FlowPanel flowpanel,standardsConatiner;
 	@UiField
 	HTMLPanel contentpanel;
 	@UiField
@@ -95,6 +98,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 	@UiField
 	HTML queriedTextHtml;
+	
 
 	/**
 	 * Class constructor
@@ -245,6 +249,12 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			queriedTextHtml.getElement().setAttribute("alt", searchText);
 			queriedTextHtml.getElement().setAttribute("title", searchText);
 			lodingImage.setVisible(false);
+			
+			standardsConatiner.clear();
+			showSubjectsFilter();
+			showGradesFilter();
+			showStandardsFilter();
+			
 		}
 	}
 
@@ -252,4 +262,71 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public void clearPanel() {
 		contentpanel.clear();
 	}*/
+	
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showStandardsFilter() {
+		String stdCode = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
+		if(stdCode!=null){
+			String[] stdSplit = stdCode.split(",");
+			System.out.println("stdSplit::"+stdSplit);
+			for(int i=0; i<stdSplit.length; i++){
+				standardsConatiner.add(createTagsLabel(stdSplit[i],"standPanel"));
+			}
+//			standardsConatiner.add(createTagsLabel(stdCode,"standPanel"));
+		}
+	}
+
+	/**
+	 * Pre-Selected grades showing in search page
+	 */
+	private void showGradesFilter() {
+		String grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
+		if(grades!=null){
+			String[] gradesSplit = grades.split(",");
+			System.out.println("grades::"+gradesSplit);
+			for(int i=0; i<gradesSplit.length; i++){
+				standardsConatiner.add(createTagsLabel(gradesSplit[i],"gradePanel"));
+			}
+				
+		}
+	}
+
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showSubjectsFilter() {
+		String subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+		if(subjects!=null){
+			String[] split = subjects.split("~~");
+			System.out.println("subjects::"+subjects);
+			System.out.println("subjects::"+split.length);
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"subjectPanel"));
+			}
+				
+		}
+	}
+
+	/**
+	 * Show user searched filter 
+	 * 
+	 * @param filterValue
+	 *            search filter of the label widget which is user searched filter value
+	 * @return the label of user search filter.
+	 */
+	protected CloseLabelSetting createTagsLabel(final String filterValue, final String panelName) {
+		return new CloseLabelSetting(filterValue) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				System.out.println("filterName::"+filterValue);
+				System.out.println("panelName::"+panelName);
+				AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
+				/*CodeDo codeDo = new CodeDo();
+				codeDo.setCodeId(Integer.parseInt(courseCode));*/
+			}
+		};
+	}
 }
