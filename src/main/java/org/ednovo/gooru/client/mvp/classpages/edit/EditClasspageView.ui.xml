@@ -183,7 +183,9 @@
 		<g:HTMLPanel ui:field="frameDiv">
 		<g:Button styleName="{res.css.backArrowButton} backArrowButton" ui:field="backArrowButton"></g:Button>
 		<g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorProgress"></g:Button>
+		<g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorSummary"></g:Button>
 		<g:Frame styleName="{res.css.iframeBorder}" ui:field="frameUrl" width="900" height="500"></g:Frame>
+		<g:HTMLPanel ui:field="frameContainer"></g:HTMLPanel>
 		</g:HTMLPanel>
 		</g:HTMLPanel>
 		<sg:FooterUc />
