@@ -38,6 +38,8 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterHandler;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
@@ -645,6 +647,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardToolTip.getElement().setId("epnlStandardToolTip");
 		standardsNotFoundLbl.getElement().setId("lblStandardsNotFoundLbl");
 		standardContainerFloPanel.getElement().setId("fpnlStandardContainerFloPanel");
+		
+		AppClientFactory.getEventBus().addHandler(SearchFilterEvent.TYPE, handler);
 	}
 	
 
@@ -1949,6 +1953,72 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
 	}
+	/**
+	 * SearchFilterHandler handles update/Remove the Search filters.
+	 */
+	SearchFilterHandler handler = new SearchFilterHandler() {
+		
+		@Override
+		public void getSearchFilters(String filterName, String panel) {
+			if (filterName != null) {
+				//if(resourceSearch){
+				if(panel.equals("subjectPanel")){
+					removeSelectedFilter(subjectPanelUc, filterName);
+				}
+				if(panel.equals("gradePanel")){
+					removeSelectedFilter(gradePanelUc, filterName);
+				}
+				if(panel.equals("standPanel"))
+				{
+					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
+				
+			}
+		}
+        /**
+         * Remove the selected search filter (grade/subject) from left panel and search results when user click on 'X'.
+         * @param subjectPanelUc {@link HTMLPanel} 
+         * @param filterName {@link String} grade/subject search filter name 
+         */
+		private void removeSelectedFilter(HTMLPanel subjectPanelUc,
+				String filterName) {
+			for(int i=0;i<subjectPanelUc.getWidgetCount();i++){
+				Widget filterWidget = subjectPanelUc.getWidget(i);
+				if (filterWidget instanceof CheckBox) {
+					CheckBox filterCheckBox = (CheckBox) filterWidget;
+					if ((filterCheckBox.getName().equals(filterName))) {	
+						filterCheckBox.setValue(false);
+					}
+				}
+			}
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+		}
+	};
+	/**
+	 * Remove the selected standards from left panel and search results when user click on 'X'.
+	 * @param flowPanel {@link FlowPanel}
+	 * @param filters {@link String} standards filter name 
+	 */
+	private void removeSelectedStandards(FlowPanel flowPanel, String[] filters){
+		Iterator<Widget> widgets = flowPanel.iterator();
+		String filterCodes = "";
+		for (String filter : filters) {
+			boolean exist = false;
+			while (widgets.hasNext()) {
+				Widget filterWidget = widgets.next();
+				if (filterWidget instanceof FilterLabelVc && filter.equals(((FilterLabelVc) filterWidget).getSourceText())) {
+					exist = true;
+				} else if (filterWidget instanceof DownToolTipWidgetUc && filter.equals(((FilterLabelVc) ((DownToolTipWidgetUc) filterWidget).getWidget()).getSourceText())) {
+					exist = true;
+				}
+				if (exist) {
+					filterWidget.removeFromParent();
+					//flowPanel.removeFromParent();
+					AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+				}
+			}
+		}
+	}
 	@UiHandler("arrowLblCategory")
 	public void onCategoryArrowLabelclick(ClickEvent clickEvent) 
 	{
@@ -2067,3 +2137,4 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	
 	
 }
+
