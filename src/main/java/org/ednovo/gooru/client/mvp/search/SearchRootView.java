@@ -99,6 +99,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	@UiField
 	HTML queriedTextHtml;
 	
+	String grades,stdCode,subjects;
+	
 
 	/**
 	 * Class constructor
@@ -254,6 +256,10 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			showSubjectsFilter();
 			showGradesFilter();
 			showStandardsFilter();
+			if(!(stdCode!=null || grades!=null || subjects!=null)){
+				System.out.println("ININININ");
+				standardsConatiner.removeFromParent();
+			}
 			
 		}
 	}
@@ -267,7 +273,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	 * Pre-Selected Standards showing in search page
 	 */
 	private void showStandardsFilter() {
-		String stdCode = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
+	    stdCode = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
 		if(stdCode!=null){
 			String[] stdSplit = stdCode.split(",");
 			System.out.println("stdSplit::"+stdSplit);
@@ -282,7 +288,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	 * Pre-Selected grades showing in search page
 	 */
 	private void showGradesFilter() {
-		String grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
+	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
 		if(grades!=null){
 			String[] gradesSplit = grades.split(",");
 			System.out.println("grades::"+gradesSplit);
@@ -297,7 +303,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	 * Pre-Selected Subjects showing in search page
 	 */
 	private void showSubjectsFilter() {
-		String subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
 		if(subjects!=null){
 			String[] split = subjects.split("~~");
 			System.out.println("subjects::"+subjects);
