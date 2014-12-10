@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.AppServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.service.CollaboratorsServiceAsync;
@@ -85,5 +86,7 @@ public interface ServiceInjector extends Ginjector {
 	LibraryServiceAsync getLibraryService();
 	
 	CollaboratorsServiceAsync getCollaboratorsService();
+	
+	AnalyticsServiceAsync getAnalyticsService();
 
 }
