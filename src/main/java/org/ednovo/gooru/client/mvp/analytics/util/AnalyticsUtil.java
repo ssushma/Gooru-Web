@@ -95,6 +95,9 @@ public class AnalyticsUtil {
 		}
 		return msg;
 	}	
+	public static native String roundToTwo(double number) /*-{
+		return ""+(Math.round(number + "e+2")  + "e-2");
+	}-*/;
 	/**
 	 * This is used to convert long time format
 	 * @param commentCreatedTime
@@ -102,7 +105,7 @@ public class AnalyticsUtil {
 	 */
 	public static String getTimeSpent(Long commentCreatedTime) {
 		String createdTime = null;
-		int seconds = (int) (commentCreatedTime / 1000) % 60 ;
+		double seconds = (double) ((double)commentCreatedTime / 1000) % 60 ;
 		int minutes = (int) ((commentCreatedTime / (1000*60)) % 60);
 		int hours   = (int) ((commentCreatedTime / (1000*60*60)) % 24);
 		int days = (int) (commentCreatedTime / (1000*60*60*24));
@@ -124,10 +127,11 @@ public class AnalyticsUtil {
 			}
 		}
 		if(seconds!=0){
+			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
 			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
+				createdTime=createdTime+((seconds<10)?"0"+secondsInMille+"sec":secondsInMille+"sec")+"";
 			}else{
-				createdTime="0min"+" "+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
+				createdTime="0min"+" "+((seconds<10)?"0"+secondsInMille+"sec":secondsInMille+"sec")+"";
 			}
 		}
 		return createdTime;
