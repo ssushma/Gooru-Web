@@ -217,8 +217,8 @@
 			margin-right:5px;
 		}
 		.prefilterPanel{
-			margin-left: 205px;
-			margin-bottom: 30px;
+			margin-left: 5px;
+			<!-- margin-bottom: 30px; -->
 		}
 
 	</ui:style>
