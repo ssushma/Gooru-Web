@@ -313,7 +313,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	 */
 	private String getTimeSpent(Long commentCreatedTime) {
 		String createdTime = null;
-		int seconds = (int) (commentCreatedTime / 1000) % 60 ;
+		double seconds = (double) ((double)commentCreatedTime / 1000) % 60 ;
 		int minutes = (int) ((commentCreatedTime / (1000*60)) % 60);
 		int hours   = (int) ((commentCreatedTime / (1000*60*60)) % 24);
 		int days = (int) (commentCreatedTime / (1000*60*60*24));
@@ -335,12 +335,16 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			}
 		}
 		if(seconds!=0){
+			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
 			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+seconds:seconds)+"";
+				createdTime=createdTime+((seconds<10)?"0"+secondsInMille:secondsInMille)+"";
 			}else{
-				createdTime="00"+":"+((seconds<10)?"0"+seconds:seconds)+"";
+				createdTime="00"+":"+((seconds<10)?"0"+secondsInMille:secondsInMille)+"";
 			}
 		}
 		return createdTime;
 	}
+	public static native String roundToTwo(double number) /*-{
+		return ""+(Math.round(number + "e+2")  + "e-2");
+	}-*/;
 }
