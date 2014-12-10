@@ -24,10 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.CssTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
@@ -64,6 +67,7 @@ public class PreFilterPopup extends PopupPanel {
 
 	interface PreFilterPopupUiBinder extends UiBinder<Widget, PreFilterPopup> {
 	}
+	
 	
 	@UiField HTMLPanel filterPanel,eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
 
@@ -400,7 +404,7 @@ public class PreFilterPopup extends PopupPanel {
 	}
 	
 	/**
-	 * To set the Default tabs
+	 * To set the Default tab as grade & subject tab 
 	 */
 	public void hidePlanels(){
 		lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
@@ -410,5 +414,54 @@ public class PreFilterPopup extends PopupPanel {
 		gradesPanel.setVisible(true);
 	}
 	
+	/**
+	 * Set search filters
+	 */
+	public void setFilter() {
+		String grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+		
+		String subjects = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+		
+		String standards = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
+		
+		
+		if(grade!=null){
+			setSelectedFilter(gradesPanel,grade,COMMA_SEPARATOR);
+		}
+		if(subjects!=null){
+			setSelectedFilter(subjectPanelUc,subjects,"~~");
+		}
+		if(standards!=null){
+			setSelectedFilter(standardsPanel,standards,COMMA_SEPARATOR);
+		}
+	}
+	/**
+	 * Set filter value for search with separator
+	 * @param filterFlowPanel instance of {@link DisclosurePanelUc} which has filter values
+	 * @param checkedValues selected filter value
+	 * @param separator concatenation of the filter value by separator 
+	 */
+	private void setSelectedFilter(HTMLPanel filterHtmlPanel, String checkedValues, String separator) {
+		List<String> items = null;
+		if (checkedValues != null) {
+			items = Arrays.asList(checkedValues.split("\\s*" + separator + "\\s*"));
+		}
+		
+		if (items != null) {
+			//if(resourceSearch){
+			for(int i=0;i<filterHtmlPanel.getWidgetCount();i++){
+				Widget filterWidget = filterHtmlPanel.getWidget(i);
+				if (filterWidget instanceof CheckBox) {
+					CheckBox filterCheckBox = (CheckBox) filterWidget;
+					filterCheckBox.setValue(false);
+					for (String item : items) {
+						if ((filterCheckBox.getName().equals(item))) {	
+							filterCheckBox.setValue(true);
+						}
+					}
+				}
+			}
+		}
+	}
 
 }
