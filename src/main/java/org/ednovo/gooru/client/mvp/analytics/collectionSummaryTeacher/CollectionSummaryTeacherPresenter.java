@@ -77,7 +77,7 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final CollectionSummaryMetaDataDo result,final HTMLPanel loadingImage) {
 		this.pathwayId=pathwayId;
 		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		this.collectionId=AppClientFactory.getPlaceManager().getRequestParameter("analyticsId", null);
+		this.collectionId=collectionId;
 		this.analyticService.getCollectionResourceData(this.collectionId,this.classpageId,"",new AsyncCallback<ArrayList<UserDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> userData) {

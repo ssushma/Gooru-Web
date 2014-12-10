@@ -89,7 +89,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	 */
 	@Override
 	public void setCollectionSummaryData(final String collectionId,final String pathwayId) {
-		this.collectionId=AppClientFactory.getPlaceManager().getRequestParameter("analyticsId", null);
+		this.collectionId=collectionId;
 		getView().getLoadinImage().setVisible(true);
 		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		this.analyticService.getCollectionSummaryUsersData(classpageId,new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
@@ -103,7 +103,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			public void onFailure(Throwable caught) {
 			}
 		});
-		this.analyticService.getAssignmentAverageData(classpageId, pathwayId, this.collectionId,new AsyncCallback<CollectionSummaryMetaDataDo>() {
+		this.analyticService.getAssignmentAverageData(classpageId, pathwayId, collectionId,new AsyncCallback<CollectionSummaryMetaDataDo>() {
 			
 			@Override
 			public void onSuccess(CollectionSummaryMetaDataDo result) {

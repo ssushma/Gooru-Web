@@ -27,36 +27,7 @@ package org.ednovo.gooru.client.mvp.analytics;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface AnalyticsUiHandlers extends BaseUiHandlers{
-	
-	/**
-	 * This method is used to get the pathway items.
-	 * @param classpageId
-	 * @param pathwayGooruOid
-	 * @param sequence
-	 * @param limit
-	 * @param offSet
-	 */
-	void getPathwayItems(String classpageId,String pathwayGooruOid,String sequence,int limit,int offSet);
-	
-	/**
-	 * This method is used to get unit assignments items.
-	 * @param classpageId
-	 * @param pathwayGooruOid
-	 * @param sequence
-	 * @param limit
-	 * @param offSet
-	 */
-	void getUnitAssignments(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet);
-	
-	/**
-	 * This method is used to get the pathway units
-	 * @param classId
-	 * @param limit
-	 * @param offset
-	 * @param clearPanel
-	 */
-	void getPathwayUnits(String classId,int limit, int offset ,boolean clearPanel);
-	
+	void getGradeCollectionJson() ;
 	/**
 	 * This method is used to set the clicked tab presenter on the slot.
 	 * @param clickedTab
@@ -64,55 +35,4 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	 * @param selectedCollectionTitle
 	 */
 	void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle);
-	
-	/**
-	 * This method is used to get the bottom scored students data.
-	 * @param classpageId
-	 * @param pathwayId
-	 * @param collectionId
-	 * @param sortOrder
-	 */
-	void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
-	
-	/**
-	 * This method is used to get the top scored students data
-	 * @param classpageId
-	 * @param pathwayId
-	 * @param collectionId
-	 * @param sortOrder
-	 */
-	void getTopStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
-	
-	/**
-	 * This method is used to get the collections.
-	 * @param classpageId
-	 * @param pathwayId
-	 */
-	void getGradeCollectionJson(String classpageId,String pathwayId);
-	
-	/**
-	 * This method is used to export the OE responses.
-	 * @param classpageId
-	 * @param pathwayId
-	 * @param timeZone
-	 */
-	void exportOEPathway(String classpageId,String pathwayId,String timeZone);
-	
-	/**
-	 * This method is used to get the unit Assignments.
-	 */
-	void getUnitAssignments();
-	
-	/**
-	 * This method is used to set the clicked unit assignment details in the slot.
-	 * @param result
-	 * @param classpageId
-	 * @param pathwayId
-	 */
-	//void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId);
-	
-	/**
-	 * This method is used to set the personalize data.
-	 */
-	//void setPersonalizeData();
 }

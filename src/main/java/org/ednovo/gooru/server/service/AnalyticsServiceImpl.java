@@ -105,7 +105,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		if(jsonResponseRep.getStatusCode()==200){
+		if(jsonResponseRep.getStatusCode()==200){ 
 			try {
 				collectionProgressDataList= (ArrayList<CollectionProgressDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionProgressDataDo>>() {});
 			} catch (JSONException e) {

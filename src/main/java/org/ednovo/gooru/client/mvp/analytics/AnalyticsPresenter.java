@@ -34,16 +34,10 @@ import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers{
-	
-	private int limit = 5;
-	private int offSet = 0;
-	private int assignmentOffset=0;
-	private int assignmentLimit=10;
 	
 	private CollectionProgressPresenter collectionProgressPresenter;
 	
@@ -54,13 +48,10 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	
 	public static final  Object COLLECTION_PROGRESS_SLOT = new Object();
 	
-	public static final  Object UNIT_ASSIGNMENT_SLOT = new Object();
+	public static final  Object COLLECTION_SUMMARY_SLOT = new Object();
 	
-	public static final  Object PERSONALIZE_SLOT = new Object();
 	
 	final String SUMMARY="Summary",PROGRESS="Progress";
-	
-	private String pathwayId=null;
 	
 	ClasspageDo classpageDo=null;
 	
@@ -85,48 +76,22 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		getView().setUiHandlers(this);
 		this.collectionProgressPresenter=collectionProgressPresenter;
 		this.collectionSummaryPresenter=collectionSummaryPresenter;
-		//this.personalizeUnitPresenter=personalizeUnitPresenter;
+		getGradeCollectionJson();
 	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getPathwayItems(java.lang.String, java.lang.String, java.lang.String, int, int)
-	 */
 	@Override
-	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
-		/*AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+	public void getGradeCollectionJson() {
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
 			@Override
-			public void onSuccess(UnitAssignmentsDo result) {
-				//classpageId,pathwayid
-				getGradeCollectionJson(classpageId, pathwayGooruOid);
-				getView().removeAndAddUnitSelectedStyle();
-			}
-		});*/
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getPathwayUnits(java.lang.String, int, int, boolean)
-	 */
-	@Override
-	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
-		/*final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
-			@Override
-			public void onSuccess(ClassDo classDo) {
-				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
-					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-					if(unitId==null){
-                        pathwayId=classDo.getSearchResults().get(0).getResource().getGooruOid();
-						getView().revealPlace("reports",null,pathwayId,null);
-					}else{
-						getView().clearDownArrow();
-						clearSlot(COLLECTION_PROGRESS_SLOT);
-						getView().hidePersonalizeContainers();
-						getView().showUnitNames(classDo,clearPanel);
-						getPathwayItems(classpageId,unitId,"sequence",assignmentLimit,assignmentOffset);
-					}
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				if(result.size()!=0){
+					getView().setGradeCollectionData(result);
 				}
 			}
-		});*/
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 
 	/* (non-Javadoc)
@@ -134,14 +99,14 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 */
 	@Override
 	public void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle) {
-		String pathWayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		clearSlot(COLLECTION_PROGRESS_SLOT);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
-				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathWayId);
-				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
+				clearSlot(COLLECTION_SUMMARY_SLOT);	
+				collectionSummaryPresenter.setCollectionSummaryData(collectionId,"");
+				setInSlot(COLLECTION_SUMMARY_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId,false,selectedCollectionTitle);
+				clearSlot(COLLECTION_PROGRESS_SLOT);
+				collectionProgressPresenter.setCollectionProgressData(collectionId,"",false,selectedCollectionTitle);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
 			}
 		}else{
@@ -166,152 +131,16 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 
 	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getBottomStudentsData(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder) {
-		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId,sortOrder, new AsyncCallback<ArrayList<GradeJsonData>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<GradeJsonData> result) {
-				getView().setBottomStudentsData(result);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getTopStudentsData(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void getTopStudentsData(String classpageId, String pathwayId,String collectionId, String sortOrder) {
-		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId,sortOrder, new AsyncCallback<ArrayList<GradeJsonData>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<GradeJsonData> result) {
-				getView().setTopStudentsData(result);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getGradeCollectionJson(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void getGradeCollectionJson(final String classpageId, final String pathwayId) {
-		getView().LoadingImageLabeltrue();
-		this.analyticService.getAnalyticsGradeData(classpageId, pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
-			@Override
-			public void onSuccess(ArrayList<GradeJsonData> result) {
-				getView().setGradeCollectionData(result);
-				if(result.size()!=0){
-					getTopStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"DESC");
-					getBottomStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"ASC");
-				}
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});
-	}
-	/**
-	 * This method is used to ge tthe class units.
-	 * @param classpageDo
-	 */
-	public void getClassUnits(ClasspageDo classpageDo){
-		this.classpageDo=classpageDo;
-		//String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		/*if(unitId!=null && getView().getUnitPanel().getWidgetCount()!=0){
-			getPathwayItems(classpageDo.getClasspageId(),unitId,"sequence",assignmentLimit,assignmentOffset);
-		}else{*/
-			getPathwayUnits(classpageDo.getClasspageId(),limit,offSet,true);
-		/*}*/
-	}
-
-	/* (non-Javadoc)
 	 * @see com.gwtplatform.mvp.client.PresenterWidget#onHide()
 	 */
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().resetData();
-		clearSlot(UNIT_ASSIGNMENT_SLOT);	
-		clearSlot(COLLECTION_PROGRESS_SLOT);
-		clearSlot(PERSONALIZE_SLOT);	
+		clearSlot(COLLECTION_PROGRESS_SLOT);	
+		clearSlot(COLLECTION_SUMMARY_SLOT);	
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#exportOEPathway(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void exportOEPathway(String classpageId, String pathwayId,String timeZone) {
-		this.analyticService.exportPathwayOE(classpageId, pathwayId,timeZone,new AsyncCallback<String>() {
-			
-			@Override
-			public void onSuccess(String result) {
-				Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getUnitAssignments()
-	 */
-	@Override
-	public void getUnitAssignments() {
-		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		if(unitId!=null){
-			getUnitAssignments(classpageId, unitId, "sequence", assignmentLimit, assignmentOffset);
-		}else{
-			getUnitAssignments(classpageId, pathwayId, "sequence", assignmentLimit, assignmentOffset);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#setAnalyticsAssignmentsPresenter(org.ednovo.gooru.shared.model.content.UnitAssignmentsDo, java.lang.String, java.lang.String)
-	 */
-	/*@Override
-	public void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId) {
-		clearSlot(UNIT_ASSIGNMENT_SLOT);	
-		analyticsUnitAssignmentsPresenter.setAnalyticsAssignmentsPresenter(result,classpageId,pathwayId);
-		setInSlot(UNIT_ASSIGNMENT_SLOT, analyticsUnitAssignmentsPresenter,false);
-	}*/
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getUnitAssignments(java.lang.String, java.lang.String, java.lang.String, int, int)
-	 */
-	@Override
-	public void getUnitAssignments(final String classpageId, final String pathwayGooruOid,String sequence, int limit, int offSet) {
-		/*AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
-			@Override
-			public void onSuccess(UnitAssignmentsDo result) {
-				setAnalyticsAssignmentsPresenter(result,classpageId, pathwayGooruOid);
-			}
-		});*/
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#setPersonalizeData()
-	 */
-	/*@Override
-	public void setPersonalizeData() {
-		clearSlot(PERSONALIZE_SLOT);	
-		personalizeUnitPresenter.setClasspageData(classpageDo);
-		setInSlot(PERSONALIZE_SLOT, personalizeUnitPresenter,false);
-	}*/
-
 	/**
 	 * Get the class page service
 	 * @return

@@ -5,169 +5,44 @@
 	<ui:style field="unitStyle" src="analytics.css" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{unitStyle.unitDetails}">
-		<div class="{unitStyle.containerTeacher}">
-			<div class="col-xs-2 {unitStyle.leftPanel}">
-				<hr/>
-				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
-				   <g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
-			    </uc:UlPanel>  
-			    
-				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
-					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits" text="{i18n.GL2256}"></g:Label>
-				</g:HTMLPanel>
-			</div>
-			<div class="col-xs-10 {unitStyle.rightPanel}">
-				
-				<!-- 	This widget Is used to Graph Widget-->
-				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
-				   <g:HTMLPanel>
-				        <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="graphWidget" >
-				        </g:HTMLPanel>
-					    <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
-						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
-						</g:HTMLPanel>
-				      </g:HTMLPanel>
-				</g:HTMLPanel>
-				<!-- end Graph Widget -->
-				
 				<!-- load all collections start-->
 				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
 				   <g:HTMLPanel>
 				  	  <g:Label styleName="{unitStyle.narrowReportText}" text="{i18n.GL2257}"></g:Label>
 				      <g:ListBox styleName="{unitStyle.filterDropDown}" ui:field="loadCollections">
 				  	  </g:ListBox>
-				      </g:HTMLPanel>
+				   </g:HTMLPanel>
 				</g:HTMLPanel>
+				<g:Label styleName="{unitStyle.labelForClassReport}">Class Reports</g:Label> 
 				<!-- load all collections end -->
-				
-				<!-- 	This widget Is used for view assignments-->
-				<g:HTMLPanel styleName="row {unitStyle.generalSet} {unitStyle.arrowStyle}">
-				   <g:HTMLPanel>
-				       <g:HorizontalPanel styleName="{unitStyle.rowInner}">
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Label styleName="{unitStyle.viewAssignmentText}" text="{i18n.GL2227}"></g:Label>  </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary" text="{i18n.GL2228}"></g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary" text="{i18n.GL2229}"></g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary" text="{i18n.GL2258}"></g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
-				        </g:HorizontalPanel> 
-				      </g:HTMLPanel>
-				</g:HTMLPanel>
-				<!-- end view assignments -->
-				
-				<!-- 	This widget Is used for view assignments-->
-				<g:HTMLPanel styleName="row {unitStyle.setBroder}">
-				   <g:HTMLPanel>
-				      <g:HTMLPanel styleName="{unitStyle.rowInner} {unitStyle.slotWidget}" ui:field="slotWidget" >
-				      </g:HTMLPanel>
-				      </g:HTMLPanel>
-				</g:HTMLPanel>
-				<!-- end view assignments -->
-				
-				
-				<g:HTMLPanel styleName="row {unitStyle.setBroder}">
-					<div class=" {unitStyle.studentPerformance}">
-					<div class="row">
-						<div class="{unitStyle.unitHeadingAnalytics}">
-						<g:Label text="{i18n.GL2259}" styleName="{unitStyle.studentsPerformance}"></g:Label> <!-- <g:InlineLabel text="{i18n.GL2260}"></g:InlineLabel> -->
-						</div>
-						<div class="{unitStyle.scoreText}">
-						<g:InlineLabel text="{i18n.GL2261}"></g:InlineLabel> <g:InlineLabel ui:field="minimumScorelbl"></g:InlineLabel>
-						</div>
-						<div class="clearfix"></div>
-						</div>
-					<div class="row">
-						  <div class="col-xs-12">
-					      <div class="{unitStyle.progress}">
-						  <g:HTMLPanel  styleName="{unitStyle.progress_org}" ui:field="orangeProgressBar">
-						  </g:HTMLPanel>
-					  	  <g:HTMLPanel styleName="{unitStyle.progress_green}" ui:field="greenProgressBar">
-					  	  </g:HTMLPanel>
-					      <g:HTMLPanel styleName="{unitStyle.progress_blue}" ui:field="blueProgressBar">
-					      </g:HTMLPanel>
+				<div class="{unitStyle.reportDiv}">
+					<div class="{unitStyle.reportsGeneration}">
+						Collection Progress
+						<span><img class="title-report-info" src="images/question.png" data-text="Analyze how your students did on the collection overall and view a more detailed report on student usage."/></span>
 					</div>
-					</div>
-					</div>
-					
-					<div class="row scores" style="display:none;">
-					<div class="col-xs-6">
-					<g:InlineLabel text="{i18n.GL2262}"></g:InlineLabel> <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
-					</div>
-					<div class="col-xs-6 text-right">
-					<g:InlineLabel text="{i18n.GL2263}"></g:InlineLabel> <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
-					</div>
-					<div class="clearfix"></div>
-					</div>
-					
-					<div class="row {unitStyle.scoresTable}">
-					
-					<g:Label styleName="col-xs-6 {unitStyle.org}" text="{i18n.GL2264}"/>
-					<g:Label styleName="col-xs-6 {unitStyle.green}" text="{i18n.GL2265}"/>
-					
-					<div class="clearfix"></div>
-					</div>
-					<div class="row scoresTableList">
-					<g:HTMLPanel ui:field="scoredBelowPanel" styleName="col-xs-6"/>
-					<g:HTMLPanel ui:field="scoredAbovePanel" styleName="col-xs-6"/>
-					<div class="clearfix"></div>
-					</div>
-					</div>
-				</g:HTMLPanel>
-				
-				
-				<div class="row {unitStyle.personalBtn}">
-					<div class="col-xs-12">
-						<div class="{unitStyle.rowInner}">
-							<p class="text-center"><g:Button  ui:field="personalizeBtn" styleName="primary"></g:Button></p>
-						</div>
+					<div id="profile-class-gradebook-view-report">
+						<g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary" text="{i18n.GL2296}"></g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
 					</div>
 				</div>
-				 <div class="row">
-						<div class="col-xs-12">
-								<g:Label ui:field="unitTitleDetails" styleName="{unitStyle.unitHeading}" />
-							<div class="clearfix"></div>
-							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}" ui:field="unitOptionsContainer">
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.assignOverOptions} text-center">
-										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
-										<g:InlineLabel text="{i18n.GL2209}"></g:InlineLabel> 
-									</g:HTMLPanel>
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
-										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
-										<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel> 
-									</g:HTMLPanel>
-									
-									<g:HTMLPanel ui:field="personalizePanel">
-						 				<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
-											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
-											<g:InlineLabel text="{i18n.GL2239}"></g:InlineLabel> 
-										</g:HTMLPanel>
-										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthGoalNotMet} {unitStyle.classOverOptions1} text-center">
-											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel> 
-											<g:InlineLabel text="{i18n.GL2240}"></g:InlineLabel>
-										</g:HTMLPanel>
-										<!-- <g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth1} {unitStyle.classOverOptions} text-center">
-											<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel> 
-											<g:InlineLabel text="{i18n.GL2212}"></g:InlineLabel>
-										</g:HTMLPanel>
-										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthFDS} {unitStyle.classOverOptionsFeedback} text-center">
-										    <g:InlineLabel styleName="{unitStyle.bubbleBlueFeedBack}"></g:InlineLabel> 
-										   	<g:InlineLabel text="{i18n.GL2238}"></g:InlineLabel>
-										</g:HTMLPanel>  -->
-									</g:HTMLPanel>
-									
-							</g:HTMLPanel>
-						</div>
-					</div> 
-					<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
-					<g:HTMLPanel ui:field="highlightedStudentsContainer" styleName="{unitStyle.hilightStudentsContainer}">
-					<g:HTMLPanel ui:field="scoreAboveHighlightedStudentsContainer" styleName="{unitStyle.scoreAboveHilightStudentsContainer} unitDetailsSigngle"></g:HTMLPanel>
-					<g:HTMLPanel ui:field="scoreBelowHighlightedStudentsContainer" styleName="{unitStyle.scoreBelowilightStudentsContainer} unitDetailsSigngle"></g:HTMLPanel>
-					<g:Button ui:field="btnViewAllStudents" styleName="primary {unitStyle.viewAllStudentsBtn}" text="{i18n.GL2292}"/>
-					</g:HTMLPanel>
-					<g:HTMLPanel ui:field="personalizeMainContainer">
-					<g:HTMLPanel ui:field="personalizeContainer"></g:HTMLPanel>
-					<g:Button ui:field="btnViewHighlightedStudents" styleName="primary {unitStyle.viewAllStudentsBtn}" text="{i18n.GL2293}"/>
-					</g:HTMLPanel>
-			</div>
-			<div class="clearfix"></div>
-		</div>
+				<g:HTMLPanel ui:field="collectionProgressSlot" styleName="clearfix">	</g:HTMLPanel>
+				<div class="{unitStyle.reportDiv}">
+					<div class="{unitStyle.reportsGeneration}">
+						Collection Summary
+						<span><img class="title-report-info" src="images/question.png" data-text="Analyze how your students did on the collection overall and view a more detailed report on student usage."/></span>
+					</div>
+					<div id="profile-class-gradebook-view-report">
+						 <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary" text="{i18n.GL2296}"></g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+					</div>
+				</div>
+				<g:HTMLPanel ui:field="collectionSummarySlot" styleName="clearfix">	</g:HTMLPanel>
+				<div class="{unitStyle.reportDiv}">
+					<div class="{unitStyle.reportsGeneration}">
+						Open-Ended Responses
+						<span><img class="title-report-info" src="images/question.png" data-text="Analyze how your students did on the collection overall and view a more detailed report on student usage."/></span>
+					</div>
+					<div id="profile-class-gradebook-view-report">
+						  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary" text="{i18n.GL2258}"></g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+				   	</div>
+				</div>
 	</g:HTMLPanel>
 </ui:UiBinder>
