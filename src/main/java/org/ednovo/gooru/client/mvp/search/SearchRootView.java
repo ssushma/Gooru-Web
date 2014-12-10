@@ -258,7 +258,12 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			showStandardsFilter();
 			if(!(stdCode!=null || grades!=null || subjects!=null)){
 				System.out.println("ININININ");
-				standardsConatiner.removeFromParent();
+				standardsConatiner.setVisible(false);
+				flowpanel.getElement().setAttribute("style", "margin-top: 0px;");
+			}else{
+				System.out.println("else::");
+				standardsConatiner.setVisible(true);
+				flowpanel.getElement().setAttribute("style", "margin-top: 10px;");
 			}
 			
 		}
@@ -276,7 +281,6 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	    stdCode = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
 		if(stdCode!=null){
 			String[] stdSplit = stdCode.split(",");
-			System.out.println("stdSplit::"+stdSplit);
 			for(int i=0; i<stdSplit.length; i++){
 				standardsConatiner.add(createTagsLabel(stdSplit[i],"standPanel"));
 			}
@@ -291,7 +295,6 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
 		if(grades!=null){
 			String[] gradesSplit = grades.split(",");
-			System.out.println("grades::"+gradesSplit);
 			for(int i=0; i<gradesSplit.length; i++){
 				standardsConatiner.add(createTagsLabel(gradesSplit[i],"gradePanel"));
 			}
@@ -306,8 +309,6 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
 		if(subjects!=null){
 			String[] split = subjects.split("~~");
-			System.out.println("subjects::"+subjects);
-			System.out.println("subjects::"+split.length);
 			for(int i=0; i<split.length; i++){
 				standardsConatiner.add(createTagsLabel(split[i],"subjectPanel"));
 			}
@@ -327,11 +328,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				System.out.println("filterName::"+filterValue);
-				System.out.println("panelName::"+panelName);
 				AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
-				/*CodeDo codeDo = new CodeDo();
-				codeDo.setCodeId(Integer.parseInt(courseCode));*/
 			}
 		};
 	}

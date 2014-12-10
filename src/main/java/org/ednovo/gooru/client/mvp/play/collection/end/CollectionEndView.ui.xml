@@ -5,6 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field= "playerStyle" src="collectionend.css" type="org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle" />
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource"/>
+	<ui:style field="unitStyle" src="collectionSummary.css" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	      <g:FlowPanel ui:field="studyMainContianer" styleName="{playerStyle.container} {playerStyle.clearfix}">
             <g:FlowPanel styleName="{playerStyle.leftPanel}">
@@ -63,7 +64,57 @@
 			</g:FlowPanel>
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
            	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
-	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer"/>
+           	    	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1"/>
+           	    	
+           	    	<g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+					</g:HTMLPanel>
+					<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
+	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}">Collection Summary</g:HTMLPanel>
+					             	 <!-- Collection Summary Top -->
+					     <g:HTMLPanel>
+						    <g:HTMLPanel styleName="{unitStyle.collectionSummaryDetailsWrapper}">
+							<g:HTMLPanel styleName="{unitStyle.left_container}">
+							<g:Image ui:field="collectionImage" styleName="{unitStyle.collection_teacher_img}"></g:Image>
+							<g:HTMLPanel styleName="{unitStyle.collection_details_teacher}">
+							<g:InlineLabel ui:field="collectionTitle"></g:InlineLabel>
+							<br/>
+							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
+							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}">Collection Last Accessed</g:InlineLabel> 
+							<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
+							</g:HTMLPanel>
+							</g:HTMLPanel>
+							</g:HTMLPanel>
+						 </g:HTMLPanel>
+					  <!-- Collection Summary Top  End-->
+					  <!-- Sessions start-->
+					  <g:HTMLPanel ui:field="sessionspnl">
+						   <g:HTMLPanel styleName="{unitStyle.gooru_session_data_content}">
+					       		<g:HTMLPanel styleName="{unitStyle.left_session}">
+									<g:HTMLPanel styleName="{unitStyle.collection_last_accessed}">
+										<span class="collectionLastAccessed">Session Start Time : </span>
+										<g:InlineLabel ui:field="lastModifiedTime"></g:InlineLabel>
+									</g:HTMLPanel>
+								</g:HTMLPanel>
+					       		<g:HTMLPanel styleName="{unitStyle.right_session}">
+					       		<g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.session_data}">
+								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
+								 </g:ListBox>
+								</g:HTMLPanel>
+								</g:HTMLPanel> 
+								</g:HTMLPanel>
+				      	 </g:HTMLPanel>
+						 </g:HTMLPanel>
+					  <!-- Sessions end-->
+	             	 <g:HTMLPanel styleName="{unitStyle.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
+					 <g:VerticalPanel ui:field="pnlSummary" styleName="{unitStyle.pnlSummary}"/>
+					 </g:HTMLPanel>
+	             	</g:FlowPanel>
+	             	
 	                <g:FlowPanel styleName="{playerStyle.messageContainer}" ui:field="messageContainer">
 	                	<g:Label styleName="{playerStyle.messageTextHeader}" ui:field="insightsHeaderText"></g:Label>
 	                	<g:Label styleName="{playerStyle.messagecontentText}" ui:field="insightsContentText"></g:Label>
