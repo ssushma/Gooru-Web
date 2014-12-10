@@ -36,6 +36,8 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.WelcomeClassView;
@@ -109,6 +111,13 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 
 	AddAssignmentContainerPresenter assignmentContainer=null;
 	
+	CollectionProgressPresenter collectionProgressPresenter=null;
+	
+	private CollectionSummaryPresenter collectionSummaryPresenter;
+	
+	public static final  Object SLOT_SET_SUMMARY_PROGRESS = new Object();
+	final String SUMMARY="Summary",PROGRESS="Progress";
+	
 	private Integer offset=0;
 	private Integer limit=5;
 	private static final Integer DEFAULT_LIMITVALUE=5;
@@ -135,7 +144,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
-	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter) {
+	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
 		super(view, proxy);
 		
 		getView().setUiHandlers(this);
@@ -144,6 +153,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		this.assignmentContainer = assignmentContainer;
 		this.imageUploadPresenter=imageUploadPresenter;		
 		this.classlistPresenter=classlistPresenter;
+		this.collectionProgressPresenter=collectionProgressPresenter;
+		this.collectionSummaryPresenter=collectionSummaryPresenter;
 		addRegisteredHandler(AssignmentEvent.TYPE, this);
 		addRegisteredHandler(RefreshAssignmentsListEvent.TYPE, this);
 		addRegisteredHandler(UpdateClasspageImageEvent.TYPE, this);
@@ -737,4 +748,17 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		});
 	}
 
+	@Override
+	public void setCollectionProgressData(String clickedTab,String collectionId,String collectionTitle) {
+		clearSlot(SLOT_SET_SUMMARY_PROGRESS);
+		if(clickedTab!=null){
+			if(clickedTab.equalsIgnoreCase(SUMMARY)){
+				collectionSummaryPresenter.setCollectionSummaryData(collectionId,"");
+				setInSlot(SLOT_SET_SUMMARY_PROGRESS, collectionSummaryPresenter,false);
+			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
+				collectionProgressPresenter.setCollectionProgressData(collectionId, "", false, collectionTitle);
+				setInSlot(SLOT_SET_SUMMARY_PROGRESS, collectionProgressPresenter,false);	
+			}
+		}
+	}
 }

@@ -77,7 +77,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	final String INCORRECT="#db0f0f",CORRECT="#4d9645",ONMULTIPULEATTEMPTS="#FBB03B";
 	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",EMAIL="email";
 	private static final String QUESTION = "question";
-	private static final String VIEWRESPONSE = i18n.GL2286();
+	private static final String VIEWRESPONSE = "View Response";
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
@@ -410,7 +410,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
 	        individualResourceBreakdownData.add(table);
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override
@@ -550,7 +550,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	individualOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}
 	/**
 	 * This class is used to handle the click event on the table cell
@@ -904,7 +904,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
 	        	individualScoredData.add(erroeMsg);
 	        }
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}
 	/**
 	 * This will return the correct answers

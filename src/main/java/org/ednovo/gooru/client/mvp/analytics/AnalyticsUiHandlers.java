@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.analytics;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	
@@ -110,10 +109,10 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	 * @param classpageId
 	 * @param pathwayId
 	 */
-	void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId);
+	//void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId);
 	
 	/**
 	 * This method is used to set the personalize data.
 	 */
-	void setPersonalizeData();
+	//void setPersonalizeData();
 }

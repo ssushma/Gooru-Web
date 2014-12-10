@@ -25,18 +25,13 @@
 package org.ednovo.gooru.client.mvp.analytics;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
-import org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsPresenter;
-import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
-import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -54,9 +49,8 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	
 	private CollectionSummaryPresenter collectionSummaryPresenter;
 	
-	private AnalyticsUnitAssignmentsPresenter analyticsUnitAssignmentsPresenter;
 	
-	private PersonalizeUnitPresenter personalizeUnitPresenter;
+	//private PersonalizeUnitPresenter personalizeUnitPresenter;
 	
 	public static final  Object COLLECTION_PROGRESS_SLOT = new Object();
 	
@@ -86,13 +80,12 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 * @param personalizeUnitPresenter
 	 */
 	@Inject
-	public AnalyticsPresenter(EventBus eventBus, IsAnalyticsView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter,AnalyticsUnitAssignmentsPresenter analyticsUnitAssignmentsPresenter,PersonalizeUnitPresenter personalizeUnitPresenter) {
+	public AnalyticsPresenter(EventBus eventBus, IsAnalyticsView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.collectionProgressPresenter=collectionProgressPresenter;
 		this.collectionSummaryPresenter=collectionSummaryPresenter;
-		this.analyticsUnitAssignmentsPresenter=analyticsUnitAssignmentsPresenter;
-		this.personalizeUnitPresenter=personalizeUnitPresenter;
+		//this.personalizeUnitPresenter=personalizeUnitPresenter;
 	}
 
 	/* (non-Javadoc)
@@ -100,14 +93,14 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 */
 	@Override
 	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+		/*AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
 				//classpageId,pathwayid
 				getGradeCollectionJson(classpageId, pathwayGooruOid);
 				getView().removeAndAddUnitSelectedStyle();
 			}
-		});
+		});*/
 	}
 
 	/* (non-Javadoc)
@@ -115,7 +108,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 */
 	@Override
 	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
-		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		/*final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
@@ -133,7 +126,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 					}
 				}
 			}
-		});
+		});*/
 	}
 
 	/* (non-Javadoc)
@@ -289,35 +282,35 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#setAnalyticsAssignmentsPresenter(org.ednovo.gooru.shared.model.content.UnitAssignmentsDo, java.lang.String, java.lang.String)
 	 */
-	@Override
+	/*@Override
 	public void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId) {
 		clearSlot(UNIT_ASSIGNMENT_SLOT);	
 		analyticsUnitAssignmentsPresenter.setAnalyticsAssignmentsPresenter(result,classpageId,pathwayId);
 		setInSlot(UNIT_ASSIGNMENT_SLOT, analyticsUnitAssignmentsPresenter,false);
-	}
+	}*/
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getUnitAssignments(java.lang.String, java.lang.String, java.lang.String, int, int)
 	 */
 	@Override
 	public void getUnitAssignments(final String classpageId, final String pathwayGooruOid,String sequence, int limit, int offSet) {
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+		/*AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
 				setAnalyticsAssignmentsPresenter(result,classpageId, pathwayGooruOid);
 			}
-		});
+		});*/
 	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#setPersonalizeData()
 	 */
-	@Override
+	/*@Override
 	public void setPersonalizeData() {
 		clearSlot(PERSONALIZE_SLOT);	
 		personalizeUnitPresenter.setClasspageData(classpageDo);
 		setInSlot(PERSONALIZE_SLOT, personalizeUnitPresenter,false);
-	}
+	}*/
 
 	/**
 	 * Get the class page service

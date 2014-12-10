@@ -102,7 +102,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
-		printWidget.setVisible(true);
+		printWidget.setVisible(false);
 	}
 	
 	/**
@@ -384,7 +384,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	teacherOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}
 	/**
 	 * This class is used to handle the click event on the table cell
@@ -609,7 +609,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        Table table = new Table(data, options);
 	        table.getElement().setId("collectionBreakDown");
 	        teacherResourceBreakdownData.add(table);
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override

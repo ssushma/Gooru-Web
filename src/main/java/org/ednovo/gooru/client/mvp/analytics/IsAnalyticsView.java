@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
-import org.ednovo.gooru.shared.model.content.ClassDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 
@@ -39,7 +38,7 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	 * @param classDo
 	 * @param clearPanel
 	 */
-	public void showUnitNames(ClassDo classDo,boolean clearPanel);
+	//public void showUnitNames(ClassDo classDo,boolean clearPanel);
 	
 	/**
 	 * This method is used to hide more units link

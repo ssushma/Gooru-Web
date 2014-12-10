@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
@@ -75,9 +76,9 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	@Override
 	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final CollectionSummaryMetaDataDo result,final HTMLPanel loadingImage) {
 		this.pathwayId=pathwayId;
-		this.classpageId=classpageId;
-		this.collectionId=collectionId;
-		this.analyticService.getCollectionResourceData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
+		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		this.collectionId=AppClientFactory.getPlaceManager().getRequestParameter("analyticsId", null);
+		this.analyticService.getCollectionResourceData(this.collectionId,this.classpageId,"",new AsyncCallback<ArrayList<UserDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> userData) {
 				getView().setTeacherResourceData(userData,result,loadingImage);

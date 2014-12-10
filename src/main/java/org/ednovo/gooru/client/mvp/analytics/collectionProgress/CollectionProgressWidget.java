@@ -59,7 +59,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	private final String RED = "#EAB4B3 !important";
 	private final String ORANGE = "#FFE7C2 !important";
 	private final String WHITE = "#FFF";
-	private static final String VIEWRESPONSE = i18n.GL2286();
+	private static final String VIEWRESPONSE = "View Response";
 	private static final String QUESTION = "question";
 	private static final String RESOURCE="resource";
 	
@@ -255,7 +255,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
         final Table table = new Table(view, options);
         table.setStyleName("collectionProgressTable");
      
-        filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
+       filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
         filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
         filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
         filterDropDown.addChangeHandler(new ChangeHandler() {

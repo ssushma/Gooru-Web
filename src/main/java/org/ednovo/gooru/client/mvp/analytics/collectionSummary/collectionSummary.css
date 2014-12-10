@@ -75,6 +75,7 @@
 .left_container {
 	width: 100%;
 	float: left;
+	margin-left: 28px; 
 }
 
 .collection_teacher_img {

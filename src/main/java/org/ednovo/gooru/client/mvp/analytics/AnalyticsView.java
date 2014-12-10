@@ -2,7 +2,6 @@ package org.ednovo.gooru.client.mvp.analytics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -11,13 +10,9 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.HCLineChart;
 import org.ednovo.gooru.client.mvp.analytics.util.StudentScoredAboveBelowUlPanel;
-import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
-import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal.AssignmentGoalView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -83,8 +78,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	String unitCollectionId;
 	int selectedUnitNumber;
 	String unitId; 
-	ClassDo classDo;
-	private ClassUnitsListDo classUnitsDo;
+/*	ClassDo classDo;
+	private ClassUnitsListDo classUnitsDo;*/
 	
 	/**
 	 * Default constructor
@@ -241,7 +236,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	}
 	/**
 	 * This method is used to remove the unit selected style
-	 */
+	 *//*
 	public void removeUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
 		while (widgets.hasNext()) {
@@ -251,15 +246,15 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 			}
 		}		
-	}
+	}*/
 	
 	/**
 	 * This method is used to add unit select style 
 	 * @param unitsWidget
 	 */
-	public void addUnitSelectStyle(UnitWidget unitsWidget){
+	/*public void addUnitSelectStyle(UnitWidget unitsWidget){
 		unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
-	}
+	}*/
 	/**
 	 * This will handle the click event on the more units.
 	 * @param event
@@ -284,7 +279,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	@UiHandler("btnViewAllStudents")
 	public void clickOnViewAllStudents(ClickEvent event){
-		getUiHandlers().setPersonalizeData();
+		//getUiHandlers().setPersonalizeData();
 		personalizeMainContainer.setVisible(true);
 		highlightedStudentsContainer.setVisible(false);
 	}
@@ -302,7 +297,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	@Override
 	public void removeAndAddUnitSelectedStyle(){
-		Iterator<Widget> widgets = unitPanel.iterator();
+		/*Iterator<Widget> widgets = unitPanel.iterator();
 		while (widgets.hasNext()) {
 			 Widget widget = widgets.next();
 			if (widget instanceof UnitWidget) {
@@ -317,7 +312,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				}
 			}
 		}		
-		
+		*/
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#hideMoreUnitsLink()
@@ -356,8 +351,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#showUnitNames(org.ednovo.gooru.shared.model.content.ClassDo, boolean)
 	 */
-	@Override
-	public void showUnitNames(ClassDo classDo, boolean clearPanel) {
+	/*	@Override
+public void showUnitNames(ClassDo classDo, boolean clearPanel) {
 		this.classDo = classDo;
 		unitsTotalCount=classDo.getTotalHitCount();
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
@@ -392,19 +387,19 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				unitPanel.add(unitsWidget);
 			}
 		}
-	}
+	}*/
 	/**
 	 * This method is used to update the page number
 	 */
-	private void updatePageNumber(){
+/*	private void updatePageNumber(){
 		unitsPageNumber++;
 		if((limit*unitsPageNumber)<unitsTotalCount){
 			lblMoreUnits.setVisible(true);
 		}else{
 			lblMoreUnits.setVisible(false);
 		}
-	}
-	public class UnitChangeEvent implements ClickHandler{
+	}*/
+/*	public class UnitChangeEvent implements ClickHandler{
 		private UnitWidget unitsWidget;
 		private String unitTitle;
 		private int unitNumber;
@@ -422,7 +417,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			//removeAndAddUnitSelectedStyle();
 		}
 	}
-	
+	*/
 	public class MiniMumScoreKeyUpHandler implements KeyUpHandler{
 		private String scoreVal;
 		public MiniMumScoreKeyUpHandler(String scoreVal){
@@ -502,15 +497,15 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 					collaboratorsDo2.setGooruUid(userData.getGooruUId());
 					collaboratorsDo2.setUsername(userData.getUserName());
 					if(userData.getFirstName()!=null){
-						collaboratorsDo2.setFirstName(userData.getFirstName());
+						//collaboratorsDo2.setFirstName(userData.getFirstName());
 					}else{
-						collaboratorsDo2.setFirstName(userData.getUserName());
+						//collaboratorsDo2.setFirstName(userData.getUserName());
 					}
 					if(userData.getLastName()!=null)
-					collaboratorsDo2.setLastName(userData.getLastName());
+					//collaboratorsDo2.setLastName(userData.getLastName());
 					if(userData.getEmailId()!=null)
 					collaboratorsDo2.setEmailId(userData.getEmailId());
-					scoreBelowHighlightedStudentsContainer.add(new AssignmentGoalView(collaboratorsDo2));
+					//scoreBelowHighlightedStudentsContainer.add(new AssignmentGoalView(collaboratorsDo2));
 				}
 			}
 		}
@@ -535,15 +530,15 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 					collaboratorsDo2.setGooruUid(userData.getGooruUId());
 					collaboratorsDo2.setUsername(userData.getUserName());
 					if(userData.getFirstName()!=null){
-						collaboratorsDo2.setFirstName(userData.getFirstName());
+					//	collaboratorsDo2.setFirstName(userData.getFirstName());
 					}else{
-						collaboratorsDo2.setFirstName(userData.getUserName());
+						//collaboratorsDo2.setFirstName(userData.getUserName());
 					}
 					if(userData.getLastName()!=null)
-					collaboratorsDo2.setLastName(userData.getLastName());
+					//collaboratorsDo2.setLastName(userData.getLastName());
 					if(userData.getEmailId()!=null)
 					collaboratorsDo2.setEmailId(userData.getEmailId());
-					scoreAboveHighlightedStudentsContainer.add(new AssignmentGoalView(collaboratorsDo2));
+					//scoreAboveHighlightedStudentsContainer.add(new AssignmentGoalView(collaboratorsDo2));
 				}
 			}
 		}
@@ -640,8 +635,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		if (unitTitle.length() > 10){
 			unitTitle = unitTitle.substring(0, 11) + "...";
 		}
-		personalizeBtn.setText(StringUtil.generateMessage(i18n.GL2221(), unitTitle));
-		StringUtil.setAttributes(personalizeBtn.getElement(), "btnPersonalize", StringUtil.generateMessage(i18n.GL2221(), unitTitle), StringUtil.generateMessage(i18n.GL2221(), unitTitle));
+		//personalizeBtn.setText(StringUtil.generateMessage(i18n.GL2221(), unitTitle));
+		//StringUtil.setAttributes(personalizeBtn.getElement(), "btnPersonalize", StringUtil.generateMessage(i18n.GL2221(), unitTitle), StringUtil.generateMessage(i18n.GL2221(), unitTitle));
 	}
 	
 	/**
