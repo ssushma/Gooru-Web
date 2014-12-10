@@ -45,11 +45,52 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	private String title;
 	
 	private String category;
+
+	private String gooruOid;
+	
+	private String thumbnail;
+	
+	private String description;
+	
+	private String topViewedCollection;
 	
 	private Integer ratingsCount;
 	
 	private Integer reactionsCount;
 	
+	
+	public String getGooruOid() {
+		return gooruOid;
+	}
+
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getTopViewedCollection() {
+		return topViewedCollection;
+	}
+
+	public void setTopViewedCollection(String topViewedCollection) {
+		this.topViewedCollection = topViewedCollection;
+	}
+
 	public PublishedCollectionsInfoDo(){
 		
 	}

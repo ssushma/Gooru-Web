@@ -259,5 +259,7 @@ public interface UserService extends BaseService {
      * @return
      */
     ProfileRatingsReactionsDO getProfileAnalyticsRatings();
+    
+    UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval);
 
 }
