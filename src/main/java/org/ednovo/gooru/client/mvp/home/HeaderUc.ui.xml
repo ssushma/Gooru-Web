@@ -215,7 +215,7 @@
 			float: left;
 			 height: 50px;
              width:455px;
-             margin-left:-6px;
+             margin-left:-11px;
 		}
 		.teachUserNameTextContainer {
 			float: left;
