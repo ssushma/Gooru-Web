@@ -2155,15 +2155,15 @@ a.secondary:hover {
 .rightImageContainer {
 	position: absolute;
 	right: 0;
-	top: 50%;
-	right: 22px;
+	top: 60%;
+	right: 2%;
 	cursor: pointer;
 }
 
 .leftImageContainer {
-	left: 22px;
+	left: 2%;
 	position: absolute;
-	top: 50%;
+	top: 60%;
 	cursor: pointer;
 }
 /* end report */
