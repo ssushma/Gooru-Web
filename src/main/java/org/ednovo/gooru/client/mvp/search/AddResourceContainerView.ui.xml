@@ -13,7 +13,7 @@
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="loadingImage" styleName="loadingImage"/>
 			
-				<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel}">
+				<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel} dropdownListContainerScrollPanel ">
 	            	<g:HTMLPanel ui:field="floderTreeContainer" styleName="{res.css.folderStucture}">
 			   		</g:HTMLPanel>
 				</g:ScrollPanel>

@@ -8,8 +8,8 @@
 		type='org.ednovo.gooru.player.collection.client.view.add.tooltip.FlagBundle' />
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="{playerStyle.ratingPoorConfirmationContainer}">
-			<g:HTMLPanel styleName="{playerStyle.arrowBorder}"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{playerStyle.arrow}"></g:HTMLPanel>
+			<g:HTMLPanel styleName="{playerStyle.arrowBorder} hidden-xs"></g:HTMLPanel>
+			<g:HTMLPanel styleName="{playerStyle.arrow} hidden-xs"></g:HTMLPanel>
 			<g:Label ui:field="poorRatingHeaderLbl" styleName ="{playerStyle.ratingPoorHeader}"></g:Label>
 			<g:Label ui:field="poorRatingSubHeaderLbl" styleName ="{flagPopUpstyle.ratingPoorSubHeader}"></g:Label>
 			<g:HTMLPanel styleName="{flagPopUpstyle.playerflagradiobutton}">

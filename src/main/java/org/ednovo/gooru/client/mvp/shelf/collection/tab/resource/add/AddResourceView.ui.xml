@@ -37,9 +37,6 @@
 							ui:field="searchTabButton">
 							<g:Anchor ui:field="fromwsearch" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
-						
-						
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="questionTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="multipleChoiceRadioButton"

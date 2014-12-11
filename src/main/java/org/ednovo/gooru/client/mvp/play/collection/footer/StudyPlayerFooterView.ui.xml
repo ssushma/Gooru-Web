@@ -7,7 +7,7 @@ xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags" xmlns:panel="urn:impor
 	<ui:with type="org.ednovo.gooru.client.uc.PlayerBundle" field="palyerBundle" />
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource" />
 	<html5:FooterTag styleName="{footerstyle.footerContainer}" ui:field="footerContainer">
-		<g:FlowPanel styleName="container {palyerStyleResource.getPlayerStyleResource.animationWrapper}" ui:field="resourceAnimationContainer"></g:FlowPanel>
+		<g:FlowPanel styleName="container {palyerStyleResource.getPlayerStyleResource.animationWrapper} text-center" ui:field="resourceAnimationContainer"></g:FlowPanel>
 		<g:HTMLPanel styleName="container">
 			<div class="col-md-6 "></div>
 			<div class="col-md-6  {footerstyle.text-right}">

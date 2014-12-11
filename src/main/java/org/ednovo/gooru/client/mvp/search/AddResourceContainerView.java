@@ -778,6 +778,7 @@ public class AddResourceContainerView extends
 		this.isPlayer = isPlayer;
 		addContent.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.addPlayerStyle());
+		addContent.addStyleName("addResourceContainer");
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
 				"height: 135px !important;margin-left: 46px;overflow: auto;");
 		floderTreeContainer.getElement().setAttribute("style","height: 135px !important");
@@ -820,8 +821,8 @@ public class AddResourceContainerView extends
 			final HashMap<String, String> params) {
 		dropdownListContainerScrollPanel.setVisible(false);
 		createCollectionbuttonsContainer.setVisible(false);
-		enableSuccessView.getElement().setAttribute("style", "width: 559px;");
-		enableSuccessView.setVisible(true);
+/*		enableSuccessView.getElement().setAttribute("style", "width: 559px;");
+*/		enableSuccessView.setVisible(true);
 		buttonsContainer.setVisible(false);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 		headerTitle.setText("This resource has been added to  " + title);

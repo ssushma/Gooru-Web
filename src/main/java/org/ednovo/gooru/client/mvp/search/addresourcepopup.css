@@ -719,7 +719,7 @@
 .addPlayerStyle{
 	display: inline-block;
 	float: center;
-	margin-left: 275px;
+/*	margin-left: 275px;*/
 	/* height: 258px; */
 	background-color: #fff;
 }

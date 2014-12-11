@@ -118,6 +118,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		this.count=count;
 		this.createrName = createrName;
 		setWidget(uiBinder.createAndBindUi(this));
+		this.setStyleName("reviewPopupPoor");
 		
 		ratingCommentTxtArea.getElement().setAttribute("maxlength", "500");
 		incorporateresourceText.setText(i18n.GL0612());

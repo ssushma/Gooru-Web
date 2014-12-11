@@ -707,7 +707,7 @@ fieldset {
 	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-	width: 300px;
+	/*width: 300px;*/
 	text-align: center;
 	border-radius: 4px;
 	position: absolute;
@@ -751,7 +751,7 @@ fieldset {
 	height: 0;
 	z-index: 100;
 	position: absolute;
-	left: 150px;
+	left: 70px;
 	border-left: 15px solid transparent;
 	border-right: 15px solid transparent;
 	border-bottom: 15px solid #ddd;
@@ -763,7 +763,7 @@ fieldset {
 	height: 0;
 	z-index: 100;
 	position: absolute;
-	left: 150px;
+	left: 70px;
 	border-left: 15px solid transparent;
 	border-right: 15px solid transparent;
 	border-bottom: 15px solid #fff;
@@ -839,7 +839,7 @@ fieldset {
 	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-	width: 300px;
+/*	width: 300px;*/
 	border-radius: 4px;
 	position: absolute;
 	/* top: 425px;
@@ -943,4 +943,12 @@ margin-right: 5px;
 	/* line-height: 1.3; */
 	margin-top: -8px;
 	margin-bottom: 2px;
+}
+.reviewPopup{
+	left: 63%;
+	top: 287px;
+	z-index: 999999;
+	padding: 0px;
+	position: absolute;
+	overflow: visible;
 }

@@ -146,6 +146,12 @@ header {
 .menuActive:hover{
 	padding:18px 8px;
 }
+.districDropDown >li >a{
+	white-space: normal !important;
+}
+.partnersDropdown >li >a{
+	white-space: normal !important;
+}
 .login{}
 .loggedInfo{}
 .logoutPanel{}
@@ -1211,8 +1217,6 @@ x {
  .communityblock{}
  .getInner{}
  .dropdowDisplay{}
- .districDropDown{}
- .partnersDropdown{}
  .logoutDownArrow{}
  .searchButton{}
  .menuHeader{}

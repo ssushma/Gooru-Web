@@ -132,6 +132,13 @@ public class WrapView extends BaseView implements IsWrapView {
 			androidSectiondiv.setVisible(false);
 			webcontainer.getElement().setId("main");
 			headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+			String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			System.out.println("========================place"+place);
+			if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
+				  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
+				  System.out.println("=========================I am In Wrap view If");
+
+			}
 		  setUiText();
 	}
 
@@ -145,6 +152,15 @@ public class WrapView extends BaseView implements IsWrapView {
 		activateClassicButton(false);
 		if (slot == WrapPresenter.TYPE_VIEW) {
 			if (content != null) {
+				String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
+					if(place.equals(PlaceTokens.SHELF)){
+						wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
+					}else{
+						wrapperPanel.getElement().setAttribute("style", "margin-top:50px;");
+
+					}
+				}
 				wrapperPanel.setWidget(content);
 			}
 		}

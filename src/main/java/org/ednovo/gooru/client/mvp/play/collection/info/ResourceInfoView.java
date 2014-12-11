@@ -379,7 +379,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		reosourceReleatedCollections.getElement().setId("pnlReosourceReleatedCollections");
 		hideButton.getElement().setId("btnHideButton");
 		
-		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
+	//	resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		AppClientFactory.getEventBus().addHandler(DeletePlayerStarReviewEvent.TYPE,deleteStarRating);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceReviewCountEvent.TYPE,setReviewCount);
