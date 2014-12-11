@@ -1926,14 +1926,28 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 								if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()!=null){
 									if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode().size()==0){
 										standardLbl.setVisible(true);
+										if(standardPanelUc.isVisible())
+										{
 										standardPanelUc.setVisible(true);
+										}
+										else
+										{
+										standardPanelUc.setVisible(false);
+										}
 										isBrowseTooltip = true;
 										DisableStandars();
 										
 									}else
 									{
 										standardLbl.setVisible(true);
+										if(standardPanelUc.isVisible())
+										{
 										standardPanelUc.setVisible(true);
+										}
+										else
+										{
+										standardPanelUc.setVisible(false);
+										}
 										isBrowseTooltip = false;
 										enableStandards();
 										standardPreflist=new ArrayList<String>();
@@ -1944,7 +1958,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 									}
 								}else{
 									standardLbl.setVisible(true);
+									if(standardPanelUc.isVisible())
+									{
 									standardPanelUc.setVisible(true);
+									}
+									else
+									{
+									standardPanelUc.setVisible(false);
+									}
 									isBrowseTooltip = true;
 									DisableStandars();
 									
@@ -1956,7 +1977,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	public void getStandardVisiblity()
 	{
 		standardLbl.setVisible(true);
+		if(standardPanelUc.isVisible())
+		{
 		standardPanelUc.setVisible(true);
+		}
+		else
+		{
+		standardPanelUc.setVisible(false);
+		}
 	}
 	
 	public void DisableStandars(){
@@ -2237,7 +2265,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		gradePanelUc.setVisible(true);
 		gradePanelUcNext.setVisible(true);
 		arrowLblGrade.setStyleName(style.arrowLable());
+		if(standardPanelUc.isVisible())
+		{
 		standardPanelUc.setVisible(true);
+		}
+		else
+		{
+		standardPanelUc.setVisible(false);	
+		}
 		arrowLblstandard.setStyleName(style.arrowLable());
 		ratingPanelUc.setVisible(true);
 		reviewPanelUc.setVisible(true);
