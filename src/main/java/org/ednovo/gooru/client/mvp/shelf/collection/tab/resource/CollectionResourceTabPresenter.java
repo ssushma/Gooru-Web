@@ -419,7 +419,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void reorderResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow, Integer newSequence) {
-		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
+//		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
 	}
 
 	
