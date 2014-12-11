@@ -123,6 +123,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		String active();
 		String arrowLable();
 		String arrowLableTransform();
+		String reviewCheckBoxStyle();
+		String reviewLabelForCheckbox();
 	}
 
 	/*@UiField
@@ -827,6 +829,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		chkNotFriendly.setText(value);
 		chkNotFriendly.setName(key);
 		
+		if(value.equalsIgnoreCase("Only Resources with Reviews"))
+		{
+			//chkNotFriendly.setStyleName(style.reviewCheckBoxStyle());
+			chkNotFriendly.getElement().getFirstChildElement().setClassName(style.reviewCheckBoxStyle());
+			chkNotFriendly.getElement().getFirstChildElement().getNextSiblingElement().setClassName(style.reviewLabelForCheckbox());
+		}
+		
 		if(value.equalsIgnoreCase("Mobile Friendly")){
 			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
@@ -839,7 +848,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
 		{
 			String reviewedVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
-			if(reviewedVal.equalsIgnoreCase("1") && value.equalsIgnoreCase("Resources w/ Reviews"))
+			if(reviewedVal.equalsIgnoreCase("1") && value.equalsIgnoreCase("Only Resources with Reviews"))
 			{
 				chkNotFriendly.setValue(true);
 			}
@@ -1067,7 +1076,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				renderCheckBox(gradePanelUcNext, "10", i18n.GL3081());
 				renderCheckBox(gradePanelUcNext, "11", i18n.GL3082());
 				renderCheckBox(gradePanelUcNext, "12", i18n.GL3083());
-				renderCheckBox(gradePanelUcNext, "HigherEd", i18n.GL3084());
+				renderCheckBox(gradePanelUcNext, "12gte", i18n.GL3084());
 				
 			}
 			if (searchFilterDo.getSubjects() != null) {
@@ -1195,7 +1204,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 				renderCheckBox(ratingPanelUc, i+"", starVal+"star");
 			}
-			renderCheckBox(reviewPanelUc,"review", "Resources w/ Reviews");
+			renderCheckBox(reviewPanelUc,"review", "Only Resources with Reviews");
 			
 		}/*else{
 			collectionLinkLbl.addStyleName(style.active());
