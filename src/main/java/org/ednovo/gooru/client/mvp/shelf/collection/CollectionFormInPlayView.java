@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -43,7 +44,6 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -199,8 +199,9 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		//buttonFloPanel.add(btnOk);
 		//buttonFloPanel.add(cancelAnr);
 		publicShareFloPanel.setVisible(false);
-		appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
-		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
+		/*appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);*/
+		appPopUp.getMainPanel().setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
 		collectionTitleTxtBox.getElement().setAttribute("maxlength", "50");
 		radioButtonPublic.getElement().setId("rdPublic");
 		radioButtonShare.getElement().setId("rdShare");
