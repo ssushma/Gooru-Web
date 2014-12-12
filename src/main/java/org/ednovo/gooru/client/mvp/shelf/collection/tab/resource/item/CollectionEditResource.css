@@ -1409,8 +1409,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 9999999;
-	top: -11px;
-	width: 373px;
+	top: -51px;
+	width: 365px;
 }
 .myEducationQuestionDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -2414,6 +2414,7 @@ margin-top: 18px; */
 	margin-left: 120px;
 	width: 100%;
 	height: 65px;
+	margin-top: 62px;
 }
 
 .resourceRightsContainerPdf {
@@ -2593,7 +2594,7 @@ margin-top: 18px; */
 
 .fileActionPanelEditFile {
 	text-align: center;
-	margin-top: 70px;
+	/* margin-top: 70px; */
 	margin-bottom: 10px;
 	margin-left: 162px;
 }
@@ -2604,7 +2605,7 @@ margin-top: 18px; */
 	color: #999 !important;
 	font-style: italic;
 	padding: 10px;
-	margin-top: 50px;
+	/* margin-top: 50px; */
 	margin-bottom: 10px;
 }
 

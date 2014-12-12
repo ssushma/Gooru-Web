@@ -214,6 +214,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	private List<Widget> answerChoicesList = new ArrayList<Widget>();
 	
 	private boolean isQuestion = false;
+	private boolean isUserResource = false;
 
 	private static EditQuestionPopupVcUiBinder uiBinder = GWT
 			.create(EditQuestionPopupVcUiBinder.class);
@@ -437,14 +438,15 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		 browseStandards.addClickHandler(new callBrowseStandards());
 	}
 
-	public abstract void callBrowseStandardsInfo(boolean val);
+	public abstract void callBrowseStandardsInfo(boolean val,boolean userResource);
 	
 	private class callBrowseStandards implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			isQuestion = true;
-			callBrowseStandardsInfo(isQuestion);
+			isUserResource = false;
+			callBrowseStandardsInfo(isQuestion,isUserResource);
 		}
 		
 	}

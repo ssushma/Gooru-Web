@@ -315,9 +315,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 	
 	public void hideTabButtons(boolean isResourceWidget,boolean isQuestionWidget,boolean isAssementsWidget){
-		System.out.println("inside tables isResourceWidget"+isResourceWidget);
-		System.out.println("inside tables isQuestionWidget"+isQuestionWidget);
-		System.out.println("inside tables isAssementsWidget"+isAssementsWidget);
 		//Add Resource Tabs
 		urlTabButton.setVisible(isResourceWidget);
 		searchTabButton.setVisible(isResourceWidget);
