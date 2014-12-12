@@ -14,7 +14,7 @@
       		<!--  new design start -->
       		<g:FlowPanel styleName="{playerStyle.collectionEnd}">
       			<g:FlowPanel styleName="col-md-12">
-						<g:FlowPanel styleName="{playerStyle.collections} {playerStyle.Playlast}">
+						<g:FlowPanel styleName="{playerStyle.collections}">
 							<g:FlowPanel styleName="">
 								<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
 							</g:FlowPanel>

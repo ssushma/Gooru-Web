@@ -4,12 +4,16 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -29,6 +33,8 @@ public class SampleReportView extends PopupPanel {
 	@UiField
 	HTMLPanel imageContainer;
 	@UiField
+	FlowPanel bodyContainer;
+	@UiField
 	Label lblsummaryText, lblCollectionProgress, lblCollectionProgressDetails,
 			lblHeading;
 	@UiField
@@ -39,13 +45,15 @@ public class SampleReportView extends PopupPanel {
 	public SampleReportView() {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
+		this.setHeight("642px");
+
 		this.setGlassEnabled(true);
 		this.show();
-		this.center();
 		Window.enableScrolling(false);
 		setUiField();
 		this.getElement().getStyle().setZIndex(99999);
-		this.getElement().getStyle().setTop(0, Unit.PX);
+		this.center();
+
 
 	}
 

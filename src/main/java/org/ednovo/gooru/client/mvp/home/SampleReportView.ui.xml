@@ -6,7 +6,7 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
 
-	<g:HTMLPanel styleName="{res1.css.PopupMainMedium}">
+	<g:HTMLPanel styleName="{res1.css.PopupMainMedium}" >
 		<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
 		    <g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
 		        <g:HTMLPanel styleName="row">
@@ -19,7 +19,7 @@
 		    	
 		    </g:HTMLPanel>
 			
-			<g:FlowPanel styleName="{res1.css.popupContentGrey}">
+			<g:FlowPanel styleName="{res1.css.popupContentGrey}"  ui:field="bodyContainer">
 				<g:Label styleName="{res.css.summaryText}" ui:field="lblsummaryText" />
 				<g:Label ui:field="lblCollectionProgress" styleName="{res1.css.lblCollectionProgress}" />
 				<g:Label ui:field="lblCollectionProgressDetails" styleName="{res1.css.lblCollectionProgressDetails}" />

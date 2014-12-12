@@ -39,12 +39,13 @@ public class SampleReportEndView extends PopupPanel {
 	public SampleReportEndView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
+		this.setHeight("584px");
 		this.show();
 		this.center();
 		Window.enableScrolling(false);
 		setUiField();
 		this.getElement().getStyle().setZIndex(99999);
-		this.getElement().getStyle().setTop(0, Unit.PX);
+
 	}
 
 	private void setUiField() {

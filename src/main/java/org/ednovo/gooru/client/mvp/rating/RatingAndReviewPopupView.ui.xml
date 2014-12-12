@@ -6,7 +6,7 @@
 	<ui:style field="style" src="ratingandreview.css"/>
 <ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res" />
-	<g:HTMLPanel styleName="{res.css.PopupMainVSmall}">
+	<g:HTMLPanel styleName="{res.css.PopupMainVSmall}" ui:field="maincontainer">
             <g:HTMLPanel styleName="{res.css.popupInnerGrey}">
                 <g:HTMLPanel styleName="{res.css.popupgreyHeader}">
                     <g:HTMLPanel styleName="row">
