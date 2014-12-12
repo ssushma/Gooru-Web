@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -43,15 +44,12 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	
 	private CollectionSummaryPresenter collectionSummaryPresenter;
 	
-	
-	//private PersonalizeUnitPresenter personalizeUnitPresenter;
-	
 	public static final  Object COLLECTION_PROGRESS_SLOT = new Object();
 	
 	public static final  Object COLLECTION_SUMMARY_SLOT = new Object();
 	
 	
-	final String SUMMARY="Summary",PROGRESS="Progress";
+	final String SUMMARY="Summary",PROGRESS="Progress",CLEARSUMMARY="ClearSummary",CLEARPROGRESS="ClearProgress";
 	
 	ClasspageDo classpageDo=null;
 	
@@ -108,9 +106,15 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 				clearSlot(COLLECTION_PROGRESS_SLOT);
 				collectionProgressPresenter.setCollectionProgressData(collectionId,"",false,selectedCollectionTitle);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
+			}else if(clickedTab.equalsIgnoreCase(CLEARPROGRESS)){
+				clearSlot(COLLECTION_PROGRESS_SLOT);
+				setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
+				getView().getCollectionProgressSlot().clear();
+			}else if(clickedTab.equalsIgnoreCase(CLEARSUMMARY)){
+				clearSlot(COLLECTION_SUMMARY_SLOT);
+				setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
+				getView().getCollectionSummarySlot().clear();
 			}
-		}else{
-			setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
 		}
 	}
 	
@@ -155,5 +159,22 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 */
 	public void setClasspageService(ClasspageServiceAsync classpageService) {
 		this.classpageService = classpageService;
+	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#exportOEPathway(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void exportOEPathway(String classpageId, String pathwayId,String timeZone) {
+		this.analyticService.exportPathwayOE(classpageId, pathwayId,timeZone,new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 }

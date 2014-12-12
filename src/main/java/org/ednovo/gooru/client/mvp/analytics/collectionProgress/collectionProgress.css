@@ -61,7 +61,7 @@
 	width: 35px
 }
 .htmlpanlProgress{
-	overflow-x: auto;
+	overflow:hidden;
 	width: 95%;
 	margin: 2%;
 	border-left: 1px solid #eee;
@@ -75,8 +75,9 @@
 	clear:both;
 }
 .maincontainer{
-	background-color: white;
+	background-color: inherit;
 	text-align: center;
+	clear:both;
 }
 .summary_title {
 	float: left;
@@ -150,14 +151,16 @@
 	padding-left: 23px;
 	padding-bottom: 10px;
 }
-#scrollForCollectionProgress::-webkit-scrollbar {
+#pnlScrollForCollectionProgress::-webkit-scrollbar {
 	width: 8px;
-	height: 4px;
-	background: #6f6d6d;
+	height: 8px;
 }
-#scrollForCollectionProgress::-webkit-scrollbar-thumb {
+#pnlScrollForCollectionProgress::-webkit-scrollbar-thumb {
 	background-color: #bdbebd;
-	-webkit-border-radius: 1ex;
+	-webkit-border-radius: 2ex;
+}
+#pnlScrollForCollectionProgress:hover {
+    overflow-x: scroll;
 }
 .setOETextPopupCenter {
 	left: 0 !important;

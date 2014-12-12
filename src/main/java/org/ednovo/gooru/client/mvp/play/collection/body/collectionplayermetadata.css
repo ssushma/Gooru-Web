@@ -572,14 +572,14 @@ a.flaggedCollection {
 }
 
 .switchContainer {
- 	 position: relative;
-	display: inline-block;
-	vertical-align: top;
-	width: 59px;
-	height: 28px;
-	padding: 3px;
-	vertical-align: middle;
-	background-color: white;
-	border-radius: 18px;
-	cursor: pointer;
+ 	position: relative;
+display: inline-block;
+vertical-align: top;
+width: 329px;
+height: 28px;
+padding: 3px;
+vertical-align: middle;
+background-color: white;
+border-radius: 18px;
+cursor: pointer;
 }

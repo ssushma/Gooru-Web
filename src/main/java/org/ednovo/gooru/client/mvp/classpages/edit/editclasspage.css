@@ -1285,3 +1285,27 @@ margin-bottom: -10px;
 	width: 218px;
 	top: 29%;
 }
+.switchContainer {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	/* left: 0; */
+	width: 216px;
+	/* height: 21px;
+	padding: 3px;*/
+	vertical-align: middle;
+	background-color: white;
+	cursor: pointer;
+	border: 2px solid #1076BB;
+	border-radius: 4px;
+	right: -94px;
+	float: right;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.toggleContainer{
+	float: right;
+	/* position: relative; */
+	display: inline-block;
+	top: 0;
+}

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -45,7 +46,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	Map<String,GradeJsonData> loadcollectionsmap=new HashMap<String, GradeJsonData>();
 	
-	final String SUMMARY="Summary",PROGRESS="Progress",BELOWSCORE="BelowScore",ABOVESCORE="AboveScore";
+	final String CLEARSUMMARY="ClearSummary",CLEARPROGRESS="ClearProgress",SUMMARY="Summary",PROGRESS="Progress",BELOWSCORE="BelowScore",ABOVESCORE="AboveScore";
 	
 	String unitCollectionId;
 	int selectedUnitNumber;
@@ -79,8 +80,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	void setStaticData(){
 		StringUtil.setAttributes(loadCollections.getElement(), "ddlLoadCollections", null, null);
-		StringUtil.setAttributes(btnCollectionSummary.getElement(), "btnCollectionSummary", i18n.GL2228(), i18n.GL2228());
-		StringUtil.setAttributes(btnCollectionProgress.getElement(), "btnCollectionProgress", i18n.GL2229(), i18n.GL2229());
+		StringUtil.setAttributes(btnCollectionSummary.getElement(), "btnCollectionSummary", i18n.GL2296(), i18n.GL2296());
+		StringUtil.setAttributes(btnCollectionProgress.getElement(), "btnCollectionProgress", i18n.GL2296(), i18n.GL2296());
 		StringUtil.setAttributes(btnCollectionResponses.getElement(), "btnCollectionResponses", i18n.GL2258(),i18n.GL2258());
 	}
 	public class loadCollectionsChangeHandler implements ChangeHandler{
@@ -99,25 +100,28 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
 			String selectedCollectionTitle=loadCollections.getItemText(loadCollections.getSelectedIndex());
 			if(clicked.equalsIgnoreCase(PROGRESS)){
-				isSummayClicked=false;
 				if(isProgressClicked){
 					isProgressClicked=false;
-					getUiHandlers().setClickedTabPresenter(null,selectedCollectionId,selectedCollectionTitle);
+					btnCollectionProgress.setText(i18n.GL2296());
+					getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
 				}else{
 					isProgressClicked=true;
+					btnCollectionProgress.setText(i18n.GL2297());
 					getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId,selectedCollectionTitle);
 				}
 			}else if(clicked.equalsIgnoreCase(SUMMARY)){
-				isProgressClicked=false;
 				if(isSummayClicked){
 					isSummayClicked=false;
-					getUiHandlers().setClickedTabPresenter(null,selectedCollectionId,selectedCollectionTitle);
+					btnCollectionSummary.setText(i18n.GL2296());
+					getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
 				}else{
 					isSummayClicked=true;
+					btnCollectionSummary.setText(i18n.GL2297());
 					getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId,selectedCollectionTitle);
 				}
 			}else{
-
+				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				getUiHandlers().exportOEPathway(classpageId, "",AnalyticsUtil.getTimeZone());
 			}
 		}
 	}
@@ -152,6 +156,12 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	public void setUnitCollectionId(String unitCollectionId) {
 		this.unitCollectionId = unitCollectionId;
+	}
+	public HTMLPanel getCollectionSummarySlot(){
+		return collectionSummarySlot;
+	}
+	public HTMLPanel getCollectionProgressSlot(){
+		return collectionProgressSlot;
 	}
 	/**
 	 * This will set the styles for the data table cells.

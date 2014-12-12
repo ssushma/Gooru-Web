@@ -132,5 +132,5 @@ public interface IsCollectionResourceTabView extends IsViewWithHandlers<Collecti
 
 	void setUpdatedStandardsCode(String setStandardsVal,Integer codeId, String setStandardDesc,boolean isQuestionResource, boolean userResource);
 
-	void reorderItemToNewPosition(ShelfCollectionResourceChildView shelfCollectionResourceChildView,Integer newSequence, String arrow);
+//	void reorderItemToNewPosition(ShelfCollectionResourceChildView shelfCollectionResourceChildView,Integer newSequence, String arrow);
 }

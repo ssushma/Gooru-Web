@@ -93,7 +93,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- * 
+ *  
  */
 public class CollectionResourceTabView extends
 		BaseViewWithHandlers<CollectionResourceTabUiHandlers> implements
@@ -109,10 +109,10 @@ public class CollectionResourceTabView extends
 	}
 
 	@UiField
-	VerticalPanel sequenceVerPanel,collectionResourcePanelVc;
+	VerticalPanel sequenceVerPanel/*,collectionResourcePanelVc*/;
 
-	/*@UiField
-	CollectionResourcePanelVc collectionResourcePanelVc;*/ 
+	@UiField
+	CollectionResourcePanelVc collectionResourcePanelVc; 
 
 	@UiField
 	Label dragAndDropLabel;
@@ -192,7 +192,7 @@ public class CollectionResourceTabView extends
 		buttonContainerForQuestionGreay.getElement().setAttribute("alt",i18n.GL0852());
 		buttonContainerForQuestionGreay.getElement().setAttribute("title",i18n.GL0852());
 		
-		dragAndDropLabel.setText("Enter in the position you would like to move resources.");
+		dragAndDropLabel.setText(i18n.GL0853());
 		dragAndDropLabel.getElement().setId("lblDragAndDropLabel");
 		dragAndDropLabel.getElement().setAttribute("alt",i18n.GL0853());
 		dragAndDropLabel.getElement().setAttribute("title",i18n.GL0853());
@@ -251,10 +251,10 @@ public class CollectionResourceTabView extends
 			setTotalCount(collectionDo.getCollectionItems().size());
 			Label label = new Label("");
 			label.setStyleName(getCss().shelfResourceDragdropSpacer());
-//			collectionResourcePanelVc.superAdd(label);
+			collectionResourcePanelVc.superAdd(label);
 			Label toplabel = new Label("");
 			toplabel.setStyleName(getCss().shelfResourceDragdropSpacer());
-//			collectionResourcePanelVc.add(toplabel);
+			collectionResourcePanelVc.add(toplabel);
 			Label prelabel = new Label("");
 			prelabel.setStyleName(getCss().shelfResourceSequenceSpacer());
 			sequenceVerPanel.add(prelabel);
@@ -276,7 +276,7 @@ public class CollectionResourceTabView extends
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				insertColectionItem(collectionItem, false);
 			}
-			setResourceSequence();
+			/*setResourceSequence();*/
 			hideNoResourceMsg();
 			
 			if (collectionDo.getCollectionItems().size() >= 25) {
@@ -367,7 +367,6 @@ public class CollectionResourceTabView extends
 					public void onClick(ClickEvent event) {
 						shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
 //						shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
-						shelfCollectionResourceVc.getReorderContainer().setVisible(false);
 						shelfCollectionResourceVc.getEditButton().setVisible(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
@@ -375,10 +374,11 @@ public class CollectionResourceTabView extends
 						} 
 					}
 				});
-//		collectionResourcePanelVc.remove(collectionItemDo.getItemSequence());
+		collectionResourcePanelVc.remove(collectionItemDo.getItemSequence());
 		//sequenceVerPanel.remove(collectionItemDo.getItemSequence()-1);
-//		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
-		collectionResourcePanelVc.add(shelfCollectionResourceVc);	
+		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
+		
+		/*collectionResourcePanelVc.add(shelfCollectionResourceVc);*/	
 	}
 
 	@Override
@@ -464,10 +464,14 @@ public class CollectionResourceTabView extends
 			sequenceVerPanel.insert(sequenceLbl, sequencePostion);
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			resetSequence();
+			/*
+				Again enabled DnD
 			shelfCollectionResourceVc.getResourceMoveUpBtn().addClickHandler(new OnClickReorderUpButton(collectionItemDo.getGooruOid())); 
 			shelfCollectionResourceVc.getResourceMoveDownBtn().addClickHandler(new OnClickReorderDownButton(collectionItemDo.getGooruOid()));
 			shelfCollectionResourceVc.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 			shelfCollectionResourceVc.getReorderTxtBox().addKeyUpHandler(new ReorderText(collectionItemDo.getGooruOid()));
+			*/
+			
 			
 			/*if(getTotalCount()==1){
 				isReorderButtonEnabled(false,shelfCollectionResourceVc);
@@ -487,7 +491,7 @@ public class CollectionResourceTabView extends
 					shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
 //					shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
 					shelfCollectionResourceVc.getEditButton().setVisible(false);
-					shelfCollectionResourceVc.getReorderContainer().setVisible(false);
+					/*shelfCollectionResourceVc.getReorderContainer().setVisible(false);*/
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 						getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
@@ -571,9 +575,9 @@ public class CollectionResourceTabView extends
 
 				}
 			});
-			/*collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());*/
-			collectionResourcePanelVc.add(shelfCollectionResourceVc);
-			setResourceSequence();
+			collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
+			/*collectionResourcePanelVc.add(shelfCollectionResourceVc);
+			setResourceSequence();*/
 			AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
@@ -626,7 +630,7 @@ public class CollectionResourceTabView extends
 						shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
 //						shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
 						shelfCollectionResourceVc.getEditButton().setVisible(false);
-						shelfCollectionResourceVc.getReorderContainer().setVisible(false);
+						/*shelfCollectionResourceVc.getReorderContainer().setVisible(false);*/
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 							editQuestionPopupWidget = new EditQuestionPopupWidget(collectionItemDo);
@@ -758,8 +762,8 @@ public class CollectionResourceTabView extends
 						}
 					}
 				});
-		/*collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());*/
-		collectionResourcePanelVc.add(shelfCollectionResourceVc);
+		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
+		/*collectionResourcePanelVc.add(shelfCollectionResourceVc);*/
 	}
 
 	public class EditQuestionPopupWidget extends EditQuestionPopupVc {
@@ -827,13 +831,19 @@ public class CollectionResourceTabView extends
 	@Override
 	public void removeCollectionItem(CollectionItemDo collectionItemDo,	ShelfCollectionResourceChildView resourceChildView) {
 		
-		int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"));
-		collectionDo.getCollectionItems().remove(collectionItemDo);
-		setTotalCount(collectionDo.getCollectionItems().size());
-		collectionResourcePanelVc.remove(sequence-1);
+		/*int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"));*/
+		
+		int sequence = collectionResourcePanelVc.getWidgetIndex(resourceChildView.getParent());
+		collectionResourcePanelVc.remove(sequence);
 		sequenceVerPanel.remove(sequence);
 		resetSequence();
-		setResourceSequence();
+		collectionDo.getCollectionItems().remove(collectionItemDo);
+		
+		/*setTotalCount(collectionDo.getCollectionItems().size());
+		collectionResourcePanelVc.remove(sequence-1);*/
+		
+		
+		/*setResourceSequence();*/
 		if (collectionDo.getCollectionItems().size() >= 25) {
 			// newResourceLabel.setVisible(false);
 
@@ -978,7 +988,7 @@ public class CollectionResourceTabView extends
 	@Override
 	public void setEditMode(boolean editMode, Widget resourceWidget) {
 		Widget sequenceWidget = sequenceVerPanel.getWidget(collectionResourcePanelVc.getWidgetIndex(resourceWidget.getParent()));
-//		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
+		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
 		sequenceWidget.setHeight((resourceWidget.getOffsetHeight() - 7) + "px");
 	}
 
@@ -1397,6 +1407,9 @@ public class CollectionResourceTabView extends
 		
 	}
 	
+/*
+ * Removed move option
+ * 
 	private void setResourceSequence() { 
 		Iterator<Widget> widgets = collectionResourcePanelVc.iterator(); 
 		int seqNum=1;
@@ -1412,10 +1425,10 @@ public class CollectionResourceTabView extends
 					((ShelfCollectionResourceChildView) widget).upButtonIsVisible(false); 
 					((ShelfCollectionResourceChildView) widget).downButtonIsVisible(true); 
 				}else{
-					/**
+					*//**
 					 * If user moved folder to last position, based on total count down arrow will be invisible and 
 					 * vice versa in case of reordering last folder or collection to the first position, up arrow should be in visible.
-					 */
+					 *//*
 					if(seqNum==getTotalCount()){
 						((ShelfCollectionResourceChildView) widget).upButtonIsVisible(true); 
 						((ShelfCollectionResourceChildView) widget).downButtonIsVisible(false);  
@@ -1432,11 +1445,11 @@ public class CollectionResourceTabView extends
 		}
 	}
 	
-	
-	/**
+
+	*//**
 	 * This inner class used for to restrict text box values to have only numbers
 	 *
-	 */
+	 *//*
 
 	public class HasNumbersOnly implements KeyPressHandler {
 
@@ -1461,10 +1474,10 @@ public class CollectionResourceTabView extends
 	}
 	
 	
-	/**
+	*//**
 	 * This inner class used for disabling up and down arrow based on user entered reorder value.
 	 *
-	 */
+	 *//*
 
 	public class ReorderText implements KeyUpHandler {
 		String itemGooruOid;
@@ -1498,20 +1511,20 @@ public class CollectionResourceTabView extends
 	}
 	
 	
-	/**
+	*//**
 	 * 
 	 * Inner class for reorder Up button, which implements click handler {@link ClickHandler}
 	 *
-	 */
+	 *//*
 	
 	public class OnClickReorderUpButton implements ClickHandler{
 		private String itemGooruOid;
 		int itemPosSeqNumb,itemToBeMovedPosSeqNumb,itemSeqToAPI;
 		private String reorderValidationMsg;
-		/**
+		*//**
 		 * Class constructor
 		 * @param itemGooruOid {@link String}
-		 */
+		 *//*
 		public OnClickReorderUpButton(String itemGooruOid) {
 			this.itemGooruOid = itemGooruOid;
 		}
@@ -1543,11 +1556,11 @@ public class CollectionResourceTabView extends
 	
 	
 	
-	/**
+	*//**
 	 * 
 	 * Inner class for reorder down button, which implements click handler {@link ClickHandler}
 	 *
-	 */
+	 *//*
 	
 	public class OnClickReorderDownButton implements ClickHandler{
 		
@@ -1556,10 +1569,10 @@ public class CollectionResourceTabView extends
 		private String reorderValidationMsg;
 		
 		
-		/**
+		*//**
 		 * Class constructor
 		 * @param itemGooruOid {@link String}
-		 */
+		 *//*
 		public OnClickReorderDownButton(String itemGooruOid) {
 			this.itemGooruOid = itemGooruOid;
 		}
@@ -1588,13 +1601,13 @@ public class CollectionResourceTabView extends
 	
 	
 	
-	/**
+	*//**
 	 * Before reorder will return with valid message.
 	 * @param itemToBeMovedPosSeqNumb {@link Integer}
 	 * @param itemPosSeqNumb {@link Integer}
 	 * @param arrow {@link String}
 	 * @return validationStaus {@link String} 
-	 */
+	 *//*
 	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
 		String validationStaus=REORDER_VALIDATION_MSG; 
 		if(itemToBeMovedPosSeqNumb==0){
@@ -1608,12 +1621,12 @@ public class CollectionResourceTabView extends
 	}
 	
 
-	/**
+	*//**
 	 * Gets the respective folder or collection widget for reorder.
 	 * @param itemGooruOid {@link String}
 	 * 
 	 * @return widget {@link ShelfCollectionResourceChildView}
-	 */
+	 *//*
 	public ShelfCollectionResourceChildView getFolderOrCollectionWidget(String itemGooruOid) { 
 		Iterator<Widget> widgets = collectionResourcePanelVc.iterator();
 		while (widgets.hasNext()) {
@@ -1625,7 +1638,7 @@ public class CollectionResourceTabView extends
 		return null;
 	}
 	
-	
+
 	
 	@Override
 	public void reorderItemToNewPosition(ShelfCollectionResourceChildView shelfCollectionResourceChildView,Integer newSequence, String arrow) {
@@ -1640,7 +1653,11 @@ public class CollectionResourceTabView extends
 		resetSequence();
 		setResourceSequence();
 	}
+*/	
 	
+	/**
+	 * This not commented for hot fix, not required.
+	 */
 	/*private void isReorderButtonEnabled(boolean isEnable, ShelfCollectionResourceChildView shelfCollectionResourceChildView) { 
 		if(isEnable){
 			shelfCollectionResourceChildView.setReorderContainerVisibility(isEnable); 

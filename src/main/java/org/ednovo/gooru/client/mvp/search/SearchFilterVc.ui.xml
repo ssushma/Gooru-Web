@@ -190,6 +190,19 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	left: -23px;
 
 	}
+	.reviewCheckBoxStyle{
+	vertical-align: middle;
+	width: 14px;
+	margin-left: 2px;
+
+	}
+	.reviewLabelForCheckbox{
+	display: inline-block;
+	margin-left: 1px;
+	width: 120px;
+	vertical-align: top;
+
+	}
 
 	</ui:style>
 	<g:FlowPanel styleName="{style.searchFilterVcContainer}" ui:field="myCollectionSearch">

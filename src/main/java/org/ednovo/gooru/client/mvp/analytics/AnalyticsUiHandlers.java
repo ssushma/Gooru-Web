@@ -35,4 +35,12 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	 * @param selectedCollectionTitle
 	 */
 	void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle);
+	/**
+	 * This method is used to export the OE responses.
+	 * @param classpageId
+	 * @param pathwayId
+	 * @param timeZone
+	 */
+	void exportOEPathway(String classpageId,String pathwayId,String timeZone);
+	
 }
