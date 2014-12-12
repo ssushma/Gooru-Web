@@ -33,6 +33,9 @@ public abstract class AnalyticsTabContainer extends Composite {
 		btnEmail.addClickHandler(new ClickImplemntation(EMAIL));
 		btnSave.addClickHandler(new ClickImplemntation(SAVEBTN));
 	}
+	/**
+	 * This method is used to clear the highlight styles
+	 */
 	void clearStyles(){
 		btnScoredQuestions.removeStyleName("addButonStyleActive");
 		btnOpenEndedQuestions.removeStyleName("addButonStyleActive");
