@@ -13,12 +13,14 @@
 				  	  </g:ListBox>
 				   </g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:Label styleName="{unitStyle.labelForClassReport}">Class Reports</g:Label> 
+				<g:Label styleName="{unitStyle.labelForClassReport}" text="{i18n.GL1873}"></g:Label> 
 				<!-- load all collections end -->
 				<div class="{unitStyle.reportDiv}">
 					<div class="{unitStyle.reportsGeneration}">
-						Collection Progress
-						<span><img class="title-report-info" src="images/question.png" data-text="Analyze how your students did on the collection overall and view a more detailed report on student usage."/></span>
+						<g:InlineLabel text="{i18n.GL1586}"></g:InlineLabel>
+						<span>
+						<g:Image ui:field="collectionProgressQuestionimg"></g:Image>
+						</span>
 					</div>
 					<div id="profile-class-gradebook-view-report">
 						<g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary" text="{i18n.GL2296}"></g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
@@ -27,8 +29,8 @@
 				<g:HTMLPanel ui:field="collectionProgressSlot" styleName="clearfix">	</g:HTMLPanel>
 				<div class="{unitStyle.reportDiv}">
 					<div class="{unitStyle.reportsGeneration}">
-						Collection Summary
-						<span><img class="title-report-info" src="images/question.png" data-text="Analyze how your students did on the collection overall and view a more detailed report on student usage."/></span>
+						<g:InlineLabel text="{i18n.GL1587}"></g:InlineLabel>
+						<span><g:Image ui:field="collectionSummaryQuestionimg"></g:Image></span>
 					</div>
 					<div id="profile-class-gradebook-view-report">
 						 <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary" text="{i18n.GL2296}"></g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
@@ -37,8 +39,8 @@
 				<g:HTMLPanel ui:field="collectionSummarySlot" styleName="clearfix">	</g:HTMLPanel>
 				<div class="{unitStyle.reportDiv}">
 					<div class="{unitStyle.reportsGeneration}">
-						Open-Ended Responses
-						<span><img class="title-report-info" src="images/question.png" data-text="Analyze how your students did on the collection overall and view a more detailed report on student usage."/></span>
+						<g:InlineLabel text="{i18n.GL3087}"></g:InlineLabel>
+						<span><g:Image ui:field="collectionExportQuestionimg"></g:Image></span>
 					</div>
 					<div id="profile-class-gradebook-view-report">
 						  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary" text="{i18n.GL2258}"></g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>

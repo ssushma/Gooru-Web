@@ -128,13 +128,16 @@ public class AnalyticsUtil {
 		}
 		if(seconds!=0){
 			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
-			if(secondsInMille<1000){
-				
+			String formattedTime="";
+			if(secondsInMille > 0 && secondsInMille<1){
+				formattedTime="<1";
+			}else{
+				formattedTime=((int) Math.round(secondsInMille))+"";
 			}
 			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+secondsInMille+"sec":secondsInMille+"sec")+"";
+				createdTime=createdTime+((seconds<10)?"0"+formattedTime+"sec":formattedTime+"sec")+"";
 			}else{
-				createdTime="0min"+" "+((seconds<10)?"0"+secondsInMille+"sec":secondsInMille+"sec")+"";
+				createdTime="0min"+" "+((seconds<10)?"0"+formattedTime+"sec":formattedTime+"sec")+"";
 			}
 		}
 		return createdTime;
