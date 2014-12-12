@@ -128,6 +128,9 @@ public class AnalyticsUtil {
 		}
 		if(seconds!=0){
 			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
+			if(secondsInMille<1000){
+				
+			}
 			if(createdTime!=null){
 				createdTime=createdTime+((seconds<10)?"0"+secondsInMille+"sec":secondsInMille+"sec")+"";
 			}else{
