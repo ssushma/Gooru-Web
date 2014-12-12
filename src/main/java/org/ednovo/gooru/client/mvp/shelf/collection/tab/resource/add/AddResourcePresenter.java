@@ -87,6 +87,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoAsyncCallback;
 	
+	private SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoImageAsyncCallback;
+	
 	private SimpleAsyncCallback<ExistsResourceDo> resoureCheckAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> addQuestionResourceAsyncCallback;
@@ -274,6 +276,15 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			}
 		});
 		
+		setResoureMetaInfoImageAsyncCallback(new SimpleAsyncCallback<ResourceMetaInfoDo>() {
+
+			@Override
+			public void onSuccess(ResourceMetaInfoDo result) {
+				getView().setPopupImageData(result);
+
+			}
+		});
+		
 		setResoureCheckAsyncCallback(new SimpleAsyncCallback<ExistsResourceDo>() {
 			@Override
 			public void onSuccess(ExistsResourceDo result) {
@@ -375,7 +386,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void getResourceMetaInfo(String url){
 		getResourceService().getResourceMetaInfo(url, resoureMetaInfoAsyncCallback);
 	}
-	
+	@Override
+	public void getResourceImageInfo(String url) {
+		getResourceService().getResourceMetaInfo(url, resoureMetaInfoImageAsyncCallback);
+	}
 	@Override
 	public void getResourceExists(String url){
 		getResourceService().checkResourceExists(url, resoureCheckAsyncCallback);
@@ -384,7 +398,13 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public SimpleAsyncCallback<ResourceMetaInfoDo> getResoureMetaInfoAsyncCallback() {
 		return resoureMetaInfoAsyncCallback;
 	}
-	
+	public SimpleAsyncCallback<ResourceMetaInfoDo> getResoureMetaInfoImageAsyncCallback() {
+		return resoureMetaInfoImageAsyncCallback;
+	}
+	public void setResoureMetaInfoImageAsyncCallback(
+			SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoImageAsyncCallback) {
+		this.resoureMetaInfoImageAsyncCallback = resoureMetaInfoImageAsyncCallback;
+	}
 	public void setResoureMetaInfoAsyncCallback(
 			SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoAsyncCallback) {
 		this.resoureMetaInfoAsyncCallback = resoureMetaInfoAsyncCallback;
@@ -629,7 +649,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl) {
 		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
 	}
-	
 
 }
 

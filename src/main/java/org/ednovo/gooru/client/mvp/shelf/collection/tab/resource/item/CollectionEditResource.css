@@ -902,7 +902,8 @@ user agent stylesheetdiv {
 	font-size: 12px;
 	color: rgb(81, 81, 81);
 	text-align: left;
-	padding: 8px 0px 2px 0px;
+	padding: 0px 0px 2px 0px;
+	display: inline-block;
 }
 
 .myFolderCollectionFormInputControl {
@@ -940,7 +941,6 @@ user agent stylesheetdiv {
 .myFolderCollectionCategoryDiv {
 	position: relative;
 }
-
 .myFolderCollectionCategoryInputDiv {
 	border-color: rgb(221, 221, 221);
 	border-width: 1px;
@@ -955,6 +955,10 @@ user agent stylesheetdiv {
 	height: 28px;
 	margin-bottom: 10px;
 	margin-right: 92px;
+}
+.myEducationPanelInputDiv:hover {
+	 border-color: #1076bb;
+    box-shadow: 0 0 5px #76c2f5;
 }
 .myFolderCollectionCategoryDivText {
 	font-family: Arial, Helvetica, sans-serif;
@@ -1012,6 +1016,18 @@ user agent stylesheetdiv {
 	float: left;
 	padding: 2px;
 }
+.myFolderCollectionThumbRectWeb{
+	position: relative;
+	background-color: rgb(240, 240, 240);
+	width: 80px;
+	height: 60px;
+	border-color: rgb(221, 221, 221);
+	border-style: solid;
+	border-width: 1px;
+	padding: 2px;
+	vertical-align: middle;
+	display: inline-block;
+}
 
 .myFolderCollectionThumbArrLContainer {
 	position: absolute;
@@ -1056,6 +1072,7 @@ user agent stylesheetdiv {
 	color: rgb(153, 153, 153);
 	text-align: left;
 	float: left;
+	display:inline-block;
 }
 
 .myFolderCollectionThumbUploadImagetext {
@@ -1067,12 +1084,20 @@ user agent stylesheetdiv {
 	padding: 28px 0px 0px 12px;
 	float: left;
 	cursor: pointer;
+	display:inline-block;
 }
 
 .myFolderCollectionRefreshMainContainer {
 	padding: 0px 0px 0px 9px;
 }
-
+.myFolderCollectionRefreshMainContainerWeb {
+	padding: 0px 0px 0px 9px;
+	float: right;
+	right: 51%;
+	position: relative;
+	padding-bottom: -12px;
+	bottom: 30px;
+}
 .myFolderCollectionRefreshContainer {
 	/*padding: 0px 0px 0px 15px;*/
 	
@@ -2794,6 +2819,10 @@ margin-top: 18px; */
 	border-style:solid;
 	position: relative;
 }
+.dropdownContainerInstructional:hover{
+	border-color: #1076bb;
+    box-shadow: 0 0 5px #76c2f5;
+}
 .placeHolderText{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
@@ -2912,4 +2941,66 @@ margin-top: 18px; */
     overflow-y: auto;
 }
 
+.generateImage{
+	position: relative;
+	display: inline-block;
+	margin-left: 4px;
+}
+.generateMessage{
+	position: absolute;
+	left: 0px;
+	bottom: -14px;
+	display: block;
+	color: #fab03a;
+}
+.myFolderCollectionThumbOrtextWeb{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 155%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	display:inline-block;
+}
+.generateImageContainer{
+	display: inline-block;
+width: 252px;
+vertical-align: top;
+}
+.generateImageContainer .gwt-Button{
+	padding: 7px 5px;
+}
+.generateImageContainer button.secondary{
+	padding: 7px 5px;
+}
+.eHeader{
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#515151;
+	padding:0 0 0 18px;
+	/* margin-bottom:8px; */
+	background:#ffffff url(../images/NewResourcePopup/sprite-new-resourcenew.png) no-repeat -7px -70px;
+	height: 13px;
+	display: inline-block;
+}
 
+.eInput{
+	margin-bottom:15px;
+}
+.advncedOption{
+	background:url(../images/NewResourcePopup/line.png) repeat-x center center;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#999999;
+	width:360px;
+	text-align:center;
+	margin-top:15px;
+}
+.advncedOption span{
+	padding:8px 10px;
+	background:#ffffff;
+}
+.shelfGradeInfoBottomWeb {
+	color: rgb(112, 109, 109);
+	width: 100%;
+	display:inline;
+}

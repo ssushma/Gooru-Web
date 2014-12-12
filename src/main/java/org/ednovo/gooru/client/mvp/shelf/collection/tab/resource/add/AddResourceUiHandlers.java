@@ -93,5 +93,6 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 
 	void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl);
 
+	void getResourceImageInfo(String userUrlStr);
 
 }
