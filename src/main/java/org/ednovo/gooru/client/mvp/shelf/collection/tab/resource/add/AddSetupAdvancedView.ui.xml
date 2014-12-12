@@ -10,30 +10,30 @@
 		field="res"></ui:with>
 	<g:HTMLPanel>
 			<div class="{res.css.advancedOptionContainer}">
-				<div class="{res.css.setupHeader}">Setup Advanced Options?</div>
+				<g:HTMLPanel styleName="{res.css.setupHeader}" ui:field="setUpLabel"></g:HTMLPanel>
 		
 						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="educationUseAdvancedContainer">
-						<g:Anchor ui:field="educationUseAdvancedPnl">Educational Use</g:Anchor>
+						<g:Anchor ui:field="educationUseAdvancedPnl"></g:Anchor>
 						</g:HTMLPanel>
 		
 						<g:HTMLPanel styleName="{res.css.setupBoxes}"  ui:field="momentsOfLearningAdvancedContainer">
-						<g:Anchor ui:field="momentsOfLearningAdvancedPnl"> Moments of Learning</g:Anchor>
+						<g:Anchor ui:field="momentsOfLearningAdvancedPnl"></g:Anchor>
 						</g:HTMLPanel>
 		
 						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="standardsAdvancedContainer">
-						<g:Anchor ui:field="standardsAdvancedPnl"> Standards</g:Anchor>
+						<g:Anchor ui:field="standardsAdvancedPnl"></g:Anchor>
 						</g:HTMLPanel>
 		
 						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="accessHazardAdvancedContainer">
-						<g:Anchor ui:field="accessHazardAdvancedPnl"> Access Hazard</g:Anchor>
+						<g:Anchor ui:field="accessHazardAdvancedPnl"></g:Anchor>
 						</g:HTMLPanel>
 		
 						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="mediaFeatureAdvancedContainer">
-						<g:Anchor ui:field="mediaFeatureAdvancedPnl"> Media Feature</g:Anchor>
+						<g:Anchor ui:field="mediaFeatureAdvancedPnl"></g:Anchor>
 						</g:HTMLPanel>
 						
 						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="mobileFreindlyAdvancedContainer">
-						<g:Anchor ui:field="mobileFreindlyAdvancedPnl"> Mobile Friendly</g:Anchor>
+						<g:Anchor ui:field="mobileFreindlyAdvancedPnl"></g:Anchor>
 						</g:HTMLPanel>
 		
 				</div>

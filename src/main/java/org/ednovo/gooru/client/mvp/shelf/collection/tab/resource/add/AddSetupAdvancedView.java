@@ -50,11 +50,20 @@ public  abstract class AddSetupAdvancedView extends Composite implements HasMous
 	@UiField Anchor educationUseAdvancedPnl,momentsOfLearningAdvancedPnl,standardsAdvancedPnl,accessHazardAdvancedPnl,
 	mediaFeatureAdvancedPnl,mobileFreindlyAdvancedPnl;
 	@UiField HTMLPanel educationUseAdvancedContainer,momentsOfLearningAdvancedContainer,standardsAdvancedContainer,
-	accessHazardAdvancedContainer,mediaFeatureAdvancedContainer,mobileFreindlyAdvancedContainer;
+	accessHazardAdvancedContainer,mediaFeatureAdvancedContainer,mobileFreindlyAdvancedContainer,setUpLabel;
 
 	public AddSetupAdvancedView(){
 		initWidget(obj.createAndBindUi(this));
 		AddSetupAdvancedCBundle.INSTANCE.css().ensureInjected();
+		setUpLabel.getElement().setInnerText(i18n.GL3097()+i18n.GL_SPL_QUESTION());
+		educationUseAdvancedPnl.setText(i18n.GL1664());
+		momentsOfLearningAdvancedPnl.setText(i18n.GL1678());
+		standardsAdvancedPnl.setText(i18n.GL1682());
+		accessHazardAdvancedPnl.setText(i18n.GL1705());
+		mediaFeatureAdvancedPnl.setText(i18n.GL3094());
+		mobileFreindlyAdvancedPnl.setText(i18n.GL1811());
+		
+		
 	}
 	public interface Binder extends UiBinder<Widget, AddSetupAdvancedView> 
 	{

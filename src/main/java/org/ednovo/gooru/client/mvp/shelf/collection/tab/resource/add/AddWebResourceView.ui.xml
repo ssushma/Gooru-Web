@@ -299,7 +299,7 @@
         </g:HTMLPanel>
 	
 	
-	<g:HTMLPanel styleName="{res.css.advncedOption}"><g:InlineLabel>Advanced</g:InlineLabel></g:HTMLPanel>
+	<g:HTMLPanel styleName="{res.css.advncedOption}"><g:InlineLabel ui:field="advancedText"></g:InlineLabel></g:HTMLPanel>
 	
 		<!-- Educational use -->
 		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="educationalContainer">
