@@ -1300,6 +1300,12 @@ margin-bottom: -10px;
 	border-radius: 4px;
 	right: -94px;
 	float: right;
-	margin-top: 15px;
+	margin-top: 20px;
 	margin-bottom: 20px;
+}
+.toggleContainer{
+	float: right;
+	/* position: relative; */
+	display: inline-block;
+	top: 0;
 }

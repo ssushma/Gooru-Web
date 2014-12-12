@@ -28,11 +28,27 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 
 public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
     /**
      * This method is used to reset data.
      */
     void resetData();
+    /**
+     * This method is used to set collection title to the dropdown.
+     * @param gradeData
+     */
     void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
+    /**
+     * This will return the collection summary panel
+     * @return
+     */
+    HTMLPanel getCollectionSummarySlot();
+    /**
+     * This will return the collection progress panel
+     * @return
+     */
+    HTMLPanel getCollectionProgressSlot();
 }
