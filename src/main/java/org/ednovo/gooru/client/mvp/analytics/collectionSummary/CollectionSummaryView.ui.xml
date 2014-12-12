@@ -11,7 +11,8 @@
  	 <g:HTMLPanel>
  	 <g:HTMLPanel>
  	 <g:Label styleName="{unitStyle.summary_title}"  text="{i18n.GL1587}"></g:Label>
- 	 <g:Label text="{i18n.GL2270}"></g:Label>
+ 	 <g:Image ui:field="imgQuestionMark" url="/images/mos/questionmark.png" styleName="{unitStyle.questionImage}"></g:Image>
+ 	 <g:Label text="{i18n.GL2270}" styleName="{unitStyle.subText}"></g:Label>
  	 <g:Image ui:field="exportImage" styleName="{unitStyle.exportImage}" url="images/analytics/export.png"></g:Image>
  	 </g:HTMLPanel>
  	 <g:HTMLPanel>

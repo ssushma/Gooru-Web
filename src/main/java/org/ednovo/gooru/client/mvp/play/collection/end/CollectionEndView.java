@@ -1474,13 +1474,18 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	@Override
 	public void displaySpendTime(Long hours, Long mins, Double secs) {
-		spendTimeContainer.clear();
-		if(AppClientFactory.isAnonymous()){
-			dispalyTime();
-			return;
-		}
-		String minsString = (mins == 0)? "00": ((mins < 10)? "0"+mins : ""+mins );
-	    String secsString = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
+			spendTimeContainer.clear();
+			if(AppClientFactory.isAnonymous()){
+				dispalyTime();
+				return;
+			}
+			String minsString = (mins == 0)? "00": ((mins < 10)? "0"+mins : ""+mins );
+			String secsString ="";
+			if(secs>0 && secs<1){
+				secsString="<1";
+			}else{
+				secsString = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
+			}
 	        if (hours > 0){
 	        	displayTime(hours.toString(),hours==1?"hr":"hrs");
 	        	displayTime(" "+minsString.toString(),minsString.equals("01")?"min":"mins");

@@ -173,3 +173,12 @@
 	z-index: 5;
 	margin-left: 375px;
 }
+.questionImage{
+	position: relative;
+	bottom: 20px;
+	left: 129px;
+}
+.subText{
+	font-size: 15px;
+	font-family: Arial, Verdana, Sans-serif;
+}

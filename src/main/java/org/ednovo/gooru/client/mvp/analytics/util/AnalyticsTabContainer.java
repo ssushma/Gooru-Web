@@ -33,7 +33,14 @@ public abstract class AnalyticsTabContainer extends Composite {
 		btnEmail.addClickHandler(new ClickImplemntation(EMAIL));
 		btnSave.addClickHandler(new ClickImplemntation(SAVEBTN));
 	}
-	
+	/**
+	 * This method is used to clear the highlight styles
+	 */
+	void clearStyles(){
+		btnScoredQuestions.removeStyleName("addButonStyleActive");
+		btnOpenEndedQuestions.removeStyleName("addButonStyleActive");
+		btnCollectionBreakDown.removeStyleName("addButonStyleActive");
+	}
 	public class ClickImplemntation implements ClickHandler{
 		private String tabClicked;
 		ClickImplemntation(String tabClicked){
@@ -41,6 +48,14 @@ public abstract class AnalyticsTabContainer extends Composite {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			clearStyles();
+			if(tabClicked.equalsIgnoreCase(SCORED)){
+				btnScoredQuestions.addStyleName("addButonStyleActive");
+			}else if(tabClicked.equalsIgnoreCase(OPENENDED)){
+				btnOpenEndedQuestions.addStyleName("addButonStyleActive");
+			}else if(tabClicked.equalsIgnoreCase(BREAKDOWN)){
+				btnCollectionBreakDown.addStyleName("addButonStyleActive");
+			}
 			onTabClick(tabClicked);
 		}
 	}

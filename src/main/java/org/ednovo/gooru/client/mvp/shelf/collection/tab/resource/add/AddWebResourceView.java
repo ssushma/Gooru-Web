@@ -40,7 +40,9 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceView.AddWebResourceWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAdvancedCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
@@ -66,7 +68,10 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -74,6 +79,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -119,7 +125,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
-	public Label standardsDefaultText,mandatoryEducationalLbl, generateImageLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl;
+	public Label standardsDefaultText,mandatoryEducationalLbl, generateImageLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl,mandatorygenerateFromUrlLbl;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
@@ -131,9 +137,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	HTMLEventPanel refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
 	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
-	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel;
+	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
+	AdvancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly;
 	@UiField
-	Label leftArrowLbl, rightArrowLbl, uploadImageLbl,momentsOfLearningDropDownLbl;
+	Label leftArrowLbl, rightArrowLbl,momentsOfLearningDropDownLbl;
 
 	@UiField
 	public TextBox urlTextBox, titleTextBox;
@@ -149,7 +157,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
-		educationalpanel;
+		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer;
 
 	@UiField
 	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,contentPanel,textsText,audioText,urlContianer;//otherText
@@ -158,7 +166,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer;//other
 
 	@UiField
-	HTMLPanel resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel;
+	HTMLPanel resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel,educationalContainer;
 
 	@UiField
 	Label resoureDropDownLbl, resourceCategoryLabel,resourceEducationalLabel,resourcemomentsOfLearningLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords,educationalDropDownLbl;
@@ -179,7 +187,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	AppSuggestBox standardSgstBox;
 	
 	@UiField FlowPanel standardsPanel,standardContainer;
-	@UiField Button cancelResourcePopupBtnLbl,mobileYes,mobileNo;
+	@UiField Button cancelResourcePopupBtnLbl,mobileYes,mobileNo,generateFromUrlBtn,uploadImageLbl;
 	
 	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
 	
@@ -190,6 +198,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
 	@UiField Button browseStandards;
+	
+	@UiField InlineLabel advancedText;
 	
 	@UiField(provided = true)
 	AddTagesCBundle res2;
@@ -239,10 +249,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 BrowseStandardsTooltip browseStandardsTooltip;
 	private boolean isBrowseStandardsToolTip = false;
 	
+	private boolean isGenerateURL =false;
 	
+	public AddSetupAdvancedView addSetupAdvancedView;
+
 	public AddWebResourceView(CollectionDo collectionDo,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) { 
 		this.res2 = AddTagesCBundle.INSTANCE;
 		res2.css().ensureInjected();
+		AddSetupAdvancedCBundle.INSTANCE.css().ensureInjected();
 		this.isGoogleDriveFile=isGoogleDriveFile;
 		this.googleDriveItemDo=googleDriveItemDo;
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
@@ -321,6 +335,19 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		standardSgstBox.addSelectionHandler(this);
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		advancedText.setText(i18n.GL3096());
+		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		addSetupAdvancedView = new AddSetupAdvancedView() {
+			@Override
+			public void showAndHideContainers() {
+			}
+		};
+		AdvancedSetupContainer.add(addSetupAdvancedView);
+		generateFromUrlBtn.setText(i18n.GL3092());
+		/*generateFromUrlBtn.setEnabled(false);
+		generateFromUrlBtn.getElement().getStyle().setOpacity(0.5);
+		isGenerateURL =false;*/
+		disableGenerateBtn();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		urlTitle.getElement().setInnerHTML(i18n.GL0915());
@@ -415,6 +442,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		bookText.getElement().setId("pnlBookText");
 		bookText.getElement().setAttribute("alt", i18n.GL1677());
 		bookText.getElement().setAttribute("title", i18n.GL1677());
+		
+		defaultText.getElement().setInnerHTML(i18n.GL3093());
+		
 		momentsOfLearningTitle.getElement().setInnerHTML(i18n.GL1678());
 		momentsOfLearningTitle.getElement().setId("pnlMomentsOfLearningTitle");
 		momentsOfLearningTitle.getElement().setAttribute("alt", i18n.GL1678());
@@ -473,6 +503,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		uploadImageLbl.setText(i18n.GL0912());
 		uploadImageLbl.getElement().setAttribute("alt", i18n.GL0912());
 		uploadImageLbl.getElement().setAttribute("title", i18n.GL0912());
+		
 		refreshText.getElement().setInnerHTML(i18n.GL0923());
 		refreshText.getElement().setId("pnlRefreshText");
 		refreshText.getElement().setAttribute("alt", i18n.GL0923());
@@ -499,6 +530,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 		browseStandards.addClickHandler(new onBrowseStandarsCLick());
+		
+		generateFromUrlBtn.addClickHandler(new onGenerateFromUrlBtnClick());
+		
 		uploadImageLbl.getElement().setId("lblUploadImage");
 		addResourceBtnLbl.getElement().setId("btnAdd");
 		urlTextBox.getElement().setId("tbUrl");
@@ -581,6 +615,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		resourceTypePanel.setVisible(false);
 		resourceTypePanel.getElement().setId("pnlResourceTypePanel");
+		System.out.println("3");
 		educationalUsePanel.getElement().setId("pnlEducationalUsePanel");
 		educationalUsePanel.setVisible(false);
 		momentsOfLearningPanel.getElement().setId("pnlMomentsOfLearningPanel");
@@ -643,6 +678,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		moblieFriendly.getElement().setId("spnMobileFriendly");
 		moblieFriendly.getElement().setAttribute("alt",i18n.GL1811());
 		moblieFriendly.getElement().setAttribute("title",i18n.GL1811());
+		moblieFriendly.getElement().getStyle().setDisplay(Display.INLINE);
 		
 		mobileYes.setText(i18n.GL_GRR_YES());
 		mobileYes.getElement().setId("btnYes");
@@ -658,6 +694,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		accessHazard.getElement().setId("lblAccessHazard");
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
+		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
 		flashingHazard.setText(i18n.GL1806());
 		flashingHazard.getElement().setId("lblFlashingHazard");
@@ -675,15 +712,18 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		soundHazard.getElement().setAttribute("title",i18n.GL1810());
 		
 
-		mediaLabel.setText("Media Feature");
+		mediaLabel.setText(i18n.GL3094());
 		mediaLabel.getElement().setId("lblMediaFeature");
 		mediaLabel.getElement().setAttribute("alt","Media Feature");
 		mediaLabel.getElement().setAttribute("title","Media Feature");
+		mediaLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		
-		lblMediaPlaceHolder.setText("Choose a Media Feature Option:");
+		lblMediaPlaceHolder.setText(i18n.GL3051()+i18n.GL_SPL_SEMICOLON());
 		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
 		lblMediaPlaceHolder.getElement().setAttribute("alt","Choose a Media Feature Option:");
 		lblMediaPlaceHolder.getElement().setAttribute("title","Choose a Media Feature Option:");
+		
+		mandatorygenerateFromUrlLbl.setText(i18n.GL3095());
 		
 		spanelMediaFeaturePanel.setVisible(false);
 		
@@ -717,6 +757,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
 						lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
 						lblMediaPlaceHolder.setText(optionSelected);
+						setAdvancedOptionsStyles();
 					}
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
@@ -743,7 +784,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				
 			}
 		});
-		
+	
 		termsAndPolicyAnr.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -842,8 +883,101 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 		
+		/*if(isGenerateURL == false){
+			generateFromUrlBtn.addMouseOverHandler(new MouseOverHandler() {
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					mandatorygenerateFromUrlLbl.setVisible(true);
+				}
+			});
+		}*/
+		generateFromUrlBtn.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				mandatorygenerateFromUrlLbl.setVisible(false);
+			}
+		});
 		
+	/** Add Advanced Setup Changes **/
+		
+		educationalContainer.setVisible(false);
+		educationalUsePanel.setVisible(false);
+		momentsOfLearningContainer.setVisible(false);
+		momentsOfLearningPanel.setVisible(false);
+		standardContainer.setVisible(false);
+		mediaFeatureContainer.setVisible(false);
+		accessHazardContainer.setVisible(false);
+		standardsBrowseContainer.setVisible(false);
+		mobileFriendlyContainer.setVisible(false);
+		
+		addSetupAdvancedView.educationUseAdvancedPnl.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+			educationalContainer.setVisible(true);
+			educationalUsePanel.setVisible(true);
+			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.momentsOfLearningAdvancedPnl.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				momentsOfLearningContainer.setVisible(true);
+				momentsOfLearningPanel.setVisible(true);
+				addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				standardContainer.setVisible(true);
+				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				accessHazardContainer.setVisible(true);
+				addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				mediaFeatureContainer.setVisible(true);
+				addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				mobileFriendlyContainer.setVisible(true);
+				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				standardsBrowseContainer.setVisible(true);
+				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
+			}
+		});
+		
+		/** Add Advanced Setup Changes End**/
+		
+		eHearderIconEducationalUse.addClickHandler(new eHeaderClickHandler());
+		eHearderIconMomentsOfLearning.addClickHandler(new eHeaderMomentsOfLearningClickHandler());
+		eHearderIconstandards.addClickHandler(new eHeaderStandardsClickHandler());
+		eHearderIconAccessHazard.addClickHandler(new eHeaderAccessHazardClickHandler());
+		eHearderIconMediafeature.addClickHandler(new eHeaderMediaFeatureOnCLick());
+		eHearderIconMobileFriendly.addClickHandler(new eHeaderMobileFriendlyOnClick());
 	}
+	
 	private void OpenMediaFeatureDropdown() {
 		hasClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
@@ -998,6 +1132,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
+				updateStandardsAdvancedSetupStyle();
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
@@ -1011,10 +1146,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
-		
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
 		standardSuggestOracle.clear();
+		updateStandardsAdvancedSetupStyle();
 	}
 	private class OnEditImageClick implements ClickHandler {
 		@Override
@@ -1028,6 +1163,37 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		@Override
 		public void onClick(ClickEvent event) {
 			browseStandardsInfo();
+		}
+	}
+	
+	private class onGenerateFromUrlBtnClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if(isGenerateURL){
+			String userUrlStr = urlTextBox.getText().trim();
+			userUrlStr = URL.encode(userUrlStr);
+			//userUrlStr = userUrlStr.replaceAll("#", "%23");
+			urlTextBox.setText(URL.decode(userUrlStr));
+			urlTextBox.getElement().setAttribute("alt",userUrlStr);
+			urlTextBox.getElement().setAttribute("title", userUrlStr);
+			String userUrlStr1 = userUrlStr.replaceAll(
+					"feature=player_detailpage&", "");
+			userUrlStr1 = userUrlStr.replaceAll(
+					"feature=player_embedded&", "");
+			// getResourceInfo(userUrlStr1);
+				updateThumbanilImage(userUrlStr);
+			if (userUrlStr.indexOf("youtube") >0){
+				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
+				String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+				System.out.println("thumbnailUrl:"+thumbnailUrl);
+				generateImageLbl.setVisible(false);
+				setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
+				setThumbnailImage.setUrl(thumbnailUrl);
+				//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+			}
+			loadingPanel.setVisible(true);
+			contentPanel.getElement().getStyle().setOpacity(0.6);
+			}
 		}
 	}
 	  private class rightsChecked implements ClickHandler {
@@ -1060,6 +1226,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		{
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+			updateMobileFriendlyAdvancedStyles();
 		}
 		
 		@UiHandler("mobileNo")
@@ -1067,6 +1234,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		{
 			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+			updateMobileFriendlyAdvancedStyles();
 		}
 		/*
 		 * method for select access hazards
@@ -1096,6 +1264,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 			
 			accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
+			setAdvancedAccessHazardStyles(accessHazardsArr.length);
 			return accessHazardsArr;
 		}
 		
@@ -1109,6 +1278,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			{
 				flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
+			setAccessHazards();
 		}
 
 		@UiHandler("motionSimulationHazard")
@@ -1121,6 +1291,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			{
 				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
+			setAccessHazards();
 		}
 
 		@UiHandler("soundHazard")
@@ -1133,6 +1304,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			{
 				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
+			setAccessHazards();
 		}	
 	public abstract void resourceImageUpload();
 	
@@ -1338,6 +1510,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											}
 											if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 											{
+												System.out.println("resourceEducationalLabel.getText() here is::::"+resourceEducationalLabel.getText());
 												if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
 													tagList.add("Educational Use : "+resourceEducationalLabel.getText());
 												}
@@ -1451,7 +1624,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							userUrlStr = userUrlStr.substring(0, userUrlStr.length() - 1);
 						}
 						if (!userUrlStr.equalsIgnoreCase("")) {
-
 							boolean isStartWithHttp = userUrlStr
 									.matches("^(http|https)://.*$");
 							if (!isStartWithHttp) {
@@ -1459,11 +1631,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								urlTextBox.setText(userUrlStr);
 								urlTextBox.getElement().setAttribute("alt",userUrlStr);
 								urlTextBox.getElement().setAttribute("title", userUrlStr);
-								
 							}
-
 							if (isValidUrl(userUrlStr, true)) {
-								
+								enableGenerateBtn();
 								userUrlStr = URL.encode(userUrlStr);
 								//userUrlStr = userUrlStr.replaceAll("#", "%23");
 								urlTextBox.setText(URL.decode(userUrlStr));
@@ -1474,9 +1644,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								userUrlStr1 = userUrlStr.replaceAll(
 										"feature=player_embedded&", "");
 								// getResourceInfo(userUrlStr1);
-									
+									System.out.println("here url on blur:::"+userUrlStr);
 								checkShortenUrl(userUrlStr);
-								if (userUrlStr.indexOf("youtube") >0){
+								/*if (userUrlStr.indexOf("youtube") >0){
 									String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
 									String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
 									System.out.println("thumbnailUrl:"+thumbnailUrl);
@@ -1484,19 +1654,24 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 									setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
 									setThumbnailImage.setUrl(thumbnailUrl);
 									//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
-								}
+								}*/
 								loadingPanel.setVisible(true);
 								contentPanel.getElement().getStyle().setOpacity(0.6);
 
 							} else {
+								disableGenerateBtn();
 								mandatoryUrlLbl.setText(i18n.GL0926());
 								mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0926());
 								mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0926());
 								mandatoryUrlLbl.setVisible(true);
 							}
+						}else{
+							System.out.println("url empty");
+							disableGenerateBtn();
 						}
 					}else{
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(urlTextBox, mandatoryUrlLbl, value);
+						disableGenerateBtn();
 					}
 				}
 			});
@@ -1506,17 +1681,77 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public abstract void getResourceInfo(String userUrlStr);
 
 	public abstract void checkShortenUrl(String userUrlStr);
+	
+	public abstract void updateThumbanilImage(String userUrlStr);
 
 	private class UrlKeyUpHandler implements KeyUpHandler {
-
 		public void onKeyUp(KeyUpEvent event) {
 
+
+			final Map<String, String> parms = new HashMap<String, String>();
+			
+			parms.put("text", urlTextBox.getText().trim());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					if(!value){
+						addResourceBtnLbl.setVisible(true);
+						addResourceBtnPanel.setVisible(true);
+						String userUrlStr = urlTextBox.getText().trim();
+						if (userUrlStr.contains("goorulearning.org")) {
+							if (userUrlStr.contains("support.goorulearning.org")
+									|| userUrlStr.contains("about.goorulearning.org")) {
+
+							} else {
+								mandatoryUrlLbl
+										.setText(i18n.GL0924());
+								mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0924());
+								mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0924());
+								mandatoryUrlLbl.setVisible(true);
+								return;
+							}
+						}
+
+						if (userUrlStr.endsWith("/")) {
+							userUrlStr = userUrlStr.substring(0, userUrlStr.length() - 1);
+						}
+						if (!userUrlStr.equalsIgnoreCase("")) {
+
+							boolean isStartWithHttp = userUrlStr
+									.matches("^(http|https)://.*$");
+							if (!isStartWithHttp) {
+								userUrlStr = "http://" + userUrlStr;
+								urlTextBox.setText(userUrlStr);
+								urlTextBox.getElement().setAttribute("alt",userUrlStr);
+								urlTextBox.getElement().setAttribute("title", userUrlStr);
+							}
+							if (isValidUrl(userUrlStr, true)) {
+								enableGenerateBtn();
+							} else {
+								disableGenerateBtn();
+								mandatoryUrlLbl.setText(i18n.GL0926());
+								mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0926());
+								mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0926());
+								mandatoryUrlLbl.setVisible(true);
+							}
+						}else{
+							disableGenerateBtn();
+						}
+					}else{
+						SetStyleForProfanity.SetStyleForProfanityForTextBox(urlTextBox, mandatoryUrlLbl, value);
+						disableGenerateBtn();
+					}
+				}
+			});
+		
+		
 			mandatoryUrlLbl.setVisible(false);
+			mandatorygenerateFromUrlLbl.setVisible(false);
 		}
 	}
 
 	private class TitleKeyUpHandler implements KeyUpHandler {
-
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryTitleLbl.setVisible(false);
 			if (titleTextBox.getText().length() >= 50) {
@@ -1541,7 +1776,54 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		}
 	}
+	private class eHeaderClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			educationalContainer.setVisible(false);
+			educationalUsePanel.setVisible(false);
+			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderMomentsOfLearningClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			momentsOfLearningContainer.setVisible(false);
+			momentsOfLearningPanel.setVisible(false);
+			addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderStandardsClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			standardsBrowseContainer.setVisible(false);
+			addSetupAdvancedView.standardsAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderAccessHazardClickHandler implements ClickHandler{
 
+		@Override
+		public void onClick(ClickEvent event) {
+			accessHazardContainer.setVisible(false);
+			addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderMediaFeatureOnCLick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mediaFeatureContainer.setVisible(false);
+			addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(true);
+			}
+	}
+	private class eHeaderMobileFriendlyOnClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mobileFriendlyContainer.setVisible(false);
+			addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
+		}
+		
+	}
 	@UiHandler("leftArrowLbl")
 	void leftArrowClick(ClickEvent event) {
 		activeImageIndex--;
@@ -1668,7 +1950,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	}
 	
-	
+	@UiHandler("defaultPanel")
+	void defaultPanel(ClickEvent event) {
+		resourceEducationalLabel.setText(i18n.GL1684());
+		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
+		resourceEducationalLabel.getElement().setAttribute("title", i18n.GL1684());
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
+	}
 	@UiHandler("activityPanel")
 	void activityPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
@@ -1678,6 +1969,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("handoutPanel")
 	void handoutPanel(ClickEvent event) {
@@ -1688,6 +1980,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("homeworkPanel")
 	void homeworkPanel(ClickEvent event) {
@@ -1698,6 +1991,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("gamePanel")
 	void gamePanel(ClickEvent event) {
@@ -1708,6 +2002,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("presentationPanel")
 	void presentationPanel(ClickEvent event) {
@@ -1718,6 +2013,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("referenceMaterialPanel")
 	void referenceMaterialPanel(ClickEvent event) {
@@ -1728,6 +2024,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("quizPanel")
 	void quizPanel(ClickEvent event) {
@@ -1738,6 +2035,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("curriculumPlanPanel")
 	void curriculumPlanPanel(ClickEvent event) {
@@ -1748,6 +2046,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("lessonPlanPanel")
 	void lessonPlanPanel(ClickEvent event) {
@@ -1758,6 +2057,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("unitPlanPanel")
 	void unitPlanPanel(ClickEvent event) {
@@ -1768,6 +2068,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("projectPlanPanel")
 	void projectPlanPanel(ClickEvent event) {
@@ -1778,6 +2079,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("readingPanel")
 	void readingPanel(ClickEvent event) {
@@ -1788,6 +2090,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("textbookPanel")
 	void textbookPanel(ClickEvent event) {
@@ -1798,6 +2101,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("articlePanel")
 	void articlePanel(ClickEvent event) {
@@ -1808,6 +2112,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("bookPanel")
 	void bookPanel(ClickEvent event) {
@@ -1818,6 +2123,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	
 	@UiHandler("educationalDropDownLbl")
@@ -1840,6 +2146,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("interactingWithTheTextPanel")
 	void interactingWithTheTextPanel(ClickEvent event) {
@@ -1850,6 +2157,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("extendingUnderstandingPanel")
 	void extendingUnderstandingPanel(ClickEvent event) {
@@ -1860,6 +2168,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("momentsOfLearningDropDownLbl")
 	public void momentsOfLearningDropDownClick(ClickEvent event) {
@@ -1903,7 +2212,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			setImageThumbnail();
 		}
 	}
-
 	/*
 	 * @UiHandler("refreshlabel") void refreshlabelClick(ClickEvent event){
 	 * String userUrlStr = urlTextBox.getText().trim(); if
@@ -2126,6 +2434,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			standardMaxShow();
 		}
 		closeStandardsPopup();
+		updateStandardsAdvancedSetupStyle();
 	}
 	
 	public void DisableStandars(){
@@ -2179,5 +2488,79 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public void enableStandards(){
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
+	}
+	public void enableGenerateBtn(){
+		generateFromUrlBtn.getElement().getStyle().clearColor();
+		generateFromUrlBtn.getElement().removeClassName("disabled");
+		generateFromUrlBtn.getElement().getStyle().setOpacity(1);
+		isGenerateURL =true;
+		generateFromUrlBtn.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				mandatorygenerateFromUrlLbl.setVisible(false);
+			}
+		});
+	}
+	public void disableGenerateBtn(){
+		generateFromUrlBtn.getElement().getStyle().setColor("#999");
+		generateFromUrlBtn.getElement().addClassName("disabled");
+		generateFromUrlBtn.getElement().getStyle().setOpacity(0.5);
+		isGenerateURL =false;
+		mandatorygenerateFromUrlLbl.setVisible(false);
+		generateFromUrlBtn.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				mandatorygenerateFromUrlLbl.setVisible(true);
+			}
+		});
+	}
+	public void setAdvancedOptionsStyles(){
+		if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+			addSetupAdvancedView.educationUseAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.educationUseAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.educationUseAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+		if(resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+			addSetupAdvancedView.momentsOfLearningAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.momentsOfLearningAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.momentsOfLearningAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+		if(lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:")){
+			addSetupAdvancedView.mediaFeatureAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.mediaFeatureAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.mediaFeatureAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
+	public void setAdvancedAccessHazardStyles(int length){
+		if(length == 0){
+			addSetupAdvancedView.accessHazardAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.accessHazardAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.accessHazardAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
+	public void updateStandardsAdvancedSetupStyle() {
+		System.out.println("standardsPanel.getWidgetCount() here is:::::"+standardsPanel.getWidgetCount());
+		if(standardsPanel.getWidgetCount()==0){
+			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.standardsAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
+	public void updateMobileFriendlyAdvancedStyles(){
+		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}	
 	}
 }

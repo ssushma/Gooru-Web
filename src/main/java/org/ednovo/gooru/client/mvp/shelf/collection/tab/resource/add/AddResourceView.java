@@ -398,7 +398,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 		public void getResourceInfo(String userUrlStr) {
-		
+
 			//Check whether the resource already existing or not.
 			userUrlStr=userUrlStr.replaceAll("feature=player_detailpage&", "");
 			userUrlStr=userUrlStr.replaceAll("feature=player_embedded&","");
@@ -406,8 +406,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			//Get Meta Info for Resource
 			getUiHandlers().getResourceMetaInfo(userUrlStr);
 		}
-		
-	
+
+
 		@Override
 
 		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final String hostname,final List<String> tagList) {
@@ -505,8 +505,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void checkShortenUrl(String userUrlStr) {
 			getUiHandlers().isShortenUrl(userUrlStr);
 		}
-
-
+		@Override
+		public void updateThumbanilImage(String userUrlStr) {
+			getUiHandlers().getResourceImageInfo(userUrlStr);
+		}
 		@Override
 		public void browseStandardsInfo() {
 			isQuestion =false;
@@ -525,7 +527,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			// TODO Auto-generated method stub
 			getUiHandlers().closeStandardsPopup();
 		}
-		
+	
 	}
 	
 	
@@ -903,6 +905,27 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				addWebResourceWidget.descriptionTxtAera.setText(resMetaInfo.getDescription());
 			}
 			setResMetaInfo(resMetaInfo);
+			/*setThumbnailImages(resMetaInfo.getImages());
+			updateUi();
+			if(resMetaInfo.getImages().size()<=0){
+				addWebResourceWidget.generateImageLbl.setVisible(true);
+				addWebResourceWidget.rightArrowLbl.setVisible(false);
+				addWebResourceWidget.leftArrowLbl.setVisible(false);
+				addWebResourceWidget.setThumbnailImage.setVisible(false);
+			}
+			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(resMetaInfo.getImages().get(0), 0, 0, 80, 60);
+			addWebResourceWidget.setThumbnailImage.setUrl(resMetaInfo.getImages().size() >0 ? resMetaInfo.getImages().get(0) : "");
+			addWebResourceWidget.setThumbnailImage.setHeight("60px");
+			addWebResourceWidget.setThumbnailImage.setWidth("80px");*/
+		}
+	}
+	
+	@Override
+	public void setPopupImageData(ResourceMetaInfoDo resMetaInfo) {
+		addWebResourceWidget.loadingPanel.setVisible(false);
+		addWebResourceWidget.contentPanel.getElement().getStyle().clearOpacity();
+		if(resMetaInfo!=null){
+			setResMetaInfo(resMetaInfo);
 			setThumbnailImages(resMetaInfo.getImages());
 			updateUi();
 			if(resMetaInfo.getImages().size()<=0){
@@ -914,7 +937,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(resMetaInfo.getImages().get(0), 0, 0, 80, 60);
 			addWebResourceWidget.setThumbnailImage.setUrl(resMetaInfo.getImages().size() >0 ? resMetaInfo.getImages().get(0) : "");
 			addWebResourceWidget.setThumbnailImage.setHeight("60px");
-			addWebResourceWidget.setThumbnailImage.setWidth("80px");
+			addWebResourceWidget.setThumbnailImage.setWidth("80px");		
 		}
 	}
 	@Override
@@ -1416,5 +1439,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			addQuestionResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
 		}
 	}
-	
+
+
 }
