@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsHandler;
+import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
@@ -51,7 +52,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author Search Team
  * 
  */
-public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler,UpdateRatingsInSearchHandler {
+public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler,DisableSpellSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler,UpdateRatingsInSearchHandler {
 	
 	/**
 	 * Set search page view

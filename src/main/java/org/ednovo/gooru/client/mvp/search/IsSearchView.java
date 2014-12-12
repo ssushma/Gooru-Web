@@ -149,4 +149,6 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 
 	void OnStandardsClickEvent(Button addBtn);
 
+	String getSearchText();
+
 }

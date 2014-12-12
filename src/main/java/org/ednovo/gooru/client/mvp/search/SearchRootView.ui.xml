@@ -92,7 +92,6 @@
 
 
 		}
-
 		.resourceSearchButtonImage{
 			margin-left: 5px;
 			padding: 7px 31px !important;
@@ -216,23 +215,17 @@
 			width:22px;
 			margin-right:5px;
 		}
-		.prefilterPanel{
-			margin-left: 5px;
-		    margin-bottom: 30px;
-		}
+
 
 	</ui:style>
 	<g:HTMLPanel styleName="{style.searchTotalContainer}">
 		<!-- <gc:SearchBarVc ui:field="searchBarVc" /> -->
 		<g:FlowPanel styleName="" ui:field="panelSearchPage">
 			<g:FlowPanel styleName="{style.searchResultPanel}">
-				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
-				<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
+
 				<g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
 					<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
-					<g:Button styleName="{style.secondaryResourceSearchBtn}" ui:field="resourceSearchBtn"/>
-					<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
-					<g:Button styleName="{style.secondaryCollectionSearchBtn}" ui:field="collectionSearchBtn"/>
+	
 				</g:FlowPanel>
 			</g:FlowPanel>
 			<g:SimplePanel styleName="{style.searchWrapper}"  ui:field="searchWrapperSimPanel"/>
