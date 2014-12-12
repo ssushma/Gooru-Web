@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -49,9 +51,11 @@ import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.tooltip.AddResourceToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -70,6 +74,9 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -504,8 +511,8 @@ public class CollectionResourceTabView extends
 							}
 
 							@Override
-							public void browseStandardsInfo(boolean val) {
-								getUiHandlers().getBrowseStandardsInfo(val);
+							public void browseStandardsInfo(boolean val,boolean userResource) {
+								getUiHandlers().getBrowseStandardsInfo(val,userResource);
 							}
 
 							@Override
@@ -522,7 +529,7 @@ public class CollectionResourceTabView extends
 								getUiHandlers().imageEditUserOwnResourceUpload();
 							}
 							@Override
-							public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,	String thumbnailUrlStr) {
+							public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,String thumbnailUrlStr,CollectionItemDo collectionItemDo, List<String> tagList) {
 								title=titleStr;
 								description = desc;
 								category = categoryStr;
@@ -535,10 +542,29 @@ public class CollectionResourceTabView extends
 								//	 }*/
 								//}
 
-								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr);
-
+								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 								//										getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
+							}
+							
+							
+							
+							/*@Override
+							public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+								getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
+							}*/
+							@Override
+							public void browseStandardsInfo(boolean val, boolean userResource) {
+								getUiHandlers().getBrowseStandardsInfo(val,userResource);
+							}
+							@Override
+							public void closeStandardsPopup() {
+								getUiHandlers().closeBrowseStandardsPopup();
+							}
+							
+							@Override
+							public void onSelection(SelectionEvent<Suggestion> event) {
+								super.onSelection(event);		
 							}
 						};
 					}
@@ -681,8 +707,8 @@ public class CollectionResourceTabView extends
 							}
 
 							@Override
-							public void browseStandardsInfo(boolean val) {
-								getUiHandlers().getBrowseStandardsInfo(val);
+							public void browseStandardsInfo(boolean val,boolean userResource) {
+								getUiHandlers().getBrowseStandardsInfo(val,userResource);
 							}
 
 							@Override
@@ -701,18 +727,35 @@ public class CollectionResourceTabView extends
 								}
 
 								@Override
-								public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,String thumbnailUrlStr) {
+								public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,String thumbnailUrlStr,CollectionItemDo collectionItemDo, List<String> tagList) {
 									title=titleStr;
 									description = desc;
 									category = categoryStr;
 									thumbnailUrl = thumbnailUrlStr;
-									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr);
+									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 //									getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 								}
+
+								/*@Override
+								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
+								}*/
+								@Override
+								public void browseStandardsInfo(boolean val, boolean userResource) {
+									getUiHandlers().getBrowseStandardsInfo(val,userResource);
+								}
+								@Override
+								public void closeStandardsPopup() {
+									getUiHandlers().closeBrowseStandardsPopup();
+								}
+								
+								@Override
+								public void onSelection(SelectionEvent<Suggestion> event) {
+									super.onSelection(event);		
+								}
 							};
 						}
-
 					}
 				});
 		/*collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());*/
@@ -765,8 +808,8 @@ public class CollectionResourceTabView extends
 		}
 
 		@Override
-		public void callBrowseStandardsInfo(boolean val) {
-			getUiHandlers().getBrowseStandardsInfo(val);
+		public void callBrowseStandardsInfo(boolean val,boolean userResource) {
+			getUiHandlers().getBrowseStandardsInfo(val,userResource);
 		}
 
 		public void setUpdatedBrowseStandardsVal(String setStandardsVal,Integer codeId, String setStandardDesc) {
@@ -1255,12 +1298,12 @@ public class CollectionResourceTabView extends
 
 	@Override
 	public void uploadResource(MediaUploadDo result) {
-		JSONObject jsonObject = setEditUserResourceJsonObject(result.getOriginalFilename(),result.getName(), title, description, category, thumbnailUrl);
-		getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
+//		JSONObject jsonObject = setEditUserResourceJsonObject(result.getOriginalFilename(),result.getName(), title, description, category, thumbnailUrl);
+//		getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 		
 	}
 
-	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl) {
+	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl, CollectionItemDo collectionItemDo, List<String> tagList) {
 		JSONObject file = new JSONObject();
 		 if(originalFilename!=null && mediaFileName!=null){
 			 file.put("filename", new JSONString(originalFilename));
@@ -1268,7 +1311,7 @@ public class CollectionResourceTabView extends
 		 }
 		
 		     
-		 JSONObject attach = new JSONObject();
+		JSONObject attach = new JSONObject();
         attach.put("title", new JSONString(editedTitle));
         attach.put("description", new JSONString(editedDescription));
         JSONObject resourceFormat = new JSONObject();
@@ -1281,8 +1324,44 @@ public class CollectionResourceTabView extends
         	 attach.put("attach", file);
              
         }
-       
+        
+        List<CodeDo> codeDoList = new ArrayList<CodeDo>(collectionItemDo.getResource().getTaxonomySet());
+      
+        JSONArray standardsJsonArray = new JSONArray();
+        JSONArray momentsOfLearningArrValue = new JSONArray();
+        JSONArray educatUseArrValue = new JSONArray();
+        JSONArray tagsArrValue = new JSONArray();
+        
+        for(int i=0;i<codeDoList.size();i++){
+        	JSONObject code = new JSONObject();
+        	code.put("code",new JSONString(codeDoList.get(i).getCode()));
+        	code.put("codeId",new JSONNumber(codeDoList.get(i).getCodeId()));
+        	standardsJsonArray.set(i,code);
+        }
+        attach.put("taxonomySet", standardsJsonArray);
+        
+        for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
+        	JSONObject momentsOfLearningJsonObj = new JSONObject();
+        	momentsOfLearningJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getMomentsOfLearning().get(i).isSelected()));        
+        	momentsOfLearningJsonObj.put("value",new JSONString(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue()));
+            momentsOfLearningArrValue.set(i, momentsOfLearningJsonObj);
+        }
+        attach.put("momentsOfLearning", momentsOfLearningArrValue);
+        
+        for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
+        	JSONObject educatUseJsonObj = new JSONObject();
+        	educatUseJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getEducationalUse().get(i).isSelected()));
+        	educatUseJsonObj.put("value", new JSONString(collectionItemDo.getResource().getEducationalUse().get(i).getValue()));
+        	educatUseArrValue.set(i, educatUseJsonObj);
+        }
+        attach.put("educationalUse", educatUseArrValue);
+        
+        for(int i=0;i<tagList.size();i++){
+        	tagsArrValue.set(i, new JSONString(tagList.get(i))); 
+        }
+        
         JSONObject resource = new JSONObject();
+        resource.put("resourceTags",tagsArrValue);
         resource.put("resource", attach);
         
 		return resource;
@@ -1304,9 +1383,14 @@ public class CollectionResourceTabView extends
 	}
 
 	@Override
-	public void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,String setStandardDesc, boolean value) {
+	public void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,String setStandardDesc, boolean value, boolean userResource) {
 		if(value == false){
-			editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+			if(userResource){
+				ownResourcePopupVc.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+			}else{
+				editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+			}
+			
 		}else{
 			editQuestionPopupWidget.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 		}

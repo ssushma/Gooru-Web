@@ -902,6 +902,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		
 		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
+		getLogger().info("---- Updating Web url --- "+url);
+		getLogger().info("--- pay load -- "+form);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1100,6 +1102,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_RESOURCE, gooruOid, getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), jsonString);
+		getLogger().info("---- Updating User own resource -- "+url);
+		getLogger().info("--- payload -- "+jsonString);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
 	}

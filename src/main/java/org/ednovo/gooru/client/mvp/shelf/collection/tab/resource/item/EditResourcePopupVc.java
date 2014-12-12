@@ -231,6 +231,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	String mediaFeatureStr = i18n.GL1767();
 	public abstract void updateResource(CollectionItemDo collectionItemDo,List<String> tagList);
 	private boolean isQuestionResource=false;
+	private boolean isUserResource=false;
 
 	public EditResourcePopupVc(CollectionItemDo collectionItemDo) {
 		super();
@@ -854,14 +855,15 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 	}
-	public abstract void browseStandardsInfo(boolean val);
+	public abstract void browseStandardsInfo(boolean val,boolean userResource);
 	public abstract void closeStandardsPopup();
 	
 	private class onBrowseStandardsClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			isQuestionResource= false;
-			browseStandardsInfo(isQuestionResource);
+			isUserResource = false;
+			browseStandardsInfo(isQuestionResource,isUserResource);
 		}
 	}
 	public void onLoad(){
@@ -1137,7 +1139,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
 		setImage(url, category);
 		if( collectionItemDo.getResource().getEducationalUse()!=null){
-			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
+			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
+				
 				   if(item.isSelected()){
 					    resourceEducationalLabel.setText(item.getValue());
 						educationalUsePanel.setVisible(false);
@@ -1147,7 +1150,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 		}
 		if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
-			for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {			
+			for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {	
 				   if(item.isSelected()){
 					   resourcemomentsOfLearningLabel.setText(item.getValue());
 					   resourcemomentsOfLearningLabel.getElement().setAttribute("alt", item.getValue());
@@ -1391,6 +1394,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
 												}
 												collectionItemDo.getResource().setTaxonomySet(standardsDo);
+												
 												if(tagListGlobal!=null&&tagListGlobal.size()!=0){
 												AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(collectionItemDo.getResource().getGooruOid(), tagListGlobal.toString(), new AsyncCallback<Void>() {
 													
@@ -1969,7 +1973,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
 	{
-		
 		if(mobileFriendlyVal.contains(i18n.GL_GRR_YES()))
 		{
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
