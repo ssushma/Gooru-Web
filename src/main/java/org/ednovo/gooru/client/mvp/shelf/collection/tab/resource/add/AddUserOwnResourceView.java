@@ -92,7 +92,10 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -1013,7 +1016,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 											isEnabled = false;
 										}
 										if(isValidate){
-											/*addResourceBtnLbl.setEnabled(true);
+											addResourceBtnLbl.setEnabled(true);
 											addResourceBtnLbl.getElement().removeClassName("secondary");
 											addResourceBtnLbl.getElement().addClassName("primary");
 											addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
@@ -1028,10 +1031,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 													loadingImagePanel.setVisible(false);
 													if(isValidImageSize){
 														if(collectionDo.getSharing().equalsIgnoreCase("public")){
-															parseUploadFileDetails(event.getResults(),true);
+															parseUploadFileDetails(event.getResults(),true,tagList);
 														}
 														else{
-															parseUploadFileDetails(event.getResults(),false);
+															parseUploadFileDetails(event.getResults(),false,tagList);
 														}
 													}
 												}
@@ -1041,12 +1044,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 												
 												}
 											});
-											fileuploadForm.submit();*/
+											fileuploadForm.submit();
 											
 											
 											
-											 String str ="{\"deleteType\":\"DELETE\",\"deleteUrl\":\"media/3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\",\"imageValidationMsg\":null,\"name\":\"3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\",\"originalFilename\":\"6-004s09.jpg\",\"size\":72869,\"statusCode\":200,\"uploadImageSource\":\"local\",\"url\":\"http://qarepo.goorulearning.org/qalive/uploaded-media/3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\"}";
-							                 parseUploadFileDetails(str,false,tagList);
+											/* String str ="{\"deleteType\":\"DELETE\",\"deleteUrl\":\"media/3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\",\"imageValidationMsg\":null,\"name\":\"3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\",\"originalFilename\":\"6-004s09.jpg\",\"size\":72869,\"statusCode\":200,\"uploadImageSource\":\"local\",\"url\":\"http://qarepo.goorulearning.org/qalive/uploaded-media/3f4d6fb4-a42f-4f7c-b11d-28fb8f654194.jpg\"}";
+							                 parseUploadFileDetails(str,false,tagList);*/
 											
 										}else{
 											lblAdding.getElement().getStyle().setDisplay(Display.NONE);
