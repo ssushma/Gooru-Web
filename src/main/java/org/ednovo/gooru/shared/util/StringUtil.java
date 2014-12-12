@@ -413,4 +413,37 @@ public class StringUtil {
 		if (titleValue !=null)
 			object.setAttribute("title",titleValue);
 	}
+	
+	/**
+	 * 
+	 * @function removeCookie 
+	 * 
+	 * @created_date : 12-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param key
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public static native void removeCookie(String key) /*-{
+		for (Cookie cookie : request.getCookies()) {
+			// Delete the cookie by setting its maximum age to zero
+			if (cookie.getName().equals(key)) {
+				Cookie gooruCookie = new Cookie(cookie.getName(), "");
+				gooruCookie.setMaxAge(0);
+				gooruCookie.setPath("/");
+				gooruCookie.setDomain(request.getServerName());
+				gooruCookie.setValue("");
+				response.addCookie(gooruCookie);
+			}
+		}
+	}-*/;
 }
