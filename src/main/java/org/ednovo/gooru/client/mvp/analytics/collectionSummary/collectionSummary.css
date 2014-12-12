@@ -2,6 +2,7 @@
 .maincontainer {
 	background-color: inherit;
 	text-align: center;
+	clear:both;
 }
 .exportImage{
 	float: right;

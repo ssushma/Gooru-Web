@@ -185,7 +185,7 @@
 		<g:Button styleName="{res.css.backArrowButton} backArrowButton" ui:field="backArrowButton"></g:Button>
 		<!-- <g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorProgress"></g:Button>
 		<g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorSummary"></g:Button> -->
-		<g:HTMLPanel ui:field="hideToggleButtons">
+		<g:HTMLPanel ui:field="hideToggleButtons" styleName="{unitStyle.toggleContainer} ">
 			<label class="{unitStyle.switchContainer} switchGreen">
 				<g:SimpleCheckBox styleName="switchInput1" ui:field="changeProgressSummary" checked="true"></g:SimpleCheckBox>
 				<g:InlineLabel styleName="switchLabel1" ui:field="monitorProgress">Progress</g:InlineLabel>
