@@ -619,7 +619,7 @@
 }
 
 .filterDropDown {
-	float: left;
+	float: right;
 	border: 1px solid #ddd;
 	cursor: pointer;
 	display: block;
