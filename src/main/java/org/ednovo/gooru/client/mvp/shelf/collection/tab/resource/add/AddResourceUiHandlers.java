@@ -85,7 +85,7 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	void saveUserResource(String filePath);
 	public void showDriveResoureView(HTMLPanel tabContainer);
 	
-	public void browseStandardsInfo(boolean val);
+	public void browseStandardsInfo(boolean val, boolean isUserResource);
 
 	void addUpdatedBrowseStandards();
 

@@ -259,9 +259,11 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			if(!(stdCode!=null || grades!=null || subjects!=null)){
 				System.out.println("ININININ");
 				standardsConatiner.setVisible(false);
+				flowpanel.getElement().setAttribute("style", "margin-top: 0px;");
 			}else{
 				System.out.println("else::");
 				standardsConatiner.setVisible(true);
+				flowpanel.getElement().setAttribute("style", "margin-top: 10px;");
 			}
 			
 		}
@@ -294,7 +296,12 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		if(grades!=null){
 			String[] gradesSplit = grades.split(",");
 			for(int i=0; i<gradesSplit.length; i++){
-				standardsConatiner.add(createTagsLabel(gradesSplit[i],"gradePanel"));
+				if(gradesSplit[i].equals("12gte")){
+					standardsConatiner.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
+				}else{
+					standardsConatiner.add(createTagsLabel(gradesSplit[i],"gradePanel"));
+				}
+				
 			}
 				
 		}

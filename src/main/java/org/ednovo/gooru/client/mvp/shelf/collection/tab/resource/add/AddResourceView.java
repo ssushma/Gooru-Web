@@ -74,8 +74,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -161,6 +165,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private HandlerRegistration handlerRegistration=null;
 	
 	private boolean isQuestion =false;
+	
+	private boolean isUserResource =false;
 	
 	@Inject
 	public AddResourceView(EventBus eventBus) {
@@ -507,7 +513,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void browseStandardsInfo() {
 			isQuestion =false;
-			getUiHandlers().browseStandardsInfo(isQuestion);
+			isUserResource = false;
+			getUiHandlers().browseStandardsInfo(isQuestion,isUserResource);
 		}
 
 
@@ -592,7 +599,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void callBrowseStandards() {
 			isQuestion =true;
-			getUiHandlers().browseStandardsInfo(isQuestion);
+			isUserResource = false;
+			getUiHandlers().browseStandardsInfo(isQuestion, isUserResource);
 		}
 		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id, String desc) {
 			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
@@ -647,7 +655,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 
 		@Override
-		public void showResourcePreview(final String filePath,String resourceMediaFileName,String resourceOriginalFileName,  String resourceTitle,  String resourceDesc, String resourceCategory) {
+		public void showResourcePreview(final String filePath,String resourceMediaFileName,String resourceOriginalFileName,  String resourceTitle,  String resourceDesc, String resourceCategory, final String educationalLevel, final String momentsOfLearning, final List<CodeDo> standardsDo, final List<String> tagList) {
 			title=resourceTitle;
 			desc=resourceDesc;
 			category=resourceCategory;
@@ -666,7 +674,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				
 				@Override
 				public void addUserOwnResource() {
-					JSONObject jsonObject = setImageUploadJsonObject(originalFileName,mediaFilename, title, desc, category, ownResourceImgUrl);
+					JSONObject jsonObject = setImageUploadJsonObject(originalFileName,mediaFilename, title, desc, category, ownResourceImgUrl,educationalLevel,momentsOfLearning,standardsDo,tagList);
 					ownResourceImgUrl = null;
 					userOwnResourcePreview.lblConfirmAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 					userOwnResourcePreview.actionPanel.getElement().getStyle().setDisplay(Display.NONE);
@@ -717,14 +725,34 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}*/
 
 		@Override
-		public void addUserResource(String filePath,String mediaFileName,String originalFileName, String resourceTitle,String resourceDesc, String resourceCategory) {
+		public void addUserResource(String filePath,String mediaFileName,String originalFileName, String resourceTitle,String resourceDesc, String resourceCategory, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList) {
 			title=resourceTitle;
 			desc=resourceDesc;
 			category=resourceCategory;
-			JSONObject jsonObject = setImageUploadJsonObject(originalFileName,mediaFileName, title, desc, category, ownResourceImgUrl); 
+			JSONObject jsonObject = setImageUploadJsonObject(originalFileName,mediaFileName, title, desc, category, ownResourceImgUrl,educationalLevel,momentsOfLearning,standardsDo,tagList); 
 			ownResourceImgUrl = null;
+			System.out.println("--- string payload -- "+jsonObject.toString());
 			getUiHandlers().addUserOwnResource(jsonObject.toString());
-//			saveUserResource(filePath);
+		}
+
+		@Override
+		public void browseStandardsInfo() {
+			isQuestion =false;
+			isUserResource = true;
+			
+			getUiHandlers().browseStandardsInfo(isQuestion,isUserResource);
+		}
+
+
+		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
+			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
+		}
+
+
+		@Override
+		public void closeStandardsPopup() {
+			// TODO Auto-generated method stub
+			getUiHandlers().closeStandardsPopup();
 		}
 		
 	}
@@ -1233,13 +1261,13 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	@Override
 	public void uploadResource(MediaUploadDo result) {
-		JSONObject jsonObject = setImageUploadJsonObject(result.getOriginalFilename(),result.getName(), title, desc, category, ownResourceImgUrl);
+		/*JSONObject jsonObject = setImageUploadJsonObject(result.getOriginalFilename(),result.getName(), title, desc, category, ownResourceImgUrl);
 		getUiHandlers().addUserOwnResource(jsonObject.toString());
 		userOwnResourcePreview.hide();
-		userOwnResourcePreview.setGlassEnabled(false);
+		userOwnResourcePreview.setGlassEnabled(false);*/
 	}
 	
-	public JSONObject setImageUploadJsonObject(String originalFileName,String mediaFileName,String resourceTitle, String resourceDesc,	String resourceCategory, String ownResourceImgUrl) {
+	public JSONObject setImageUploadJsonObject(String originalFileName,String mediaFileName,String resourceTitle, String resourceDesc,	String resourceCategory, String ownResourceImgUrl, String educationalLevel, String momentsOfLearning, List<CodeDo> standardsDo, List<String> tagList) {
 		JSONObject file = new JSONObject();
         file.put("filename", new JSONString(originalFileName));
         file.put("mediaFilename", new JSONString(mediaFileName));
@@ -1264,8 +1292,47 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
         	 attach.put("thumbnail", new JSONString(ownResourceImgUrl));
         }
         attach.put("attach", file);
+        
+        JSONArray standardsJsonArray = new JSONArray();
+        JSONArray momentsOfLearningArrValue = new JSONArray();
+        JSONObject momentsOfLearningJsonObj = new JSONObject();
+
+        JSONArray educatUseArrValue = new JSONArray();
+        JSONObject educatUseJsonObj = new JSONObject();
+        
+        JSONArray tagsArrValue = new JSONArray();
+        
+        for(int i=0;i<standardsDo.size();i++){
+        	JSONObject code = new JSONObject();
+        	code.put("code",new JSONString(standardsDo.get(i).getCode()));
+        	code.put("codeId",new JSONNumber(standardsDo.get(i).getCodeId()));
+        	standardsJsonArray.set(i,code);
+        }
+        attach.put("taxonomySet", standardsJsonArray);
+        
+        momentsOfLearningJsonObj.put("selected",JSONBoolean.getInstance(true));        
+        momentsOfLearningJsonObj.put("value",new JSONString(momentsOfLearning));
+        momentsOfLearningArrValue.set(0, momentsOfLearningJsonObj);
+        
+        attach.put("momentsOfLearning", momentsOfLearningArrValue);
+        
+        
+        educatUseJsonObj.put("selected",JSONBoolean.getInstance(true));
+        educatUseJsonObj.put("value", new JSONString(educationalLevel));
+        educatUseArrValue.set(0,educatUseJsonObj);
+        
+        attach.put("educationalUse", educatUseArrValue);
+        
+
+        for(int i=0;i<tagList.size();i++){
+        	tagsArrValue.set(i, new JSONString(tagList.get(i))); 
+        }
+        
         JSONObject resource = new JSONObject();
+        resource.put("resourceTags",tagsArrValue);
         resource.put("resource", attach);
+       
+        
        	return resource;
 	}
 
@@ -1340,9 +1407,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 
 	@Override
-	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc,boolean value) {
+	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc,boolean value, boolean isUserOwnResource) {
 		if(value == false){
-			addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+			if(isUserOwnResource){
+				addUserOwnResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+			}else{
+				addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+			}
+			
 		}else{
 			addQuestionResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
 		}

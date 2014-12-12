@@ -169,13 +169,39 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
     transform: rotate(270deg);
        background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
             position: absolute;
-			right: 46px;
+			right: 49px;
 			z-index: 9999999;
 			width: 10px;
 			height: 17px;
 			cursor: pointer;
 			margin: 8px 4px 5px 0;
 			display: inline-block !important;
+	}
+	.grade1Contianer{
+	display: inline-block;
+	width: 100px;
+	position: relative;
+	}
+	.grade2Contianer{
+	display: inline-block;
+	width: 58px;
+	position: relative;
+	top: -20px;
+	left: -23px;
+
+	}
+	.reviewCheckBoxStyle{
+	vertical-align: middle;
+	width: 14px;
+	margin-left: 2px;
+
+	}
+	.reviewLabelForCheckbox{
+	display: inline-block;
+	margin-left: 1px;
+	width: 120px;
+	vertical-align: top;
+
 	}
 
 	</ui:style>
@@ -211,7 +237,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<g:HTMLPanel>
 			<g:Label styleName="{style.headerLbl}" ui:field="gradeLbl"></g:Label>
 			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblGrade" visible="true"></g:Label>
-			<g:HTMLPanel  ui:field="gradePanelUc" />
+			<g:HTMLPanel  ui:field="gradePanelUc" styleName="{style.grade1Contianer}"/>
+			<g:HTMLPanel  ui:field="gradePanelUcNext" styleName="{style.grade2Contianer}"/>
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel>

@@ -306,6 +306,7 @@ public abstract class DistrictMenuNav extends Composite {
 					@Override
 					public void onClick(ClickEvent event) {
 						Window.scrollTo(0, 0);
+						DistrictView.scrollFlag = false;
 						setTabSelection(subjectname);
 						getCourse(courseId, subjectname, profileLibraryDo);
 					}

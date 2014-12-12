@@ -123,6 +123,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		String active();
 		String arrowLable();
 		String arrowLableTransform();
+		String reviewCheckBoxStyle();
+		String reviewLabelForCheckbox();
 	}
 
 	/*@UiField
@@ -146,7 +148,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
+	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,gradePanelUcNext,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
 	HTMLPanel /*contentpanel,*/oerPanel,aggregatorPanel;
@@ -418,23 +420,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		filtersText.getElement().setAttribute("alt",i18n.GL0719());
 		filtersText.getElement().setAttribute("title",i18n.GL0719());
 		
-		categoryPanelUc.setVisible(true);
-		arrowLblCategory.setStyleName(style.arrowLable());
-		subjectPanelUc.setVisible(true);
-		arrowLblSubject.setStyleName(style.arrowLable());
-		gradePanelUc.setVisible(true);
-		arrowLblGrade.setStyleName(style.arrowLable());
-		standardPanelUc.setVisible(true);
-		arrowLblstandard.setStyleName(style.arrowLable());
-		ratingPanelUc.setVisible(true);
-		reviewPanelUc.setVisible(true);
-		arrowLblratings.setStyleName(style.arrowLable());
-		sourcePanelUc.setVisible(false);
-		arrowLblsource.setStyleName(style.arrowLableTransform());
-		aggregatorPanel.setVisible(false);
-		arrowLblaggregator.setStyleName(style.arrowLableTransform());
-		accessModePanel.setVisible(false);
-		arrowLblaccess.setStyleName(style.arrowLableTransform());
+
 		
 		/*resourceLinkLbl.setText(i18n.GL0174());
 		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
@@ -607,6 +593,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 			});
 		}
+		
+		setDefaults();
+		
 		standardsNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 		if(resourceSearch){
 			resourceFormatLbl.setText(i18n.GL0721());
@@ -721,17 +710,50 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			categoryChk.setText("Tech & Engineering");
 			categoryChk.getElement().setId("chkTechnology&Engineering");
 		}
-		else if(value.equalsIgnoreCase("Elementary School")){
-			categoryChk.getElement().setId("chkElementarySchool");
+		else if(value.equalsIgnoreCase("Pre-K")){
+			categoryChk.getElement().setId("chkPreK");
 		}
-		else if(value.equalsIgnoreCase("Middle School")){
-			categoryChk.getElement().setId("chkMiddleSchool");
+		else if(value.equalsIgnoreCase("K")){
+			categoryChk.getElement().setId("chkK");
 		}
-		else if(value.equalsIgnoreCase("High School")){
-			categoryChk.getElement().setId("chkHighSchool");
+		else if(value.equalsIgnoreCase("1")){
+			categoryChk.getElement().setId("chk1");
 		}
-		else if(value.equalsIgnoreCase("Higher Education")){
-			categoryChk.getElement().setId("chkHigherEducation");
+		else if(value.equalsIgnoreCase("2")){
+			categoryChk.getElement().setId("chk2");
+		}
+		else if(value.equalsIgnoreCase("3")){
+			categoryChk.getElement().setId("chk3");
+		}
+		else if(value.equalsIgnoreCase("4")){
+			categoryChk.getElement().setId("chk4");
+		}
+		else if(value.equalsIgnoreCase("5")){
+			categoryChk.getElement().setId("chk5");
+		}
+		else if(value.equalsIgnoreCase("6")){
+			categoryChk.getElement().setId("chk6");
+		}
+		else if(value.equalsIgnoreCase("7")){
+			categoryChk.getElement().setId("chk7");
+		}
+		else if(value.equalsIgnoreCase("8")){
+			categoryChk.getElement().setId("chk8");
+		}
+		else if(value.equalsIgnoreCase("9")){
+			categoryChk.getElement().setId("chk9");
+		}
+		else if(value.equalsIgnoreCase("10")){
+			categoryChk.getElement().setId("chk10");
+		}
+		else if(value.equalsIgnoreCase("11")){
+			categoryChk.getElement().setId("chk11");
+		}
+		else if(value.equalsIgnoreCase("12")){
+			categoryChk.getElement().setId("chk12");
+		}
+		else if(value.equalsIgnoreCase("Higher Ed")){
+			categoryChk.getElement().setId("chkHigherEd");
 		}
 		else if(value.equalsIgnoreCase("Show only Quizzes")){
 			categoryChk.getElement().setId("chkShowonlyQuizzes");
@@ -807,6 +829,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		chkNotFriendly.setText(value);
 		chkNotFriendly.setName(key);
 		
+		if(value.equalsIgnoreCase("Only Resources with Reviews"))
+		{
+			//chkNotFriendly.setStyleName(style.reviewCheckBoxStyle());
+			chkNotFriendly.getElement().getFirstChildElement().setClassName(style.reviewCheckBoxStyle());
+			chkNotFriendly.getElement().getFirstChildElement().getNextSiblingElement().setClassName(style.reviewLabelForCheckbox());
+		}
+		
 		if(value.equalsIgnoreCase("Mobile Friendly")){
 			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
@@ -819,7 +848,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
 		{
 			String reviewedVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
-			if(reviewedVal.equalsIgnoreCase("1") && value.equalsIgnoreCase("Resources w/ Reviews"))
+			if(reviewedVal.equalsIgnoreCase("1") && value.equalsIgnoreCase("Only Resources with Reviews"))
 			{
 				chkNotFriendly.setValue(true);
 			}
@@ -1017,6 +1046,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		categoryPanelUc.clear();
 		subjectPanelUc.clear();
 		gradePanelUc.clear();
+		gradePanelUcNext.clear();
 		ratingPanelUc.clear();
 		reviewPanelUc.clear();
 		panelNotMobileFriendly.clear();
@@ -1032,10 +1062,22 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 			
 			if (searchFilterDo.getGradeLevels() != null) {		
-				renderCheckBox(gradePanelUc, "K-4", i18n.GL0166());
-				renderCheckBox(gradePanelUc, "5-8", i18n.GL0167());
-				renderCheckBox(gradePanelUc, "9-12", i18n.GL0168());
-				renderCheckBox(gradePanelUc, "H", i18n.GL0169());
+				renderCheckBox(gradePanelUc, "Pre-K", i18n.GL3070());
+				renderCheckBox(gradePanelUc, "K", i18n.GL3071());
+				renderCheckBox(gradePanelUc, "1", i18n.GL3072());
+				renderCheckBox(gradePanelUc, "2", i18n.GL3073());
+				renderCheckBox(gradePanelUc, "3", i18n.GL3074());
+				renderCheckBox(gradePanelUc, "4", i18n.GL3075());
+				renderCheckBox(gradePanelUc, "5", i18n.GL3076());
+				renderCheckBox(gradePanelUc, "6", i18n.GL3077());
+				renderCheckBox(gradePanelUcNext, "7", i18n.GL3078());
+				renderCheckBox(gradePanelUcNext, "8", i18n.GL3079());
+				renderCheckBox(gradePanelUcNext, "9", i18n.GL3080());
+				renderCheckBox(gradePanelUcNext, "10", i18n.GL3081());
+				renderCheckBox(gradePanelUcNext, "11", i18n.GL3082());
+				renderCheckBox(gradePanelUcNext, "12", i18n.GL3083());
+				renderCheckBox(gradePanelUcNext, "12gte", i18n.GL3084());
+				
 			}
 			if (searchFilterDo.getSubjects() != null) {
 				for (String subject : searchFilterDo.getSubjects()) {
@@ -1162,7 +1204,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 				renderCheckBox(ratingPanelUc, i+"", starVal+"star");
 			}
-			renderCheckBox(reviewPanelUc,"review", "Resources w/ Reviews");
+			renderCheckBox(reviewPanelUc,"review", "Only Resources with Reviews");
 			
 		}/*else{
 			collectionLinkLbl.addStyleName(style.active());
@@ -1187,6 +1229,18 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		String selectedGrade = getSelectedFilter(gradePanelUc);
 		if (!selectedGrade.isEmpty()) {
 			filterMap.put(IsSearchView.GRADE_FLT, selectedGrade);
+		}
+		String selectedGrade1 = getSelectedFilter(gradePanelUcNext);
+		if (!selectedGrade.isEmpty()) {
+		if (!selectedGrade1.isEmpty()) {
+			filterMap.put(IsSearchView.GRADE_FLT, selectedGrade+","+selectedGrade1);
+		}
+		}
+		else
+		{
+		if (!selectedGrade1.isEmpty()) {
+			filterMap.put(IsSearchView.GRADE_FLT, selectedGrade1);
+		}
 		}
 	//	if(resourceSearch){
 			String category = getSelectedFilter(categoryPanelUc);
@@ -1426,6 +1480,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		setSelectedFilter(categoryPanelUc, categories);
 		setSelectedFilter(subjectPanelUc, subjects, "~~");
 		setSelectedFilter(gradePanelUc, grade);
+		setSelectedFilter(gradePanelUcNext, grade);
 		if(resourceSearch)
 		setSelectedFilter(ratingPanelUc, ratings);
 		standardSgstBox.setText("");
@@ -1505,6 +1560,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		if(grade == null){
 			clearFilter(gradePanelUc);
+			clearFilter(gradePanelUcNext);
 		}
 		if(subjects == null){
 			clearFilter(subjectPanelUc);
@@ -1700,6 +1756,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	public void onClearFilter(ClickEvent clickEvent) {
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
+		clearFilter(gradePanelUcNext);
 		clearFilter(subjectPanelUc);
 		clearFilter(accessModePanel);
 		clearFilter(ratingPanelUc);
@@ -1726,6 +1783,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	public void clearAllFields(){
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
+		clearFilter(gradePanelUcNext);
 		clearFilter(subjectPanelUc);
 		clearFilter(accessModePanel);
 		clearFilter(ratingPanelUc);
@@ -1868,14 +1926,28 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 								if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()!=null){
 									if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode().size()==0){
 										standardLbl.setVisible(true);
+										if(standardPanelUc.isVisible())
+										{
 										standardPanelUc.setVisible(true);
+										}
+										else
+										{
+										standardPanelUc.setVisible(false);
+										}
 										isBrowseTooltip = true;
 										DisableStandars();
 										
 									}else
 									{
 										standardLbl.setVisible(true);
+										if(standardPanelUc.isVisible())
+										{
 										standardPanelUc.setVisible(true);
+										}
+										else
+										{
+										standardPanelUc.setVisible(false);
+										}
 										isBrowseTooltip = false;
 										enableStandards();
 										standardPreflist=new ArrayList<String>();
@@ -1886,7 +1958,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 									}
 								}else{
 									standardLbl.setVisible(true);
+									if(standardPanelUc.isVisible())
+									{
 									standardPanelUc.setVisible(true);
+									}
+									else
+									{
+									standardPanelUc.setVisible(false);
+									}
 									isBrowseTooltip = true;
 									DisableStandars();
 									
@@ -1898,7 +1977,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	public void getStandardVisiblity()
 	{
 		standardLbl.setVisible(true);
+		if(standardPanelUc.isVisible())
+		{
 		standardPanelUc.setVisible(true);
+		}
+		else
+		{
+		standardPanelUc.setVisible(false);
+		}
 	}
 	
 	public void DisableStandars(){
@@ -1967,6 +2053,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 				if(panel.equals("gradePanel")){
 					removeSelectedFilter(gradePanelUc, filterName);
+					removeSelectedFilter(gradePanelUcNext, filterName);
 				}
 				if(panel.equals("standPanel"))
 				{
@@ -2022,30 +2109,22 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiHandler("arrowLblCategory")
 	public void onCategoryArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(categoryPanelUc.isVisible())
-		{
-			categoryPanelUc.setVisible(false);
-			arrowLblCategory.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			categoryPanelUc.setVisible(true);
-			arrowLblCategory.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(categoryPanelUc,arrowLblCategory);
 	}
+	@UiHandler("resourceFormatLbl")
+	public void onResourceFormatArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(categoryPanelUc,arrowLblCategory);
+	}
+	@UiHandler("subjectLbl")
+	public void onSubjectLabelArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(subjectPanelUc,arrowLblSubject);
+	}	
 	@UiHandler("arrowLblSubject")
 	public void onSubjectArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(subjectPanelUc.isVisible())
-		{
-			subjectPanelUc.setVisible(false);
-			arrowLblSubject.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			subjectPanelUc.setVisible(true);
-			arrowLblSubject.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(subjectPanelUc,arrowLblSubject);
 	}
 	@UiHandler("arrowLblGrade")
 	public void onGradeArrowLabelclick(ClickEvent clickEvent) 
@@ -2053,31 +2132,47 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(gradePanelUc.isVisible())
 		{
 			gradePanelUc.setVisible(false);
+			gradePanelUcNext.setVisible(false);
 			arrowLblGrade.setStyleName(style.arrowLableTransform());
 		}
 		else
 		{
 			gradePanelUc.setVisible(true);
+			gradePanelUcNext.setVisible(true);
 			arrowLblGrade.setStyleName(style.arrowLable());
 		}
 	}
-	@UiHandler("arrowLblstandard")
-	public void onStandardsArrowLabelclick(ClickEvent clickEvent) 
+	@UiHandler("gradeLbl")
+	public void onGradeLabelArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(standardPanelUc.isVisible())
+		if(gradePanelUc.isVisible())
 		{
-			standardPanelUc.setVisible(false);
-			arrowLblstandard.setStyleName(style.arrowLableTransform());
+			gradePanelUc.setVisible(false);
+			gradePanelUcNext.setVisible(false);
+			arrowLblGrade.setStyleName(style.arrowLableTransform());
 		}
 		else
 		{
-			standardPanelUc.setVisible(true);
-			arrowLblstandard.setStyleName(style.arrowLable());
+			gradePanelUc.setVisible(true);
+			gradePanelUcNext.setVisible(true);
+			arrowLblGrade.setStyleName(style.arrowLable());
 		}
 	}
+	
+	@UiHandler("arrowLblstandard")
+	public void onStandardsArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(standardPanelUc,arrowLblstandard);
+	}
+	@UiHandler("standardLbl")
+	public void onStandardsLabelArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(standardPanelUc,arrowLblstandard);
+	}
+	
 	@UiHandler("arrowLblratings")
 	public void onRatingsArrowLabelclick(ClickEvent clickEvent) 
-	{
+	{		
 		if(ratingPanelUc.isVisible())
 		{
 			ratingPanelUc.setVisible(false);
@@ -2091,47 +2186,103 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			arrowLblratings.setStyleName(style.arrowLable());
 		}
 	}
+	@UiHandler("ratingsLbl")
+	public void onRatingsLabelArrowLabelclick(ClickEvent clickEvent) 
+	{		
+		if(ratingPanelUc.isVisible())
+		{
+			ratingPanelUc.setVisible(false);
+			reviewPanelUc.setVisible(false);
+			arrowLblratings.setStyleName(style.arrowLableTransform());
+		}
+		else
+		{
+			ratingPanelUc.setVisible(true);
+			reviewPanelUc.setVisible(true);
+			arrowLblratings.setStyleName(style.arrowLable());
+		}
+	}
+	
 	@UiHandler("arrowLblsource")
 	public void onSourceArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(sourcePanelUc.isVisible())
-		{
-			sourcePanelUc.setVisible(false);
-			arrowLblsource.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			sourcePanelUc.setVisible(true);
-			arrowLblsource.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(sourcePanelUc,arrowLblsource);
 	}
+	@UiHandler("sourceLbl")
+	public void onSourceLabelArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(sourcePanelUc,arrowLblsource);
+	}
+	
 	@UiHandler("arrowLblaggregator")
 	public void onAggregatorArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(aggregatorPanel.isVisible())
-		{
-			aggregatorPanel.setVisible(false);
-			arrowLblaggregator.setStyleName(style.arrowLableTransform());
-		}
-		else
-		{
-			aggregatorPanel.setVisible(true);
-			arrowLblaggregator.setStyleName(style.arrowLable());
-		}
+		setVisibilityValues(aggregatorPanel,arrowLblaggregator);
 	}
+	@UiHandler("aggregatorLbl")
+	public void onAggregatorLabelArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(aggregatorPanel,arrowLblaggregator);
+	}
+	
 	@UiHandler("arrowLblaccess")
 	public void onAccessArrowLabelclick(ClickEvent clickEvent) 
 	{
-		if(accessModePanel.isVisible())
+		setVisibilityValues(accessModePanel,arrowLblaccess);
+	}
+	@UiHandler("accessModeLbl")
+	public void onAccessLabelArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(accessModePanel,arrowLblaccess);
+	}
+	
+	/*
+	 * This is a common method for toggling each div and arrow
+	 */
+	public void setVisibilityValues(HTMLPanel panelToHide, Label lblTotranform)
+	{
+		if(panelToHide.isVisible())
 		{
-			accessModePanel.setVisible(false);
-			arrowLblaccess.setStyleName(style.arrowLableTransform());
+			panelToHide.setVisible(false);
+			lblTotranform.setStyleName(style.arrowLableTransform());
 		}
 		else
 		{
-			accessModePanel.setVisible(true);
-			arrowLblaccess.setStyleName(style.arrowLable());
+			panelToHide.setVisible(true);
+			lblTotranform.setStyleName(style.arrowLable());
 		}
+	}
+	/*
+	 * This method is used for enabling toggles by default
+	 * and each section will be hidden and shown on arrow click.
+	 */
+	public void setDefaults()
+	{
+		categoryPanelUc.setVisible(true);
+		arrowLblCategory.setStyleName(style.arrowLable());
+		subjectPanelUc.setVisible(true);
+		arrowLblSubject.setStyleName(style.arrowLable());
+		gradePanelUc.setVisible(true);
+		gradePanelUcNext.setVisible(true);
+		arrowLblGrade.setStyleName(style.arrowLable());
+		if(standardPanelUc.isVisible())
+		{
+		standardPanelUc.setVisible(true);
+		}
+		else
+		{
+		standardPanelUc.setVisible(false);	
+		}
+		arrowLblstandard.setStyleName(style.arrowLable());
+		ratingPanelUc.setVisible(true);
+		reviewPanelUc.setVisible(true);
+		arrowLblratings.setStyleName(style.arrowLable());
+		sourcePanelUc.setVisible(false);
+		arrowLblsource.setStyleName(style.arrowLableTransform());
+		aggregatorPanel.setVisible(false);
+		arrowLblaggregator.setStyleName(style.arrowLableTransform());
+		accessModePanel.setVisible(false);
+		arrowLblaccess.setStyleName(style.arrowLableTransform());
 	}
 	
 	
