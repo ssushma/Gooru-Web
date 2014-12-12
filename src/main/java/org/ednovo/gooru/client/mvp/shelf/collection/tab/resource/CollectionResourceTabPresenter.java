@@ -86,6 +86,8 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	
 	private boolean isQuestionResource=false;
 	
+	private boolean isUserOwnResource = false;
+	
 	private static final String O1_LEVEL = "o1";
 	
 	private static final String O2_LEVEL = "o2";
@@ -359,7 +361,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	}
 
 	@Override
-	public void getBrowseStandardsInfo(final boolean val) {
+	public void getBrowseStandardsInfo(final boolean val,final boolean userResource) {
 
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
@@ -394,6 +396,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 							}
 								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 									isQuestionResource = val;
+									isUserOwnResource = userResource;
 									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 									addToPopupSlot(addStandardsPresenter);
 									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
@@ -409,7 +412,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource);
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource, this.isUserOwnResource);
 	}
 
 	@Override
@@ -419,7 +422,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void reorderResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow, Integer newSequence) {
-		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
+//		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
 	}
 
 	

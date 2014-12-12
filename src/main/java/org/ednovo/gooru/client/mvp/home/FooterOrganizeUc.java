@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -198,10 +201,14 @@ public class FooterOrganizeUc extends Composite {
 		contactUsAnr.getElement().setAttribute("alt",i18n.GL1245());
 		contactUsAnr.getElement().setAttribute("title",i18n.GL1245());
 		
-		copyRightYearText.setText(i18n.GL1246());
+		
+		Date todaysYear = new Date();
+		String copyRight = i18n.GL1246() + "" + (todaysYear.getYear() + 1900);
+		
+		copyRightYearText.setText(copyRight);
 		copyRightYearText.getElement().setId("lblCopyRightYearText");
-		copyRightYearText.getElement().setAttribute("alt",i18n.GL1246());
-		copyRightYearText.getElement().setAttribute("title",i18n.GL1246());
+		copyRightYearText.getElement().setAttribute("alt",copyRight);
+		copyRightYearText.getElement().setAttribute("title",copyRight);
 		
 		
 		/*mixpanelLink.setTarget("_blank");

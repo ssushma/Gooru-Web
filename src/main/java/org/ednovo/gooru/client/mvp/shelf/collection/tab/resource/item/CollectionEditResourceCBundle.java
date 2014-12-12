@@ -489,7 +489,10 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String OnButtonDeActive();
         String accessHazard();
         String charLimit();
-        String upDownBtn();
+        /**
+         * Following line is commented for hotfix
+         */
+        /*String upDownBtn();*/
         
         String coursePopupStyle();
         String generateImage();

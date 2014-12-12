@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -49,9 +51,11 @@ import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.tooltip.AddResourceToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -70,6 +74,9 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -86,7 +93,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- * 
+ *  
  */
 public class CollectionResourceTabView extends
 		BaseViewWithHandlers<CollectionResourceTabUiHandlers> implements
@@ -102,10 +109,10 @@ public class CollectionResourceTabView extends
 	}
 
 	@UiField
-	VerticalPanel sequenceVerPanel,collectionResourcePanelVc;
+	VerticalPanel sequenceVerPanel/*,collectionResourcePanelVc*/;
 
-	/*@UiField
-	CollectionResourcePanelVc collectionResourcePanelVc;*/ 
+	@UiField
+	CollectionResourcePanelVc collectionResourcePanelVc; 
 
 	@UiField
 	Label dragAndDropLabel;
@@ -185,7 +192,7 @@ public class CollectionResourceTabView extends
 		buttonContainerForQuestionGreay.getElement().setAttribute("alt",i18n.GL0852());
 		buttonContainerForQuestionGreay.getElement().setAttribute("title",i18n.GL0852());
 		
-		dragAndDropLabel.setText("Enter in the position you would like to move resources.");
+		dragAndDropLabel.setText(i18n.GL0853());
 		dragAndDropLabel.getElement().setId("lblDragAndDropLabel");
 		dragAndDropLabel.getElement().setAttribute("alt",i18n.GL0853());
 		dragAndDropLabel.getElement().setAttribute("title",i18n.GL0853());
@@ -244,10 +251,10 @@ public class CollectionResourceTabView extends
 			setTotalCount(collectionDo.getCollectionItems().size());
 			Label label = new Label("");
 			label.setStyleName(getCss().shelfResourceDragdropSpacer());
-//			collectionResourcePanelVc.superAdd(label);
+			collectionResourcePanelVc.superAdd(label);
 			Label toplabel = new Label("");
 			toplabel.setStyleName(getCss().shelfResourceDragdropSpacer());
-//			collectionResourcePanelVc.add(toplabel);
+			collectionResourcePanelVc.add(toplabel);
 			Label prelabel = new Label("");
 			prelabel.setStyleName(getCss().shelfResourceSequenceSpacer());
 			sequenceVerPanel.add(prelabel);
@@ -269,7 +276,7 @@ public class CollectionResourceTabView extends
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				insertColectionItem(collectionItem, false);
 			}
-			setResourceSequence();
+			/*setResourceSequence();*/
 			hideNoResourceMsg();
 			
 			if (collectionDo.getCollectionItems().size() >= 25) {
@@ -360,7 +367,6 @@ public class CollectionResourceTabView extends
 					public void onClick(ClickEvent event) {
 						shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
 //						shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
-						shelfCollectionResourceVc.getReorderContainer().setVisible(false);
 						shelfCollectionResourceVc.getEditButton().setVisible(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
@@ -368,10 +374,11 @@ public class CollectionResourceTabView extends
 						} 
 					}
 				});
-//		collectionResourcePanelVc.remove(collectionItemDo.getItemSequence());
+		collectionResourcePanelVc.remove(collectionItemDo.getItemSequence());
 		//sequenceVerPanel.remove(collectionItemDo.getItemSequence()-1);
-//		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
-		collectionResourcePanelVc.add(shelfCollectionResourceVc);	
+		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
+		
+		/*collectionResourcePanelVc.add(shelfCollectionResourceVc);*/	
 	}
 
 	@Override
@@ -457,10 +464,14 @@ public class CollectionResourceTabView extends
 			sequenceVerPanel.insert(sequenceLbl, sequencePostion);
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			resetSequence();
+			/*
+				Again enabled DnD
 			shelfCollectionResourceVc.getResourceMoveUpBtn().addClickHandler(new OnClickReorderUpButton(collectionItemDo.getGooruOid())); 
 			shelfCollectionResourceVc.getResourceMoveDownBtn().addClickHandler(new OnClickReorderDownButton(collectionItemDo.getGooruOid()));
 			shelfCollectionResourceVc.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 			shelfCollectionResourceVc.getReorderTxtBox().addKeyUpHandler(new ReorderText(collectionItemDo.getGooruOid()));
+			*/
+			
 			
 			/*if(getTotalCount()==1){
 				isReorderButtonEnabled(false,shelfCollectionResourceVc);
@@ -480,7 +491,7 @@ public class CollectionResourceTabView extends
 					shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
 //					shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
 					shelfCollectionResourceVc.getEditButton().setVisible(false);
-					shelfCollectionResourceVc.getReorderContainer().setVisible(false);
+					/*shelfCollectionResourceVc.getReorderContainer().setVisible(false);*/
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 					if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 						getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
@@ -504,8 +515,8 @@ public class CollectionResourceTabView extends
 							}
 
 							@Override
-							public void browseStandardsInfo(boolean val) {
-								getUiHandlers().getBrowseStandardsInfo(val);
+							public void browseStandardsInfo(boolean val,boolean userResource) {
+								getUiHandlers().getBrowseStandardsInfo(val,userResource);
 							}
 
 							@Override
@@ -522,7 +533,7 @@ public class CollectionResourceTabView extends
 								getUiHandlers().imageEditUserOwnResourceUpload();
 							}
 							@Override
-							public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,	String thumbnailUrlStr) {
+							public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,String thumbnailUrlStr,CollectionItemDo collectionItemDo, List<String> tagList) {
 								title=titleStr;
 								description = desc;
 								category = categoryStr;
@@ -535,19 +546,38 @@ public class CollectionResourceTabView extends
 								//	 }*/
 								//}
 
-								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr);
-
+								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 								//										getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
+							}
+							
+							
+							
+							/*@Override
+							public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+								getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
+							}*/
+							@Override
+							public void browseStandardsInfo(boolean val, boolean userResource) {
+								getUiHandlers().getBrowseStandardsInfo(val,userResource);
+							}
+							@Override
+							public void closeStandardsPopup() {
+								getUiHandlers().closeBrowseStandardsPopup();
+							}
+							
+							@Override
+							public void onSelection(SelectionEvent<Suggestion> event) {
+								super.onSelection(event);		
 							}
 						};
 					}
 
 				}
 			});
-			/*collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());*/
-			collectionResourcePanelVc.add(shelfCollectionResourceVc);
-			setResourceSequence();
+			collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
+			/*collectionResourcePanelVc.add(shelfCollectionResourceVc);
+			setResourceSequence();*/
 			AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
@@ -600,7 +630,7 @@ public class CollectionResourceTabView extends
 						shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
 //						shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
 						shelfCollectionResourceVc.getEditButton().setVisible(false);
-						shelfCollectionResourceVc.getReorderContainer().setVisible(false);
+						/*shelfCollectionResourceVc.getReorderContainer().setVisible(false);*/
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 							editQuestionPopupWidget = new EditQuestionPopupWidget(collectionItemDo);
@@ -681,8 +711,8 @@ public class CollectionResourceTabView extends
 							}
 
 							@Override
-							public void browseStandardsInfo(boolean val) {
-								getUiHandlers().getBrowseStandardsInfo(val);
+							public void browseStandardsInfo(boolean val,boolean userResource) {
+								getUiHandlers().getBrowseStandardsInfo(val,userResource);
 							}
 
 							@Override
@@ -701,22 +731,39 @@ public class CollectionResourceTabView extends
 								}
 
 								@Override
-								public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,String thumbnailUrlStr) {
+								public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,String thumbnailUrlStr,CollectionItemDo collectionItemDo, List<String> tagList) {
 									title=titleStr;
 									description = desc;
 									category = categoryStr;
 									thumbnailUrl = thumbnailUrlStr;
-									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr);
+									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
 									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 //									getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 								}
+
+								/*@Override
+								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
+								}*/
+								@Override
+								public void browseStandardsInfo(boolean val, boolean userResource) {
+									getUiHandlers().getBrowseStandardsInfo(val,userResource);
+								}
+								@Override
+								public void closeStandardsPopup() {
+									getUiHandlers().closeBrowseStandardsPopup();
+								}
+								
+								@Override
+								public void onSelection(SelectionEvent<Suggestion> event) {
+									super.onSelection(event);		
+								}
 							};
 						}
-
 					}
 				});
-		/*collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());*/
-		collectionResourcePanelVc.add(shelfCollectionResourceVc);
+		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
+		/*collectionResourcePanelVc.add(shelfCollectionResourceVc);*/
 	}
 
 	public class EditQuestionPopupWidget extends EditQuestionPopupVc {
@@ -765,8 +812,8 @@ public class CollectionResourceTabView extends
 		}
 
 		@Override
-		public void callBrowseStandardsInfo(boolean val) {
-			getUiHandlers().getBrowseStandardsInfo(val);
+		public void callBrowseStandardsInfo(boolean val,boolean userResource) {
+			getUiHandlers().getBrowseStandardsInfo(val,userResource);
 		}
 
 		public void setUpdatedBrowseStandardsVal(String setStandardsVal,Integer codeId, String setStandardDesc) {
@@ -784,13 +831,19 @@ public class CollectionResourceTabView extends
 	@Override
 	public void removeCollectionItem(CollectionItemDo collectionItemDo,	ShelfCollectionResourceChildView resourceChildView) {
 		
-		int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"));
-		collectionDo.getCollectionItems().remove(collectionItemDo);
-		setTotalCount(collectionDo.getCollectionItems().size());
-		collectionResourcePanelVc.remove(sequence-1);
+		/*int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"));*/
+		
+		int sequence = collectionResourcePanelVc.getWidgetIndex(resourceChildView.getParent());
+		collectionResourcePanelVc.remove(sequence);
 		sequenceVerPanel.remove(sequence);
 		resetSequence();
-		setResourceSequence();
+		collectionDo.getCollectionItems().remove(collectionItemDo);
+		
+		/*setTotalCount(collectionDo.getCollectionItems().size());
+		collectionResourcePanelVc.remove(sequence-1);*/
+		
+		
+		/*setResourceSequence();*/
 		if (collectionDo.getCollectionItems().size() >= 25) {
 			// newResourceLabel.setVisible(false);
 
@@ -935,7 +988,7 @@ public class CollectionResourceTabView extends
 	@Override
 	public void setEditMode(boolean editMode, Widget resourceWidget) {
 		Widget sequenceWidget = sequenceVerPanel.getWidget(collectionResourcePanelVc.getWidgetIndex(resourceWidget.getParent()));
-//		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
+		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
 		sequenceWidget.setHeight((resourceWidget.getOffsetHeight() - 7) + "px");
 	}
 
@@ -1255,12 +1308,12 @@ public class CollectionResourceTabView extends
 
 	@Override
 	public void uploadResource(MediaUploadDo result) {
-		JSONObject jsonObject = setEditUserResourceJsonObject(result.getOriginalFilename(),result.getName(), title, description, category, thumbnailUrl);
-		getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
+//		JSONObject jsonObject = setEditUserResourceJsonObject(result.getOriginalFilename(),result.getName(), title, description, category, thumbnailUrl);
+//		getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 		
 	}
 
-	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl) {
+	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl, CollectionItemDo collectionItemDo, List<String> tagList) {
 		JSONObject file = new JSONObject();
 		 if(originalFilename!=null && mediaFileName!=null){
 			 file.put("filename", new JSONString(originalFilename));
@@ -1268,7 +1321,7 @@ public class CollectionResourceTabView extends
 		 }
 		
 		     
-		 JSONObject attach = new JSONObject();
+		JSONObject attach = new JSONObject();
         attach.put("title", new JSONString(editedTitle));
         attach.put("description", new JSONString(editedDescription));
         JSONObject resourceFormat = new JSONObject();
@@ -1281,8 +1334,44 @@ public class CollectionResourceTabView extends
         	 attach.put("attach", file);
              
         }
-       
+        
+        List<CodeDo> codeDoList = new ArrayList<CodeDo>(collectionItemDo.getResource().getTaxonomySet());
+      
+        JSONArray standardsJsonArray = new JSONArray();
+        JSONArray momentsOfLearningArrValue = new JSONArray();
+        JSONArray educatUseArrValue = new JSONArray();
+        JSONArray tagsArrValue = new JSONArray();
+        
+        for(int i=0;i<codeDoList.size();i++){
+        	JSONObject code = new JSONObject();
+        	code.put("code",new JSONString(codeDoList.get(i).getCode()));
+        	code.put("codeId",new JSONNumber(codeDoList.get(i).getCodeId()));
+        	standardsJsonArray.set(i,code);
+        }
+        attach.put("taxonomySet", standardsJsonArray);
+        
+        for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
+        	JSONObject momentsOfLearningJsonObj = new JSONObject();
+        	momentsOfLearningJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getMomentsOfLearning().get(i).isSelected()));        
+        	momentsOfLearningJsonObj.put("value",new JSONString(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue()));
+            momentsOfLearningArrValue.set(i, momentsOfLearningJsonObj);
+        }
+        attach.put("momentsOfLearning", momentsOfLearningArrValue);
+        
+        for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
+        	JSONObject educatUseJsonObj = new JSONObject();
+        	educatUseJsonObj.put("selected",JSONBoolean.getInstance(collectionItemDo.getResource().getEducationalUse().get(i).isSelected()));
+        	educatUseJsonObj.put("value", new JSONString(collectionItemDo.getResource().getEducationalUse().get(i).getValue()));
+        	educatUseArrValue.set(i, educatUseJsonObj);
+        }
+        attach.put("educationalUse", educatUseArrValue);
+        
+        for(int i=0;i<tagList.size();i++){
+        	tagsArrValue.set(i, new JSONString(tagList.get(i))); 
+        }
+        
         JSONObject resource = new JSONObject();
+        resource.put("resourceTags",tagsArrValue);
         resource.put("resource", attach);
         
 		return resource;
@@ -1304,15 +1393,23 @@ public class CollectionResourceTabView extends
 	}
 
 	@Override
-	public void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,String setStandardDesc, boolean value) {
+	public void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,String setStandardDesc, boolean value, boolean userResource) {
 		if(value == false){
-			editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+			if(userResource){
+				ownResourcePopupVc.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+			}else{
+				editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+			}
+			
 		}else{
 			editQuestionPopupWidget.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 		}
 		
 	}
 	
+/*
+ * Removed move option
+ * 
 	private void setResourceSequence() { 
 		Iterator<Widget> widgets = collectionResourcePanelVc.iterator(); 
 		int seqNum=1;
@@ -1328,10 +1425,10 @@ public class CollectionResourceTabView extends
 					((ShelfCollectionResourceChildView) widget).upButtonIsVisible(false); 
 					((ShelfCollectionResourceChildView) widget).downButtonIsVisible(true); 
 				}else{
-					/**
+					*//**
 					 * If user moved folder to last position, based on total count down arrow will be invisible and 
 					 * vice versa in case of reordering last folder or collection to the first position, up arrow should be in visible.
-					 */
+					 *//*
 					if(seqNum==getTotalCount()){
 						((ShelfCollectionResourceChildView) widget).upButtonIsVisible(true); 
 						((ShelfCollectionResourceChildView) widget).downButtonIsVisible(false);  
@@ -1348,11 +1445,11 @@ public class CollectionResourceTabView extends
 		}
 	}
 	
-	
-	/**
+
+	*//**
 	 * This inner class used for to restrict text box values to have only numbers
 	 *
-	 */
+	 *//*
 
 	public class HasNumbersOnly implements KeyPressHandler {
 
@@ -1377,10 +1474,10 @@ public class CollectionResourceTabView extends
 	}
 	
 	
-	/**
+	*//**
 	 * This inner class used for disabling up and down arrow based on user entered reorder value.
 	 *
-	 */
+	 *//*
 
 	public class ReorderText implements KeyUpHandler {
 		String itemGooruOid;
@@ -1414,20 +1511,20 @@ public class CollectionResourceTabView extends
 	}
 	
 	
-	/**
+	*//**
 	 * 
 	 * Inner class for reorder Up button, which implements click handler {@link ClickHandler}
 	 *
-	 */
+	 *//*
 	
 	public class OnClickReorderUpButton implements ClickHandler{
 		private String itemGooruOid;
 		int itemPosSeqNumb,itemToBeMovedPosSeqNumb,itemSeqToAPI;
 		private String reorderValidationMsg;
-		/**
+		*//**
 		 * Class constructor
 		 * @param itemGooruOid {@link String}
-		 */
+		 *//*
 		public OnClickReorderUpButton(String itemGooruOid) {
 			this.itemGooruOid = itemGooruOid;
 		}
@@ -1459,11 +1556,11 @@ public class CollectionResourceTabView extends
 	
 	
 	
-	/**
+	*//**
 	 * 
 	 * Inner class for reorder down button, which implements click handler {@link ClickHandler}
 	 *
-	 */
+	 *//*
 	
 	public class OnClickReorderDownButton implements ClickHandler{
 		
@@ -1472,10 +1569,10 @@ public class CollectionResourceTabView extends
 		private String reorderValidationMsg;
 		
 		
-		/**
+		*//**
 		 * Class constructor
 		 * @param itemGooruOid {@link String}
-		 */
+		 *//*
 		public OnClickReorderDownButton(String itemGooruOid) {
 			this.itemGooruOid = itemGooruOid;
 		}
@@ -1504,13 +1601,13 @@ public class CollectionResourceTabView extends
 	
 	
 	
-	/**
+	*//**
 	 * Before reorder will return with valid message.
 	 * @param itemToBeMovedPosSeqNumb {@link Integer}
 	 * @param itemPosSeqNumb {@link Integer}
 	 * @param arrow {@link String}
 	 * @return validationStaus {@link String} 
-	 */
+	 *//*
 	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
 		String validationStaus=REORDER_VALIDATION_MSG; 
 		if(itemToBeMovedPosSeqNumb==0){
@@ -1524,12 +1621,12 @@ public class CollectionResourceTabView extends
 	}
 	
 
-	/**
+	*//**
 	 * Gets the respective folder or collection widget for reorder.
 	 * @param itemGooruOid {@link String}
 	 * 
 	 * @return widget {@link ShelfCollectionResourceChildView}
-	 */
+	 *//*
 	public ShelfCollectionResourceChildView getFolderOrCollectionWidget(String itemGooruOid) { 
 		Iterator<Widget> widgets = collectionResourcePanelVc.iterator();
 		while (widgets.hasNext()) {
@@ -1541,7 +1638,7 @@ public class CollectionResourceTabView extends
 		return null;
 	}
 	
-	
+
 	
 	@Override
 	public void reorderItemToNewPosition(ShelfCollectionResourceChildView shelfCollectionResourceChildView,Integer newSequence, String arrow) {
@@ -1556,7 +1653,11 @@ public class CollectionResourceTabView extends
 		resetSequence();
 		setResourceSequence();
 	}
+*/	
 	
+	/**
+	 * This not commented for hot fix, not required.
+	 */
 	/*private void isReorderButtonEnabled(boolean isEnable, ShelfCollectionResourceChildView shelfCollectionResourceChildView) { 
 		if(isEnable){
 			shelfCollectionResourceChildView.setReorderContainerVisibility(isEnable); 

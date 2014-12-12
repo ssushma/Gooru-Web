@@ -768,6 +768,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		
 		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
 		
+		getLogger().info("Add new Web resource --- "+url);
+		getLogger().info("Pay load --- "+form);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -899,6 +902,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		
 		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
+		getLogger().info("---- Updating Web url --- "+url);
+		getLogger().info("--- pay load -- "+form);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1063,7 +1068,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo addNewUserResource(	String jsonString,String gooruOid)throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_NEW_USER_RESOURCE, gooruOid, getLoggedInSessionToken());
-
+		
+		getLogger().info("Add user own resource -- "+url);
+		getLogger().info("--- Payload -- "+jsonString);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonString);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -1095,6 +1102,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_RESOURCE, gooruOid, getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), jsonString);
+		getLogger().info("---- Updating User own resource -- "+url);
+		getLogger().info("--- payload -- "+jsonString);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
 	}

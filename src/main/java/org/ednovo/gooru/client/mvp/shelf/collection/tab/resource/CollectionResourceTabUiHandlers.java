@@ -100,7 +100,7 @@ public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQu
 	/**
 	 * @param val
 	 */
-	void getBrowseStandardsInfo(boolean val);
+	void getBrowseStandardsInfo(boolean val, boolean userResource);
 
 	/**
 	 * 

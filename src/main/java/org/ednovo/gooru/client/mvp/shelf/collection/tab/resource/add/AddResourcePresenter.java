@@ -102,6 +102,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	private static final String KEY_OER = "resourceLicense";
 	private static final String VAL_OER = "OER";
 	private boolean isQuestionResource = false;
+	private boolean isUserResource = false;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
@@ -590,7 +591,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	}
 
 	@Override
-	public void browseStandardsInfo(final boolean val) {
+	public void browseStandardsInfo(final boolean val, final boolean isUserOwnResource) {
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
 				new SimpleAsyncCallback<ProfileDo>() {
@@ -624,6 +625,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 							}
 								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 									isQuestionResource = val;
+									isUserResource = isUserOwnResource;
 									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 									addToPopupSlot(addStandardsPresenter);
 									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
@@ -637,7 +639,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource);
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource,this.isUserResource);
 	}
 
 	@Override

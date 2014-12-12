@@ -415,6 +415,10 @@ button.disabled, button.disabled:hover {
  	background:url(../images/ratings/reviews-one.png) 16px 0 no-repeat;
  	padding: 2px;
 }
+.zerostar{
+ 	background:url(../images/ratings/reviews-none.png) 16px 0 no-repeat;
+ 	padding: 2px;
+}
 
 .reStar{
 	height: 17px;

@@ -38,6 +38,7 @@ package org.ednovo.gooru.client.mvp.dashboard;
  * @Reviewer: 
  */
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -86,10 +87,14 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 		super(eventBus);
 		popup.add(uiBinder.createAndBindUi(this));
 		popup.setGlassEnabled(true);
+		popup.center();
 		popup.setAutoHideEnabled(true);
 		popup.setGlassStyleName("");
 		btnHighToLow.setText(i18n.GL3057());
+		StringUtil.setAttributes(btnHighToLow.getElement(), "btnHighToLow", i18n.GL3057(), i18n.GL3057());
 		btnLowToHigh.setText(i18n.GL3058());
+		StringUtil.setAttributes(btnHighToLow.getElement(), "btnLowToHigh", i18n.GL3058(), i18n.GL3058());
+		StringUtil.setAttributes(titleTextlbl.getElement(), "lblTitleText", "", "");
 		pnlScrollPanel.addScrollHandler(new ScrollHandler() {
 			@Override
 			public void onScroll(ScrollEvent event) {
@@ -143,7 +148,6 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 			boolean isEndorsed=Boolean.parseBoolean(isEndorsedOrRemixed);
 			if(isEndorsed){
 				titleTextlbl.setText(i18n.GL3059());
-				
 			}else{
 				titleTextlbl.setText(i18n.GL3053());
 			}
