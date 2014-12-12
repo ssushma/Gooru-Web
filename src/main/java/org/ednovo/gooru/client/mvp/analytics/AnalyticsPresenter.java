@@ -43,9 +43,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	
 	private CollectionSummaryPresenter collectionSummaryPresenter;
 	
-	
-	//private PersonalizeUnitPresenter personalizeUnitPresenter;
-	
 	public static final  Object COLLECTION_PROGRESS_SLOT = new Object();
 	
 	public static final  Object COLLECTION_SUMMARY_SLOT = new Object();
