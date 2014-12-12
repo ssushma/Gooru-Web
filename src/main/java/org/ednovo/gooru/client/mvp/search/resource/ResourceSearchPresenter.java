@@ -171,6 +171,14 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 			filterMap.put("flt.isReviewed", reviewsVal);
 			searchDo.setFilters(filterMap);
 		}
+		if(getPlaceManager().getRequestParameter("disableSpellCheck") != null)
+		{
+			String disableSpellCheckVal = getPlaceManager().getRequestParameter("disableSpellCheck");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("disableSpellCheck", "true");
+			searchDo.setFilters(filterMap);
+		}
 		getSearchService().getResourceSearchResults(searchDo, searchAsyncCallback);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		
