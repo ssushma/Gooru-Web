@@ -94,13 +94,13 @@ public class GooruEntry implements EntryPoint {
 		    
 		String device = BrowserAgent.returnFormFactorWithSizeView();
 		String size[] = device.split("-");
-		if (size[0].equalsIgnoreCase("mobile") || size[0].equalsIgnoreCase("iphone")){
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("device", size[0]);
-			params.put("size", size[1]);
-			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
-//			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
-		}else{
+//		if (size[0].equalsIgnoreCase("mobile") || size[0].equalsIgnoreCase("iphone")){
+//			Map<String, String> params = new HashMap<String, String>();
+//			params.put("device", size[0]);
+//			params.put("size", size[1]);
+//			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
+////			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
+//		}else{
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
@@ -121,7 +121,7 @@ public class GooruEntry implements EntryPoint {
 				
 			});
 			AppClientFactory.setAppGinjector(appInjector);
-		}
+//		}
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");
