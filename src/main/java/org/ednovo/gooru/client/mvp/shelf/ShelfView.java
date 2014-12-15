@@ -391,6 +391,17 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 							.removeStyleName("titleAlertMessageActive");
 				}
 			}
+			
+			@Override
+			public void showErrorMessage(String message){
+				titleAlertMessageLbl.setText(message);
+				StringUtil.setAttributes(titleAlertMessageLbl.getElement(), "lblTitleAlertMessageLbl", message, message);
+				
+				titleAlertMessageLbl
+						.addStyleName("titleAlertMessageActive");
+				titleAlertMessageLbl
+						.removeStyleName("titleAlertMessageDeActive");
+			}
 		};
 		
 		DisplayNoCollectionHandler displayNoCollections = new DisplayNoCollectionHandler() {
