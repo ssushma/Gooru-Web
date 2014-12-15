@@ -763,6 +763,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 				collectionProgressPresenter.setCollectionProgressData(collectionId, "", false, collectionTitle);
 				setInSlot(SLOT_SET_SUMMARY_PROGRESS, collectionProgressPresenter,false);	
 			}else if(clickedTab.equalsIgnoreCase(REPORTS)){
+				analyticsPresenter.getGradeCollectionJson();
 				setInSlot(SLOT_SET_SUMMARY_PROGRESS, analyticsPresenter,false);	
 			}
 		}
