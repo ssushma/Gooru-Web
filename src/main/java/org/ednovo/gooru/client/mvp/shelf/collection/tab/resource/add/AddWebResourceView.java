@@ -1553,7 +1553,37 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 
-
+	/**
+	 * 
+	 * @function addResource 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param idStr
+	 * @parm(s) : @param urlStr
+	 * @parm(s) : @param titleStr
+	 * @parm(s) : @param descriptionStr
+	 * @parm(s) : @param categoryStr
+	 * @parm(s) : @param thumbnailUrlStr
+	 * @parm(s) : @param endTime
+	 * @parm(s) : @param conformationFlag
+	 * @parm(s) : @param educationalUse
+	 * @parm(s) : @param momentsOfLearning
+	 * @parm(s) : @param standards
+	 * @parm(s) : @param hostName
+	 * @parm(s) : @param tagList
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName,List<String> tagList);
 
 //	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime);
