@@ -56,7 +56,7 @@
 				<g:item value='Exam'>Exam</g:item>
 			</g:ListBox> -->
 			
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}">
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}" ui:field="panelCategoryInputDiv">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="categorypanel"></g:HTMLPanel>
