@@ -1418,7 +1418,6 @@ public class HeaderUc extends Composite implements
 				params.remove(IsSearchView.GRADE_FLT);
 			}
 			if(stadardCode!=null && !stadardCode.equals("")){
-				System.out.println("stadardcode::"+stadardCode);
 				params.put(IsSearchView.STANDARD_FLT, stadardCode);
 			}
 		}
