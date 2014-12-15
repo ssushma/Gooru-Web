@@ -53,8 +53,9 @@ public class GradeJsonData implements Serializable{
 	private String minimumScore;
 	private long avgTimeSpent;
 	private long timeSpent;
+	private String aggregateData;
 	
-	GradeJsonData(){
+	public GradeJsonData(){
 		
 	}
 	public String getEstimatedTime() {
@@ -110,5 +111,11 @@ public class GradeJsonData implements Serializable{
 	}
 	public void setTimeSpent(long timeSpent) {
 		this.timeSpent = timeSpent;
+	}
+	public String getAggregateData() {
+		return aggregateData;
+	}
+	public void setAggregateData(String aggregateData) {
+		this.aggregateData = aggregateData;
 	}
 }

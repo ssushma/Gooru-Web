@@ -74,7 +74,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		getView().setUiHandlers(this);
 		this.collectionProgressPresenter=collectionProgressPresenter;
 		this.collectionSummaryPresenter=collectionSummaryPresenter;
-		getGradeCollectionJson();
 	}
 	@Override
 	public void getGradeCollectionJson() {
@@ -82,8 +81,12 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
 			@Override
 			public void onSuccess(ArrayList<GradeJsonData> result) {
-				if(result.size()!=0){
-					getView().setGradeCollectionData(result);
+				if(result.size()>0){
+					if(result.get(0).getAggregateData()!=null && result.get(0).getAggregateData().equalsIgnoreCase("false")){
+						getView().setNoDataText();
+					}else{
+						getView().setGradeCollectionData(result);
+					}
 				}
 			}
 			@Override
@@ -140,7 +143,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	@Override
 	protected void onHide() {
 		super.onHide();
-		getView().resetData();
 		clearSlot(COLLECTION_PROGRESS_SLOT);	
 		clearSlot(COLLECTION_SUMMARY_SLOT);	
 	}
