@@ -1158,8 +1158,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiHandler("settingsSaveButton")
 	public void OnClickSaveButton(ClickEvent event) {
 		
-		tbLastNameUcLabel.switchToLabel();
 		tbFirstNameUcLabel.switchToLabel();
+		tbLastNameUcLabel.switchToLabel(); 
 		if(enableEdit && enableEditFirstName){
 			enableEdit=false;
 			enableEditFirstName=false;
@@ -1179,9 +1179,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			
 			getUiHandlers().saveSettingsInformation();
 			
+		}else{
+			tbFirstNameUcLabel.switchToEdit();
+			tbLastNameUcLabel.switchToEdit();
 		}
 		
-	
 	}
 	@UiHandler("settingCancelButton")
 	public void OnClickCancelSettingpage(ClickEvent event) {

@@ -63,13 +63,14 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
+
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -103,7 +104,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -158,6 +158,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
 		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer;
+
+	
+	@UiField HTMLPanel panelCategoryInputDiv;
+
 
 	@UiField
 	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,contentPanel,textsText,audioText,urlContianer;//otherText
@@ -1367,31 +1371,20 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 														|| urlStr.contains("about.goorulearning.org")) {
 													isValidate = true;
 												} else {
-													mandatoryUrlLbl
-															.setText(i18n.GL0924());
-													mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0924());
-													mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0924());
-													mandatoryUrlLbl.setVisible(true);
+													showUrlErrorMessage(i18n.GL0924());
 													isValidate = false;
 												}
 											}
 											if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
-													//mandatoryUrlLbl.setText(i18n.GL2009());
-													mandatoryUrlLbl.setText(i18n.GL2009_1());
-													mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL2009_1());
-													mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL2009_1());
-													mandatoryUrlLbl.setVisible(true);
-													isValidate = false;
+												showUrlErrorMessage(i18n.GL2009_1());
+												isValidate = false;
 											}
 											if(!rightsChkBox.getValue()){
 												rightsLbl.getElement().getStyle().setColor("orange");
 												isValidate = false;
 											}
 											if (urlStr == null || urlStr.equalsIgnoreCase("")) {
-												mandatoryUrlLbl.setText(i18n.GL0916());
-												mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0916());
-												mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0916());
-												mandatoryUrlLbl.setVisible(true);
+												showUrlErrorMessage(i18n.GL0916());
 												isValidate = false;
 											} else {
 												boolean isStartWithHttp = urlStr.matches("^(http|https)://.*$");
@@ -1407,18 +1400,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													|| titleStr.toLowerCase().contains("http://")
 													|| titleStr.toLowerCase().contains("https://")
 													|| titleStr.toLowerCase().contains("ftp://")) {
-												mandatoryTitleLbl.setText(i18n.GL0323());
-												mandatoryTitleLbl.getElement().setAttribute("alt", i18n.GL0323());
-												mandatoryTitleLbl.getElement().setAttribute("title", i18n.GL0323());
-												mandatoryTitleLbl.setVisible(true);
+												showTitleErrorMessage(i18n.GL0323());
 												isValidate = false;
 											}
 
 											if (titleStr == null || titleStr.equalsIgnoreCase("")) {
-												mandatoryTitleLbl.setText(i18n.GL0173());
-												mandatoryTitleLbl.getElement().setAttribute("alt", i18n.GL0173());
-												mandatoryTitleLbl.getElement().setAttribute("title", i18n.GL0173());
-												mandatoryTitleLbl.setVisible(true);
+												showTitleErrorMessage(i18n.GL0173());
 												isValidate = false;
 											}
 											if (descriptionStr.length() >300) {
@@ -1429,30 +1416,20 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													|| categoryStr.equalsIgnoreCase("-1")
 													|| categoryStr
 															.equalsIgnoreCase("Choose a resource format")) {
-												mandatoryCategoryLbl.setText(i18n.GL0917());
-												mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0917());
-												mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0917());
-												mandatoryCategoryLbl.setVisible(true);
+												showCategoryErrorMessage(i18n.GL0917());
 												scrollPanel.setVerticalScrollPosition(0);
 												isValidate = false;
 											}
 
 											if (!isValidYoutubeUrlFlag && categoryStr.equalsIgnoreCase("Video")) {
-												mandatoryCategoryLbl
-														.setText(i18n.GL0925());
-												mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0925());
-												mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0925());
-												mandatoryCategoryLbl.setVisible(true);
+												showCategoryErrorMessage(i18n.GL0925());
 												scrollPanel.setVerticalScrollPosition(0);
 												isValidate = false;
 
 											}
 
 											if (!isValidUrl(urlStr, true)) {
-												mandatoryUrlLbl.setText(i18n.GL0926());
-												mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0926());
-												mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0926());
-												mandatoryUrlLbl.setVisible(true);
+												showUrlErrorMessage(i18n.GL0926());
 												isValidate = false;
 											}
 											if(urlStr.indexOf("youtube")!=-1){
@@ -1460,20 +1437,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													if(!categoryStr.equalsIgnoreCase("Webpage")){
 														isValidate = true;									
 													}else{
-														mandatoryCategoryLbl.setText(i18n.GL0927());
-														mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0927());
-														mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0927());
-														mandatoryCategoryLbl.setVisible(true);
+														showCategoryErrorMessage(i18n.GL0927());
 														scrollPanel.setVerticalScrollPosition(0);
 														isValidate = false;													}
 												}
 											}
 											if(categoryStr.equalsIgnoreCase("Audio") && !hasValidateResource())
 											{
-												mandatoryUrlLbl.setText(i18n.GL1161());
-												mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL1161());
-												mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL1161());
-												mandatoryUrlLbl.setVisible(true);
+												showUrlErrorMessage(i18n.GL1161());
 												isValidate = false;
 											}
 											if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
@@ -1611,11 +1582,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 									|| userUrlStr.contains("about.goorulearning.org")) {
 
 							} else {
-								mandatoryUrlLbl
-										.setText(i18n.GL0924());
-								mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0924());
-								mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0924());
-								mandatoryUrlLbl.setVisible(true);
+								showUrlErrorMessage(i18n.GL0924());
 								return;
 							}
 						}
@@ -1660,13 +1627,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 							} else {
 								disableGenerateBtn();
-								mandatoryUrlLbl.setText(i18n.GL0926());
-								mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0926());
-								mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0926());
-								mandatoryUrlLbl.setVisible(true);
+
+								showUrlErrorMessage(i18n.GL0926());
 							}
 						}else{
-							System.out.println("url empty");
 							disableGenerateBtn();
 						}
 					}else{
@@ -1686,79 +1650,15 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	private class UrlKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
-
-
-			final Map<String, String> parms = new HashMap<String, String>();
-			
-			parms.put("text", urlTextBox.getText().trim());
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-
-				@Override
-				public void onSuccess(Boolean value) {
-					if(!value){
-						addResourceBtnLbl.setVisible(true);
-						addResourceBtnPanel.setVisible(true);
-						String userUrlStr = urlTextBox.getText().trim();
-						if (userUrlStr.contains("goorulearning.org")) {
-							if (userUrlStr.contains("support.goorulearning.org")
-									|| userUrlStr.contains("about.goorulearning.org")) {
-
-							} else {
-								mandatoryUrlLbl
-										.setText(i18n.GL0924());
-								mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0924());
-								mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0924());
-								mandatoryUrlLbl.setVisible(true);
-								return;
-							}
-						}
-
-						if (userUrlStr.endsWith("/")) {
-							userUrlStr = userUrlStr.substring(0, userUrlStr.length() - 1);
-						}
-						if (!userUrlStr.equalsIgnoreCase("")) {
-
-							boolean isStartWithHttp = userUrlStr
-									.matches("^(http|https)://.*$");
-							if (!isStartWithHttp) {
-								userUrlStr = "http://" + userUrlStr;
-								urlTextBox.setText(userUrlStr);
-								urlTextBox.getElement().setAttribute("alt",userUrlStr);
-								urlTextBox.getElement().setAttribute("title", userUrlStr);
-							}
-							if (isValidUrl(userUrlStr, true)) {
-								enableGenerateBtn();
-							} else {
-								disableGenerateBtn();
-								mandatoryUrlLbl.setText(i18n.GL0926());
-								mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL0926());
-								mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL0926());
-								mandatoryUrlLbl.setVisible(true);
-							}
-						}else{
-							disableGenerateBtn();
-						}
-					}else{
-						SetStyleForProfanity.SetStyleForProfanityForTextBox(urlTextBox, mandatoryUrlLbl, value);
-						disableGenerateBtn();
-					}
-				}
-			});
-		
-		
-			mandatoryUrlLbl.setVisible(false);
-			mandatorygenerateFromUrlLbl.setVisible(false);
+			clearUrlErrorMessage();
 		}
 	}
 
 	private class TitleKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
-			mandatoryTitleLbl.setVisible(false);
+			clearTitleErrorMessage();
 			if (titleTextBox.getText().length() >= 50) {
-				mandatoryTitleLbl.setText(i18n.GL0143());
-				mandatoryTitleLbl.getElement().setAttribute("alt", i18n.GL0143());
-				mandatoryTitleLbl.getElement().setAttribute("title", i18n.GL0143());
-				mandatoryTitleLbl.setVisible(true);
+				showTitleErrorMessage(i18n.GL0143());
 			}
 		}
 	}
@@ -1845,7 +1745,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		categorypanel.setStyleName(video.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-		mandatoryCategoryLbl.setVisible(false);
+		
+		clearCategoryErrorMessage();
 	}
 
 	@UiHandler("interactiveResourcePanel")
@@ -1857,7 +1758,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		categorypanel.setStyleName(interactive.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-		mandatoryCategoryLbl.setVisible(false);
+		clearCategoryErrorMessage();
 	}
 
 	@UiHandler("websiteResourcePanel")
@@ -1869,7 +1770,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		categorypanel.setStyleName(website.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-		mandatoryCategoryLbl.setVisible(false);
+		clearCategoryErrorMessage();
 	}
 
 	@UiHandler("imageResourcePanel")
@@ -1881,7 +1782,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-		mandatoryCategoryLbl.setVisible(false);
+		clearCategoryErrorMessage();
 	}
 
 	@UiHandler("textResourcePanel")
@@ -1893,7 +1794,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-		mandatoryCategoryLbl.setVisible(false);
+		clearCategoryErrorMessage();
 	}
 
 	@UiHandler("audioResourcePanel")
@@ -1905,7 +1806,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		categorypanel.setStyleName(audio.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-		mandatoryCategoryLbl.setVisible(false);
+		clearCategoryErrorMessage();
 	}
 
 //	@UiHandler("otherResourcePanel")
@@ -2244,9 +2145,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0360());
 		categorypanel.setStyleName("");
 
-		mandatoryCategoryLbl.setVisible(false);
-		mandatoryTitleLbl.setVisible(false);
-		mandatoryUrlLbl.setVisible(false);
+		clearCategoryErrorMessage();
+		clearTitleErrorMessage();
+		clearUrlErrorMessage();
 		descCharcterLimit.setVisible(false);
 		loadingTextLbl.getElement().getStyle().setDisplay(Display.NONE);
 		buttonsPanel.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -2489,6 +2390,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
 	}
+
 	public void enableGenerateBtn(){
 		generateFromUrlBtn.getElement().getStyle().clearColor();
 		generateFromUrlBtn.getElement().removeClassName("disabled");
@@ -2563,4 +2465,54 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}	
 	}
+
+	
+	public void showUrlErrorMessage(String message){
+		mandatoryUrlLbl.setText(message);
+		StringUtil.setAttributes(mandatoryUrlLbl.getElement(), "lblMandatoryUrlLbl", message, message);
+		urlTextBox.getElement().getStyle().setBorderColor("orange");
+		urlTextBox.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
+		urlTextBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
+		mandatoryUrlLbl.setVisible(true);
+	}
+	public void clearUrlErrorMessage(){
+		mandatoryUrlLbl.setVisible(false);
+		urlTextBox.getElement().getStyle().clearBorderColor();
+		urlTextBox.getElement().getStyle().clearBorderStyle();
+		urlTextBox.getElement().getStyle().clearBorderWidth();
+	}
+	
+	
+	public void showTitleErrorMessage(String message){
+		mandatoryTitleLbl.setText(message);
+		StringUtil.setAttributes(mandatoryTitleLbl.getElement(), "lblMandatoryTitleLbl", message, message);
+		titleTextBox.getElement().getStyle().setBorderColor("orange");
+		titleTextBox.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
+		titleTextBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
+		mandatoryTitleLbl.setVisible(true);
+	}
+	public void clearTitleErrorMessage(){
+		mandatoryTitleLbl.setVisible(false);
+		titleTextBox.getElement().getStyle().clearBorderColor();
+		titleTextBox.getElement().getStyle().clearBorderStyle();
+		titleTextBox.getElement().getStyle().clearBorderWidth();
+	}
+	
+	public void showCategoryErrorMessage(String message){
+		mandatoryCategoryLbl.setText(message);
+		StringUtil.setAttributes(mandatoryTitleLbl.getElement(), "lblMandatoryCategoryLbl", message, message);
+		panelCategoryInputDiv.getElement().getStyle().setBorderColor("orange");
+		panelCategoryInputDiv.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
+		panelCategoryInputDiv.getElement().getStyle().setBorderWidth(1, Unit.PX);
+		panelCategoryInputDiv.getElement().setId("panelCategoryInputDiv");
+		mandatoryCategoryLbl.setVisible(true);
+	}
+	public void clearCategoryErrorMessage(){
+		mandatoryCategoryLbl.setVisible(false);
+		panelCategoryInputDiv.getElement().getStyle().clearBorderColor();
+		panelCategoryInputDiv.getElement().getStyle().clearBorderStyle();
+		panelCategoryInputDiv.getElement().getStyle().clearBorderWidth();
+	}
+	
+
 }
