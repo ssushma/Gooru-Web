@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAdvancedCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
@@ -62,6 +63,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -117,7 +119,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText;;
+	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,mediaLabelContainer,educationalContainer,
+	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer;
 	
 	@UiField
 	public Button cancelResourcePopupBtnLbl,uploadImageLbl,browseResourceBtn;
@@ -174,7 +177,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 	@UiField Label lblAdding,standardMaxMsg;
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr,moblieFriendly;
-	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel;
+	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel,AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly;
 	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
@@ -185,6 +189,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	public Label educationalDropDownLbl,mandatoryEducationalLbl,lblMediaFeatureArrow,lblMediaPlaceHolder;
 	
 	@UiField ScrollPanel spanelMediaFeaturePanel;
+	
+	@UiField InlineLabel advancedText;
+	
+	public AddSetupAdvancedView addSetupAdvancedView;
 	
 	
 	/** 
@@ -338,7 +346,14 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
-		
+		advancedText.setText(i18n.GL3096());
+		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		addSetupAdvancedView = new AddSetupAdvancedView() {
+			@Override
+			public void showAndHideContainers() {
+			}
+		};
+		AdvancedSetupContainer.add(addSetupAdvancedView);
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		standardContainer.getElement().setId("fpnlStandardContainer");
@@ -472,6 +487,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		accessHazard.getElement().setId("lblAccessHazard");
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
+		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
 		flashingHazard.setText(i18n.GL1806());
 		flashingHazard.getElement().setId("lblFlashingHazard");
@@ -492,11 +508,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		mediaLabel.getElement().setId("lblMediaFeature");
 		mediaLabel.getElement().setAttribute("alt","Media Feature");
 		mediaLabel.getElement().setAttribute("title","Media Feature");
-		
-		mediaLabel.setText("Media Feature");
-		mediaLabel.getElement().setId("lblMediaFeature");
-		mediaLabel.getElement().setAttribute("alt","Media Feature");
-		mediaLabel.getElement().setAttribute("title","Media Feature");
+		mediaLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		
 		lblMediaPlaceHolder.setText("Choose a Media Feature Option:");
 		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
@@ -509,6 +521,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		moblieFriendly.getElement().setId("spnMobileFriendly");
 		moblieFriendly.getElement().setAttribute("alt",i18n.GL1811());
 		moblieFriendly.getElement().setAttribute("title",i18n.GL1811());
+		moblieFriendly.getElement().getStyle().setDisplay(Display.INLINE);
 		
 		mobileYes.setText(i18n.GL_GRR_YES());
 		mobileYes.getElement().setId("btnYes");
@@ -702,6 +715,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 						lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
 						lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
 						lblMediaPlaceHolder.setText(optionSelected);
+						setAdvancedOptionsStyles();
 					}
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
@@ -796,7 +810,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				if(!hasClickedOnDropDwn){
-					System.out.println("enter");
 					educationalUsePanel.setVisible(false);
 					educationalDropDownLblOpen = false;
 					momentsOfLearningPanel.setVisible(false);
@@ -812,8 +825,133 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 	
+/** Add Advanced Setup Changes **/
+		
+		educationalContainer.setVisible(false);
+		educationalUsePanel.setVisible(false);
+		momentsOfLearningContainer.setVisible(false);
+		momentsOfLearningPanel.setVisible(false);
+		standardContainer.setVisible(false);
+		mediaFeatureContainer.setVisible(false);
+		accessHazardContainer.setVisible(false);
+		standardsBrowseContainer.setVisible(false);
+		mobileFriendlyContainer.setVisible(false);
+		
+		addSetupAdvancedView.educationUseAdvancedPnl.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+			educationalContainer.setVisible(true);
+			educationalUsePanel.setVisible(true);
+			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.momentsOfLearningAdvancedPnl.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				momentsOfLearningContainer.setVisible(true);
+				momentsOfLearningPanel.setVisible(true);
+				addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				standardContainer.setVisible(true);
+				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				accessHazardContainer.setVisible(true);
+				addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				mediaFeatureContainer.setVisible(true);
+				addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				mobileFriendlyContainer.setVisible(true);
+				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
+			}
+		});
+		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				standardsBrowseContainer.setVisible(true);
+				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
+			}
+		});
+		
+		/** Add Advanced Setup Changes End**/
+		
+		eHearderIconEducationalUse.addClickHandler(new eHeaderClickHandler());
+		eHearderIconMomentsOfLearning.addClickHandler(new eHeaderMomentsOfLearningClickHandler());
+		eHearderIconstandards.addClickHandler(new eHeaderStandardsClickHandler());
+		eHearderIconAccessHazard.addClickHandler(new eHeaderAccessHazardClickHandler());
+		eHearderIconMediafeature.addClickHandler(new eHeaderMediaFeatureOnCLick());
+		eHearderIconMobileFriendly.addClickHandler(new eHeaderMobileFriendlyOnClick());
 	
+	}
 	
+	private class eHeaderClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			educationalContainer.setVisible(false);
+			educationalUsePanel.setVisible(false);
+			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderMomentsOfLearningClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			momentsOfLearningContainer.setVisible(false);
+			momentsOfLearningPanel.setVisible(false);
+			addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderStandardsClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			standardsBrowseContainer.setVisible(false);
+			addSetupAdvancedView.standardsAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderAccessHazardClickHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			accessHazardContainer.setVisible(false);
+			addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(true);
+		}
+	}
+	private class eHeaderMediaFeatureOnCLick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mediaFeatureContainer.setVisible(false);
+			addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(true);
+			}
+	}
+	private class eHeaderMobileFriendlyOnClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mobileFriendlyContainer.setVisible(false);
+			addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
+		}
+		
 	}
 	
 	/**
@@ -1413,6 +1551,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
 		standardSuggestOracle.clear();
+		updateStandardsAdvancedSetupStyle();
 	}
 	
 	/**
@@ -1428,6 +1567,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
+				updateStandardsAdvancedSetupStyle();
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
@@ -1518,6 +1658,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			standardMaxShow();
 		}
 		closeStandardsPopup();
+		updateStandardsAdvancedSetupStyle();
 	}
 	
 	@UiHandler("activityPanel")
@@ -1529,6 +1670,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("handoutPanel")
 	void handoutPanel(ClickEvent event) {
@@ -1539,6 +1681,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("homeworkPanel")
 	void homeworkPanel(ClickEvent event) {
@@ -1549,6 +1692,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("gamePanel")
 	void gamePanel(ClickEvent event) {
@@ -1559,6 +1703,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("presentationPanel")
 	void presentationPanel(ClickEvent event) {
@@ -1569,6 +1714,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("referenceMaterialPanel")
 	void referenceMaterialPanel(ClickEvent event) {
@@ -1579,6 +1725,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("quizPanel")
 	void quizPanel(ClickEvent event) {
@@ -1589,6 +1736,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("curriculumPlanPanel")
 	void curriculumPlanPanel(ClickEvent event) {
@@ -1599,6 +1747,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("lessonPlanPanel")
 	void lessonPlanPanel(ClickEvent event) {
@@ -1609,6 +1758,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("unitPlanPanel")
 	void unitPlanPanel(ClickEvent event) {
@@ -1619,6 +1769,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("projectPlanPanel")
 	void projectPlanPanel(ClickEvent event) {
@@ -1629,6 +1780,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("readingPanel")
 	void readingPanel(ClickEvent event) {
@@ -1639,6 +1791,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("textbookPanel")
 	void textbookPanel(ClickEvent event) {
@@ -1649,6 +1802,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("articlePanel")
 	void articlePanel(ClickEvent event) {
@@ -1659,6 +1813,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("bookPanel")
 	void bookPanel(ClickEvent event) {
@@ -1669,6 +1824,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	
 	@UiHandler("educationalDropDownLbl")
@@ -1693,6 +1849,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("interactingWithTheTextPanel")
 	void interactingWithTheTextPanel(ClickEvent event) {
@@ -1703,6 +1860,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("extendingUnderstandingPanel")
 	void extendingUnderstandingPanel(ClickEvent event) {
@@ -1713,6 +1871,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
 	}
 	@UiHandler("momentsOfLearningDropDownLbl")
 	public void momentsOfLearningDropDownClick(ClickEvent event) {
@@ -1763,6 +1922,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 		
 		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
+		setAdvancedAccessHazardStyles(accessHazardsArr.length);
 		return accessHazardsArr;
 	}
 	
@@ -1776,6 +1936,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		{
 			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
+		setAccessHazards();
 	}
 
 	@UiHandler("motionSimulationHazard")
@@ -1788,6 +1949,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		{
 			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
+		setAccessHazards();
 	}
 
 	@UiHandler("soundHazard")
@@ -1800,6 +1962,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		{
 			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
+		setAccessHazards();
 	}
 	
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
@@ -1820,6 +1983,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	{
 		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		updateMobileFriendlyAdvancedStyles();
 	}
 	
 	@UiHandler("mobileNo")
@@ -1827,11 +1991,72 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	{
 		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		updateMobileFriendlyAdvancedStyles();
 	}
 	
 	
 	public abstract void browseStandardsInfo();
 	
 	public abstract void closeStandardsPopup();
-	
+	/**
+	 * This method is used to set Styles for Advanced Options(Educational Use,Moments Of Learning and Media Feature)
+	 */
+	public void setAdvancedOptionsStyles(){
+		if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+			addSetupAdvancedView.educationUseAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.educationUseAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.educationUseAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+		if(resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+			addSetupAdvancedView.momentsOfLearningAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.momentsOfLearningAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.momentsOfLearningAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+		if(lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:")){
+			addSetupAdvancedView.mediaFeatureAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.mediaFeatureAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.mediaFeatureAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
+	/**
+	 * This method is used to set Styles for Access Hazard Advanced Options 
+	 * @param length
+	 */
+	public void setAdvancedAccessHazardStyles(int length){
+		if(length == 0){
+			addSetupAdvancedView.accessHazardAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.accessHazardAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.accessHazardAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
+	/**
+	 * This method is used to set Styles for Standards Advanced Option 
+	 */
+	public void updateStandardsAdvancedSetupStyle() {
+		if(standardsPanel.getWidgetCount()==0){
+			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.standardsAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
+	/**
+	 *  This method is used to set Styles for Mobile Friendly Advanced Option 
+	 */
+	public void updateMobileFriendlyAdvancedStyles(){
+		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}	
+	}
 }

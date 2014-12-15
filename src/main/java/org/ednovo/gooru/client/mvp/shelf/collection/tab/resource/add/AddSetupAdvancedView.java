@@ -47,9 +47,10 @@ import com.google.gwt.user.client.ui.Widget;
 public  abstract class AddSetupAdvancedView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
-	@UiField Anchor educationUseAdvancedPnl,momentsOfLearningAdvancedPnl,standardsAdvancedPnl,accessHazardAdvancedPnl,
-	mediaFeatureAdvancedPnl,mobileFreindlyAdvancedPnl;
-	@UiField HTMLPanel educationUseAdvancedContainer,momentsOfLearningAdvancedContainer,standardsAdvancedContainer,
+	@UiField
+	public Anchor educationUseAdvancedPnl,momentsOfLearningAdvancedPnl,standardsAdvancedPnl,accessHazardAdvancedPnl,mediaFeatureAdvancedPnl,mobileFreindlyAdvancedPnl;
+	
+	@UiField public HTMLPanel educationUseAdvancedContainer,momentsOfLearningAdvancedContainer,standardsAdvancedContainer,
 	accessHazardAdvancedContainer,mediaFeatureAdvancedContainer,mobileFreindlyAdvancedContainer,setUpLabel;
 
 	public AddSetupAdvancedView(){
