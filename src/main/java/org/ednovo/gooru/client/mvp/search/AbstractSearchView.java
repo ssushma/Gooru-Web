@@ -103,19 +103,21 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	Style style;
 	
 	@UiField
-	HTML queriedTextHtml,spellCheckedqueriedTextHtml;
+	HTML queriedTextHtml;
 	
 	@UiField
 	FlowPanel standardsConatiner;
 	
-	@UiField HTMLPanel spellerrorqueriedTextHtml;
+	@UiField HTMLPanel spellerrorqueriedTextHtml,correctSpellHTML;
 	
 	@UiField
 	Button resourceSearchBtn, collectionSearchBtn;
 	
 	@UiField Label wrongQueryText;
+	
+	@UiField Label correctQueryText;
 		
-	String grades,stdCode,subjects;
+	String grades,stdCode,subjects,categories;
 	
 	protected ResourceDragController dragController;
 
@@ -167,7 +169,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		
 		
 		standardsConatiner.clear();
-		
+		showCategoryFilter();
 		showSubjectsFilter();
 		showGradesFilter();
 		showStandardsFilter();
@@ -254,7 +256,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				}
 			}
 			
-			spellCheckedqueriedTextHtml.setVisible(false);
+			correctSpellHTML.setVisible(false);
 			spellerrorqueriedTextHtml.setVisible(false);
 			queriedTextHtml.setVisible(true);
 
@@ -263,6 +265,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			queriedTextHtml.getElement().setAttribute("title", searchText);
 
 			standardsConatiner.clear();
+			showCategoryFilter();
 			showSubjectsFilter();
 			showGradesFilter();
 			showStandardsFilter();
@@ -276,12 +279,12 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		}
 		else
 		{
-			String correctedSpelling = searchDo.getSpellCheckQueryString();
+/*			String correctedSpelling = searchDo.getSpellCheckQueryString();
 			correctedSpelling = "" + i18n.GL1468() + " <b>" + searchDo.getSpellCheckQueryString()
-					+ "</b>";
+					+ "</b>";*/
 
 			
-			String enteredSearchTerm = searchDo.getUserQueryString();
+
 
 			wrongQueryText.setText(searchDo.getUserQueryString());
 			wrongQueryText.addClickHandler(new ClickHandler() {
@@ -296,15 +299,27 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				}
 			});
 
-
+			final String correctSearchTerm = searchDo.getSpellCheckQueryString();
 			
-			spellCheckedqueriedTextHtml.setHTML(correctedSpelling);
+			correctQueryText.setText(searchDo.getSpellCheckQueryString());
+			correctQueryText.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+					AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,correctSearchTerm));
+					}
+					//AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
+					
+				}
+			});
 			
-			spellCheckedqueriedTextHtml.setVisible(true);
+			correctSpellHTML.setVisible(true);
 			spellerrorqueriedTextHtml.setVisible(true);
 			queriedTextHtml.setVisible(false);
 			
 			standardsConatiner.clear();
+			showCategoryFilter();
 			showSubjectsFilter();
 			showGradesFilter();
 			showStandardsFilter();
@@ -547,6 +562,22 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			String[] split = subjects.split("~~");
 			for(int i=0; i<split.length; i++){
 				standardsConatiner.add(createTagsLabel(split[i],"subjectPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showCategoryFilter() {
+		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
+		if(categories!=null){
+			String[] split = categories.split(",");
+			for(int i=0; i<split.length; i++){
+				if(!split[i].equalsIgnoreCase("all"))
+				{
+				standardsConatiner.add(createTagsLabel(split[i],"categoryPanel"));
+				}
 			}
 				
 		}
