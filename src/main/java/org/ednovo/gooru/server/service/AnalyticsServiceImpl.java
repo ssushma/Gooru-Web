@@ -251,7 +251,19 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
-				collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
+				String boolVal="";
+				JSONArray messageArr=jsonRep.getJsonObject().getJSONArray("message");
+				if(messageArr.length()>0){
+					boolVal=messageArr.getJSONObject(0).getString("aggregateData");
+					if(boolVal.equalsIgnoreCase("true")){
+						collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
+					}else{
+						GradeJsonData gradeData=new GradeJsonData();
+						gradeData.setAggregateData(boolVal);
+						collectionResourcesList.add(gradeData);
+					}
+				}
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
