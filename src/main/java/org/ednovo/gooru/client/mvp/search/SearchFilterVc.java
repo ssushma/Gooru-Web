@@ -2055,6 +2055,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					removeSelectedFilter(gradePanelUc, filterName);
 					removeSelectedFilter(gradePanelUcNext, filterName);
 				}
+				if(panel.equals("categoryPanel")){
+					removeSelectedFilter(categoryPanelUc, filterName);
+				}
 				if(panel.equals("standPanel"))
 				{
 					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));

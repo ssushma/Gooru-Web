@@ -1,5 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<ui:style type="org.ednovo.gooru.client.mvp.search.AbstractSearchView.Style">
 		.searchFilter {
 			float: left;
@@ -167,7 +168,6 @@
 			color: #515151;
 				<!-- float: left; -->
 				margin: 5px 0 0 6px;
-				display: inline-block;
 				padding-bottom: 10px;
 	
 		}
@@ -187,6 +187,10 @@
 		.wrongSpellcontainer{
 		display: inline-block;
 		}
+		.correctSpellcontainer{
+		display: inline-block;
+		}
+		
 	</ui:style>
 	<g:FlowPanel>
 	    <g:ScrollPanel styleName="{style.searchFilter}" ui:field="searchFilterPanel">
@@ -195,9 +199,13 @@
 		<g:FlowPanel  styleName="{style.searchResultContainer}">
 				<g:HTMLPanel>
 				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
-				<g:HTML styleName="{style.searchResultSpell}" ui:field="spellCheckedqueriedTextHtml" />
+				<!-- <g:HTML styleName="{style.searchResultSpell}" ui:field="spellCheckedqueriedTextHtml" /> -->
+				<g:HTMLPanel styleName="{style.searchResultError}" ui:field="correctSpellHTML">
+				<g:Label styleName="{style.correctSpellcontainer}" text="{i18n.GL1468}"></g:Label>
+				<g:Label ui:field="correctQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
+				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.searchResultError}" ui:field="spellerrorqueriedTextHtml" >
-				<g:HTMLPanel styleName="{style.wrongSpellcontainer}">Search instead for</g:HTMLPanel>
+				<g:Label styleName="{style.wrongSpellcontainer}" text="{i18n.GL3098}"></g:Label>
 				<g:Label ui:field="wrongQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
 				</g:HTMLPanel>
 				<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
