@@ -2082,6 +2082,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			momentsOfLearningOpen = false;
 		}
 	}
+	/**
+	 * 
+	 * @function setImageThumbnail 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setImageThumbnail() {
 		if( thumbnailImages.size()>0){
 		if (activeImageIndex == 0) {
@@ -2165,7 +2184,27 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	private RegExp urlValidator;
 	private RegExp urlPlusTldValidator;
-
+	/**
+	 * 
+	 * @function isValidUrl 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param url
+	 * @parm(s) : @param topLevelDomainRequired
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public boolean isValidUrl(String url, boolean topLevelDomainRequired) {
 		int count = returnCount(url);
 		 if(count > 2)
@@ -2188,7 +2227,26 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
 				.exec(url) != null;
 	}
-
+	/**
+	 * 
+	 * @function returnCount 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param url
+	 * @parm(s) : @return
+	 * 
+	 * @return : Integer
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public Integer returnCount(String url) {
 
 		String string = url;
@@ -2225,6 +2283,26 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		return count;
 
 	}
+	/**
+	 * 
+	 * @function getYoutubeVideoId 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param youtubeUrl
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String getYoutubeVideoId(String youtubeUrl) {
 
 		youtubeUrl=youtubeUrl.replaceAll("feature=player_detailpage&", "");
@@ -2267,7 +2345,21 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public void setVideoDuration(Integer videoDuration) {
 		this.videoDuration = videoDuration;
 	}
-	
+	/**
+	 * 
+	 * @fileName : AddWebResourceView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 15-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class CheckProfanityInOnBlur implements BlurHandler{
 		private TextBox textBox;
 		private Label label;
@@ -2309,6 +2401,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			});
 		}
 	}
+	/**
+	 * 
+	 * @function hasValidateResource 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public boolean hasValidateResource(){
 		String userUrlStr = urlTextBox.getText().trim();
 		boolean isValid;
@@ -2322,6 +2433,27 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 		
 	}
+	/**
+	 * 
+	 * @function setUpdatedBrowseStandarsCode 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param standardsCodeVal
+	 * @parm(s) : @param id
+	 * @parm(s) : @param desc
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUpdatedBrowseStandarsCode(String standardsCodeVal,int id,String desc) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
@@ -2337,7 +2469,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		closeStandardsPopup();
 		updateStandardsAdvancedSetupStyle();
 	}
-	
+	/**
+	 * 
+	 * @function DisableStandars 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void DisableStandars(){
 		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
 		browseStandards.getElement().getStyle().setColor("#999");
@@ -2360,7 +2510,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	          }
 	    });
 	}
-	
+	/**
+	 * 
+	 * @function hideBrowseStandardsPopup 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void hideBrowseStandardsPopup(NativePreviewEvent event){
 		try{
 			if(event.getTypeInt()==Event.ONMOUSEOVER){
@@ -2375,7 +2543,26 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 		}catch(Exception ex){ex.printStackTrace();}
 	}
-	
+	/**
+	 * 
+	 * @function eventTargetsPopup 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
@@ -2385,12 +2572,48 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 		return false;
 	}
-
+	/**
+	 * 
+	 * @function enableStandards 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void enableStandards(){
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
 	}
-
+	/**
+	 * 
+	 * @function enableGenerateBtn 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void enableGenerateBtn(){
 		generateFromUrlBtn.getElement().getStyle().clearColor();
 		generateFromUrlBtn.getElement().removeClassName("disabled");
@@ -2403,6 +2626,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function disableGenerateBtn 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void disableGenerateBtn(){
 		generateFromUrlBtn.getElement().getStyle().setColor("#999");
 		generateFromUrlBtn.getElement().addClassName("disabled");
@@ -2416,6 +2658,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function setAdvancedOptionsStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setAdvancedOptionsStyles(){
 		if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
 			addSetupAdvancedView.educationUseAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
@@ -2436,6 +2697,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			addSetupAdvancedView.mediaFeatureAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}
 	}
+	/**
+	 * 
+	 * @function setAdvancedAccessHazardStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param length
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setAdvancedAccessHazardStyles(int length){
 		if(length == 0){
 			addSetupAdvancedView.accessHazardAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
@@ -2444,6 +2724,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			addSetupAdvancedView.accessHazardAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}
 	}
+	/**
+	 * 
+	 * @function updateStandardsAdvancedSetupStyle 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateStandardsAdvancedSetupStyle() {
 		System.out.println("standardsPanel.getWidgetCount() here is:::::"+standardsPanel.getWidgetCount());
 		if(standardsPanel.getWidgetCount()==0){
@@ -2453,6 +2752,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			addSetupAdvancedView.standardsAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
 		}
 	}
+	/**
+	 * 
+	 * @function updateMobileFriendlyAdvancedStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateMobileFriendlyAdvancedStyles(){
 		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 		{
@@ -2466,7 +2784,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}	
 	}
 
-	
+	/**
+	 * 
+	 * @function showUrlErrorMessage 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param message
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void showUrlErrorMessage(String message){
 		mandatoryUrlLbl.setText(message);
 		StringUtil.setAttributes(mandatoryUrlLbl.getElement(), "lblMandatoryUrlLbl", message, message);
@@ -2475,6 +2811,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		urlTextBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
 		mandatoryUrlLbl.setVisible(true);
 	}
+	/**
+	 * 
+	 * @function clearUrlErrorMessage 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void clearUrlErrorMessage(){
 		mandatoryUrlLbl.setVisible(false);
 		urlTextBox.getElement().getStyle().clearBorderColor();
@@ -2482,7 +2837,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		urlTextBox.getElement().getStyle().clearBorderWidth();
 	}
 	
-	
+	/**
+	 * 
+	 * @function showTitleErrorMessage 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param message
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void showTitleErrorMessage(String message){
 		mandatoryTitleLbl.setText(message);
 		StringUtil.setAttributes(mandatoryTitleLbl.getElement(), "lblMandatoryTitleLbl", message, message);
@@ -2491,13 +2864,50 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		titleTextBox.getElement().getStyle().setBorderWidth(1, Unit.PX);
 		mandatoryTitleLbl.setVisible(true);
 	}
+	/**
+	 * 
+	 * @function clearTitleErrorMessage 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void clearTitleErrorMessage(){
 		mandatoryTitleLbl.setVisible(false);
 		titleTextBox.getElement().getStyle().clearBorderColor();
 		titleTextBox.getElement().getStyle().clearBorderStyle();
 		titleTextBox.getElement().getStyle().clearBorderWidth();
 	}
-	
+	/**
+	 * 
+	 * @function showCategoryErrorMessage 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param message
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void showCategoryErrorMessage(String message){
 		mandatoryCategoryLbl.setText(message);
 		StringUtil.setAttributes(mandatoryTitleLbl.getElement(), "lblMandatoryCategoryLbl", message, message);
@@ -2507,6 +2917,25 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		panelCategoryInputDiv.getElement().setId("panelCategoryInputDiv");
 		mandatoryCategoryLbl.setVisible(true);
 	}
+	/**
+	 * 
+	 * @function clearCategoryErrorMessage 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void clearCategoryErrorMessage(){
 		mandatoryCategoryLbl.setVisible(false);
 		panelCategoryInputDiv.getElement().getStyle().clearBorderColor();
