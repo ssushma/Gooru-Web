@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceView.AddWebResourceWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAdvancedCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -68,10 +67,7 @@ import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
-
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -1611,17 +1607,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								userUrlStr1 = userUrlStr.replaceAll(
 										"feature=player_embedded&", "");
 								// getResourceInfo(userUrlStr1);
-									System.out.println("here url on blur:::"+userUrlStr);
 								checkShortenUrl(userUrlStr);
-								/*if (userUrlStr.indexOf("youtube") >0){
-									String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
-									String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
-									System.out.println("thumbnailUrl:"+thumbnailUrl);
-									generateImageLbl.setVisible(false);
-									setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
-									setThumbnailImage.setUrl(thumbnailUrl);
-									//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
-								}*/
+								if (userUrlStr.indexOf("youtube") >0){
+									setVideoCategory();
+								}
 								loadingPanel.setVisible(true);
 								contentPanel.getElement().getStyle().setOpacity(0.6);
 
@@ -1738,6 +1727,28 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiHandler("videoResourcePanel")
 	void videoResourcePanel(ClickEvent event) {
+		setVideoCategory();
+	}
+	/**
+	 * 
+	 * @function setVideoCategory 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void setVideoCategory(){
 		MixpanelUtil.mixpanelEvent("organize_add_resource_video_selected");
 		resourceCategoryLabel.setText(i18n.GL0918());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0918());
@@ -1748,7 +1759,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		
 		clearCategoryErrorMessage();
 	}
-
+	
 	@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_interactive_selected");
