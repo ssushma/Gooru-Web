@@ -205,7 +205,7 @@
 				<g:Label ui:field="correctQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.searchResultError}" ui:field="spellerrorqueriedTextHtml" >
-				<g:Label styleName="{style.wrongSpellcontainer}" text="{i18n.GL3098}"></g:Label>
+				<g:Label styleName="{style.wrongSpellcontainer}" text="{i18n.GL3100}"></g:Label>
 				<g:Label ui:field="wrongQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
 				</g:HTMLPanel>
 				<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
