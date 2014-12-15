@@ -1207,7 +1207,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			if(postCommentBtn.getStyleName().contains(PRIMARY_STYLE)) {
 				//check for bad words first.
 				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", commentField.getText());
+				parms.put("text", removeHtmlTags(commentField.getText()));
 				postCommentBtn.setEnabled(false);
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 	
@@ -1226,7 +1226,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							commentField.getElement().getStyle().setBorderColor("#ccc");
 							characterLimit.setVisible(false);
 							
-							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), commentField.getText());
+							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), removeHtmlTags(commentField.getText()));
 							
 							commentField.setText("");
 							commentField.getElement().setAttribute("alt","");
@@ -1729,6 +1729,26 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public HTMLPanel getLoadingImageLabel() {
 		return loadingImageLabel;
+	}
+	
+	/**
+	 * @function removeHtmlTags 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description this method is used to remove the html tags in comment input box
+	 * 
+	 * @parm(s) : @param String 
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	private String removeHtmlTags(String html){
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
+        return html;
 	}
 
 }
