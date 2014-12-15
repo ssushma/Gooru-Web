@@ -239,8 +239,50 @@
 			
 			
 		</g:HTMLPanel>
+		
+		<g:HTMLPanel styleName="{res.css.standardsInEditResource}">
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbImageDesc}" ui:field="thumbnailLbl"></g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRect}">
+				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbArrLContainer}">
+					<g:Label
+						styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionThumbArrLeftIcon}"
+						ui:field="leftArrowLbl"></g:Label>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbArrRContainer}">
+					<g:Label
+						styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionThumbArrRightIcon}"
+						ui:field="rightArrowLbl"></g:Label>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRectDesc}">
+					<g:Label styleName="" 
+						ui:field="generateImageLbl"></g:Label>
+					<g:Image url="" ui:field="setThumbnailImage" styleName="{res.css.resourceThumbnailImage}"></g:Image>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbOrtext}" ui:field="orLbl"></g:HTMLPanel>
+			<g:Label styleName="{res.css.myFolderCollectionThumbUploadImagetext}"
+				ui:field="uploadImageLbl"></g:Label>
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionRefresh}"></g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshMainContainer}">
+				<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshContainer}">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshInnerContainer}">
+						<g:Label
+							styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionRefreshIcon}"
+							ui:field="refreshLbl"></g:Label>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshText}" ui:field="refreshLblPanel"></g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		
+		
+		
+		
+		<g:HTMLPanel styleName="{res.css.advncedOption}"><g:InlineLabel ui:field="advancedText"></g:InlineLabel></g:HTMLPanel>
 		<!-- Educational use -->
-		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}">
+		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="educationalContainer">
+		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconEducationalUse"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="educationalTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
@@ -340,7 +382,8 @@
 		</g:HTMLPanel>
 		<!-- Educational use End -->
 		        	<!-- Moments of Learning -->
-		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}">
+		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="momentsOfLearningContainer">
+		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMomentsOfLearning"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="momentsOfLearningTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
@@ -381,8 +424,10 @@
 		<!-- Moments of Learning  End-->
 	
 		<!-- Standards Start -->
+		<g:HTMLPanel ui:field="standardsBrowseContainer">
 		 <g:FlowPanel ui:field="standardContainer">
-					<g:Label styleName="{res1.css.shelfGradeInfoBottom}"
+		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconstandards"></uc:HTMLEventPanel>
+					<g:Label styleName="{res.css.shelfGradeInfoBottomWeb}"
 						ui:field="standardsDefaultText"></g:Label>
 					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
 						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
@@ -400,69 +445,45 @@
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
+				</g:HTMLPanel>
         <!-- Standards End -->
 		<!--accessHazard -->
       	<g:Label styleName="{res.css.clearfix}"></g:Label>
+      	<g:HTMLPanel ui:field="accessHazardContainer">
+      	 	 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconAccessHazard"></uc:HTMLEventPanel>
 		      <g:Label styleName="{res.css.accessHazard}" ui:field="accessHazard"></g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="soundHazard"></g:Label>
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
+		 </g:HTMLPanel>
       	 <!-- accessHazard End -->
       	 <!--mediaLabel -->
       	 <br />
-			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
- 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" >
- 		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
-							<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
-		       <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
-								styleName="{res.css.scrollPanelContainerInstructional}">
-								<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"
-									styleName=""></g:HTMLPanel>
-							</g:ScrollPanel>
+      	 	<g:HTMLPanel ui:field="mediaFeatureContainer">
+      	 	 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMediafeature"></uc:HTMLEventPanel>
+				  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
+	 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" ui:field="mediaLabelContainer">
+	 		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
+								<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+			       <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
+									styleName="{res.css.scrollPanelContainerInstructional}">
+									<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"
+										styleName=""></g:HTMLPanel>
+								</g:ScrollPanel>
+			      </g:HTMLPanel>
 		      </g:HTMLPanel>
       	 <!-- mediaLabel End -->
       	  <!--moblieFriendly -->
-      	 <g:HTMLPanel styleName="{res.css.h5} {res.css.selectsection} {res.css.fRight}"><g:InlineLabel ui:field="moblieFriendly"></g:InlineLabel><br />
-		    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes"></g:Button>
-		    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo"></g:Button>
+      	   <g:HTMLPanel ui:field="mobileFriendlyContainer">
+      	   <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMobileFriendly"></uc:HTMLEventPanel>
+		      	 <g:HTMLPanel styleName="{res.css.h5} {res.css.selectsection}"><g:InlineLabel ui:field="moblieFriendly"></g:InlineLabel><br />
+				    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes"></g:Button>
+				    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo"></g:Button>
+				 </g:HTMLPanel>
 		 </g:HTMLPanel>
       	 <!-- moblieFriendly End -->
-		<g:HTMLPanel styleName="{res.css.standardsInEditResource}">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbImageDesc}" ui:field="thumbnailLbl"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRect}">
-				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbArrLContainer}">
-					<g:Label
-						styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionThumbArrLeftIcon}"
-						ui:field="leftArrowLbl"></g:Label>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbArrRContainer}">
-					<g:Label
-						styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionThumbArrRightIcon}"
-						ui:field="rightArrowLbl"></g:Label>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRectDesc}">
-					<g:Label styleName="" 
-						ui:field="generateImageLbl"></g:Label>
-					<g:Image url="" ui:field="setThumbnailImage" styleName="{res.css.resourceThumbnailImage}"></g:Image>
-				</g:HTMLPanel>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbOrtext}" ui:field="orLbl"></g:HTMLPanel>
-			<g:Label styleName="{res.css.myFolderCollectionThumbUploadImagetext}"
-				ui:field="uploadImageLbl"></g:Label>
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionRefresh}"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshMainContainer}">
-				<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshContainer}">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshInnerContainer}">
-						<g:Label
-							styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionRefreshIcon}"
-							ui:field="refreshLbl"></g:Label>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionRefreshText}" ui:field="refreshLblPanel"></g:HTMLPanel>
-				</g:HTMLPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
+		 <uc:HTMLEventPanel ui:field="AdvancedSetupContainer"></uc:HTMLEventPanel>
 		
 		 <g:HTMLPanel styleName="{res.css.resourceRightsContainerPdf}" ui:field="rightsContainer">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>

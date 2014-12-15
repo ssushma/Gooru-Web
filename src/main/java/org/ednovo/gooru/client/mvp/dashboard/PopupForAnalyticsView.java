@@ -88,6 +88,7 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 		popup.add(uiBinder.createAndBindUi(this));
 		popup.setGlassEnabled(true);
 		popup.center();
+		popup.hide();
 		popup.setAutoHideEnabled(true);
 		popup.setGlassStyleName("");
 		btnHighToLow.setText(i18n.GL3057());
@@ -144,6 +145,7 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 	 */
 	@Override
 	public void setPopupData(String isEndorsedOrRemixed,String isReactionOrRatings) {
+		popup.show();
 		if(isEndorsedOrRemixed!=null){
 			boolean isEndorsed=Boolean.parseBoolean(isEndorsedOrRemixed);
 			if(isEndorsed){
