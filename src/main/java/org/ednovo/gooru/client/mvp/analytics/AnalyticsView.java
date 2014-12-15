@@ -17,6 +17,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -71,7 +73,21 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
 		btnCollectionResponses.addClickHandler(new ViewAssignmentClickEvent(""));
+		loadCollections.addChangeHandler(new loadCollectionsChangeHandler());
 		setStaticData();
+	}
+	/**
+	 * This inner class is used to handle change event of the collections.
+	 */
+	public class loadCollectionsChangeHandler implements ChangeHandler{
+		@Override
+		public void onChange(ChangeEvent event) {
+			//when changing the collections drop down reset all the changes.
+			getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,"","");
+			getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,"","");
+			btnCollectionProgress.setText(i18n.GL2296());
+			btnCollectionSummary.setText(i18n.GL2296());
+		}
 	}
 	@Override
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {

@@ -140,7 +140,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	@Override
 	protected void onHide() {
 		super.onHide();
-		getView().resetData();
 		clearSlot(COLLECTION_PROGRESS_SLOT);	
 		clearSlot(COLLECTION_SUMMARY_SLOT);	
 	}
