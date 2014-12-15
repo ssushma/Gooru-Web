@@ -113,6 +113,7 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.itextpdf.text.log.SysoCounter;
 
 public abstract class EditResourcePopupVc extends AppPopUp implements SelectionHandler<SuggestOracle.Suggestion>{
 
@@ -874,7 +875,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 		
-/** Add Advanced Setup Changes **/
+		/** Add Advanced Setup Changes **/
 		
 		educationalContainer.setVisible(false);
 		educationalUsePanel.setVisible(false);
@@ -1135,9 +1136,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		updateStandardsAdvancedSetupStyle();
 		String url = collectionItemDo.getResource().getUrl();
 		if(collectionItemDo.getResource().getResourceTags()!=null){
-			
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
-				
 				tagListGlobal.add("\""+collectionItemDo.getResource().getResourceTags().get(i).getLabel()+"\"");
 				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Media Feature"))
 				{
@@ -1146,7 +1145,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Mobile Friendly"))
 				{
 					setMobileFriendlyObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
-					updateMobileFriendlyAdvancedStyles();
 				}
 				
 				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Access Hazard"))
@@ -1191,7 +1189,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(video.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		} else if (category.equalsIgnoreCase("Interactive")) {
 			resourceCategoryLabel.setText(i18n.GL0919());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0919());
@@ -1199,7 +1196,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(interactive.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		} else if (category.equalsIgnoreCase("Website")||category.equalsIgnoreCase("websites")||category.equalsIgnoreCase("webpage")) {
 			resourceCategoryLabel.setText(i18n.GL1396());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1396());
@@ -1207,7 +1203,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		}
 		else if(category.equalsIgnoreCase("audio")) {
 			resourceCategoryLabel.setText(i18n.GL1045());
@@ -1216,7 +1211,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(audio.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		}
 	//	else if((category.equalsIgnoreCase("texts")||(category.equalsIgnoreCase("Slide")||(category.equalsIgnoreCase("Handout")||(category.equalsIgnoreCase("Textbook")||(category.equalsIgnoreCase("Lesson")) {
 		else if(category.equalsIgnoreCase("texts")||category.equalsIgnoreCase("text")) {
@@ -1226,7 +1220,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		}
 		else if (category.equalsIgnoreCase("image")) {
 			resourceCategoryLabel.setText(i18n.GL1046());
@@ -1235,7 +1228,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		}
 //		else if (category.equalsIgnoreCase("other")) {
 //			resourceCategoryLabel.setText(MessageProperties.i18n.GL1047);
@@ -1250,7 +1242,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		} else if (category.equalsIgnoreCase("Handout")) {
 			resourceCategoryLabel.setText(i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
@@ -1258,7 +1249,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		} else if (category.equalsIgnoreCase("Textbook")) {
 			resourceCategoryLabel.setText(i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
@@ -1266,7 +1256,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		} else if (category.equalsIgnoreCase("Lesson")) {
 			resourceCategoryLabel.setText(i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
@@ -1274,7 +1263,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 //		} else if (category.equalsIgnoreCase("Question")) {
 //			resourceCategoryLabel.setText("Question");
 //			categorypanel.setStyleName(question.getStyleName());
@@ -1287,7 +1275,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-			setAdvancedOptionsStyles();
 		}
 
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
@@ -2160,11 +2147,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		}
-	}	
+		updateMobileFriendlyAdvancedStyles();
+		}	
 	@UiHandler("mobileYes")
 	public void onmobileYesClick(ClickEvent click)
 	{
-		
 		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		updateMobileFriendlyAdvancedStyles();
@@ -2397,7 +2384,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	 * This method is used to set Styles for Standards Advanced Option 
 	 */
 	public void updateStandardsAdvancedSetupStyle() {
-		System.out.println("standardsPanel.getWidgetCount() here is:::::"+standardsPanel.getWidgetCount());
 		if(standardsPanel.getWidgetCount()==0){
 			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 		}else{
