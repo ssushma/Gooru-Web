@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 
 public interface IsCollectionProgressView extends IsViewWithHandlers<CollectionProgressUiHandlers>{
 	/**
@@ -37,4 +39,9 @@ public interface IsCollectionProgressView extends IsViewWithHandlers<CollectionP
 	 * @param collectionTitle
 	 */
 	void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView,String collectionTitle);
+	/**
+	 * This method is used to get loading image.
+	 * @return
+	 */
+	HTMLPanel getLoadingImage();
 }
