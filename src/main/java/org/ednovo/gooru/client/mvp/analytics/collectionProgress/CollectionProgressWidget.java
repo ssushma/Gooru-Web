@@ -399,9 +399,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 				formattedTime=((int) Math.round(secondsInMille))+"";
 			}
 			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+formattedTime:formattedTime)+"";
+				createdTime=createdTime+formattedTime+"";
 			}else{
-				createdTime="00"+":"+((seconds<10)?"0"+formattedTime:formattedTime)+"";
+				createdTime="00"+":"+formattedTime+"";
 			}
 		}
 		return createdTime;
