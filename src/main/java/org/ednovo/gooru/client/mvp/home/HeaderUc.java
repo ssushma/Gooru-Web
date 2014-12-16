@@ -530,12 +530,12 @@ public class HeaderUc extends Composite implements
 		myDashBoardPop.getElement().getStyle().setZIndex(99);
 		myDashBoardPop.setVisible(false);
 
-		LoginLinkContainer.addMouseOverHandler(new DashBoardMouseOver());
-		LoginLinkContainer.addMouseOutHandler(new DashBoardMouseOut());
+//		LoginLinkContainer.addMouseOverHandler(new DashBoardMouseOver());
+//		LoginLinkContainer.addMouseOutHandler(new DashBoardMouseOut());
 
 
-	organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
-	organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
+		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
+		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
 		
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
@@ -624,6 +624,7 @@ public class HeaderUc extends Composite implements
 
 		dropDownImg.getElement().setId("pnlDropDownImg");
 		dropDownImgforDashboard.getElement().getStyle().setMarginTop(14, Unit.PX);
+		dropDownImgforDashboard.setVisible(false);
 		signUpInfo.getElement().setId("fpnlSignUpInfo");
 		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
 		logInfoFloPanel.getElement().setId("fpnlLogInfoFloPanel");
