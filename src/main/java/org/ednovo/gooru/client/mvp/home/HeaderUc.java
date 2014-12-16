@@ -963,6 +963,7 @@ public class HeaderUc extends Composite implements
 			String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
 			queryVal = queryVal.replace("+", " ");
 			map.put("query", queryVal);
+			editSearchTxtBox.setText(queryVal);
 		}
 		if(map.containsKey("flt.subjectName"))
 		{
@@ -1345,6 +1346,7 @@ public class HeaderUc extends Composite implements
 				//queryVal = queryVal.replaceAll("%5C1", "&");
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
+				editSearchTxtBox.setText(queryVal);
 				if(prefilter!=null){
 					prefilter.hide();
 				}
@@ -1418,7 +1420,6 @@ public class HeaderUc extends Composite implements
 				params.remove(IsSearchView.GRADE_FLT);
 			}
 			if(stadardCode!=null && !stadardCode.equals("")){
-				System.out.println("stadardcode::"+stadardCode);
 				params.put(IsSearchView.STANDARD_FLT, stadardCode);
 			}
 		}
@@ -1963,6 +1964,7 @@ public class HeaderUc extends Composite implements
 				//queryVal = queryVal.replaceAll("%5C1", "&");
 				Map<String, String> map = params;
 				map.put("query", queryVal);
+				editSearchTxtBox.setText(queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.RESOURCE_SEARCH, map);
 			}

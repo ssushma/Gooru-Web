@@ -142,6 +142,11 @@ public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
 	*/
 	
 	void setButtonVisibility();
+	/**
+	 * This method is used to set the view collection analytics drop down
+	 * @param isaggregateData
+	 */
+	void setViewCollectionAnalytics(boolean isaggregateData);
 	
 }
 

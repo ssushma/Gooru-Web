@@ -335,6 +335,12 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		}
 		
 	}
+	
+	
+	@Override
+	protected void onHide() {
+		AppClientFactory.getPlaceManager().setClasspageEventId(null);
+	}
 
 	@Override
 	public String getViewToken() {

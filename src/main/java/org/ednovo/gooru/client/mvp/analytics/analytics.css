@@ -1013,3 +1013,12 @@
 	float: left;
 	margin-top: 5px;
 }
+.showEmptyMessage{
+	font-weight: normal;
+	margin: 5% 0;
+	text-align: center;
+	width: 100%;
+	background-color: white;
+	padding: 20px 0px;
+	box-shadow: 0 2px 2px #ccc;
+}

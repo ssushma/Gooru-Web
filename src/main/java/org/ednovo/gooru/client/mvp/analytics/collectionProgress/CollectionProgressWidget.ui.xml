@@ -3,7 +3,11 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressCBundle" field="res"/>
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:style field="unitStyle" src="collectionProgress.css" />
 	 <g:HTMLPanel>
+	 <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel1">
+						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+	 </g:HTMLPanel>
  	 <g:HTMLPanel styleName="{res.css.maincontainer}">
  	 <g:HTMLPanel>
  	 <g:Label styleName="{res.css.summary_title}"  text="{i18n.GL1586}"></g:Label>
@@ -18,9 +22,11 @@
  	 <g:Label styleName="{res.css.narrowreportText}" text="{i18n.GL2266}"></g:Label>
 	 <g:ListBox ui:field="filterDropDown" styleName="{res.css.filterDropDown}">
 	 </g:ListBox>
+	 <g:Label ui:field="leftArrow" styleName="{unitStyle.leftArrow}"></g:Label>
 	 <g:HTMLPanel ui:field="scrollForCollectionProgress">
 	 <g:VerticalPanel ui:field="htmlpnlProgress"/>
 	 </g:HTMLPanel>
+	  <g:Label ui:field="rightArrow" styleName="{unitStyle.rightArrow}"></g:Label>
 	 </g:HTMLPanel>
 	 </g:HTMLPanel>
 	</g:HTMLPanel>

@@ -91,7 +91,7 @@ public class PreFilterPopup extends PopupPanel {
 	String[] elementaryGrades = new String[]{i18n.GL3070(),i18n.GL3071(),i18n.GL3072(),i18n.GL3073(),i18n.GL3074()};
 	String[] middleGrades = new String[]{i18n.GL3075(),i18n.GL3076(),i18n.GL3077(),i18n.GL3078(),i18n.GL3079()};
 	String[] higherGrades = new String[]{i18n.GL3080(),i18n.GL3081(),i18n.GL3082(),i18n.GL3083(),i18n.GL3084()};
-	String[] subjects = new String[]{i18n.GL1000(),i18n.GL1001(),i18n.GL1002(),i18n.GL1003(),i18n.GL3085(),i18n.GL3086()};
+	String[] subjects = new String[]{i18n.GL1000().trim(),i18n.GL1001().trim(),i18n.GL1002().trim(),i18n.GL1003().trim(),i18n.GL3085().trim(),i18n.GL3086().trim()};
 
 	/**
 	 * Because this class has a default constructor, it can
@@ -113,6 +113,8 @@ public class PreFilterPopup extends PopupPanel {
 		renderCheckBoxs(subjectPanelUc, subjects);
 		setStaticData();
 		eventActions();
+		setPreSelectedFilters(AppClientFactory.getCurrentPlaceToken());
+		
 		/*gradeAnc.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -132,6 +134,24 @@ public class PreFilterPopup extends PopupPanel {
 			}
 		});*/
 //		clearAllFields();
+	}
+
+	/**
+	 * If any filters are checked, this method will be called and will respective check box will get checked.
+	 * @param currentPlaceToken
+	 */
+	private void setPreSelectedFilters(String currentPlaceToken) {
+		
+		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null)!=null){
+			setSelectedFilter(eleGradePanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null), ",");
+			setSelectedFilter(middleGradePanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null), ",");
+			setSelectedFilter(highrGradePanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null), ",");
+		}
+		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName",null)!=null){
+			setSelectedFilter(subjectPanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName",null), " ~~");
+		}
+		
+		
 	}
 
 	/**
@@ -173,7 +193,7 @@ public class PreFilterPopup extends PopupPanel {
 					gradeCheckBox.setName("13gte");
 				}*/
 			}
-			gradeCheckBox.setText(stringArray[i]);
+			gradeCheckBox.setText(stringArray[i].trim());
 			gradeCheckBox.setStyleName(CssTokens.FILTER_CHECKBOX);
 			htmlPanel.add(gradeCheckBox);
 			gradeCheckBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
@@ -208,7 +228,6 @@ public class PreFilterPopup extends PopupPanel {
 			filterGrade+=eleGrade;
 		}
 		String midGrade = getSelectedFilter(middleGradePanelUc);
-		System.out.println("selected grade:"+midGrade);
 		if (!midGrade.isEmpty()) {
 			if(filterGrade.equals("")){
 				if(elemGrade.isEmpty()){
@@ -221,7 +240,6 @@ public class PreFilterPopup extends PopupPanel {
 			}
 		}
 		String highGrade = getSelectedFilter(highrGradePanelUc);
-		System.out.println("selected grade:"+highGrade);
 		if (!highGrade.isEmpty()) {
 			if(filterGrade.equals("")){
 				filterGrade+=highGrade;
@@ -230,11 +248,9 @@ public class PreFilterPopup extends PopupPanel {
 			}
 		}
 		if(filterGrade!=null && !filterGrade.equals("")){
-			System.out.println("filtergrade:"+filterGrade);
 			filterMap.put(IsSearchView.GRADE_FLT, filterGrade);
 		}
 		String selectedSubject = getSelectedFilter(subjectPanelUc, "~~");
-		System.out.println("selected subjects:"+selectedSubject);
 		if (!selectedSubject.isEmpty()) {
 			filterMap.put(IsSearchView.SUBJECT_FLT, selectedSubject);
 		}

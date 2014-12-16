@@ -20,6 +20,7 @@
 .closeLabelText {
 	float: left;
 	font-size:12px;
+	padding-left:4px;
 	/*width: 125px;*/
 }
 
