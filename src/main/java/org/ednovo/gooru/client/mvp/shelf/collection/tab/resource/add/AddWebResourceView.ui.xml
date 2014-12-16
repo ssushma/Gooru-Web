@@ -448,6 +448,12 @@
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="extendingUnderstandingText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
+				
+				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="defaultPanelMomentsOfLearningPnl">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="defaultMomentsOfLearningText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<!-- Moments of Learning  End-->
@@ -494,7 +500,7 @@
 			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
  		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" ui:field="mediaLabelContainer">
  		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
-							<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+				<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
 		       <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
 								styleName="{res.css.scrollPanelContainerInstructional}">
 								<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"
