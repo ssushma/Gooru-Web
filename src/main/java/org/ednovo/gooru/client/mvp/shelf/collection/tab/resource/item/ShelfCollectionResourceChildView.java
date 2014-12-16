@@ -433,7 +433,7 @@ public class ShelfCollectionResourceChildView extends
 		cancelpdfBtn.setText(i18n.GL0142());
 		cancelpdfBtn.getElement().setAttribute("alt", i18n.GL0142());
 		cancelpdfBtn.getElement().setAttribute("title", i18n.GL0142());
-		resourceFlowPanel.getElement().setId("fpnlResourceFlowPanel");
+		resourceFlowPanel.getElement().setId("collectionItem-"+collectionItem.getResource().getGooruOid());
 		narrationConatainer.getElement().setId("fpnlNarrationConatainer");
 		/**
 		 * Hotfix changes.

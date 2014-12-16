@@ -1038,7 +1038,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 
 		setThumbnailImage.setVisible(true);
-		String category = collectionItemDo.getResource().getCategory();
+		String category = collectionItemDo.getResource().getCategory().trim();
 		
 		if (category.equalsIgnoreCase("Video")||category.equalsIgnoreCase("Videos")) {
 			resourceCategoryLabel.setText(i18n.GL0918());
@@ -1137,7 +1137,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
-		setImage(url, category);
+		setImage(thumbnailUrlStr, category);
 		if( collectionItemDo.getResource().getEducationalUse()!=null){
 			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
 				
@@ -1190,16 +1190,17 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 	}
 
-	public void setImage(String url, String category){
-		if (thumbnailUrlStr.endsWith("null")) {
-			if (url.indexOf("youtube") >0){
-				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
-				thumbnailUrlStr = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+	public void setImage(String thumbnailUrlImage, String category){
+		System.out.println("thumbnailUrlImage : "+thumbnailUrlImage);
+		if (thumbnailUrlImage.endsWith("null")) {
+			if (thumbnailUrlImage.indexOf("youtube") >0){
+				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(thumbnailUrlImage);
+				thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
 			}else{
-				thumbnailUrlStr = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
+				thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 			}
 		} 
-		setThumbnailImage.setUrl(thumbnailUrlStr);
+		setThumbnailImage.setUrl(thumbnailUrlImage);
 	}
 	public void updateUi() {
 		generateImageLbl.setVisible(false);
@@ -1344,7 +1345,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												}else{
 													collectionItemDo.getResource().getThumbnails().setUrl(null);
 												}
-												collectionItemDo.getResource().setUrl(urlStr);
+//												collectionItemDo.getResource().setUrl(urlStr);
 												
 												if(!resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
 													ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
