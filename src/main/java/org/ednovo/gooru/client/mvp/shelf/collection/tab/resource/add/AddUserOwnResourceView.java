@@ -135,7 +135,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	@UiField 
 	org.ednovo.gooru.client.uc.HTMLEventPanel preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
-	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel;
+	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,defaultPanel,defaultPanelMomentsOfLearningPnl;
 
 
 	@UiField
@@ -152,7 +152,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	HTMLPanel panelContentRights,resourceTitleContainer,filePathContainer,thumbnailImageText,errorContainer,interactingWithTheTextText,extendingUnderstandingText;
 
 	@UiField
-	public HTMLPanel loadingPanel,htmlMediaFeatureListContainer,imageContainer,fileSizeLimit,titleText,descriptionText,categoryPanelText,imageText,textsPanelLabel,preparingTheLearningText;
+	public HTMLPanel loadingPanel,htmlMediaFeatureListContainer,imageContainer,fileSizeLimit,titleText,descriptionText,categoryPanelText,imageText,textsPanelLabel,preparingTheLearningText,
+	defaultText,defaultMomentsOfLearningText;
 
 	@UiField
 	HTMLPanel categorypanel,texts,image,educationalTitle,activityText,educationalpanel,educationalUsePanel;
@@ -270,7 +271,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
-		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
 			public void keyAction(String text) {
@@ -682,6 +682,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		rightsContent.getElement().setId("pnlRightsContent");
 		panelAction.getElement().setId("pnlPanelAction");
 		loadingImagePanel.getElement().setId("pnlLoadingImagePanel");
+		
+		defaultText.getElement().setInnerHTML(i18n.GL3093());
+		defaultMomentsOfLearningText.getElement().setInnerHTML(i18n.GL3093());
 		clearFields();
 		handelFormEvent();
 		
@@ -720,7 +723,22 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
 		}
-		
+		HTMLEventPanel defaultMediaFeaturePnl = new HTMLEventPanel("");
+		defaultMediaFeaturePnl.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFolderVideoOuterContainer());
+		HTMLPanel defaultMediaFeatureText = new HTMLPanel("");
+		defaultMediaFeatureText.getElement().setInnerHTML(i18n.GL3093());
+		defaultMediaFeatureText.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myEducationalPanelSubTitles());
+		defaultMediaFeaturePnl.add(defaultMediaFeatureText);
+		defaultMediaFeaturePnl.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				lblMediaPlaceHolder.setText(i18n.GL3051()+i18n.GL_SPL_SEMICOLON());
+				spanelMediaFeaturePanel.setVisible(false);
+				lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+				setAdvancedOptionsStyles();
+			}
+		});
+		htmlMediaFeatureListContainer.add(defaultMediaFeaturePnl);
 		
 
 		copyRightAnr.addClickHandler(new ClickHandler() {
@@ -1660,7 +1678,16 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		closeStandardsPopup();
 		updateStandardsAdvancedSetupStyle();
 	}
-	
+	@UiHandler("defaultPanel")
+	void defaultPanel(ClickEvent event) {
+		resourceEducationalLabel.setText(i18n.GL1684());
+		resourceEducationalLabel.getElement().setAttribute("alt", i18n.GL1684());
+		resourceEducationalLabel.getElement().setAttribute("title", i18n.GL1684());
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+		setAdvancedOptionsStyles();
+	}
 	@UiHandler("activityPanel")
 	void activityPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
@@ -1838,7 +1865,16 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			educationalDropDownLblOpen = false;
 		}
 	}
-	
+	@UiHandler("defaultPanelMomentsOfLearningPnl")
+	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
+		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
+		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1684());
+		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1684());
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
+	}
 	
 	@UiHandler("preparingTheLearningPanel")
 	void preparingTheLearningPanel(ClickEvent event) {
@@ -2056,7 +2092,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
-			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
-		}	
+/*			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());*/		}	
 	}
 }
