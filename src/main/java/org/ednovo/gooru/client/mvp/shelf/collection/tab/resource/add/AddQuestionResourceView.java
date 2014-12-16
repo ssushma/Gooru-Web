@@ -1590,7 +1590,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
      */
     void clearErrorMessageForAnswer(){
     	errorMessageForQuestion.setText("");
-    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", "", "");
+    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", null, null);
     	
     	questionNameTextArea.getElement().removeClassName("errorBorderMessage");
     }
@@ -1641,7 +1641,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
      */
     void clearErrorQuestionMessage(){
     	errorMessageForQuestion.setText("");
-    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", "", "");
+    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", null, null);
     	
     	questionNameTextArea.getElement().removeClassName("errorBorderMessage");
     }
