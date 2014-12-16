@@ -73,6 +73,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
@@ -867,7 +868,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		if(questionType.equals("T/F")||questionType.equals("MC")){
 			removeSelectedOption(questionAnswerChoiceContainer,addQuestionAnswerChoice);
 		}
-		ansChoiceErrMsg.setText("");
+		clearErrorMessageForAnswer();
 		if(addQuestionAnswerChoice.optionSelectedButton.getStyleName().equals(addWebResourceStyle.answerDeselected())){
 			addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
 			addStyleToBody(addQuestionAnswerChoice);
@@ -1295,9 +1296,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if(!isHintsAdded(hintsContainer)){
 					if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
 						fieldValidationCheck = false;
-						ansChoiceErrMsg.setText(ERROR_MSG_ANSWER_SELECTED);
-						ansChoiceErrMsg.getElement().setAttribute("alt", ERROR_MSG_ANSWER_SELECTED);
-						ansChoiceErrMsg.getElement().setAttribute("title", ERROR_MSG_ANSWER_SELECTED);
+						showErrorMessageForAnswer(ERROR_MSG_ANSWER_SELECTED);
 						explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 						isAddBtnClicked=true;
 					}else{
@@ -1314,9 +1313,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			if(!isHintsAdded(hintsContainer)){
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
-					ansChoiceErrMsg.setText(errorMessage);
-					ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
-					ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
+					showErrorMessageForAnswer(errorMessage);
 					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
@@ -1333,9 +1330,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			if(!isHintsAdded(hintsContainer)){
 				if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
-					ansChoiceErrMsg.setText(errorMessage);
-					ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
-					ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
+					showErrorMessageForAnswer(errorMessage);
 					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
@@ -1380,11 +1375,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						    		AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestImgContainer.getWidget(0);
     						    		mediaFileName=addQuestionImage.getFileName();
     						    	}
-    						    	errorMessageForQuestion.setText("");
+    						    	clearErrorQuestionMessage();
     						        if(questionNameTextArea.getText()==null||questionNameTextArea.getText().trim().equals("")){
-    						        	errorMessageForQuestion.setText(ERROR_MSG_QUESTION);
-    						        	errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_QUESTION);
-    						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_QUESTION);
+    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION);
     						        	fieldValidationStaus=false;
     						        	isQuestEnteredFlag=false;
     						        	isAddBtnClicked=true;
@@ -1392,17 +1385,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						        //This regex is used to get text count with out html tags
     						        String questionNameText = questionNameTextArea.getText().replaceAll("\\<.*?>","");
     						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
-    						        	errorMessageForQuestion.setText(ERROR_MSG_QUESTION_LENGTH);
-    						        	errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_QUESTION_LENGTH);
-    						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_QUESTION_LENGTH);
+    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
     						        	isAddBtnClicked=true;
     						        }
     						        errorMessageForExplanation.setText("");
     						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
-    						        	errorMessageForQuestion.setText(ERROR_MSG_QUESTION_LENGTH);
-    						        	errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_QUESTION_LENGTH);
-    						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_QUESTION_LENGTH);
+    						        	showErrorQuestionMessage(ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
     						        	isAddBtnClicked=true;
     						        }
@@ -1413,7 +1402,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									isAddBtnClicked=true;
     								}
     						    	if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("T/F")) {
-    									ansChoiceErrMsg.setText("");
+    									clearErrorMessageForAnswer();
     									if (isAnswerChoiceEmpty(questionTrueOrFalseAnswerChoiceContainer)) {
     										fieldValidationStaus = false;
     										isAddBtnClicked=true;
@@ -1422,9 +1411,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     										if(!isHintsAdded(hintsContainer)){
     											if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
     												fieldValidationStaus = false;
-    												ansChoiceErrMsg.setText(ERROR_MSG_ANSWER_SELECTED);
-    												ansChoiceErrMsg.getElement().setAttribute("alt", ERROR_MSG_ANSWER_SELECTED);
-    												ansChoiceErrMsg.getElement().setAttribute("title", ERROR_MSG_ANSWER_SELECTED);
+    												showErrorMessageForAnswer(ERROR_MSG_ANSWER_SELECTED);
     												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												isAddBtnClicked=true;
     											}else{
@@ -1436,7 +1423,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     								}
     							
     								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MC")) {
-    									ansChoiceErrMsg.setText("");
+    									clearErrorMessageForAnswer();
     									if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
     										fieldValidationStaus = false;
     										isAddBtnClicked=true;
@@ -1444,9 +1431,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     										if(!isHintsAdded(hintsContainer)){
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
-    												ansChoiceErrMsg.setText(errorMessage);
-    												ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
-    												ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
+    												showErrorMessageForAnswer(errorMessage);
     												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
@@ -1459,7 +1444,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     								}
     						    	
     								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MA")) {
-    									ansChoiceErrMsg.setText("");
+    									clearErrorMessageForAnswer();
     									if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
     										fieldValidationStaus = false;
     										isAddBtnClicked=true;
@@ -1467,9 +1452,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     										if(!isHintsAdded(hintsContainer)){
     											if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
-    												ansChoiceErrMsg.setText(errorMessage);
-    												ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
-    												ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
+    												showErrorMessageForAnswer(errorMessage);
+    												
     												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
@@ -1559,6 +1543,108 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     		});
     	}
 	}
+    /**
+     * 
+     * @function showErrorMessageForAnswer 
+     * 
+     * @created_date : 16-Dec-2014
+     * 
+     * @description
+     * 
+     * 
+     * @parm(s) : @param errMessage
+     * 
+     * @return : void
+     *
+     * @throws : <Mentioned if any exceptions>
+     *
+     * 
+     *
+     *
+     */
+    void showErrorMessageForAnswer(String errMessage){
+    	    	
+		ansChoiceErrMsg.setText(errMessage);
+    	StringUtil.setAttributes(ansChoiceErrMsg.getElement(), "lblErrorMessageForAnswer", errMessage, errMessage);
+    	
+    	questionNameTextArea.getElement().addClassName("errorBorderMessage");
+    }
+    /**
+     * 
+     * @function clearErrorMessageForAnswer 
+     * 
+     * @created_date : 16-Dec-2014
+     * 
+     * @description
+     * 
+     * 
+     * @parm(s) : 
+     * 
+     * @return : void
+     *
+     * @throws : <Mentioned if any exceptions>
+     *
+     * 
+     *
+     *
+     */
+    void clearErrorMessageForAnswer(){
+    	errorMessageForQuestion.setText("");
+    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", "", "");
+    	
+    	questionNameTextArea.getElement().removeClassName("errorBorderMessage");
+    }
+    /**
+     * 
+     * @function showErrorQuestionMessage 
+     * 
+     * @created_date : 16-Dec-2014
+     * 
+     * @description
+     * 
+     * 
+     * @parm(s) : @param errMessage
+     * 
+     * @return : void
+     *
+     * @throws : <Mentioned if any exceptions>
+     *
+     * 
+     *
+     *
+     */
+    void showErrorQuestionMessage(String errMessage){
+    	
+    	errorMessageForQuestion.setText(errMessage);
+    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", errMessage, errMessage);
+    	
+    	questionNameTextArea.getElement().addClassName("errorBorderMessage");
+    }
+    /**
+     * 
+     * @function clearErrorQuestionMessage 
+     * 
+     * @created_date : 16-Dec-2014
+     * 
+     * @description
+     * 
+     * 
+     * @parm(s) : 
+     * 
+     * @return : void
+     *
+     * @throws : <Mentioned if any exceptions>
+     *
+     * 
+     *
+     *
+     */
+    void clearErrorQuestionMessage(){
+    	errorMessageForQuestion.setText("");
+    	StringUtil.setAttributes(errorMessageForQuestion.getElement(), "errlblErrorMessageForQuestion", "", "");
+    	
+    	questionNameTextArea.getElement().removeClassName("errorBorderMessage");
+    }
 
     /**
 	 * If all validations successful, question is added to the collection.
@@ -1804,6 +1890,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				  for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
 					  final AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
 					  addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+					  addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
 					  SetStyleForProfanity.SetStyleForProfanityForTinyMCE(addQuestionAnswerChoice.answerTextBox, addQuestionAnswerChoice.errorMessageforAnswerChoice, result.get(i).questionValue);
 					  if(result.get(i)!=null && result.get(i).questionValue==true){
 						  	 addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "float: left;left: 24px;");
@@ -1852,6 +1939,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
                  final AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
                  String answerChoiceValue=null;
                  addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+                 addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
                  if(getQuestionType().equalsIgnoreCase("T/F")){
                 	 answerChoiceValue=addQuestionAnswerChoice.fieldValue;
                  }else if(getQuestionType().equalsIgnoreCase("MC")||getQuestionType().equalsIgnoreCase("MA")){
@@ -1861,6 +1949,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
                  if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
                 	  	 isAnswerChoiceSelected=true;
                          addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
+                         addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
                          profanitymodel.setQuestionID(Integer.toString(i));
                          profanityList.add(profanitymodel);
                          addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "display:block");
@@ -1869,6 +1958,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
                 		   isAnswerChoiceSelected=true;
                 		   Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
                 		   addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
+                		   addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
                 	 }else{
                 		 	isAnswerChoiceSelected=false;
 	                		profanitymodel.setQuestionID(Integer.toString(i));
@@ -1950,12 +2040,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	public void showMulipleChoice(){
 		setHeaderAndBodyText(questionType);
-		ansChoiceErrMsg.setText("");
-		errorMessageForQuestion.setText("");
+		clearErrorMessageForAnswer();
+		clearErrorQuestionMessage();
 		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
      		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i); 
      		addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
-     		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");      
+     		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+     		addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
      		 addQuestionAnswerChoice.showAnswerChoicesForOthers();
 		 }
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
@@ -1971,12 +2062,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	public void showMulipleAnswerChoiceOptions(){
 		setHeaderAndBodyText(questionType);
-		ansChoiceErrMsg.setText("");
-		errorMessageForQuestion.setText("");
+		clearErrorMessageForAnswer();
+		clearErrorQuestionMessage();
 		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
      		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);  
      		addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
      		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+     		addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
      		 addQuestionAnswerChoice.showAnswerChoicesForMultipleAnswers();
 		 }
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
@@ -1991,8 +2083,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 */
 	public void showTrueOrFalseAnswerChoice(){
 		setHeaderAndBodyText("T/F");
-		ansChoiceErrMsg.setText("");
-		errorMessageForQuestion.setText("");
+		clearErrorMessageForAnswer();
+		clearErrorQuestionMessage();
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
@@ -2006,8 +2098,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	public void showOpenEndedQuestion(){ 
 		setHeaderAndBodyText("OE");
-		ansChoiceErrMsg.setText("");
-		errorMessageForQuestion.setText("");
+		clearErrorMessageForAnswer();
+		clearErrorQuestionMessage();
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
@@ -2020,8 +2112,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void showFillInTheBlank(){
 		questionNameTextArea.markAsBlankPanel.setVisible(true);
 		setHeaderAndBodyText("FIB");
-		ansChoiceErrMsg.setText("");
-		errorMessageForQuestion.setText("");
+		clearErrorMessageForAnswer();
+		clearErrorQuestionMessage();
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);

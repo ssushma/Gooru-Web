@@ -28,7 +28,7 @@
         </g:HTMLPanel>
          <g:HTMLPanel styleName="{addWebResourceStyle.addQuestionImageButtonContainer}"><g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle} {addWebResourceStyle.addResourceBottmTitleAlign}" ui:field="addQuestionImg"></g:Anchor></g:HTMLPanel>
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
-           <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForQuestion"></g:Label>
+           <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForQuestion"></g:Label>
         </g:HTMLPanel>
         
         <g:HTMLPanel ui:field="addQuestImgContainer">
@@ -49,8 +49,8 @@
         </g:HTMLPanel>
         <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice"></g:Anchor>
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
-          <g:Label text="" ui:field="errorMessageForAnsCheck" styleName="{addWebResourceStyle.addResourceFormInputBottomText}"/>
-          <g:Label text="" ui:field="ansChoiceErrMsg" styleName="{addWebResourceStyle.addResourceFormInputBottomTextAnswerChoice}"/>   
+          <g:Label text="" ui:field="errorMessageForAnsCheck" styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage"/>
+          <g:Label text="" ui:field="ansChoiceErrMsg" styleName="{addWebResourceStyle.addResourceFormInputBottomTextAnswerChoice} errorMessage"/>   
         </g:HTMLPanel>
         <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="explanationContainer">
           <g:Label styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="explanationLabel"></g:Label>
@@ -61,11 +61,11 @@
            <!--  <g:TextArea ui:field="explainationTextArea" styleName="{addWebResourceStyle.addResourceFormTextarea}"></g:TextArea> -->
           </g:HTMLPanel>
         </g:FlowPanel>
-         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForExplanation"></g:Label>
+         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForExplanation"></g:Label>
       	
       	 <g:HTMLPanel ui:field="hintsContainer"></g:HTMLPanel>
          <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addHintsLabel"></g:Anchor>
-         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForHintsCheck"></g:Label>
+         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage" ui:field="errorMessageForHintsCheck"></g:Label>
      
       	 <!-- Depth Of Knowledge Start-->
       	<g:FlowPanel  styleName="{res1.css.depthOfKnowledgeContainer}">
