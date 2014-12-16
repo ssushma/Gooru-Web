@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontStyle;
@@ -167,6 +168,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
 		searchResultPanel.getElement().setId("appMirageDragContainer");
 		
+		correctSpellHTML.setVisible(false);
+		spellerrorqueriedTextHtml.setVisible(false);
+		
 		
 		standardsConatiner.clear();
 		showCategoryFilter();
@@ -224,9 +228,6 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		String searchText = AppClientFactory.getPlaceManager()
 				.getRequestParameter("query");
 		
-		if(searchDo.getSpellCheckQueryString() == null)
-		{
-
 		if (searchText == null) {
 			searchText = "";
 
@@ -255,36 +256,19 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
 				}
 			}
+			queriedTextHtml.setHTML(searchText);
+			queriedTextHtml.getElement().setAttribute("alt", StringUtil.removeHtml(searchText));
+			queriedTextHtml.getElement().setAttribute("title", StringUtil.removeHtml(searchText));
 			
+		}
+		
+		if(searchDo.getSpellCheckQueryString() == null){
 			correctSpellHTML.setVisible(false);
 			spellerrorqueriedTextHtml.setVisible(false);
 			queriedTextHtml.setVisible(true);
-
-			queriedTextHtml.setHTML(searchText);
-			queriedTextHtml.getElement().setAttribute("alt", searchText);
-			queriedTextHtml.getElement().setAttribute("title", searchText);
-
-			standardsConatiner.clear();
-			showCategoryFilter();
-			showSubjectsFilter();
-			showGradesFilter();
-			showStandardsFilter();
-			if(!(stdCode!=null || grades!=null || subjects!=null)){
-				standardsConatiner.setVisible(false);
-			}else{
-				standardsConatiner.setVisible(true);
-			}
-			
-		}
 		}
 		else
 		{
-/*			String correctedSpelling = searchDo.getSpellCheckQueryString();
-			correctedSpelling = "" + i18n.GL1468() + " <b>" + searchDo.getSpellCheckQueryString()
-					+ "</b>";*/
-
-			
-
 
 			wrongQueryText.setText(searchDo.getUserQueryString());
 			wrongQueryText.addClickHandler(new ClickHandler() {
@@ -292,10 +276,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				@Override
 				public void onClick(ClickEvent event) {
 					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-					AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText(),""));
+						AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText(),""));
 					}
-					//AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
-					
 				}
 			});
 
@@ -306,11 +288,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-					AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,correctSearchTerm));
-					}
-					//AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
-					
+					correctSpellHTML.setVisible(false);
+					spellerrorqueriedTextHtml.setVisible(false);
+					queriedTextHtml.setVisible(true);
 				}
 			});
 			
@@ -318,19 +298,19 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			spellerrorqueriedTextHtml.setVisible(true);
 			queriedTextHtml.setVisible(false);
 			
-			standardsConatiner.clear();
-			showCategoryFilter();
-			showSubjectsFilter();
-			showGradesFilter();
-			showStandardsFilter();
-			if(!(stdCode!=null || grades!=null || subjects!=null)){
-				standardsConatiner.setVisible(false);
-			}else{
-				standardsConatiner.setVisible(true);
-			}
+			
 		}
 		
-		
+		standardsConatiner.clear();
+		showCategoryFilter();
+		showSubjectsFilter();
+		showGradesFilter();
+		showStandardsFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null)){
+			standardsConatiner.setVisible(false);
+		}else{
+			standardsConatiner.setVisible(true);
+		}
 		
 		searchResultPanel.setClonnable(true);
 		

@@ -179,17 +179,21 @@
 		margin-left: 6px;
 		}
 		.wrongSpellLabel{
-		display: inline-block;
-		color: blue;
-		cursor: pointer;
-		font-weight: bold;
-
+			display: inline-block;
+			color: #1076bb;
+			cursor: pointer;
+			font-weight: bold;
+			font-size: 14px;
+		}
+		.wrongSpellLabel:hover{
+			color : #4c98cc;
 		}
 		.wrongSpellcontainer{
-		display: inline-block;
+			display: inline-block;
 		}
 		.correctSpellcontainer{
-		display: inline-block;
+			display: inline-block;
+			font-size: 14px;
 		}
 		
 	</ui:style>
@@ -202,12 +206,12 @@
 				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
 				<!-- <g:HTML styleName="{style.searchResultSpell}" ui:field="spellCheckedqueriedTextHtml" /> -->
 				<g:HTMLPanel styleName="{style.searchResultError}" ui:field="correctSpellHTML">
-				<g:Label styleName="{style.correctSpellcontainer}" text="{i18n.GL1468}"></g:Label>
-				<g:Label ui:field="correctQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
+					<g:Label styleName="{style.correctSpellcontainer}" text="{i18n.GL1468}"></g:Label>
+					<g:Label ui:field="correctQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.searchResultError}" ui:field="spellerrorqueriedTextHtml" >
-				<g:Label styleName="{style.wrongSpellcontainer}" text="{i18n.GL3100}"></g:Label>
-				<g:Label ui:field="wrongQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
+					<g:Label styleName="{style.wrongSpellcontainer}" text="{i18n.GL3100}"></g:Label>
+					<g:Label ui:field="wrongQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
 				</g:HTMLPanel>
 				<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
 				</g:HTMLPanel>
