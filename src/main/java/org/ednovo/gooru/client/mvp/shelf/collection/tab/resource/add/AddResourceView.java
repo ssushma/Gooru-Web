@@ -1067,7 +1067,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				tabViewContainer.add(addQuestionResourceWidget);
 				tabViewContainer.getElement().setId("pnlTabViewContainer");
-				int questionTypeNum=collectionItemDo.getResource().getType();
+				int questionTypeNum=collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType(); 
 				if(questionTypeNum==1){
 					highlightSelectedTab("MC");
 					multipleChoiceRadioButton.setValue(true);
@@ -1086,7 +1086,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}catch(Exception e) {
-				
+				e.printStackTrace();
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);
