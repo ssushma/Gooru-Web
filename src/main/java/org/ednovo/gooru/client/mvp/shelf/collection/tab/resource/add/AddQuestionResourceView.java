@@ -834,7 +834,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 */
 	
 	public void setQuestionTypeStaticTexts(){
-		int questionTypeNum=collectionItemDo.getResource().getType();
+		int questionTypeNum=collectionItemDo.getResource().getType() !=null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
 		if(questionTypeNum==1){
 			setQuestionType("MC");
 			showMulipleChoice();
@@ -2111,7 +2111,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	protected void showEditQuestionResourceView(){
 		
-		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers();
+		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo.getResource().getAnswers() != null ? collectionItemDo.getResource().getAnswers() : collectionItemDo.getQuestionInfo().getAnswers();
 		Iterator<QuestionAnswerDo> it = answerChoicesSet.iterator(); 
 		List<QuestionAnswerDo> questionAnswerDoList = new ArrayList<QuestionAnswerDo>();
 		
@@ -2119,7 +2119,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			/**
 			 *  If type = 4 from API, treated as FIB.
 			 */
-			 if(collectionItemDo.getResource().getType()==4){
+			int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
+			String explanation = collectionItemDo.getResource().getExplanation() != null ? collectionItemDo.getResource().getExplanation() : collectionItemDo.getQuestionInfo().getExplanation();
+			 if(type==4){
 				 while(it.hasNext()){
 					 QuestionAnswerDo answer = it.next();
 					 questionAnswerDoList.add(answer); 
@@ -2135,26 +2137,29 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 							 questionText.append("["+questionAnswerDoList.get(j).getAnswerText()+"]");
 					 }
 				 }
-				 questionNameTextArea.setText(questionText.toString());
-				 questionNameTextArea.getElement().setAttribute("alt", questionText.toString());
-				 questionNameTextArea.getElement().setAttribute("title", questionText.toString());
-				 explainationTextArea.setText(collectionItemDo.getResource().getExplanation());
-				 explainationTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getExplanation());
-				 explainationTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getExplanation());
+				 
+				 
+				 questionNameTextArea.setText(explanation);
+				 questionNameTextArea.getElement().setAttribute("alt", explanation);
+				 questionNameTextArea.getElement().setAttribute("title", explanation);
+				 explainationTextArea.setText(explanation);
+				 explainationTextArea.getElement().setAttribute("alt", explanation);
+				 explainationTextArea.getElement().setAttribute("title", explanation);
 			 }else{
-				 questionNameTextArea.setText(collectionItemDo.getResource().getTitle());
-				 questionNameTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
-				 questionNameTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
-				 explainationTextArea.setText(collectionItemDo.getResource().getExplanation());
-				 explainationTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getExplanation());
-				 explainationTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getExplanation());
+				 questionNameTextArea.setText(explanation);
+				 questionNameTextArea.getElement().setAttribute("alt", explanation);
+				 questionNameTextArea.getElement().setAttribute("title", explanation);
+				 explainationTextArea.setText(explanation);
+				 explainationTextArea.getElement().setAttribute("alt", explanation);
+				 explainationTextArea.getElement().setAttribute("title", explanation);
 			 }
 			
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints();
+		
+		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
 		Iterator<QuestionHintsDo> iterator = hintsList.iterator();
 		hintsContainer.clear();
 		while (iterator.hasNext()) {
@@ -2163,7 +2168,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
 	        addHintsTextArea(addHints);
 		}
-		if(collectionItemDo.getResource().getType()==1){
+		int type = collectionItemDo.getResource().getType() != null ? collectionItemDo.getResource().getType() : collectionItemDo.getQuestionInfo().getType();
+		if(type==1){
 			addResourceFormTitleChoice.setText(i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("alt", i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("title", i18n.GL0864());
@@ -2186,7 +2192,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 				addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
 			}
-		}else if(collectionItemDo.getResource().getType()==7){
+		}else if(type==7){
 			addResourceFormTitleChoice.setText("Enter answers and select correct ones *");
 			addResourceFormTitleChoice.getElement().setAttribute("alt", "Enter answers and select correct ones *");
 			addResourceFormTitleChoice.getElement().setAttribute("title", "Enter answers and select correct ones *");
@@ -2215,7 +2221,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 				addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
 			}
-		}else if(collectionItemDo.getResource().getType()==3){
+		}else if(type==3){
 			addResourceFormTitleChoice.setText(i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("alt", i18n.GL0864());
 			addResourceFormTitleChoice.getElement().setAttribute("title", i18n.GL0864());

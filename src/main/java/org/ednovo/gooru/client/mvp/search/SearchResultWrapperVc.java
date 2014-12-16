@@ -183,11 +183,11 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		shareLbl.getElement().setAttribute("title",i18n.GL0526());
 		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)) {
 			addLbl.setText(i18n.GL0590());
-			analyticsInfoLbl.setText("Analytics");
-			analyticsInfoLbl.setVisible(false);
+			analyticsInfoLbl.setText(i18n.GL3101());
 		}else{
 			addLbl.setText(i18n.GL2037());
 		}
+		analyticsLinkFocPanel.setVisible(false);
 		tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+"0"+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		collcResLbl.getElement().setId("lblResColle");

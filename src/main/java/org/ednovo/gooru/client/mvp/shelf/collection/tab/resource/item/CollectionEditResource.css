@@ -212,9 +212,9 @@ margin-top: -2px;
 
 .shelfResourceSequenceSpacer {
 	float: left;
-	margin-bottom: 11px;
+	/* margin-bottom: 11px; */
 	position: relative;
-	height: 30px;
+	height: 39px;
 }
 
 .shelfResourceDragdropPositioner {

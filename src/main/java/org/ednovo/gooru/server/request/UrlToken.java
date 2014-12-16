@@ -277,7 +277,7 @@ public enum UrlToken {
 	/*UPDATE_RESOURCE_INFO(
 			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}&mediaFileName={5}"),*/
 	UPDATE_RESOURCE_INFO(
-			"/v2/resource/{0}?sessionToken={1}"),
+			"/v2/collection/resource/{0}?sessionToken={1}"),
 			
 	UPDATE_RESOURCE_INFO_NO_MEDIA(
 			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}"),
@@ -364,7 +364,7 @@ public enum UrlToken {
 
 	V2_JOIN_CLASS("/v2/class/{0}/member/join?sessionToken={1}"),
 	
-	V2_UPDATE_USER_RESOURCE("/v2/resource/{0}?sessionToken={1}"),
+	V2_UPDATE_USER_RESOURCE("/v2/collection/resource/{0}?sessionToken={1}"),
 	
 	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?sessionToken={0}"),
 	

@@ -326,29 +326,29 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-                    //isCollResourceTabView.updateCollectionItem(result);
+                    isCollResourceTabView.updateCollectionItem(result);
             		
-                	Map<String,String> params = new HashMap<String,String>();
-                	
-                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
-            		}
-                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-            		}
-                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            		}
-                	
-              
-                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
-                	{
-                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
-                	}
-            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+//                	Map<String,String> params = new HashMap<String,String>();
+//                	
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            		}
+//                	
+//              
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
+//                	{
+//                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
+//                	}
+//            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
             		
                     MixpanelUtil.AddQuestion();
                    // redirect(Window.Location.getHref());
