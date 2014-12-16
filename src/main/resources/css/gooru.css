@@ -2399,7 +2399,7 @@ fieldset {
 	transition: left 0.15s ease-out;
 	width: 103px;
 	height: 22px;
-	background: #1076BB  url(../images/liners.png) repeat;
+	background: #1076BB;
 	border-radius: 2px;
 	padding: 3px;
 	box-shadow: none;
