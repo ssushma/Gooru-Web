@@ -51,7 +51,7 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 		label = new Label();
 		label.setStyleName(UcCBundle.INSTANCE.css().closeLabelText());
 		label.setText(text);
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 			setStyleName(UcCBundle.INSTANCE.css().closeLabelSearch());
 		}else{
 			setStyleName(UcCBundle.INSTANCE.css().closeLabel());

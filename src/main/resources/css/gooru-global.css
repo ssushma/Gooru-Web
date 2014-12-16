@@ -393,31 +393,25 @@ button.disabled, button.disabled:hover {
 	margin: 3px 0.5ex !important;
 }
 .fivestar{
-	background:url(../images/ratings/reviews.png) 16px 0 no-repeat;
-	padding: 2px;
+	background: url(../images/stars.png) no-repeat 14px -10px !important;
 }
 
 .fourstar{
- 	background:url(../images/ratings/reviews-four.png) 16px 0 no-repeat;
- 	padding: 2px;
+ 	background: url(../images/stars.png) no-repeat 14px -38px !important;
 }
 
 .threestar{
-	background:url(../images/ratings/reviews-three.png) 16px 0 no-repeat;
-	padding: 2px;
+	background: url(../images/stars.png) no-repeat 14px -65px !important;
 }
 
 .twostar{
- 	background:url(../images/ratings/reviews-two.png) 16px 0 no-repeat;
- 	padding: 2px;
+ 	background: url(../images/stars.png) no-repeat 14px -89px !important;
 }
 .onestar{
- 	background:url(../images/ratings/reviews-one.png) 16px 0 no-repeat;
- 	padding: 2px;
+ 	background: url(../images/stars.png) no-repeat 14px -116px !important;
 }
 .zerostar{
- 	background:url(../images/ratings/reviews-none.png) 16px 0 no-repeat;
- 	padding: 2px;
+ 	background: url(../images/stars.png) no-repeat 14px -148px !important;
 }
 
 .reStar{

@@ -160,7 +160,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			height: 17px;
 			cursor: pointer;
 			margin: 4px 0 5px 0;
-			display: inline-block !important;
+			display: inline-block;
        }
        .arrowLableTransform{
     -ms-transform: rotate(270deg); /* IE 9 */
@@ -173,7 +173,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			height: 17px;
 			cursor: pointer;
 			margin: 8px 4px 5px 0;
-			display: inline-block !important;
+			display: inline-block;
 	}
 	.grade1Contianer{
 	display: inline-block;
@@ -327,6 +327,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		
 		<g:HTMLPanel>
 		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="authorLbl"></g:Label>		  
+			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblauthor" visible="false"></g:Label>
 			<g:HTMLPanel  ui:field="authorPanelUc" visible="false">
 				<g:HTMLPanel>
 					<g:TextBox ui:field="authorTxtBox" width="130px" />
