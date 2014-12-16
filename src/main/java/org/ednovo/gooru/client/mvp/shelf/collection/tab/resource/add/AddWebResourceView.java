@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAdvancedCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
@@ -135,7 +136,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
 	AdvancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
-	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly;
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl;
 	@UiField
 	Label leftArrowLbl, rightArrowLbl,momentsOfLearningDropDownLbl;
 
@@ -153,7 +154,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
-		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer;
+		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
+		defaultMomentsOfLearningText;
 
 	
 	@UiField HTMLPanel panelCategoryInputDiv;
@@ -257,6 +259,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		this.res2 = AddTagesCBundle.INSTANCE;
 		res2.css().ensureInjected();
 		AddSetupAdvancedCBundle.INSTANCE.css().ensureInjected();
+		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		this.isGoogleDriveFile=isGoogleDriveFile;
 		this.googleDriveItemDo=googleDriveItemDo;
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
@@ -444,6 +447,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		bookText.getElement().setAttribute("title", i18n.GL1677());
 		
 		defaultText.getElement().setInnerHTML(i18n.GL3093());
+		defaultMomentsOfLearningText.getElement().setInnerHTML(i18n.GL3093());
+		//defaultMediaFeatureText.getElement().setInnerHTML(i18n.GL3093());
+		
 		
 		momentsOfLearningTitle.getElement().setInnerHTML(i18n.GL1678());
 		momentsOfLearningTitle.getElement().setId("pnlMomentsOfLearningTitle");
@@ -762,7 +768,22 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
 		}
-		
+		HTMLEventPanel defaultMediaFeaturePnl = new HTMLEventPanel("");
+		defaultMediaFeaturePnl.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFolderVideoOuterContainer());
+		HTMLPanel defaultMediaFeatureText = new HTMLPanel("");
+		defaultMediaFeatureText.getElement().setInnerHTML(i18n.GL3093());
+		defaultMediaFeatureText.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myEducationalPanelSubTitles());
+		defaultMediaFeaturePnl.add(defaultMediaFeatureText);
+		defaultMediaFeaturePnl.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				lblMediaPlaceHolder.setText(i18n.GL3051()+i18n.GL_SPL_SEMICOLON());
+				spanelMediaFeaturePanel.setVisible(false);
+				lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+				setAdvancedOptionsStyles();
+			}
+		});
+		htmlMediaFeatureListContainer.add(defaultMediaFeaturePnl);
 		clearFields();
 		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-top:10px");
 		copyRightAnr.addClickHandler(new ClickHandler() {
@@ -2079,6 +2100,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			educationalDropDownLblOpen = false;
 		}
 	}
+	@UiHandler("defaultPanelMomentsOfLearningPnl")
+	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
+		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
+		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", i18n.GL1684());
+		resourcemomentsOfLearningLabel.getElement().setAttribute("title", i18n.GL1684());
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+		setAdvancedOptionsStyles();
+	}
 	@UiHandler("preparingTheLearningPanel")
 	void preparingTheLearningPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_preparing_the_learning_selected");
@@ -2821,7 +2852,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
-			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+			/*addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());*/
 		}	
 	}
 

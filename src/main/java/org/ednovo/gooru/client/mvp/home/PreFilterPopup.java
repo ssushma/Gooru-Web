@@ -350,7 +350,7 @@ public class PreFilterPopup extends PopupPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
-			filterPanel.getElement().setAttribute("style", "width:360px;");
+			filterPanel.getElement().setAttribute("style", "width:565px;");
 			lblStandards.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(false);
 			gradesPanel.setVisible(true);
@@ -385,7 +385,7 @@ public class PreFilterPopup extends PopupPanel {
 	 */
 	public void hidePlanels(){
 		lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
-		filterPanel.getElement().setAttribute("style", "width:360px;");
+		filterPanel.getElement().setAttribute("style", "width:565px;");
 		lblStandards.getElement().getStyle().clearBackgroundColor();
 		standardsPanel.setVisible(false);
 		gradesPanel.setVisible(true);
