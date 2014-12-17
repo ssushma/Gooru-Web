@@ -93,7 +93,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	
-	final String style="<link rel='styleSheet' type='text/css' href='../css/googleVisualization.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+	 String style="";
 	/**
 	 * Costructor
 	 */
@@ -101,6 +101,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		this.res = CollectionSummaryTeacherCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		String urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"'/css/googleVisualization.css'><link href='"+urlDomain+"'/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		printWidget.setVisible(false);
 	}
@@ -172,7 +174,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	@Override
 	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,CollectionSummaryMetaDataDo collectionMetaData,HTMLPanel loadingImage) {
-		    hideAllPanels();
+			teacherTabContainer.clearStyles();
+			teacherTabContainer.setScoredQuestionsHilight();  
+			hideAllPanels();
 		    teacherScoredDatapnl.setVisible(true);
 		    this.collectionMetaData=collectionMetaData;
 		    teacherScoredData.clear();

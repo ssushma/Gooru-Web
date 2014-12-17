@@ -212,9 +212,9 @@ margin-top: -2px;
 
 .shelfResourceSequenceSpacer {
 	float: left;
-	margin-bottom: 11px;
+	/* margin-bottom: 11px; */
 	position: relative;
-	height: 30px;
+	height: 39px;
 }
 
 .shelfResourceDragdropPositioner {
@@ -284,9 +284,8 @@ margin-top: -2px;
 	display: none;
 	font-size: 12px;
 	font-style: italic;
-	position: absolute;
 	text-align: right;
-	width: 68%;
+	width: 76%;
 }
 
 .pencilEditImage {
@@ -976,6 +975,7 @@ user agent stylesheetdiv {
 	color: rgb(250, 176, 58);
 	text-align: right;
 	position: relative;
+	font-style: italic;
 }
 
 .addNewResourceMandatoryCategory {
@@ -986,6 +986,7 @@ user agent stylesheetdiv {
 	text-align: right;
 	position: relative;
 	top: 10px;
+	font-style: italic;
 }
 
 .myFolderCollectionThumbImageContainer {
@@ -3006,6 +3007,7 @@ vertical-align: top;
 .advncedOption span{
 	padding:8px 10px;
 	background:#ffffff;
+	margin-left: 20%;
 }
 .shelfGradeInfoBottomWeb {
 	color: rgb(112, 109, 109);

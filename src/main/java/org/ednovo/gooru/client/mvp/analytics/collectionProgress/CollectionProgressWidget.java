@@ -15,15 +15,21 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -51,8 +57,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	
 	@UiField VerticalPanel htmlpnlProgress;
 	@UiField ListBox filterDropDown;
-	@UiField HTMLPanel scrollForCollectionProgress;
+	@UiField HTMLPanel scrollForCollectionProgress,loadingImageLabel1;
 	@UiField InlineLabel collectionTitlelbl,resourceCountlbl,questionCountlbl;
+	@UiField Label leftArrow,rightArrow;
 	
 	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
@@ -75,6 +82,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		setWidget(uiBinder.createAndBindUi(this));	
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 		setStaticData();
+		
 	}
 	/**
 	 * This method is used to set static data.
@@ -88,6 +96,53 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		StringUtil.setAttributes(collectionTitlelbl.getElement(), "spnCollectionTitlelbl", null, null);
 		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
 		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
+		
+		leftArrow.setVisible(false);
+		rightArrow.setVisible(false);
+		
+		MouseOverHandler mouseOver=new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				leftArrow.setVisible(true);
+				rightArrow.setVisible(true);
+				leftArrow.getElement().getStyle().setTop((scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
+				rightArrow.getElement().getStyle().setBottom(60+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
+			}
+		};
+		MouseOutHandler mouseOutHandler=new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				leftArrow.setVisible(false);
+				rightArrow.setVisible(false);				
+			}
+		};
+		scrollForCollectionProgress.addDomHandler(mouseOver, MouseOverEvent.getType());
+		scrollForCollectionProgress.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
+		
+		leftArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
+		leftArrow.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
+		
+		rightArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
+		rightArrow.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
+	}
+	/**
+	 * This handler is used to handle the click event on left arrow
+	 * @param e
+	 */
+	@UiHandler("leftArrow")
+	public void onClickOfLeftArrow(ClickEvent e){
+		if(scrollForCollectionProgress.getElement().getScrollLeft()>0){
+			scrollForCollectionProgress.getElement().setScrollLeft(scrollForCollectionProgress.getElement().getScrollLeft()-100);
+		}
+	}
+	/**
+	 * This handler is used to handle the click event on right arrow
+	 * @param e
+	 */
+	@UiHandler("rightArrow")
+	public void onClickOfRightArrow(ClickEvent e){
+		scrollForCollectionProgress.getElement().setScrollLeft(scrollForCollectionProgress.getElement().getScrollLeft()+100);
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionProgress.IsCollectionProgressView#setData(java.util.ArrayList, boolean, java.lang.String)
@@ -255,7 +310,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
         final Table table = new Table(view, options);
         table.setStyleName("collectionProgressTable");
      
-       filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
+        filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
         filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
         filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
         filterDropDown.addChangeHandler(new ChangeHandler() {
@@ -279,6 +334,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		});
         table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
         htmlpnlProgress.add(table);	
+        getLoadingImage().setVisible(false);
 	}
 	
 	/**
@@ -336,10 +392,16 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		}
 		if(seconds!=0){
 			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
-			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+secondsInMille:secondsInMille)+"";
+			String formattedTime="";
+			if(secondsInMille > 0 && secondsInMille<1){
+				formattedTime="<1";
 			}else{
-				createdTime="00"+":"+((seconds<10)?"0"+secondsInMille:secondsInMille)+"";
+				formattedTime=((int) Math.round(secondsInMille))+"";
+			}
+			if(createdTime!=null){
+				createdTime=createdTime+formattedTime+"";
+			}else{
+				createdTime="00"+":"+formattedTime+"";
 			}
 		}
 		return createdTime;
@@ -347,4 +409,12 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
+	
+	/**
+	 * This will return the loading image.
+	 */
+	@Override
+	public HTMLPanel getLoadingImage() {
+		return loadingImageLabel1;
+	}
 }

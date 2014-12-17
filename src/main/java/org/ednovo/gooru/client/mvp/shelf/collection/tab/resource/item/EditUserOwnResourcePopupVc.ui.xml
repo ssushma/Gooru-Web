@@ -277,9 +277,10 @@
           <g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
         </g:HTMLPanel>
         
-		
+		<g:HTMLPanel styleName="{res.css.advncedOption}"><g:InlineLabel ui:field="advancedText"></g:InlineLabel></g:HTMLPanel>
 		<!-- Educational use -->
-		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}">
+		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="educationalContainer">
+		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconEducationalUse"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="educationalTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
@@ -375,12 +376,18 @@
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="bookText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
+				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="defaultPanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="defaultText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<!-- Educational use End -->
 		
 		       	<!-- Moments of Learning -->
-		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}">
+		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}" ui:field="momentsOfLearningContainer">
+		  <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMomentsOfLearning"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="momentsOfLearningTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
@@ -416,45 +423,58 @@
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="extendingUnderstandingText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
+				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="defaultPanelMomentsOfLearningPnl">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
+						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="defaultMomentsOfLearningText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<!-- Moments of Learning  End-->
 		
 		<!-- Standards Start -->
-		 <g:FlowPanel ui:field="standardContainer">
-					<g:Label styleName="{res1.css.shelfGradeInfoBottom}"
-						ui:field="standardsDefaultText"></g:Label>
-					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
-						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
-							<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
-								<uc:AppSuggestBox ui:field="standardSgstBox"
-									width="255px" height="19px" />
-									<g:HTMLPanel styleName="{res1.css.browseContainer}">
-										<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
-									</g:HTMLPanel>
-								 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
-								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
-								<g:FlowPanel ui:field="standardsPanel"
-									styleName="{res1.css.collectionStandardsMargin}" />
+		<g:HTMLPanel ui:field="standardsBrowseContainer">
+			 <g:FlowPanel ui:field="standardContainer">
+			 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconstandards"></uc:HTMLEventPanel>
+						<g:Label styleName="{res.css.shelfGradeInfoBottomWeb}"
+							ui:field="standardsDefaultText"></g:Label>
+						<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
+							<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
+								<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
+									<uc:AppSuggestBox ui:field="standardSgstBox"
+										width="255px" height="19px" />
+										<g:HTMLPanel styleName="{res1.css.browseContainer}">
+											<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
+										</g:HTMLPanel>
+									 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
+									<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
+									<g:FlowPanel ui:field="standardsPanel"
+										styleName="{res1.css.collectionStandardsMargin}" />
+								</g:FlowPanel>
 							</g:FlowPanel>
 						</g:FlowPanel>
 					</g:FlowPanel>
-				</g:FlowPanel>
+				</g:HTMLPanel>
         <!-- Standards End -->
         
         <!--accessHazard -->
       	<g:Label styleName="{res.css.clearfix}"></g:Label>
-		      <g:Label styleName="{res.css.accessHazard}" ui:field="accessHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="soundHazard"></g:Label>
-		      <g:Label styleName="{res.css.clearfix}"></g:Label>
+      		<g:HTMLPanel ui:field="accessHazardContainer">
+      		<uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconAccessHazard"></uc:HTMLEventPanel>
+			      <g:Label styleName="{res.css.accessHazard}" ui:field="accessHazard"></g:Label>
+			      <g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
+			      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>
+			      <g:Label styleName="{res.css.li}" ui:field="soundHazard"></g:Label>
+			      <g:Label styleName="{res.css.clearfix}"></g:Label>
+		      </g:HTMLPanel>
       	 <!-- accessHazard End -->
       	 
       	  <!--mediaLabel -->
       	 <br />
+      	 <g:HTMLPanel ui:field="mediaFeatureContainer">
+      	 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMediafeature"></uc:HTMLEventPanel>
 			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
- 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" >
+ 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" ui:field="mediaLabelContainer">
  		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
 							<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
 		       <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
@@ -463,22 +483,22 @@
 									styleName=""></g:HTMLPanel>
 							</g:ScrollPanel>
 		      </g:HTMLPanel>
+		      </g:HTMLPanel>
       	 <!-- mediaLabel End -->
       	 
       	 <!--moblieFriendly -->
-      	 <g:HTMLPanel styleName="{res.css.h5} {res.css.selectsection} {res.css.fRight}"><g:InlineLabel ui:field="moblieFriendly"></g:InlineLabel><br />
-		    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes"></g:Button>
-		    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo"></g:Button>
+      	  <g:HTMLPanel ui:field="mobileFriendlyContainer">
+      	   <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMobileFriendly"></uc:HTMLEventPanel>
+	      	 <g:HTMLPanel styleName="{res.css.h5} {res.css.selectsection}"><g:InlineLabel ui:field="moblieFriendly"></g:InlineLabel><br />
+			    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes"></g:Button>
+			    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo"></g:Button>
+			 </g:HTMLPanel>
 		 </g:HTMLPanel>
       	 <!-- moblieFriendly End -->
       	 
-      	 
-		
-		
-		
-		
-        
-         <g:HTMLPanel styleName="{res.css.resourceRightsContainerWeb}">
+      	<uc:HTMLEventPanel ui:field="AdvancedSetupContainer"></uc:HTMLEventPanel>
+      	
+        <g:HTMLPanel styleName="{res.css.resourceRightsContainerWeb}">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>
         	<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}"></g:Label> 
      <uc:HTMLEventPanel ui:field="lblContentRights" styleName="{res.css.ownResourceFormRightsContent}">

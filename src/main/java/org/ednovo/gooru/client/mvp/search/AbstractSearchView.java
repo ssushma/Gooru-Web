@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontStyle;
@@ -103,19 +104,21 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	Style style;
 	
 	@UiField
-	HTML queriedTextHtml,spellCheckedqueriedTextHtml;
+	HTML queriedTextHtml;
 	
 	@UiField
 	FlowPanel standardsConatiner;
 	
-	@UiField HTMLPanel spellerrorqueriedTextHtml;
+	@UiField HTMLPanel spellerrorqueriedTextHtml,correctSpellHTML;
 	
 	@UiField
 	Button resourceSearchBtn, collectionSearchBtn;
 	
 	@UiField Label wrongQueryText;
+	
+	@UiField Label correctQueryText;
 		
-	String grades,stdCode,subjects;
+	String grades,stdCode,subjects,categories;
 	
 	protected ResourceDragController dragController;
 
@@ -165,9 +168,12 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
 		searchResultPanel.getElement().setId("appMirageDragContainer");
 		
+		correctSpellHTML.setVisible(false);
+		spellerrorqueriedTextHtml.setVisible(false);
+		
 		
 		standardsConatiner.clear();
-		
+		showCategoryFilter();
 		showSubjectsFilter();
 		showGradesFilter();
 		showStandardsFilter();
@@ -222,9 +228,6 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		String searchText = AppClientFactory.getPlaceManager()
 				.getRequestParameter("query");
 		
-		if(searchDo.getSpellCheckQueryString() == null)
-		{
-
 		if (searchText == null) {
 			searchText = "";
 
@@ -253,35 +256,19 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
 				}
 			}
-			
-			spellCheckedqueriedTextHtml.setVisible(false);
-			spellerrorqueriedTextHtml.setVisible(false);
-			queriedTextHtml.setVisible(true);
-
 			queriedTextHtml.setHTML(searchText);
-			queriedTextHtml.getElement().setAttribute("alt", searchText);
-			queriedTextHtml.getElement().setAttribute("title", searchText);
-
-			standardsConatiner.clear();
-			showSubjectsFilter();
-			showGradesFilter();
-			showStandardsFilter();
-			if(!(stdCode!=null || grades!=null || subjects!=null)){
-				standardsConatiner.setVisible(false);
-			}else{
-				standardsConatiner.setVisible(true);
-			}
+			queriedTextHtml.getElement().setAttribute("alt", StringUtil.removeHtml(searchText));
+			queriedTextHtml.getElement().setAttribute("title", StringUtil.removeHtml(searchText));
 			
 		}
+		
+		if(searchDo.getSpellCheckQueryString() == null){
+			correctSpellHTML.setVisible(false);
+			spellerrorqueriedTextHtml.setVisible(false);
+			queriedTextHtml.setVisible(true);
 		}
 		else
 		{
-			String correctedSpelling = searchDo.getSpellCheckQueryString();
-			correctedSpelling = "" + i18n.GL1468() + " <b>" + searchDo.getSpellCheckQueryString()
-					+ "</b>";
-
-			
-			String enteredSearchTerm = searchDo.getUserQueryString();
 
 			wrongQueryText.setText(searchDo.getUserQueryString());
 			wrongQueryText.addClickHandler(new ClickHandler() {
@@ -289,33 +276,41 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				@Override
 				public void onClick(ClickEvent event) {
 					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-					AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText(),""));
+						AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText(),""));
 					}
-					//AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
-					
 				}
 			});
 
-
+			final String correctSearchTerm = searchDo.getSpellCheckQueryString();
 			
-			spellCheckedqueriedTextHtml.setHTML(correctedSpelling);
+			correctQueryText.setText(searchDo.getSpellCheckQueryString());
+			correctQueryText.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					correctSpellHTML.setVisible(false);
+					spellerrorqueriedTextHtml.setVisible(false);
+					queriedTextHtml.setVisible(true);
+				}
+			});
 			
-			spellCheckedqueriedTextHtml.setVisible(true);
+			correctSpellHTML.setVisible(true);
 			spellerrorqueriedTextHtml.setVisible(true);
 			queriedTextHtml.setVisible(false);
 			
-			standardsConatiner.clear();
-			showSubjectsFilter();
-			showGradesFilter();
-			showStandardsFilter();
-			if(!(stdCode!=null || grades!=null || subjects!=null)){
-				standardsConatiner.setVisible(false);
-			}else{
-				standardsConatiner.setVisible(true);
-			}
+			
 		}
 		
-		
+		standardsConatiner.clear();
+		showCategoryFilter();
+		showSubjectsFilter();
+		showGradesFilter();
+		showStandardsFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null)){
+			standardsConatiner.setVisible(false);
+		}else{
+			standardsConatiner.setVisible(true);
+		}
 		
 		searchResultPanel.setClonnable(true);
 		
@@ -547,6 +542,22 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			String[] split = subjects.split("~~");
 			for(int i=0; i<split.length; i++){
 				standardsConatiner.add(createTagsLabel(split[i],"subjectPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showCategoryFilter() {
+		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
+		if(categories!=null){
+			String[] split = categories.split(",");
+			for(int i=0; i<split.length; i++){
+				if(!split[i].equalsIgnoreCase("all"))
+				{
+				standardsConatiner.add(createTagsLabel(split[i],"categoryPanel"));
+				}
 			}
 				
 		}

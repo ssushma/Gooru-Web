@@ -53,6 +53,7 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	 */
 	@Override
 	public void setCollectionProgressData(String collectionId,String pathwayId,final boolean isCollectionView,final String collectionTitle) {
+		getView().getLoadingImage().setVisible(true);
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
 					

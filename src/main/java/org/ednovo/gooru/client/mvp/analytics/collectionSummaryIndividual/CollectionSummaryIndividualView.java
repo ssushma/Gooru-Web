@@ -92,7 +92,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
-	String style="<link rel='styleSheet' type='text/css' href='../css/googleVisualization.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+	String style="";
 
 	/**
 	 * Constructor
@@ -101,6 +101,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		String urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"'/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		setStaticData();
 	}
@@ -172,6 +174,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	@Override
 	public void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage) {
+			individualTabContainer.clearStyles();
+			individualTabContainer.setScoredQuestionsHilight();
+			
 			hideAllPanels();
 			individualScoredDatapnl.setVisible(true);
 			

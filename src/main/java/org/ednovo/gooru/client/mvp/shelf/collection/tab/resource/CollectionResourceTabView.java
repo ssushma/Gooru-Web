@@ -25,15 +25,12 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditQuestionPopupVc;
@@ -55,19 +52,12 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
-import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -87,7 +77,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -366,11 +355,87 @@ public class CollectionResourceTabView extends
 					@Override
 					public void onClick(ClickEvent event) {
 						shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
-//						shelfCollectionResourceVc.getResourceEditButtonContainer().getElement().getStyle().setVisibility(Visibility.HIDDEN);
 						shelfCollectionResourceVc.getEditButton().setVisible(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 							getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
+						}else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
+							editResoruce = new EditResourcePopupVc(collectionItemDo) {
+
+								@Override
+								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
+								}
+
+								@Override
+								public void resourceImageUpload() {
+									getUiHandlers().imageEditResourceUpload();
+								}
+
+								@Override
+								public void onSelection(
+										SelectionEvent<Suggestion> event) {
+									super.onSelection(event);		
+								}
+
+								@Override
+								public void closeStandardsPopup() {
+									getUiHandlers().closeBrowseStandardsPopup();
+								}
+
+								@Override
+								public void browseStandardsInfo(boolean val,
+										boolean userResource) {
+									getUiHandlers().getBrowseStandardsInfo(val, userResource);
+								}
+							};
+						}
+						else {
+							MixpanelUtil.Resource_Action_Edit_Info();
+							ownResourcePopupVc = new EditUserOwnResourcePopupVc(collectionItemDo) {
+								@Override
+								public void resourceImageUpload() {
+									getUiHandlers().imageEditUserOwnResourceUpload();
+								}
+								@Override
+								public void updateUserOwnResource(String resourceFilePath,String resMediaFileName,String resOriginalFileName,String titleStr, String desc,String categoryStr,String thumbnailUrlStr,CollectionItemDo collectionItemDo, List<String> tagList) {
+									title=titleStr;
+									description = desc;
+									category = categoryStr;
+	 								thumbnailUrl = thumbnailUrlStr;
+									//if(category.contains("Image")||category.contains("Text"))
+									//{
+									//	category=category.substring(0, category.length()-1);
+									//	/* if(category.contains("Image")||category.contains("Images")){
+									//		 category="Slide";
+									//	 }*/
+									//}
+
+									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
+									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
+									//										getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
+								}
+								
+								
+								
+								/*@Override
+								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
+								}*/
+								@Override
+								public void browseStandardsInfo(boolean val, boolean userResource) {
+									getUiHandlers().getBrowseStandardsInfo(val,userResource);
+								}
+								@Override
+								public void closeStandardsPopup() {
+									getUiHandlers().closeBrowseStandardsPopup();
+								}
+								
+								@Override
+								public void onSelection(SelectionEvent<Suggestion> event) {
+									super.onSelection(event);		
+								}
+							};
 						} 
 					}
 				});
@@ -378,7 +443,8 @@ public class CollectionResourceTabView extends
 		//sequenceVerPanel.remove(collectionItemDo.getItemSequence()-1);
 		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
 		
-		/*collectionResourcePanelVc.add(shelfCollectionResourceVc);*/	
+		collectionResourcePanelVc.insert(shelfCollectionResourceVc, collectionItemDo.getItemSequence());
+
 	}
 
 	@Override
@@ -547,7 +613,7 @@ public class CollectionResourceTabView extends
 								//}
 
 								JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
+								getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
 								//										getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 							}
 							
@@ -737,7 +803,7 @@ public class CollectionResourceTabView extends
 									category = categoryStr;
 									thumbnailUrl = thumbnailUrlStr;
 									JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr,collectionItemDo,tagList);
-									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
+									getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getCollectionItemId());
 //									getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 								}
 
@@ -1123,7 +1189,7 @@ public class CollectionResourceTabView extends
 	public void updateCollectionItem(CollectionItemDo collectionItem) {
 		if(collectionItem != null)
 		{
-		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItem, RefreshType.UPDATE));
+//		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItem, RefreshType.UPDATE));
 		AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(collectionItem, RefreshType.UPDATE));
 		}
 	}

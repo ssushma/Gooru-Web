@@ -51,4 +51,8 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
      * @return
      */
     HTMLPanel getCollectionProgressSlot();
+    /**
+     * This method is used to enable the no data message text.
+     */
+    void setNoDataText();
 }

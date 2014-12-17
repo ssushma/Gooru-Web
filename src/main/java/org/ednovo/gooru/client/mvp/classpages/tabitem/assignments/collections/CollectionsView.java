@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonHandler;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -47,6 +48,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -647,11 +649,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private class OpenAnalyticsDropdownPanelEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			if(dropdownPanelAnalyticsButton.isVisible()){
-				dropdownPanelAnalyticsButton.setVisible(false);
-			}else{
-				dropdownPanelAnalyticsButton.setVisible(true);
-			}
+			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			getPresenter().checkCollectionStaus(classpageId);
+			
 		}
 	}
 	/**
@@ -1361,6 +1361,23 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
 				changeStatusButton.setVisible(true);
 			}
+		}
+	}
+	@Override
+	public void setViewCollectionAnalytics(boolean isaggregateData) {
+		if(isaggregateData){
+			if(dropdownPanelAnalyticsButton.isVisible()){
+				dropdownPanelAnalyticsButton.setVisible(false);
+			}else{
+				dropdownPanelAnalyticsButton.setVisible(true);
+			}
+		}else{
+			ToolTip toolTip=new ToolTip(i18n.GL3098(),"");
+			toolTip.getTootltipContent().getElement().setAttribute("style", "width: 184px;");
+			toolTip.getElement().getStyle().setBackgroundColor("transparent");
+			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			toolTip.setPopupPosition(viewClassItemAnalyticsButton.getAbsoluteLeft(), viewClassItemAnalyticsButton.getAbsoluteTop()+36);
+			toolTip.show();
 		}
 	}
 }

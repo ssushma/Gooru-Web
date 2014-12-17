@@ -183,7 +183,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl,accessModeLbl;
 	
-	@UiField Label arrowLblCategory,arrowLblSubject,arrowLblGrade,arrowLblstandard,arrowLblratings,arrowLblsource,arrowLblaggregator,arrowLblaccess;
+	@UiField Label arrowLblCategory,arrowLblSubject,arrowLblGrade,arrowLblstandard,arrowLblratings,arrowLblsource,arrowLblaggregator,arrowLblaccess,arrowLblauthor;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
@@ -517,7 +517,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
 			aggregatorNotFoundLbl.getElement().getStyle().setOpacity(0.0);
-			
+			arrowLblsource.setVisible(true);
+			arrowLblaccess.setVisible(true);
+			arrowLblratings.setVisible(true);
 			
 			publisherTooltip.addMouseOverHandler(new MouseOverHandler() {
 				
@@ -574,6 +576,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		} else {
 			authorLbl.setVisible(true);
 			authorPanelUc.setVisible(true);
+			arrowLblsource.setVisible(false);
+			arrowLblaccess.setVisible(false);
+			arrowLblratings.setVisible(false);
+			arrowLblauthor.setVisible(true);
 			authorTxtBox.getElement().setId("tbAuthor");
 			StringUtil.setAttributes(authorTxtBox, true);
 			authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
@@ -2055,6 +2061,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					removeSelectedFilter(gradePanelUc, filterName);
 					removeSelectedFilter(gradePanelUcNext, filterName);
 				}
+				if(panel.equals("categoryPanel")){
+					removeSelectedFilter(categoryPanelUc, filterName);
+				}
 				if(panel.equals("standPanel"))
 				{
 					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));
@@ -2235,7 +2244,16 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	{
 		setVisibilityValues(accessModePanel,arrowLblaccess);
 	}
-	
+	@UiHandler("arrowLblauthor")
+	public void onAuthorLabelArrowLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(authorPanelUc,arrowLblauthor);
+	}
+	@UiHandler("authorLbl")
+	public void onAuthorLabelclick(ClickEvent clickEvent) 
+	{
+		setVisibilityValues(authorPanelUc,arrowLblauthor);
+	}
 	/*
 	 * This is a common method for toggling each div and arrow
 	 */

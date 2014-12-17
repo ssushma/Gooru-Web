@@ -17,6 +17,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -28,9 +30,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * @author ibc
+ *
+ */
 public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> implements IsAnalyticsView {
 
 	private static AnalyticsViewUiBinder uiBinder = GWT
@@ -47,9 +54,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	@UiField ListBox loadCollections;
 	
-	@UiField HTMLPanel collectionProgressSlot,collectionSummarySlot;
+	@UiField HTMLPanel pnlMainContainer,collectionProgressSlot,collectionSummarySlot;
 	
 	@UiField Image collectionProgressQuestionimg,collectionSummaryQuestionimg,collectionExportQuestionimg;
+	
+	@UiField Label setNoDataText;
 	
 	boolean isSummayClicked=false,isProgressClicked=false,isPersonalizedBtnClicked=false;
 	
@@ -71,10 +80,28 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
 		btnCollectionResponses.addClickHandler(new ViewAssignmentClickEvent(""));
+		loadCollections.addChangeHandler(new loadCollectionsChangeHandler());
 		setStaticData();
+		pnlMainContainer.setVisible(false);
+		setNoDataText.setVisible(false);
+	}
+	/**
+	 * This inner class is used to handle change event of the collections.
+	 */
+	public class loadCollectionsChangeHandler implements ChangeHandler{
+		@Override
+		public void onChange(ChangeEvent event) {
+			//when changing the collections drop down reset all the changes.
+			getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,"","");
+			getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,"","");
+			btnCollectionProgress.setText(i18n.GL2296());
+			btnCollectionSummary.setText(i18n.GL2296());
+		}
 	}
 	@Override
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
+		pnlMainContainer.setVisible(true);
+		setNoDataText.setVisible(false);
 		loadcollectionsmap.clear();
 		loadCollections.clear();
 		if(gradeData!=null){
@@ -86,6 +113,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	}
 	/**
 	 * This method is used to set static text.
+	 */
+	/**
+	 * 
 	 */
 	void setStaticData(){
 		
@@ -231,4 +261,13 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			  com.google.gwt.visualization.client.Properties p=properties.cast();
 			  return p;
 	}
+	/**
+     * This method is used to enable the no data message text.
+     */
+	@Override
+	public void setNoDataText() {
+		pnlMainContainer.setVisible(false);
+		setNoDataText.setVisible(true);
+	}
+
 }
