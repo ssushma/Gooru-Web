@@ -1,4 +1,5 @@
 /*******************************************************************************
+
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -22,37 +23,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 
-public interface AnalyticsUiHandlers extends BaseUiHandlers{
-	void getGradeCollectionJson() ;
-	/**
-	 * This method is used to set the clicked tab presenter on the slot.
-	 * @param clickedTab
-	 * @param collectionId
-	 * @param selectedCollectionTitle
-	 */
-	void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle);
-	/**
-	 * This method is used to export the OE responses.
-	 * @param classpageId
-	 * @param pathwayId
-	 * @param timeZone
-	 */
-	void exportOEPathway(String classpageId,String pathwayId,String timeZone);
+
+package org.ednovo.gooru.client.mvp.home.event;
+
+import com.google.gwt.event.shared.GwtEvent;
+
+public class PreFilterEvent extends GwtEvent<PreFilterEventHandler> {
+
+	public static Type<PreFilterEventHandler> TYPE = new Type<PreFilterEventHandler>();
 	
-	/**
-	 * This method is used to get the collection progress presenter.
-	 * @return
-	 */
-	CollectionProgressPresenter getCollectionProgressPresenter();
-	/**
-	 * This method is used to get the collection summary presenter.
-	 * @return
-	 */
-	CollectionSummaryPresenter getCollectionSummaryPresenter();
+	
+	
+	public PreFilterEvent(){
+		
+	}
+	
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<PreFilterEventHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(PreFilterEventHandler handler) {
+		handler.openPreFilterPopup();
+	} 
+
 }
