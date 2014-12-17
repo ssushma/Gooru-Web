@@ -285,6 +285,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		assessmentLabel.getElement().setId("lblAssessmentLabel");
 		assessmentLabel.getElement().setAttribute("alt", i18n.GL3007());
 		assessmentLabel.getElement().setAttribute("title", i18n.GL3007());
+		assessmentLabel.removeFromParent();
 		organizelbl.getElement().setInnerText(i18n.GL0180());
 		organizelbl.getElement().setId("pnlOrganizelbl");
 		organizelbl.getElement().setAttribute("alt", i18n.GL0180());

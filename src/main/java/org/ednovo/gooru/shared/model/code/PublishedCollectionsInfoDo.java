@@ -38,6 +38,59 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	
 	private String creatorUid;
 	
+	private Integer resourceTypeId;
+	
+	private Integer viewsCount;
+	
+	private String title;
+	
+	private String category;
+
+	private String gooruOid;
+	
+	private String thumbnail;
+	
+	private String description;
+	
+	private String topViewedCollection;
+	
+	private Integer ratingsCount;
+	
+	private Integer reactionsCount;
+	
+	
+	public String getGooruOid() {
+		return gooruOid;
+	}
+
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getTopViewedCollection() {
+		return topViewedCollection;
+	}
+
+	public void setTopViewedCollection(String topViewedCollection) {
+		this.topViewedCollection = topViewedCollection;
+	}
+
 	public PublishedCollectionsInfoDo(){
 		
 	}
@@ -53,6 +106,54 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	}
 	public void setCreatorUid(String creatorUid) {
 		this.creatorUid = creatorUid;
+	}
+	
+	public Integer getResourceTypeId() {
+		return resourceTypeId;
+	}
+
+	public void setResourceTypeId(Integer resourceTypeId) {
+		this.resourceTypeId = resourceTypeId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public Integer getViewsCount() {
+		return viewsCount;
+	}
+
+	public void setViewsCount(Integer viewsCount) {
+		this.viewsCount = viewsCount;
+	}
+
+	public Integer getRatingsCount() {
+		return ratingsCount;
+	}
+
+	public void setRatingsCount(Integer ratingsCount) {
+		this.ratingsCount = ratingsCount;
+	}
+
+	public Integer getReactionsCount() {
+		return reactionsCount;
+	}
+
+	public void setReactionsCount(Integer reactionsCount) {
+		this.reactionsCount = reactionsCount;
 	}
 	
 }

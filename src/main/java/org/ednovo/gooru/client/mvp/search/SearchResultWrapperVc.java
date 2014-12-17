@@ -29,6 +29,9 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEventHandler;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
@@ -177,11 +180,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		this.res = SearchResultWrapperCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+
 		setAddedStatus(true);
 		disclosureContentSimPanel.getElement().getStyle().setWidth(100, Unit.PCT);
 		disclosureContentSimPanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		disclosureContentSimPanel.getElement().getStyle().setPadding(0, Unit.PX);
 		disclosureContentSimPanel.getElement().getStyle().setMargin(0, Unit.PX);
+
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
@@ -191,12 +196,12 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		shareLbl.getElement().setAttribute("title",i18n.GL0526());
 		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)) {
 			addLbl.setText(i18n.GL0590());
-			analyticsInfoLbl.setText("Analytics");
-			analyticsInfoLbl.setVisible(false);
+			analyticsInfoLbl.setText(i18n.GL3101());
 		}else{
 			addLbl.setText(i18n.GL2037());
 		}
-		tagsLbl.setText("Tags");
+		analyticsLinkFocPanel.setVisible(false);
+		tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+"0"+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		collcResLbl.getElement().setId("lblResColle");
 		shareLbl.getElement().setId("lblSahre");
@@ -230,6 +235,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		}
 		
 		tagsLinkFocPanel.setVisible(true);
+		AppClientFactory.getEventBus().addHandler(ResourceTagsCountUpdateEvent.TYPE,updateTagscount);
 		
 		dragHandleFocPanel.getElement().setId("focuspnlDragHandleFocPanel");
 		contentSimPanel.getElement().setId("spnlContentSimPanel");
@@ -587,6 +593,11 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		//getSearchMoreInfoVc().setData(searchResultDo); 
 		getSearchShareVc().setData(searchResultDo);
 	
+		if(searchResultDo.getResourceTags() != null){
+			if(!searchResultDo.getResourceTags().isEmpty()){
+				tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+searchResultDo.getResourceTags().size()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+			}
+		}
 		
 		if(rootWebUrl.contains("collection-search")){
 			collcResLbl.setText(i18n.GL1755()+ " ("+searchResultDo.getResourceCount()+")");
@@ -616,6 +627,16 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		});
 
 	}
+	
+	
+	ResourceTagsCountUpdateEventHandler updateTagscount = new ResourceTagsCountUpdateEventHandler() {
+		
+		@Override
+		public void updateTotalTagsCount(int totalTagsCount) {
+			tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+totalTagsCount+i18n.GL_SPL_CLOSE_SMALL_BRACKET());  
+		}
+	};
+	
 
 
 	/**

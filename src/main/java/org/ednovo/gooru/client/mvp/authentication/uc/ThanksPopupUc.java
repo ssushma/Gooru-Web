@@ -268,6 +268,8 @@ public class ThanksPopupUc extends PopupPanel{
 		map.remove("rp");
 		
 		AppClientFactory.getPlaceManager().revealPlace(viewToken, map);
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		hide();
 	}
 	

@@ -23,9 +23,10 @@
 		}
 
 		.PageNotify {
-		margin: 0px 0 0 207px;
-		width: 596px;
-		display: inline-block;
+
+			margin: 0px 0 0 207px;
+			width: 596px;
+			display: inline-block;
 
 		}
 		.notifyLink {
@@ -111,7 +112,6 @@
 
 
 		}
-
 		.resourceSearchButtonImage{
 		margin-left: 5px;
 		padding: 7px 31px !important;
@@ -131,10 +131,13 @@
 		padding: 0px 0px 0px 12%;
 		}
 		.searchResultPanel {
-		clear: both;
-		height: 34px;
-		/*margin: 20px auto 0; */
-	/* 	width: 796px; */
+
+		    clear: both;
+		    height: 34px;
+			margin-left: 205px;
+		   <!--  margin: 20px auto 0; -->
+		    width: 612px;
+
 		}
 
 		.searchResult {
@@ -145,7 +148,6 @@
 		padding-bottom: 10px;
 
 		}
-
 		.notifyColorLink {
 		color: #222222;
 		}
@@ -264,6 +266,7 @@
 		margin-right:5px;
 		}
 
+
 	</ui:style>
 	<g:HTMLPanel styleName="{res.css.bodyWrapper}">
 		<!-- <gc:SearchBarVc ui:field="searchBarVc" /> -->
@@ -275,19 +278,13 @@
 						<g:FlowPanel styleName="{style.searchResultPanel} {res.css.innerResult} {res.css.searchInner}">
 						    <g:HTMLPanel styleName="{res.css.searchResult1}">
 								<g:HTMLPanel styleName="col-md-4 col-xs-4 visible-xs {res.css.filtersButton}">
-						        <g:Anchor ui:field="searchFilterMenu" styleName="{res.css.btn} btn btn-primary">
-						            <img src="images/toggleIcon.png"/> Search Filters
-						        </g:Anchor>
+							        <g:Anchor ui:field="searchFilterMenu" styleName="{res.css.btn} btn btn-primary">
+							            <img src="images/toggleIcon.png"/> Search Filters
+							        </g:Anchor>
 						   		</g:HTMLPanel>
 						   		<g:HTMLPanel styleName="{res.css.PageNotify}">
-								<uc:PPanel>
-									<g:HTML ui:field="queriedTextHtml" />
-								</uc:PPanel>
 								<g:FlowPanel ui:field="flowpanel">
 									<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
-									<g:Button styleName="{res.css.secondaryICactive}" ui:field="resourceSearchBtn" />
-								<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
-									<g:Button styleName="{res.css.secondaryIC1}"	ui:field="collectionSearchBtn" />
 								</g:FlowPanel>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
@@ -302,7 +299,5 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-
 	</g:HTMLPanel>
-
 </ui:UiBinder> 

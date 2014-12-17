@@ -1,0 +1,219 @@
+.viewResponseInCollectionProgress {
+	padding: 0px;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#EDEDED));
+	background: -webkit-linear-gradient(top, #FFF, #EDEDED);
+	background: -moz-linear-gradient(top, #FFF, #EDEDED);
+	background: -ms-linear-gradient(top, #FFF, #EDEDED);
+	background: -o-linear-gradient(top, #FFF, #EDEDED);
+	/* line-height: 27px; */
+	line-height: 21px;
+	/* width: 86%; */
+	width: 88%;
+	margin-left: 7%;
+	background-color: inherit;
+	font-size:11px;
+}
+.mainDataVpnl{
+	margin: 0 auto;
+	vertical-align: baseline;
+	text-align: center;
+}
+.alignCenterAndBackground{
+	background-color: inherit !important;
+	text-align: center;
+}
+.reaction_explain1 {
+	background: url(/images/analyticsReactions.png) no-repeat scroll 0px 0px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_understand1 {
+	background: url(/images/analyticsReactions.png) no-repeat scroll -78px 1px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_mean1 {
+	background: url(/images/analyticsReactions.png) no-repeat scroll -148px 1px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_dontunderstand1 {
+	background: url(/images/analyticsReactions.png) no-repeat scroll -217px 2px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_needhelp1 {
+	background: url(/images/analyticsReactions.png) no-repeat scroll -285px 0px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_redneedhelp {
+	background: url(/images/analyticsReactions.png) no-repeat scroll -81px -45px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_reddontunderstand {
+	background:url(/images/analyticsReactions.png) no-repeat scroll -1px -45px transparent;
+	height: 35px;
+	width: 35px
+}
+.htmlpanlProgress{
+	overflow:hidden;
+	width: 95%;
+	margin: 2%;
+	border-left: 1px solid #eee;
+	clear:both;
+}
+.htmlpanlProgressCollectionView{
+	overflow-x: auto;
+	width: 731px;
+	margin: 2%;
+	border-left: 1px solid #eee;
+	clear:both;
+}
+.maincontainer{
+	background-color: inherit;
+	text-align: center;
+	clear:both;
+}
+.summary_title {
+	float: left;
+	text-align: center;
+	/* width: 75%; */
+	width: 100%;
+	font-size: 24px;
+	font-weight: bold;
+	color: #515151;
+	margin-top: 3%;
+	/* margin-left: 14%; */
+}
+.narrowreportText{
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	padding-right: 12px;
+	color: #515151;
+	font-size: 14px;
+	padding-left: 24px;
+	padding-bottom: 13px;
+}
+.filterDropDown{
+	float: left;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	display: block;
+	background-color: white;
+	color: rgb(81, 81, 81);
+	padding: 5px 0px 5px 5px;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	display: block;
+	text-indent: 0.01px;
+	text-overflow: '';
+}
+.correct_legend_one {
+	float: left;
+	width: 15px;
+	height: 15px;
+	background: #BCD1B9;
+}
+.correct_legend_other {
+	float: left;
+	width: 15px;
+	height: 15px;
+	background: #FFE7C2;
+}
+.incorrect_legend {
+	float: left;
+	width: 15px;
+	height: 15px;
+	background: #EAB4B3;
+}
+.correct_incorrect_text{
+	padding-left: 6px;
+	padding-right: 6px;
+}
+.floatLeft{
+	float: left;
+}
+.resource_monitor_header_title{
+	float: left;
+	width: 100%;
+	/* width: 77%; */
+	color: #515151;
+	/* font-size: 16px; */
+	/* font-weight: bold; */
+	/* margin: 1%; */
+	padding-top: 25px;
+	padding-left: 23px;
+	padding-bottom: 10px;
+}
+#pnlScrollForCollectionProgress::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+#pnlScrollForCollectionProgress::-webkit-scrollbar-thumb {
+	background-color: #bdbebd;
+	-webkit-border-radius: 2ex;
+}
+#pnlScrollForCollectionProgress:hover {
+    overflow-x: scroll;
+}
+.setOETextPopupCenter {
+	left: 0 !important;
+	right: 0 !important;
+	top: 180px !important;
+	bottom: 0 !important;
+	position: fixed !important;
+	margin: auto;
+	width: 941px;
+	min-height: 148px;
+	height:auto;
+	z-index: 99999;
+}
+.setGlassStyleName{
+	background-color: #000;
+	opacity: 0.3;
+	z-index: 99999;
+}
+.loadingImageMainDiv {
+	width: 100%;
+    height: 300px;
+	position: relative;
+	/* background-color: #FFF; */
+	/* opacity: 0.4; */
+	top: 0px;
+    left: 0px;
+    z-index:1;
+}
+
+.loadingImageForSelfEdit {
+	background: url("images/core/B-Dot.gif");
+	width: 166px;
+	height: 170px;
+	margin: 0 auto;
+	margin-top: 65px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
+}
+.leftArrow{
+	clear: both;
+	width: 6%;
+	height: 40px;
+	z-index: 999;
+	float: left;
+	position: relative;
+	background: url(images/analytics/leftArrow.png)  no-repeat ;
+}
+.rightArrow{
+	float: right;
+	z-index: 999;
+	position: relative;
+	width: 4%;
+	height: 40px;
+	background: url(images/analytics/rightArrow.png)  no-repeat ;
+}

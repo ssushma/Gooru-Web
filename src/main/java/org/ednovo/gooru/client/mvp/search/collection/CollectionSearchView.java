@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.mvp.search.collection;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;

@@ -91,6 +91,7 @@
 	float: left;
 	width: 330px;
 	text-align: left;
+	overflow-wrap: break-word;
 }
 .contentDiv {
 	float: left;

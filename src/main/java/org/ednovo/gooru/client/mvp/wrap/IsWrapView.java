@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.wrap;
 
 import org.ednovo.gooru.client.gin.IsView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -82,8 +83,84 @@ public interface IsWrapView extends IsView {
 	 */
 	void setDiscoverLinkFromLibrary(String discoverLink);
 
+	/**
+	 * 
+	 * @function getSearchFiltersPanel 
+	 * 
+	 * @created_date : 17-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : HTMLPanel
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	HTMLPanel getSearchFiltersPanel();
-
+	/**
+	 * 
+	 * @function getCollectionSearchFiltersPanel 
+	 * 
+	 * @created_date : 17-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : HTMLPanel
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	HTMLPanel getCollectionSearchFiltersPanel();
-	
+	/**
+	 * 
+	 * @function showPrefilter 
+	 * 
+	 * @created_date : 17-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param addStandardsPresenter
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
+	/**
+	 * 
+	 * @function openPreFilter 
+	 * 
+	 * @created_date : 17-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void openPreFilter(); 	
 }

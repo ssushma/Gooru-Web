@@ -80,6 +80,8 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	
 	private String classpageEventId="";
 	
+	private String classpageId=null;
+	
 	private boolean isLibraryEventTriggered=false;
 	
 	private Map<String,Boolean> libraryEventMap=new HashMap<String, Boolean>();
@@ -418,6 +420,8 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 					pageLocation="shelf";
 				}else if(pageLocation.equals(PlaceTokens.PROFILE_PAGE)){
 					pageLocation="profile";
+				}else if(pageLocation.equals(PlaceTokens.DASHBOARD)){
+					pageLocation="dashboard";
 				}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 					pageLocation="teach";
 				}else if(pageLocation.equals(PlaceTokens.STUDENT)){
@@ -474,27 +478,32 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return folderIds;
 		}
+		
+		public void setDataLogClasspageId(String classpageId){
+			this.classpageId=classpageId;
+		}
+		
 		public String getDataLogClasspageId(){
-			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
-			String pageLocation=placeRequest.getNameToken();
-			String classpageId="";
-			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				classpageId=placeRequest.getParameter("classpageid", "");
-			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
-				classpageId=placeRequest.getParameter("id", "");
-			}
-			return classpageId;
+//			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+//			String pageLocation=placeRequest.getNameToken();
+//			String classpageId="";
+//			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+//				classpageId=placeRequest.getParameter("classpageid", "");
+//			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
+//				classpageId=placeRequest.getParameter("id", "");
+//			}
+			return this.classpageId;
 		}
 		public String getClasspageEventId(){
-			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
-			String pageLocation=placeRequest.getNameToken();
-			String classpageEventId="";
-			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				classpageEventId=this.classpageEventId;
-			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
-				classpageEventId=this.classpageEventId;
-			}
-			return classpageEventId;
+//			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+//			String pageLocation=placeRequest.getNameToken();
+//			String classpageEventId="";
+//			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+//				classpageEventId=this.classpageEventId;
+//			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
+//				classpageEventId=this.classpageEventId;
+//			}
+			return this.classpageEventId;
 		}
 		public void setClasspageEventId(String classpageEventId){
 			this.classpageEventId=classpageEventId;

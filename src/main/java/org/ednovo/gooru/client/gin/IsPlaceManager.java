@@ -96,6 +96,8 @@ public interface IsPlaceManager extends PlaceManager {
 	
 	public String getDataLogClasspageId();
 	
+	public void setDataLogClasspageId(String classpageId);
+	
 	public String getClasspageEventId();
 	
 	public void setClasspageEventId(String classpageEventId);

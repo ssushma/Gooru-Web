@@ -36,15 +36,18 @@ import org.ednovo.gooru.client.gin.BasePresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.HomeHandler;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEventHandler;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchFilterVc;
 import org.ednovo.gooru.client.mvp.search.event.FilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.FilterHandler;
-import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
-import org.ednovo.gooru.client.mvp.search.event.SearchFilterEventHandler;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiHandler;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter.IsWrapProxy;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -63,10 +66,13 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * @author Search Team
  * 
  */
-public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,SearchFilterEventHandler,FilterHandler {
+public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,SearchFilterUiHandler,FilterHandler, PreFilterEventHandler {
 	
 	private String  RESOURCE_SEARCH="resource-search";
 	private String COLLECTION_SEARCH="collection-search";
+	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_VIEW = new Type<RevealContentHandler<?>>();
@@ -76,15 +82,19 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	}
 
 	@Inject
-	public WrapPresenter(IsWrapView view, IsWrapProxy proxy) {
+	public WrapPresenter(IsWrapView view, IsWrapProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenter) {
 		super(view, proxy);
+		this.addStandardsPresenter = addStandardsPresenter;
 		addRegisteredHandler(InvokeLoginEvent.TYPE, this);
 		addRegisteredHandler(ActivateSearchBarEvent.TYPE, this);
 		addRegisteredHandler(InvokeGooruGuideBubbleEvent.TYPE, this);
 		addRegisteredHandler(HomeEvent.TYPE, this);
 		addRegisteredHandler(SetDiscoverLinkEvent.TYPE, this);
-		addRegisteredHandler(SearchFilterEvent.TYPE, this);
+		addRegisteredHandler(SearchFilterUiEvent.TYPE, this);
 		addRegisteredHandler(FilterEvent.TYPE, this);
+		addRegisteredHandler(PreFilterEvent.TYPE, this);
+		
+		showPrefilterPopup();
 	}
 
 	@Override
@@ -152,14 +162,14 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 		
 		if(resource){
-		getView().getSearchFiltersPanel().clear();
-		getView().getSearchFiltersPanel().getElement().setId("left-menu");
-		filterVc.getMainContainer().setStyleName("col-md-12");
-		filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().filtersContainer());
-		filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().searchFilters());
-		filterVc.getMainContainer().addStyleName("hidden-sm");
-		filterVc.getMainContainer().addStyleName("hidden-md");
-		getView().getSearchFiltersPanel().add(filterVc);
+			getView().getSearchFiltersPanel().clear();
+			getView().getSearchFiltersPanel().getElement().setId("left-menu");
+			filterVc.getMainContainer().setStyleName("col-md-12");
+			filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().filtersContainer());
+			filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().searchFilters());
+			filterVc.getMainContainer().addStyleName("hidden-sm");
+			filterVc.getMainContainer().addStyleName("hidden-md");
+			getView().getSearchFiltersPanel().add(filterVc);
 		}else{
 			getView().getCollectionSearchFiltersPanel().clear();
 			getView().getCollectionSearchFiltersPanel().getElement().setId("left-menu");
@@ -206,5 +216,13 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 			getView().getCollectionSearchFiltersPanel().getElement().getStyle().setDisplay(Display.BLOCK);
 
 		}
+	}
+	private void showPrefilterPopup() {
+		getView().showPrefilter(addStandardsPresenter);
+	}
+
+	@Override
+	public void openPreFilterPopup() {
+		getView().openPreFilter();
 	}
 }

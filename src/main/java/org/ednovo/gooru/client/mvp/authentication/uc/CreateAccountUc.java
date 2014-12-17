@@ -1459,6 +1459,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 		
 	}
 
+	
 	/**
 	 * Checks the availability of user name, entered by User.
 	 * 

@@ -24,28 +24,28 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
 
+
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
 /**
- * @fileName : UserSettingsUiHandlers.java
+ * 
+ * @fileName : UserDashBoardUiHandlers.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: Apr 18, 2013
+ * @date: 07-Dec-2014
  *
  * @Author Gooru Team
  *
- * @Reviewer: 
+ * @Reviewer:
  */
 
-import java.util.Set;
-
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEventHandler;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
-
 public interface UserDashBoardUiHandlers extends BaseUiHandlers{
+	/**
+	 * This method is used to handle the click event on view more.
+	 */
+	void clickedOnMoreButton(String isEndorsedOrRemixed,String isReactionOrRatings);
 	
 }

@@ -161,6 +161,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	ThankYouResourceStarRatingsPoor thankYouResourceStarRatingsPoor;
 	RatingsConfirmationPopup ratingsConfirmationPopup;
 	private boolean isRated=false,isFromThanksPopup=false;
+	private double previousRating=0;
 	String assocGooruOId;
 	Integer score,count;
 	double average;
@@ -1044,6 +1045,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(result!=null){
 			this.starRatingsDo=result;
 			isRated=true; 
+			if(result.getRatings()!=null){
+				previousRating=result.getRatings().getAverage();
+			}
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 				if(result.getRatings()!=null){
 					if(isFromThanksPopup){
@@ -1072,6 +1076,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else{
 			isRated=false;
+			previousRating=0;
 		}
 		
 		if(thankYouResourceStarRatingsPoor!=null){
@@ -1138,15 +1143,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		@Override
 		public void crateStarRating(String selectedStar) {
 			if(selectedStar.equals("starOne")){
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starTwo")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starThree")){                                          
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starFour")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starFive")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,null,collectionItemDo.getResource().getGooruOid());
 			}
 		}
 		
@@ -1319,6 +1324,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 //		five_star.setValue(false);
 	}
 	
+	public void setPreviousRating(double previousRating){
+		this.previousRating=previousRating;
+	}
+	
+	public double getPreviousRating(){
+		return previousRating;
+	}
 	
 	/**
 	 * In this create API will be called based the rating selected.
@@ -1326,15 +1338,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void crateStarRating(String selectedStar) {
 		if(selectedStar.equals(ONE_STAR)){
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(TWO_STAR)){                                           
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(THREE_STAR)){                                          
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FOUR_STAR)){                                           
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FIVE_STAR)){                                           
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,"",collectionItemDo.getResource().getGooruOid());
 		}
 	}
 	
@@ -1344,15 +1356,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void updateStarRating(String selectedStar) {
 		if(selectedStar.equals(ONE_STAR)){
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),1,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),1,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(TWO_STAR)){                                           
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),2,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),2,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(THREE_STAR)){                                          
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),3,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),3,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FOUR_STAR)){                                           
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),4,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),4,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FIVE_STAR)){                                           
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),5,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),5,true,collectionItemDo.getResource().getGooruOid());
 		}
 	}
 	
@@ -1593,13 +1605,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		if(isUpdate){
-			getUiHandlers().updateReview(starRatingsDo.getDeleteRatingGooruOid(), score,userReview);
+			getUiHandlers().updateReview(starRatingsDo.getDeleteRatingGooruOid(), score,userReview,collectionItemDo.getResource().getGooruOid());
 		}else{
 			if(ratingsConfirmationPopup!=null && ratingsConfirmationPopup.isVisible()){
 				ratingsConfirmationPopup.hide();
 			}
 			isFromThanksPopup=true;
-			getUiHandlers().createStarRatings(assocGooruOId,score,false,userReview);
+			getUiHandlers().createStarRatings(assocGooruOId,score,false,userReview,collectionItemDo.getResource().getGooruOid());
 		}
 		
 	}

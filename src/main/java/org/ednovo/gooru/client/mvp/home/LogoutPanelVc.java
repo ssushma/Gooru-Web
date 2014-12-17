@@ -101,8 +101,8 @@ public class LogoutPanelVc extends Composite{
 		
 		feedbackAnr.setText(i18n.GL0195());
 		feedbackAnr.getElement().setId("lnkFeedback");
-		feedbackAnr.getElement().setAttribute("alt",i18n.GL0193());
-		feedbackAnr.getElement().setAttribute("title",i18n.GL0193());
+		feedbackAnr.getElement().setAttribute("alt",i18n.GL0195());
+		feedbackAnr.getElement().setAttribute("title",i18n.GL0195());
 		
 		logoutAnr.setText(i18n.GL0197());
 		logoutAnr.getElement().setId("lnkLogout");

@@ -212,9 +212,9 @@ margin-top: -2px;
 
 .shelfResourceSequenceSpacer {
 	float: left;
-	margin-bottom: 11px;
+	/* margin-bottom: 11px; */
 	position: relative;
-	height: 30px;
+	height: 39px;
 }
 
 .shelfResourceDragdropPositioner {
@@ -284,9 +284,8 @@ margin-top: -2px;
 	display: none;
 	font-size: 12px;
 	font-style: italic;
-	position: absolute;
 	text-align: right;
-	width: 68%;
+	width: 76%;
 }
 
 .pencilEditImage {
@@ -329,7 +328,9 @@ margin-top: -2px;
 .reorderLabelContainer { /* top: -19px; */
 	position: relative;
 	float: left;
-	margin-top: 40px;
+	/*
+		// hot fix changes
+	 margin-top: 40px; */
 }
 
 .newResourceLabelNoHover {
@@ -902,7 +903,8 @@ user agent stylesheetdiv {
 	font-size: 12px;
 	color: rgb(81, 81, 81);
 	text-align: left;
-	padding: 8px 0px 2px 0px;
+	padding: 0px 0px 2px 0px;
+	display: inline-block;
 }
 
 .myFolderCollectionFormInputControl {
@@ -940,7 +942,6 @@ user agent stylesheetdiv {
 .myFolderCollectionCategoryDiv {
 	position: relative;
 }
-
 .myFolderCollectionCategoryInputDiv {
 	border-color: rgb(221, 221, 221);
 	border-width: 1px;
@@ -956,6 +957,10 @@ user agent stylesheetdiv {
 	margin-bottom: 10px;
 	margin-right: 92px;
 }
+.myEducationPanelInputDiv:hover {
+	 border-color: #1076bb;
+    box-shadow: 0 0 5px #76c2f5;
+}
 .myFolderCollectionCategoryDivText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -970,6 +975,7 @@ user agent stylesheetdiv {
 	color: rgb(250, 176, 58);
 	text-align: right;
 	position: relative;
+	font-style: italic;
 }
 
 .addNewResourceMandatoryCategory {
@@ -980,6 +986,7 @@ user agent stylesheetdiv {
 	text-align: right;
 	position: relative;
 	top: 10px;
+	font-style: italic;
 }
 
 .myFolderCollectionThumbImageContainer {
@@ -1011,6 +1018,18 @@ user agent stylesheetdiv {
 	border-width: 1px;
 	float: left;
 	padding: 2px;
+}
+.myFolderCollectionThumbRectWeb{
+	position: relative;
+	background-color: rgb(240, 240, 240);
+	width: 80px;
+	height: 60px;
+	border-color: rgb(221, 221, 221);
+	border-style: solid;
+	border-width: 1px;
+	padding: 2px;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 .myFolderCollectionThumbArrLContainer {
@@ -1056,6 +1075,7 @@ user agent stylesheetdiv {
 	color: rgb(153, 153, 153);
 	text-align: left;
 	float: left;
+	display:inline-block;
 }
 
 .myFolderCollectionThumbUploadImagetext {
@@ -1067,12 +1087,20 @@ user agent stylesheetdiv {
 	padding: 28px 0px 0px 12px;
 	float: left;
 	cursor: pointer;
+	display:inline-block;
 }
 
 .myFolderCollectionRefreshMainContainer {
 	padding: 0px 0px 0px 9px;
 }
-
+.myFolderCollectionRefreshMainContainerWeb {
+	padding: 0px 0px 0px 9px;
+	float: right;
+	right: 51%;
+	position: relative;
+	padding-bottom: -12px;
+	bottom: 30px;
+}
 .myFolderCollectionRefreshContainer {
 	/*padding: 0px 0px 0px 15px;*/
 	
@@ -1407,8 +1435,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 9999999;
-	top: -11px;
-	width: 373px;
+	top: -51px;
+	width: 365px;
 }
 .myEducationQuestionDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -2412,6 +2440,7 @@ margin-top: 18px; */
 	margin-left: 120px;
 	width: 100%;
 	height: 65px;
+	margin-top: 62px;
 }
 
 .resourceRightsContainerPdf {
@@ -2515,7 +2544,9 @@ margin-top: 18px; */
 
 .gEditButton {
 	margin-top: 2px;
-	margin-left: 16px;
+	/* 
+	 Hot fix changes
+	margin-left: 16px; */
 	padding: 8px 65px 8px 10px;
 	color: white;
 	background: #1076bb url(images/g.png) 55px -9px no-repeat;
@@ -2589,7 +2620,7 @@ margin-top: 18px; */
 
 .fileActionPanelEditFile {
 	text-align: center;
-	margin-top: 70px;
+	/* margin-top: 70px; */
 	margin-bottom: 10px;
 	margin-left: 162px;
 }
@@ -2600,7 +2631,7 @@ margin-top: 18px; */
 	color: #999 !important;
 	font-style: italic;
 	padding: 10px;
-	margin-top: 50px;
+	/* margin-top: 50px; */
 	margin-bottom: 10px;
 }
 
@@ -2794,6 +2825,10 @@ margin-top: 18px; */
 	border-style:solid;
 	position: relative;
 }
+.dropdownContainerInstructional:hover{
+	border-color: #1076bb;
+    box-shadow: 0 0 5px #76c2f5;
+}
 .placeHolderText{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
@@ -2882,6 +2917,9 @@ margin-top: 18px; */
 }
 
 
+
+/* 
+ // hot fix changes
 .upDownBtn{
 	padding:10px 6px;
 }
@@ -2895,7 +2933,7 @@ margin-top: 18px; */
 	font-size:16px;
 	color:#515151;
 	text-align:center;
-}
+} */
 
 .coursePopupStyle {
 	float: left;
@@ -2912,4 +2950,67 @@ margin-top: 18px; */
     overflow-y: auto;
 }
 
+.generateImage{
+	position: relative;
+	display: inline-block;
+	margin-left: 4px;
+}
+.generateMessage{
+	position: absolute;
+	left: 0px;
+	bottom: -14px;
+	display: block;
+	color: #fab03a;
+}
+.myFolderCollectionThumbOrtextWeb{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 155%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	display:inline-block;
+}
+.generateImageContainer{
+	display: inline-block;
+width: 252px;
+vertical-align: top;
+}
+.generateImageContainer .gwt-Button{
+	padding: 7px 5px;
+}
+.generateImageContainer button.secondary{
+	padding: 7px 5px;
+}
+.eHeader{
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#515151;
+	padding:0 0 0 18px;
+	/* margin-bottom:8px; */
+	background:#ffffff url(../images/NewResourcePopup/sprite-new-resourcenew.png) no-repeat -7px -70px;
+	height: 13px;
+	display: inline-block;
+}
 
+.eInput{
+	margin-bottom:15px;
+}
+.advncedOption{
+	background:url(../images/NewResourcePopup/line.png) repeat-x center center;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#999999;
+	width:360px;
+	text-align:center;
+	margin-top:15px;
+}
+.advncedOption span{
+	padding:8px 10px;
+	background:#ffffff;
+	margin-left: 20%;
+}
+.shelfGradeInfoBottomWeb {
+	color: rgb(112, 109, 109);
+	width: 100%;
+	display:inline;
+}

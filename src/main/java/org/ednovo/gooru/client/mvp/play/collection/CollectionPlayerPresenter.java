@@ -502,6 +502,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
 				metadataPresenter.setTeacherInfo(classpageItemDo);
 				classpageId=classpageItemDo.getClasspageId();
+				AppClientFactory.getPlaceManager().setDataLogClasspageId(classpageId);
+				if(getPlaceManager().getRequestParameter("view")!=null){
+					String collectionId=getPlaceManager().getRequestParameter("id", null);
+					sessionId=GwtUUIDGenerator.uuid();
+					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+				}
 				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
 			}
 		});
@@ -544,9 +550,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			if(collectionId!=null && !collectionId.equalsIgnoreCase("")){
 				resetCollectionPlayer();
 				if(getPlaceManager().getRequestParameter("view")!=null){
+					if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
+						getClassPageDetails(AppClientFactory.getPlaceManager().getRequestParameter("cid")); 
+					}
 				}else{
-					sessionId=GwtUUIDGenerator.uuid();
-					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+					if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
+						getClassPageDetails(AppClientFactory.getPlaceManager().getRequestParameter("cid")); 
+					}else{
+						sessionId=GwtUUIDGenerator.uuid();
+						triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+					}
 				}
 				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
@@ -560,9 +573,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						}
 					}
 				});
-				if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
-					getClassPageDetails(AppClientFactory.getPlaceManager().getRequestParameter("cid")); 
-				}
 				
 			}
 		}
@@ -1928,6 +1938,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
 			path=classpageId+"/"+collectionDo.getGooruOid();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
 			collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null));
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
@@ -2054,6 +2067,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
 			path=classpageId+"/"+collectionId;
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
 			if(classpageEventId==null||classpageEventId.equals("")){
@@ -2089,6 +2105,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			path=classpageId+"/"+collectionDo.getGooruOid();
 			if(getPlaceManager().getRequestParameter("rid")!=null){
 				path=path+"/"+itemGooruOid;
+			}
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
 			}
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
@@ -2134,6 +2153,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
 			path=classpageId+"/"+collectionDo.getGooruOid();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
 			if(classpageEventId==null||classpageEventId.equals("")){
@@ -2147,6 +2169,55 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		String playerMode=getPlayerMode();
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionDo.getGooruOid(), "", classpageEventId,classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
+	}
+	
+	public void triggerCommentDataLogEvent(String commentId,String eventName,String commentText){
+		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
+		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
+		String path="";
+		if(classpageId!=null&&!classpageId.equals("")){
+			path=classpageId+"/"+collectionDo.getGooruOid();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
+			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
+			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
+			classpageId=libraryId;
+			path=classpageId+"/"+collectionDo.getGooruOid();
+		}else{
+			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
+		}
+		PlayerDataLogEvents.triggerCommentDataLogEvent(collectionDo.getGooruOid(), commentId, classpageEventId,classpageId, sessionId, path, null, commentText, eventName);
+	}
+	
+	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
+		String path="";
+		if(classpageId!=null&&!classpageId.equals("")){
+			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
+			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
+			path=libraryId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
+		}else{
+			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
+		}
+		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId,sessionId, path, null,currentRate,previousRate);
+	}
+	
+	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
+		String path="";
+		if(classpageId!=null&&!classpageId.equals("")){
+			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
+			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
+			path=libraryId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
+		}else{
+			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
+		}
+		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId,sessionId, path, null,reviewText);
 	}
 	
 	public String getPlayerMode(){

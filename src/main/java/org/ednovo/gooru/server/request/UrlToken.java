@@ -277,7 +277,7 @@ public enum UrlToken {
 	/*UPDATE_RESOURCE_INFO(
 			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}&mediaFileName={5}"),*/
 	UPDATE_RESOURCE_INFO(
-			"/v2/resource/{0}?sessionToken={1}"),
+			"/v2/collection/resource/{0}?sessionToken={1}"),
 			
 	UPDATE_RESOURCE_INFO_NO_MEDIA(
 			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}"),
@@ -364,7 +364,7 @@ public enum UrlToken {
 
 	V2_JOIN_CLASS("/v2/class/{0}/member/join?sessionToken={1}"),
 	
-	V2_UPDATE_USER_RESOURCE("/v2/resource/{0}?sessionToken={1}"),
+	V2_UPDATE_USER_RESOURCE("/v2/collection/resource/{0}?sessionToken={1}"),
 	
 	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?sessionToken={0}"),
 	
@@ -619,7 +619,36 @@ public enum UrlToken {
 
 	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?sessionToken={0}&data={1}"),
 
-	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}&offset={2}&limit={3}");
+	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
+	
+	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
+	
+V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
+	
+	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?sessionToken={1}&data={2}"),
+	
+	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?sessionToken={1}&data={2}"),
+	
+	V1_GETSESSIONSDATABYUSER("/v1/classpage/{0}/sessions.json?sessionToken={1}&data={2}"),
+	
+	V1_GETSESSIONDATABYUSERSESSION("/v1/classpage/{0}/resources.json?sessionToken={1}&data={2}"),
+	
+	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?sessionToken={1}"),
+	
+	V1_EXPORTSUMMARYATHWAY("/v1/classpage/{0}/summary/export.xls?sessionToken={1}&data={2}&timeZone={3}"),
+	
+	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}"),
+	
+	V2_GET_ASSIGNMENT_PARENT_DETAILS("/v2/class/assignment/{0}?sessionToken={1}"),
+	
+	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?sessionToken={1}&data={2}"),
+	
+	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}&data={2}&timeZone={3}"),
+	
+	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?sessionToken={1}&data={2}");
+	
+	
+	
 
 
 	private String url;

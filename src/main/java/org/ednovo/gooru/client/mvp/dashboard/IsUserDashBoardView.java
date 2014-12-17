@@ -44,18 +44,212 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
-
+	/**
+	 * 
+	 * @function dispalyDashBoardHomePage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void dispalyDashBoardHomePage();
 	
+	/**
+	 * 
+	 * @function setProfileAnalyticsFlaggedChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result);
-	
+	/**
+	 * 
+	 * @function setProfileAnalyticsViewsChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void setProfileAnalyticsViewsChatData(Map<String, Integer> result);
-	
+	/**
+	 * 
+	 * @function setProfileAnalyticsSharedChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void setProfileAnalyticsSharedChatData(Map<String, Integer> result);
-	
+	/**
+	 * 
+	 * @function setProfileAnalyticsAddedCollectionChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
-
+	/**
+	 * 
+	 * @function setPublishedCollectionData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
+
+	/**
+	 * 
+	 * @function getFiveStarRatedResults 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void getFiveStarRatedResults(UserDashBoardCommonInfoDO result);
+	/**
+	 * 
+	 * @function getFiveStarReviewedResources 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result);
+
+	/**
+	 * 
+	 * @function setProfileRatingsData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void setProfileRatingsData(ProfileRatingsReactionsDO result);
+	/**
+	 * 
+	 * @function setProfileReationsData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void setProfileReationsData(ProfileRatingsReactionsDO result);
+	void getTopViewedCOllectionsData(UserDashBoardCommonInfoDO result);
+
 }

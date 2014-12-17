@@ -1101,9 +1101,7 @@
 							<!-- <p>
 								<img src="images/landing-page/footer-icon.png" />
 							</p> -->
-						
-							<tbp:PPanel text="{i18n.GL1246}"/>
-						
+							<tbp:PPanel text="{i18n.GL1246}" ui:field="panelCopyRight"/>						
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-6">
 							<tbp:H4Panel text="{i18n.GL1243}" />

@@ -32,8 +32,19 @@ import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
 /**
- * @author Search Team
+ * 
+ * @fileName : ClasslistpageCBundle.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface ClasslistpageCBundle extends ClientBundle{
 	

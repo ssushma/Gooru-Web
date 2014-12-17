@@ -28,6 +28,21 @@ package org.ednovo.gooru.client.gin;
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.AppRootPresenter;
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
+import org.ednovo.gooru.client.mvp.analytics.AnalyticsView;
+import org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressWidget;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.IsCollectionProgressView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView;
 import org.ednovo.gooru.client.mvp.authentication.IsSignUpView;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpView;
@@ -70,7 +85,10 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
+import org.ednovo.gooru.client.mvp.dashboard.IsPopupForAnalyticsView;
 import org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsView;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter.IsUserDashBoardProxy;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardView;
@@ -595,6 +613,13 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
 		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
-
+		bindPresenterWidget(PopupForAnalyticsPresenter.class,IsPopupForAnalyticsView.class, PopupForAnalyticsView.class);
+	
+		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);
+		bindPresenterWidget(CollectionProgressPresenter.class,IsCollectionProgressView.class,CollectionProgressWidget.class);
+		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
+		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
+		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
+	
 	}
 }

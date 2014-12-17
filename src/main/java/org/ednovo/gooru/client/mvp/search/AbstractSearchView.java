@@ -28,19 +28,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
+import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.FilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
-import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
+import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -49,17 +53,23 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -70,22 +80,18 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <T>
  *            type of ResourceSearchResultDo
  */
-public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
-		extends BaseViewWithHandlers<SearchUiHandlers> implements
-		IsSearchView<T>, ClickHandler {
+public abstract class AbstractSearchView<T extends ResourceSearchResultDo> extends BaseViewWithHandlers<SearchUiHandlers> implements IsSearchView<T>, ClickHandler {
 
-	private static AbstractSearchViewUiBinder uiBinder = GWT
-			.create(AbstractSearchViewUiBinder.class);
-
+	private static AbstractSearchViewUiBinder uiBinder = GWT.create(AbstractSearchViewUiBinder.class);
+	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface AbstractSearchViewUiBinder extends
-			UiBinder<Widget, AbstractSearchView<?>> {
+	interface AbstractSearchViewUiBinder extends UiBinder<Widget, AbstractSearchView<?>> {
 	}
 
 	@UiField(provided = true)
 	SearchFilterVc searchFilterVc;
-
+	
 	SearchFilterVc searchFilterVc1;
 
 	@UiField(provided = true)
@@ -96,7 +102,27 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 
 	@UiField
 	ScrollPanel searchFilterPanel;
-
+	
+	@UiField
+	Style style;
+	
+	@UiField
+	HTML queriedTextHtml;
+	
+	@UiField
+	FlowPanel standardsConatiner;
+	
+	@UiField HTMLPanel spellerrorqueriedTextHtml,correctSpellHTML;
+	
+	@UiField
+	Button resourceSearchBtn, collectionSearchBtn;
+	
+	@UiField Label wrongQueryText;
+	
+	@UiField Label correctQueryText;
+		
+	String grades,stdCode,subjects,categories;
+	
 	protected ResourceDragController dragController;
 
 	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
@@ -108,14 +134,20 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 	public boolean refreshShelfInfo;
 
 	public boolean refreshedShelfCollections;
-	String rootWebUrl = AppClientFactory.getPlaceManager()
-			.getCurrentPlaceRequest().getNameToken();
+	String rootWebUrl = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+	
+	private HandlerRegistration handlerRegistration=null;
+	
+	public interface Style extends CssResource {
 
-	private HandlerRegistration handlerRegistration = null;
-
+		String resourceBtnActive();
+		String collectionBtnActive();
+		String secondaryResourceSearchBtn();
+		String secondaryCollectionSearchBtn();
+	}
+	
 	/**
-	 * Assign new instance for {@link ResourceDragController},
-	 * {@link AppMirageDragContainer}, {@link SearchFilterVc}
+	 * Assign new instance for {@link ResourceDragController}, {@link AppMirageDragContainer}, {@link SearchFilterVc}
 	 * 
 	 * @param resourceSearch
 	 *            whether resource search or not
@@ -123,33 +155,56 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 	public AbstractSearchView(boolean resourceSearch) {
 		dragController = new ResourceDragController(RootPanel.get());
 		searchResultPanel = new AppMirageDragContainer(dragController);
-		
 		searchFilterVc = new SearchFilterVc(resourceSearch);
 		searchFilterVc1 = new SearchFilterVc(resourceSearch);
 		setWidget(uiBinder.createAndBindUi(this));
-
+		
+		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
+		
+		resourceSearchBtn.getElement().setId("btnResource");
+		collectionSearchBtn.getElement().setId("btnCollection");
+		
+		resourceSearchBtn.setText(i18n.GL0174());
+		collectionSearchBtn.setText(i18n.GL0175());
+		
 		searchFilterPanel.getElement().setId("searchFilterPanelDiv");
-		searchFilterPanel.getElement().getStyle().setOverflow(Overflow.VISIBLE);
-		searchFilterVc.getElement().setId("searchFilterVc");
+		searchFilterVc.getElement().setId("searchFilterVcsearchFilterVc");
+		
 		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
 		searchResultPanel.getElement().setId("appMirageDragContainer");
-		AppClientFactory.fireEvent(new SearchFilterEvent(searchFilterVc1,resourceSearch));
-
-
+		
+		correctSpellHTML.setVisible(false);
+		spellerrorqueriedTextHtml.setVisible(false);
+		
+		
+		standardsConatiner.clear();
+		showCategoryFilter();
+		showSubjectsFilter();
+		showGradesFilter();
+		showStandardsFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null)){
+			standardsConatiner.setVisible(false);
+		}else{
+			standardsConatiner.setVisible(true);
+		}
+		
+		AppClientFactory.fireEvent(new SearchFilterUiEvent(searchFilterVc1,resourceSearch));
+		
 		getBrowseBtn().addClickHandler(new ClickHandler() {
-
+			
 			@Override
 			public void onClick(ClickEvent event) {
-				getUiHandlers().getAddStandards();
-
+			getUiHandlers().getAddStandards();
+				
 			}
 		});
+		
 		searchFilterVc1.browseStandards.addClickHandler(new ClickHandler() {
-
+	
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().getAddStandards();
-
+	
 			}
 		});
 
@@ -160,60 +215,155 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 		reset();
 		searchFilterVc.setFilter(searchDo.getFilters());
 		searchFilterVc1.setFilter(searchDo.getFilters());
-		if (!AppClientFactory.isAnonymous()) {
+		if(!AppClientFactory.isAnonymous()) {
 			searchFilterVc.getUserStandardPrefCodeId();
 			searchFilterVc1.getUserStandardPrefCodeId();
-		} else {
+		}else{
 			searchFilterVc.getStandardVisiblity();
 			searchFilterVc1.getStandardVisiblity();
 		}
-	}
+		
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			resourceSearchBtn.addStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.secondaryResourceSearchBtn()); 
+			collectionSearchBtn.addStyleName(style.secondaryCollectionSearchBtn());
+		} else {
+			collectionSearchBtn.addStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.secondaryCollectionSearchBtn());
+			resourceSearchBtn.addStyleName(style.secondaryResourceSearchBtn()); 
+		}
+		}
+		
+	
 
 	@Override
 	public void postSearch(SearchDo<T> searchDo) {
-		// searchResultPanel.setVisible(false);
-		boolean device = BrowserAgent.isDevice();
+		//searchResultPanel.setVisible(false);
+		
+		int countValue = searchDo.getSearchResults().size();
+		String searchText = AppClientFactory.getPlaceManager()
+				.getRequestParameter("query");
+		
+		if (searchText == null) {
+			searchText = "";
+
+		} else {
+			if (searchText.contains("252")) {
+				searchText = searchText.replaceAll("%", " ")
+						.replaceAll("2", "").replaceAll("5", "")
+						.replaceAll("B", "");
+			}
+			searchText = searchText.trim();
+			if (searchText.length() > 50) {
+				if (countValue > 0) {
+					searchText = searchText.substring(0, 50) + "...";
+					searchText = " " + i18n.GL1468() + " <b>" + searchText
+							+ "</b>";
+				} else {
+					searchText = searchText.substring(0, 50) + "...";
+					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
+				}
+
+			} else {
+				if (countValue > 0) {
+					searchText = "" + i18n.GL1468() + " <b>" + searchText
+							+ "</b>";
+				} else {
+					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
+				}
+			}
+			queriedTextHtml.setHTML(searchText);
+			queriedTextHtml.getElement().setAttribute("alt", StringUtil.removeHtml(searchText));
+			queriedTextHtml.getElement().setAttribute("title", StringUtil.removeHtml(searchText));
+			
+		}
+		
+		if(searchDo.getSpellCheckQueryString() == null){
+			correctSpellHTML.setVisible(false);
+			spellerrorqueriedTextHtml.setVisible(false);
+			queriedTextHtml.setVisible(true);
+		}
+		else
+		{
+
+			wrongQueryText.setText(searchDo.getUserQueryString());
+			wrongQueryText.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+						AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText(),""));
+					}
+				}
+			});
+
+			final String correctSearchTerm = searchDo.getSpellCheckQueryString();
+			
+			correctQueryText.setText(searchDo.getSpellCheckQueryString());
+			correctQueryText.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					correctSpellHTML.setVisible(false);
+					spellerrorqueriedTextHtml.setVisible(false);
+					queriedTextHtml.setVisible(true);
+				}
+			});
+			
+			correctSpellHTML.setVisible(true);
+			spellerrorqueriedTextHtml.setVisible(true);
+			queriedTextHtml.setVisible(false);
+			
+			
+		}
+		
+		standardsConatiner.clear();
+		showCategoryFilter();
+		showSubjectsFilter();
+		showGradesFilter();
+		showStandardsFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null)){
+			standardsConatiner.setVisible(false);
+		}else{
+			standardsConatiner.setVisible(true);
+		}
+		
 		searchResultPanel.setClonnable(true);
-		if (searchDo.getSearchResults() != null	&& searchDo.getSearchResults().size() > 0) {
+		
+		
+		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
-				if (device){
-					searchResultPanel.add(renderSearchResult(searchResult));
-					
-				}else{
-					searchResultPanel
-						.addDraggable(renderSearchResult(searchResult));
-				}
-				
-		}
+				searchResultPanel.addDraggable(renderSearchResult(searchResult));
+			}
 			if (searchDo.getTotalPages() > 1) {
 				if (searchDo.getPageNum() > 1) {
 					paginationFocPanel.add(new PaginationButtonUc(searchDo.getPageNum() - 1, PREVIOUS, this));
 				}
 				int page = searchDo.getPageNum() < 10 ? 1 : searchDo.getPageNum() - 8;
-				for (int count = 1; count < 10&& page <= searchDo.getTotalPages(); page++, ++count) {
-					paginationFocPanel.add(new PaginationButtonUc(page,
-							page == searchDo.getPageNum(), this));
+				for (int count = 1; count < 10 && page <= searchDo.getTotalPages(); page++, ++count) {
+					paginationFocPanel.add(new PaginationButtonUc(page, page == searchDo.getPageNum(), this));
 				}
 				if (searchDo.getPageNum() < searchDo.getTotalPages()) {
-					paginationFocPanel.add(new PaginationButtonUc(searchDo
-							.getPageNum() + 1, NEXT, this));
+					paginationFocPanel.add(new PaginationButtonUc(searchDo.getPageNum() + 1, NEXT, this));
 				}
 			}
 		}
-
+		
 		else {
 			MixpanelUtil.Search_No_Results();
-			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest()
-					.getNameToken().contains("resource-search")) {
-				searchResultPanel.add(new NOSearchResultCollectionVc());
-
+			if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search"))
+			{
+			searchResultPanel.add(new NOSearchResultCollectionVc());
+			
 			}
-			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest()
-					.getNameToken().contains("collection-search")) {
-				searchResultPanel.add(new NOSearchResultCollectionVc());
+			if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search"))
+			{
+			searchResultPanel.add(new NOSearchResultCollectionVc());
 			}
-
+			
 		}
 		refreshShelfInfo = true;
 		if (refreshedShelfCollections) {
@@ -233,23 +383,25 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 		searchResultPanel.clear();
 		paginationFocPanel.clear();
 		SHELF_COLLECTIONS.clear();
+		queriedTextHtml.setHTML("<p></p>");
+		queriedTextHtml.getElement().setAttribute("alt","<p></p>");
+		queriedTextHtml.getElement().setAttribute("title","<p></p>");
 	}
 
 	/**
 	 * @return instance of {@link SearchFilterVc}
 	 */
-	@Override
 	public SearchFilterVc getSearchFilterVc() {
 		return searchFilterVc;
 	}
+	
+	
 
 	@Override
 	public void setSearchFilter(SearchFilterDo searchFilterDo) {
 		getSearchFilterVc().renderFilter(searchFilterDo);
 		searchFilterVc1.renderFilter(searchFilterDo);
-		System.out.println("====================I am In Set Search Filters");
 		AppClientFactory.getEventBus().fireEvent(new FilterEvent(searchFilterDo));
-
 		getUiHandlers().initiateSearch();
 	}
 
@@ -257,18 +409,13 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 	public Map<String, String> getSearchFilters() {
 		return getSearchFilterVc().getFilter();
 	}
-	
-	@Override
-	public Map<String,String> getSearchFilters1(){
-		return searchFilterVc1.getFilter();
-	}
+
 	public abstract IsDraggable renderSearchResult(T searchDo);
 
 	@Override
 	public void onClick(ClickEvent event) {
 		if (event.getSource() instanceof PaginationButtonUc) {
-			AppClientFactory.fireEvent(new SearchPaginationEvent(
-					((PaginationButtonUc) event.getSource()).getPage()));
+			AppClientFactory.fireEvent(new SearchPaginationEvent(((PaginationButtonUc) event.getSource()).getPage()));
 		} else {
 			Window.alert("Event is not caught");
 		}
@@ -283,34 +430,30 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 
 	@Override
 	public void setSourceSuggestions(SearchDo<String> sourceSuggestions) {
-		searchFilterVc1.setSourceSuggestions(sourceSuggestions);
 		searchFilterVc.setSourceSuggestions(sourceSuggestions);
+		searchFilterVc1.setSourceSuggestions(sourceSuggestions);
 	}
 
 	@Override
 	public void setAggregatorSuggestions(SearchDo<String> aggregatorSuggestions) {
 		searchFilterVc.setAggregatorSuggestions(aggregatorSuggestions);
 		searchFilterVc1.setAggregatorSuggestions(aggregatorSuggestions);
-
 	}
-
+	
 	@Override
 	public void setStandardsSuggestions(SearchDo<CodeDo> standardsSuggestions) {
 		searchFilterVc.setStandardSuggestions(standardsSuggestions);
 		searchFilterVc1.setStandardSuggestions(standardsSuggestions);
-
 	}
 
 	@Override
-	public void registerDropController(ResourceDropController dropController,
-			RegisterSearchDropEvent.DROP_AREA type) {
+	public void registerDropController(ResourceDropController dropController, RegisterSearchDropEvent.DROP_AREA type) {
 		dragController.unregisterDropController(dropController);
 		dragController.registerDropController(dropController);
 	}
 
 	@Override
-	public void unregisterDropController(ResourceDropController dropController,
-			RegisterSearchDropEvent.DROP_AREA type) {
+	public void unregisterDropController(ResourceDropController dropController, RegisterSearchDropEvent.DROP_AREA type) {
 		dragController.unregisterDropController(dropController);
 	}
 
@@ -332,52 +475,171 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 		}
 	}
 
-	protected abstract void refreshShelfCollections(
-			List<FolderDo> shelfCollections);
+	protected abstract void refreshShelfCollections(List<FolderDo> shelfCollections);
 
 	@Override
 	public void setStandardsSuggestionsInfo(SearchDo<CodeDo> result) {
 		searchFilterVc.setSourceSuggestionsInfo(result);
-		searchFilterVc1.setSourceSuggestionsInfo(result);
-
 	}
-
+	
 	@Override
-	public void resetFilters() {
+	public void resetFilters(){
 		searchFilterVc.clearAllFields();
 		searchFilterVc1.clearAllFields();
-		
-
 	}
-
-	public Button getBrowseBtn() {
+	
+	public Button getBrowseBtn()
+	{
 		return searchFilterVc.browseStandards;
 	}
-
-	public void OnStandardsClickEvent(Button standardsButtonClicked) {
-		if (handlerRegistration != null) {
+	
+	public void OnStandardsClickEvent(Button standardsButtonClicked)
+	{
+		if(handlerRegistration!=null){
 			handlerRegistration.removeHandler();
 		}
-		handlerRegistration = standardsButtonClicked
-				.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						getUiHandlers().setUpdatedStandards();
-
-					}
-				});
+		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedStandards();
+		
+				
+			}
+		});
 	}
-
-	public void setUpdatedStandards(String standardsCode) {
-		if (!standardsCode.isEmpty()) {
-			searchFilterVc.addStandardFilter(standardsCode);
-			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+	
+	public void setUpdatedStandards(String standardsCode)
+	{
+		if(!standardsCode.isEmpty())
+		{
+		searchFilterVc.addStandardFilter(standardsCode);
+		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 		}
 		getUiHandlers().closeStandardsPopup();
 	}
+	
+	@Override
+	public String getSearchText() {
+//		return searchBarVc.getSearchText();
+		return AppClientFactory.getPlaceManager().getRequestParameter("query");
+	}
+	
+	/**
+	 * Set resource search page view
+	 * @param clickEvent instance of {@link ClickEvent}
+	 */
+	@UiHandler("resourceSearchBtn")
+	public void onResourceSearchButtonClicked(ClickEvent clickEvent) {
+		if(getSearchText()!=null || getSearchText().length()>0){
+			MixpanelUtil.Show_Resource_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText()));
+		}
+		
+		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
+			MixpanelUtil.Show_Collection_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
+		}
+	}
 
-	public abstract void setAddResourceContainerPresenter(
-			AddResourceContainerPresenter addResourceContainerPresenter);
+	/**
+	 * Set collection search page view 
+	 * @param clickEvent instance of {@link ClickEvent}
+	 */
+	@UiHandler("collectionSearchBtn")
+	public void onCollectionSearchBtnClicked(ClickEvent clickEvent) {
+		if(getSearchText()!=null || getSearchText().length()>0){
+			MixpanelUtil.Show_Collection_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,getSearchText()));
+		}
+		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
+			MixpanelUtil.Show_Collection_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
+		}
+	}
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showSubjectsFilter() {
+		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+		if(subjects!=null){
+			String[] split = subjects.split("~~");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"subjectPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showCategoryFilter() {
+		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
+		if(categories!=null){
+			String[] split = categories.split(",");
+			for(int i=0; i<split.length; i++){
+				if(!split[i].equalsIgnoreCase("all"))
+				{
+				standardsConatiner.add(createTagsLabel(split[i],"categoryPanel"));
+				}
+			}
+				
+		}
+	}
 
+	/**
+	 * Pre-Selected grades showing in search page
+	 */
+	private void showGradesFilter() {
+	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
+		if(grades!=null){
+			String[] gradesSplit = grades.split(",");
+			for(int i=0; i<gradesSplit.length; i++){
+				if(gradesSplit[i].equals("12gte")){
+					standardsConatiner.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
+				}else{
+					standardsConatiner.add(createTagsLabel(gradesSplit[i],"gradePanel"));
+				}
+				
+			}
+				
+		}
+	}
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showStandardsFilter() {
+	    stdCode = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
+		if(stdCode!=null){
+			String[] stdSplit = stdCode.split(",");
+			for(int i=0; i<stdSplit.length; i++){
+				standardsConatiner.add(createTagsLabel(stdSplit[i],"standPanel"));
+			}
+//			standardsConatiner.add(createTagsLabel(stdCode,"standPanel"));
+		}
+	}
+
+	/**
+	 * Show user searched filter 
+	 * 
+	 * @param filterValue
+	 *            search filter of the label widget which is user searched filter value
+	 * @return the label of user search filter.
+	 */
+	protected CloseLabelSetting createTagsLabel(final String filterValue, final String panelName) {
+		return new CloseLabelSetting(filterValue) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
+			}
+		};
+	}
+	
+	public abstract void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
+	
+	@Override
+	public Map<String, String> getSearchFilters1() {
+		return searchFilterVc1.getFilter();
+	}
 }

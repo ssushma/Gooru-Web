@@ -23,24 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
-/**
 
-
-*
-* @description : 
-*
-* @version :1.0
-*
-* @date: APR 19 2013
-   	
-* @Author Gooru Team
-*
-* Reviewer Gooru Team
-*
-*/
-
-
-import org.ednovo.gooru.client.util.HeatMapLayerWidget;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -52,7 +35,21 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-
+/**
+ * 
+ * @fileName : GoogleMapWidget.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 08-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class GoogleMapWidget extends Composite{
 	private static GoogleMapWidgetUiBinder uiBinder = GWT
 			.create(GoogleMapWidgetUiBinder.class);

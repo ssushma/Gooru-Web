@@ -24,11 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
-import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
@@ -41,9 +40,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -85,32 +82,25 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	/*@UiField
 	Anchor resourceLinkLbl, collectionLinkLbl;*/
 	
-	@UiField
-	Button resourceSearchBtn, collectionSearchBtn;
+
 	
 	@UiField
     Label lodingImage;
 	
 	@UiField
 	Style style;
+
 	@UiField
 	SearchCBundle res;
-	
-	@UiField
-	HTML queriedTextHtml;
 
 	/**
 	 * Class constructor
 	 */
 	public SearchRootView() {
 		setWidget(uiBinder.createAndBindUi(this));
+
 		res.css().ensureInjected();
-		resourceSearchBtn.getElement().setId("btnResource");
-		collectionSearchBtn.getElement().setId("btnCollection");
 		
-		resourceSearchBtn.setText(i18n.GL0174());
-		collectionSearchBtn.setText(i18n.GL0175());
-		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
 		searchWrapperSimPanel.getElement().setId("spnlSearchWrapperSimPanel");
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		lodingImage.getElement().setId("lblLodingImage");
@@ -138,66 +128,17 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		return AppClientFactory.getPlaceManager().getRequestParameter("query");
 	}
 
-	/**
-	 * Set resource search page view
-	 * @param clickEvent instance of {@link ClickEvent}
-	 */
-	@UiHandler("resourceSearchBtn")
-	public void onResourceSearchButtonClicked(ClickEvent clickEvent) {
-		if(getSearchText()!=null || getSearchText().length()>0){
-			MixpanelUtil.Show_Resource_Search_Results();
-			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText()));
-		}
-		
-		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
-			MixpanelUtil.Show_Collection_Search_Results();
-			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
-		}
-	}
-
-	/**
-	 * Set collection search page view 
-	 * @param clickEvent instance of {@link ClickEvent}
-	 */
-	@UiHandler("collectionSearchBtn")
-	public void onCollectionSearchBtnClicked(ClickEvent clickEvent) {
-		if(getSearchText()!=null || getSearchText().length()>0){
-			MixpanelUtil.Show_Collection_Search_Results();
-			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,getSearchText()));
-		}
-		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
-			MixpanelUtil.Show_Collection_Search_Results();
-			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
-		}
-	}
+	
 
 	@Override
 	public void reset() {
 		super.reset();
-		queriedTextHtml.setHTML("<p></p>");
-		queriedTextHtml.getElement().setAttribute("alt","<p></p>");
-		queriedTextHtml.getElement().setAttribute("title","<p></p>");
+
 	}
 
 	@Override
 	public void preSearch(SearchDo<?> searchDo) {
 		lodingImage.setVisible(true);
-//		searchBarVc.setSearchText(searchDo.getUrlQuery());
-		
-//				searchBarVc.setInitialSearchQuery();
-		
-		
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			resourceSearchBtn.addStyleName(res.css().secondaryICactive());
-			collectionSearchBtn.removeStyleName(res.css().secondaryIC1active());
-			resourceSearchBtn.removeStyleName(res.css().secondaryIC()); 
-			collectionSearchBtn.addStyleName(res.css().secondaryIC1());
-		} else {
-			collectionSearchBtn.addStyleName(res.css().secondaryIC1active());
-			resourceSearchBtn.removeStyleName(res.css().secondaryICactive());
-			collectionSearchBtn.removeStyleName(res.css().secondaryIC1());
-			resourceSearchBtn.addStyleName(res.css().secondaryIC()); 
-		}
 	}
 
 	@Override
@@ -216,6 +157,10 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 		String searchText = AppClientFactory.getPlaceManager()
 				.getRequestParameter("query");
+
+		
+		if(searchDo.getSpellCheckQueryString() == null)
+		{
 
 		if (searchText == null) {
 			searchText = "";
@@ -246,10 +191,25 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 				}
 			}
 
-			queriedTextHtml.setHTML(searchText);
-			queriedTextHtml.getElement().setAttribute("alt", searchText);
-			queriedTextHtml.getElement().setAttribute("title", searchText);
+
 			lodingImage.setVisible(false);
+
+
+			
+		}
+		}
+		else
+		{
+			String correctedSpelling = searchDo.getSpellCheckQueryString();
+			correctedSpelling = "" + i18n.GL1468() + " <b>" + searchDo.getSpellCheckQueryString()
+					+ "</b>";
+			String enteredSearchTerm = searchDo.getUserQueryString();
+			enteredSearchTerm = "" + "Search instead for" + " <b>" + searchDo.getUserQueryString()
+					+ "</b>";
+
+			lodingImage.setVisible(false);
+
+
 		}
 	}
 
@@ -257,6 +217,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public void clearPanel() {
 		contentpanel.clear();
 	}*/
+
 	@UiHandler("searchFilterMenu")
 	public void searchFilterMenuClickEvent(ClickEvent event){
 		invokeShowHideMenuContainer();

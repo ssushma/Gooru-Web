@@ -1046,6 +1046,17 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void triggerShareDataLogEvent(String resourceGooruOid, String itemType, String shareType, boolean confirmStatus){
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", null,"", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
 	}
+	
+	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
+		String path="";
+		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, path, null,currentRate,previousRate);
+	}
+	
+	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
+		String path="";
+		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, path, null,reviewText);
+	}
+
 	/**
 	 * Gets the respective resource ratings rated by the user.
 	 * @param resourceGooruId {@link String} 

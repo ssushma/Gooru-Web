@@ -28,7 +28,21 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-
+/**
+ * 
+ * @fileName : AddAssignmentContainerCBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface AddAssignmentContainerCBundle extends ClientBundle {
 	static final AddAssignmentContainerCBundle INSTANCE = GWT.create(AddAssignmentContainerCBundle.class);
 	

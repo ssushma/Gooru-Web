@@ -32,6 +32,8 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
+import com.google.gwt.user.client.ui.Label;
+
 public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 
 	/**
@@ -49,6 +51,6 @@ public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 	/**
 	 * @param resourceId
 	 */
-	void setResourceTagsData(String resourceId);   
+	void setResourceTagsData(String resourceId, Label tagsLbl);   
 
 }

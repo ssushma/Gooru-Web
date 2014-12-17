@@ -86,6 +86,8 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	
 	private boolean isQuestionResource=false;
 	
+	private boolean isUserOwnResource = false;
+	
 	private static final String O1_LEVEL = "o1";
 	
 	private static final String O2_LEVEL = "o2";
@@ -200,7 +202,6 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 				@Override
 				public void onSuccess(CollectionItemDo result) {
 					getView().hideUpdateResourceQuestionPopup();
-					//getView().updateData(result);
 				}
 			};
 		}
@@ -250,27 +251,30 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 				@Override
 				public void onSuccess(CollectionItemDo result) {
 					getView().hideUpdateResourcePopup();
+					
+					getView().updateCollectionItem(result);
+					
 					//redirect(Window.Location.getHref());
-					Map<String,String> params = new HashMap<String,String>();
-                	
-                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
-            		}
-                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-            		}
-                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            		}
-              
-                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
-                	{
-                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
-                	}
-            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+//					Map<String,String> params = new HashMap<String,String>();
+//                	
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            		}
+//              
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
+//                	{
+//                		params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
+//                	}
+//            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 				}
 			};
 		}
@@ -336,30 +340,32 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 				//redirect(Window.Location.getHref());
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
     			//String pageLocation=placeRequest.getNameToken();
-        		
-            	Map<String,String> params = new HashMap<String,String>();
-            	if(placeRequest.getParameter(O1_LEVEL, "")!= null) {
-        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-        		} else if(placeRequest.getParameter(O2_LEVEL, "")!=null) {
-        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
-        		} else if(placeRequest.getParameter(O3_LEVEL, "")!=null){
-        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
-        			params.put(O3_LEVEL, placeRequest.getParameter(O3_LEVEL, ""));
-        		}
-            	if(placeRequest.getParameter(ID, "") != null)
-            	{
-            	params.put(ID, placeRequest.getParameter(ID, ""));
-            	}
-        		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+				
+				getView().updateCollectionItem(result);
+//        		
+//            	Map<String,String> params = new HashMap<String,String>();
+//            	if(placeRequest.getParameter(O1_LEVEL, "")!= null) {
+//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
+//        		} else if(placeRequest.getParameter(O2_LEVEL, "")!=null) {
+//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
+//        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
+//        		} else if(placeRequest.getParameter(O3_LEVEL, "")!=null){
+//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
+//        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
+//        			params.put(O3_LEVEL, placeRequest.getParameter(O3_LEVEL, ""));
+//        		}
+//            	if(placeRequest.getParameter(ID, "") != null)
+//            	{
+//            	params.put(ID, placeRequest.getParameter(ID, ""));
+//            	}
+//        		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 			}
 			
 		});
 	}
 
 	@Override
-	public void getBrowseStandardsInfo(final boolean val) {
+	public void getBrowseStandardsInfo(final boolean val,final boolean userResource) {
 
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
@@ -394,6 +400,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 							}
 								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 									isQuestionResource = val;
+									isUserOwnResource = userResource;
 									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 									addToPopupSlot(addStandardsPresenter);
 									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
@@ -409,7 +416,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource);
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource, this.isUserOwnResource);
 	}
 
 	@Override
@@ -419,7 +426,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void reorderResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow, Integer newSequence) {
-		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
+//		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
 	}
 
 	

@@ -298,12 +298,12 @@
 }
 
 .insightsFrameContainer {	 	
-    min-height: 100px;
+ /*    min-height: 100px;
 	max-height: 100%;
 	width: 900px;
 	background-color: #EEE;
 	margin: 0 auto;
-	background: none repeat scroll 0 0 #F2F1F1;
+	background: none repeat scroll 0 0 #F2F1F1; */
 }
 
 .insightsFrame .buttonGroup {

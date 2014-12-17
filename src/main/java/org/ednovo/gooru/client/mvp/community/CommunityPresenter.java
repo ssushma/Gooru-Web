@@ -59,7 +59,21 @@ import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-
+/**
+ * 
+ * @fileName : CommunityPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, CommunityPresenter.IsCommunityProxy> implements CommunityUiHandlers {
 
 	private static final String LIBRARY_PAGE = "page";
@@ -205,7 +219,25 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 		tiggerCommnutiyLibraryEvent();
 		
 	}
-	
+	/**
+	 * 
+	 * @function tiggerCommnutiyLibraryEvent 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void tiggerCommnutiyLibraryEvent(){
 		if(!AppClientFactory.getPlaceManager().isLibaryEventTriggered(PlaceTokens.DISCOVER)){
 			String eventId=GwtUUIDGenerator.uuid();
@@ -452,6 +484,25 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
 			getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
 	}
+	/**
+	 * 
+	 * @function callBackMethods 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void callBackMethods(){
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){

@@ -78,6 +78,11 @@ public class PlayerDataLogEvents {
 	public static final String ITEM_SHARE="item.share";
 	public static final String ITEM_FLAG="item.flag";
 	public static final String LIBRARY_VIEW="library.view";
+	public static final String COMMENT_CREATE="comment.create";
+	public static final String COMMENT_EDIT="comment.edit";
+	public static final String COMMENT_DELETE="comment.delete";
+	public static final String ITEM_RATE="item.rate";
+	public static final String ITEM_REVIEW="item.review";
 	
 	//event keys
 	public static final String EVENTID="eventId";
@@ -145,6 +150,9 @@ public class PlayerDataLogEvents {
 	public static final String TWITTER="twitter";
 	public static final String MAIL="mail";
 	public static final String SEARCHTERM="searchTerm";
+	public static final String RATE="rate";
+	public static final String PREVIOUS_RATE="previousRate";
+	
 	
 	
 	
@@ -568,6 +576,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemContentItemId, parentEventId, parentGooruOid, parentContItemId, playerMode, path, pageLocation, PlayerDataLogEvents.COLLECTION_SHARE_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}	
+	
 	public static void triggerItemShareDataLogEventForProfile(String itemGooruOid, String itemContentItemId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
 		JSONObject collectionDataLog=new JSONObject(); 
@@ -610,6 +619,114 @@ public class PlayerDataLogEvents {
 		libarayViewData.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getLibraryDataLogContext(libararyGooruOid, pageLocation));
 		PlayerDataLogEvents.collectionStartStopEvent(libarayViewData);
 	}
+	
+	public static void triggerCommentDataLogEvent(String collectionId, String commentGooruOid,String parentEventId,String parentGooruOid,String sessionId,
+			String path,String pageLocation,String commentText,String eventName){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=PlayerDataLogEvents.getUnixTime();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getCommentDataLogPayLoadObject(commentText));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(collectionId, commentGooruOid, parentEventId, parentGooruOid, path, pageLocation));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	
+	public static void triggerRatingDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,double currentRate,double previousRate){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=PlayerDataLogEvents.getUnixTime();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_RATE));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getRatingtDataLogPayLoadObject(currentRate,previousRate));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(resourceId,null,parentEventId, collectionId, path, pageLocation));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	
+	public static void triggerReviewDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,String reviewText){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=PlayerDataLogEvents.getUnixTime();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_REVIEW));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getReviewDataLogPayLoadObject(reviewText));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(resourceId,null,parentEventId, collectionId, path, pageLocation));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	
+	public static  JSONString getCommentDataLogPayLoadObject(String commentText){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			if(commentText!=null){
+				payLoadMap.put(TEXT, new JSONString(commentText));
+			}
+		}catch(Exception e){
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	
+	public static  JSONString getCommentDataLogContextObject(String collectionId,String commentGooruOid,String parentEventId, String parentGooruOid, String path, String pageLocation){
+		JSONObject contextMap=new JSONObject();
+		try{
+			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
+			//contextMap.put(CONTENTITEMID, new JSONString("")); // may be need to send comment Id
+			if(parentGooruOid!=null){
+				contextMap.put(PARENTGOORUID, new JSONString(parentGooruOid));
+			}
+			if(parentEventId!=null){
+				contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
+			}
+			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
+			contextMap.put(PATH, new JSONString(path));
+			if(pageLocation!=null){
+				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
+			}else{
+				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
+			}
+			
+		}catch(Exception e){
+			
+		}
+		return new JSONString(contextMap.toString());
+	}
+	
+	public static  JSONString getRatingtDataLogPayLoadObject(double currentRate,double previousRate){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			payLoadMap.put(RATE, new JSONNumber(currentRate));
+			payLoadMap.put(PREVIOUS_RATE, new JSONNumber(previousRate));
+			payLoadMap.put(ITEMTYPE, new JSONString(RESOURCE));
+		}catch(Exception e){
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	
+	public static  JSONString getReviewDataLogPayLoadObject(String reviewText){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			payLoadMap.put(TEXT, new JSONString(reviewText));
+			payLoadMap.put(ITEMTYPE, new JSONString(RESOURCE));
+		}catch(Exception e){
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	
+	
 	public static Long getUnixTime(){
 		return System.currentTimeMillis();
 	}

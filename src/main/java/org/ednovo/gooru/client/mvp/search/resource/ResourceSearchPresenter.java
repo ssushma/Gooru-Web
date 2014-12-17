@@ -57,6 +57,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -170,6 +171,14 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 			filterMap.put("flt.isReviewed", reviewsVal);
 			searchDo.setFilters(filterMap);
 		}
+		if(getPlaceManager().getRequestParameter("disableSpellCheck") != null)
+		{
+			String disableSpellCheckVal = getPlaceManager().getRequestParameter("disableSpellCheck");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("disableSpellCheck", "true");
+			searchDo.setFilters(filterMap);
+		}
 		getSearchService().getResourceSearchResults(searchDo, searchAsyncCallback);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		
@@ -269,10 +278,10 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
 	 */
 	@Override
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen) { 
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl) { 
 		simplePanel.clear();
 		if(!isTagsPanelOpen){
-			tagsTabPresenter.setData(searchResultDo.getGooruOid());   
+			tagsTabPresenter.setData(searchResultDo.getGooruOid(), tagsLbl);   
 			simplePanel.setWidget(tagsTabPresenter.getWidget());
 		}
 	}

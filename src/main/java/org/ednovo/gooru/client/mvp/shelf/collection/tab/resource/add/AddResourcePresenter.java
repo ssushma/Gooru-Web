@@ -87,6 +87,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoAsyncCallback;
 	
+	private SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoImageAsyncCallback;
+	
 	private SimpleAsyncCallback<ExistsResourceDo> resoureCheckAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> addQuestionResourceAsyncCallback;
@@ -100,6 +102,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	private static final String KEY_OER = "resourceLicense";
 	private static final String VAL_OER = "OER";
 	private boolean isQuestionResource = false;
+	private boolean isUserResource = false;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
@@ -274,6 +277,15 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			}
 		});
 		
+		setResoureMetaInfoImageAsyncCallback(new SimpleAsyncCallback<ResourceMetaInfoDo>() {
+
+			@Override
+			public void onSuccess(ResourceMetaInfoDo result) {
+				getView().setPopupImageData(result);
+
+			}
+		});
+		
 		setResoureCheckAsyncCallback(new SimpleAsyncCallback<ExistsResourceDo>() {
 			@Override
 			public void onSuccess(ExistsResourceDo result) {
@@ -314,29 +326,29 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-                    //isCollResourceTabView.updateCollectionItem(result);
+                    isCollResourceTabView.updateCollectionItem(result);
             		
-                	Map<String,String> params = new HashMap<String,String>();
-                	
-                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
-            		}
-                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-            		}
-                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
-            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-            		}
-                	
-              
-                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
-                	{
-                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
-                	}
-            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+//                	Map<String,String> params = new HashMap<String,String>();
+//                	
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            		}
+//                	
+//              
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
+//                	{
+//                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
+//                	}
+//            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
             		
                     MixpanelUtil.AddQuestion();
                    // redirect(Window.Location.getHref());
@@ -375,7 +387,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void getResourceMetaInfo(String url){
 		getResourceService().getResourceMetaInfo(url, resoureMetaInfoAsyncCallback);
 	}
-	
+	@Override
+	public void getResourceImageInfo(String url) {
+		getResourceService().getResourceMetaInfo(url, resoureMetaInfoImageAsyncCallback);
+	}
 	@Override
 	public void getResourceExists(String url){
 		getResourceService().checkResourceExists(url, resoureCheckAsyncCallback);
@@ -384,7 +399,13 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public SimpleAsyncCallback<ResourceMetaInfoDo> getResoureMetaInfoAsyncCallback() {
 		return resoureMetaInfoAsyncCallback;
 	}
-	
+	public SimpleAsyncCallback<ResourceMetaInfoDo> getResoureMetaInfoImageAsyncCallback() {
+		return resoureMetaInfoImageAsyncCallback;
+	}
+	public void setResoureMetaInfoImageAsyncCallback(
+			SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoImageAsyncCallback) {
+		this.resoureMetaInfoImageAsyncCallback = resoureMetaInfoImageAsyncCallback;
+	}
 	public void setResoureMetaInfoAsyncCallback(
 			SimpleAsyncCallback<ResourceMetaInfoDo> resoureMetaInfoAsyncCallback) {
 		this.resoureMetaInfoAsyncCallback = resoureMetaInfoAsyncCallback;
@@ -570,7 +591,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	}
 
 	@Override
-	public void browseStandardsInfo(final boolean val) {
+	public void browseStandardsInfo(final boolean val, final boolean isUserOwnResource) {
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
 				new SimpleAsyncCallback<ProfileDo>() {
@@ -604,6 +625,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 							}
 								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 									isQuestionResource = val;
+									isUserResource = isUserOwnResource;
 									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 									addToPopupSlot(addStandardsPresenter);
 									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
@@ -617,7 +639,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource);
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource,this.isUserResource);
 	}
 
 	@Override
@@ -629,7 +651,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl) {
 		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
 	}
-	
 
 }
 

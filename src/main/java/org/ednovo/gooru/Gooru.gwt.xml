@@ -45,6 +45,7 @@
 
 	<!-- GWT high charts-->
 	<inherits name="org.moxieapps.gwt.highcharts.Highcharts"/>
+	<inherits name='com.google.gwt.visualization.Visualization'/>
 
 	<inherits name='com.google.gwt.maps.Maps' />
 

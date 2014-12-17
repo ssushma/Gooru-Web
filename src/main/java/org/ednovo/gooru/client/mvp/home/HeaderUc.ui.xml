@@ -232,10 +232,12 @@
 		height:26px; background:url(../images/headernew/setting.png);
 		}
 		.teachUserNameContainerHoverAddAssignment {
+
 		float: left;
 		height: 50px;
 		width:455px;
 		margin-left:-6px;
+
 		}
 		.teachUserNameTextContainer {
 		float:
@@ -492,8 +494,6 @@
 	<g:HTMLPanel>
 
 		<!-- New Header -->
-
-
 		<uc:HeaderPanel ui:field="headerMainPanel">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row">
@@ -574,8 +574,12 @@
 														<g:Image styleName="{style.profileImage} hidden-sm hidden-xs"
 															ui:field="imgUserProfile"></g:Image>
 														<g:Anchor styleName="{style.username}" ui:field="loggedInfoLbl" />
+														<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImgforDashboard"/>
 														<g:HTMLPanel styleName="" ui:field="myDashBoardPop" />
 													</uc:HTMLEventPanel>
+														<g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}" ui:field="panelArrow">
+								                         	<g:HTMLPanel styleName="{style.downArrow}"></g:HTMLPanel>
+														</g:HTMLPanel>
 												</uc:LiPanel>
 												<!-- <uc:LiPanel> <g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}"> 
 													<div style="border-right: 1px solid #616161; height: 34px; /* margin-left: 

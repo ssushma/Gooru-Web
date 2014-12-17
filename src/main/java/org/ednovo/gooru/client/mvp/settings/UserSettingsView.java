@@ -745,7 +745,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
-		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
+		String userRoles = AppClientFactory.getLoggedInUser().getUserRoleSetString();
+		if(userRoles.contains("Content_Admin") || userRoles.contains("superadmin")){
 			btnViewAdmin.setVisible(true);
 		}else{
 			btnViewAdmin.setVisible(false);
@@ -1157,8 +1158,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiHandler("settingsSaveButton")
 	public void OnClickSaveButton(ClickEvent event) {
 		
-		tbLastNameUcLabel.switchToLabel();
 		tbFirstNameUcLabel.switchToLabel();
+		tbLastNameUcLabel.switchToLabel(); 
 		if(enableEdit && enableEditFirstName){
 			enableEdit=false;
 			enableEditFirstName=false;
@@ -1178,9 +1179,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			
 			getUiHandlers().saveSettingsInformation();
 			
+		}else{
+			tbFirstNameUcLabel.switchToEdit();
+			tbLastNameUcLabel.switchToEdit();
 		}
 		
-	
 	}
 	@UiHandler("settingCancelButton")
 	public void OnClickCancelSettingpage(ClickEvent event) {

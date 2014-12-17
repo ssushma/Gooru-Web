@@ -64,6 +64,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,6 +160,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<ResourceSearchResultDo> getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo) {
 		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
 		String query1=searchDo.getSearchQuery();
+	
 		 query= query1;
 		try{
 			if(searchDo.getFilters()!=null){
@@ -168,16 +170,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				  searchDo.getFilters().put(key, value);
 				 }
 			}
-			/*if(query!=null){
-				query = query.replaceAll("2C",""); 
-				if(query.contains("25")){
-					query=query.replaceAll("%","").replaceAll("2", "").replaceAll("5", "").replaceAll("B", "");
-					query=query.trim();
-					query=query.replaceAll(" ","%20");	
-					
-				}
+			if(query.equalsIgnoreCase("'*'"))
+			{
+				query = "*";
 			}
-*/			
+			
 		JsonRepresentation jsonRep=null;
 		Map<String,String> filtersMap=searchDo.getFilters();
 		if(filtersMap!=null){

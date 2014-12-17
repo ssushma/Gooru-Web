@@ -52,6 +52,8 @@ public interface UcCBundle extends ClientBundle {
 		
 		String closeLabel();
 		
+		String closeLabelSearch();
+		
 		String closeLabelText();
 		
 		String closeLabelRemove();

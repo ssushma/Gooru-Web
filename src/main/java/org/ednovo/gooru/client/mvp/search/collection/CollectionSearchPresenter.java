@@ -48,6 +48,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -241,7 +242,7 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	}
 
 	@Override
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen) {
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl) {
 		
 	}
 

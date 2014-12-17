@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsHandler;
+import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
@@ -44,13 +45,14 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @author Search Team
  * 
  */
-public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler,UpdateRatingsInSearchHandler {
+public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler,DisableSpellSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler,UpdateRatingsInSearchHandler {
 	
 	/**
 	 * Set search page view
@@ -122,6 +124,7 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 * @param simplePanel     
 	 * @param searchResultDo
 	 * @param isTagsPanelOpen 
+	 * @param tagsLbl 
 	 */
-	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen);
+	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl);
 }
