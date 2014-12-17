@@ -48,7 +48,7 @@
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="resourceFormat"/> 
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
-				<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}">
+				<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}" ui:field="panelCategory">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="categorypanel"></g:HTMLPanel>

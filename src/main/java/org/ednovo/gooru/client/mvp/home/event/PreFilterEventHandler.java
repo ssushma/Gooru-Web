@@ -1,4 +1,5 @@
 /*******************************************************************************
+
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -22,19 +23,15 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.body;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
-import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHandler;
-import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
 
-public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers,SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
-	public void createCommentForCollection(String gooruOid, String comment);
-	
-	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);
-	
-	public void getPaginationResults(String gooruOid, String offset, String limit);
 
-	void updateCommentsStatus(String commentsStatus);
+package org.ednovo.gooru.client.mvp.home.event;
+
+import com.google.gwt.event.shared.EventHandler;
+
+public interface PreFilterEventHandler extends EventHandler {
+
+	void openPreFilterPopup(); 
+
 }
