@@ -33,7 +33,7 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
 	public void createCommentForCollection(String gooruOid, String comment);
 	
-	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit);
+	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);
 	
 	public void getPaginationResults(String gooruOid, String offset, String limit);
 	
