@@ -84,8 +84,9 @@ public class AlertContentUc extends Composite {
 		alertMessageHeaderField.getElement().setAttribute("alt",messageHeader);
 		alertMessageHeaderField.getElement().setAttribute("title",messageHeader);
 		
-		alertBoxUc.show();
 		alertBoxUc.center();
+		alertBoxUc.show();
+		
 		
 		okButton.setText(i18n.GL0190());
 		okButton.getElement().setId("btnOkButton");

@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
+
 import com.google.gwt.user.client.ui.Widget;
 
 
@@ -38,7 +40,8 @@ public class AlertBoxUc extends DialogBoxUc{
 	 */
 	public AlertBoxUc(){
 		super();
-		this.setStyleName("alertDialogBox");
+		this.setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVVSmall());
+		this.addStyleName("loginFailureAlert");
 	}
 	
 	/**

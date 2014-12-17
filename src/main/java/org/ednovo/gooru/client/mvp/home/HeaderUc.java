@@ -1328,6 +1328,7 @@ public class HeaderUc extends Composite implements
 			logoutPanelVc.hide();
 			isOpenSettingDropDown = true;
 		}*/
+		
 		if(logoutPanelVc.isShowing()){
 			settingOptionsPopup.setVisible(false);
 			logoutPanelVc.hide();

@@ -629,5 +629,6 @@ public interface HomeCBundle extends ClientBundle{
 		String districtLibraryContainer();
 		String blockHeader();
 		String last();
+		String arrowLable();
 	}	
 }

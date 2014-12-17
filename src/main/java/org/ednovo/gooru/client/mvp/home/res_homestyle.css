@@ -152,6 +152,16 @@ header {
 .partnersDropdown >li >a{
 	white-space: normal !important;
 }
+.arrowLable{
+	background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+	position: absolute;
+	top: 3px;
+	right: 15px;
+	z-index: 9999999;
+	width: 10px;
+	height: 17px;
+	cursor: pointer;	
+}
 .login{}
 .loggedInfo{}
 .logoutPanel{}

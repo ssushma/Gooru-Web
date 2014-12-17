@@ -164,30 +164,24 @@
 
 		}
 	</ui:style>
-	<g:HTMLPanel>
-		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
-			widget names. The ui:field attribute binds an element to a field in the owner 
-			class. See the GWT docs on UI Binder for more details. -->
-
-		<g:HTMLPanel styleName="{style.searchPop}" ui:field="filterPanel">
-			<g:HTMLPanel styleName="{style.searchPopMenu}">
+<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+		<g:HTMLPanel styleName="{res.css.PopupMainVSmall}" ui:field="filterPanel">
+		    <g:HTMLPanel styleName="{res.css.popupInnerGrey}">
+		    <g:HTMLPanel styleName="{style.searchPopMenu}">
 				<g:HTMLPanel styleName="{style.filterHeaderPanel}">
 					<g:HTMLPanel styleName="{style.filterGradePanel}">
-						<g:Label styleName="{style.filterLable}" ui:field="lblGradesSubj" />
+						<g:Label styleName="{style.filterLable}" ui:field="lblGradesSubj"/>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{style.filterGradePanel}">
 						<g:Label styleName="{style.filterLable}" ui:field="lblStandards" />
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-
 			</g:HTMLPanel>
-
 			<g:HTMLPanel styleName="{style.searchPopContent}" ui:field="gradesPanel">
-
 				<g:HTMLPanel styleName="{style.searchPopGrade}">
 					<g:Label styleName="{style.searchPopSmallHead}" text="{i18n.GL0325}"/>
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
-
 						<g:HTMLPanel styleName="{style.col1}">
 							<g:HTMLPanel ui:field="eleGradePanelUc" />
 						</g:HTMLPanel>
@@ -218,5 +212,5 @@
 			<g:HTMLPanel ui:field="standardsPanel"></g:HTMLPanel>
 
 		</g:HTMLPanel>
-	</g:HTMLPanel>
+		</g:HTMLPanel>
 </ui:UiBinder> 

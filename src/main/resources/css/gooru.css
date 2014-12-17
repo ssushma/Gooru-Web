@@ -1186,7 +1186,7 @@ button::-moz-focus-inner {
     position: relative;
 }
 .dialogMiddleCenterInner{
-	min-width: 395px;
+/* 	min-width: 395px; */
 	}
 .dateBoxPopup {
 	z-index: 9999 !important;
@@ -2161,6 +2161,9 @@ fieldset {
  .borderLeft{
  	border-right:1px solid #999;
  }
+ .loginFailureAlert{
+ 	left:35% !important;
+ }
  
  
  
@@ -2594,6 +2597,7 @@ fieldset {
 		left:63% !important;
 		width:100%;	
 	}
+	.
 	 .borderLeft{
  		border-right:1px solid #999;
  	}
@@ -2604,6 +2608,10 @@ fieldset {
 	.addResourceContainer{
 		width:500px;
    }
+   .loginFailureAlert{
+ 		left:35% !important;
+ 	}
+ 
    
 	#main, #menuRight {
 	-webkit-backface-visibility: hidden;
@@ -2633,6 +2641,9 @@ fieldset {
 	
 }
 	
+.loginFailureAlert{
+ 	left:32% !important;
+ }
 }
 
 
@@ -2646,6 +2657,7 @@ fieldset {
 		left:44% !important;
 		width: 100%;
 	}
+	
 	.reviewPopupPoor{
 		left:24% !important;
 		width:300px;
@@ -2653,6 +2665,11 @@ fieldset {
 	.addResourceContainer{
 	width:500px;
  }
+ 
+  .loginFailureAlert{
+ 	left:22% !important;
+ }
+ 
 	
 }
 @media (min-width: 320px) and (max-width: 479px){
@@ -2675,6 +2692,11 @@ fieldset {
    	  margin:0px !important;
    	 
    }
+   .loginFailureAlert{
+ 	left:0% !important;
+ 	width:100% !important;
+ }
+ 
    
 }
 @media (min-width: 240px) and (max-width: 319px){
@@ -2700,6 +2722,11 @@ fieldset {
    	  margin:0px !important;
    	 
    }
+ 
+ .loginFailureAlert{
+ 	left:0% !important;
+ 	width:100% !important;
+ }
   
 
 }
@@ -2707,6 +2734,12 @@ fieldset {
 	.borderLeft{
  		border-right:0px !important;
  	}
+ 	
+ 	.loginFailureAlert{
+ 		left:29% !important;
+ 		
+ }
+ 
 }
 
 @media(min-width:768px){

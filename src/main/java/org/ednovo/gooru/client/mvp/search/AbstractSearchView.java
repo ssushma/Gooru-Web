@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -122,6 +123,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 	public AbstractSearchView(boolean resourceSearch) {
 		dragController = new ResourceDragController(RootPanel.get());
 		searchResultPanel = new AppMirageDragContainer(dragController);
+		
 		searchFilterVc = new SearchFilterVc(resourceSearch);
 		searchFilterVc1 = new SearchFilterVc(resourceSearch);
 		setWidget(uiBinder.createAndBindUi(this));
@@ -170,13 +172,20 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo>
 	@Override
 	public void postSearch(SearchDo<T> searchDo) {
 		// searchResultPanel.setVisible(false);
+		boolean device = BrowserAgent.isDevice();
 		searchResultPanel.setClonnable(true);
 		if (searchDo.getSearchResults() != null	&& searchDo.getSearchResults().size() > 0) {
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
-				searchResultPanel
+				if (device){
+					searchResultPanel.add(renderSearchResult(searchResult));
+					
+				}else{
+					searchResultPanel
 						.addDraggable(renderSearchResult(searchResult));
-			}
+				}
+				
+		}
 			if (searchDo.getTotalPages() > 1) {
 				if (searchDo.getPageNum() > 1) {
 					paginationFocPanel.add(new PaginationButtonUc(searchDo.getPageNum() - 1, PREVIOUS, this));

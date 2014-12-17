@@ -344,8 +344,7 @@
 		.shelfPanel {
 		border-left: 1px dashed #CCCCCC;
 		float: right;
-		height:
-		97%;
+		height:97%;
 		margin-bottom: -143px;
 		min-height: 759px;
 		position: absolute;
@@ -474,14 +473,14 @@
 		}
 
        .arrowLable{
-            background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
-            position: absolute;
-			top: 10px;
-			right: 122px;
-			z-index: 9999999;
-			width: 10px;
-			height: 17px;
-			cursor: pointer;
+        background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+		position: absolute;
+		top: 3px;
+		right: 8px;
+		z-index: 9999999;
+		width: 10px;
+		height: 17px;
+		cursor: pointer;
        }
 
        .searchMainPanel{
@@ -513,7 +512,7 @@
 									styleName="form-group">
 									<uc:AppSuggestBox ui:field="editSearchTxtBox"
 										styleName="form-control" />
-									<g:Label styleName="{style.arrowLable}" ui:field="arrowLbl" visible="false"></g:Label>
+									<g:Label styleName="{res1.css.arrowLable}" ui:field="arrowLbl" visible="false"></g:Label>
 								</g:FlowPanel>
 								<g:Button styleName="primary" ui:field="editSearchBtn" />
 							</g:HTMLPanel>

@@ -3007,3 +3007,17 @@ footer {
 color: #ffffff !important;
 }
 
+.searchbox .form-group{
+	position:relative;
+}
+ .arrowLable{
+        background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+		position: absolute;
+		top: 3px;
+		right: 8px;
+		z-index: 9999999;
+		width: 10px;
+		height: 17px;
+		cursor: pointer;
+       }
+
