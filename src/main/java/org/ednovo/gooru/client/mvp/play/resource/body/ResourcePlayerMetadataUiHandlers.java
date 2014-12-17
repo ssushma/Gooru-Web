@@ -44,13 +44,13 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
 	
-	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String userReview);   
+	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String userReview,String resourceGooruId);   
 	
 	public boolean isOeAnswerSubmited();
 
-	public void updateStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip);
+	public void updateStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String resourceGooruId);
 
-	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview);
+	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview,String resourceGooruId);
 
 	public void getAvgRatingAndCount(String assocGooruOid, Integer score, String review);   
 	

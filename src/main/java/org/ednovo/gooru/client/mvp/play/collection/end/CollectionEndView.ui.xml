@@ -70,7 +70,7 @@
 						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
 					</g:HTMLPanel>
 					<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
-	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}">Collection Summary</g:HTMLPanel>
+	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}" ui:field="collectionSummaryText"></g:HTMLPanel>
 					             	 <!-- Collection Summary Top -->
 					     <g:HTMLPanel>
 						    <g:HTMLPanel styleName="{unitStyle.collectionSummaryDetailsWrapper}">
@@ -82,7 +82,7 @@
 							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
-							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}">Collection Last Accessed</g:InlineLabel> 
+							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}" text="{i18n.GL2271}"></g:InlineLabel> 
 							<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
 							</g:HTMLPanel>
@@ -94,13 +94,13 @@
 						   <g:HTMLPanel styleName="{unitStyle.gooru_session_data_content}">
 					       		<g:HTMLPanel styleName="{unitStyle.left_session}">
 									<g:HTMLPanel styleName="{unitStyle.collection_last_accessed}">
-										<span class="collectionLastAccessed">Session Start Time : </span>
+										<g:InlineLabel  styleName="collectionLastAccessed" text="{i18n.GL2272}"></g:InlineLabel>
 										<g:InlineLabel ui:field="lastModifiedTime"></g:InlineLabel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
 					       		<g:HTMLPanel styleName="{unitStyle.right_session}">
 					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
 								<g:HTMLPanel styleName="{unitStyle.session_data}">
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>

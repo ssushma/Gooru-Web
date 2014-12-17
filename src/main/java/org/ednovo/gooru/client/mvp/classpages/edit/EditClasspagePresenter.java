@@ -114,10 +114,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 
 	AddAssignmentContainerPresenter assignmentContainer=null;
 	
-	CollectionProgressPresenter collectionProgressPresenter=null;
-	
-	private CollectionSummaryPresenter collectionSummaryPresenter;
-	
 	public static final  Object SLOT_SET_SUMMARY_PROGRESS = new Object();
 	final String SUMMARY="Summary",PROGRESS="Progress",REPORTS="reports";
 	
@@ -147,7 +143,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
-	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter,AnalyticsPresenter analyticsPresenter) {
+	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,AnalyticsPresenter analyticsPresenter) {
 		super(view, proxy);
 		
 		getView().setUiHandlers(this);
@@ -157,8 +153,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		this.imageUploadPresenter=imageUploadPresenter;		
 		this.classlistPresenter=classlistPresenter;
 		this.analyticsPresenter=analyticsPresenter;
-		this.collectionProgressPresenter=collectionProgressPresenter;
-		this.collectionSummaryPresenter=collectionSummaryPresenter;
 		addRegisteredHandler(AssignmentEvent.TYPE, this);
 		addRegisteredHandler(RefreshAssignmentsListEvent.TYPE, this);
 		addRegisteredHandler(UpdateClasspageImageEvent.TYPE, this);
@@ -757,11 +751,11 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		clearSlot(SLOT_SET_SUMMARY_PROGRESS);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
-				collectionSummaryPresenter.setCollectionSummaryData(collectionId,"");
-				setInSlot(SLOT_SET_SUMMARY_PROGRESS, collectionSummaryPresenter,false);
+				analyticsPresenter.getCollectionSummaryPresenter().setCollectionSummaryData(collectionId,"");
+				setInSlot(SLOT_SET_SUMMARY_PROGRESS, analyticsPresenter.getCollectionSummaryPresenter(),false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData(collectionId, "", false, collectionTitle);
-				setInSlot(SLOT_SET_SUMMARY_PROGRESS, collectionProgressPresenter,false);	
+				analyticsPresenter.getCollectionProgressPresenter().setCollectionProgressData(collectionId, "", false, collectionTitle);
+				setInSlot(SLOT_SET_SUMMARY_PROGRESS, analyticsPresenter.getCollectionProgressPresenter(),false);	
 			}else if(clickedTab.equalsIgnoreCase(REPORTS)){
 				analyticsPresenter.getGradeCollectionJson();
 				setInSlot(SLOT_SET_SUMMARY_PROGRESS, analyticsPresenter,false);	
