@@ -201,11 +201,9 @@
 	margin-left: 375px;
 }
 .leftArrow{
-	clear: both;
 	width: 6%;
 	height: 40px;
 	z-index: 999;
-	float: left;
 	position: relative;
 	background: url(images/analytics/leftArrow.png)  no-repeat ;
 }
