@@ -233,10 +233,12 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	private void setAvgRatingWidget(CollectionItemSearchResultDo resourceSearchResultDo) {
 		ratingWidgetView=new RatingWidgetView();
 		if(resourceSearchResultDo.getRatings()!=null){
-			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
-			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount()!=null?resourceSearchResultDo.getRatings().getCount().toString():"0");
-			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
-			ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
+			if(resourceSearchResultDo.getRatings().getCount()!=null && resourceSearchResultDo.getRatings().getCount()!= 0){
+				ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
+				ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString());
+				ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
+				ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
+			}
 		}
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.clear();
