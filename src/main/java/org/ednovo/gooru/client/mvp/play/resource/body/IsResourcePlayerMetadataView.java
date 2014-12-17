@@ -64,4 +64,6 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public Button getNarrationButton();
 	public void clearMarginTop();
 	public void setMarginTop();
+	public void setPreviousRating(double previousRating);
+	public double getPreviousRating();
 }
