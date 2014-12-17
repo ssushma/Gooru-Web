@@ -492,7 +492,6 @@
 
 	</ui:style>
 	<g:HTMLPanel>
-
 		<!-- New Header -->
 		<uc:HeaderPanel ui:field="headerMainPanel">
 			<g:HTMLPanel styleName="container">
@@ -627,7 +626,6 @@
 				</g:HTMLPanel>
 			</uc:HTMLEventPanel>
 		</uc:HeaderPanel>
-
 		<!-- New Header End -->
 		<!-- This is not used. Hidden through Code. -->
 		<!-- <g:FlowPanel styleName="{style.gooruClassicViewContainer}" ui:field="goToClasicGooruPanel"> 

@@ -30,6 +30,7 @@ import java.util.List;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -839,6 +840,7 @@ public class AddResourceContainerView extends
 				isSelectedCollection=false;
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.SHELF, params);
+				AppClientFactory.fireEvent(new CloseCollectionPlayerEvent(true));
 			}
 		});
 

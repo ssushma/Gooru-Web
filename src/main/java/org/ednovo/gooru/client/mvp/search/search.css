@@ -52,6 +52,7 @@ padding-bottom: 10px;
 .categoryFilterContainer .filterCheckBox label {
     background: url("../images/resource-type-icons.png") no-repeat scroll 0 0  transparent;
     padding: 3px 31px;
+    font-weight: normal;
 }
 .webpage label {
     background-position: 0 -223px !important;
@@ -595,8 +596,8 @@ input.form-control1{
 	position:fixed !important;
 	top:55px;
 	right:30px;
-	background:#ffffff;
-	box-shadow:0 0 10px rgba(0, 0, 0, 0.1);
+	/* background:#ffffff; */
+	/* box-shadow:0 0 10px rgba(0, 0, 0, 0.1); */
 	width:21% !important;
 	height:100%;
 	padding-left:0 !important;

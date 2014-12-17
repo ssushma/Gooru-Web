@@ -179,4 +179,18 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			}
 		});
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getCollectionProgressPresenter()
+	 */
+	@Override
+	public CollectionProgressPresenter getCollectionProgressPresenter() {
+		return collectionProgressPresenter;
+	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getCollectionSummaryPresenter()
+	 */
+	@Override
+	public CollectionSummaryPresenter getCollectionSummaryPresenter() {
+		return collectionSummaryPresenter;
+	}
 }

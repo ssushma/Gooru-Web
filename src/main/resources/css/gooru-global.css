@@ -859,3 +859,6 @@ button.backArrowButton:hover {
 	}
 } */
 
+.filterCheckBox label {
+    font-weight: normal;
+}
