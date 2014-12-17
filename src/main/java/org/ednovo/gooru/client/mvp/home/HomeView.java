@@ -1,4 +1,5 @@
 /*******************************************************************************
+
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -264,11 +265,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		});
 		
-		ClickHandler rootClick = new ClickHandler(){
+		/*ClickHandler rootClick = new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("isArrowIcon::"+isArrowIcon);
+				System.out.println("-->> "+preFilter);
 				if(!isArrowIcon && preFilter!=null){
 					isOpenPrefilterPopup=true;
 					preFilter.hide();
@@ -277,12 +278,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				}
 			}
 			
-		};
+		};*/
 		
-		RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
+//		RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
 		Date todaysYear = new Date();
 		String copyRightTxt = i18n.GL1246() + "" + (todaysYear.getYear() + 1900);
-		System.out.println("copyRight : "+copyRightTxt);
 		
 		lblCopyRight.setText(copyRightTxt);
 		lblCopyRight.getElement().setId("lblCopyRightYearText");
@@ -995,9 +995,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 */
 	@Override
 	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
-		// TODO Auto-generated method stub
 		this.addStandardsPresenter=addStandardsPresenter;
-		HeaderUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
+//		HeaderUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
 	}
 	
 	/**
@@ -1013,9 +1012,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			System.out.println("onClick::");
 			if(preFilter!=null && preFilter.isShowing()){
-				System.out.println("ifsss::");
 				preFilter.hide();
 				isArrowIcon=true;
 			}else{
@@ -1094,7 +1091,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 								isCAAvailable = false;
 							}
 								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
-									System.out.println("isCCSSAvailable::"+isCCSSAvailable+"isNGSSAvailable::"+isNGSSAvailable);
 									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 									addStandardsPresenter.callDefaultStandardsLoad();
 									//addToPopupSlot(addStandardsPresenter);

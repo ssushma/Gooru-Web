@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
@@ -82,6 +83,8 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -110,6 +113,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
@@ -312,7 +316,7 @@ public class HeaderUc extends Composite implements
 	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
 
 	@UiField
-	static Label arrowLbl;
+	Label arrowLbl;
 
 	@UiField
 	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
@@ -354,6 +358,7 @@ public class HeaderUc extends Composite implements
 	/**
 	 * Class constructor , set logged in user , gooru classic view link
 	 */
+	@SuppressWarnings("deprecation")
 	public HeaderUc() {
 		this.res = GooruCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -436,6 +441,7 @@ public class HeaderUc extends Composite implements
 //		registerLinkLbl.addClickHandler(new studyClickHandler());
 	/*	getEditSearchTxtBox().addKeyUpHandler(new SearchKeyUpHandler());*/
 		getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
+		getEditSearchTxtBox().addFocusListener(new SearchClickHandler());
 		editSearchInputFloPanel.setVisible(false);
 		// gooruGuideImgLbl.setStyleName(GooruCBundle.INSTANCE.css().gooruGuideImg());
 		this.switchToClassicView();
@@ -754,6 +760,8 @@ public class HeaderUc extends Composite implements
 			});
 		}
 	}
+
+
 
 	/**
 	 * @function getBetaStatus 
@@ -1568,6 +1576,22 @@ public class HeaderUc extends Composite implements
 			return null;
 		}
 	}
+	
+	@SuppressWarnings("deprecation")
+	private class SearchClickHandler implements FocusListener{
+
+		@Override
+		@Deprecated
+	    public void onFocus(Widget sender) {
+			AppClientFactory.fireEvent(new PreFilterEvent());
+		}
+
+		@Override
+		@Deprecated
+		public void onLostFocus(Widget sender) {
+		}
+
+	}
 
 	/**
 	 * @author Search Team
@@ -1577,12 +1601,8 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
-			if (getEditSearchTxtBox().getText() != null && getEditSearchTxtBox().getText().length() > 0){
-				arrowLbl.setVisible(true);
-			}else{
-				arrowLbl.setVisible(false);
-			}
-		
+			
+			arrowLbl.setVisible(true);
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
@@ -2087,7 +2107,7 @@ public class HeaderUc extends Composite implements
 		}
 	}
 
-	public static Label getArrowLbl() {
+	public  Label getArrowLbl() {
 		return arrowLbl;
 	}
 
