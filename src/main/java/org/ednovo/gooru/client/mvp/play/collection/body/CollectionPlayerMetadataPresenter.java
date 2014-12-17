@@ -208,8 +208,8 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	}
 
 	@Override
-	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit) {
-		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,"");
+	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit,String commentText) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,commentText);
 		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void noResult) {
@@ -228,7 +228,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	}
 	@Override
 	public void editCommentChildView(String commentUid, String commentText, String action) {
-		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,commentText);
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);
 		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo result) {

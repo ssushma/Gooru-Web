@@ -536,12 +536,12 @@ public class HeaderUc extends Composite implements
 		myDashBoardPop.getElement().getStyle().setZIndex(99);
 		myDashBoardPop.setVisible(false);
 
-		LoginLinkContainer.addMouseOverHandler(new DashBoardMouseOver());
-		LoginLinkContainer.addMouseOutHandler(new DashBoardMouseOut());
+//		LoginLinkContainer.addMouseOverHandler(new DashBoardMouseOver());
+//		LoginLinkContainer.addMouseOutHandler(new DashBoardMouseOut());
 
 
-	organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
-	organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
+		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
+		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
 		
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
@@ -630,6 +630,7 @@ public class HeaderUc extends Composite implements
 
 		dropDownImg.getElement().setId("pnlDropDownImg");
 		dropDownImgforDashboard.getElement().getStyle().setMarginTop(14, Unit.PX);
+		dropDownImgforDashboard.setVisible(false);
 		signUpInfo.getElement().setId("fpnlSignUpInfo");
 		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
 		logInfoFloPanel.getElement().setId("fpnlLogInfoFloPanel");
@@ -1355,6 +1356,7 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
 				editSearchTxtBox.setText(queryVal);
+				System.out.println("queryValeditSearchBtn::"+queryVal);
 				if(prefilter!=null){
 					prefilter.hide();
 				}
@@ -1364,6 +1366,21 @@ public class HeaderUc extends Composite implements
 			}
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 			getEditSearchTxtBox().hideSuggestionList();
+		}
+		else
+		{
+			//else is for * query search.
+			
+			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			{
+				Map<String, String> params = new HashMap<String, String>();
+				params = updateParams(params);
+				Map<String, String> map = params;
+				String queryVal = params.get("query");
+				map.put("query", "*");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
 		}
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
@@ -1991,11 +2008,26 @@ public class HeaderUc extends Composite implements
 			editSearchTxtBox.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 			editSearchTxtBox.hideSuggestionList();
+			getEditSearchTxtBox().setText(searchText.trim());
+		}
+		else
+		{
+			//else is for * query search.
+			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			{
+				getEditSearchTxtBox().setText("");
+				Map<String, String> params = new HashMap<String, String>();
+				params = updateParams(params);
+				Map<String, String> map = params;
+				map.put("query", "*");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
 		}
 		
 		hasAutoSelected=true;
 		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
-		getEditSearchTxtBox().setText(searchText.trim());
+
 
 	}
 

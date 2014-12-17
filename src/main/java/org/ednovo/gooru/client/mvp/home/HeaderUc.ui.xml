@@ -507,7 +507,7 @@
                           	<g:Image styleName="{style.profileImage}" ui:field="imgUserProfile"></g:Image>
                       		<g:Label styleName="{style.username}" ui:field="loggedInfoLbl" />
                       		<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImgforDashboard"/>
-                      		     <g:HTMLPanel ui:field="myDashBoardPop"></g:HTMLPanel>
+                      		<g:HTMLPanel ui:field="myDashBoardPop"></g:HTMLPanel>
                       </uc:HTMLEventPanel>
                       <g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}">
                       <div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-top: -13px;"></div>  

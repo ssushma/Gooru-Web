@@ -2427,3 +2427,7 @@ fieldset {
   left: 0px;
   background: #1076BB;
 }
+
+.errorBorderMessage{
+	border: 1px solid orange !important;
+}

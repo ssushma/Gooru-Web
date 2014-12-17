@@ -935,6 +935,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			Widget widget = widgets.next();
 			if (widget instanceof CommentWidgetChildView && ((CommentWidgetChildView) widget).getCommentUid().equals(commentUid)) {
 				CommentWidgetChildView commentWidgetChildView = ((CommentWidgetChildView) widget);
+				final String commentText=commentWidgetChildView.getCommentField().getText();
 				int index = commentsContainer.getWidgetIndex(commentWidgetChildView);
 				commentsContainer.remove(index);
 				final HTMLPanel deletePanel = new HTMLPanel(i18n.GL0555());
@@ -948,7 +949,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		            {
 						int deleteIndex = commentsContainer.getWidgetIndex(deletePanel);
 						commentsContainer.remove(deleteIndex);
-						getUiHandlers().deleteCommentFromCollection(collectionDo.getGooruOid(),commentUid, commentsContainer.getWidgetCount()+"", 1+"");
+						getUiHandlers().deleteCommentFromCollection(collectionDo.getGooruOid(),commentUid, commentsContainer.getWidgetCount()+"", 1+"",commentText);
 		            }
 		        };
 		        timer.schedule(1000);

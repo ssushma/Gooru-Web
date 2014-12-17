@@ -14,6 +14,6 @@
               <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormAnswerMarkbg}">
                        <g:Label styleName="{addWebResourceStyle.answerDeselected}" ui:field="optionSelectedButton"></g:Label>
               </g:HTMLPanel>
-              <g:Label text="" ui:field="errorMessageforAnswerChoice" styleName="{addWebResourceStyle.addResourceFormInputBottomText}"/>
+              <g:Label text="" ui:field="errorMessageforAnswerChoice" styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage"/>
        </g:HTMLPanel>
 </ui:UiBinder>
