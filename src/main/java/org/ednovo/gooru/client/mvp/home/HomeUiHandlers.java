@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.mvp.home;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.home.event.HomePreFilterEventHandler;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;

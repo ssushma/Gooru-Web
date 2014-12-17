@@ -24,28 +24,37 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.wrap;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseView;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
+import org.ednovo.gooru.client.mvp.home.PreFilterPopup;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -73,6 +82,22 @@ public class WrapView extends BaseView implements IsWrapView {
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
 	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
 	@UiField Anchor viewAnchor;
+	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	private boolean isArrowIcon = false;
+	
+	PreFilterPopup preFilter =	null;
+	
+	private boolean isOpenPrefilterPopup = true;
+	
 	/**
 	 * Class constructor 
 	 */
@@ -127,6 +152,23 @@ public class WrapView extends BaseView implements IsWrapView {
 		  }
 		 
 		  setUiText();
+		  
+		  ClickHandler rootClick = new ClickHandler(){
+
+				@Override
+				public void onClick(ClickEvent event) {
+					if(!isArrowIcon && preFilter!=null){
+						isOpenPrefilterPopup=true;
+						preFilter.hide();
+					}else{
+						isArrowIcon=false;
+					}
+				}
+				
+			};
+			
+			RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
+			
 	}
 
 	@Override
@@ -249,5 +291,132 @@ public class WrapView extends BaseView implements IsWrapView {
 		  viewAnchor.getElement().setAttribute("alt", i18n.GL1428());
 		  viewAnchor.getElement().setAttribute("title", i18n.GL1428());
 		  
+	}
+
+	@Override
+	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
+		this.addStandardsPresenter=addStandardsPresenter;
+		headerUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
+	}
+	
+	/**
+	 * @description This class is used to show the pre-filter search popup
+	 * @date 16-Dec-2014
+	 */
+	public class showPrefilterPopup implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			displayPreFilterpopup();
+		}
+	}
+
+	@Override
+	public void openPreFilter() {
+		displayPreFilterpopup();
+	}
+
+	public void displayPreFilterpopup() { 
+
+		if(preFilter!=null && preFilter.isShowing()){
+			preFilter.hide();
+			isArrowIcon=true;
+		}else{
+			isArrowIcon=true;
+			//if(preFilter==null){
+				preFilter =	new PreFilterPopup();
+				preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						preFilter.ShowSTandardsPanel().clear();
+						getAddStandards();
+						preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
+						
+						addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+						addStandardsPresenter.getAddBtn().setVisible(false);
+						
+					}
+				});
+			//}
+			HeaderUc.setPrefilterObj(preFilter);
+			preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+30);
+			preFilter.setFilter();
+			preFilter.show();
+			preFilter.hidePlanels();
+			ClickHandler handler = new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					preFilter.show();
+					isArrowIcon = true;
+				}
+			};
+			preFilter.addDomHandler(handler, ClickEvent.getType());
+			
+		}
+		
+	
+	}
+	
+	/**
+     * To show particular user standards 
+     */
+	public void getAddStandards() {
+		if(!AppClientFactory.isAnonymous()){
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+						
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addStandardsPresenter.callDefaultStandardsLoad();
+								}
+							
+					}
+						
+					}
+
+				});
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+				addStandardsPresenter.callDefaultStandardsLoad();
+			}
+		}
 	}
 }
