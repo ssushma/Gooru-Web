@@ -441,7 +441,7 @@ public class HeaderUc extends Composite implements
 //		registerLinkLbl.addClickHandler(new studyClickHandler());
 	/*	getEditSearchTxtBox().addKeyUpHandler(new SearchKeyUpHandler());*/
 		getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
-		getEditSearchTxtBox().addFocusListener(new SearchClickHandler());
+//		getEditSearchTxtBox().addFocusListener(new SearchClickHandler());
 		editSearchInputFloPanel.setVisible(false);
 		// gooruGuideImgLbl.setStyleName(GooruCBundle.INSTANCE.css().gooruGuideImg());
 		this.switchToClassicView();
@@ -1594,7 +1594,7 @@ public class HeaderUc extends Composite implements
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
+	/*@SuppressWarnings("deprecation")
 	private class SearchClickHandler implements FocusListener{
 
 		@Override
@@ -1608,7 +1608,7 @@ public class HeaderUc extends Composite implements
 		public void onLostFocus(Widget sender) {
 		}
 
-	}
+	}*/
 
 	/**
 	 * @author Search Team
