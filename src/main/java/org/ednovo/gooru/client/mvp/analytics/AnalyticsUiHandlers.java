@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.mvp.analytics;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 
 public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	void getGradeCollectionJson() ;
@@ -43,4 +45,14 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	 */
 	void exportOEPathway(String classpageId,String pathwayId,String timeZone);
 	
+	/**
+	 * This method is used to get the collection progress presenter.
+	 * @return
+	 */
+	CollectionProgressPresenter getCollectionProgressPresenter();
+	/**
+	 * This method is used to get the collection summary presenter.
+	 * @return
+	 */
+	CollectionSummaryPresenter getCollectionSummaryPresenter();
 }
