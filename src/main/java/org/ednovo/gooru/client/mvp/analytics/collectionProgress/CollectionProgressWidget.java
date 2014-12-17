@@ -82,7 +82,6 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		setWidget(uiBinder.createAndBindUi(this));	
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 		setStaticData();
-		
 	}
 	/**
 	 * This method is used to set static data.
