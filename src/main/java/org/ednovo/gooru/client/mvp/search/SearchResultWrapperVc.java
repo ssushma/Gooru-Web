@@ -221,7 +221,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			addedStatusLbl.getElement().setAttribute("title",DRAG_TO_ADD);
 		}
 		
-		tagsLinkFocPanel.setVisible(true);
+		tagsLinkFocPanel.setVisible(false);
 		AppClientFactory.getEventBus().addHandler(ResourceTagsCountUpdateEvent.TYPE,updateTagscount);
 		
 		dragHandleFocPanel.getElement().setId("focuspnlDragHandleFocPanel");
