@@ -692,9 +692,9 @@ public class HeaderUc extends Composite implements
 		// "goToClasicInnerPanel");
 		// goToClasicGooruPanel.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		if (!AppClientFactory.isAnonymous()) {
-			if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
-				acctActivationPl.setVisible(true);
-			}
+//			if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
+//				acctActivationPl.setVisible(true);
+//			}
 		} else {
 			acctActivationPl.setVisible(false);
 		}
