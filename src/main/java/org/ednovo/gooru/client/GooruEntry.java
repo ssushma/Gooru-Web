@@ -82,6 +82,7 @@ public class GooruEntry implements EntryPoint {
 	public void onModuleLoad() {
 
 		DelayedBindRegistry.bind(appInjector);
+		AppClientFactory.setAppGinjector(appInjector);
 		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
 		    loadLibraries.add(LoadLibrary.ADSENSE);
 		    loadLibraries.add(LoadLibrary.DRAWING);
@@ -94,6 +95,7 @@ public class GooruEntry implements EntryPoint {
 		    
 		String device = BrowserAgent.returnFormFactorWithSizeView();
 		String size[] = device.split("-");
+
 //		if (size[0].equalsIgnoreCase("mobile") || size[0].equalsIgnoreCase("iphone")){
 //			Map<String, String> params = new HashMap<String, String>();
 //			params.put("device", size[0]);
@@ -104,18 +106,19 @@ public class GooruEntry implements EntryPoint {
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
-					AppClientFactory.setLoggedInUser(loggedInUser);
+					AppClientFactory.loggedInUser=loggedInUser;
 //					loadCssJsFiles();
 					UcCBundle.INSTANCE.css().ensureInjected();
 					HomeCBundle.INSTANCE.css().ensureInjected();
-					AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
+					//AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 					appInjector.getPlaceManager().revealCurrentPlace();
 					AppClientFactory.setProtocol(getHttpOrHttpsProtocol());
 					registerWindowEvents();
 				}
 			});
 			AppClientFactory.setAppGinjector(appInjector);
-//		}
+		
+
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");

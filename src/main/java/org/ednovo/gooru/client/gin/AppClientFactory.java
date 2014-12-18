@@ -249,7 +249,7 @@ public class AppClientFactory {
 	 *
 	 */
 	public static boolean isAnonymous() {
-		return getClientFactory().loggedInUser.getGooruUId().equals(GOORU_ANONYMOUS);
+		return getClientFactory().loggedInUser.getGooruUId()!=null?getClientFactory().loggedInUser.getGooruUId().equals(GOORU_ANONYMOUS):false;
 	}
 	/**
 	 * 

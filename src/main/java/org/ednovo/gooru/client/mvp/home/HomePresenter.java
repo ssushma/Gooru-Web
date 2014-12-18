@@ -244,9 +244,9 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	
 	private void callBackMethods(){
-		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
-			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
-		}
+//		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
+//			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
+//		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registration")) {
 			this.getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 			parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
@@ -338,6 +338,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 		}
 		
+
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
@@ -350,6 +351,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		else if(flag>0 && flag<=11 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
 		}
+
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
 	}
 	
