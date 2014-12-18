@@ -379,7 +379,7 @@ public class WrapView extends BaseView implements IsWrapView {
 				});
 			//}
 			HeaderUc.setPrefilterObj(preFilter);
-			preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+30);
+			preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
 			preFilter.setFilter();
 			preFilter.show();
 			preFilter.hidePlanels();
