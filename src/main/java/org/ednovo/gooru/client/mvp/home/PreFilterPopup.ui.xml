@@ -163,10 +163,13 @@
 		cursor:pointer;
 
 		}
+		.clearMargin{
+			margin:0px;
+		}
 	</ui:style>
 <ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res" />
-		<g:HTMLPanel styleName="{res.css.PopupMainVSmall}" ui:field="filterPanel">
+		<g:HTMLPanel styleName="{res.css.PopupMainVSmall} {style.clearMargin}" ui:field="filterPanel">
 		    <g:HTMLPanel styleName="{res.css.popupInnerGrey}">
 		    <g:HTMLPanel styleName="{style.searchPopMenu}">
 				<g:HTMLPanel styleName="{style.filterHeaderPanel}">

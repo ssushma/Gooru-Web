@@ -1041,7 +1041,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 					});
 				//}
 				HeaderUc.setPrefilterObj(preFilter);
-				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
+				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+40);
 				preFilter.setFilter();
 				preFilter.show();
 				preFilter.hidePlanels();
