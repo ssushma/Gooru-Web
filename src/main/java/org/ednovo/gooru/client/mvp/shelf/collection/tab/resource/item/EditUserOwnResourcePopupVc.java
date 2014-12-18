@@ -1491,6 +1491,22 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 													}
 												}
 												collectionItemDo.getResource().setEducationalUse(arrayOfEducational);
+											}else{
+												if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+													ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
+													checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
+													if(collectionOriginalItemDo.getResource().getEducationalUse() != null){
+														for(int eduI=0; eduI<collectionOriginalItemDo.getResource().getEducationalUse().size(); eduI++){
+															if(!resourceEducationalLabel.getText().equalsIgnoreCase(collectionOriginalItemDo.getResource().getEducationalUse().get(eduI).getValue())){
+																checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
+																eduUseObjPrevious.setSelected(false);
+																eduUseObjPrevious.setValue(collectionOriginalItemDo.getResource().getEducationalUse().get(eduI).getValue());
+																arrayOfEducational.add(eduUseObjPrevious);
+															}
+														}
+													}
+													collectionItemDo.getResource().setEducationalUse(arrayOfEducational);
+												}
 											}
 											if(!resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(i18n.GL1684())){
 												ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
@@ -1509,6 +1525,22 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 													}
 												}
 												collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
+											}else{
+												if(resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+													ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
+													checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
+													if(collectionOriginalItemDo.getResource().getMomentsOfLearning() != null){
+														for(int momentsI=0; momentsI<collectionOriginalItemDo.getResource().getMomentsOfLearning().size(); momentsI++){
+															if(!resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(collectionOriginalItemDo.getResource().getMomentsOfLearning().get(momentsI).getValue())){
+																checkboxSelectedDo momentsOfObjPrevious=new checkboxSelectedDo();
+																momentsOfObjPrevious.setSelected(false);
+																momentsOfObjPrevious.setValue(collectionOriginalItemDo.getResource().getMomentsOfLearning().get(momentsI).getValue());
+																arrayOfMoments.add(momentsOfObjPrevious);
+															}
+														}
+													}
+													collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
+												}
 											}
 											collectionItemDo.getResource().setTaxonomySet(standardsDo);
 											

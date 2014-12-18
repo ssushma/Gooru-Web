@@ -1504,15 +1504,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													collectionItemDo.getResource().getThumbnails().setUrl(null);
 												}
 //												collectionItemDo.getResource().setUrl(urlStr);
-												System.out.println("here:::"+collectionOriginalItemDo.getResource().getEducationalUse());
-												System.out.println("here text:::"+resourceEducationalLabel.getText());
 												if(!resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
 													ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
 													checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
 													educationalOfObj.setSelected(true);
 													educationalOfObj.setValue(resourceEducationalLabel.getText());
 													arrayOfEducational.add(educationalOfObj);
-													System.out.println("here:::"+collectionOriginalItemDo.getResource().getEducationalUse());
 													if(collectionOriginalItemDo.getResource().getEducationalUse() != null)
 													{
 													for(int eduI=0; eduI<collectionOriginalItemDo.getResource().getEducationalUse().size(); eduI++)
@@ -1530,7 +1527,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												}else{
 													ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
 													checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
-													if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+												if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+													if(collectionOriginalItemDo.getResource().getEducationalUse() != null){
 														for(int eduI=0; eduI<collectionOriginalItemDo.getResource().getEducationalUse().size(); eduI++)
 														{
 															if(!resourceEducationalLabel.getText().equalsIgnoreCase(collectionOriginalItemDo.getResource().getEducationalUse().get(eduI).getValue()))
@@ -1541,9 +1539,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 																arrayOfEducational.add(eduUseObjPrevious);
 															}
 														}
-													
 													}
-													collectionItemDo.getResource().setEducationalUse(arrayOfEducational);
+														collectionItemDo.getResource().setEducationalUse(arrayOfEducational);
+													}
 												}
 												if(!resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(i18n.GL1684())){
 													ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
@@ -1583,8 +1581,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 															}
 														}
 														}
+														collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
 													}
-													collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
 												}
 												collectionItemDo.getResource().setTaxonomySet(standardsDo);
 												
