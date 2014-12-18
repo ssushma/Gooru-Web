@@ -31,7 +31,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
@@ -673,7 +672,7 @@ public class PlayerDataLogEvents {
 		JSONObject payLoadMap=new JSONObject();
 		try{
 			if(commentText!=null){
-				payLoadMap.put(TEXT, new JSONString(commentText));
+				payLoadMap.put(TEXT, new JSONString(com.google.gwt.http.client.URL.encodeQueryString(commentText)));
 			}
 		}catch(Exception e){
 		}
@@ -719,7 +718,7 @@ public class PlayerDataLogEvents {
 	public static  JSONString getReviewDataLogPayLoadObject(String reviewText){
 		JSONObject payLoadMap=new JSONObject();
 		try{
-			payLoadMap.put(TEXT, new JSONString(reviewText));
+			payLoadMap.put(TEXT, new JSONString(com.google.gwt.http.client.URL.encodeQueryString(reviewText)));
 			payLoadMap.put(ITEMTYPE, new JSONString(RESOURCE));
 		}catch(Exception e){
 		}

@@ -361,7 +361,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		rightArrowLbl.setVisible(false);
 		setThumbnailImage.setVisible(true);
 		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		generateImageLbl.setVisible(false);
 		saveButtonContainer.getElement().setId("pnlSaveButtonContainer");
@@ -1203,30 +1203,34 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0918());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0918());
 			categorypanel.setStyleName(video.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			videoResourcePanel.addStyleName("active");
 		} else if (category.equalsIgnoreCase("Interactive")) {
 			resourceCategoryLabel.setText(i18n.GL0919());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0919());
 			resourceCategoryLabel.getElement().setAttribute("title",i18n.GL0919());
 			categorypanel.setStyleName(interactive.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			interactiveResourcePanel.addStyleName("active");
 		} else if (category.equalsIgnoreCase("Website")||category.equalsIgnoreCase("websites")||category.equalsIgnoreCase("webpage")) {
 			resourceCategoryLabel.setText(i18n.GL1396());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1396());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1396());
 			categorypanel.setStyleName(website.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			websiteResourcePanel.addStyleName("active");
 		}
 		else if(category.equalsIgnoreCase("audio")) {
 			resourceCategoryLabel.setText(i18n.GL1045());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1045());
 			resourceCategoryLabel.getElement().setAttribute("title",i18n.GL1045());
 			categorypanel.setStyleName(audio.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			audioResourcePanel.addStyleName("active");
 		}
 	//	else if((category.equalsIgnoreCase("texts")||(category.equalsIgnoreCase("Slide")||(category.equalsIgnoreCase("Handout")||(category.equalsIgnoreCase("Textbook")||(category.equalsIgnoreCase("Lesson")) {
 		else if(category.equalsIgnoreCase("texts")||category.equalsIgnoreCase("text")) {
@@ -1234,16 +1238,18 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 				resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 			categorypanel.setStyleName(texts.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			textResourcePanel.addStyleName("active");
 		}
 		else if (category.equalsIgnoreCase("image")) {
 			resourceCategoryLabel.setText(i18n.GL1046());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 			categorypanel.setStyleName(image.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			imageResourcePanel.addStyleName("active");
 		}
 //		else if (category.equalsIgnoreCase("other")) {
 //			resourceCategoryLabel.setText(MessageProperties.i18n.GL1047);
@@ -1256,28 +1262,28 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 			categorypanel.setStyleName(image.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Handout")) {
 			resourceCategoryLabel.setText(i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 			categorypanel.setStyleName(texts.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Textbook")) {
 			resourceCategoryLabel.setText(i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 			categorypanel.setStyleName(texts.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Lesson")) {
 			resourceCategoryLabel.setText(i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 			categorypanel.setStyleName(texts.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 //		} else if (category.equalsIgnoreCase("Question")) {
 //			resourceCategoryLabel.setText("Question");
@@ -1289,12 +1295,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1396());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1396());
 			categorypanel.setStyleName(website.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 		}
 
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
 		setImage(thumbnailUrlStr, category);
+		
 		if( collectionItemDo.getResource().getEducationalUse()!=null){
 			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
 				
@@ -1497,14 +1504,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													collectionItemDo.getResource().getThumbnails().setUrl(null);
 												}
 //												collectionItemDo.getResource().setUrl(urlStr);
-												
 												if(!resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
 													ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
 													checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
 													educationalOfObj.setSelected(true);
 													educationalOfObj.setValue(resourceEducationalLabel.getText());
 													arrayOfEducational.add(educationalOfObj);
-													
 													if(collectionOriginalItemDo.getResource().getEducationalUse() != null)
 													{
 													for(int eduI=0; eduI<collectionOriginalItemDo.getResource().getEducationalUse().size(); eduI++)
@@ -1518,10 +1523,25 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 														}
 													}
 													}
-													
-													
-													
 													collectionItemDo.getResource().setEducationalUse(arrayOfEducational);
+												}else{
+													ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
+													checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
+												if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+													if(collectionOriginalItemDo.getResource().getEducationalUse() != null){
+														for(int eduI=0; eduI<collectionOriginalItemDo.getResource().getEducationalUse().size(); eduI++)
+														{
+															if(!resourceEducationalLabel.getText().equalsIgnoreCase(collectionOriginalItemDo.getResource().getEducationalUse().get(eduI).getValue()))
+															{
+																checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
+																eduUseObjPrevious.setSelected(false);
+																eduUseObjPrevious.setValue(collectionOriginalItemDo.getResource().getEducationalUse().get(eduI).getValue());
+																arrayOfEducational.add(eduUseObjPrevious);
+															}
+														}
+													}
+														collectionItemDo.getResource().setEducationalUse(arrayOfEducational);
+													}
 												}
 												if(!resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(i18n.GL1684())){
 													ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
@@ -1544,6 +1564,25 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													}
 													}
 													collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
+												}else{
+													ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
+													checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
+													if(resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(i18n.GL1684())){
+														if(collectionOriginalItemDo.getResource().getMomentsOfLearning() != null)
+														{
+														for(int momentsI=0; momentsI<collectionOriginalItemDo.getResource().getMomentsOfLearning().size(); momentsI++)
+														{
+															if(!resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(collectionOriginalItemDo.getResource().getMomentsOfLearning().get(momentsI).getValue()))
+															{
+																checkboxSelectedDo momentsOfObjPrevious=new checkboxSelectedDo();
+																momentsOfObjPrevious.setSelected(false);
+																momentsOfObjPrevious.setValue(collectionOriginalItemDo.getResource().getMomentsOfLearning().get(momentsI).getValue());
+																arrayOfMoments.add(momentsOfObjPrevious);
+															}
+														}
+														}
+														collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
+													}
 												}
 												collectionItemDo.getResource().setTaxonomySet(standardsDo);
 												
@@ -1660,8 +1699,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0918());
 		//resourceCategoryLabel.setStyleName(video.getStyleName());
 		categorypanel.setStyleName(video.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen=false;
+		videoResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 	@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event){
@@ -1669,8 +1714,15 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0919());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0919());
 		categorypanel.setStyleName(interactive.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen=false;
+		System.out.println("on click interactive");
+		interactiveResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 	@UiHandler("websiteResourcePanel")
 	void websiteResourcePanel(ClickEvent event){
@@ -1678,8 +1730,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1396());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1396());
 		categorypanel.setStyleName(website.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen=false;
+		websiteResourcePanel.addStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
@@ -1687,9 +1745,17 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 		categorypanel.setStyleName(image.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+		imageResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
 		clearCategoryErrorMessage();
+
 	}
 
 	@UiHandler("textResourcePanel")
@@ -1698,8 +1764,15 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 		categorypanel.setStyleName(texts.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+		textResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 		clearCategoryErrorMessage();
 	}
 
@@ -1709,8 +1782,15 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1045());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1045());
 		categorypanel.setStyleName(audio.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+		audioResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 		clearCategoryErrorMessage();
 	}
 
@@ -1764,7 +1844,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
 	}*/
-	@UiHandler("resoureDropDownLbl")
+	/*@UiHandler("resoureDropDownLbl")
 	public void dropDownClick(ClickEvent event){
 		if(resoureDropDownLblOpen==false){
 			resourceTypePanel.setVisible(true);
@@ -1775,7 +1855,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resoureDropDownLblOpen=false;
 		}
 		
-	}
+	}*/
 
 	public void setImageThumbnail() {
 		if (activeImageIndex == 0) {
