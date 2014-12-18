@@ -144,4 +144,10 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			}
 		});
 	}
+
+	@Override
+	public void setNoDataMessage(HTMLPanel loadingImage) {
+		loadingImage.setVisible(false);
+		getView().setErrorMessage();
+	}
 }
