@@ -296,10 +296,18 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 						AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText(),""));
 					}
+					else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+						AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.COLLECTION_SEARCH,getSearchText(),""));
+					}
 				}
 			});
 
 			final String correctSearchTerm = searchDo.getSpellCheckQueryString();
+			String searchTextValue = i18n.GL1468() + " <b>" + correctSearchTerm + "</b>";
+			
+			queriedTextHtml.setHTML(searchTextValue);
+			queriedTextHtml.getElement().setAttribute("alt", StringUtil.removeHtml(searchTextValue));
+			queriedTextHtml.getElement().setAttribute("title", StringUtil.removeHtml(searchTextValue));
 			
 			correctQueryText.setText(searchDo.getSpellCheckQueryString());
 			correctQueryText.addClickHandler(new ClickHandler() {
@@ -597,8 +605,12 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			for(int i=0; i<gradesSplit.length; i++){
 				if(gradesSplit[i].equals("12gte")){
 					standardsConatiner.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
-				}else{
-					standardsConatiner.add(createTagsLabel(gradesSplit[i],"gradePanel"));
+				}
+				else if(gradesSplit[i].equalsIgnoreCase("pre-k")){
+					standardsConatiner.add(createTagsLabel(i18n.GL3070(),"gradePanel"));
+				}
+				else{
+					standardsConatiner.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
 				}
 				
 			}

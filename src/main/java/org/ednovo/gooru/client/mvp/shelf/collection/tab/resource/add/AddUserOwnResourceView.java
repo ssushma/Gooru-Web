@@ -657,7 +657,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		descCharcterLimit.setVisible(false);
 		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		setThumbnailImage.setVisible(false);
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		loadingPanel.setVisible(false);
 		panelContentRights.setVisible(false);
 		panelContentRights.getElement().setId("pnlPanelContentRights");
@@ -811,7 +811,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 		categorypanel.setStyleName(texts.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		
 		
@@ -1337,8 +1337,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 		categorypanel.setStyleName(image.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
+		imageResourcePanel.addStyleName("active");
+		textsResourcePanel.removeStyleName("active");
 	}
 
 	@UiHandler("textsResourcePanel")
@@ -1348,8 +1350,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 		categorypanel.setStyleName(texts.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
+		textsResourcePanel.addStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 
 	/*@UiHandler("textbookResourcePanel")
@@ -1369,7 +1373,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	}*/
 
 
-	@UiHandler("resoureDropDownLbl")
+	/*@UiHandler("resoureDropDownLbl")
 	public void dropDownClick(ClickEvent event) {
 		if (resoureDropDownLblOpen == false) {
 			resourceTypePanel.setVisible(true);
@@ -1380,7 +1384,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			resoureDropDownLblOpen = false;
 		}
 
-	}
+	}*/
 	
 	@UiHandler("lblContentRights")
 	public void onMouseOver(MouseOverEvent event){

@@ -494,10 +494,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearAll.getElement().setAttribute("alt",i18n.GL0725());
 		clearAll.getElement().setAttribute("title",i18n.GL0725());
 		
-		aggregatorLbl.setText(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.setText(i18n.GL1628()+" ");
 		aggregatorLbl.getElement().setId("lblAggregator");
-		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
-		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+" ");
+		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+" ");
 		
 		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
 		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);
@@ -2303,10 +2303,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		arrowLblaccess.setStyleName(style.arrowLableTransform());
 	}
 	
-	
 	public FlowPanel getMainContainer(){
 		return myCollectionSearch;
 
 	}
+	
 }
 
