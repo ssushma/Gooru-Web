@@ -353,11 +353,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	}
 
 	protected void setUserFilterProperties(UserDo user) {
-		FilterSettings filterProperties = getFilterProperties();
-		user.setSettings(filterProperties);
-	}
-	
-	protected FilterSettings getFilterProperties() {
 		FilterSettings filterProperties = new FilterSettings();
 		filterProperties.setRestEndPoint(getRestEndPoint());
 		filterProperties.setHomeEndPoint(getHomeEndPoint());
@@ -377,7 +372,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		filterProperties.setTaxonomyPreferences(getTaxonomyPreferences());
 		filterProperties.setAnalyticsEndPoint(getAnalyticsEndPoint());
 		filterProperties.setCommunityLibraryGooruOid(getCommunityLibaryGooruOid());
-		return filterProperties;
+		user.setSettings(filterProperties);
 	}
 
 	public String getDomainName() {

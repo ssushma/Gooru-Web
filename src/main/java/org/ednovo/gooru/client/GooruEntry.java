@@ -80,7 +80,6 @@ public class GooruEntry implements EntryPoint {
 	public void onModuleLoad() {
 
 		DelayedBindRegistry.bind(appInjector);
-		AppClientFactory.setAppGinjector(appInjector);
 		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
 		    loadLibraries.add(LoadLibrary.ADSENSE);
 		    loadLibraries.add(LoadLibrary.DRAWING);
@@ -100,14 +99,14 @@ public class GooruEntry implements EntryPoint {
 			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
 //			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
 		}else{
-			appInjector.getAppService().getUserFilterProperties(new SimpleAsyncCallback<UserDo>() {
+			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
-					AppClientFactory.loggedInUser=loggedInUser;
+					AppClientFactory.setLoggedInUser(loggedInUser);
 //					loadCssJsFiles();
 					UcCBundle.INSTANCE.css().ensureInjected();
 					HomeCBundle.INSTANCE.css().ensureInjected();
-					//AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
+					AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 					appInjector.getPlaceManager().revealCurrentPlace();
 					AppClientFactory.setProtocol(getHttpOrHttpsProtocol());
 					registerWindowEvents();
@@ -119,7 +118,7 @@ public class GooruEntry implements EntryPoint {
 //				}
 				
 			});
-			
+			AppClientFactory.setAppGinjector(appInjector);
 		}
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 1000px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");

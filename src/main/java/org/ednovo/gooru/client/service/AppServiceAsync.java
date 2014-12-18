@@ -45,6 +45,4 @@ public interface AppServiceAsync extends BaseServiceAsync {
 	void v2Signout(AsyncCallback<UserDo> callback);
 	
 	void getAnalyticsURL(String type, String id, AsyncCallback<String> callback);
-	
-	void getUserFilterProperties(AsyncCallback<UserDo> callback);
 }
