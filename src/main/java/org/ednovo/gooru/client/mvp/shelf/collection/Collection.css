@@ -103,7 +103,7 @@
 	float: left;
 	height: 120px;
 	padding: 20px;
-	width: 170px;
+	width: 200px;
 	padding-right:10px;
 }
 
@@ -151,6 +151,7 @@
 	width: 104px;
 	margin-left: 28px;
 	float: left;
+	height: 32px;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB');
 }
 .changeImage:hover{
@@ -1183,8 +1184,8 @@ transition: .5s;
 {
 	padding:20px;
 	float: left;
-width: 96%;
-padding-left:40px;
+	width: 100%;
+	padding-left:40px;
 }
 .secondaryInfoContainer {
 	float: left;
@@ -1195,15 +1196,13 @@ padding-left:40px;
 }
 .languageObjectiveContainer{
 		float: left;
-	margin-right: 45px;
-	width: 91%;
+	width: 100%;
 	margin-top:20px;
 }
 .depthOfKnowledgeContainer
 {
 	float: left;
-	margin-right: 45px;
-	width: 91%;
+	width: 100%;
 	clear: both;
 }
 .languageObjectiveTextArea
@@ -1296,7 +1295,7 @@ height: 73px;
 	left: 130px;
 	top: -9px;
 	float: right;
-	margin-top: -12px;
+	margin-top: 10px;
 	margin-right: 7px;
 	border-bottom: none;
 	cursor: pointer;
@@ -1380,4 +1379,7 @@ position: relative;
 	font-size: 12px;
    font-style: italic;
    margin-right: -9px;
+}
+.checkBoxlevels label{
+	font-weight: normal;
 }

@@ -125,6 +125,8 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		};
 		AppClientFactory.getEventBus().addHandler(
 				SetButtonEvent.TYPE, setButtonVisibility);
+		
+		Window.enableScrolling(true);
 	}
 	/**
 	 * 

@@ -12,7 +12,7 @@
 			<g:HTMLPanel styleName="{ProfilePageTagStyle.normalTxt}"
 				ui:field="tagTextMessage" />
 			<g:ScrollPanel ui:field="userTagScrollPanel"
-				styleName="{ProfilePageTagStyle.scrollStyleTag}">
+				styleName="">
 				<g:HTMLPanel styleName="{ProfilePageTagStyle.content-inner}"
 					ui:field="userTagsConatiner">
 
