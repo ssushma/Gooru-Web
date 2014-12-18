@@ -1057,7 +1057,7 @@ user agent stylesheetdiv {
 .myFolderCollectionThumbArrLContainer {
 	position: absolute;
 	top: 0px;
-	top: 23px;
+	top: 40px;
 	left: -15px;
 }
 
@@ -1079,6 +1079,8 @@ user agent stylesheetdiv {
 	width: 15px;
 	height: 48px;
 	cursor: pointer;
+	top: 16px;
+	position: relative;
 }
 
 .myFolderCollectionThumbRectDesc {
@@ -1116,7 +1118,7 @@ user agent stylesheetdiv {
 	padding: 0px 0px 0px 9px;
 }
 .myFolderCollectionRefreshMainContainerWeb {
-	padding: 0px 0px 0px 9px;
+	padding: 0px 0px 0px 0px;
 	float: right;
 	right: 51%;
 	position: relative;
