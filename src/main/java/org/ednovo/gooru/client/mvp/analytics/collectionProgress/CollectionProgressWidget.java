@@ -82,7 +82,6 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		setWidget(uiBinder.createAndBindUi(this));	
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 		setStaticData();
-		
 	}
 	/**
 	 * This method is used to set static data.
@@ -105,7 +104,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			public void onMouseOver(MouseOverEvent event) {
 				leftArrow.setVisible(true);
 				rightArrow.setVisible(true);
-				leftArrow.getElement().getStyle().setTop((scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
+				leftArrow.getElement().getStyle().setTop(54+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
 				rightArrow.getElement().getStyle().setBottom(60+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
 			}
 		};
@@ -169,7 +168,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			defaultUserDataForUsers=collectionProgressDataDo;
 			if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
 				 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
-				 noOfQuestions++;
+				 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
+					 noOfQuestions++;
+				 }
 				 questionColumnIndex.add(collectionProgressCount+1);
 			}else{
 				 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
@@ -399,9 +400,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 				formattedTime=((int) Math.round(secondsInMille))+"";
 			}
 			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+formattedTime:formattedTime)+"";
+				createdTime=createdTime+formattedTime+"";
 			}else{
-				createdTime="00"+":"+((seconds<10)?"0"+formattedTime:formattedTime)+"";
+				createdTime="00"+":"+formattedTime+"";
 			}
 		}
 		return createdTime;

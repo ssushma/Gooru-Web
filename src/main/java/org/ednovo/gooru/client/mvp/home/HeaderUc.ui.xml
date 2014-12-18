@@ -466,7 +466,7 @@
 							<g:FlowPanel styleName="{style.searchMainPanel}" ui:field="headerSearchBarFloPanel">
 								<uc:AppSuggestBox ui:field="editSearchTxtBox"
 								styleName="{res.css.editInputBox}"/>
-								<g:Label styleName="{style.arrowLable}" ui:field="arrowLbl" visible="false"></g:Label>
+								<g:Label styleName="{style.arrowLable}" ui:field="arrowLbl" visible="true"></g:Label>
 							<g:Button styleName="primary"
 								ui:field="editSearchBtn" />
 							</g:FlowPanel>
@@ -507,7 +507,7 @@
                           	<g:Image styleName="{style.profileImage}" ui:field="imgUserProfile"></g:Image>
                       		<g:Label styleName="{style.username}" ui:field="loggedInfoLbl" />
                       		<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImgforDashboard"/>
-                      		     <g:HTMLPanel ui:field="myDashBoardPop"></g:HTMLPanel>
+                      		<g:HTMLPanel ui:field="myDashBoardPop"></g:HTMLPanel>
                       </uc:HTMLEventPanel>
                       <g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}">
                       <div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-top: -13px;"></div>  

@@ -191,6 +191,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		this.signUpAfterThirteenPresenter=signUpAfterThirteenPresenter;
 		this.contributorsPresenter = contributorsPresenter;
 		
+		
 		addRegisteredHandler(SetTexasPlaceHolderEvent.TYPE, new SetTexasPlaceHolderHandler() {
 			
 			@Override
@@ -198,8 +199,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				
 			}
 		});
-		
-		showPrefilterPopup();
 	}
 	
 	@Override
@@ -235,7 +234,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	
 	private void callBackMethods(){
-
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
 			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		}
@@ -387,6 +385,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		super.prepareFromRequest(request);
 		request.getParameter("", "register");
 		callBackMethods();
+		
 		getIntoLibrarypage();
 		if (AppClientFactory.isAnonymous()){
 			getView().getBtnSignUp().setVisible(true);
@@ -602,7 +601,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * 
 	 */
 	private void showPrefilterPopup() {
-		// TODO Auto-generated method stub
 		getView().showPrefilter(addStandardsPresenter);
 	}
 

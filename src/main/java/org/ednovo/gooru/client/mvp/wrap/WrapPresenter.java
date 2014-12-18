@@ -35,8 +35,11 @@ import org.ednovo.gooru.client.gin.BasePresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.HomeHandler;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEventHandler;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter.IsWrapProxy;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -53,9 +56,9 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * @author Search Team
  * 
  */
-public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler {
+public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler{
 	
-	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_VIEW = new Type<RevealContentHandler<?>>();
@@ -65,13 +68,17 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	}
 
 	@Inject
-	public WrapPresenter(IsWrapView view, IsWrapProxy proxy) {
+	public WrapPresenter(IsWrapView view, IsWrapProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenter) {
 		super(view, proxy);
+		this.addStandardsPresenter = addStandardsPresenter;
 		addRegisteredHandler(InvokeLoginEvent.TYPE, this);
 		addRegisteredHandler(ActivateSearchBarEvent.TYPE, this);
 		addRegisteredHandler(InvokeGooruGuideBubbleEvent.TYPE, this);
 		addRegisteredHandler(HomeEvent.TYPE, this);
 		addRegisteredHandler(SetDiscoverLinkEvent.TYPE, this);
+		addRegisteredHandler(PreFilterEvent.TYPE, this);
+		
+		showPrefilterPopup();
 	}
 
 	@Override
@@ -123,5 +130,15 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	@Override
 	public void setDiscoverLink(String discoverLink) {
 		getView().setDiscoverLinkFromLibrary(discoverLink);
+	}
+	
+	
+	private void showPrefilterPopup() {
+		getView().showPrefilter(addStandardsPresenter);
+	}
+
+	@Override
+	public void openPreFilterPopup() {
+		getView().openPreFilter();
 	}
 }

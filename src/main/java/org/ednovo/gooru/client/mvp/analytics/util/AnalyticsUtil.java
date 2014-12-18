@@ -135,9 +135,9 @@ public class AnalyticsUtil {
 				formattedTime=((int) Math.round(secondsInMille))+"";
 			}
 			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+formattedTime+"sec":formattedTime+"sec")+"";
+				createdTime=createdTime+formattedTime+"sec";
 			}else{
-				createdTime="0min"+" "+((seconds<10)?"0"+formattedTime+"sec":formattedTime+"sec")+"";
+				createdTime="0min"+" "+formattedTime+"sec";
 			}
 		}
 		return createdTime;

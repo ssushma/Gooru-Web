@@ -36,10 +36,16 @@ public abstract class AnalyticsTabContainer extends Composite {
 	/**
 	 * This method is used to clear the highlight styles
 	 */
-	void clearStyles(){
+	public void clearStyles(){
 		btnScoredQuestions.removeStyleName("addButonStyleActive");
 		btnOpenEndedQuestions.removeStyleName("addButonStyleActive");
 		btnCollectionBreakDown.removeStyleName("addButonStyleActive");
+	}
+	/**
+	 * This method is used to highlight scored questions tab.
+	 */
+	public void setScoredQuestionsHilight(){
+		btnScoredQuestions.addStyleName("addButonStyleActive");
 	}
 	public class ClickImplemntation implements ClickHandler{
 		private String tabClicked;

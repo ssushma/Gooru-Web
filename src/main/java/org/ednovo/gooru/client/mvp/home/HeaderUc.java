@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
@@ -82,6 +83,8 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -110,6 +113,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
@@ -312,7 +316,7 @@ public class HeaderUc extends Composite implements
 	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
 
 	@UiField
-	static Label arrowLbl;
+	Label arrowLbl;
 
 	@UiField
 	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
@@ -354,6 +358,7 @@ public class HeaderUc extends Composite implements
 	/**
 	 * Class constructor , set logged in user , gooru classic view link
 	 */
+	@SuppressWarnings("deprecation")
 	public HeaderUc() {
 		this.res = GooruCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -436,6 +441,7 @@ public class HeaderUc extends Composite implements
 //		registerLinkLbl.addClickHandler(new studyClickHandler());
 	/*	getEditSearchTxtBox().addKeyUpHandler(new SearchKeyUpHandler());*/
 		getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
+//		getEditSearchTxtBox().addFocusListener(new SearchClickHandler());
 		editSearchInputFloPanel.setVisible(false);
 		// gooruGuideImgLbl.setStyleName(GooruCBundle.INSTANCE.css().gooruGuideImg());
 		this.switchToClassicView();
@@ -530,12 +536,12 @@ public class HeaderUc extends Composite implements
 		myDashBoardPop.getElement().getStyle().setZIndex(99);
 		myDashBoardPop.setVisible(false);
 
-		LoginLinkContainer.addMouseOverHandler(new DashBoardMouseOver());
-		LoginLinkContainer.addMouseOutHandler(new DashBoardMouseOut());
+//		LoginLinkContainer.addMouseOverHandler(new DashBoardMouseOver());
+//		LoginLinkContainer.addMouseOutHandler(new DashBoardMouseOut());
 
 
-	organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
-	organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
+		organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
+		organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
 		
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
@@ -624,6 +630,7 @@ public class HeaderUc extends Composite implements
 
 		dropDownImg.getElement().setId("pnlDropDownImg");
 		dropDownImgforDashboard.getElement().getStyle().setMarginTop(14, Unit.PX);
+		dropDownImgforDashboard.setVisible(false);
 		signUpInfo.getElement().setId("fpnlSignUpInfo");
 		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
 		logInfoFloPanel.getElement().setId("fpnlLogInfoFloPanel");
@@ -754,6 +761,8 @@ public class HeaderUc extends Composite implements
 			});
 		}
 	}
+
+
 
 	/**
 	 * @function getBetaStatus 
@@ -1347,6 +1356,7 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
 				editSearchTxtBox.setText(queryVal);
+				System.out.println("queryValeditSearchBtn::"+queryVal);
 				if(prefilter!=null){
 					prefilter.hide();
 				}
@@ -1356,6 +1366,21 @@ public class HeaderUc extends Composite implements
 			}
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 			getEditSearchTxtBox().hideSuggestionList();
+		}
+		else
+		{
+			//else is for * query search.
+			
+			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			{
+				Map<String, String> params = new HashMap<String, String>();
+				params = updateParams(params);
+				Map<String, String> map = params;
+				String queryVal = params.get("query");
+				map.put("query", "*");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
 		}
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
@@ -1568,6 +1593,22 @@ public class HeaderUc extends Composite implements
 			return null;
 		}
 	}
+	
+	/*@SuppressWarnings("deprecation")
+	private class SearchClickHandler implements FocusListener{
+
+		@Override
+		@Deprecated
+	    public void onFocus(Widget sender) {
+			AppClientFactory.fireEvent(new PreFilterEvent());
+		}
+
+		@Override
+		@Deprecated
+		public void onLostFocus(Widget sender) {
+		}
+
+	}*/
 
 	/**
 	 * @author Search Team
@@ -1577,12 +1618,8 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
-			if (getEditSearchTxtBox().getText() != null && getEditSearchTxtBox().getText().length() > 0){
-				arrowLbl.setVisible(true);
-			}else{
-				arrowLbl.setVisible(false);
-			}
-		
+			
+			arrowLbl.setVisible(true);
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
@@ -1971,11 +2008,26 @@ public class HeaderUc extends Composite implements
 			editSearchTxtBox.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 			editSearchTxtBox.hideSuggestionList();
+			getEditSearchTxtBox().setText(searchText.trim());
+		}
+		else
+		{
+			//else is for * query search.
+			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			{
+				getEditSearchTxtBox().setText("");
+				Map<String, String> params = new HashMap<String, String>();
+				params = updateParams(params);
+				Map<String, String> map = params;
+				map.put("query", "*");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
 		}
 		
 		hasAutoSelected=true;
 		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
-		getEditSearchTxtBox().setText(searchText.trim());
+
 
 	}
 
@@ -2087,7 +2139,7 @@ public class HeaderUc extends Composite implements
 		}
 	}
 
-	public static Label getArrowLbl() {
+	public  Label getArrowLbl() {
 		return arrowLbl;
 	}
 

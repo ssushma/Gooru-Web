@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
@@ -220,6 +221,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void createCommentForCollection(String gooruOid, String comment) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(null, PlayerDataLogEvents.COMMENT_CREATE, comment);
 		this.playerAppService.createCommentForCollection(gooruOid, comment, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo commentsDo) {
@@ -235,7 +237,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 
 	@Override
-	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit) {
+	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit,String commentText) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,commentText);
 		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void noResult) {
@@ -254,6 +257,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	@Override
 	public void editCommentChildView(String commentUid, String commentText, String action) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);
 		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo result) {
