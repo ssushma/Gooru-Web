@@ -61,9 +61,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
+	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
-	@UiField Label lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
+	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
 	
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
@@ -105,6 +105,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"'/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		setStaticData();
+		noErrorMesage.setVisible(false);
+		maincontainer.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -174,6 +176,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	@Override
 	public void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage) {
+			noErrorMesage.setVisible(false);
+			maincontainer.setVisible(true);
 			individualTabContainer.clearStyles();
 			individualTabContainer.setScoredQuestionsHilight();
 			
@@ -1022,5 +1026,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@Override
 	public void enableAndDisableEmailButton(boolean isSummary){
 		individualTabContainer.getEmailButton().setVisible(!isSummary);
+	}
+	@Override
+	public void setErrorMessage() {
+		noErrorMesage.setVisible(true);
+		maincontainer.setVisible(false);
 	}
 }
