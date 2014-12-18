@@ -938,7 +938,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 }
 
 .upDownBtn input[type="text"]{
-	width:22px;
+	width:34px;
 	margin:8px 0;
 	height:25px;
 	padding:1px 6px;
