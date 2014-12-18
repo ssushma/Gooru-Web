@@ -13,6 +13,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 
       <g:FlowPanel ui:field="studyMainContianer" styleName="container">
+          <g:HTMLPanel>
       	<g:FlowPanel styleName="row">
       		<!--  new design start -->
       		<g:FlowPanel styleName="{playerStyle.collectionEnd}">
@@ -168,9 +169,7 @@
 					    </g:HTMLPanel>
 					</g:HTMLPanel>
 			</g:FlowPanel>
-
-        </g:FlowPanel>
-   		<html5:SectionTag styleName="row ">
+			<html5:SectionTag styleName="row ">
 			<g:HTMLPanel styleName="col-md-12 {playerStyle.whitebg} {playerStyle.padding20}">
 			    <g:HTMLPanel styleName="{playerStyle.commentsSection}" ui:field="commentssection">
 			   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
@@ -212,26 +211,6 @@
 			    </g:HTMLPanel>
 			</g:HTMLPanel>
 		 </html5:SectionTag>
-<!-- 		 <g:HTMLPanel styleName="{playerStyle.commentsSection}">
-		   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
-		   <g:VerticalPanel ui:field="commentsContainer"/>
-		   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
-		   <g:Label ui:field="noCommentsLbl"/>
-		   <g:HTMLPanel styleName="{playerStyle.addComment}" ui:field="addComment">
-		      <g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
-			      	<g:Label ui:field="loginMessagingText"></g:Label>
-			      	<g:Anchor ui:field="loginUrl"/> 
-			      	<g:Label ui:field="orText"></g:Label> 
-			      	<g:Anchor ui:field="signupUrl" />
-			      	<g:Label ui:field="toCommentText"></g:Label>
-		      </g:HTMLPanel>
-		      <g:Image styleName="{playerStyle.userPhoto}" ui:field="userPhoto"></g:Image>
-		      <g:TextArea styleName="{playerStyle.commentField}" ui:field="commentField"></g:TextArea>
-		      <g:Label styleName="{playerStyle.successPostMsg}" ui:field="successPostMsg" />
-		      <g:Button styleName="secondary disabled" ui:field="postCommentBtn"/>
-		      <g:Button styleName="secondary {playerStyle.marginTop10}" ui:field="postCommentCancel"/>
-		      <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessage}"/>
-		    </g:HTMLPanel>
-		</g:HTMLPanel> -->
-     
+		</g:HTMLPanel>
+        </g:FlowPanel>  
 </ui:UiBinder>

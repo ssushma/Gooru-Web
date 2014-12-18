@@ -106,9 +106,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	Anchor moreInfoLbl,collcResLbl;
 
 	@UiField
-	Label tagsLbl;
+	Anchor tagsLbl;
 	
-	@UiField public Label analyticsInfoLbl;
+	@UiField public Anchor analyticsInfoLbl;
 	
 	@UiField Anchor shareLbl;
 	
@@ -690,14 +690,14 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	/**
 	 * @return the tagsLbl
 	 */
-	public Label getTagsLbl() {
+	public Anchor getTagsLbl() {
 		return tagsLbl;
 	}
 
 	/**
 	 * @param tagsLbl the tagsLbl to set
 	 */
-	public void setTagsLbl(Label tagsLbl) {
+	public void setTagsLbl(Anchor tagsLbl) {
 		this.tagsLbl = tagsLbl;
 	}
 

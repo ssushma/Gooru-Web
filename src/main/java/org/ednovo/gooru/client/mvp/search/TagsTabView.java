@@ -34,7 +34,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
-import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
@@ -50,6 +49,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -90,7 +90,7 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	
 	@UiField SearchTabTagsStyleBundle searchTagsTabStyle;
 	
-	Label tagsLbl = new Label();
+	Anchor tagsLbl = new Anchor();
 	
 	AddTagesPopupView addTagesPopupView;
 	
@@ -298,7 +298,7 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	 * @see org.ednovo.gooru.client.mvp.search.IsTagsTabView#setResourceTagsData(java.lang.String, java.lang.String)
  	 */
 	@Override
-	public void setResourceTagsData(String resourceGooruOid, Label tagsLbl) {
+	public void setResourceTagsData(String resourceGooruOid, Anchor tagsLbl) {
 		
 		this.resourceGooruOid = resourceGooruOid;
 		this.tagsLbl = tagsLbl;

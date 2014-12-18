@@ -224,7 +224,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 	}
 
 	
-	public Label getAnalyticsButton(){
+	public Anchor getAnalyticsButton(){
 		return wrapperVcr.analyticsInfoLbl;
 	}
 	
@@ -686,7 +686,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 	};
 	
 	
-	public Label getAddTagsTab(){
+	public Anchor getAddTagsTab(){
 		return wrapperVcr.getTagsLbl();
 	}
 	

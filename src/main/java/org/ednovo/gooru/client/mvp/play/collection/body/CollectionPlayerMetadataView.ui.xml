@@ -7,9 +7,10 @@
 	<ui:style field= "playerStyle" src="collectionplayermetadata.css" type="org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle" />
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="playerResponseStyle"/>
 	    <g:FlowPanel ui:field="studyMainContianer" styleName="container">
-	    	<g:FlowPanel  styleName="row">
-	    		<g:FlowPanel  styleName="{playerResponseStyle.getPlayerStyleResource.greybackground}">
+	    	<g:HTMLPanel  styleName="row">
+	    		<g:HTMLPanel  styleName="{playerResponseStyle.getPlayerStyleResource.greybackground}">
      	      		 <g:FlowPanel styleName="col-md-9 col-sm-12 {playerResponseStyle.getPlayerStyleResource.leftPanel}" ui:field="leftPanelContainer">
+     	      		     <g:HTMLPanel>
 			            	<html5:SectionTag ui:field="metadataContainer" styleName="{playerStyle.block}"></html5:SectionTag>
 							<html5:SectionTag styleName="{playerStyle.block} {playerStyle.commentsSection}" ui:field="commentssection">
 								<g:HTMLPanel styleName="col-md-12">
@@ -51,10 +52,11 @@
 								    </g:HTMLPanel>
 								</g:HTMLPanel>
 							 </html5:SectionTag>
+							 </g:HTMLPanel>
 						</g:FlowPanel>
 						<metadata:MetadataWidget ui:field="rightPanelMetadata"></metadata:MetadataWidget>
        				 <g:HTMLPanel styleName="clear"></g:HTMLPanel>
-       			</g:FlowPanel>
-       		</g:FlowPanel>
+       			</g:HTMLPanel>
+       		</g:HTMLPanel>
         </g:FlowPanel>
 </ui:UiBinder>
