@@ -659,7 +659,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		descCharcterLimit.setVisible(false);
 		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		setThumbnailImage.setVisible(true);
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		chooseResourceBtn.getElement().setId("uploadFile");
 		panelContentRights.getElement().setId("pnlPanelContentRights");
 		panelContentRights.setVisible(false);
@@ -1210,8 +1210,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 			categorypanel.setStyleName(image.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			imageResourcePanel.addStyleName("active");
 //		} else if (category.equalsIgnoreCase("Question")) {
 //			resourceCategoryLabel.setText("Question");
 //			categorypanel.setStyleName(question.getStyleName());
@@ -1222,8 +1223,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 			categorypanel.setStyleName(texts.getStyleName());
-			resourceTypePanel.setVisible(false);
+			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
+			textResourcePanel.addStyleName("active");
 		/*}else if (category.equalsIgnoreCase(i18n.GL1045)) {
 			resourceCategoryLabel.setText(i18n.GL1045);
 			categorypanel.setStyleName(audio.getStyleName());
@@ -1681,9 +1683,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 		categorypanel.setStyleName(image.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
+		imageResourcePanel.addStyleName("active");
+		textResourcePanel.removeStyleName("active");
 	}
 
 	@UiHandler("textResourcePanel")
@@ -1693,9 +1697,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 		categorypanel.setStyleName(texts.getStyleName());
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
+		imageResourcePanel.removeStyleName("active");
+		textResourcePanel.addStyleName("active");
 	}
 
 	/*@UiHandler("audioResourcePanel")

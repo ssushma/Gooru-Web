@@ -56,7 +56,7 @@
 				<g:item value='Exam'>Exam</g:item>
 			</g:ListBox> -->
 			
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}" ui:field="panelCategoryInputDiv">
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDivRFormat}" ui:field="panelCategoryInputDiv">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="categorypanel"></g:HTMLPanel>
@@ -72,13 +72,13 @@
           </g:HTMLPanel>
         </g:HTMLPanel>
         
-        <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="resourceTypePanel">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderDropdown}">
+        <g:HTMLPanel styleName="{res.css.reorderLabelContainerRFormat}" ui:field="resourceTypePanel">
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderDropdownRFormat}">
 				<uc:HTMLEventPanel
-					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 					ui:field="videoResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
 								<g:HTMLPanel
 									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteVideo}" ui:field="video">
@@ -89,10 +89,10 @@
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel
-					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 					ui:field="websiteResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
 								<g:HTMLPanel
 									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteWebsite}" ui:field="website">
@@ -103,10 +103,10 @@
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel
-					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 					ui:field="interactiveResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
 								<g:HTMLPanel
 									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteInteractive}" ui:field="interactive">
@@ -202,10 +202,10 @@
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel> -->
 				<uc:HTMLEventPanel
-					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 					ui:field="imageResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
 								<g:HTMLPanel
 									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteImage}" ui:field="image">
@@ -216,10 +216,10 @@
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 					<uc:HTMLEventPanel
-					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 					ui:field="textResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
 								<g:HTMLPanel
 									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteText}" ui:field="texts">
@@ -230,10 +230,10 @@
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 					<uc:HTMLEventPanel
-					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainerRFormat}"
 					ui:field="audioResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdivRFormat}">
 							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
 								<g:HTMLPanel
 									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteAudio}" ui:field="audio">
