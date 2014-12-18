@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.search.collection;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
