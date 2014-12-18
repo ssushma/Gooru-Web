@@ -495,6 +495,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				classpageId=classpageItemDo.getClasspageId();
 				AppClientFactory.getPlaceManager().setDataLogClasspageId(classpageId);
 				if(getPlaceManager().getRequestParameter("view")!=null){
+				}else{
 					String collectionId=getPlaceManager().getRequestParameter("id", null);
 					sessionId=GwtUUIDGenerator.uuid();
 					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
