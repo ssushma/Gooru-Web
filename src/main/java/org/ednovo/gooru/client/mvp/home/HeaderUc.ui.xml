@@ -511,7 +511,7 @@
 									styleName="form-group">
 									<uc:AppSuggestBox ui:field="editSearchTxtBox"
 										styleName="form-control" />
-									<g:Label styleName="{res1.css.arrowLable}" ui:field="arrowLbl" visible="false"></g:Label>
+									<g:Label styleName="{res1.css.arrowLable}" ui:field="arrowLbl" visible="true"></g:Label>
 								</g:FlowPanel>
 								<g:Button styleName="primary" ui:field="editSearchBtn" />
 							</g:HTMLPanel>
