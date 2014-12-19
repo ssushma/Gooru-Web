@@ -96,8 +96,6 @@ public class WrapView extends BaseView implements IsWrapView {
 	
 	PreFilterPopup preFilter =	null;
 	
-	private boolean isOpenPrefilterPopup = true;
-	
 	/**
 	 * Class constructor 
 	 */
@@ -154,17 +152,14 @@ public class WrapView extends BaseView implements IsWrapView {
 		  setUiText();
 		  
 		  ClickHandler rootClick = new ClickHandler(){
-
 				@Override
 				public void onClick(ClickEvent event) {
 					if(!isArrowIcon && preFilter!=null){
-						isOpenPrefilterPopup=true;
 						preFilter.hide();
 					}else{
 						isArrowIcon=false;
 					}
 				}
-				
 			};
 			
 			RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
