@@ -111,11 +111,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
 	@UiField
-	FlowPanel frameContainer1,dataInsightsPanel;
+	FlowPanel frameContainer,frameContainer1,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer,pnlSummary;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
-	@UiField HTMLPanel collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
+	@UiField HTMLPanel sessionspnl,collectionMetaDataPnl,collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
@@ -1685,6 +1685,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	@Override
 	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result) {
+		sessionspnl.setVisible(true);
+		collectionMetaDataPnl.setVisible(true);
 		sessionsDropDown.clear();
 		sessionData.clear();
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
@@ -1756,5 +1758,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
         return html;
 	}
-
+	@Override
+	public void hidePanel(){
+		sessionspnl.setVisible(false);
+		collectionMetaDataPnl.setVisible(false);
+	}
 }

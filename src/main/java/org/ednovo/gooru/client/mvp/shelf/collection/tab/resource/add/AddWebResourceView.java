@@ -619,7 +619,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		setThumbnailImage.setVisible(false);
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
-		resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resourceTypePanel.getElement().setId("pnlResourceTypePanel");
 		System.out.println("3");
 		educationalUsePanel.getElement().setId("pnlEducationalUsePanel");
@@ -1800,75 +1800,122 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *
 	 */
 	void setVideoCategory(){
+		System.out.println("on click video");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_video_selected");
 		resourceCategoryLabel.setText(i18n.GL0918());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0918());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0918());
 		categorypanel.setStyleName(video.getStyleName());
-		resourceTypePanel.setVisible(false);
+		//resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
-		
 		clearCategoryErrorMessage();
+		videoResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 	
 	@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event) {
+		System.out.println("on click interactive");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_interactive_selected");
 		resourceCategoryLabel.setText(i18n.GL0919());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0919());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0919());
 		categorypanel.setStyleName(interactive.getStyleName());
-		resourceTypePanel.setVisible(false);
+		//resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		clearCategoryErrorMessage();
+		interactiveResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 
 	@UiHandler("websiteResourcePanel")
 	void websiteResourcePanel(ClickEvent event) {
+		System.out.println("on click website");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_website_selected");
 		resourceCategoryLabel.setText(i18n.GL1396());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1396());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1396());
 		categorypanel.setStyleName(website.getStyleName());
-		resourceTypePanel.setVisible(false);
+		//resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
+		websiteResourcePanel.addStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 		clearCategoryErrorMessage();
 	}
 
 	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
+		System.out.println("on click image");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
 		resourceCategoryLabel.setText(i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 		categorypanel.setStyleName(image.getStyleName());
-		resourceTypePanel.setVisible(false);
+		//resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		clearCategoryErrorMessage();
+		imageResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
 	}
 
 	@UiHandler("textResourcePanel")
 	void handoutResourcePanel(ClickEvent event) {
+		System.out.println("on click text");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
 		resourceCategoryLabel.setText(i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 		categorypanel.setStyleName(texts.getStyleName());
-		resourceTypePanel.setVisible(false);
+		//resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		clearCategoryErrorMessage();
+		textResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 
 	@UiHandler("audioResourcePanel")
 	void textbookResourcePanel(ClickEvent event) {
+		System.out.println("on click audio");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_audio_selected");
 		resourceCategoryLabel.setText(i18n.GL1045());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1045());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1045());
 		categorypanel.setStyleName(audio.getStyleName());
-		resourceTypePanel.setVisible(false);
+		//resourceTypePanel.setVisible(false);
+		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		clearCategoryErrorMessage();
+		audioResourcePanel.addStyleName("active");
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 
 //	@UiHandler("otherResourcePanel")
@@ -1898,7 +1945,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		mandatoryCategoryLbl.setVisible(false);
 	}*/
 
-	@UiHandler("resoureDropDownLbl")
+/*	@UiHandler("resoureDropDownLbl")
 	public void dropDownClick(ClickEvent event) {
 		if(!isGoogleDriveFile){
 			if (resoureDropDownLblOpen == false) {
@@ -1911,7 +1958,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 		}
 
-	}
+	}*/
 	
 	@UiHandler("defaultPanel")
 	void defaultPanel(ClickEvent event) {

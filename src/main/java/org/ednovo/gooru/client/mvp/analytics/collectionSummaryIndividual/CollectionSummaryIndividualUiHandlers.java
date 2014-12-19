@@ -54,4 +54,9 @@ public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
 	 * @param questionType
 	 */
 	void setOEtextData(String resourceGooruId,String questionType);
+	/**
+	 * This method is used to set error message
+	 * @param loadingImage
+	 */
+	void setNoDataMessage(HTMLPanel loadingImage);
 }
