@@ -673,6 +673,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		audioResourcePanel.getElement().setId("epnlAudioResourcePanel");
 		audio.getElement().setId("pnlAudio");
 		refreshLbl.getElement().setId("epnlRefreshLbl");
+		refreshLbl.getElement().getStyle().setWidth(70, Unit.PX);
 		educationalpanel.getElement().setId("pnlEducationalpanel");
 		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
 		mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
