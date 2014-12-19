@@ -648,7 +648,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		resourceTypePanel.setVisible(true);
 		resourceTypePanel.getElement().setId("pnlResourceTypePanel");
-		System.out.println("3");
 		educationalUsePanel.getElement().setId("pnlEducationalUsePanel");
 		educationalUsePanel.setVisible(false);
 		momentsOfLearningPanel.getElement().setId("pnlMomentsOfLearningPanel");
@@ -919,7 +918,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				if(!hasClickedOnDropDwn){
-					System.out.println("enter");
 					educationalUsePanel.setVisible(false);
 					educationalDropDownLblOpen = false;
 					momentsOfLearningPanel.setVisible(false);
@@ -1209,7 +1207,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			if (userUrlStr.indexOf("youtube") >0){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
 				String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
-				System.out.println("thumbnailUrl:"+thumbnailUrl);
 				generateImageLbl.setVisible(false);
 				setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
 				setThumbnailImage.setUrl(thumbnailUrl);
@@ -1500,7 +1497,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 										}
 										if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 										{
-											System.out.println("resourceEducationalLabel.getText() here is::::"+resourceEducationalLabel.getText());
 											if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
 												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
 											}
@@ -1821,7 +1817,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *
 	 */
 	void setVideoCategory(){
-		System.out.println("on click video");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_video_selected");
 		resourceCategoryLabel.setText(i18n.GL0918());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0918());
@@ -1841,7 +1836,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event) {
-		System.out.println("on click interactive");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_interactive_selected");
 		resourceCategoryLabel.setText(i18n.GL0919());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0919());
@@ -1861,7 +1855,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiHandler("websiteResourcePanel")
 	void websiteResourcePanel(ClickEvent event) {
-		System.out.println("on click website");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_website_selected");
 		resourceCategoryLabel.setText(i18n.GL1396());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1396());
@@ -1881,7 +1874,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
-		System.out.println("on click image");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
 		resourceCategoryLabel.setText(i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
@@ -1901,7 +1893,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiHandler("textResourcePanel")
 	void handoutResourcePanel(ClickEvent event) {
-		System.out.println("on click text");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
 		resourceCategoryLabel.setText(i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
@@ -1921,7 +1912,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiHandler("audioResourcePanel")
 	void textbookResourcePanel(ClickEvent event) {
-		System.out.println("on click audio");
 		MixpanelUtil.mixpanelEvent("organize_add_resource_audio_selected");
 		resourceCategoryLabel.setText(i18n.GL1045());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1045());
@@ -2906,7 +2896,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *
 	 */
 	public void updateStandardsAdvancedSetupStyle() {
-		System.out.println("standardsPanel.getWidgetCount() here is:::::"+standardsPanel.getWidgetCount());
 		if(standardsPanel.getWidgetCount()==0){
 			addSetupAdvancedView.standardsAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 		}else{
