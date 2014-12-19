@@ -95,8 +95,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextBox;
@@ -135,7 +133,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public AppSuggestBox txtSearch;
 	
 	String jsonDataString = null;
-	
 
 	boolean isGetLibApiCalling = false;
 
@@ -153,10 +150,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	private boolean isArrowIcon = false;
 	private boolean isOpenPrefilterPopup = true;
 
-	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
-	private boolean hasAutoSelected = false;
 	
 	private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 
@@ -975,8 +970,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 			txtSearch.hideSuggestionList();
 		}
-		
-		hasAutoSelected=true;
 		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
 		getEditSearchTxtBox().setText(searchText.trim());
 
@@ -994,8 +987,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public void setBtnSignUp(Button btnSignUp) {
 		this.btnSignUp = btnSignUp;
 	}
-
-
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.IsHomeView#showPrefilter()

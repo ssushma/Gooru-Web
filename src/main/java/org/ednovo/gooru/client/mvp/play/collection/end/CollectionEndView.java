@@ -1499,23 +1499,25 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				return;
 			}
 			String minsString = (mins == 0)? "00": ((mins < 10)? "0"+mins : ""+mins );
+			String formattedTime="";
+			formattedTime=((int) Math.round(secs))+"";
 			String secsString ="";
 			if(secs>0 && secs<1){
-				secsString="<1";
-			}else{
-				secsString = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
-			}
+				formattedTime="<1";
+			}/*else{
+				formattedTime = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
+			}*/
 	        if (hours > 0){
 	        	displayTime(hours.toString(),hours==1?"hr":"hrs");
 	        	displayTime(" "+minsString.toString(),minsString.equals("01")?"min":"mins");
-	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"secs");
+	        	displayTime(" "+formattedTime.toString(),formattedTime.equals("01")?"sec":"secs");
 	        }
 	        else if (mins > 0){
 	        	displayTime(minsString.toString(),minsString.equals("01")?"min":"mins");
-	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        	displayTime(" "+formattedTime.toString(),formattedTime.equals("01")?"sec":"sec");
 	        }
 	        else {
-	        	displayTime(secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        	displayTime(formattedTime.toString(),formattedTime.equals("01")?"sec":"sec");
 	        }
 	}
 	public void displayTime(String time, String timeText){

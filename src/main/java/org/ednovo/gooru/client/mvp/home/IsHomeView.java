@@ -81,6 +81,7 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	*/
 	Button getBtnSignUp();
 
+
 	/**
 	 * 
 	 * @function displayPartnerLibraries 
