@@ -351,6 +351,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		generateFromUrlBtn.getElement().getStyle().setOpacity(0.5);
 		isGenerateURL =false;*/
 		disableGenerateBtn();
+		refreshLbl.setVisible(false);
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		urlTitle.getElement().setInnerHTML(i18n.GL0915());
@@ -1648,6 +1649,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							}
 							if (isValidUrl(userUrlStr, true)) {
 								enableGenerateBtn();
+								refreshLbl.setVisible(true);
 								userUrlStr = URL.encode(userUrlStr);
 								//userUrlStr = userUrlStr.replaceAll("#", "%23");
 								urlTextBox.setText(URL.decode(userUrlStr));
@@ -1667,15 +1669,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 							} else {
 								disableGenerateBtn();
-
+								refreshLbl.setVisible(false);
 								showUrlErrorMessage(i18n.GL0926());
 							}
 						}else{
 							disableGenerateBtn();
+							refreshLbl.setVisible(false);
 						}
 					}else{
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(urlTextBox, mandatoryUrlLbl, value);
 						disableGenerateBtn();
+						refreshLbl.setVisible(false);
 					}
 				}
 			});
@@ -1691,6 +1695,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private class UrlKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
 			clearUrlErrorMessage();
+			String userUrlStr = urlTextBox.getText().trim();
+			if (userUrlStr.equalsIgnoreCase("")) {
+				refreshLbl.setVisible(false);
+			}
 		}
 	}
 
