@@ -166,8 +166,7 @@ public class LoginPopupUc extends PopupPanel{
         
 		lblPleaseWait.setVisible(false);
 		setHandlers();
-        
-	//	this.center();
+		this.center();
 	}
 	
 	public LoginPopupUc(String emailId){
