@@ -630,5 +630,6 @@ public interface HomeCBundle extends ClientBundle{
 		String blockHeader();
 		String last();
 		String arrowLable();
+		String displayRight();
 	}	
 }
