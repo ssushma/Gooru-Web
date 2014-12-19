@@ -80,7 +80,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 	
 	@UiField Label panelLoading;
 	
-	@UiField HTMLPanel panelControls,titlePanel,headerPanel,bodyConatiner;
+	@UiField HTMLPanel panelControls,titlePanel,headerPanel,bodyConatiner, panelPleaseWait;
 		
 	interface NewClasspagePopupViewUiBinder extends
 		UiBinder<Widget, NewClasspagePopupView> {
@@ -159,7 +159,8 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		mandatoryClasspageTitleLbl.setVisible(false);
-		panelLoading.setVisible(false);
+//		panelLoading.setVisible(false);
+		panelPleaseWait.setVisible(false);
 		panelLoading.setText(i18n.GL0122());
 		panelControls.setVisible(true);
 		show();
@@ -257,7 +258,8 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 						}else{
 							createNewClasspage(title);
 							panelControls.setVisible(false);
-							panelLoading.setVisible(true);
+//							panelLoading.setVisible(true);
+							panelPleaseWait.setVisible(true);
 							classpageTitleTxt.getElement().getStyle().clearBackgroundColor();
 							classpageTitleTxt.getElement().getStyle().setBorderColor("#ccc");
 						}
@@ -319,7 +321,8 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 	public void ClosePopup(){
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		panelLoading.setVisible(false);
+//		panelLoading.setVisible(false);
+        panelPleaseWait.setVisible(false);
 		hide();
 	}
 	

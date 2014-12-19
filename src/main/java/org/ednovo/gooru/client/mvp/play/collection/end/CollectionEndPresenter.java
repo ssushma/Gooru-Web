@@ -468,6 +468,11 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 					printData.setSessionStartTime(AnalyticsUtil.getCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
 					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId(),printData);
 					getView().setSessionsData(result);
+				}else{
+					clearSlot(COLLECTION_REPORTS_SLOT);
+					getView().hidePanel();
+					collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
+					setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 				}
 			}
 			
