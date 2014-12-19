@@ -378,7 +378,7 @@
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="defaultPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="defaultText"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles} {res.css.setBorder}" ui:field="defaultText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
@@ -425,7 +425,7 @@
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="defaultPanelMomentsOfLearningPnl">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
-						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="defaultMomentsOfLearningText"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles} {res.css.setBorder}" ui:field="defaultMomentsOfLearningText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>

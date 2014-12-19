@@ -898,6 +898,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		HTMLPanel defaultMediaFeatureText = new HTMLPanel("");
 		defaultMediaFeatureText.getElement().setInnerHTML(i18n.GL3093());
 		defaultMediaFeatureText.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myEducationalPanelSubTitles());
+		defaultMediaFeatureText.getElement().addClassName(CollectionEditResourceCBundle.INSTANCE.css().setBorder());
 		defaultMediaFeaturePnl.add(defaultMediaFeatureText);
 		defaultMediaFeaturePnl.addClickHandler(new ClickHandler() {
 			@Override
