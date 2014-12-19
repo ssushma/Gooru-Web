@@ -8,9 +8,8 @@
 		.searchFilter {
 			float: left;
 			clear: both;
-			min-height: 450px;
 			width: 185px;
-			margin-bottom: 30px;
+			overflow:visible !important;
 		}
 		
 		.searchResultContainer {
@@ -45,6 +44,8 @@
 			background-position:0 0;
 			font-family:Arial, Helvetica, sans-serif;
 			cursor:pointer;
+			margin-right:10px;
+			margin-bottom:10px;
 		}
 
 		.secondaryResourceSearchBtn:hover{
@@ -58,6 +59,8 @@
 			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #f0f0f0, #ffffff); /* Opera 11.10+ */
 			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
 			background-repeat:no-repeat;
+			margin-right:10px;
+			margin-bottom:10px;
 		}
 
 
@@ -65,7 +68,6 @@
 			color: #515151;
 			padding: 7px 9px 9px 34px;
 			border-radius: 4px;
-			margin-left: 10px;
 			background: #efefef;
 			background-image: url(images/collectionIco.png); /* fallback */
 			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f0f0f0)); /* Saf4+, Chrome */
@@ -81,6 +83,7 @@
 			background-position:0 0;
 			font-family:Arial, Helvetica, sans-serif;
 			cursor:pointer;
+			
 		}
 
 
@@ -95,6 +98,7 @@
 			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #f0f0f0, #ffffff); /* Opera 11.10+ */
 			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
 			background-repeat:no-repeat;
+			
 		}
 
 		.secondaryIC img{
@@ -121,13 +125,14 @@
 			background-position:0 0;
 			cursor:pointer;
 			box-shadow:0 1px 3px #d0d0d5 inset;
+			margin-bottom:10px;
+			margin-right:10px
 
 		}
 
 		.collectionBtnActive {
 			color: #515151;
 			padding: 7px 9px 9px 34px;
-			margin-left: 10px;
 			border-radius: 4px;
 			background: #efefef;
 			background-image: url(images/collectionIco.png); /* fallback */
@@ -149,7 +154,7 @@
 			color: #515151;
 			<!-- float: left; -->
 			margin: 0px 0 0 6px;
-			display: inline-block;
+			<!-- float:left; -->
 			padding-bottom: 10px;
 			
 		}
@@ -198,15 +203,21 @@
 			display: inline-block;
 			font-size: 14px;
 		}
+		.searchMargin{
+			float:left;
+			margin-bottom: 10px;
+			margin-top: 10px;
+			margin-left: 25px;
+		}
 		
+	
 	</ui:style>
 	<g:FlowPanel>
 	    <g:ScrollPanel styleName="{style.searchFilter}"  ui:field="searchFilterPanel">
       		<s:SearchFilterVc ui:field="searchFilterVc"  />
         </g:ScrollPanel>
-		<g:FlowPanel  styleName="col-md-9 col-sm-9 {res.css.searchResult}">
-		
-				<g:HTMLPanel>
+		<g:FlowPanel  styleName="col-md-9 col-sm-9">
+					<g:HTMLPanel styleName="{style.searchMargin}">
 					<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
 					<!-- <g:HTML styleName="{style.searchResultSpell}" ui:field="spellCheckedqueriedTextHtml" /> -->
 					<g:HTMLPanel styleName="{style.searchResultError}" ui:field="correctSpellHTML">
@@ -218,13 +229,14 @@
 						<g:Label ui:field="wrongQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
 					</g:HTMLPanel>
 					<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
+					<g:HTMLPanel>
+						<g:Button styleName="{style.secondaryResourceSearchBtn}" ui:field="resourceSearchBtn"/>
+				<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
+						<g:Button styleName="{style.secondaryCollectionSearchBtn}" ui:field="collectionSearchBtn"/>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 				
-				<g:HTMLPanel styleName="{style.buttonsContainerDiv}">
-				<g:Button styleName="{style.secondaryResourceSearchBtn}" ui:field="resourceSearchBtn"/>
-				<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
-				<g:Button styleName="{style.secondaryCollectionSearchBtn}" ui:field="collectionSearchBtn"/>
-				</g:HTMLPanel>
+			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>	
 			<dnd:AppMirageDragContainer ui:field="searchResultPanel" />
 			<g:FlowPanel ui:field="paginationFocPanel" styleName="{style.paginationPanel}" />
 		</g:FlowPanel>

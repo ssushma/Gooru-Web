@@ -255,6 +255,7 @@ grade modification......
 }
 
 .notFriendly{
+	clear:both;
 	font-style: italic;
 	color: #999;
 	float: left;

@@ -230,3 +230,7 @@
 	cursor:pointer;
 	box-shadow: none;
 }
+.setFont{
+	font-size:12px;
+	white-space: normal;
+}

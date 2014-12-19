@@ -175,7 +175,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			String resourceTitleText=resourceTitleLbl.getText();
 			resourceTitleText=resourceTitleText.substring(0, 26)+"...";
 			resourceTitleLbl.setText(resourceTitleText);
-			resourceTitleLbl.getElement().getStyle().setWidth(210, Unit.PX);
+			//resourceTitleLbl.getElement().getStyle().setWidth(210, Unit.PX);
 		}else{
 			resourceTitleLbl.getElement().getStyle().clearWidth();
 		}

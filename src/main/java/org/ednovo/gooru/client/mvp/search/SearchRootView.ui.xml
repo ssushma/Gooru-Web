@@ -4,7 +4,10 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle"
 		field="res"></ui:with>
-	<ui:style type="org.ednovo.gooru.client.mvp.search.SearchRootView.Style">
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	
+		<ui:style type="org.ednovo.gooru.client.mvp.search.SearchRootView.Style">
+
 		.searchWrapper {
 		/*min-height: 383px;*/
 		margin: 0 auto;
@@ -275,12 +278,11 @@
 				<g:HTMLPanel styleName="row">
 					<g:FlowPanel styleName="{res.css.searchResultScroll}"
 						ui:field="panelSearchPage">
-						<g:FlowPanel styleName="{style.searchResultPanel} {res.css.innerResult} {res.css.searchInner}">
+						<g:FlowPanel styleName="{res.css.innerResult}">
 						    <g:HTMLPanel styleName="{res.css.searchResult1}">
 								<g:HTMLPanel styleName="col-md-4 col-xs-4 visible-xs {res.css.filtersButton}">
-							        <g:Anchor ui:field="searchFilterMenu" styleName="{res.css.btn} btn btn-primary">
-							            <img src="images/toggleIcon.png"/> Search Filters
-							        </g:Anchor>
+							        <g:Anchor ui:field="searchFilterMenu" text="{i18n.GL3104}" styleName="{res.css.btn} btn btn-primary">
+									</g:Anchor>
 						   		</g:HTMLPanel>
 						   		<g:HTMLPanel styleName="{res.css.PageNotify}">
 								<g:FlowPanel ui:field="flowpanel">

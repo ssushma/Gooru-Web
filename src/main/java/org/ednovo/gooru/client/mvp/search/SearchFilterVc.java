@@ -48,6 +48,9 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.uc.DownToolTipUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.client.uc.H5Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -93,6 +96,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -148,10 +152,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,gradePanelUcNext,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
+	@UiField HTMLPanel categoryPanelUc,subjectPanelUc,gradePanelUc,gradePanelUcNext,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
-	HTMLPanel /*contentpanel,*/oerPanel,aggregatorPanel;
+	HTMLPanel aggregatorPanel;
 
 	@UiField(provided = true)
 	AppSuggestBox sourceSgstBox;
@@ -175,18 +179,28 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	FlowPanel standardContainerFloPanel;
 
 	@UiField
-	Label sourcesNotFoundLbl,filtersText,/*notifyText,*/aggregatorNotFoundLbl;
+	Label sourcesNotFoundLbl,/*notifyText,*/aggregatorNotFoundLbl;
+	@UiField
+	PPanel oerPanel,panelNotMobileFriendly;
 
 	@UiField
-	Label standardsNotFoundLbl,ratingsLbl;
+	H4Panel filtersText;
+	@UiField
+	Label standardsNotFoundLbl;
 	
 	@UiField
-	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl,accessModeLbl;
+	Label publisherTooltip, standardHelpicon,aggregatorTooltip,aggregatorLbl,authorLbl;
 	
 	@UiField Label arrowLblCategory,arrowLblSubject,arrowLblGrade,arrowLblstandard,arrowLblratings,arrowLblsource,arrowLblaggregator,arrowLblaccess,arrowLblauthor;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
+	
+	@UiField
+	Anchor clearAll;
+	
+	@UiField
+	H5Panel accessModeLbl,sourceLbl,ratingsLbl,standardLbl,gradeLbl,resourceFormatLbl,subjectLbl;
 	
 	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
@@ -652,7 +666,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param key check box name
 	 * @param value check box value
 	 */
-	public void renderCheckBox(DisclosurePanelUc disclosurePanelVc, String key, String value) {
+	public void renderCheckBox(PPanel disclosurePanelVc, String key, String value) {
 		CheckBox categoryChk = new CheckBox();
 		categoryChk.setText(value);
 		categoryChk.setName(key);
@@ -766,7 +780,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		categoryChk.setStyleName(CssTokens.FILTER_CHECKBOX);
 		categoryChk.addStyleName(value.toLowerCase());
-		disclosurePanelVc.addWidget(categoryChk);
+		disclosurePanelVc.add(categoryChk);
 		categoryChk.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
 			@Override
@@ -775,7 +789,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 		});
 	}
-	public void renderOERCheckBox(HTMLPanel disclosurePanelVc, String key, final String value) {
+	public void renderOERCheckBox(PPanel disclosurePanelVc, String key, final String value) {
 		chkOER = new CheckBox();	
 		chkOER.setText(value);
 		chkOER.setName(key);
@@ -783,7 +797,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("OER")){
 			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
-			chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);
+			/*chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);*/
 		}
 			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 			chkOER.addStyleName(value.toLowerCase());
@@ -1109,9 +1123,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 			imgNotFriendly.getElement().getStyle().setLeft(114, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(-16, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
+			imgNotFriendly.getElement().getStyle().setTop(-20, Unit.PX);
+/*			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
+*/			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 	
 			
 			
@@ -1151,7 +1165,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(85, Unit.PX);
-			oer.getElement().getStyle().setTop(-20, Unit.PX);
+			oer.getElement().getStyle().setTop(-28, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(i18n.GL0732());
