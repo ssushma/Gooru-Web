@@ -271,7 +271,7 @@ public class PlayerDataLogEvents {
 	public static  JSONString getDataLogVersionObject(){
 		JSONObject versionMap=new JSONObject();
 		try{
-			versionMap.put(LOGAPI, new JSONString("0.1")); //TODO need to implement version
+			versionMap.put(LOGAPI, new JSONString("0.1")); 
 		}catch(Exception e){
 			
 		}
