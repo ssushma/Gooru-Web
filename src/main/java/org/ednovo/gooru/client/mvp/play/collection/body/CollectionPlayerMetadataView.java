@@ -1261,7 +1261,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			deleteComment(commentUid);
 			addComment.setVisible(true);
 		} else if (!commentUid.isEmpty() && action.equals(EDIT)) {
-			addComment.setVisible(false);
+			addComment.setVisible(true);
 			editComment(commentUid);
 		} else if(commentUid.isEmpty() && action.equals(EDIT)) {
 			addComment.setVisible(true);
