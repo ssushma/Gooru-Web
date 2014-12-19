@@ -619,6 +619,18 @@ public class PlayerDataLogEvents {
 		PlayerDataLogEvents.collectionStartStopEvent(libarayViewData);
 	}
 	
+	/**
+	 * This method is used to create data in JSON format and log <b>create comment, update comment and delete comment</b> data log events
+	 * @param collectionId specifies unique id of the collection.
+	 * @param commentGooruOid specifies unique id of the comment in case of comment update and delete.
+	 * @param parentEventId  specifies event id of the library view event id or class view event id.
+	 * @param parentGooruOid specifies unique id of the library gooruOid or class view event id.
+	 * @param sessionId specifies unique id of the session created by session tracker API.
+	 * @param path specifies the hierarchy of the collection.
+	 * @param pageLocation specifies the page location of the event.
+	 * @param commentText specifies the user given comment text.
+	 * @param eventName specifies the name of the data log event.
+	 */
 	public static void triggerCommentDataLogEvent(String collectionId, String commentGooruOid,String parentEventId,String parentGooruOid,String sessionId,
 			String path,String pageLocation,String commentText,String eventName){
 		JSONObject collectionDataLog=new JSONObject(); 
@@ -636,6 +648,17 @@ public class PlayerDataLogEvents {
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	
+	/**
+	 *  This method is used to create data in JSON format and log user<b>star rating</b> data log events
+	 * @param resourceId specifies unique id of the collection item.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param parentEventId specifies event id of the collection play event id
+	 * @param sessionId specifies unique id of the session created by session tracker API.
+	 * @param path specifies the hierarchy of the collection item.
+	 * @param pageLocation specifies the page location of the event.
+	 * @param currentRate specifies user given star rating for collection item.
+	 * @param previousRate specifies user previous given star rating for collection item.
+	 */
 	public static void triggerRatingDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,double currentRate,double previousRate){
 		JSONObject collectionDataLog=new JSONObject(); 
 		Long startTime=PlayerDataLogEvents.getUnixTime();
@@ -652,6 +675,16 @@ public class PlayerDataLogEvents {
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	
+	/**
+	 * This method is used to frame data in JSON format and log user <b>review</b> text data log event.  
+	 * @param resourceId specifies unique id of the collection item.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param parentEventId specifies event id of the collection play event id
+	 * @param sessionId specifies unique id of the session created by session tracker API.
+	 * @param path specifies the hierarchy of the collection item.
+	 * @param pageLocation specifies the page location of the event.
+	 * @param reviewText specifies the user entered review text.
+	 */
 	public static void triggerReviewDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,String reviewText){
 		JSONObject collectionDataLog=new JSONObject(); 
 		Long startTime=PlayerDataLogEvents.getUnixTime();
@@ -668,6 +701,11 @@ public class PlayerDataLogEvents {
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	
+	/**
+	 * This method is used to frame comments payload JSON object and will return JSON object.
+	 * @param commentText specifies user entered comment text.
+	 * @return  JSON object
+	 */
 	public static  JSONString getCommentDataLogPayLoadObject(String commentText){
 		JSONObject payLoadMap=new JSONObject();
 		try{
@@ -679,11 +717,22 @@ public class PlayerDataLogEvents {
 		return new JSONString(payLoadMap.toString());
 	}
 	
+	/**
+	 *  This method is used to frame comments context JSON object and will return context JSON object.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param commentGooruOid specifies unique id of the comment in case of comment update and delete.
+	 * @param parentEventId  specifies event id of the library view event id or class view event id.
+	 * @param parentGooruOid specifies unique id of the library gooruOid or class view event id.
+	 * @param path specifies the hierarchy of the collection.
+	 * @param pageLocation specifies the page location of the event.
+	 * @return JSON object.
+	
+	 */
 	public static  JSONString getCommentDataLogContextObject(String collectionId,String commentGooruOid,String parentEventId, String parentGooruOid, String path, String pageLocation){
 		JSONObject contextMap=new JSONObject();
 		try{
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
-			//contextMap.put(CONTENTITEMID, new JSONString("")); // may be need to send comment Id
 			if(parentGooruOid!=null){
 				contextMap.put(PARENTGOORUID, new JSONString(parentGooruOid));
 			}
@@ -704,6 +753,12 @@ public class PlayerDataLogEvents {
 		return new JSONString(contextMap.toString());
 	}
 	
+	/**
+	 * This method is used to frame rating payload JSON object and will return JSON object.
+	 * @param currentRate specifies user given star rating for collection item.
+	 * @param previousRate specifies user previous given star rating for collection item.
+	 * @return JSON object.
+	 */
 	public static  JSONString getRatingtDataLogPayLoadObject(double currentRate,double previousRate){
 		JSONObject payLoadMap=new JSONObject();
 		try{
@@ -714,7 +769,11 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
-	
+	/**
+	 * This method is used to frame review payload JSON object and will return JSON object.
+	 * @param reviewText specifies the user entered review text.
+	 * @return JSON object
+	 */
 	public static  JSONString getReviewDataLogPayLoadObject(String reviewText){
 		JSONObject payLoadMap=new JSONObject();
 		try{

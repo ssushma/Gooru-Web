@@ -1047,14 +1047,23 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", null,"", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
 	}
 	
+	/**
+	 * This method is used to log <b>star rating</b> data log event.
+	 * @param resourceId specifies the unique id of the resource.
+	 * @param currentRate specifies the user star rating.
+	 * @param previousRate specifies the user previous star rating.
+	 */
 	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
-		String path="";
-		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, path, null,currentRate,previousRate);
+		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, "", null,currentRate,previousRate);
 	}
 	
+	/**
+	 * This method is used to log user <b>review</b> text data log event.
+	 * @param resourceId specifies the unique id of the resource.
+	 * @param reviewText specifies user entered review text.
+	 */
 	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
-		String path="";
-		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, path, null,reviewText);
+		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, "", null,reviewText);
 	}
 
 	/**
