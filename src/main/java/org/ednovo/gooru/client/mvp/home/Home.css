@@ -2709,7 +2709,13 @@ footer {
 	display: block;
 	margin-top: 0;
 	font-size:12px;
+	left: auto;
+	border-radius : 0 0 4px 4px;
 }
+.displayRight{
+	right: 0;
+}
+
 
 .districDropDown {
 	position: absolute;

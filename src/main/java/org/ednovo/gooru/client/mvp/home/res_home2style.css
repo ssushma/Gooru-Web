@@ -1371,3 +1371,6 @@ x {
 
 .errorMessageStyle{}
 .errorMessageContainer{}
+.displayRight{
+	right: 0;
+}

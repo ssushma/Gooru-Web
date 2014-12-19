@@ -4,7 +4,7 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
 	<g:FlowPanel ui:field="logPanel">
-	    <uc:UlPanel  styleName="dropdown-menu {res.css.dropdowDisplay}">
+	    <uc:UlPanel  styleName="dropdown-menu {res.css.dropdowDisplay} {res.css.displayRight}">
 	        <uc:LiPanel>
 	    		<g:Anchor styleName="{res.css.logoutText}" ui:field="anrSettings"></g:Anchor>        
 	        </uc:LiPanel>

@@ -259,6 +259,7 @@
 
 .folderLevel {
 	background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 10px 13px;
+	box-sizing: content-box;
 }
 
 .open {
