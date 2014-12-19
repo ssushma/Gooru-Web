@@ -2174,6 +2174,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionDo.getGooruOid(), "", classpageEventId,classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 	
+	/**
+	 * This method is used to log <b>create comment, update comment and delete comment</b> data log event.
+	 * @param commentId specifies the comment id.
+	 * @param eventName specifies the event name.
+	 * @param commentText  specifies the user commented text.
+	 */
 	public void triggerCommentDataLogEvent(String commentId,String eventName,String commentText){
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
@@ -2197,6 +2203,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		PlayerDataLogEvents.triggerCommentDataLogEvent(collectionDo.getGooruOid(), commentId, classpageEventId,classpageId, sessionId, path, null, commentText, eventName);
 	}
 	
+	/**
+	 * This method is used to log user <b>star rating</b> data log events.
+	 * @param resourceId specifies unique id of the collection item.
+	 * @param currentRate specifies user given star rating for collection item.
+	 * @param previousRate specifies user previous given star rating for collection item.
+	 */
 	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
@@ -2210,6 +2222,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId,sessionId, path, null,currentRate,previousRate);
 	}
 	
+	/**
+	 * This method is used to log user <b>review text</b> data log events.
+	 * @param resourceId specifies unique id of the collection item.
+	 * @param reviewText specifies user review text.
+	 */
 	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){

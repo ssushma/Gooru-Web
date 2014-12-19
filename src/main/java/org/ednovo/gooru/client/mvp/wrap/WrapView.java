@@ -97,8 +97,6 @@ public class WrapView extends BaseView implements IsWrapView {
 	
 	PreFilterPopup preFilter =	null;
 	
-	private boolean isOpenPrefilterPopup = true;
-	
 	/**
 	 * Class constructor 
 	 */
@@ -167,17 +165,14 @@ public class WrapView extends BaseView implements IsWrapView {
 		  setUiText();
 		  
 		  ClickHandler rootClick = new ClickHandler(){
-
 				@Override
 				public void onClick(ClickEvent event) {
 					if(!isArrowIcon && preFilter!=null){
-						isOpenPrefilterPopup=true;
 						preFilter.hide();
 					}else{
 						isArrowIcon=false;
 					}
 				}
-				
 			};
 			
 			RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
@@ -379,6 +374,7 @@ public class WrapView extends BaseView implements IsWrapView {
 				});
 			//}
 			HeaderUc.setPrefilterObj(preFilter);
+			preFilter.getElement().setAttribute("style", "position:fixed !important;");
 			preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
 			preFilter.setFilter();
 			preFilter.show();

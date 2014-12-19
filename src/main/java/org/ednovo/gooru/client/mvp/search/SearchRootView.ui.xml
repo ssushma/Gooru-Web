@@ -156,11 +156,11 @@
 		}
 		.loadingImageContainer
 		{
-		background: url("images/core/search.gif");
-		width: 130px;
-		height: 100px;
-		margin: 0 auto;
-		margin-top: 110px;
+			background: url("images/core/search.gif") no-repeat;
+ 	     	width: 130px;
+         	height: 100px;
+         	margin: 0 auto;
+         	margin-top: 250px;
 		}
 
 

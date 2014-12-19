@@ -202,6 +202,11 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 
 	}
 
+	.gradesFilContainer{
+	width:100%;
+
+	}
+
 	</ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle"
 		field="res"></ui:with>
@@ -237,8 +242,10 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			<uc:H5Panel styleName="{style.headerLbl}" ui:field="gradeLbl"/>
 			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblGrade" visible="true"></g:Label>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-			<g:HTMLPanel  ui:field="gradePanelUc" styleName="col-md-6 col-xs-6"/>
-			<g:HTMLPanel  ui:field="gradePanelUcNext" styleName="col-md-6 col-xs-6"/>
+			<g:HTMLPanel styleName="{style.gradesFilContainer}">
+				<g:HTMLPanel  ui:field="gradePanelUc" styleName="col-md-6 col-xs-6"/>
+				<g:HTMLPanel  ui:field="gradePanelUcNext" styleName="col-md-6 col-xs-6"/>
+			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		</g:HTMLPanel>
 		

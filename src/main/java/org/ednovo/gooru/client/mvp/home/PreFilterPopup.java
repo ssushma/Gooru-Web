@@ -141,17 +141,16 @@ public class PreFilterPopup extends PopupPanel {
 	 * @param currentPlaceToken
 	 */
 	private void setPreSelectedFilters(String currentPlaceToken) {
-		
-		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null)!=null){
-			setSelectedFilter(eleGradePanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null), ",");
-			setSelectedFilter(middleGradePanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null), ",");
-			setSelectedFilter(highrGradePanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null), ",");
+		String gradeVal=AppClientFactory.getPlaceManager().getRequestParameter("flt.grade",null);
+		String subjectVal=AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName",null);
+		if(gradeVal!=null){
+			setSelectedFilter(eleGradePanelUc, gradeVal, ",");
+			setSelectedFilter(middleGradePanelUc, gradeVal, ",");
+			setSelectedFilter(highrGradePanelUc, gradeVal, ",");
 		}
-		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName",null)!=null){
-			setSelectedFilter(subjectPanelUc, AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName",null), " ~~");
+		if(subjectVal!=null){
+			setSelectedFilter(subjectPanelUc, subjectVal, " ~~");
 		}
-		
-		
 	}
 
 	/**

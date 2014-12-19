@@ -554,7 +554,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		descriptionText.getElement().setId("pnlDescriptionText");
 		descriptionText.getElement().setAttribute("alt", i18n.GL0904());
 		descriptionText.getElement().setAttribute("title", i18n.GL0904());
-		categoryPanelText.getElement().setInnerHTML(i18n.GL0906());
+		categoryPanelText.getElement().setInnerHTML(i18n.GL3103()+i18n.GL_SPL_STAR());
 		categoryPanelText.getElement().setId("pnlCategoryPanelText");
 		categoryPanelText.getElement().setAttribute("alt", i18n.GL0906());
 		categoryPanelText.getElement().setAttribute("title", i18n.GL0906());
@@ -728,6 +728,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		HTMLPanel defaultMediaFeatureText = new HTMLPanel("");
 		defaultMediaFeatureText.getElement().setInnerHTML(i18n.GL3093());
 		defaultMediaFeatureText.getElement().setClassName(CollectionEditResourceCBundle.INSTANCE.css().myEducationalPanelSubTitles());
+		defaultMediaFeatureText.getElement().addClassName(CollectionEditResourceCBundle.INSTANCE.css().setBorder());
 		defaultMediaFeaturePnl.add(defaultMediaFeatureText);
 		defaultMediaFeaturePnl.addClickHandler(new ClickHandler() {
 			@Override
@@ -853,122 +854,81 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		standardsBrowseContainer.setVisible(false);
 		mobileFriendlyContainer.setVisible(false);
 		
-		addSetupAdvancedView.educationUseAdvancedPnl.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
+		addSetupAdvancedView.educationUseAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.momentsOfLearningAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		
+		eHearderIconEducationalUse.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconMomentsOfLearning.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconstandards.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconAccessHazard.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconMediafeature.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconMobileFriendly.addClickHandler(new MinimizePanelsClickHandler());
+		
+		/** Add Advanced Setup Changes End**/
+	}
+	
+	private class MinimizePanelsClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(event.getSource()==eHearderIconEducationalUse){
+				educationalContainer.setVisible(false);
+				educationalUsePanel.setVisible(false);
+				addSetupAdvancedView.educationUseAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconMomentsOfLearning){
+				momentsOfLearningContainer.setVisible(false);
+				momentsOfLearningPanel.setVisible(false);
+				addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconstandards){
+				standardsBrowseContainer.setVisible(false);
+				addSetupAdvancedView.standardsAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconAccessHazard){
+				accessHazardContainer.setVisible(false);
+				addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconMediafeature){
+				mediaFeatureContainer.setVisible(false);
+				addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconMobileFriendly){
+				mobileFriendlyContainer.setVisible(false);
+				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
+			}
+		}
+	}
+	
+	private class AddSetupAdvancedClickHandlers implements ClickHandler{
+		public AddSetupAdvancedClickHandlers() {
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			if(event.getSource()==addSetupAdvancedView.educationUseAdvancedPnl){
 			educationalContainer.setVisible(true);
 			educationalUsePanel.setVisible(true);
 			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.momentsOfLearningAdvancedPnl.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.momentsOfLearningAdvancedPnl){
 				momentsOfLearningContainer.setVisible(true);
 				momentsOfLearningPanel.setVisible(true);
 				addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.standardsAdvancedPnl){
 				standardContainer.setVisible(true);
+				standardsBrowseContainer.setVisible(true);
 				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.accessHazardAdvancedPnl){
 				accessHazardContainer.setVisible(true);
 				addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.mediaFeatureAdvancedPnl){
 				mediaFeatureContainer.setVisible(true);
 				addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.mobileFreindlyAdvancedPnl){
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
 			}
-		});
-		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				standardsBrowseContainer.setVisible(true);
-				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
-			}
-		});
-		
-		/** Add Advanced Setup Changes End**/
-		
-		eHearderIconEducationalUse.addClickHandler(new eHeaderClickHandler());
-		eHearderIconMomentsOfLearning.addClickHandler(new eHeaderMomentsOfLearningClickHandler());
-		eHearderIconstandards.addClickHandler(new eHeaderStandardsClickHandler());
-		eHearderIconAccessHazard.addClickHandler(new eHeaderAccessHazardClickHandler());
-		eHearderIconMediafeature.addClickHandler(new eHeaderMediaFeatureOnCLick());
-		eHearderIconMobileFriendly.addClickHandler(new eHeaderMobileFriendlyOnClick());
-	
+		}
 	}
 	
-	private class eHeaderClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			educationalContainer.setVisible(false);
-			educationalUsePanel.setVisible(false);
-			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(true);
-		}
-	}
-	private class eHeaderMomentsOfLearningClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			momentsOfLearningContainer.setVisible(false);
-			momentsOfLearningPanel.setVisible(false);
-			addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(true);
-		}
-	}
-	private class eHeaderStandardsClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			standardsBrowseContainer.setVisible(false);
-			addSetupAdvancedView.standardsAdvancedPnl.setVisible(true);
-		}
-	}
-	private class eHeaderAccessHazardClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			accessHazardContainer.setVisible(false);
-			addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(true);
-		}
-	}
-	private class eHeaderMediaFeatureOnCLick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			mediaFeatureContainer.setVisible(false);
-			addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(true);
-			}
-	}
-	private class eHeaderMobileFriendlyOnClick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			mobileFriendlyContainer.setVisible(false);
-			addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
-		}
-		
-	}
+	
 	
 	/**
 	 * On click of this button can browse for file from local computer.
@@ -1610,7 +1570,25 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			browseStandardsInfo();
 		}
 	}
-	
+	/**
+	 * 
+	 * @function DisableStandars 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description    This method is used to disable the standrds based on user selected standards from settings
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void DisableStandars(){
 		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
 		browseStandards.getElement().getStyle().setColor("#999");
@@ -1659,12 +1637,35 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 		return false;
 	}
-	
+	/**
+	 * 
+	 * @function enableStandards 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description  This method is used to enable the standrds based on user selected standards from settings
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void enableStandards(){
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
 	}
-	
+	/**
+	 * 
+	 * @param standardsCodeVal
+	 * @param id
+	 * @param desc
+	 */
 	public void setUpdatedBrowseStandarsCode(String standardsCodeVal,int id,String desc) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
@@ -2037,7 +2038,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	public abstract void closeStandardsPopup();
 	/**
-	 * This method is used to set Styles for Advanced Options(Educational Use,Moments Of Learning and Media Feature)
+	 * 
+	 * @function setAdvancedOptionsStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description  This method is used to set styles for educationaluse,momentsoflearning and mediafeature based on dropdown selection.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void setAdvancedOptionsStyles(){
 		if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
@@ -2060,8 +2077,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 	}
 	/**
-	 * This method is used to set Styles for Access Hazard Advanced Options 
-	 * @param length
+	 * 
+	 * @function setAdvancedAccessHazardStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description  This method is used to set styles for accesshazard on click of perticular panel.
+	 * 
+	 * 
+	 * @parm(s) : @param length
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void setAdvancedAccessHazardStyles(int length){
 		if(length == 0){
@@ -2072,7 +2104,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 	}
 	/**
-	 * This method is used to set Styles for Standards Advanced Option 
+	 * 
+	 * @function updateStandardsAdvancedSetupStyle 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description This method is used to set styles for standards based on the number of standards.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void updateStandardsAdvancedSetupStyle() {
 		if(standardsPanel.getWidgetCount()==0){
@@ -2083,7 +2131,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 	}
 	/**
-	 *  This method is used to set Styles for Mobile Friendly Advanced Option 
+	 * 
+	 * @function updateMobileFriendlyAdvancedStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description This method is used to set styles for MobileFriendly tags based on the user selection(Yes/No).
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void updateMobileFriendlyAdvancedStyles(){
 		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
