@@ -470,7 +470,10 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setNotFriendly(null);
 		getSearchDo().setQuery(searchQuery);
 		Map<String, String> filterMap = new HashMap<String, String>();
+		if(getSearchDo().getFilters() != null)
+		{
 		filterMap = getSearchDo().getFilters();
+		}
 		filterMap.put("disableSpellCheck", "true");
 		getSearchDo().setFilters(filterMap);
 		onSearchDisableSpellCheck(viewToken);
