@@ -1188,7 +1188,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			browseStandardsInfo();
 		}
 	}
-	
+	/**
+	 * 
+	 * @author GooruTeam
+	 * This method is used to generate image on button click
+	 *
+	 */
 	private class onGenerateFromUrlBtnClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -2574,7 +2579,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description  This method is used to update the browse standards
 	 * 
 	 * 
 	 * @parm(s) : @param standardsCodeVal
@@ -2612,7 +2617,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description    This method is used to disable the standrds based on user selected standards from settings
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2721,7 +2726,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description  This method is used to enable the standrds based on user selected standards from settings
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2746,7 +2751,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description   This method is used to enable the generatefromURL button based on the url entered.
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2779,7 +2784,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description This method is used to disable the generatefromURL button based on the url entered.
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2813,7 +2818,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description  This method is used to set styles for educationaluse,momentsoflearning and mediafeature based on dropdown selection.
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2854,7 +2859,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description  This method is used to set styles for accesshazard on click of perticular panel.
 	 * 
 	 * 
 	 * @parm(s) : @param length
@@ -2883,7 +2888,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description This method is used to set styles for standards based on the number of standards.
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2912,7 +2917,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description This method is used to set styles for MobileFriendly tags based on the user selection(Yes/No).
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2944,7 +2949,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description : This method is used to show UrlErrorMessage.
 	 * 
 	 * 
 	 * @parm(s) : @param message
@@ -2973,7 +2978,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description This method is used to clear the URL Error Message.
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -2999,7 +3004,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description : This method is used to show the error message for title
 	 * 
 	 * 
 	 * @parm(s) : @param message
@@ -3028,7 +3033,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description  This method is used to clear the error message for title
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -3055,7 +3060,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description  This method is used to show the error message for category
 	 * 
 	 * 
 	 * @parm(s) : @param message
@@ -3085,7 +3090,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description
+	 * @description   This method is used to clear the error message for category
 	 * 
 	 * 
 	 * @parm(s) : 

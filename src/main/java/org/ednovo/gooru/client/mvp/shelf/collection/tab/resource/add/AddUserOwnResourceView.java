@@ -1572,7 +1572,25 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			browseStandardsInfo();
 		}
 	}
-	
+	/**
+	 * 
+	 * @function DisableStandars 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description    This method is used to disable the standrds based on user selected standards from settings
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void DisableStandars(){
 		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
 		browseStandards.getElement().getStyle().setColor("#999");
@@ -1621,12 +1639,35 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 		return false;
 	}
-	
+	/**
+	 * 
+	 * @function enableStandards 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description  This method is used to enable the standrds based on user selected standards from settings
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void enableStandards(){
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
 	}
-	
+	/**
+	 * 
+	 * @param standardsCodeVal
+	 * @param id
+	 * @param desc
+	 */
 	public void setUpdatedBrowseStandarsCode(String standardsCodeVal,int id,String desc) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
@@ -1999,7 +2040,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	public abstract void closeStandardsPopup();
 	/**
-	 * This method is used to set Styles for Advanced Options(Educational Use,Moments Of Learning and Media Feature)
+	 * 
+	 * @function setAdvancedOptionsStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description  This method is used to set styles for educationaluse,momentsoflearning and mediafeature based on dropdown selection.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void setAdvancedOptionsStyles(){
 		if(resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684())){
@@ -2022,8 +2079,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 	}
 	/**
-	 * This method is used to set Styles for Access Hazard Advanced Options 
-	 * @param length
+	 * 
+	 * @function setAdvancedAccessHazardStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description  This method is used to set styles for accesshazard on click of perticular panel.
+	 * 
+	 * 
+	 * @parm(s) : @param length
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void setAdvancedAccessHazardStyles(int length){
 		if(length == 0){
@@ -2034,7 +2106,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 	}
 	/**
-	 * This method is used to set Styles for Standards Advanced Option 
+	 * 
+	 * @function updateStandardsAdvancedSetupStyle 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description This method is used to set styles for standards based on the number of standards.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void updateStandardsAdvancedSetupStyle() {
 		if(standardsPanel.getWidgetCount()==0){
@@ -2045,7 +2133,23 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		}
 	}
 	/**
-	 *  This method is used to set Styles for Mobile Friendly Advanced Option 
+	 * 
+	 * @function updateMobileFriendlyAdvancedStyles 
+	 * 
+	 * @created_date : 15-Dec-2014
+	 * 
+	 * @description This method is used to set styles for MobileFriendly tags based on the user selection(Yes/No).
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void updateMobileFriendlyAdvancedStyles(){
 		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
