@@ -133,7 +133,7 @@
 		        </html5:SectionTag>
 	        </g:FlowPanel>
         </g:FlowPanel>
-        <g:FlowPanel styleName="row">
+        <html5:SectionTag styleName="row">
 	      	<g:FlowPanel styleName="col-md-12 {playerStyle.whitebg}">
        			 <g:Label styleName="{playerStyle.hrShadow}"></g:Label>
        		 </g:FlowPanel>
@@ -168,49 +168,8 @@
 					      <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessage}"/>
 					    </g:HTMLPanel>
 					</g:HTMLPanel>
-			</g:FlowPanel>
-			<html5:SectionTag styleName="row ">
-			<g:HTMLPanel styleName="col-md-12 {playerStyle.whitebg} {playerStyle.padding20}">
-			    <g:HTMLPanel styleName="{playerStyle.commentsSection}" ui:field="commentssection">
-			   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
-			   <g:HTMLPanel styleName="{playerStyle.onoffbtns}" ui:field="switchContainer">
-					<g:InlineLabel ui:field="requiredLabel">Comments On</g:InlineLabel>
-					<label class="{playerStyle.switchContainer} switchGreen">
-					 	<g:SimpleCheckBox styleName="switchInput" ui:field="changeAssignmentStatusButton" checked="true"></g:SimpleCheckBox>
-						<g:InlineLabel styleName="switchLabel"></g:InlineLabel>
-						<g:InlineLabel styleName="switchHandle" ui:field="sequenceNumberLabel"></g:InlineLabel>
-					</label> 
-					<g:InlineLabel ui:field="optionalLabel">Comments Off</g:InlineLabel>
-				</g:HTMLPanel>
-			   <g:VerticalPanel ui:field="commentsContainer" styleName="{playerStyle.commentsTable}"/>
-			   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
-			   <g:Label ui:field="noCommentsLbl"/>
-			   <g:HTMLPanel styleName="{playerStyle.avatarblock}" ui:field="addComment">
-			      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2">
-			     		<g:Image styleName="{playerStyle.userPhoto}" ui:field="userPhoto"></g:Image>
-			      </g:HTMLPanel>
-			      <g:HTMLPanel styleName="col-md-10 col-xs-6 col-sm-8">
-					<g:Label ui:field="lblCharLimitComments" styleName="{playerStyle.commentsCharLimit}"/>
-					<g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
-					      	<g:Label ui:field="loginMessagingText"></g:Label>
-					      	<g:Anchor ui:field="loginUrl"/> 
-					      	<g:Label ui:field="orText"></g:Label> 
-					      	<g:Anchor ui:field="signupUrl" />
-					      	<g:Label ui:field="toCommentText"></g:Label>
-				      </g:HTMLPanel>
-			      	  <g:TextArea styleName="{playerStyle.commentField} form-control" ui:field="commentField"></g:TextArea>
-			      </g:HTMLPanel>
-				  <g:Label styleName="col-md-10 col-xs-6 col-sm-8 {playerStyle.successPostMsg}" ui:field="successPostMsg" />
-			      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2">
-				      <g:Button styleName="secondary disabled" ui:field="postCommentBtn"/>
-				      <g:Button styleName="secondary {playerStyle.marginTop10}" ui:field="postCommentCancel"/>
-				      <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessage}"/>
-				  </g:HTMLPanel>
-				  <g:Label styleName="clearfix"></g:Label>
-			    </g:HTMLPanel>
-			    </g:HTMLPanel>
-			</g:HTMLPanel>
-		 </html5:SectionTag>
+			</html5:SectionTag>
+			
 		</g:HTMLPanel>
         </g:FlowPanel>  
 </ui:UiBinder>
