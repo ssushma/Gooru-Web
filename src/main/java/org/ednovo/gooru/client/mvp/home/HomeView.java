@@ -127,18 +127,9 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public AppSuggestBox txtSearch;
 	
 	String jsonDataString = null;
-	
-	
-	PreFilterPopup preFilter =	null;
-	
-	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
-	
-	
-	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
-	private boolean hasAutoSelected = false;
 	
 	private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 
@@ -959,8 +950,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 			txtSearch.hideSuggestionList();
 		}
-		
-		hasAutoSelected=true;
 		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
 		getEditSearchTxtBox().setText(searchText.trim());
 
