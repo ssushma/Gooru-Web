@@ -520,3 +520,7 @@ white-space: nowrap; */
 .floatLeft{
 	float:left;
 }
+
+.clearPadding{
+	padding: 0px;
+}
