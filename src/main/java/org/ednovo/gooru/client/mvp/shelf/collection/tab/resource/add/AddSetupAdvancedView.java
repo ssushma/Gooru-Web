@@ -44,7 +44,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public  abstract class AddSetupAdvancedView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
+public  abstract class AddSetupAdvancedView extends Composite{
 
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	@UiField
@@ -71,18 +71,6 @@ public  abstract class AddSetupAdvancedView extends Composite implements HasMous
 		
 	}
 	public static Binder obj = GWT.create(Binder.class); 
-	
-	@Override
-	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
-		// TODO Auto-generated method stub
-		return addDomHandler(handler, MouseOverEvent.getType());
-	}
-	@Override
-	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
-		// TODO Auto-generated method stub
-		return addDomHandler(handler, MouseOutEvent.getType());
-	}
-	
 	
 	public  abstract  void showAndHideContainers();
 }
