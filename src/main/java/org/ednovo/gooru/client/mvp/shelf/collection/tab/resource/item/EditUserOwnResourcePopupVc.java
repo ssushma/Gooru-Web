@@ -547,7 +547,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		descriptionText.getElement().setId("pnlDescriptionText");
 		descriptionText.getElement().setAttribute("alt", i18n.GL0904());
 		descriptionText.getElement().setAttribute("title", i18n.GL0904());
-		categoryLabel.getElement().setInnerHTML(i18n.GL0906());
+		categoryLabel.getElement().setInnerHTML(i18n.GL3103()+i18n.GL_SPL_STAR());
 		categoryLabel.getElement().setId("pnlCategoryLabel");
 		categoryLabel.getElement().setAttribute("alt", i18n.GL0906());
 		categoryLabel.getElement().setAttribute("title", i18n.GL0906());
@@ -946,120 +946,80 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		standardsBrowseContainer.setVisible(false);
 		mobileFriendlyContainer.setVisible(false);
 		
-		addSetupAdvancedView.educationUseAdvancedPnl.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
+		addSetupAdvancedView.educationUseAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.momentsOfLearningAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		
+		eHearderIconEducationalUse.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconMomentsOfLearning.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconstandards.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconAccessHazard.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconMediafeature.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconMobileFriendly.addClickHandler(new MinimizePanelsClickHandler());
+		
+		/** Add Advanced Setup Changes End**/
+	}
+	
+	private class MinimizePanelsClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(event.getSource()==eHearderIconEducationalUse){
+				educationalContainer.setVisible(false);
+				educationalUsePanel.setVisible(false);
+				addSetupAdvancedView.educationUseAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconMomentsOfLearning){
+				momentsOfLearningContainer.setVisible(false);
+				momentsOfLearningPanel.setVisible(false);
+				addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconstandards){
+				standardsBrowseContainer.setVisible(false);
+				addSetupAdvancedView.standardsAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconAccessHazard){
+				accessHazardContainer.setVisible(false);
+				addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconMediafeature){
+				mediaFeatureContainer.setVisible(false);
+				addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconMobileFriendly){
+				mobileFriendlyContainer.setVisible(false);
+				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
+			}
+		}
+	}
+	
+	private class AddSetupAdvancedClickHandlers implements ClickHandler{
+		public AddSetupAdvancedClickHandlers() {
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			if(event.getSource()==addSetupAdvancedView.educationUseAdvancedPnl){
 			educationalContainer.setVisible(true);
 			educationalUsePanel.setVisible(true);
 			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.momentsOfLearningAdvancedPnl.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.momentsOfLearningAdvancedPnl){
 				momentsOfLearningContainer.setVisible(true);
 				momentsOfLearningPanel.setVisible(true);
 				addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.standardsAdvancedPnl){
 				standardContainer.setVisible(true);
+				standardsBrowseContainer.setVisible(true);
 				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.accessHazardAdvancedPnl){
 				accessHazardContainer.setVisible(true);
 				addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.mediaFeatureAdvancedPnl){
 				mediaFeatureContainer.setVisible(true);
 				addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(false);
-			}
-		});
-		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+			}else if(event.getSource()==addSetupAdvancedView.mobileFreindlyAdvancedPnl){
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
 			}
-		});
-		addSetupAdvancedView.standardsAdvancedPnl.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				standardsBrowseContainer.setVisible(true);
-				addSetupAdvancedView.standardsAdvancedPnl.setVisible(false);
-			}
-		});
-		
-		/** Add Advanced Setup Changes End**/
-		
-		eHearderIconEducationalUse.addClickHandler(new eHeaderClickHandler());
-		eHearderIconMomentsOfLearning.addClickHandler(new eHeaderMomentsOfLearningClickHandler());
-		eHearderIconstandards.addClickHandler(new eHeaderStandardsClickHandler());
-		eHearderIconAccessHazard.addClickHandler(new eHeaderAccessHazardClickHandler());
-		eHearderIconMediafeature.addClickHandler(new eHeaderMediaFeatureOnCLick());
-		eHearderIconMobileFriendly.addClickHandler(new eHeaderMobileFriendlyOnClick());
-		
-	}
-	private class eHeaderClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			educationalContainer.setVisible(false);
-			educationalUsePanel.setVisible(false);
-			addSetupAdvancedView.educationUseAdvancedPnl.setVisible(true);
 		}
 	}
-	private class eHeaderMomentsOfLearningClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			momentsOfLearningContainer.setVisible(false);
-			momentsOfLearningPanel.setVisible(false);
-			addSetupAdvancedView.momentsOfLearningAdvancedPnl.setVisible(true);
-		}
-	}
-	private class eHeaderStandardsClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			standardsBrowseContainer.setVisible(false);
-			addSetupAdvancedView.standardsAdvancedPnl.setVisible(true);
-		}
-	}
-	private class eHeaderAccessHazardClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			accessHazardContainer.setVisible(false);
-			addSetupAdvancedView.accessHazardAdvancedPnl.setVisible(true);
-		}
-	}
-	private class eHeaderMediaFeatureOnCLick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			mediaFeatureContainer.setVisible(false);
-			addSetupAdvancedView.mediaFeatureAdvancedPnl.setVisible(true);
-			}
-	}
-	private class eHeaderMobileFriendlyOnClick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			mobileFriendlyContainer.setVisible(false);
-			addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
-		}
-		
-	}
+	
 	public void onLoad(){
 		super.onLoad();
 		Scheduler.get().scheduleDeferred(new ScheduledCommand(){
