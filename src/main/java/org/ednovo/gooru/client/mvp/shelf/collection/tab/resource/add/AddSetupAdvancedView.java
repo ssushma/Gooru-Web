@@ -28,15 +28,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAd
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasMouseOutHandlers;
-import com.google.gwt.event.dom.client.HasMouseOverHandlers;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
@@ -54,7 +45,7 @@ public  abstract class AddSetupAdvancedView extends Composite{
 	accessHazardAdvancedContainer,mediaFeatureAdvancedContainer,mobileFreindlyAdvancedContainer,setUpLabel;
 
 	public AddSetupAdvancedView(){
-		initWidget(obj.createAndBindUi(this));
+		initWidget(Uibinder.createAndBindUi(this));
 		AddSetupAdvancedCBundle.INSTANCE.css().ensureInjected();
 		setUpLabel.getElement().setInnerText(i18n.GL3097()+i18n.GL_SPL_QUESTION());
 		educationUseAdvancedPnl.setText(i18n.GL1664());
@@ -70,7 +61,7 @@ public  abstract class AddSetupAdvancedView extends Composite{
 	{
 		
 	}
-	public static Binder obj = GWT.create(Binder.class); 
+	public static Binder Uibinder = GWT.create(Binder.class); 
 	
 	public  abstract  void showAndHideContainers();
 }
