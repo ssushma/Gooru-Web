@@ -177,12 +177,12 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	}
 	.grade1Contianer{
 	display: inline-block;
-	width: 100px;
+	width: 44%;
 	position: relative;
 	}
 	.grade2Contianer{
 	display: inline-block;
-	width: 58px;
+	width: 50%;
 	position: relative;
 	top: -20px;
 	left: -23px;
@@ -199,6 +199,10 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	margin-left: 1px;
 	width: 120px;
 	vertical-align: top;
+
+	}
+	.gradesFilContainer{
+	width:100%;
 
 	}
 
@@ -235,8 +239,10 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<g:HTMLPanel>
 			<g:Label styleName="{style.headerLbl}" ui:field="gradeLbl"></g:Label>
 			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblGrade" visible="true"></g:Label>
+			<g:HTMLPanel styleName="{style.gradesFilContainer}">
 			<g:HTMLPanel  ui:field="gradePanelUc" styleName="{style.grade1Contianer}"/>
 			<g:HTMLPanel  ui:field="gradePanelUcNext" styleName="{style.grade2Contianer}"/>
+			</g:HTMLPanel>
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel>
