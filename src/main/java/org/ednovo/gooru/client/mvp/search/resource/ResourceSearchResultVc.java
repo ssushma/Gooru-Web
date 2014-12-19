@@ -188,6 +188,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 		imgOER.getElement().setAttribute("id", i18n.GL1834());
 		imgOER.getElement().setAttribute("alt", i18n.GL1834());
 		imgOER.getElement().setAttribute("title", i18n.GL1834());
+		
 	}
 
 	public RatingWidgetView getRatingWidgetView() {

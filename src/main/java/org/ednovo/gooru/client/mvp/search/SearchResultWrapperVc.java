@@ -184,8 +184,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		setAddedStatus(true);
 		disclosureContentSimPanel.getElement().getStyle().setWidth(100, Unit.PCT);
 		disclosureContentSimPanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
-		disclosureContentSimPanel.getElement().getStyle().setPadding(0, Unit.PX);
-		disclosureContentSimPanel.getElement().getStyle().setMargin(0, Unit.PX);
+	
 
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());

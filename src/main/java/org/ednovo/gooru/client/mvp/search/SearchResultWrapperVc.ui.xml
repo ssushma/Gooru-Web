@@ -22,25 +22,25 @@ xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:rating="urn:import
 					<g:Label styleName="{res.css.infoLbl}" ui:field="infoLbl" />
 				</g:FocusPanel> -->
 				<g:FocusPanel ui:field="moreInfoLinkFocPanel" styleName="btn-group">
-					<g:Anchor  ui:field="moreInfoLbl"  styleName="btn" />
+					<g:Anchor  ui:field="moreInfoLbl"  styleName="btn {res.css.setFont}" />
 				</g:FocusPanel>
 				<g:FocusPanel ui:field="collectionFocPanel" styleName="btn-group">
-					<g:Anchor  ui:field="collcResLbl" styleName="btn"/>
+					<g:Anchor  ui:field="collcResLbl" styleName="btn {res.css.setFont}"/>
 				</g:FocusPanel> 
 
 				<g:FocusPanel ui:field="analyticsLinkFocPanel" styleName="btn-group">
-					<g:Anchor styleName="{res.css.infoLbl} btn" ui:field="analyticsInfoLbl" />
+					<g:Anchor styleName="{res.css.infoLbl} btn {res.css.setFont}" ui:field="analyticsInfoLbl" />
 				</g:FocusPanel>
 
 				<g:FocusPanel ui:field="shareLinkFocPanel" styleName="btn-group">
-					<g:Anchor  ui:field="shareLbl" styleName="btn"/>
+					<g:Anchor  ui:field="shareLbl" styleName="btn {res.css.setFont}"/>
 
 				</g:FocusPanel>
 				<g:FocusPanel ui:field="tagsLinkFocPanel" styleName="btn-group">
-					<g:Anchor styleName="{res.css.share} btn" ui:field="tagsLbl" />
+					<g:Anchor styleName="{res.css.share} btn {res.css.setFont}" ui:field="tagsLbl" />
 				</g:FocusPanel>
-				<g:FocusPanel ui:field="addLinkFocPanel">
-					<g:Anchor styleName="{res.css.share} btn" ui:field="addLbl" />
+				<g:FocusPanel ui:field="addLinkFocPanel"  styleName="btn-group">
+					<g:Anchor styleName="{res.css.share} btn {res.css.setFont}" ui:field="addLbl" />
 				</g:FocusPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>

@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -56,7 +57,6 @@ import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -340,11 +340,15 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		
 		searchResultPanel.setClonnable(true);
 		
-		
+		boolean device = BrowserAgent.isDevice();
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
-				searchResultPanel.addDraggable(renderSearchResult(searchResult));
+				if (device){
+					searchResultPanel.add(renderSearchResult(searchResult));
+				}else{
+					searchResultPanel.addDraggable(renderSearchResult(searchResult));
+				}
 			}
 			if (searchDo.getTotalPages() > 1) {
 				if (searchDo.getPageNum() > 1) {

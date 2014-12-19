@@ -102,6 +102,7 @@ public interface SearchResultWrapperCBundle extends ClientBundle {
 		String tabActive();
 		
 		String analyticsLblActive();
+		String setFont();
 	}
 
 	@Source("SearchResultWrapper.css")

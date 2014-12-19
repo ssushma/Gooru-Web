@@ -825,10 +825,7 @@ body {
 	margin: 3px 0.5ex !important;
 }
 
-.categoryFilterContainer .filterCheckBox label {
-	padding: 3px 31px;
-	background: url(../images/resource-type-icons.png) no-repeat transparent;
-}
+
 
 .filterCheckBox {
 	float: left;

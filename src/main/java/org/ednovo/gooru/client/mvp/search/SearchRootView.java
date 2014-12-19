@@ -42,6 +42,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -78,7 +79,6 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	SimplePanel searchWrapperSimPanel, shelfTabSimPanel;
 	@UiField FlowPanel panelSearchPage;
 	@UiField Anchor searchFilterMenu;
-
 	/*@UiField
 	Anchor resourceLinkLbl, collectionLinkLbl;*/
 	
@@ -105,7 +105,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		lodingImage.getElement().setId("lblLodingImage");
 		searchFilterMenu.getElement().setId("toggle-menu1");
-	/*	int windowHeight=Window.getClientHeight();
+		searchFilterMenu.setHTML("<img src=\"images/toggleIcon.png\"/> "+i18n.GL3102());
+		/*	int windowHeight=Window.getClientHeight();
 		panelSearchPage.setStyleName("panelHeight");
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);*/
 	}
