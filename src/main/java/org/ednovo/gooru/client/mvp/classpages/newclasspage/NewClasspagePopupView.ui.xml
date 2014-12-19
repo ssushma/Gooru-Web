@@ -26,12 +26,14 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res1.css.formViewButtonContainer}" ui:field="panelPleaseWait">
-					<g:Label styleName="{res.css.creating}" ui:field="panelLoading"></g:Label>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res1.css.formViewButtonContainer}" ui:field="panelControls">
-					<g:Button ui:field="btnCancel" styleName="secondary"/>
-					<g:Button ui:field="btnAdd" styleName="primary"/>
+				<g:HTMLPanel styleName="{res1.css.formViewButtonContainer}">
+				    <g:HTMLPanel ui:field="panelPleaseWait">
+						<g:Label styleName="{res.css.creating}" ui:field="panelLoading"></g:Label>
+					</g:HTMLPanel>
+					<g:HTMLPanel ui:field="panelControls">
+						<g:Button ui:field="btnCancel" styleName="secondary"/>
+						<g:Button ui:field="btnAdd" styleName="primary"/>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
