@@ -4,9 +4,10 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle"
 		field="res" />
-
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
 		
-		<g:HTMLPanel styleName="{res.css.assign}" ui:field="panelAssign">
+		<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}" ui:field="panelAssign">
 		<g:HTMLPanel styleName="{res.css.assignContentLoginCustomize}">
 			<g:HTMLPanel styleName="{res.css.assignHeader}">
 				<g:HTMLPanel styleName="{res.css.assignTitle}" ui:field="customizeText"></g:HTMLPanel>
@@ -41,6 +42,7 @@
 			</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
+		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</g:HTMLPanel>
 
 </ui:UiBinder> 
