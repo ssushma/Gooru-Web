@@ -147,6 +147,7 @@
 	height: 100px;
 	border: 1px solid #ddd;
 	float: left;
+	box-sizing: content-box;
 }
 .sausdContentLast {
 	width: 325px;
@@ -154,6 +155,7 @@
 	background: white;
 	height: 100px;
 	border: 1px solid #ddd;
+	box-sizing: content-box;
 }
 .sausdContentBlock {
 	width: 680px;
