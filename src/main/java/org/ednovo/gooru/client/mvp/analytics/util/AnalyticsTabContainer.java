@@ -54,12 +54,14 @@ public abstract class AnalyticsTabContainer extends Composite {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			clearStyles();
 			if(tabClicked.equalsIgnoreCase(SCORED)){
+				clearStyles();
 				btnScoredQuestions.addStyleName("addButonStyleActive");
 			}else if(tabClicked.equalsIgnoreCase(OPENENDED)){
+				clearStyles();
 				btnOpenEndedQuestions.addStyleName("addButonStyleActive");
 			}else if(tabClicked.equalsIgnoreCase(BREAKDOWN)){
+				clearStyles();
 				btnCollectionBreakDown.addStyleName("addButonStyleActive");
 			}
 			onTabClick(tabClicked);
