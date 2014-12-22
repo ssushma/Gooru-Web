@@ -42,7 +42,6 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
@@ -87,8 +86,6 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -117,7 +114,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -1135,7 +1131,7 @@ public class HeaderUc extends Composite implements
 								});
 			} else {
 				name = "teach";
-
+				Window.enableScrolling(true);
 				// onLinkPopupClicked(null);
 				// TODO need to show new logout page....
 				AppClientFactory.getPlaceManager().redirectPlace(
@@ -1150,11 +1146,9 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onClick(ClickEvent event) {
 			name = "dashboard";
-			if (AppClientFactory.isAnonymous()){
-				Window.enableScrolling(true);
-			}else{
-				Window.enableScrolling(true);
-			}
+			
+			Window.enableScrolling(true);
+			
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 			manageDotsMenuSelection(loggedInfoLbl);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);

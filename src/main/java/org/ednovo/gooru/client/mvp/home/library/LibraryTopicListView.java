@@ -310,7 +310,7 @@ public class LibraryTopicListView extends Composite{
 		if(maps.containsKey("emailId")){
 			showPopupAfterGmailSignin();
 		}
-		
+		Window.enableScrolling(true);
 	}
 	
 
@@ -461,6 +461,7 @@ public class LibraryTopicListView extends Composite{
 		if(maps.containsKey("emailId")){
 			showPopupAfterGmailSignin();
 		}
+		Window.enableScrolling(true);
 	}
 
 	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
@@ -535,6 +536,7 @@ public class LibraryTopicListView extends Composite{
 		if(maps.containsKey("emailId")){
 			showPopupAfterGmailSignin();
 		}
+		Window.enableScrolling(true);
 	}
 
 	private void setPartnerLibraryLessonData(final ArrayList<PartnerFolderDo> lessonDoList) {
@@ -1348,7 +1350,6 @@ public class LibraryTopicListView extends Composite{
 		
 				if(!isAssignPopup){
 					isAssignPopup=true;
-				//	Window.enableScrolling(false);
 				//final Map<String,String> params = new HashMap<String,String>();
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 					

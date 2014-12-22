@@ -168,6 +168,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
+		Window.enableScrolling(true);
 	}
 
 	@Override

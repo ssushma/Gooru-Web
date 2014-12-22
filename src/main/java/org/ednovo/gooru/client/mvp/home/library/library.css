@@ -1177,7 +1177,7 @@ height: 55px;
 float: right;
 margin-left: auto;
 margin-right: auto;
-margin-top: 7px;
+margin-top: 23px;
 }
 .districtLibraryHeaderTextCore{
 	color: white;
@@ -1185,14 +1185,14 @@ font-size: 38px;
 font-weight: bold;
 text-align: center;
 padding-top: 100px;
-height: 45px;
+/* height: 45px; */
 }
 .districtLibrarySubHeaderTextCore{
 	color: white;
 font-size: 16px;
 text-align: center;
 margin-top: 10px;
-height: 19px;
+/* height: 19px; */
 }
 .districtSpecificPartnersMainlps{
 	width: 100%;
@@ -1220,7 +1220,7 @@ font-size: 38px;
 font-weight: bold;
 text-align: center;
 padding-top: 100px;
-height: 45px;
+/* height: 45px; */
 margin-left: 96px;
 }
 .districtLibrarySubHeaderTextlps{
@@ -1228,6 +1228,6 @@ color: white;
 font-size: 16px;
 text-align: center;
 margin-top: 10px;
-height: 19px;
+/* height: 19px; */
 margin-left: 82px;
 }
