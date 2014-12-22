@@ -182,7 +182,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			individualTabContainer.setScoredQuestionsHilight();
 			
 			hideAllPanels();
-			individualScoredDatapnl.setVisible(true);
+			individualResourceBreakdownDatapnl.setVisible(true);
 			
 			individualScoredData.clear();
 			individualOpenendedData.clear();

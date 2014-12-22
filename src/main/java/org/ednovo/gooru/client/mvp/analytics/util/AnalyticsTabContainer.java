@@ -45,7 +45,7 @@ public abstract class AnalyticsTabContainer extends Composite {
 	 * This method is used to highlight scored questions tab.
 	 */
 	public void setScoredQuestionsHilight(){
-		btnScoredQuestions.addStyleName("addButonStyleActive");
+		btnCollectionBreakDown.addStyleName("addButonStyleActive");
 	}
 	public class ClickImplemntation implements ClickHandler{
 		private String tabClicked;

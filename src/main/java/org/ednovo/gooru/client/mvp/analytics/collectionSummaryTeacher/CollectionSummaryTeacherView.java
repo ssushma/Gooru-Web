@@ -177,7 +177,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 			teacherTabContainer.clearStyles();
 			teacherTabContainer.setScoredQuestionsHilight();  
 			hideAllPanels();
-		    teacherScoredDatapnl.setVisible(true);
+		    teacherResourceBreakdownDatapnl.setVisible(true);
+		    
 		    this.collectionMetaData=collectionMetaData;
 		    teacherScoredData.clear();
 			teacherOpenendedData.clear();
