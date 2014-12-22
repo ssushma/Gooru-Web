@@ -48,9 +48,12 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -292,6 +295,14 @@ public class WrapView extends BaseView implements IsWrapView {
 	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
 		this.addStandardsPresenter=addStandardsPresenter;
 		headerUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
+		//This is used for handle the mouse left click event to display the search prefilter popup.
+		MouseDownHandler hanlder=new MouseDownHandler() {
+			@Override
+			public void onMouseDown(MouseDownEvent event) {
+				displayPreFilterpopup();
+			}
+		};
+		headerUc.getEditSearchTxtBox().addDomHandler(hanlder, MouseDownEvent.getType());
 	}
 	
 	/**
