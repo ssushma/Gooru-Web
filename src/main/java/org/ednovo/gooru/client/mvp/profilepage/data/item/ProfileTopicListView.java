@@ -1112,8 +1112,8 @@ public class ProfileTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-		/*	successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("657px");*/
+		/*	successPopupVc.setWidth("500px");*/
+			successPopupVc.setHeight("657px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
@@ -1156,7 +1156,7 @@ public class ProfileTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
+		/*	successPopupVc.setWidth("500px");*/
 			successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
@@ -1204,7 +1204,7 @@ public class ProfileTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				customizePopup.setWidth("500px");
+			/*	customizePopup.setWidth("500px");*/
 				customizePopup.setHeight("440px");
 				customizePopup.show();
 				customizePopup.center();
@@ -1231,7 +1231,7 @@ public class ProfileTopicListView extends Composite{
 				};
 				Window.scrollTo(0, 0);
 				//assignPopup.setWidth("500px");
-				//assignPopup.setHeight("657px");
+				assignPopup.setHeight("657px");
 				assignPopup.show();
 				assignPopup.center();
 				if (AppClientFactory.isAnonymous()){

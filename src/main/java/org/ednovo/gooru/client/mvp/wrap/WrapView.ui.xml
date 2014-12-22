@@ -64,9 +64,7 @@
 		font-size: 16px;
 		height: 80px;
 		line-height: 80px;
-		margin-right: 15px;
-		padding-left: 80px;
-		padding-right: 20px;
+	
 		border-right: 1px solid #ddd;
 		}
 		.rating{
@@ -74,7 +72,7 @@
 		.imgSection {
 		display: inline-block;
 		vertical-align: top;
-		padding-left: 30px;
+		
 		}
 		.info {
 		color: #515151;
@@ -92,8 +90,16 @@
 		.close {
 		position: absolute;
 		right: 40px;
-		margin-top: 30px;
+		margin-top: 16px;
 		cursor: pointer;
+		}
+		.img{
+			width:100%;
+			height:100%;
+		}
+		.ipadsection{
+			margin:0 auto;
+			text-align:center;	
 		}
 	</ui:style>
 
@@ -105,24 +111,30 @@
 	        </g:HTMLPanel>
 	    </g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.tabSection}" ui:field="androidSectiondiv">
-			<g:HTMLPanel styleName="{style.imgSection}">
-				<g:Image url="images/tablet.png" width="129" height="73" />
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.info}" ui:field="msglinkPanel">
+		    <g:HTMLPanel styleName="{style.ipadsection}">
+			<g:HTMLPanel styleName="col-md-2 col-sm-2 {style.imgSection}">
+				<g:Image url="images/tablet.png" styleName="{style.img}"/>
+			</g:HTMLPanel> 
+			<!--  <g:Image styleName="col-md-2 col-xs-2 {style.imgSection}" url="images/tablet.png"/> -->
+			 
+			<g:HTMLPanel styleName="col-md-8 col-xs-10 col-sm-8 {style.info}" ui:field="msglinkPanel">
 				<g:HTMLPanel ui:field="msgPanel"></g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:Image url="images/close.png" width="20" height="20"
-				ui:field="closeAndriodBtn" styleName="{style.close}" />
+			<g:HTMLPanel styleName="col-md-2 col-xs-2 col-sm-2">
+					<g:Image url="images/close.png" ui:field="closeAndriodBtn" styleName="{style.close}" />	    
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="clearfix"/>
+			</g:HTMLPanel>	
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.tabSection}" ui:field="ipadSectiondiv">
-			<g:HTMLPanel styleName="{style.viewResult}">
+			<g:HTMLPanel styleName="{style.ipadsection}">
+			    <g:HTMLPanel styleName="col-md-6">
 				<g:HTMLPanel styleName="{style.closesmall}">
 					<g:Image ui:field="closeIpadBtn" url="images/close-small.png"
 						width="14" height="14" />
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:Image url="images/gooru-thumbnail.png" width="80"
-						height="79" />
+					<g:Image url="images/gooru-thumbnail.png" width="80" height="79"/>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.resource-cover}">
 					<g:HTMLPanel styleName="{style.rating}">
@@ -132,6 +144,8 @@
 						<g:HTMLPanel styleName="{style.normal}" ui:field="appstorePanel"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="col-md-6">
 				<g:Anchor styleName="{style.resource-cover} {style.view}"
 					target="_blank" href="https://itunes.apple.com/in/app/gooru/id674087861?mt=8"
 					ui:field="viewAnchor"></g:Anchor>
@@ -151,6 +165,8 @@
 				<g:HTMLPanel styleName="{style.resource-cover}">
 					<g:Image url="images/result-img.png" width="100" height="75" />
 				</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="clearfix"/>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="webcontainer">
