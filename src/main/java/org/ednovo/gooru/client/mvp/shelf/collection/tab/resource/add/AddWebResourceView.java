@@ -1221,6 +1221,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				}else{
 					activeImageIndex=0;
 					setImageThumbnail();
+					generateImageLbl.setVisible(false);
+					setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
 				}
 //				loadingPanel.setVisible(true);
 //				contentPanel.getElement().getStyle().setOpacity(0.6);
@@ -1621,6 +1623,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		@Override
 		public void onBlur(BlurEvent event) {
+			
+			refreshLbl.setVisible(false);
+			setThumbnailImage.setUrl("");
+			setThumbnailImage.setVisible(false);
+			rightArrowLbl.setVisible(false);
+			leftArrowLbl.setVisible(false);
+			generateImageLbl.setVisible(true);
+			
 			final Map<String, String> parms = new HashMap<String, String>();
 			
 			parms.put("text", urlTextBox.getText().trim());
