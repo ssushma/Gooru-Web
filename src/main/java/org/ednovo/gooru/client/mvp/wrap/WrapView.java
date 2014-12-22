@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -50,6 +51,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -119,7 +121,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		searchPush.getElement().setId("searchPush");
 		menuRight.getElement().setId("menuRight");
 		
-		/*  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		 Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
@@ -150,16 +152,14 @@ public class WrapView extends BaseView implements IsWrapView {
 		//	  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-		  }*/
+		  }
 			ipadSectiondiv.setVisible(false);
 			androidSectiondiv.setVisible(false);
 			webcontainer.getElement().setId("main");
 			headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-			System.out.println("========================place"+place);
 			if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
 				  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-				  System.out.println("=========================I am In Wrap view If");
 
 			}
 		  setUiText();
