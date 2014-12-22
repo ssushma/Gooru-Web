@@ -118,7 +118,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	@UiField Label correctQueryText;
 		
-	String grades,stdCode,subjects,categories,publisher,aggregator;
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,publisher,aggregator;
 	
 	protected ResourceDragController dragController;
 
@@ -179,7 +179,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showStandardsFilter();
 		showPublisherFilter();
 		showAggregatorFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || publisher!=null || aggregator!=null)){
+		showOERFilter();
+		showMobileFriendlyFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -318,7 +320,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showStandardsFilter();
 		showPublisherFilter();
 		showAggregatorFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || publisher!=null )){
+		showOERFilter();
+		showMobileFriendlyFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -654,6 +658,34 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			}
 		};
 	}
+	
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showOERFilter() {
+		oerTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isOer");
+		if(oerTag!=null){
+			if(oerTag.equalsIgnoreCase("1"))
+			{
+				standardsConatiner.add(createTagsLabel("OER","standPanel"));
+			}
+
+		}
+	}
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showMobileFriendlyFilter() {
+		mobileFirendlyTag = AppClientFactory.getPlaceManager().getRequestParameter("fltNot.mediaType");
+		if(mobileFirendlyTag!=null){
+			if(mobileFirendlyTag.equalsIgnoreCase("not_ipad_friendly"))
+			{
+				standardsConatiner.add(createTagsLabel("Mobile Friendly","standPanel"));
+			}
+
+		}
+	}
+	
 	
 	public abstract void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
 
