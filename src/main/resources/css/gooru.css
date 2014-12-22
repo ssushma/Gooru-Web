@@ -1583,8 +1583,8 @@ td.datePickerMonth{
 	width: 400px !important;
 }
 p{
-	padding:0;
-	margin:0;
+	padding:0 !important;
+	margin:0 !important;
 }
 
 
