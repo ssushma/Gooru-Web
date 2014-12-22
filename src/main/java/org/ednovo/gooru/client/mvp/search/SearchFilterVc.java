@@ -2054,6 +2054,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		public void getSearchFilters(String filterName, String panel) {
 			if (filterName != null) {
 				//if(resourceSearch){
+				System.out.println("panel::"+panel);
+				System.out.println("filterName::"+filterName);
+
 				if(panel.equals("subjectPanel")){
 					removeSelectedFilter(subjectPanelUc, filterName);
 				}
@@ -2068,7 +2071,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				{
 					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));
 				}
-				
+								
 			}
 		}
         /**
@@ -2076,12 +2079,20 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
          * @param subjectPanelUc {@link HTMLPanel} 
          * @param filterName {@link String} grade/subject search filter name 
          */
-		private void removeSelectedFilter(HTMLPanel subjectPanelUc,
+		private void removeSelectedFilter(HTMLPanel filterPanelUc,
 				String filterName) {
-			for(int i=0;i<subjectPanelUc.getWidgetCount();i++){
-				Widget filterWidget = subjectPanelUc.getWidget(i);
+			if(filterPanelUc.equals(gradePanelUc) || filterPanelUc.equals(gradePanelUcNext)){
+				System.out.println("ininin");
+				if(filterName.contains("Grade")){
+					filterName=filterName.replace("Grade ", "");
+					System.out.println("filterName:"+filterName);
+				}
+			}
+			for(int i=0;i<filterPanelUc.getWidgetCount();i++){
+				Widget filterWidget = filterPanelUc.getWidget(i);
 				if (filterWidget instanceof CheckBox) {
 					CheckBox filterCheckBox = (CheckBox) filterWidget;
+					System.out.println("filterCheckBox.getName()"+filterCheckBox.getName());
 					if ((filterCheckBox.getName().equals(filterName))) {	
 						filterCheckBox.setValue(false);
 					}

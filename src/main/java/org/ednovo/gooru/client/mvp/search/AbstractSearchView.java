@@ -118,7 +118,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	@UiField Label correctQueryText;
 		
-	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag;
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,publisher,aggregator;
 	
 	protected ResourceDragController dragController;
 
@@ -177,9 +177,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showSubjectsFilter();
 		showGradesFilter();
 		showStandardsFilter();
+		showPublisherFilter();
+		showAggregatorFilter();
 		showOERFilter();
 		showMobileFriendlyFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null)){
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -316,9 +318,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showSubjectsFilter();
 		showGradesFilter();
 		showStandardsFilter();
+		showPublisherFilter();
+		showAggregatorFilter();
 		showOERFilter();
 		showMobileFriendlyFilter();
-		if(!(stdCode !=null || grades!=null || subjects!=null|| oerTag !=null || mobileFirendlyTag!=null)){
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -608,6 +612,33 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				standardsConatiner.add(createTagsLabel(stdSplit[i],"standPanel"));
 			}
 //			standardsConatiner.add(createTagsLabel(stdCode,"standPanel"));
+		}
+	}
+	/**
+	 * To show the publisher values in search page
+	 */
+	private void showPublisherFilter() {
+		publisher = AppClientFactory.getPlaceManager().getRequestParameter("flt.publisher");
+		if(publisher!=null){
+			String[] split = publisher.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"publisherPanel"));
+			}
+				
+		}
+	}
+	
+	/**
+	 * To show the aggregator values in search page
+	 */
+	private void showAggregatorFilter() {
+		aggregator = AppClientFactory.getPlaceManager().getRequestParameter("flt.aggregator");
+		if(aggregator!=null){
+			String[] split = aggregator.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"aggregatorPanel"));
+			}
+				
 		}
 	}
 
