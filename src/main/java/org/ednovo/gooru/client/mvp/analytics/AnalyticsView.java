@@ -106,8 +106,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		loadCollections.clear();
 		if(gradeData!=null){
 			for (GradeJsonData gradeJsonData : gradeData) {
-				loadcollectionsmap.put(gradeJsonData.getResourceGooruOId(), gradeJsonData);
-				loadCollections.addItem(gradeJsonData.getTitle(), gradeJsonData.getResourceGooruOId());
+				if(gradeJsonData.getTitle()!=null){
+					loadcollectionsmap.put(gradeJsonData.getResourceGooruOId(), gradeJsonData);
+					loadCollections.addItem(gradeJsonData.getTitle(), gradeJsonData.getResourceGooruOId());
+				}
 			}
 		}
 	}

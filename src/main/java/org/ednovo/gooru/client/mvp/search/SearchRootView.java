@@ -105,7 +105,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		lodingImage.getElement().setId("lblLodingImage");
 		searchFilterMenu.getElement().setId("toggle-menu1");
-		searchFilterMenu.setHTML("<img src=\"images/toggleIcon.png\"/> "+i18n.GL3104());
+		searchFilterMenu.setHTML("<img src=\"images/toggleIcon.png\"/> "+i18n.GL3104_1());
 		/*	int windowHeight=Window.getClientHeight();
 		panelSearchPage.setStyleName("panelHeight");
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);*/

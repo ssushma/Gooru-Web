@@ -26,7 +26,9 @@
 }
 .addButonStyle{
 	height: 39px;
+	background: #EDEDED !important;
 	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED) !important;
+	background: -moz-linear-gradient(top,#FDFDFD, #EDEDED) !important;
 	color: #515151 !important;
 	border: none !important;
 	border-radius: 0px !important;

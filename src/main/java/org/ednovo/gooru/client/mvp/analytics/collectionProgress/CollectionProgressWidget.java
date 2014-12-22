@@ -72,7 +72,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	
 	private int collectionProgressCount=1;
 	ViewResponsesPopup showResponsesPopup=null;
-	
+	Table table;
 	/**
 	 * Constructor
 	 */
@@ -102,10 +102,12 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				leftArrow.setVisible(true);
-				rightArrow.setVisible(true);
-				leftArrow.getElement().getStyle().setTop(54+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
-				rightArrow.getElement().getStyle().setBottom(60+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
+				if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
+					leftArrow.setVisible(true);
+					rightArrow.setVisible(true);
+					leftArrow.getElement().getStyle().setTop(54+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
+					rightArrow.getElement().getStyle().setBottom(60+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
+				}
 			}
 		};
 		MouseOutHandler mouseOutHandler=new MouseOutHandler() {
@@ -308,7 +310,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
         
         final DataView view =DataView.create(data);
         
-        final Table table = new Table(view, options);
+        table = new Table(view, options);
         table.setStyleName("collectionProgressTable");
      
         filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
