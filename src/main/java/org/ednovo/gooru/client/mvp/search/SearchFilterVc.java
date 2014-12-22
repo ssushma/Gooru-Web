@@ -1299,13 +1299,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			filterMap.put(IsSearchView.STANDARD_FLT, standardSgsts);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			if(getSelectedFilter(panelNotMobileFriendly) != null)
-			{
-			if (getSelectedFilter(panelNotMobileFriendly).equalsIgnoreCase("not_ipad_friendly")){
+			if (chkNotFriendly !=null &&  chkNotFriendly.getValue()){
 //				if (chkNotFriendly.getText().equalsIgnoreCase("not_ipad_friendly")){
 					filterMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 //				}
-			}
 			}
 			String ratings=getSelectedFilter(ratingPanelUc);
 			if(!ratings.isEmpty()){
@@ -2057,6 +2054,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		public void getSearchFilters(String filterName, String panel) {
 			if (filterName != null) {
 				//if(resourceSearch){
+				System.out.println("panel::"+panel);
+				System.out.println("filterName::"+filterName);
+
 				if(panel.equals("subjectPanel")){
 					removeSelectedFilter(subjectPanelUc, filterName);
 				}
@@ -2064,6 +2064,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					removeSelectedFilter(gradePanelUc, filterName);
 					removeSelectedFilter(gradePanelUcNext, filterName);
 				}
+				if(panel.equals("accessPanel")){
+					removeSelectedFilter(accessModePanel, filterName);
+				}
+				/*if(panel.equals("oerPanel")){
+					removeSelectedFilter(oerPanel, filterName);
+				}
+				if(panel.equals("mediaPanel")){
+					removeSelectedFilter(panelNotMobileFriendly, filterName);
+				}*/
 				if(panel.equals("categoryPanel")){
 					removeSelectedFilter(categoryPanelUc, filterName);
 				}
@@ -2071,63 +2080,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				{
 					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));
 				}
-				if(panel.equals("oerPanel"))
+				if(panel.equals("publisherPanel"))
 				{
-					removeSelectedFilter(oerPanel, "flt.isOer");
-					clearFilter(oerPanel);
+					removeSelectedStandards(sourceContainerFloPanel, filterName.split(COMMA_SEPARATOR));
 				}
-				if(panel.equals("mobileFirendlyPanel"))
+				if(panel.equals("aggregatorPanel"))
 				{
-					removeSelectedFilter(panelNotMobileFriendly, "fltNot.mediaType");
-					clearFilter(panelNotMobileFriendly);
+					removeSelectedStandards(aggregatorContainerFloPanel, filterName.split(COMMA_SEPARATOR));
 				}
-				if(panel.equals("ratingallPanel"))
+				if(panel.equals("authorPanel"))
 				{
-					removeSelectedFilter(ratingPanelUc, "flt.rating");
-					clearFilter(ratingPanelUc);
+					removeSelectedStandards(authorContainerFloPanel, filterName.split(COMMA_SEPARATOR));
 				}
-				if(panel.equals("ratingPanel"))
-				{
-					System.out.println("in rating panel::");
-					removeSelectedFilter(ratingPanelUc, "flt.rating");
-					String ratingsText = "";
-					if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
-					{
-					ratingsText = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
-					if(filterName.equalsIgnoreCase("5 star"))
-					{
-	
-						ratingsText= ratingsText.replaceAll("5,", "");
-					}
-					else if(filterName.equalsIgnoreCase("4 star"))
-					{
-						
-						ratingsText = ratingsText.replaceAll(",4", "");
-					}
-					else if(filterName.equalsIgnoreCase("3 star"))
-					{
-					
-						ratingsText = ratingsText.replaceAll(",3", "");
-					}
-					else if(filterName.equalsIgnoreCase("2 star"))
-					{
-						
-						ratingsText = ratingsText.replaceAll(",2", "");
-					}
-					else if(filterName.equalsIgnoreCase("1 star"))
-					{
-						
-						ratingsText = ratingsText.replaceAll(",1", "");
-					}
-					else if(filterName.equalsIgnoreCase("No Ratings"))
-					{
-						ratingsText = ratingsText.replaceAll(",0", "");
-					}
-					}
-					setSelectedFilter(ratingPanelUc,ratingsText,COMMA_SEPARATOR);
-				}
-				
-				
+								
 			}
 		}
         /**
@@ -2135,12 +2100,20 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
          * @param subjectPanelUc {@link HTMLPanel} 
          * @param filterName {@link String} grade/subject search filter name 
          */
-		private void removeSelectedFilter(HTMLPanel subjectPanelUc,
+		private void removeSelectedFilter(HTMLPanel filterPanelUc,
 				String filterName) {
-			for(int i=0;i<subjectPanelUc.getWidgetCount();i++){
-				Widget filterWidget = subjectPanelUc.getWidget(i);
+			if(filterPanelUc.equals(gradePanelUc) || filterPanelUc.equals(gradePanelUcNext)){
+				System.out.println("ininin");
+				if(filterName.contains("Grade")){
+					filterName=filterName.replace("Grade ", "");
+					System.out.println("filterName:"+filterName);
+				}
+			}
+			for(int i=0;i<filterPanelUc.getWidgetCount();i++){
+				Widget filterWidget = filterPanelUc.getWidget(i);
 				if (filterWidget instanceof CheckBox) {
 					CheckBox filterCheckBox = (CheckBox) filterWidget;
+					System.out.println("filterCheckBox.getName()"+filterCheckBox.getName());
 					if ((filterCheckBox.getName().equals(filterName))) {	
 						filterCheckBox.setValue(false);
 					}
@@ -2174,7 +2147,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 		}
 	}
-	
 	@UiHandler("arrowLblCategory")
 	public void onCategoryArrowLabelclick(ClickEvent clickEvent) 
 	{
