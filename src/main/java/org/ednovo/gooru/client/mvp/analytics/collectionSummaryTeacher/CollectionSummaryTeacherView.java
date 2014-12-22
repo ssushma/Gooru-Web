@@ -102,7 +102,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		String urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
-		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"'/css/googleVisualization.css'><link href='"+urlDomain+"'/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		printWidget.setVisible(false);
 	}
@@ -248,7 +248,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	   	        	
 	   	            //Set Question Title
-	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	   	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	   	            data.setValue(i, 1, questionTitle.toString());
 	   	          
@@ -572,7 +572,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            data.setValue(i, 1,categorylbl.toString());
 	            
 	            //Set Question Title
-	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 2, questionTitle.toString());
 	          
