@@ -693,28 +693,29 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	@UiHandler("assessmentButton")
 	public void onClickNewAssessmentBtn(ClickEvent clickEvent){
-		if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
-			AppClientFactory.fireEvent(new InvokeLoginEvent());
-		} else {
-			setFolderUrlParams();
-			Map<String, String> params = new HashMap<String, String>();
-			if(O3_LEVEL_VALUE!=null) {
-				params.put(O1_LEVEL, O1_LEVEL_VALUE);
-				params.put(O2_LEVEL, O2_LEVEL_VALUE);
-				params.put(O3_LEVEL, O3_LEVEL_VALUE);
-			} else if(O2_LEVEL_VALUE!=null) {
-				params.put(O1_LEVEL, O1_LEVEL_VALUE);
-				params.put(O2_LEVEL, O2_LEVEL_VALUE);
-			} else if(O1_LEVEL_VALUE!=null){
-				params.put(O1_LEVEL, O1_LEVEL_VALUE);
-			}
-				params.put("folderId", presentFolderId);
-				params.put("type", "assessment");
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-				
-			}
+		Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint(), "_blank", "");
+//		if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
+//			AppClientFactory.fireEvent(new InvokeLoginEvent());
+//		} else {
+//			setFolderUrlParams();
+//			Map<String, String> params = new HashMap<String, String>();
+//			if(O3_LEVEL_VALUE!=null) {
+//				params.put(O1_LEVEL, O1_LEVEL_VALUE);
+//				params.put(O2_LEVEL, O2_LEVEL_VALUE);
+//				params.put(O3_LEVEL, O3_LEVEL_VALUE);
+//			} else if(O2_LEVEL_VALUE!=null) {
+//				params.put(O1_LEVEL, O1_LEVEL_VALUE);
+//				params.put(O2_LEVEL, O2_LEVEL_VALUE);
+//			} else if(O1_LEVEL_VALUE!=null){
+//				params.put(O1_LEVEL, O1_LEVEL_VALUE);
+//			}
+//				params.put("folderId", presentFolderId);
+//				params.put("type", "assessment");
+//				Window.enableScrolling(false);
+//				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+//				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
+//				
+//			}
 		}
 
 	@Override

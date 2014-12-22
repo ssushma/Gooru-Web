@@ -72,6 +72,8 @@ public class FilterSettings implements Serializable {
 	private String communityLibraryGooruOid;
 
 	
+	private String assessementEndPoint;
+	
 	public FilterSettings(){}
 	
 	public String getApiKeyPoint() {
@@ -253,4 +255,11 @@ public class FilterSettings implements Serializable {
 		this.communityLibraryGooruOid = communityLibraryGooruOid;
 	}
 
+	public String getAssessementEndPoint() {
+		return assessementEndPoint;
+	}
+
+	public void setAssessementEndPoint(String assessementEndPoint) {
+		this.assessementEndPoint = assessementEndPoint;
+	}
 }
