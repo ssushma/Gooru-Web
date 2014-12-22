@@ -788,6 +788,7 @@ public class LibraryMenuNav extends Composite{
 								
 								@Override
 								public void onClick(ClickEvent event) {
+									Window.enableScrolling(true);
 									Window.scrollTo(0, 0);
 									setHeaderBrowserTitle(standardsCourseDo.getLabel());
 									//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());

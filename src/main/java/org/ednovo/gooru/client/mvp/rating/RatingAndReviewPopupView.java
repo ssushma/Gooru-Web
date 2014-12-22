@@ -117,8 +117,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		reviewsContainer.getElement().getStyle().setWidth(100, Unit.PCT);
-		maincontainer.setHeight("500px");
-		maincontainer.getElement().getStyle().setOverflow(Overflow.AUTO);
+		reviewScrollPanel.setHeight("500px");
+		reviewScrollPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
 //		this.center();
 //		appPopUp.center();
 	}
