@@ -392,7 +392,7 @@ public class HeaderUc extends Composite implements
 			public void keyAction(String text) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
-
+				
 				autoSuggestKeywordDo.setQuery(text);
 				searchData = getEditSearchTxtBox().getText();
 				autoSuggestKeywordDo.setType("resource");
@@ -401,9 +401,7 @@ public class HeaderUc extends Composite implements
 				} else {
 					getEditSearchTxtBox().hideSuggestionList();
 				}
-
 			}
-
 		});
 		getEditSearchTxtBox().addSelectionHandler(this);
 		getEditSearchTxtBox().setPopupStyleName("shelfEditSearchTextBox");
@@ -1714,8 +1712,10 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
-			
 			arrowLbl.setVisible(true);
+			if(prefilter!=null){
+				prefilter.hide();
+			}
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
