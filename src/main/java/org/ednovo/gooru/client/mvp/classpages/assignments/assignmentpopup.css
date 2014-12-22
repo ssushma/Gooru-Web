@@ -31,6 +31,14 @@
 	float: left;
 	margin: 38px 0 15px 55px;
 }
+.navigateButtonContainer{
+	float: left;
+	margin: 0 auto;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	text-align: center;
+	width: 100%;
+}
 
 .assessmentAddContainer {
 		
