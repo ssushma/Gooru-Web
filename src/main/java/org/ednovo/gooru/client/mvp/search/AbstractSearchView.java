@@ -118,7 +118,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	@UiField Label correctQueryText;
 		
-	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,publisher,aggregator;
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,publisher,aggregator,accessMode,author;
 	
 	protected ResourceDragController dragController;
 
@@ -181,7 +181,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showAggregatorFilter();
 		showOERFilter();
 		showMobileFriendlyFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null)){
+		showAccessModeFilter();
+		showAuthorFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -314,6 +316,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		}
 		
 		standardsConatiner.clear();
+		System.out.println("presearch:::");
 		showCategoryFilter();
 		showSubjectsFilter();
 		showGradesFilter();
@@ -322,7 +325,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showAggregatorFilter();
 		showOERFilter();
 		showMobileFriendlyFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null)){
+		showAccessModeFilter();
+		showAuthorFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -641,6 +646,32 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				
 		}
 	}
+	/**
+	 * To show the Access mode values in search page
+	 */
+	private void showAccessModeFilter() {
+		accessMode = AppClientFactory.getPlaceManager().getRequestParameter("flt.cfAccessMode");
+		if(accessMode!=null){
+			String[] split = accessMode.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"accessPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * To show the Author values in search page
+	 */
+	private void showAuthorFilter() {
+		author = AppClientFactory.getPlaceManager().getRequestParameter("flt.owner");
+		if(author!=null){
+			String[] split = author.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"authorPanel"));
+			}
+				
+		}
+	}
 
 	/**
 	 * Show user searched filter 
@@ -667,7 +698,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		if(oerTag!=null){
 			if(oerTag.equalsIgnoreCase("1"))
 			{
-				standardsConatiner.add(createTagsLabel("OER","standPanel"));
+				standardsConatiner.add(createTagsLabel("OER","oerPanel"));
 			}
 
 		}
@@ -680,7 +711,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		if(mobileFirendlyTag!=null){
 			if(mobileFirendlyTag.equalsIgnoreCase("not_ipad_friendly"))
 			{
-				standardsConatiner.add(createTagsLabel("Mobile Friendly","standPanel"));
+				standardsConatiner.add(createTagsLabel("Mobile Friendly","mediaPanel"));
 			}
 
 		}
