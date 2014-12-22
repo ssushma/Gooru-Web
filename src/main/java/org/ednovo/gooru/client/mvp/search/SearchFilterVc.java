@@ -1299,10 +1299,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			filterMap.put(IsSearchView.STANDARD_FLT, standardSgsts);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			if (chkNotFriendly !=null &&  chkNotFriendly.getValue()){
+			if(getSelectedFilter(panelNotMobileFriendly) != null)
+			{
+			if (getSelectedFilter(panelNotMobileFriendly).equalsIgnoreCase("not_ipad_friendly")){
 //				if (chkNotFriendly.getText().equalsIgnoreCase("not_ipad_friendly")){
 					filterMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 //				}
+			}
 			}
 			String ratings=getSelectedFilter(ratingPanelUc);
 			if(!ratings.isEmpty()){
@@ -2068,6 +2071,62 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				{
 					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));
 				}
+				if(panel.equals("oerPanel"))
+				{
+					removeSelectedFilter(oerPanel, "flt.isOer");
+					clearFilter(oerPanel);
+				}
+				if(panel.equals("mobileFirendlyPanel"))
+				{
+					removeSelectedFilter(panelNotMobileFriendly, "fltNot.mediaType");
+					clearFilter(panelNotMobileFriendly);
+				}
+				if(panel.equals("ratingallPanel"))
+				{
+					removeSelectedFilter(ratingPanelUc, "flt.rating");
+					clearFilter(ratingPanelUc);
+				}
+				if(panel.equals("ratingPanel"))
+				{
+					System.out.println("in rating panel::");
+					removeSelectedFilter(ratingPanelUc, "flt.rating");
+					String ratingsText = "";
+					if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
+					{
+					ratingsText = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+					if(filterName.equalsIgnoreCase("5 star"))
+					{
+	
+						ratingsText= ratingsText.replaceAll("5,", "");
+					}
+					else if(filterName.equalsIgnoreCase("4 star"))
+					{
+						
+						ratingsText = ratingsText.replaceAll(",4", "");
+					}
+					else if(filterName.equalsIgnoreCase("3 star"))
+					{
+					
+						ratingsText = ratingsText.replaceAll(",3", "");
+					}
+					else if(filterName.equalsIgnoreCase("2 star"))
+					{
+						
+						ratingsText = ratingsText.replaceAll(",2", "");
+					}
+					else if(filterName.equalsIgnoreCase("1 star"))
+					{
+						
+						ratingsText = ratingsText.replaceAll(",1", "");
+					}
+					else if(filterName.equalsIgnoreCase("No Ratings"))
+					{
+						ratingsText = ratingsText.replaceAll(",0", "");
+					}
+					}
+					setSelectedFilter(ratingPanelUc,ratingsText,COMMA_SEPARATOR);
+				}
+				
 				
 			}
 		}
@@ -2115,6 +2174,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 		}
 	}
+	
 	@UiHandler("arrowLblCategory")
 	public void onCategoryArrowLabelclick(ClickEvent clickEvent) 
 	{

@@ -118,7 +118,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	@UiField Label correctQueryText;
 		
-	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag;
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag;
 	
 	protected ResourceDragController dragController;
 
@@ -179,7 +179,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showStandardsFilter();
 		showOERFilter();
 		showMobileFriendlyFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null)){
+		showRatingsFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -318,7 +319,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showStandardsFilter();
 		showOERFilter();
 		showMobileFriendlyFilter();
-		if(!(stdCode !=null || grades!=null || subjects!=null|| oerTag !=null || mobileFirendlyTag!=null)){
+		showRatingsFilter();
+		if(!(stdCode !=null || grades!=null || subjects!=null|| oerTag !=null || mobileFirendlyTag!=null || ratingTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -636,7 +638,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		if(oerTag!=null){
 			if(oerTag.equalsIgnoreCase("1"))
 			{
-				standardsConatiner.add(createTagsLabel("OER","standPanel"));
+				standardsConatiner.add(createTagsLabel("OER","oerPanel"));
 			}
 
 		}
@@ -649,8 +651,36 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		if(mobileFirendlyTag!=null){
 			if(mobileFirendlyTag.equalsIgnoreCase("not_ipad_friendly"))
 			{
-				standardsConatiner.add(createTagsLabel("Mobile Friendly","standPanel"));
+				standardsConatiner.add(createTagsLabel("Mobile Friendly","mobileFirendlyPanel"));
 			}
+
+		}
+	}
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showRatingsFilter() {
+		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+		if(ratingTag!=null){
+			if(ratingTag.equalsIgnoreCase("5,4,3,2,1,0"))
+			{
+				standardsConatiner.add(createTagsLabel("All Ratings","ratingallPanel"));
+			}
+			else 
+			{
+				String[] ratingsSplit = ratingTag.split(",");
+				for(int i=0; i<ratingsSplit.length; i++){
+					if(ratingsSplit[i].equalsIgnoreCase("0"))
+					{
+						standardsConatiner.add(createTagsLabel("No Ratings","ratingPanel"));	
+					}
+					else
+					{
+					standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Star","ratingPanel"));
+					}
+				}
+			}
+			
 
 		}
 	}
