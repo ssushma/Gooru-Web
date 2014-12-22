@@ -28,14 +28,19 @@
 package org.ednovo.gooru.server.request;
 
 
+
+import org.ednovo.gooru.server.AppSessionHolder;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.engine.header.Header;
+import org.restlet.engine.header.HeaderConstants;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
+import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -183,7 +188,14 @@ public abstract class ServiceRequest {
 	}
 
 	public ClientResource getClientResource() {
-		return clientResource;
+	   Series<org.restlet.engine.header.Header> series=(Series<Header>)this.clientResource.getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+       if(series==null){
+    	   series= new Series<Header>(Header.class);
+       }
+       Header agentHeader=new Header(HeaderConstants.HEADER_USER_AGENT, AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT));
+       series.add(agentHeader);
+       this.clientResource.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS,series);
+	   return clientResource;
 	}
 
 	public void setClientResource(ClientResource clientResource) {
