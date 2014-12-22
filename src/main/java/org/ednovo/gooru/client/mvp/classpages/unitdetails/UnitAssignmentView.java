@@ -94,7 +94,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin,lblTimeValidation;
 	
-	@UiField Anchor unitSetupButton;
+	@UiField Button unitSetupButton;
 	
 	@UiField Button btnDashBoard,btnAssignment,btnSetGoal, btnPersonalize;
 	
@@ -179,7 +179,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if(pageLocation.equals(PlaceTokens.STUDENT)){
 			unitSetupButton.setText(i18n.GL2198());			
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-			unitSetupButton.setText(i18n.GL2216());	
+			unitSetupButton.setText(i18n.GL2285()+" "+i18n.GL2219());
 		}
 		assignmentContainer.setVisible(true);
 		lblMoreUnits.setText(i18n.GL2199());

@@ -10,8 +10,7 @@
 		<div class="{unitStyle.containerTeacher}">
 			<div class="col-xs-2 {unitStyle.leftPanel}">
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
-					<img src="images/blueArrow.png" />
-					<g:Anchor ui:field="unitSetupButton"></g:Anchor>
+					<g:Button styleName="primary" ui:field="unitSetupButton"></g:Button>
 				</g:HTMLPanel>
 				<hr />
 				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
