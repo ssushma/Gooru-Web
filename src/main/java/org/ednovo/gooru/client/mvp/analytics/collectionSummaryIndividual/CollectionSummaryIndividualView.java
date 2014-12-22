@@ -102,7 +102,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		String urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
-		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"'/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		setStaticData();
 		noErrorMesage.setVisible(false);
@@ -114,7 +114,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	void setStaticData(){
 		StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 		StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
-		StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
+		//StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
 		StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
 		StringUtil.setAttributes(individualOpenendedData.getElement(), "pnlIndividualOpenendedData", null, null);
 		StringUtil.setAttributes(individualScoredDatapnl.getElement(), "pnlIndividualScoredDatapnl", null, null);
