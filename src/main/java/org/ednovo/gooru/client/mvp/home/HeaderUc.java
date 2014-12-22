@@ -42,7 +42,6 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
@@ -83,8 +82,6 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -113,7 +110,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
@@ -367,6 +363,7 @@ public class HeaderUc extends Composite implements
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				Window.alert("in");
 				return null;
 			}
 
@@ -374,9 +371,6 @@ public class HeaderUc extends Composite implements
 			public void keyAction(String text) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
-				
-				
-				
 				autoSuggestKeywordDo.setQuery(text);
 				searchData = getEditSearchTxtBox().getText();
 				autoSuggestKeywordDo.setType("resource");
@@ -385,9 +379,7 @@ public class HeaderUc extends Composite implements
 				} else {
 					getEditSearchTxtBox().hideSuggestionList();
 				}
-
 			}
-
 		});
 		getEditSearchTxtBox().addSelectionHandler(this);
 		getEditSearchTxtBox().setPopupStyleName("shelfEditSearchTextBox");
@@ -1618,8 +1610,10 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
-			
 			arrowLbl.setVisible(true);
+			if(prefilter!=null){
+				prefilter.hide();
+			}
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
