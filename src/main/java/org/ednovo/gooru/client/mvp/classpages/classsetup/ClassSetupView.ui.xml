@@ -5,17 +5,20 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:ptag= "urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="playerStyle" src="classsetup.css" />
+	
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	
 	<g:HTMLPanel styleName="{playerStyle.unitDetails}">
 		<g:HTMLPanel styleName="{playerStyle.containerTeacher}">
 			<g:HTMLPanel styleName="col-xs-12 {playerStyle.gerybg}">
 				<g:HTMLPanel styleName="col-xs-2"></g:HTMLPanel>
 				<g:FlowPanel styleName="col-xs-8">
-					<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Pathway Setup</g:HTMLPanel>
-					<g:HTMLPanel styleName="text-center {playerStyle.ptag}">You can add, delete and reorder pathways on this page</g:HTMLPanel>
+					<g:Label styleName="text-center {playerStyle.headerFont}" text="{i18n.GL2215}"></g:Label>
+					<g:Label styleName="text-center {playerStyle.ptag}" text="{i18n.GL4003}"></g:Label>
 				</g:FlowPanel>
 				<g:HTMLPanel styleName="col-xs-4 text-right {playerStyle.unitSetupLabel}" ui:field="unitSetupLabel">
 					<ptag:PPanel ui:field="unitSetupContainer" styleName="{playerStyle.uniSetup}">
-					    	<g:Label ui:field="unitSetupButton" styleName="{playerStyle.unitdetailsLbl}">Add Tasks</g:Label> 
+					    	<g:Label ui:field="unitSetupButton" styleName="{playerStyle.unitdetailsLbl}" text="{i18n.GL2216}"></g:Label> 
 							<g:Image url="images/blueRightArrow.png"></g:Image>
 					</ptag:PPanel>
 				</g:HTMLPanel>
@@ -27,7 +30,7 @@
 			    <g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
 			    
 			<g:HTMLPanel styleName="text-center">
-				<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Pathway</g:Button>
+				<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}" text="{i18n.GL4004}"></g:Button>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{playerStyle.paginationStyle}">
 			<ptag:HTMLEventPanel ui:field="paginationPanel" styleName="text-right {playerStyle.paginationBtns}" ></ptag:HTMLEventPanel></g:HTMLPanel>
