@@ -248,7 +248,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	   	        	
 	   	            //Set Question Title
-	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	   	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	   	            data.setValue(i, 1, questionTitle.toString());
 	   	          
