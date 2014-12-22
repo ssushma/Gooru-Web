@@ -10,12 +10,12 @@
 			<g:HTMLPanel styleName="col-xs-12 {playerStyle.gerybg}">
 				<g:HTMLPanel styleName="col-xs-2"></g:HTMLPanel>
 				<g:FlowPanel styleName="col-xs-8">
-					<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Unit Setup</g:HTMLPanel>
-					<g:HTMLPanel styleName="text-center {playerStyle.ptag}">You can add, delete and reorder units on this page</g:HTMLPanel>
+					<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Pathway Setup</g:HTMLPanel>
+					<g:HTMLPanel styleName="text-center {playerStyle.ptag}">You can add, delete and reorder pathways on this page</g:HTMLPanel>
 				</g:FlowPanel>
 				<g:HTMLPanel styleName="col-xs-4 text-right {playerStyle.unitSetupLabel}" ui:field="unitSetupLabel">
 					<ptag:PPanel ui:field="unitSetupContainer" styleName="{playerStyle.uniSetup}">
-					    	<g:Label ui:field="unitSetupButton" styleName="{playerStyle.unitdetailsLbl}">Add Assignments</g:Label> 
+					    	<g:Label ui:field="unitSetupButton" styleName="{playerStyle.unitdetailsLbl}">Add Tasks</g:Label> 
 							<g:Image url="images/blueRightArrow.png"></g:Image>
 					</ptag:PPanel>
 				</g:HTMLPanel>
@@ -27,7 +27,7 @@
 			    <g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
 			    
 			<g:HTMLPanel styleName="text-center">
-				<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Unit</g:Button>
+				<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Pathway</g:Button>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{playerStyle.paginationStyle}">
 			<ptag:HTMLEventPanel ui:field="paginationPanel" styleName="text-right {playerStyle.paginationBtns}" ></ptag:HTMLEventPanel></g:HTMLPanel>

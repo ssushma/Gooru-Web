@@ -108,7 +108,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					pageIntVal = pageIntVal-1;
 				}
 	
-				getUiHandlers().createPathway("Unitname",(pageIntVal)*limit);
+				getUiHandlers().createPathway("Pathwayname",(pageIntVal)*limit);
 			}
 		});
 		
