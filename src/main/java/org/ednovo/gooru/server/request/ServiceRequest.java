@@ -188,13 +188,13 @@ public abstract class ServiceRequest {
 	}
 
 	public ClientResource getClientResource() {
-	   Series<org.restlet.engine.header.Header> series=(Series<Header>)this.clientResource.getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
-       if(series==null){
-    	   series= new Series<Header>(Header.class);
+	   Series<org.restlet.engine.header.Header> requestHeaders=(Series<Header>)this.clientResource.getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+       if(requestHeaders==null){
+    	   requestHeaders= new Series<Header>(Header.class);
+    	   this.clientResource.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS,requestHeaders);
        }
-       Header agentHeader=new Header(HeaderConstants.HEADER_USER_AGENT, AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT));
-       series.add(agentHeader);
-       this.clientResource.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS,series);
+       Header userAgentHeader=new Header(HeaderConstants.HEADER_USER_AGENT, AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT));
+       requestHeaders.add(userAgentHeader);
 	   return clientResource;
 	}
 
