@@ -1203,28 +1203,34 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		@Override
 		public void onClick(ClickEvent event) {
 			if(isGenerateURL){
-			String userUrlStr = urlTextBox.getText().trim();
-			userUrlStr = URL.encode(userUrlStr);
-			//userUrlStr = userUrlStr.replaceAll("#", "%23");
-			urlTextBox.setText(URL.decode(userUrlStr));
-			urlTextBox.getElement().setAttribute("alt",userUrlStr);
-			urlTextBox.getElement().setAttribute("title", userUrlStr);
-			String userUrlStr1 = userUrlStr.replaceAll(
-					"feature=player_detailpage&", "");
-			userUrlStr1 = userUrlStr.replaceAll(
-					"feature=player_embedded&", "");
-			// getResourceInfo(userUrlStr1);
-				updateThumbanilImage(userUrlStr);
-			if (userUrlStr.indexOf("youtube") >0){
-				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
-				String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
-				generateImageLbl.setVisible(false);
-				setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
-				setThumbnailImage.setUrl(thumbnailUrl);
-				//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
-			}
-			loadingPanel.setVisible(true);
-			contentPanel.getElement().getStyle().setOpacity(0.6);
+				
+				
+				String userUrlStr = urlTextBox.getText().trim();
+				userUrlStr = URL.encode(userUrlStr);
+				//userUrlStr = userUrlStr.replaceAll("#", "%23");
+				urlTextBox.setText(URL.decode(userUrlStr));
+				urlTextBox.getElement().setAttribute("alt",userUrlStr);
+				urlTextBox.getElement().setAttribute("title", userUrlStr);
+				String userUrlStr1 = userUrlStr.replaceAll(
+						"feature=player_detailpage&", "");
+				userUrlStr1 = userUrlStr.replaceAll(
+						"feature=player_embedded&", "");
+
+				if (userUrlStr.indexOf("youtube") >0){
+					String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
+					String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+					generateImageLbl.setVisible(false);
+					setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
+					setThumbnailImage.setUrl(thumbnailUrl);
+					//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+				}else{
+					activeImageIndex=0;
+					setImageThumbnail();
+					generateImageLbl.setVisible(false);
+					setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
+				}
+//				loadingPanel.setVisible(true);
+//				contentPanel.getElement().getStyle().setOpacity(0.6);
 			}
 		}
 	}
@@ -1622,6 +1628,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		@Override
 		public void onBlur(BlurEvent event) {
+			
+			refreshLbl.setVisible(false);
+			setThumbnailImage.setUrl("");
+			setThumbnailImage.setVisible(false);
+			rightArrowLbl.setVisible(false);
+			leftArrowLbl.setVisible(false);
+			generateImageLbl.setVisible(true);
+			
 			final Map<String, String> parms = new HashMap<String, String>();
 			
 			parms.put("text", urlTextBox.getText().trim());
@@ -2263,26 +2277,26 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 */
 	public void setImageThumbnail() {
 		if( thumbnailImages.size()>0){
-		if (activeImageIndex == 0) {
-			leftArrowLbl.setVisible(false);
-		} else {
-			leftArrowLbl.setVisible(true);
-		}
-		if (thumbnailImages != null) {
-			if (activeImageIndex == thumbnailImages.size()) {
-				rightArrowLbl.setVisible(false);
+			if (activeImageIndex == 0) {
+				leftArrowLbl.setVisible(false);
 			} else {
-				rightArrowLbl.setVisible(true);
+				leftArrowLbl.setVisible(true);
 			}
-			// setThumbnailImage.setUrlAndVisibleRect(thumbnailImages.get(activeImageIndex),
-			// 0, 0, 80, 60);
-			setThumbnailImage.getElement().setAttribute("style",
-					"width: 80px;height: 60px;");
-			setThumbnailImage.setUrl(thumbnailImages.get(activeImageIndex));
-			thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+			if (thumbnailImages != null) {
+				if (activeImageIndex == thumbnailImages.size()) {
+					rightArrowLbl.setVisible(false);
+				} else {
+					rightArrowLbl.setVisible(true);
+				}
+				// setThumbnailImage.setUrlAndVisibleRect(thumbnailImages.get(activeImageIndex),
+				// 0, 0, 80, 60);
+				setThumbnailImage.getElement().setAttribute("style",
+						"width: 80px;height: 60px;");
+				setThumbnailImage.setUrl(thumbnailImages.get(activeImageIndex));
+				thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+			}
 		}
-		}
-		}
+	}
 
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {
