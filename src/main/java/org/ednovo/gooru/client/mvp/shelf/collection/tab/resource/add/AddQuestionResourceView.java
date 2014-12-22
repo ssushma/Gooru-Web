@@ -355,6 +355,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardContainer.getElement().setId("fpnlStandardContainer");
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
+		standardSgstBox.getElement().setAttribute("style", "box-sizing:content-box");
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
 		standardsPanel.getElement().setId("fpnlStandardsPanel");
 		lblContentRights.getElement().setId("epnlLblContentRights");
