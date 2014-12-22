@@ -408,10 +408,10 @@ public class StringUtil {
 	 */
 	public static void setAttributes(Element object, String idValue, String altValue, String titleValue){
 		object.setAttribute("id",idValue);
-		if(altValue!=null)
-		object.setAttribute("alt",altValue);
-		if(titleValue!=null)
-		object.setAttribute("title",titleValue);
+		if (altValue !=null )
+			object.setAttribute("alt",altValue);
+		if (titleValue !=null )
+			object.setAttribute("title",titleValue);
 	}
 	
 	public static native String removeHtml(String htmText) /*-{
