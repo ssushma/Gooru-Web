@@ -967,6 +967,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			addSetupAdvancedView.setUpLabel.setVisible(true);
 			if(event.getSource()==eHearderIconEducationalUse){
 				educationalContainer.setVisible(false);
 				educationalUsePanel.setVisible(false);
@@ -1018,7 +1019,31 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
 			}
+			
+			if(isAllAdditionalTagsOpen()){
+				addSetupAdvancedView.setUpLabel.setVisible(false);
+			}
 		}
+	}
+	
+	/**
+	 * This method will check all additional tags are open or not.
+	 * 
+	 * @return allAdditionalTagInVisisble
+	 */
+	public boolean isAllAdditionalTagsOpen() {
+		
+		boolean allAdditionalTagInVisisble = false;
+		
+		if (!addSetupAdvancedView.educationUseAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.momentsOfLearningAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
+			allAdditionalTagInVisisble = true;
+		}
+		return allAdditionalTagInVisisble;
 	}
 	
 	public void onLoad(){
