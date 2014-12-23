@@ -1281,10 +1281,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			String ratings=getSelectedFilter(ratingPanelUc);
 			String reviews = getSelectedFilter(reviewPanelUc);
 			if(!reviews.isEmpty()){
-				if(chkNotFriendly.getValue())
-				{
+
 				filterMap.put(IsSearchView.REVIEWS_FLT, "1");
-				}
+				
 			}
 			if(!ratings.isEmpty()){
 				filterMap.put(IsSearchView.RATINGS_FLT, ratings);
@@ -1485,6 +1484,17 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		String ratings = filter.get(IsSearchView.RATINGS_FLT);
 		
+		String reviews = filter.get(IsSearchView.REVIEWS_FLT);
+		
+		if(ratings == null)
+		{
+			ratings = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+		}
+		if(reviews == null)
+		{
+			reviews = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
+		}
+		
 		if(categories==null){
 			clearAllFields();
 		}
@@ -1493,7 +1503,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		setSelectedFilter(gradePanelUc, grade);
 		setSelectedFilter(gradePanelUcNext, grade);
 		if(resourceSearch)
+		{
 		setSelectedFilter(ratingPanelUc, ratings);
+		setSelectedFilter(reviewPanelUc, reviews);
+		}
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -1653,6 +1666,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param separator concatenation of the filter value by separator 
 	 */
 	private void setSelectedFilter(HTMLPanel filterHtmlPanel, String checkedValues, String separator) {
+		System.out.println("filterHtmlPanel::"+filterHtmlPanel.getWidgetCount());
+		System.out.println("filterHtmlPanelcheckedValues::"+checkedValues);
 		List<String> items = null;
 		if (checkedValues != null) {
 			items = Arrays.asList(checkedValues.split("\\s*" + separator + "\\s*"));
@@ -1666,7 +1681,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					CheckBox filterCheckBox = (CheckBox) filterWidget;
 					filterCheckBox.setValue(false);
 					for (String item : items) {
-						if ((filterCheckBox.getName().equals(item))) {	
+						System.out.println("filterCheckBox.getName()::"+(filterCheckBox.getName().equalsIgnoreCase("review")));
+						System.out.println("item::"+item);
+						if ((filterCheckBox.getName().equals(item)) || (filterCheckBox.getName().equalsIgnoreCase("review"))) {	
 							filterCheckBox.setValue(true);
 						}
 					}
