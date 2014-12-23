@@ -89,15 +89,10 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	void setStaticData(){
 		StringUtil.setAttributes(htmlpnlProgress.getElement(), "pnlHtmlpnlProgress", null, null);
 		StringUtil.setAttributes(scrollForCollectionProgress.getElement(), "pnlScrollForCollectionProgress", null, null);
-		
 		StringUtil.setAttributes(filterDropDown.getElement(), "ddlFilterDropDown", null, null);
-		
 		StringUtil.setAttributes(collectionTitlelbl.getElement(), "spnCollectionTitlelbl", null, null);
 		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
 		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
-		
-		leftArrow.setVisible(false);
-		rightArrow.setVisible(false);
 		
 		MouseOverHandler mouseOver=new MouseOverHandler() {
 			@Override
@@ -105,27 +100,15 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 				if(table.getOffsetWidth()>=scrollForCollectionProgress.getOffsetWidth()){
 					leftArrow.setVisible(true);
 					rightArrow.setVisible(true);
-					leftArrow.getElement().getStyle().setTop(54+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
-					rightArrow.getElement().getStyle().setBottom(60+(scrollForCollectionProgress.getOffsetHeight()/2), Unit.PX);
+				}else{
+					leftArrow.setVisible(false);
+					rightArrow.setVisible(false);
 				}
 			}
 		};
-		MouseOutHandler mouseOutHandler=new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				leftArrow.setVisible(false);
-				rightArrow.setVisible(false);				
-			}
-		};
 		scrollForCollectionProgress.addDomHandler(mouseOver, MouseOverEvent.getType());
-		scrollForCollectionProgress.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
-		
 		leftArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
-		leftArrow.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
-		
 		rightArrow.addDomHandler(mouseOver, MouseOverEvent.getType());
-		rightArrow.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
 	}
 	/**
 	 * This handler is used to handle the click event on left arrow

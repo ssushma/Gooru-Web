@@ -444,7 +444,7 @@ public class WrapView extends BaseView implements IsWrapView {
 							}
 								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-									addStandardsPresenter.callDefaultStandardsLoad();
+									addStandardsPresenter.callDefaultStandardsLoad();								
 								}
 							
 					}
@@ -459,6 +459,7 @@ public class WrapView extends BaseView implements IsWrapView {
 			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 				addStandardsPresenter.callDefaultStandardsLoad();
+			
 			}
 		}
 

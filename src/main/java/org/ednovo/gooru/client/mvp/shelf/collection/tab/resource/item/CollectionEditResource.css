@@ -3069,10 +3069,9 @@ vertical-align: top;
 	display:inline;
 }
 .setBorder{
-	border-top: 1px solid #999;
-	text-align: center;
-	width: 64%;
-	padding-right: 90px;
-	padding-left: 0;
-	background: url(../images/NewResourcePopup/clear.png) no-repeat center left;
+border-top: 1px solid #999;
+text-align: left;
+width: 92%;
+padding-left: 16px;
+background: url(../images/NewResourcePopup/clear.png) no-repeat center left;
 }
