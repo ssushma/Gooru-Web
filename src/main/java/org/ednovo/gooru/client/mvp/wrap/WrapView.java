@@ -379,15 +379,15 @@ public class WrapView extends BaseView implements IsWrapView {
 						getAddStandards();
 						preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 						
-						addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+					//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
 						addStandardsPresenter.getAddBtn().setVisible(false);
 						
 					}
 				});
 			//}
 			headerUc.setPrefilterObj(preFilter);
-			preFilter.setStyleName(GooruCBundle.INSTANCE.css().positionStyle());
-			preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
+			//preFilter.setStyleName(GooruCBundle.INSTANCE.css().positionStyle());
+			//preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
 
 			preFilter.setFilter();
 			preFilter.show();

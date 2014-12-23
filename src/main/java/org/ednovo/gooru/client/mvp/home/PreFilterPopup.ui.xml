@@ -68,13 +68,10 @@
 		box-sizing: border-box;
 		box-sizing: border-box;
 		float: left;
-		width: 50%;
 		padding-top: 12px;
 	}
 	
 	.searchPopSubject {
-		width: 50%;
-		border-left: 1px solid #cacaca;
 		padding-left: 4%;
 		height: 155px;
 		box-sizing: border-box;
@@ -177,7 +174,7 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.searchPopContent}" ui:field="gradesPanel">
-				<g:HTMLPanel styleName="{style.searchPopGrade}">
+				<g:HTMLPanel styleName="col-md-6 {style.searchPopGrade}">
 					<g:Label styleName="{style.searchPopSmallHead}" text="{i18n.GL0325}" />
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
 						<g:HTMLPanel styleName="{style.col1}">
@@ -192,7 +189,7 @@
 						<g:HTMLPanel styleName="{style.clearfix}"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.searchPopSubject}">
+				<g:HTMLPanel styleName="col-md-6 borderRight {style.searchPopSubject}">
 					<g:Label styleName="{style.searchPopSmallHead}" text="{i18n.GL0226}" />
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
 						<g:HTMLPanel ui:field="subjectPanelUc" />
