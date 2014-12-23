@@ -176,7 +176,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 	
-	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer;
+	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer;
 	
 	@UiField HTMLEventPanel AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl,defaultPanel;
@@ -757,7 +757,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 
 		});
-		
+		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
 		moblieFriendly.setText(i18n.GL1811());
 		moblieFriendly.getElement().setId("spnMobileFriendly");
 		moblieFriendly.getElement().setAttribute("alt",i18n.GL1811());
@@ -1108,9 +1108,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	public void setData(ResourceMetaInfoDo result) {
 		setResMetaInfo(result);
+		if(result.getImages()!=null && result.getImages().size()>1){
+			rightArrowLbl.setVisible(true);
+		}else{
+			rightArrowLbl.setVisible(false);
+		}
 		setThumbnailImages(result.getImages());
 		updateUi();
-		rightArrowLbl.setVisible(true);
 	}
 	private class rightsChecked implements ClickHandler {
 			@Override
@@ -1289,7 +1293,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resoureDropDownLblOpen=false;
 		}
 
-		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
+		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
 		
 		if( collectionItemDo.getResource().getEducationalUse()!=null){
@@ -1348,21 +1352,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void setImage(String thumbnailUrlImage, String category){
-		System.out.println("thumbnailUrlImage : "+thumbnailUrlImage);
 		if (thumbnailUrlImage.endsWith("null")) {
-			if (thumbnailUrlImage.indexOf("youtube") >0){
-				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(thumbnailUrlImage);
-				thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
-			}else{
-				thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
-			}
+			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 		} 
+		if (thumbnailUrlImage!=null && thumbnailUrlImage.indexOf("youtube") >0){
+			String urlStr = urlTextLbl.getText().trim();
+			String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(urlStr);
+			thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+		}
 		setThumbnailImage.setUrl(thumbnailUrlImage);
 	}
 	public void updateUi() {
 		generateImageLbl.setVisible(false);
 		setThumbnailImage.setVisible(true);
-
 		if (urlTextLbl.getText().indexOf("youtube") != -1) {
 			rightArrowLbl.setVisible(false);
 		}
@@ -1848,25 +1850,28 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}*/
 
 	public void setImageThumbnail() {
+		
 		if (activeImageIndex == 0) {
 			leftArrowLbl.setVisible(false);
 		} else {
 			leftArrowLbl.setVisible(true);
 		}
-		if (activeImageIndex == thumbnailImagesLink.size()) {
-			rightArrowLbl.setVisible(false);
-		} else {
-			rightArrowLbl.setVisible(true);
+			if (thumbnailImagesLink != null) {
+				
+			if (activeImageIndex == thumbnailImagesLink.size()) {
+				rightArrowLbl.setVisible(false);
+			} else {
+				rightArrowLbl.setVisible(true);
+			}
+			setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
+			thumbnailUrlStr = thumbnailImagesLink.get(activeImageIndex);
 		}
-		setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
-		thumbnailUrlStr = thumbnailImagesLink.get(activeImageIndex);
 	}
 
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {
-		
-		setImage(collectionItemDo.getResource()
-				.getThumbnailUrl(), collectionItemDo.getResource().getCategory());
+		String thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
+		setImage(thumbnailUrlStr, collectionItemDo.getResource().getCategory());
 		
 		leftArrowLbl.setVisible(false);
 		if (urlTextLbl.getText().contains("youtube")) {

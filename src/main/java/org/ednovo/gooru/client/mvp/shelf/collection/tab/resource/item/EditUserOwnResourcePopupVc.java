@@ -141,7 +141,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	@UiField
 	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent,
 	mediaLabelContainer,educationalContainer,momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,
-	mobileFriendlyContainer;
+	mobileFriendlyContainer,mediaDropdownArrowConatainer;
 	
 
 	@UiField
@@ -387,6 +387,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}
 		};
 		AdvancedSetupContainer.add(addSetupAdvancedView);
+		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
 		
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningPanel.getElement().setId("pnlMomentsOfLearningPanel");

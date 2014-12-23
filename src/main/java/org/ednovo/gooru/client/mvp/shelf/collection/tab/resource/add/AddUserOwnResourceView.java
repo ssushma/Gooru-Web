@@ -120,7 +120,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	@UiField HTMLPanel loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,mediaLabelContainer,educationalContainer,
-	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer;
+	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer;
 	
 	@UiField
 	public Button cancelResourcePopupBtnLbl,uploadImageLbl,browseResourceBtn;
@@ -346,6 +346,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
+		textsResourcePanel.addStyleName("active");
+		resourceCategoryLabel.setText(i18n.GL1044());
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {

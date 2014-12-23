@@ -155,7 +155,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
 		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
-		defaultMomentsOfLearningText;
+		defaultMomentsOfLearningText,mediaDropdownArrowConatainer;
 
 	
 	@UiField HTMLPanel panelCategoryInputDiv;
@@ -369,6 +369,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		initWidget(uiBinder.createAndBindUi(this));
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {
 			@Override
 			public void showAndHideContainers() {
@@ -608,6 +609,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		mandatoryDescLblForSwareWords.setVisible(false);
 		mandatoryCategoryLbl.setVisible(false);
 		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
+		mandatoryCategoryLbl.getElement().getStyle().setTop(-10, Unit.PX);
 		descCharcterLimit.getElement().setInnerText(i18n.GL0143());
 		descCharcterLimit.getElement().setId("pnlDescCharcterLimit");
 		descCharcterLimit.getElement().setAttribute("alt", i18n.GL0143());
