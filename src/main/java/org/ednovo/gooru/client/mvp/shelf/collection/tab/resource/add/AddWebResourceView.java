@@ -155,7 +155,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
 		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
-		defaultMomentsOfLearningText;
+		defaultMomentsOfLearningText,mediaDropdownArrowConatainer;
 
 	
 	@UiField HTMLPanel panelCategoryInputDiv;
@@ -369,6 +369,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		initWidget(uiBinder.createAndBindUi(this));
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {
 			@Override
 			public void showAndHideContainers() {
