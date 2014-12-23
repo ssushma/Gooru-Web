@@ -1108,9 +1108,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	public void setData(ResourceMetaInfoDo result) {
 		setResMetaInfo(result);
+		if(result.getImages()!=null && result.getImages().size()>1){
+			rightArrowLbl.setVisible(true);
+		}else{
+			rightArrowLbl.setVisible(false);
+		}
 		setThumbnailImages(result.getImages());
 		updateUi();
-		rightArrowLbl.setVisible(true);
 	}
 	private class rightsChecked implements ClickHandler {
 			@Override
@@ -1348,21 +1352,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void setImage(String thumbnailUrlImage, String category){
-		System.out.println("thumbnailUrlImage : "+thumbnailUrlImage);
 		if (thumbnailUrlImage.endsWith("null")) {
-			if (thumbnailUrlImage.indexOf("youtube") >0){
-				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(thumbnailUrlImage);
-				thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
-			}else{
-				thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
-			}
+			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 		} 
+		if (thumbnailUrlImage!=null && thumbnailUrlImage.indexOf("youtube") >0){
+			String urlStr = urlTextLbl.getText().trim();
+			String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(urlStr);
+			thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+		}
 		setThumbnailImage.setUrl(thumbnailUrlImage);
 	}
 	public void updateUi() {
 		generateImageLbl.setVisible(false);
 		setThumbnailImage.setVisible(true);
-
 		if (urlTextLbl.getText().indexOf("youtube") != -1) {
 			rightArrowLbl.setVisible(false);
 		}
@@ -1848,18 +1850,22 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}*/
 
 	public void setImageThumbnail() {
+		
 		if (activeImageIndex == 0) {
 			leftArrowLbl.setVisible(false);
 		} else {
 			leftArrowLbl.setVisible(true);
 		}
-		if (activeImageIndex == thumbnailImagesLink.size()) {
-			rightArrowLbl.setVisible(false);
-		} else {
-			rightArrowLbl.setVisible(true);
+			if (thumbnailImagesLink != null) {
+				
+			if (activeImageIndex == thumbnailImagesLink.size()) {
+				rightArrowLbl.setVisible(false);
+			} else {
+				rightArrowLbl.setVisible(true);
+			}
+			setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
+			thumbnailUrlStr = thumbnailImagesLink.get(activeImageIndex);
 		}
-		setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
-		thumbnailUrlStr = thumbnailImagesLink.get(activeImageIndex);
 	}
 
 	@UiHandler("refreshLbl")
