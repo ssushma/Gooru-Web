@@ -815,7 +815,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 								publishedPanel.setVisible(true);
 							}
 						}
-						if(!collectionDo.getCollectionType().equals("quiz")){
+						if(!collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 							rbPublicPanel.setVisible(true);
 						}else{
 							rbPublicPanel.setVisible(false);
@@ -824,7 +824,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					
 				});
 			}
-			if(!collection.getCollectionType().equals("quiz")){
+			if(!collection.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 				editCollectionDescTitle.addMouseOverHandler(new OnCollectionDescriptionClick());
 				editCollectionDescTitle.addMouseOutHandler(new OnCollectionDescriptionOut());
 				collectionDescriptionTitle.addMouseOverHandler(new OnCollectionDescriptionClick());
@@ -1185,7 +1185,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
 			}else{
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
@@ -1195,7 +1195,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 				lblFriendly.setText(i18n.GL3013());
 			}else{
 				lblFriendly.setText(i18n.GL0453());
@@ -1204,7 +1204,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	}
 	
 	public void modifyStaticText(String collectionType){
-		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3007().toLowerCase():i18n.GL2001();
+		collectionType=(collectionType!=null&&collectionType.equals(ShelfPresenter.ASSESSMENT))?i18n.GL3007().toLowerCase():i18n.GL2001();
 		collectionDescriptionUc.setPlaceholder(StringUtil.generateMessage(WHAT_IS_THIS_COLLECTION_ABOUT, collectionType));
 	}
 
@@ -1316,7 +1316,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 */
 	@UiHandler("deleteUserCollectionLbl")
 	public void deleteCollectionPopup(ClickEvent clickEvent) {
-		if(!collectionDo.getCollectionType().equals("quiz")){
+		if(!collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 			deleteCollectionId = collectionDo.getGooruOid();
 			/*collectionEditButtonContainer.getElement().getStyle()
 			.setVisibility(Visibility.HIDDEN);
@@ -1386,7 +1386,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
-		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 			delete.setNotes(StringUtil.generateMessage(i18n.GL3038(), collectionDo.getTitle()));
 			delete.setDescText(i18n.GL3039());
 		}else{
@@ -1553,7 +1553,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 */
 	@UiHandler("collectionPreviewBtn")
 	public void collectionPlay(ClickEvent event) {
-		if(collectionDo!=null && !collectionDo.getCollectionType().equals("quiz")){
+		if(collectionDo!=null && !collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 			MixpanelUtil.Preview_Collection_From_CollectionEdit();
 			HashMap<String,String> params = new HashMap<String,String>();
 			params.put("id", collectionDo.getGooruOid());
@@ -1572,7 +1572,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void onCopyCollectionClick(ClickEvent clickEvent) {
 	/*	collectionEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);
-*/		if(!collectionDo.getCollectionType().equals("quiz")){
+*/		if(!collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
 			MixpanelUtil.Organize_Click_Collection_Copy();
 	        boolean addToShelf=AppClientFactory.getPlaceManager().getRequestParameter("o1")==null ? true : false;
 			getLoadingImageVisible();

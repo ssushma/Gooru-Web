@@ -29,6 +29,7 @@ public class ClasspageItemDo implements Serializable{
 	private String classpageId;
 	private String status;
 	private Integer sequenceNumber;
+
 	private Boolean isRequired;
 	private Integer itemSequence;
 	private String estimatedTime;
@@ -40,6 +41,9 @@ public class ClasspageItemDo implements Serializable{
 	private Integer minimumScoreByUser;
 	private Integer assignmentCompleted;
 	private Integer timeStudying;
+
+	private String collectionType;
+
 	
 	
 	private Set<StandardFo> standards = new HashSet<StandardFo>();
@@ -222,6 +226,7 @@ public class ClasspageItemDo implements Serializable{
 	public void setSequenceNumber(Integer sequenceNumber) {
 		this.sequenceNumber = sequenceNumber;
 	}
+
 	/**
 	 * @return the isRequired
 	 */
@@ -271,4 +276,10 @@ public class ClasspageItemDo implements Serializable{
 		this.narration = narration;
 	}
 
+	public String getCollectionType() {
+		return collectionType;
+	}
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
 }
