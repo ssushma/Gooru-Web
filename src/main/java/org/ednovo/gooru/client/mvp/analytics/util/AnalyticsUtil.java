@@ -70,7 +70,7 @@ public class AnalyticsUtil {
 		String createdTime = null;
 		Long commentTime = Long.parseLong(commentCreatedTime);
 		Date currentDate = new Date(commentTime);
-		DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
+		DateTimeFormat fmt = DateTimeFormat.getFormat(DATE_FORMAT);
 		createdTime = fmt.format(currentDate);
 		return createdTime;
 	}

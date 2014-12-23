@@ -198,22 +198,6 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 	
 	
 	public void checkCollectionStaus(String classpageId,String collectionId){
-		/*AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId, "", new AsyncCallback<ArrayList<GradeJsonData>>() {
-			@Override
-			public void onSuccess(ArrayList<GradeJsonData> result) {
-				if(result.size()>0){
-						if(result.get(0).getAggregateData()!=null && result.get(0).getAggregateData().equalsIgnoreCase("false")){
-							getView().setViewCollectionAnalytics(false);
-						}else{
-							getView().setViewCollectionAnalytics(true);
-						}
-				}
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});*/
-		
 		AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", collectionId, new AsyncCallback<CollectionSummaryMetaDataDo>() {
 			@Override
 			public void onSuccess(CollectionSummaryMetaDataDo result) {
