@@ -109,5 +109,5 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void hidePanel();
 	
-	public VerticalPanel getPnlSummary();
+	public void resetData();
 }

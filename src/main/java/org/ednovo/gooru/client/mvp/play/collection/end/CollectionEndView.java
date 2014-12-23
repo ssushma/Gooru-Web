@@ -1549,7 +1549,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void displayNextCollectionDetails(final CollectionDo collectionDo,final String subjectId,final String lessonId,final String libraryType){
 		if(collectionDo!=null){
 			hideNextCollectionContainer(true);
-			whatNextCollectionTitle.setText(collectionDo.getTitle().substring(0,10)+"...");
+			whatNextCollectionTitle.setText(collectionDo.getTitle().toString().length()>10?collectionDo.getTitle().substring(0,10)+"...":collectionDo.getTitle());
 			whatNextCollectionTitle.setTitle(collectionDo.getTitle());
 			nextCollectionThumbnail.setUrl(collectionDo.getThumbnails().getUrl());
 			if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
@@ -1766,7 +1766,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		collectionMetaDataPnl.setVisible(false);
 	}
 	@Override
-	public VerticalPanel getPnlSummary(){
-		return pnlSummary;
+	public void resetData(){
+		 pnlSummary.clear();
 	}
 }

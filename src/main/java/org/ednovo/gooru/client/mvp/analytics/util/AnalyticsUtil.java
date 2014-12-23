@@ -71,7 +71,7 @@ public class AnalyticsUtil {
 		Long commentTime = Long.parseLong(commentCreatedTime);
 		Date currentDate = new Date(commentTime);
 		DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
-		createdTime = fmt.format (currentDate);
+		createdTime = fmt.format(currentDate);
 		return createdTime;
 	}
 	/**
