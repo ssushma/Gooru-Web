@@ -102,7 +102,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		String urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
-		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"'/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		setStaticData();
 		noErrorMesage.setVisible(false);
@@ -114,7 +114,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	void setStaticData(){
 		StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 		StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
-		StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
+		//StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
 		StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
 		StringUtil.setAttributes(individualOpenendedData.getElement(), "pnlIndividualOpenendedData", null, null);
 		StringUtil.setAttributes(individualScoredDatapnl.getElement(), "pnlIndividualScoredDatapnl", null, null);
@@ -182,7 +182,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			individualTabContainer.setScoredQuestionsHilight();
 			
 			hideAllPanels();
-			individualScoredDatapnl.setVisible(true);
+			individualResourceBreakdownDatapnl.setVisible(true);
 			
 			individualScoredData.clear();
 			individualOpenendedData.clear();
@@ -201,7 +201,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	}
 	        });
 			for (UserDataDo userDataDo : result) {
-				if(userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+				if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
 					if(!userDataDo.getType().equalsIgnoreCase("OE")){
 						questionsData.add(userDataDo);
 					}else{
@@ -253,7 +253,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        for(int i=0;i<result.size();i++) {
 		        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
-		              String  resourceCategory =result.get(i).getCategory();
+		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 		              String categoryStyle="";
 					  if(resourceCategory.equalsIgnoreCase("website")){
 					      resourceCategory = "webpage";
@@ -356,7 +356,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        for(int i=0;i<result.size();i++) {
 	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	              String  resourceCategory =result.get(i).getCategory();
+	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 	              String categoryStyle="";
 				  if(resourceCategory.equalsIgnoreCase("website")){
 				      resourceCategory = "webpage";
@@ -385,7 +385,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            data.setValue(i, 1,categorylbl.toString());
 	            
 	            //Set Question Title
-	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 2, questionTitle.toString());
 	          

@@ -134,7 +134,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLEventPanel refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
 	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
-	AdvancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
+	advancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl;
 	
 	@UiField
@@ -374,7 +374,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			public void showAndHideContainers() {
 			}
 		};
-		AdvancedSetupContainer.add(addSetupAdvancedView);
+		advancedSetupContainer.add(addSetupAdvancedView);
 		generateFromUrlBtn.setText(i18n.GL3092());
 		/*generateFromUrlBtn.setEnabled(false);
 		generateFromUrlBtn.getElement().getStyle().setOpacity(0.5);
@@ -1204,28 +1204,34 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		@Override
 		public void onClick(ClickEvent event) {
 			if(isGenerateURL){
-			String userUrlStr = urlTextBox.getText().trim();
-			userUrlStr = URL.encode(userUrlStr);
-			//userUrlStr = userUrlStr.replaceAll("#", "%23");
-			urlTextBox.setText(URL.decode(userUrlStr));
-			urlTextBox.getElement().setAttribute("alt",userUrlStr);
-			urlTextBox.getElement().setAttribute("title", userUrlStr);
-			String userUrlStr1 = userUrlStr.replaceAll(
-					"feature=player_detailpage&", "");
-			userUrlStr1 = userUrlStr.replaceAll(
-					"feature=player_embedded&", "");
-			// getResourceInfo(userUrlStr1);
-				updateThumbanilImage(userUrlStr);
-			if (userUrlStr.indexOf("youtube") >0){
-				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
-				String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
-				generateImageLbl.setVisible(false);
-				setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
-				setThumbnailImage.setUrl(thumbnailUrl);
-				//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
-			}
-			loadingPanel.setVisible(true);
-			contentPanel.getElement().getStyle().setOpacity(0.6);
+				
+				
+				String userUrlStr = urlTextBox.getText().trim();
+				userUrlStr = URL.encode(userUrlStr);
+				//userUrlStr = userUrlStr.replaceAll("#", "%23");
+				urlTextBox.setText(URL.decode(userUrlStr));
+				urlTextBox.getElement().setAttribute("alt",userUrlStr);
+				urlTextBox.getElement().setAttribute("title", userUrlStr);
+				String userUrlStr1 = userUrlStr.replaceAll(
+						"feature=player_detailpage&", "");
+				userUrlStr1 = userUrlStr.replaceAll(
+						"feature=player_embedded&", "");
+
+				if (userUrlStr.indexOf("youtube") >0){
+					String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
+					String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+					generateImageLbl.setVisible(false);
+					setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
+					setThumbnailImage.setUrl(thumbnailUrl);
+					//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+				}else{
+					activeImageIndex=0;
+					setImageThumbnail();
+					generateImageLbl.setVisible(false);
+					setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
+				}
+//				loadingPanel.setVisible(true);
+//				contentPanel.getElement().getStyle().setOpacity(0.6);
 			}
 		}
 	}
@@ -1623,6 +1629,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		@Override
 		public void onBlur(BlurEvent event) {
+			
+			refreshLbl.setVisible(false);
+			setThumbnailImage.setUrl("");
+			setThumbnailImage.setVisible(false);
+			rightArrowLbl.setVisible(false);
+			leftArrowLbl.setVisible(false);
+			generateImageLbl.setVisible(true);
+			
 			final Map<String, String> parms = new HashMap<String, String>();
 			
 			parms.put("text", urlTextBox.getText().trim());
@@ -1761,6 +1775,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			
+			addSetupAdvancedView.setUpLabel.setVisible(true);
+			
 			if(event.getSource()==eHearderIconEducationalUse){
 				educationalContainer.setVisible(false);
 				educationalUsePanel.setVisible(false);
@@ -1790,6 +1807,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			if(event.getSource()==addSetupAdvancedView.educationUseAdvancedPnl){
 			educationalContainer.setVisible(true);
 			educationalUsePanel.setVisible(true);
@@ -1812,6 +1830,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
 			}
+			
+			if(isAllAdditionalTagsOpen()){
+				addSetupAdvancedView.setUpLabel.setVisible(false);
+			}
 		}
 	}
 	
@@ -1819,6 +1841,27 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	void leftArrowClick(ClickEvent event) {
 		activeImageIndex--;
 		setImageThumbnail();
+	}
+
+	/**
+	 * This method will check all additional tags are open or not.
+	 * 
+	 * @return allAdditionalTagInVisisble
+	 */
+	public boolean isAllAdditionalTagsOpen() {
+		
+		boolean allAdditionalTagInVisisble = false;
+		
+
+		if (!addSetupAdvancedView.educationUseAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.momentsOfLearningAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
+			allAdditionalTagInVisisble = true;
+		}
+		return allAdditionalTagInVisisble;
 	}
 
 	@UiHandler("rightArrowLbl")
@@ -2264,26 +2307,26 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 */
 	public void setImageThumbnail() {
 		if( thumbnailImages.size()>0){
-		if (activeImageIndex == 0) {
-			leftArrowLbl.setVisible(false);
-		} else {
-			leftArrowLbl.setVisible(true);
-		}
-		if (thumbnailImages != null) {
-			if (activeImageIndex == thumbnailImages.size()) {
-				rightArrowLbl.setVisible(false);
+			if (activeImageIndex == 0) {
+				leftArrowLbl.setVisible(false);
 			} else {
-				rightArrowLbl.setVisible(true);
+				leftArrowLbl.setVisible(true);
 			}
-			// setThumbnailImage.setUrlAndVisibleRect(thumbnailImages.get(activeImageIndex),
-			// 0, 0, 80, 60);
-			setThumbnailImage.getElement().setAttribute("style",
-					"width: 80px;height: 60px;");
-			setThumbnailImage.setUrl(thumbnailImages.get(activeImageIndex));
-			thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+			if (thumbnailImages != null) {
+				if (activeImageIndex == thumbnailImages.size()) {
+					rightArrowLbl.setVisible(false);
+				} else {
+					rightArrowLbl.setVisible(true);
+				}
+				// setThumbnailImage.setUrlAndVisibleRect(thumbnailImages.get(activeImageIndex),
+				// 0, 0, 80, 60);
+				setThumbnailImage.getElement().setAttribute("style",
+						"width: 80px;height: 60px;");
+				setThumbnailImage.setUrl(thumbnailImages.get(activeImageIndex));
+				thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+			}
 		}
-		}
-		}
+	}
 
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {

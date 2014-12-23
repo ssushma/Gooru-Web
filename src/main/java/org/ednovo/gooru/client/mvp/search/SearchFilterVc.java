@@ -226,11 +226,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 	private boolean resourceSearch;
 	
+	private DownToolTipUc sourcetooltipPopUpUc;
+	
 	private DownToolTipUc standardtooltipPopUpUc;
 
 	private boolean isSourcePopupShowing=false;
 
 	private boolean isStandardPopupShowing=false;
+	
+	private DownToolTipUc aggregatortooltipPopUpUc;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
@@ -477,7 +481,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		gradeLbl.getElement().setAttribute("alt",i18n.GL0165());
 		gradeLbl.getElement().setAttribute("title",i18n.GL0165());
 		
-		ratingsLbl.setText(i18n.GL3104());
+		ratingsLbl.setText("Ratings & Reviews");
 		StringUtil.setAttributes(ratingsLbl.getElement(), "ratingsLbl", "Ratings & Reviews", "Ratings & Reviews");
 		
 		accessModeLbl.setText(i18n.GL2093());
@@ -771,12 +775,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 		});
 	}
-	/**
-	 * This method is used to render the OER CheckBox details.
-	 * @param disclosurePanelVc
-	 * @param key
-	 * @param value
-	 */
 	public void renderOERCheckBox(HTMLPanel disclosurePanelVc, String key, final String value) {
 		chkOER = new CheckBox();	
 		chkOER.setText(value);
@@ -807,12 +805,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		});
 		
 	}
-	/**
-	 * This method is used to render the AccessMode CheckBox details.
-	 * @param accessModePanel
-	 * @param key
-	 * @param value
-	 */
+	
 	private void renderAccessModeCheckBox(HTMLPanel accessModePanel,String key,String value) {
 		chkAccessMode = new CheckBox();
 		chkAccessMode.setText(value);
@@ -1217,7 +1210,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 				renderCheckBox(ratingPanelUc, i+"", starVal+"star");
 			}
-			renderCheckBox(reviewPanelUc,"review", i18n.GL3105());
+			renderCheckBox(reviewPanelUc,"review", "Only Resources with Reviews");
 			
 		}/*else{
 			collectionLinkLbl.addStyleName(style.active());
@@ -1579,12 +1572,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			clearFilter(subjectPanelUc);
 		}
 	}
-	/**
-	 * This method is used to set the filters suggestion data.
-	 * @param flowPanel
-	 * @param filters
-	 * @param addToolTip
-	 */
+
 	private void setFilterSuggestionData(FlowPanel flowPanel, String[] filters, boolean addToolTip) {
 
 		Iterator<Widget> widgets = flowPanel.iterator();
@@ -1772,7 +1760,25 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	@UiHandler("clearAll")
 	public void onClearFilter(ClickEvent clickEvent) {
-		clearAllPanels();
+		clearFilter(categoryPanelUc);
+		clearFilter(gradePanelUc);
+		clearFilter(gradePanelUcNext);
+		clearFilter(subjectPanelUc);
+		clearFilter(accessModePanel);
+		clearFilter(ratingPanelUc);
+		standardSgstBox.setText("");
+		standardSgstBox.getElement().setAttribute("alt","");
+		standardSgstBox.getElement().setAttribute("title","");
+		
+		sourceSgstBox.setText("");
+		sourceSgstBox.getElement().setAttribute("alt","");
+		sourceSgstBox.getElement().setAttribute("title","");
+		
+		sourceContainerFloPanel.clear();
+		standardContainerFloPanel.clear();
+		authorContainerFloPanel.clear();
+		standardCodesMap.clear();
+		aggregatorContainerFloPanel.clear();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			chkNotFriendly.setValue(false);
 			chkOER.setValue(false);
@@ -1781,7 +1787,22 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	}
 	
 	public void clearAllFields(){
-		clearAllPanels();
+		clearFilter(categoryPanelUc);
+		clearFilter(gradePanelUc);
+		clearFilter(gradePanelUcNext);
+		clearFilter(subjectPanelUc);
+		clearFilter(accessModePanel);
+		clearFilter(ratingPanelUc);
+		standardSgstBox.setText("");
+		sourceSgstBox.setText("");
+		sourceSgstBox.getElement().setAttribute("alt","");
+		sourceSgstBox.getElement().setAttribute("title","");
+		
+		sourceContainerFloPanel.clear();
+		standardContainerFloPanel.clear();
+		authorContainerFloPanel.clear();
+		aggregatorContainerFloPanel.clear();
+		standardCodesMap.clear();
 		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 	}
 
@@ -1828,10 +1849,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			standardSuggestOracle.clear();
 		}
 	}
-	/**
-	 * This method is used to add the standard filter.
-	 * @param code
-	 */
+
 	public void addStandardFilter(String code) {		
 		standardContainerFloPanel.add(new DownToolTipWidgetUc(new FilterLabelVc(code), standardCodesMap.get(code)));
 	}
@@ -1857,10 +1875,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		standardSgstBox.showSuggestionList();
 	}
-	/**
-	 * This method is used to set the source suggest info
-	 * @param searchDo
-	 */
+
 	public void setSourceSuggestionsInfo(SearchDo<CodeDo> searchDo) {
 		Iterator<Widget> widgets = standardContainerFloPanel.iterator();
 		while (widgets.hasNext()) {
@@ -1892,10 +1907,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		sourceSgstBox.showSuggestionList();
 	}
-	/**
-	 * This method is used to set the Aggregator suggestions.
-	 * @param aggregatorSearchDo
-	 */
 	public void setAggregatorSuggestions(SearchDo<String> aggregatorSearchDo) {
 		aggregatorSuggestOracle.clear();
 		this.aggregatorSearchDo=aggregatorSearchDo;
@@ -1909,9 +1920,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		aggregatorSgstBox.showSuggestionList();
 	}
-	/**
-	 * This method is used to get the user Standard preferences.
-	 */
 	public void getUserStandardPrefCodeId()
 	{
 		/**
@@ -1972,10 +1980,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 						});
 	}
-	
-	/**
-	 * This method is used to handle the standards visibility
-	 */
 	public void getStandardVisiblity()
 	{
 		standardLbl.setVisible(true);
@@ -1988,9 +1992,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardPanelUc.setVisible(false);
 		}
 	}
-	/**
-	 * This method is used to disable the standards based on user standard preferences from settings page.
-	 */
+	
 	public void DisableStandars(){
 		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
 		browseStandards.getElement().getStyle().setColor("#999");
@@ -2038,9 +2040,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		return false;
 	}
-	/**
-	 * This method is used to enable standards
-	 */
+	
 	public void enableStandards(){
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
@@ -2064,12 +2064,33 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					removeSelectedFilter(gradePanelUc, filterName);
 					removeSelectedFilter(gradePanelUcNext, filterName);
 				}
+				if(panel.equals("accessPanel")){
+					removeSelectedFilter(accessModePanel, filterName);
+				}
+				/*if(panel.equals("oerPanel")){
+					removeSelectedFilter(oerPanel, filterName);
+				}
+				if(panel.equals("mediaPanel")){
+					removeSelectedFilter(panelNotMobileFriendly, filterName);
+				}*/
 				if(panel.equals("categoryPanel")){
 					removeSelectedFilter(categoryPanelUc, filterName);
 				}
 				if(panel.equals("standPanel"))
 				{
 					removeSelectedStandards(standardContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
+				if(panel.equals("publisherPanel"))
+				{
+					removeSelectedStandards(sourceContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
+				if(panel.equals("aggregatorPanel"))
+				{
+					removeSelectedStandards(aggregatorContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
+				if(panel.equals("authorPanel"))
+				{
+					removeSelectedStandards(authorContainerFloPanel, filterName.split(COMMA_SEPARATOR));
 				}
 								
 			}
@@ -2313,30 +2334,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		accessModePanel.setVisible(false);
 		arrowLblaccess.setStyleName(style.arrowLableTransform());
 	}
-	/**
-	 * This method is used to clear the panels data.
-	 */
-	public void clearAllPanels(){
-		clearFilter(categoryPanelUc);
-		clearFilter(gradePanelUc);
-		clearFilter(gradePanelUcNext);
-		clearFilter(subjectPanelUc);
-		clearFilter(accessModePanel);
-		clearFilter(ratingPanelUc);
-		standardSgstBox.setText("");
-		standardSgstBox.getElement().setAttribute("alt","");
-		standardSgstBox.getElement().setAttribute("title","");
-		
-		sourceSgstBox.setText("");
-		sourceSgstBox.getElement().setAttribute("alt","");
-		sourceSgstBox.getElement().setAttribute("title","");
-		
-		sourceContainerFloPanel.clear();
-		standardContainerFloPanel.clear();
-		authorContainerFloPanel.clear();
-		standardCodesMap.clear();
-		aggregatorContainerFloPanel.clear();
-	}
+	
+	
 	
 }
 
