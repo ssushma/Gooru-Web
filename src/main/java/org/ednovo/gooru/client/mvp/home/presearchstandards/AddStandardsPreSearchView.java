@@ -168,12 +168,6 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	@Override
 	public void loadData()
 	{
-
-		commonStandards1.setText("Common Core State Standards");
-		texasKnowledge1.setText("Texas Essential Knowledge and Skills");
-		ngss1.setText("Next Generation Science Standards");
-		californiaStandards1.setText("California State Standards");
-		addBtn.setText("Add");
 		addBtn.setEnabled(false);
 		addBtn.removeStyleName("primary");
 		addBtn.addStyleName("secondary");
@@ -998,7 +992,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	 */
 	@Override
 	public void setStandardsStyles(String standardVal) {
-		// TODO Auto-generated method stub
+
 		if(standardVal.equalsIgnoreCase("CCSS")){
 			setDefaultCCSS();
 		}else if(standardVal.equalsIgnoreCase("TEKS")){
