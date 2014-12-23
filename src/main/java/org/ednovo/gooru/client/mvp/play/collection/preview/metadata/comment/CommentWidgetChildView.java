@@ -338,7 +338,6 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 					}else{
 						commentField.getElement().getStyle().clearBackgroundColor();
 						commentField.getElement().getStyle().setBorderColor("#ccc");
-						
 						AppClientFactory.fireEvent(new EditCommentChildViewEvent(getCommentUid(),removeHtmlTags(commentField.getText()),EDIT));
 				    	displaySuccessMsg(true);
 						Timer timer = new Timer(){

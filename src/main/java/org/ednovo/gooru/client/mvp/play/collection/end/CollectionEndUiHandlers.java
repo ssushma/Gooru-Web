@@ -30,7 +30,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHan
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
-public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
+public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler {
 	public void createCommentForCollection(String gooruOid, String comment);
 	
 	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);

@@ -25,14 +25,16 @@
 package org.ednovo.gooru.client.mvp.play.collection;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEventHandler;
+import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayHandler;
 
 public interface CollectionPlayerUiHandlers extends BaseUiHandlers,ShowResourceViewEventHandler,UpdateCollectionViewCountEventHandler,
-					ShowCollectionTabWidgetEventHandler,RefreshCollectionInShelfListInPlayHandler,UpdateFlagIconColorEventHandler{
+					ShowCollectionTabWidgetEventHandler,RefreshCollectionInShelfListInPlayHandler,UpdateFlagIconColorEventHandler,EditCommentChildViewHandler,UpdateCommentChildViewHandler{
 	public void updateResourceThumbsRating(int userThumbsRataing);
 	public void showLoginPopupWidget(String widgetMode);
 	public void resetCollectionPlayer();

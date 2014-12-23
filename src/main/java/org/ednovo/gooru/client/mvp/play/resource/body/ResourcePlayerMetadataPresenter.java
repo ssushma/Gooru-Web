@@ -276,7 +276,6 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	public void createStarRatings(String associateGooruOid, int starRatingValue, final boolean showThankYouToolTip,String userReview,String resourceGooruId) {
 		if(showThankYouToolTip){
 			triggerCreateRatingEvent(resourceGooruId, starRatingValue, getView().getPreviousRating());
-			getView().setPreviousRating(starRatingValue);
 		}else{
 			triggerCreateReviewEvent(resourceGooruId, userReview);
 		}
@@ -329,7 +328,6 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	@Override
 	public void updateStarRatings(String gooruOid, int starRatingValue,boolean showThankYouToolTip,String resourceGooruId) {
 		triggerCreateRatingEvent(resourceGooruId, starRatingValue, getView().getPreviousRating());
-		getView().setPreviousRating(starRatingValue);
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarRatings(gooruOid, starRatingValue, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
 
 			@Override
@@ -514,6 +512,14 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			collectionPlayerPresenter.updateRatings(gooruOid,average);  
 		}else{
 			resourcePlayerPresenter.updateRatings(gooruOid,average);   
+		}
+	}
+	
+	public double getResourceRating(String resoruceGooruOid){
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			return collectionPlayerPresenter.getResourceRating(resoruceGooruOid);  
+		}else{
+			return resourcePlayerPresenter.getResourceRating(resoruceGooruOid);   
 		}
 	}
 
