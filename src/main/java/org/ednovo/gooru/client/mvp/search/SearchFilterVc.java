@@ -2155,6 +2155,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					filterName=filterName.replace("Grade ", "");
 					System.out.println("filterName:"+filterName);
 				}
+				if(filterName.equals(i18n.GL3084())){
+					filterName="12gte";
+				}
 			}
 			for(int i=0;i<filterPanelUc.getWidgetCount();i++){
 				Widget filterWidget = filterPanelUc.getWidget(i);

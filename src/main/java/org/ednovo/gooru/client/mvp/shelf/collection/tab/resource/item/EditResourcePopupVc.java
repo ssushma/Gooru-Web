@@ -1289,7 +1289,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resoureDropDownLblOpen=false;
 		}
 
-		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
+		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
 		
 		if( collectionItemDo.getResource().getEducationalUse()!=null){
@@ -1864,9 +1864,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {
-		
-		setImage(collectionItemDo.getResource()
-				.getThumbnailUrl(), collectionItemDo.getResource().getCategory());
+		String thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
+		setImage(thumbnailUrlStr, collectionItemDo.getResource().getCategory());
 		
 		leftArrowLbl.setVisible(false);
 		if (urlTextLbl.getText().contains("youtube")) {
