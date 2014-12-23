@@ -2100,6 +2100,21 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					removeSelectedFilter(panelNotMobileFriendly, "fltNot.mediaType");
 					clearFilter(panelNotMobileFriendly);
 				}
+				if(panel.equals("accessPanel")){
+					removeSelectedFilter(accessModePanel, filterName);
+				}
+				if(panel.equals("publisherPanel"))
+				{
+					removeSelectedStandards(sourceContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
+				if(panel.equals("aggregatorPanel"))
+				{
+					removeSelectedStandards(aggregatorContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
+				if(panel.equals("authorPanel"))
+				{
+					removeSelectedStandards(authorContainerFloPanel, filterName.split(COMMA_SEPARATOR));
+				}
 				if(panel.equals("ratingallPanel"))
 				{
 					removeSelectedFilter(ratingPanelUc, "flt.rating");

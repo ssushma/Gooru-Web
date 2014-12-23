@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgre
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
@@ -201,5 +202,24 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	@Override
 	public CollectionSummaryPresenter getCollectionSummaryPresenter() {
 		return collectionSummaryPresenter;
+	}
+	
+	@Override
+	public void checkCollectionStaus(String classpageId, String collectionId) {
+		AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", collectionId, new AsyncCallback<CollectionSummaryMetaDataDo>() {
+			@Override
+			public void onSuccess(CollectionSummaryMetaDataDo result) {
+				if(result!=null && result.getViews()!=0){
+					setClickedTabPresenter(CLEARPROGRESS,"","");
+					setClickedTabPresenter(CLEARSUMMARY,"","");
+					getView().resetDataText();
+				}else{
+					getView().setNoDataText();
+				}
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 }
