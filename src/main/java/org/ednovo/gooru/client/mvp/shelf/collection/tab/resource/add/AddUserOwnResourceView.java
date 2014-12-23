@@ -346,6 +346,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		textsResourcePanel.addStyleName("active");
+		resourceCategoryLabel.setText(i18n.GL1044());
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {
@@ -874,6 +876,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			addSetupAdvancedView.setUpLabel.setVisible(true);
 			if(event.getSource()==eHearderIconEducationalUse){
 				educationalContainer.setVisible(false);
 				educationalUsePanel.setVisible(false);
@@ -925,11 +928,34 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
 			}
+			
+			if(isAllAdditionalTagsOpen()){
+				addSetupAdvancedView.setUpLabel.setVisible(false);
+			}
 		}
 	}
 	
 	
-	
+	/**
+	 * This method will check all additional tags are open or not.
+	 * 
+	 * @return allAdditionalTagInVisisble
+	 */
+	public boolean isAllAdditionalTagsOpen() {
+		
+		boolean allAdditionalTagInVisisble = false;
+		
+
+		if (!addSetupAdvancedView.educationUseAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.momentsOfLearningAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
+			allAdditionalTagInVisisble = true;
+		}
+		return allAdditionalTagInVisisble;
+	}
 	/**
 	 * On click of this button can browse for file from local computer.
 	 * 

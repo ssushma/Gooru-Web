@@ -137,6 +137,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			margin: 10px 0px 5px 0px;
 			display: inline-block;
 		}
+
 		.browseContainer{
 			float: left;
 			margin-left: -7px;
@@ -152,29 +153,6 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			display: inline-block;
 		}
 		
-		.arrowLable{
-            background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
-            position: absolute;
-			right: 46px;
-			width: 10px;
-			height: 17px;
-			cursor: pointer;
-			margin: 4px 0 5px 0;
-			display: inline-block;
-       }
-       .arrowLableTransform{
-    -ms-transform: rotate(270deg); /* IE 9 */
-    -webkit-transform: rotate(270deg); /* Chrome, Safari, Opera */
-    transform: rotate(270deg);
-       background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
-            position: absolute;
-			right: 49px;
-			width: 10px;
-			height: 17px;
-			cursor: pointer;
-			margin: 8px 4px 5px 0;
-			display: inline-block;
-	}
 	.grade1Contianer{
 	display: inline-block;
 	width: 100px;
@@ -207,6 +185,31 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 
 	}
 
+		.arrowLable{
+			background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
+			left: 6px;
+			width: 10px;
+			height: 17px;
+			cursor: pointer;
+			margin: 4px 0 0px 0;
+			display: inline-block;
+		}
+
+       .arrowLableTransform{
+    		-ms-transform: rotate(270deg); /* IE 9 */
+    		-webkit-transform: rotate(270deg); /* Chrome, Safari, Opera */
+    		transform: rotate(270deg);
+       		background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
+			left: 0px;
+			width: 10px;
+			height: 17px;
+			cursor: pointer;
+			margin: 4px 7px 0 -6px;
+			display: inline-block;
+			top: 2px;
+			position: relative;
+		}
+
 	</ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle"
 		field="res"></ui:with>
@@ -227,20 +230,20 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<uc:PPanel ui:field="panelNotMobileFriendly"/>
 		
 		<g:HTMLPanel styleName="categoryFilterContainer">
+		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblCategory" visible="true"></g:Label>
 			<uc:H5Panel styleName="{style.headerLbl}" ui:field="resourceFormatLbl"/>
-			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblCategory" visible="true"></g:Label>
 			<g:HTMLPanel  ui:field="categoryPanelUc" />
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="categorySubjectContainer">
+		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblSubject" visible="true"></g:Label>
 			<uc:H5Panel styleName="{style.headerLbl}" ui:field="subjectLbl"/>
-			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblSubject" visible="true"></g:Label>
 			<g:HTMLPanel  ui:field="subjectPanelUc" />
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="filterGradeContainer">
-			<uc:H5Panel styleName="{style.headerLbl}" ui:field="gradeLbl"/>
 			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblGrade" visible="true"></g:Label>
+			<uc:H5Panel styleName="{style.headerLbl}" ui:field="gradeLbl"/>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.gradesFilContainer}">
 				<g:HTMLPanel  ui:field="gradePanelUc" styleName="col-md-6 col-xs-6"/>
@@ -250,8 +253,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="{res.css.filterStandardContainer}">
-		    <uc:H5Panel styleName="{style.headerLbl}" ui:field="standardLbl"/>
 		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblstandard" visible="true"></g:Label>
+		    <uc:H5Panel styleName="{style.headerLbl}" ui:field="standardLbl"/>
 			<g:HTMLPanel  ui:field="standardPanelUc">
 			    <g:Button ui:field="browseStandards" styleName="{res.css.btn} btn btn-default">Browse</g:Button>
 				<uc:AppSuggestBox ui:field="standardSgstBox" styleName="form-control {res.css.form_control}" />
@@ -271,15 +274,15 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="ratingContainer">
+		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblratings" visible="true"></g:Label>
 			<uc:H5Panel styleName="{style.headerLbl}" visible="false" ui:field="ratingsLbl"></uc:H5Panel>
-			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblratings" visible="true"></g:Label>
 			<g:HTMLPanel  ui:field="ratingPanelUc" />
 			<g:HTMLPanel  ui:field="reviewPanelUc" />
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="filterpublisherContainer">
+		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblsource" visible="true"></g:Label>
 		    <uc:H5Panel styleName="{style.headerLbl}" visible="false" ui:field="sourceLbl"></uc:H5Panel>
-		      <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblsource" visible="true"></g:Label>
 			<g:HTMLPanel  ui:field="sourcePanelUc" visible="false">
 				<g:HTMLPanel>
 				 	<g:Label styleName="{style.helpIconBtnPublisher}" ui:field="publisherTooltip"/>
@@ -302,8 +305,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="filteraggContainer" ui:field="aggregatorPanelUc" visible="false">
-			     <g:Label styleName="{style.headerLbl}" visible="false" ui:field="aggregatorLbl"></g:Label>
-			        <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblaggregator" visible="true"></g:Label>
+		    	<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblaggregator" visible="true"></g:Label>
+			    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="aggregatorLbl"></g:Label>
 			    <g:HTMLPanel ui:field="aggregatorPanel">
 			 	<g:HTMLPanel>
 				 	<g:Label styleName="{style.helpIconBtnAggregator}" ui:field="aggregatorTooltip"/>
@@ -326,8 +329,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		<g:HTMLPanel>
+		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblauthor" visible="false"></g:Label>
 		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="authorLbl"></g:Label>		  
-			<g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblauthor" visible="false"></g:Label>
 			<g:HTMLPanel  ui:field="authorPanelUc" visible="false">
 				<g:HTMLPanel>
 					<g:TextBox ui:field="authorTxtBox" width="130px" />
@@ -339,8 +342,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="filterAccess ModeContainer">
+		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblaccess" visible="true"></g:Label>
 			<uc:H5Panel  visible="false"  ui:field="accessModeLbl"></uc:H5Panel>
-			   <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblaccess" visible="true"></g:Label>
 			<g:HTMLPanel  ui:field="accessModePanel" />
 		</g:HTMLPanel>
 		
