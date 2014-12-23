@@ -176,7 +176,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 	
-	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer;
+	@UiField HTMLPanel htmlMediaFeatureListContainer,mediaLabelContainer,mediaDropdownArrowConatainer;
 	
 	@UiField HTMLEventPanel AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl,defaultPanel;
@@ -757,7 +757,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 
 		});
-		
+		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
 		moblieFriendly.setText(i18n.GL1811());
 		moblieFriendly.getElement().setId("spnMobileFriendly");
 		moblieFriendly.getElement().setAttribute("alt",i18n.GL1811());
