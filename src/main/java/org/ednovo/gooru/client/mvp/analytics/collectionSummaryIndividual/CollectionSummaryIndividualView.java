@@ -61,9 +61,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
+	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
-	@UiField Label lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
+	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
 	
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
@@ -102,9 +102,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		String urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
-		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"'/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		setStaticData();
+		noErrorMesage.setVisible(false);
+		maincontainer.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -112,7 +114,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	void setStaticData(){
 		StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 		StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
-		StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
+		//StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
 		StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
 		StringUtil.setAttributes(individualOpenendedData.getElement(), "pnlIndividualOpenendedData", null, null);
 		StringUtil.setAttributes(individualScoredDatapnl.getElement(), "pnlIndividualScoredDatapnl", null, null);
@@ -174,11 +176,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	@Override
 	public void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage) {
+			noErrorMesage.setVisible(false);
+			maincontainer.setVisible(true);
 			individualTabContainer.clearStyles();
 			individualTabContainer.setScoredQuestionsHilight();
 			
 			hideAllPanels();
-			individualScoredDatapnl.setVisible(true);
+			individualResourceBreakdownDatapnl.setVisible(true);
 			
 			individualScoredData.clear();
 			individualOpenendedData.clear();
@@ -197,7 +201,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	}
 	        });
 			for (UserDataDo userDataDo : result) {
-				if(userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+				if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
 					if(!userDataDo.getType().equalsIgnoreCase("OE")){
 						questionsData.add(userDataDo);
 					}else{
@@ -249,7 +253,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        for(int i=0;i<result.size();i++) {
 		        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
-		              String  resourceCategory =result.get(i).getCategory();
+		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 		              String categoryStyle="";
 					  if(resourceCategory.equalsIgnoreCase("website")){
 					      resourceCategory = "webpage";
@@ -352,7 +356,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        for(int i=0;i<result.size();i++) {
 	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	              String  resourceCategory =result.get(i).getCategory();
+	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 	              String categoryStyle="";
 				  if(resourceCategory.equalsIgnoreCase("website")){
 				      resourceCategory = "webpage";
@@ -381,7 +385,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            data.setValue(i, 1,categorylbl.toString());
 	            
 	            //Set Question Title
-	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 2, questionTitle.toString());
 	          
@@ -1022,5 +1026,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@Override
 	public void enableAndDisableEmailButton(boolean isSummary){
 		individualTabContainer.getEmailButton().setVisible(!isSummary);
+	}
+	@Override
+	public void setErrorMessage() {
+		noErrorMesage.setVisible(true);
+		maincontainer.setVisible(false);
 	}
 }

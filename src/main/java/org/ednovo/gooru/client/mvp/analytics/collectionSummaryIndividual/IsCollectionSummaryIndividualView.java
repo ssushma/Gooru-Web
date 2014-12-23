@@ -73,4 +73,9 @@ public interface IsCollectionSummaryIndividualView extends IsViewWithHandlers<Co
 	 * @param path
 	 */
 	void setPdfForEmail(String path);
+	/**
+	 * This method is used to set empty error message.
+	 */
+	void setErrorMessage();
+	
 }

@@ -111,11 +111,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
 	@UiField
-	FlowPanel frameContainer1,dataInsightsPanel;
+	FlowPanel frameContainer,frameContainer1,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer,pnlSummary;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
-	@UiField HTMLPanel collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
+	@UiField HTMLPanel sessionspnl,collectionMetaDataPnl,collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
@@ -1486,23 +1486,25 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				return;
 			}
 			String minsString = (mins == 0)? "00": ((mins < 10)? "0"+mins : ""+mins );
+			String formattedTime="";
+			formattedTime=((int) Math.round(secs))+"";
 			String secsString ="";
 			if(secs>0 && secs<1){
-				secsString="<1";
-			}else{
-				secsString = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
-			}
+				formattedTime="<1";
+			}/*else{
+				formattedTime = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
+			}*/
 	        if (hours > 0){
 	        	displayTime(hours.toString(),hours==1?"hr":"hrs");
 	        	displayTime(" "+minsString.toString(),minsString.equals("01")?"min":"mins");
-	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"secs");
+	        	displayTime(" "+formattedTime.toString(),formattedTime.equals("01")?"sec":"secs");
 	        }
 	        else if (mins > 0){
 	        	displayTime(minsString.toString(),minsString.equals("01")?"min":"mins");
-	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        	displayTime(" "+formattedTime.toString(),formattedTime.equals("01")?"sec":"sec");
 	        }
 	        else {
-	        	displayTime(secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        	displayTime(formattedTime.toString(),formattedTime.equals("01")?"sec":"sec");
 	        }
 	}
 	public void displayTime(String time, String timeText){
@@ -1547,7 +1549,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void displayNextCollectionDetails(final CollectionDo collectionDo,final String subjectId,final String lessonId,final String libraryType){
 		if(collectionDo!=null){
 			hideNextCollectionContainer(true);
-			whatNextCollectionTitle.setText(collectionDo.getTitle().substring(0,10)+"...");
+			whatNextCollectionTitle.setText(collectionDo.getTitle().toString().length()>10?collectionDo.getTitle().substring(0,10)+"...":collectionDo.getTitle());
 			whatNextCollectionTitle.setTitle(collectionDo.getTitle());
 			nextCollectionThumbnail.setUrl(collectionDo.getThumbnails().getUrl());
 			if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
@@ -1685,6 +1687,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	@Override
 	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result) {
+		sessionspnl.setVisible(true);
+		collectionMetaDataPnl.setVisible(true);
 		sessionsDropDown.clear();
 		sessionData.clear();
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
@@ -1756,5 +1760,13 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
         return html;
 	}
-
+	@Override
+	public void hidePanel(){
+		sessionspnl.setVisible(false);
+		collectionMetaDataPnl.setVisible(false);
+	}
+	@Override
+	public void resetData(){
+		 pnlSummary.clear();
+	}
 }

@@ -167,9 +167,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
-		clearSlot(COLLECTION_REPORTS_SLOT);
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
+	}
+	public void clearslot(){
+		getView().resetData();
+		getView().resetCollectionMetaData();
+		clearSlot(COLLECTION_REPORTS_SLOT);
+		setInSlot(COLLECTION_REPORTS_SLOT,null,false);
 	}
 	
 	public void setViewCount(String viewCount){
@@ -221,7 +226,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void createCommentForCollection(String gooruOid, String comment) {
+		if(collectionPlayerPresenter!=null){
 		collectionPlayerPresenter.triggerCommentDataLogEvent(null, PlayerDataLogEvents.COMMENT_CREATE, comment);
+		}
 		this.playerAppService.createCommentForCollection(gooruOid, comment, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo commentsDo) {
@@ -237,7 +244,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit,String commentText) {
+		if(collectionPlayerPresenter!=null){
 		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,commentText);
+		}
 		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void noResult) {
@@ -256,7 +265,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	
 	public void editCommentChildView(String commentUid, String commentText, String action) {
+		if(collectionPlayerPresenter!=null){
 		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);
+		}
 		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo result) {
@@ -467,6 +478,11 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 					printData.setSessionStartTime(AnalyticsUtil.getCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
 					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId(),printData);
 					getView().setSessionsData(result);
+				}else{
+					clearSlot(COLLECTION_REPORTS_SLOT);
+					getView().hidePanel();
+					collectionSummaryIndividualPresenter.setNoDataMessage(getView().getLoadingImageLabel());
+					setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 				}
 			}
 			

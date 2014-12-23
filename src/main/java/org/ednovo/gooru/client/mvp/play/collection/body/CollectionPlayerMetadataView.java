@@ -265,6 +265,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							commentField.setEnabled(true);
 							commentssection.getElement().getStyle().setOpacity(1);
 							changeAssignmentStatusButton.setChecked(true);
+							postCommentBtn.setEnabled(true);
+							postCommentBtn.setStyleName(PRIMARY_STYLE);
 						}
 						else
 						{
@@ -1260,8 +1262,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			addComment.setVisible(true);
 		} else if (!commentUid.isEmpty() && action.equals(EDIT)) {
 			addComment.setVisible(false);
+			lblCharLimitComments.setVisible(false);
 			editComment(commentUid);
 		} else if(commentUid.isEmpty() && action.equals(EDIT)) {
+			lblCharLimitComments.setVisible(true);
 			addComment.setVisible(true);
 		}
 	}
@@ -1441,6 +1445,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 								requiredLabel.removeStyleName(playerStyle.mutedText());
 								optionalLabel.removeStyleName(playerStyle.mutedText());								
 								commentField.setEnabled(true);	
+								postCommentBtn.setEnabled(true);
+								postCommentBtn.setStyleName(PRIMARY_STYLE);
 								commentssection.getElement().getStyle().setOpacity(1);
 								changeAssignmentStatusButton.setChecked(true);
 							}

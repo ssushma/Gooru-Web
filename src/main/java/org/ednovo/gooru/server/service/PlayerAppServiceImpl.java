@@ -879,6 +879,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public CommentsListDo getCollectionCommentsList(String gooruOid,String offset,String pageLimit) {
 		JsonRepresentation jsonRep= null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_COMMENTS, getLoggedInSessionToken(),gooruOid,offset,pageLimit);
+		getLogger().info("---- get comments --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionComments(jsonRep);
@@ -897,6 +898,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	
 	public void deleteCollectionCommentbyCommentUid(String commentUid){
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_COMMENT,commentUid,getLoggedInSessionToken());
+		getLogger().info("--- delete comment -- "+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 	
@@ -1482,6 +1484,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId){
 		String formdata=insightsJsonPayload(collectionId,classpageId,sessionId,getLoggedInUserUid());
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.GET_COLLECTION_SUMMARY,collectionId, getLoggedInSessionToken(),formdata);
+		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 		JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
 		InsightsCollectionDo insightCollectionDo=null;
