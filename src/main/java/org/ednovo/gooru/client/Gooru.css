@@ -682,4 +682,10 @@ div.learnMoreIconsDiv,div.learnMoreIconsDiv {
 .discoverTextStyle {
 	float: left;
 }
+.positionStyle{
+	position:fixed !important;
+	background: white;
+	border: 3px solid #e7e7e7;
+	z-index: 99;
+}
 

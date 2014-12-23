@@ -134,7 +134,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLEventPanel refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
 	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
-	AdvancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
+	advancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl;
 	
 	@UiField
@@ -374,7 +374,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			public void showAndHideContainers() {
 			}
 		};
-		AdvancedSetupContainer.add(addSetupAdvancedView);
+		advancedSetupContainer.add(addSetupAdvancedView);
 		generateFromUrlBtn.setText(i18n.GL3092());
 		/*generateFromUrlBtn.setEnabled(false);
 		generateFromUrlBtn.getElement().getStyle().setOpacity(0.5);
@@ -608,6 +608,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		mandatoryDescLblForSwareWords.setVisible(false);
 		mandatoryCategoryLbl.setVisible(false);
 		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
+		mandatoryCategoryLbl.getElement().getStyle().setTop(-10, Unit.PX);
 		descCharcterLimit.getElement().setInnerText(i18n.GL0143());
 		descCharcterLimit.getElement().setId("pnlDescCharcterLimit");
 		descCharcterLimit.getElement().setAttribute("alt", i18n.GL0143());
@@ -1771,6 +1772,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			
+			addSetupAdvancedView.setUpLabel.setVisible(true);
+			
 			if(event.getSource()==eHearderIconEducationalUse){
 				educationalContainer.setVisible(false);
 				educationalUsePanel.setVisible(false);
@@ -1800,6 +1804,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			if(event.getSource()==addSetupAdvancedView.educationUseAdvancedPnl){
 			educationalContainer.setVisible(true);
 			educationalUsePanel.setVisible(true);
@@ -1822,6 +1827,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
 			}
+			
+			if(isAllAdditionalTagsOpen()){
+				addSetupAdvancedView.setUpLabel.setVisible(false);
+			}
 		}
 	}
 	
@@ -1829,6 +1838,27 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	void leftArrowClick(ClickEvent event) {
 		activeImageIndex--;
 		setImageThumbnail();
+	}
+
+	/**
+	 * This method will check all additional tags are open or not.
+	 * 
+	 * @return allAdditionalTagInVisisble
+	 */
+	public boolean isAllAdditionalTagsOpen() {
+		
+		boolean allAdditionalTagInVisisble = false;
+		
+
+		if (!addSetupAdvancedView.educationUseAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.momentsOfLearningAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
+			allAdditionalTagInVisisble = true;
+		}
+		return allAdditionalTagInVisisble;
 	}
 
 	@UiHandler("rightArrowLbl")

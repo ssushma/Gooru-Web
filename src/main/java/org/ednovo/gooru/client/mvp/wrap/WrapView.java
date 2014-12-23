@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.wrap;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -384,9 +385,10 @@ public class WrapView extends BaseView implements IsWrapView {
 					}
 				});
 			//}
-			HeaderUc.setPrefilterObj(preFilter);
-			preFilter.getElement().setAttribute("style", "position:fixed !important;");
-		//	preFilter.setPopupPosition(0, headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
+			headerUc.setPrefilterObj(preFilter);
+			//preFilter.setStyleName(GooruCBundle.INSTANCE.css().positionStyle());
+			//preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
+
 			preFilter.setFilter();
 			preFilter.show();
 			preFilter.hidePlanels();

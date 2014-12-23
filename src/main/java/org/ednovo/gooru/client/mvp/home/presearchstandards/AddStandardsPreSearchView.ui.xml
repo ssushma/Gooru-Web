@@ -2,13 +2,16 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="createCollectionStyle" src="CreateCollectionPopUp.css"/>
+
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	
 	<g:HTMLPanel styleName="{res1.css.standarBodyContainer}" ui:field="addStandardsPanel">
-		<g:Button styleName="secondary" ui:field="commonStandards1">Common Core State Standards</g:Button>
-		<g:Button styleName="secondary" ui:field="texasKnowledge1">Texas Essential Knowledge and Skills</g:Button>
-		<g:Button styleName="secondary" ui:field="ngss1">Next Generation Science Standards</g:Button>
-		<g:Button styleName="secondary"  ui:field="californiaStandards1">California State Standards</g:Button>
+		<g:Button styleName="secondary" ui:field="commonStandards1" text="{i18n.GL1560}"></g:Button>
+		<g:Button styleName="secondary" ui:field="texasKnowledge1" text="{i18n.GL1562}"></g:Button>
+		<g:Button styleName="secondary" ui:field="ngss1" text="{i18n.GL1655}"></g:Button>
+		<g:Button styleName="secondary"  ui:field="californiaStandards1" text="{i18n.GL2105}"></g:Button>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{res1.css.listGroup}">
 		<g:HTMLPanel styleName="col-md-2 col-sm-2 searchStandard1">
@@ -38,10 +41,7 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix"/>  
 		<g:HTMLPanel styleName="text-right">
-			<g:Button styleName="primary {createCollectionStyle.addBtnStyle}" ui:field="addBtn">Add</g:Button>
+			<g:Button styleName="primary {createCollectionStyle.addBtnStyle}" ui:field="addBtn" text="{i18n.GL0590}"></g:Button>
 		</g:HTMLPanel>    
-		
-		
-		
 	</g:HTMLPanel>
 </ui:UiBinder>
