@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewH
 import com.google.gwt.user.client.ui.FlowPanel;
 
 public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers,SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
+
 	public void createCommentForCollection(String gooruOid, String comment);
 	
 	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);

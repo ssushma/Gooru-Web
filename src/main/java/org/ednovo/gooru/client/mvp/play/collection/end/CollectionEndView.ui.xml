@@ -82,7 +82,7 @@
 					</g:HTMLPanel>
 					<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
 	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}" ui:field="collectionSummaryText"></g:HTMLPanel>
-					             	 <!-- Collection Summary Top -->
+					      <!-- Collection Summary Top -->
 					     <g:HTMLPanel ui:field="collectionMetaDataPnl">
 						    <g:HTMLPanel styleName="{unitStyle.collectionSummaryDetailsWrapper}">
 							<g:HTMLPanel styleName="{unitStyle.left_container}">

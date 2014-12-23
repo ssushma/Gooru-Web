@@ -104,8 +104,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
-		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
-		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
+		//addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo){
@@ -206,7 +205,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		});
 	}
 
-	@Override
+	
 	public void updateCommentChildView(String commentUid, String action) {
 		getView().updateCommentChildView(commentUid, action);
 	}
@@ -230,7 +229,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 			}
 		});
 	}
-	@Override
+	
 	public void editCommentChildView(String commentUid, String commentText, String action) {
 		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);
 		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {

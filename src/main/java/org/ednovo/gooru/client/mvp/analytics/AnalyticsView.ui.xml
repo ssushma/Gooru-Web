@@ -4,8 +4,7 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="unitStyle" src="analytics.css" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
-	<g:HTMLPanel>
-		<g:HTMLPanel ui:field="pnlMainContainer" styleName="{unitStyle.unitDetails}">
+		<g:HTMLPanel>
 					<!-- load all collections start-->
 					<g:HTMLPanel styleName="row {unitStyle.generalSet}">
 					   <g:HTMLPanel>
@@ -14,6 +13,7 @@
 					  	  </g:ListBox>
 					   </g:HTMLPanel>
 					</g:HTMLPanel>
+				<g:HTMLPanel ui:field="pnlMainContainer" styleName="{unitStyle.unitDetails}">
 					<g:Label styleName="{unitStyle.labelForClassReport}" text="{i18n.GL1873}" title="{i18n.GL1873}"></g:Label> 
 					<!-- load all collections end -->
 					<div class="{unitStyle.reportDiv}">
