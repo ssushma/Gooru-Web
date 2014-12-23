@@ -346,6 +346,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		textsResourcePanel.addStyleName("active");
+		resourceCategoryLabel.setText(i18n.GL1044());
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {
