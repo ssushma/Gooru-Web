@@ -534,7 +534,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	public void onResourceSearchButtonClicked(ClickEvent clickEvent) {
 		if(getSearchText()!=null || getSearchText().length()>0){
 			MixpanelUtil.Show_Resource_Search_Results();
-			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText()));
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText()));	
 		}
 		
 		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
@@ -724,6 +724,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	 * Pre-Selected Standards showing in search page
 	 */
 	private void showRatingsFilter() {
+
 		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
 		if(ratingTag!=null){
 			if(ratingTag.equalsIgnoreCase("5,4,3,2,1,0"))
