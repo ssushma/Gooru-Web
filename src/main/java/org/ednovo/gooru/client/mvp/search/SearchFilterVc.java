@@ -857,16 +857,17 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("Only Resources with Reviews"))
 		{
 			//chkNotFriendly.setStyleName(style.reviewCheckBoxStyle());
+			chkReview.getElement().getStyle().setDisplay(Display.INLINE);
 			chkReview.getElement().getFirstChildElement().setClassName(style.reviewCheckBoxStyle());
 			chkReview.getElement().getFirstChildElement().getNextSiblingElement().setClassName(style.reviewLabelForCheckbox());
 		}
 		
 
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
-		chkNotFriendly.addStyleName(value.toLowerCase());
+		chkNotFriendly.addStyleName(value.toLowerCase().replaceAll(" ",""));
 		
 		chkReview.setStyleName(CssTokens.FILTER_CHECKBOX);
-		chkReview.addStyleName(value.toLowerCase());
+		chkReview.addStyleName(value.toLowerCase().replaceAll(" ",""));
 		
 		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
 		{
@@ -890,7 +891,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")||value.equalsIgnoreCase("zerostar")){
 			chkNotFriendly.setText("");
-			chkNotFriendly.addStyleName(value.toLowerCase());
+			chkNotFriendly.addStyleName(value.toLowerCase().replaceAll(" ",""));
 			
 			if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
 			{
@@ -1149,11 +1150,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(reviewPanelUc,"review", "Only Resources with Reviews");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
+			panelNotMobileFriendly.addStyleName("mobilefriendlyContainer");
+			panelNotMobileFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
-			imgNotFriendly.getElement().getStyle().setLeft(114, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(-20, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setLeft(142, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(35, Unit.PX);
 /*			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
-*/			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
+*/			imgNotFriendly.getElement().getStyle().setPosition(Position.ABSOLUTE);
 	
 			
 			
@@ -1190,11 +1193,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			panelNotMobileFriendly.add(imgNotFriendly);
 			panelNotMobileFriendly.setVisible(true);
 			//added for OER search
-			
+			oerPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(85, Unit.PX);
-			oer.getElement().getStyle().setTop(-28, Unit.PX);
-			oer.getElement().getStyle().setPosition(Position.RELATIVE);
+			oer.getElement().getStyle().setTop(0, Unit.PX);
+			oer.getElement().getStyle().setPosition(Position.ABSOLUTE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(i18n.GL0732());
 			oer.setTitle(i18n.GL0732());

@@ -423,11 +423,18 @@ button.disabled, button.disabled:hover {
 	padding-left: 46%;
 }
 
-/* .categoryFilterContainer .filterCheckBox label {
+ .categoryFilterContainer .filterCheckBox label {
 	padding: 3px 31px;
 	background: url(../images/resource-type-icons.png) no-repeat transparent;
 	
-} */
+}
+.onlyresourceswithreviews{
+	display:inline;	
+}
+
+.onlyresourceswithreviews label{
+	display:inline !important;	
+}
 
 .filterCheckBox {
 	float: left;
