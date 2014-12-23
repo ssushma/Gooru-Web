@@ -77,6 +77,15 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 	@Override
 	public void getGradeCollectionJson() {
+		clearSlot(COLLECTION_PROGRESS_SLOT);
+		setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
+		getView().getCollectionProgressSlot().clear();
+		
+		clearSlot(COLLECTION_SUMMARY_SLOT);
+		setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
+		getView().getCollectionSummarySlot().clear();
+		
+		getView().resetData();
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
 			@Override

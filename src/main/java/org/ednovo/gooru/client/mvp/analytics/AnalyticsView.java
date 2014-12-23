@@ -221,7 +221,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	@Override
 	public void resetData(){
-		loadCollections.clear();
+		//loadCollections.clear();
+		btnCollectionSummary.setText(i18n.GL2296());
+		btnCollectionProgress.setText(i18n.GL2296());
+		isSummayClicked=false;
+		isProgressClicked=false;
 	}
 	
 	/* (non-Javadoc)

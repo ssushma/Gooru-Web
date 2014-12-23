@@ -1484,6 +1484,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId){
 		String formdata=insightsJsonPayload(collectionId,classpageId,sessionId,getLoggedInUserUid());
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.GET_COLLECTION_SUMMARY,collectionId, getLoggedInSessionToken(),formdata);
+		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 		JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
 		InsightsCollectionDo insightCollectionDo=null;

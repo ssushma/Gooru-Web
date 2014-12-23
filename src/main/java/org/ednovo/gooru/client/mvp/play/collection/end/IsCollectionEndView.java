@@ -108,4 +108,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public HTMLPanel getLoadingImageLabel();
 	
 	public void hidePanel();
+	
+	public VerticalPanel getPnlSummary();
 }

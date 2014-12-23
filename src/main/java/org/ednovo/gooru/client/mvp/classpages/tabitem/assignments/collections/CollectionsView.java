@@ -650,7 +650,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			getPresenter().checkCollectionStaus(classpageId);
+			getPresenter().checkCollectionStaus(classpageId,classpageItemDo.getCollectionId());
 			
 		}
 	}

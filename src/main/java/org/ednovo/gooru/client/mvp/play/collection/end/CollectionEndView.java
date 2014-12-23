@@ -1765,4 +1765,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		sessionspnl.setVisible(false);
 		collectionMetaDataPnl.setVisible(false);
 	}
+	@Override
+	public VerticalPanel getPnlSummary(){
+		return pnlSummary;
+	}
 }
