@@ -1025,14 +1025,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 							getAddStandards();
 							preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 							
-							addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+						//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
 							addStandardsPresenter.getAddBtn().setVisible(false);
 							
 						}
 					});
 				//}
 				HeaderUc.setPrefilterObj(preFilter);
-				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+40);
+			//	preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+40);
 				preFilter.setFilter();
 				preFilter.show();
 				preFilter.hidePlanels();

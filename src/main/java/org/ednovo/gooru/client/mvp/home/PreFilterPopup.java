@@ -113,8 +113,8 @@ public class PreFilterPopup extends PopupPanel {
 		renderCheckBoxs(subjectPanelUc, subjects);
 		setStaticData();
 		eventActions();
+		this.setStyleName("preFilterPopup");
 		setPreSelectedFilters(AppClientFactory.getCurrentPlaceToken());
-		
 		/*gradeAnc.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -349,7 +349,9 @@ public class PreFilterPopup extends PopupPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
-			filterPanel.getElement().setAttribute("style", "width:565px;");
+		//	filterPanel.getElement().setAttribute("style", "width:565px;");
+			filterPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+			filterPanel.removeStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainExtraLarge());
 			lblStandards.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(false);
 			gradesPanel.setVisible(true);
@@ -370,7 +372,10 @@ public class PreFilterPopup extends PopupPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			lblStandards.getElement().setAttribute("style", "background: #e5e5e5;");
-			filterPanel.getElement().setAttribute("style", "width:922px;");
+			//filterPanel.getElement().setAttribute("style", "width:922px;");
+			filterPanel.removeStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+			filterPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainExtraLarge());
+	
 			lblGradesSubj.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(true);
 			gradesPanel.setVisible(false);
@@ -384,7 +389,10 @@ public class PreFilterPopup extends PopupPanel {
 	 */
 	public void hidePlanels(){
 		lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
-		filterPanel.getElement().setAttribute("style", "width:565px;");
+		//filterPanel.getElement().setAttribute("style", "width:565px;");
+		filterPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+		filterPanel.removeStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainExtraLarge());
+
 		lblStandards.getElement().getStyle().clearBackgroundColor();
 		standardsPanel.setVisible(false);
 		gradesPanel.setVisible(true);

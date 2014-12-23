@@ -14,26 +14,26 @@
 		<g:HTMLPanel styleName="{res1.css.listGroup}">
 		<g:HTMLPanel styleName="col-md-2 col-sm-2 searchStandard1">
 		    <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
-		        <g:Label styleName="{res1.css.menu_icon}" ui:field="subjects">Select subjects....</g:Label>
+		        <g:Label styleName="{res1.css.menu_icon}" ui:field="subjects">Select Subjects....</g:Label>
 					<uc:UlPanel  ui:field="levelOneStandards" styleName="list-unstyled standeredList"/>        
 		    </g:HTMLPanel>
 			    
 		</g:HTMLPanel>    
 		<g:HTMLPanel styleName="col-md-4 col-sm-4 searchStandard2">
 		      <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
-		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="grade">Select grades....</g:Label>
+		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="grade">Select Courses....</g:Label>
 				<uc:UlPanel  ui:field="levelTwoStandards"  styleName="list-unstyled standeredList"/>	    
 		    </g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="col-md-2 col-sm-2 searchStandard3">
 		    <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
-		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="course">Select course....</g:Label>
+		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="course">Select Units....</g:Label>
 				<uc:UlPanel  ui:field="levelThreeStandards" styleName="list-unstyled standeredList"/>	    
 		    </g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="col-md-4 col-sm-4 searchStandard4">
 		    <g:HTMLPanel styleName="nav-wrap {res1.css.scrollBar}">
-		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="standard">Select course....</g:Label>
+		        <g:Label styleName="menu-icon {res1.css.menu_icon}" ui:field="standard">Select Standards code....</g:Label>
 				<uc:UlPanel  ui:field="levelFourStandards" styleName="list-unstyled standeredList"/>	    
 		    </g:HTMLPanel>
 		</g:HTMLPanel>

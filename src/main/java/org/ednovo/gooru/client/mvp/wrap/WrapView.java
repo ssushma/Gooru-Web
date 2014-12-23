@@ -378,7 +378,7 @@ public class WrapView extends BaseView implements IsWrapView {
 						getAddStandards();
 						preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 						
-						addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+					//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
 						addStandardsPresenter.getAddBtn().setVisible(false);
 						
 					}
@@ -386,7 +386,7 @@ public class WrapView extends BaseView implements IsWrapView {
 			//}
 			HeaderUc.setPrefilterObj(preFilter);
 			preFilter.getElement().setAttribute("style", "position:fixed !important;");
-			preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
+		//	preFilter.setPopupPosition(0, headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
 			preFilter.setFilter();
 			preFilter.show();
 			preFilter.hidePlanels();

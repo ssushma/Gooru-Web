@@ -2148,6 +2148,15 @@ fieldset {
 .reviewPopup{
 	left: 63% !important;
  }
+ .preFilterPopup{
+	left:20% !important;
+	top:48px !important;
+	z-index: 99999;
+visibility: visible;
+position: absolute;
+overflow: visible;
+ }
+ 
  .addResourceContainer{
 	width:500px;
  }
@@ -2157,12 +2166,14 @@ fieldset {
  .borderLeft{
  	border-right:1px solid #999;
  }
+ 
+ .borderRight{
+ 	border-left: 1px solid #cacaca;
+ }
  .loginFailureAlert{
  	left:35% !important;
  }
- 
- 
- 
+  
  .dropdownListContainerScrollPanel{
  	margin-left:46px;
  }
@@ -2594,9 +2605,12 @@ fieldset {
 		left:63% !important;
 		width:100%;	
 	}
-	.
+	
 	 .borderLeft{
  		border-right:1px solid #999;
+ 	}
+ 	.borderRight{
+ 		border-left: 1px solid #cacaca;
  	}
 	.reviewPopupPoor{
 		left:63% !important;
@@ -2655,6 +2669,12 @@ fieldset {
 		width: 100%;
 	}
 	
+	.preFilterPopup{
+		left:18% !important;
+		top:48px !important;
+		
+ 	}
+	
 	.reviewPopupPoor{
 		left:24% !important;
 		width:300px;
@@ -2673,10 +2693,17 @@ fieldset {
 	 .borderLeft{
  		border-right:0px !important;
  	}
+ 		.borderRight{
+ 			border-left: 0px !important;
+ 		}
 		.reviewPopup{
 			left:20% !important;
 			width: 100%;
 		}
+		.preFilterPopup{
+			left:0% !important;
+			top:48px !important;
+ 		}
 		.reviewPopupPoor{
 			left:20% !important;
 			width:250px;
@@ -2698,12 +2725,19 @@ fieldset {
 }
 @media (min-width: 240px) and (max-width: 319px){
 		 .borderLeft{
- 		border-right:0px !important;
- 	}
+ 			border-right:0px !important;
+ 		}
+ 		.borderRight{
+ 			border-left: 0px !important;
+ 		}
 		.reviewPopup{
 		left:10% !important;
 		width: 100%;
 		}
+		.preFilterPopup{
+			left:0% !important;
+			top:48px !important;
+ 		}
 		.reviewPopupPoor{
 			left:10% !important;
 			width:200px;
@@ -2731,6 +2765,9 @@ fieldset {
 	.borderLeft{
  		border-right:0px !important;
  	}
+ 	.borderRight{
+ 		border-left: 0px !important;
+ 	}
  	
  	.loginFailureAlert{
  		left:29% !important;
@@ -2749,6 +2786,10 @@ fieldset {
 		left:69% !important;
 		width: 100%;	
 	}
+	.preFilterPopup{
+	left:2% !important;
+	top:48px !important;
+  }
 	.reviewPopupPoor{
 		left:63% !important;
 		width:300px;
@@ -2890,4 +2931,8 @@ fieldset {
 
 .errorBorderMessage{
 	border: 1px solid orange !important;
+}
+
+#uvTabLabel{
+	display:none !important;
 }
