@@ -2774,6 +2774,7 @@ overflow: visible;
  		
  }
  
+ 
 }
 
 @media(min-width:768px){
@@ -2787,7 +2788,7 @@ overflow: visible;
 		width: 100%;	
 	}
 	.preFilterPopup{
-	left:2% !important;
+	left:4% !important;
 	top:48px !important;
   }
 	.reviewPopupPoor{
