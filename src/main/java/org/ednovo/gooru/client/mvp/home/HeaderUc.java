@@ -363,7 +363,6 @@ public class HeaderUc extends Composite implements
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				Window.alert("in");
 				return null;
 			}
 
