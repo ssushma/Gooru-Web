@@ -519,7 +519,7 @@
 		 </g:HTMLPanel>
       	 <!-- moblieFriendly End -->
       	 
-      	 <uc:HTMLEventPanel ui:field="AdvancedSetupContainer"></uc:HTMLEventPanel>
+      	 <uc:HTMLEventPanel ui:field="advancedSetupContainer"></uc:HTMLEventPanel>
       	 
       	 
         <g:Label styleName="" ui:field="driveFileInfoLbl"></g:Label>

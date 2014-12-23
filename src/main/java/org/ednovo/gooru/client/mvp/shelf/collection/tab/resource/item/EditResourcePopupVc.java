@@ -922,6 +922,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			addSetupAdvancedView.setUpLabel.setVisible(true);
 			if(event.getSource()==eHearderIconEducationalUse){
 				educationalContainer.setVisible(false);
 				educationalUsePanel.setVisible(false);
@@ -973,8 +974,34 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
 			}
+			
+			if(isAllAdditionalTagsOpen()){
+				addSetupAdvancedView.setUpLabel.setVisible(false);
+			}
 		}
 	}
+	
+	/**
+	 * This method will check all additional tags are open or not.
+	 * 
+	 * @return allAdditionalTagInVisisble
+	 */
+	public boolean isAllAdditionalTagsOpen() {
+		
+		boolean allAdditionalTagInVisisble = false;
+		
+
+		if (!addSetupAdvancedView.educationUseAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.momentsOfLearningAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
+			allAdditionalTagInVisisble = true;
+		}
+		return allAdditionalTagInVisisble;
+	}
+	
 	public abstract void browseStandardsInfo(boolean val,boolean userResource);
 	public abstract void closeStandardsPopup();
 	
@@ -1078,9 +1105,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	public void setData(ResourceMetaInfoDo result) {
 		setResMetaInfo(result);
+		if(result.getImages()!=null && result.getImages().size()>1){
+			rightArrowLbl.setVisible(true);
+		}else{
+			rightArrowLbl.setVisible(false);
+		}
 		setThumbnailImages(result.getImages());
 		updateUi();
-		rightArrowLbl.setVisible(true);
 	}
 	private class rightsChecked implements ClickHandler {
 			@Override
@@ -1259,7 +1290,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resoureDropDownLblOpen=false;
 		}
 
-		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
+		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
 		
 		if( collectionItemDo.getResource().getEducationalUse()!=null){
@@ -1318,21 +1349,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void setImage(String thumbnailUrlImage, String category){
-		System.out.println("thumbnailUrlImage : "+thumbnailUrlImage);
 		if (thumbnailUrlImage.endsWith("null")) {
-			if (thumbnailUrlImage.indexOf("youtube") >0){
-				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(thumbnailUrlImage);
-				thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
-			}else{
-				thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
-			}
+			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 		} 
+		if (thumbnailUrlImage!=null && thumbnailUrlImage.indexOf("youtube") >0){
+			String urlStr = urlTextLbl.getText().trim();
+			String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(urlStr);
+			thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+		}
 		setThumbnailImage.setUrl(thumbnailUrlImage);
 	}
 	public void updateUi() {
 		generateImageLbl.setVisible(false);
 		setThumbnailImage.setVisible(true);
-
 		if (urlTextLbl.getText().indexOf("youtube") != -1) {
 			rightArrowLbl.setVisible(false);
 		}
@@ -1818,25 +1847,28 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}*/
 
 	public void setImageThumbnail() {
+		
 		if (activeImageIndex == 0) {
 			leftArrowLbl.setVisible(false);
 		} else {
 			leftArrowLbl.setVisible(true);
 		}
-		if (activeImageIndex == thumbnailImagesLink.size()) {
-			rightArrowLbl.setVisible(false);
-		} else {
-			rightArrowLbl.setVisible(true);
+			if (thumbnailImagesLink != null) {
+				
+			if (activeImageIndex == thumbnailImagesLink.size()) {
+				rightArrowLbl.setVisible(false);
+			} else {
+				rightArrowLbl.setVisible(true);
+			}
+			setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
+			thumbnailUrlStr = thumbnailImagesLink.get(activeImageIndex);
 		}
-		setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
-		thumbnailUrlStr = thumbnailImagesLink.get(activeImageIndex);
 	}
 
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {
-		
-		setImage(collectionItemDo.getResource()
-				.getThumbnailUrl(), collectionItemDo.getResource().getCategory());
+		String thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
+		setImage(thumbnailUrlStr, collectionItemDo.getResource().getCategory());
 		
 		leftArrowLbl.setVisible(false);
 		if (urlTextLbl.getText().contains("youtube")) {

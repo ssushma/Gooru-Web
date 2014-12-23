@@ -485,6 +485,9 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setPageSize(null);
 		getSearchDo().setNotFriendly(null);
 		getSearchDo().setQuery(searchQuery);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		getSearchDo().setFilters(params);
 		onSearchRequest(viewToken);
 	}
 	@Override
@@ -546,13 +549,12 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				if (standard != null) {
 					params.put(IsSearchView.STANDARD_FLT, standard);
 				}
-				if (viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {
-					String notFriendly = getPlaceManager().getRequestParameter(
-							IsSearchView.MEDIATYPE_FLT);
-					String oer = getPlaceManager().getRequestParameter(
-							IsSearchView.OWNER_FLT);
-					String accessMode = getPlaceManager().getRequestParameter(
-							IsSearchView.ACCESS_MODE_FLT);
+				if (viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
+					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
+					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
+					params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 					}
@@ -608,6 +610,12 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
 					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
 					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
+					String ratingMode = getPlaceManager().getRequestParameter(IsSearchView.RATINGS_FLT);
+					if(ratingMode != null)
+					{
+					params.put(IsSearchView.RATINGS_FLT, ratingMode);
+					}
+					
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 					}
