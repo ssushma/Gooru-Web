@@ -608,6 +608,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		mandatoryDescLblForSwareWords.setVisible(false);
 		mandatoryCategoryLbl.setVisible(false);
 		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
+		mandatoryCategoryLbl.getElement().getStyle().setTop(-10, Unit.PX);
 		descCharcterLimit.getElement().setInnerText(i18n.GL0143());
 		descCharcterLimit.getElement().setId("pnlDescCharcterLimit");
 		descCharcterLimit.getElement().setAttribute("alt", i18n.GL0143());
