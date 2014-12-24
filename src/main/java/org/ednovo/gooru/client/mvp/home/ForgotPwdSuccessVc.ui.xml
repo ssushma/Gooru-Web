@@ -25,7 +25,7 @@
 			
 			 </g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.forgotPasswordBottomContainer}">
+			<g:HTMLPanel styleName="{res.css.leaveRegistrationBottomContainer}">
 			    <g:HTMLPanel styleName="{res.css.footerText}">
 			    <g:Label ui:field="queriesText"/>
 			    <g:InlineLabel ui:field="pleaseContactLbl"/><g:Anchor ui:field="supportlnk" target="_blank"></g:Anchor>
