@@ -69,9 +69,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		}
 		.helpIconBtnPublisher {
 			position: absolute;
-			right: 0;
-			margin-top: -20px;
-			margin-right: 85px;
+			
+			left: 73px;
+			top: -24px;
 			color: #0f76bb;
 			cursor: pointer;
 			font-size: 11px;
@@ -209,7 +209,12 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			top: 2px;
 			position: relative;
 		}
-
+	.positionRelative{
+		position:relative;
+	}
+	.paddingClear{
+		padding:0px;
+	}	
 	</ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle"
 		field="res"></ui:with>
@@ -246,8 +251,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			<uc:H5Panel styleName="{style.headerLbl}" ui:field="gradeLbl"/>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.gradesFilContainer}">
-				<g:HTMLPanel  ui:field="gradePanelUc" styleName="col-md-6 col-xs-6"/>
-				<g:HTMLPanel  ui:field="gradePanelUcNext" styleName="col-md-6 col-xs-6"/>
+				<g:HTMLPanel  ui:field="gradePanelUc" styleName="col-md-6 col-xs-6 {style.paddingClear}"/>
+				<g:HTMLPanel  ui:field="gradePanelUcNext" styleName="col-md-6 col-xs-6 {style.paddingClear}"/>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		</g:HTMLPanel>
@@ -283,7 +288,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<g:HTMLPanel styleName="filterpublisherContainer">
 		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblsource" visible="true"></g:Label>
 		    <uc:H5Panel styleName="{style.headerLbl}" visible="false" ui:field="sourceLbl"></uc:H5Panel>
-			<g:HTMLPanel  ui:field="sourcePanelUc" visible="false">
+			<g:HTMLPanel styleName="{style.positionRelative}" ui:field="sourcePanelUc" visible="false">
 				<g:HTMLPanel>
 				 	<g:Label styleName="{style.helpIconBtnPublisher}" ui:field="publisherTooltip"/>
 				</g:HTMLPanel> 
@@ -350,6 +355,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<uc:PPanel>
 			<g:Anchor  styleName="{style.clearAll}" ui:field="clearAll" />
 		</uc:PPanel>
+		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		   
 	</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 
