@@ -1711,8 +1711,8 @@ color:#999;
 .mobilefriendlyContainer .filterCheckBox label {
 	/* background: url(../images/mos/ipadFriendly.png) no-repeat transparent; */
 	background: url(../images/mos/MobileFriendly.png) no-repeat transparent;
- 	padding-left: 30px;
-	padding-bottom: 6px;
+ 	padding-left: 22px;
+	padding-bottom: 2px;
 	background-size: 20px 15px;
 }
 .oerContainer  input[type="checkbox"] {
