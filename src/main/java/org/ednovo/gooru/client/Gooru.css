@@ -677,5 +677,6 @@ div.learnMoreIconsDiv,div.learnMoreIconsDiv {
 	background: white;
 	border: 3px solid #e7e7e7;
 	z-index: 99;
+	top:40px !important;
 }
 

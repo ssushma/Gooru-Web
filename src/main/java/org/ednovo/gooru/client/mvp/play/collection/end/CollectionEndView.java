@@ -377,6 +377,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							commentField.setEnabled(true);
 							commentssection.getElement().getStyle().setOpacity(1);
 							changeAssignmentStatusButton.setChecked(true);
+							postCommentBtn.setEnabled(true);
+							postCommentBtn.setStyleName(PRIMARY_STYLE);
 						}
 						else
 						{
@@ -1648,11 +1650,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		{
 			if(result.getSettings().getComment()!=null)
 			{
+		
 				if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
 				{
 					requiredLabel.removeStyleName(playerStyle.mutedText());
 					optionalLabel.removeStyleName(playerStyle.mutedText());								
-					commentField.setEnabled(true);
+					commentField.setEnabled(true);	
+					postCommentBtn.setEnabled(true);
+					postCommentBtn.setStyleName(PRIMARY_STYLE);
 					commentssection.getElement().getStyle().setOpacity(1);
 					changeAssignmentStatusButton.setChecked(true);
 				}
