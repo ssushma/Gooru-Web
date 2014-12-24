@@ -6,6 +6,7 @@
 			font-size: 12px;
 			width: 350px;
 			border: 1px solid #ccc;
+			background: white;
 		}
 		.PopupMainVSmall{
 			width:550px;

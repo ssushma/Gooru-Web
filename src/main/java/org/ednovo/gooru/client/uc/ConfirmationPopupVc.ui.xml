@@ -14,8 +14,7 @@
 		.actionField {
 		     text-align: center;
 		     width: 100%;
-		     margin-top: 19px;
-		}
+		  }
 		
 		.loadingTxtStyle {
 		     text-align: center;
@@ -30,7 +29,7 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:FlowPanel styleName="{style.removePopupContainer}" height="100px">
+		<g:FlowPanel styleName="{style.removePopupContainer}">
 			<g:FlowPanel styleName="{style.removeText}">
 				<g:Label ui:field="contentText" />
 			</g:FlowPanel>

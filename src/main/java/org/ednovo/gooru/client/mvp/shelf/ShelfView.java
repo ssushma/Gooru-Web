@@ -1359,8 +1359,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
+		delete.center();
+
 	}
 	
 	public void showCollectionIsByBoth(int collabCount){
@@ -1397,9 +1398,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
-	
+		delete.center();
+
 	}
 	
 	public void showCollectionIsUserByCollab(){
@@ -1429,9 +1430,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
-	
+		delete.center();
 	}
 	
 	public void showCollectionIsUsedByOwner(){
@@ -1486,10 +1486,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		
-		delete.center();
 		delete.show();
-	
+		delete.center();
 	}
 	
 	

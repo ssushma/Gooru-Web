@@ -2430,6 +2430,7 @@ margin-top: 18px; */
 	left: 484px;
     top: 41px;
 	z-index: 99;
+	box-sizing:content-box;
 }
 
 .editButtonText {
@@ -2442,6 +2443,7 @@ margin-top: 18px; */
 	text-decoration: none !important;
 	padding: 4px 0;
 	padding-left: 11px;
+	box-sizing:content-box;
 }
 
 .editButtonText:hover {

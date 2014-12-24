@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.TimeZone;
+import com.google.gwt.i18n.client.constants.TimeZoneConstants;
 import com.google.gwt.user.client.ui.Label;
 
 public class AnalyticsUtil {
@@ -71,7 +74,8 @@ public class AnalyticsUtil {
 		Long commentTime = Long.parseLong(commentCreatedTime);
 		Date currentDate = new Date(commentTime);
 		DateTimeFormat fmt = DateTimeFormat.getFormat(DATE_FORMAT);
-		createdTime = fmt.format(currentDate);
+		TimeZone est = TimeZone.createTimeZone(0);
+		createdTime = fmt.format(currentDate,est);
 		return createdTime;
 	}
 	/**

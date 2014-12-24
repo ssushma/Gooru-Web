@@ -121,7 +121,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	@UiField Label correctQueryText;
 		
-	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author;
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author,reviewTag;
 
 	
 	protected ResourceDragController dragController;
@@ -190,8 +190,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showAccessModeFilter();
 		showAuthorFilter();
 		showRatingsFilter();
+		showReviewFilter();
 	
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null)){
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -349,7 +350,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showAccessModeFilter();
 		showAuthorFilter();
 		showRatingsFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null)){
+		showReviewFilter();
+		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -702,6 +704,19 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				standardsConatiner.add(createTagsLabel(split[i],"authorPanel"));
 			}
 				
+		}
+	}
+	/**
+	 * To show the Author values in search page
+	 */
+	private void showReviewFilter() {
+		reviewTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
+		if(reviewTag!=null){
+			if(reviewTag.equalsIgnoreCase("1"))
+			{
+				standardsConatiner.add(createTagsLabel("Only Resources with Reviews","onlyReviewPanel"));
+			}
+
 		}
 	}
 
