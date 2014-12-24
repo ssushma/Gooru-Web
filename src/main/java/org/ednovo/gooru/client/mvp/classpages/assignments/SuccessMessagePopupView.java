@@ -80,6 +80,7 @@ public class SuccessMessagePopupView extends Composite{
 		setStaticTexts(collectonTitle);
 		//appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().successPopupContainer());
 		appPopUp.setGlassEnabled(true);
+		appPopUp.setHeight("320px");
 		appPopUp.show();
 		appPopUp.center();
 	}
