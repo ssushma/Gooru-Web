@@ -73,6 +73,7 @@ public class AppPopUp extends PopupPanel {
 		headerPanel.add(row);
 		innerPanel.add(headerPanel);
 		mainPanel.add(innerPanel);
+		mainPanel.add(clearfix);
 		content.add(mainPanel);
 		this.setWidget(content);
 		setGlassEnabled(true);
