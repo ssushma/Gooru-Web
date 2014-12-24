@@ -1736,9 +1736,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		String reviews = filter.get(IsSearchView.REVIEWS_FLT);
 		
+		System.out.println("ratings:::"+ratings);
+		
 		if(ratings == null)
 		{
 			ratings = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+			if(ratings == null)
+			{
+				ratings = "5,4,3,2,1,0";
+			}
 		}
 		if(reviews == null)
 		{
@@ -1754,7 +1760,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		setSelectedFilter(gradePanelUcNext, grade);
 		if(resourceSearch)
 		{
-		setSelectedFilterMapRating(ratingPanelUc, ratings,COMMA_SEPARATOR);
+		setSelectedFilter(ratingPanelUc, ratings);
 		//setSelectedFilter(reviewPanelUc, reviews);
 		}
 		standardSgstBox.setText("");
@@ -1990,109 +1996,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 		}
 		
-	}
-	
-	/**
-	 * Set filter value for search with separator
-	 * @param filterFlowPanel instance of {@link DisclosurePanelUc} which has filter values
-	 * @param checkedValues selected filter value
-	 * @param separator concatenation of the filter value by separator 
-	 */
-	private void setSelectedFilterMapRating(HTMLPanel filterHtmlPanel, String checkedValues, String separator) {
-		List<String> items = null;
-		if (checkedValues != null) {
-			items = Arrays.asList(checkedValues.split("\\s*" + separator + "\\s*"));
-		}
-		
-		if (items != null) {
-			for(int i=0; i<items.size();i++)
-			{
-				if(items.get(i).equalsIgnoreCase("0"))
-				{
-					chkRating0.setValue(true);
-				}
-				else if(items.get(i).equalsIgnoreCase("1"))
-				{
-					chkRating1.setValue(true);
-				}
-				else if(items.get(i).equalsIgnoreCase("2"))
-				{
-					chkRating2.setValue(true);
-				}
-				else if(items.get(i).equalsIgnoreCase("3"))
-				{
-					chkRating3.setValue(true);
-				}
-				else if(items.get(i).equalsIgnoreCase("4"))
-				{
-					chkRating4.setValue(true);
-				}
-				else if(items.get(i).equalsIgnoreCase("5"))
-				{
-					chkRating5.setValue(true);
-				}
-			}
-		
-	
-			
-			/*//if(resourceSearch){
-			for(int i=0;i<items.size();i++){
-				Widget filterWidget = filterHtmlPanel.getWidget(i);
-				if (filterWidget instanceof CheckBox) {
-					CheckBox filterCheckBox = (CheckBox) filterWidget;
-					
-					for (String item : items) {
-						System.out.println("filterCheckBox.getName():::"+filterCheckBox.getName());
-						System.out.println("filterCheckBox.getName()item:::"+item);
-						if ((filterCheckBox.getName().equals(item))) {	
-							filterCheckBox.setValue(true);
-						}
-					}
-				}*/
-			
-			/**
-			 * Removed this logic as per the new requrement in 6.5 sprint
-			 */
-				/*for (Widget filterWidget : filterFlowPanel.getContent()) {
-					if (filterWidget instanceof CheckBox) {
-						CheckBox filterCheckBox = (CheckBox) filterWidget;
-						filterCheckBox.setValue(false);
-						for (String item : items) {
-							if ((filterCheckBox.getName().equals(item))) {	
-								filterCheckBox.setValue(true);
-							}
-						}
-					}
-				}*/
-			//}
-/*			else{
-				boolean isRadioButtonSelected=false;
-				for (Widget filterWidget : filterFlowPanel.getContent()) {
-					if (filterWidget instanceof QuestionTypeFilter) {
-						QuestionTypeFilter questionTypeFilter = (QuestionTypeFilter) filterWidget;
-						//filterCheckBox.setValue(false);
-						questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButton());
-						questionTypeFilter.hiddenRadioButton.setValue(false);
-						for (String item : items) {
-							if ((questionTypeFilter.hiddenRadioButton.getText().equals(item))) {
-								questionTypeFilter.hiddenRadioButton.setValue(true);
-								isRadioButtonSelected=true;
-								questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButtonSelected());
-							}
-						}
-					}
-				}
-//				if(!isRadioButtonSelected){
-//					QuestionTypeFilter questionTypeFilter = (QuestionTypeFilter)filterFlowPanel.getContent().getWidget(2);
-//					questionTypeFilter.hiddenRadioButton.setValue(true);
-//					questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButtonSelected());
-//				}
-				
-			}*/
-			
-		}
-		
-	}
+	}	
 
 	/**
 	 * Clear all selected filter values
@@ -2523,7 +2427,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 						ratingsText = ratingsText.replaceAll(",0", "");
 					}
 					}
-					setSelectedFilter(ratingPanelUc,ratingsText,COMMA_SEPARATOR);
+					setSelectedFilter(ratingPanelUc,ratingsText);
 				}
 				
 				
