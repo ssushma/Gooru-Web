@@ -501,12 +501,12 @@ public class LoginPopupUc extends PopupPanel{
 								}
 						    }*/
 						}
-						else if(result.getStatusCode()==PASSWORDERROR_STATUS_CODE){
+						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && result.getErrorMsg().equalsIgnoreCase(i18n.GL0347())){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL0347());
 						}
-						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
+						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && !result.getErrorMsg().equalsIgnoreCase(i18n.GL0347())){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
