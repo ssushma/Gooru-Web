@@ -1634,6 +1634,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			rightArrowLbl.setVisible(false);
 			leftArrowLbl.setVisible(false);
 			generateImageLbl.setVisible(true);
+			videoResourcePanel.removeStyleName("active");
+			resourceCategoryLabel.setText(i18n.GL0360());
 			
 			final Map<String, String> parms = new HashMap<String, String>();
 			
@@ -1702,7 +1704,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 									 
 									}
 								else{
-									setVideoCategory();
 									websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
 									interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
 									imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
