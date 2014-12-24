@@ -1147,6 +1147,15 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			}
 		}
 	}
+	
+	public double getResourceRating(String gooruOid) { 
+		if(collectionItemDo!=null){
+			if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+				return collectionItemDo.getResource().getRatings().getAverage(); 
+			}
+		}
+		return 0;
+	}
 	public String getSearchKeyword(){
 		String keyword=null;
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousPlayerRequestUrl();
