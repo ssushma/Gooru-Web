@@ -107,17 +107,27 @@ public abstract class ServiceRequest {
 	public String parseJsonErrorResponse(Representation errorRepresentation){
 		String messageString=null;
 		try{
-			JsonRepresentation jsonRepresentation=new JsonRepresentation(errorRepresentation.getText());
-			JSONObject errorObject=jsonRepresentation.getJsonObject();
-			if(errorObject!=null){
-				messageString=errorObject.isNull("status")?null:errorObject.getString("status");
+			/**
+			 *  Taking values from response header to check authorized user or not. Implemented to differentiate from blocked user or authentication issue.
+			 */
+			Series<org.restlet.engine.header.Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+			if(responseHeaders!=null){
+				if(responseHeaders.getValues("Unauthorized")!=null){
+					messageString = responseHeaders.getValues("Unauthorized");
+				}else{
+					JsonRepresentation jsonRepresentation=new JsonRepresentation(errorRepresentation.getText());
+					JSONObject errorObject=jsonRepresentation.getJsonObject();
+					if(errorObject!=null){
+						messageString=errorObject.isNull("status")?null:errorObject.getString("status");
+					}
+				}
 			}
 			return messageString;
 		}catch(Exception exception){
 			logger.error(ERROR, exception);
 			return messageString;
 		}
-		
+
 	}
 	
 	protected String getApiServerStatus(){
