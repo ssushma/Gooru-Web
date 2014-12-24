@@ -1261,7 +1261,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				tagList.add("\"" + educationArr[i].toString() +"\"");
 			}
 		}
-		//System.out.println(tagList);
 		String[] lexileMainarr = setLexileLevel();
 		if(lexileMainarr != null)
 		{
@@ -1280,7 +1279,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		String hazardArr[] = setAccessHazards();
 		for(int i=0;i<hazardArr.length;i++){
 			
-			System.out.println(hazardArr[i]);
 		}
 		if(hazardArr != null)
 		{

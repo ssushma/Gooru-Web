@@ -466,7 +466,6 @@ public class SearchInfoWidget extends Composite {
 				}
 			//	gradeListInt = sortList(gradeListInt);
 /*				for(int glevel=0;glevel<gradeListInt.size();glevel++){
-					System.out.println("gradeListInt::"+gradeListInt.get(glevel));
 
 					gradesdetails.add(Integer.toString(gradeListInt.get(glevel)));
 					

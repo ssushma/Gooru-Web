@@ -1419,7 +1419,6 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
 				editSearchTxtBox.setText(queryVal);
-				System.out.println("queryValeditSearchBtn::"+queryVal);
 				if(prefilter!=null){
 					prefilter.hide();
 				}

@@ -658,7 +658,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 											StudentAssignmentView
 													.setPublicPageActive();
 										} else {
-											System.out.println("iam in classpagelistvc::setPublicPagePending");
 											StudentAssignmentView
 													.setPublicPagePending();
 										}

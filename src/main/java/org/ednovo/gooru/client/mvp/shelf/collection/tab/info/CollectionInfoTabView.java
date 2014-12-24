@@ -1674,7 +1674,6 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 	}
 	
 	private void updateGrade(List<String> gradeListInternal){
-		System.out.println("gradeListInternal::"+gradeListInternal);
 	AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, join(gradeListInternal, ","), null, null, null,null,null,null, new SimpleAsyncCallback<CollectionDo>(){
 			
 			@Override
