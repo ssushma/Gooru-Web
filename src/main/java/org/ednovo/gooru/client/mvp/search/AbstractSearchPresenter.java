@@ -473,6 +473,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setNotFriendly(null);
 		getSearchDo().setQuery(searchQuery);
 		Map<String, String> filterMap = new HashMap<String, String>();
+		filterMap.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		if(getSearchDo().getFilters() != null)
 		{
 		filterMap = getSearchDo().getFilters();
