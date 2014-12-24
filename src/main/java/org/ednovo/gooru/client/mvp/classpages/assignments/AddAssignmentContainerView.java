@@ -1006,8 +1006,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		hide();
 		clearShelfData();
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		new SuccessMessagePopupView(collectionTitle);
 		Window.enableScrolling(false);
+		new SuccessMessagePopupView(collectionTitle);
 	}
 	
 	public TreeItem loadingTreeItem(){

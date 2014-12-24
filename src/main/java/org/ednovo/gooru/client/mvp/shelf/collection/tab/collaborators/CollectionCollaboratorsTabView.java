@@ -458,9 +458,8 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			delete.setDescText(StringUtil.generateMessage(i18n.GL1119(), emailIdsToRemove.get(1) != null ? emailIdsToRemove.get(1) : emailIdsToRemove.get(0))); 
 			delete.setPositiveButtonText(i18n.GL_GRR_YES());
 			delete.setNegitiveButtonText(i18n.GL0142());
-			delete.center();
 			delete.show();
-			
+			delete.center();
 		}else{
 			//give message...
 		}

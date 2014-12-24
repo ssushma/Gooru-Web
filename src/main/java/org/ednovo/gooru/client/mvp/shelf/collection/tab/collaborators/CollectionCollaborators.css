@@ -373,6 +373,7 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 	font-size: 12px;
 	border: 1px solid #ccc;
 	padding: 3px;
+	box-sizing:content-box;
 }
 .deleteContainer{
 	text-align: center;

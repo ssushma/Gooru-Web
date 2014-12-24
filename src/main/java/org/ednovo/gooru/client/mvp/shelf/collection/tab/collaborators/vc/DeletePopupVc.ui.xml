@@ -5,7 +5,9 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle"
 		field="collaborators" />
-	<g:HTMLPanel styleName="{collaborators.css.popup}">
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
+	<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
 		<g:HTMLPanel styleName="{collaborators.css.popupInner}">
 			<g:Label styleName="{collaborators.css.popupHeader}"
 				ui:field="lblTitle" />

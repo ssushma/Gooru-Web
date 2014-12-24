@@ -73,11 +73,11 @@ public class SuccessMessagePopupView extends Composite{
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public SuccessMessagePopupView(String collectonTitle) {
+		Window.enableScrolling(false);
 		appPopUp=new PopupPanel();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		setStaticTexts(collectonTitle);
-		Window.enableScrolling(false);
 		//appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().successPopupContainer());
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
