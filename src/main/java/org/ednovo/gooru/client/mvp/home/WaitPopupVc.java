@@ -71,7 +71,7 @@ public abstract class WaitPopupVc extends AppPopUp{
 	public WaitPopupVc(String title, String entityInfo) {
 		super();
 		setContent(title, uiBinder.createAndBindUi(this));
-		setStyleName("deleteResourcePopup");
+		//setStyleName("deleteResourcePopup");
 		//okButtonUc.setStyleName("overRideBlueButtonDelete");
 		messageTextLabel.setText(entityInfo);
 		messageTextLabel.getElement().setId("lblMessageTextLabel");
