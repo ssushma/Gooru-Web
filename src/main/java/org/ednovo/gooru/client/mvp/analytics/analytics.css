@@ -1003,6 +1003,7 @@
 	margin: 1% 0;
 	padding: 1% 0;
 	width: 100%;
+	box-sizing: content-box;
 }
 .reportsGeneration{
 		font-family: Arial, Verdana, Sans-serif;

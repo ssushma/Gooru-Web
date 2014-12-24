@@ -1377,6 +1377,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			toolTip.getElement().getStyle().setBackgroundColor("transparent");
 			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 			toolTip.setPopupPosition(viewClassItemAnalyticsButton.getAbsoluteLeft(), viewClassItemAnalyticsButton.getAbsoluteTop()+36);
+			toolTip.setAutoHideEnabled(true);
 			toolTip.show();
 		}
 	}
