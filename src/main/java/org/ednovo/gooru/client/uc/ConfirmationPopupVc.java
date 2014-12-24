@@ -140,7 +140,6 @@ public abstract class ConfirmationPopupVc extends Composite {
 
 	@UiHandler("okButton")
 	public void onClickDelete(ClickEvent clickEvent){
-		System.out.println("con--inin");
 		loadingTextLbl.setVisible(true);
         buttonContainer.setVisible(false);
 		onDelete(clickEvent);

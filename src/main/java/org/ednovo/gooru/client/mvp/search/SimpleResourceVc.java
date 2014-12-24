@@ -264,7 +264,6 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	
 	public void updateResourceViewCount(String viewCount){
 		if(viewCountLabel!=null){
-			System.out.println("viewCountLabel====>"+viewCountLabel.getText());
 			viewCountLabel.setText(viewCount+ " " + VIEWS_PREFIX_NAME);  
 		}
 	}

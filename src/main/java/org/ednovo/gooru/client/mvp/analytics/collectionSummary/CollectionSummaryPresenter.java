@@ -128,7 +128,6 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
-				System.out.println("sessions Size::"+result.size());
 				getView().setUserSessionsData(result);
 				if(result.size()!=0){
 					printUserDataDO.setSession("1st Session");

@@ -71,7 +71,6 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 			});
 //		}else if(caught instanceof GwtException){
 //			GwtException gwtException=(GwtException)caught;
-//			System.out.println("inside gwt exception");
 //			ErrorPopupUc errorPopupuc=new ErrorPopupUc();
 //			errorPopupuc.show();
 			}

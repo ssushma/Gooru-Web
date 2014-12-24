@@ -611,7 +611,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	}
 	@Override
 	public void generatePartnerLibraries() {
-		System.out.println("In Home View ....");
 		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
 			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {

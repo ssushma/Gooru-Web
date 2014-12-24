@@ -483,7 +483,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
 //					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
-//					System.out.println("webResourceWidget"+webResourceWidget);
 					HTMLPanel htmlPanel = new HTMLPanel("");
 					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
 					Image img = new Image();

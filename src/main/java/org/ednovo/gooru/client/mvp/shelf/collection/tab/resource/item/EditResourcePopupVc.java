@@ -1177,7 +1177,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		urlTextLbl.getElement().setAttribute("alt", i18n.GL0827());
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
 		
-		System.out.println("url here::::"+url);
 		if(urlTextLbl.getText().contains("youtube")){
 			setVideoCategory();
 			if(websiteClickHandler!=null){
@@ -1744,7 +1743,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		categorypanel.setStyleName(interactive.getStyleName());
 		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen=false;
-		System.out.println("on click interactive");
 		interactiveResourcePanel.addStyleName("active");
 		websiteResourcePanel.removeStyleName("active");
 		audioResourcePanel.removeStyleName("active");
