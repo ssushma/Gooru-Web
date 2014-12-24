@@ -5,10 +5,8 @@ import java.util.List;
 
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
-import com.google.gwt.i18n.client.constants.TimeZoneConstants;
 import com.google.gwt.user.client.ui.Label;
 
 public class AnalyticsUtil {
