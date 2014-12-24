@@ -6,6 +6,7 @@
 			font-size: 12px;
 			width: 350px;
 			border: 1px solid #ccc;
+			background: white;
 		}
 		.alertHeaderStyle {
 			background: -webkit-gradient(linear, 0 0, 0 100%, from(#666), to(#515151));

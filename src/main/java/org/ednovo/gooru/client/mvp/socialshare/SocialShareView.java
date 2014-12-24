@@ -45,6 +45,7 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -159,10 +160,13 @@ IsSocialShareView {
 		emailText.getElement().setAttribute("title", i18n.GL0212());
 		twitterText.getElement().setInnerHTML(i18n.GL0647());
 		twitterText.getElement().setId("pnlTwitterText");
+		twitterText.getElement().getStyle().setMarginBottom(5, Unit.PX);
+
 		twitterText.getElement().setAttribute("alt", i18n.GL0647());
 		twitterText.getElement().setAttribute("title", i18n.GL0647());
 		facbookText.getElement().setInnerHTML(i18n.GL0646());
 		facbookText.getElement().setId("pnlFacbookText");
+		facbookText.getElement().getStyle().setMarginBottom(5, Unit.PX);
 		facbookText.getElement().setAttribute("alt", i18n.GL0646());
 		facbookText.getElement().setAttribute("title", i18n.GL0646());
 		shareIconPanel.getElement().setId("pnlShareIconPanel");
