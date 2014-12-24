@@ -428,6 +428,13 @@ button.disabled, button.disabled:hover {
 	background: url(../images/resource-type-icons.png) no-repeat transparent;
 	
 }
+.showonlyquizzes{
+	display:block;
+}
+.showonlyquizzes lable{
+	padding:0;
+	background:none;
+}
 .onlyresourceswithreviews{
 	display:inline;	
 }

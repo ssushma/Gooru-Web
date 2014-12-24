@@ -119,8 +119,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
 		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
-		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
-		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
+		//addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
+		//addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo){
@@ -167,9 +167,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
-		clearSlot(COLLECTION_REPORTS_SLOT);
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
+	}
+	public void clearslot(){
+		getView().resetData();
+		getView().resetCollectionMetaData();
+		clearSlot(COLLECTION_REPORTS_SLOT);
+		setInSlot(COLLECTION_REPORTS_SLOT,null,false);
 	}
 	
 	public void setViewCount(String viewCount){
@@ -233,7 +238,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		});
 	}
 
-	@Override
 	public void updateCommentChildView(String commentUid, String action) {
 		getView().updateCommentChildView(commentUid, action);
 	}
@@ -259,7 +263,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			}
 		});
 	}
-	@Override
+	
 	public void editCommentChildView(String commentUid, String commentText, String action) {
 		if(collectionPlayerPresenter!=null){
 		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);

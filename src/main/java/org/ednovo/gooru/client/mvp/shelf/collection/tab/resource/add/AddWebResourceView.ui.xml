@@ -500,7 +500,11 @@
 			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
  		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" ui:field="mediaLabelContainer">
  		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
-				<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+ 		      
+ 		      <g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}" ui:field="mediaDropdownArrowConatainer">
+								<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
+			      				 </g:HTMLPanel>
+				
 		       <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
 								styleName="{res.css.scrollPanelContainerInstructional}">
 								<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"

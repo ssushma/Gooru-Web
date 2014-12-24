@@ -55,4 +55,8 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
      * This method is used to enable the no data message text.
      */
     void setNoDataText();
+    /**
+     * This method is used to reset the data.
+     */
+    void resetDataText() ;
 }

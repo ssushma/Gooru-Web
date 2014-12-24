@@ -46,9 +46,11 @@ import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadata
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEvent;
+import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
@@ -455,8 +457,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
 		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
+
 		//collectionPlayerTocPresenter.getWidget().addAttachHandler(new TocAttachEvent());
 		Window.addResizeHandler(new PlayerResizeEvent());
+
+		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
+		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
+
 	}
 
 	@ProxyCodeSplit
@@ -767,6 +774,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		showClasspageButton();
 		setOpenEndedAnswerSubmited(true);
 		getView().setResourceTitle(collectionDo.getTitle());
+		collectionEndPresenter.clearslot();
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
 		collectionEndPresenter.setCollectionMetadata(collectionDo);
 		 showSignupPopup(); 
@@ -1756,6 +1764,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			AppClientFactory.getEventBus().fireEvent(new UpdateViewCountInSearchEvent(collectionDo));
 			stopCollectionDataLogs();
 			getView().hidePlayerButtons(true,null);
+			AppClientFactory.getPlaceManager().setDataLogClasspageId(null);
 			collectionDo=null;
 			collectionItemDo=null;
 			collectionMetadataId=null;
@@ -2406,6 +2415,18 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}
 	}
+	
+	public double getResourceRating(String gooruOid){
+		if(gooruOid!=null&&!gooruOid.equalsIgnoreCase("")&&collectionDo!=null&&collectionDo.getGooruOid()!=null){
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){	
+				CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
+				if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+					return collectionItemDo.getResource().getRatings().getAverage();   
+				}
+			}
+		}
+		return 0;
+	}
 
 	@Override
 	public void navigateToNext(final String direction) {
@@ -2481,5 +2502,19 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		
 	}
 	
-
+	public void editCommentChildView(String commentUid, String commentText, String action) {
+		if(getPlaceManager().getRequestParameter("view")!=null){
+			collectionEndPresenter.editCommentChildView(commentUid, commentText, action);
+		}else{
+			metadataPresenter.editCommentChildView(commentUid, commentText, action);
+		}
+	}
+	
+	public void updateCommentChildView(String commentUid, String action){
+		if(getPlaceManager().getRequestParameter("view")!=null){
+			collectionEndPresenter.updateCommentChildView(commentUid, action);
+		}else{
+			metadataPresenter.updateCommentChildView(commentUid,action);
+		}
+	}
 }
