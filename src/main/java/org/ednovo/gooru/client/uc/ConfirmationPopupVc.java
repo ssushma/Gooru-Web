@@ -77,7 +77,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 	public ConfirmationPopupVc(String messageHeader, String  messageContent) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
+//		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(messageHeader, uiBinder.createAndBindUi(this));
 		contentText.setText(messageContent);
 		contentText.getElement().setId("lblContentText");
