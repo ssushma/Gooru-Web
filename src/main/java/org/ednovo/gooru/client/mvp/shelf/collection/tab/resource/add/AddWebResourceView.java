@@ -351,7 +351,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				return null;
 			}
 		};
-		
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
@@ -367,6 +366,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		standardSgstBox.addSelectionHandler(this);
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
@@ -671,6 +671,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		interactiveResourcePanel.getElement().setId("epnlInteractiveResourcePanel");
 		
 		videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
 		
 		interactive.getElement().setId("pnlInteractive");
 		imageResourcePanel.getElement().setId("epnlImageResourcePanel");

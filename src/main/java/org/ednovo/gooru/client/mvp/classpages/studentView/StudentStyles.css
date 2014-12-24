@@ -2,6 +2,7 @@
 	width: 1000px;
 	margin: 0 auto;
 	overflow: hidden;
+	clear: both;
 	/* background-color: #eeecec; */
 	min-height:400px;
 }
