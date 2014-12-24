@@ -203,7 +203,7 @@ margin-top: -2px;
 	padding-top: 13px;
 	font-size: 2em;
 	position: relative;
-	height: 125px;
+	height: 118px;
 	width:100%;
 	text-align: right;
 	/* margin-bottom: 10px; */
@@ -249,20 +249,19 @@ margin-top: -2px;
 	position: relative;
 	text-align: left;
 	left: -20px;
-	width: 412px;
+	width: 360px;
 	color: #999999;
 }
 
 .resourceVideoTime {
 	word-wrap: break-word;
-	float: left;
+	/* float: left; */
 	padding-left: 0;
 	position: relative;
 	text-align: left;
-	width: 505px;
+	width: 440px;
 	color: #999999;
-	left: 0px;
-	top: 0px;
+	
 }
 
 .resourceNarrationEdit {
