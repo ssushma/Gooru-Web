@@ -431,9 +431,9 @@ button.disabled, button.disabled:hover {
 .showonlyquizzes{
 	display:block;
 }
-.showonlyquizzes lable{
-	padding:0;
-	background:none;
+.showonlyquizzes label{
+	padding:0 !important;
+	background:none !important;
 }
 .onlyresourceswithreviews{
 	display:inline;	
