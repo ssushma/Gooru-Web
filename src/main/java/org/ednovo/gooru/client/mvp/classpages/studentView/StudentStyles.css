@@ -287,11 +287,14 @@
 	margin: 0px 0 0 15px;
 }
 .searchResultContainer {
-	text-align: right;
+	/* text-align: right;
+	height:39px; */
+	float: right;
+	
+}
+.paginationContainer{
 	width: 1000px;
 	margin: 0 auto;
-	height:30px;
-	
 }
 
 .paginationPanel {
