@@ -123,7 +123,6 @@ public class DrivePresenter extends
 			getView().getPanelFileList().add(setLoadingPanel());
 		}
 		String refresh_token = AppClientFactory.getLoggedInUser().getRefreshToken();
-		System.out.println("refresh_token : "+refresh_token);
 		
 		if (refresh_token == null){
 			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new SimpleAsyncCallback<String>() {

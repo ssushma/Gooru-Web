@@ -139,15 +139,15 @@ button.secondary:hover {
 }
 
 button.disabled, button.disabled:hover {
-	color: #999;
-	background: #efefef;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
-	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
-	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
-	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
-	background: -o-linear-gradient(top, #fdfdfd, #ddd);
-	border: 1px solid #ddd;
-	cursor: default;
+	color: #999 !important;
+	background: #efefef !important;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd)) !important;
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd) !important;
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd) !important;
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd) !important;
+	background: -o-linear-gradient(top, #fdfdfd, #ddd) !important;
+	border: 1px solid #ddd !important;
+	cursor: default !important;
 }
 
 .arrowButton {

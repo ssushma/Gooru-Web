@@ -1856,7 +1856,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						if(result.get(i).getContentReportList()!=null){
 							for(int j=0; j<result.get(i).getContentReportList().size(); j++){
 								flagType=result.get(i).getContentReportList().get(j);
-								System.out.println("flagType::"+flagType);
 								if(flagType.equals("not-loading")){
 									isNotLoad=true;
 								}

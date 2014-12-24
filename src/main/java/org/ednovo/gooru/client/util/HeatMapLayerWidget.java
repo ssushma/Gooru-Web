@@ -72,7 +72,6 @@ public class HeatMapLayerWidget extends Composite {
 	    // set data
  }
  public LatLngBounds processHeatData(){
-	 System.out.println("arrayOfLocations::"+arrayOfLocations.length());
 	 
 	 MVCArray<WeightedLocation> weightedDataPoints = MVCArray.newInstance(arrayOfLocations);
 	 LatLngBounds bounds = null;

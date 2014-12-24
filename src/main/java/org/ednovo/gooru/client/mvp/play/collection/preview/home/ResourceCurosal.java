@@ -99,8 +99,6 @@ public class ResourceCurosal {
 //		int totalWidgetsWidth=widgetsCount*WIDGET_WIDTH;
 //		if((totalWidgetsWidth-getTotalViewableWidth())<=(currentMarginLeft)){
 //				int totalNavigableWidth=totalWidgetsWidth-getTotalViewableWidth();
-//				System.out.println("totalNavigableWidth===>"+totalNavigableWidth);
-//				System.out.println("currentMarginLeft===>"+currentMarginLeft);
 //				if(currentMarginLeft>totalNavigableWidth){
 //					currentMarginLeft=totalNavigableWidth;
 //					widgetsPanel.getElement().getStyle().setMarginLeft(-(currentMarginLeft), Unit.PX);

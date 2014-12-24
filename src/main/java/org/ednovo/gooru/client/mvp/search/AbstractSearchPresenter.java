@@ -262,11 +262,8 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			Window.enableScrolling(false);
 			// Window.enableScrolling(true);
 		}
-
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		System.out.println("======================================Set filter "
-				+ setFilter);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			if (setFilter) {
 				searchDo.setPageNum(1);

@@ -127,7 +127,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPIC_OFFSET, subjectName, topicId, getLoggedInSessionToken(), ""+offset, ""+limit);
 		url+=getLibraryName(libraryName);
-		System.out.println("getLessonsOnPagination.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLessons(jsonRepresentation);
@@ -154,7 +153,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectId, getLoggedInSessionToken());
 		url+=getLibraryName(libraryName);
-		System.out.println("getSubjectsurl:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeSubjects(jsonRepresentation,subjectId,libraryName);
@@ -190,7 +188,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ConceptDo getConceptForStandards(String gooruOid, String roteNodeId, boolean skipCollectionItems) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTIONForStandards, gooruOid, getLoggedInSessionToken(),roteNodeId, skipCollectionItems + "");
-		System.out.println("-- lib url ---"+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeConcept(jsonRepresentation);
@@ -205,7 +202,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNIT_OFFSET, subjectId, unitId, getLoggedInSessionToken(), offset+"", TOTAL_LIMIT);
 		url+=getLibraryName(libraryName);
 		url+=getStandardId(standardsId);
-		System.out.println("getTopicsOnPagination::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -220,7 +216,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COLLECTIONS, courseType, lessonId, getLoggedInSessionToken());
 		url+=getLibraryName(libraryName);
-		System.out.println("---- lib coll -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -642,7 +637,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"","0","20");
-		System.out.println("url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(placeToken.equals(PlaceTokens.PROFILE_PAGE)) {
@@ -866,7 +860,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, sessionToken, limit+"",offset+"","14");
-		System.out.println("----- district lib url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -883,7 +876,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"",offset+"");
-		System.out.println("---- >>> sausd units api -- "+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -901,7 +893,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				//sessionToken=sessionToken+"&sharing="+sharingType;
 			}
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST_PUBLIC, parentId, sessionToken, offset, "20");
-			System.out.println("getLibraryCoursesList::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -952,7 +943,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public HashMap<String, SubjectDo> getLibrarySubjects(String subjectName, String courseId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_SUBJECTS_OPTIMIZED, getLoggedInSessionToken(), libraryName);
-		System.out.println("getLibrarySubjects::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		HashMap<String,SubjectDo> subjectList = new HashMap<String,SubjectDo>();
@@ -1059,7 +1049,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId, getLoggedInSessionToken());
 		url=url+getLibraryName(libraryName);
-		System.out.println("--- lib units api -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLibraryUnits(jsonRepresentation, subjectName);
