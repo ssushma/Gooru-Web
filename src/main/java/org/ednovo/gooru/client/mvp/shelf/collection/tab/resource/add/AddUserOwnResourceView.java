@@ -331,6 +331,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				return null;
 			}
 		};
+		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
