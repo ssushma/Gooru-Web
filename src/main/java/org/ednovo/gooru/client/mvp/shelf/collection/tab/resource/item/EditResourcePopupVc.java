@@ -311,6 +311,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				return null;
 			}
 		};
+		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override

@@ -2593,11 +2593,6 @@ overflow: visible;
 		left:21% !important;
 	}
 } */
-/* @media (min-width: 479px) and (max-width: 767px){
-	.gwt-PopupPanel{
-		left:10% !important;
-	}
-} */
 
 @media (min-width: 1200px) {
 	
@@ -2663,6 +2658,10 @@ overflow: visible;
 	html{
  		overflow:visible !important;
  	}
+ 	
+	#__printingFrame{
+		display: none;
+	}
 	
 	.reviewPopup{
 		left:44% !important;
@@ -2680,8 +2679,8 @@ overflow: visible;
 		width:300px;
 	}
 	.addResourceContainer{
-	width:500px;
- }
+		width:500px;
+	 }
  
   .loginFailureAlert{
  	left:22% !important;
@@ -2936,4 +2935,8 @@ overflow: visible;
 
 #uvTabLabel{
 	display:none !important;
+}
+
+.contentBoxStyles{
+	box-sizing: content-box;
 }

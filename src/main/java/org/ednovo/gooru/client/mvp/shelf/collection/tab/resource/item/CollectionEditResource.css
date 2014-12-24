@@ -203,7 +203,7 @@ margin-top: -2px;
 	padding-top: 13px;
 	font-size: 2em;
 	position: relative;
-	height: 125px;
+	height: 118px;
 	width:100%;
 	text-align: right;
 	/* margin-bottom: 10px; */
@@ -249,20 +249,19 @@ margin-top: -2px;
 	position: relative;
 	text-align: left;
 	left: -20px;
-	width: 412px;
+	width: 360px;
 	color: #999999;
 }
 
 .resourceVideoTime {
 	word-wrap: break-word;
-	float: left;
+	/* float: left; */
 	padding-left: 0;
 	position: relative;
 	text-align: left;
-	width: 505px;
+	width: 440px;
 	color: #999999;
-	left: 0px;
-	top: 0px;
+	
 }
 
 .resourceNarrationEdit {
@@ -1479,7 +1478,8 @@ user agent stylesheetdiv {
 	background-color: rgb(255, 255, 255);
 	z-index: 1;
 	top: -50px;
-	width: 249px;
+	width: 277px;
+	margin-top: 39px;
 }
 .myEducationEditDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -1488,8 +1488,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 9999999;
-	top: -51px;
-	width: 365px;
+	top: -11px;
+	width: 389px;
 }
 .myEducationQuestionDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -2428,7 +2428,7 @@ margin-top: 18px; */
 	/* left: 653px; 
 	top: 45px;*/
 	left: 484px;
-    top: 41px;
+    top: 45px;
 	z-index: 99;
 	box-sizing:content-box;
 }
@@ -2924,7 +2924,7 @@ margin-top: 18px; */
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:1px;
 	border-style:solid;
-	top: 7px;
+	top: 4px;
 	left: -1px;
 	z-index: 9;
 	overflow-x:hidden !important;
@@ -3074,7 +3074,7 @@ vertical-align: top;
 .setBorder{
 border-top: 1px solid #999;
 text-align: left;
-width: 92%;
+width: 100%;
 padding-left: 16px;
 background: url(../images/NewResourcePopup/clear.png) no-repeat center left;
 }
