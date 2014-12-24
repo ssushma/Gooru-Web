@@ -156,6 +156,7 @@ IsSocialShareView {
 		panelEmail.getElement().setId("pnlPanelEmail");
 		emailText.getElement().setInnerHTML(i18n.GL0212());
 		emailText.getElement().setId("pnlEmailText");
+		
 		emailText.getElement().setAttribute("alt", i18n.GL0212());
 		emailText.getElement().setAttribute("title", i18n.GL0212());
 		twitterText.getElement().setInnerHTML(i18n.GL0647());
