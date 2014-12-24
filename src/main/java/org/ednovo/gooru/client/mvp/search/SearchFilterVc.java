@@ -1741,10 +1741,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(ratings == null)
 		{
 			ratings = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
-			if(ratings == null)
-			{
-				ratings = "5,4,3,2,1,0";
-			}
 		}
 		if(reviews == null)
 		{
