@@ -892,7 +892,7 @@ user agent stylesheetdiv {
 .myFolderCollectionFormContainer {
 	float: left;
 	padding: 0px 10px 0px 10px;
-	width: 70%;
+	width: 75%;
 	border-left: 1px solid #DDD;
 	/* height: 518px; */
 	background-color: white;
@@ -1816,12 +1816,13 @@ input[type="text"] {
 .myWebResourceContainer {
 	float: left;
 	padding: 0px 25px 33px 18px;
-	width: 91%;
+	width: 100%;
 	border-left: 1px solid #DDD;
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
 	max-height: 550px;
 	min-height: 300px;
+	background-color: white;
 }
 
 .reportResource {
