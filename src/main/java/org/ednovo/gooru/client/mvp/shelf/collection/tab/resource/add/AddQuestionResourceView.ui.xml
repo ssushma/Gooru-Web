@@ -214,7 +214,7 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="271px" height="19px" />
-									<g:HTMLPanel styleName="{res1.css.browseContainer}">
+									<g:HTMLPanel styleName="{res1.css.browseContainer}" ui:field="browseStantardContainer">
 										<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
 									</g:HTMLPanel>
 								<g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
