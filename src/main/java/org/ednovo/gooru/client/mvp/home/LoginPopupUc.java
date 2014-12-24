@@ -142,6 +142,7 @@ public class LoginPopupUc extends PopupPanel{
 	private static final int UNAUTHORISED_STATUS_CODE = 401;
 	private static final int PASSWORDERROR_STATUS_CODE = 400;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
+	private static final String UNAUTHORIZED_MSG ="Please double-check your password and try signing in again.";
 	
 	@UiTemplate("LoginPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, LoginPopupUc> {
@@ -365,7 +366,6 @@ public class LoginPopupUc extends PopupPanel{
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-						
 						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE && result.getStatusCode()!=PASSWORDERROR_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
@@ -501,12 +501,12 @@ public class LoginPopupUc extends PopupPanel{
 								}
 						    }*/
 						}
-						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && result.getErrorMsg().equalsIgnoreCase(i18n.GL0347())){
+						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && result.getErrorMsg().equalsIgnoreCase(UNAUTHORIZED_MSG)){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL0347());
 						}
-						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && !result.getErrorMsg().equalsIgnoreCase(i18n.GL0347())){
+						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && !result.getErrorMsg().equalsIgnoreCase(UNAUTHORIZED_MSG)){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
