@@ -704,7 +704,12 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				AppClientFactory.fireEvent(new SearchFilterEvent(filterValue,panelName));
+				String newFilterVal = filterValue;
+				if(filterValue.contains("Grade "))
+				{
+					newFilterVal = filterValue.replaceAll("Grade ", "");
+				}
+				AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
 			}
 		};
 	}
