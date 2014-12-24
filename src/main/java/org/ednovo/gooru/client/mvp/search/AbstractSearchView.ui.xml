@@ -207,9 +207,13 @@
 			float:left;
 			margin-bottom: 10px;
 			margin-top: 10px;
-			margin-left: 25px;
-		}
 		
+		}
+		.buttonsContainer{
+			float:left;
+			width:100%;
+			margin-top:10px;
+		}
 	
 	</ui:style>
 	<g:FlowPanel>
@@ -229,7 +233,7 @@
 						<g:Label ui:field="wrongQueryText" styleName="{style.wrongSpellLabel}"></g:Label>
 					</g:HTMLPanel>
 					<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
-					<g:HTMLPanel>
+					<g:HTMLPanel styleName="{style.buttonsContainer}">
 						<g:Button styleName="{style.secondaryResourceSearchBtn}" ui:field="resourceSearchBtn"/>
 				<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
 						<g:Button styleName="{style.secondaryCollectionSearchBtn}" ui:field="collectionSearchBtn"/>
