@@ -362,6 +362,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				return null;
 			}
 		};
+		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override

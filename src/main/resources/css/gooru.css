@@ -2937,3 +2937,7 @@ overflow: visible;
 #uvTabLabel{
 	display:none !important;
 }
+
+.contentBoxStyles{
+	box-sizing: content-box;
+}
