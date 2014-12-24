@@ -351,6 +351,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				return null;
 			}
 		};
+		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override

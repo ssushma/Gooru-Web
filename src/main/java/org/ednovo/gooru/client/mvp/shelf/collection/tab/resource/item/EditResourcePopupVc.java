@@ -227,6 +227,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
+	HandlerRegistration videoClickHandler,websiteClickHandler,interactiveClickHandler,imageClickHandler,textClickHandler,audioClickHandler=null;
+	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
 
@@ -311,6 +313,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				return null;
 			}
 		};
+		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
@@ -379,6 +382,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+        
+        videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
+        
         categorypanel.getElement().setId("pnlCategorypanel");
         mandatoryTitleLbl.getElement().setId("lblMandatoryTitleLbl");
         mandatoryTitleLbl.setText(i18n.GL0173());
@@ -1166,6 +1177,32 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		urlTextLbl.getElement().setAttribute("alt", i18n.GL0827());
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
 		
+		System.out.println("url here::::"+url);
+		if(urlTextLbl.getText().contains("youtube")){
+			setVideoCategory();
+			if(websiteClickHandler!=null){
+					websiteClickHandler.removeHandler();
+			}
+			 if(interactiveClickHandler!=null){
+				 interactiveClickHandler.removeHandler();
+			}
+			 if(imageClickHandler!=null){
+				 imageClickHandler.removeHandler();
+			}
+			 if(textClickHandler!=null){
+				 textClickHandler.removeHandler();
+			}
+			 if(audioClickHandler!=null){
+				 audioClickHandler.removeHandler();
+			}
+		}else{
+			websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
+			interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
+			imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
+			textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
+			audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		}
+		
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription().substring(0, 300));
@@ -1683,8 +1720,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		activeImageIndex++;
 		setImageThumbnail();
 	}
-	@UiHandler("videoResourcePanel")
-	void videoResourcePanel(ClickEvent event){
+	
+	void setVideoCategory(){
 		resourceCategoryLabel.setText(i18n.GL0918());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0918());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0918());
@@ -1699,8 +1736,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		textResourcePanel.removeStyleName("active");
 		imageResourcePanel.removeStyleName("active");
 	}
-	@UiHandler("interactiveResourcePanel")
-	void interactiveResourcePanel(ClickEvent event){
+	
+	void setInteractiveCategory(){
 		resourceCategoryLabel.setText(i18n.GL0919());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL0919());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL0919());
@@ -1715,8 +1752,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		videoResourcePanel.removeStyleName("active");
 		imageResourcePanel.removeStyleName("active");
 	}
-	@UiHandler("websiteResourcePanel")
-	void websiteResourcePanel(ClickEvent event){
+	
+	void setWebsiteCategory(){
 		resourceCategoryLabel.setText(i18n.GL1396());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1396());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1396());
@@ -1730,8 +1767,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		videoResourcePanel.removeStyleName("active");
 		imageResourcePanel.removeStyleName("active");
 	}
-	@UiHandler("imageResourcePanel")
-	void slideResourcePanel(ClickEvent event) {
+	
+	void setImageCategory() {
 		resourceCategoryLabel.setText(i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
@@ -1749,8 +1786,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	}
 
-	@UiHandler("textResourcePanel")
-	void handoutResourcePanel(ClickEvent event) {
+	void setTextCategory() {
 		resourceCategoryLabel.setText(i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
@@ -1767,8 +1803,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		clearCategoryErrorMessage();
 	}
 
-	@UiHandler("audioResourcePanel")
-	void textbookResourcePanel(ClickEvent event) {
+	void setAudioCategory() {
 		resourceCategoryLabel.setText(i18n.GL1045());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1045());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1045());
@@ -1784,6 +1819,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		imageResourcePanel.removeStyleName("active");
 		clearCategoryErrorMessage();
 	}
+	
+	
+	
+	
+	
 
 //	@UiHandler("otherResourcePanel")
 //	void lessonResourcePanel(ClickEvent event) {
@@ -2636,5 +2676,27 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 			/*addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());*/
 		}	
+	}
+	
+	private class  checkAvailableClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(event.getSource() == websiteResourcePanel){
+				setWebsiteCategory();
+			}else if(event.getSource() == videoResourcePanel){
+				setVideoCategory();
+			}else if(event.getSource() == interactiveResourcePanel){
+				setInteractiveCategory();
+			}else if(event.getSource() == imageResourcePanel){
+				setImageCategory();
+			}
+			else if(event.getSource() == textResourcePanel){
+				setTextCategory();
+			}else if(event.getSource() == audioResourcePanel){
+				setAudioCategory();
+			}
+			
+		}
+		
 	}
 }

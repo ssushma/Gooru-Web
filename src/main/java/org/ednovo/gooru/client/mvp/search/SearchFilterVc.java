@@ -1800,8 +1800,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		String reviews = filter.get(IsSearchView.REVIEWS_FLT);
 		
-		System.out.println("ratings:::"+ratings);
-		
 		if(ratings == null)
 		{
 			ratings = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
