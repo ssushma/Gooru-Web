@@ -4,7 +4,7 @@
 	<ui:style field="style" src="successpopup.css" />
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
-		<g:FlowPanel styleName="{style.popupContent} {res1.css.PopupMainVSmall}">
+		<g:FlowPanel styleName="{res1.css.PopupMainVSmall}">
 			<g:HTMLPanel styleName="{style.popupHeader}">
 				<g:Label styleName="{style.popupHeaderText}" ui:field="successPopupHeader"></g:Label>
 			</g:HTMLPanel>
@@ -17,5 +17,6 @@
 					<g:Button styleName="primary" ui:field="okayButton" />
 				</g:HTMLPanel>
 		</g:HTMLPanel>
+		<g:HTMLPanel styleName="clearfix"/>
 	</g:FlowPanel>
 </ui:UiBinder>
