@@ -521,6 +521,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
 					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
 					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
+					String reviewTag = getPlaceManager().getRequestParameter(IsSearchView.REVIEWS_FLT);
 					params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
@@ -531,6 +532,10 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					
 					if (accessMode != null) {
 						params.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+					}
+					if(reviewTag != null)
+					{
+						params.put(IsSearchView.REVIEWS_FLT, reviewTag);
 					}
 				}else{
 					params.remove(IsSearchView.MEDIATYPE_FLT);
