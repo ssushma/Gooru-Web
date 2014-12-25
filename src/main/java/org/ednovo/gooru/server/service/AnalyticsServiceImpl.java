@@ -311,9 +311,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
 		
-		System.out.println("getAnalyticsEndPoint()::"+getAnalyticsEndPoint());
-		System.out.println("collectionId::"+collectionId);
-		System.out.println("urlDataParameterValue::"+urlDataParameterValue);
 		String  url= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken(),urlDataParameterValue);
 		LOGGER.info("url==>"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());

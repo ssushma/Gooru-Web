@@ -1128,7 +1128,6 @@ public class CollectionShareTabVc extends Composite {
 		rbPublic.setVisible(false);
 		lblPublishPending.setVisible(true);
 		publishedPanel.setVisible(false);
-		System.out.println("else-end:"+lblPublishPending.isVisible());
 	}*/
 	
 	private void selectPrivateResource(String visibilityType) {

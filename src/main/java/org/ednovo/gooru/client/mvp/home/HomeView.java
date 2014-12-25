@@ -200,7 +200,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		    public void onWindowScroll(ScrollEvent event) {
 		    	getEditSearchTxtBox().hideSuggestionList(); 
 		    	if (panelPartnerLibraries.getWidgetCount() <= 0 && !isGetLibApiCalling){
-		    		System.out.println("Window.getScrollTop() : "+Window.getScrollTop());
 		    		getUiHandlers().generatePartnerLibraries();
 		    		isGetLibApiCalling= true;
 		    	}
@@ -277,7 +276,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("-->> "+preFilter);
 				if(!isArrowIcon && preFilter!=null){
 					isOpenPrefilterPopup=true;
 					preFilter.hide();

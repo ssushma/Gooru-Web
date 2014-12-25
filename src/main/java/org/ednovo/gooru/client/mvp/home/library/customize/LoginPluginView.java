@@ -425,7 +425,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 			@Override
 			public void onSuccess(String result) {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
-				System.out.println("replace::"+result);
 				Window.Location.replace(result);
 			
 			}

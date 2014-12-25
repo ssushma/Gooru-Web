@@ -240,7 +240,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setSaveQuestionImageAysncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo collItem) {
-				System.out.println("i am here in success::"+collItem.getUrl());
 				//AppClientFactory.fireEvent(new UpdateQuestionImageEvent(url,fileNameWithoutRepository));
 				AppClientFactory.fireEvent(new AddResouceImageEvent(collItem.getUrl(),fileNameWithoutRepository,isUpdateQuestionImage,isuserOwnResourceImage));
 				getView().closeImageUploadWidget();

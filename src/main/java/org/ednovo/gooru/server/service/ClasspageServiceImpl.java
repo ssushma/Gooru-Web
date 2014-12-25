@@ -936,9 +936,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction){
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId,getLoggedInSessionToken());
-		System.out.println("createClassPageItem::"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate,null);
-		System.out.println("classPageItemJsonObject::"+classPageItemJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		if(jsonResponseRep.getStatusCode()==200){
 			try{
