@@ -150,6 +150,7 @@ public class OrganizeToolTip extends Composite implements HasMouseOutHandlers{
 					folderPopupUc.setPopupPosition((Window.getClientWidth() - 456)/2, (Window.getClientHeight() - 522)/2);*/
 					Window.enableScrolling(false);
 					folderPopupUc.show();
+					folderPopupUc.center();
 				}
 			}
 		});

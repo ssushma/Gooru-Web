@@ -70,7 +70,7 @@ public class AlertMessageUc extends Composite {
 	public AlertMessageUc(String messageHeader, Widget messageContent) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
+		
 		appPopUp.setContent(messageHeader, uiBinder.createAndBindUi(this));
 		content.add(messageContent);
 		appPopUp.show();

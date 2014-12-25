@@ -1544,6 +1544,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() + (110), Window.getScrollTop() + 50);*/
 			Window.enableScrolling(false);
 			folderPopupUc.show();
+			folderPopupUc.center();
 		}
 	}
 	
