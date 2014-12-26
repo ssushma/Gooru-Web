@@ -1741,10 +1741,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(ratings == null)
 		{
 			ratings = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
-			if(ratings == null)
-			{
-				ratings = "5,4,3,2,1,0";
-			}
 		}
 		if(reviews == null)
 		{
@@ -2398,36 +2394,39 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					{
 					ratingsText = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
 					if(filterName.equalsIgnoreCase("5 star"))
-					{
-	
-						ratingsText= ratingsText.replaceAll("5,", "");
+					{			
+						ratingsText= ratingsText.replaceAll("5", "");
 					}
 					else if(filterName.equalsIgnoreCase("4 star"))
 					{
-						
-						ratingsText = ratingsText.replaceAll(",4", "");
+						ratingsText= ratingsText.replaceAll("4", "");	
 					}
 					else if(filterName.equalsIgnoreCase("3 star"))
 					{
-					
-						ratingsText = ratingsText.replaceAll(",3", "");
+						ratingsText = ratingsText.replaceAll("3", "");						
 					}
 					else if(filterName.equalsIgnoreCase("2 star"))
 					{
-						
-						ratingsText = ratingsText.replaceAll(",2", "");
+						ratingsText = ratingsText.replaceAll("2", "");
 					}
 					else if(filterName.equalsIgnoreCase("1 star"))
 					{
-						
-						ratingsText = ratingsText.replaceAll(",1", "");
+						ratingsText = ratingsText.replaceAll("1", "");
 					}
 					else if(filterName.equalsIgnoreCase("No Ratings"))
 					{
-						ratingsText = ratingsText.replaceAll(",0", "");
+						ratingsText = ratingsText.replaceAll("0", "");
 					}
+					}
+					if(ratingsText.contains(",,"))
+					{
+						ratingsText= ratingsText.replaceAll(",,", ",");
 					}
 					setSelectedFilter(ratingPanelUc,ratingsText);
+					if(ratingsText.isEmpty())
+					{
+						removeSelectedFilter(ratingPanelUc, "flt.rating");
+					}
 				}
 				
 				
