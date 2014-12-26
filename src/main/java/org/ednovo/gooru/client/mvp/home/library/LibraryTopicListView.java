@@ -1447,8 +1447,8 @@ public class LibraryTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-		/*	successPopupVc.setWidth("500px");*/
-			successPopupVc.setHeight("471px");
+			/*	successPopupVc.setWidth("500px");*/
+			//successPopupVc.setHeight("471px");
 			successPopupVc.show();
 			successPopupVc.center();
 			
@@ -1503,7 +1503,7 @@ public class LibraryTopicListView extends Composite{
 				};
 				Window.scrollTo(0, 0);
 				/*successPopupVc.setWidth("500px");*/
-				successPopupVc.setHeight("471px");
+				//successPopupVc.setHeight("471px");
 				successPopupVc.show();
 				successPopupVc.center();
 			}
@@ -1526,17 +1526,18 @@ public class LibraryTopicListView extends Composite{
 				};
 				Window.scrollTo(0, 0);
 			//	successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("658px");
+				//successPopupVc.setHeight("658px");
 				if(!successPopupVc.isVisible()){
 					successPopupVc.show();
 					successPopupVc.center();
 				}
 				if (AppClientFactory.isAnonymous()){
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 				}
 				else
 				{
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.center();
+
 				}
 			}
 			

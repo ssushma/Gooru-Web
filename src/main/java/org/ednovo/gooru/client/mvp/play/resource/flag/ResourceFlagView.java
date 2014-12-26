@@ -105,7 +105,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		submitButtonGray.getElement().setId("btnSubmitButtonGray");
 		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
 		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
-		
+		submitButtonGray.getElement().getStyle().setColor("#999");
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
 		flagText.setText(i18n.GL0600());
