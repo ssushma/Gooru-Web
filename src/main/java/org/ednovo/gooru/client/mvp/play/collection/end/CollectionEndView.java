@@ -1764,7 +1764,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(result.size()!=0){
 			collectionTitle.setText(result.get(0).getTitle());
 			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
-			if(result.get(0).getThumbnail()!=null && result.get(0).getThumbnail().trim().equalsIgnoreCase("")){
+			if(result.get(0).getThumbnail()!=null && !result.get(0).getThumbnail().trim().equalsIgnoreCase("")){
 				collectionImage.setUrl(result.get(0).getThumbnail());
 			}else{
 				collectionImage.setUrl("images/analytics/default-collection-image.png");
