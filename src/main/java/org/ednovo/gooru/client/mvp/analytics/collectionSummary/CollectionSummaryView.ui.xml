@@ -48,6 +48,7 @@
  	 <g:HTMLPanel>
 	 <g:HTMLPanel styleName="{unitStyle.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
 	 <g:VerticalPanel ui:field="pnlSummary" styleName="{unitStyle.pnlSummary}"/>
+	 	<g:Frame ui:field="downloadFile"></g:Frame>
 	 </g:HTMLPanel>
 	 </g:HTMLPanel>
 	 </g:HTMLPanel>
