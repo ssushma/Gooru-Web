@@ -24,8 +24,8 @@
 	   	</g:HTMLPanel>
 		<g:HTMLPanel ui:field="htmlPanelContainer">
 			<g:HTMLPanel styleName="{res.css.controlsContainer}"	ui:field="controlsContainer">
-			<g:Label ui:field="lblClasspages" styleName="col-md-4 col-xs-4 {res.css.marginTop}"></g:Label>
-			<g:HTMLPanel styleName="col-md-8 col-xs-8 {res.css.marginTop}">
+			<g:Label ui:field="lblClasspages" styleName="col-md-4 col-sm-4 {res.css.marginTop}"></g:Label>
+			<g:HTMLPanel styleName="col-md-8 col-sm-8 {res.css.marginTop}">
 				<g:HTMLPanel styleName="{res.css.dropdownContainer}">
 			    <g:Label ui:field="lblClasspagePlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
 				<g:Label ui:field="lblClasspagesArrow" styleName="{res.css.arrow}"></g:Label>
@@ -35,20 +35,20 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"/>
-		<g:HTMLPanel styleName="col-md-4 col-xs-4 {res.css.marginTop}">
+		<g:HTMLPanel styleName="col-md-4 col-sm-4 {res.css.marginTop}">
 			<g:Label ui:field="lblDuedate" styleName="{res.css.duedateDivLabel}"></g:Label>
 				<g:Label ui:field="lblDuedateOptional" styleName="{res.css.duedateDivLabel}"></g:Label>
 		</g:HTMLPanel>
 
-		<g:HTMLPanel ui:field="duedateContainer" styleName="col-md-8 col-xs-8 {res.css.marginTop}"></g:HTMLPanel>
+		<g:HTMLPanel ui:field="duedateContainer" styleName="col-md-8 col-sm-8 {res.css.marginTop}"></g:HTMLPanel>
 	</g:HTMLPanel>
 	<g:Label ui:field="lblDirectionCharLimit" styleName="{res.css.directionsChrLimit}"></g:Label>
 	<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
-		<g:HTMLPanel styleName="col-md-4 col-xs-4 {res.css.directionsDiv} {res.css.marginTop}">
+		<g:HTMLPanel styleName="col-md-4 col-sm-4 {res.css.directionsDiv} {res.css.marginTop}">
 			<g:Label ui:field="lblDirections" styleName="{res.css.directionsDivLabel}"></g:Label>
 			<g:Label ui:field="lblDirectionsOptional" styleName="{res.css.directionsDivLabel}"></g:Label>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="col-md-8 col-xs-8 {res.css.marginTop}">
+		<g:HTMLPanel styleName="col-md-8 col-sm-8 {res.css.marginTop}">
 			<g:TextArea ui:field="textAreaVal" styleName="form-control {res1.css.form_control}"></g:TextArea>
 			<g:Label ui:field="directionsErrorLbl" styleName="{res.css.directionsErrorLbl}"></g:Label>    
 		</g:HTMLPanel>    
@@ -70,7 +70,10 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel> -->
 		</g:HTMLPanel>
-			<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>
+			<g:HTMLPanel ui:field="assignContainer">
+				<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>    
+			</g:HTMLPanel>
+			
 			<g:HTMLPanel ui:field="assignMoreCpContainer">
 				<g:InlineLabel ui:field="assignMoreCpLbl"	styleName="{res.css.labelTextSucees} {res.css.cpSuccessMsg}"></g:InlineLabel> 
 					<g:InlineLabel ui:field="ancClasspageTitle" styleName="{res.css.assignmentLabel}"/>

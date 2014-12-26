@@ -395,9 +395,9 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 			};
 			Window.scrollTo(0, 0);
 		//	successPopupVc.setWidth("500px");
-			successPopupVc.center();
 			successPopupVc.show();
-		
+			successPopupVc.center();
+
 		}
 		if(assign!=null && assign.equals("yes")){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {

@@ -777,7 +777,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		int left = (Window.getClientWidth() - 500) >> 1;
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
 	   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
-		params.put("assign", "yes");
+		//added newly
+
+	    //till here 
+	    params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
