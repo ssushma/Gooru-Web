@@ -94,6 +94,8 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		resourceHeaderPanel.getElement().setId("sbResourceHeaderPanel");
 		privateResourcePanel.getElement().setId("pnlPrivateResourcePanel");
 		buttonContainer.getElement().setId("pnlButtonContainer");
+		this.show();
+		this.center();
 	}
 
 	@UiHandler("okButton")
@@ -227,13 +229,13 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 	
 	public void setVisibilityData(boolean isVisible, boolean isPublicResource) {
 		if(isVisible==true) {
-			shareAlertPopup.setWidth("350px");
+			//shareAlertPopup.setWidth("350px");
 		} else {
-			shareAlertPopup.setWidth("450px");
+			//shareAlertPopup.setWidth("450px");
 		}
 		if(isPublicResource==true) {
 			setPopupMargins(true);
-			shareAlertPopup.setWidth("500px");
+			//shareAlertPopup.setWidth("500px");
 		} else {
 			setPopupMargins(false);
 		}
@@ -270,10 +272,12 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
         	left = (left - 450)/2;
         	top = ((top - 400)/2)+Window.getScrollTop();
         	this.setPopupPosition(left, top);
+        	
         } else {
         	this.center();
         }
         this.show();
+        this.center();
         
 	}
 	

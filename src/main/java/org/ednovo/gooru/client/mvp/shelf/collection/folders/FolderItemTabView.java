@@ -293,6 +293,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				*/
 				Window.enableScrolling(false);
 				folderPopupUc.show();
+				folderPopupUc.center();
 			}
 			
 		}

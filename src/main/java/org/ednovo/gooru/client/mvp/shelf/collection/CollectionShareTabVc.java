@@ -659,6 +659,7 @@ public class CollectionShareTabVc extends Composite {
 							updateShare("private");
 							selectPrivateResource("private");
 						}
+						collectionConfirmationPopup.center();
 					}
 				}
 			});
@@ -728,6 +729,7 @@ public class CollectionShareTabVc extends Composite {
 				}
 				
 			}
+			collectionShareAlertPopup.center();
 		}
 	}
 
@@ -1117,6 +1119,7 @@ public class CollectionShareTabVc extends Composite {
 					}
 				};
 				collectionShareAlertPopup.setPublicMsgData(collection);
+				collectionShareAlertPopup.center();
 			}
 		}
 	}
