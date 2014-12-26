@@ -748,6 +748,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				successPopupVc.show();
 			
 				
+				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 				
@@ -759,6 +760,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
 					params.put("customize", "yes");
 					
+
 				}
 				params.put("view", "end");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -811,7 +813,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
 	   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
 		//added newly
-
+	    successPopupVc.center();
+		if(AppClientFactory.isAnonymous()){
+			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
+		}
 	    //till here 
 	    params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);

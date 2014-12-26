@@ -18,15 +18,9 @@
 		      <g:Label  styleName="{res.css.loadingImageForSelfEditCustomize}" />
 		   </g:HTMLPanel>
 			<g:HTMLPanel  ui:field="popupcontentCustomize">
-			
 			<g:HTMLPanel ui:field="loginCustom" styleName="{res.css.conentLoginPop}">
-
-
 			</g:HTMLPanel>
-
-			<g:HTMLPanel ui:field="copyCollectionSuccess" styleName="{res.css.popupContent}">  
-
-      
+		<g:HTMLPanel ui:field="copyCollectionSuccess" styleName="{res.css.popupContent}">  
 		<g:Label ui:field="lblpopupTitle" styleName="{res.css.popupTitle}"/>	
 		<g:Label styleName="{res.css.popupDesc}" ui:field="assignDes"/>	  
 

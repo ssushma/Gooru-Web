@@ -178,6 +178,7 @@ public class CollectionFlagView extends
 		submitButtonGray.getElement().setId("epnlSubmitButtonGray");
 		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
 		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
+		submitButtonGray.getElement().getStyle().setColor("#999");
 		
 		chooseResourceText.setText(i18n.GL0609());
 		chooseResourceText.getElement().setId("lblChooseResourceText");
