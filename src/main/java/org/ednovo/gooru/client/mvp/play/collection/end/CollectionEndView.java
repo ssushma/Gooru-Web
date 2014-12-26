@@ -836,6 +836,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
+			loadingImageLabel.setVisible(false);
 //		}else if(page!=null&&page.equals("teach")){
 //			frameContainer1.clear();
 //			frameContainer1.setVisible(false);
@@ -861,6 +862,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
+			loadingImageLabel.setVisible(false);
 //		}else if(page!=null&&page.equals("teach")){
 //			frameContainer1.clear();
 //			frameContainer1.setVisible(false);
@@ -883,6 +885,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
+			loadingImageLabel.setVisible(false);
 //		}else if(page!=null&&page.equals("teach")){
 //			frameContainer1.clear();
 //			frameContainer1.setVisible(false);

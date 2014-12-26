@@ -237,7 +237,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			LOGGER.info(dataPassing);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),dataPassing);
 			savedFileName=stringRepresentation.getText();
-			downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken(),savedFileName,"");
+			downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken(),savedFileName,pdfName);
 		}catch(Exception e){
 			
 		}
