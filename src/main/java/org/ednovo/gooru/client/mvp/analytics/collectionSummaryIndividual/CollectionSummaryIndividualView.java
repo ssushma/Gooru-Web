@@ -110,6 +110,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		setStaticData();
 		noErrorMesage.setVisible(false);
 		maincontainer.setVisible(false);
+		downloadFile.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -1009,7 +1010,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		printWidget.add(collectionOverViewWidget);
 		printWidget.add(printResourceData);
 		if(isClickedOnSave){
-				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),isClickedOnEmail);
+				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),collectionTitle,isClickedOnEmail);
 				 printWidget.clear();
 		}else{
 			Print.it(style,printWidget);

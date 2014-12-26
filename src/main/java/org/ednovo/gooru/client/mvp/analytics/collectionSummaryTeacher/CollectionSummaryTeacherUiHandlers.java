@@ -49,6 +49,6 @@ void setOEtextData(String resourceGooruId,String questionType);
 /**
  * @param string
  */
-void setHtmltopdf(String string);
+void setHtmltopdf(String string,String collectionTitle);
 
 }
