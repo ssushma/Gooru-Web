@@ -51,7 +51,7 @@ public class CommunityView extends BaseViewWithHandlers<CommunityUiHandlers> imp
 		Window.scrollTo(0, 0);
 		landingpagePanel.add(libraryView);
 		landingpagePanel.getElement().setId("pnlPartnerPanel");
-		landingpagePanel.getElement().getStyle().setMarginTop(39, Unit.PX);
+		//landingpagePanel.getElement().getStyle().setMarginTop(39, Unit.PX);
 	}
 
 	@Override
