@@ -382,7 +382,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 					}
 				};
-				//Window.scrollTo(0, 0);
+				Window.scrollTo(0, 0);
 				int clientHeight=Window.getClientHeight();
 				//successPopupVc.setWidth("500px");
 				//successPopupVc.setHeight("658px");
@@ -396,11 +396,11 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				int left = (Window.getClientWidth() - 500) >> 1;
 			    int top = (Window.getClientHeight() - clientHeight) >> 1;
 			  //  successPopupVc.setHeight("658px");
-			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
+			   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
 
 				successPopupVc.center();
 				if(AppClientFactory.isAnonymous()){
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -25);
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 
 				}
 				

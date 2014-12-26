@@ -50,8 +50,7 @@
 						 ui:field="cancelButton" />
 						<g:Button styleName="primary"
 							 ui:field="submitButton" />
-						<g:Button styleName="secondary"
-							 ui:field="submitButtonGray" />
+						<g:Button styleName="secondary"	 ui:field="submitButtonGray" />
 					</div>
 					<div class="clearfix"/>
 				</div>
