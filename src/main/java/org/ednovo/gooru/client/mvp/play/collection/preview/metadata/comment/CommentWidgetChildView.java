@@ -24,8 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -97,6 +99,8 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	private static final String CONTENT_ADMIN_ROLE = "Content_Admin";
 	
 	private static boolean CHECK_COLLOBORATOR =false;
+	
+	private List<String> getPermissionsList = null;
 	
 	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
 	
@@ -229,6 +233,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	 */
 	private void setCommentData(CommentsDo commentsDo, CollectionDo collectionDo) {
 		//Added try catch because "commentsDo.getCommentorUid().getGooruUId()" is null.
+		getPermissionsList = new ArrayList<String>();
 		characterLimit.setVisible(false);
 		try{
 			setCommentUid(commentsDo.getCommentUid());
@@ -236,6 +241,9 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			commentOwnerUid = commentsDo.getCommentorUid().getGooruUId() != null ? commentsDo.getCommentorUid().getGooruUId() : null;
 			loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
 			CHECK_COLLOBORATOR = collectionDo.getMeta().isIsCollaborator();
+			 if(collectionDo.getMeta().getPermissions()!=null){
+			getPermissionsList = collectionDo.getMeta().getPermissions();
+			 }
 			userPhoto.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+commentOwnerUid+PNG);
 			userPhoto.addErrorHandler(new ErrorHandler() {
 				@Override
@@ -293,7 +301,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		} else if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
 			deleteButton.setVisible(true);
 			editButton.setVisible(false);
-		}else if(!AppClientFactory.isAnonymous() && CHECK_COLLOBORATOR == true){
+		}else if(!AppClientFactory.isAnonymous() && getPermissionsList!=null && getPermissionsList.toString().contains("edit")){
 				deleteButton.setVisible(false);
 				editButton.setVisible(true);
 		}
