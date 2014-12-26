@@ -402,8 +402,9 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			};
 			Window.scrollTo(0, 0);
 		//	successPopupVc.setWidth("500px");
-			successPopupVc.center();
 			successPopupVc.show();
+			successPopupVc.center();
+
 			Map<String,String> params = new HashMap<String,String>();
 			params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 			if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)

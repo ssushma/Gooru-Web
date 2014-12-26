@@ -1114,14 +1114,14 @@ public class ProfileTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 		/*	successPopupVc.setWidth("500px");*/
-			successPopupVc.setHeight("657px");
+			//successPopupVc.setHeight("657px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 			}
 			else {				
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				successPopupVc.center();
 			}
 			
 			params.put(ASSIGN, "yes");

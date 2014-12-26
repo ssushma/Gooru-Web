@@ -113,7 +113,7 @@ IsCollectionAssign {
 	
 	@UiField ScrollPanel spanelClasspagesPanel;
 	
-	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer;
+	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer,assignContainer;
 	
 	@UiField HTMLPanel  panelNoClasspages,htmlPanelContainer,panelTitleContainer,loadingImageLabel;
 	
@@ -870,7 +870,7 @@ IsCollectionAssign {
 		//Ids
 		btnAssign.getElement().setAttribute("id", "btnAssign");
 		btnAssign.setStyleName(res.css().disableAssignButon());
-		btnAssign.getElement().getStyle().setMarginLeft(190, Unit.PX);
+		assignContainer.getElement().setAttribute("style","float:left;margin-top:10px;width:100%;margin:0 auto;text-align:center");
 		btnAssign.setEnabled(false);
 		btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().disableAssignButon());
 
