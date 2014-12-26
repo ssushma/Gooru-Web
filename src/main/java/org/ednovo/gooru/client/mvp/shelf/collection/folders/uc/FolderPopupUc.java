@@ -134,8 +134,11 @@ public abstract class FolderPopupUc extends PopupPanel {
 			}
 		});
 		folderTitle.addBlurHandler(new CheckProfanityForFolders());
-		this.show();
 		this.center();
+		this.setGlassEnabled(true);
+		this.show();
+		
+		
 	}
 	
 	public void setCollectionType(String collectionType){
