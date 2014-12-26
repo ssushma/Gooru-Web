@@ -1554,6 +1554,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		folderPopupUc.setCollectionType(collectionDo.getCollectionType());
 		/*folderPopupUc.center();*/
 		folderPopupUc.show();
+		folderListPanel.clear();
 	}
 
 	/**

@@ -58,6 +58,8 @@ a img {
 	border: 0;
 }
 
+
+
 .shelfFolderItemTitle{
 	padding-top: 3px;
 	white-space: nowrap !important;
@@ -2172,6 +2174,9 @@ overflow: visible;
  }
  .loginFailureAlert{
  	left:35% !important;
+ }
+ .positionFixed{
+ 	position:fixed !important;
  }
   
  .dropdownListContainerScrollPanel{

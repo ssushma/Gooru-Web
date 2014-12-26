@@ -29,7 +29,7 @@
 		}
 		.myFolderCollectionPopupOuterdiv { 
 	        width: 548px;
-	        margin: 0 auto;
+	       	margin:0 auto;
 			position: relative;
 			padding: 3px 7px 3px 5px;
 			background: #fff;
@@ -49,19 +49,34 @@
 			border-bottom: none;
 			background: url("../images/core/background-image.png") !important;
 		}
+	.coursePopupStyle {
+		float: left;
+		background-color: #fff;
+		border-color: #ddd;
+		border-width: 1px;
+		border-style: solid;
+		width: 100%;
+		margin-bottom: 6px;
+		max-height: 530px;
+		min-height: 400px;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
 	</ui:style>
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
 		field="res"></ui:with>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
 
 	<g:FlowPanel>
-		<g:HTMLPanel styleName="{style.myFolderCollectionPopupOuterdiv}">
+		<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupContainer}">
 			    <g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
 						<g:Label styleName="{res.css.myFolderCollectionTitle}"
 							ui:field="titleLbl"></g:Label>
 					</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.coursePopupStyle}">
+				<g:HTMLPanel styleName="{style.coursePopupStyle}">
 					<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}"
 						ui:field="loadingPanel">
 						<g:Label styleName="{res.css.loadingImageForResource1}" />
@@ -82,7 +97,9 @@
 							ui:field="addCourseBtnLbl" />
 					</g:HTMLPanel>
 				</g:HTMLPanel>
+				<g:HTMLPanel styleName="clearfix"/>
 			</g:HTMLPanel>
+			<g:HTMLPanel styleName="clearfix"/>
 		</g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

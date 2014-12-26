@@ -278,7 +278,7 @@
 	width: 100%;
     text-align:center;
 	margin:auto;
-	margin-bottom:15px;
+	margin-bottom:5px;
 	/* margin-top: 25px; */
 }
 #btnNegitive, #btnPositive{
@@ -408,6 +408,6 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 }
 .deleteTextLable{
 	text-align: left;
-	margin-left: 72px;
+	margin-left: 115px;
 	margin-bottom: -6px;
 }
