@@ -300,6 +300,7 @@
 	height: 45px; 
 	margin-top: -35px;
 	margin-left: -107px;
+	box-sizing:content-box;
 }
 
 .resourceDrag {
@@ -344,6 +345,7 @@
 	padding: 4px;
 	height: 20px;
 	border: 1px solid #DDDDDD;
+	box-sizing:content-box;
 }
 
 .resourceDragTitle {
