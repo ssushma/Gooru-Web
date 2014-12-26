@@ -111,6 +111,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	private String loggedInOwnerUid = null;
 	
 	private CommentsDo commentsDo;
+	private CollectionDo collectionDo;
 	
 	private DeleteConfirmationPopupVc deleteConfirmationPopupVc;
 	
@@ -124,6 +125,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		initWidget(uiBinder.createAndBindUi(this));
 		enableEditFunction(false);
 		this.commentsDo = commentsDo;
+		this.collectionDo = collectionDo;
 		successPostMsg.setVisible(false);
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
@@ -174,6 +176,21 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		
 		setCommentData(commentsDo, collectionDo);
 		
+		if(collectionDo.getSettings()!=null)
+		{
+			if(collectionDo.getSettings().getComment()!=null)
+			{
+	
+				if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on"))
+				{
+					editButton.setVisible(true);
+				}
+				else
+				{
+					editButton.setVisible(false);
+				}
+			}
+		}
 		
 		userPhoto.getElement().setId("imgUserPhoto");
 		messageInfo.getElement().setId("pnlMessageInfo");
@@ -256,6 +273,11 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			commentField.setText(commentsDo.getComment());
 			commentField.getElement().setAttribute("alt",commentsDo.getComment());
 			commentField.getElement().setAttribute("title",commentsDo.getComment());
+			
+			
+			
+			
+			
 			setOptionsButtons();
 			
 		}catch(Exception e){
@@ -606,4 +628,16 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
         return html;
 	}
+
+
+	public HTMLPanel getEditButton() {
+		return editButton;
+	}
+
+
+	public void setEditButton(HTMLPanel editButton) {
+		this.editButton = editButton;
+	}
+	
+	
 }
