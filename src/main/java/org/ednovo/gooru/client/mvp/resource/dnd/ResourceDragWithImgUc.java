@@ -79,6 +79,7 @@ public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMira
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		container.setWidgetPosition(dragImage, 226, 0);
+		container.getElement().setAttribute("style","box-sizing:content-box");
 		onDroppable(false);
 		setData(category, title);
 	}
