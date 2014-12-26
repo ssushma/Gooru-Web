@@ -1228,7 +1228,7 @@ user agent stylesheetdiv {
 .inputTextBox {
 	outline: 0;
 	/* width: 308px; */
-	width: 98%;
+	width: 100%;
 	height: 28px;
 	font-size: 12px;
 	border: 0px;
