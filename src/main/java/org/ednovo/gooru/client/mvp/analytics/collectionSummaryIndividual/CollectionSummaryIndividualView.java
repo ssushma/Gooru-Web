@@ -39,6 +39,8 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -64,6 +66,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
 	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
+	@UiField Frame downloadFile;
 	
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
@@ -282,7 +285,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            data.setValue(i, 1,categorylbl.toString());
 		            
 		            //Set Question Title
-		            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 		            data.setValue(i, 2, questionTitle.toString());
 		          
@@ -1031,5 +1034,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	public void setErrorMessage() {
 		noErrorMesage.setVisible(true);
 		maincontainer.setVisible(false);
+	}
+	@Override
+	public Frame getFrame(){
+		return downloadFile;
 	}
 }

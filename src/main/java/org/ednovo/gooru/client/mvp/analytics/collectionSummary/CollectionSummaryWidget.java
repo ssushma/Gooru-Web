@@ -63,7 +63,8 @@ public class CollectionSummaryWidget extends Composite {
 		collectionLastAccessedlbl.setText(i18n.GL2271());
 		collectionTitle.setText(result.getTitle());
 		collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastModified())));
-		if(result.getThumbnail()!=null){
+		
+		if(result.getThumbnail()!=null && !result.getThumbnail().equalsIgnoreCase("")){
 			collectionImage.setUrl(result.getThumbnail());
 		}else{
 			collectionImage.setUrl("../images/analytics/default-collection-image.png");
