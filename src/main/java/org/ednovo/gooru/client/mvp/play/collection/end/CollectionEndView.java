@@ -797,10 +797,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
+		frameContainer.setVisible(true);
 		if(AppClientFactory.isAnonymous()){
 			frameContainer1.clear();
 			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
+			frameContainer.setVisible(false);
 //		}else if(page!=null&&page.equals("teach")){
 //			frameContainer1.clear();
 //			frameContainer1.setVisible(false);
@@ -820,10 +822,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			sessionId = "";
 		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
+		frameContainer.setVisible(true);
 		if(AppClientFactory.isAnonymous()){
 			frameContainer1.clear();
 			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
+			frameContainer.setVisible(false);
 //		}else if(page!=null&&page.equals("teach")){
 //			frameContainer1.clear();
 //			frameContainer1.setVisible(false);
@@ -840,10 +844,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
+		frameContainer.setVisible(true);
 		if(AppClientFactory.isAnonymous()){
 			frameContainer1.clear();
 			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
+			frameContainer.setVisible(false);
 //		}else if(page!=null&&page.equals("teach")){
 //			frameContainer1.clear();
 //			frameContainer1.setVisible(false);
