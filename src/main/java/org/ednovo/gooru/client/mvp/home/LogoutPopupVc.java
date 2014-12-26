@@ -286,7 +286,6 @@ public class LogoutPopupVc extends Composite{
 						}
 						map.put("category", category);
 					}
-										
 					map.remove("callback");
 					map.remove("type");
 					map.remove("userName");
