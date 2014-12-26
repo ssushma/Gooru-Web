@@ -636,6 +636,39 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	}
 	
 	/**
+	 * @function hideorShowEditButtonForAllCommentWidgets 
+	 * 
+	 * @created_date : 03-Jan-2014
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param commentUid
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	private void hideorShowEditButtonForAllCommentWidgets(Boolean boolFlag) {
+		Iterator<Widget> widgets = commentsContainer.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof CommentWidgetChildView) {
+				CommentWidgetChildView commentWidgetChildView = ((CommentWidgetChildView) widget);
+				if(boolFlag)
+				{
+					commentWidgetChildView.getEditButton().setVisible(true);
+				}
+				else
+				{
+					commentWidgetChildView.getEditButton().setVisible(false);	
+				}
+			
+			}
+		}
+	}
+	
+	/**
 	 * @function deleteComment 
 	 * 
 	 * @created_date : 03-Jan-2014
@@ -990,6 +1023,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 					
 							if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
 							{
+								hideorShowEditButtonForAllCommentWidgets(true);
 								requiredLabel.removeStyleName(playerStyle.mutedText());
 								optionalLabel.removeStyleName(playerStyle.mutedText());								
 								commentField.setEnabled(true);	
@@ -1000,6 +1034,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							}
 							else
 							{
+								hideorShowEditButtonForAllCommentWidgets(false);
 								requiredLabel.setStyleName(playerStyle.mutedText());
 								optionalLabel.setStyleName(playerStyle.mutedText());								
 								commentField.setEnabled(false);
@@ -1014,12 +1049,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 						}
 						else
 						{
+							hideorShowEditButtonForAllCommentWidgets(true);
 							requiredLabel.setStyleName(playerStyle.mutedText());
 							optionalLabel.setStyleName(playerStyle.mutedText());
 						}
 					}
 					else
 					{
+						hideorShowEditButtonForAllCommentWidgets(true);
 						requiredLabel.setStyleName(playerStyle.mutedText());
 						optionalLabel.setStyleName(playerStyle.mutedText());
 					}

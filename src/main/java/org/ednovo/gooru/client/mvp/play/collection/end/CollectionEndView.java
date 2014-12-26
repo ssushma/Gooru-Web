@@ -467,6 +467,39 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 	}
 	
+	/**
+	 * @function hideorShowEditButtonForAllCommentWidgets 
+	 * 
+	 * @created_date : 03-Jan-2014
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param commentUid
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	private void hideorShowEditButtonForAllCommentWidgets(Boolean boolFlag) {
+		Iterator<Widget> widgets = commentsContainer.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof CommentWidgetChildView) {
+				CommentWidgetChildView commentWidgetChildView = ((CommentWidgetChildView) widget);
+				if(boolFlag)
+				{
+					commentWidgetChildView.getEditButton().setVisible(true);
+				}
+				else
+				{
+					commentWidgetChildView.getEditButton().setVisible(false);	
+				}
+			
+			}
+		}
+	}
+	
 
 	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
@@ -777,7 +810,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		int left = (Window.getClientWidth() - 500) >> 1;
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
 	   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
-		params.put("assign", "yes");
+		//added newly
+
+	    //till here 
+	    params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
@@ -1672,6 +1708,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 				if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
 				{
+					hideorShowEditButtonForAllCommentWidgets(true);
 					requiredLabel.removeStyleName(playerStyle.mutedText());
 					optionalLabel.removeStyleName(playerStyle.mutedText());								
 					commentField.setEnabled(true);	
@@ -1682,6 +1719,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				}
 				else
 				{
+					hideorShowEditButtonForAllCommentWidgets(false);
 					requiredLabel.setStyleName(playerStyle.mutedText());
 					optionalLabel.setStyleName(playerStyle.mutedText());								
 					commentField.setEnabled(false);
@@ -1696,12 +1734,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			}
 			else
 			{
+				hideorShowEditButtonForAllCommentWidgets(true);
 				requiredLabel.setStyleName(playerStyle.mutedText());
 				optionalLabel.setStyleName(playerStyle.mutedText());
 			}
 		}
 		else
 		{
+			hideorShowEditButtonForAllCommentWidgets(true);
 			requiredLabel.setStyleName(playerStyle.mutedText());
 			optionalLabel.setStyleName(playerStyle.mutedText());
 		}

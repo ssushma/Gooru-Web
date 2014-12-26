@@ -184,7 +184,7 @@
 
 .scrollPanelContainer{
 	background-color:rgb(255,255,255);
-	width:310px;
+	width:90%;
 	border-color:rgb(221,221,221);
 	border-width:1px;
 	/* Firefox v1.0+ */
@@ -195,10 +195,10 @@
 	border-radius:1px;
 	border-style:solid;
 	top: 29px;
-	left: 4px;
+	
 	z-index: 9;
 	position: absolute !important;
-	margin-left: -5px;
+	
 	height: auto;
 	max-height: 108px;
 }
@@ -242,7 +242,7 @@
 .disableAssignButon{
 	display: inline-block;
 	clear: both;
-	float: left;
+	
 	color: #999;
 	padding: 7px 9px;
 	border-radius: 4px;
@@ -275,7 +275,6 @@
 	background: -o-linear-gradient(top, #4C98CC, #1076BB);
 	cursor: pointer;
 	clear: both;
-	float: left;
 	background-color: #1076bb;
 }
 

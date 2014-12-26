@@ -205,12 +205,9 @@ public class WrapView extends BaseView implements IsWrapView {
 			if (content != null) {
 				String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
-					if(place.equals(PlaceTokens.SHELF)){
+					if(place.equals(PlaceTokens.SHELF)||place.equalsIgnoreCase(PlaceTokens.COMMUNITY)||place.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||place.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)||place.equalsIgnoreCase(PlaceTokens.VALVERDE)||place.equalsIgnoreCase(PlaceTokens.LIFEBOARD)){
 						wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-					}else if(place.equalsIgnoreCase(PlaceTokens.COMMUNITY)||place.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||place.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)||place.equalsIgnoreCase(PlaceTokens.VALVERDE)||place.equalsIgnoreCase(PlaceTokens.LIFEBOARD)){
-						wrapperPanel.getElement().setAttribute("style", "margin-top:39px;");
-					}
-					else{
+					}else{
 						wrapperPanel.getElement().setAttribute("style", "margin-top:50px;");
 					}
 				}

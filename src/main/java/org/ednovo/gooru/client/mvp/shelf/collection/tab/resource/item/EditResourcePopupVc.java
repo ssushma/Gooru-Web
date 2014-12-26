@@ -666,6 +666,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		rightsContainer.getElement().setId("pnlRightsContainer");
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-left:10px");
+		
+		 	videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		 	websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		 	interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		 	imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		 	textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		 	audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
+		
 		displayResourceInfo();
 		show();
 		center();
@@ -1178,30 +1186,29 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
 		
 		if(urlTextLbl.getText().contains("youtube")){
-			setVideoCategory();
-			if(websiteClickHandler!=null){
-					websiteClickHandler.removeHandler();
-			}
-			 if(interactiveClickHandler!=null){
-				 interactiveClickHandler.removeHandler();
-			}
-			 if(imageClickHandler!=null){
-				 imageClickHandler.removeHandler();
-			}
-			 if(textClickHandler!=null){
-				 textClickHandler.removeHandler();
-			}
-			 if(audioClickHandler!=null){
-				 audioClickHandler.removeHandler();
-			}
-		}else{
-			websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
-			interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
-			imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
-			textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
-			audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		}
-		
+						setVideoCategory();
+						if(websiteClickHandler!=null){
+							websiteClickHandler.removeHandler();
+						}
+						 if(interactiveClickHandler!=null){
+							 interactiveClickHandler.removeHandler();
+						}
+						 if(imageClickHandler!=null){
+							 imageClickHandler.removeHandler();
+						}
+						 if(textClickHandler!=null){
+							 textClickHandler.removeHandler();
+						}
+						 if(audioClickHandler!=null){
+							 audioClickHandler.removeHandler();
+						}
+					}else{
+						websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
+						interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
+						imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
+						textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
+						audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
+					}
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription().substring(0, 300));
@@ -2677,24 +2684,22 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	
 	private class  checkAvailableClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(event.getSource() == websiteResourcePanel){
-				setWebsiteCategory();
-			}else if(event.getSource() == videoResourcePanel){
-				setVideoCategory();
-			}else if(event.getSource() == interactiveResourcePanel){
-				setInteractiveCategory();
-			}else if(event.getSource() == imageResourcePanel){
-				setImageCategory();
+			@Override
+				public void onClick(ClickEvent event) {
+					if(event.getSource() == websiteResourcePanel){
+						setWebsiteCategory();
+					}else if(event.getSource() == videoResourcePanel){
+						setVideoCategory();
+					}else if(event.getSource() == interactiveResourcePanel){
+						setInteractiveCategory();
+					}else if(event.getSource() == imageResourcePanel){
+						setImageCategory();
+					}
+					else if(event.getSource() == textResourcePanel){
+						setTextCategory();
+					}else if(event.getSource() == audioResourcePanel){
+						setAudioCategory();
+					}
+				}
 			}
-			else if(event.getSource() == textResourcePanel){
-				setTextCategory();
-			}else if(event.getSource() == audioResourcePanel){
-				setAudioCategory();
-			}
-			
-		}
-		
-	}
 }

@@ -334,9 +334,8 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				};
 				Window.scrollTo(0, 0);
 			//	successPopupVc.setWidth("500px");
-				successPopupVc.center();
 				successPopupVc.show();
-		
+				successPopupVc.center();
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -400,7 +399,10 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
 
 				successPopupVc.center();
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				if(AppClientFactory.isAnonymous()){
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -25);
+
+				}
 				
 //				if(!successPopupVc.isVisible()){
 //					successPopupVc.show();

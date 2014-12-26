@@ -72,9 +72,10 @@
 	  
     </g:HTMLPanel>
     
-			</g:HTMLPanel>
+	</g:HTMLPanel>
 			
-		</g:HTMLPanel>
+	</g:HTMLPanel>
+	<g:HTMLPanel styleName="clearfix"/>	
 	</g:HTMLPanel>
 
 </ui:UiBinder> 
