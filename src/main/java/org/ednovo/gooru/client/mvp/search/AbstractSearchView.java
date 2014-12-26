@@ -709,6 +709,10 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				{
 					newFilterVal = filterValue.replaceAll("Grade ", "");
 				}
+				else if(filterValue.contains("Higher Ed"))
+				{
+					newFilterVal = filterValue.replaceAll("Higher Ed", "12gte");
+				}
 				AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
 			}
 		};
