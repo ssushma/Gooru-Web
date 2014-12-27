@@ -894,6 +894,7 @@ IsCollectionAssign {
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		directionsErrorLbl.getElement().setId("errlblDirectionsErrorLbl");
 		assignMoreCpContainer.getElement().setId("pnlAssignMoreCpContainer");
+		assignMoreCpContainer.getElement().setAttribute("style", "text-align:center");
 		assignMoreCpLbl.getElement().setId("spnAssignMoreCpLbl");
 		ancClasspageTitle.getElement().setId("spnAncClasspageTitle");
 	}
