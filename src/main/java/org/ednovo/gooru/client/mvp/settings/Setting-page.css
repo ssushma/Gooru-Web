@@ -1033,6 +1033,7 @@ input.styled {
 }
 
 .uploadProfileImageButton {
+	box-sizing:content-box;
 	display: none;
 	position: relative;
 	text-align: center;
@@ -1065,6 +1066,7 @@ input.styled {
 	float: left;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC',
 		endColorstr='#1076BB');
+	
 }
 
 .uploadProfileImageButton:hover {
