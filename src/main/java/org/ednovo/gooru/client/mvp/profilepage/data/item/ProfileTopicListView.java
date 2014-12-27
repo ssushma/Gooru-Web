@@ -108,9 +108,9 @@ public class ProfileTopicListView extends Composite{
 
 	private boolean isScrollable = true;
 	
-	private boolean isAssignPopup = false;
+	public static boolean isAssignPopup = false;
 	
-	private boolean isCustomizePopup = false;
+	public static boolean isCustomizePopup = false;
 	
 	private ProfileLibraryDo profileLibraryDo;
 	
@@ -167,6 +167,7 @@ public class ProfileTopicListView extends Composite{
 	private static final String COLLECTION_TITLE = "collectionTitle";
 	
 	private String libraryGooruOid=null;
+	
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
 			.create(ProfileTopicListViewUiBinder.class);

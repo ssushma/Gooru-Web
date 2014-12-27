@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/profilePageService")
@@ -124,5 +125,14 @@ public interface ProfilePageService extends BaseService {
 	 * @throws : GwtException
 	 */
 	public ProfileLibraryDo getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException, ServerDownException;
+	
+	
+	/**
+	 * @param delcodeDoList
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	public String deleteUserCourses(List<CodeDo> delcodeDoList) throws GwtException, ServerDownException;
 
 }

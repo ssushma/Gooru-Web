@@ -1387,8 +1387,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 1;
-	top: -11px;
-	width: 358px;
+	top: -51px;
+	width: 341px;
 }
 .myEducationDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -1397,8 +1397,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 1;
-	top: -11px;
-	width: 257px;
+	top: -50px;
+	width: 249px;
 }
 .myEducationEditDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -2360,7 +2360,7 @@ margin-top: 18px; */
 
 .panelAlignRight {
 	float: right;
-	margin-right: 8px;
+	margin-right: 3px;
 	margin-top: -93px;
 }
 
@@ -2877,7 +2877,7 @@ margin-top: 18px; */
 }
 
 .upDownBtn input[type="text"]{
-	width:17px;
+	width:22px;
 	margin:8px 7px 0px 8px;
 	height:25px;
 	padding:1px 6px;

@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -532,40 +533,31 @@ public class UserSettingsPresenter
 					
 				}
 				updateRefershToken();
+				
 				/**
 				 * This RPC is to get the User profile Details(grade value)
 				 */
-				AppClientFactory
-						.getInjector()
-						.getUserService()
-						.getUserProfileV2Details(gooruUid,
-								USER_META_ACTIVE_FLAG,
-								new SimpleAsyncCallback<ProfileDo>() {
+				AppClientFactory.getInjector().getUserService().getUserProfileV2Details(gooruUid,"1",new SimpleAsyncCallback<ProfileDo>() {
 
-									@Override
-									public void onSuccess(ProfileDo profileObj) {
-										getView().setProfileData(profileObj);
-										//getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-										AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-									}
+					@Override
+					public void onSuccess(ProfileDo profileObj) {
+						getView().setProfileData(profileObj);
+						//getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					}
 
-								});
+				});
 				/**
 				 * This RPC is to get the Courses
 				 */
-				AppClientFactory
-						.getInjector()
-						.getTaxonomyService()
-						.getCourse(
-								new SimpleAsyncCallback<List<LibraryCodeDo>>() {
-									@Override
-									public void onSuccess(
-											List<LibraryCodeDo> result) {
-										getView().setCourseList(result);
-									}
-								});
+				AppClientFactory.getInjector().getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+					@Override
+					public void onSuccess(List<LibraryCodeDo> result) {
+						getView().setCourseList(result);
+					}
+				});
 
-			
+
 			}
 		});
 		
@@ -1041,30 +1033,25 @@ public class UserSettingsPresenter
 
 	@Override
 	public void addCourse(Set<ProfileCodeDo> profileCodeDo) {
-		AppClientFactory
-				.getInjector()
-				.getProfilePageService()
-				.addCourseUserProfile(profileCodeDo, "settings",
-						new SimpleAsyncCallback<Void>() {
-							@Override
-							public void onSuccess(Void result) {
 
-							}
-						});
+		AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDo, "settings",new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				
+				getView().getUserProfileCourseGradeDetails();
+
+			}
+		});
 	}
 
 	@Override
 	public void deleteCourse(CodeDo codeDo) {
-		AppClientFactory
-				.getInjector()
-				.getProfilePageService()
-				.deleteCourseUserProfile(codeDo, "settings",
-						new SimpleAsyncCallback<Void>() {
-							@Override
-							public void onSuccess(Void result) {
-
-							}
-						});
+		AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, "settings",new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				getView().onPostCourseDel();
+			}
+		});
 	}
 
 	@Override
@@ -1259,6 +1246,18 @@ public class UserSettingsPresenter
 			}
 		});
 		
+	}
+
+	
+	@Override
+	public void deleteCorses(List<CodeDo> delcodeDoList) {
+		AppClientFactory.getInjector().getProfilePageService().deleteUserCourses(delcodeDoList, new SimpleAsyncCallback<String>() {  
+
+			@Override
+			public void onSuccess(String result) {
+				getView().onPostCourseDel();
+			}
+		});
 	}
 	
 }

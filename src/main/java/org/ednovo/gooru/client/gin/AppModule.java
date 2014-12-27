@@ -335,9 +335,12 @@ import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
 import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
 import org.ednovo.gooru.client.mvp.search.IsSearchRootView;
+import org.ednovo.gooru.client.mvp.search.IsTagsTabView;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter.IsSearchRootProxy;
 import org.ednovo.gooru.client.mvp.search.SearchRootView;
+import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
+import org.ednovo.gooru.client.mvp.search.TagsTabView;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter.IsCollectionSearchProxy;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchView;
@@ -624,5 +627,7 @@ public class AppModule extends AppPresenterModule {
 		
 		bindPresenterWidget(AssignmentWidgetPresenter.class, IsAssignmentWidget.class,AssignmentWidgetView.class);
 		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
+		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
+
 	}
 }

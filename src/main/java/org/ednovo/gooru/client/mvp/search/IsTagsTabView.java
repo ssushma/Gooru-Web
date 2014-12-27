@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,53 +23,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.settings;
 
-/**
- * @fileName : UserSettingsUiHandlers.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: Apr 18, 2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.search;
 
 import java.util.List;
-import java.util.Set;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEventHandler;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
-public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileImageEventHandler{
+public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> { 
+	
 
-	void saveSettingsInformation();
-	
-	void updateProfileVisibilitySetting(String optionalValue);
-	
-	void updateUserBiography(String biography,String role,String firstName,String lastName,String gender);
-	
-	public void showUploadProfileImageWidget();
-	
-	void deleteCourse(CodeDo codeDo);
-	
-	void addCourse(Set<ProfileCodeDo> profileCodeDo);
-	
-	void saveEmail(boolean isEmailConfirmed);
-	
-	void updatePartyCustomField(String optionKey,String optionValue);
-	
-	void revokeToken();
-	
-	void getGoogleDrive();
+	/**
+	 * @param resourceTagsDo
+	 */
+	void setResourceTags(List<UserTagsDo> resourceTagsDo);
 
-	void deleteCorses(List<CodeDo> delcodeDoList); 
-	
+
+	/**
+	 * @param isVisible
+	 */
+	void isLoadingImageVisible(boolean isVisible);
+
+	/**
+	* @param resourceId
+	* @param resourceGooruOid
+	*/
+	void setResourceTagsData(String resourceId, String resourceGooruOid);   
 }

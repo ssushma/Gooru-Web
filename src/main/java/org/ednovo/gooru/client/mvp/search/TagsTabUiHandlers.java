@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,53 +23,18 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.settings;
-
-/**
- * @fileName : UserSettingsUiHandlers.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: Apr 18, 2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
-
-import java.util.List;
-import java.util.Set;
+package org.ednovo.gooru.client.mvp.search;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEventHandler;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
+import com.google.gwt.event.shared.EventHandler;
 
-public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileImageEventHandler{
+public interface TagsTabUiHandlers extends BaseUiHandlers,EventHandler {
+	
+	/**
+	 * @param resourceId
+	 * @param offSet
+	 * @param limit
+	 */
+	void getResourceTags(String resourceId, String offSet, String limit); 
 
-	void saveSettingsInformation();
-	
-	void updateProfileVisibilitySetting(String optionalValue);
-	
-	void updateUserBiography(String biography,String role,String firstName,String lastName,String gender);
-	
-	public void showUploadProfileImageWidget();
-	
-	void deleteCourse(CodeDo codeDo);
-	
-	void addCourse(Set<ProfileCodeDo> profileCodeDo);
-	
-	void saveEmail(boolean isEmailConfirmed);
-	
-	void updatePartyCustomField(String optionKey,String optionValue);
-	
-	void revokeToken();
-	
-	void getGoogleDrive();
-
-	void deleteCorses(List<CodeDo> delcodeDoList); 
-	
 }

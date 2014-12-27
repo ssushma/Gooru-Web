@@ -23,66 +23,92 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client.mvp.search;
 
+import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
+
+
 /**
  * 
- * @fileName : AddAssignmentContainerPresenter.java
+ * @fileName : TagsTabPresenter.java
  *
  * @description : 
  *
  *
- * @version : 1.0
+ * @version : 1.1
  *
- * @date: 27-Dec-2013
+ * @date: 25-Nov-2014
  *
  * @Author : Gooru Team
  *
  * @Reviewer: Gooru Team
  */
-public class AnalyticsInfoContainerPresenter extends PresenterWidget<IsAnalyticsInfoContainerView> implements AnalyticsInfoContainerUiHandlers{
 
+
+public class TagsTabPresenter extends PresenterWidget<IsTagsTabView> implements TagsTabUiHandlers {
+
+	/**
+	 * @param eventBus {@link EventBus}
+	 * @param view {@link IsTagsTabView}
+	 */
 	@Inject
-	public AnalyticsInfoContainerPresenter(EventBus eventBus, IsAnalyticsInfoContainerView view) {
+	public TagsTabPresenter(EventBus eventBus, IsTagsTabView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-
+	
+	
+	/**
+	 * (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.HandlerContainerImpl#onBind()
+	 */
 	@Override
 	protected void onBind() {
 		super.onBind();
 	}
 
-	public void setAnalyticsDataForCollections(CollectionSearchResultDo searchResultDo) {
-		// TODO Auto-generated method stub
-		int Count=3;
-		getView().setCollectionAnalyticsData(searchResultDo);
-		getView().setAverageReactionWidget(Count);
+
+	/**
+	 * 
+	 * @param resourceId {@link String}
+	 * @param resourceId1 {@link String}
+	 */
+	public void setData(String resourceId, String resourceGooruOid) { 
+
+		getView().setResourceTagsData(resourceId,resourceGooruOid);
+		getView().isLoadingImageVisible(false);
+
 	}
 
-	public void setAnalyticsResourcesData(ResourceSearchResultDo searchResultDo) {
-		int Count=3;
-		getView().setAverageReactionWidget(Count);
-		String resourcegooruOid = searchResultDo.getGooruOid();
-		AppClientFactory.getInjector().getPlayerAppService().getContentStarRatings(resourcegooruOid, new SimpleAsyncCallback<ContentStarRatingsDo>() {
+
+	/**
+	 * Calls the API to get tags related to resource.
+	 * 
+	 * (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.TagsTabUiHandlers#getResourceTags(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void getResourceTags(String resourceId, String offSet, String limit) {
+
+		AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(resourceId,offSet,limit,new SimpleAsyncCallback<List<UserTagsDo>>() {
+
 			@Override
-			public void onSuccess(ContentStarRatingsDo result) {
-				getView().setContentGraph(result); 
-				getView().setAverageRatingWidget(result);
+			public void onSuccess(List<UserTagsDo> result) {
+				getView().setResourceTags(result); 
+
 			}
 		});
 	}
-	
+
+
 }

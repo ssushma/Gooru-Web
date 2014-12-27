@@ -57,14 +57,13 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 		super(true);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.AbstractSearchView#renderSearchResult(org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
+	 */
 	@Override
 	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
 		final ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
-//		if(searchResultDo.getRatings().getReviewCount()>0){
-			resourceSearchResultVc.setUpdateReviewCount(searchResultDo.getRatings().getReviewCount());
-			/*resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().removeAttribute("class");
-			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX)*/;
+		resourceSearchResultVc.setUpdateReviewCount(searchResultDo.getRatings().getReviewCount());
 			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -73,34 +72,60 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 					}
 				}
 			});
-//		}
-		
-		
-		resourceSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
-				}else{
-				getUiHandlers().showAddResourceToShelfView(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
-				getUiHandlers().showAndHideDisclosurePanelOnCLick(resourceSearchResultVc.getDisclosurePanelClose());
+			//		}
+
+
+			resourceSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					if(AppClientFactory.isAnonymous()){
+						LoginPopupUc loginPopupUc=new LoginPopupUc();
+					}else{
+						getUiHandlers().showAddResourceToShelfView(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
+						getUiHandlers().showAndHideDisclosurePanelOnCLick(resourceSearchResultVc.getDisclosurePanelClose());
+					}
 				}
-				}
-		});
-		return resourceSearchResultVc;
+			});
+			
+			/**
+			 * Giving click handler for tags tab in search result widget.
+			 */
+			resourceSearchResultVc.getAddTagsTab().addClickHandler(new ClickHandler() {
+
+				/** (non-Javadoc)
+				 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+				 */
+
+				@Override
+				public void onClick(ClickEvent event) {
+
+					if(AppClientFactory.isAnonymous()){
+						new LoginPopupUc();
+					}else{
+						getUiHandlers().setTagsWidget(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,resourceSearchResultVc.isTagsPanelOpen());
+					}
+
+				}});
+
+
+
+			return resourceSearchResultVc;
 	}
-	
-	
-/*	private class ShowRatingPopupEvent implements ClickHandler{
+
+
+	/*	private class ShowRatingPopupEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			
+
 		}
 	}*/
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.AbstractSearchView#refreshShelfCollections(java.util.List)
+	 */
 	@Override
 	protected void refreshShelfCollections(List<FolderDo> shelfCollections) {
-		
+
 		for (Widget widget : getSearchResultPanel()) {
 			if (widget instanceof Draggable && ((Draggable)widget).getDraggableUc() instanceof ResourceSearchResultVc) {
 				ResourceSearchResultVc searchResultVc = (ResourceSearchResultVc) ((Draggable)widget).getDraggableUc();
@@ -128,11 +153,11 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 
 	@Override
 	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter) {
-//		System.out.println("inside::::"+resourceSearchResultVc);
-//		if(resourceSearchResultVc!=null){
-//			resourceSearchResultVc.getAddResourceContainerPanel().clear();
-//			resourceSearchResultVc.getAddResourceContainerPanel().setWidget(addResourceContainerPresenter.getWidget());
-//		}
+		//		System.out.println("inside::::"+resourceSearchResultVc);
+		//		if(resourceSearchResultVc!=null){
+		//			resourceSearchResultVc.getAddResourceContainerPanel().clear();
+		//			resourceSearchResultVc.getAddResourceContainerPanel().setWidget(addResourceContainerPresenter.getWidget());
+		//		}
 	}
 
 }

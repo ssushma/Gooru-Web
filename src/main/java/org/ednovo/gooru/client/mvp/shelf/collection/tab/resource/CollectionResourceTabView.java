@@ -1364,9 +1364,8 @@ public class CollectionResourceTabView extends
 
 			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
 
-			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence()):0;
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(Integer.parseInt(shelfCollectionResourceChildView.getElement().getAttribute("widgetNumb"))):0;
 			itemToBeMovedPosSeqNumb = (shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
-
 			if(itemToBeMovedPosSeqNumb==0 && itemPosSeqNumb!=1 && itemPosSeqNumb!=getTotalCount()){
 				shelfCollectionResourceChildView.downButtonIsVisible(true);
 				shelfCollectionResourceChildView.upButtonIsVisible(true);
@@ -1406,7 +1405,7 @@ public class CollectionResourceTabView extends
 			
 			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
 			
-			itemPosSeqNumb = shelfCollectionResourceChildView != null ?shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence():0;
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?Integer.parseInt(shelfCollectionResourceChildView.getElement().getAttribute("widgetNumb")):0;
 			itemToBeMovedPosSeqNumb = (shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
 			if(shelfCollectionResourceChildView!=null){
 				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW);
@@ -1454,7 +1453,7 @@ public class CollectionResourceTabView extends
 			
 			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
 
-			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence()):0;
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(Integer.parseInt(shelfCollectionResourceChildView.getElement().getAttribute("widgetNumb"))):0;
 			itemToBeMovedPosSeqNumb = shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals("")?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
 			if(shelfCollectionResourceChildView!=null){
 				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW);
@@ -1519,6 +1518,9 @@ public class CollectionResourceTabView extends
 		}else{
 			collectionResourcePanelVc.insert(shelfCollectionResourceChildView, newSequence);
 		}
+		shelfCollectionResourceChildView.getResourceEditButtonContainer().setVisible(false);
+		shelfCollectionResourceChildView.getEditButton().setVisible(false);
+		shelfCollectionResourceChildView.getReorderContainer().setVisible(false);
 		resetSequence();
 		setResourceSequence();
 	}

@@ -180,6 +180,8 @@ public class ShelfCollectionResourceChildView extends
 	
 	private boolean isReorderContainerVisible=false;
 	
+	private GlobalToolTip globalToolTip;
+	
 	
 	
 	
@@ -795,7 +797,6 @@ public class ShelfCollectionResourceChildView extends
 				if(isReorderContainerVisible){
 					reorderContainer.setVisible(true);
 				}else{
-					System.out.println("--- in else --");
 					reorderContainer.setVisible(false);
 				}
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1686,7 +1687,12 @@ public class ShelfCollectionResourceChildView extends
 				narrationTxtArea.getElement().setAttribute("alt", collectionItemDo.getNarration());
 				narrationTxtArea.getElement().setAttribute("title", collectionItemDo.getNarration());
 			}
+			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			resourceNarrationHtml.setHTML(ADD_NARRATION_FOR_YOUR_VIEWERS);
+			String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+			lblCharLimit.setText(value);
+			lblCharLimit.setVisible(true);
+			
 			resourceNarrationHtml.getElement().setAttribute("alt", ADD_NARRATION_FOR_YOUR_VIEWERS);
 			resourceNarrationHtml.getElement().setAttribute("title", ADD_NARRATION_FOR_YOUR_VIEWERS);
 			setEditMode(true);
@@ -2324,9 +2330,11 @@ public class ShelfCollectionResourceChildView extends
 	
 	public void showReorderValidationToolTip(String validationMsg){
 		toolTipPopupPanel.clear();
-		toolTipPopupPanel.setWidget(new GlobalToolTip(validationMsg));
+		globalToolTip = new GlobalToolTip(validationMsg);
+		globalToolTip.confirmationPanel.getElement().getStyle().setWidth(155, Unit.PX);
+		toolTipPopupPanel.setWidget(globalToolTip);
 		toolTipPopupPanel.setStyleName("");
-		toolTipPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()+110, reorderTxtBox.getElement().getAbsoluteTop()-40);
+		toolTipPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()+160, reorderTxtBox.getElement().getAbsoluteTop()-70);
 		toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
 		toolTipPopupPanel.show();
 		new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);

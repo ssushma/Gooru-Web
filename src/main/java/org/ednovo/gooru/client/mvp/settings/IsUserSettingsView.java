@@ -257,4 +257,8 @@ public interface IsUserSettingsView extends IsViewWithHandlers<UserSettingsUiHan
 	 * 
 	*/
 	public void setConnectedAs(String connectedEmailId);
+	
+	public void getUserProfileCourseGradeDetails();
+	
+	public void onPostCourseDel();
 }

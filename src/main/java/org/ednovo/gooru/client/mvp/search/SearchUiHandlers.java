@@ -50,26 +50,68 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author Search Team
  * 
  */
+/**
+ * @author ibc
+ *
+ */
 public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler,UpdateRatingsInSearchHandler {
 	
 	/**
 	 * Set search page view
 	 */
+	/**
+	 * 
+	 */
 	void initiateSearch();
 	
+	/**
+	 * @param searchResultDo
+	 */
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo);
 	
+	/**
+	 * @return
+	 */
 	public AddResourceContainerPresenter getAddResourceContainerPresenter();
 	
+	/**
+	 * @param addResourceContainerPanel
+	 * @param searchResultDo
+	 * @param Type
+	 */
 	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type);
 	
+	/**
+	 * @param addResourceContainerPanel
+	 * @param collectionsearchResultDo
+	 * @param Type
+	 */
 	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String Type);
 
+	/**
+	 * 
+	 */
 	void getAddStandards();
 
+	/**
+	 * 
+	 */
 	void setUpdatedStandards();
 
+	/**
+	 * 
+	 */
 	void closeStandardsPopup();
 
+	/**
+	 * @param DisclosurePanelClose
+	 */
 	void showAndHideDisclosurePanelOnCLick(DisclosurePanel DisclosurePanelClose);
+
+	/**
+	 * @param addResourceContainerPanel
+	 * @param searchResultDo
+	 * @param isTagsPanelOpen
+	 */
+	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen);
 }
