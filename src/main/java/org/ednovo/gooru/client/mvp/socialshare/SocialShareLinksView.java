@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -99,6 +100,9 @@ public class SocialShareLinksView extends Composite {
 		shareLinkContainer.getElement().setId("fpnlShareLinkContainer");
 		shareLinkTxtBox.addClickHandler(new OnTextBoxClick());
 		shareLinkTxtBox.getElement().setId("tatShareLink");
+		String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(placeToken!=null&&placeToken.equalsIgnoreCase(PlaceTokens.SHELF))
+		shareLinkTxtBox.getElement().getStyle().setWidth(62, Unit.PCT);
 		StringUtil.setAttributes(shareLinkTxtBox, true);
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt", i18n.GL0639());
@@ -108,6 +112,7 @@ public class SocialShareLinksView extends Composite {
 		swithToEmbedLbl.getElement().setAttribute("title", i18n.GL0640());
 		swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
+		swithToEmbedLbl.getElement().getStyle().setMarginLeft(35, Unit.PX);
 		shareLbl.setText(i18n.GL0512());
 		shareLbl.getElement().setId("lblShareLbl");
 		shareLbl.getElement().setAttribute("alt", i18n.GL0512());

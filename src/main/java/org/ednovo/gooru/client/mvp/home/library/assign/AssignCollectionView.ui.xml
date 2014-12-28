@@ -41,9 +41,8 @@
 		</g:HTMLPanel>
 
 		<g:HTMLPanel ui:field="duedateContainer" styleName="col-md-8 col-sm-8 {res.css.marginTop}"></g:HTMLPanel>
-	</g:HTMLPanel>
-	<g:Label ui:field="lblDirectionCharLimit" styleName="{res.css.directionsChrLimit}"></g:Label>
-	<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
+			<g:Label ui:field="lblDirectionCharLimit" styleName="{res.css.directionsChrLimit}"></g:Label>
+		<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
 		<g:HTMLPanel styleName="col-md-4 col-sm-4 {res.css.directionsDiv} {res.css.marginTop}">
 			<g:Label ui:field="lblDirections" styleName="{res.css.directionsDivLabel}"></g:Label>
 			<g:Label ui:field="lblDirectionsOptional" styleName="{res.css.directionsDivLabel}"></g:Label>
@@ -70,7 +69,8 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel> -->
 		</g:HTMLPanel>
-			<g:HTMLPanel ui:field="assignContainer">
+	</g:HTMLPanel>
+		<g:HTMLPanel ui:field="assignContainer">
 				<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>    
 			</g:HTMLPanel>
 			

@@ -908,6 +908,7 @@
 
 
 .profileEditImageButton {
+	box-sizing:content-box;
 	display:none;
 	position: relative;
 	text-align: center;
@@ -934,6 +935,7 @@
 	margin-left: 45.5px;
 	float: left;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdfdfd', endColorstr='#dddddd');
+	
 }
 .profileEditImageButton:hover{
 	background: #eee;
