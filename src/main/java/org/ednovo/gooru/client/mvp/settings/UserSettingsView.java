@@ -746,7 +746,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
 		String userRoles = AppClientFactory.getLoggedInUser().getUserRoleSetString();
-		if(userRoles.contains("Content_Admin") || userRoles.contains("superadmin")){
+		if(userRoles.contains("Content Admin") || userRoles.contains("Content_Admin") || userRoles.contains("superadmin")){
 			btnViewAdmin.setVisible(true);
 		}else{
 			btnViewAdmin.setVisible(false);
