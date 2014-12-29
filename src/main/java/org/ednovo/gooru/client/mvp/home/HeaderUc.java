@@ -1444,10 +1444,21 @@ public class HeaderUc extends Composite implements
 			}else{
 				params.remove(IsSearchView.GRADE_FLT);
 			}
-
-			if(stadardCode!=null && !stadardCode.equals("")){
-				params.put(IsSearchView.STANDARD_FLT, stadardCode);
+			String standardsUrlParam = null;
+			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
+			{
+				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
+				params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
 			}
+			else
+			{
+				if(stadardCode!=null && !stadardCode.equals("")){
+				params.put(IsSearchView.STANDARD_FLT, stadardCode);
+				stadardCode=null;
+				}
+			}
+
+			
 
 		}
 		params.put("category", "All");

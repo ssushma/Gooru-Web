@@ -330,7 +330,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	}
 
 	public void displayPreFilterpopup() { 
-		headerUc.setStandardsCode(null,0,null);
+			
 		if(preFilter!=null && preFilter.isShowing()){
 			preFilter.hide();
 			isArrowIcon=true;
