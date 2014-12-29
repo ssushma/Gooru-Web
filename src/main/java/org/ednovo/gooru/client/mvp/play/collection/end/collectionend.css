@@ -249,7 +249,7 @@
 	transition: height 1s ease;
 	position: relative;
 	text-align: center;
-	width: 626px;
+	width: 100%;
 	color: #1076BB;
 	cursor: pointer;
 }
