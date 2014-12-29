@@ -1054,7 +1054,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 * @param previousRate specifies the user previous star rating.
 	 */
 	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
-		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, "", null,currentRate,previousRate);
+		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,null, null,sessionId, "", null,currentRate,previousRate);
 	}
 	
 	/**
@@ -1063,7 +1063,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 * @param reviewText specifies user entered review text.
 	 */
 	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
-		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,null, resourceNewDataLogEventId,sessionId, "", null,reviewText);
+		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,null, null,sessionId, "", null,reviewText);
 	}
 
 	/**

@@ -44,6 +44,8 @@ import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -97,6 +99,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
+		addRegisteredHandler(PostUserReviewResourceEvent.TYPE, this);
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
 		addRegisteredHandler(DeletePlayerStarReviewEvent.TYPE,this);
@@ -315,6 +318,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 */
 	@Override
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
+		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
+	}
+	
+	@Override
+	public void postReviewForResource(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
 	}
 
