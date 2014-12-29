@@ -2182,6 +2182,10 @@ overflow: visible;
  .dropdownListContainerScrollPanel{
  	margin-left:46px;
  }
+#uvTabLabel{
+	display:none !important;
+}
+
 @media screen and (min-width: 0px) and (max-width: 1000px) {
 	.searchResults > .mediaCssToHide{
 		display: none;
@@ -2579,6 +2583,7 @@ overflow: visible;
 	background: none !important;
 }
 
+
 /* @media (min-width: 240px) and (max-width: 319px){
 	.gwt-PopupPanel{
 		width:100%;
@@ -2938,9 +2943,7 @@ overflow: visible;
 	border: 1px solid orange !important;
 }
 
-#uvTabLabel{
-	display:none !important;
-}
+
 
 .contentBoxStyles{
 	box-sizing: content-box;
