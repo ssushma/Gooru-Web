@@ -186,7 +186,7 @@ width: 50%;
 }
 .scrollPanelContainerInstructional{
 	background-color:rgb(255,255,255);
-	width:270px;
+	width:245px;
 	height:80px;
 	border-color:rgb(221,221,221);
 	border-width:1px;
@@ -197,10 +197,11 @@ width: 50%;
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:1px;
 	border-style:solid;
-	top: 7px;
+	top: 33px;
 	left: -1px;
 	z-index: 9;
 	overflow-x:hidden !important;
+	position:absolute !important;
 }
 .secondaryInfoContainer {
 	float: left;

@@ -329,6 +329,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
 		this.addStandardsPresenter=addStandardsPresenter;
 		headerUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
+		
 		//This is used for handle the mouse left click event to display the search prefilter popup.
 		MouseDownHandler hanlder=new MouseDownHandler() {
 			@Override
@@ -362,7 +363,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	}
 
 	public void displayPreFilterpopup() { 
-
+			
 		if(preFilter!=null && preFilter.isShowing()){
 			preFilter.hide();
 			isArrowIcon=true;
