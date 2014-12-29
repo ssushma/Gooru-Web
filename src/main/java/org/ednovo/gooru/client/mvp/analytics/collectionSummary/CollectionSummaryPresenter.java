@@ -182,4 +182,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			}
 		});
 	}
+	@Override
+	public void clearFrames(){
+		collectionSummaryTeacherPresenter.clearFrame();
+		collectionSummaryIndividualPresenter.clearFrame();
+	}
 }
