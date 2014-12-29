@@ -112,7 +112,7 @@
 .iconOuter {
 	display: inline-block;
 	vertical-align: top;
-	float: left;
+	/* float: left; */
 	padding-left: 10px;
 	position: relative;
 }
