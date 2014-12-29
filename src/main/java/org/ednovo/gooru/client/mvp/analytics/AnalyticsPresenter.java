@@ -112,6 +112,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
 				clearSlot(COLLECTION_SUMMARY_SLOT);	
+				collectionSummaryPresenter.clearFrames();
 				collectionSummaryPresenter.setCollectionSummaryData(collectionId,"");
 				setInSlot(COLLECTION_SUMMARY_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
@@ -123,6 +124,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 				setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
 				getView().getCollectionProgressSlot().clear();
 			}else if(clickedTab.equalsIgnoreCase(CLEARSUMMARY)){
+				collectionSummaryPresenter.clearFrames();
 				clearSlot(COLLECTION_SUMMARY_SLOT);
 				setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
 				getView().getCollectionSummarySlot().clear();
