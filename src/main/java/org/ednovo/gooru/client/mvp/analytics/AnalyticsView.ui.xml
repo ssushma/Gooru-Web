@@ -49,5 +49,6 @@
 					</div>
 		</g:HTMLPanel>
 		<g:Label ui:field="setNoDataText" styleName="{unitStyle.showEmptyMessage}" text="{i18n.GL3099}" title="{i18n.GL3099}"></g:Label>
+		<g:Frame ui:field="downloadFile"/>
 	</g:HTMLPanel>
 </ui:UiBinder>
