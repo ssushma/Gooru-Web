@@ -28,6 +28,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -60,6 +61,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	@UiField Label setNoDataText;
 	
+	@UiField Frame downloadFile;
+	
 	boolean isSummayClicked=false,isProgressClicked=false,isPersonalizedBtnClicked=false;
 	
 	Map<String,GradeJsonData> loadcollectionsmap=new HashMap<String, GradeJsonData>();
@@ -84,6 +87,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		setStaticData();
 		pnlMainContainer.setVisible(false);
 		setNoDataText.setVisible(false);
+		downloadFile.setVisible(false);
 	}
 	/**
 	 * This inner class is used to handle change event of the collections.
@@ -283,5 +287,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		pnlMainContainer.setVisible(true);
 		setNoDataText.setVisible(false);
 	}
-
+	@Override
+	public Frame getFrame() {
+		return downloadFile;
+	}
 }
