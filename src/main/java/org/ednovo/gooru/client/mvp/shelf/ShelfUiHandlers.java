@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
@@ -64,6 +65,9 @@ public interface ShelfUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHa
 	void deleteCollection(String collectionId);
 
 	void revealTab(Type<RevealContentHandler<?>> tabType, CollectionDo collectionDo);
+	
+	void revealAssignTab(Type<RevealContentHandler<?>> tabType, CollectionDo collectionDo,ScrollPanel spanel);
+
 
 	void clearTabSlot();
 

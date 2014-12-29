@@ -1359,4 +1359,36 @@ public class CpuTitleLabelClick implements ClickHandler{
 			}
 		}
 	}
+	/**
+	 * 
+	 * @function closeCalendar 
+	 * 
+	 * @created_date : December 28, 2014
+	 * 
+	 * @description
+	 * 	This method is used to hide calendar when scroll moves.
+	 * 
+	 * @parm(s) : NONE
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public void closeCalendar(ScrollPanel spanel) {
+		if(spanel!=null){
+			spanel.addScrollHandler(new ScrollHandler() {
+
+				@Override
+				public void onScroll(ScrollEvent event) {
+					dateBoxUc.getDatePickerUc().hide();
+				}
+			});
+
+		}
+	}
 }

@@ -85,6 +85,8 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -98,6 +100,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -168,7 +171,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 * @UiField FocusPanel simplePencilFocPanel;
 	 */
 	@UiField
-	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,editPanel,rbPublicPanel,publishedPanel;
+	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,rbPublicPanel,publishedPanel;
+	
+	@UiField ScrollPanel editPanel;
 
 	@UiField
 	FlowPanel shelfViewMainContainer;
@@ -734,6 +739,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}else{
 			Window.enableScrolling(false);
 		}
+		
+		
 	}
 	
 	
@@ -1100,7 +1107,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				setPersistantTabFlag("assignTab");
 				assignTabVc.setSelected(true);
 				collectionMetaDataSimPanel.clear();
-				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo);
+				getUiHandlers().revealAssignTab(ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo,editPanel);
 			}
 			else if (tab.equals(shareTabVc)) {
 				MixpanelUtil.Click_Share_CollectionEdit();
@@ -2065,15 +2072,17 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 * This method is to get the editPanel
 	 */
 	@Override
-	public HTMLPanel getEditPanel() {
+	public ScrollPanel getEditPanel() {
 		return editPanel;
 	}
 
 	/** 
 	 * This method is to set the editPanel
 	 */
-	public void setEditPanel(HTMLPanel editPanel) {
+	public void setEditPanel(ScrollPanel editPanel) {
 		this.editPanel = editPanel;
 	}
+	
+	
 
 }
