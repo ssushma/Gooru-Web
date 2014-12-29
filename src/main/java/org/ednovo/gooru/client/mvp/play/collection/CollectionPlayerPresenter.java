@@ -826,7 +826,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
 							count=0;
 						}else{
-							if(count<=10){
+							if(count<10){
 								displayCollectionSummaryData(collectionId,classpageId,sessionId);
 								count++;
 							}

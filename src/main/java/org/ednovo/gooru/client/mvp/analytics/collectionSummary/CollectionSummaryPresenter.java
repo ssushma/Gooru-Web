@@ -163,6 +163,11 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId,true,getView().getLoadinImage(),printUserDataDO);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
 	}
+	@Override
+	protected void onHide() {
+		super.onHide();
+		clearFrames();
+	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#exportCollectionSummary(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)

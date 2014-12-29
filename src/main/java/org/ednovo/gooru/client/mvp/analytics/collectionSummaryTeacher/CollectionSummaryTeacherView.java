@@ -159,7 +159,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					printElement.appendChild(printOpendedData.getElement());
 					printElement.appendChild(collectionOverViewWidget.getElement());
 					printElement.appendChild(printResourceData.getElement());
-					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printElement.toString().replaceAll("\"", "\\\\\""),collectionMetaData.getTitle()!=null?collectionMetaData.getTitle():"");
+					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printElement.getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionMetaData.getTitle()!=null?collectionMetaData.getTitle():"");
 					scoredPrintWidget.setVisible(false);
 				}
 			}
