@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
@@ -2560,6 +2561,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 				}
 			}
+		}
+		if(filters.length==0)
+		{
+			HeaderUc.setStandardsCode(null,0,null);
 		}
 	}
 	
