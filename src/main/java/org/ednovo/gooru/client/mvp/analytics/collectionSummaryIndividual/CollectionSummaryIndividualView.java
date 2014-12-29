@@ -83,7 +83,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
-	EmailPopup emailPopup=new EmailPopup();
+	EmailPopup emailPopup=null;
 	String collectionTitle=null;
 	
 	//Used for print
@@ -161,6 +161,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					setPrintIndividualSummayData(false,false);
 				}else if(tabClicked.equalsIgnoreCase(EMAIL)){
 					setPrintIndividualSummayData(true,true);
+					emailPopup=new EmailPopup();
 					emailPopup.setData();
 					emailPopup.show();
 				}else{
@@ -1021,7 +1022,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	@Override 
 	public void setPdfForEmail(String path){
-		emailPopup.setEmailData(collectionTitle,path);
+		if(emailPopup!=null){
+			emailPopup.setEmailData(collectionTitle,path);
+		}
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#enableAndDisableEmailButton(boolean)

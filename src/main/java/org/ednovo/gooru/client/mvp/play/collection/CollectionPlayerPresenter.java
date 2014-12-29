@@ -819,16 +819,18 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
 					if(insightsCollectionDo!=null){
 						if(insightsCollectionDo.getCompletionStatus()!=null&&insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
+							collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
 							convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
 							displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
-							collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
+							
 						}else{
 							displayCollectionSummaryData(collectionId,classpageId,sessionId);
 						}
 					}else{
+						collectionEndPresenter.showAvgReaction(0);
 						convertMilliSecondsToTime(0L);
 						displayScoreCount(0,0);
-						collectionEndPresenter.showAvgReaction(0);
+					
 					}
 					
 				}
@@ -2286,13 +2288,19 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 //					}
 //				}
 //			}
+		if(questionCount!=null)
+		{
 			if(questionCount==0){
 				collectionEndPresenter.displayScoreCount(questionCount,questionCount);
 			}else{
 				collectionEndPresenter.displayScoreCount(score,questionCount);
 			}
-			
-//		}
+		}
+		else
+		{
+			questionCount = 0;
+			collectionEndPresenter.displayScoreCount(score,questionCount);
+		}
 	}
 
 	@Override

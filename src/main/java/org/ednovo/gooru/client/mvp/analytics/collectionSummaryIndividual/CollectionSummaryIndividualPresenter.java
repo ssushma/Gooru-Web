@@ -152,4 +152,8 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		loadingImage.setVisible(false);
 		getView().setErrorMessage();
 	}
+	@Override
+	public void clearFrame(){
+		getView().getFrame().setUrl("");
+	}
 }
