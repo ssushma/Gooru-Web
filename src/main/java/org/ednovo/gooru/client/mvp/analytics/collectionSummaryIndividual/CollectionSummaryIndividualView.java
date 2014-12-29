@@ -39,6 +39,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -64,6 +65,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
 	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
+	@UiField Frame downloadFile;
 	
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
@@ -81,7 +83,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
-	EmailPopup emailPopup=new EmailPopup();
+	EmailPopup emailPopup=null;
 	String collectionTitle=null;
 	
 	//Used for print
@@ -107,6 +109,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		setStaticData();
 		noErrorMesage.setVisible(false);
 		maincontainer.setVisible(false);
+		downloadFile.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -158,6 +161,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					setPrintIndividualSummayData(false,false);
 				}else if(tabClicked.equalsIgnoreCase(EMAIL)){
 					setPrintIndividualSummayData(true,true);
+					emailPopup=new EmailPopup();
 					emailPopup.setData();
 					emailPopup.show();
 				}else{
@@ -282,7 +286,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            data.setValue(i, 1,categorylbl.toString());
 		            
 		            //Set Question Title
-		            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 		            data.setValue(i, 2, questionTitle.toString());
 		          
@@ -1006,7 +1010,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		printWidget.add(collectionOverViewWidget);
 		printWidget.add(printResourceData);
 		if(isClickedOnSave){
-				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),isClickedOnEmail);
+				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),collectionTitle,isClickedOnEmail);
 				 printWidget.clear();
 		}else{
 			Print.it(style,printWidget);
@@ -1018,7 +1022,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	@Override 
 	public void setPdfForEmail(String path){
-		emailPopup.setEmailData(collectionTitle,path);
+		if(emailPopup!=null){
+			emailPopup.setEmailData(collectionTitle,path);
+		}
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#enableAndDisableEmailButton(boolean)
@@ -1031,5 +1037,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	public void setErrorMessage() {
 		noErrorMesage.setVisible(true);
 		maincontainer.setVisible(false);
+	}
+	@Override
+	public Frame getFrame(){
+		return downloadFile;
 	}
 }

@@ -76,6 +76,14 @@ public class AnalyticsUtil {
 		createdTime = fmt.format(currentDate,est);
 		return createdTime;
 	}
+	public static String getSessionsCreatedTime(String commentCreatedTime) {
+		String createdTime = null;
+		Long commentTime = Long.parseLong(commentCreatedTime);
+		Date currentDate = new Date(commentTime);
+		DateTimeFormat fmt = DateTimeFormat.getFormat(DATE_FORMAT);
+		createdTime = fmt.format(currentDate);
+		return createdTime;
+	}
 	/**
 	 * @function getTimePrefix 
 	 * 

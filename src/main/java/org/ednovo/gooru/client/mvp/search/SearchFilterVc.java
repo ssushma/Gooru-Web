@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
@@ -955,6 +956,35 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							chkRating0.setValue(true);
 							disclosurePanelVc.add(chkRating0);
 						}
+						else
+						{
+							if(value.equalsIgnoreCase("fivestar"))
+							{
+							disclosurePanelVc.add(chkRating5);
+							}
+							else if(value.equalsIgnoreCase("fourstar"))
+							{
+								disclosurePanelVc.add(chkRating4);	
+							}
+							else if(value.equalsIgnoreCase("threestar"))
+							{
+								disclosurePanelVc.add(chkRating3);	
+							}
+							else if(value.equalsIgnoreCase("twostar"))
+							{
+								disclosurePanelVc.add(chkRating2);	
+							}
+							else if(value.equalsIgnoreCase("onestar"))
+							{
+								disclosurePanelVc.add(chkRating1);	
+							}
+							else if(value.equalsIgnoreCase("zerostar"))
+							{
+								disclosurePanelVc.add(chkRating0);	
+							}
+					
+								
+						}
 					}
 				}
 				else
@@ -989,8 +1019,65 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 						chkRating0.setValue(true);
 						disclosurePanelVc.add(chkRating0);
 					}
+					else
+					{
+						if(value.equalsIgnoreCase("fivestar"))
+						{
+						disclosurePanelVc.add(chkRating5);
+						}
+						else if(value.equalsIgnoreCase("fourstar"))
+						{
+							disclosurePanelVc.add(chkRating4);	
+						}
+						else if(value.equalsIgnoreCase("threestar"))
+						{
+							disclosurePanelVc.add(chkRating3);	
+						}
+						else if(value.equalsIgnoreCase("twostar"))
+						{
+							disclosurePanelVc.add(chkRating2);	
+						}
+						else if(value.equalsIgnoreCase("onestar"))
+						{
+							disclosurePanelVc.add(chkRating1);	
+						}
+						else if(value.equalsIgnoreCase("zerostar"))
+						{
+							disclosurePanelVc.add(chkRating0);	
+						}
+							
+					}
 				}
 			}
+			else
+			{
+				if(value.equalsIgnoreCase("fivestar"))
+				{
+				disclosurePanelVc.add(chkRating5);
+				}
+				else if(value.equalsIgnoreCase("fourstar"))
+				{
+					disclosurePanelVc.add(chkRating4);	
+				}
+				else if(value.equalsIgnoreCase("threestar"))
+				{
+					disclosurePanelVc.add(chkRating3);	
+				}
+				else if(value.equalsIgnoreCase("twostar"))
+				{
+					disclosurePanelVc.add(chkRating2);	
+				}
+				else if(value.equalsIgnoreCase("onestar"))
+				{
+					disclosurePanelVc.add(chkRating1);	
+				}
+				else if(value.equalsIgnoreCase("zerostar"))
+				{
+					disclosurePanelVc.add(chkRating0);	
+				}
+					
+			}
+			
 			
 		}
 		
@@ -2474,6 +2561,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 				}
 			}
+		}
+		if(filters.length==0)
+		{
+			HeaderUc.setStandardsCode(null,0,null);
 		}
 	}
 	

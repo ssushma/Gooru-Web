@@ -1347,7 +1347,6 @@ public class HeaderUc extends Composite implements
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
 				editSearchTxtBox.setText(queryVal);
-				System.out.println("queryValeditSearchBtn::"+queryVal);
 				if(prefilter!=null){
 					prefilter.hide();
 				}
@@ -1424,20 +1423,43 @@ public class HeaderUc extends Composite implements
 		if(prefilter!=null){
 			params=prefilter.getFilter();
 			String subject = params.get(IsSearchView.SUBJECT_FLT);
+			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
+			{
+				subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+			}
 			if (subject != null) {
 				params.put(IsSearchView.SUBJECT_FLT, subject);
 			}else{
 				params.remove(IsSearchView.SUBJECT_FLT);
 			}
 			String grade = params.get(IsSearchView.GRADE_FLT);
+			
+			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
+			{
+				grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+			}
+			
 			if (grade != null) {
 				params.put(IsSearchView.GRADE_FLT, grade);
 			}else{
 				params.remove(IsSearchView.GRADE_FLT);
 			}
-			if(stadardCode!=null && !stadardCode.equals("")){
-				params.put(IsSearchView.STANDARD_FLT, stadardCode);
+			String standardsUrlParam = null;
+			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
+			{
+				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
+				params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
 			}
+			else
+			{
+				if(stadardCode!=null && !stadardCode.equals("")){
+				params.put(IsSearchView.STANDARD_FLT, stadardCode);
+				stadardCode=null;
+				}
+			}
+
+			
+
 		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
