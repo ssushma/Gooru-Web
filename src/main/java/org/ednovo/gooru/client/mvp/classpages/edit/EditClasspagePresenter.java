@@ -170,6 +170,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 		getView().clearPanel();
@@ -199,6 +200,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -272,7 +275,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	protected void onReset() {
 //		setInSlot(TYPE_SHELF_TAB, shelfListPresenter);
-		
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
