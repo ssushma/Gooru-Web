@@ -103,21 +103,22 @@
 					  <!-- Sessions start-->
 					  <g:HTMLPanel ui:field="sessionspnl">
 						   <g:HTMLPanel styleName="{unitStyle.gooru_session_data_content}">
-					       		<g:HTMLPanel styleName="{unitStyle.left_session}">
+					       		<g:HTMLPanel styleName="col-md-6">
 									<g:HTMLPanel styleName="{unitStyle.collection_last_accessed}">
 										<g:InlineLabel  styleName="collectionLastAccessed" text="{i18n.GL2272}"></g:InlineLabel>
 										<g:InlineLabel ui:field="lastModifiedTime"></g:InlineLabel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-					       		<g:HTMLPanel styleName="{unitStyle.right_session}">
+					       		<g:HTMLPanel styleName="col-md-6">
 					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel><span class="tooltip-icon hidden-sm hidden-xs"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
 								<g:HTMLPanel styleName="{unitStyle.session_data}">
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>
 								</g:HTMLPanel>
 								</g:HTMLPanel> 
 								</g:HTMLPanel>
+								<g:HTMLPanel styleName="clearfix"/>
 				      	 </g:HTMLPanel>
 						 </g:HTMLPanel>
 					  <!-- Sessions end-->
