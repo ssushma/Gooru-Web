@@ -26,6 +26,8 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	private int totalQuestionCount;
 	private long timeSpent;
 	private int resourceCount;
+	private int nonResourceCount;
+	
 	public int getUserCount() {
 		return userCount;
 	}
@@ -109,5 +111,17 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	}
 	public void setResourceCount(int resourceCount) {
 		this.resourceCount = resourceCount;
+	}
+	/**
+	 * @return the nonResourceCount
+	 */
+	public int getNonResourceCount() {
+		return nonResourceCount;
+	}
+	/**
+	 * @param nonResourceCount the nonResourceCount to set
+	 */
+	public void setNonResourceCount(int nonResourceCount) {
+		this.nonResourceCount = nonResourceCount;
 	}
 }

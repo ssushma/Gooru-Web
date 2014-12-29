@@ -803,6 +803,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			Label noAssignmentlabel = new Label(i18n.GL2202());
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
+			panelPersonalizeButtonContainer.setVisible(false);
+		}
+		else
+		{
+			panelPersonalizeButtonContainer.setVisible(true);
 		}
 		
 		if(classUnitsDo!=null){
