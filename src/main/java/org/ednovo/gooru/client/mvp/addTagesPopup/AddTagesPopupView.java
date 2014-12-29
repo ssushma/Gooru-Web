@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
  * 
@@ -162,8 +161,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
 		lblMediaPlaceHolder.getElement().setAttribute("data-toggle","dropdown");
-		htmlMediaFeatureListContainer.setHeight("100px");
-		htmlMediaFeatureListContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
+		/*htmlMediaFeatureListContainer.setHeight("100px");
+		htmlMediaFeatureListContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);*/
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
 		//		this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
 			}else{
@@ -431,7 +430,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		mediaLabel.getElement().setAttribute("alt",i18n.GL1706());
 		mediaLabel.getElement().setAttribute("title",i18n.GL1706());
 		
-		lblMediaPlaceHolder.setText(i18n.GL3051()+i18n.GL_SPL_SEMICOLON());
+		lblMediaPlaceHolder.setHTML(i18n.GL3051()+i18n.GL_SPL_SEMICOLON()+"<span class=\"caret\"></span>");
 
 		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
 		lblMediaPlaceHolder.getElement().setAttribute("alt",i18n.GL3051());
