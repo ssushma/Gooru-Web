@@ -64,6 +64,7 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPres
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -453,6 +454,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
 		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
+		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
 	}
 
 	@ProxyCodeSplit
@@ -2486,5 +2488,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}else{
 			metadataPresenter.updateCommentChildView(commentUid,action);
 		}
+	}
+
+	@Override
+	public void postReview(String assocGooruOId, String userReview,Integer score, boolean isUpdate) {
+		if(resoruceMetadataPresenter!=null){
+			resoruceMetadataPresenter.postReview(assocGooruOId, userReview, score, isUpdate);
+		}
+		
 	}
 }
