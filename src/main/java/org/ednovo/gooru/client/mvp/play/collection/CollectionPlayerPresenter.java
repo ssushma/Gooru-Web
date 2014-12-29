@@ -265,6 +265,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     
     private Long totalTimeSpendInMs=0L;
     
+    int count=0;
+    
     /**
 	 * @return the answerIdsObject
 	 */
@@ -822,9 +824,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
 							convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
 							displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
-							
+							count=0;
 						}else{
-							displayCollectionSummaryData(collectionId,classpageId,sessionId);
+							if(count<=10){
+								displayCollectionSummaryData(collectionId,classpageId,sessionId);
+								count++;
+							}
 						}
 					}else{
 						collectionEndPresenter.showAvgReaction(0);

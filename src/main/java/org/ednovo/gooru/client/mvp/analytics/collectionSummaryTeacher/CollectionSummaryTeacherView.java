@@ -633,7 +633,21 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 						 Table table = new Table(operationsView, options);
 					     table.setStyleName("collectionProgressTable");
 					     table.getElement().setId("collectionBreakDown");
-					     teacherResourceBreakdownData.add(table);	
+					     if(primitivesResources.length==0){
+					        	Label erroeMsg=new Label();
+					        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
+					        	erroeMsg.setText("It looks like there is no resources in this collection yet.");
+					        	teacherResourceBreakdownData.add(table);	
+					        	teacherResourceBreakdownData.add(erroeMsg);	
+					      }else if(primitivesQuestions.length==0){
+					    	  	Label erroeMsg=new Label();
+					        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
+					        	erroeMsg.setText("It looks like there is no questions in this collection yet.");
+					        	teacherResourceBreakdownData.add(table);	
+					        	teacherResourceBreakdownData.add(erroeMsg);
+					      }else{
+					    	  	teacherResourceBreakdownData.add(table);	
+					      }
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				}
 			});
