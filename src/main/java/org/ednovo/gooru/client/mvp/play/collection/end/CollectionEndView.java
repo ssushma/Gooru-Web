@@ -211,6 +211,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
 		//teacherContainer.setVisible(false);
+		collectionImage.setSize("59px", "44px");
 		messageContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
