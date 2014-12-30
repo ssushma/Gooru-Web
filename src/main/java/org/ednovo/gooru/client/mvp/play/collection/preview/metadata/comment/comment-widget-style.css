@@ -31,7 +31,8 @@
 .messageInfo {
    
     float:left;
-    width:67%;]
+    width:92%;
+    position:relative;
 }
 
 .username {
@@ -53,21 +54,25 @@
 
 .timestamp {
     color:#999;
-    position:absolute;
+    /* position:absolute;
     top:30px;
-    right:30px;
+    right:30px; */
+    text-align:right;
 }
 
 .text {
     margin-top:15px;
+    width:100%;
+    word-break: break-all;
+    text-align:left;
 }
 
 .editButton,
 .deleteButton {
-    position:absolute;
-    top:30px;
-    right:0px;
-    display:none;
+    position: absolute;
+	right: -18px;
+	top: 0px;
+	display:none;
 }
 
 .comment:hover .editButton,
@@ -107,6 +112,9 @@
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.2);
     box-shadow: 0 0 10px rgba(0,0,0,.2);
     display:none;
+}
+.editButton{
+	text-align:left;
 }
 
 .deleteButton .tooltip {
