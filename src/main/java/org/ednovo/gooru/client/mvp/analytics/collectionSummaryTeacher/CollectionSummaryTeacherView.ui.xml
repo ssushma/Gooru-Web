@@ -36,5 +36,6 @@
 	 </g:HTMLPanel>
 	<g:HTMLPanel ui:field="scoredPrintWidget"></g:HTMLPanel>
 	<g:HTMLPanel ui:field="printWidget" styleName="{unitStyle.printWidget}"></g:HTMLPanel>
+	<g:Frame ui:field="downloadFile"/>
 	</g:HTMLPanel>
 </ui:UiBinder> 

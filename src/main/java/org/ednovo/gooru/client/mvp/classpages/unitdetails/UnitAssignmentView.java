@@ -94,7 +94,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin,lblTimeValidation;
 	
-	@UiField Button unitSetupButton;
+	@UiField Button unitSetupButton,taskSetupButton;
 	
 	@UiField Button btnDashBoard,btnAssignment,btnSetGoal, btnPersonalize;
 	
@@ -177,8 +177,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		requiredText.getElement().setAttribute("style", "display: inline;margin-right: 22px;");
 		if(pageLocation.equals(PlaceTokens.STUDENT)){
-			unitSetupButton.setText(i18n.GL2198());			
+			unitSetupButton.setText(i18n.GL2198());	
+			taskSetupButton.setVisible(false);
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			taskSetupButton.setText(i18n.GL2285()+" "+i18n.GL0103());
 			unitSetupButton.setText(i18n.GL2285()+" "+i18n.GL2219());
 		}
 		assignmentContainer.setVisible(true);
@@ -186,6 +188,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnDashBoard.setText(i18n.GL2200());
 		btnAssignment.setText(i18n.GL1933());
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
+		taskSetupButton.addClickHandler(new TaskSetupEvents());
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 
 //		requiredLabel.setText(i18n.GL2200());
@@ -651,11 +654,17 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void hideMoreUnitsLink() {
 		lblMoreUnits.setVisible(false);
 	}
+	 private class TaskSetupEvents implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+				revealPlace("unitsetup","1",null,null);
+			}
+		}
 
 	 private class UnitSetupEvents implements ClickHandler{
 			@Override
 			public void onClick(ClickEvent event) {
-				revealPlace("unitsetup","1",null,null);
+				revealPlace(null,"1",null,null);
 			}
 		}
 	 public void revealPlace(String tabName,String pageNum,String unitId,String assignmentId){

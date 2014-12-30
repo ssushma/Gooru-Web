@@ -1244,3 +1244,7 @@
 	background: #b9bbca url(../images/liners.png) -38px -22px no-repeat
 		!important;
 }
+.editButn  {
+	min-width: 96px;
+	margin-bottom: 5px;
+}

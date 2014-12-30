@@ -774,6 +774,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode, getLoggedInSessionToken());
+		System.out.println("v2getClasspageByCode url--"+url);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonRep!=null && jsonRep.getSize()!=1){	
@@ -1784,7 +1786,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
 		
-		url= url + "&isRequired=false";
+		url= url + "&isRequired=true";
 		if(suggestTime!=null){
              url = url + "&estimatedTime=" + suggestTime;
 	     }
