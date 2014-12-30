@@ -59,5 +59,6 @@ public interface ResourcePlayerMetadataBundle extends CssResource {
 	
 	String educationalUseMoretags();
 	String reviewPopup();
+	String green();
 	
 }
