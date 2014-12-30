@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
@@ -169,5 +170,5 @@ public interface IsShelfView extends IsViewWithHandlers<ShelfUiHandlers> {
 	 * 
 	*/
 	
-	HTMLPanel getEditPanel();  
+	ScrollPanel getEditPanel();  
 }
