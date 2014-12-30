@@ -500,7 +500,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
-			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 				if(result.get(0).getCompletionStatus()!=null){
@@ -508,6 +507,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 						if(count<10){
 							getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
 							count++;
+						}else{
+							if(count>=10){
+								getView().showMessageWhenDataNotFound();
+							}
 						}
 					}else{
 						if(result.size()!=0){
