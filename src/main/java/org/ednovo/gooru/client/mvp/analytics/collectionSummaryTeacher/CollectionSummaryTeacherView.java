@@ -622,35 +622,37 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override
-				public void onChange(ChangeEvent event) {
-					    teacherResourceBreakdownData.clear();
-						int selectedIndex=filterDropDown.getSelectedIndex();
-					 	operationsView=DataView.create(data);
-						 if(selectedIndex==1){
-							 operationsView.hideRows(primitivesResources); 
-						 }
-						 if(selectedIndex==2){
-							 operationsView.hideRows(primitivesQuestions); 
-						 }
-						 Table table = new Table(operationsView, options);
-					     table.setStyleName("collectionProgressTable");
-					     table.getElement().setId("collectionBreakDown");
-					     if(primitivesResources.length==0){
-					        	Label erroeMsg=new Label();
-					        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
-					        	erroeMsg.setText("It looks like there is no resources in this collection yet.");
-					        	teacherResourceBreakdownData.add(table);	
-					        	teacherResourceBreakdownData.add(erroeMsg);	
-					      }else if(primitivesQuestions.length==0){
-					    	  	Label erroeMsg=new Label();
-					        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
-					        	erroeMsg.setText("It looks like there is no questions in this collection yet.");
-					        	teacherResourceBreakdownData.add(table);	
-					        	teacherResourceBreakdownData.add(erroeMsg);
-					      }else{
-					    	  	teacherResourceBreakdownData.add(table);	
-					      }
-					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+				public void onChange(ChangeEvent event) { 
+				teacherResourceBreakdownData.clear();
+				int selectedIndex = filterDropDown.getSelectedIndex();
+				operationsView = DataView.create(data);
+				Table table = new Table(operationsView, options);
+				table.setStyleName("collectionProgressTable");
+				table.getElement().setId("collectionBreakDown");
+				if (selectedIndex == 1) {
+					operationsView.hideRows(primitivesResources);
+					teacherResourceBreakdownData.add(table);
+					if (primitivesQuestions.length == 0) {
+						Label erroeMsg = new Label();
+						erroeMsg.setStyleName(res.css()
+								.displayMessageTextForOEQuestions());
+						erroeMsg.setText("It looks like there is no questions in this collection yet.");
+						teacherResourceBreakdownData.add(erroeMsg);
+					}
+				} else if (selectedIndex == 2) {
+					operationsView.hideRows(primitivesQuestions);
+					teacherResourceBreakdownData.add(table);
+					if (primitivesResources.length == 0) {
+						Label erroeMsg = new Label();
+						erroeMsg.setStyleName(res.css()
+								.displayMessageTextForOEQuestions());
+						erroeMsg.setText("It looks like there is no resources in this collection yet.");
+						teacherResourceBreakdownData.add(erroeMsg);
+					}
+				} else {
+					teacherResourceBreakdownData.add(table);
+				}
+				table.addDomHandler(new ClickOnTableCell(),ClickEvent.getType());
 				}
 			});
 	        loadingImage.setVisible(false);

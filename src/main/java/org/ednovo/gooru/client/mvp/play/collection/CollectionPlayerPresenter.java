@@ -1365,13 +1365,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-		this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String activityEventId) {
-
-			}
-		});
+//		this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String activityEventId) {
+//
+//			}
+//		});
 	}
 
 	public void createSession(String collectionGooruOid){
