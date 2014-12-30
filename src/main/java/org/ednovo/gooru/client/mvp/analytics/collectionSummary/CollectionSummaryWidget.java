@@ -89,7 +89,7 @@ public class CollectionSummaryWidget extends Composite {
 			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
 			collectionLastAccessedlbl.setText("Sort BY:");
 			collectionLastAccessed.setText(printUserDataDO.getUserName());
-			collectionResourcesCount.setText("Resource in this Collection :"+(result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
 			sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
 			sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
 			sessionValue.setText(printUserDataDO.getSession());
@@ -98,7 +98,7 @@ public class CollectionSummaryWidget extends Composite {
 			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
 			collectionLastAccessedlbl.setText("");
 			collectionLastAccessed.setText("");
-			collectionResourcesCount.setText("Resource in this Collection :"+(result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
 			sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
 			sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
 			sessionValue.setText(printUserDataDO.getSession());
@@ -107,7 +107,7 @@ public class CollectionSummaryWidget extends Composite {
 			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
 			collectionLastAccessedlbl.setText("Sort BY:");
 			collectionLastAccessed.setText(i18n.GL2289());
-			collectionResourcesCount.setText("Resource in this Collection :"+(result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
 		}
 	}
 }

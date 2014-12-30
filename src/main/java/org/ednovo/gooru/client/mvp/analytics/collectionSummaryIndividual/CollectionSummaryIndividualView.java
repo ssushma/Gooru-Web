@@ -1010,7 +1010,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		printWidget.add(collectionOverViewWidget);
 		printWidget.add(printResourceData);
 		if(isClickedOnSave){
-				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),collectionTitle,isClickedOnEmail);
+				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle,isClickedOnEmail);
 				 printWidget.clear();
 		}else{
 			Print.it(style,printWidget);

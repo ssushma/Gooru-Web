@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,18 +23,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource;
+package org.ednovo.gooru.client.mvp.rating.events;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEventHandler;
-import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEventHandler;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEventHandler;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayHandler;
 
-public interface ResourcePlayerUiHandlers extends BaseUiHandlers,ShowResourceViewEventHandler,ShowResourceTabWidgetEventHandler,RefreshCollectionInShelfListInResourcePlayHandler,PostUserReviewResourceEventHandler{
-	public void resetResourcePlayer();
-	public void updateResourceThumbsRating(int userThumbsRataing);
-	public void showLoginPopupWidget(String widgetMode);
-	public void getContentReport(String assoGooruId);
-	public boolean isOpenEndedAnswerSubmited();
+import com.google.gwt.event.shared.GwtEvent;
+
+public class PostUserReviewResourceEvent extends GwtEvent<PostUserReviewResourceEventHandler> {
+
+	public static final Type<PostUserReviewResourceEventHandler> TYPE = new Type<PostUserReviewResourceEventHandler>();
+	
+	String userReview="";
+	String assocGooruOId="";
+	Integer score;
+	 boolean isUpdate;
+	 
+	public PostUserReviewResourceEvent(String assocGooruOId, String userReview, Integer score, boolean isUpdate) { 
+		this.assocGooruOId = assocGooruOId;
+		this.userReview = userReview;
+		this.score = score;
+		this.isUpdate = isUpdate;
+	}
+
+	
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<PostUserReviewResourceEventHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(PostUserReviewResourceEventHandler handler) {
+		handler.postReviewForResource(assocGooruOId,userReview,score,isUpdate);
+	}
+
 }

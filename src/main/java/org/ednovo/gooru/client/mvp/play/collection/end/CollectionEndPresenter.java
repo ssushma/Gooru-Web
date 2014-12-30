@@ -107,6 +107,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
+	int count=0;
+	
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
 			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
@@ -503,9 +505,13 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 				if(result.get(0).getCompletionStatus()!=null){
 					if(result.get(0).getCompletionStatus().equalsIgnoreCase("in-progress")){
-						getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
+						if(count<10){
+							getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
+							count++;
+						}
 					}else{
 						if(result.size()!=0){
+							count=0;
 							getView().setCollectionMetaDataByUserAndSession(result);
 							setCollectionSummaryData(collectionId, classId, userId, sessionId,printData);
 						}
