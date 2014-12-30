@@ -27,8 +27,6 @@ package org.ednovo.gooru.client.mvp.play.collection.end;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -36,14 +34,12 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.body.IsCollectionPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
-import org.ednovo.gooru.client.mvp.play.collection.share.email.SummaryPageEmailShareUc;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
@@ -59,7 +55,6 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
-import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -108,6 +103,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
 	
 	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
+	
+	int count = 0;
 	
 	
 	
@@ -174,11 +171,18 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
-		getView().getLoadingImageLabel().setVisible(true);
-		clearSlot(COLLECTION_REPORTS_SLOT);
+		//getView().getLoadingImageLabel().setVisible(true);
+		//clearSlot(COLLECTION_REPORTS_SLOT);
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 	}
+	
+	public void clearslot(){
+			getView().resetData();
+			getView().resetCollectionMetaData();
+			clearSlot(COLLECTION_REPORTS_SLOT);
+			setInSlot(COLLECTION_REPORTS_SLOT,null,false);
+		}
 
 	public void setViewCount(String viewCount){
 		getView().setViewCount(viewCount);
@@ -450,9 +454,17 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 				if(result.get(0).getCompletionStatus()!=null){
 					if(result.get(0).getCompletionStatus().equalsIgnoreCase("in-progress")){
-						getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
+						if(count<10){
+							getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
+							count++;
+						}else{
+							if(count>=10){
+								getView().showMessageWhenDataNotFound();
+							}
+						}
 					}else{
 						if(result.size()!=0){
+							count=0;
 							getView().setCollectionMetaDataByUserAndSession(result);
 							setCollectionSummaryData(collectionId, classId, userId, sessionId,printData);
 						}

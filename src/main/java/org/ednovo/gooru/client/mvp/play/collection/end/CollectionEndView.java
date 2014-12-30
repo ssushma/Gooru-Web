@@ -1555,7 +1555,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					collectionImage.setUrl("images/analytics/default-collection-image.png");
 				}
 			});
-			collectionResourcesCount.setText((result.get(0).getResourceCount()-result.get(0).getTotalQuestionCount())+" Resources | "+result.get(0).getTotalQuestionCount()+" Questions");
+			collectionResourcesCount.setText((result.get(0).getResourceCount())+" Resources | "+result.get(0).getNonResourceCount()+" Questions");
 		}
 	}
 	@Override
@@ -1569,6 +1569,24 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public HTMLPanel getLoadingImageLabel() {
 		return loadingImageLabel;
+	}
+	
+	@Override
+	public void resetData(){
+		 pnlSummary.clear();
+	 }
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.play.collection.end.IsCollectionEndView#showMessageWhenDataNotFound()
+	 */
+	@Override
+	public void showMessageWhenDataNotFound() {
+		// TODO Auto-generated method stub
+		messageContainer.setVisible(true);
+		frameContainer.setVisible(false);
+		loadingImageLabel.setVisible(false);
+		insightsContentText.setText(i18n.GL4005());
 	}
 
 }
