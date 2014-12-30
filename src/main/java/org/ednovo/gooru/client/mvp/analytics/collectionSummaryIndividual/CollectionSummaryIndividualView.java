@@ -448,55 +448,55 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	void setOpenendedQuestionsPrintData(ArrayList<UserDataDo> result){
 		try{
 			printOpendedData.clear();		
-			DataTable data = DataTable.create();
-			data.addColumn(ColumnType.NUMBER, "No.");
-			data.addColumn(ColumnType.STRING, "Question");
-			data.addColumn(ColumnType.STRING, "Completion");
-			data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
-			data.addColumn(ColumnType.STRING, "Reaction");
-			data.addColumn(ColumnType.STRING, "Response");
-			data.addRows(result.size());
-			for(int i=0;i<result.size();i++) {
-				data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-
-				//Set Question Title
-				Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
-				questionTitle.setStyleName(res.css().alignCenterAndBackground());
-				data.setValue(i, 1, questionTitle.toString());
-
-				//Set completion
-				int noOfAttempts=result.get(i).getAttempts();
-				Label completion=new Label();
-				completion.setStyleName(res.css().alignCenterAndBackground());
-				if(noOfAttempts>0){
-					completion.setText("Completed");
-				}else{
-					completion.setText("In Progress");
-				}
-				data.setValue(i, 2, completion.toString());
-
-				//Set time spent
-				data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
-
-				//Set reactions
-				int reaction=result.get(i).getReaction();
-				data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
-
-				//set View response label
-				Label viewResponselbl=new Label(result.get(i).getText());
-				viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
-				data.setValue(i, 5, viewResponselbl.toString());
-			}
-			Options options = Options.create();
-			options.setAllowHtml(true);
-			final Table table = new Table(data, options);
-			printOpendedData.add(table);
-			if(result.size()==0){
-				Label erroeMsg=new Label();
-				erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
-				erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
-				printOpendedData.add(erroeMsg);
-			}
+		    DataTable data = DataTable.create();
+		    data.addColumn(ColumnType.NUMBER, "No.");
+	        data.addColumn(ColumnType.STRING, "Question");
+	        data.addColumn(ColumnType.STRING, "Completion");
+	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
+	        data.addColumn(ColumnType.STRING, "Reaction");
+	        data.addColumn(ColumnType.STRING, "Response");
+	        data.addRows(result.size());
+	        for(int i=0;i<result.size();i++) {
+	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	        	
+	            //Set Question Title
+	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	            questionTitle.setStyleName(res.css().alignLeftAndBackground());
+	            data.setValue(i, 1, questionTitle.toString());
+	          
+	            //Set completion
+	            int noOfAttempts=result.get(i).getAttempts();
+	            Label completion=new Label();
+	            completion.setStyleName(res.css().alignCenterAndBackground());
+	            if(noOfAttempts>0){
+	            	completion.setText("Completed");
+	            }else{
+	            	completion.setText("In Progress");
+	            }
+	            data.setValue(i, 2, completion.toString());
+	          
+	            //Set time spent
+	            data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+	           
+	            //Set reactions
+	            int reaction=result.get(i).getReaction();
+	            data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
+	           
+	            //set View response label
+	            Label viewResponselbl=new Label(result.get(i).getText());
+	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+	            data.setValue(i, 5, viewResponselbl.toString());
+	        }
+	        Options options = Options.create();
+	        options.setAllowHtml(true);
+	        final Table table = new Table(data, options);
+	        printOpendedData.add(table);
+	        if(result.size()==0){
+	        	Label erroeMsg=new Label();
+	        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
+	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
+	        	printOpendedData.add(erroeMsg);
+	        }
 		}catch(Exception e){
 
 		}
