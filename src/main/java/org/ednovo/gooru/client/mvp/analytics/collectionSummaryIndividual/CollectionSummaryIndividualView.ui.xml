@@ -37,5 +37,6 @@
 		 	<g:HTMLPanel ui:field="printWidget" styleName="{unitStyle.printWidget}"></g:HTMLPanel>
 			</g:HTMLPanel>
 		<g:Label ui:field="noErrorMesage" styleName="{unitStyle.showEmptyMessage}" text="{i18n.GL3102}"></g:Label>
+			<g:Frame ui:field="downloadFile"></g:Frame>
 	</g:HTMLPanel>
 </ui:UiBinder> 

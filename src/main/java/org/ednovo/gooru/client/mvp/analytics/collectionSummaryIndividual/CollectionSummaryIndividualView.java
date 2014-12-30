@@ -39,6 +39,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -64,7 +65,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	@UiField HTMLPanel maincontainer,printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
 	@UiField Label noErrorMesage,lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
-
+	@UiField Frame downloadFile;
+	
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
 	CollectionSummaryIndividualCBundle res;
@@ -106,6 +108,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		setStaticData();
 		noErrorMesage.setVisible(false);
 		maincontainer.setVisible(false);
+		downloadFile.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -1006,8 +1009,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		printWidget.add(collectionOverViewWidget);
 		printWidget.add(printResourceData);
 		if(isClickedOnSave){
-			getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),isClickedOnEmail);
-			printWidget.clear();
+			getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle,isClickedOnEmail);
+			 printWidget.clear();
 		}else{
 			Print.it(style,printWidget);
 			printWidget.clear();
@@ -1032,5 +1035,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	public void setErrorMessage() {
 		noErrorMesage.setVisible(true);
 		maincontainer.setVisible(false);
+	}
+	@Override
+	public Frame getFrame(){
+		return downloadFile;
 	}
 }
