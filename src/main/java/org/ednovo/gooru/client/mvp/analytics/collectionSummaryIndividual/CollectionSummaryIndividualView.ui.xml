@@ -8,9 +8,9 @@
 			<g:HTMLPanel ui:field="tabContainer"/>
 			 <g:HTMLPanel ui:field="individualScoredDatapnl">
 			 <g:HTMLPanel styleName="{unitStyle.resource_monitor_header_title}">
-			      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_one}" ></g:InlineLabel><g:InlineLabel styleName="correct-one {unitStyle.correct_incorrect_text}" text="{i18n.GL2267}"></g:InlineLabel></g:HTMLPanel>
-			      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_other}"></g:InlineLabel><g:InlineLabel styleName="correct-other {unitStyle.correct_incorrect_text}" text="{i18n.GL2268}"></g:InlineLabel></g:HTMLPanel>
-			      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.incorrect_legend}"></g:InlineLabel><g:InlineLabel styleName="incorrect-ans {unitStyle.correct_incorrect_text}"  text="{i18n.GL2269}"></g:InlineLabel></g:HTMLPanel>
+			      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_one}" ></g:InlineLabel><g:InlineLabel styleName="{unitStyle.correct_incorrect_text}" text="{i18n.GL2267}"></g:InlineLabel></g:HTMLPanel>
+			      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_other}"></g:InlineLabel><g:InlineLabel styleName="{unitStyle.correct_incorrect_text}" text="{i18n.GL2268}"></g:InlineLabel></g:HTMLPanel>
+			      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.incorrect_legend}"></g:InlineLabel><g:InlineLabel styleName="{unitStyle.correct_incorrect_text}"  text="{i18n.GL2269}"></g:InlineLabel></g:HTMLPanel>
 			 </g:HTMLPanel>
 			<g:HTMLPanel ui:field="individualScoredData" styleName="{unitStyle.individualScore}"/>
 			</g:HTMLPanel>
