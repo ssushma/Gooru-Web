@@ -217,7 +217,7 @@ public class HeaderUc extends Composite implements
 	private String name;
 
 	@UiField(provided = true)
-	public AppSuggestBox editSearchTxtBox;
+	public static AppSuggestBox editSearchTxtBox;
 
 	@UiField
 	FlowPanel editSearchInputFloPanel,signUpInfo;
@@ -1911,7 +1911,7 @@ public class HeaderUc extends Composite implements
 		return autoKeyWordSuggestionAsyncCallback;
 	}
 
-	public AppSuggestBox getEditSearchTxtBox() {
+	public static AppSuggestBox getEditSearchTxtBox() {
 		return editSearchTxtBox;
 	}
 

@@ -220,7 +220,8 @@
 	</ui:style>
 	<g:HTMLPanel styleName="{style.searchTotalContainer}">
 		<!-- <gc:SearchBarVc ui:field="searchBarVc" /> -->
-		<g:FlowPanel styleName="" ui:field="panelSearchPage">
+		<g:ScrollPanel styleName="" ui:field="panelSearchPage">
+		<g:FlowPanel>
 			<g:FlowPanel styleName="{style.searchResultPanel}">
 				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
 				<g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
@@ -234,7 +235,8 @@
 			<g:SimplePanel styleName="searchResults" ui:field="shelfTabSimPanel"/>
 			<g:Label ui:field="lodingImage" styleName="{style.loadingImageContainer}" />
 			<sg:FooterUc />
-		</g:FlowPanel>
+			</g:FlowPanel>
+		</g:ScrollPanel>
 	</g:HTMLPanel>
 
 </ui:UiBinder> 
