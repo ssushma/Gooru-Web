@@ -1826,6 +1826,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		messageContainer.setVisible(true);
 		frameContainer.setVisible(false);
 		loadingImageLabel.setVisible(false);
-		insightsContentText.setText(i18n.GL3106());
+		insightsContentText.setText(i18n.GL2038());
 	}
 }
