@@ -237,6 +237,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	void setOpenendedQuestionsPrintData(final ArrayList<UserDataDo> result){
         try{
+        	printOpendedData.clear();
 		 	int totalUserCount=this.collectionMetaData.getUserCount();
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
@@ -411,6 +412,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	void setCollectionBreakDownPrintData(ArrayList<UserDataDo> result){
 		try{
+			printResourceData.clear();
 			UserDataDo maxAvgValue=Collections.max(result,new Comparator<UserDataDo>() {
 	        	public int compare(UserDataDo o1, UserDataDo o2) {
 	        		 Long obj1 = new Long(o1.getTimeSpent());

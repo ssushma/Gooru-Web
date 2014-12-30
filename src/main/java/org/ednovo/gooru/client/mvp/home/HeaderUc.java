@@ -219,7 +219,7 @@ public class HeaderUc extends Composite implements
 	private String name;
 
 	@UiField(provided = true)
-	public AppSuggestBox editSearchTxtBox;
+	public static AppSuggestBox editSearchTxtBox;
 
 	@UiField
 	FlowPanel editSearchInputFloPanel,signUpInfo;
@@ -1463,7 +1463,11 @@ public class HeaderUc extends Composite implements
 		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
+		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH))
+		{
 		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		}
 		params.put("pageNum", "1");
 		params.put("pageSize", "8");
 		
@@ -2094,7 +2098,7 @@ public class HeaderUc extends Composite implements
 		return autoKeyWordSuggestionAsyncCallback;
 	}
 
-	public AppSuggestBox getEditSearchTxtBox() {
+	public static AppSuggestBox getEditSearchTxtBox() {
 		return editSearchTxtBox;
 	}
 
