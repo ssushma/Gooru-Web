@@ -666,7 +666,9 @@ public enum UrlToken {
 
 	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
 
-	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}");
+	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}"),
+	
+	V2_DOWNLOADFILE("/v2/media/download?sessionToken={0}&url={1}&filename={2}");
 
 	private String url;
 
