@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.search;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -36,6 +37,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -46,6 +49,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -79,7 +83,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	HTMLPanel contentpanel;
 	@UiField
 	SimplePanel searchWrapperSimPanel, shelfTabSimPanel;
-	@UiField FlowPanel panelSearchPage;
+	@UiField ScrollPanel panelSearchPage;
 
 	/*@UiField
 	Anchor resourceLinkLbl, collectionLinkLbl;*/
@@ -114,6 +118,15 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		int windowHeight=Window.getClientHeight();
 		panelSearchPage.setStyleName("panelHeight");
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
+		
+		panelSearchPage.addScrollHandler(new ScrollHandler() {
+			
+			@Override
+			public void onScroll(ScrollEvent event) {
+				HeaderUc.getEditSearchTxtBox().hideSuggestionList();
+				
+			}
+		});
 	}
 
 	@Override
