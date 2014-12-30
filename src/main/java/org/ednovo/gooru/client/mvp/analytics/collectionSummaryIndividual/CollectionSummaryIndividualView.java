@@ -446,7 +446,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
-	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.setStyleName(res.css().alignLeftAndBackground());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
 	            //Set completion
