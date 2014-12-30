@@ -39,6 +39,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -63,6 +64,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	@UiField HTMLPanel scoredPrintWidget,printWidget,totalAvgReactionlbl,hiddenChartPnl,tabContainer,teacherScoredData,teacherScoredDatapnl,teacherOpenendedData,teacherResourceBreakdownData,teacherResourceBreakdownDatapnl;
 	@UiField ListBox filterDropDown;
 	@UiField Label totalTimeSpentlbl,totalViewlbl;
+	@UiField Frame downloadFile;
 	
 	
 	AnalyticsTabContainer teacherTabContainer;
@@ -102,6 +104,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
 		printWidget.setVisible(true);
+		downloadFile.setVisible(false);
 	}
 	
 	/**
@@ -154,7 +157,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					printElement.appendChild(printOpendedData.getElement());
 					printElement.appendChild(collectionOverViewWidget.getElement());
 					printElement.appendChild(printResourceData.getElement());
-					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printElement.toString().replaceAll("\"", "\\\\\""));
+					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printElement.getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionMetaData.getTitle()!=null?collectionMetaData.getTitle():"");
 					scoredPrintWidget.setVisible(false);
 				}
 			}
@@ -847,4 +850,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		    	 popupPanel.center();
 		     }
 		}
+	@Override
+	public Frame getFrame() {
+		return downloadFile;
+	}
 }
