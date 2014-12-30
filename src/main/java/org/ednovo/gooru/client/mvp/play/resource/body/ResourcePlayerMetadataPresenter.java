@@ -98,8 +98,6 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		//this.collectionEndPresenter=collectionEndPresenter;
 		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
-		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
-		addRegisteredHandler(PostUserReviewResourceEvent.TYPE, this);
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
 		addRegisteredHandler(DeletePlayerStarReviewEvent.TYPE,this);
@@ -316,12 +314,12 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	/**
 	 * Receiving event to post the review. 
 	 */
-	@Override
+	
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
 	}
 	
-	@Override
+	
 	public void postReviewForResource(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
 	}
