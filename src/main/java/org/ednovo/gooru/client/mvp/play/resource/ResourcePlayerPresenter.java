@@ -617,13 +617,13 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-			this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String activityEventId) {
-				
-			}
-		});
+//			this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String activityEventId) {
+//				
+//			}
+//		});
 	}
 	public void createSession(String collectionGooruOid){
 		this.playerAppService.createSessionTracker(collectionGooruOid,null, new SimpleAsyncCallback<String>() {
