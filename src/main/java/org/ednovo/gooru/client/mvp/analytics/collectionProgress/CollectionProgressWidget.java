@@ -218,7 +218,10 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        				  viewResponselbl.setText(answerText);
 		        				  viewResponselbl.getElement().setAttribute("questionCount", (j+1)+"");
 		        				  viewResponselbl.getElement().setAttribute("question", AnalyticsUtil.html2text(collectionProgressData.get(j).getTitle()));
+		        				  if(collectionProgressData.get(j).getUserData().get(i) != null && collectionProgressData.get(j).getUserData().get(i).getText() != null)
+		        				  {
 		        				  viewResponselbl.getElement().setAttribute("questionAnswer",  AnalyticsUtil.html2text(collectionProgressData.get(j).getUserData().get(i).getText()));
+		        				  }
 		        				  }else{
 		        				  String answerText="";
 				        		  if(answerOption!=null){
