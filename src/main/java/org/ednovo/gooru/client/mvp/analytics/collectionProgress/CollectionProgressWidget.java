@@ -15,13 +15,10 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.json.client.JSONObject;
@@ -230,7 +227,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					        		  Set<String> keys=optionObj.keySet();
 					        		  if(keys.iterator().hasNext())
 					        			  answer= keys.iterator().next().toString();
-					        		  
+					        		  	  answer=answer!=null?answer:"";
 					        		  if(typeOfQuestion.equalsIgnoreCase("TF")){
 			        					  if(answer.equalsIgnoreCase("A")){
 			        						  answerText="true";
