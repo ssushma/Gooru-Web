@@ -112,7 +112,7 @@ public class SocialShareLinksView extends Composite {
 		swithToEmbedLbl.getElement().setAttribute("title", i18n.GL0640());
 		swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
-		swithToEmbedLbl.getElement().getStyle().setMarginLeft(35, Unit.PX);
+		swithUrlLbl.getElement().getStyle().setMarginRight(35, Unit.PX);
 		shareLbl.setText(i18n.GL0512());
 		shareLbl.getElement().setId("lblShareLbl");
 		shareLbl.getElement().setAttribute("alt", i18n.GL0512());

@@ -78,7 +78,7 @@
 	</ui:style>
 	<g:HTMLPanel ui:field="mainContainer">
 		<g:FlowPanel styleName="{style.resourceThumbnailPanel}" ui:field="internalPanel1">
-		    <g:HTMLPanel styleName="col-md-2 {style.paddingClear} chidden-sm hidden-xs">
+		    <g:HTMLPanel styleName="col-md-2 {style.paddingClear} hidden-sm hidden-xs">
 		    	<uc:ResourceImageUc ui:field="resourceImageUc" />    
 		    </g:HTMLPanel>
 		    <g:HTMLPanel styleName="col-md-10 col-xs-12">
