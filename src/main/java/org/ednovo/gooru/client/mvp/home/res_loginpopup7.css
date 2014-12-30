@@ -5,6 +5,9 @@
 
 display: block !important;
 }
+.menu-icon{
+	display:none;
+}
 .normalText{}
  .flagbuttonDeSelected{}
  .rightFlagPanel{}

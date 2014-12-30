@@ -543,7 +543,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
+						LiPanel clickedElement = (LiPanel)event.getSource();
 						String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 						getThirdLevelObjects("3",codeStandardsVal);
 						for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
@@ -578,7 +578,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
+							LiPanel clickedObject = (LiPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
 							selectedCodeDesc = codeDesc;
@@ -634,7 +634,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
+							LiPanel clickedObject = (LiPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
 							selectedCodeDesc = codeDesc;

@@ -165,7 +165,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		
 		commonStandards.setStyleName("primary");
 
-		commonStandards.addStyleName(AddStandardsBundle.INSTANCE.css().btnStandardsStyle());
+//		commonStandards.addStyleName(AddStandardsBundle.INSTANCE.css().btnStandardsStyle());
 	
 		commonStandards.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -469,7 +469,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					
 				}
 			});
-			levelTwoStandards.add(levelOneStandardsInner2.asWidget());
+			liPanel1.add(levelOneStandardsInner2);
+			levelTwoStandards.add(liPanel1.asWidget());
 			if(i==0)
 			{
 			for(int j=0;j<levelOneData.get(i).getNode().size();j++)
