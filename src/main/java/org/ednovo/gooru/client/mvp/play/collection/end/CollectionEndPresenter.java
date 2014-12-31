@@ -478,7 +478,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 					int day=result.get(result.size()-1).getFrequency();
 					printData.setUserName(null);
 					printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-					printData.setSessionStartTime(AnalyticsUtil.getCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
+					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
 					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId(),printData);
 					getView().setSessionsData(result);
 				}else{
