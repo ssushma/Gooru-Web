@@ -79,6 +79,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +92,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @ServiceURL("/resourceService")
 public class ResourceServiceImpl extends BaseServiceImpl implements ResourceService {
 
+	private static final Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
 	
 	private static final long serialVersionUID = 3247182821197046755L;
 	
@@ -1836,5 +1840,42 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
 		collItemDo.setStandards(collectionItemDoNew.getStandards());
 		return collectionItemDoNew;
+	}
+	
+	
+	public String getUserShelfDetails(String userUid){
+		String shelfGooruOid=null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_USER_WORKSPACE,userUid, getLoggedInSessionToken(),"0","1");
+		logger.info("get user shelf details API=>"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		shelfGooruOid=getShelfGooruOid(jsonRep);
+		return shelfGooruOid;
+	}
+	
+	public String getShelfGooruOid(JsonRepresentation jsonRep){
+		String shelfGooruOid=null;
+		if(jsonRep!=null){
+			try {
+				JSONArray jsonArray=jsonRep.getJsonArray();
+				if(jsonArray!=null&&jsonArray.length()>0){
+					for(int i=0;i<jsonArray.length();i++){
+						JSONObject jsonObject=jsonArray.getJSONObject(i);
+						if(jsonObject!=null){
+							JSONObject collectionObject=jsonObject.isNull("collection")?null:jsonObject.getJSONObject("collection");
+							String collectionType=collectionObject.isNull("collectionType")?null:collectionObject.getString("collectionType");
+							if(collectionType!=null&&collectionType.equals("shelf")){
+								shelfGooruOid=collectionObject.getString("gooruOid");
+								return shelfGooruOid;
+							}
+						}
+					}
+				}
+			} catch (JSONException e) {
+				logger.error("Exception::", e);
+			}
+		}
+		return shelfGooruOid;
 	}
 }
