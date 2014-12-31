@@ -109,8 +109,16 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				nextButton.setVisible(true);
 				previousButton.setVisible(true);
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
-			
-				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				TocCollectionHomeView tocCollectionHomeView=null;
+			if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
+			{
+				tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+			}
+			else
+			{
+				tocCollectionHomeView=new TocCollectionHomeView("images/default-collection-image-160x120.png");
+			}
+				
 				if(!isCollectionHome){
 					tocCollectionHomeView.hideResourceThumbnailContainer(true);
 				}
@@ -133,7 +141,15 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 					}
 					navgationTocContainer.add(tocResoruceView);
 				}
-				TocCollectionEndView tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl());
+				TocCollectionEndView tocCollectionEndView=null;
+				if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
+				{
+					tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl());
+				}
+				else
+				{
+					tocCollectionEndView=new TocCollectionEndView("images/default-collection-image-160x120.png");
+				}
 				tocCollectionEndView.addClickHandler(new EndRequest());
 				if(!isCollectionHome){
 					tocCollectionEndView.hideResourceThumbnailContainer(true);
