@@ -212,17 +212,19 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        });
 	        //This is used for segrate data based on the category
 	        for (UserDataDo userDataDo : resourcesData) {
-				if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
-					if(userDataDo.getType().equalsIgnoreCase("OE")){
+	        	if(userDataDo.getStatus()==0){
+					if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
+						if(userDataDo.getType().equalsIgnoreCase("OE")){
 							openendedData.add(userDataDo);
+						}else{
+							questionsData.add(userDataDo);
+						}
+						questionRowIndex.add(collectionProgressCount);
 					}else{
-						questionsData.add(userDataDo);
+						resourceRowIndex.add(collectionProgressCount);
 					}
-					questionRowIndex.add(collectionProgressCount);
-				}else{
-					resourceRowIndex.add(collectionProgressCount);
-				}
-				collectionProgressCount++;
+					collectionProgressCount++;
+	        	}
 	        }
 	    	setScoredQuestionsData(questionsData);
 	    	setQuestionsPrintData(questionsData);
@@ -434,9 +436,16 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Views");
 	        data.addColumn(ColumnType.STRING, "Reaction");
-	        data.addRows(result.size());
+	        int rowCount=0;
+	        for(int i=0;i<result.size();i++) {
+	        	if(result.get(i).getStatus()==0){
+	        		rowCount=rowCount+1;
+	        	}
+	        }
+	        data.addRows(rowCount);
 	        
 	        for(int i=0;i<result.size();i++) {
+	         	if(result.get(i).getStatus()==0){
 	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
 	        	 String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
@@ -503,6 +512,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            reactioncount.setText(reaction+"/5");
 	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 5, reactionpnl.toString());
+	         	}
 	        }
 	        final Options options = Options.create();
 	        options.setAllowHtml(true);
@@ -543,9 +553,16 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Views");
 	        data.addColumn(ColumnType.STRING, "Reaction");
-	        data.addRows(result.size());
+	        int rowCount=0;
+	        for(int i=0;i<result.size();i++) {
+	        	if(result.get(i).getStatus()==0){
+	        		rowCount=rowCount+1;
+	        	}
+	        }
+	        data.addRows(rowCount);
 	        
 	        for(int i=0;i<result.size();i++) {
+	        	if(result.get(i).getStatus()==0){
 	        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
 	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
@@ -612,6 +629,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            reactioncount.setText(reaction+"/5");
 	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 5, reactionpnl.toString());
+	        	}
 	        }
 	        final Options options = Options.create();
 	        options.setAllowHtml(true);

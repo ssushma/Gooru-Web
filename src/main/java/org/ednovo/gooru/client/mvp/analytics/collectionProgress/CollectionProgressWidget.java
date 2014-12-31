@@ -147,18 +147,20 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		data.addColumn(ColumnType.STRING, i18n.GL2288());
 
 		for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
-			defaultUserDataForUsers=collectionProgressDataDo;
-			if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
-				 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
-				 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
-					 noOfQuestions++;
-				 }
-				 questionColumnIndex.add(collectionProgressCount+1);
-			}else{
-				 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
-				 resourceColumnIndex.add(collectionProgressCount+1);
+			if(collectionProgressDataDo.getStatus()==0){
+				defaultUserDataForUsers=collectionProgressDataDo;
+				if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+					 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
+					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
+						 noOfQuestions++;
+					 }
+					 questionColumnIndex.add(collectionProgressCount+1);
+				}else{
+					 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
+					 resourceColumnIndex.add(collectionProgressCount+1);
+				}
+				collectionProgressCount++;
 			}
-			collectionProgressCount++;
 		}
 		collectionTitlelbl.setText(collectionTitle);
 		resourceCountlbl.setText(resourceColumnIndex.size()+"");
@@ -175,6 +177,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	        for(int i=0;i<sizeNames;i++) {
 	        	  int score=0;
 	        	  for(int j=0;j<columnsSize;j++) {
+	        		  if(collectionProgressData.get(j).getStatus()==0){
 	        		  	  String color=WHITE;
 	        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
 		        		  if(collectionProgressData.get(j).getCategory()!=null && !collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
@@ -272,6 +275,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        		  com.google.gwt.visualization.client.Properties p=properties.cast();
 		        		  mainDataVpnl.addStyleName(res.css().mainDataVpnl());
 		        		  data.setCell(i, j+2,mainDataVpnl.toString(),null,p);
+	        		  }
 	        	   }
 	        	  data.setValue(i, 0,defaultUserDataForUsers.getUserData().get(i).getUserName());
 	        	  VerticalPanel scoreWidget=new VerticalPanel();
