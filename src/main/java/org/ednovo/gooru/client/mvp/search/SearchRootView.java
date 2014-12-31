@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
@@ -109,6 +110,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		int windowHeight=Window.getClientHeight();
 		panelSearchPage.setStyleName("panelHeight");
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
+		panelSearchPage.getElement().getStyle().setOverflowY(Overflow.AUTO);
+		panelSearchPage.getElement().getStyle().setOverflowX(Overflow.HIDDEN);
 		
 		panelSearchPage.addScrollHandler(new ScrollHandler() {
 			
