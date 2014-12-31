@@ -145,10 +145,11 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		final DataTable data = DataTable.create();
 		data.addColumn(ColumnType.STRING, i18n.GL2287());
 		data.addColumn(ColumnType.STRING, i18n.GL2288());
-
+		int rowCount=0;
 		for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
+			defaultUserDataForUsers=collectionProgressDataDo;
 			if(collectionProgressDataDo.getStatus()==0){
-				defaultUserDataForUsers=collectionProgressDataDo;
+				rowCount=rowCount+1;
 				if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
 					 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
 					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
@@ -173,7 +174,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			if(sizeNames!=0){
 				data.addRows(sizeNames);
 			}
-	        int columnsSize=collectionProgressData.size();
+	        int columnsSize=rowCount;
 	        for(int i=0;i<sizeNames;i++) {
 	        	  int score=0;
 	        	  for(int j=0;j<columnsSize;j++) {
