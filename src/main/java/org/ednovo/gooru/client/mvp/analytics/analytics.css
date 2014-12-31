@@ -1022,3 +1022,6 @@
 	padding: 20px 0px;
 	box-shadow: 0 2px 2px #ccc;
 }
+.btnLineHeight{
+	line-height:20px;
+}
