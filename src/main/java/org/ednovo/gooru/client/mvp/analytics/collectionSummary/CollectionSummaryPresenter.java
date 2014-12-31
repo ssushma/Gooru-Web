@@ -131,7 +131,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 				getView().setUserSessionsData(result);
 				if(result.size()!=0){
 					printUserDataDO.setSession("1st Session");
-					printUserDataDO.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getTimeStamp())));
+					printUserDataDO.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(result.get(0).getTimeStamp())));
 					setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId,printUserDataDO);
 				}
 			}

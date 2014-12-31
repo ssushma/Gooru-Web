@@ -1755,7 +1755,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			sessionsDropDown.setSelectedIndex(selectedIndex);
 			printData.setUserName(null);
 			printData.setSession(sessionsDropDown.getItemText(selectedIndex));
-			printData.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
+			printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 		}
 	}
 
