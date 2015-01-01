@@ -254,7 +254,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 		        data.addColumn(ColumnType.STRING, "Views");
 		        data.addColumn(ColumnType.STRING, "Reaction");
-		        int rowCount=0;
+		        int rowCount=0,rowVal=0;
 		        for(int i=0;i<result.size();i++) {
 		        	if(result.get(i).getStatus()==0){
 		        		rowCount=rowCount+1;
@@ -262,9 +262,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        }
 		        data.addRows(rowCount);
 		        
-		        for(int i=0;i<rowCount-1;i++) {
+		        for(int i=0;i<result.size();i++) {
 		         	if(result.get(i).getStatus()==0){
-		        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
+		        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
 		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 		              String categoryStyle="";
@@ -292,12 +292,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            Label categorylbl=new Label();
 		            categorylbl.addStyleName(categoryStyle);
 		            categorylbl.addStyleName(res.css().setMarginAuto());
-		            data.setValue(i, 1,categorylbl.toString());
+		            data.setValue(rowVal, 1,categorylbl.toString());
 		            
 		            //Set Question Title
 		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-		            data.setValue(i, 2, questionTitle.toString());
+		            data.setValue(rowVal, 2, questionTitle.toString());
 		          
 		           //Set time spent
 		            HorizontalPanel timeSpentpnl=new HorizontalPanel();
@@ -307,7 +307,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            timeSpentpnl.add(progressBar);
 		            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
 		            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
-		            data.setValue(i, 3, timeSpentpnl.toString());
+		            data.setValue(rowVal, 3, timeSpentpnl.toString());
 		           
 		            //set Views label
 		            HorizontalPanel viewpnl=new HorizontalPanel();
@@ -319,11 +319,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            viewpnl.add(viewProgressBar);
 		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
 		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-		            data.setValue(i, 4, viewpnl.toString());
+		            data.setValue(rowVal, 4, viewpnl.toString());
 		            
 		            //Set reactions
 		            int reaction=result.get(i).getReaction();
-		            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
+		            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
+		            rowVal++;
 		        }
 		        }
 		        final Options options = Options.create();
@@ -340,6 +341,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 * @param loadingImage
 	 */
 	void setCollectionBreakDown(ArrayList<UserDataDo> result,HTMLPanel loadingImage){
+		try{
 		
 		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
 		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceRowIndex);
@@ -365,7 +367,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Views");
 	        data.addColumn(ColumnType.STRING, "Reaction");
-	        int rowCount=0;
+	        int rowCount=0,rowVal=0;
 	        for(int i=0;i<result.size();i++) {
 	        	if(result.get(i).getStatus()==0){
 	        		rowCount=rowCount+1;
@@ -373,9 +375,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        }
 	        data.addRows(rowCount);
 	        
-	        for(int i=0;i<rowCount-1;i++) {
+	        for(int i=0;i<result.size();i++) {
 	        	if(result.get(i).getStatus()==0){
-	        		data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+	        		data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
 		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 		              String categoryStyle="";
@@ -403,12 +405,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            Label categorylbl=new Label();
 		            categorylbl.addStyleName(categoryStyle);
 		            categorylbl.addStyleName(res.css().setMarginAuto());
-		            data.setValue(i, 1,categorylbl.toString());
+		            data.setValue(rowVal, 1,categorylbl.toString());
 		            
 		            //Set Question Title
 		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-		            data.setValue(i, 2, questionTitle.toString());
+		            data.setValue(rowVal, 2, questionTitle.toString());
 		          
 		           //Set time spent
 		            HorizontalPanel timeSpentpnl=new HorizontalPanel();
@@ -418,7 +420,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            timeSpentpnl.add(progressBar);
 		            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
 		            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
-		            data.setValue(i, 3, timeSpentpnl.toString());
+		            data.setValue(rowVal, 3, timeSpentpnl.toString());
 		           
 		            //set Views label
 		            HorizontalPanel viewpnl=new HorizontalPanel();
@@ -430,11 +432,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            viewpnl.add(viewProgressBar);
 		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
 		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-		            data.setValue(i, 4, viewpnl.toString());
+		            data.setValue(rowVal, 4, viewpnl.toString());
 		            
 		            //Set reactions
 		            int reaction=result.get(i).getReaction();
-		            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
+		            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
+		        	rowVal++;
 	        	}
 	        }
 	        final Options options = Options.create();
@@ -461,6 +464,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				}
 			});
+	    	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	        if(loadingImage!=null)
 	        loadingImage.setVisible(false);
 	}
