@@ -444,7 +444,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        }
 	        data.addRows(rowCount);
 	        
-	        for(int i=0;i<result.size();i++) {
+	        for(int i=0;i<rowCount-1;i++) {
 	         	if(result.get(i).getStatus()==0){
 	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
@@ -561,7 +561,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        }
 	        data.addRows(rowCount);
 	        
-	        for(int i=0;i<result.size();i++) {
+	        for(int i=0;i<rowCount-1;i++) {
 	        	if(result.get(i).getStatus()==0){
 	        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
