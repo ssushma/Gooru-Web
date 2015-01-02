@@ -109,7 +109,7 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	 */
 	@Override
 	public void setHtmltopdf(String htmlString,String collectionTitle) {
-		this.analyticService.setHTMLtoPDF(htmlString,collectionTitle, new AsyncCallback<String>() {
+		this.analyticService.setHTMLtoPDF(htmlString,collectionTitle,false, new AsyncCallback<String>() {
 					@Override
 					public void onSuccess(String result) {
 						getView().getFrame().setUrl(result);
