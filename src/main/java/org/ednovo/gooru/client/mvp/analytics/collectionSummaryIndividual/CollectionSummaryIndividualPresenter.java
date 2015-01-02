@@ -113,7 +113,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	 */
 	@Override
 	public void setHtmltopdf(String htmlString,String fileName,final boolean isClickedOnEmail) {
-		this.analyticService.setHTMLtoPDF(htmlString,fileName, new AsyncCallback<String>() {
+		this.analyticService.setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
 				if(isClickedOnEmail){

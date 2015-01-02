@@ -223,7 +223,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	@Override
-	public String setHTMLtoPDF(String htmlString,String fileName) {
+	public String setHTMLtoPDF(String htmlString,String fileName,boolean isClickedOnEmail) {
 		String pdfName=fileName.replaceAll(" ", "_");
 		pdfName = pdfName + "_Collection_Summary.pdf";
 		String savedFileName=null;
@@ -237,7 +237,11 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			LOGGER.info(dataPassing);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),dataPassing);
 			savedFileName=stringRepresentation.getText();
-			downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,getLoggedInSessionToken(),savedFileName,pdfName);
+			if(isClickedOnEmail){
+				downloadUrl=savedFileName;
+			}else{
+				downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,getLoggedInSessionToken(),savedFileName,pdfName);
+			}
 		}catch(Exception e){
 			
 		}
