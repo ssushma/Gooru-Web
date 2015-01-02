@@ -69,6 +69,10 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	
 	String ACCESS_MODE_FLT = "flt.cfAccessMode";
 	
+	String RATINGS_FLT = "flt.rating";
+	
+	String REVIEWS_FLT = "flt.isReviewed";
+	
 	/**
 	 * Set post search view
 	 * @param searchDo instance of {@link SearchDo}
@@ -144,5 +148,7 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	void setUpdatedStandards(String setStandardsVal);
 
 	void OnStandardsClickEvent(Button addBtn);
+
+	String getSearchText();
 
 }

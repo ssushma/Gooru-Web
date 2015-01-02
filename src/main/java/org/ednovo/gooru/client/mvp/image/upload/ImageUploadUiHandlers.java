@@ -66,4 +66,6 @@ public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 	
 	public void uploadGooruDefaultImage(String imageURL);
 	void saveImage(String gooruOid, String fileName, String resourceId);
+
+	void saveImageCollection(String gooruOid, String fileName);
 }

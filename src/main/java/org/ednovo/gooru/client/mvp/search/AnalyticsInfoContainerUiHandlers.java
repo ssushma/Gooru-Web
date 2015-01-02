@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 

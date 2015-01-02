@@ -237,7 +237,7 @@
 
 .commentsH2 {
 	margin-bottom: 10px;
-	display: block;
+	display: inline-block;
 	font-size: 1.5em;
 	font-weight: bold;
 }
@@ -300,12 +300,12 @@
 }
 
 .insightsFrameContainer {	 	
-    min-height: 100px;
+ /*    min-height: 100px;
 	max-height: 100%;
 	width: 900px;
 	background-color: #EEE;
 	margin: 0 auto;
-	background: none repeat scroll 0 0 #F2F1F1;
+	background: none repeat scroll 0 0 #F2F1F1; */
 }
 
 .insightsFrame .buttonGroup {
@@ -493,6 +493,9 @@
 .clearBoth{
 	clear: both;
 }
+.mutedText{
+	color:#EEEEEE;
+}
 
 .collections{
 	background:#333333;
@@ -670,5 +673,23 @@
 	height: 35px;
 }
 .commentsCharLimit{
-	
+	text-align: center;
+	color: #999;
+}
+.onoffbtns{
+	display:inline-block;
+	margin-left:15px;
+}
+
+.switchContainer {
+ 	 position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 59px;
+	height: 28px;
+	padding: 3px;
+	vertical-align: middle;
+	background-color: white;
+	border-radius: 18px;
+	cursor: pointer;
 }

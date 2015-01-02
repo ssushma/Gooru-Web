@@ -392,6 +392,36 @@ button.disabled, button.disabled:hover {
 .categoryFilterContainer  input[type="checkbox"] {
 	margin: 3px 0.5ex !important;
 }
+.fivestar{
+	background: url(../images/stars.png) no-repeat 14px -10px !important;
+}
+
+.fourstar{
+ 	background: url(../images/stars.png) no-repeat 14px -38px !important;
+}
+
+.threestar{
+	background: url(../images/stars.png) no-repeat 14px -65px !important;
+}
+
+.twostar{
+ 	background: url(../images/stars.png) no-repeat 14px -89px !important;
+}
+.onestar{
+ 	background: url(../images/stars.png) no-repeat 14px -116px !important;
+}
+.zerostar{
+ 	background: url(../images/stars.png) no-repeat 14px -148px !important;
+}
+
+.reStar{
+	height: 17px;
+	display: inline-block;
+	width: 90px;
+}
+.fivestar label, .fourstar label, .threestar label, .twostar label, .onestar label, .zerostar label{
+	padding-left: 46%;
+}
 
 .categoryFilterContainer .filterCheckBox label {
 	padding: 3px 31px;

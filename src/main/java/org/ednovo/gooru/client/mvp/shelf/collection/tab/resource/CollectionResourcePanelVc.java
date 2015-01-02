@@ -60,10 +60,10 @@ public class CollectionResourcePanelVc extends AppRepositionDragContainer {
 	@Override
 	public void onDrop(Draggable draggable) {
 		/**
-		 * Removing drag and drop in 1.1 release for resources at m\My collections.
+		 * Enabled drag and drop again in hotfix release for resources at m\My collections.
 		 */
-		/*ShelfCollectionResourceChildView resourceVc = (ShelfCollectionResourceChildView) draggable.getDraggableUc();
-		resourceVc.reorderCollectionItem(getWidgetIndex(draggable));*/
+		ShelfCollectionResourceChildView resourceVc = (ShelfCollectionResourceChildView) draggable.getDraggableUc();
+		resourceVc.reorderCollectionItem(getWidgetIndex(draggable));
 	}
 
 	/* (non-Javadoc)

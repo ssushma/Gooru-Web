@@ -29,15 +29,18 @@ package org.ednovo.gooru.client.mvp.search;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> { 
-	
+import com.google.gwt.user.client.ui.Label;
+
+public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 
 	/**
-	 * @param resourceTagsDo
+	 * @param isTagsclear 
+	 * @param result
 	 */
-	void setResourceTags(List<UserTagsDo> resourceTagsDo);
+	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo, boolean isTagsclear); 
 
 
 	/**
@@ -46,8 +49,8 @@ public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 	void isLoadingImageVisible(boolean isVisible);
 
 	/**
-	* @param resourceId
-	* @param resourceGooruOid
-	*/
-	void setResourceTagsData(String resourceId, String resourceGooruOid);   
+	 * @param resourceId
+	 */
+	void setResourceTagsData(String resourceId, Label tagsLbl);   
+
 }

@@ -37,12 +37,15 @@ import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.AssignmentWidgetPresenter;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
@@ -104,8 +107,19 @@ import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AppInjector.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 @GinModules({ AppModule.class, ServiceModule.class })
 public interface AppInjector extends ServiceInjector {
@@ -233,6 +247,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
+	
+	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
 
@@ -253,10 +269,15 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LusdLibraryPresenter> getLusdLibraryPresenter();
 	
 	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
-	
+
 	AsyncProvider<AssignmentWidgetPresenter> getAssignmentWidgetPresenter();
 	
 	AsyncProvider<AnalyticsInfoContainerPresenter> getAnalyticsInfoContainerPresenter();
 	
 	AsyncProvider<TagsTabPresenter> getTagsTabPresenter();
+	
+	AsyncProvider<UserDashBoardPresenter> getUserDashBoardPresenter();
+	
+	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
+
 }

@@ -30,8 +30,19 @@ package org.ednovo.gooru.client.gin;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 /**
- * @author Search Team
  * 
+ * @fileName : BaseUiHandlers.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface BaseUiHandlers extends UiHandlers {
 	

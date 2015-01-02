@@ -41,6 +41,7 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -106,5 +107,7 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	 
 	 void getGooruStoriesUrl(String parms, AsyncCallback<String> callback);
 	 
-	 void showGooruStoriesSection(AsyncCallback<String> callback); 
+	 void showGooruStoriesSection(AsyncCallback<String> callback);
+
+	void getResourceTags(String resourceId, String offSet, String limit,AsyncCallback<SearchResourcesTagsDo> callback); 
 }

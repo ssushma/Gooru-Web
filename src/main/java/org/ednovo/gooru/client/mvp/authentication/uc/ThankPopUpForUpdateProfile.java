@@ -43,7 +43,21 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : ThankPopUpForUpdateProfile.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class ThankPopUpForUpdateProfile extends PopupPanel{
 
 	private static ThankPopUpForUpdateProfileUiBinder uiBinder = GWT
@@ -78,6 +92,25 @@ public class ThankPopUpForUpdateProfile extends PopupPanel{
 		//this.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 	}
+	/**
+	 * 
+	 * @function setUiAndIds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUiAndIds() {
 		lblTitle.setText(i18n.GL0481()
 				+i18n.GL_SPL_EXCLAMATION());

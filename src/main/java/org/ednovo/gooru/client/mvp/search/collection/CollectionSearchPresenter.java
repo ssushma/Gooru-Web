@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -51,6 +52,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -68,6 +70,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class CollectionSearchPresenter extends AbstractSearchPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsCollectionSearchView, CollectionSearchPresenter.IsCollectionSearchProxy> implements SearchUiHandlers,RefreshDisclosurePanelForFoldersEventHandler {
 
 	private AddResourceContainerPresenter addResourceContainerPresenter;
+	private	AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
 	
@@ -88,10 +91,11 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter) {
+	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.addResourceContainerPresenter = addResourceContainerPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
+		this.analyticsInfoContainerPresenter=analyticsInfoContainerPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshDisclosurePanelForFoldersEvent.TYPE, this);
 	}
@@ -132,6 +136,14 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 
 	@Override
 	protected void requestSearch(SearchDo<CollectionSearchResultDo> searchDo, SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
+		if(getPlaceManager().getRequestParameter("disableSpellCheck") != null)
+		{
+			String disableSpellCheckVal = getPlaceManager().getRequestParameter("disableSpellCheck");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("disableSpellCheck", "true");
+			searchDo.setFilters(filterMap);
+		}
 		getSearchService().getCollectionSearchResults(searchDo, searchAsyncCallback);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 
@@ -227,15 +239,22 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		});
 	}
 
-	/**
-	 * No need to use this method, at the same do not delete this method.
-	 *
-	 * (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo, boolean)
-	 */
 	@Override
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen) {
+	public void setAnalyticsTabData(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo, String type) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setAnalyticsTabDataForCollections(SimplePanel addResourceContainerPanel,CollectionSearchResultDo searchResultDo, String type) {
+		// TODO Auto-generated method stub
+		addResourceContainerPanel.clear();
+		analyticsInfoContainerPresenter.setAnalyticsDataForCollections(searchResultDo);
+		addResourceContainerPanel.setWidget(analyticsInfoContainerPresenter.getWidget());
+	}
+
+	@Override
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl) {
 		
 	}
 

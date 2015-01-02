@@ -85,7 +85,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @ServiceURL("/classpageService")
 public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageService {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClasspageServiceImpl.class);
+
 	/**
 	 * 
 	 */
@@ -1042,6 +1044,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			if(studyStatus!=null){
 				url=url+"&status="+studyStatus;
 			}
+	    logger.info("get class items API==>"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1557,7 +1560,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
-		logger.info("getActiveAssociatedStudentListByCode : "+url);
+
+		getLogger().info("--- Active memb assoc students -- "+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		

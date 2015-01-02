@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
-
  * 
  *  http://www.goorulearning.org/
  * 
@@ -66,23 +65,11 @@ public class AnalyticsInfoContainerPresenter extends PresenterWidget<IsAnalytics
 	}
 
 	public void setAnalyticsDataForCollections(CollectionSearchResultDo searchResultDo) {
-		// TODO Auto-generated method stub
-		int Count=3;
-		getView().setCollectionAnalyticsData(searchResultDo);
-		getView().setAverageReactionWidget(Count);
+		getView().setCollectionData();
 	}
 
 	public void setAnalyticsResourcesData(ResourceSearchResultDo searchResultDo) {
-		int Count=3;
-		getView().setAverageReactionWidget(Count);
-		String resourcegooruOid = searchResultDo.getGooruOid();
-		AppClientFactory.getInjector().getPlayerAppService().getContentStarRatings(resourcegooruOid, new SimpleAsyncCallback<ContentStarRatingsDo>() {
-			@Override
-			public void onSuccess(ContentStarRatingsDo result) {
-				getView().setContentGraph(result); 
-				getView().setAverageRatingWidget(result);
-			}
-		});
+			getView().setResourceData();
 	}
 	
 }

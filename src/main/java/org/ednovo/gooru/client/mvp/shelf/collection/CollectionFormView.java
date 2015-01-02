@@ -537,8 +537,12 @@ public class CollectionFormView extends
 		if (radioButtonPrivate.isChecked() == true) {
 			collection.setSharing("private");
 		}
-
-		collection.setCollectionType("collection");
+		String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type", null);
+		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
+			collection.setCollectionType("quiz");
+		}else{
+			collection.setCollectionType("collection");
+		}
 		if(isCheckedValue){
 			collection.setMediaType("iPad_friendly");
 		}else{
@@ -612,7 +616,26 @@ public class CollectionFormView extends
 			appPopUp.setViewTitle(i18n.GL1421());
 			setPopUpStyle();
 		}else{
-			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
+			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
+		if(collectionType!=null&&collectionType.equals("assessment")){
+			appPopUp.setViewTitle(i18n.GL3008());
+			collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
+			collPopUpMainheading.setText(i18n.GL3009());
+			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL3009());
+			collPopUpMainheading.getElement().setAttribute("title",i18n.GL3009());
+			collPopUpSubheading.setText(i18n.GL1033());
+			collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1033());
+			collPopUpSubheading.getElement().setAttribute("title",i18n.GL1033());
+			collTitleLbl.setText(i18n.GL3009()+i18n.GL_SPL_SEMICOLON()+" ");
+			collTitleLbl.getElement().setAttribute("alt",i18n.GL3009());
+			collTitleLbl.getElement().setAttribute("title",i18n.GL3009());
+			btnOk.setText(i18n.GL0141());
+			btnOk.getElement().setAttribute("alt",i18n.GL0141());
+			btnOk.getElement().setAttribute("title",i18n.GL0141());
+			cancelAnr.setText(i18n.GL0142());
+			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+		}else if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
 				collPopUpMainheading.setText(i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("title",i18n.GL0993());
@@ -840,5 +863,10 @@ public class CollectionFormView extends
 			}
 		});
 
+	}
+
+	@Override
+	public void setStaticData(String collectionType) {
+		
 	}
 }

@@ -135,6 +135,8 @@ public class DrivePresenter extends
 						user.setRefreshToken(result);
 						AppClientFactory.setLoggedInUser(user);
 						getAccessToken(result, folderId, nextPageToken, isPanelClear);
+					}else{
+						getView().showNoDriveAccess(401);
 					}
 				}
 			});

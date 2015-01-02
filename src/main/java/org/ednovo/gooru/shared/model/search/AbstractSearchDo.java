@@ -51,6 +51,10 @@ public class AbstractSearchDo<T> implements Serializable {
 
 	private String query;
 	
+	private String spellCheckQueryString;
+	
+	private String userQueryString;
+	
 	private Integer collectionItemsCount;
 
 	private String type;
@@ -250,5 +254,22 @@ public class AbstractSearchDo<T> implements Serializable {
 	public void setNotFriendly(String notFriendly) {
 		this.notFriendly = notFriendly;
 	}
+
+	public String getSpellCheckQueryString() {
+		return spellCheckQueryString;
+	}
+
+	public void setSpellCheckQueryString(String spellCheckQueryString) {
+		this.spellCheckQueryString = spellCheckQueryString;
+	}
+
+	public String getUserQueryString() {
+		return userQueryString;
+	}
+
+	public void setUserQueryString(String userQueryString) {
+		this.userQueryString = userQueryString;
+	}
+	
 
 }

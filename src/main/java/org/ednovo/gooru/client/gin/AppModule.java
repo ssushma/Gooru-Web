@@ -106,6 +106,13 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
+import org.ednovo.gooru.client.mvp.dashboard.IsPopupForAnalyticsView;
+import org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsView;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter.IsUserDashBoardProxy;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardView;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter.IsDeviceSupportProxy;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportView;
@@ -136,6 +143,9 @@ import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.client.mvp.home.HomeView;
 import org.ednovo.gooru.client.mvp.home.IsHomeView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.register.IsUserRegistrationView;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
@@ -408,8 +418,19 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AppModule.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class AppModule extends AppPresenterModule {
 
@@ -595,6 +616,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
 		
 		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
+		bindPresenterWidget(AddStandardsPreSearchPresenter.class, IsAddStandardsPreSearchView.class, AddStandardsPreSearchView.class);
 		bindPresenterWidget(ContributorsPresenter.class, IsContributorsView.class, ContributorsView.class);
 
 		bindPresenterWidget(DistrictPresenter.class, IsDistrictView.class, DistrictView.class);
@@ -617,6 +639,11 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(UnitAssignmentPresenter.class,IsUnitAssignmentView.class,UnitAssignmentView.class);
 		bindPresenterWidget(PersonalizeUnitPresenter.class,IsPersonalizeUnitView.class,PersonalizeUnitView.class);
 
+		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
+		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
+		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
+		bindPresenterWidget(PopupForAnalyticsPresenter.class,IsPopupForAnalyticsView.class, PopupForAnalyticsView.class);
+
 		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);
 		bindPresenterWidget(CollectionProgressPresenter.class,IsCollectionProgressView.class,CollectionProgressWidget.class);
 		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
@@ -626,8 +653,8 @@ public class AppModule extends AppPresenterModule {
 		
 		
 		bindPresenterWidget(AssignmentWidgetPresenter.class, IsAssignmentWidget.class,AssignmentWidgetView.class);
-		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
-		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
+
+
 
 	}
 }

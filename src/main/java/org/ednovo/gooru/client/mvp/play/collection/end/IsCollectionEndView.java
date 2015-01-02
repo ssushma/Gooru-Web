@@ -34,9 +34,11 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
-
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 
@@ -93,14 +95,17 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void dispalyTime();
 
-	void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
+	public void changeCommentsButton(CollectionDo collectionDoObj);
 
-	void setCollectionMetaDataByUserAndSession(
-			ArrayList<CollectionSummaryMetaDataDo> result);
+	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
 
-	void resetCollectionMetaData();
-
-	HTMLPanel getLoadingImageLabel();
+	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> result);
+	
+	public void resetCollectionMetaData();
+	
+	public HTMLPanel getLoadingImageLabel();
+	
+	public void hidePanel();
 	
 	public void resetData();
 	
