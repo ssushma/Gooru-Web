@@ -170,6 +170,8 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 		MixpanelUtil.Arrive_Landing_Page();
 		setRegisterdUserAsyncCallback(new SimpleAsyncCallback<UserDo>() {
 			@Override
@@ -182,6 +184,7 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.DISCOVER_TITLE_ANONYMOUS);
@@ -202,6 +205,8 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	@Override
 	public void onReset() {
 		super.onReset();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
