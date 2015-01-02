@@ -53,7 +53,7 @@ public interface AnalyticsService extends BaseService {
 
 	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder);
 	
-	public String setHTMLtoPDF(String htmlString,String fileName);
+	public String setHTMLtoPDF(String htmlString,String fileName,boolean isClickedOnEmail);
 	
 	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId);
 	
