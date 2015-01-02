@@ -70,6 +70,8 @@ import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.StringRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +81,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @ServiceURL("/classpageService")
 public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ClasspageServiceImpl.class);
 
 	/**
 	 * 
@@ -1022,6 +1026,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			if(studyStatus!=null){
 				url=url+"&status="+studyStatus;
 			}
+	    logger.info("get class items API==>"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		if(jsonResponseRep.getStatusCode()==200){
