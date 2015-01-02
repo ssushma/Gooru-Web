@@ -1,12 +1,9 @@
 package org.ednovo.gooru.client.mvp.analytics.util;
 
-import java.util.Date;
 import java.util.List;
 
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.ui.Label;
 
 public class AnalyticsUtil {
@@ -68,22 +65,37 @@ public class AnalyticsUtil {
 	 * @return : String
 	 */
 	public static String getCreatedTime(String commentCreatedTime) {
-		String createdTime = null;
-		Long commentTime = Long.parseLong(commentCreatedTime);
-		Date currentDate = new Date(commentTime);
-		DateTimeFormat fmt = DateTimeFormat.getFormat(DATE_FORMAT);
-		TimeZone est = TimeZone.createTimeZone(0);
-		createdTime = fmt.format(currentDate,est);
+		String createdTime = timeConversionInJS(commentCreatedTime);
 		return createdTime;
 	}
 	public static String getSessionsCreatedTime(String commentCreatedTime) {
-		String createdTime = null;
-		Long commentTime = Long.parseLong(commentCreatedTime);
-		Date currentDate = new Date(commentTime);
-		DateTimeFormat fmt = DateTimeFormat.getFormat(DATE_FORMAT);
-		createdTime = fmt.format(currentDate);
+		String createdTime = timeConversionInJS(commentCreatedTime);
 		return createdTime;
 	}
+	public static native String timeConversionInJS(String sessionDate)/*-{
+		sessionDate = parseInt(sessionDate);
+		var updatedDate = new Date(sessionDate);
+		var date = updatedDate.getDate();
+		date = date < 10 ? '0' + date : date;
+		var month = updatedDate.getMonth();
+		month = +month + 1;
+		month = month < 10 ? '0' + month : month;
+		var hours = updatedDate.getHours();
+		var year = updatedDate.getFullYear();
+		var minutes = updatedDate.getMinutes();
+		var seconds = updatedDate.getSeconds();
+		seconds = seconds < 10 ? '0' + seconds : seconds;
+		var ampm = hours >= 12 ? 'PM' : 'AM';
+		hours = hours % 12;
+		hours = hours ? hours : 12;
+		// the hour '0' should be '12'
+		hours = hours < 10 ? '0' + hours : hours;
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		var strTime = hours + ':' + minutes + ':' + seconds + '' + ampm;
+		//var updatedDateTime = date + "/" + month + "/" + year + " " + strTime;
+		var updatedDateTime = month + "/" + date + "/" + year + " " + strTime;
+		return updatedDateTime;
+	}-*/;
 	/**
 	 * @function getTimePrefix 
 	 * 
