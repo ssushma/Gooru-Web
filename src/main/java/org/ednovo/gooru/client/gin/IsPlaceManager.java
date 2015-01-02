@@ -123,4 +123,8 @@ public interface IsPlaceManager extends PlaceManager {
 	public void resetLibraryEventData(String libraryName);
 	
 	public void setLibaryEventTriggered(String libraryName);
+	
+	public void setUserShelfId(String userShelfId);
+	
+	public String getShelfParentGooruOid();
 }

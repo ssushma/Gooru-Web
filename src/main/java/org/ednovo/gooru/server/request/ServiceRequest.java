@@ -29,10 +29,15 @@ package org.ednovo.gooru.server.request;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.ednovo.gooru.server.AppSessionHolder;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.data.MediaType;
+import org.restlet.data.Preference;
 import org.restlet.engine.header.Header;
 import org.restlet.engine.header.HeaderConstants;
 import org.restlet.ext.json.JsonRepresentation;
@@ -198,18 +203,28 @@ public abstract class ServiceRequest {
 	}
 
 	public ClientResource getClientResource() {
-	   Series<org.restlet.engine.header.Header> requestHeaders=(Series<Header>)this.clientResource.getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
-       if(requestHeaders==null){
-    	   requestHeaders= new Series<Header>(Header.class);
-    	   this.clientResource.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS,requestHeaders);
-       }
-       Header userAgentHeader=new Header(HeaderConstants.HEADER_USER_AGENT, AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT));
-       requestHeaders.add(userAgentHeader);
 	   return clientResource;
 	}
 
 	public void setClientResource(ClientResource clientResource) {
 		this.clientResource = clientResource;
+		setUserAgent();
+	}
+	
+	public void setUserAgent(){
+		if(clientResource!=null){
+			clientResource.getClientInfo().setAgent(AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT));
+		}
+	}
+	
+	public void setMediaType(MediaType mediaType){
+		if(clientResource!=null){
+			List<Preference<MediaType>> mediaTypes=new ArrayList<Preference<MediaType>>();
+			Preference<MediaType> contentType=new Preference<MediaType>();
+			contentType.setMetadata(mediaType);
+			mediaTypes.add(contentType);
+			clientResource.getClientInfo().setAcceptedMediaTypes(mediaTypes);
+		}
 	}
 
 	public Representation getRepresentation() {

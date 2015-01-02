@@ -1340,7 +1340,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
-			frameUrl.setUrl(frameReportsUrl());
+			//frameUrl.setUrl(frameReportsUrl());
 			getUiHandlers().setCollectionProgressData(REPORTS,analyticsId,collectionTitleUc.getText());
 		}
 		else if(analyticsId!=null)
@@ -1353,7 +1353,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(484, Unit.PX);
-			frameUrl.setUrl(frameAnalyticsUrl());
+			//frameUrl.setUrl(frameAnalyticsUrl());
 			monitorProgress.setVisible(true);
 			monitorProgress.setText(i18n.GL2229());
 			panelAssignmentPath.setVisible(false);
@@ -1376,7 +1376,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(484, Unit.PX);
-			frameUrl.setUrl(frameAnalyticsUrlForMonitor());
+			//frameUrl.setUrl(frameAnalyticsUrlForMonitor());
 			monitorProgress.setVisible(true);
 			panelAssignmentPath.setVisible(false);
 			headerAssignments.setVisible(false);
@@ -2461,7 +2461,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
-			frameUrl.setUrl(frameReportsUrl());
+			//frameUrl.setUrl(frameReportsUrl());
 
 			
 			Map<String,String> params = new HashMap<String,String>();
@@ -2516,7 +2516,7 @@ public class EditClasspageView extends
 		frameDiv.setVisible(true);
 		frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 		frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
-		frameUrl.setUrl(frameAnalyticsUrl());
+		//frameUrl.setUrl(frameAnalyticsUrl());
 		monitorProgress.setVisible(true);
 	}
 	/**
@@ -2549,7 +2549,7 @@ public class EditClasspageView extends
 		frameDiv.setVisible(true);
 		frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 		frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
-		frameUrl.setUrl(frameAnalyticsUrlForMonitor());
+		//frameUrl.setUrl(frameAnalyticsUrlForMonitor());
 		monitorProgress.setVisible(true);
 	}
 

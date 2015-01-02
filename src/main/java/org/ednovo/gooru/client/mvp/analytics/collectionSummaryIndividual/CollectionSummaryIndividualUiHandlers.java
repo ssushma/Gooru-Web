@@ -60,4 +60,6 @@ public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
 	 * @param loadingImage
 	 */
 	void setNoDataMessage(HTMLPanel loadingImage);
+	
+	public void clearFrame();
 }

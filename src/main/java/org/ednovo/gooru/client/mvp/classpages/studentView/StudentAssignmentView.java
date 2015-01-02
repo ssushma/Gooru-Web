@@ -537,8 +537,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
 				btnWithDraw.setVisible(true);
-				lineSeparation.setVisible(true);
 				memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+				lineSeparation.setVisible(true);
+				LblMember.setVisible(true);
+				LblMember.setText(StudentAssignmentView.i18n.GL1549());
 				LblMember.setVisible(true);
 //				userImage.setVisible(true);
 				LblMember.setText(i18n.GL1549());
@@ -600,8 +602,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //											userImage.setVisible(true);
 											lblWebHelp.setVisible(false);
 											btnWithDraw.setVisible(true);
-											lineSeparation.setVisible(true);
 											memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+											lineSeparation.setVisible(true);
 											LblMember.setVisible(true);
 											LblMember.setText(StudentAssignmentView.i18n.GL1549());
 											mainContainer.setVisible(true);
@@ -611,8 +613,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										}
 										
 									};
-//									success.setHeight("248px");
-//                                    success.setWidth("450px");
+									success.setHeight("266px");
+                                    success.setWidth("450px");
                                     success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                     success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                     success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -670,8 +672,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					btnJoinClass.setVisible(false);
 //					userImage.setVisible(true);
 					lblWebHelp.setVisible(false);
-					btnWithDraw.setVisible(false);
+					btnWithDraw.setVisible(true);
+					memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+					lineSeparation.setVisible(true);
 					LblMember.setVisible(true);
+					LblMember.setText(StudentAssignmentView.i18n.GL1549());
 //					userImage.setVisible(true);
 					mainContainer.setVisible(true);
 				}
@@ -723,7 +728,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													btnJoinClass.setVisible(false);
 //													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
-													btnWithDraw.setVisible(false);
+													btnWithDraw.setVisible(true);
+													memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+													lineSeparation.setVisible(true);
 													LblMember.setVisible(true);
 													LblMember.setText(StudentAssignmentView.i18n.GL1549());
 													mainContainer.setVisible(true);
@@ -733,8 +740,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												}
 												
 											};
-//											success.setHeight("248px");
-//                                            success.setWidth("450px");
+											success.setHeight("266px");
+                                            success.setWidth("450px");
                                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                             success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                             success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1229,8 +1236,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									}
 									
 								};
-//								success.setHeight("248px");
-//                                success.setWidth("450px");
+								success.setHeight("266px");
+                                success.setWidth("450px");
                                 success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                 success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                 success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1445,7 +1452,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									btnJoinClass.setVisible(false);
 //									userImage.setVisible(true);
 									lblWebHelp.setVisible(false);
-									btnWithDraw.setVisible(false);
+									btnWithDraw.setVisible(true);
+									memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+									lineSeparation.setVisible(true);
 									LblMember.setVisible(true);
 									LblMember.setText(StudentAssignmentView.i18n.GL1549());
 									mainContainer.setVisible(true);
@@ -1455,8 +1464,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								}
 								
 							};
-//							success.setHeight("248px");
-//                            success.setWidth("450px");
+							success.setHeight("266px");
+                            success.setWidth("450px");
                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                             success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                             success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1514,7 +1523,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		lblWebHelp.setVisible(false);
 		btnWithDraw.setVisible(true);
 		memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-		lineSeparation.setVisible(true);
+		lineSeparation.setVisible(false);
 		LblMember.setVisible(true);
 		LblMember.setText(i18n.GL1551());
 		mainContainer.setVisible(true);
@@ -1547,7 +1556,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 		lineSeparation.setVisible(true);
 		LblMember.setVisible(true);
-		LblMember.setText(i18n.GL1549());
+		LblMember.setText(StudentAssignmentView.i18n.GL1549());
 		mainContainer.setVisible(true);
 	}
 	/**
@@ -1630,8 +1639,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												}
 												
 											};
-//											success.setHeight("248px");
-//			                                success.setWidth("450px");
+											success.setHeight("266px");
+			                                success.setWidth("450px");
 			                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
 			                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 			                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1772,8 +1781,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 						memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 						lineSeparation.setVisible(true);
 						LblMember.setVisible(true);
-//						userImage.setVisible(true);
-						LblMember.setText(i18n.GL1549());
+						LblMember.setText(StudentAssignmentView.i18n.GL1549());
 						mainContainer.setVisible(true);
 					}
 					else 
@@ -1841,8 +1849,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 															isJoinPopupPublic=false;
 														}
 													};
-//													success.setHeight("248px");
-//				                                    success.setWidth("450px");
+													success.setHeight("266px");
+				                                    success.setWidth("450px");
 				                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
 				                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 				                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1900,8 +1908,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							btnJoinClass.setVisible(false);
 //							userImage.setVisible(true);
 							lblWebHelp.setVisible(false);
-							btnWithDraw.setVisible(false);
+							btnWithDraw.setVisible(true);
+							memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+							lineSeparation.setVisible(true);
 							LblMember.setVisible(true);
+							LblMember.setText(StudentAssignmentView.i18n.GL1549());
 //							userImage.setVisible(true);
 							mainContainer.setVisible(true);
 						}
@@ -1954,7 +1965,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 															btnJoinClass.setVisible(false);
 //															userImage.setVisible(true);
 															lblWebHelp.setVisible(false);
-															btnWithDraw.setVisible(false);
+															btnWithDraw.setVisible(true);
+															memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+															lineSeparation.setVisible(true);
 															LblMember.setVisible(true);
 															LblMember.setText(StudentAssignmentView.i18n.GL1549());
 															mainContainer.setVisible(true);
@@ -1964,8 +1977,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														}
 														
 													};
-//													success.setHeight("248px");
-//		                                            success.setWidth("450px");
+													success.setHeight("266px");
+		                                            success.setWidth("450px");
 		                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
 		                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 		                                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());

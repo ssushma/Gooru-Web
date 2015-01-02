@@ -216,7 +216,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', end
 	color: #999;
 	/* line-height: 100px; */
 	text-align: center;
-	padding: 40px;
+	padding: 5px;
 	line-height: 1.5em;
 }
 
@@ -264,7 +264,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', end
 	transition: height 1s ease;
 	position: relative;
 	text-align: center;
-	width: 626px;
+	width: 100%;
 	color: #1076BB;
 	cursor: pointer;
 }
@@ -576,10 +576,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', end
 }
 
 .commentsCharLimit{
-	float: right;
-	margin-right: 116px;
-	margin-top: 13px;
-	color:#999;
+	margin-top: -10px;
+	color: #999;
+	text-align: right;
 }
 .onoffbtns{
 	display:inline-block;

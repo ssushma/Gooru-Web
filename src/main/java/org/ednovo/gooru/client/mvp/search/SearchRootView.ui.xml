@@ -273,11 +273,13 @@
 	</ui:style>
 	<g:HTMLPanel styleName="{res.css.bodyWrapper}">
 		<!-- <gc:SearchBarVc ui:field="searchBarVc" /> -->
+
 		<g:HTMLPanel styleName="{res.css.searchResultMain}">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row">
-					<g:FlowPanel styleName="{res.css.searchResultScroll}"
+					<g:ScrollPanel styleName="{res.css.searchResultScroll}"
 						ui:field="panelSearchPage">
+						<g:FlowPanel>
 						<g:FlowPanel styleName="{res.css.innerResult}">
 						    <g:HTMLPanel styleName="{res.css.searchResult1}">
 								<g:HTMLPanel styleName="col-md-4 col-xs-4 visible-xs {res.css.filtersButton}">
@@ -296,7 +298,8 @@
 						<g:SimplePanel styleName="searchResults" ui:field="shelfTabSimPanel" />
 						<g:Label ui:field="lodingImage" styleName="{style.loadingImageContainer}" />
 						<sg:FooterUc />
-					</g:FlowPanel>
+								</g:FlowPanel>
+					</g:ScrollPanel>
 
 				</g:HTMLPanel>
 			</g:HTMLPanel>

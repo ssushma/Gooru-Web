@@ -107,6 +107,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
+	int count=0;
+	
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
 			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
@@ -476,7 +478,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 					int day=result.get(result.size()-1).getFrequency();
 					printData.setUserName(null);
 					printData.setSession(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session");
-					printData.setSessionStartTime(AnalyticsUtil.getCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
+					printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime((Long.toString(result.get(result.size()-1).getTimeStamp()))));
 					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId(),printData);
 					getView().setSessionsData(result);
 				}else{
@@ -498,14 +500,21 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
-			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 				if(result.get(0).getCompletionStatus()!=null){
 					if(result.get(0).getCompletionStatus().equalsIgnoreCase("in-progress")){
-						getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
+						if(count<10){
+							getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
+							count++;
+						}else{
+							if(count>=10){
+								getView().showMessageWhenDataNotFound();
+							}
+						}
 					}else{
 						if(result.size()!=0){
+							count=0;
 							getView().setCollectionMetaDataByUserAndSession(result);
 							setCollectionSummaryData(collectionId, classId, userId, sessionId,printData);
 						}

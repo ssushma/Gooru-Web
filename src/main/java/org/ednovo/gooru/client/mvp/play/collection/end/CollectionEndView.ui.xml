@@ -86,17 +86,23 @@
 					     <g:HTMLPanel ui:field="collectionMetaDataPnl">
 						    <g:HTMLPanel styleName="{unitStyle.collectionSummaryDetailsWrapper}">
 							<g:HTMLPanel styleName="{unitStyle.left_container}">
-							<g:Image ui:field="collectionImage" styleName="{unitStyle.collection_teacher_img}"></g:Image>
-							<g:HTMLPanel styleName="{unitStyle.collection_details_teacher}">
+							<g:HTMLPanel styleName="col-md-9 {playerStyle.paddingClear}"> 
+							 <g:HTMLPanel styleName="col-md-2 col-sm-2 {playerStyle.paddingClear}">
+							     <g:Image ui:field="collectionImage"></g:Image>
+							</g:HTMLPanel>      
+							<g:HTMLPanel styleName="col-md-10 col-sm-10 {playerStyle.paddingClear}">
 							<g:InlineLabel ui:field="collectionTitle"></g:InlineLabel>
 							<br/>
 							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
+							<g:HTMLPanel styleName="clearfix"/>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="col-md-3 {playerStyle.paddingClear}">
 							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}" text="{i18n.GL2271}"></g:InlineLabel> 
 							<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
 							</g:HTMLPanel>
+							<g:HTMLPanel styleName="clearfix"/>
 							</g:HTMLPanel>
 						 </g:HTMLPanel>
 					  <!-- Collection Summary Top  End-->
@@ -111,8 +117,11 @@
 								</g:HTMLPanel>
 					       		<g:HTMLPanel styleName="col-md-6">
 					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel><span class="tooltip-icon hidden-sm hidden-xs"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.session_data}">
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text} col-md-6 col-xs-6 {playerStyle.paddingClear}">
+								    <g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel>
+								    <span class="tooltip-icon hidden-sm hidden-xs"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span>
+								</g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.session_data} col-md-6 col-xs-6 {playerStyle.paddingClear}">
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>
 								</g:HTMLPanel>
