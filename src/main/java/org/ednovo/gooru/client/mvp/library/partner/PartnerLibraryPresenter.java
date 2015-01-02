@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -50,6 +51,8 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 
 	@Override
@@ -57,8 +60,16 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 		super.onReveal();
 		getView().onLoad();
 		getView().reset();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 
+	@Override
+	public void onReset() {
+		super.onReset();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
+	}
 	@Override
 	public void getPartnerWorkspaceFolders() {
 		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, null, AppClientFactory.getCurrentPlaceToken(), new SimpleAsyncCallback<PartnerFolderListDo>(){
