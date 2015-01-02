@@ -45,21 +45,7 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-/**
- * 
- * @fileName : ClassHomePresenter.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+
 public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsClassHomeProxy> implements ClassHomeUiHandlers {
 	
 	
@@ -94,25 +80,7 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 
 		
 	}
-	/**
-	 * 
-	 * @function callBackMethods 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void callBackMethods(){
 		getView().callServiceRequestsToBindData();
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {

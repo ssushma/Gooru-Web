@@ -29,20 +29,10 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 
+
 /**
- * 
- * @fileName : ClasspageCBundle.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 06-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public interface ClasspageCBundle extends ClientBundle{
 	

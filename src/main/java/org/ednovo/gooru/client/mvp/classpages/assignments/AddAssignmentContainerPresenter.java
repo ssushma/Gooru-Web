@@ -98,51 +98,10 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	protected void onBind() {
 		super.onBind();
 	}
-	
-	/**
-	 * 
-	 * @function getUserShelfData 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void getUserShelfData(){
 		getView().clearShelfData();
 		getWorkspaceData(0,20,true);
 	}
-	/**
-	 * 
-	 * @function getWorkspaceData 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : offset
-	 * @param	:	limit
-	 * @param	:	clearShelfPanel
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel){
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
@@ -165,27 +124,6 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function addCollectionToAssign 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : collectionId
-	 * @param	:	direction
-	 * @param	:	dueDate
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void addCollectionToAssign(String collectionId,String direction,String dueDate){
 		AppClientFactory.getInjector().getClasspageService().createClassPageItem(this.classpageId, collectionId, dueDate, direction, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
@@ -195,25 +133,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function addCollectionToAssign 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : collectionId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void addCollectionToAssign(String collectionId){
 		if(mode.equals(CLASS_SETUP) || mode.equals(UNIT_SETUP)){
 			addAssignment(collectionId,pathwayId);
@@ -255,25 +175,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			});
 		}
 	}
-	/**
-	 * 
-	 * @function showCollectionsAfterAddingNewCollections 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void showCollectionsAfterAddingNewCollections(){
 		Map<String,String> params = new HashMap<String,String>();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -284,71 +186,15 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 		AppClientFactory.fireEvent(new ResetProgressEvent());
 	}
-	/**
-	 * 
-	 * @function setClasspageId 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageId
-	 * @parm(s) : @param editClasspagePresenter
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setClasspageId(String classpageId,EditClasspagePresenter editClasspagePresenter){
 		this.classpageId=classpageId;
 		this.setEditClasspagePresenter(editClasspagePresenter);
 	}
-	/**
-	 * 
-	 * @function getEditClasspagePresenter 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : EditClasspagePresenter
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public EditClasspagePresenter getEditClasspagePresenter() {
 		return editClasspagePresenter;
 	}
-	/**
-	 * 
-	 * @function setEditClasspagePresenter 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param editClasspagePresenter
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setEditClasspagePresenter(EditClasspagePresenter editClasspagePresenter) {
 		this.editClasspagePresenter = editClasspagePresenter;
 	}

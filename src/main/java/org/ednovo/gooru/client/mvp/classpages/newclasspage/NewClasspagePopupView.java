@@ -166,21 +166,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		panelLoading.getElement().setId("pnlLoading");
 		panelControls.getElement().setId("pnlControls");
 	}
-	/**
-	 * 
-	 * @fileName : NewClasspagePopupView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -193,21 +179,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : NewClasspagePopupView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	//Click handler for Close/Cancel
 	private class CloseExistsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -220,22 +192,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 	        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}		
 	}
-
-	/**
-	 * 
-	 * @fileName : NewClasspagePopupView.java
-	 *
-	 * @description : 
-	 * 	Click event to handle Add existing resource/collection item to collection.
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	//Click event to handle Add existing resource/collection item to collection.
 	private class AddExistsClickHandler implements ClickHandler{
 
 		@Override
@@ -266,25 +223,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function validateFields 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public boolean validateFields(){
 		boolean isValid=true;
 		String title = classpageTitleTxt.getText().trim();
@@ -295,25 +234,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		
 		return isValid;
 	}
-	/**
-	 * 
-	 * @function ClosePopup 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void ClosePopup(){
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));

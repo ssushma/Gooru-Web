@@ -284,4 +284,5 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 	public void setShareType(String shareType) {
 		this.shareType = shareType;
 	}	
+
 }

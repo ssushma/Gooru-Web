@@ -251,25 +251,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			refreshClasspage();
 		
 	}
-	/**
-	 * 
-	 * @function refreshClasspage 
-	 * 
-	 * @created_date : 06-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	void refreshClasspage(){
 	  List<CollectionDo> tmpClasspageList = new ArrayList<CollectionDo>();
 		

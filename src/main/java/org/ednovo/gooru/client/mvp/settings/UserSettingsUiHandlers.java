@@ -39,7 +39,6 @@ package org.ednovo.gooru.client.mvp.settings;
  * @Reviewer: 
  */
 
-import java.util.List;
 import java.util.Set;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
@@ -68,7 +67,5 @@ public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileIma
 	void revokeToken();
 	
 	void getGoogleDrive();
-
-	void deleteCorses(List<CodeDo> delcodeDoList); 
 	
 }

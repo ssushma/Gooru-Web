@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Classpages Team
  * 
- * @fileName : RefreshClasspageResourceItemListHandler.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public interface RefreshClasspageResourceItemListHandler extends EventHandler {
 

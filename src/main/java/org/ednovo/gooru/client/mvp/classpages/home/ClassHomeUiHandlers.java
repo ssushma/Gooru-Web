@@ -25,41 +25,9 @@
 package org.ednovo.gooru.client.mvp.classpages.home;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-/**
- * 
- * @fileName : ClassHomeUiHandlers.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+
 public interface ClassHomeUiHandlers extends BaseUiHandlers {
-	/**
-	 * 
-	 * @function gotoStudentsView 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param tbvalue
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	void gotoStudentsView(String tbvalue);
 
 }

@@ -84,26 +84,6 @@ public class SuccessMessagePopupView extends Composite{
 		appPopUp.show();
 		appPopUp.center();
 	}
-	
-	/**
-	 * 
-	 * @function setStaticTexts 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param collectonTitle
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setStaticTexts(String collectonTitle){
 		successPopupHeader.setText(i18n.GL1384());
 		successPopupHeader.getElement().setId("lblSuccessPopupHeader");
@@ -131,25 +111,6 @@ public class SuccessMessagePopupView extends Composite{
 	public void closePopupEvent(ClickEvent event){
 		hide();
 	}
-	/**
-	 * 
-	 * @function hide 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void hide(){
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));

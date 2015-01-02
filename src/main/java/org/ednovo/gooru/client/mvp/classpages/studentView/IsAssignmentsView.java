@@ -29,64 +29,17 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 
 /**
- * 
- * @fileName : IsAssignmentsView.java
+ * @author 
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public interface IsAssignmentsView extends IsChildView<AssignmentsPresenter>, IsDraggable {
 
 	/*void setData();
 
 	void onPostUserCollections(List<CollectionDo> result);*/
-	/**
-	 * 
-	 * @function insertCollectionToAssignment 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param resourceDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	void insertCollectionToAssignment(ResourceDo resourceDo);
-	/**
-	 * 
-	 * @function emptyAssignment 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	void emptyAssignment();
 	
 	/*void showPanel(boolean visible);

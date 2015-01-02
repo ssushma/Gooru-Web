@@ -60,21 +60,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-/**
- * 
- * @fileName : ClassHomeView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+
 public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> implements IsClassHomeView {
 	
 	private static ClassCodeViewUiBinder uiBinder = GWT
@@ -118,9 +104,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 
 	}
-	/**
-	 * 
-	 */
 	public void callServiceRequestsToBindData() {
 		ownerClassesContainer.clear();
 		joinedClassesContainer.clear();
@@ -293,26 +276,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	}
 
 	
-	/**
-	 * 
-	 * @function OpenClasspageEdit 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param gooruOId
-	 * @parm(s) : @param token
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("classpageid", gooruOId);
@@ -325,21 +289,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		AppClientFactory.getPlaceManager().revealPlace(
 				token, params);
 	}
-	/**
-	 * 
-	 * @fileName : ClassHomeView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class OnClickCreateClass implements ClickHandler{
 
 		@Override
@@ -403,21 +353,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : ClassHomeView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class OnEnterClassCodeClick implements ClickHandler {
 
 		@Override
@@ -589,21 +525,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		}
 	}
 	
-	/**
-	 * 
-	 * @fileName : ClassHomeView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class OnClickSeeMoreJoined implements ClickHandler{
 
 		@Override
@@ -637,21 +559,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : ClassHomeView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class OnClickSeeMoreOwner implements ClickHandler{
 
 		@Override
@@ -685,25 +593,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		}
 		
 	}
-	/**
-	 * 
-	 * @function setEnterLblVisbility 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param isVisible
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setEnterLblVisbility(boolean isVisible) {
 		btnEnter.setVisible(!isVisible);
 		disabledBtn.setVisible(isVisible);

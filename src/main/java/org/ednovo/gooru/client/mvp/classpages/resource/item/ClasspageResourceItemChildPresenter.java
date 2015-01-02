@@ -36,19 +36,8 @@ import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ClasspageResourceItemChildPresenter.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public class ClasspageResourceItemChildPresenter extends ChildPresenter<ClasspageResourceItemChildPresenter, IsClasspageResourceItemView> {
 	
@@ -104,25 +93,7 @@ public class ClasspageResourceItemChildPresenter extends ChildPresenter<Classpag
 			SimpleAsyncCallback<Void> deleteClasspageAsyncCallback) {
 		this.deleteClasspageAsyncCallback = deleteClasspageAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getClasspageService 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ClasspageServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public ClasspageServiceAsync getClasspageService() {
 		return AppClientFactory.getInjector().getClasspageService();
 	}

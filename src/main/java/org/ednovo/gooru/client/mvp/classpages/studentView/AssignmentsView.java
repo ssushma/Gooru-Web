@@ -54,19 +54,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author
  * 
- * @fileName : AssignmentsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public class AssignmentsView extends
 		ChildView<AssignmentsPresenter> implements
@@ -191,21 +180,7 @@ public class AssignmentsView extends
 		colletionPanel.getElement().setId("pnlColletion");
 		emptyAssignmentLbl.getElement().setId("lblEmptyAssignment");
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+		
 	private class OnMouseOver implements MouseOverHandler{
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -215,21 +190,7 @@ public class AssignmentsView extends
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	private class OnMouseOut implements MouseOutHandler{
 		
 		@Override
@@ -237,21 +198,7 @@ public class AssignmentsView extends
 			expandLbl.setVisible(false);
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	private class OnTitleClick implements ClickHandler{
 
 		@Override
@@ -270,10 +217,6 @@ public class AssignmentsView extends
 		}
 		
 	}
-	
-	/**
-	 * 
-	 */
 	public void insertCollectionToAssignment(ResourceDo resourceDo){
 		CollectionsView cv = new CollectionsView();
 		
