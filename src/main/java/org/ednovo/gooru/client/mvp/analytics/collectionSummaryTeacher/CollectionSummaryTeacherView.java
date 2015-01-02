@@ -159,7 +159,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					printElement.appendChild(printOpendedData.getElement());
 					printElement.appendChild(collectionOverViewWidget.getElement());
 					printElement.appendChild(printResourceData.getElement());
-					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printElement.toString().replaceAll("\"", "\\\\\""),collectionMetaData.getTitle()!=null?collectionMetaData.getTitle():"");
+					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printElement.getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionMetaData.getTitle()!=null?collectionMetaData.getTitle():"");
 					scoredPrintWidget.setVisible(false);
 				}
 			}
@@ -212,17 +212,19 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        });
 	        //This is used for segrate data based on the category
 	        for (UserDataDo userDataDo : resourcesData) {
-				if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
-					if(userDataDo.getType().equalsIgnoreCase("OE")){
+	        	if(userDataDo.getStatus()==0){
+					if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
+						if(userDataDo.getType().equalsIgnoreCase("OE")){
 							openendedData.add(userDataDo);
+						}else{
+							questionsData.add(userDataDo);
+						}
+						questionRowIndex.add(collectionProgressCount);
 					}else{
-						questionsData.add(userDataDo);
+						resourceRowIndex.add(collectionProgressCount);
 					}
-					questionRowIndex.add(collectionProgressCount);
-				}else{
-					resourceRowIndex.add(collectionProgressCount);
-				}
-				collectionProgressCount++;
+					collectionProgressCount++;
+	        	}
 	        }
 	    	setScoredQuestionsData(questionsData);
 	    	setQuestionsPrintData(questionsData);
@@ -237,6 +239,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	void setOpenendedQuestionsPrintData(final ArrayList<UserDataDo> result){
         try{
+        	printOpendedData.clear();
 		 	int totalUserCount=this.collectionMetaData.getUserCount();
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
@@ -411,6 +414,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	void setCollectionBreakDownPrintData(ArrayList<UserDataDo> result){
 		try{
+			printResourceData.clear();
 			UserDataDo maxAvgValue=Collections.max(result,new Comparator<UserDataDo>() {
 	        	public int compare(UserDataDo o1, UserDataDo o2) {
 	        		 Long obj1 = new Long(o1.getTimeSpent());
@@ -432,10 +436,17 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Views");
 	        data.addColumn(ColumnType.STRING, "Reaction");
-	        data.addRows(result.size());
+	        int rowCount=0,rowVal=0;
+	        for(int i=0;i<result.size();i++) {
+	        	if(result.get(i).getStatus()==0){
+	        		rowCount=rowCount+1;
+	        	}
+	        }
+	        data.addRows(rowCount);
 	        
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+	         	if(result.get(i).getStatus()==0){
+	        	data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
 	        	 String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 	              String categoryStyle="";
@@ -463,12 +474,12 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            Label categorylbl=new Label();
 	            categorylbl.addStyleName(categoryStyle);
 	            categorylbl.addStyleName(res.css().setMarginAuto());
-	            data.setValue(i, 1,categorylbl.toString());
+	            data.setValue(rowVal, 1,categorylbl.toString());
 	            
 	            //Set Question Title
 	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 2, questionTitle.toString());
+	            data.setValue(rowVal, 2, questionTitle.toString());
 	          
 	           //Set time spent
 	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
@@ -478,7 +489,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            timeSpentpnl.add(progressBar);
 	            double maxAvgVal = ((double) result.get(i).getAvgTimeSpent())/((double) maxAvgValue.getTimeSpent());
 	            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
-	            data.setValue(i, 3, timeSpentpnl.toString());
+	            data.setValue(rowVal, 3, timeSpentpnl.toString());
 	           
 	            //set Views label
 	            HorizontalPanel viewpnl=new HorizontalPanel();
@@ -490,7 +501,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            viewpnl.add(viewProgressBar);
 	            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
 	            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-	            data.setValue(i, 4, viewpnl.toString());
+	            data.setValue(rowVal, 4, viewpnl.toString());
 	            
 	            //Set reactions
 	            int reaction=result.get(i).getAvgReaction();
@@ -500,7 +511,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            reactionpnl.add(reactioncount);
 	            reactioncount.setText(reaction+"/5");
 	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 5, reactionpnl.toString());
+	            data.setValue(rowVal, 5, reactionpnl.toString());
+	            rowVal++;
+	         	}
 	        }
 	        final Options options = Options.create();
 	        options.setAllowHtml(true);
@@ -541,10 +554,17 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Views");
 	        data.addColumn(ColumnType.STRING, "Reaction");
-	        data.addRows(result.size());
+	        int rowCount=0,rowVal=0;
+	        for(int i=0;i<result.size();i++) {
+	        	if(result.get(i).getStatus()==0){
+	        		rowCount=rowCount+1;
+	        	}
+	        }
+	        data.addRows(rowCount);
 	        
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
+	        	if(result.get(i).getStatus()==0){
+	        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
 	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 	              String categoryStyle="";
@@ -572,12 +592,12 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            Label categorylbl=new Label();
 	            categorylbl.addStyleName(categoryStyle);
 	            categorylbl.addStyleName(res.css().setMarginAuto());
-	            data.setValue(i, 1,categorylbl.toString());
+	            data.setValue(rowVal, 1,categorylbl.toString());
 	            
 	            //Set Question Title
 	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 2, questionTitle.toString());
+	            data.setValue(rowVal, 2, questionTitle.toString());
 	          
 	           //Set time spent
 	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
@@ -587,7 +607,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            timeSpentpnl.add(progressBar);
 	            double maxAvgVal = ((double) result.get(i).getAvgTimeSpent())/((double) maxAvgValue.getTimeSpent());
 	            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
-	            data.setValue(i, 3, timeSpentpnl.toString());
+	            data.setValue(rowVal, 3, timeSpentpnl.toString());
 	           
 	            //set Views label
 	            HorizontalPanel viewpnl=new HorizontalPanel();
@@ -599,7 +619,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            viewpnl.add(viewProgressBar);
 	            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
 	            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-	            data.setValue(i, 4, viewpnl.toString());
+	            data.setValue(rowVal, 4, viewpnl.toString());
 	            
 	            //Set reactions
 	            int reaction=result.get(i).getAvgReaction();
@@ -609,7 +629,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            reactionpnl.add(reactioncount);
 	            reactioncount.setText(reaction+"/5");
 	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 5, reactionpnl.toString());
+	            data.setValue(rowVal, 5, reactionpnl.toString());
+	            rowVal++;
+	        	}
 	        }
 	        final Options options = Options.create();
 	        options.setAllowHtml(true);
@@ -620,21 +642,37 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override
-				public void onChange(ChangeEvent event) {
-					    teacherResourceBreakdownData.clear();
-						int selectedIndex=filterDropDown.getSelectedIndex();
-					 	operationsView=DataView.create(data);
-						 if(selectedIndex==1){
-							 operationsView.hideRows(primitivesResources); 
-						 }
-						 if(selectedIndex==2){
-							 operationsView.hideRows(primitivesQuestions); 
-						 }
-						 Table table = new Table(operationsView, options);
-					     table.setStyleName("collectionProgressTable");
-					     table.getElement().setId("collectionBreakDown");
-					     teacherResourceBreakdownData.add(table);	
-					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+				public void onChange(ChangeEvent event) { 
+				teacherResourceBreakdownData.clear();
+				int selectedIndex = filterDropDown.getSelectedIndex();
+				operationsView = DataView.create(data);
+				Table table = new Table(operationsView, options);
+				table.setStyleName("collectionProgressTable");
+				table.getElement().setId("collectionBreakDown");
+				if (selectedIndex == 1) {
+					operationsView.hideRows(primitivesResources);
+					teacherResourceBreakdownData.add(table);
+					if (primitivesQuestions.length == 0) {
+						Label erroeMsg = new Label();
+						erroeMsg.setStyleName(res.css()
+								.displayMessageTextForOEQuestions());
+						erroeMsg.setText("It looks like there is no questions in this collection yet.");
+						teacherResourceBreakdownData.add(erroeMsg);
+					}
+				} else if (selectedIndex == 2) {
+					operationsView.hideRows(primitivesQuestions);
+					teacherResourceBreakdownData.add(table);
+					if (primitivesResources.length == 0) {
+						Label erroeMsg = new Label();
+						erroeMsg.setStyleName(res.css()
+								.displayMessageTextForOEQuestions());
+						erroeMsg.setText("It looks like there is no resources in this collection yet.");
+						teacherResourceBreakdownData.add(erroeMsg);
+					}
+				} else {
+					teacherResourceBreakdownData.add(table);
+				}
+				table.addDomHandler(new ClickOnTableCell(),ClickEvent.getType());
 				}
 			});
 	        loadingImage.setVisible(false);

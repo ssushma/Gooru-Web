@@ -122,4 +122,8 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 					}
 				});
 	}
+	@Override
+	public void clearFrame(){
+		getView().getFrame().setUrl("");
+	}
 }

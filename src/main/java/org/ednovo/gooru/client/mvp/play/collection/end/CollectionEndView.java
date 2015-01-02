@@ -1776,11 +1776,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	public void setSessionStartTime(int selectedIndex) {
 		if(sessionData.size()!=0){
-			lastModifiedTime.setText(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
+			lastModifiedTime.setText(AnalyticsUtil.getSessionsCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 			sessionsDropDown.setSelectedIndex(selectedIndex);
 			printData.setUserName(null);
 			printData.setSession(sessionsDropDown.getItemText(selectedIndex));
-			printData.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
+			printData.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 		}
 	}
 
@@ -1800,7 +1800,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					collectionImage.setUrl("images/analytics/default-collection-image.png");
 				}
 			});
-			collectionResourcesCount.setText((result.get(0).getResourceCount()-result.get(0).getTotalQuestionCount())+" Resources | "+result.get(0).getTotalQuestionCount()+" Questions");
+			collectionResourcesCount.setText(result.get(0).getResourceCount()+" Resources | "+result.get(0).getNonResourceCount()+" Questions");
 		}
 	}
 	
@@ -1844,5 +1844,13 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public void resetData(){
 		 pnlSummary.clear();
+	}
+
+	@Override
+	public void showMessageWhenDataNotFound() {
+		messageContainer.setVisible(true);
+		frameContainer.setVisible(false);
+		loadingImageLabel.setVisible(false);
+		insightsContentText.setText(i18n.GL2038());
 	}
 }

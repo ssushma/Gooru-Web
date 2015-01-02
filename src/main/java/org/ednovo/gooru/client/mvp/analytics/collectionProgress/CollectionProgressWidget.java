@@ -15,13 +15,10 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.json.client.JSONObject;
@@ -148,20 +145,23 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		final DataTable data = DataTable.create();
 		data.addColumn(ColumnType.STRING, i18n.GL2287());
 		data.addColumn(ColumnType.STRING, i18n.GL2288());
-
+		int rowCount=0;
 		for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
 			defaultUserDataForUsers=collectionProgressDataDo;
-			if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
-				 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
-				 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
-					 noOfQuestions++;
-				 }
-				 questionColumnIndex.add(collectionProgressCount+1);
-			}else{
-				 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
-				 resourceColumnIndex.add(collectionProgressCount+1);
+			if(collectionProgressDataDo.getStatus()==0){
+				rowCount=rowCount+1;
+				if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+					 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
+					 if(!collectionProgressDataDo.getType().equalsIgnoreCase("OE")){
+						 noOfQuestions++;
+					 }
+					 questionColumnIndex.add(collectionProgressCount+1);
+				}else{
+					 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
+					 resourceColumnIndex.add(collectionProgressCount+1);
+				}
+				collectionProgressCount++;
 			}
-			collectionProgressCount++;
 		}
 		collectionTitlelbl.setText(collectionTitle);
 		resourceCountlbl.setText(resourceColumnIndex.size()+"");
@@ -174,10 +174,11 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			if(sizeNames!=0){
 				data.addRows(sizeNames);
 			}
-	        int columnsSize=collectionProgressData.size();
+	        int columnsSize=rowCount;
 	        for(int i=0;i<sizeNames;i++) {
 	        	  int score=0;
 	        	  for(int j=0;j<columnsSize;j++) {
+	        		  if(collectionProgressData.get(j).getStatus()==0){
 	        		  	  String color=WHITE;
 	        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
 		        		  if(collectionProgressData.get(j).getCategory()!=null && !collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
@@ -220,9 +221,11 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        				  }
 		        				  viewResponselbl.setText(answerText);
 		        				  viewResponselbl.getElement().setAttribute("questionCount", (j+1)+"");
-		        				  viewResponselbl.getElement().setAttribute("question", AnalyticsUtil.html2text(collectionProgressData.get(j).getTitle()));
-		        				  viewResponselbl.getElement().setAttribute("questionAnswer",  AnalyticsUtil.html2text(collectionProgressData.get(j).getUserData().get(i).getText()));
-		        			  }else{
+		        				  viewResponselbl.getElement().setAttribute("question", AnalyticsUtil.html2text(collectionProgressData.get(j).getTitle()!=null?collectionProgressData.get(j).getTitle():""));
+			        				if(collectionProgressData.get(j).getUserData()!=null && collectionProgressData.get(j).getUserData().get(i) != null && collectionProgressData.get(j).getUserData().get(i).getText() != null){
+			        					  viewResponselbl.getElement().setAttribute("questionAnswer",  AnalyticsUtil.html2text(collectionProgressData.get(j).getUserData().get(i).getText()));
+			        				  }
+		        				  }else{
 		        				  String answerText="";
 				        		  if(answerOption!=null){
 				        			  JSONValue value = JSONParser.parseStrict(answerOption);
@@ -230,7 +233,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					        		  Set<String> keys=optionObj.keySet();
 					        		  if(keys.iterator().hasNext())
 					        			  answer= keys.iterator().next().toString();
-					        		  
+					        		  	  answer=answer!=null?answer:"";
 					        		  if(typeOfQuestion.equalsIgnoreCase("TF")){
 			        					  if(answer.equalsIgnoreCase("A")){
 			        						  answerText="true";
@@ -273,6 +276,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        		  com.google.gwt.visualization.client.Properties p=properties.cast();
 		        		  mainDataVpnl.addStyleName(res.css().mainDataVpnl());
 		        		  data.setCell(i, j+2,mainDataVpnl.toString(),null,p);
+	        		  }
 	        	   }
 	        	  data.setValue(i, 0,defaultUserDataForUsers.getUserData().get(i).getUserName());
 	        	  VerticalPanel scoreWidget=new VerticalPanel();

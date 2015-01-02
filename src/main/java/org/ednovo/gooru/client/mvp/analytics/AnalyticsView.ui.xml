@@ -24,7 +24,7 @@
 							</span>
 						</div>
 						<div id="profile-class-gradebook-view-report">
-							<g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary" text="{i18n.GL2296}" title="{i18n.GL2296}"></g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
+							<g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary {unitStyle.btnLineHeight}" text="{i18n.GL2296}" title="{i18n.GL2296}"></g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
 						</div>
 					</div>
 					<g:HTMLPanel ui:field="collectionProgressSlot" styleName="clearfix">	</g:HTMLPanel>
@@ -34,7 +34,7 @@
 							<span><g:Image ui:field="collectionSummaryQuestionimg"></g:Image></span>
 						</div>
 						<div id="profile-class-gradebook-view-report">
-							 <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary" text="{i18n.GL2296}" title="{i18n.GL2296}"></g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+							 <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary {unitStyle.btnLineHeight}" text="{i18n.GL2296}" title="{i18n.GL2296}"></g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
 						</div>
 					</div>
 					<g:HTMLPanel ui:field="collectionSummarySlot" styleName="clearfix">	</g:HTMLPanel>
@@ -44,7 +44,7 @@
 							<span><g:Image ui:field="collectionExportQuestionimg"></g:Image></span>
 						</div>
 						<div id="profile-class-gradebook-view-report">
-							  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary" text="{i18n.GL2258}" title="{i18n.GL2258}"></g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+							  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary {unitStyle.btnLineHeight}" text="{i18n.GL2258}" title="{i18n.GL2258}"></g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
 					   	</div>
 					</div>
 		</g:HTMLPanel>

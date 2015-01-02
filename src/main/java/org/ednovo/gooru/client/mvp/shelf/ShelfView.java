@@ -818,7 +818,21 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		setTab(getPersistantTabObjectUsingTabFlag());
 		collectionTitleUc.setText(collection.getTitle());
 		collectionDescriptionUc.setText(collection.getGoals());
-		collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
+		if(collection.getThumbnails()!= null)
+		{
+			if(collection.getThumbnails().getUrl() != null)
+			{
+				collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
+			}
+			else
+			{
+				collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
+			}
+		}
+		else
+		{
+			collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
+		}
 		collectionImageShelfUc.getCollectionImg().setAltText(collection.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());
 		collectionFloPanel.setVisible(true);

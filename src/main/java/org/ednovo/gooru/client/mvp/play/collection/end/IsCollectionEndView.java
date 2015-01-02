@@ -110,4 +110,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void hidePanel();
 	
 	public void resetData();
+	
+	public void showMessageWhenDataNotFound();
 }

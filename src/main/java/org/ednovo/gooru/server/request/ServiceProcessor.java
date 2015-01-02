@@ -51,7 +51,8 @@ public class ServiceProcessor {
                if (username != null && username.length() > 0 && password != null && password.length() > 0) {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
-               setRepresentation(getClientResource().get(type));
+               setMediaType(type);
+               setRepresentation(getClientResource().get());
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(getRepresentation().getText()));
@@ -70,7 +71,8 @@ public class ServiceProcessor {
            @Override
            public JsonResponseRepresentation run() throws Exception {
                setClientResource(new ClientResource(url));
-               setRepresentation(getClientResource().get(type));
+               setMediaType(type);
+               setRepresentation(getClientResource().get());
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation(getRepresentation().getText());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
@@ -261,7 +263,8 @@ public class ServiceProcessor {
                if (username != null && username.length() > 0 && password != null && password.length() > 0) {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
-               setRepresentation(getClientResource().delete(type));
+               setMediaType(type);
+               setRepresentation(getClientResource().delete());
                
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():"");

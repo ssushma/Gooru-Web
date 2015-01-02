@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -82,7 +83,11 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	
 	private String classpageId=null;
 	
+	private String userShelfId=null;
+	
 	private boolean isLibraryEventTriggered=false;
+	
+	private ArrayList<String> libraryList;
 	
 	private Map<String,Boolean> libraryEventMap=new HashMap<String, Boolean>();
 	
@@ -93,6 +98,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		super(eventBus, tokenFormatter);
 		this.defaultPlaceRequest = new PlaceRequest(place);
 		this.errorPlaceRequest = new PlaceRequest(PlaceTokens.HOME);
+		addAllLibraries();
 	}
 
 	@Override
@@ -414,8 +420,8 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 					}else{
 						pageLocation="home";
 					}
-				}else if(pageLocation.equals(PlaceTokens.RUSD_LIBRARY)||pageLocation.equals(PlaceTokens.SAUSD_LIBRARY)){
-					pageLocation="home";
+				}else if(isLibraryToken(pageLocation)){
+					pageLocation="library";
 				}else if(pageLocation.equals(PlaceTokens.SHELF)){
 					pageLocation="shelf";
 				}else if(pageLocation.equals(PlaceTokens.PROFILE_PAGE)){
@@ -432,6 +438,40 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return pageLocation;
 		}
+		
+		public boolean isLibraryToken(String token){
+			if(libraryList!=null){
+				return libraryList.contains(token);
+			}
+			return false;
+		}
+		
+		public void addAllLibraries(){
+			libraryList=new ArrayList<String>();
+			libraryList.add(PlaceTokens.RUSD_LIBRARY);
+			libraryList.add(PlaceTokens.SAUSD_LIBRARY);
+			libraryList.add(PlaceTokens.FTE);
+			libraryList.add(PlaceTokens.ONR);
+			libraryList.add(PlaceTokens.AUTODESK);
+			libraryList.add(PlaceTokens.LESSONOPOLY);
+			libraryList.add(PlaceTokens.NGC);
+			libraryList.add(PlaceTokens.WSPWH);
+			libraryList.add(PlaceTokens.PSDPAL);
+			libraryList.add(PlaceTokens.FINCAPINC);
+			libraryList.add(PlaceTokens.COMMUNITY);
+			libraryList.add(PlaceTokens.YOUTHVOICES);
+			libraryList.add(PlaceTokens.GEOEDUCATION);
+			libraryList.add(PlaceTokens.LIFEBOARD);
+			libraryList.add(PlaceTokens.SUSD);
+			libraryList.add(PlaceTokens.LPS);
+			libraryList.add(PlaceTokens.MURRIETA);
+			libraryList.add(PlaceTokens.VALVERDE);
+			libraryList.add(PlaceTokens.ESYP);
+			libraryList.add(PlaceTokens.CCST_Cal_TAC);
+			libraryList.add(PlaceTokens.LUSD);
+			libraryList.add(PlaceTokens.TICAL);
+		}
+		
 		public String getPlayerMode(){
 			String mode=PlayerDataLogEvents.PREVIEW;
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
@@ -568,6 +608,29 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			//isLibraryEventTriggered=false;
 			libraryEventMap.remove(libraryName);
 			isLibraryEventId=null;
+		}
+
+		public String getShelfParentGooruOid() {
+			String parentGooruId="";
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			if(pageLocation.equals(PlaceTokens.SHELF)){
+				for(int i=1;i<4;i++){
+					String folderId=placeRequest.getParameter("o"+i, "");
+					if(folderId!=null&&!folderId.equals("")){
+						parentGooruId=folderId;
+					}
+				}
+				if(parentGooruId.equals("")){
+					parentGooruId=userShelfId==null?"":userShelfId;
+				}
+			}
+			return parentGooruId;
+		}
+		
+
+		public void setUserShelfId(String userShelfId) {
+			this.userShelfId = userShelfId;
 		}
 		
 		

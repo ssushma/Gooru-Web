@@ -429,5 +429,7 @@ public interface ResourceService extends BaseService {
 			String vocabulary, String taxonomyCode,
 			String updateTaxonomyByCode, String mediaType, String action,
 			String comments);
+	
+	public String getUserShelfDetails(String userUid) throws GwtException, ServerDownException;
 		 
 }
