@@ -276,6 +276,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private boolean isGenerateURL =false;
 	
+	
+	
+	
+	
 	public AddSetupAdvancedView addSetupAdvancedView;
 	
 	HandlerRegistration videoClickHandler,websiteClickHandler,interactiveClickHandler,imageClickHandler,textClickHandler,audioClickHandler=null;
@@ -1001,7 +1005,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 	
-	
+	public void hideAllPanels(){
+		videoResourcePanel.setVisible(false);
+		websiteResourcePanel.setVisible(false);
+		interactiveResourcePanel.setVisible(false);
+		imageResourcePanel.setVisible(false);
+		textResourcePanel.setVisible(false);
+		audioResourcePanel.setVisible(false);
+	}
 	public void setDriveFileDetails(){
 //		urlTitle.setVisible(false);
 //		urlTextBox.setVisible(false);
@@ -1015,16 +1026,21 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		titleTextBox.getElement().setAttribute("title", googleDriveItemDo.getTitle());
 		urlTextBox.setReadOnly(true);
 		titleTextBox.setFocus(true);
+		hideAllPanels();
 		if(googleDriveItemDo.getMimeType().equals(DriveView.DOCUMENT_MIMETYPE)||googleDriveItemDo.getMimeType().equals(DriveView.PRESENTATION_MIMETYPE)
 				||googleDriveItemDo.getMimeType().equals(DriveView.SPREADSHEET_MIMETYPE)){
 			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("alt", googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getEmbedLink());
+			textResourcePanel.setVisible(true);
+			setTextCategory();
 			//handoutResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.DRAWING_MIMETYPE)){
 			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("alt", googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getEmbedLink());
+			imageResourcePanel.setVisible(true);
+			setImageCategory();
 			//slideResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.FORM_MIMETYPE)){
 			try{
@@ -1036,7 +1052,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				urlTextBox.getElement().setAttribute("alt",googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
 				urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
 			}
-
+			interactiveResourcePanel.setVisible(true);
+			setInteractiveCategory();
 			//interactiveResourcePanel(null);
 		}
 	}
