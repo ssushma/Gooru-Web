@@ -1,0 +1,90 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<ui:style field="style" src="dashboard.css"/>
+		
+		<g:HTMLPanel>
+			<div class="containerMain">
+				<div class="{style.profileHeader}">Your Reach Beyond the Classroom</div>
+				<div class="row">
+					<div class="{style.colLeft}">
+									<div class="row">
+										<g:HTMLPanel styleName="col-md-6">
+											<g:HTMLPanel ui:field="CollectionsPublishedWidget"></g:HTMLPanel>
+										</g:HTMLPanel> 
+										 <g:HTMLPanel styleName="col-md-6">
+											<g:HTMLPanel ui:field="ResourceAddedWidget"></g:HTMLPanel>
+										</g:HTMLPanel>
+										<div class="{style.clearfix}"></div>
+									</div>
+									<div class="row {style.collectionsResources}">
+										<div class="col-md-6">
+										<g:HTMLPanel ui:field="topEndorsedCollectionsWidget"></g:HTMLPanel>
+										</div>
+										<div class="col-md-6">
+										<g:HTMLPanel ui:field="fiveStarRatedResourcesWidget"></g:HTMLPanel>
+										</div>
+										<div class="{style.clearfix}"></div>
+									</div>
+									<div class="row {style.collectionsResources}">
+										<div class="col-md-6">
+										<g:HTMLPanel ui:field="topRemixedCollectionsWidget"></g:HTMLPanel>
+										</div>
+										<div class="col-md-6">
+										<g:HTMLPanel ui:field="reactionsWidgetPanel"></g:HTMLPanel>
+										</div>
+										<div class="{style.clearfix}"></div>
+									</div>
+					</div>
+					
+					<div class="{style.colRight} {style.gradeContainer}">
+					<uc:HTMLEventPanel ui:field="profileAnalyticsGrageContainer"></uc:HTMLEventPanel>
+					</div>
+					<div class="{style.clearfix}"></div>
+							
+							<div class="col-md-12">
+							<g:HTMLPanel ui:field="googleMapContainer"></g:HTMLPanel>
+							</div>
+							<div class="{style.clearfix}"></div>
+							
+							<div class="col-md-12 {style.commentsContainer}">
+							<g:HTMLPanel styleName="col-md-4">
+							<g:HTMLPanel ui:field="commentsMadeWIdget"></g:HTMLPanel>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="col-md-4">
+							<g:HTMLPanel ui:field="endorsementsGivenWidget"></g:HTMLPanel>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="col-md-4">
+							<g:HTMLPanel ui:field="reviewsWrittenWidget"></g:HTMLPanel>
+							</g:HTMLPanel>
+							<div class="{style.clearfix}"></div>
+							</div>
+							<div class="{style.clearfix}"></div>
+							
+							<div class="col-md-12 ratingsContainer">
+							<div class="col-md-6">
+							<g:HTMLPanel ui:field="ratingsGivenWidget"></g:HTMLPanel>
+							</div>
+							<div class="col-md-6">
+							<g:HTMLPanel ui:field="reactionsGivenWidget"></g:HTMLPanel>
+							</div>
+							<div class="{style.clearfix}"></div>
+							</div>
+							<div class="{style.clearfix}"></div>
+							
+							<div class="col-md-12 {style.graphSmall}">
+							<div class="{style.whiteBg}">
+							<g:HTMLPanel ui:field="profileActivityBreakDown"></g:HTMLPanel>
+							</div>
+							</div>
+			   </div>
+		    </div>
+		</g:HTMLPanel>
+	
+</ui:UiBinder>

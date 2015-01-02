@@ -45,7 +45,21 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : SignUpDontWorryView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
 public class SignUpDontWorryView extends PopupPanel{
 
 	private static SignUpDontWorryViewUiBinder uiBinder = GWT
@@ -82,7 +96,25 @@ public class SignUpDontWorryView extends PopupPanel{
 		//this.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 	}
-
+	/**
+	 * 
+	 * @function setUiAndIds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUiAndIds() {
 		lblTitle.setText(i18n.GL0481()
 				+ i18n.GL_SPL_EXCLAMATION());

@@ -82,9 +82,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -228,6 +228,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
+		getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){
@@ -385,11 +386,11 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			Window.enableScrolling(true);
 		}
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		int windowHeight=Window.getClientHeight();
+		getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
+		getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
 		if (idParm == null){
-			int windowHeight=Window.getClientHeight();
 			
-			getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
-			getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
 			getView().getEditPanel().getElement().getStyle().setMarginTop(38, Unit.PX);
 		}else{
 			/*getView().getEditPanel().getElement().getStyle().clearHeight();
@@ -405,6 +406,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		getView().hideAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
 //		collectionResourceTabPresenter.closePopUp();
+		AppClientFactory.getPlaceManager().setUserShelfId(null);
 		
 	}
 
@@ -541,16 +543,14 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			addToSlot(TYPE_COLLECTION_INFO_TAB, collectionInfoTabPresenter);
 			collectionInfoTabPresenter.getView().setData(collectionDo);
 		}else if(tabType.equals(TYPE_ASSIGN_INFO_TAB)){
-			/*addToSlot(TYPE_ASSIGN_INFO_TAB, collectionAssignTabPresenter);
-			collectionAssignTabPresenter.getClasspage(collectionDo, collectionDo.getSharing());*/
+			addToSlot(TYPE_ASSIGN_INFO_TAB, collectionAssignTabPresenter);
+			collectionAssignTabPresenter.getClasspage(collectionDo, collectionDo.getSharing());
 		}else if(tabType.equals(TYPE_COLLABORATOR_TAB)){
 			addToSlot(TYPE_COLLABORATOR_TAB, collectionCollaboratorsTabPresenter);
 			collectionCollaboratorsTabPresenter.setData(collectionDo);
 		}
 		
 	}
-	
-	
 
 	@Override
 	public void clearTabSlot() {
@@ -681,13 +681,17 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		folderItemTabPresenter.setFolderMetaData(folderMetaData);
 		this.folderMetaData = folderMetaData;
 	}
-
-	@Override
-	public void revealAssignTab(Type<RevealContentHandler<?>> tabType,
-			CollectionDo collectionDo, ScrollPanel spanel) {
-		addToSlot(TYPE_ASSIGN_INFO_TAB, collectionAssignTabPresenter);
-		collectionAssignTabPresenter.getClasspage(collectionDo, collectionDo.getSharing(),spanel);
-		
+	
+	public void getUserSheldId(){
+		if(!AppClientFactory.isAnonymous()){
+			String userUid=AppClientFactory.getLoggedInUser().getGooruUId();
+			AppClientFactory.getInjector().getResourceService().getUserShelfDetails(userUid, new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String result) {
+					AppClientFactory.getPlaceManager().setUserShelfId(result);
+				}
+			});
+		}
 	}
 	
 }

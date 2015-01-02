@@ -121,8 +121,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 	boolean isChildAccount = false;
 	
-	private boolean isAPICall = true;
-	
 	//private final Widget widget;
 	private static final String PROFILE_DEFAULT_IMAGE="./images/settings/setting-user-image.png";
 	
@@ -200,14 +198,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	String USER_TAXONOMY_ROOT_CODE="user_taxonomy_root_code";
 	List<String> userStandardPrefcode=new ArrayList<String>();
-	
-	
-	Set<ProfileCodeDo> profileCodeDoSet =  new HashSet<ProfileCodeDo>();
-	
-	List<CodeDo> delcodeDoList = new ArrayList<CodeDo>();
-	
-	CodeDo delCodeDo;
-	
 	
 	boolean isDriveConnected = false;
 	
@@ -755,14 +745,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
-		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
-			btnViewAdmin.setVisible(true);
-		}else{
-			btnViewAdmin.setVisible(false);
-			
-		}
-
 		
+		displayAdminPortal();
+
 		standardSavingTextLabel.setText("");
 		standardsEditButton.setVisible(true);
 		userStandardDefaultView.setVisible(true);
@@ -1123,10 +1108,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if(profileDo !=null){
-				setUserCourse(profileDo);
-			}
-			
 			EduInfoButtonContainer.setVisible(true);
 			editButtonEdu.setVisible(false);
 			gradeContainer.setVisible(true);
@@ -1171,8 +1152,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiHandler("settingsSaveButton")
 	public void OnClickSaveButton(ClickEvent event) {
 		
-		tbLastNameUcLabel.switchToLabel();
 		tbFirstNameUcLabel.switchToLabel();
+		tbLastNameUcLabel.switchToLabel(); 
 		if(enableEdit && enableEditFirstName){
 			enableEdit=false;
 			enableEditFirstName=false;
@@ -1192,9 +1173,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			
 			getUiHandlers().saveSettingsInformation();
 			
+		}else{
+			tbFirstNameUcLabel.switchToEdit();
+			tbLastNameUcLabel.switchToEdit();
 		}
 		
-	
 	}
 	@UiHandler("settingCancelButton")
 	public void OnClickCancelSettingpage(ClickEvent event) {
@@ -1245,26 +1228,18 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		courseContainer.setVisible(false);
 		EduSavingTextLabel.setVisible(true);
 		editButtonEdu.setVisible(false);
-		
-		if(delcodeDoList!=null){
-			if(delcodeDoList.size()!=0){
-				isAPICall = false;
-				getUiHandlers().deleteCorses(delcodeDoList);
-			}
-		}
-		
-		if(profileCodeDoSet!=null){
-			if(profileCodeDoSet.size() != 0){
-				isAPICall = false;
-				getUiHandlers().addCourse(profileCodeDoSet);
-			}
-		}
-		
-		if(isAPICall){
-			getProfileEduInfoDetails();
-		}
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(gooruUid, USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>() {
 
-	}
+			@Override
+			public void onSuccess(ProfileDo profileObj) {
+				setProfileData(profileObj);
+				EduSavingTextLabel.setVisible(false);
+				editButtonEdu.setVisible(true);
+			}
+			
+		});
+		
+		}
 	@UiHandler("eduInfoCancelButton")
 	public void onClickEduInfoCancelButton(ClickEvent event) {
 		gradeContainer.setVisible(false);
@@ -1642,23 +1617,17 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 	@Override
 	public void setProfileData(ProfileDo profileDo) {
-		this.profileDo= profileDo; 
 		uploadProfileImage.setUrl(profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random());
 		uploadProfilImageButton.setText(i18n.GL0800());
 		StringUtil.setAttributes(uploadProfilImageButton.getElement(), "uploadProfilImageButton", i18n.GL0800(), i18n.GL0800());
 		setGradeList(profileDo.getGrade(), profileDo);
-		setUserCourse(profileDo);
-		
-	}
-	
-	private void setUserCourse(ProfileDo profileDo) {
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();
 		
 		collectionCourseDefaultLstPanel.clear();
 		for (ProfileCodeDo code : codeDo) {
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
-			
+			//collectionCourseDefaultLstPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
 			defaultCoursePanel=new HTML(code.getCode().getLabel());
 			collectionCourseDefaultLstPanel.add(defaultCoursePanel);
 			defaultCoursePanel.setStyleName(Settings.deafaultCourse());
@@ -1671,8 +1640,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			defaultCourseLabel.setText(i18n.GL1476());
 			collectionCourseDefaultLstPanel.add(defaultCourseLabel);
 		}
+		
 	}
-
+	
 	/**
 	 * separate the view according to grade level of the user
 	 */
@@ -1764,15 +1734,16 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	 *            used to create a new course
 	 * @return the label of all course created for the User.
 	 */
-	protected CloseLabelSetting createCourseLabel(final String courseLabel,final String courseCode) {
+	protected CloseLabelSetting createCourseLabel(final String courseLabel,
+			final String courseCode) {
 		return new CloseLabelSetting(courseLabel) {
+
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.removeFromParent();
-				
-				CodeDo delCodeDo = new CodeDo();
-				delCodeDo.setCodeId(Integer.parseInt(courseCode));
-				delcodeDoList.add(delCodeDo);
+				CodeDo codeDo = new CodeDo();
+				codeDo.setCodeId(Integer.parseInt(courseCode));
+				getUiHandlers().deleteCourse(codeDo);
 			}
 		};
 	}
@@ -1815,29 +1786,32 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	 */
 	
 	private void addCourseEvent() {
-		if (coursesPanel.getWidgetCount() < 5) {
-			final String courseCodeLabel = collectionCourseLst.getItemText(collectionCourseLst.getSelectedIndex());
-			final String courseCode = collectionCourseLst.getValue(collectionCourseLst.getSelectedIndex());
-			if (collectionCourseLst.getSelectedIndex() == 0) {
-				return;
-			}
-			if (validateCourse(courseCodeLabel) && courseCode != null) {
-				alertContentUc=	new AlertContentUc(i18n.GL1089(), i18n.GL1090());
+			if (coursesPanel.getWidgetCount() < 5) {
+				final String courseCodeLabel = collectionCourseLst
+						.getItemText(collectionCourseLst.getSelectedIndex());
+				final String courseCode = collectionCourseLst
+						.getValue(collectionCourseLst.getSelectedIndex());
+				if (collectionCourseLst.getSelectedIndex() == 0) {
+					return;
+				}
+				if (validateCourse(courseCodeLabel) && courseCode != null) {
+					alertContentUc=	new AlertContentUc(i18n.GL1089(), i18n.GL1090());
+				} else {
+					Set<ProfileCodeDo> profileCodeDoSet = new HashSet<ProfileCodeDo>();
+					ProfileCodeDo profileCodeDo = new ProfileCodeDo();
+					CodeDo codeDo = new CodeDo();
+					codeDo.setCodeId(Integer.parseInt(courseCode));
+					profileCodeDo.setCode(codeDo);
+					profileCodeDoSet.add(profileCodeDo);
+					getUiHandlers().addCourse(profileCodeDoSet);
+					coursesPanel.add(createCourseLabel(courseCodeLabel, courseCode));
+					collectionCourseLst.setSelectedIndex(0);
+				}
+				courseMaxHide();
 			} else {
-				
-				ProfileCodeDo profileCodeDo = new ProfileCodeDo();
-				CodeDo codeDo = new CodeDo();
-				codeDo.setCodeId(Integer.parseInt(courseCode));
-				profileCodeDo.setCode(codeDo);
-				profileCodeDoSet.add(profileCodeDo);
-				coursesPanel.add(createCourseLabel(courseCodeLabel, courseCode));
-				collectionCourseLst.setSelectedIndex(0);
+				courseMaxShow();
 			}
-			courseMaxHide();
-		} else {
-			courseMaxShow();
-		}
-
+		
 	}
 	
 	
@@ -2342,34 +2316,19 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		htmlConnectedAs.setVisible(true);
 		htmlConnectedAs.getElement().getStyle().setLineHeight(3, Unit.EM);
 	}
-	
 
 	@Override
-	public void getUserProfileCourseGradeDetails() {
-		isAPICall = true;
-		profileCodeDoSet.clear();
-		getProfileEduInfoDetails();
-	}
-
-	@Override
-	public void onPostCourseDel() {
-		isAPICall = true;
-		delcodeDoList.clear();
-		getProfileEduInfoDetails();
-	}
-
-	private void getProfileEduInfoDetails() {
-		
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(gooruUid, USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>() {
-
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-				setProfileData(profileObj);
-				EduSavingTextLabel.setVisible(false);
-				editButtonEdu.setVisible(true);
+	public void displayAdminPortal() {
+		if (!AppClientFactory.isAnonymous()){
+			String userRoles = AppClientFactory.getLoggedInUser().getUserRoleSetString();
+			if(userRoles.contains("Content Admin") || userRoles.contains("Content_Admin") || userRoles.contains("superadmin")){
+				btnViewAdmin.setVisible(true);
+			}else{
+				btnViewAdmin.setVisible(false);
+				
 			}
-
-		});
-
+		}else {
+			btnViewAdmin.setVisible(false);
+		}
 	}
 }

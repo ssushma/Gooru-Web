@@ -423,5 +423,13 @@ public interface ResourceService extends BaseService {
 	//DriveDo updatePermissions(DriveDo driveObject)throws GwtException, ServerDownException;
 	
 	public CollectionItemDo v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException;
+
+	public CollectionDo updateCollectionSettingForComments(String collectionId,
+			String title, String description, String grade, String sharing,
+			String vocabulary, String taxonomyCode,
+			String updateTaxonomyByCode, String mediaType, String action,
+			String comments);
+	
+	public String getUserShelfDetails(String userUid) throws GwtException, ServerDownException;
 		 
 }

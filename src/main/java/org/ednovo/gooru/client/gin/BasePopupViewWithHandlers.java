@@ -38,9 +38,21 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 /**
- * @author Search Team
  * 
+ * @fileName : BasePopupViewWithHandlers.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
+		
 public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extends PopupViewWithUiHandlers<H> implements IsViewWithHandlers<H> {
 
 	/**

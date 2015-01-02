@@ -44,6 +44,8 @@ import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -95,7 +97,6 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		//this.collectionEndPresenter=collectionEndPresenter;
 		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
-		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
 		addRegisteredHandler(DeletePlayerStarReviewEvent.TYPE,this);
@@ -272,7 +273,12 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * @param clickEvent {@link ClickEvent}
 	 */
 	@Override
-	public void createStarRatings(String associateGooruOid, int starRatingValue, final boolean showThankYouToolTip,String userReview) {
+	public void createStarRatings(String associateGooruOid, int starRatingValue, final boolean showThankYouToolTip,String userReview,String resourceGooruId) {
+		if(showThankYouToolTip){
+			triggerCreateRatingEvent(resourceGooruId, starRatingValue, getView().getPreviousRating());
+		}else{
+			triggerCreateReviewEvent(resourceGooruId, userReview);
+		}
 		AppClientFactory.getInjector().getPlayerAppService().createStarRatings(associateGooruOid,starRatingValue,userReview,new SimpleAsyncCallback<StarRatingsDo>() {
 			@Override
 			public void onSuccess(StarRatingsDo result) { 
@@ -307,8 +313,13 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	/**
 	 * Receiving event to post the review. 
 	 */
-	@Override
+	
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
+		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
+	}
+	
+	
+	public void postReviewForResource(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
 	}
 
@@ -320,7 +331,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * @param showThankYouToolTip {@link Boolean} 
 	 */
 	@Override
-	public void updateStarRatings(String gooruOid, int starRatingValue,boolean showThankYouToolTip) {
+	public void updateStarRatings(String gooruOid, int starRatingValue,boolean showThankYouToolTip,String resourceGooruId) {
+		triggerCreateRatingEvent(resourceGooruId, starRatingValue, getView().getPreviousRating());
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarRatings(gooruOid, starRatingValue, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
 
 			@Override
@@ -370,7 +382,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * @param showThankYouToolTip {@link Boolean} 
 	 */
 	@Override
-	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview) { 
+	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview,String resourceGooruId) {
+		triggerCreateReviewEvent(resourceGooruId, userReview);
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarReviews(deleteRatingGooruOid, score, userReview, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
 
 			@Override
@@ -506,6 +519,14 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			resourcePlayerPresenter.updateRatings(gooruOid,average);   
 		}
 	}
+	
+	public double getResourceRating(String resoruceGooruOid){
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			return collectionPlayerPresenter.getResourceRating(resoruceGooruOid);  
+		}else{
+			return resourcePlayerPresenter.getResourceRating(resoruceGooruOid);   
+		}
+	}
 
 	@Override
 	public void deleteRatingsInPlayer() {
@@ -530,5 +551,21 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		});
 		
 	}*/
+	
+	public void  triggerCreateRatingEvent(String resourceId,double currentRate, double previousRate){
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.triggerRatingDataLogEvent(resourceId, currentRate, previousRate);
+		}else if(isResourcePlayer){
+			resourcePlayerPresenter.triggerRatingDataLogEvent(resourceId, currentRate, previousRate);
+		}
+	}
+	
+	public void  triggerCreateReviewEvent(String resourceId,String reviewText){
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.triggerReviewDataLogEvent(resourceId, reviewText);
+		}else if(isResourcePlayer){
+			resourcePlayerPresenter.triggerReviewDataLogEvent(resourceId, reviewText);
+		}
+	}
 
 }

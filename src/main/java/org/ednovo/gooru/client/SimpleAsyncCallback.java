@@ -28,7 +28,6 @@ package org.ednovo.gooru.client;
 import java.io.IOException;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.uc.error.ErrorPopupUc;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -36,14 +35,27 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
+/**
+ * 
+ * @fileName : SimpleAsyncCallback.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Override
 	public void onFailure(Throwable caught) {
-		System.out.println("out side gwt exception");
 		String message = "";
 		if(caught instanceof ServerDownException){
 			ServerDownException serverDownException=(ServerDownException)caught;

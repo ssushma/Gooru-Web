@@ -65,7 +65,21 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-
+/**
+ * 
+ * @fileName : StudentAssignmentPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssignmentView, IsStudentAssignmentProxy> implements StudentAssignmentUiHandlers {
 
 	
@@ -169,6 +183,25 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		getView().clearAll();
 		getClasspage();
 	}
+	/**
+	 * 
+	 * @function getClasspage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getClasspage(){
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
@@ -274,6 +307,29 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	     }
 		
 	}
+	/**
+	 * 
+	 * @function getClasspageItems 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param offset
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param isForAssignmentPath
+	 * @parm(s) : @param sortOrder
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getClasspageItems(String classpageId,String offset,final String limit,final boolean isForAssignmentPath, final String sortOrder){
 		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit,sortOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
@@ -288,7 +344,25 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			}
 		});
 	}
-	
+	/**
+	 * 
+	 * @function getOffsetValue 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : Integer
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
 		int pageNumber=0;
@@ -346,6 +420,12 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		}
 		
 	}
+	
+	
+	@Override
+	protected void onHide() {
+		AppClientFactory.getPlaceManager().setClasspageEventId(null);
+	}
 
 	@Override
 	public String getViewToken() {
@@ -383,7 +463,26 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback) {
 		this.assignmentsListAsyncCallback = assignmentsListAsyncCallback;
 	}
-
+	/**
+	 * 
+	 * @function triggerClassPageNewDataLogStartStopEvent 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param classCode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
 		JSONObject classpageDataLog=new JSONObject();
 		String classpageEventId=GwtUUIDGenerator.uuid();

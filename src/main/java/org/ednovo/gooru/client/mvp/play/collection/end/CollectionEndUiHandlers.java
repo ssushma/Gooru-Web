@@ -30,10 +30,10 @@ import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHan
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
-public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
+public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler {
 	public void createCommentForCollection(String gooruOid, String comment);
 	
-	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit);
+	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);
 	
 	public void getPaginationResults(String gooruOid, String offset, String limit);
 	
@@ -42,6 +42,8 @@ public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginS
 	public void triggerCollectionShareDataEvent(String collectionId,String itemType, String shareType, boolean confirmStatus) ;
 	
 	public void getAvgReaction();
+
+	public void updateCommentsStatus(String string);
 	
 	public void getSessionsDataByUser(String collectionId, String classId, String userId);
 	
@@ -52,6 +54,5 @@ public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginS
 	public void setCollectionSummaryBasedOnClasspageIdSessionId();
 	
 	public void clearslot();
-	
 
 }

@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -532,11 +533,27 @@ public class SearchInfoWidget extends Composite {
 				hostType.getElement().setAttribute("alt"," "+CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
 				hostType.getElement().setAttribute("title"," "+CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
 				isGeneralInfo=true;
+			}else if(resourceDo.getHost()!=null){
+				if(resourceDo.getHost().size()>0)
+				{
+					setHostDetails(resourceDo.getHost());
+					isGeneralInfo=true;
+				}
+				else
+				{
+					hostPanel.setVisible(false);
+				}			
 			}else{
 				hostPanel.setVisible(false);
 			}
 			
 			setResourceLicenceLogo(CollectiongenealInfo.getResource().getAssetURI(), CollectiongenealInfo.getResource().getLicense());
+			
+			if(!CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+			{
+				originalUrlTitle.setVisible(false);
+				originalUrlText.setVisible(false);
+			}
 			
 			if(grade==null && coursesList.isEmpty() && CollectiongenealInfo.getStandards().isEmpty() && url==null &&
 					resourceDo.getPublisher().isEmpty() && resourceDo.getAggregator().isEmpty() && host==null && licence==null ){
@@ -561,6 +578,29 @@ public class SearchInfoWidget extends Composite {
 		}else{
 			generalLbl.setVisible(false);
 		}
+	}
+
+	/**
+	 * To set the Host values in search Info
+	 * @param host {@link List}
+	 */
+	private void setHostDetails(List<String> host) {
+		// TODO Auto-generated method stub
+		if(host == null || host.size() == 0 || host.contains(null) || host.contains("") ){
+		}else{
+			if(host.size()>0){
+				if(host.size()==1){
+					hostPanel.setVisible(true);
+					hostLbl.setText(i18n.GL1700().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					StringUtil.setAttributes(hostLbl.getElement(),"hostLbl", i18n.GL1700(), i18n.GL1700());
+					hostType.setText(" "+host.get(0).toString());
+					StringUtil.setAttributes(hostType.getElement(),"hostType", host.get(0).toString(), host.get(0).toString());
+				} 
+			}else{
+				hostPanel.setVisible(false);
+			}
+		}
+		
 	}
 
 	/**

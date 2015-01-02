@@ -62,7 +62,10 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -157,6 +160,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<ResourceSearchResultDo> getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo) {
 		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
 		String query1=searchDo.getSearchQuery();
+	
 		 query= query1;
 		try{
 			if(searchDo.getFilters()!=null){
@@ -166,16 +170,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				  searchDo.getFilters().put(key, value);
 				 }
 			}
-			/*if(query!=null){
-				query = query.replaceAll("2C",""); 
-				if(query.contains("25")){
-					query=query.replaceAll("%","").replaceAll("2", "").replaceAll("5", "").replaceAll("B", "");
-					query=query.trim();
-					query=query.replaceAll(" ","%20");	
-					
-				}
+			if(query.equalsIgnoreCase("'*'"))
+			{
+				query = "*";
 			}
-*/			
+			
 		JsonRepresentation jsonRep=null;
 		Map<String,String> filtersMap=searchDo.getFilters();
 		if(filtersMap!=null){
@@ -242,6 +241,10 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				collectionQuery=collectionQuery.replaceAll(" ","%20");
 			}
 		}*/
+		if(collectionQuery.equalsIgnoreCase("'*'"))
+		{
+			collectionQuery = "*";
+		}
 		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SIMPLE_COLLECTION_SEARCH, searchDo.getFilters(), getLoggedInSessionToken(), collectionQuery, searchDo.getPageNum() + "", searchDo.getPageSize() + "", MY_STRING);
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
@@ -551,7 +554,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("search end point url::::::"+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
@@ -579,6 +582,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
+		System.out.println("getFirstLevelStandards::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -692,6 +696,25 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public String showGooruStoriesSection() throws GwtException, ServerDownException {
 		return showStoriesSection();
+	}
+
+	@Override
+	public SearchResourcesTagsDo getResourceTags(String resourceId,	String offSet, String limit) throws GwtException,ServerDownException {
+		
+		JsonRepresentation jsonRep = null;
+		SearchResourcesTagsDo searchResourcesTagsDo = new SearchResourcesTagsDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESOURCE_TAGS, resourceId,getLoggedInSessionToken(),offSet,limit);
+		getLogger().info("-- resource based tags url -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
+		
+		try{
+			searchResourcesTagsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SearchResourcesTagsDo.class);
+		}
+		catch(JSONException ex){
+			
+		}
+		return searchResourcesTagsDo;
 	}
 	
 	/*@Override

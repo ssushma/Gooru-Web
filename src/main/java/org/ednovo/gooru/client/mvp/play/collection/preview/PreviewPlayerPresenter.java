@@ -1210,13 +1210,13 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-			this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String activityEventId) {
-				
-			}
-		});
+//			this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String activityEventId) {
+//				
+//			}
+//		});
 	}
 	
 	public void createSession(String collectionGooruOid){
@@ -1760,6 +1760,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
 		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
+		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
 		if(classpageItemId!=null){
 			params.put("cid", classpageItemId);
 		}
@@ -1781,6 +1782,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(libraryGooruOid!=null) {
 			params.put("lid", libraryGooruOid);
 		}
+		if(eventId!=null) {
+			params.put("eventid", eventId);
+		}
 		return params;
 	}
 
@@ -1793,6 +1797,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
 		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
+		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
 		if(classpageItemId!=null){
 			anchorLink += "&cid="+classpageItemId;
 		}
@@ -1813,6 +1818,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}
 		if(libraryGooruOid!=null) {
 			anchorLink += "&lid="+libraryGooruOid;
+		}
+		if(eventId!=null) {
+			anchorLink += "&eventid="+eventId;
 		}
 		return anchorLink;
 	}

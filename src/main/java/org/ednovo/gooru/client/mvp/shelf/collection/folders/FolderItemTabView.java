@@ -75,7 +75,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField HTMLPanel mainSection, panelTitleSection;
 	@UiField VerticalPanel folderContentBlock;
 	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
-	@UiField Button newCollectionBtn, newFolderBtn;
+	@UiField Button newCollectionBtn, newFolderBtn,assessmentButton;
 	@UiField HTMLEventPanel editButtonEventPanel;
 	@UiField FlowPanel folderContentPanel;
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
@@ -253,6 +253,12 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		newCollectionBtn.getElement().setId("btnNewCollectionBtn");
 		newCollectionBtn.getElement().setAttribute("alt",i18n.GL1451());
 		newCollectionBtn.getElement().setAttribute("title",i18n.GL1451());
+		
+		assessmentButton.setText(i18n.GL3024());
+		assessmentButton.getElement().setId("btnNewCollectionBtn");
+		assessmentButton.getElement().setAttribute("alt",i18n.GL3024());
+		assessmentButton.getElement().setAttribute("title",i18n.GL3024());
+		assessmentButton.removeFromParent();
 		
 		newFolderBtn.setText(i18n.GL1450());
 		newFolderBtn.getElement().setId("btnNewFolderBtn");
@@ -684,6 +690,32 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				
 			}
 		}
+	
+	@UiHandler("assessmentButton")
+	public void onClickNewAssessmentBtn(ClickEvent clickEvent){
+		if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			setFolderUrlParams();
+			Map<String, String> params = new HashMap<String, String>();
+			if(O3_LEVEL_VALUE!=null) {
+				params.put(O1_LEVEL, O1_LEVEL_VALUE);
+				params.put(O2_LEVEL, O2_LEVEL_VALUE);
+				params.put(O3_LEVEL, O3_LEVEL_VALUE);
+			} else if(O2_LEVEL_VALUE!=null) {
+				params.put(O1_LEVEL, O1_LEVEL_VALUE);
+				params.put(O2_LEVEL, O2_LEVEL_VALUE);
+			} else if(O1_LEVEL_VALUE!=null){
+				params.put(O1_LEVEL, O1_LEVEL_VALUE);
+			}
+				params.put("folderId", presentFolderId);
+				params.put("type", "assessment");
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
+				
+			}
+		}
 
 	@Override
 	public void setFolderTitle(String title) {
@@ -766,11 +798,10 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				}else{
 					isReorderButtonEnabled(true,(ShelfFolderItemChildView) widget);
 				}
-
+				
 				/**
 				 * For a first folder/collection hiding the up and top most arrow.
 				 */
-
 				if(seqNum==1){
 					((ShelfFolderItemChildView) widget).upButtonIsVisible(false); 
 					((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 
@@ -1030,9 +1061,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
 		String validationStaus=REORDER_VALIDATION_MSG; 
 		if(itemToBeMovedPosSeqNumb==0){
-			validationStaus = "Given Reorder sequence is not valid or empty.";
+			validationStaus = i18n.GL3003();
 		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
-			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
+			validationStaus = StringUtil.generateMessage(i18n.GL3004(),itemToBeMovedPosSeqNumb+"");
 		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
 			validationStaus = "Please click on down arrow";
 		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
@@ -1146,7 +1177,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition,String direction, HashMap<String, String> params){
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
 		if(shelfFolderItemChildView.toolTipPosPopupPanel!=null && shelfFolderItemChildView.toolTipPosPopupPanel.isVisible()){
-			shelfFolderItemChildView.toolTipPosPopupPanel.hide();
+			shelfFolderItemChildView.toolTipPosPopupPanel.hide(); 
 		}
 		Document.get().getElementById("pnlEditPanel").setScrollTop(0 + (newItemPosition)*(shelfFolderItemChildView.getOffsetHeight()-23));
 		new BackgroundColorEffect(shelfFolderItemChildView.getElement(),"#E7F1F8" ,"white", 4000);

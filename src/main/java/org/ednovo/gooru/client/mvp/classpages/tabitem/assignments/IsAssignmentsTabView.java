@@ -48,7 +48,25 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
  */
 public interface IsAssignmentsTabView extends IsChildView<AssignmentsTabPresenter>, IsDraggable {
 	
-	// Override method. Once collection is added this method is called and set the relevant data.
+	/**
+	 * 
+	 * @function onPostUserCollections 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * Override method. Once collection is added this method is called and set the relevant data.
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void onPostUserCollections(List<CollectionDo> result);
 	
 	/**

@@ -26,7 +26,21 @@
 package org.ednovo.gooru.client;
 
 import org.ednovo.gooru.shared.exception.GwtException;
-
+/**
+ * 
+ * @fileName : HasError.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface HasError {
 
 	void setErrors(GwtException exception);

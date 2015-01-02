@@ -366,7 +366,21 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : AssignmentsTabView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -380,7 +394,21 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : AssignmentsTabView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -391,8 +419,25 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 							.gooruDateError());
 		}
 	}
-
-	// To hide and show controls (parms visibility)
+	/**
+	 * 
+	 * @function hideShowControls 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 	To hide and show controls (parms visibility)
+	 * 
+	 * @parm(s) : @param visibility
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void hideShowControls(boolean visibility) {
 		assignmentTitleTxt.setVisible(visibility);
 		// assignmentDueDateTxt.setVisible(visibility);
@@ -402,7 +447,25 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentTitleTxt.setFocus(true);
 	}
 
-	// To hide and show labels (parms visibility)
+	/**
+	 * 
+	 * @function hideShowLabels 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 	To hide and show labels (parms visibility)
+	 * 
+	 * @parm(s) : @param visibility
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void hideShowLabels(boolean visibility) {
 		assignmentTitelLbl.setVisible(visibility);
 		dueDateLbl.setVisible(visibility);
@@ -410,7 +473,26 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentTitleLblPanel.setVisible(visibility);
 	}
 
-	// Display the content to UI
+	
+	/**
+	 * 
+	 * @function setUiElements 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 	Display the content to UI
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setUiElements() {
 		
 		String taskTitle = assignmentsSearchDo.getTask().getTitle().replaceAll("%20"," ");
@@ -441,7 +523,22 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentDescriptionTxtArea.setText(description);
 	}
 
-	// Display add collections popup
+	
+	/**
+	 * 
+	 * @fileName : AssignmentsTabView.java
+	 *
+	 * @description : 
+	 *	Display add collections popup
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class OnClickAddCollectionToAssignment implements ClickHandler {
 
 		@Override
@@ -841,7 +938,21 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : AssignmentsTabView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class DirectionsKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {

@@ -36,20 +36,20 @@ import java.util.Set;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
-import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
-import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
+import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
+import org.ednovo.gooru.shared.model.content.SearchResultsTagsDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * @author Search Team
@@ -67,6 +67,8 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 	private static final String ASSESSMENT_QUESTION = "assessment-question";
 	
 	private static final String TAG_SET = "tagSet";
+	
+	private static final String RESOURCE_TAGS = "resourceTags";
 	
 	@Override
 	public ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
@@ -144,6 +146,21 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			} catch (JSONException e) {
 			}
 		}
+		
+		/**
+		 * Deserialzing Resource tags.
+		 */
+		
+		try {
+			if(recordJsonObject.get(RESOURCE_TAGS)!= null){
+				List<SearchResultsTagsDo> searchTags = new ArrayList<SearchResultsTagsDo>();
+				searchTags.addAll((ArrayList<SearchResultsTagsDo>) JsonDeserializer.deserialize(recordJsonObject.getJSONArray(RESOURCE_TAGS).toString(),new TypeReference<List<SearchResultsTagsDo>>() {}));
+				resourceSearchResultDo.setResourceTags(searchTags);
+			}
+		} catch (Exception e) {
+		}
+		
+		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
 		

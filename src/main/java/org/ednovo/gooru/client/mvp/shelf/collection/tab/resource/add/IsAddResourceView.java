@@ -83,6 +83,10 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 
 	void OnBrowseStandardsClickEvent(Button addBtn);
 
-	void setUpdatedStandardsCode(String setStandardsVal,int id,String desc,boolean val);
+	void setUpdatedStandardsCode(String setStandardsVal,int id,String desc,boolean val, boolean isUserOwnResource);
 	
+	public void setCollectionDo(CollectionDo collectionDo);
+
+	void setPopupImageData(ResourceMetaInfoDo result);
+
 }

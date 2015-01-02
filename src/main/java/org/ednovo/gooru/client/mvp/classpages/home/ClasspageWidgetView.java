@@ -48,7 +48,21 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : ClasspageWidgetView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class ClasspageWidgetView extends Composite {
 
 /*	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5;*/
@@ -90,7 +104,26 @@ public class ClasspageWidgetView extends Composite {
 /*	public InlineLabel getRatingCountLabel(){
 		return ratingCountLabel;
 	}*/
-
+	/**
+	 * 
+	 * @function setClassPageImage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param collectionDoObj
+	 * @parm(s) : @param pageMode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setClassPageImage(final CollectionDo collectionDoObj,String pageMode) {
 		
 

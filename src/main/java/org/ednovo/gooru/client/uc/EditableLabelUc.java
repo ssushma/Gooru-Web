@@ -236,7 +236,8 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 			if (isHavingBadWords){
 				editTextBox.getElement().getStyle().setBorderColor("orange");
 			}else{
-				new AlertContentUc(i18n.GL0061(),i18n.GL1026()+i18n.GL_SPL_EXCLAMATION());
+//				new AlertContentUc(i18n.GL0061(),i18n.GL1026()+i18n.GL_SPL_EXCLAMATION());
+				showErrorMessage(i18n.GL1026()+i18n.GL_SPL_EXCLAMATION());
 			}
 			return;
 		}
@@ -254,6 +255,11 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		deckPanel.showWidget(0);
 	}
 
+	
+	public void showErrorMessage(String message){
+		
+	}
+	
 	// Override this method to catch on blur
 	/**
 	 * @param text

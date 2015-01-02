@@ -20,6 +20,7 @@
 .closeLabelText {
 	float: left;
 	font-size:12px;
+	padding-left:4px;
 	/*width: 125px;*/
 }
 
@@ -32,6 +33,33 @@
 	background-image: -ms-linear-gradient(top, #666, #515151);
 	background: -o-linear-gradient(top, #666, #515151);
 	background-color: #515151;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-top: 5px;
+	padding: 3px 1px;
+	cursor: default !important;
+	min-height: 12px;
+	height: auto;
+}
+
+.closeLabelSearch {
+	background: -moz-linear-gradient(center top, #88bbe1, #88bbe1) repeat
+		scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#88bbe1),
+		to(#88bbe1));
+	background: -webkit-linear-gradient(top, #88bbe1, #88bbe1);
+	background-image: -ms-linear-gradient(top, #88bbe1, #88bbe1);
+	background: -o-linear-gradient(top, #88bbe1, #88bbe1);
+	background-color: #88bbe1;
 	border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 	-moz-border-radius: 3px 3px 3px 3px;

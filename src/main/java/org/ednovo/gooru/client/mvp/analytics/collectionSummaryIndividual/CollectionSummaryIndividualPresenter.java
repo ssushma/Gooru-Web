@@ -32,7 +32,6 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
@@ -113,7 +112,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	 */
 	@Override
 	public void setHtmltopdf(String htmlString,String fileName,final boolean isClickedOnEmail) {
-		this.analyticService.setHTMLtoPDF(htmlString,fileName, new AsyncCallback<String>() {
+		this.analyticService.setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
 				if(isClickedOnEmail){
@@ -145,5 +144,15 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			public void onFailure(Throwable caught) {
 			}
 		});
+	}
+
+	@Override
+	public void setNoDataMessage(HTMLPanel loadingImage) {
+		loadingImage.setVisible(false);
+		getView().setErrorMessage();
+	}
+	@Override
+	public void clearFrame(){
+		getView().getFrame().setUrl("");
 	}
 }

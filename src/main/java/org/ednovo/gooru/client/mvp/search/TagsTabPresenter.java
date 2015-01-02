@@ -30,9 +30,12 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -83,11 +86,11 @@ public class TagsTabPresenter extends PresenterWidget<IsTagsTabView> implements 
 	 * @param resourceId {@link String}
 	 * @param resourceId1 {@link String}
 	 */
-	public void setData(String resourceId, String resourceGooruOid) { 
-
-		getView().setResourceTagsData(resourceId,resourceGooruOid);
+	public void setData(String resourceId, Label tagsLbl) { 
+		
+		getView().setResourceTagsData(resourceId, tagsLbl);
 		getView().isLoadingImageVisible(false);
-
+		
 	}
 
 
@@ -98,17 +101,15 @@ public class TagsTabPresenter extends PresenterWidget<IsTagsTabView> implements 
 	 * @see org.ednovo.gooru.client.mvp.search.TagsTabUiHandlers#getResourceTags(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void getResourceTags(String resourceId, String offSet, String limit) {
-
-		AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(resourceId,offSet,limit,new SimpleAsyncCallback<List<UserTagsDo>>() {
+	public void getResourceTags(String resourceId, String offSet, String limit, final boolean isTagsclear) {
+		
+		AppClientFactory.getInjector().getSearchService().getResourceTags(resourceId,offSet,limit, new SimpleAsyncCallback<SearchResourcesTagsDo>() {
 
 			@Override
-			public void onSuccess(List<UserTagsDo> result) {
-				getView().setResourceTags(result); 
-
+			public void onSuccess(SearchResourcesTagsDo result) {
+				getView().setResourceTags(result,isTagsclear);
 			}
 		});
 	}
-
 
 }
