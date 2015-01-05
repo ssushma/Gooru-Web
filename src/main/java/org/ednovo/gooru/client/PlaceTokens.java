@@ -91,5 +91,6 @@ public interface PlaceTokens {
 	String LUSD = "lusd";	
 	String TICAL = "tical";
 	String DASHBOARD ="dashboard";
+	String ASPIRE_EPACS =  "AspireEPACS"; 
 
 }
