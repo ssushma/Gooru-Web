@@ -58,6 +58,7 @@ import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -158,6 +159,8 @@ public class CollectionResourceTabView extends
 	private static final String DOWN_ARROW = "MoveDown";
 	
 	private static final String REORDER_VALIDATION_MSG = "Success";
+	
+	int resourceLimit = 10;
 
 	/**
 	 * Class constructor
@@ -174,6 +177,8 @@ public class CollectionResourceTabView extends
 		editAssesmentButton.getElement().setId("btnEditAssessment");
 		editAssesmentButton.getElement().setAttribute("alt",i18n.GL3102_1());
 		editAssesmentButton.getElement().setAttribute("title",i18n.GL3102_1());
+		
+		editAssesmentButton.getElement().getStyle().setMarginRight(20, Unit.PX);
 		
 		buttonContainerAddGray.setText(i18n.GL0851());
 		buttonContainerAddGray.getElement().setId("btnButtonContainerAddGray");
@@ -230,6 +235,8 @@ public class CollectionResourceTabView extends
 		sequenceVerPanel.getElement().setId("vpnlSequenceVerPanel");
 		panelNoResourceContainer.getElement().setId("pnlPanelNoResourceContainer");
 		
+		
+		editAssesmentButton.setVisible(false);
 	}
 	
 	@UiHandler("editAssesmentButton")
@@ -281,9 +288,16 @@ public class CollectionResourceTabView extends
 			/*setResourceSequence();*/
 			hideNoResourceMsg();
 			
-			if (collectionDo.getCollectionItems().size() >= 25) {
-				buttonContainerForQuestionGreay.setVisible(true);
-				buttonContainerAddGray.setVisible(true);
+			if (collectionDo.getCollectionItems().size() >= resourceLimit) {
+				
+				if (collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
+					buttonContainerForQuestionGreay.setVisible(false);
+					buttonContainerAddGray.setVisible(false);
+				}else{
+					buttonContainerForQuestionGreay.setVisible(true);
+					buttonContainerAddGray.setVisible(true);
+				}
+				
 				buttonContainer.setVisible(false);
 				buttonContainerForQuestion.setVisible(false);
 				buttonContainerAddGray.addClickHandler(new ClickHandler() {
@@ -338,7 +352,7 @@ public class CollectionResourceTabView extends
 
 					}
 				});
-
+				
 			} else {
 				toolTipPopupPanel.clear();
 				buttonContainerForQuestionGreay.setVisible(false);
@@ -347,13 +361,15 @@ public class CollectionResourceTabView extends
 				buttonContainerForQuestion.setVisible(true);
 
 				// newResourceLabel.setVisible(true);
+				showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
 			}
-			showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
+			
 		}
 		panelLoading.getElement().getStyle().setDisplay(Display.NONE);
 		contentPanel.setVisible(true);
 	}
 	public void showOrHideResourceButton(String collectionType, int size){
+		editAssesmentButton.setVisible(false);
 		if(collectionType!=null&&collectionType.equals(ShelfPresenter.ASSESSMENT)){
 			editAssesmentButton.setVisible(true);
 			buttonContainerForQuestionGreay.setVisible(false);
@@ -362,11 +378,16 @@ public class CollectionResourceTabView extends
 			buttonContainerForQuestion.setVisible(false);
 			dragAndDropLabel.setVisible(false);
 		}else{
-			editAssesmentButton.setVisible(true);
-			buttonContainerForQuestionGreay.setVisible(true);
-			buttonContainerAddGray.setVisible(true);
-			buttonContainer.setVisible(true);
-			buttonContainerForQuestion.setVisible(true);
+			editAssesmentButton.setVisible(false);
+			buttonContainerForQuestionGreay.setVisible(false);
+			buttonContainerAddGray.setVisible(false);
+			if (size >=resourceLimit){
+				buttonContainer.setVisible(false);
+				buttonContainerForQuestion.setVisible(false);
+			}else{
+				buttonContainer.setVisible(true);
+				buttonContainerForQuestion.setVisible(true);
+			}
 			dragAndDropLabel.setVisible(true);
 		}
 	}
