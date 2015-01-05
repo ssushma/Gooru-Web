@@ -279,12 +279,27 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 */
 	public void setStoryButtonUrl(){
 		
-		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(), new SimpleAsyncCallback<String>() {
+		AppClientFactory.getInjector().getSearchService().showGooruStoriesSection( new SimpleAsyncCallback<String>() {
 			
 			@Override
 			public void onSuccess(String result) {
-				achGooruStories.setHref(result);
-				achGooruStories.setTarget("_blank");
+				if (result.equalsIgnoreCase("true")){
+					panelText.clear();
+					PeListPanel p = new PeListPanel();
+					p.setTitle(i18n.GL2188_3());
+					p.getElement().setInnerHTML(i18n.GL2188_3());
+					panelText.add(p);
+					
+					AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(), new SimpleAsyncCallback<String>() {
+						
+						@Override
+						public void onSuccess(String result) {
+							achGooruStories.setHref(result);
+							achGooruStories.setTarget("_blank");
+						}
+					});
+					panelGooruStories.setVisible(true);
+				}
 			}
 		});
 	}
