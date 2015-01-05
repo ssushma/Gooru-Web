@@ -162,6 +162,12 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	private static final String ASSESSMENT_ENDPOINT = "assessment.endpoint";
 	
+	private static final String STORIES_LTI_URL = "stories.lti.url";
+	
+	private static final String STORIES_LOGGEDIN_URL="stories.loggedin.url";
+	
+	private static final String STOIRES_APIKEY="stories.apiKey";
+	
 	private static final String HTTPS = "https";
 	
 	private static final String HTTP = "http";
@@ -336,6 +342,11 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	public String getStoriesUrl(){
 		return restConstants.getProperty(STORIES_URL);
 	}
+	
+	public String getStoriesLtiUrl(){
+		return restConstants.getProperty(STORIES_LTI_URL);
+	}
+
 
 	public String showStoriesSection(){
 		return restConstants.getProperty(SHOW_STORIES);
@@ -345,6 +356,15 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return restConstants.getProperty(COMMUNITY_LIBRARY_ID);
 		
 	}
+
+	public String getStoriesLoggedInUrl(){
+		return restConstants.getProperty(STORIES_LOGGEDIN_URL);
+	}
+	
+	public String getStoriesApiKey(){
+		return restConstants.getProperty(STOIRES_APIKEY);
+	}
+	
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	
 		if (jsonObject != null && jsonObject.has(key)) {
 			String value = null;

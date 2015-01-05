@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetStoriesUrlEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -146,6 +147,7 @@ public class LogoutPopupVc extends Composite{
 				AppClientFactory.setLoggedInUser(result);
 				AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(result);
 				AppClientFactory.fireEvent(new SetButtonEvent());
+				AppClientFactory.fireEvent(new SetStoriesUrlEvent());
 				//AppClientFactory.resetPlace();
 				if(premiumAccountUserName.equalsIgnoreCase("TexasTeacher")) {
 					AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));

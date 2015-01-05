@@ -79,9 +79,15 @@
 				<prop key="drive.api">${drive.api}</prop>
 				<prop key="google.restendpoint">${google.restendpoint}</prop>
 				<prop key="stories.url">${stories.url}</prop>
+
 				<prop key="community.library.gooruOid">${community.library.gooruOid}</prop>
 				<prop key="show.stories">${show.stories}</prop>
 				<prop key="assessment.endpoint">${assessment.endpoint}</prop>
+
+				<prop key="stories.lti.url">${stories.lti.url}</prop>
+				<prop key="stories.loggedin.url">${stories.loggedin.url}</prop>
+				<prop key="stories.apiKey">${stories.apiKey}</prop>
+
 			</props>
 		</property>
 	</bean>

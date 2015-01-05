@@ -397,27 +397,6 @@ public interface SearchService extends BaseService {
 	 */
 	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException;
 
-	/**
-	 * @function getGooruStoriesUrl 
-	 * 
-	 * @created_date : 20-Oct-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param parms
-	 * @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	String getGooruStoriesUrl(String parms)  throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -439,8 +418,55 @@ public interface SearchService extends BaseService {
 	 *
 	 */
 	String showGooruStoriesSection()  throws GwtException, ServerDownException; 
-	
-	
+	/**
+	 * 	
+	 * @function getResourceTags 
+	 * 
+	 * @created_date : 05-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param resourceId
+	 * @parm(s) : @param offSet
+	 * @parm(s) : @param limit
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * @parm(s) : @throws ServerDownException
+	 * 
+	 * @return : SearchResourcesTagsDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public SearchResourcesTagsDo getResourceTags(String resourceId, String offSet, String limit) throws GwtException, ServerDownException; 
 
+	/**
+	 * 
+	 * @function getGooruStoriesUrl 
+	 * 
+	 * @created_date : 05-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param emailId
+	 * @parm(s) : @param userId
+	 * @parm(s) : @param userName
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * @parm(s) : @throws ServerDownException
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	String getGooruStoriesUrl(String emailId, String userId, String userName) throws GwtException, ServerDownException;
 }
