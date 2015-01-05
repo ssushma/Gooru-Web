@@ -30,11 +30,13 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler,OpenReviewPopUpEventHandler,UpdateUserStarReviewEventHandler,DeletePlayerStarReviewHandler,DeletePlayerStarRatingsEventHandler {
+public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,OpenReviewPopUpEventHandler,UpdateUserStarReviewEventHandler,DeletePlayerStarReviewHandler,DeletePlayerStarRatingsEventHandler {
 	
 	public void showQuestionView(CollectionItemDo collectionItemDo);
 
@@ -44,13 +46,13 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
 	
-	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String userReview);   
+	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String userReview,String resourceGooruId);   
 	
 	public boolean isOeAnswerSubmited();
 
-	public void updateStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip);
+	public void updateStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String resourceGooruId);
 
-	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview);
+	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview,String resourceGooruId);
 
 	public void getAvgRatingAndCount(String assocGooruOid, Integer score, String review);   
 	

@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<ui:style field="style" src="dashboard.css"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<g:HTMLPanel>
+	<div class="{style.popupWrapper}">
+		<div class="{style.PopupMainSmall}">
+			<div class="{style.popupInnerGrey}">
+				<div class="{style.popupgreyHeader}">
+					<div class="row">
+						<g:Label styleName="{style.MainHeader}" ui:field="titleTextlbl"></g:Label>
+					    <div class="{style.closeContainer}"><g:Anchor ui:field="lnkClose" styleName="{style.closeButton}"></g:Anchor></div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="{style.profilePopContent}">
+					<div class="{style.profilePopHeader}">
+						<g:Button styleName="btnGroup active" ui:field="btnHighToLow"></g:Button>	
+						<g:Button styleName="btnGroup" ui:field="btnLowToHigh"></g:Button>	
+					</div>
+					<div class="{style.colHeadBlock}">
+						<div class="col6">
+							<g:Label styleName="{style.smallHeader}"  ui:field="leftSideText" text="{i18n.GL0645}"></g:Label>
+						</div>
+						<div class="col6">
+							<g:Label styleName="{style.smallHeader}"  ui:field="rightSideText" text="{i18n.GL3056}"></g:Label>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<g:ScrollPanel styleName="{style.scrollPanel}"  ui:field="pnlScrollPanel">
+					<g:HTMLPanel styleName="{style.collectionsEndo}" ui:field="pnlItemsContainer">
+					</g:HTMLPanel>
+					</g:ScrollPanel>
+				</div>
+			</div>
+		</div>
+	</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

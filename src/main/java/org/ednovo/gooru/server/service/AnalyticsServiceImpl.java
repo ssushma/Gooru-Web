@@ -44,12 +44,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.representation.StringRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.restlet.representation.StringRepresentation;
+
 
 @Service("analyticsService")
 @ServiceURL("/analyticsService")
@@ -106,7 +107,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		if(jsonResponseRep.getStatusCode()==200){
+		if(jsonResponseRep.getStatusCode()==200){ 
 			try {
 				collectionProgressDataList= (ArrayList<CollectionProgressDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionProgressDataDo>>() {});
 			} catch (JSONException e) {
@@ -224,9 +225,12 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	@Override
-	public String setHTMLtoPDF(String htmlString) {
+	public String setHTMLtoPDF(String htmlString,String fileName,boolean isClickedOnEmail) {
+		String pdfName=fileName.replaceAll(" ", "_");
+		pdfName = pdfName + "_Collection_Summary.pdf";
 		String savedFileName=null;
 		StringRepresentation stringRepresentation= null;
+		String downloadUrl="";
 		try{
 			//String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
@@ -235,10 +239,16 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			LOGGER.info(dataPassing);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),dataPassing);
 			savedFileName=stringRepresentation.getText();
+			downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,getLoggedInSessionToken(),savedFileName,pdfName);
+			if(isClickedOnEmail){
+				downloadUrl=savedFileName;
+			}else{
+				downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,getLoggedInSessionToken(),savedFileName,pdfName);
+			}
 		}catch(Exception e){
 			
 		}
-		return savedFileName;
+		return downloadUrl;
 	}
 
 	@Override
@@ -253,6 +263,20 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
+				String boolVal="";
+				JSONArray messageArr=jsonRep.getJsonObject().getJSONArray("message");
+				if(messageArr.length()>0){
+					boolVal=messageArr.getJSONObject(0).getString("aggregateData");
+					if(boolVal.equalsIgnoreCase("true")){
+						collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
+					}else{
+						GradeJsonData gradeData=new GradeJsonData();
+						gradeData.setAggregateData(boolVal);
+						collectionResourcesList.add(gradeData);
+					}
+				}
+				
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -299,7 +323,11 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+OE+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+TOTALRESOURCECOUNT+","+GRADEINPERCENTAGE+","+GOORUOID;
 		
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
-		
+
+		System.out.println("getAnalyticsEndPoint()::"+getAnalyticsEndPoint());
+		System.out.println("collectionId::"+collectionId);
+		System.out.println("urlDataParameterValue::"+urlDataParameterValue);
+
 		String  url= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken(),urlDataParameterValue);
 		LOGGER.info("url==>"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -409,13 +437,22 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			setPlayLoadObj.put("classCode", classCode);
 			setPlayLoadObj.put("pathwayId", pathwayId);
 			setPlayLoadObj.put("classId",classpageId);
-			
+
+			setPlayLoadObj.put("sessionId",session);
+			if(contentItemId.equalsIgnoreCase("commentsDelete")){
+				setPlayLoadObj.put("active ","false");
+			}else{
+				setPlayLoadObj.put("active ","true");
+			}
+
 			mainObj.put("contentGooruOId",resourceId);
 			mainObj.put("contentItemId",contentItemId);
 			mainObj.put("parentItemId",parentItemId);
 			mainObj.put("parentGooruOId",collectionId);
 			mainObj.put("freeText",freeText);
-			mainObj.put("playLoadObject",setPlayLoadObj.toString());
+
+			mainObj.put("payLoadObject",setPlayLoadObj.toString());
+
 			mainObj.put("user",userObj);
 			LOGGER.info("mainObj.toString()::"+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());

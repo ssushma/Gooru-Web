@@ -19,14 +19,14 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			 <g:HTMLPanel ui:field="sessionsPnl" styleName="sessionsPnl">
-				<g:HTMLPanel styleName="{unitStyle.left_container}">
-				<g:HTMLPanel styleName="session_details">
-				<g:InlineLabel ui:field="sessionAccessedTime"></g:InlineLabel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
-				<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}"  ui:field="sessionText"></g:InlineLabel> 
-				<g:InlineLabel ui:field="sessionValue" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
-				</g:HTMLPanel>
+					<g:HTMLPanel styleName="{unitStyle.left_container}">
+						<g:HTMLPanel styleName="session_details">
+						   <g:InlineLabel ui:field="sessionAccessedTime"></g:InlineLabel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
+						<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}"  ui:field="sessionText"></g:InlineLabel> 
+						<g:InlineLabel ui:field="sessionValue" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		 </g:HTMLPanel>

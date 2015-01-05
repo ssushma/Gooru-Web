@@ -104,6 +104,13 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
 		//editBtn.setVisible(false);
+		editBtn.setText(i18n.GL0140());
+		cancelBtn.setText(i18n.GL0142());
+		saveBtn.setText(i18n.GL0141());
+		deleteBtnUnit.setText(i18n.GL0558());
+		btnReorder.setText(i18n.GL4001());
+		saveButton.setText(i18n.GL0141());
+		cancelButton.setText(i18n.GL0142());
 		unitNameErrorLabel.setVisible(false);
 		saveBtn.setVisible(false);
 		cancelBtn.setVisible(false);

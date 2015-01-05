@@ -31,7 +31,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
@@ -78,6 +77,11 @@ public class PlayerDataLogEvents {
 	public static final String ITEM_SHARE="item.share";
 	public static final String ITEM_FLAG="item.flag";
 	public static final String LIBRARY_VIEW="library.view";
+	public static final String COMMENT_CREATE="comment.create";
+	public static final String COMMENT_EDIT="comment.edit";
+	public static final String COMMENT_DELETE="comment.delete";
+	public static final String ITEM_RATE="item.rate";
+	public static final String ITEM_REVIEW="item.review";
 	
 	//event keys
 	public static final String EVENTID="eventId";
@@ -145,6 +149,9 @@ public class PlayerDataLogEvents {
 	public static final String TWITTER="twitter";
 	public static final String MAIL="mail";
 	public static final String SEARCHTERM="searchTerm";
+	public static final String RATE="rate";
+	public static final String PREVIOUS_RATE="previousRate";
+	
 	
 	
 	
@@ -196,8 +203,12 @@ public class PlayerDataLogEvents {
 		try{
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
 			parentGooruId=parentGooruId==null?"":parentGooruId;
-			contextMap.put(PARENTGOORUID, new JSONString(parentGooruId));
-			contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
+			if(parentGooruId!=null){
+				contextMap.put(PARENTGOORUID, new JSONString(parentGooruId));
+			}
+			if(parentEventId!=null){
+				contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
+			}
 			contextMap.put(TYPE, new JSONString(eventType));
 			contextMap.put(RESOURCETYPE, new JSONString(resourceType));
 			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
@@ -225,7 +236,9 @@ public class PlayerDataLogEvents {
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
 			contentItemId=contentItemId!=null?contentItemId:"";
 			contextMap.put(CONTENTITEMID, new JSONString(contentItemId));
-			contextMap.put(PARENTGOORUID, new JSONString(parentGooruOid));
+			if(parentGooruOid!=null){
+				contextMap.put(PARENTGOORUID, new JSONString(parentGooruOid));
+			}
 			if(parentEventId!=null){
 				contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
 			}
@@ -264,7 +277,7 @@ public class PlayerDataLogEvents {
 	public static  JSONString getDataLogVersionObject(){
 		JSONObject versionMap=new JSONObject();
 		try{
-			versionMap.put(LOGAPI, new JSONString("0.1")); //TODO need to implement version
+			versionMap.put(LOGAPI, new JSONString("0.1")); 
 		}catch(Exception e){
 			
 		}
@@ -568,6 +581,7 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemContentItemId, parentEventId, parentGooruOid, parentContItemId, playerMode, path, pageLocation, PlayerDataLogEvents.COLLECTION_SHARE_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}	
+	
 	public static void triggerItemShareDataLogEventForProfile(String itemGooruOid, String itemContentItemId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
 		JSONObject collectionDataLog=new JSONObject(); 
@@ -610,6 +624,173 @@ public class PlayerDataLogEvents {
 		libarayViewData.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getLibraryDataLogContext(libararyGooruOid, pageLocation));
 		PlayerDataLogEvents.collectionStartStopEvent(libarayViewData);
 	}
+	
+	/**
+	 * This method is used to create data in JSON format and log <b>create comment, update comment and delete comment</b> data log events
+	 * @param collectionId specifies unique id of the collection.
+	 * @param commentGooruOid specifies unique id of the comment in case of comment update and delete.
+	 * @param parentEventId  specifies event id of the library view event id or class view event id.
+	 * @param parentGooruOid specifies unique id of the library gooruOid or class view event id.
+	 * @param sessionId specifies unique id of the session created by session tracker API.
+	 * @param path specifies the hierarchy of the collection.
+	 * @param pageLocation specifies the page location of the event.
+	 * @param commentText specifies the user given comment text.
+	 * @param eventName specifies the name of the data log event.
+	 */
+	public static void triggerCommentDataLogEvent(String collectionId, String commentGooruOid,String parentEventId,String parentGooruOid,String sessionId,
+			String path,String pageLocation,String commentText,String eventName){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=PlayerDataLogEvents.getUnixTime();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(eventName));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getCommentDataLogPayLoadObject(commentText));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(collectionId, commentGooruOid, parentEventId, parentGooruOid, path, pageLocation));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	
+	/**
+	 *  This method is used to create data in JSON format and log user<b>star rating</b> data log events
+	 * @param resourceId specifies unique id of the collection item.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param parentEventId specifies event id of the collection play event id
+	 * @param sessionId specifies unique id of the session created by session tracker API.
+	 * @param path specifies the hierarchy of the collection item.
+	 * @param pageLocation specifies the page location of the event.
+	 * @param currentRate specifies user given star rating for collection item.
+	 * @param previousRate specifies user previous given star rating for collection item.
+	 */
+	public static void triggerRatingDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,double currentRate,double previousRate){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=PlayerDataLogEvents.getUnixTime();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_RATE));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getRatingtDataLogPayLoadObject(currentRate,previousRate));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(resourceId,null,parentEventId, collectionId, path, pageLocation));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	
+	/**
+	 * This method is used to frame data in JSON format and log user <b>review</b> text data log event.  
+	 * @param resourceId specifies unique id of the collection item.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param parentEventId specifies event id of the collection play event id
+	 * @param sessionId specifies unique id of the session created by session tracker API.
+	 * @param path specifies the hierarchy of the collection item.
+	 * @param pageLocation specifies the page location of the event.
+	 * @param reviewText specifies the user entered review text.
+	 */
+	public static void triggerReviewDataLogEvent(String resourceId,String collectionId, String parentEventId,String sessionId,String path, String pageLocation,String reviewText){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=PlayerDataLogEvents.getUnixTime();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(ITEM_REVIEW));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getReviewDataLogPayLoadObject(reviewText));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getCommentDataLogContextObject(resourceId,null,parentEventId, collectionId, path, pageLocation));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	
+	/**
+	 * This method is used to frame comments payload JSON object and will return JSON object.
+	 * @param commentText specifies user entered comment text.
+	 * @return  JSON object
+	 */
+	public static  JSONString getCommentDataLogPayLoadObject(String commentText){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			if(commentText!=null){
+				payLoadMap.put(TEXT, new JSONString(com.google.gwt.http.client.URL.encodeQueryString(commentText)));
+			}
+		}catch(Exception e){
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	
+	/**
+	 *  This method is used to frame comments context JSON object and will return context JSON object.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param collectionId specifies unique id of the collection.
+	 * @param commentGooruOid specifies unique id of the comment in case of comment update and delete.
+	 * @param parentEventId  specifies event id of the library view event id or class view event id.
+	 * @param parentGooruOid specifies unique id of the library gooruOid or class view event id.
+	 * @param path specifies the hierarchy of the collection.
+	 * @param pageLocation specifies the page location of the event.
+	 * @return JSON object.
+	
+	 */
+	public static  JSONString getCommentDataLogContextObject(String collectionId,String commentGooruOid,String parentEventId, String parentGooruOid, String path, String pageLocation){
+		JSONObject contextMap=new JSONObject();
+		try{
+			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
+			if(parentGooruOid!=null){
+				contextMap.put(PARENTGOORUID, new JSONString(parentGooruOid));
+			}
+			if(parentEventId!=null){
+				contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
+			}
+			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
+			contextMap.put(PATH, new JSONString(path));
+			if(pageLocation!=null){
+				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
+			}else{
+				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
+			}
+			
+		}catch(Exception e){
+			
+		}
+		return new JSONString(contextMap.toString());
+	}
+	
+	/**
+	 * This method is used to frame rating payload JSON object and will return JSON object.
+	 * @param currentRate specifies user given star rating for collection item.
+	 * @param previousRate specifies user previous given star rating for collection item.
+	 * @return JSON object.
+	 */
+	public static  JSONString getRatingtDataLogPayLoadObject(double currentRate,double previousRate){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			payLoadMap.put(RATE, new JSONNumber(currentRate));
+			payLoadMap.put(PREVIOUS_RATE, new JSONNumber(previousRate));
+			payLoadMap.put(ITEMTYPE, new JSONString(RESOURCE));
+		}catch(Exception e){
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	/**
+	 * This method is used to frame review payload JSON object and will return JSON object.
+	 * @param reviewText specifies the user entered review text.
+	 * @return JSON object
+	 */
+	public static  JSONString getReviewDataLogPayLoadObject(String reviewText){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			payLoadMap.put(TEXT, new JSONString(com.google.gwt.http.client.URL.encodeQueryString(reviewText)));
+			payLoadMap.put(ITEMTYPE, new JSONString(RESOURCE));
+		}catch(Exception e){
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	
+	
 	public static Long getUnixTime(){
 		return System.currentTimeMillis();
 	}

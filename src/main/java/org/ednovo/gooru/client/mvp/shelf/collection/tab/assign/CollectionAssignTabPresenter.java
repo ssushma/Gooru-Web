@@ -35,6 +35,8 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -119,13 +121,15 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 		
 		getView().setToClear(true);
 		isApiCalling = false;
-		getClasspage(collectionDo, null);
+		getClasspage(collectionDo, null,null);
 	}
 	
-	public void getClasspage(CollectionDo collectionDo, String shareType){
+	public void getClasspage(CollectionDo collectionDo, String shareType,ScrollPanel spanel){
 		this.shareType = shareType;
 		this.collectionDo = collectionDo;
 		getView().setCollectionDo(collectionDo);
+		
+		getView().closeCalendar(spanel);
 		
 		if (!isApiCalling){			//This condition is added because, this method is called thrice from shelf
 			classpageOffSet = 0;
@@ -134,6 +138,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 			 * getting available classpages of the user
 			 */
 			getAllClasspages(limit, String.valueOf(classpageOffSet));
+			
 			
 			getView().hideContainers();
 		}
@@ -279,4 +284,5 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 	public void setShareType(String shareType) {
 		this.shareType = shareType;
 	}	
+
 }

@@ -28,6 +28,8 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
+import com.google.gwt.user.client.ui.ScrollPanel;
+
 /**
  * @author Search Team
  *
@@ -83,4 +85,6 @@ public interface IsCollectionAssignTab extends IsViewWithHandlers<CollectionAssi
 	void setToClear(boolean toClear);
 	
 	void setPrivateLableVisibility(boolean visibility);
+	
+	void closeCalendar(ScrollPanel spanel);
 }

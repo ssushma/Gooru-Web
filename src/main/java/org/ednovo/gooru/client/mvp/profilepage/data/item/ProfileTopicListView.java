@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionHandler;
+import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
@@ -108,9 +109,9 @@ public class ProfileTopicListView extends Composite{
 
 	private boolean isScrollable = true;
 	
-	private boolean isAssignPopup = false;
+	public static boolean isAssignPopup = false;
 	
-	private boolean isCustomizePopup = false;
+	public static boolean isCustomizePopup = false;
 	
 	private ProfileLibraryDo profileLibraryDo;
 	
@@ -167,6 +168,7 @@ public class ProfileTopicListView extends Composite{
 	private static final String COLLECTION_TITLE = "collectionTitle";
 	
 	private String libraryGooruOid=null;
+	
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
 			.create(ProfileTopicListViewUiBinder.class);
@@ -629,6 +631,10 @@ public class ProfileTopicListView extends Composite{
 										if(libraryGooruOid!=null){
 											params.put("lid", libraryGooruOid);
 										}
+										String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+										if(libraryEventId!=null){
+											params.put("eventid", libraryEventId);
+										}
 										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 											params.put("library", getPlaceToken());
 										}
@@ -662,6 +668,10 @@ public class ProfileTopicListView extends Composite{
 										params.put("lessonId", lessonId);
 										if(libraryGooruOid!=null){
 											params.put("lid", libraryGooruOid);
+										}
+										String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+										if(libraryEventId!=null){
+											params.put("eventid", libraryEventId);
 										}
 										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 											params.put("library", getPlaceToken());
@@ -1065,6 +1075,10 @@ public class ProfileTopicListView extends Composite{
 			if(libraryGooruOid!=null){
 				params.put("lid", libraryGooruOid);
 			}
+			String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+			if(libraryEventId!=null){
+				params.put("eventid", libraryEventId);
+			}
 			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 				params.put("library", getPlaceToken());
 			}
@@ -1257,6 +1271,7 @@ public class ProfileTopicListView extends Composite{
 		params.put("query", searchQuery);
 		params.put("pageSize", "8");
 		params.put("pageNum", "1");
+		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		return params;
 	}
 	private class OnSearchLinkClick implements ClickHandler {

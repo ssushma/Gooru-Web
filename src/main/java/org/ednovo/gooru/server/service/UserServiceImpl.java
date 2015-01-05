@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.UserService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
@@ -43,6 +43,7 @@ import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
@@ -51,6 +52,7 @@ import org.ednovo.gooru.shared.model.user.GenderDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.ProfileV2Do;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -59,11 +61,9 @@ import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +97,31 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	private static final String PROFILE = "profile";
 	
 	private static final String USER_META_ACTIVE_FLAG = "&userMetaActiveFlag=1";
+	
+	
+	public static final String FIELDS="fields";
+	public static final String DATASOURCE="dataSource";
+	public static final String GRANULARITY="granularity";
+	public static final String GROUPBY="groupBy";
+	public static final String LOGICALKey="logicalOperatorPrefix";
+	public static final String RATNGFIELDS="copiedCount,shareCount,countOfReaction5,countOfRating5,countOfRating4,countOfRating3,countOfRating2,countOfRating1,countOfICanExplain,countOfINeedHelp,countOfIDoNotUnderstand,countOfMeh,countOfICanUnderstand,commentCount,reviewCount";
+	
+	public static final String TYPE="type";
+	public static final String VALUETYPE="valueType";
+	public static final String FIELDNAME="fieldName";
+	public static final String OPERATOR="operator";
+	public static final String VALUE="value";
+	
+	public static final String FILTER=	"filter";
+	public static final String AGGREGATIONS="aggregations";
+	public static final String PAGINATION="pagination";
+	public static final String OFFSETVAL=	"offset";
+	public static final String LIMITVAL="limit";
+	public static final String SORTBY="sortBy";
+	public static final String SORTORDER="sortOrder";
+	public static final String ORDERKEY="order";
+	
+	
 
 	@Override
 	public UserDo getEmailId(String emailId) {
@@ -169,7 +194,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public V2UserDo getV2UserProfileDetails(String gooruUid) {
 		V2UserDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, userUid, getLoggedInSessionToken());
+		System.out.println("urlval::"+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -367,7 +393,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
-		System.out.println("getUserProfileV2Details..."+url);
+	
+		getLogger().info("-- usersetting to get grdes -- "+url);
+
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -618,6 +646,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken(),offset,limit);
+		getLogger().info("-- user based tags url -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeTagsContent(jsonRep);
@@ -795,10 +824,530 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			JSONObject jsonObject=jsonRep.getJsonObject();
 			resetToken = jsonObject.getString("isValidToken");
 			}catch(JSONException e){}
-				
 		}
-		return resetToken;
+		return resetToken;																																																																																																																																																																																																								
+	}
+	@Override
+	public UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount() {
+		JsonRepresentation jsonRep = null;
+		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlDataParameterValue);
+		System.out.println("getUsersPublishedCollectionsCount url::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDoObj = null;
+		if(jsonRep!=null){
+			try {
+				userDashBoardCommonInfoDoObj=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return userDashBoardCommonInfoDoObj;
+	}
+	/**
+	 * This method is used to frame json string
+	 * @param userId
+	 * @param resourceTypeId
+	 * @return
+	 */
+	public String createJsonPayloadObject(String userId,String resourceTypeId){
+		JSONObject jsonDataObject=new JSONObject(); 
+		try {
+			jsonDataObject.put(FIELDS, "publishedCollection");
+			jsonDataObject.put(DATASOURCE, "content");
+			jsonDataObject.put(GRANULARITY, "");
+			jsonDataObject.put(GROUPBY, "creatorUid");
+			
+			
+			JSONArray filterArray = new JSONArray();
+			JSONObject filterObject = new JSONObject();
+			JSONArray fieldsArray = new JSONArray();
+			JSONObject fieldsObjectOne = new JSONObject();
+			JSONObject fieldsObjectTwo = new JSONObject();
+			JSONObject fieldsObjectThree = new JSONObject();
+			JSONObject paginationObject = new JSONObject();
+			
+			JSONArray agreegationsArray = new JSONArray();
+			JSONObject aggregationsObject = new JSONObject();
+			
+			JSONArray orderArray = new JSONArray();
+			
+			fieldsObjectOne.put("type","selector");
+			fieldsObjectOne.put("valueType","String");
+			fieldsObjectOne.put("fieldName","creatorUid");
+			fieldsObjectOne.put("operator","eq");
+			fieldsObjectOne.put("value",userId);
+			
+			fieldsObjectTwo.put("type","selector");
+			fieldsObjectTwo.put("valueType","String");
+			fieldsObjectTwo.put("fieldName","sharing");
+			fieldsObjectTwo.put("operator","eq");
+			fieldsObjectTwo.put("value","public");
+			
+			fieldsObjectThree.put("type","selector");
+			fieldsObjectThree.put("valueType","Long");
+			fieldsObjectThree.put("fieldName","resourceTypeId");
+			fieldsObjectThree.put("operator","eq");
+			fieldsObjectThree.put("value",resourceTypeId);
+			
+			fieldsArray.put(fieldsObjectOne);
+			fieldsArray.put(fieldsObjectTwo);
+			fieldsArray.put(fieldsObjectThree);
+			
+			
+			filterObject.put(LOGICALKey, "AND");
+			filterObject.put(FIELDS, fieldsArray);
+			filterArray.put(filterObject);
+			
+			
+			aggregationsObject.put("field1", "gooruOid");
+			aggregationsObject.put("formula","count");
+			aggregationsObject.put("name","publishedCollection");
+			aggregationsObject.put("requestValues","field1");
+			
+			agreegationsArray.put(aggregationsObject);
+			
+			paginationObject.put("offset",0);
+			paginationObject.put("limit",10);
+			paginationObject.put("order",orderArray);
+			
+			
+			
+			jsonDataObject.put("filter", filterArray);
+			jsonDataObject.put("aggregations", agreegationsArray);
+			jsonDataObject.put("pagination", paginationObject);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonDataObject.toString();
+	}
+
+	@Override
+	public UserDashBoardCommonInfoDO getFiveStarRatedResources() {
+		JsonRepresentation jsonrep = null;
+		//"1edb25aa-5c5e-4d13-8498-15ef31a93c1f"   sessiontoken hardcoded
+		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfRating5",
+				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
+		String url= UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(), urlparameters);
+		System.out.println("getFiveStarRatedResources url:::"+url);
+		JsonResponseRepresentation jsonRespRep=ServiceProcessor.post(url,getRestUsername(),getRestPassword());
+		jsonrep	=jsonRespRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDOObject = null;
+		if(jsonrep!=null){
+			try{
+				userDashBoardCommonInfoDOObject	= JsonDeserializer.deserialize(jsonrep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return userDashBoardCommonInfoDOObject;
 	}
 	
+	@Override
+	public UserDashBoardCommonInfoDO getFiveStarReviewdResources() {
+		JsonRepresentation jsonRep = null;
+		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfICanExplain",
+				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);
+		System.out.println("getFiveStarReviewdResources url::::::"+url);
+		JsonResponseRepresentation jsonRespRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep	= jsonRespRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
+		if(jsonRep != null){
+			try{
+				userDashBoardCommonInfoDO	=	JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			}catch(Exception e){
+				
+			}
+		}
+		return userDashBoardCommonInfoDO;
+	}
 	
+	/**
+	 * This method is used to frame json string.
+	 * @param fields
+	 * @param content
+	 * @param granularity
+	 * @param groupBy
+	 * @param logicalKey
+	 * @param selector
+	 * @param stringval
+	 * @param countofratings
+	 * @param operatorval
+	 * @param valueone
+	 * @param creatoruserId
+	 * @param eqval
+	 * @param creatoruid
+	 * @param desc
+	 * @return
+	 */
+	public String createJsonRatingsPayloadObject(String fields,String content,String granularity,String groupBy,String logicalKey,String selector,String stringval,
+			String countofratings,String operatorval,String valueone,String creatoruserId,String eqval,String creatoruid,String desc){
+		JSONObject jsondataobject= null;
+		try{
+		jsondataobject = new JSONObject();
+		
+		JSONObject filterobject = new JSONObject();
+		JSONArray filterArray = new JSONArray();
+		JSONArray fieldsArray = new JSONArray();
+		JSONObject fieldsobjectone = new JSONObject();
+		JSONObject fieldsobjecttwo = new JSONObject();
+		JSONArray aggregationsArray = new JSONArray();
+		JSONObject paginationobject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		JSONObject orderobject = new JSONObject();
+		
+		jsondataobject.put(FIELDS, fields);
+		jsondataobject.put(DATASOURCE, content);
+		jsondataobject.put(GRANULARITY, granularity);
+		jsondataobject.put(GROUPBY, groupBy);
+		
+		filterobject.put(LOGICALKey, logicalKey);
+		
+		fieldsobjectone.put(TYPE, selector);
+		fieldsobjectone.put(VALUETYPE, stringval);
+		fieldsobjectone.put(FIELDNAME, countofratings);
+		fieldsobjectone.put(OPERATOR, operatorval);
+		fieldsobjectone.put(VALUE, valueone);
+		
+		
+		fieldsobjecttwo.put(TYPE, selector);
+		fieldsobjecttwo.put(VALUETYPE, stringval);
+		fieldsobjecttwo.put(FIELDNAME, creatoruid);
+		fieldsobjecttwo.put(OPERATOR, eqval);
+		//fieldsobjecttwo.put(VALUE, creatoruserId);
+		fieldsobjecttwo.put(VALUE, "ee410cef-2a44-46ef-878d-172511e54e07");
+		
+		
+		fieldsArray.put(fieldsobjectone);
+		fieldsArray.put(fieldsobjecttwo);
+		
+		
+		filterobject.put(FIELDS, fieldsArray);
+		filterArray.put(filterobject);
+		jsondataobject.put(FILTER, filterArray);
+		jsondataobject.put(AGGREGATIONS, aggregationsArray);
+		
+		paginationobject.put(OFFSETVAL, 0);
+		paginationobject.put(LIMITVAL, 10);
+		
+		orderobject.put(SORTBY, countofratings);
+		orderobject.put(SORTORDER, desc);
+		
+		orderArray.put(orderobject);
+		paginationobject.put(ORDERKEY, orderArray);
+		
+		jsondataobject.put(PAGINATION, paginationobject);
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+
+		}
+		
+		return jsondataobject.toString();
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.UserService#getTheAnalyticsFlaggedMonthlyData(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval) {
+		JsonRepresentation jsonRep = null;
+		String urlparameters = getTopViewedCollectionPayloadObject(offsetval, limitval);
+		/*String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);*/
+		String url = "http://www.goorulearning.org/insights/api/v2/query?sessionToken=419c6c56-5295-11e4-8d6c-123141016e2a&data="+urlparameters;
+		System.out.println("getTopViewedCollectionsInfo:::::"+url);
+		JsonResponseRepresentation jsonRespRep	= ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonRespRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
+		if(jsonRep!= null){
+			try{
+				userDashBoardCommonInfoDO = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			}catch(Exception e){
+				
+			}
+		}
+		return userDashBoardCommonInfoDO;
+	}
+	public String getTopViewedCollectionPayloadObject(String offset,String limit){
+		
+		JSONObject jsonDataObject = new JSONObject();
+		try{
+		JSONArray filterArray = new JSONArray();
+		JSONObject filterObject = new JSONObject();
+		JSONArray fieldsArray = new JSONArray();
+		JSONObject fieldsObjectOne = new JSONObject();
+		JSONObject fieldsObjectTwo = new JSONObject();
+		JSONArray agreegationsArray = new JSONArray();
+		JSONObject aggregationsObject = new JSONObject();
+		JSONObject paginationsObject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		
+		
+		jsonDataObject.put("fields","title,gooruOid,viewsCount,thumbnail,description");
+		jsonDataObject.put("dataSource","rawdata,content");
+		jsonDataObject.put("granularity","");
+		jsonDataObject.put("groupBy","gooruOid");
+		jsonDataObject.put("orderBy","topViewedCollection");
+		
+		filterObject.put("logicalOperatorPrefix", "AND");
+		
+		fieldsObjectOne.put("type", "selector");
+		fieldsObjectOne.put("valueType", "string");
+		fieldsObjectOne.put("fieldName", "eventName");
+		fieldsObjectOne.put("operator", "eq");
+		fieldsObjectOne.put("value", "collection.play");
+		
+		fieldsObjectTwo.put("type", "selector");
+		fieldsObjectTwo.put("valueType", "string");
+		fieldsObjectTwo.put("fieldName", "gooruUId");
+		fieldsObjectTwo.put("operator", "eq");
+		fieldsObjectTwo.put("value", getLoggedInUserUid());
+		
+		fieldsArray.put(fieldsObjectOne);
+		fieldsArray.put(fieldsObjectTwo);
+		
+		filterObject.put("fields", fieldsArray);
+		
+		filterArray.put(filterObject);
+		
+		jsonDataObject.put("filter", filterArray);
+		
+		aggregationsObject.put("field1", "eventName");
+		aggregationsObject.put("formula", "count");
+		aggregationsObject.put("name", "topViewedCollection");
+		aggregationsObject.put("requestValues", "field1");
+		
+		agreegationsArray.put(aggregationsObject);
+		
+		jsonDataObject.put("aggregations", agreegationsArray);
+		
+		paginationsObject.put("offset", offset);
+		paginationsObject.put("limit", limit);
+		paginationsObject.put("order", orderArray);
+		
+		jsonDataObject.put("pagination", paginationsObject);
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return jsonDataObject.toString();
+	}
+
+	@Override
+	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+
+		System.out.println("url::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeMapData(jsonRep,operator);
+	}
+	/**
+	 * This method is used to frame json string.
+	 * @param fieldVal
+	 * @param startDate
+	 * @param endDate
+	 * @param operator
+	 * @return
+	 */
+	public String createProfileJsonPayloadObject(String fieldVal,String startDate,String endDate,String operator){
+		JSONObject jsonMainDataObject=new JSONObject(); 
+		try {
+			jsonMainDataObject.put("fields", "");
+			jsonMainDataObject.put("dataSource","rawdata");
+			jsonMainDataObject.put("granularity","month");
+			
+			JSONArray filterArray=new JSONArray();
+			JSONObject filterObj=new JSONObject();
+			filterObj.put("logicalOperatorPrefix", "AND");
+			
+			JSONArray filterArrayVales=new JSONArray();
+			
+			JSONObject firstFilterVal=new JSONObject();
+			firstFilterVal.put("type", "selector");
+			firstFilterVal.put("valueType", "string");
+			firstFilterVal.put("fieldName", "eventName");
+			firstFilterVal.put("operator", operator);
+			firstFilterVal.put("value", fieldVal);
+			filterArrayVales.put(firstFilterVal);
+			
+			JSONObject secondFilterVal=new JSONObject();
+			secondFilterVal.put("type", "selector");
+			secondFilterVal.put("valueType", "Date");
+			secondFilterVal.put("fieldName", "eventTime");
+			secondFilterVal.put("operator", "ge");
+			secondFilterVal.put("value", startDate);
+			secondFilterVal.put("format", "yyyy-MM-dd");
+			filterArrayVales.put(secondFilterVal);
+			
+			JSONObject thiredFilterVal=new JSONObject();
+			thiredFilterVal.put("type", "selector");
+			thiredFilterVal.put("valueType", "Date");
+			thiredFilterVal.put("fieldName", "eventTime");
+			thiredFilterVal.put("operator", "le");
+			thiredFilterVal.put("value", endDate);
+			thiredFilterVal.put("format", "yyyy-MM-dd");
+			filterArrayVales.put(thiredFilterVal);
+		
+			JSONObject fourthFilterVal=new JSONObject();
+			fourthFilterVal.put("type", "selector");
+			fourthFilterVal.put("valueType", "String");
+			fourthFilterVal.put("fieldName", "gooruUId");
+			fourthFilterVal.put("operator", "eq");
+			fourthFilterVal.put("value", getLoggedInUserUid());
+			filterArrayVales.put(fourthFilterVal);
+			
+			filterObj.put("fields", filterArrayVales);
+			filterArray.put(filterObj);
+			jsonMainDataObject.put("filter", filterArray);
+			
+			JSONArray aggregationsArray=new JSONArray();
+			JSONObject aggregationObj=new JSONObject();
+			aggregationObj.put("field1", "eventName");
+			aggregationObj.put("formula", "count");
+			aggregationObj.put("name", "eventCount");
+			aggregationObj.put("requestValues", "field1");
+			aggregationsArray.put(aggregationObj);
+			
+			jsonMainDataObject.put("aggregations", aggregationsArray);
+			jsonMainDataObject.put("groupBy","eventName,eventTime");
+			
+			JSONObject paginationObj=new JSONObject();
+			paginationObj.put("offset", 0);
+			paginationObj.put("limit", 10);
+			JSONArray offsetArray=new JSONArray();
+			paginationObj.put("order",offsetArray);
+			
+			jsonMainDataObject.put("pagination",paginationObj);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonMainDataObject.toString();
+	}
+	/**
+	 * This method is used to deserialize flagged,view,shared and add to collection response.
+	 * @param jsonRep
+	 * @param operator
+	 * @return
+	 */
+	public Map<String, Integer> deserializeMapData(JsonRepresentation jsonRep,String operator) {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+		try{
+			JSONArray posts = jsonRep.getJsonObject().getJSONArray("content");
+			for(int i=0;i<posts.length();i++){
+				JSONObject obj=posts.getJSONObject(i);
+				Iterator<String> keys = obj.keys();
+				int j=0;
+		        while( keys.hasNext() ){
+		            String key = (String)keys.next();
+		            if( obj.get(key) instanceof JSONArray ){
+		            	int size=obj.getJSONArray(key).length();
+		            	if(operator.equalsIgnoreCase("in") && size>=2){
+		            		result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount")+obj.getJSONArray(key).getJSONObject(1).getInt("eventCount"));
+		            	}else{
+		            		result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount"));
+		            	}
+		            }
+		            j++;
+		        }
+			}
+		}catch(JSONException e){
+			e.getStackTrace();
+		}
+	}
+		return result;
+ }
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.UserService#getProfileAnalyticsRatings()
+	 */
+	@Override
+	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileRatingsJsonPayloadObject());
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileRatingsJsonPayloadObject());
+		//String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileRatingsJsonPayloadObject();
+		System.out.println("url::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		ProfileRatingsReactionsDO profileRatingsReactionsDO = null;
+			try {
+				if(jsonRep!=null && jsonRep.getJsonObject().getJSONArray("content").length()>0){
+					System.out.println(jsonRep.getJsonObject().getJSONArray("content").get(0).toString());;
+					profileRatingsReactionsDO=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").get(0).toString(), ProfileRatingsReactionsDO.class);
+					}
+				} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		return profileRatingsReactionsDO;
+	}
+	/**
+	 * This method is used to create a json sting for profile ratings.
+	 * @return
+	 */
+	public String createProfileRatingsJsonPayloadObject(){
+		JSONObject jsonMainDataObject=new JSONObject(); 
+		try {
+			jsonMainDataObject.put("fields",RATNGFIELDS);
+			jsonMainDataObject.put("dataSource","user");
+			jsonMainDataObject.put("granularity","");
+			
+			JSONArray filterArray=new JSONArray();
+			//First Obj
+			JSONObject filterObj=new JSONObject();
+			filterObj.put("logicalOperatorPrefix", "AND");
+				JSONArray filterArrayVales=new JSONArray();
+				Map<String,String> firstFilterMap=new HashMap<String, String>();
+				firstFilterMap.put("type","selector");
+				firstFilterMap.put("valueType","string");
+				firstFilterMap.put("fieldName","gooruUId");
+				firstFilterMap.put("operator","eq");
+				firstFilterMap.put("value",getLoggedInUserUid());
+				JSONObject firstFilterVal=getPayLoadObj(firstFilterMap);
+				filterArrayVales.put(firstFilterVal);
+				filterObj.put("fields", filterArrayVales);
+			filterArray.put(filterObj);
+			
+			jsonMainDataObject.put("filter", filterArray);
+			
+			JSONArray aggregationsArray=new JSONArray();
+			jsonMainDataObject.put("aggregations", aggregationsArray);
+			jsonMainDataObject.put("groupBy","");
+			
+			JSONObject paginationObj=new JSONObject();
+			paginationObj.put("offset", 0);
+			paginationObj.put("limit", 10);
+			JSONArray offsetArray=new JSONArray();
+			paginationObj.put("order",offsetArray);
+			
+			jsonMainDataObject.put("pagination",paginationObj);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonMainDataObject.toString();
+	}
+	/**
+	 * This method is used to frame json sting based on the give map.
+	 * @param payLoad
+	 * @return
+	 */
+	public JSONObject getPayLoadObj(Map<String,String> payLoad){
+		JSONObject objVal=null;
+		try{
+			objVal=new JSONObject();
+			for(Map.Entry<String, String> entry : payLoad.entrySet()) {
+				objVal.put(entry.getKey(), entry.getValue());
+			}
+		}catch(Exception e){	}
+		return objVal;
+	}
 }

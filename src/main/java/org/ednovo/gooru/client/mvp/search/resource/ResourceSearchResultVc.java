@@ -61,6 +61,7 @@ import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -199,6 +200,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public Label getAddButton(){
 		return wrapperVcr.addLbl;
 	}
+	
+	public Label getAnalyticsButton(){
+				return wrapperVcr.analyticsInfoLbl;
+			}
+	
 	public SimplePanel getAddResourceContainerPanel(){
 		return wrapperVcr.disclosureContentSimPanel;
 	}
@@ -289,13 +295,21 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		this.resourceSearchResultDo = resourceSearchResultDo;
 		ratingWidgetView.getAverageRatingLabel().setText(Double.toString(resourceSearchResultDo.getRatings().getAverage())+" ");
 		ratingWidgetView.getAverageRatingLabel().setVisible(false);
-//		ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 		Integer reviewCount;
 		reviewCount= resourceSearchResultDo.getRatings().getReviewCount();
 		if(reviewCount==null){
 			reviewCount = 0;
 		}
-		ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024()); 
+		if(reviewCount!=0){
+			ratingWidgetView.getRatingCountLabel().setVisible(true);
+			if(reviewCount==1){
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL3006()); 
+			}else{
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024()); 
+			}
+		}else{
+			ratingWidgetView.getRatingCountLabel().setVisible(false);
+		}
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		wrapperVcr.setData(resourceSearchResultDo);
@@ -532,16 +546,22 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 				if(ratingWidgetView!=null){
 					String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
 					if(Integer.parseInt(revCount[1].trim())==1){
-//						ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-//						ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
 						ratingWidgetView.setAvgStarRating(0);
-						ratingWidgetView.getRatingCountLabel().setText(" "+ (Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
-						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
-//						ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
+						ratingWidgetView.getRatingCountLabel().setVisible(false);	
+						/**
+						 * Commented the following code as 0 reviews we should not show.
+						 */
+						/*ratingWidgetView.getRatingCountLabel().setText(" "+ (Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
+						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);*/
 					}else{
-//						ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+						ratingWidgetView.getRatingCountLabel().setVisible(true); 
 						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
-						ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
+						if((Integer.parseInt(revCount[1])-1)==1){
+							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL3006());  
+						}else{
+							ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
+						}
+						
 					}
 				}
 			}
@@ -553,23 +573,30 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		@Override
 		public void setReviewCount(String resourceId,Integer count) {
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
-				setUpdateReviewCount(count);
-				/*ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-				ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");*/
-				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
-				ratingWidgetView.getAverageRatingLabel().setVisible(false);
-				/*if(count==1 && isRatingUpdated){
-					isRatingUpdated=false;
-//					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-//					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
-					if(reviewLabelHandler !=null){
-						reviewLabelHandler.removeHandler();
+				if(count!=0){
+					ratingWidgetView.getRatingCountLabel().setVisible(true); 
+					setUpdateReviewCount(count);
+					if(count==1){
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL3006()); 
+					}else{
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
 					}
-//					reviewLabelHandler = ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-				}*/
+				}else{
+					ratingWidgetView.getRatingCountLabel().setVisible(false);
+				}
+				ratingWidgetView.getAverageRatingLabel().setVisible(false);
 			}
 		}
 		
 	};
+	
+	
+	public Label getAddTagsTab(){
+		return wrapperVcr.getTagsLbl();
+	}
+	
+	public boolean isTagsPanelOpen(){
+		return wrapperVcr.isTagsDisclosurePanelOpen();
+	}
+	
 }

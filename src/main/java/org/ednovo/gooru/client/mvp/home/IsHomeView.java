@@ -29,6 +29,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 
 import com.google.gwt.user.client.ui.Button;
@@ -77,5 +78,5 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	*/
 	
 	Button getBtnSignUp();
-	
+
 }

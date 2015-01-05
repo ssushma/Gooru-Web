@@ -340,7 +340,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JSONObject FolderDataObject=new JSONObject();
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
 		try {
-			collectionDataObject.put("collectionType", "collection");
+			collectionDataObject.put("collectionType", data.getCollectionType());
 			collectionDataObject.put("title", data.getTitle());
 			collectionDataObject.put("sharing", data.getSharing());
 			collectionDataObject.put("grade", data.getGrade());
@@ -353,8 +353,11 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			}
 			FolderDataObject.put("collection", collectionDataObject);
 			FolderDataObject.put("parentId", folderId);
+			System.out.println("createCollectionInParent urll==>"+url);
+			System.out.println("FolderDataObject object==>"+FolderDataObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),FolderDataObject.toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
+			System.out.println("outputt==>==>"+jsonRep.getText());
 			collectionDo = deserializeCreatedCollInFolder(jsonRep);
 		} catch (Exception e) {
 		}

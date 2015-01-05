@@ -38,8 +38,10 @@ import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInPlayEvent;
+import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusHandler;
+import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
@@ -821,6 +823,9 @@ public abstract class AssignPopupVc extends PopupPanel {
 		{
 			params.remove("assign");
 		}
+		LibraryTopicListView.isAssignPopup=false;
+		ProfileTopicListView.isAssignPopup=false;
+		
 /*		AppClientFactory.getPlaceManager().revealPlace(
 				AppClientFactory.getCurrentPlaceToken(), params);*/
 		

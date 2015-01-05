@@ -2744,10 +2744,7 @@ public interface MessageProperties extends Constants {
 	String GL2225();
 
 	String GL2226();
-	String GL2227();
-	String GL2228();
-	String GL2229();
-	String GL2230();
+
 	String GL2231();
 	String GL2232();
 	String GL2233();
@@ -2798,50 +2795,52 @@ public interface MessageProperties extends Constants {
 	String GL2188_3();
 	
 	//Analytics Static data
-	 String GL2256();
-	 String GL2257();
-	 String GL2258();
-	 String GL2259();
-	 String GL2260();
-	 String GL2261();
-	 String GL2262();
-	 String GL2263();
-	 String GL2264();
-	 String GL2265();
-	 String GL2266();
-	 String GL2267();
-	 String GL2268();
-	 String GL2269();
-	 String GL2270();
-	 String GL2271();
-	 String GL2272();
-	 String GL2273();
-	 String GL2274();
-	 String GL2275();
-	 String GL2276();
-	 String GL2277();
-	 String GL2278();
-	 String GL2279();
-	 String GL2280();
-	 String GL2281();
-	 String GL2282();
-	 String GL2283();
-	 String GL2284();
-	 String GL2285();
-	 String GL2286();
-	 String GL2287();
-	 String GL2288();
-	 String GL2289();
-	 String GL2290();
-	 String GL2291();
-	 String GL2292();
-	 String GL2293();
+		
+	//Analytics Static data
+		 String GL2256();
+		 String GL2257();
+		 String GL2258();
+		 String GL2259();
+		 String GL2260();
+		 String GL2261();
+		 String GL2262();
+		 String GL2263();
+		 String GL2264();
+		 String GL2265();
+		 String GL2266();
+		 String GL2267();
+		 String GL2268();
+		 String GL2269();
+		 String GL2270();
+		 String GL2271();
+		 String GL2272();
+		 String GL2273();
+		 String GL2274();
+		 String GL2275();
+		 String GL2276();
+		 String GL2277();
+		 String GL2278();
+		 String GL2279();
+		 String GL2280();
+		 String GL2281();
+		 String GL2282();
+		 String GL2283();
+		 String GL2284();
+		 String GL2285();
+		 String GL2286();
+		 String GL2287();
+		 String GL2288();
+		 String GL2289();
+		 String GL2290();
+		 String GL2291();
+		 String GL2292();
+		 String GL2293();
+	
 	
 	String GL2201();
 	String GL2202();
 	String GL2203();
 
-	
 	String GL2189_1();
 	String GL2190_1();
 	String GL2191_1();
@@ -2859,7 +2858,137 @@ public interface MessageProperties extends Constants {
 	String GL2202_1();
 	String GL2203_1();
 
+
 	String GL2204_1();
 	String GL2205_1();
+	
+		
+	
+	String GL4001();
+	String GL4002();
+	String GL4003();
+	String GL4004();
+	String GL4005();
+
+	
+	String GL3000();
+	String GL3001();
+	String GL3002();
+	String GL3003();
+	String GL3004();
+	String GL3005();
+	String GL3006();
+	
+	//Assesments
+	String GL3007();
+	String GL3008();
+	String GL3009();
+	String GL3010();
+	String GL3011();
+	String GL3012();
+	String GL3013();
+	String GL3014();
+	String GL3015();
+	String GL3016();
+	String GL3017();
+	String GL3018();
+	String GL3019();
+	String GL3020();
+	String GL3021();
+	String GL3022();
+	String GL3023();
+	String GL3024();
+	String GL3025();
+	String GL3026();
+	String GL3027();
+	String GL3028();
+	String GL3029();
+	String GL3030();
+	String GL3031();
+	String GL3032();
+	String GL3033();
+	String GL3034();
+	String GL3035();
+	String GL3036();
+	String GL3037();
+	String GL3038();
+	String GL3039();
+	String GL3040();
+	String GL3041();
+	String GL3042();
+	String GL3043();
+	String GL3044();
+	String GL3045();
+	String GL3046();
+	String GL3047();
+	String GL3048();
+	String GL3049();
+	String GL3050();
+	String GL3051();
+	String GL3052();
+	String GL3053();
+	String GL3054();
+	String GL3055();
+	String GL3056();
+	String GL3057();
+	String GL3058();
+	String GL3059();
+
+	String GL2295();
+	String GL2230();
+	String GL2227();
+	String GL2228();
+	String GL2229();
+	String GL2294();
+	String GL2296();
+	String GL2297();
+
+	String GL3060();
+	String GL3061();
+	String GL3062();
+	String GL3063();
+	String GL3064();
+	String GL3065();
+	String GL3066();
+	String GL3067();
+	String GL3068();
+	String GL3069();
+	String GL3070();
+	String GL3071();
+	String GL3072();
+	String GL3073();
+	String GL3074();
+	String GL3075();
+	String GL3076();
+	String GL3077();
+	String GL3078();
+	String GL3079();
+	String GL3080();
+	String GL3081();
+	String GL3082();
+	String GL3083();
+	String GL3084();
+	String GL3085();
+	String GL3086();
+	String GL3087();
+	String GL3088();
+	String GL3089();
+	String GL3090();
+	String GL3091();
+	String GL3092();
+	String GL3093();
+	String GL3094();
+	String GL3095();
+	String GL3096();
+	String GL3097();
+	String GL3098();
+	String GL3099();
+	String GL3100();
+	String GL3101();
+	String GL3102();
+	String GL3103();
+	String GL3104();
+	String GL3105();
+	String GL3106();
 
 }

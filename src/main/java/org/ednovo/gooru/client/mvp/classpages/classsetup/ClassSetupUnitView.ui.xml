@@ -19,11 +19,11 @@
 				<g:Label ui:field="unitnameLBL"></g:Label>
 		</gg:HTMLEventPanel>
 		<g:HTMLPanel styleName="{playerStyle.ordButtons}">
-			<g:Button ui:field="editBtn" styleName="secondary normalBtn">Edit</g:Button> 
-			<g:Button ui:field="cancelBtn" styleName="secondary"> Cancel</g:Button>  
-			<g:Button ui:field="saveBtn" styleName="primary"> Save</g:Button> 
-			<g:Button ui:field="deleteBtnUnit" styleName="secondary normalBtn">Delete</g:Button> 
-			<g:Button styleName="secondary normalBtn {playerStyle.lgBtn}" ui:field="btnReorder">Reorder</g:Button></g:HTMLPanel>
+			<g:Button ui:field="editBtn" styleName="secondary normalBtn"></g:Button> 
+			<g:Button ui:field="cancelBtn" styleName="secondary"></g:Button>  
+			<g:Button ui:field="saveBtn" styleName="primary"></g:Button> 
+			<g:Button ui:field="deleteBtnUnit" styleName="secondary normalBtn"></g:Button> 
+			<g:Button styleName="secondary normalBtn {playerStyle.lgBtn}" ui:field="btnReorder"></g:Button></g:HTMLPanel>
  			<gg:HTMLEventPanel styleName="{playerStyle.profileVisiblityPopup} {playerStyle.absoluteContainer}" ui:field="moveAssignmentPopup">
 				<g:HTMLPanel styleName="{playerStyle.bubblearrowstyle}"></g:HTMLPanel>
 			    <g:HTMLPanel styleName=" {playerStyle.standardsinner} {playerStyle.standardsPopup}">
@@ -45,8 +45,8 @@
 						     </g:HTMLPanel>
 					      </g:HTMLPanel>		
 						  <g:HTMLPanel styleName="{playerStyle.saveBtnsReorder}" ui:field="buttonsContainerReorder"> 
-								<g:Button ui:field="cancelButton" styleName="secondary"> Cancel</g:Button>  
-								<g:Button ui:field="saveButton" styleName="primary"> Save</g:Button> 
+								<g:Button ui:field="cancelButton" styleName="secondary"> </g:Button>  
+								<g:Button ui:field="saveButton" styleName="primary"> </g:Button> 
 						  </g:HTMLPanel>		
 			         </g:HTMLPanel>
 			      </gg:HTMLEventPanel>	

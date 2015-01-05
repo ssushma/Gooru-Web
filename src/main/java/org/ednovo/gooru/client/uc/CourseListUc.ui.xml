@@ -39,7 +39,7 @@
 		
 		.myFolderCollectionUrlContent {
 			float: left;
-			width: 259px;
+			width: 256px;
 			/*height: 510px;*/
 			border-bottom: none;
 			border-left: none;
@@ -65,7 +65,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}"
 						ui:field="loadingPanel">
-						<g:Label styleName="{res.css.loadingImageForResource}" />
+						<g:Label styleName="{res.css.loadingImageForResource1}" />
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{style.myFolderCollectionUrlContent}"
 						ui:field="addResourceTabContainer">

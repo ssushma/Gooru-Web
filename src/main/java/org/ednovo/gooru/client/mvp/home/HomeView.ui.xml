@@ -1065,7 +1065,7 @@
 								<img src="images/landing-page/footer-icon.png" />
 							</p> -->
 							<div>
-								<g:Label styleName="copyRight" text="{i18n.GL1246}"></g:Label>
+								<g:Label styleName="copyRight" text="{i18n.GL1246}" ui:field="lblCopyRight"></g:Label>
 							</div>
 						</div>
 						<div class="col-xs-2">

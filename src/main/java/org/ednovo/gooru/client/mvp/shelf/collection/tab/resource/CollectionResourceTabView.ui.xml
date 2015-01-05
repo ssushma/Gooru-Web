@@ -49,8 +49,9 @@
 			<g:HorizontalPanel styleName="{res.css.reorderLabelContainer}">
 				<g:VerticalPanel ui:field="sequenceVerPanel"
 					styleName="{res.css.shelfResourceSequencePanel}" />
-				<!-- <sr:CollectionResourcePanelVc ui:field="collectionResourcePanelVc" /> -->
-				<g:VerticalPanel ui:field="collectionResourcePanelVc" />
+				<sr:CollectionResourcePanelVc ui:field="collectionResourcePanelVc" />
+				<!-- changes made for hotfix -->
+				<!-- <g:VerticalPanel ui:field="collectionResourcePanelVc" /> -->
 			</g:HorizontalPanel>
 			<g:Label styleName="{res.css.noResourceLabel}" ui:field="noResourceLineOneLabel" />
 			<g:HTMLPanel styleName="{res.css.noResourceContainer}"

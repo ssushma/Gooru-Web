@@ -176,9 +176,12 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
     
 	private DateBoxUc dateBoxUc;
 	
-	//Image suggestTimeQuestionMark = new Image();
-	
+
 	ToolTip toolTip=null;
+
+	private String textAreaPlaceHolder="";
+
+	private boolean isClickedDwnArw=false;
     
 	/**
 	 * Class constructor
@@ -257,10 +260,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		dateBoxUc = new DateBoxUc(false, false,false);
 		duedateContainer.add(dateBoxUc);
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
-		textAreaVal.setText(i18n.GL1389());
 		textAreaVal.getElement().setId("tatTextAreaVal");
-		textAreaVal.getElement().setAttribute("alt",i18n.GL1389());
-		textAreaVal.getElement().setAttribute("title",i18n.GL1389());
+		
 		StringUtil.setAttributes(textAreaVal, true);
 		
 		textAreaVal.getElement().getStyle().setColor("#999");
@@ -269,7 +270,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {
-				if(textAreaVal.getText().equalsIgnoreCase(i18n.GL1389()))
+				if(textAreaVal.getText().equalsIgnoreCase(textAreaPlaceHolder))
 				{
 					textAreaVal.setText("");
 					textAreaVal.getElement().setAttribute("alt","");
@@ -453,25 +454,19 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	 *
 	 */
 	public void setLabelsAndIds(){
-		
-		
 		remainderLbl.setText(i18n.GL1889());
+
 		remainderLbl.getElement().setId("lblRemainderLbl");
-		remainderLbl.getElement().setAttribute("alt",i18n.GL1889());
-		remainderLbl.getElement().setAttribute("title",i18n.GL1889());
 		
-		lblAssignCollectionPrivate.setText(i18n.GL0112());
+		
 		lblAssignCollectionPrivate.getElement().setId("lblAssignCollectionPrivate");
-		lblAssignCollectionPrivate.getElement().setAttribute("alt",i18n.GL0112());
-		lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL0112());
+		
 		
 		lblAssignCollectionPrivate.setVisible(false);
 		errorLabel.setVisible(false);
 		
-		lblAssignCollectionTitle.setText(i18n.GL0101());
 		lblAssignCollectionTitle.getElement().setId("lblAssignCollectionTitle");
-		lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL0101());
-		lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL0101());
+		
 		
 		lblClasspages.setText(i18n.GL0102());
 		lblClasspages.getElement().setId("lblClasspages");
@@ -668,7 +663,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 						MixpanelUtil.mixpanelEvent("Collaborator_assigns_collection");
 					}
 					String directionsVal = textAreaVal.getText();
-					if(textAreaVal.getText().equalsIgnoreCase(i18n.GL1389()))
+					if(textAreaVal.getText().equalsIgnoreCase(textAreaPlaceHolder))
 					{
 						directionsVal = "";
 					}
@@ -1071,8 +1066,44 @@ public class CpuTitleLabelClick implements ClickHandler{
 	@Override
 	public void setCollectionDo(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
+		if(collectionDo!=null){
+			modifyStaticText(collectionDo.getCollectionType());
+		}
 	}
 
+	public void modifyStaticText(String collectionType){
+		if(collectionType!=null&&collectionType.equals("quiz")){
+			lblAssignCollectionTitle.setText(i18n.GL3032());
+			lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL3032());
+			lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL3032());
+			remainderLbl.setText(i18n.GL3033());
+			remainderLbl.getElement().setAttribute("alt",i18n.GL3033());
+			remainderLbl.getElement().setAttribute("title",i18n.GL3033());
+			textAreaPlaceHolder=i18n.GL3034();
+			textAreaVal.setText(i18n.GL3034());
+			textAreaVal.getElement().setAttribute("alt",i18n.GL3034());
+			textAreaVal.getElement().setAttribute("title",i18n.GL3034());
+			lblAssignCollectionPrivate.setText(i18n.GL3040());
+			lblAssignCollectionPrivate.getElement().setAttribute("alt",i18n.GL3040());
+			lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL3040());
+		}else{
+			lblAssignCollectionTitle.setText(i18n.GL0101());
+			lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL0101());
+			lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL0101());
+			remainderLbl.setText(i18n.GL1889());
+			remainderLbl.getElement().setAttribute("alt",i18n.GL1889());
+			remainderLbl.getElement().setAttribute("title",i18n.GL1889());
+			textAreaPlaceHolder=i18n.GL1389();
+			textAreaVal.setText(i18n.GL1389());
+			textAreaVal.getElement().setAttribute("alt",i18n.GL1389());
+			textAreaVal.getElement().setAttribute("title",i18n.GL1389());
+			lblAssignCollectionPrivate.setText(i18n.GL0112());
+			lblAssignCollectionPrivate.getElement().setAttribute("alt",i18n.GL0112());
+			lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL0112());
+		}
+	}
+	
+	
 	
 	@Override
 	public void hideContainers(){
@@ -1357,6 +1388,38 @@ public class CpuTitleLabelClick implements ClickHandler{
 				suggestTimeErrorLabel.setVisible(false);
 				directionsErrorLength.setVisible(false);
 			}
+		}
+	}
+	/**
+	 * 
+	 * @function closeCalendar 
+	 * 
+	 * @created_date : December 28, 2014
+	 * 
+	 * @description
+	 * 	This method is used to hide calendar when scroll moves.
+	 * 
+	 * @parm(s) : NONE
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public void closeCalendar(ScrollPanel spanel) {
+		if(spanel!=null){
+			spanel.addScrollHandler(new ScrollHandler() {
+
+				@Override
+				public void onScroll(ScrollEvent event) {
+					dateBoxUc.getDatePickerUc().hide();
+				}
+			});
+
 		}
 	}
 }

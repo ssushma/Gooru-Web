@@ -48,17 +48,14 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
 public interface IsAnalyticsInfoContainerView extends IsViewWithHandlers<AnalyticsInfoContainerUiHandlers>{
 
-	void setContentGraph(ContentStarRatingsDo result);
+	void setResourceData();
 
-	void setAverageRatingWidget(ContentStarRatingsDo result);
-
-	void setCollectionAnalyticsData(CollectionSearchResultDo searchResultDo);
-
-	void setAverageReactionWidget(int count);
+	void setCollectionData();
 
 }

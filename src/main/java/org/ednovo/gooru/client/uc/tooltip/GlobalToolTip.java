@@ -44,6 +44,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class GlobalToolTip extends Composite {
 	
 	@UiField
+	public
 	HTMLEventPanel confirmationPanel;
 	
 	@UiField
@@ -97,52 +98,41 @@ public class GlobalToolTip extends Composite {
 		setArrowLeft();
 	}
     public GlobalToolTip(String description, String value){
-    	initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
-    	desLbl.setText(description);
-    	confirmationPanel.getElement().setId("epnlConfirmationPanel");
-    	desLbl.getElement().setId("lblDesLbl");
-    	desLbl.getElement().setAttribute("alt", description);
-    	desLbl.getElement().setAttribute("title", description);
-    	if(value.equals(RIGHT) || value.equals(TOP) || value.equals(BOTTOM) ){
-    		arrowVisibility(value);
-    		setArrowRight(value);
-    	}else{
-    		setArrowDirections();
-    	}
-    }
-    
-    private void arrowVisibility(String value) {
-    	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
-    	panelArrow.getElement().getStyle().setDisplay(Display.BLOCK); 
+		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
+		desLbl.setText(description);
+		confirmationPanel.getElement().setId("epnlConfirmationPanel");
+		desLbl.getElement().setId("lblDesLbl");
+		desLbl.getElement().setAttribute("alt", description);
+		desLbl.getElement().setAttribute("title", description);
+		if(value.equals(RIGHT) || value.equals(TOP) || value.equals(BOTTOM) ){
+			arrowVisibility(value);
+			setArrowRight(value);
+		}else{
+			setArrowDirections();
+		}
 	}
     
     
-    
-    
-    public void setPanelPosition(){
+    private void arrowVisibility(String value) {
+    	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
+    	panelArrow.getElement().getStyle().setDisplay(Display.BLOCK);
+	}
+
+
+	public void setPanelPosition(){
     	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     	/*if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
 			panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		}else{
 			panelArrow.getElement().getStyle().clearPosition();
 		}*/
-    	
-    	String isTab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
-    	try
-    	{
-    	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && isTab==null){
-    		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
-			//panelArrow.getElement().getStyle().setLeft(141, Unit.PX);
-		}
-    	else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && isTab=="classlist"){
+    	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+    		panelArrow.getElement().getStyle().setDisplay(Display.NONE);
+    	}
+    	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
     		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
 			panelArrow.getElement().getStyle().setLeft(141, Unit.PX);
-		}
-    	else if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
-    		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
-			//panelArrow.getElement().getStyle().setLeft(141, Unit.PX);
-		}
-    	else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			if(AppClientFactory.getPlaceManager().getRequestParameter("page")!=null && AppClientFactory.getPlaceManager().getRequestParameter("page").equals("teach")){
 				confirmationPanel.getElement().getStyle().setWidth(131, Unit.PX);
 				desLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -151,11 +141,6 @@ public class GlobalToolTip extends Composite {
 			confirmationPanel.getElement().getStyle().clearLeft();
 			panelArrow.getElement().getStyle().clearLeft();
 		}
-    	}
-    	catch(Exception ex)
-    	{
-    		
-    	}
     }
     public void setArrowLeft(){
      	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);

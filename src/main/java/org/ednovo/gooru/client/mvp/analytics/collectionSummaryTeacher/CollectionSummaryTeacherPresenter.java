@@ -108,11 +108,12 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherUiHandlers#setHtmltopdf(java.lang.String)
 	 */
 	@Override
-	public void setHtmltopdf(String htmlString) {
-		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<String>() {
+	public void setHtmltopdf(String htmlString,String collectionTitle) {
+		this.analyticService.setHTMLtoPDF(htmlString,collectionTitle,false, new AsyncCallback<String>() {
 					@Override
 					public void onSuccess(String result) {
-						Window.open(result, "_blank", "status=0,toolbar=0,menubar=0,location=0");
+						getView().getFrame().setUrl(result);
+						//Window.open(result, "_blank", "status=0,toolbar=0,menubar=0,location=0");
 					}
 					
 					@Override
@@ -121,4 +122,10 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 					}
 				});
 	}
+	
+	@Override
+	public void clearFrame(){
+		getView().getFrame().setUrl("");
+	}
+
 }

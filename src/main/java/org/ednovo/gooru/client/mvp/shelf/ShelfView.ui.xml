@@ -26,7 +26,8 @@
 			ui:field="loadingImageLabel">
 			<g:Label styleName="{res.css.loadingImageForSelfEdit}" />
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{folderStyle.editPanel}" ui:field="editPanel">
+		<g:ScrollPanel styleName="{folderStyle.editPanel}" ui:field="editPanel">
+		    <g:HTMLPanel>
 			<g:SimplePanel styleName="searchResults" ui:field="folderListPanel"></g:SimplePanel>
 			<g:FlowPanel ui:field="collectionFloPanel">
 				<g:FlowPanel styleName="{res.css.userCollectionInShelf}">
@@ -128,6 +129,7 @@
 
 			</g:FlowPanel>
 			<sg:FooterOrganizeUc ui:field="panelFoooter"/>
-		</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:ScrollPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

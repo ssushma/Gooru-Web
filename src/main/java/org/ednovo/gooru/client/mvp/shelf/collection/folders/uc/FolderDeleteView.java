@@ -111,7 +111,7 @@ public class FolderDeleteView extends AppPopUp {
 		lblDeleteText.setText(i18n.GL2189());
 		StringUtil.setAttributes(lblDeleteText.getElement(), "lblDeleteText", null, "lblDeleteText");
 		
-		txtDelete.setPlaceholder(i18n.GL1175());
+		//txtDelete.setPlaceholder(i18n.GL1175());
 		txtDelete.getElement().setId("txtTxtDelete");
 		
 		txtDelete.addKeyUpHandler(new ValidateConfirmText());

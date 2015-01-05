@@ -74,7 +74,8 @@ public class CollectionSummaryWidget extends Composite {
 				collectionImage.setUrl("../images/analytics/default-collection-image.png");
 			}
 		});
-		collectionResourcesCount.setText((result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+		/*collectionResourcesCount.setText((result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");*/
+		collectionResourcesCount.setText((result.getResourceCount())+" Resources | "+result.getNonResourceCount()+" Questions"); 
 	}
 	
 	/**

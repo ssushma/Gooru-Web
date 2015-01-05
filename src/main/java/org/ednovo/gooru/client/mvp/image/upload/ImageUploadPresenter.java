@@ -35,13 +35,18 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.service.MediaUploadServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -96,6 +101,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	
 	private AddResourcePresenter addResourcePresenter;
 	
+	private SimpleAsyncCallback<String> saveImageCollectionAsyncCallback;
+	
 
 	/**
 	 * Creates a {@link ImageUploadPresenter} by inherits the {@link PresenterWidget }
@@ -137,9 +144,10 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			public void onSuccess(String filename) {
 				
 				if(isCollectionImage){
-					saveImage(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename,getCollectionItemId());
+					saveImageCollection(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
+
 				}else if(isClassPageImage){
-					saveImage(getClasspageId(), filename,getCollectionItemId());
+					saveImageCollection(getClasspageId(), filename);
 				}
 				else if(isQuestionImage){
 					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
@@ -195,6 +203,29 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 						MixpanelUtil.AddImageFromMyComputer();
 					}
 					getShelfView().onPostCollectionImageUpload(collDo.getUrl());
+				}
+				getView().closeImageUploadWidget();
+				getView().resetImageUploadWidget();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
+				getView().glasspanelLoadingImage(false);
+			}
+		});
+		setSaveImageCollectionAsyncCallback(new SimpleAsyncCallback<String>() {
+			@Override
+			public void onSuccess(String url) {
+				if(isClassPageImage){
+					AppClientFactory.fireEvent(new UpdateClasspageImageEvent(url));
+				}else{
+					if(isImageUploadedFromUrl){
+						MixpanelUtil.AddImageByUrlOntheWeb();
+					}else{
+						MixpanelUtil.AddImageFromMyComputer();
+					}
+					getShelfView().onPostCollectionImageUpload(url);
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -281,6 +312,30 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	public void saveImage(String gooruOid, String fileName, String resourceId) {
 		this.getMediaUploadService().saveImage(gooruOid, resourceId, fileName, getSaveImageAsyncCallback());
 	}
+	
+	@Override
+	public void saveImageCollection(String gooruOid, String fileName) {
+		this.getMediaUploadService().saveImageCollection(gooruOid, fileName, getSaveImageCollectionAsyncCallback());
+		
+		
+/*		AppClientFactory.getInjector().getMediaUploadService().saveImageCollection(gooruOid, fileName, new AsyncCallback<String>() {
+			@Override
+			public void onSuccess(String result) {
+				getShelfView().onPostCollectionImageUpload(result);
+				getView().closeImageUploadWidget();
+				getView().resetImageUploadWidget();
+				
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});*/
+	}
+	
+	
 	
 	public void saveQuestionImage(String fileName){
 		this.getMediaUploadService().saveQuestionImage(getCollectionItemId(), fileName, saveQuestionImageAysncCallback);
@@ -516,6 +571,17 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		getView().setAspectRatio(1.0f);
 		this.isUdateProfileImage = isUdateProfileImage;
 	}
+
+	public SimpleAsyncCallback<String> getSaveImageCollectionAsyncCallback() {
+		return saveImageCollectionAsyncCallback;
+	}
+
+	public void setSaveImageCollectionAsyncCallback(
+			SimpleAsyncCallback<String> saveImageCollectionAsyncCallback) {
+		this.saveImageCollectionAsyncCallback = saveImageCollectionAsyncCallback;
+	}
+	
+	
 
 
 }

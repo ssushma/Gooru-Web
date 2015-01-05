@@ -1,4 +1,5 @@
 /*******************************************************************************
+
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -26,6 +27,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -103,7 +106,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText, panelGooruStories;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
-	@UiField Label lblHeading, lblSubHeading; 
+	@UiField Label lblHeading, lblSubHeading, lblCopyRight; 
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright, achGooruStories;//achDataPolicy
@@ -124,10 +127,9 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public AppSuggestBox txtSearch;
 	
 	String jsonDataString = null;
-	
+
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
-	private boolean hasAutoSelected = false;
 	
 	private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 
@@ -244,6 +246,30 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				}
 			}
 		});
+		
+		/*ClickHandler rootClick = new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				System.out.println("-->> "+preFilter);
+				if(!isArrowIcon && preFilter!=null){
+					isOpenPrefilterPopup=true;
+					preFilter.hide();
+				}else{
+					isArrowIcon=false;
+				}
+			}
+			
+		};*/
+		
+//		RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
+		Date todaysYear = new Date();
+		String copyRightTxt = i18n.GL1246() + "" + (todaysYear.getYear() + 1900);
+		
+		lblCopyRight.setText(copyRightTxt);
+		lblCopyRight.getElement().setId("lblCopyRightYearText");
+		lblCopyRight.getElement().setAttribute("alt",copyRightTxt);
+		lblCopyRight.getElement().setAttribute("title",copyRightTxt);
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
@@ -924,8 +950,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
 			txtSearch.hideSuggestionList();
 		}
-		
-		hasAutoSelected=true;
 		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
 		getEditSearchTxtBox().setText(searchText.trim());
 
@@ -943,6 +967,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public void setBtnSignUp(Button btnSignUp) {
 		this.btnSignUp = btnSignUp;
 	}
+
 }
 
 

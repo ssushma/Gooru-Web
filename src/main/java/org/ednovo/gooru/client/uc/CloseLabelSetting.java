@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -49,7 +51,12 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 		label = new Label();
 		label.setStyleName(UcCBundle.INSTANCE.css().closeLabelText());
 		label.setText(text);
-		setStyleName(UcCBundle.INSTANCE.css().closeLabel());
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			setStyleName(UcCBundle.INSTANCE.css().closeLabelSearch());
+		}else{
+			setStyleName(UcCBundle.INSTANCE.css().closeLabel());
+		}
+		
 		add(label);
 		add(removeLabel);
 		removeLabel.addClickHandler(this);

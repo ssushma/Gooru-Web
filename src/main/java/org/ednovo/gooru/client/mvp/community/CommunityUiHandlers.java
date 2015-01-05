@@ -12,8 +12,19 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 /**
- * @author Search Team
  * 
+ * @fileName : CommunityUiHandlers.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface CommunityUiHandlers extends BaseUiHandlers {
 

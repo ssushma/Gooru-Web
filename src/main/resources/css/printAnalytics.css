@@ -1,9 +1,3 @@
- thead {
-    display:table-header-group;
-}
-tbody {
-    display:table-row-group;
-}
 .setMarginAuto {
 	margin: 0 auto;
 	text-align: center;
@@ -129,7 +123,7 @@ tbody {
 }
 .collectionBreakDown_infobox_print{
 	display: inline-block;
-	width: 33%;
+	width: 220px;
 	white-space: pre;
 }
 .collectionBreakDown_infobox_titles_print{
@@ -140,7 +134,7 @@ tbody {
 	font-weight: bold;
 	line-height: 50px;
 	text-align: center;
-	width: 100%;
+	width: 220px;
 }
 .collectionBreakDown_infobox_titles_print1{
 	clear: both;
@@ -150,7 +144,7 @@ tbody {
 	font-weight: bold;
 	line-height: 50px;
 	text-align: center;
-	width: 100%;
+	width: 220px;
 	border-bottom: 1px solid #ccc;
 	padding-left: 5px;
 }
@@ -206,13 +200,13 @@ tbody {
 }
 
 .collection_details_teacher {
-	width: 718px;
+	width: 425px;
 	float: left;
 	margin-left: 12px;
 	text-align: left;
 }
 .session_details{
-	width: 718px;
+	width: 425px;
 	float: left;
 	margin-left: 12px;
 	text-align: left;
@@ -223,7 +217,7 @@ tbody {
 	display: inline-block;
 }
 .resource_in_collection_teacher_summary {
-	width: 200px;
+	 width: 200px; 
 	float: left;
 }
 .collectionLastAccessed {
@@ -337,3 +331,14 @@ tbody {
 	width: 20px;	
 }
 /*End */
+@media print
+{
+    table { page-break-inside:auto }
+    tr    { page-break-inside:avoid; page-break-after:auto; }
+	thead {
+	    display:table-header-group;
+	}
+	tbody {
+	    display:table-row-group;
+	}
+}

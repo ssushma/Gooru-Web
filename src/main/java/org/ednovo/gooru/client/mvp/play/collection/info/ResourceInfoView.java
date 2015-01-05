@@ -212,8 +212,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		standardsText.getElement().setAttribute("alt",i18n.GL1877());
 		standardsText.getElement().setAttribute("title",i18n.GL1877());
 
-		collectionsText.getElement().setInnerHTML(i18n.GL0620());
 		collectionsText.getElement().setId("pnlCollectionsText");
+		collectionsText.getElement().setInnerHTML(i18n.GL0620());
 		collectionsText.getElement().setAttribute("alt",i18n.GL0620());
 		collectionsText.getElement().setAttribute("title",i18n.GL0620());
 		
@@ -396,25 +396,21 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
-//			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 			Integer reviewCount=collectionItemDoGlobal.getResource().getRatings().getReviewCount();
 			if(reviewCount==null){
 				reviewCount = 0;
 			}
-			ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
+			if(reviewCount==1){
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL3006()); 
+			}else{
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
+			}
 			setUpdateReviewCount(reviewCount);
-//			if(reviewCount>0)
-//			{
-//				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-//				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-//			}
+			ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
 //			ratingWidgetView.getAverageRatingLabel().setText(Double.toString(collectionItemDoGlobal.getResource().getRatings().getAverage())+" ");
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		}
-		
-	
 		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
@@ -514,8 +510,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setGrades(gradesdetails);
 			}
 		
+		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+		{
 		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
+		}
+		else
+		{
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+		}
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
 		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
@@ -2081,6 +2085,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			{
 			liecenceTooltip.hide();
 			}
+			if(toolTip!=null){
+				toolTip.hide();
+			}
 		}
 		
 	}
@@ -2241,7 +2248,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
 				}else{
 					setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
-					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
+					if((Integer.parseInt(revCount[1])-1)==1){
+						ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL3006());
+					}else{
+						ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
+					}
 				}
 			}
 			
@@ -2257,7 +2268,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			{
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
 					setUpdateReviewCount(count);
-					ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+					if(count==1){
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL3006());
+					}else{
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+					}
 					ratingWidgetView.getAverageRatingLabel().setVisible(false);
 				}
 			}
@@ -2283,5 +2298,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public void insertHideButtonAtLast(){
 		resouceInfoContainer.add(hideButton);
 		hideImageLabel.getElement().setAttribute("style", "transform: rotate(0deg);-ms-transform: rotate(0deg);-webkit-transform: rotate(0deg);padding-top:10px;");
+	}
+
+	@Override
+	public void setCollectionType(String collectionType) {
+		System.out.println("Enter");
+		String message=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3043():i18n.GL0620();
+		System.out.println("message:::"+message);
+		collectionsText.getElement().setInnerHTML(message);
+		collectionsText.getElement().setAttribute("alt",message);
+		collectionsText.getElement().setAttribute("title",message);
+		
 	}
 }

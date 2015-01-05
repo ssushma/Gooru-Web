@@ -211,7 +211,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	private TreeItem previousTreeChildSelectedItem = new TreeItem();
 	
-	@UiField Label folderLabel, collectionLabel;
+	@UiField Label folderLabel, collectionLabel,assessmentLabel;
 	
 	private PlaceRequest searchRequest = null;
 	
@@ -228,6 +228,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	private static final String ID = "id";
 
 	private static final String FOLDER = "folder";
+	private static final String TYPE = "type";
 	
 	private static final String SCOLLECTION = "scollection";
 	
@@ -273,6 +274,11 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		collectionLabel.getElement().setId("lblCollectionLabel");
 		collectionLabel.getElement().setAttribute("alt", i18n.GL0645());
 		collectionLabel.getElement().setAttribute("title", i18n.GL0645());
+		assessmentLabel.setText(i18n.GL3007());
+		assessmentLabel.getElement().setId("lblAssessmentLabel");
+		assessmentLabel.getElement().setAttribute("alt", i18n.GL3007());
+		assessmentLabel.getElement().setAttribute("title", i18n.GL3007());
+		assessmentLabel.removeFromParent();
 		organizelbl.getElement().setInnerText(i18n.GL0180());
 		organizelbl.getElement().setId("pnlOrganizelbl");
 		organizelbl.getElement().setAttribute("alt", i18n.GL0180());
@@ -338,7 +344,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		  }
 		
 		folderLabel.addClickHandler(new CreateNewFolder());
-		collectionLabel.addClickHandler(new CreateNewCollection());
+		collectionLabel.addClickHandler(new CreateNewCollection(null));
+		assessmentLabel.addClickHandler(new CreateNewCollection("assessment"));
 		
 		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
 			organizeButtonPanel.getElement().getStyle().clearMarginTop();
@@ -1561,12 +1568,20 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	}
 	
 	public class CreateNewCollection implements ClickHandler {
+		private String collectionType=null;
+		public CreateNewCollection(String collectionType){
+			this.collectionType=collectionType;
+		}
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 			final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 			final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 			Map<String, String> params = new HashMap<String, String>();
+			if(collectionType!=null){
+				params.put(TYPE, collectionType);
+			}
 			if(o3!=null) {
 				params.put(O1_LEVEL, o1);
 				params.put(O2_LEVEL, o2);
@@ -1583,7 +1598,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				params.put("folderId", o1);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
 			} else {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
 			}
 			Window.enableScrolling(false);
 			

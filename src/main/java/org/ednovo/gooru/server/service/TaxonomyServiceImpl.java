@@ -65,6 +65,7 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 	public List<LibraryCodeDo> getCourse() {
 		JsonRepresentation jsonRep =null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.TAXONOMY_COURSE, getLoggedInSessionToken());
+		getLogger().info("--- get course at settings -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return taxonomyDeSerializer.getCourse(jsonRep);
