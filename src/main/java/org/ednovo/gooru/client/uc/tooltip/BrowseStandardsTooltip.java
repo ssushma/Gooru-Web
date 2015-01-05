@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.uc.tooltip;
 
+
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -39,6 +40,7 @@ public class BrowseStandardsTooltip extends PopupPanel {
 	
     public BrowseStandardsTooltip(String description, String value){
     	setWidget(toolTipBrowseStandardsUiBinder.createAndBindUi(this));
+
 		anchorLbl.setText(value.toLowerCase());
 		if(AppClientFactory.isAnonymous()){
 			desLbl.setText(i18n.GL1613());
