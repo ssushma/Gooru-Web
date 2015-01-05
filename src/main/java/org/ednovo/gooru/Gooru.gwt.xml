@@ -24,6 +24,10 @@
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name="com.google.gwt.http.HTTP" />
 
+	<!-- Include GWT charts-->
+	<inherits name="org.moxieapps.gwt.highcharts.Highcharts"/>
+	<inherits name='com.google.gwt.visualization.Visualization'/>
+	
 	<!--Inherit this class for disabling obfuscation. Remove this line for production -->
 	<inherits name='com.google.gwt.resources.Resources' />
 
