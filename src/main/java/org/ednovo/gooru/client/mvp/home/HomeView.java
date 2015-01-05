@@ -45,6 +45,8 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetStoriesUrlEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetStoriesUrlHandler;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.ui.PeListPanel;
