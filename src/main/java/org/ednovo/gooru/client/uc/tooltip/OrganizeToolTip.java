@@ -96,8 +96,7 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 		lblCreateAsseement.getElement().setId("lblLblAssessment");
 		lblCreateAsseement.getElement().setAttribute("alt", i18n.GL3011());
 		lblCreateAsseement.getElement().setAttribute("title", i18n.GL3011());
-		
-		lblCreateAsseement.removeFromParent();
+
 		
 		lblCreateFolder.setText(i18n.GL1758());
 		lblCreateFolder.getElement().setId("lblLblCreateFolder");

@@ -2880,15 +2880,19 @@ public interface MessageProperties extends Constants {
 	String GL3006();
 	
 	//Assesments
+	String GL3006_1();
+
 	String GL3007();
 	String GL3008();
 	String GL3009();
 	String GL3010();
 	String GL3011();
+
 	String GL3012();
 	String GL3013();
 	String GL3014();
 	String GL3015();
+
 	String GL3016();
 	String GL3017();
 	String GL3018();
@@ -2898,6 +2902,7 @@ public interface MessageProperties extends Constants {
 	String GL3022();
 	String GL3023();
 	String GL3024();
+
 	String GL3025();
 	String GL3026();
 	String GL3027();
