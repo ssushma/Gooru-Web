@@ -16,6 +16,10 @@
 				<g:Label styleName="{playerStyle.rightArrow}" ui:field="nextButton"></g:Label>
 			</g:FlowPanel>
 	 	</g:HTMLPanel>
+	 	<uc:HTMLEventPanel styleName="{playerStyle.resource-info-bottomImageContainer}" ui:field="hideButton">
+		      <g:Label styleName="{playerStyle.resource-info-hideImage}"/>
+		      <g:Label styleName="{playerStyle.resource-info-hideText}" ui:field="hideText"></g:Label>
+		 </uc:HTMLEventPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
 

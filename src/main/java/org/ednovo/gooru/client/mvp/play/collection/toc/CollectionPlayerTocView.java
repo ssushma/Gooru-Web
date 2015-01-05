@@ -58,7 +58,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView{
 
-	@UiField FlowPanel navgationTocContainer;
+	@UiField FlowPanel navgationTocContainer,carouselContainer;
 	@UiField Label previousButton,nextButton,hideText,resourceCountLabel;
 	
 	@UiField HTMLEventPanel hideButton;
@@ -159,7 +159,8 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				//have 100px each. navgationTocContainer width is derived from this.
 				if(resourcesSize>7){
 					navgationTocContainer.getElement().removeAttribute("style");
-					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100);
+					//new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100,carouselContainer);
+					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100,carouselContainer);
 				}else{
 					nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 					previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
