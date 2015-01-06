@@ -109,6 +109,6 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 
 	void getResourceTags(String resourceId, String offSet, String limit,AsyncCallback<SearchResourcesTagsDo> callback); 
 
-	 void getGooruStoriesUrl(String emailId, String userId, String userName, AsyncCallback<String> callback);
+	 void getGooruStoriesUrl(String emailId, String userId, String userName, String appName, String redirectUrl, AsyncCallback<String> callback);
 
 }
