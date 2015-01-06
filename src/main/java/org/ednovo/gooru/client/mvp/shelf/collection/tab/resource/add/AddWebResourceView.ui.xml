@@ -11,7 +11,7 @@
 		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
 		field="res2" />
   <g:ScrollPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="scrollPanel">
-	<g:HTMLPanel  ui:field="contentPanel">
+	<g:HTMLPanel styleName="{res.css.urlTopPadding}" ui:field="contentPanel">
 	   
         <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}" ui:field="urlContianer">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTitle"></g:HTMLPanel>

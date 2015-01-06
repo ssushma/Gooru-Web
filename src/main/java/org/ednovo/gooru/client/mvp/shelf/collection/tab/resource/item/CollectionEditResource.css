@@ -1478,8 +1478,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 1;
-	top: -50px;
-	width: 249px;
+	top: -11px;
+	width: 264px;
 }
 .myEducationEditDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -3061,7 +3061,6 @@ vertical-align: top;
 .advncedOption span{
 	padding:8px 10px;
 	background:#ffffff;
-	margin-left: 20%;
 }
 .shelfGradeInfoBottomWeb {
 	color: rgb(112, 109, 109);
@@ -3074,4 +3073,7 @@ text-align: left;
 width: 92%;
 padding-left: 16px;
 background: url(../images/NewResourcePopup/clear.png) no-repeat center left;
+}
+.urlTopPadding{
+	margin-top:10px;
 }
