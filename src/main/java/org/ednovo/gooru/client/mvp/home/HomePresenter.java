@@ -332,9 +332,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		StringUtil.consoleLog("flag : "+flag);
-		StringUtil.consoleLog("loginType : "+loginType);
-		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
 			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
 			update.setGlassEnabled(true);
 			update.show();
