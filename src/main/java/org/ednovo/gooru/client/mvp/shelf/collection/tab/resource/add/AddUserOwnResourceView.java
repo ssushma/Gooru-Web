@@ -119,7 +119,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,mediaLabelContainer,educationalContainer,
+	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,educationalContainer,
 	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer;
 	
 	@UiField
@@ -179,7 +179,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiField Label lblAdding,standardMaxMsg;
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr,moblieFriendly;
 	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel,AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
-	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly;
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,mediaLabelContainer,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
@@ -697,6 +697,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				OpenMediaFeatureDropdown();
 			}
 		});
+
 		lblMediaPlaceHolder.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -1897,6 +1898,17 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			educationalDropDownLblOpen = false;
 		}
 	}
+	@UiHandler("educatioNalUseDropContainer")
+	public void educationalDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (educationalDropDownLblOpen == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+		}
+	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
 	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
@@ -1952,6 +1964,18 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			momentsOfLearningOpen = false;
 		}
 	}
+	@UiHandler("momentsOfLearningDropDownContianer")
+	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (momentsOfLearningOpen == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
+		}
+	}
+	
 	
 	private void OpenMediaFeatureDropdown() {
 		hasClickedOnDropDwn=true;
