@@ -1035,7 +1035,7 @@ public class LibraryMenuNav extends Composite{
 	 */
 	public String getSubjectIdBySubjectName(Map<String,String> subjectList, String subject) {
 		for (Map.Entry<String, String> entry : subjectList.entrySet()) {
-			if(entry.getKey().equalsIgnoreCase(subject)) {
+			if(entry.getKey().trim().equalsIgnoreCase(subject)) {
 				return entry.getValue();
 			}
 		}
