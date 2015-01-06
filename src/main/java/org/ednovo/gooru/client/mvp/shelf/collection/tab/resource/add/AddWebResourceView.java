@@ -130,12 +130,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	Label mandatoryCategoryLbl;
 	
+		
 	@UiField
 	HTMLEventPanel refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
 	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
 	advancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
-	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl;
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 	
 	@UiField
 	Label leftArrowLbl, rightArrowLbl,momentsOfLearningDropDownLbl;
@@ -154,11 +155,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
-		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
+		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
 		defaultMomentsOfLearningText,mediaDropdownArrowConatainer;
 
 	
 	@UiField HTMLPanel panelCategoryInputDiv;
+	
+	@UiField HTMLEventPanel mediaLabelContainer;
 
 
 	@UiField
@@ -783,6 +786,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				OpenMediaFeatureDropdown();
 			}
 		});
+		
 		
 		lblMediaPlaceHolder.addClickHandler(new ClickHandler() {
 			@Override
@@ -2274,6 +2278,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			educationalDropDownLblOpen = false;
 		}
 	}
+	@UiHandler("educatioNalUseDropContainer")
+	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (educationalDropDownLblOpen == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+		}
+	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
 	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
@@ -2328,6 +2343,18 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			momentsOfLearningOpen = false;
 		}
 	}
+	@UiHandler("momentsOfLearningDropDownContianer")
+	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (momentsOfLearningOpen == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
+		}
+	}
+	
 	/**
 	 * 
 	 * @function setImageThumbnail 

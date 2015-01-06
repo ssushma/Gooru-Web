@@ -511,6 +511,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String myFolderCollectionFolderVideoOuterContainerRFormat();
         String myFolderCollectionFolderDropdownRFormat();
         String setBorder();
+        
+        String urlTopPadding();
            
 	}
 	
