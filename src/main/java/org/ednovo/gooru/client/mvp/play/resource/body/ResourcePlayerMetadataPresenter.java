@@ -136,7 +136,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		}else{
 			questionResourcePresenter.getWidget().setHeight((windowHeight-202)+"px");
 		}
+		
 		getView().getResourceWidgetContainer().add(questionResourcePresenter.getWidget());
+		questionResourcePresenter.getWidget().getParent().getElement().getStyle().clearPaddingTop();
 	}
 	
 	public void setCollectionPlayerPresnter(CollectionPlayerPresenter collectionPlayerPresenter,boolean isCollectionPlayer){

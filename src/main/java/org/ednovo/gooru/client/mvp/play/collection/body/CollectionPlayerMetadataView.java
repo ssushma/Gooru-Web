@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -368,7 +369,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 //		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
 //		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
 		
-
+		studyMainContianer.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
 		//metadataContainer.getElement().setId("fpnlMetadataContainer");
