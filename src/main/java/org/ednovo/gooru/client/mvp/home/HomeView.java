@@ -290,7 +290,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 					p.getElement().setInnerHTML(i18n.GL2188_3());
 					panelText.add(p);
 					
-					AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(), new SimpleAsyncCallback<String>() {
+					AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"stories", null, new SimpleAsyncCallback<String>() {
 						
 						@Override
 						public void onSuccess(String result) {

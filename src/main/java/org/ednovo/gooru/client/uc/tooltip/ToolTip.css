@@ -547,6 +547,11 @@
     cursor: pointer;
     padding-left: 40px;
     background: url(images/folders/panel/collection-smaller-icon.png) 10px no-repeat;
+    text-decoration: none;
+	color: #515151;
+	line-height: 16px;
+	display: inline-block;
+	width: 74%;
 }
 .folderToolTipLabel{
 	padding: 6px;
@@ -563,6 +568,8 @@
 
 .collectionToolTipLabel:hover,.folderToolTipLabel:hover, .mycollectionsToolTipLabel:hover, .dashBoardToolTipLabel:hover {
 	background-color: #cfe3f1;
+	opacity: 1.0 !important;
+	color: #515151;
 }
 .partnerLibraryDivInfo{
 	/* position: fixed !important;width:22% !important; */

@@ -168,6 +168,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String STOIRES_APIKEY="stories.apiKey";
 	
+	private static final String ASSESSMENT_APIKEY="assessment.apiKey";
+	
 	private static final String HTTPS = "https";
 	
 	private static final String HTTP = "http";
@@ -363,6 +365,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getStoriesApiKey(){
 		return restConstants.getProperty(STOIRES_APIKEY);
+	}
+	
+	public String getAssessmentsApiKey(){
+		return restConstants.getProperty(ASSESSMENT_APIKEY);
 	}
 	
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	

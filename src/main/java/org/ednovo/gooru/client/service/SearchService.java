@@ -468,5 +468,5 @@ public interface SearchService extends BaseService {
 	 *
 	 *
 	 */
-	String getGooruStoriesUrl(String emailId, String userId, String userName) throws GwtException, ServerDownException;
+	String getGooruStoriesUrl(String emailId, String userId, String userName, String appName, String redirectUrl) throws GwtException, ServerDownException;
 }
