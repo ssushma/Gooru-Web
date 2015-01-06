@@ -285,7 +285,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	public AddSetupAdvancedView addSetupAdvancedView;
 	
-	HandlerRegistration videoClickHandler,websiteClickHandler,interactiveClickHandler,imageClickHandler,textClickHandler,audioClickHandler=null;
+	HandlerRegistration videoClickHandler=null,websiteClickHandler=null,interactiveClickHandler=null,imageClickHandler=null,textClickHandler=null,audioClickHandler=null;
 
 	public AddWebResourceView(CollectionDo collectionDo,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) { 
 		this.res2 = AddTagesCBundle.INSTANCE;
@@ -677,6 +677,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		website.getElement().setId("pnlWebsite");
 		interactiveResourcePanel.getElement().setId("epnlInteractiveResourcePanel");
 		
+		clearCategorySelections();
 		videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
 		websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
 		interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
@@ -1663,7 +1664,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			rightArrowLbl.setVisible(false);
 			leftArrowLbl.setVisible(false);
 			generateImageLbl.setVisible(true);
-			
+			clearCategorySelections();
 			final Map<String, String> parms = new HashMap<String, String>();
 			
 			parms.put("text", urlTextBox.getText().trim());
@@ -1714,24 +1715,42 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								if (userUrlStr.indexOf("youtube") >0){
 									setVideoCategory();
 									if(websiteClickHandler!=null){
+										try{
 											websiteClickHandler.removeHandler();
+										}catch(Exception e){
+											
+										}
 									}
 									 if(interactiveClickHandler!=null){
+										 try{
 										 interactiveClickHandler.removeHandler();
+										 }catch(Exception e){
+												
+											}
 									}
 									 if(imageClickHandler!=null){
+										 try{
 										 imageClickHandler.removeHandler();
+									 }catch(Exception e){
+											
+										}
 									}
 									 if(textClickHandler!=null){
+										 try{
 										 textClickHandler.removeHandler();
+										 }catch(Exception e){
+												
+											}
 									}
 									 if(audioClickHandler!=null){
+										 try{
 										 audioClickHandler.removeHandler();
+										 }catch(Exception e){
+												
+											}
 									}
-									 
-									}
+								}
 								else{
-									setVideoCategory();
 									websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
 									interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
 									imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
@@ -3248,5 +3267,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			
 		}
 		
+	}
+	public void clearCategorySelections(){
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 }
