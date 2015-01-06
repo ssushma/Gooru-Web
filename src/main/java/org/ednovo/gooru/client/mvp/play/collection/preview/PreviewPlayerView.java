@@ -269,7 +269,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 					params.put("tab", tabView);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-					ResourcePlayerMetadataView.removePadding();
+					
 				}
 			}
 			else if(view!=null&&view.equalsIgnoreCase("end")){
@@ -330,10 +330,10 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		setActiveButton(makeAddButtionActive,makeInfoButtionActive, makeShareButtonActive, makeNarrationButtonActive, makeNavigationButtonActive,makeFlagButtonActive);
 		if(makeNavigationButtonActive || makeInfoButtionActive || makeShareButtonActive)
 		{
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 		if(!AppClientFactory.isAnonymous() && makeAddButtionActive){
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 	}
 
@@ -341,7 +341,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton) {
 		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion, deselectNarrationButton, deselectNavigationButton,deselectFlagButton);	
 		setActiveButton(false,false,false,false,false,false);
-		ResourcePlayerMetadataView.addPadding();
+		
 	}
 	public void setActiveButton(boolean makeAddButtionActive,boolean makeInfoButtionActive,
 			boolean makeShareButtonActive,boolean makeNarrationButtonActive,boolean makeNavigationButtonActive,boolean makeFlagButtonActive){

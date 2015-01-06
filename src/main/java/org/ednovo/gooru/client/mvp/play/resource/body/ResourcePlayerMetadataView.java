@@ -540,6 +540,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			resourceWidgetContainer.setHeight((windowHeight-202)+"px");
 		}
+		
 	}
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
@@ -949,15 +950,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		
 	}
-	public static void addPadding(){
-		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapper());
-		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapperPadding());
-	}
-	
-	public static void removePadding(){
-		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapperPadding());
-		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapper());
-	}
+
 
 	/**
 	 * If no reaction available, sets the default reaction for all the resources.

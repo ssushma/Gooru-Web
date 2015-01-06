@@ -254,7 +254,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 				    PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).with("id", resourceId).with("tab", tabView);
 				    boolean refreshPlace=tabView.equalsIgnoreCase("add")?true:false;
 					AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-					ResourcePlayerMetadataView.removePadding();
+					
 			 }
 		}
 		
@@ -281,10 +281,10 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		setActiveButton(makeAddButtonActive, makeInfoButtionActive,makeShareButtonActive,makeFlagButtonActive);
 		if(makeInfoButtionActive || makeShareButtonActive)
 		{
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 		if(!AppClientFactory.isAnonymous() && makeAddButtonActive){
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 	}
 
@@ -292,7 +292,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectFlagButton) {
 		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion,deselectFlagButton);		
 		setActiveButton(false,false,false,false);
-		ResourcePlayerMetadataView.addPadding();
+		
 	}
 	
 	public void setActiveButton(boolean makeAddButtonActive,boolean makeInfoButtionActive,

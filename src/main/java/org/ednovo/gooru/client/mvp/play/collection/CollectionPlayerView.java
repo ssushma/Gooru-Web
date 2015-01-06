@@ -315,7 +315,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					params.put("tab", tabView);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-					ResourcePlayerMetadataView.removePadding();
+
 				}
 			}
 			else if(view!=null&&view.equalsIgnoreCase("end")){
@@ -374,11 +374,11 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		setActiveButton(makeAddButtionActive,makeInfoButtionActive, makeShareButtonActive, makeNarrationButtonActive, makeNavigationButtonActive,makeFlagButtonActive);
 		if(makeNavigationButtonActive || makeInfoButtionActive || makeShareButtonActive)
 		{
-			ResourcePlayerMetadataView.removePadding();
+
 			//CollectionPlayerMetadataView.removePadding();
 		}
 		if(!AppClientFactory.isAnonymous() && makeAddButtionActive){
-			ResourcePlayerMetadataView.removePadding();
+			
 			//CollectionPlayerMetadataView.removePadding();
 		}
 	}
@@ -387,7 +387,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton) {
 		footerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion, deselectNarrationButton, deselectNavigationButton,deselectFlagButton);	
 		setActiveButton(false,false,false,false,false,false);
-		ResourcePlayerMetadataView.addPadding();
+		
 		//CollectionPlayerMetadataView.addPadding();
 	}
 	public void setActiveButton(boolean makeAddButtionActive,boolean makeInfoButtionActive,
