@@ -48,7 +48,7 @@
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="categoryPanelText"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDivRFormat}">
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDivRFormat}"  ui:field="panelCategoryInputDiv">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="categorypanel"></g:HTMLPanel>
@@ -62,7 +62,7 @@
 				</g:HTMLPanel>
 					
 			
-			
+			<g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryCategoryLbl"></g:Label>
             <!-- <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryCategoryLbl">Please choose a category.</g:Label> -->
           </g:HTMLPanel>
         </g:HTMLPanel>
@@ -150,7 +150,7 @@
 		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconEducationalUse"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="educationalTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
-			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
+			<uc:HTMLEventPanel styleName="{res.css.myEducationPanelInputDiv}" ui:field="educatioNalUseDropContainer">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="educationalpanel"></g:HTMLPanel>
@@ -160,7 +160,7 @@
 					<g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}">
 						<g:Label ui:field="educationalDropDownLbl"	styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
-				</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryEducationalLbl"></g:Label>
           </g:HTMLPanel>
@@ -257,7 +257,7 @@
 		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMomentsOfLearning"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="momentsOfLearningTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
-			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
+			<uc:HTMLEventPanel styleName="{res.css.myEducationPanelInputDiv}" ui:field="momentsOfLearningDropDownContianer">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="momentsOfLearningpanel"></g:HTMLPanel>
@@ -267,7 +267,7 @@
 					<g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}">
 						<g:Label ui:field="momentsOfLearningDropDownLbl"	styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
-				</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatorymomentsOfLearninglLbl"></g:Label>
           </g:HTMLPanel>
@@ -339,7 +339,7 @@
       	 <g:HTMLPanel ui:field="mediaFeatureContainer">
       	  <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMediafeature"></uc:HTMLEventPanel>
 			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
- 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" ui:field="mediaLabelContainer" >
+ 		      <uc:HTMLEventPanel styleName="{res.css.dropdownContainerInstructional}" ui:field="mediaLabelContainer" >
  		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
  		      
  		        <g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}" ui:field="mediaDropdownArrowConatainer">
@@ -350,7 +350,7 @@
 								<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"
 									styleName=""></g:HTMLPanel>
 							</g:ScrollPanel>
-		      </g:HTMLPanel>
+		      </uc:HTMLEventPanel>
 		      </g:HTMLPanel>
       	 <!-- mediaLabel End -->
       	  <!--moblieFriendly -->

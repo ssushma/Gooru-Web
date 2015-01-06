@@ -130,12 +130,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	Label mandatoryCategoryLbl;
 	
+		
 	@UiField
 	HTMLEventPanel refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
 	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
 	advancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
-	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl;
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanelMomentsOfLearningPnl,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 	
 	@UiField
 	Label leftArrowLbl, rightArrowLbl,momentsOfLearningDropDownLbl;
@@ -154,11 +155,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
-		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,mediaLabelContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
+		educationalpanel,generateFromUrlPanel,defaultText,momentsOfLearningContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaFeatureContainer,
 		defaultMomentsOfLearningText,mediaDropdownArrowConatainer;
 
 	
 	@UiField HTMLPanel panelCategoryInputDiv;
+	
+	@UiField HTMLEventPanel mediaLabelContainer;
 
 
 	@UiField
@@ -276,9 +279,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private boolean isGenerateURL =false;
 	
+	
+	
+	
+	
 	public AddSetupAdvancedView addSetupAdvancedView;
 	
-	HandlerRegistration videoClickHandler,websiteClickHandler,interactiveClickHandler,imageClickHandler,textClickHandler,audioClickHandler=null;
+	HandlerRegistration videoClickHandler=null,websiteClickHandler=null,interactiveClickHandler=null,imageClickHandler=null,textClickHandler=null,audioClickHandler=null;
 
 	public AddWebResourceView(CollectionDo collectionDo,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) { 
 		this.res2 = AddTagesCBundle.INSTANCE;
@@ -671,6 +678,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		website.getElement().setId("pnlWebsite");
 		interactiveResourcePanel.getElement().setId("epnlInteractiveResourcePanel");
 		
+		clearCategorySelections();
 		videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
 		websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
 		interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
@@ -779,6 +787,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				OpenMediaFeatureDropdown();
 			}
 		});
+		
 		
 		lblMediaPlaceHolder.addClickHandler(new ClickHandler() {
 			@Override
@@ -999,7 +1008,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 	
-	
+	public void hideAllPanels(){
+		videoResourcePanel.setVisible(false);
+		websiteResourcePanel.setVisible(false);
+		interactiveResourcePanel.setVisible(false);
+		imageResourcePanel.setVisible(false);
+		textResourcePanel.setVisible(false);
+		audioResourcePanel.setVisible(false);
+	}
 	public void setDriveFileDetails(){
 //		urlTitle.setVisible(false);
 //		urlTextBox.setVisible(false);
@@ -1013,16 +1029,21 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		titleTextBox.getElement().setAttribute("title", googleDriveItemDo.getTitle());
 		urlTextBox.setReadOnly(true);
 		titleTextBox.setFocus(true);
+		hideAllPanels();
 		if(googleDriveItemDo.getMimeType().equals(DriveView.DOCUMENT_MIMETYPE)||googleDriveItemDo.getMimeType().equals(DriveView.PRESENTATION_MIMETYPE)
 				||googleDriveItemDo.getMimeType().equals(DriveView.SPREADSHEET_MIMETYPE)){
 			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("alt", googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getEmbedLink());
+			textResourcePanel.setVisible(true);
+			setTextCategory();
 			//handoutResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.DRAWING_MIMETYPE)){
 			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("alt", googleDriveItemDo.getEmbedLink());
 			urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getEmbedLink());
+			imageResourcePanel.setVisible(true);
+			setImageCategory();
 			//slideResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.FORM_MIMETYPE)){
 			try{
@@ -1034,7 +1055,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				urlTextBox.getElement().setAttribute("alt",googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
 				urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
 			}
-
+			interactiveResourcePanel.setVisible(true);
+			setInteractiveCategory();
 			//interactiveResourcePanel(null);
 		}
 	}
@@ -1640,9 +1662,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			rightArrowLbl.setVisible(false);
 			leftArrowLbl.setVisible(false);
 			generateImageLbl.setVisible(true);
+
 			videoResourcePanel.removeStyleName("active");
 			resourceCategoryLabel.setText(i18n.GL0360());
-			
+
+			clearCategorySelections();
+
 			final Map<String, String> parms = new HashMap<String, String>();
 			
 			parms.put("text", urlTextBox.getText().trim());
@@ -1693,22 +1718,41 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								if (userUrlStr.indexOf("youtube") >0){
 									setVideoCategory();
 									if(websiteClickHandler!=null){
+										try{
 											websiteClickHandler.removeHandler();
+										}catch(Exception e){
+											
+										}
 									}
 									 if(interactiveClickHandler!=null){
+										 try{
 										 interactiveClickHandler.removeHandler();
+										 }catch(Exception e){
+												
+											}
 									}
 									 if(imageClickHandler!=null){
+										 try{
 										 imageClickHandler.removeHandler();
+									 }catch(Exception e){
+											
+										}
 									}
 									 if(textClickHandler!=null){
+										 try{
 										 textClickHandler.removeHandler();
+										 }catch(Exception e){
+												
+											}
 									}
 									 if(audioClickHandler!=null){
+										 try{
 										 audioClickHandler.removeHandler();
+										 }catch(Exception e){
+												
+											}
 									}
-									 
-									}
+								}
 								else{
 									websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
 									interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
@@ -2237,6 +2281,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			educationalDropDownLblOpen = false;
 		}
 	}
+	@UiHandler("educatioNalUseDropContainer")
+	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (educationalDropDownLblOpen == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+		}
+	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
 	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
@@ -2291,6 +2346,18 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			momentsOfLearningOpen = false;
 		}
 	}
+	@UiHandler("momentsOfLearningDropDownContianer")
+	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (momentsOfLearningOpen == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
+		}
+	}
+	
 	/**
 	 * 
 	 * @function setImageThumbnail 
@@ -3203,5 +3270,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			
 		}
 		
+	}
+	public void clearCategorySelections(){
+		websiteResourcePanel.removeStyleName("active");
+		interactiveResourcePanel.removeStyleName("active");
+		audioResourcePanel.removeStyleName("active");
+		textResourcePanel.removeStyleName("active");
+		videoResourcePanel.removeStyleName("active");
+		imageResourcePanel.removeStyleName("active");
 	}
 }

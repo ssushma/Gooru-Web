@@ -173,6 +173,10 @@ import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresen
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter.IsCoreLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.IsCoreLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.epapa.EpapaLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.epapa.EpapaLibraryPresenter.IsEpapaLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.epapa.EpapaLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.epapa.IsEpapaLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter.IsEsypLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryView;
@@ -620,6 +624,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
 		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
-	
+		bindPresenter(EpapaLibraryPresenter.class, IsEpapaLibraryView.class, EpapaLibraryView.class,IsEpapaLibraryProxy.class);
 	}
 }
