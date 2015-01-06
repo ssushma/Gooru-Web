@@ -62,6 +62,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -120,7 +121,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	@UiField HTMLPanel loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,educationalContainer,
-	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer;
+	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer,panelCategoryInputDiv;
 	
 	@UiField
 	public Button cancelResourcePopupBtnLbl,uploadImageLbl,browseResourceBtn;
@@ -128,7 +129,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	public BlueButtonUc addResourceBtnLbl;
 
 	@UiField
-	Label resourceContentChkLbl, mandatoryTitleLbl,descCharcterLimit,standardsDefaultText,accessHazard,flashingHazard,motionSimulationHazard,soundHazard,mediaLabel;
+	Label resourceContentChkLbl, mandatoryTitleLbl,descCharcterLimit,standardsDefaultText,accessHazard,flashingHazard,motionSimulationHazard,soundHazard,mediaLabel,mandatoryCategoryLbl;
 	
 	@UiField
 	HTMLEventPanel lblContentRights;
@@ -346,9 +347,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		mandatoryCategoryLbl.setVisible(false);
+		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
+		mandatoryCategoryLbl.getElement().getStyle().setTop(-10, Unit.PX);
 		mediaDropdownArrowConatainer.getElement().getStyle().setRight(10, Unit.PX);
-		textsResourcePanel.addStyleName("active");
-		resourceCategoryLabel.setText(i18n.GL1044());
+		/*textsResourcePanel.addStyleName("active");
+		resourceCategoryLabel.setText(i18n.GL1044());*/
 		advancedText.setText(i18n.GL3096());
 		mediaLabelContainer.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		addSetupAdvancedView = new AddSetupAdvancedView() {
@@ -814,9 +818,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		
 		
 		
-		resourceCategoryLabel.setText(i18n.GL1044());
+		/*resourceCategoryLabel.setText(i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
-		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
+		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());*/
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
@@ -1114,6 +1118,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 										if(resourceCategory==null || resourceCategory.equals("-1") || resourceCategory.equalsIgnoreCase("Choose a resource format") ){ 
 											isValidate = false;
 											isEnabled = false;
+											showCategoryErrorMessage(i18n.GL0917());
 										}
 										
 										if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
@@ -1329,6 +1334,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
+		clearCategoryErrorMessage();
 		imageResourcePanel.addStyleName("active");
 		textsResourcePanel.removeStyleName("active");
 	}
@@ -1340,6 +1346,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 		categorypanel.setStyleName(texts.getStyleName());
+		clearCategoryErrorMessage();
 		resourceTypePanel.setVisible(true);
 		resoureDropDownLblOpen = false;
 		textsResourcePanel.addStyleName("active");
@@ -2212,5 +2219,21 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 /*			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());*/		}	
+	}
+	
+	public void showCategoryErrorMessage(String message){
+		mandatoryCategoryLbl.setText(message);
+		StringUtil.setAttributes(mandatoryTitleLbl.getElement(), "lblMandatoryCategoryLbl", message, message);
+		panelCategoryInputDiv.getElement().getStyle().setBorderColor("orange");
+		panelCategoryInputDiv.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
+		panelCategoryInputDiv.getElement().getStyle().setBorderWidth(1, Unit.PX);
+		panelCategoryInputDiv.getElement().setId("panelCategoryInputDiv");
+		mandatoryCategoryLbl.setVisible(true);
+	}
+	public void clearCategoryErrorMessage(){
+		mandatoryCategoryLbl.setVisible(false);
+		panelCategoryInputDiv.getElement().getStyle().clearBorderColor();
+		panelCategoryInputDiv.getElement().getStyle().clearBorderStyle();
+		panelCategoryInputDiv.getElement().getStyle().clearBorderWidth();
 	}
 }

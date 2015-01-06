@@ -48,7 +48,7 @@
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="categoryPanelText"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 			
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDivRFormat}">
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDivRFormat}"  ui:field="panelCategoryInputDiv">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="categorypanel"></g:HTMLPanel>
@@ -62,7 +62,7 @@
 				</g:HTMLPanel>
 					
 			
-			
+			<g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryCategoryLbl"></g:Label>
             <!-- <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryCategoryLbl">Please choose a category.</g:Label> -->
           </g:HTMLPanel>
         </g:HTMLPanel>
