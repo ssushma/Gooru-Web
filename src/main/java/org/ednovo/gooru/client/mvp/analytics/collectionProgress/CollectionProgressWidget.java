@@ -316,10 +316,12 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					 if(selectedIndex==2){
 						 operationsView.hideColumns(primitivesQuestions); 
 					 }
-					 Table table = new Table(operationsView, options);
+					 table = new Table(operationsView, options);
 				     table.setStyleName("collectionProgressTable");
 				     htmlpnlProgress.add(table);	
 				     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+				     leftArrow.setVisible(true);
+				     rightArrow.setVisible(true);
 			}
 		});
         table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
