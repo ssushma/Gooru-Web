@@ -161,7 +161,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	
 	@UiField Label lblAdding,resoureDropDownLbl,mandatoryTitleLblForSwareWords,mandatoryDescLblForSwareWords;
 	
-	@UiField HTMLEventPanel lblContentRights,imageResourcePanel,textResourcePanel;
+	@UiField HTMLEventPanel lblContentRights,imageResourcePanel,textResourcePanel,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 
 	@UiField
 	Image setThumbnailImage,clipImage;
@@ -274,7 +274,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
-	public boolean educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
+	public boolean educationalDropDownLblOpen=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false,educationalDropDownLblOpen1=false;
 	
 	private boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	
@@ -2112,7 +2112,28 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			momentsOfLearningOpen = false;
 		}
 	}
-	
+	@UiHandler("educatioNalUseDropContainer")
+	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (educationalDropDownLblOpen1 == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen1 = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen1 = false;
+		}
+	}
+	@UiHandler("momentsOfLearningDropDownContianer")
+	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (momentsOfLearningOpen1 == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen1 = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen1 = false;
+		}
+	}
 	
 	/**
 	 * (non-Javadoc)

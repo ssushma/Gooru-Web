@@ -142,7 +142,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiField HTMLEventPanel videoResourcePanel,lblContentRights,interactiveResourcePanel,websiteResourcePanel,imageResourcePanel,
 	textResourcePanel,audioResourcePanel,activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,
 	referenceMaterialPanel,quizPanel,curriculumPlanPanel,lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,
-	textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel;
+	textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 
 	/*@UiField
 	public ListBox resourceTypeListBox;*/
@@ -198,7 +198,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	String fileNameWithOutRespUrl = null;
 	
-	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,educationalDropDownLblOpen1=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
@@ -2168,6 +2168,28 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		} else {
 			educationalUsePanel.setVisible(false);
 			educationalDropDownLblOpen = false;
+		}
+	}
+	@UiHandler("educatioNalUseDropContainer")
+	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (educationalDropDownLblOpen1 == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen1 = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen1 = false;
+		}
+	}
+	@UiHandler("momentsOfLearningDropDownContianer")
+	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (momentsOfLearningOpen1 == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen1 = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen1 = false;
 		}
 	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
