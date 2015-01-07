@@ -30,6 +30,7 @@ import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.ListBox;
 
 
 public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
@@ -61,4 +62,5 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
      */
     void resetDataText() ;
 	Frame getFrame();
+	ListBox getLoadCollections();
 }

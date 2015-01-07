@@ -301,4 +301,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	public Frame getFrame() {
 		return downloadFile;
 	}
+	@Override
+	public ListBox getLoadCollections() {
+		return loadCollections;
+	}
 }

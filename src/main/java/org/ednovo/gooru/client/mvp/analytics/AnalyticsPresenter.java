@@ -84,9 +84,10 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		clearSlot(COLLECTION_SUMMARY_SLOT);
 		setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
 		getView().getCollectionSummarySlot().clear();
+		getView().getLoadCollections().clear();
 		
 		getView().resetData();
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
 			@Override
 			public void onSuccess(final ArrayList<GradeJsonData> result) {
@@ -95,7 +96,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 						getView().setNoDataText();
 					}else{
 						getView().setGradeCollectionData(result);
-						String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 						AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", result.get(0).getResourceGooruOId(), new AsyncCallback<CollectionSummaryMetaDataDo>() {
 							@Override
 							public void onSuccess(CollectionSummaryMetaDataDo collectionData) {
