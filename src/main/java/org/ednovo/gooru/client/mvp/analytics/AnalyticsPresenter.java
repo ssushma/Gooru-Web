@@ -95,12 +95,12 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 					if(result.get(0).getAggregateData()!=null && result.get(0).getAggregateData().equalsIgnoreCase("false")){
 						getView().setNoDataText();
 					}else{
+						getView().setGradeCollectionData(result);
 						String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 						AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", result.get(0).getResourceGooruOId(), new AsyncCallback<CollectionSummaryMetaDataDo>() {
 							@Override
 							public void onSuccess(CollectionSummaryMetaDataDo collectionData) {
 								if(collectionData!=null && collectionData.getViews()!=0){
-									getView().setGradeCollectionData(result);
 								}else{
 									getView().setNoDataText();
 								}
