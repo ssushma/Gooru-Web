@@ -189,6 +189,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 	@Override
 	public void clearFrames(){
+		getView().getFrame().setUrl("");
 		collectionSummaryTeacherPresenter.clearFrame();
 		collectionSummaryIndividualPresenter.clearFrame();
 	}
