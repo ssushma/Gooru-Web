@@ -84,6 +84,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		clearSlot(COLLECTION_SUMMARY_SLOT);
 		setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
 		getView().getCollectionSummarySlot().clear();
+		getView().getLoadCollections().clear();
 		
 		getView().resetData();
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
