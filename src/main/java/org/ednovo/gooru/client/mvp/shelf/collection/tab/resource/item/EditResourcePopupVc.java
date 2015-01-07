@@ -78,6 +78,8 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -197,6 +199,24 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private String mobileFeature;
 	
 	String fileNameWithOutRespUrl = null;
+	
+	private static final String DEFULT_VIMAGE = "images/default-video.png";
+
+	private static final String DEFULT_QIMAGE = "images/default-question.png";
+
+	private static final String DEFULT_IIMAGE = "images/default-interactive.png";
+
+	private static final String DEFULT_WIMAGE = "images/default-website.png";
+
+	private static final String DEFULT_TIMAGE = "images/default-textbook.png";
+
+	private static final String DEFULT_EIMAGE = "images/default-exam.png";
+
+	private static final String DEFULT_SIMAGE = "images/default-slide.png";
+
+	private static final String DEFULT_HIMAGE = "images/default-handout.png";
+
+	private static final String DEFULT_LIMAGE = "images/default-lesson.png";
 	
 	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,educationalDropDownLblOpen1=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false;
 	
@@ -1387,7 +1407,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 	}
 
-	public void setImage(String thumbnailUrlImage, String category){
+	public void setImage(String thumbnailUrlImage, final String category){
 		if (thumbnailUrlImage.endsWith("null")) {
 			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 		} 
@@ -1397,6 +1417,36 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			thumbnailUrlImage = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
 		}
 		setThumbnailImage.setUrl(thumbnailUrlImage);
+		setThumbnailImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				String categoryImage = setDefaultResourceThumbnail(category);
+				setThumbnailImage.setUrl(categoryImage);
+			}
+		});
+	}
+	private String setDefaultResourceThumbnail(String category){
+		String resourceImage = "";
+		if (category.equalsIgnoreCase("video")) {
+			resourceImage = DEFULT_VIMAGE;
+		} else if (category.equalsIgnoreCase("question")) {
+			resourceImage = DEFULT_QIMAGE;
+		} else if (category.equalsIgnoreCase("interactive")) {
+			resourceImage = DEFULT_IIMAGE;
+		} else if (category.equalsIgnoreCase("website")) {
+			resourceImage = DEFULT_WIMAGE;
+		} else if (category.equalsIgnoreCase("slide")) {
+			resourceImage = DEFULT_SIMAGE;
+		} else if (category.equalsIgnoreCase("textbook")) {
+			resourceImage = DEFULT_TIMAGE;
+		} else if (category.equalsIgnoreCase("handout")) {
+			resourceImage = DEFULT_HIMAGE;
+		} else if (category.equalsIgnoreCase("lesson")) {
+			resourceImage = DEFULT_LIMAGE;
+		} else if (category.equalsIgnoreCase("exam")) {
+			resourceImage = DEFULT_EIMAGE;
+		}
+		return resourceImage;
 	}
 	public void updateUi() {
 		generateImageLbl.setVisible(false);
