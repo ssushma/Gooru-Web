@@ -224,7 +224,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private boolean hasClickedOnDropDwn=false;
 
-	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,educationalDropDownLblOpen1=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false;
 	
 	private boolean isShortenedUrl;
 	
@@ -2281,12 +2281,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiHandler("educatioNalUseDropContainer")
 	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
-		if (educationalDropDownLblOpen == false) {
+		if (educationalDropDownLblOpen1 == false) {
 			educationalUsePanel.setVisible(true);
-			educationalDropDownLblOpen = true;
+			educationalDropDownLblOpen1 = true;
 		} else {
 			educationalUsePanel.setVisible(false);
-			educationalDropDownLblOpen = false;
+			educationalDropDownLblOpen1 = false;
 		}
 	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
@@ -2346,12 +2346,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiHandler("momentsOfLearningDropDownContianer")
 	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
-		if (momentsOfLearningOpen == false) {
+		if (momentsOfLearningOpen1 == false) {
 			momentsOfLearningPanel.setVisible(true);
-			momentsOfLearningOpen = true;
+			momentsOfLearningOpen1 = true;
 		} else {
 			momentsOfLearningPanel.setVisible(false);
-			momentsOfLearningOpen = false;
+			momentsOfLearningOpen1 = false;
 		}
 	}
 	
