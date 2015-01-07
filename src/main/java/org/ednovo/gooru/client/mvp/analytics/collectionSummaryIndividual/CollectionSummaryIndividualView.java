@@ -297,6 +297,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //Set Question Title
 		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+		            questionTitle.addStyleName(res.css().alignLeft());
+		            
 		            data.setValue(rowVal, 2, questionTitle.toString());
 		          
 		           //Set time spent
@@ -410,6 +412,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //Set Question Title
 		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+		            questionTitle.addStyleName(res.css().alignLeft());
 		            data.setValue(rowVal, 2, questionTitle.toString());
 		          
 		           //Set time spent
@@ -493,6 +496,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
 	            //Set completion
@@ -552,6 +556,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
 	            //Set completion
@@ -629,6 +634,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            questionTitle.setStyleName(res.css().alignLeft());
 				            data.setValue(i, 1, questionTitle.toString());
 				            int noOfAttempts=result.get(i).getAttempts();
 				           
@@ -809,6 +815,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            questionTitle.setStyleName(res.css().alignLeft());
 				            data.setValue(i, 1, questionTitle.toString());
 				            int noOfAttempts=result.get(i).getAttempts();
 				           

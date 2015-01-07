@@ -42,6 +42,7 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        String setGlassStyleName();
 	        String setEmailGlassStyleName();
 	        String setEmailPopupCenter();
+	        String alignLeft();
 	        
 	}
 	@NotStrict

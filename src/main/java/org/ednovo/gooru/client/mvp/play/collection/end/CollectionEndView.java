@@ -350,7 +350,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTip = new ToolTip(i18n.GL3110());
+			toolTip = new ToolTip(i18n.GL3113());
 			toolTip.getLblLink().setVisible(false);
 			toolTip.getElement().getStyle().setBackgroundColor("transparent");
 			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
