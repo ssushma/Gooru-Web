@@ -749,20 +749,20 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
-		flashingHazard.setText(i18n.GL1806());
+		flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL1806());
-		flashingHazard.getElement().setAttribute("title",i18n.GL1806());
+		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
+		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
 		
-		motionSimulationHazard.setText(i18n.GL1808());
+		motionSimulationHazard.setText(i18n.GL3111());
 		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL1808());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL1808());
+		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
+		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
 		
-		soundHazard.setText(i18n.GL1810());
+		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL1810());
-		soundHazard.getElement().setAttribute("title",i18n.GL1810());
+		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());
 		
 
 		mediaLabel.setText(i18n.GL3094());
