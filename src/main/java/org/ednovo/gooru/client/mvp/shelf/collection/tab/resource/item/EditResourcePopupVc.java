@@ -122,7 +122,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public Button addResourceBtn,cancelResourcePopupBtnLbl,mobileYes,mobileNo,browseStandards;
 	
 	@UiField
-	public Label generateImageLbl,resoureDropDownLbl;
+	public Label resoureDropDownLbl;
 
 	@UiField
 	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,educationalDropDownLbl;
@@ -148,7 +148,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public ListBox resourceTypeListBox;*/
 
 	@UiField
-	Image setThumbnailImage;
+	Image setThumbnailImage,generateImageLbl;
 	
 	// Drop down for Resource Type//
 	@UiField
@@ -428,7 +428,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		imagePanel.getElement().setId("pnlImagePanel");
 		imagePanel.getElement().setAttribute("alt", i18n.GL1046());
 		imagePanel.getElement().setAttribute("title", i18n.GL1046());
-		generateImageLbl.setText(i18n.GL0922());
+		generateImageLbl.setUrl("../images/NewResourcePopup/PreviewResourceThumbnail.png");
 		generateImageLbl.getElement().setId("lblGenerateImageLbl");
 		generateImageLbl.getElement().setAttribute("alt", i18n.GL0922());
 		generateImageLbl.getElement().setAttribute("title", i18n.GL0922());
@@ -2184,6 +2184,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("momentsOfLearningDropDownContianer")
 	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
+		System.out.println("momentsOfLearningOpen1::::"+momentsOfLearningOpen1);
 		if (momentsOfLearningOpen1 == false) {
 			momentsOfLearningPanel.setVisible(true);
 			momentsOfLearningOpen1 = true;
