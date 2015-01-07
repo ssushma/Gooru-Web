@@ -197,6 +197,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
 			String selectedCollectionTitle=loadCollections.getItemText(loadCollections.getSelectedIndex());
 			if(clicked.equalsIgnoreCase(PROGRESS)){
+				//Clearing the summary
+				getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
+				isSummayClicked=false;
+				btnCollectionSummary.setText(i18n.GL2296());
+				
 				if(isProgressClicked){
 					isProgressClicked=false;
 					btnCollectionProgress.setText(i18n.GL2296());
@@ -207,6 +212,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 					getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId,selectedCollectionTitle);
 				}
 			}else if(clicked.equalsIgnoreCase(SUMMARY)){
+				//Clearing the progress
+				getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
+				isProgressClicked=false;
+				btnCollectionProgress.setText(i18n.GL2296());
+				
 				if(isSummayClicked){
 					isSummayClicked=false;
 					btnCollectionSummary.setText(i18n.GL2296());

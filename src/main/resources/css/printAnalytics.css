@@ -12,6 +12,9 @@
 	text-align: center;
 	width: auto;
 }
+.alignLeft{
+	text-align: left;
+}
 .reaction_explain1 {
 	background: url(../images/analyticsReactions.png) no-repeat scroll 0px 0px transparent;
 	height: 35px;
