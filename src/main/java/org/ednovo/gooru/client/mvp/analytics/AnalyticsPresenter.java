@@ -36,6 +36,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers{
@@ -236,5 +237,9 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			public void onFailure(Throwable caught) {
 			}
 		});
+	}
+	@Override
+	public Frame getIframe() {
+		return getView().getFrame();
 	}
 }

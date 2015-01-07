@@ -746,6 +746,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 
 	@Override
 	public void setCollectionProgressData(String clickedTab,String collectionId,String collectionTitle) {
+		analyticsPresenter.getIframe().setUrl("");
 		clearSlot(SLOT_SET_SUMMARY_PROGRESS);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
