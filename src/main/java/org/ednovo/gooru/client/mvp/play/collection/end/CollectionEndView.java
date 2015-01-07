@@ -65,6 +65,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -128,9 +130,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField SimpleCheckBox changeAssignmentStatusButton;
 	
 	@UiField ListBox sessionsDropDown;
-	@UiField Image collectionImage;
+	@UiField Image collectionImage,sessionsTooltip;
 	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
-	ToolTip toolTip;
+	
+	private ToolTip toolTip;
+	
 	Map<String, Long> sessionData=new HashMap<String, Long>();
 	PrintUserDataDO printData=new PrintUserDataDO();
 	
@@ -183,6 +187,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	private boolean isCustomizePopup = false;
 	
 	private boolean isSharePopup = false;
+	
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
@@ -240,7 +245,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		lblCharLimitComments.setText(value);
 		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
-		
+		sessionsTooltip.addMouseOverHandler(new QuestionMarkHover());
+		sessionsTooltip.addMouseOutHandler(new QuestionMarkHoverOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		customizeCollectionBtn.addBlurHandler(new customizeCollectionBtnOnBlur());
@@ -338,6 +344,28 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 		
 		
+	}
+	
+	public class QuestionMarkHover implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTip = new ToolTip(i18n.GL3113());
+			toolTip.getLblLink().setVisible(false);
+			toolTip.getElement().getStyle().setBackgroundColor("transparent");
+			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			toolTip.setPopupPosition(sessionsTooltip.getAbsoluteLeft()-72, sessionsTooltip.getAbsoluteTop()+25);
+			toolTip.getElement().getStyle().setZIndex(99999);
+			toolTip.show();
+		}
+	}
+	
+	public class QuestionMarkHoverOut implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTip.hide();	
+		}
 	}
 	
 	@Override
