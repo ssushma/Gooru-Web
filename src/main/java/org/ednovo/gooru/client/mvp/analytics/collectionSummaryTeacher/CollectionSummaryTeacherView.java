@@ -470,7 +470,10 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 				      resourceCategory = "webpage";
 				      categoryStyle=res.css().category_new_type_interactive();
-				  } else{
+				  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+				      resourceCategory = "audio";
+				      categoryStyle=res.css().category_new_type_audio();
+				  }else{
 					  categoryStyle=res.css().category_new_type_other();
 				  }
 	            Label categorylbl=new Label();
@@ -589,6 +592,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 				      resourceCategory = "webpage";
 				      categoryStyle=res.css().category_new_type_interactive();
+				  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+				      resourceCategory = "audio";
+				      categoryStyle=res.css().category_new_type_audio();
 				  } else{
 					  categoryStyle=res.css().category_new_type_other();
 				  }

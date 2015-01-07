@@ -119,7 +119,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
-	public Label standardsDefaultText,mandatoryEducationalLbl, generateImageLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl,mandatorygenerateFromUrlLbl;
+	public Label standardsDefaultText,mandatoryEducationalLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl,mandatorygenerateFromUrlLbl;
 	
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
@@ -150,7 +150,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	// @UiField public ListBox resourceTypeListBox;
 
 	@UiField
-	public Image setThumbnailImage;
+	public Image setThumbnailImage,generateImageLbl;
 	// Drop down for Resource Type//
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
@@ -536,7 +536,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		thumbnailText.getElement().setId("pnlThumbnailText");
 		thumbnailText.getElement().setAttribute("alt", i18n.GL0911());
 		thumbnailText.getElement().setAttribute("title", i18n.GL0911());
-		generateImageLbl.setText(i18n.GL0922());
+		generateImageLbl.setUrl("../images/NewResourcePopup/PreviewResourceThumbnail.png");
 		generateImageLbl.getElement().setId("lblGenerateImageLbl");
 		generateImageLbl.getElement().setAttribute("alt", i18n.GL0922());
 		generateImageLbl.getElement().setAttribute("title", i18n.GL0922());

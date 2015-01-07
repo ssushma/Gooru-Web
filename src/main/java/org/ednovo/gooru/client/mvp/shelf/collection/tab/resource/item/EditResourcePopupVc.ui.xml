@@ -254,8 +254,9 @@
 						ui:field="rightArrowLbl"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRectDesc}">
-					<g:Label styleName="" 
-						ui:field="generateImageLbl"></g:Label>
+					<!-- <g:Label styleName="" 
+						ui:field="generateImageLbl"></g:Label> -->
+						 <g:Image url="" ui:field="generateImageLbl" styleName="{res.css.resourceThumbnailImage}"></g:Image>
 					<g:Image url="" ui:field="setThumbnailImage" styleName="{res.css.resourceThumbnailImage}"></g:Image>
 				</g:HTMLPanel>
 			</g:HTMLPanel>

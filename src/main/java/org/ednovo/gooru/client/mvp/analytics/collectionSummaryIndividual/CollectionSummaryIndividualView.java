@@ -287,6 +287,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_interactive();
+					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+					      resourceCategory = "audio";
+					      categoryStyle=res.css().category_new_type_audio();
 					  } else{
 						  categoryStyle=res.css().category_new_type_other();
 					  }
@@ -402,6 +405,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_interactive();
+					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+					      resourceCategory = "audio";
+					      categoryStyle=res.css().category_new_type_audio();
 					  } else{
 						  categoryStyle=res.css().category_new_type_other();
 					  }
