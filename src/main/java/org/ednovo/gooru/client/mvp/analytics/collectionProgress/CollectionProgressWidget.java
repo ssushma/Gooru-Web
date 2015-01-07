@@ -204,7 +204,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        		  mainDataVpnl.add(reactionlbl);
 			        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
 		        		  }else{
-		        			  String typeOfQuestion=collectionProgressData.get(j).getType();
+		        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
 		        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions();
 		        			  String answer="";
 		        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();

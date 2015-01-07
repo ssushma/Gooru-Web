@@ -764,7 +764,11 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable,boolean isPrint){
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
         	 sortableTable.setValue(i, 0,scoredQuestionsData.get(i-1).getItemSequence());
-             sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
+        	 Label questionTitle=new Label(AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()!=null?scoredQuestionsData.get(i-1).getTitle():""));
+	         questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	         questionTitle.addStyleName(res.css().alignLeft());
+	         sortableTable.setWidget(i, 1, questionTitle);
+            // sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
             	  String getQuestionType=scoredQuestionsData.get(i-1).getType();
