@@ -729,7 +729,14 @@ public class CollectionShareTabVc extends Composite {
 				}
 				
 			}
+			try
+			{
 			collectionShareAlertPopup.center();
+			}
+			catch(Exception e)
+			{
+				
+			}
 		}
 	}
 

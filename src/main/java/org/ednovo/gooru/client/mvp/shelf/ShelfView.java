@@ -867,6 +867,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					}else{
 						rbPublicPanel.setVisible(true);
 						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+							if(collectionDo!=null){
 							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
 								rbPublic.setVisible(false);
 								lblPublishPending.setVisible(true);
@@ -881,6 +882,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 							lblPublishPending.setVisible(false);
 							publishedPanel.setVisible(true);
 						}
+					}else{
+						rbPublic.setVisible(false);
+						lblPublishPending.setVisible(false);
+						publishedPanel.setVisible(true);
+					}
 					}
 				}
 			});
