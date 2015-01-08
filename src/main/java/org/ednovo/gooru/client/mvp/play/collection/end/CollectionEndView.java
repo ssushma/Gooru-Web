@@ -775,9 +775,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					params.put("customize", "yes");
 					
 				}
-				params.put("view", "end");
+		/*		params.put("view", "end");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
 				
 			}
 		
@@ -809,9 +809,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				public void closePoup() {
 					Window.enableScrolling(true);
 			        this.hide();
-			    	params.remove("assign");
+/*			    	params.remove("assign");
 			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 				}
 			};
 		int clientHeight=Window.getClientHeight();
@@ -825,9 +825,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		int left = (Window.getClientWidth() - 500) >> 1;
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
 	    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
-		params.put("assign", "yes");
+	/*	params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 	}
 	
 	public void resetMetadataFields(){
