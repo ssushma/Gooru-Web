@@ -161,7 +161,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	
 	@UiField Label lblAdding,resoureDropDownLbl,mandatoryTitleLblForSwareWords,mandatoryDescLblForSwareWords;
 	
-	@UiField HTMLEventPanel lblContentRights,imageResourcePanel,textResourcePanel;
+	@UiField HTMLEventPanel lblContentRights,imageResourcePanel,textResourcePanel,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 
 	@UiField
 	Image setThumbnailImage,clipImage;
@@ -274,7 +274,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
-	public boolean educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
+	public boolean educationalDropDownLblOpen=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false,educationalDropDownLblOpen1=false;
 	
 	private boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	
@@ -822,20 +822,20 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
-		flashingHazard.setText(i18n.GL1806());
+		flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL1806());
-		flashingHazard.getElement().setAttribute("title",i18n.GL1806());
+		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
+		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
 		
-		motionSimulationHazard.setText(i18n.GL1808());
+		motionSimulationHazard.setText(i18n.GL3111());
 		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL1808());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL1808());
+		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
+		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
 		
-		soundHazard.setText(i18n.GL1810());
+		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL1810());
-		soundHazard.getElement().setAttribute("title",i18n.GL1810());
+		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());
 		
 
 		mediaLabel.setText("Media Feature");
@@ -2112,7 +2112,28 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			momentsOfLearningOpen = false;
 		}
 	}
-	
+	@UiHandler("educatioNalUseDropContainer")
+	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (educationalDropDownLblOpen1 == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen1 = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen1 = false;
+		}
+	}
+	@UiHandler("momentsOfLearningDropDownContianer")
+	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (momentsOfLearningOpen1 == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen1 = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen1 = false;
+		}
+	}
 	
 	/**
 	 * (non-Javadoc)
@@ -2360,13 +2381,13 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		
 		String[] stringArry=accessHazardStr.split(" : ");
 		if(stringArry.length!=0){
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL1806().trim())){
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3110().trim())){
 				flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL1808().trim())){
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3111().trim())){
 				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL1810().trim())){
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3112().trim())){
 				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
 			setAdvancedAccessHazardStyles(stringArry.length);

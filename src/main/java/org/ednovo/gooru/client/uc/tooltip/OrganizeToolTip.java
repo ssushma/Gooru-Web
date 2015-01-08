@@ -175,15 +175,7 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 			}
 		});
         
-        String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT;
-		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
-			
-			@Override
-			public void onSuccess(String result) {
-				anchCreateAsseement.setHref(result);
-				anchCreateAsseement.setTarget("_blank");
-			}
-		});
+        setAssessmentUrl();
         
         lblEditMyCollections.addClickHandler(new ClickHandler() {
 			
@@ -199,6 +191,37 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
+	/**
+	 * 
+	 * @function setAssessmentUrl 
+	 * 
+	 * @created_date : 08-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setAssessmentUrl(){
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT;
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				anchCreateAsseement.setHref(result);
+				anchCreateAsseement.setTarget("_blank");
+			}
+		});
+	}
+	
 	
 	public void createFolderInParent(String folderName,
 			final String parentId, final HashMap<String, String> params) {

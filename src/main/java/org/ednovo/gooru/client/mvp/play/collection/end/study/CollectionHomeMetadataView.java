@@ -345,9 +345,9 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-				params.put("customize", "yes");
+	/*			params.put("customize", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
 			}
 		
 	}
@@ -379,9 +379,9 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					public void closePoup() {
 						Window.enableScrolling(true);
 				        this.hide();
-				    	params.remove("assign");
+				    /*	params.remove("assign");
 				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
 					}
 				};
 				//Window.scrollTo(0, 0);
@@ -414,9 +414,9 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 //				else{
 					//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 //				}
-				params.put("assign", "yes");
+	/*			params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
 
 		
 //		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
