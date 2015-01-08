@@ -275,4 +275,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	public Frame getFrame() {
 		return downloadFile;
 	}
+	@Override
+	public InlineLabel getLastModified() {
+		return lastModifiedTime;
+	}
 }
