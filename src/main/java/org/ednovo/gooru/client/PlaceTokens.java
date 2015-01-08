@@ -94,8 +94,8 @@ public interface PlaceTokens {
 	String LUSD = "lusd";	
 	String TICAL = "tical";
 	String DASHBOARD ="dashboard";
-	String CREATE_ASSIGNMENT="#/list";
-	String EDIT_ASSIGNMENT="/assessments#/assessments/";
+	String CREATE_ASSIGNMENT="%23/list";
+	String EDIT_ASSIGNMENT="/assessments%23/assessments/";
 	String PLAY_ASSIGNMENT="/assessments/";
 	String ASPIRE_EPACS =  "AspireEPACS"; 
 }
