@@ -49,7 +49,6 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -83,6 +82,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -211,7 +211,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	private TreeItem previousTreeChildSelectedItem = new TreeItem();
 	
-	@UiField Label folderLabel, collectionLabel,assessmentLabel;
+	@UiField Label folderLabel, collectionLabel;
+	
+	@UiField Anchor assessmentLabel;
 	
 	private PlaceRequest searchRequest = null;
 	
@@ -345,7 +347,18 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		
 		folderLabel.addClickHandler(new CreateNewFolder());
 		collectionLabel.addClickHandler(new CreateNewCollection(null));
-		assessmentLabel.addClickHandler(new CreateNewCollection("assessment"));
+//		assessmentLabel.addClickHandler(new CreateNewCollection("assessment"));
+
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT;
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				assessmentLabel.setHref(result);
+				assessmentLabel.setTarget("_blank");
+			}
+		});
+		
 		
 		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
 			organizeButtonPanel.getElement().getStyle().clearMarginTop();
@@ -1576,7 +1589,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
-				Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT, "_blank", "");
+//				Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT, "_blank", "");
 			}
 			else {
 				final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
