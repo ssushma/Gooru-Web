@@ -33,6 +33,7 @@ import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -54,6 +55,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	@UiField HTMLPanel collectionSummaryDetails,sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
 	@UiField Frame downloadFile;
+	@UiField Label subText;
 	
 	Map<String, String> sessionData=new HashMap<String, String>();
 	ToolTip toolTip;
@@ -186,8 +188,10 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		String tabReports=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		if(tabReports!=null && tabReports.equalsIgnoreCase("reports")){
 			exportImage.setVisible(true);
+			subText.setVisible(true);
 		}else{
 			exportImage.setVisible(false);
+			subText.setVisible(false);
 		}
 	}
 
