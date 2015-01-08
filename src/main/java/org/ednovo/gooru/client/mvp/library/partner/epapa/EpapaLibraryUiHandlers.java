@@ -23,8 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-
-package org.ednovo.gooru.client.mvp.library.partner.ccstcaltac;
+package org.ednovo.gooru.client.mvp.library.partner.epapa;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
@@ -32,9 +31,10 @@ import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
-public interface CcstCalTacLibraryUiHandlers extends BaseUiHandlers {
+public interface EpapaLibraryUiHandlers extends BaseUiHandlers {
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+
 
 }

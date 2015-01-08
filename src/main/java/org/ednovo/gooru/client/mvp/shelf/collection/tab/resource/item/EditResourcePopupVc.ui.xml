@@ -254,8 +254,9 @@
 						ui:field="rightArrowLbl"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRectDesc}">
-					<g:Label styleName="" 
-						ui:field="generateImageLbl"></g:Label>
+					<!-- <g:Label styleName="" 
+						ui:field="generateImageLbl"></g:Label> -->
+						 <g:Image url="" ui:field="generateImageLbl" styleName="{res.css.resourceThumbnailImage}"></g:Image>
 					<g:Image url="" ui:field="setThumbnailImage" styleName="{res.css.resourceThumbnailImage}"></g:Image>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
@@ -285,7 +286,7 @@
 		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconEducationalUse"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="educationalTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
-			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
+			<uc:HTMLEventPanel styleName="{res.css.myEducationPanelInputDiv}" ui:field="educatioNalUseDropContainer">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="educationalpanel"></g:HTMLPanel>
@@ -295,7 +296,7 @@
 					<g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}">
 						<g:Label ui:field="educationalDropDownLbl"	styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
-				</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatoryEducationalLbl"></g:Label>
           </g:HTMLPanel>
@@ -391,7 +392,7 @@
 		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconMomentsOfLearning"></uc:HTMLEventPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="momentsOfLearningTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
-			<g:HTMLPanel styleName="{res.css.myEducationPanelInputDiv}">
+			<uc:HTMLEventPanel ui:field="momentsOfLearningDropDownContianer" styleName="{res.css.myEducationPanelInputDiv}">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 						<g:HTMLPanel>
 							<g:HTMLPanel styleName="" ui:field="momentsOfLearningpanel"></g:HTMLPanel>
@@ -401,7 +402,7 @@
 					<g:HTMLPanel styleName="{res.css.myEducationArrowleftContainer}">
 						<g:Label ui:field="momentsOfLearningDropDownLbl" styleName="{res.css.myFolderCollectionPopupSprite} {res.css.myFolderCollectionArrowleft}"></g:Label>
 					</g:HTMLPanel>
-				</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			
             <g:Label styleName="{res.css.addNewResourceMandatoryCategory}" ui:field="mandatorymomentsOfLearninglLbl"></g:Label>
           </g:HTMLPanel>
