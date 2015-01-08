@@ -47,7 +47,7 @@ public  abstract class AddSetupAdvancedView extends Composite{
 	public AddSetupAdvancedView(){
 		initWidget(Uibinder.createAndBindUi(this));
 		AddSetupAdvancedCBundle.INSTANCE.css().ensureInjected();
-		setUpLabel.getElement().setInnerText(i18n.GL3097()+i18n.GL_SPL_QUESTION());
+		setUpLabel.getElement().setInnerText(i18n.GL3097());
 		educationUseAdvancedPnl.setText(i18n.GL1664());
 		momentsOfLearningAdvancedPnl.setText(i18n.GL1678());
 		standardsAdvancedPnl.setText(i18n.GL1682());

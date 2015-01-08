@@ -97,4 +97,5 @@ public interface PlaceTokens {
 	String CREATE_ASSIGNMENT="%23/list";
 	String EDIT_ASSIGNMENT="/assessments%23/assessments/";
 	String PLAY_ASSIGNMENT="/assessments/";
+	String ASPIRE_EPACS =  "AspireEPACS"; 
 }
