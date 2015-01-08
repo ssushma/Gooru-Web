@@ -118,7 +118,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		unitTextLbl.setText(i18n.GL2219());
 		unitTextLbl.getElement().setId("unitTextLbl");
-		unitTextLbl.getElement().setAttribute("alt",i18n.GL2175());
+		unitTextLbl.getElement().setAttribute("alt",i18n.GL2219());
 		unitTextLbl.getElement().setAttribute("style", "display: inline-block;");
 		assignmentTextLbl.setText(i18n.GL0103());
 		assignmentTextLbl.getElement().setId("assignmentTextLbl");

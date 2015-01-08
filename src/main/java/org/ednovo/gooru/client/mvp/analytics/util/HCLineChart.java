@@ -218,7 +218,7 @@ private String getTimeSpent(Long commentCreatedTime) {
 				chart.getXAxis().setTickWidth(0);
 				chart.getXAxis().setTickLength(0);
 		 }*/
-		chart.getXAxis().setAxisTitleText("Assignments");
+		chart.getXAxis().setAxisTitleText("Tasks");
 		if(chartmetadata.getyAxisTitle()!=null&&!chartmetadata.getyAxisTitle().isEmpty()) {
 			chart.getYAxis().setAxisTitleText(chartmetadata.getyAxisTitle());
 		} else {
