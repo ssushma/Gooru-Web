@@ -109,6 +109,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		noErrorMesage.setVisible(false);
 		maincontainer.setVisible(false);
 		downloadFile.setVisible(false);
+		printWidget.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
