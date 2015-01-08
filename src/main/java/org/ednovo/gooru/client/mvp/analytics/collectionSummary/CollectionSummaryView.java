@@ -178,11 +178,17 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	@Override
 	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
 		studentsListDropDown.clear();
-		studentsListDropDown.addItem("All");
+		studentsListDropDown.addItem("All Students");
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
 			studentsListDropDown.addItem(collectionSummaryUsersDataDo.getUserName(),collectionSummaryUsersDataDo.getGooruUId());
 		}
 		sessionspnl.setVisible(false);
+		String tabReports=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+		if(tabReports!=null && tabReports.equalsIgnoreCase("reports")){
+			exportImage.setVisible(true);
+		}else{
+			exportImage.setVisible(false);
+		}
 	}
 
 	/* (non-Javadoc)

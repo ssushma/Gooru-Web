@@ -68,4 +68,6 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
     void sendEmail(String to,String subject,String message,String displayName,String fileName,String path,AsyncCallback<Void> callback);
 
     void exportTeacherSummary(String collectionGooruOId,String pathwayId, String classId,String timeZone,AsyncCallback<String> callback) ;
+    
+	void exportProgress(String collectionId, String classpageId,String timeZone,AsyncCallback<String> callback);
 }

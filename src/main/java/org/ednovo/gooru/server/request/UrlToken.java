@@ -647,7 +647,9 @@ V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	
 	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?sessionToken={1}&data={2}"),
 	
-	V2_DOWNLOADFILE("/v2/media/download?sessionToken={0}&url={1}&filename={2}");
+	V2_DOWNLOADFILE("/v2/media/download?sessionToken={0}&url={1}&filename={2}"),
+	
+	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}&data={2}&&timeZone={3}");
 	
 
 	private String url;

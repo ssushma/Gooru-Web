@@ -550,4 +550,12 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		LOGGER.info("url:+"+url);
 		return url;
 	}
+
+	@Override
+	public String exportProgress(String collectionId, String classpageId,String timeZone) {
+		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22session%22:%22FS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22},%22paginate%22:{%22sortBy%22:%22%22,%22sortOrder%22:%22%22}}";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTPROGRESS, classpageId,getLoggedInSessionToken(),dataPassing,timeZone);
+		LOGGER.info("url:+"+url);
+		return url;
+	}
 }
