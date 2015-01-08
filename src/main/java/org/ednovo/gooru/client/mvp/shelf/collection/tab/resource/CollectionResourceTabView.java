@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -74,8 +75,8 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -122,7 +123,9 @@ public class CollectionResourceTabView extends
 	HTMLPanel panelNoResourceContainer,panelLoading,contentPanel;
 
 	@UiField
-	Button buttonContainer, buttonContainerForQuestion, buttonContainerAddGray,buttonContainerForQuestionGreay,editAssesmentButton ;
+	Button buttonContainer, buttonContainerForQuestion, buttonContainerAddGray,buttonContainerForQuestionGreay;
+	
+	@UiField Anchor editAssesmentButton;
 
 	private CollectionDo collectionDo;
 
@@ -160,7 +163,7 @@ public class CollectionResourceTabView extends
 	
 	private static final String REORDER_VALIDATION_MSG = "Success";
 	
-	int resourceLimit = 10;
+	int resourceLimit = 25;
 
 	/**
 	 * Class constructor
@@ -237,13 +240,25 @@ public class CollectionResourceTabView extends
 		
 		
 		editAssesmentButton.setVisible(false);
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.EDIT_ASSIGNMENT+collectionId;
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				editAssesmentButton.setHref(result);
+				editAssesmentButton.setTarget("_blank");
+			}
+		});
+		
 	}
 	
-	@UiHandler("editAssesmentButton")
-	public void editAssementButton(ClickEvent event){
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.EDIT_ASSIGNMENT+collectionId, "_blank", "");
-	}
+//	@UiHandler("editAssesmentButton")
+//	public void editAssementButton(ClickEvent event){
+//		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+////		Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.EDIT_ASSIGNMENT+collectionId, "_blank", "");
+//		
+//	}
 
 	@Override
 	public void reset() {
