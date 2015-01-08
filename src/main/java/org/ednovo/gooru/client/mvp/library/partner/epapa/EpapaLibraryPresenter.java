@@ -24,7 +24,7 @@
  ******************************************************************************/
 
 
-package org.ednovo.gooru.client.mvp.library.partner.ccstcaltac;
+package org.ednovo.gooru.client.mvp.library.partner.epapa;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
@@ -33,8 +33,6 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
-import org.ednovo.gooru.client.mvp.library.partner.autodesk.IsAutodeskLibraryView;
-import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter.IsAutodeskLibraryProxy;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 
 import com.google.gwt.user.client.Window;
@@ -45,9 +43,8 @@ import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-public class CcstCalTacLibraryPresenter extends BasePlacePresenter<IsCcstCalTacLibraryView, CcstCalTacLibraryPresenter.IsCcstCalTacLibraryProxy> implements CcstCalTacLibraryUiHandlers {
+public class EpapaLibraryPresenter extends BasePlacePresenter<IsEpapaLibraryView, EpapaLibraryPresenter.IsEpapaLibraryProxy> implements EpapaLibraryUiHandlers {
 
-	
 	private PartnerLibraryPresenter partnerLibraryPresenter;
 	
 	private static final String CALLBACK = "callback";
@@ -55,14 +52,14 @@ public class CcstCalTacLibraryPresenter extends BasePlacePresenter<IsCcstCalTacL
 	SignUpPresenter signUpViewPresenter = null;
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.CCST_Cal_TAC)
+	@NameToken(PlaceTokens.ASPIRE_EPACS)
 	@UseGatekeeper(AppPlaceKeeper.class)
-	public interface IsCcstCalTacLibraryProxy extends ProxyPlace<CcstCalTacLibraryPresenter>{
+	public interface IsEpapaLibraryProxy extends ProxyPlace<EpapaLibraryPresenter>{
 		
 	}
 	
 	@Inject
-	public CcstCalTacLibraryPresenter(IsCcstCalTacLibraryView view, IsCcstCalTacLibraryProxy proxy, PartnerLibraryPresenter partnerLibraryPresenter, SignUpPresenter signUpViewPresenter) {
+	public EpapaLibraryPresenter(IsEpapaLibraryView view, IsEpapaLibraryProxy proxy, PartnerLibraryPresenter partnerLibraryPresenter, SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.partnerLibraryPresenter = partnerLibraryPresenter;
@@ -87,7 +84,7 @@ public class CcstCalTacLibraryPresenter extends BasePlacePresenter<IsCcstCalTacL
 	@Override
 	public void onHide() {
 		super.onHide();
-		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.CCST_Cal_TAC);
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.ASPIRE_EPACS);
 	}
 	
 	@Override
@@ -125,4 +122,5 @@ public class CcstCalTacLibraryPresenter extends BasePlacePresenter<IsCcstCalTacL
 	public String getViewToken() {
 		return PlaceTokens.DISCOVER;
 	}
+
 }
