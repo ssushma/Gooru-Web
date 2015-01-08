@@ -14,7 +14,9 @@
 	margin-top: 3%;
 	/* margin-left: 14%; */
 }
-
+.container{}
+.collectionsProgressContainerMain{}
+.collectionSummaryDetailsWrapper{}
 .htmlpanlProgress {
 	overflow: hidden;
 	width: 100%;
@@ -54,15 +56,20 @@
 }
 
 .collectionSummaryDetailsWrapper {
+	float: left;
+	/* width: 91%; */
+	width: 100%;
+	border-top: 1px solid #DDDDDD;
+	padding: 15px 0px;
+	border-bottom: 1px solid #DDDDDD;
+	color: #515151;
 	font-size: 13px;
-	padding: 10px 0;
-	margin: -1px 0;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	clear: both;
+	margin-top: 15px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: rgb(221, 221, 221);
 }
-.container{}
-.collectionsProgressContainerMain{}
+
 .left_container {
 	width: 100%;
 	float: left;
@@ -161,4 +168,10 @@
 	position: absolute;
 	z-index: 5;
 	margin-left: 375px;
+}
+.container{
+	
+}
+.collectionsProgressContainerMain{
+	
 }

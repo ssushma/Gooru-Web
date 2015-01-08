@@ -36,11 +36,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-
 import org.ednovo.gooru.client.htmltags.SectionTag;
-
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
-
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
@@ -70,7 +67,6 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -116,8 +112,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	FlowPanel metadataContainer;
 	@UiField
 	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
-	@UiField
-	FlowPanel frameContainer1;
 	
 	@UiField SectionTag dataInsightsPanel;
 	
@@ -673,7 +667,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentField.getElement().setId("tatCommentField");
 		StringUtil.setAttributes(commentField, true);
 		dataInsightsPanel.getElement().setId("pnlDataInsightsPanel");
-		frameContainer1.getElement().setId("fpnlframeContainer1");
 		messageContainer.getElement().setId("fpnlMessageContainer");
 		
 		replayCollection.setText(i18n.GL0632());
@@ -885,8 +878,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		frameContainer.setVisible(true);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer1.clear();
-			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
 			loadingImageLabel.setVisible(false);
@@ -895,8 +886,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer1.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer1.clear();
-			frameContainer1.setVisible(true);
 			messageContainer.setVisible(false);
 /*			frameContainer1.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
 					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));*/
@@ -911,8 +900,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		frameContainer.setVisible(true);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer1.clear();
-			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
 
@@ -923,8 +910,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer1.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer1.clear();
-			frameContainer1.setVisible(true);
 			messageContainer.setVisible(false);
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 			/*frameContainer1.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
@@ -936,8 +921,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		frameContainer.setVisible(true);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer1.clear();
-			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
 			loadingImageLabel.setVisible(false);
@@ -946,8 +929,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer1.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer1.clear();
-			frameContainer1.setVisible(true);
 			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
