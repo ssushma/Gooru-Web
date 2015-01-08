@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 
@@ -44,4 +45,6 @@ public interface IsCollectionProgressView extends IsViewWithHandlers<CollectionP
 	 * @return
 	 */
 	HTMLPanel getLoadingImage();
+	
+	Frame getFrame();
 }
