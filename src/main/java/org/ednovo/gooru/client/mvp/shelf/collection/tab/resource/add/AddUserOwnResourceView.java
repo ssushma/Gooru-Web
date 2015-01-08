@@ -258,7 +258,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 
 	String mediaFeatureStr = i18n.GL1767();
 	
-	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,educationalDropDownLblOpen1=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false;
 	
 	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	
@@ -497,20 +497,20 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
-		flashingHazard.setText(i18n.GL1806());
+		flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL1806());
-		flashingHazard.getElement().setAttribute("title",i18n.GL1806());
+		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
+		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
 		
-		motionSimulationHazard.setText(i18n.GL1808());
+		motionSimulationHazard.setText(i18n.GL3111());
 		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL1808());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL1808());
+		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
+		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
 		
-		soundHazard.setText(i18n.GL1810());
+		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL1810());
-		soundHazard.getElement().setAttribute("title",i18n.GL1810());
+		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());
 		
 		mediaLabel.setText("Media Feature");
 		mediaLabel.getElement().setId("lblMediaFeature");
@@ -1907,12 +1907,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiHandler("educatioNalUseDropContainer")
 	public void educationalDropDownContainerClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
-		if (educationalDropDownLblOpen == false) {
+		if (educationalDropDownLblOpen1 == false) {
 			educationalUsePanel.setVisible(true);
-			educationalDropDownLblOpen = true;
+			educationalDropDownLblOpen1 = true;
 		} else {
 			educationalUsePanel.setVisible(false);
-			educationalDropDownLblOpen = false;
+			educationalDropDownLblOpen1 = false;
 		}
 	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
@@ -1973,12 +1973,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiHandler("momentsOfLearningDropDownContianer")
 	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
-		if (momentsOfLearningOpen == false) {
+		if (momentsOfLearningOpen1 == false) {
 			momentsOfLearningPanel.setVisible(true);
-			momentsOfLearningOpen = true;
+			momentsOfLearningOpen1 = true;
 		} else {
 			momentsOfLearningPanel.setVisible(false);
-			momentsOfLearningOpen = false;
+			momentsOfLearningOpen1 = false;
 		}
 	}
 	

@@ -36,6 +36,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers{
@@ -84,17 +85,30 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		clearSlot(COLLECTION_SUMMARY_SLOT);
 		setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
 		getView().getCollectionSummarySlot().clear();
+		getView().getLoadCollections().clear();
 		
 		getView().resetData();
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
 			@Override
-			public void onSuccess(ArrayList<GradeJsonData> result) {
+			public void onSuccess(final ArrayList<GradeJsonData> result) {
 				if(result.size()>0){
 					if(result.get(0).getAggregateData()!=null && result.get(0).getAggregateData().equalsIgnoreCase("false")){
 						getView().setNoDataText();
 					}else{
 						getView().setGradeCollectionData(result);
+						AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", result.get(0).getResourceGooruOId(), new AsyncCallback<CollectionSummaryMetaDataDo>() {
+							@Override
+							public void onSuccess(CollectionSummaryMetaDataDo collectionData) {
+								if(collectionData!=null && collectionData.getViews()!=0){
+								}else{
+									getView().setNoDataText();
+								}
+							}
+							@Override
+							public void onFailure(Throwable caught) {
+							}
+						});
 					}
 				}
 			}
@@ -223,5 +237,9 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			public void onFailure(Throwable caught) {
 			}
 		});
+	}
+	@Override
+	public Frame getIframe() {
+		return getView().getFrame();
 	}
 }

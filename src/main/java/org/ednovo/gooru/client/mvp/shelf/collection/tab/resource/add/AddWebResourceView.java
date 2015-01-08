@@ -119,7 +119,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
-	public Label standardsDefaultText,mandatoryEducationalLbl, generateImageLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl,mandatorygenerateFromUrlLbl;
+	public Label standardsDefaultText,mandatoryEducationalLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl,mandatorygenerateFromUrlLbl;
 	
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
@@ -150,7 +150,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	// @UiField public ListBox resourceTypeListBox;
 
 	@UiField
-	public Image setThumbnailImage;
+	public Image setThumbnailImage,generateImageLbl;
 	// Drop down for Resource Type//
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
@@ -224,7 +224,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private boolean hasClickedOnDropDwn=false;
 
-	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,educationalDropDownLblOpen1=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false;
 	
 	private boolean isShortenedUrl;
 	
@@ -537,7 +537,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		thumbnailText.getElement().setId("pnlThumbnailText");
 		thumbnailText.getElement().setAttribute("alt", i18n.GL0911());
 		thumbnailText.getElement().setAttribute("title", i18n.GL0911());
-		generateImageLbl.setText(i18n.GL0922());
+		generateImageLbl.setUrl("../images/NewResourcePopup/PreviewResourceThumbnail.png");
 		generateImageLbl.getElement().setId("lblGenerateImageLbl");
 		generateImageLbl.getElement().setAttribute("alt", i18n.GL0922());
 		generateImageLbl.getElement().setAttribute("title", i18n.GL0922());
@@ -750,20 +750,20 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
-		flashingHazard.setText(i18n.GL1806());
+		flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL1806());
-		flashingHazard.getElement().setAttribute("title",i18n.GL1806());
+		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
+		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
 		
-		motionSimulationHazard.setText(i18n.GL1808());
+		motionSimulationHazard.setText(i18n.GL3111());
 		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL1808());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL1808());
+		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
+		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
 		
-		soundHazard.setText(i18n.GL1810());
+		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL1810());
-		soundHazard.getElement().setAttribute("title",i18n.GL1810());
+		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());
 		
 
 		mediaLabel.setText(i18n.GL3094());
@@ -2284,12 +2284,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiHandler("educatioNalUseDropContainer")
 	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
-		if (educationalDropDownLblOpen == false) {
+		if (educationalDropDownLblOpen1 == false) {
 			educationalUsePanel.setVisible(true);
-			educationalDropDownLblOpen = true;
+			educationalDropDownLblOpen1 = true;
 		} else {
 			educationalUsePanel.setVisible(false);
-			educationalDropDownLblOpen = false;
+			educationalDropDownLblOpen1 = false;
 		}
 	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
@@ -2349,12 +2349,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiHandler("momentsOfLearningDropDownContianer")
 	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
-		if (momentsOfLearningOpen == false) {
+		if (momentsOfLearningOpen1 == false) {
 			momentsOfLearningPanel.setVisible(true);
-			momentsOfLearningOpen = true;
+			momentsOfLearningOpen1 = true;
 		} else {
 			momentsOfLearningPanel.setVisible(false);
-			momentsOfLearningOpen = false;
+			momentsOfLearningOpen1 = false;
 		}
 	}
 	

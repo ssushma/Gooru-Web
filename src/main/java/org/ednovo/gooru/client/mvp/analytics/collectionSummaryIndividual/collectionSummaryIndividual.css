@@ -1,4 +1,4 @@
-@external .printWidget,.collectionBreakDown_infobox_titles_print,.maincontainer_collectionOverView_print,.collectionBreakDown_infobox_titles_print1,.collectionBreakDown_infobox_print,.collectionBreakDown_infobox_print,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand  ; 
+@external .alignLeft,.printWidget,.collectionBreakDown_infobox_titles_print,.maincontainer_collectionOverView_print,.collectionBreakDown_infobox_titles_print1,.collectionBreakDown_infobox_print,.collectionBreakDown_infobox_print,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand  ; 
 .reportsTableContainer {
 	padding-top: 15px;
 }
@@ -7,6 +7,9 @@
 	background-color: inherit !important;
 	text-align: center;
 	width: auto;
+}
+.alignLeft{
+	text-align: left;
 }
 
 .setMarginAuto {

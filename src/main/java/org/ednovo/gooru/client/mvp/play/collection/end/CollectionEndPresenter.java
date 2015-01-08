@@ -375,6 +375,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		return previewHomePresenter.getBackToClassButton();
 	}
 	public void clearDashBoardIframe(){
+		collectionSummaryIndividualPresenter.clearFrame();
 		getView().clearDashBoardIframe();
 	}
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){

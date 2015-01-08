@@ -95,6 +95,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
 	String style="";
+	String urlDomain = "";
 
 	/**
 	 * Constructor
@@ -103,7 +104,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		String urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
+		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
 		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		setStaticData();
@@ -286,6 +287,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_interactive();
+					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+					      resourceCategory = "audio";
+					      categoryStyle=res.css().category_new_type_audio();
 					  } else{
 						  categoryStyle=res.css().category_new_type_other();
 					  }
@@ -297,6 +301,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //Set Question Title
 		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+		            questionTitle.addStyleName(res.css().alignLeft());
+		            
 		            data.setValue(rowVal, 2, questionTitle.toString());
 		          
 		           //Set time spent
@@ -399,6 +405,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_interactive();
+					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+					      resourceCategory = "audio";
+					      categoryStyle=res.css().category_new_type_audio();
 					  } else{
 						  categoryStyle=res.css().category_new_type_other();
 					  }
@@ -410,6 +419,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //Set Question Title
 		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+		            questionTitle.addStyleName(res.css().alignLeft());
 		            data.setValue(rowVal, 2, questionTitle.toString());
 		          
 		           //Set time spent
@@ -493,6 +503,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
 	            //Set completion
@@ -552,6 +563,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
 	            //Set completion
@@ -629,6 +641,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            questionTitle.setStyleName(res.css().alignLeft());
 				            data.setValue(i, 1, questionTitle.toString());
 				            int noOfAttempts=result.get(i).getAttempts();
 				           
@@ -755,11 +768,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		 data.setValue(i, 3, answerspnl.toString());
 				        	}
 				        	
-				        	Image correctImg=new Image();
+				        	Image correctImg=new Image();      	            
 				        	if(isTickdisplay){
-				        		 correctImg.setUrl("/images/analytics/tick.png");
+				        		 correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
 				        	}else{ 
-				        		correctImg.setUrl("/images/analytics/wrong.png");				        		
+				        		correctImg.setUrl(urlDomain+"/images/analytics/wrong.png");				        		
 				        	}
 				            data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
 				            //Set attempts
@@ -809,6 +822,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            questionTitle.setStyleName(res.css().alignLeft());
 				            data.setValue(i, 1, questionTitle.toString());
 				            int noOfAttempts=result.get(i).getAttempts();
 				           
