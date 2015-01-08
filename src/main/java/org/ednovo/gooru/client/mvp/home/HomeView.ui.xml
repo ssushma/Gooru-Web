@@ -1164,7 +1164,7 @@
 								</li>
 
 							</ul>
-        					<tbp:PPanel text="{i18n.GL1246}"/>
+        					<tbp:PPanel text="{i18n.GL1246}" ui:field="panelCopyRightR"/>
       					</div>
 						<div class="clearfix"></div>
 					</div>

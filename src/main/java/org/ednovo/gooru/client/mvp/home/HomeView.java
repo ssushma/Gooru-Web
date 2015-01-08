@@ -111,7 +111,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 
 	@UiField H2Panel lblHeading;
-	@UiField PPanel  lblSubHeading, panelCopyRight;
+	@UiField PPanel  lblSubHeading, panelCopyRight, panelCopyRightR;
 	
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
@@ -292,13 +292,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		panelCopyRight.setText(copyRightTxt);
 		panelCopyRight.getElement().setId("lblCopyRightYearText");
-		panelCopyRight.getElement().setAttribute("alt",copyRightTxt);
-		panelCopyRight.getElement().setAttribute("title",copyRightTxt);
-
+		StringUtil.setAttributes(panelCopyRight.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
 		
-//		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
-//		};
-//		error.show();
+		panelCopyRightR.setText(copyRightTxt);
+		panelCopyRightR.getElement().setId("lblCopyRightYearText");
+		StringUtil.setAttributes(panelCopyRightR.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
 		
 	}
 	
