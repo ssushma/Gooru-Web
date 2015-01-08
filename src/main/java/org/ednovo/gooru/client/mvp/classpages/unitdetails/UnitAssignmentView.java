@@ -180,8 +180,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			unitSetupButton.setText(i18n.GL2198());	
 			taskSetupButton.setVisible(false);
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-			taskSetupButton.setText(i18n.GL2285()+" "+i18n.GL0103());
-			unitSetupButton.setText(i18n.GL3114());
+			taskSetupButton.setText(i18n.GL2285()+" "+i18n.GL1933());
+			unitSetupButton.setText(i18n.GL3114()); 
 		}
 		assignmentContainer.setVisible(true);
 		lblMoreUnits.setText(i18n.GL2199());
