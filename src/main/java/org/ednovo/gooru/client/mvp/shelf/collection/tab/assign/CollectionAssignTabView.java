@@ -473,10 +473,10 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		lblClasspages.getElement().setAttribute("alt",i18n.GL0102());
 		lblClasspages.getElement().setAttribute("title",i18n.GL0102());
 		
-		lblClasspagesUnit.setText(i18n.GL2175());
+		lblClasspagesUnit.setText(i18n.GL2219());
 		lblClasspagesUnit.getElement().setId("lblClasspagesUnit");
-		lblClasspagesUnit.getElement().setAttribute("alt",i18n.GL2175());
-		lblClasspagesUnit.getElement().setAttribute("title",i18n.GL2175());
+		lblClasspagesUnit.getElement().setAttribute("alt",i18n.GL2219());
+		lblClasspagesUnit.getElement().setAttribute("title",i18n.GL2219());
 		
 		//lblAssignments.setText(i18n.GL0103);
 		

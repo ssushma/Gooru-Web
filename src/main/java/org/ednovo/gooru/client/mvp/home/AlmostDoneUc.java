@@ -167,7 +167,7 @@ public class AlmostDoneUc extends PopupPanel{
 		lblSelectRole.getElement().setId("lblSelectRole");
 		
 		lblToolTipOther.setText(i18n.GL0419());
-		lblOtherDesc.setText(i18n.GL2196());
+		lblOtherDesc.setText(i18n.GL2196_1());
 		
 		rbTeacher.addClickHandler(new ClickHandler() {
 
@@ -257,19 +257,19 @@ public class AlmostDoneUc extends PopupPanel{
 		
 		lblJoin.setText(i18n.GL0400());
 		StringUtil.setAttributes(lblJoin.getElement(), "lblJoin", i18n.GL0400(), i18n.GL0400());
-		lblSubHeader.setText(i18n.GL2197());
+		lblSubHeader.setText(i18n.GL2197_1());
 		StringUtil.setAttributes(lblSubHeader.getElement(), "lblSubHeader", i18n.GL2197(), i18n.GL2197());
 		lblTeacherContainer.setText(i18n.GL0416());
 		StringUtil.setAttributes(lblTeacherContainer.getElement(), "lblTeacherContainer", i18n.GL0416(), i18n.GL0416());
-		lblTeacherDesc.setText(i18n.GL2198());
+		lblTeacherDesc.setText(i18n.GL2198_1());
 		StringUtil.setAttributes(lblTeacherDesc.getElement(), "lblTeacherDesc", i18n.GL2198(), i18n.GL2198());
 		lblTooltipStudent.setText(i18n.GL0417());
 		StringUtil.setAttributes(lblTooltipStudent.getElement(), "lblTooltipStudent", i18n.GL0417(), i18n.GL0417());
-		lblStudentDesc.setText(i18n.GL2199());
+		lblStudentDesc.setText(i18n.GL2199_1());
 		StringUtil.setAttributes(lblStudentDesc.getElement(), "lblStudentDesc", i18n.GL2199(), i18n.GL2199());
 		lblTooltipParent.setText(i18n.GL0418());
 		StringUtil.setAttributes(lblTooltipParent.getElement(), "lblTooltipParent", i18n.GL0418(), i18n.GL0418());
-		lblParentDesc.setText(i18n.GL2200());
+		lblParentDesc.setText(i18n.GL2200_1());
 		StringUtil.setAttributes(lblParentDesc.getElement(), "lblParentDesc", i18n.GL2200(), i18n.GL2200());
 		btnSubmit.setText(i18n.GL0486());
 		StringUtil.setAttributes(btnSubmit.getElement(), "btnSubmit", i18n.GL0486(), i18n.GL0486());
