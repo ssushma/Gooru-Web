@@ -2310,6 +2310,7 @@ fieldset {
 
 .pathwayContainer:hover .showitem{
 	display:block !important;
+	cursor: pointer;
 }
 
 .panelHeight{
