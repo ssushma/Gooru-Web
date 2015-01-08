@@ -117,11 +117,13 @@
 								</g:HTMLPanel>
 					       		<g:HTMLPanel styleName="col-md-6">
 					       		<g:HTMLPanel>
+
 								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text} col-md-6 col-xs-6 {playerStyle.paddingClear}">
 								    <g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel>
 								    <span class="tooltip-icon hidden-sm hidden-xs"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span>
 								</g:HTMLPanel>
 								<g:HTMLPanel styleName="{unitStyle.session_data} col-md-6 col-xs-6 {playerStyle.paddingClear}">
+
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>
 								</g:HTMLPanel>

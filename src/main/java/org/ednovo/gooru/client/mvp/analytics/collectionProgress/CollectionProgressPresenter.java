@@ -37,6 +37,7 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
 	
+	String collectionId=null;
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -53,6 +54,8 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	 */
 	@Override
 	public void setCollectionProgressData(String collectionId,String pathwayId,final boolean isCollectionView,final String collectionTitle) {
+		this.collectionId=collectionId;
+		getView().getFrame().setUrl("");
 		getView().getLoadingImage().setVisible(true);
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		this.analyticService.getCollectionProgressData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
@@ -83,5 +86,23 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
+	}
+
+	@Override
+	public void exportCollectionProgress(String collectionId,String classpageId, String timeZone) {
+		System.out.println("timeZone::"+timeZone);
+		String classpage=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		this.analyticService.exportProgress(this.collectionId, classpage, timeZone, new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				getView().getFrame().setUrl(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
 	}
 }

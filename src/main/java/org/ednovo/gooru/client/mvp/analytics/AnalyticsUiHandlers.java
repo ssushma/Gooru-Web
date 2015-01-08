@@ -28,6 +28,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 
+import com.google.gwt.user.client.ui.Frame;
+
 public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	void getGradeCollectionJson() ;
 	/**
@@ -57,4 +59,6 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	CollectionSummaryPresenter getCollectionSummaryPresenter();
 	
 	void checkCollectionStaus(String classpageId,String collectionId);
+	
+	Frame getIframe();
 }

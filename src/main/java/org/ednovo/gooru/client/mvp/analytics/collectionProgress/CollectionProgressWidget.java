@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
@@ -28,7 +29,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -57,6 +60,8 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	@UiField HTMLPanel scrollForCollectionProgress,loadingImageLabel1;
 	@UiField InlineLabel collectionTitlelbl,resourceCountlbl,questionCountlbl;
 	@UiField Label leftArrow,rightArrow;
+	@UiField Image exportImage;
+	@UiField Frame downloadFile;
 	
 	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
@@ -78,6 +83,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));	
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
+		downloadFile.setVisible(false);
 		setStaticData();
 	}
 	/**
@@ -130,6 +136,12 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	 */
 	@Override
 	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView,String collectionTitle){
+		String tabReports=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+		if(tabReports!=null && tabReports.equalsIgnoreCase("reports")){
+			exportImage.setVisible(true);
+		}else{
+			exportImage.setVisible(false);
+		}
 		if(!isCollectionView){
 			scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgress());
 		}else{
@@ -204,7 +216,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			        		  mainDataVpnl.add(reactionlbl);
 			        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
 		        		  }else{
-		        			  String typeOfQuestion=collectionProgressData.get(j).getType();
+		        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
 		        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions();
 		        			  String answer="";
 		        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
@@ -316,10 +328,12 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 					 if(selectedIndex==2){
 						 operationsView.hideColumns(primitivesQuestions); 
 					 }
-					 Table table = new Table(operationsView, options);
+					 table = new Table(operationsView, options);
 				     table.setStyleName("collectionProgressTable");
 				     htmlpnlProgress.add(table);	
 				     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+				     leftArrow.setVisible(true);
+				     rightArrow.setVisible(true);
 			}
 		});
         table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
@@ -406,5 +420,13 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	@Override
 	public HTMLPanel getLoadingImage() {
 		return loadingImageLabel1;
+	}
+	@UiHandler("exportImage")
+	public void clickedOnExport(ClickEvent e){
+		getUiHandlers().exportCollectionProgress("", "", AnalyticsUtil.getTimeZone());
+	}
+	@Override
+	public Frame getFrame() {
+		return downloadFile;
 	}
 }

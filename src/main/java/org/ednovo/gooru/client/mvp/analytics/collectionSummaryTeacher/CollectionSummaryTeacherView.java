@@ -256,6 +256,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	            //Set Question Title
 	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	   	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	   	            questionTitle.addStyleName(res.css().alignLeft());
 	   	            data.setValue(i, 1, questionTitle.toString());
 	   	          
 	   	            //Set completion
@@ -341,6 +342,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	            //Set Question Title
 	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	   	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	   	            questionTitle.addStyleName(res.css().alignLeft());
 	   	            data.setValue(i, 1, questionTitle.toString());
 	   	          
 	   	            //Set completion
@@ -468,7 +470,10 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 				      resourceCategory = "webpage";
 				      categoryStyle=res.css().category_new_type_interactive();
-				  } else{
+				  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+				      resourceCategory = "audio";
+				      categoryStyle=res.css().category_new_type_audio();
+				  }else{
 					  categoryStyle=res.css().category_new_type_other();
 				  }
 	            Label categorylbl=new Label();
@@ -479,6 +484,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            //Set Question Title
 	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(rowVal, 2, questionTitle.toString());
 	          
 	           //Set time spent
@@ -586,6 +592,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 				      resourceCategory = "webpage";
 				      categoryStyle=res.css().category_new_type_interactive();
+				  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+				      resourceCategory = "audio";
+				      categoryStyle=res.css().category_new_type_audio();
 				  } else{
 					  categoryStyle=res.css().category_new_type_other();
 				  }
@@ -597,6 +606,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            //Set Question Title
 	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(rowVal, 2, questionTitle.toString());
 	          
 	           //Set time spent
@@ -754,7 +764,11 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable,boolean isPrint){
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
         	 sortableTable.setValue(i, 0,scoredQuestionsData.get(i-1).getItemSequence());
-             sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
+        	 Label questionTitle=new Label(AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()!=null?scoredQuestionsData.get(i-1).getTitle():""));
+	         questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	         questionTitle.addStyleName(res.css().alignLeft());
+	         sortableTable.setWidget(i, 1, questionTitle);
+            // sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
             	  String getQuestionType=scoredQuestionsData.get(i-1).getType();

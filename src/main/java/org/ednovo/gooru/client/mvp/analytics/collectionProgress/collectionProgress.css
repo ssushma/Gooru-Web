@@ -16,6 +16,10 @@
 	background-color: inherit;
 	font-size:11px;
 }
+.exportImage{
+	float: right;
+	margin-top: -4%;
+}
 .mainDataVpnl{
 	margin: 0 auto;
 	vertical-align: baseline;
