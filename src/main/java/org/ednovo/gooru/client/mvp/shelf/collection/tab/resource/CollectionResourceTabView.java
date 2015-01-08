@@ -240,16 +240,6 @@ public class CollectionResourceTabView extends
 		
 		
 		editAssesmentButton.setVisible(false);
-		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.EDIT_ASSIGNMENT+collectionId;
-		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
-			
-			@Override
-			public void onSuccess(String result) {
-				editAssesmentButton.setHref(result);
-				editAssesmentButton.setTarget("_blank");
-			}
-		});
 		
 	}
 	
@@ -267,11 +257,48 @@ public class CollectionResourceTabView extends
 		sequenceVerPanel.clear();
 		collectionResourcePanelVc.clear();
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @function setAssessmentUrl 
+	 * 
+	 * @created_date : 08-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setAssessmentUrl(){
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		System.out.println("collectionId : "+collectionId);
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.EDIT_ASSIGNMENT+collectionId;
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				editAssesmentButton.setHref(result);
+				editAssesmentButton.setTarget("_blank");
+			}
+		});
+	}
 
 	@Override
 	public void setData(CollectionDo collectionDo) {
 		if (this.collectionDo == null) {
 			this.collectionDo = collectionDo;
+			
+			setAssessmentUrl();
+			
 			setTotalCount(collectionDo.getCollectionItems().size());
 			Label label = new Label("");
 			label.setStyleName(getCss().shelfResourceDragdropSpacer());
