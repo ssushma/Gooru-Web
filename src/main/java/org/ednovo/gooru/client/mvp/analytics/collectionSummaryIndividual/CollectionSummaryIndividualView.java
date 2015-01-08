@@ -268,20 +268,20 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //set Format
 		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 		              String categoryStyle="";
-					  if(resourceCategory.equalsIgnoreCase("website")){
+		    		  if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_webpage();
-					  } else if(resourceCategory.equalsIgnoreCase("slide")){
+					  } else if(resourceCategory.equalsIgnoreCase("slide") || resourceCategory.equalsIgnoreCase("image")){
 					      resourceCategory = "image";
 					      categoryStyle=res.css().category_new_type_image();
-					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")) {
+					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")|| resourceCategory.equalsIgnoreCase("text")) {
 					      resourceCategory = "text";
 					      categoryStyle=res.css().category_new_type_text();
 					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_webpage();
 					  } else if(resourceCategory.equalsIgnoreCase("video")) {
-					      resourceCategory = "webpage";
+					      resourceCategory = "video";
 					      categoryStyle=res.css().category_new_type_video();
 					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 					      resourceCategory = "webpage";
@@ -381,20 +381,20 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //set Format
 		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 		              String categoryStyle="";
-					  if(resourceCategory.equalsIgnoreCase("website")){
+		              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_webpage();
-					  } else if(resourceCategory.equalsIgnoreCase("slide")){
+					  } else if(resourceCategory.equalsIgnoreCase("slide") || resourceCategory.equalsIgnoreCase("image")){
 					      resourceCategory = "image";
 					      categoryStyle=res.css().category_new_type_image();
-					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")) {
+					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")|| resourceCategory.equalsIgnoreCase("text")) {
 					      resourceCategory = "text";
 					      categoryStyle=res.css().category_new_type_text();
 					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_webpage();
 					  } else if(resourceCategory.equalsIgnoreCase("video")) {
-					      resourceCategory = "webpage";
+					      resourceCategory = "video";
 					      categoryStyle=res.css().category_new_type_video();
 					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 					      resourceCategory = "webpage";

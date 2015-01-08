@@ -223,4 +223,5 @@
 }
 .mainPanelContainer{
 	position: relative;
+	clear: both;
 }
