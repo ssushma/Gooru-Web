@@ -548,8 +548,11 @@ public class SearchInfoWidget extends Composite {
 			}
 			
 			setResourceLicenceLogo(CollectiongenealInfo.getResource().getAssetURI(), CollectiongenealInfo.getResource().getLicense());
-			
-			if(!CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+			if(CollectiongenealInfo.getResource().getResourceType().getName().equalsIgnoreCase("video/youtube") || CollectiongenealInfo.getResource().getResourceType().getName().equalsIgnoreCase("resource/url"))
+			{
+				
+			}
+			else
 			{
 				originalUrlTitle.setVisible(false);
 				originalUrlText.setVisible(false);

@@ -282,9 +282,9 @@ public class UserSettingsPresenter
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		this.getUserService().getUserProfilePage(
+/*		this.getUserService().getV2UserProfileDetails(
 				AppClientFactory.getPlaceManager().getRequestParameter(
-						GOORU_UID), getUserProfilePageAsyncCallback());
+						GOORU_UID), getUserProfilePageAsyncCallback());*/
 		getView().setUserProfileImageUrl("EMPTY");
 	}
 
