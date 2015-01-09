@@ -26,7 +26,7 @@
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="col-md-4">
-				<g:Button styleName="green" ui:field="addTagsBtn">Add Tags</g:Button>	    
+				<g:Button styleName="{playerStyle.green}" ui:field="addTagsBtn">Add Tags</g:Button>	    
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:Label ui:field="noInfoAvailable"></g:Label>
