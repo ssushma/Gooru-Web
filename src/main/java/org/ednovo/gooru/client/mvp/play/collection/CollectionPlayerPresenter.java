@@ -823,8 +823,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
 				@Override
 				public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
-					if(insightsCollectionDo!=null){
-						if(insightsCollectionDo.getCompletionStatus()!=null&&insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
+						if( insightsCollectionDo!=null && insightsCollectionDo.getCompletionStatus()!=null && insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
 							collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
 							convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
 							displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
@@ -833,15 +832,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							if(count<10){
 								displayCollectionSummaryData(collectionId,classpageId,sessionId);
 								count++;
-							}
+							}else{
+								collectionEndPresenter.showAvgReaction(0);
+								convertMilliSecondsToTime(0L);
+								displayScoreCount(0,0);
 						}
-					}else{
-						collectionEndPresenter.showAvgReaction(0);
-						convertMilliSecondsToTime(0L);
-						displayScoreCount(0,0);
-					
 					}
-					
 				}
 			});
 		}
