@@ -75,6 +75,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		setData();
 		setStaticData();
 		downloadFile.setVisible(false);
+		errorMessage.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -180,6 +181,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	@Override
 	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
+		errorMessage.setVisible(false);
 		studentsListDropDown.clear();
 		studentsListDropDown.addItem("All Students");
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {

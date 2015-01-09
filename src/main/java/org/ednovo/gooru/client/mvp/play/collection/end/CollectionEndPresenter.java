@@ -502,21 +502,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
-			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {if(result.size()!=0){
-							if (result.get(0).getCompletionStatus() != null
-									&& result.get(0).getCompletionStatus()
-											.equalsIgnoreCase("completed")) {
+			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+							if (result.size()!=0 && result.get(0).getCompletionStatus() != null	&& result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
 								count = 0;
-								getView()
-										.setCollectionMetaDataByUserAndSession(
-												result);
-								setCollectionSummaryData(collectionId, classId,
-										userId, sessionId, printData);
+								getView().setCollectionMetaDataByUserAndSession(result);
+								setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 							} else {
 								if (count < 10) {
-									getCollectionMetaDataByUserAndSession(
-											collectionId, classId, userId,
-											sessionId, printData);
+									getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId, printData);
 									count++;
 								} else {
 									if (count >= 10) {
@@ -524,7 +517,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 									}
 								}
 							}
-						}
 			}
 			
 			@Override
