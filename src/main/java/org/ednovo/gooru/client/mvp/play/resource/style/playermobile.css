@@ -212,5 +212,6 @@ position: relative;
 	text-align:left;
 }
 .endPageIframe{
-	margin:30px 30px ;
+	margin:30px 10px ;
+	padding:15px 0px;
 }
