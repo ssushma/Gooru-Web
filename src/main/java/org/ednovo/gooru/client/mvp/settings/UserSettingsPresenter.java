@@ -389,12 +389,12 @@ public class UserSettingsPresenter
 					getView().getLbUserName().setText(
 							user.getUser().getUsername());
 					getView().hideuserDetailsContainerOnClickOfTab();
+					if(user.getUserType() != null && user.getUserType().length() > 1)
+					{
+						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
+					}
 					if (user.getUser().getLoginType()
 							.equalsIgnoreCase("credential")) {					
-						if(user.getUserType() != null && user.getUserType().length() > 1)
-						{
-						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
-						}
 						if (dob != null) {
 							getView().getLbUName().getElement()
 									.setAttribute("dob", "" + dob);
