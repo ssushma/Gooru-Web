@@ -109,7 +109,7 @@
 					  <!-- Sessions start-->
 					  <g:HTMLPanel ui:field="sessionspnl">
 						   <g:HTMLPanel styleName="{unitStyle.css.gooru_session_data_content}">
-					       		<g:HTMLPanel styleName="col-md-6">
+					       		<g:HTMLPanel styleName="col-md-6 {unitStyle.css.sessionpnl}">
 									<g:HTMLPanel styleName="{unitStyle.css.collection_last_accessed}">
 										<g:InlineLabel  styleName="collectionLastAccessed" text="{i18n.GL2272}"></g:InlineLabel>
 										<g:InlineLabel ui:field="lastModifiedTime"></g:InlineLabel>
@@ -132,7 +132,7 @@
 						 </g:HTMLPanel>
 					  <!-- Sessions end-->
 	             	 <g:HTMLPanel styleName="{unitStyle.css.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
-					 <g:VerticalPanel ui:field="pnlSummary" styleName="{unitStyle.css.pnlSummary}"/>
+					 <g:HTMLPanel ui:field="pnlSummary" styleName="{unitStyle.css.pnlSummary}"/>
 					 </g:HTMLPanel>
 	             	</g:FlowPanel>
 	             	<!--  insights -->

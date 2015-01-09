@@ -1,3 +1,4 @@
+@external .addButonStyleActive;
 .buttonsPanel {
 	width: 660px;
 	margin: 0 auto;
@@ -20,7 +21,9 @@
 }
 
 .addButonStyleActive {
-	
+	background: #4C98CC !important;
+	cursor: pointer;
+	color: #FFFFFF !important;
 }
 
 .collectionsGroupBtns {

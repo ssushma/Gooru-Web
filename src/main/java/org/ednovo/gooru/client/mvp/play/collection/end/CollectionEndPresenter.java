@@ -503,8 +503,12 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				if(result.get(0).getCompletionStatus()!=null){
-					if(result.get(0).getCompletionStatus().equalsIgnoreCase("in-progress")){
+				if(result.size()!=0){
+					if(result.get(0).getCompletionStatus()!=null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")){
+							count=0;
+							getView().setCollectionMetaDataByUserAndSession(result);
+							setCollectionSummaryData(collectionId, classId, userId, sessionId,printData);
+					}else{
 						if(count<10){
 							getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId,printData);
 							count++;
@@ -512,12 +516,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 							if(count>=10){
 								getView().showMessageWhenDataNotFound();
 							}
-						}
-					}else{
-						if(result.size()!=0){
-							count=0;
-							getView().setCollectionMetaDataByUserAndSession(result);
-							setCollectionSummaryData(collectionId, classId, userId, sessionId,printData);
 						}
 					}
 				}

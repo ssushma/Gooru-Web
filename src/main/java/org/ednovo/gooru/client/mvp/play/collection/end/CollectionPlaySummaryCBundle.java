@@ -24,6 +24,7 @@ public interface CollectionPlaySummaryCBundle extends ClientBundle{
 			String filterDropDownSessions();
 			String htmlpanlProgress();
 			String pnlSummary();
+			String sessionpnl();
 			
 	}
 	@NotStrict
