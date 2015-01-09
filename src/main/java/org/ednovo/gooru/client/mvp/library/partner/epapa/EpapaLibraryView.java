@@ -23,18 +23,40 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
+package org.ednovo.gooru.client.mvp.library.partner.epapa;
 
-package org.ednovo.gooru.client.mvp.library.partner.ccstcaltac;
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
-import com.google.gwt.event.shared.GwtEvent.Type;
-import com.gwtplatform.mvp.client.annotations.ContentSlot;
-import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
-
-public interface CcstCalTacLibraryUiHandlers extends BaseUiHandlers {
+public class EpapaLibraryView extends BaseViewWithHandlers<EpapaLibraryUiHandlers> implements IsEpapaLibraryView {
 	
-	@ContentSlot
-	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+
+	@UiField SimplePanel partnerPanel;
+	
+	private static EpapaLibraryViewUiBinder uiBinder = GWT.create(EpapaLibraryViewUiBinder.class);
+
+	interface EpapaLibraryViewUiBinder extends UiBinder<Widget, EpapaLibraryView> {
+	}
+	
+	public EpapaLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
+	}
+	
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == EpapaLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
+
 
 }

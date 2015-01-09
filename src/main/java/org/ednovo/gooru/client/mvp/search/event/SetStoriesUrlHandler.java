@@ -22,19 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
-
-package org.ednovo.gooru.client.mvp.library.partner.ccstcaltac;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-import com.google.gwt.event.shared.GwtEvent.Type;
-import com.gwtplatform.mvp.client.annotations.ContentSlot;
-import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+import com.google.gwt.event.shared.EventHandler;
 
-public interface CcstCalTacLibraryUiHandlers extends BaseUiHandlers {
-	
-	@ContentSlot
-	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+/**
+ * @author Search Team
+ * 
+ */
+public interface SetStoriesUrlHandler extends EventHandler, BaseUiHandlers {
+
+	void setStoriesUrl();
 
 }

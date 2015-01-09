@@ -58,6 +58,7 @@ import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPres
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.epapa.EpapaLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
@@ -279,5 +280,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<UserDashBoardPresenter> getUserDashBoardPresenter();
 	
 	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
+	
+	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 
 }

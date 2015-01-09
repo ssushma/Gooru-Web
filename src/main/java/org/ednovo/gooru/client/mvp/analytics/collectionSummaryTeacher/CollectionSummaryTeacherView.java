@@ -103,7 +103,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
-		printWidget.setVisible(true);
+		printWidget.setVisible(false);
 		downloadFile.setVisible(false);
 	}
 	

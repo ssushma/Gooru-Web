@@ -23,6 +23,9 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client;
+
+import org.ednovo.gooru.client.gin.AppClientFactory;
+
 /**
  * 
  * @fileName : PlaceTokens.java
@@ -91,5 +94,8 @@ public interface PlaceTokens {
 	String LUSD = "lusd";	
 	String TICAL = "tical";
 	String DASHBOARD ="dashboard";
-
+	String CREATE_ASSIGNMENT="%23/list";
+	String EDIT_ASSIGNMENT="/assessments%23/assessments/";
+	String PLAY_ASSIGNMENT="/assessments/";
+	String ASPIRE_EPACS =  "AspireEPACS"; 
 }

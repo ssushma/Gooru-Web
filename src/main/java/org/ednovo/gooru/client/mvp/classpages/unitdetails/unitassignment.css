@@ -54,6 +54,7 @@
 .unitMenu li {
 	z-index: 97;
 	position: relative;
+	list-style: none !important;
 }
 
 .unitMenu li a {
@@ -1245,6 +1246,6 @@
 		!important;
 }
 .editButn  {
-	min-width: 96px;
+	min-width: 112px;
 	margin-bottom: 5px;
 }

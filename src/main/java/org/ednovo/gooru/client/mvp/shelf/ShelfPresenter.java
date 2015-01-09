@@ -155,6 +155,8 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	
 	private static final String CALLBACK = "callback";
 	
+	public static final String ASSESSMENT = "quiz";
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SHELF)
 	@UseGatekeeper(AppPlaceKeeper.class)

@@ -1139,8 +1139,9 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onMouseOver(final MouseOverEvent event) {
+			organizeToolTip.setAssessmentUrl();
 			if (!AppClientFactory.isAnonymous()){
-			myCollectionsPop.setVisible(true);
+				myCollectionsPop.setVisible(true);
 			}
 		}
 	}
@@ -1150,7 +1151,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
-			myCollectionsPop.setVisible(false);
+				myCollectionsPop.setVisible(false);
 			}
 		}
 	}

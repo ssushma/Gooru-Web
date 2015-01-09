@@ -126,7 +126,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 */
 	@Override
 	public void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result) {
-		profileAnalyticChat.updateProfileAnalyticsFlaggedChatData(result);
+		if (result != null){
+			profileAnalyticChat.updateProfileAnalyticsFlaggedChatData(result);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -134,7 +136,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 */
 	@Override
 	public void setProfileAnalyticsSharedChatData(Map<String, Integer> result) {
-		profileAnalyticChat.updateProfileAnalyticsSharedChatData(result);
+		if (result != null){
+			profileAnalyticChat.updateProfileAnalyticsSharedChatData(result);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -142,7 +146,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 */
 	@Override
 	public void setProfileAnalyticsViewsChatData(Map<String, Integer> result) {
-		profileAnalyticChat.updateProfileAnalyticsViewsChatData(result);
+		if (result != null){
+			profileAnalyticChat.updateProfileAnalyticsViewsChatData(result);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -150,13 +156,17 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 */
 	@Override
 	public void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result) {
-		profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
+		if (result != null){
+			profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
+		}
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView#setPublishedCollectionData(org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO)
 	 */
 	public void setPublishedCollectionData(UserDashBoardCommonInfoDO result) {
-		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
+		if (result != null){
+			CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
+		}
 	}
 
 	/* (non-Javadoc)
@@ -175,21 +185,25 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 
 	@Override
 	public void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result) {
-		reactionsWidgetPanel.add(fiveStarReactions=new FiveStarRatings("fivestarReviews",result));
-		fiveStarReactions.getViewAllLabel().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().clickedOnMoreButton(null,"false");
-			}
-		});
+		if (result != null){
+			reactionsWidgetPanel.add(fiveStarReactions=new FiveStarRatings("fivestarReviews",result));
+			fiveStarReactions.getViewAllLabel().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					getUiHandlers().clickedOnMoreButton(null,"false");
+				}
+			});
+		}
 	}
 	/**
 	 * This method is used to set the count of comments,reviews written and ratings
 	 */
 	public void setProfileRatingsData(ProfileRatingsReactionsDO result) {
-		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result!=null?result.getCommentCount():0)),new Label("Comments Made")));
-		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result!=null?result.getReviewCount():0)),new Label("Reviews Written")));
-		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings",result));
+		if (result != null){
+			commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result!=null?result.getCommentCount():0)),new Label("Comments Made")));
+			reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result!=null?result.getReviewCount():0)),new Label("Reviews Written")));
+			ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings",result));
+		}
 	}
 
 	/* (non-Javadoc)
@@ -197,7 +211,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 */
 	@Override
 	public void setProfileReationsData(ProfileRatingsReactionsDO result) {
-		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
+		if (result != null){
+			reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
+		}
 
 	}
 	/**
@@ -205,19 +221,21 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 */
 	@Override
 	public void getTopViewedCOllectionsData(UserDashBoardCommonInfoDO result) {
-		topEndorsedCollectionsWidget.add(topEndorsedCollection=new TopRemixedAndEndorsedCollections("Top Endorsed Collections",result));
-		topEndorsedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().clickedOnMoreButton("true", null);
-			}
-		});
-		topRemixedCollectionsWidget.add(topRemixedCollection=new TopRemixedAndEndorsedCollections("Top Remixed Collections",result));
-		topRemixedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().clickedOnMoreButton("false",null);
-			}
-		});
+		if (result != null){
+			topEndorsedCollectionsWidget.add(topEndorsedCollection=new TopRemixedAndEndorsedCollections("Top Endorsed Collections",result));
+			topEndorsedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					getUiHandlers().clickedOnMoreButton("true", null);
+				}
+			});
+			topRemixedCollectionsWidget.add(topRemixedCollection=new TopRemixedAndEndorsedCollections("Top Remixed Collections",result));
+			topRemixedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					getUiHandlers().clickedOnMoreButton("false",null);
+				}
+			});
+		}
 	}
 }

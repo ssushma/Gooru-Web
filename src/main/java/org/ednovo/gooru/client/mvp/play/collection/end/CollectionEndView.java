@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.Rename
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
+import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -65,6 +66,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -116,6 +119,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField VerticalPanel commentsContainer,pnlSummary;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
+
 	@UiField HTMLPanel sessionspnl,collectionMetaDataPnl,collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
 
 	@UiField TextArea commentField;
@@ -131,9 +135,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField SimpleCheckBox changeAssignmentStatusButton;
 
 	@UiField ListBox sessionsDropDown;
-	@UiField Image collectionImage;
+	@UiField Image collectionImage,sessionsTooltip;
 	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
-	ToolTip toolTip;
+	
+	private ToolTip toolTip;
+	
 	Map<String, Long> sessionData=new HashMap<String, Long>();
 
 	
@@ -186,6 +192,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	private boolean isCustomizePopup = false;
 	
 	private boolean isSharePopup = false;
+	
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
@@ -244,6 +251,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		lblCharLimitComments.setText(value);
 		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
 		frameContainer1.setVisible(false);
+		sessionsTooltip.addMouseOverHandler(new QuestionMarkHover());
+		sessionsTooltip.addMouseOutHandler(new QuestionMarkHoverOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		customizeCollectionBtn.addBlurHandler(new customizeCollectionBtnOnBlur());
@@ -343,12 +352,34 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 	}
 	
+	public class QuestionMarkHover implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTip = new ToolTip(i18n.GL3113());
+			toolTip.getLblLink().setVisible(false);
+			toolTip.getElement().getStyle().setBackgroundColor("transparent");
+			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			toolTip.setPopupPosition(sessionsTooltip.getAbsoluteLeft()-72, sessionsTooltip.getAbsoluteTop()+25);
+			toolTip.getElement().getStyle().setZIndex(99999);
+			toolTip.show();
+		}
+	}
+	
+	public class QuestionMarkHoverOut implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTip.hide();	
+		}
+	}
+	
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		//showPopupAfterGmailSignin();
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
-		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz"))?i18n.GL3044():i18n.GL2083();
+		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT))?i18n.GL3044():i18n.GL2083();
 		headingText.setText(message);
 //		setCollectionGoal(collectionDo.getGoals());
 //		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
@@ -753,9 +784,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					params.put("customize", "yes");
 					
 				}
-				params.put("view", "end");
+		/*		params.put("view", "end");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
 				
 			}
 		
@@ -787,9 +818,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				public void closePoup() {
 					Window.enableScrolling(true);
 			        this.hide();
-			    	params.remove("assign");
+/*			    	params.remove("assign");
 			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 				}
 			};
 		int clientHeight=Window.getClientHeight();
@@ -803,9 +834,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		int left = (Window.getClientWidth() - 500) >> 1;
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
 	    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
-		params.put("assign", "yes");
+	/*	params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 	}
 	
 	public void resetMetadataFields(){
