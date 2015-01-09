@@ -69,5 +69,5 @@ public interface IsCollectionSummaryView extends IsViewWithHandlers<CollectionSu
 	 */
 	Frame getFrame();
 	
-	InlineLabel getLastModified();
+    void resetDataIfNoSessions();
 }

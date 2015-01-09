@@ -127,14 +127,13 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
-				System.out.println("sessions Size::"+result.size());
 				getView().setUserSessionsData(result);
 				if(result.size()!=0){
 					printUserDataDO.setSession("1st Session");
 					printUserDataDO.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(result.get(0).getTimeStamp())));
 					setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId,printUserDataDO);
 				}else{
-					getView().getLastModified().setText("");
+					getView().resetDataIfNoSessions();
 					clearSlot(TEACHER_STUDENT_SLOT);
 					setInSlot(TEACHER_STUDENT_SLOT, null,false);	
 				}
