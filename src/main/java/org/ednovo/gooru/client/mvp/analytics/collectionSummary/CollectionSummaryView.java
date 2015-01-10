@@ -55,7 +55,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	@UiField HTMLPanel collectionSummaryDetails,sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
 	@UiField Frame downloadFile;
-	@UiField Label subText;
+	@UiField Label subText,errorMessage;
 	
 	Map<String, String> sessionData=new HashMap<String, String>();
 	ToolTip toolTip;
@@ -75,6 +75,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		setData();
 		setStaticData();
 		downloadFile.setVisible(false);
+		errorMessage.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -150,6 +151,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
     public class StudentsListChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
+			errorMessage.setVisible(false);
 			int selectedIndex=studentsListDropDown.getSelectedIndex();
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			if(selectedIndex==0){
@@ -179,6 +181,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	@Override
 	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
+		errorMessage.setVisible(false);
 		studentsListDropDown.clear();
 		studentsListDropDown.addItem("All Students");
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
@@ -276,7 +279,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		return downloadFile;
 	}
 	@Override
-	public InlineLabel getLastModified() {
-		return lastModifiedTime;
+	public void resetDataIfNoSessions() {
+		lastModifiedTime.setText("");
+		sessionspnl.setVisible(false);
+		errorMessage.setVisible(true);
 	}
 }

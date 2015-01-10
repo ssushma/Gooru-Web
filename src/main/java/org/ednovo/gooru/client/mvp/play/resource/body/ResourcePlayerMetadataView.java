@@ -412,6 +412,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(publishersList!=null&&publishersList.size()>0){
 						//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
 						resourcePublisher.clear();
+						System.out.println("1");
 						SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
 					}else{
 						resourcePublisher.clear();
@@ -424,7 +425,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 						if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 							resourcePublisher.setVisible(true);
 							resourcePublisher.clear();
-							resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+							System.out.println("2");
+							resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+collectionItemDo.getResource().getCreator().getUsername());
 							resourcePublisher.getElement().getStyle().clearPaddingTop();
 						}else{
 							resourcePublisher.setVisible(false);
@@ -437,7 +439,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 						resourcePublisher.setVisible(true);
 						resourcePublisher.clear();
-						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+						System.out.println("3");
+						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+collectionItemDo.getResource().getCreator().getUsername());
 						resourcePublisher.getElement().getStyle().clearPaddingTop();
 					}else{
 						resourcePublisher.setVisible(false);
