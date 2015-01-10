@@ -777,7 +777,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 					}
 					else
 					{
-					standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Star","ratingPanel"));
+						if (ratingsSplit[i].equalsIgnoreCase("1")){
+							standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Star","ratingPanel"));
+						}else{
+							standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Stars","ratingPanel"));
+						}
 					}
 				}
 			}
