@@ -1361,7 +1361,7 @@ public class HeaderUc extends Composite implements
 		{
 			//else is for * query search.
 			
-			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			if(getEditSearchTxtBox().getText().isEmpty())
 			{
 				Map<String, String> params = new HashMap<String, String>();
 				params = updateParams(params);
