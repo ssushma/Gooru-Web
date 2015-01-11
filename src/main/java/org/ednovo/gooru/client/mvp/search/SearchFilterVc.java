@@ -1200,8 +1200,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			{
 				chkNotFriendly.setValue(true);
 			}
-
-		}		
+		}else{
+			String reviewedVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed", null);
+			if(reviewedVal != null  && reviewedVal.equalsIgnoreCase("0") && value.equalsIgnoreCase("Only Resources with Reviews"))
+			{
+				chkNotFriendly.setValue(false);
+			}
+		}
 		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")||value.equalsIgnoreCase("zerostar")){
 			chkNotFriendly.setText("");
 			chkNotFriendly.addStyleName(value.toLowerCase());
@@ -2136,6 +2141,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(subjectPanelUc);
 		clearFilter(accessModePanel);
 		clearFilter(ratingPanelUc);
+		clearFilter(reviewPanelUc);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");

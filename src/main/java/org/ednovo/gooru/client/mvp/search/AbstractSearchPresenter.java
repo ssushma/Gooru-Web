@@ -542,6 +542,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					params.remove(IsSearchView.MEDIATYPE_FLT);
 					params.remove(IsSearchView.OER_FLT);
 					params.remove(IsSearchView.ACCESS_MODE_FLT);
+					params.remove(IsSearchView.REVIEWS_FLT);
 				}
 				
 				
