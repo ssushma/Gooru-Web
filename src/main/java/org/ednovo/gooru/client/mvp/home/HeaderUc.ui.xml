@@ -437,7 +437,7 @@
             background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
             position: absolute;
 			top: 4px;
-			right: 72px;
+			right: 78px;
 			z-index: 9999999;
 			width: 10px;
 			height: 17px;
