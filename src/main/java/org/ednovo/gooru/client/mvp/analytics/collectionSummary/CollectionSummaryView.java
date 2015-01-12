@@ -99,6 +99,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	void setData(){
 		sessionspnl.setVisible(false);
+		
 		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 
@@ -156,11 +157,13 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			if(selectedIndex==0){
 				sessionspnl.setVisible(false);
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
 				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
 				printUserDataDO.setUserName(studentsListDropDown.getItemText(studentsListDropDown.getSelectedIndex()));
 				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId,printUserDataDO);
 				sessionspnl.setVisible(true);
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(false);
 			}
 		}
     }
@@ -196,6 +199,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			exportImage.setVisible(false);
 			subText.setVisible(false);
 		}
+		collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
 	}
 
 	/* (non-Javadoc)
@@ -283,5 +287,6 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		lastModifiedTime.setText("");
 		sessionspnl.setVisible(false);
 		errorMessage.setVisible(true);
+		collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
 	}
 }
