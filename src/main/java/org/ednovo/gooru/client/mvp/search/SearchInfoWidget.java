@@ -26,6 +26,7 @@
 package org.ednovo.gooru.client.mvp.search;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.LiecenceTooltip;
@@ -423,55 +425,48 @@ public class SearchInfoWidget extends Composite {
 			}*/
 	        
 	        if(grade!=null && !grade.equals("")){
-				List<String> gradesdetails = new ArrayList<String>();
-				List<Integer> gradeListInt = new  ArrayList<Integer>();
-				String[] gradeslist=resourceDo.getGrade().split(",");
-				for (String eachGrade1 : gradeslist) {
-					if (!eachGrade1.trim().equalsIgnoreCase("Kindergarten")
-							&& !eachGrade1.trim().equalsIgnoreCase("Higher Education")) {
-						eachGrade1 = eachGrade1.replaceAll("th", "")
-								.replaceAll("TH", "").replaceAll("st", "")
-								.replaceAll("ST", "").replaceAll("nd", "")
-								.replaceAll("ND", "").replaceAll("rd", "")
-								.replaceAll("RD", "");
-						eachGrade1 = eachGrade1.replaceAll("Grade", "").replaceAll("grade", "");
-						eachGrade1 = eachGrade1.replaceAll("K-", "")
-								.replaceAll("k-", "");
-				/*		eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
-								.replaceAll("k", "");*/
-						
-						gradesdetails.add(eachGrade1);
-						
-/*						try {
-							String grad[] = generateGradeIfHypen(eachGrade1).trim().split(",");
-							for (int i = 0; i < grad.length; i++) {
-								try
-								{
-								gradeListInt.add(Integer.parseInt(grad[i]));
-								}
-								catch(Exception ex)
-								{
-									gradeListInt.add(1000);
-								}
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}*/
-					}else{
-						gradesdetails.add(eachGrade1);
+			
+				List<String> gradesSorted = new ArrayList<String>();
+				
+				List<Integer> listI = new ArrayList<Integer>();
+				List<String> listS = new ArrayList<String>();
+				List<Object> listO = new ArrayList<Object>();
+				
+				String[] newst = resourceDo.getGrade().split(",");
+
+				for (int i = 0; i < newst.length; i++) {
+					try {
+						int k = Integer.parseInt(newst[i]);
+						listI.add(k);
+					} catch (Exception e) {
+						listS.add(newst[i]);
 					}
 				}
-			//	gradeListInt = sortList(gradeListInt);
-/*				for(int glevel=0;glevel<gradeListInt.size();glevel++){
-					System.out.println("gradeListInt::"+gradeListInt.get(glevel));
+				Collections.sort(listS, Collections.reverseOrder());
 
-					gradesdetails.add(Integer.toString(gradeListInt.get(glevel)));
-					
-					
-				}*/
-				//List<String> stringList = new ArrayList<String>(Arrays.asList(gradeslist));
-				setGrades(gradesdetails);
+				Collections.sort(listI);
+				
+				if (listS.contains("Kindergarten")
+						&& listS.contains("Higher Education")) {
+					listO.add("Kindergarten");
+					listO.addAll(listI);
+					listO.add("Higher Education");
+				} else if (listS.contains("Kindergarten")) {
+					listO.add("Kindergarten");
+					listO.addAll(listI);
+				} else if (listS.contains("Higher Education")) {
+					listO.addAll(listI);
+					listO.add("Higher Education");
+				} else {
+					listO.addAll(listI);
 				}
+				
+				for (Object obj : listO) {
+					gradesSorted.add(obj.toString());
+				}
+				setGrades(gradesSorted);
+				
+	        }
 	        
 	        
 			setResourceAttribution(CollectiongenealInfo.getResource().getResourceSource()!=null?CollectiongenealInfo.getResource().getResourceSource().getAttribution():
