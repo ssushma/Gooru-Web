@@ -182,7 +182,11 @@ public class AssignmentsContainerWidget extends Composite  {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			// TODO Auto-generated method stub
-			UnitAssignentStudentPlayView = new UnitAssignentStudentPlayView(seqNumber,title,dueDate,direction,collectionId,collectionItemId);
+			UnitAssignentStudentPlayView = new UnitAssignentStudentPlayView(seqNumber,title,dueDate,direction,collectionId,collectionItemId){
+				public void triggerPathwayViewEvent(){
+					triggerPathwayViewDatlogEvent(unitId);
+				}
+			};
 			
 			UnitAssignentStudentPlayView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-120,event.getRelativeElement().getAbsoluteTop()-40);
 			UnitAssignentStudentPlayView.show();
@@ -295,9 +299,10 @@ public class AssignmentsContainerWidget extends Composite  {
 				}
 				
 			}
+	 }
+	 
+	 public void triggerPathwayViewDatlogEvent(String unitId){
 		 
-		 
-
 	 }
 
 }

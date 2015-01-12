@@ -271,7 +271,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private void setClasspageItemTitle(String collectionItemTitle){
 		classpageItemTitle.setHTML(collectionItemTitle);
-		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getResource().getGooruOid()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getResource().getGooruOid()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken()+"&eventid="+AppClientFactory.getPlaceManager().getPathwayEventId());
 	}
 	
 	
@@ -293,7 +293,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public void setThumbnailUrl(){
 		collectionImage.setUrl(classpageItemDo.getResource().getThumbnails().getUrl()!=null?StringUtil.formThumbnailName(classpageItemDo.getResource().getThumbnails().getUrl(),"-160x120."):"null");
 		Anchor thumbnailAnchor=new Anchor();
-		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getResource().getGooruOid()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getResource().getGooruOid()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken()+"&eventid="+AppClientFactory.getPlaceManager().getPathwayEventId());
 		thumbnailAnchor.getElement().appendChild(collectionImage.getElement());
 		thumbnailContainer.add(thumbnailAnchor);
 	}
@@ -772,6 +772,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			parametesMap.put("id", classpageItemDo.getResource().getGooruOid());
 			parametesMap.put("cid", classpageItemDo.getCollectionItemId());
 			parametesMap.put("page", getCurrentPlaceToken());
+			parametesMap.put("eventid", AppClientFactory.getPlaceManager().getPathwayEventId());
 			AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, parametesMap));
 		}
 		

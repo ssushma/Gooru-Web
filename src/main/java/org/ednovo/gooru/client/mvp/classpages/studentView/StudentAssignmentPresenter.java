@@ -87,6 +87,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	private Integer defaultLimitForPath=20;
 	private static final Integer DEFAULT_LIMITVALUE=5;
 	
+	private String unitId=null;
+	
 	public static final  Object STUDY_SLOT = new Object();
 	
 	private ClasspageDo classpageDo=null;
@@ -106,6 +108,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.unitSetupStudentPresenter = unitSetupStudentPresenter;
 		this.unitAssignmentPresenter =unitAssignmentPresenter;
+		this.unitSetupStudentPresenter.setStudentAssignmentPresenter(this);
 		getView().setUiHandlers(this);	
 		
 	}
@@ -189,8 +192,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 //							//getView().setSortingOrderInDropdown(sortingOrder);
 //							getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
 							getView().setClasspageData(classpageDo);
-							showTabWidget(tabMode);
 							triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
+							showTabWidget(tabMode);
 							
 					}else{
 						ErrorPopup error = new ErrorPopup(i18n.GL1632());
@@ -239,8 +242,11 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
 	     }
 	     else if(tab.equalsIgnoreCase("unitdetails") || tab.equalsIgnoreCase("dashboard")){
+	    	 this.unitId=null;
 	    	 unitAssignmentPresenter.showDashBoardDetails();
 	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
+	    	 String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
+	    	 triggerUnitDataLogStartStopEvent(classpageDo.getClasspageId(), unitId, classpageDo.getClasspageCode());
 	    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
@@ -400,6 +406,34 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
+	
+	public void triggerUnitDataLogStartStopEvent(String unitId){
+		if(this.unitId==null || !this.unitId.equals(unitId)){
+			this.unitId=unitId;
+			triggerUnitDataLogStartStopEvent(classpageDo.getClasspageId(), unitId, classpageDo.getClasspageCode());
+		}
+	}
+	
+	public void triggerUnitDataLogStartStopEvent(String classpageId, String unitId, String classCode){
+		JSONObject classpageDataLog=new JSONObject();
+		String unitEventId=GwtUUIDGenerator.uuid();
+		AppClientFactory.getPlaceManager().setPathwayEventId(unitEventId);
+		classpageDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(unitEventId));
+		classpageDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.PATHWAY_VIEW));
+		classpageDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(null));
+		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(System.currentTimeMillis()));
+		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(System.currentTimeMillis()));
+		String path=classpageId+"/"+unitId;
+		String parentEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(unitId,classpageId, parentEventId, "", "","",null,path,"study"));
+		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0));
+		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
+		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
+	}
+
+	
 	@Override
 	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId){
 		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId, new SimpleAsyncCallback<Void>() {
