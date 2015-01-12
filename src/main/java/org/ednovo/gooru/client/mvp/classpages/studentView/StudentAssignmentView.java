@@ -35,7 +35,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
-import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -49,11 +48,11 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
-import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -571,10 +570,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					
 					@Override
 					void joinIntoClass() {
-							AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+							AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 								@Override
-								public void onSuccess(SettingDo result) {
+								public void onSuccess(V2UserDo result) {
 									String emailId="";
 									if(result.getUser().getAccountTypeId()==2){
 										emailId=AppClientFactory.getLoggedInUser().getUsername();
@@ -699,10 +698,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							
 							@Override
 							void joinIntoClass() {
-									AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+									AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 										@Override
-										public void onSuccess(SettingDo result) {
+										public void onSuccess(V2UserDo result) {
 											String emailId="";
 											if(result.getUser().getAccountTypeId()==2){
 												emailId=AppClientFactory.getLoggedInUser().getUsername();
@@ -1196,10 +1195,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				
 				@Override
 				void joinIntoClass() {
-						AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+						AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 							@Override
-							public void onSuccess(SettingDo result) {
+							public void onSuccess(V2UserDo result) {
 								String emailId="";
 								if(result.getUser().getAccountTypeId()==2){
 									emailId=AppClientFactory.getLoggedInUser().getUsername();
@@ -1424,9 +1423,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			
 			@Override
 			void joinIntoClass() {
-					AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+					AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 						@Override
-						public void onSuccess(SettingDo result) {
+						public void onSuccess(V2UserDo result) {
 							String emailId="";
 							if(result.getUser().getAccountTypeId()==2){
 								emailId=AppClientFactory.getLoggedInUser().getUsername();
@@ -1601,9 +1600,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 						joinPopupPublic =  new StudentJoinClassPopup(classpageDo) {
 						@Override
 						void joinIntoClass() {
-							AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+							AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 								@Override
-								public void onSuccess(SettingDo result) {
+								public void onSuccess(V2UserDo result) {
 									String emailId="";
 									if(result.getUser().getAccountTypeId()==2){
 										emailId=AppClientFactory.getLoggedInUser().getUsername();
@@ -1809,10 +1808,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							
 							@Override
 							void joinIntoClass() {
-									AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+									AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 										@Override
-										public void onSuccess(SettingDo result) {
+										public void onSuccess(V2UserDo result) {
 											String emailId="";
 											if(result.getUser().getAccountTypeId()==2){
 												emailId=AppClientFactory.getLoggedInUser().getUsername();
@@ -1935,10 +1934,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									
 									@Override
 									void joinIntoClass() {
-											AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+											AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 												@Override
-												public void onSuccess(SettingDo result) {
+												public void onSuccess(V2UserDo result) {
 													String emailId="";
 													if(result.getUser().getAccountTypeId()==2){
 														emailId=AppClientFactory.getLoggedInUser().getUsername();
