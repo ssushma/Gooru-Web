@@ -1423,26 +1423,33 @@ public class HeaderUc extends Composite implements
 		if(prefilter!=null){
 			params=prefilter.getFilter();
 			String subject = params.get(IsSearchView.SUBJECT_FLT);
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
-			{
-				subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
-			}
+
 			if (subject != null) {
 				params.put(IsSearchView.SUBJECT_FLT, subject);
 			}else{
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
+				{
+					subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+				}
+				else
+				{
 				params.remove(IsSearchView.SUBJECT_FLT);
+				}
 			}
 			String grade = params.get(IsSearchView.GRADE_FLT);
-			
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
-			{
-				grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
-			}
+		
 			
 			if (grade != null) {
 				params.put(IsSearchView.GRADE_FLT, grade);
 			}else{
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
+				{
+					grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+				}
+				else
+				{
 				params.remove(IsSearchView.GRADE_FLT);
+				}
 			}
 			String standardsUrlParam = null;
 			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
