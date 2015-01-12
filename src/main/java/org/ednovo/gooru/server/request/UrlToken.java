@@ -60,7 +60,7 @@ public enum UrlToken {
 			"/scollection/resource/moreinfo?sessionToken={0}&resourceId={1}"),
 
 	RESOURCE_COLLECTION_LIST(
-			"/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0"),
+			"/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
 
 	COLLECTION_RESOURCE_LIST(
 			"/search/resource?sessionToken={0}&pageNum={1}&pageSize={2}&flt.collectionGooruOIds={3}"),
