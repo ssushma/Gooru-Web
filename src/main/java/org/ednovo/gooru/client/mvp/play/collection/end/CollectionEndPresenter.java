@@ -104,6 +104,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
 	
 	PrintUserDataDO printData=new PrintUserDataDO();
+
+	String classpageId=null;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -123,8 +125,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		//addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
-	public void setCollectionMetadata(final CollectionDo collectionDo){
+	public void setCollectionMetadata(final CollectionDo collectionDo,String classpageId){
 		this.collectionDo=collectionDo;
+		this.classpageId=classpageId;
 		getView().setCollectionMetadata(collectionDo);
 		if(AppClientFactory.isAnonymous()) {
 			getView().setPlayerLoginStatus(false);
@@ -159,10 +162,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		setInSlot(METADATA_PRESENTER_SLOT, collectionHomeMetadataPresenter,false);
 	}
 	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		/*String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageId==null){
 			classpageId="";
-		}
+		}*/
 		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId,AppClientFactory.getLoggedInUser().getGooruUId());
 	}
 	
