@@ -585,10 +585,10 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			for(int i=0; i<split.length; i++){
 				if(!split[i].equalsIgnoreCase("all"))
 				{
-					String filterName = !split[i].equalsIgnoreCase("Audio") ? split[i] +"s" : split[i];
+					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
 					standardsConatiner.add(createTagsLabel(filterName,"categoryPanel"));
 				}
-			}
+			} 
 				
 		}
 	}
