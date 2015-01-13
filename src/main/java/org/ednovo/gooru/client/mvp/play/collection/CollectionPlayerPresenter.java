@@ -819,7 +819,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(AppClientFactory.isAnonymous()){
 			resetSummary();
 		}
-		else{
+		else{/*
 			this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
 				@Override
 				public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
@@ -840,7 +840,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					}
 				}
 			});
-		}
+		*/}
 	}
 	
 	public void resetSummary(){

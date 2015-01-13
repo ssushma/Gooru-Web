@@ -497,7 +497,45 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		});
 
 	}
-
+	public void convertMilliSecondsToTime(Long milliSeconds){
+		//milliSeconds=milliSeconds>0&&milliSeconds<1000?1000:milliSeconds;
+		double totalSecs = (double)milliSeconds/1000;
+		//totalSecs=Math.round(totalSecs);
+	    long hours = (long) (totalSecs / 3600);
+	    long mins = (long) ((totalSecs / 60) % 60);
+	    double secs = (double) (totalSecs % 60);
+	    String formattedResult=roundToTwo(secs);
+	    displaySpendTime(hours,mins,Double.valueOf(formattedResult));
+    }
+	
+	public static native String roundToTwo(double number) /*-{
+		return ""+(Math.round(number + "e+2")  + "e-2");
+	}-*/;
+	public void displayScoreCountData(Integer score,Integer questionCount){
+//		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
+//			int questionCount=0;
+//			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+//				if(collectionDo.getCollectionItems().get(i).getResource().getResourceType()!=null){
+//					String resourceTypeName=collectionDo.getCollectionItems().get(i).getResource().getResourceType().getName();
+//					if(resourceTypeName!=null&&resourceTypeName.equalsIgnoreCase("assessment-question")){
+//						questionCount++;
+//					}
+//				}
+//			}
+		if(questionCount!=null)
+		{
+			if(questionCount==0){
+				displayScoreCount(questionCount,questionCount);
+			}else{
+				displayScoreCount(score,questionCount);
+			}
+		}
+		else
+		{
+			questionCount = 0;
+			displayScoreCount(score,questionCount);
+		}
+	}
 	@Override
 	public void getCollectionMetaDataByUserAndSession(final String collectionId,final String classId, final String userId, final String sessionId,final PrintUserDataDO printData) {
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
@@ -505,6 +543,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 							if (result.size()!=0 && result.get(0).getCompletionStatus() != null	&& result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
 								count = 0;
+								showAvgReaction( result.get(0).getAvgReaction());
+								convertMilliSecondsToTime(result.get(0).getAvgTimeSpent());
+								displayScoreCountData(result.get(0).getScore(),result.get(0).getTotalQuestionCount());
 								getView().setCollectionMetaDataByUserAndSession(result);
 								setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 							} else {
@@ -514,6 +555,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 								} else {
 									if (count >= 10) {
 										getView().showMessageWhenDataNotFound();
+										showAvgReaction(0);
+										convertMilliSecondsToTime(0L);
+										displayScoreCount(0,0);
 									}
 								}
 							}

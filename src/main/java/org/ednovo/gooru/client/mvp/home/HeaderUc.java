@@ -1423,32 +1423,46 @@ public class HeaderUc extends Composite implements
 		if(prefilter!=null){
 			params=prefilter.getFilter();
 			String subject = params.get(IsSearchView.SUBJECT_FLT);
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
-			{
-				subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
-			}
+
 			if (subject != null) {
 				params.put(IsSearchView.SUBJECT_FLT, subject);
 			}else{
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
+				{
+					subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+				}
+				else
+				{
 				params.remove(IsSearchView.SUBJECT_FLT);
+				}
 			}
 			String grade = params.get(IsSearchView.GRADE_FLT);
-			
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
-			{
-				grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
-			}
+		
 			
 			if (grade != null) {
 				params.put(IsSearchView.GRADE_FLT, grade);
 			}else{
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
+				{
+					grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+				}
+				else
+				{
 				params.remove(IsSearchView.GRADE_FLT);
+				}
 			}
 			String standardsUrlParam = null;
 			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
 			{
+				if(stadardCode!=null && !stadardCode.equals("")){
+					params.put(IsSearchView.STANDARD_FLT, stadardCode);
+					stadardCode=null;
+				}
+				else
+				{
 				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
 				params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
+				}
 			}
 			else
 			{
@@ -1457,14 +1471,11 @@ public class HeaderUc extends Composite implements
 				stadardCode=null;
 				}
 			}
-
-			
-
 		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH))
+		if(!currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH))
 		{
 		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		}
@@ -2150,6 +2161,55 @@ public class HeaderUc extends Composite implements
 		}
 	}
 	
+	private void changeQueryParams() {
+		String searchText = editSearchTxtBox.getText();
+		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
+		editSearchTxtBox.setText(searchText.trim());
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (editSearchTxtBox.getText() != null && editSearchTxtBox.getText().length() > 0) {
+			MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim().toLowerCase(),"HeaderUc");
+			Map<String, String> params = new HashMap<String, String>();
+			params = updateParams(params);
+			savePlaceRequest();
+			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+					PlaceTokens.COLLECTION_SEARCH)) {
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.COLLECTION_SEARCH, params);
+			} else {
+				String queryVal = params.get("query");
+				//queryVal = queryVal.replaceAll("%5C1", "&");
+				Map<String, String> map = params;
+				map.put("query", queryVal);
+				editSearchTxtBox.setText(queryVal);
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
+			editSearchTxtBox.setText("");
+			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+			editSearchTxtBox.hideSuggestionList();
+			getEditSearchTxtBox().setText(searchText.trim());
+		}
+		else
+		{
+			//else is for * query search.
+			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			{
+				getEditSearchTxtBox().setText("");
+				Map<String, String> params = new HashMap<String, String>();
+				params = updateParams(params);
+				Map<String, String> map = params;
+				map.put("query", "*");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
+		}
+		
+		hasAutoSelected=true;
+		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
+	}
+	
+	
 	public static void closeClassContainer()
 	{
 		if(myClassesPop != null)
@@ -2169,6 +2229,9 @@ public class HeaderUc extends Composite implements
 
 	public static void setStandardsCode(String stadardCodeId, int id, String code){
 		stadardCode=stadardCodeId;
+		
+		
+		
 		/*SearchFilterVc searchFilterVc= new SearchFilterVc(true);
 		System.out.println("id::"+id);
 		System.out.println("code::"+code	);

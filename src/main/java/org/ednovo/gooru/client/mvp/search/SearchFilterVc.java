@@ -1193,6 +1193,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
 		
+		chkNotFriendly.getElement().getFirstChildElement().getStyle().setTop(2, Unit.PX);
+		chkNotFriendly.getElement().getFirstChildElement().getStyle().setPosition(Position.RELATIVE);
+		
 		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
 		{
 			String reviewedVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
