@@ -82,6 +82,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -367,7 +368,7 @@ public class HeaderUc extends Composite implements
 			}
 
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
 				autoSuggestKeywordDo.setQuery(text);
@@ -376,6 +377,14 @@ public class HeaderUc extends Composite implements
 				if (text != null && text.trim().length() > 0) {
 					requestAutoSuggestKeyword(autoSuggestKeywordDo);
 				} else {
+					getEditSearchTxtBox().hideSuggestionList();
+				}
+
+				arrowLbl.setVisible(true);
+				if(prefilter!=null){
+					prefilter.hide();
+				}
+				if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 					getEditSearchTxtBox().hideSuggestionList();
 				}
 			}
@@ -431,7 +440,7 @@ public class HeaderUc extends Composite implements
 
 //		registerLinkLbl.addClickHandler(new studyClickHandler());
 	/*	getEditSearchTxtBox().addKeyUpHandler(new SearchKeyUpHandler());*/
-		getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
+		//getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
 //		getEditSearchTxtBox().addFocusListener(new SearchClickHandler());
 		editSearchInputFloPanel.setVisible(false);
 		// gooruGuideImgLbl.setStyleName(GooruCBundle.INSTANCE.css().gooruGuideImg());
@@ -1556,7 +1565,7 @@ public class HeaderUc extends Composite implements
 			if (userDo.isBeforeProductionSwitch()) {
 				// goToClasicGooruPanel.setVisible(true);
 				logoutPanelVc.displayClassicGooruLink(true);
-				// goToClasicGooruPanel.getElement().getStyle().setVisibility(Visibility.VISIBLE);SearchKeyDownHandler
+				// goToClasicGooruPanel.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			} else {
 				// goToClasicGooruPanel.setVisible(false);
 				logoutPanelVc.displayClassicGooruLink(false);
@@ -1650,7 +1659,7 @@ public class HeaderUc extends Composite implements
 			if(prefilter!=null){
 				prefilter.hide();
 			}
-			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
 					if (AppClientFactory.getCurrentPlaceToken()
@@ -2012,6 +2021,9 @@ public class HeaderUc extends Composite implements
 
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
+		System.out.println("event.getSelectedItem().getDisplayString()::"+event.getSelectedItem().getDisplayString());
+		System.out.println("editSearchTxtBox.getText()::"+editSearchTxtBox.getText());
+		//System.out.println("enterkey::"+event.);
 		String searchText = editSearchTxtBox.getText();
 		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
 		editSearchTxtBox.setText(searchText.trim());

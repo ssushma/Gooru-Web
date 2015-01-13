@@ -287,7 +287,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				if(AppClientFactory.isAnonymous()) {
 					standardSearchDo.setSearchResults(null);
@@ -345,7 +345,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		sourceSgstBox = new AppSuggestBox(sourceSuggestOracle) {
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				if (resourceSearch) {
 					sourceSearchDo.setSearchResults(null);
 					sourceSearchDo.setQuery(text);
@@ -372,7 +372,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 			
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				if (resourceSearch) {
 					aggregatorSearchDo.setSearchResults(null);
 					aggregatorSearchDo.setQuery(text);
