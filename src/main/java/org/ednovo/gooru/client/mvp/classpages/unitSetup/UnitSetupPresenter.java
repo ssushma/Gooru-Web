@@ -96,27 +96,21 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 				@Override
 				public void onSuccess(ClassDo result) {
 					getView().showUnitDetails(result);
-					if(result.getSearchResults() != null)
-					{
-					if(result.getSearchResults().size()>0){
-						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-						pageNum=pageNum!=null&&!pageNum.equalsIgnoreCase("0")?pageNum:"1";
-						int pageNumVal = 0;
-						if(pageNum != null)
-						{
-							try
-							{
-							pageNumVal = Integer.parseInt(pageNum);
+					if(result.getSearchResults() != null){
+						if(result.getSearchResults().size()>0){
+							String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+							pageNum=pageNum!=null&&!pageNum.equalsIgnoreCase("0")?pageNum:"1";
+							int pageNumVal = 0;
+							if(pageNum != null){
+								try{
+									pageNumVal = Integer.parseInt(pageNum);
+								}
+								catch(Exception e){
+								}
 							}
-							catch(Exception e)
-							{
-								
-							}
+							getView().setPagination(result.getTotalHitCount(),pageNumVal);
 						}
-						getView().setPagination(result.getTotalHitCount(),pageNumVal);
-						
 					}
-				}
 					
 				}
 			});

@@ -32,9 +32,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
-import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
@@ -42,7 +40,7 @@ import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
@@ -300,8 +298,8 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		previewHomePresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 	}
 
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
-		getView().setTeacherInfo(classpageItemDo);
+	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) { 
+		getView().setTeacherInfo(assignmentParentDo);
 	}
 
 	public void setDataInsightsSummaryUrl(String sessionId){

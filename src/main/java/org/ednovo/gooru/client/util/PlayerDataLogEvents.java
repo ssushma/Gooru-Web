@@ -82,6 +82,7 @@ public class PlayerDataLogEvents {
 	public static final String COMMENT_DELETE="comment.delete";
 	public static final String ITEM_RATE="item.rate";
 	public static final String ITEM_REVIEW="item.review";
+	public static final String PATHWAY_VIEW="pathway.view";
 	
 	//event keys
 	public static final String EVENTID="eventId";

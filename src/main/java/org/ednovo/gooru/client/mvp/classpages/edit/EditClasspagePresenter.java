@@ -199,7 +199,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		imageUploadPresenter.getView().closeImageUploadWidget();
 		assignmentContainer.getView().onUnload();
 		this.classpageDo=null;
-		
+		AppClientFactory.getPlaceManager().setPathwayEventId(null);
 	}
 	
 	@Override
@@ -423,8 +423,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					EditClasspagePresenter.this.classpageDo=classpageDo;
 					if(classpageDo.getPermissions()!=null&&classpageDo.getPermissions().contains("edit")&& classpageDo.getClasspageId() != null){
                         getView().setClasspageData(classpageDo);
+                        triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
                         showTabWidget(tab);
-						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 					} else {
 						ErrorPopup error = new ErrorPopup(i18n.GL0341());
 						error.center();
@@ -443,7 +443,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
-	    	 System.out.println(" first");
 	    	 analyticsPresenter.getClassUnits(classpageDo);
 	    	 setInSlot(CLASSLIST_SLOT, analyticsPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
@@ -455,6 +454,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 unitAssignmentPresenter.showAssignmentDetails();
 	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
 	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
+	    	 String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
+	    	 triggerUnitDataLogStartStopEvent(classpageDo.getClasspageId(), unitId, classpageDo.getClasspageCode());
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
@@ -556,7 +557,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public SimpleAsyncCallback<CollectionDo> getUpdateAssignmentAsyncCallback() {
 		if (updateAssignmentAsyncCallback == null) {
 			updateAssignmentAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
-
 				@Override
 				public void onSuccess(CollectionDo result) {
 					getView().onPostClassPageUpdate();
@@ -604,12 +604,30 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
+	
+	public void triggerUnitDataLogStartStopEvent(String classpageId, String unitId, String classCode){
+		JSONObject classpageDataLog=new JSONObject();
+		String unitEventId=GwtUUIDGenerator.uuid();
+		AppClientFactory.getPlaceManager().setPathwayEventId(unitEventId);
+		classpageDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(unitEventId));
+		classpageDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.PATHWAY_VIEW));
+		classpageDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(null));
+		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(System.currentTimeMillis()));
+		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(System.currentTimeMillis()));
+		String path=classpageId+"/"+unitId;
+		String parentEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(unitId,classpageId, parentEventId, "", "","",null,path,"teach"));
+		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0));
+		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
+		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
+	}
 
 
 	@Override
 	public void getAssignmentsProgress(String classpageId, String offsetProgress, String limitProgress) {
 		this.classpageService.getClassPageItems(classpageId, offsetProgress, limitProgress,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
-			
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
