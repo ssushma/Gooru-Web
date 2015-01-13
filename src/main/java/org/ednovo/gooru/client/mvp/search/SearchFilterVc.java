@@ -2489,19 +2489,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
 					{
 					ratingsText = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
-					if(filterName.equalsIgnoreCase("5 star"))
+					if(filterName.equalsIgnoreCase("5 stars"))
 					{			
 						ratingsText= ratingsText.replaceAll("5", "");
 					}
-					else if(filterName.equalsIgnoreCase("4 star"))
+					else if(filterName.equalsIgnoreCase("4 stars"))
 					{
 						ratingsText= ratingsText.replaceAll("4", "");	
 					}
-					else if(filterName.equalsIgnoreCase("3 star"))
+					else if(filterName.equalsIgnoreCase("3 stars"))
 					{
 						ratingsText = ratingsText.replaceAll("3", "");						
 					}
-					else if(filterName.equalsIgnoreCase("2 star"))
+					else if(filterName.equalsIgnoreCase("2 stars"))
 					{
 						ratingsText = ratingsText.replaceAll("2", "");
 					}
