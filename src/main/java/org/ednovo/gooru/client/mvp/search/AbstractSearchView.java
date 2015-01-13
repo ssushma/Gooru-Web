@@ -187,7 +187,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showRatingsFilter();
 		showReviewFilter();
 	
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -334,7 +334,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showAuthorFilter();
 		showRatingsFilter();
 		showReviewFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
