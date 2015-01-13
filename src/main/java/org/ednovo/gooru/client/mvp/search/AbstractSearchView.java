@@ -187,7 +187,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showRatingsFilter();
 		showReviewFilter();
 	
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -334,7 +334,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showAuthorFilter();
 		showRatingsFilter();
 		showReviewFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -585,10 +585,10 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			for(int i=0; i<split.length; i++){
 				if(!split[i].equalsIgnoreCase("all"))
 				{
-					String filterName = !split[i].equalsIgnoreCase("Audio") ? split[i] +"s" : split[i];
+					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
 					standardsConatiner.add(createTagsLabel(filterName,"categoryPanel"));
 				}
-			}
+			} 
 				
 		}
 	}
