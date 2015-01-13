@@ -505,12 +505,10 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			Map<String, String> params = getView().getSearchFilters();
 			if(!viewToken.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())) {
 				params.clear();
-				String categoryParam = getPlaceManager().getRequestParameter(IsSearchView.CATEGORY_FLT);
-				if (categoryParam != null) {
-				params.put(IsSearchView.CATEGORY_FLT, categoryParam);
-				}
-				else
-				{
+				String categoryParam = getPlaceManager().getRequestParameter(IsSearchView.CATEGORY_FLT,null);
+				if (categoryParam != null && viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) && !categoryParam.equals("onlyQuestion")) {
+					params.put(IsSearchView.CATEGORY_FLT, categoryParam);
+				}else{
 					params.put(IsSearchView.CATEGORY_FLT, "all");					
 				}
 				String subject = getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
