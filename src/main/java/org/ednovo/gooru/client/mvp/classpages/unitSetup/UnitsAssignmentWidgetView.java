@@ -196,7 +196,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 					if(isStudentMode){
-						AssignmentsContainerWidget assignmentsContainerWidget=new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null){
+						AssignmentsContainerWidget assignmentsContainerWidget=new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i+insightOffset)){
 							 public void triggerPathwayViewDatlogEvent(String unitId){
 								 triggerPathwayViewEvent(unitId);
 							 }
