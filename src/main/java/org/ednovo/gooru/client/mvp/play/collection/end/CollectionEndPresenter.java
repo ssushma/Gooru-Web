@@ -57,6 +57,7 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
@@ -162,11 +163,11 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		setInSlot(METADATA_PRESENTER_SLOT, collectionHomeMetadataPresenter,false);
 	}
 	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
-		/*String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		/*String classpageIdVal=classpageId;
 		if(classpageId==null){
 			classpageId="";
 		}*/
-		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId,AppClientFactory.getLoggedInUser().getGooruUId());
+		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId!=null?classpageId:"",AppClientFactory.getLoggedInUser().getGooruUId());
 	}
 	
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData){
@@ -544,7 +545,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-							if (result.size()!=0 && result.get(0).getCompletionStatus() != null	&& result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
+						if (result.size()!=0 && result.get(0).getCompletionStatus() != null && result.get(0).getCompletionStatus().equalsIgnoreCase("completed")) {
 								count = 0;
 								showAvgReaction( result.get(0).getAvgReaction());
 								convertMilliSecondsToTime(result.get(0).getAvgTimeSpent());
@@ -552,17 +553,23 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 								getView().setCollectionMetaDataByUserAndSession(result);
 								setCollectionSummaryData(collectionId, classId,	userId, sessionId, printData);
 							} else {
-								if (count < 10) {
-									getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId, printData);
-									count++;
-								} else {
-									if (count >= 10) {
-										getView().showMessageWhenDataNotFound();
-										showAvgReaction(0);
-										convertMilliSecondsToTime(0L);
-										displayScoreCount(0,0);
-									}
-								}
+								Timer timer = new Timer() {
+								    public void run() {
+								          if (count < 10) {
+								        	  getCollectionMetaDataByUserAndSession(collectionId, classId, userId,sessionId, printData);
+								        	  count++;
+								          } else {
+								        	  	if (count >= 10) {
+												   getView().showMessageWhenDataNotFound();
+												   showAvgReaction(0);
+												   convertMilliSecondsToTime(0L);
+												   displayScoreCount(0,0);
+								        	  	}
+								          }
+								        }
+								      };
+								      // Execute the timer to expire 2 seconds in the future
+								      timer.schedule(2000);	
 							}
 			}
 			
