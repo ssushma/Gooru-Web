@@ -716,7 +716,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			public void onCloseLabelClick(ClickEvent event) {
 				String newFilterVal = filterValue;
 				
-				if (panelName != null && panelName.equalsIgnoreCase("categoryPanel") && !newFilterVal.equalsIgnoreCase("Audio")){
+				if (panelName != null && panelName.equalsIgnoreCase("categoryPanel") && !newFilterVal.equalsIgnoreCase("Audio")&& !newFilterVal.equalsIgnoreCase("Webpage")){
 					newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
 				}
 				
