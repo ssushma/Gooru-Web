@@ -208,7 +208,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			for (UserDataDo userDataDo : result) {
 				if(userDataDo.getStatus()==0){
 					if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
-						if(!userDataDo.getType().equalsIgnoreCase("OE")){
+						if(userDataDo.getType()!=null && !userDataDo.getType().equalsIgnoreCase("OE")){
 							questionsData.add(userDataDo);
 						}else{
 							openendedData.add(userDataDo);
@@ -241,13 +241,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	     return obj1.compareTo(obj2);
 		        	}
 		        });
-		        UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
+		       /* UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
 		        	public int compare(UserDataDo o1, UserDataDo o2) {
 		        		 Integer obj1 = new Integer(o1.getViews());
 		        		 Integer obj2 = new Integer(o2.getViews());
 		        	     return obj1.compareTo(obj2);
 		        	}
-		        });
+		        });*/
 			    final DataTable data = DataTable.create();
 			    data.addColumn(ColumnType.NUMBER, "No.");
 		        data.addColumn(ColumnType.STRING, "Format");
@@ -316,16 +316,16 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            data.setValue(rowVal, 3, timeSpentpnl.toString());
 		           
 		            //set Views label
-		            HorizontalPanel viewpnl=new HorizontalPanel();
+		            // HorizontalPanel viewpnl=new HorizontalPanel();
 		            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 		            viewlbl.setStyleName(res.css().alignCenterAndBackground());
-		            viewpnl.add(viewlbl);
+		           /* viewpnl.add(viewlbl);
 		            Label viewProgressBar=new Label();
 		            viewProgressBar.setStyleName(res.css().setProgressBar());
 		            viewpnl.add(viewProgressBar);
 		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
-		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-		            data.setValue(rowVal, 4, viewpnl.toString());
+		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);*/
+		            data.setValue(rowVal, 4, viewlbl.toString());
 		            
 		            //Set reactions
 		            int reaction=result.get(i).getReaction();
@@ -359,13 +359,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	     return obj1.compareTo(obj2);
 	        	}
 	        });
-	        UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
+	       /* UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
 	        	public int compare(UserDataDo o1, UserDataDo o2) {
 	        		 Integer obj1 = new Integer(o1.getViews());
 	        		 Integer obj2 = new Integer(o2.getViews());
 	        	     return obj1.compareTo(obj2);
 	        	}
-	        });
+	        });*/
 		    final DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
 	        data.addColumn(ColumnType.STRING, "Format");
@@ -433,16 +433,16 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            data.setValue(rowVal, 3, timeSpentpnl.toString());
 		           
 		            //set Views label
-		            HorizontalPanel viewpnl=new HorizontalPanel();
+		            // HorizontalPanel viewpnl=new HorizontalPanel();
 		            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 		            viewlbl.setStyleName(res.css().alignCenterAndBackground());
-		            viewpnl.add(viewlbl);
+		            /* viewpnl.add(viewlbl);
 		            Label viewProgressBar=new Label();
 		            viewProgressBar.setStyleName(res.css().setProgressBar());
 		            viewpnl.add(viewProgressBar);
 		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
-		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-		            data.setValue(rowVal, 4, viewpnl.toString());
+		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);*/
+		            data.setValue(rowVal, 4, viewlbl.toString());
 		            
 		            //Set reactions
 		            int reaction=result.get(i).getReaction();
@@ -730,6 +730,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        			 Iterator<String> itr = keys.iterator();
 				        			 boolean isCorrect=false;
 				        		      while(itr.hasNext()) {
+				        		    	  answerspnl.clear();
 				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				        		         for(int j=0;j<attemptsObj.size();j++){
 				        		        	Label answerChoice=new Label();
@@ -902,6 +903,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        			 Set<String> keys=answerObject.keySet();
 				        			 Iterator<String> itr = keys.iterator();
 				        		      while(itr.hasNext()) {
+				        		    	  answerspnl.clear();
 				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				        		         for(int j=0;j<attemptsObj.size();j++){
 				        		        	Label answerChoice=new Label();

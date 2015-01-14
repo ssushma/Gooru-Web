@@ -40,7 +40,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -683,10 +683,10 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	public void getAccountTypeId()
 	{
 	AppClientFactory
-				.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+				.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 					
 					@Override
-					public void onSuccess(SettingDo result) {
+					public void onSuccess(V2UserDo result) {
 						if(result.getUser().getAccountTypeId()!=null)
 						{
 							if(result.getUser().getAccountTypeId()==2)

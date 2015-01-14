@@ -342,7 +342,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());
+							System.out.println("codeVal::"+codeVal);
+							System.out.println("codeIdVal::"+codeIdVal);
+							System.out.println("codeDesc::"+codeDesc);
 							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
 						}
 					});

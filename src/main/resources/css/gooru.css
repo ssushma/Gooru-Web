@@ -1723,11 +1723,12 @@ color:#999;
 
 .oerContainer .filterCheckBox label {
 	background: url(../images/oer_icon.png) 0px 0px no-repeat transparent;
- 	padding-left: 29px;
+ 	padding-left: 23px;
 	height: 20px;
 	position: relative;
 	vertical-align: top;
 	display: inline-block;
+	padding-top: 4px;
 	
 }
 .navigationText span.AM img{

@@ -215,13 +215,19 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	.paddingClear{
 		padding:0px;
 	}	
+	.clearAllFilterLbl{
+	margin-top: -4.4em;
+	padding-bottom: 3em;
+	}
 	</ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle"
 		field="res"></ui:with>
 	<g:FlowPanel styleName="col-md-3 col-sm-3 {res.css.searchFilters} hidden-xs" ui:field="myCollectionSearch">
 		<g:FlowPanel styleName="{res.css.filtersInner}">
 			<uc:H4Panel  ui:field="filtersText"/>
-		
+			<uc:PPanel styleName="{style.clearAllFilterLbl}">
+			<g:Anchor  styleName="{style.clearAll}" ui:field="clearAll" />
+		</uc:PPanel>
 		<!-- <g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
 			<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
 			<g:Anchor  styleName="{style.notifyLink}" ui:field="resourceLinkLbl" />
@@ -352,9 +358,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			<g:HTMLPanel  ui:field="accessModePanel" />
 		</g:HTMLPanel>
 		
-		<uc:PPanel>
-			<g:Anchor  styleName="{style.clearAll}" ui:field="clearAll" />
-		</uc:PPanel>
+
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		   
 	</g:FlowPanel>
