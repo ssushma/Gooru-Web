@@ -208,7 +208,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			for (UserDataDo userDataDo : result) {
 				if(userDataDo.getStatus()==0){
 					if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
-						if(!userDataDo.getType().equalsIgnoreCase("OE")){
+						if(userDataDo.getType()!=null && !userDataDo.getType().equalsIgnoreCase("OE")){
 							questionsData.add(userDataDo);
 						}else{
 							openendedData.add(userDataDo);
@@ -730,6 +730,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        			 Iterator<String> itr = keys.iterator();
 				        			 boolean isCorrect=false;
 				        		      while(itr.hasNext()) {
+				        		    	  answerspnl.clear();
 				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				        		         for(int j=0;j<attemptsObj.size();j++){
 				        		        	Label answerChoice=new Label();
@@ -902,6 +903,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        			 Set<String> keys=answerObject.keySet();
 				        			 Iterator<String> itr = keys.iterator();
 				        		      while(itr.hasNext()) {
+				        		    	  answerspnl.clear();
 				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				        		         for(int j=0;j<attemptsObj.size();j++){
 				        		        	Label answerChoice=new Label();
