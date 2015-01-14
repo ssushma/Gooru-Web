@@ -440,6 +440,6 @@ public class StringUtil {
 	 *
 	 */
 	public static void SysOut(String message){
-		System.out.println(message);
+//		System.out.println(message);
 	}
 }

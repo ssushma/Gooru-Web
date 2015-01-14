@@ -90,7 +90,6 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 
 	@Override
 	public void exportCollectionProgress(String collectionId,String classpageId, String timeZone) {
-		System.out.println("timeZone::"+timeZone);
 		String classpage=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		this.analyticService.exportProgress(this.collectionId, classpage, timeZone, new AsyncCallback<String>() {
 			

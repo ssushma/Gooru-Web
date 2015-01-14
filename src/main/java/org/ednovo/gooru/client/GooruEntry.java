@@ -113,12 +113,6 @@ public class GooruEntry implements EntryPoint {
 					AppClientFactory.setProtocol(getHttpOrHttpsProtocol());
 					registerWindowEvents();
 				}
-	
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-//				}
-				
 			});
 			AppClientFactory.setAppGinjector(appInjector);
 //		}

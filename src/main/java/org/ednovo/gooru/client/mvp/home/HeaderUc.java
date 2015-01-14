@@ -2123,9 +2123,6 @@ public class HeaderUc extends Composite implements
 
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
-		System.out.println("event.getSelectedItem().getDisplayString()::"+event.getSelectedItem().getDisplayString());
-		System.out.println("editSearchTxtBox.getText()::"+editSearchTxtBox.getText());
-		//System.out.println("enterkey::"+event.);
 		String searchText = editSearchTxtBox.getText();
 		searchText = searchText.replaceAll("-<n> Gooru Search</n>", "");
 		editSearchTxtBox.setText(searchText.trim());
@@ -2350,8 +2347,6 @@ public class HeaderUc extends Composite implements
 		
 		
 		/*SearchFilterVc searchFilterVc= new SearchFilterVc(true);
-		System.out.println("id::"+id);
-		System.out.println("code::"+code	);
 		searchFilterVc.setUpdatedBrowseStandarsCode(stadardCodeId,id,code);*/	
 		}
 
