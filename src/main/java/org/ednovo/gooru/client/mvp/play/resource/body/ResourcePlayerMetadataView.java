@@ -425,7 +425,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 						if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 							resourcePublisher.setVisible(true);
 							resourcePublisher.clear();
-							resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+							resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+collectionItemDo.getResource().getCreator().getUsername());
 							resourcePublisher.getElement().getStyle().clearPaddingTop();
 						}else{
 							resourcePublisher.setVisible(false);
@@ -438,7 +438,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 						resourcePublisher.setVisible(true);
 						resourcePublisher.clear();
-						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+collectionItemDo.getResource().getCreator().getUsername());
 						resourcePublisher.getElement().getStyle().clearPaddingTop();
 					}else{
 						resourcePublisher.setVisible(false);

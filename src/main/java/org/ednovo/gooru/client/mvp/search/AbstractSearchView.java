@@ -192,7 +192,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showRatingsFilter();
 		showReviewFilter();
 	
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -350,7 +350,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		showAuthorFilter();
 		showRatingsFilter();
 		showReviewFilter();
-		if(!(stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
 			standardsConatiner.setVisible(false);
 		}else{
 			standardsConatiner.setVisible(true);
@@ -606,13 +606,15 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showCategoryFilter() {
 		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
 		if(categories!=null){
+			standardsConatiner.setVisible(true);
 			String[] split = categories.split(",");
 			for(int i=0; i<split.length; i++){
 				if(!split[i].equalsIgnoreCase("all"))
 				{
-				standardsConatiner.add(createTagsLabel(split[i],"categoryPanel"));
+					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
+					standardsConatiner.add(createTagsLabel(filterName,"categoryPanel"));
 				}
-			}
+			} 
 				
 		}
 	}
@@ -623,6 +625,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showGradesFilter() {
 	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
 		if(grades!=null){
+			standardsConatiner.setVisible(true);
 			String[] gradesSplit = grades.split(",");
 			for(int i=0; i<gradesSplit.length; i++){
 				if(gradesSplit[i].equals("12gte")){
@@ -645,6 +648,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showStandardsFilter() {
 	    stdCode = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
 		if(stdCode!=null){
+			standardsConatiner.setVisible(true);
 			String[] stdSplit = stdCode.split(",");
 			for(int i=0; i<stdSplit.length; i++){
 				standardsConatiner.add(createTagsLabel(stdSplit[i],"standPanel"));
@@ -658,6 +662,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showPublisherFilter() {
 		publisher = AppClientFactory.getPlaceManager().getRequestParameter("flt.publisher");
 		if(publisher!=null){
+			standardsConatiner.setVisible(true);
 			String[] split = publisher.split(",");
 			for(int i=0; i<split.length; i++){
 				standardsConatiner.add(createTagsLabel(split[i],"publisherPanel"));
@@ -672,6 +677,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showAggregatorFilter() {
 		aggregator = AppClientFactory.getPlaceManager().getRequestParameter("flt.aggregator");
 		if(aggregator!=null){
+			standardsConatiner.setVisible(true);
 			String[] split = aggregator.split(",");
 			for(int i=0; i<split.length; i++){
 				standardsConatiner.add(createTagsLabel(split[i],"aggregatorPanel"));
@@ -685,6 +691,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showAccessModeFilter() {
 		accessMode = AppClientFactory.getPlaceManager().getRequestParameter("flt.cfAccessMode");
 		if(accessMode!=null){
+			standardsConatiner.setVisible(true);
 			String[] split = accessMode.split(",");
 			for(int i=0; i<split.length; i++){
 				standardsConatiner.add(createTagsLabel(split[i],"accessPanel"));
@@ -698,6 +705,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showAuthorFilter() {
 		author = AppClientFactory.getPlaceManager().getRequestParameter("flt.owner");
 		if(author!=null){
+			standardsConatiner.setVisible(true);
 			String[] split = author.split(",");
 			for(int i=0; i<split.length; i++){
 				standardsConatiner.add(createTagsLabel(split[i],"authorPanel"));
@@ -711,6 +719,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showReviewFilter() {
 		reviewTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
 		if(reviewTag!=null){
+			standardsConatiner.setVisible(true);
 			if(reviewTag.equalsIgnoreCase("1"))
 			{
 				standardsConatiner.add(createTagsLabel("Only Resources with Reviews","onlyReviewPanel"));
@@ -732,6 +741,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				String newFilterVal = filterValue;
+				
+				if (panelName != null && panelName.equalsIgnoreCase("categoryPanel") && !newFilterVal.equalsIgnoreCase("Audio")&& !newFilterVal.equalsIgnoreCase("Webpage")){
+					newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
+				}
+				
 				if(filterValue.contains("Grade "))
 				{
 					newFilterVal = filterValue.replaceAll("Grade ", "");
@@ -751,6 +765,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	private void showOERFilter() {
 		oerTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isOer");
 		if(oerTag!=null){
+			standardsConatiner.setVisible(true);
 			if(oerTag.equalsIgnoreCase("1"))
 			{
 				standardsConatiner.add(createTagsLabel("OER","oerPanel"));
@@ -766,6 +781,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		if(mobileFirendlyTag!=null){
 			if(mobileFirendlyTag.equalsIgnoreCase("not_ipad_friendly"))
 			{
+				standardsConatiner.setVisible(true);
 				standardsConatiner.add(createTagsLabel("Mobile Friendly","mobileFirendlyPanel"));
 			}
 
@@ -778,6 +794,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 
 		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
 		if(ratingTag!=null){
+			standardsConatiner.setVisible(true);
 			if(ratingTag.equalsIgnoreCase("5,4,3,2,1,0"))
 			{
 				standardsConatiner.add(createTagsLabel("All Ratings","ratingallPanel"));
@@ -792,7 +809,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 					}
 					else
 					{
-					standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Star","ratingPanel"));
+						if (ratingsSplit[i].equalsIgnoreCase("1")){
+							standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Star","ratingPanel"));
+						}else{
+							standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Stars","ratingPanel"));
+						}
 					}
 				}
 			}

@@ -299,7 +299,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@SuppressWarnings("deprecation")
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				errorContainer.setVisible(false);
 				//standardsPreferenceOrganizeToolTip.hide();

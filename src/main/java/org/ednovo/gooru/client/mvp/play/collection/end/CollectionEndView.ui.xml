@@ -98,6 +98,7 @@
 							<g:HTMLPanel styleName="clearfix"/>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="col-md-3 {playerStyle.paddingClear}">
+							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}" ui:field="pnlCollectionLastAccessed">
 							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}" text="{i18n.GL2271}"></g:InlineLabel> 
 							<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
@@ -105,6 +106,7 @@
 							<g:HTMLPanel styleName="clearfix"/>
 							</g:HTMLPanel>
 						 </g:HTMLPanel>
+					  </g:HTMLPanel>
 					  <!-- Collection Summary Top  End-->
 					  <!-- Sessions start-->
 					  <g:HTMLPanel ui:field="sessionspnl">

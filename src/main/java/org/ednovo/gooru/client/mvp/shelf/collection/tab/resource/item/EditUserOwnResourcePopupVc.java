@@ -303,7 +303,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				//standardsPreferenceOrganizeToolTip.hide();
 				errorContainer.setVisible(false);

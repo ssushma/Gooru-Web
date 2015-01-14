@@ -1501,7 +1501,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JSONObject filterJsonObject=new JSONObject();
 		
 		try {
-			jsonObject.put("fields", "thumbnail,completionStatus,userCount,lastModified,timeSpent,views,avgTimeSpent,gooruOId,title,description,avgReaction,score,totalQuestionCount");
+			jsonObject.put("fields", "thumbnail,completionStatus,userCount,lastAccessed,timeSpent,views,avgTimeSpent,gooruOId,title,description,avgReaction,score,totalQuestionCount");
 			filterJsonObject.put("userUId", userId);
 			filterJsonObject.put("session", "CS");
 			filterJsonObject.put("sessionId", sessionId);
