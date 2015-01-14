@@ -471,8 +471,6 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setPageNum(null);
 		getSearchDo().setPageSize(null);
 
-		System.out
-				.println("==========================================I am in Refresh Search");
 		onSearchRequest(null);
 	}
 

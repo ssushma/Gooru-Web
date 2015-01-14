@@ -214,7 +214,6 @@ public abstract class ServiceRequest {
 	public void setUserAgent(){
 		try{
 			String userAgentValue=AppSessionHolder.getInstance()!=null&&AppSessionHolder.getInstance().getRequest()!=null?AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT):"";
-			logger.info("user agent value=="+userAgentValue);
 			if(clientResource!=null){
 				clientResource.getClientInfo().setAgent(userAgentValue);
 			}
