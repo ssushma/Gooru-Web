@@ -244,9 +244,9 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	
 	private void callBackMethods(){
-//		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
-//			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
-//		}
+		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
+			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
+		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("registration")) {
 			this.getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 			parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);

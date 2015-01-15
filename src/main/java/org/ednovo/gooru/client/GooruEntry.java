@@ -106,11 +106,11 @@ public class GooruEntry implements EntryPoint {
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
-					AppClientFactory.loggedInUser=loggedInUser;
+					AppClientFactory.setLoggedInUser(loggedInUser);
 //					loadCssJsFiles();
 					UcCBundle.INSTANCE.css().ensureInjected();
 					HomeCBundle.INSTANCE.css().ensureInjected();
-					//AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
+					AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 					appInjector.getPlaceManager().revealCurrentPlace();
 					AppClientFactory.setProtocol(getHttpOrHttpsProtocol());
 					registerWindowEvents();
