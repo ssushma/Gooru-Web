@@ -181,11 +181,11 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	position: relative;
 	}
 	.grade2Contianer{
-	display: inline-block;
-	width: 50%;
-	position: relative;
-	top: -20px;
-	left: -23px;
+		display: inline-block;
+		width: 50%;
+		position: relative;
+		top: -18px;
+		left: -23px;
 
 	}
 	.reviewCheckBoxStyle{

@@ -508,7 +508,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+" ");
 		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+" ");
 		
-		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
+//		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
 		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);
 		
 		browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
@@ -1193,7 +1193,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
 		
-		chkNotFriendly.getElement().getFirstChildElement().getStyle().setTop(2, Unit.PX);
+//		chkNotFriendly.getElement().getFirstChildElement().getStyle().setTop(2, Unit.PX);
 		chkNotFriendly.getElement().getFirstChildElement().getStyle().setPosition(Position.RELATIVE);
 		
 		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
@@ -1456,7 +1456,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 			imgNotFriendly.getElement().getStyle().setLeft(114, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(-16, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(-19, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 	
@@ -1498,7 +1498,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(85, Unit.PX);
-			oer.getElement().getStyle().setTop(-20, Unit.PX);
+			oer.getElement().getStyle().setTop(-23, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(i18n.GL0732());
