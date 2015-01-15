@@ -22,29 +22,30 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.service;
 
-import org.ednovo.gooru.shared.model.user.UserDo;
+package org.ednovo.gooru.client;
 
+
+import com.google.gwt.core.ext.typeinfo.JClassType;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.impl.RemoteServiceProxy;
+import com.google.gwt.user.client.rpc.impl.RequestCallbackAdapter.ResponseReader;
+import com.google.gwt.user.client.rpc.impl.RpcStatsContext;
+import com.google.gwt.user.client.rpc.impl.Serializer;
+import com.google.gwt.user.rebind.rpc.ProxyCreator;
 
-/**
- * @author Search Team
- * 
- */
-public interface AppServiceAsync extends BaseServiceAsync {
-	
-	void getLoggedInUser(AsyncCallback<UserDo> callback);
 
-	void signin(String username, String password, AsyncCallback<UserDo> callback);
+public class GooruProxyCreator extends ProxyCreator{
 
-	void signout(AsyncCallback<UserDo> callback);
+	public GooruProxyCreator(JClassType serviceIntf) {
+		super(serviceIntf);
+	}
 	
-	void v2Signin(String postData,AsyncCallback<UserDo> callback);
-	
-	void v2Signout(AsyncCallback<UserDo> callback);
-	
-	void getAnalyticsURL(String type, String id, AsyncCallback<String> callback);
-	
-	void getUserFilterProperties(AsyncCallback<UserDo> callback);
+	@Override
+    protected Class<? extends RemoteServiceProxy> getProxySupertype() {
+        return GooruRpcInterceptor.class;
+    }
 }

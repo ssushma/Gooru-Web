@@ -7,7 +7,7 @@
 	<div class="{unitStyle.q_oer_content}">
 			<g:Label ui:field="questionCountlbl" styleName="{unitStyle.questionCountlbl}"/>
 			<g:Label ui:field="usernamelbl" styleName="{unitStyle.q_oer_user_header}"/>
-			<g:Label ui:field="userResponselbl" styleName="{unitStyle.q_oer_question_response}"/>
+			<g:HTML ui:field="userResponselbl" styleName="{unitStyle.q_oer_question_response}"/>
 			<g:HTMLPanel ui:field="userAnswerspnl"></g:HTMLPanel>
 	</div>
 	<g:HTMLPanel>
