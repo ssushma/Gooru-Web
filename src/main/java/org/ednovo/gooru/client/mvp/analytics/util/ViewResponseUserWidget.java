@@ -171,9 +171,9 @@ public class ViewResponseUserWidget extends Composite {
 	   		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 	   		        	String colorCode="",text="";
 						if(status.equalsIgnoreCase("1")) {
-							
+							colorCode = "#4E9746";
 						} else {
-							
+							colorCode = "#FF0000";
 						}
 						if(questionType.equalsIgnoreCase("MA")) {
 							if(matext.equalsIgnoreCase("1")) {
