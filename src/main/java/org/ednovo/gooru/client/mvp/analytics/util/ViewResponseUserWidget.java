@@ -72,12 +72,20 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionText
 	 * @param questionAnswers
 	 */
-	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers) {
+	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers,String questionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		questionCountlbl.setVisible(true);
 		questionCountlbl.setText("Question "+questionCount);
 		usernamelbl.setText(questionText);
-		userResponselbl.setText(questionAnswers);
+		String answerVal="";
+		if(questionType.equalsIgnoreCase("MA")){
+			 answerVal=questionAnswers.replaceAll("1", "Yes");
+			 answerVal=answerVal.replaceAll("0", "No");
+		}else{
+			answerVal=questionAnswers;
+		}
+
+		userResponselbl.setText(answerVal);
 		giveFeedBackpnl.setVisible(false);
 		editFeedBackpnl.setVisible(false);
 		spnEdit.setVisible(false);
@@ -134,6 +142,7 @@ public class ViewResponseUserWidget extends Composite {
 	   			 Set<String> keys=answerObject.keySet();
 	   			 Iterator<String> itr = keys.iterator();
 	   		      while(itr.hasNext()) {
+	   		    	userAnswerspnl.clear();
 	   		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 	   		         for(int j=0;j<attemptsObj.size();j++){
 	   		        	Label answerChoice=new Label();
