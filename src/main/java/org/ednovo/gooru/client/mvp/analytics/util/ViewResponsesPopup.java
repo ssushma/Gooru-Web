@@ -30,9 +30,9 @@ public class ViewResponsesPopup extends PopupPanel {
 	 * @param questionText
 	 * @param questionAnswers
 	 */
-	public ViewResponsesPopup(String questionCount,String questionText,String questionAnswers) {
+	public ViewResponsesPopup(String questionCount,String questionText,String questionAnswers,String questionType) {
 		setWidget(uiBinder.createAndBindUi(this));
-		setCollectionProgressData(questionCount, questionText, questionAnswers);
+		setCollectionProgressData(questionCount, questionText, questionAnswers,questionType);
 	}
 	
 	/**
@@ -56,10 +56,10 @@ public class ViewResponsesPopup extends PopupPanel {
 	 * @param questionText
 	 * @param questionAnswers
 	 */
-	void setCollectionProgressData(String questionCount,String questionText,String questionAnswers){
+	void setCollectionProgressData(String questionCount,String questionText,String questionAnswers,String questionType){
 		viewResponsepnl.clear();
 		totalResponselbl.setVisible(false);
-		ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(questionCount, questionText, questionAnswers);
+		ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(questionCount, questionText, questionAnswers,questionType);
 		viewResponsepnl.add(responseUserWidget);
 	}
 	/**

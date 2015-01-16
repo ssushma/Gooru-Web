@@ -233,6 +233,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        				  }
 		        				  viewResponselbl.setText(answerText);
 		        				  viewResponselbl.getElement().setAttribute("questionCount", (j+1)+"");
+		        				  viewResponselbl.getElement().setAttribute("questionType",typeOfQuestion);
 		        				  viewResponselbl.getElement().setAttribute("question", AnalyticsUtil.html2text(collectionProgressData.get(j).getTitle()!=null?collectionProgressData.get(j).getTitle():""));
 			        				if(collectionProgressData.get(j).getUserData()!=null && collectionProgressData.get(j).getUserData().get(i) != null && collectionProgressData.get(j).getUserData().get(i).getText() != null){
 			        					  viewResponselbl.getElement().setAttribute("questionAnswer",  AnalyticsUtil.html2text(collectionProgressData.get(j).getUserData().get(i).getText()));
@@ -349,7 +350,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
 			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE)){
-				showResponsesPopup=new ViewResponsesPopup(ele.getAttribute("questionCount"),ele.getAttribute("question"),ele.getAttribute("questionAnswer"));
+				showResponsesPopup=new ViewResponsesPopup(ele.getAttribute("questionCount"),ele.getAttribute("question"),ele.getAttribute("questionAnswer"),ele.getAttribute("questionType"));
 				showResponsesPopup.setStyleName(res.css().setOETextPopupCenter());
 				if(showResponsesPopup.isShowing()){
 					showResponsesPopup.hide();
