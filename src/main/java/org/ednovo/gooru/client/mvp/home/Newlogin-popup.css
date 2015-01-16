@@ -421,7 +421,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff, endCo
 
 .divider {
 	border-bottom:1px solid #ddd;
-	width:100%;
+	width:95%;
 	height:1em;
 	margin:10px 0px 20px 0px;
 }
@@ -435,8 +435,8 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff, endCo
 }
 
 .emailSignIn {
-	padding-top:10px;
-	line-height:1.5em;
+	padding-top:7px;
+	line-height:1.9em;
 }
 
 .btnLogin {
@@ -562,4 +562,9 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff, endCo
 	text-align: right;
 	margin-right: -53px;
 	float: right;
+}
+
+.loginWithGooru{
+	
+	font-size: 14px;
 }
