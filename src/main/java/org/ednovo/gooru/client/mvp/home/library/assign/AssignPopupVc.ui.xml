@@ -40,11 +40,15 @@
 						<g:Label styleName="{res.css.popupTitle}" ui:field="lblLoginPopupTitle" />
 						<g:Label styleName="{res.css.popupDesc}" ui:field="lblAssignPopDes" />
 						<g:HTMLPanel styleName="{res.css.loginPopupStyle}">
-							<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
+							
+						<g:Label styleName="{res.css.loginWithGooru}" ui:field="lblLoginwithGooru"></g:Label>
+						
+						<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
+						
 							<g:HTMLPanel styleName="{res.css.divider}">
 								<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
 							</g:HTMLPanel>
-						<g:Label styleName="{res.css.loginWithGooru}" ui:field="lblLoginwithGooru"></g:Label>
+							
 							<g:HTMLPanel styleName="{res.css.inputBlockOuter}">
 								<gg:TextBoxWithPlaceholder ui:field="loginTxtBox"
 									setFocus="true" />
