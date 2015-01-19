@@ -186,9 +186,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 			if(sizeNames!=0){
 				data.addRows(sizeNames);
 			}
-	        int columnsSize=rowCount;
+	        int columnsSize=collectionProgressData.size();
 	        for(int i=0;i<sizeNames;i++) {
-	        	  int score=0;
+	        	  int score=0,position=0;
 	        	  for(int j=0;j<columnsSize;j++) {
 	        		  if(collectionProgressData.get(j).getStatus()==0){
 	        		  	  String color=WHITE;
@@ -288,7 +288,8 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        		  properties.set("style", "background-color: "+color);
 		        		  com.google.gwt.visualization.client.Properties p=properties.cast();
 		        		  mainDataVpnl.addStyleName(res.css().mainDataVpnl());
-		        		  data.setCell(i, j+2,mainDataVpnl.toString(),null,p);
+		        		  data.setCell(i, position+2,mainDataVpnl.toString(),null,p);
+		        		  position++;
 	        		  }
 	        	   }
 	        	  data.setValue(i, 0,defaultUserDataForUsers.getUserData().get(i).getUserName());
