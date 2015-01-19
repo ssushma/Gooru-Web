@@ -19,9 +19,9 @@
 					<g:Label styleName="{playerStyle.collection-share-title}"	ui:field="resourceTitleText"></g:Label>
 					<g:TextArea styleName="{playerStyle.collection-share-textbox}"	ui:field="resourceShareTextArea"></g:TextArea>
 					<uc:PPanel styleName="{playerStyle.collection-share-buttonscontainer}">
-						<g:InlineLabel styleName="col-md-6 col-sm-6 {playerStyle.collection-share-button1}"
+						<g:InlineLabel styleName="col-md-6 col-sm-6 col-xs-6 {playerStyle.collection-share-button1}"
 								ui:field="bitlyLink"></g:InlineLabel>
-						<g:InlineLabel styleName="col-md-6  col-sm-6 {playerStyle.collection-share-button2}"
+						<g:InlineLabel styleName="col-md-6  col-sm-6 col-xs-6 {playerStyle.collection-share-button2}"
 							ui:field="embedLink"></g:InlineLabel>
 					</uc:PPanel>
 					<g:HTMLPanel styleName="clearfix"/>
