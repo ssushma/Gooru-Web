@@ -78,11 +78,13 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionAnswers
 	 * @param questionType
 	 */
+
 	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers, String questionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		questionCountlbl.setVisible(true);
 		questionCountlbl.setText("Question "+questionCount);
 		usernamelbl.setText(questionText);
+
 		questionAnswers = questionAnswers.trim();
 		String text="";
 		if(questionType.equalsIgnoreCase("MA")){
@@ -163,6 +165,7 @@ public class ViewResponseUserWidget extends Composite {
 	   			 Set<String> keys=answerObject.keySet();
 	   			 Iterator<String> itr = keys.iterator();
 	   		      while(itr.hasNext()) {
+	   		    	userAnswerspnl.clear();
 	   		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 	   		         for(int j=0;j<attemptsObj.size();j++){
 	   		        	Label answerChoice=new Label();

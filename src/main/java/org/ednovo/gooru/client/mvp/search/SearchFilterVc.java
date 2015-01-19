@@ -522,7 +522,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+" ");
 		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+" ");
 		
-		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
+//		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
 		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);
 		
 		browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
@@ -1209,7 +1209,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		chkNotFriendly.addStyleName(value.toLowerCase().replaceAll(" ",""));
 		chkNotFriendly.addStyleName(value.toLowerCase());
 		
-		chkNotFriendly.getElement().getFirstChildElement().getStyle().setTop(2, Unit.PX);
+//		chkNotFriendly.getElement().getFirstChildElement().getStyle().setTop(2, Unit.PX);
 		chkNotFriendly.getElement().getFirstChildElement().getStyle().setPosition(Position.RELATIVE);
 
 		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
@@ -1473,10 +1473,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			panelNotMobileFriendly.addStyleName("mobilefriendlyContainer");
 			panelNotMobileFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
-			imgNotFriendly.getElement().getStyle().setLeft(142, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(35, Unit.PX);
-/*			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
-*/			imgNotFriendly.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			imgNotFriendly.getElement().getStyle().setLeft(131, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(-23, Unit.PX);
+//			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
+
 	
 			
 			
@@ -1516,8 +1517,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			oerPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(85, Unit.PX);
-			oer.getElement().getStyle().setTop(5, Unit.PX);
-			oer.getElement().getStyle().setPosition(Position.ABSOLUTE);
+
+			oer.getElement().getStyle().setTop(-23, Unit.PX);
+			oer.getElement().getStyle().setPosition(Position.RELATIVE);
+
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(i18n.GL0732());
 			oer.setTitle(i18n.GL0732());

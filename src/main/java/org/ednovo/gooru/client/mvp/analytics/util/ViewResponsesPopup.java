@@ -32,7 +32,7 @@ public class ViewResponsesPopup extends PopupPanel {
 	 * @param questionAnswers
 	 * @param questionType
 	 */
-	public ViewResponsesPopup(String questionCount,String questionText,String questionAnswers, String questionType) {
+	public ViewResponsesPopup(String questionCount,String questionText,String questionAnswers,String questionType) {
 		setWidget(uiBinder.createAndBindUi(this));
 		setCollectionProgressData(questionCount, questionText, questionAnswers,questionType);
 	}

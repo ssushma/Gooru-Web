@@ -22,25 +22,23 @@
 			<g:HTMLPanel styleName="{res.css.LoginpopupContent}">
 				<g:Label styleName="{res.css.LoginPopUpgreen}" ui:field="lblWelcomeBack" />
 				<g:HTMLPanel styleName="{res.css.signInContainer}">
-					<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
-					<g:HTMLPanel styleName="{res.css.divider}">
-						<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="emailSignIn">
-					    <g:Label ui:field="lblLoginWithGooru" />
-						<g:HTMLPanel styleName="{res.css.logInput}">
+					<g:HTMLPanel styleName="{res.css.emailSignIn}">
+					    <g:Label ui:field="lblLoginWithGooru" styleName="{res.css.loginWithGooru}" />
+						<br />
+						<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
+						
+						<g:HTMLPanel styleName="{res.css.divider}">
+							<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
+						</g:HTMLPanel>
+						
 						<gg:TextBoxWithPlaceholder styleName="form-control {res.css.form_control}" ui:field="loginTxtBox" setFocus="true"/>
 						<gg:TextBoxWithPlaceholder styleName="form-control {res.css.form_control}" ui:field="passwordTxtBox" password="true" />
-						</g:HTMLPanel>
+						
 						<g:HTMLPanel styleName="{res.css.forgotPasswordLink}">
 							<g:Anchor ui:field="forgotPwd"></g:Anchor>
 							<!-- <g:HTMLPanel styleName="{res.css.separator}">|</g:HTMLPanel> -->
 							<!-- <g:CheckBox styleName="{res.css.loginPopupCheckBoxDesc}" ui:field="lblKeepMeLogedIn"></g:CheckBox> -->
 						</g:HTMLPanel>
-						
-				
-						
-						
 						<!-- <g:HTMLPanel styleName="{res.css.loginPopupCheckBoxContainer}"> 
 							
 						</g:HTMLPanel> -->
