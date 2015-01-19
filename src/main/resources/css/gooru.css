@@ -1718,7 +1718,7 @@ color:#999;
 	background-size: 20px 15px;
 }
 .oerContainer  input[type="checkbox"] {
-	margin: 3px 0.5ex !important;
+	margin: 5px 0.5ex !important;
 }
 
 .oerContainer .filterCheckBox label {
@@ -1729,7 +1729,7 @@ color:#999;
 	vertical-align: top;
 	display: inline-block;
 	padding-top: 4px;
-	
+
 }
 .navigationText span.AM img{
 	max-height:23px;

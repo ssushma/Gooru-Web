@@ -204,7 +204,7 @@ html {
 }
 
 .innerResult {
-	
+	display: inline-block;
 }
 
 .questions {

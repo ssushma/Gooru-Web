@@ -270,6 +270,10 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String popup();
 	String forgetImgBG();
 	
+		String errorLabel();
+		String loginWithGooru();
+
+		String emailSignIn();
 	}
 	@NotStrict
 	@Source("Newlogin-popup.css")

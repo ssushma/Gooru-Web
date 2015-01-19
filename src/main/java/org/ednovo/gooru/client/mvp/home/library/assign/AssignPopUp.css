@@ -704,7 +704,6 @@ button.LoginText {
 }
 .contentBorder {
 	text-align: center;
-	margin-top: -13px;
 	margin-bottom: 5px;
 	border-bottom: 1px solid rgb(221,221,221);
 }
@@ -712,7 +711,7 @@ button.LoginText {
 	width: 300px;
 	margin: 0 auto;
 	padding-top: 10px;
-	padding-left: 35px;
+	/* padding-left: 35px; */
 }
 .inputBlock {
 	display: block;
@@ -894,7 +893,7 @@ button.LoginText {
 	border:1px solid #1076BB;
 	/* margin-bottom: 15px; */
 	cursor: pointer;
-	margin-top:28px;
+	margin-top:16px;
 }
 
 .gConnectButton:hover {
@@ -970,8 +969,9 @@ button.LoginText {
 	width: 74%;
 }
 .loginWithGooru{
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: normal;
+	padding-top: 10px;
 }
 
 .directionsChrLimit{
@@ -984,4 +984,8 @@ button.LoginText {
 }
 .marginTop{
 	margin-top:10px;
+}
+
+.privacyText{
+	text-align: left;	
 }

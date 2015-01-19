@@ -167,7 +167,7 @@ margin: 32px;
 }
 
 .innerResult {
-	
+	display: inline-block;
 }
 
 .standarBodyContainer {
