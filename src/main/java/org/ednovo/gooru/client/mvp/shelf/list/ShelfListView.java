@@ -49,7 +49,6 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -83,6 +82,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -213,6 +213,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	@UiField Label folderLabel, collectionLabel;
 	
+	@UiField Anchor assessmentLabel;
+	
 	private PlaceRequest searchRequest = null;
 	
     private static final String PRE_SEARCH_LINK = i18n.GL1487();
@@ -228,6 +230,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	private static final String ID = "id";
 
 	private static final String FOLDER = "folder";
+	private static final String TYPE = "type";
 	
 	private static final String SCOLLECTION = "scollection";
 	
@@ -273,6 +276,11 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		collectionLabel.getElement().setId("lblCollectionLabel");
 		collectionLabel.getElement().setAttribute("alt", i18n.GL0645());
 		collectionLabel.getElement().setAttribute("title", i18n.GL0645());
+		assessmentLabel.setText(i18n.GL3007());
+		assessmentLabel.getElement().setId("lblAssessmentLabel");
+		assessmentLabel.getElement().setAttribute("alt", i18n.GL3007());
+		assessmentLabel.getElement().setAttribute("title", i18n.GL3007());
+
 		organizelbl.getElement().setInnerText(i18n.GL0180());
 		organizelbl.getElement().setId("pnlOrganizelbl");
 		organizelbl.getElement().setAttribute("alt", i18n.GL0180());
@@ -338,7 +346,19 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		  }
 		
 		folderLabel.addClickHandler(new CreateNewFolder());
-		collectionLabel.addClickHandler(new CreateNewCollection());
+		collectionLabel.addClickHandler(new CreateNewCollection(null));
+//		assessmentLabel.addClickHandler(new CreateNewCollection("assessment"));
+
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT;
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				assessmentLabel.setHref(result);
+				assessmentLabel.setTarget("_blank");
+			}
+		});
+		
 		
 		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
 			organizeButtonPanel.getElement().getStyle().clearMarginTop();
@@ -1561,32 +1581,45 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	}
 	
 	public class CreateNewCollection implements ClickHandler {
+		private String collectionType=null;
+		public CreateNewCollection(String collectionType){
+			this.collectionType=collectionType;
+		}
+		
 		@Override
 		public void onClick(ClickEvent event) {
-			final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-			final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-			final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-			Map<String, String> params = new HashMap<String, String>();
-			if(o3!=null) {
-				params.put(O1_LEVEL, o1);
-				params.put(O2_LEVEL, o2);
-				params.put(O3_LEVEL, o3);
-				params.put("folderId", o3);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-			} else if(o2!=null) {
-				params.put(O1_LEVEL, o1);
-				params.put(O2_LEVEL, o2);
-				params.put("folderId", o2);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-			} else if(o1!=null){
-				params.put(O1_LEVEL, o1);
-				params.put("folderId", o1);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-			} else {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+			if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
+//				Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT, "_blank", "");
 			}
-			Window.enableScrolling(false);
-			
+			else {
+				final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+				final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+				final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+				Map<String, String> params = new HashMap<String, String>();
+				if(collectionType!=null){
+					params.put(TYPE, collectionType);
+				}
+				if(o3!=null) {
+					params.put(O1_LEVEL, o1);
+					params.put(O2_LEVEL, o2);
+					params.put(O3_LEVEL, o3);
+					params.put("folderId", o3);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
+				} else if(o2!=null) {
+					params.put(O1_LEVEL, o1);
+					params.put(O2_LEVEL, o2);
+					params.put("folderId", o2);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
+				} else if(o1!=null){
+					params.put(O1_LEVEL, o1);
+					params.put("folderId", o1);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
+				} else {
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
+				}
+				Window.enableScrolling(false);
+				
+			}
 		}
 	}
 	

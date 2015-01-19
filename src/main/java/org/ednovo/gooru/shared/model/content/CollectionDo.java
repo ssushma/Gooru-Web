@@ -55,7 +55,6 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String likes;
 	private String estimatedTime;
 	private List<CollectionItemDo> collectionItems;
-	private ResourceDo resource;
 	private CollectionMetaInfoDo metaInfo;
 	private MetaDO meta;
 	private Integer statusCode;
@@ -69,12 +68,13 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String sharing;
 	private PublishDo publishStatus;
 	private String status;
+	private String action;
 	private List<checkboxSelectedDo> depthOfKnowledges;
 	private List<checkboxSelectedDo> instructionalMethod;
 	private List<checkboxSelectedDo> audience;
 	private List<checkboxSelectedDo> learningSkills;
+	private CollectionSettingsDo settings;
 	
-
 	public CollectionDo(){
 		
 	}
@@ -363,13 +363,23 @@ public class CollectionDo extends ResourceDo implements Serializable{
 		this.memberCount = memberCount;
 	}
 
-	public ResourceDo getResource() {
-		return resource;
+	public CollectionSettingsDo getSettings() {
+		return settings;
 	}
 
-	public void setResource(ResourceDo resource) {
-		this.resource = resource;
+	public void setSettings(CollectionSettingsDo settings) {
+		this.settings = settings;
 	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	
 	
 
 }

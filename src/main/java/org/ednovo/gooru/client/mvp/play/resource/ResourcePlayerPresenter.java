@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPres
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.share.ResourceSharePresenter;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
@@ -73,6 +74,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -339,6 +341,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	  addRegisteredHandler(ShowResourceViewEvent.TYPE, this);
 	  addRegisteredHandler(ShowResourceTabWidgetEvent.TYPE, this);
 	  addRegisteredHandler(RefreshCollectionInShelfListInResourcePlayEvent.TYPE, this);
+	  addRegisteredHandler(PostUserReviewResourceEvent.TYPE, this);
 	}
 	@Override
 	protected void onReveal() {
@@ -614,13 +617,13 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-			this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String activityEventId) {
-				
-			}
-		});
+//			this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String activityEventId) {
+//				
+//			}
+//		});
 	}
 	public void createSession(String collectionGooruOid){
 		this.playerAppService.createSessionTracker(collectionGooruOid,null, new SimpleAsyncCallback<String>() {
@@ -1045,6 +1048,26 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void triggerShareDataLogEvent(String resourceGooruOid, String itemType, String shareType, boolean confirmStatus){
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", null,"", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
 	}
+	
+	/**
+	 * This method is used to log <b>star rating</b> data log event.
+	 * @param resourceId specifies the unique id of the resource.
+	 * @param currentRate specifies the user star rating.
+	 * @param previousRate specifies the user previous star rating.
+	 */
+	public void triggerRatingDataLogEvent(String resourceId,double currentRate,double previousRate){
+		PlayerDataLogEvents.triggerRatingDataLogEvent(resourceId,null, null,sessionId, "", null,currentRate,previousRate);
+	}
+	
+	/**
+	 * This method is used to log user <b>review</b> text data log event.
+	 * @param resourceId specifies the unique id of the resource.
+	 * @param reviewText specifies user entered review text.
+	 */
+	public void triggerReviewDataLogEvent(String resourceId,String reviewText){
+		PlayerDataLogEvents.triggerReviewDataLogEvent(resourceId,null, null,sessionId, "", null,reviewText);
+	}
+
 	/**
 	 * Gets the respective resource ratings rated by the user.
 	 * @param resourceGooruId {@link String} 
@@ -1126,14 +1149,34 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			}
 		}
 	}
+	
+	public double getResourceRating(String gooruOid) { 
+		if(collectionItemDo!=null){
+			if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+				return collectionItemDo.getResource().getRatings().getAverage(); 
+			}
+		}
+		return 0;
+	}
 	public String getSearchKeyword(){
 		String keyword=null;
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousPlayerRequestUrl();
 		if(placeRequest!=null){
 			if(placeRequest.getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 				keyword=placeRequest.getParameter("query", null);
+				keyword=URL.encodeQueryString(keyword);
 			}
 		}
 		return keyword;
 	}
+
+	@Override
+	public void postReviewForResource(String assocGooruOId, String userReview,
+			Integer score, boolean isUpdate) {
+		if(resoruceMetadataPresenter!=null){
+			resoruceMetadataPresenter.postReviewForResource(assocGooruOId, userReview, score, isUpdate);
+		}
+		
+	}
+	
 }

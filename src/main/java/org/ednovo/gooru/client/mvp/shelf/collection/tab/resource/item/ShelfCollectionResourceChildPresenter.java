@@ -283,6 +283,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		return AppClientFactory.getInjector().getResourceService();
 	}
 
+/*	
 	public void reorderMyCollectionItem(CollectionItemDo collectionItemDo, final ShelfCollectionResourceChildView shelfCollectionResourceChildView,final String arrow, final Integer newSequence) {
 		AppClientFactory.getInjector().getResourceService().reorderCollectionItem(collectionItemDo, new SimpleAsyncCallback<CollectionItemDo>() {
 
@@ -293,5 +294,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		});
 	}
 
+	
+*/	
 }
 

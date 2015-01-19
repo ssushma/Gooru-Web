@@ -157,19 +157,15 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			ClassUnitsListDo classListUnitsListDo = classDo.getSearchResults().get(i);
 			String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			int pageIntVal = 0;
-			if(pageNumVal != null)
-			{
+			if(pageNumVal != null){
 				pageIntVal = Integer.parseInt(pageNumVal);
-				if(pageIntVal!=0)
-				{
-				pageIntVal = pageIntVal-1;
+				if(pageIntVal!=0){
+					pageIntVal = pageIntVal-1;
 				}
 			}
 			int sequenceNum = unitAssignmentWidgetContainer.getWidgetCount();
-			System.out.println("seq:"+sequenceNum);
 			sequenceNum = (pageIntVal * 5)+sequenceNum;
 			sequenceNum = sequenceNum + 1;
-			System.out.println("sequenceNum::"+sequenceNum);
 			unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo);
 //			unitsAssignmentWidgetView.setClassDo(classDo);
 			if (classListUnitsListDo.getResource().getItemCount() != null) {

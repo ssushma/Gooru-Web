@@ -3,82 +3,13 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="searchRatingAndReview.css"/>
 	
-	<g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.reviewVisualizations}" ui:field="reviewVisualizations">
-                        <g:HTMLPanel styleName="{style.distribution} {style.barGraph}" ui:field="reviewBarGraph">
-                            <g:Label styleName="{style.userNameLbl}" ui:field="reviewDistributionLbl"></g:Label>
-                            <g:HTMLPanel ui:field="panelReviewLabels" styleName="{style.panelRatingLabels}">
-                               <g:HTMLPanel styleName="{style.iconOuter}">
-								<g:Button  ui:field="needHelpButton" styleName="{style.needHelpEmoticStyle}"></g:Button>
-								</g:HTMLPanel>
-                                <br/>
-                              	 <g:HTMLPanel styleName="{style.iconOuter}">
-								<g:Button ui:field="doNotUnderstandEmoticButton" styleName="{style.doNotUnderstandEmoticStyle}"></g:Button>
-								</g:HTMLPanel>
-                                <br/>
-                                <g:HTMLPanel styleName="{style.iconOuter}">
-								<g:Button  ui:field="mehEmoticButton" styleName="{style.mehEmoticStyle}"></g:Button>
-								</g:HTMLPanel>
-                                <br/>
-                               <g:HTMLPanel styleName="{style.iconOuter}">
-								<g:Button ui:field="understandEmoticButton" styleName="{style.understandEmoticStyle}"></g:Button>
-								</g:HTMLPanel>
-                                <br/>
-                               <g:HTMLPanel styleName="{style.iconOuter}">
-								<g:Button ui:field="canExplainEmoticButton" styleName="{style.canExplainEmoticStyle}"></g:Button>
-								</g:HTMLPanel>
-                                <br/>
-                             </g:HTMLPanel>
-                             <g:HTMLPanel ui:field="panelReviewValues" styleName="{style.panelReviewValues}">
-                                	<g:HTMLPanel styleName="{style.barReview}" ui:field="reviewFive"></g:HTMLPanel> 
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.barReview}" ui:field="reviewFour"></g:HTMLPanel> 
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.barReview}" ui:field="reviewThree"></g:HTMLPanel> 
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.barReview}" ui:field="reviewTwo"></g:HTMLPanel>
-                                	<br />
-                                	<g:HTMLPanel styleName="{style.barReview}" ui:field="reviewOne"></g:HTMLPanel> 
-                                	<br />
-                             </g:HTMLPanel>
-                        </g:HTMLPanel>
-                        <g:Label styleName="{style.userNameLbl}" ui:field="avgReactionLbl"></g:Label>
-                         <g:FlowPanel ui:field="reviewWidgetPanel"></g:FlowPanel>
-                </g:HTMLPanel>
-
-	 			<g:HTMLPanel styleName="{style.ratingVisualizations}" ui:field="ratingVisualizations">
-                        <g:HTMLPanel styleName="{style.distribution} {style.barGraph}" ui:field="ratingBarGraph">
-                            <g:Label styleName="{style.userNameLbl}" ui:field="ratingDistributionLbl"></g:Label>
-                            <g:HTMLPanel ui:field="panelRatingLabels" styleName="{style.panelRatingLabels}">
-                                <g:Label styleName="{style.label}" ui:field="excellentLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="veryGoodLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="goodLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="fairLbl"></g:Label>
-                                <br/>
-                                <g:Label styleName="{style.label}" ui:field="poorLbl"></g:Label>
-                                <br/>
-                             </g:HTMLPanel>
-                             <g:HTMLPanel ui:field="panelRatingValues" styleName="{style.panelRatingValues}">
-                                	<g:HTMLPanel styleName="{style.bar}" ui:field="dataFive"></g:HTMLPanel> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> <g:Label ui:field="verygoodScore" styleName="{style.count}"></g:Label>
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> <g:Label ui:field="goodScore" styleName="{style.count}"></g:Label>
-                                	<br/>
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> <g:Label ui:field="fairScore" styleName="{style.count}"></g:Label>
-                                	<br />
-                                	<g:HTMLPanel styleName="{style.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
-                                	<br />
-                             </g:HTMLPanel>
-                        </g:HTMLPanel>
-                        <g:Label styleName="{style.userNameLbl}" ui:field="avgLbl"></g:Label>
-                         <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
-                  </g:HTMLPanel>
-                    
-                    
-                    </g:HTMLPanel>
+	<g:HTMLPanel styleName="{style.QuestionsContainer}">
+		  <g:HTMLPanel styleName="{style.analyticsContainerInner}">
+		  		<g:HTMLPanel ui:field="totalReviewsContainer"></g:HTMLPanel>
+		  		<g:HTMLPanel ui:field="averageReactionsContainer"></g:HTMLPanel>
+		  		<g:HTMLPanel ui:field="averageRatingsContainer"></g:HTMLPanel>
+				    <div class="{style.clearfix}"></div>
+		  </g:HTMLPanel>
+	</g:HTMLPanel>
 
 </ui:UiBinder> 

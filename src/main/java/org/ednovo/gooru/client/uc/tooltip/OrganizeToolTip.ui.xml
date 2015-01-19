@@ -5,6 +5,7 @@
 	<g:HTMLPanel styleName="{toolTip.tooltipContainer}" ui:field="panelCode">
 		<g:HTMLPanel styleName="{toolTip.myCollectoinTooltipContent}" ui:field="tooltipPanel">
 			<g:Label styleName="{toolTip.collectionToolTipLabel}" ui:field="lblCreateCollection" />
+			<g:Anchor styleName="{toolTip.collectionToolTipLabel}" ui:field="anchCreateAsseement" />
 			<g:Label styleName="{toolTip.folderToolTipLabel} {toolTip.folderIcon} {toolTip.textPadding}" ui:field="lblCreateFolder" />
 			<g:Label styleName="{toolTip.mycollectionsToolTipLabel} {toolTip.mycollectionsToolTipLabel}" ui:field="lblEditMyCollections" />
 		</g:HTMLPanel>

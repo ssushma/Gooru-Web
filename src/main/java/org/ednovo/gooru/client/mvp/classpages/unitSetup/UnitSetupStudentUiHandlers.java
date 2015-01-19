@@ -31,4 +31,6 @@ public interface UnitSetupStudentUiHandlers extends BaseUiHandlers{
 	void getPathwayCompleteDetails(int limit, int offSet);
 
 	void getAnalyticData(String gooruUId, String pathwayId);
+	
+	public void triggerUnitDataLogStartStopEvent(String unitId);
 }

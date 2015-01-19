@@ -49,7 +49,6 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -429,11 +428,11 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						Refersh_emailId=user.getExternalId();
-						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+					if (user.getUser().getEmailId() != null) {
+						Refersh_emailId=user.getUser().getEmailId();
+						boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 						if(isValidEmail){
-							getView().getLbEmail().setText(user.getExternalId());
+							getView().getLbEmail().setText(user.getUser().getEmailId());
 							//StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
 							
 							
@@ -445,7 +444,7 @@ public class UserSettingsPresenter
 						if(user.getUser().getAccountTypeId() != 2){
 							if(user.getUser().getEmailId()!=null){
 								Refersh_emailId=user.getUser().getEmailId();
-								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+								boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 								if(isValidEmail){
 									//StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
 									
@@ -533,31 +532,41 @@ public class UserSettingsPresenter
 					
 				}
 				updateRefershToken();
-				
+				getView().displayAdminPortal();
 				/**
 				 * This RPC is to get the User profile Details(grade value)
 				 */
-				AppClientFactory.getInjector().getUserService().getUserProfileV2Details(gooruUid,"1",new SimpleAsyncCallback<ProfileDo>() {
+				AppClientFactory
+						.getInjector()
+						.getUserService()
+						.getUserProfileV2Details(gooruUid,
+								USER_META_ACTIVE_FLAG,
+								new SimpleAsyncCallback<ProfileDo>() {
 
-					@Override
-					public void onSuccess(ProfileDo profileObj) {
-						getView().setProfileData(profileObj);
-						//getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
-						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
-					}
+									@Override
+									public void onSuccess(ProfileDo profileObj) {
+										getView().setProfileData(profileObj);
+										//getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+										AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+									}
 
-				});
+								});
 				/**
 				 * This RPC is to get the Courses
 				 */
-				AppClientFactory.getInjector().getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
-					@Override
-					public void onSuccess(List<LibraryCodeDo> result) {
-						getView().setCourseList(result);
-					}
-				});
+				AppClientFactory
+						.getInjector()
+						.getTaxonomyService()
+						.getCourse(
+								new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+									@Override
+									public void onSuccess(
+											List<LibraryCodeDo> result) {
+										getView().setCourseList(result);
+									}
+								});
 
-
+			
 			}
 		});
 		
@@ -719,10 +728,10 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						getView().getLbEmail().setText(user.getExternalId());
+					if (user.getUser().getEmailId() != null) {
+						getView().getLbEmail().setText(user.getUser().getEmailId());
 						//StringUtil.consoleLog("setEmailId 3"+user.getExternalId());
-						Refersh_emailId = user.getExternalId();
+						Refersh_emailId = user.getUser().getEmailId();
 						
 						
 					} else {
@@ -1033,25 +1042,30 @@ public class UserSettingsPresenter
 
 	@Override
 	public void addCourse(Set<ProfileCodeDo> profileCodeDo) {
+		AppClientFactory
+				.getInjector()
+				.getProfilePageService()
+				.addCourseUserProfile(profileCodeDo, "settings",
+						new SimpleAsyncCallback<Void>() {
+							@Override
+							public void onSuccess(Void result) {
 
-		AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDo, "settings",new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				
-				getView().getUserProfileCourseGradeDetails();
-
-			}
-		});
+							}
+						});
 	}
 
 	@Override
 	public void deleteCourse(CodeDo codeDo) {
-		AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, "settings",new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				getView().onPostCourseDel();
-			}
-		});
+		AppClientFactory
+				.getInjector()
+				.getProfilePageService()
+				.deleteCourseUserProfile(codeDo, "settings",
+						new SimpleAsyncCallback<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+
+							}
+						});
 	}
 
 	@Override
@@ -1246,18 +1260,6 @@ public class UserSettingsPresenter
 			}
 		});
 		
-	}
-
-	
-	@Override
-	public void deleteCorses(List<CodeDo> delcodeDoList) {
-		AppClientFactory.getInjector().getProfilePageService().deleteUserCourses(delcodeDoList, new SimpleAsyncCallback<String>() {  
-
-			@Override
-			public void onSuccess(String result) {
-				getView().onPostCourseDel();
-			}
-		});
 	}
 	
 }

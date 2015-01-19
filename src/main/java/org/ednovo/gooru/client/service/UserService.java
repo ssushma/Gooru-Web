@@ -32,10 +32,12 @@ import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
@@ -235,5 +237,29 @@ public interface UserService extends BaseService {
 	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
 	
 	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
+	
+	/**
+	 * This method is used to get the count of flagged,views,shared and add to collection count in the profile analytics.
+	 * @param fieldVal
+	 * @param StartDate
+	 * @param endDate
+	 * @param operator
+	 * @return
+	 */
+	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator);
+
+    UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
+
+    UserDashBoardCommonInfoDO getFiveStarRatedResources();
+    
+    UserDashBoardCommonInfoDO getFiveStarReviewdResources();
+
+    /**
+     * This method is used to get the review and comments count in the profile analytics.
+     * @return
+     */
+    ProfileRatingsReactionsDO getProfileAnalyticsRatings();
+    
+    UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval);
 
 }

@@ -9,6 +9,7 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	static final CollectionSummaryIndividualCBundle INSTANCE = GWT.create(CollectionSummaryIndividualCBundle.class);
 	public interface CollectionSummaryIndividualCss extends CssResource{
 		    String alignCenterAndBackground();
+		    String alignLeftAndBackground();
 		    String setMarginAuto();
 	        String reaction_explain1();
 	        String reaction_understand1();
@@ -42,6 +43,7 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        String setGlassStyleName();
 	        String setEmailGlassStyleName();
 	        String setEmailPopupCenter();
+	        /*String alignLeft();*/
 	        
 	}
 	@NotStrict

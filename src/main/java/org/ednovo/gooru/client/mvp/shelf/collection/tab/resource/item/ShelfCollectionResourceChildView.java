@@ -32,13 +32,13 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
-import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
@@ -86,6 +86,7 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -128,13 +129,13 @@ public class ShelfCollectionResourceChildView extends
 	VerticalPanel actionVerPanel;
 */
 	@UiField
-	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn,resourceMoveUpBtn,resourceMoveDownBtn;
+	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn/*,resourceMoveUpBtn,resourceMoveDownBtn (hotfix changes)*/;
 
 	@UiField
 	FlowPanel editFloPanel, editFieldsFloPanel,actionVerPanel,actionVerPanelForUpdateTime;
 
 	@UiField
-	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber,reorderTxtBox;
+	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber/*,reorderTxtBox (hotfix changes)*/;
 
 	@UiField
 	TextArea narrationTxtArea;
@@ -153,7 +154,8 @@ public class ShelfCollectionResourceChildView extends
 
 	@UiField Image imgNotFriendly;
 	
-	@UiField HTMLPanel reorderContainer;
+	/* hotfix changes
+	 * @UiField HTMLPanel reorderContainer;*/
 	
 	ToolTip toolTip = null;
 	
@@ -181,8 +183,6 @@ public class ShelfCollectionResourceChildView extends
 	private boolean isReorderContainerVisible=false;
 	
 	private GlobalToolTip globalToolTip;
-	
-	
 	
 	
 	
@@ -263,6 +263,8 @@ public class ShelfCollectionResourceChildView extends
 	private static final String OOPS = i18n.GL0061();
 
 	private static final String EDIT_CONFIRM =i18n.GL0975();
+	
+	private  String collectionType=null;
 
 	private String selectedCollectionId;
 	private boolean youtube;
@@ -349,8 +351,9 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	public ShelfCollectionResourceChildView(
 			IsCollectionResourceTabView collectionResourceTabView,
-			CollectionItemDo collectionItem) {
+			CollectionItemDo collectionItem,String collectionType) {
 		this.collectionResourceTabView = collectionResourceTabView;
+		this.collectionType=collectionType;
 		res = CollectionEditResourceCBundle.INSTANCE;
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
@@ -434,13 +437,15 @@ public class ShelfCollectionResourceChildView extends
 		cancelpdfBtn.setText(i18n.GL0142());
 		cancelpdfBtn.getElement().setAttribute("alt", i18n.GL0142());
 		cancelpdfBtn.getElement().setAttribute("title", i18n.GL0142());
-		resourceFlowPanel.getElement().setId("fpnlResourceFlowPanel");
+		resourceFlowPanel.getElement().setId("collectionItem-"+collectionItem.getResource().getGooruOid());
 		narrationConatainer.getElement().setId("fpnlNarrationConatainer");
-		
-		reorderContainer.getElement().setId("reorderContainer");
+		/**
+		 * Hotfix changes.
+		 */
+		/*reorderContainer.getElement().setId("reorderContainer");
 		resourceMoveUpBtn.getElement().setId("resourceMoveUpBtn");
 		resourceMoveDownBtn.getElement().setId("resourceMoveDownBtn");
-		reorderTxtBox.getElement().setId("reorderTxtBox");
+		reorderTxtBox.getElement().setId("reorderTxtBox");*/
 		setData(collectionItem);
 		
 		onResourceNarrationOut();
@@ -461,7 +466,10 @@ public class ShelfCollectionResourceChildView extends
 //		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		ResourceEditButtonContainer.setVisible(false);
 		EditBtn.setVisible(false);
-		reorderContainer.setVisible(false);
+		/**
+		 * hotfixchanges
+		 */
+//		reorderContainer.setVisible(false);
 		editPdfFlowPanel.getElement().setId("fpnlEditPdfFlowPanel");
 		editPdfFlowPanel.setVisible(false);
 		actionVerPanelForUpdatePDF.getElement().setId("fpnlActionVerPanelForUpdatePDF");
@@ -594,7 +602,7 @@ public class ShelfCollectionResourceChildView extends
                     .addStyleName("titleAlertMessageActive");
 					updateNarrationBtn.setEnabled(false);
 	                updateNarrationBtn.getElement().addClassName("disabled");
-					event.preventDefault();
+					//event.preventDefault();
 				}
 				else
 				{ 
@@ -621,7 +629,7 @@ public class ShelfCollectionResourceChildView extends
 					updateNarrationBtn.setEnabled(false);
 	                updateNarrationBtn.getElement().addClassName("disabled");
 					if(event.getNativeEvent().getCtrlKey() && event.getNativeEvent().getKeyCode()==86){
-						event.getNativeEvent().preventDefault();
+						//event.getNativeEvent().preventDefault();
 						((RichTextArea)event.getSource()).setFocus(false);
 						narrationAlertMessageLbl.setVisible(true);
 						return;
@@ -743,10 +751,12 @@ public class ShelfCollectionResourceChildView extends
 		}
     }
 	/*private class showNarationPencil implements MouseOverHandler {
+
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			onResourceNarrationHover();
 		}
+
 	}*/
 
 	private class narationValidation implements KeyUpHandler {
@@ -778,10 +788,12 @@ public class ShelfCollectionResourceChildView extends
 	}
 
 	/*private class hideNarationPencil implements MouseOutHandler {
+
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			onResourceNarrationOut();
 		}
+
 	}*/
 
 	/**
@@ -793,12 +805,24 @@ public class ShelfCollectionResourceChildView extends
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			if ((actionVerPanel.isVisible()==false) && (actionVerPanelForUpdateTime.isVisible()==false) && (actionVerPanelForUpdatePDF.isVisible()==false)) {
-				EditBtn.setVisible(true);
-				if(isReorderContainerVisible){
+				if(collectionType!=null && !collectionType.equals(ShelfPresenter.ASSESSMENT)){
+					EditBtn.setVisible(true);
+				}else{
+					EditBtn.setVisible(false);
+				}
+				
+				/**
+				 * Hot fix changes
+				 */
+				/*if(isReorderContainerVisible){
 					reorderContainer.setVisible(true);
 				}else{
 					reorderContainer.setVisible(false);
-				}
+				}*/
+				
+				/**
+				 * Following code is not changed for hot fix
+				 */
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				//actionVerPanel.setVisible(true);
 				// onResourceNarrationHover();
@@ -817,7 +841,7 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOut(MouseOutEvent event) {
 			//if (updateResourceBtn.getText().equalsIgnoreCase("Edit Narration")) {
 				EditBtn.setVisible(false);
-				reorderContainer.setVisible(false);
+				/*s*/
 				ResourceEditButtonContainer.setVisible(false);
 //				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 				//actionVerPanel.setVisible(false);
@@ -895,7 +919,7 @@ public class ShelfCollectionResourceChildView extends
 				
 //				resourceImageUc.renderSearch(collectionItem.getResource().getCategory(), tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),PLAYER_NAME,resourceTitle, youtube,"");
 				String resourceFormat = collectionItem.getResource().getResourceFormat() !=null ? collectionItem.getResource().getResourceFormat().getDisplayName() : "text";
-				resourceImageUc.renderSearch(resourceFormat, tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
+				resourceImageUc.renderSearch(resourceFormat, tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration(),collectionType,null);
 			}
 		} else {
 				try {
@@ -916,7 +940,7 @@ public class ShelfCollectionResourceChildView extends
 					.getUrl(), collectionItem.getCollectionItemId(),
 					PLAYER_NAME,resourceTitle, youtube,"");*/
 				String resourceFormat =  collectionItem.getResource().getResourceFormat() != null ? collectionItem.getResource().getResourceFormat().getDisplayName() : "text";
-				resourceImageUc.renderSearch(resourceFormat, collectionItem.getResource().getThumbnails().getUrl(), collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
+				resourceImageUc.renderSearch(resourceFormat, collectionItem.getResource().getThumbnails().getUrl(), collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration(),collectionType,null);
 		}
 
 		if (collectionItem.getNarration() != null && !collectionItem.getNarration().trim().isEmpty()){
@@ -1286,22 +1310,30 @@ public class ShelfCollectionResourceChildView extends
 		resourceAnchor.setStyleName("");
 		resourceAnchor.getElement().appendChild(resourceTitleLbl.getElement());
 		resourceTitleContainer.add(resourceAnchor);
-		resourceAnchor.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				AppClientFactory.getPlaceManager().setRefreshPlace(false);
-			}
-		});
+		if(collectionType!=null&&!collectionType.equals(ShelfPresenter.ASSESSMENT)){
+			resourceAnchor.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					AppClientFactory.getPlaceManager().setRefreshPlace(false);
+				}
+			});
+		}else{
+			resourceAnchor.setTarget("_blank");
+		}
 	}
 	
 	public String getResourceLink(){
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
-			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
-			return resourceLink;
+		if(collectionType!=null&&!collectionType.equals(ShelfPresenter.ASSESSMENT)){
+			if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+				String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
+				return resourceLink;
+			}else{
+				String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
+				return resourceLink;
+			}
 		}else{
-			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
-			return resourceLink;
+			return AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.PLAY_ASSIGNMENT+collectionId;
 		}
 	}
 
@@ -1314,7 +1346,7 @@ public class ShelfCollectionResourceChildView extends
 	public void onEditClick(ClickEvent clickEvent) {
 		MixpanelUtil.Organize_Click_Edit_Narration();
 		EditBtn.setVisible(false);
-		reorderContainer.setVisible(false);
+		/*reorderContainer.setVisible(false);*/
 		ResourceEditButtonContainer.setVisible(false);
 		/*ResourceEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);*/
@@ -1384,7 +1416,7 @@ public class ShelfCollectionResourceChildView extends
 		/*ResourceEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);*/
 		EditBtn.setVisible(false);
-		reorderContainer.setVisible(false);
+		/*reorderContainer.setVisible(false);*/
 		fromLblDisplayText.setVisible(false);
 		videoDisplay.setVisible(false);
 		narrationConatainer.setVisible(false);
@@ -1448,7 +1480,7 @@ public class ShelfCollectionResourceChildView extends
 		ResourceEditButtonContainer.setVisible(false);
 //		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
-		reorderContainer.setVisible(false);
+		/*reorderContainer.setVisible(false);*/
 		if (isEdited) {
 				if (previousCollectionResourceChildView != null	&& previousCollectionResourceChildView.isAttached()) {
 				if (!isConfirmationPopup) {
@@ -1517,7 +1549,7 @@ public class ShelfCollectionResourceChildView extends
 		ResourceEditButtonContainer.setVisible(false);
 //		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
-		reorderContainer.setVisible(false);
+		/*reorderContainer.setVisible(false);*/
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
 
@@ -1692,7 +1724,6 @@ public class ShelfCollectionResourceChildView extends
 			String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 			lblCharLimit.setText(value);
 			lblCharLimit.setVisible(true);
-			
 			resourceNarrationHtml.getElement().setAttribute("alt", ADD_NARRATION_FOR_YOUR_VIEWERS);
 			resourceNarrationHtml.getElement().setAttribute("title", ADD_NARRATION_FOR_YOUR_VIEWERS);
 			setEditMode(true);
@@ -1789,7 +1820,7 @@ public class ShelfCollectionResourceChildView extends
 			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			MixpanelUtil.Organize_Click_Edit_Start_Time();
 			EditBtn.setVisible(false);
-			reorderContainer.setVisible(false);
+			/*reorderContainer.setVisible(false);*/
 			actionVerPanelForUpdateTime.setVisible(true);
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
@@ -1838,27 +1869,30 @@ public class ShelfCollectionResourceChildView extends
 	 *            reorder the collection item
 	 * @param arrow 
 	 */
-	public void reorderCollectionItem(ShelfCollectionResourceChildView shelfCollectionResourceChildView, Integer newSequence, String arrow) { 
+	public void reorderCollectionItem(/*ShelfCollectionResourceChildView shelfCollectionResourceChildView,*/ Integer newSequence/*, String arrow*/) { 
 		collectionItemDo.setItemSequence(newSequence);
 		/**
-		 * Not using following method, as drag and dropped removed.
+		 * enabled again by removing move option
 		 */
-		/*getPresenter().reorderCollectionItem(collectionItemDo);
+		EditBtn.setVisible(false);
+		getPresenter().reorderCollectionItem(collectionItemDo);
 		new Timer() {
+
 			@Override
 			public void run() {
 				//remove in 5.9 sprint
 				//setEditMode(false);
 			}
-		}.schedule(2000);*/
+		}.schedule(2000);
 		
 		
 		/**
 		 * Added new method in order to implement reordering of resources.
+		 * (Commented the following method to enable DnD)
 		 * 
 		 */
 		
-		getPresenter().reorderMyCollectionItem(collectionItemDo,shelfCollectionResourceChildView,arrow,newSequence);
+//		getPresenter().reorderMyCollectionItem(collectionItemDo,shelfCollectionResourceChildView,arrow,newSequence);
 		
 		
 	}
@@ -1905,7 +1939,7 @@ public class ShelfCollectionResourceChildView extends
 	}
 
 	/**
-	 * Following method is deprecated, as drag and drop is removed for resource reorder at My Collections.
+	 * Following method again enabled, as drag and drop is not removed for resource reorder at My Collections.
 	 */
 	@Override
 	public void onPostReorder(CollectionItemDo collectionItemDo) {
@@ -2305,30 +2339,30 @@ public class ShelfCollectionResourceChildView extends
 	 * Sets the re-order Up button visibility
 	 * @param isvisible {@link Boolean}
 	 */
-	public void upButtonIsVisible(boolean isvisible) {
+	/*public void upButtonIsVisible(boolean isvisible) {
 		
 		if(isvisible){
 			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		}else{
 			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
-	}
+	}*/
 
 
 	/**
 	 * Sets the re-order Down button visibility
 	 * @param isvisible {@link Boolean}
 	 */
-	public void downButtonIsVisible(boolean isvisible) {
+	/*public void downButtonIsVisible(boolean isvisible) {
 		if(isvisible){
 			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		}else{
 			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
-	}
+	}*/
 	
 	
-	public void showReorderValidationToolTip(String validationMsg){
+	/*public void showReorderValidationToolTip(String validationMsg){
 		toolTipPopupPanel.clear();
 		globalToolTip = new GlobalToolTip(validationMsg);
 		globalToolTip.confirmationPanel.getElement().getStyle().setWidth(155, Unit.PX);
@@ -2338,11 +2372,11 @@ public class ShelfCollectionResourceChildView extends
 		toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
 		toolTipPopupPanel.show();
 		new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
-	}
+	}*/
 	
 	
 	public void reorderCollectionResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView, int itemToBeMovedPosSeqNumb, String arrow) { 
-		reorderCollectionItem(shelfCollectionResourceChildView,itemToBeMovedPosSeqNumb,arrow);
+//		reorderCollectionItem(shelfCollectionResourceChildView,itemToBeMovedPosSeqNumb,arrow);
 	}
 	
 	@Override
@@ -2350,63 +2384,66 @@ public class ShelfCollectionResourceChildView extends
 		collectionItemDo.setCollection(this.collectionItemDo.getCollection());
 		this.collectionItemDo.setItemSequence(collectionItemDo.getItemSequence());
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItemDo, RefreshType.UPDATE));
-		AppClientFactory.fireEvent(new ReorderCollectionResourcesEvent(shelfCollectionResourceChildView,arrow,newSequence));
+		
+		/*AppClientFactory.fireEvent(new ReorderCollectionResourcesEvent(shelfCollectionResourceChildView,arrow,newSequence));*/
 	}
+
 	
-	
+/*	
+	Commented the following to enable DnD again, for hot fix
 	
 	public void setReorderContainerVisibility(boolean isEnable) { 
 		isReorderContainerVisible = isEnable;
 	}
 	
 	
-	/**
+	*//**
 	 * @return the reorderTxtBox
-	 */
+	 *//*
 	public TextBox getReorderTxtBox() {
 		return reorderTxtBox;
 	}
-	/**
+	*//**
 	 * @param reorderTxtBox the reorderTxtBox to set
-	 */
+	 *//*
 	public void setReorderTxtBox(TextBox reorderTxtBox) {
 		this.reorderTxtBox = reorderTxtBox;
 	}
-	/**
+	*//**
 	 * @return the resourceMoveUpBtn
-	 */
+	 *//*
 	public Button getResourceMoveUpBtn() {
 		return resourceMoveUpBtn;
 	}
-	/**
+	*//**
 	 * @param resourceMoveUpBtn the resourceMoveUpBtn to set
-	 */
+	 *//*
 	public void setResourceMoveUpBtn(Button resourceMoveUpBtn) {
 		this.resourceMoveUpBtn = resourceMoveUpBtn;
 	}
-	/**
+	*//**
 	 * @return the resourceMoveDownBtn
-	 */
+	 *//*
 	public Button getResourceMoveDownBtn() {
 		return resourceMoveDownBtn;
 	}
-	/**
+	*//**
 	 * @param resourceMoveDownBtn the resourceMoveDownBtn to set
-	 */
+	 *//*
 	public void setResourceMoveDownBtn(Button resourceMoveDownBtn) {
 		this.resourceMoveDownBtn = resourceMoveDownBtn;
 	}
-	/**
+	*//**
 	 * @return the reorderContainer
-	 */
+	 *//*
 	public HTMLPanel getReorderContainer() {
 		return reorderContainer;
 	}
-	/**
+	*//**
 	 * @param reorderContainer the reorderContainer to set
-	 */
+	 *//*
 	public void setReorderContainer(HTMLPanel reorderContainer) {
 		this.reorderContainer = reorderContainer;
 	}
-	
+*/	
 }

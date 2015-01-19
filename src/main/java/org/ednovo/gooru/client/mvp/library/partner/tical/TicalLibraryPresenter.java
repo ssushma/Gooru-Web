@@ -83,7 +83,6 @@ public class TicalLibraryPresenter extends BasePlacePresenter<IsTicalLibraryView
 			partnerLibraryPresenter.setPartnerWidget();
 			
 		}
-		
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 		    //To show SignUp (Registration popup)
 		    if (AppClientFactory.isAnonymous()){

@@ -54,7 +54,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	
 	DistrictMenuNav districtMenuNav = null;
 	ProfileLibraryDo ProfileLibraryDoObj;
-	boolean scrollFlag=false;
+	public static boolean scrollFlag=false;
 	
 	private static final String FEATURED_COURSE="featured-course",COURSE_PAGE = "course-page", COURSE_ID = "courseId", FEATURED_LABEL = "featured", 
 			CALLBACK = "callback", ACTIVE_STYLE = "active",LIBRARY_PAGE = "page";
@@ -333,7 +333,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.VALVERDE)) {
 			setLandingBannerMetaData("landingValverdeBanner", "250px", i18n.GL2075() + " " + i18n.GL0587(), districtStyleUc.valverdePartnerLogo(), true);
 		}else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LUSD)) {
-			setLandingBannerMetaData("landingLusdBanner", "250px", i18n.GL2180(), districtStyleUc.lusdPartnerLogo(), true);
+			setLandingBannerMetaData("landingLusdBanner", "250px", i18n.GL2180_1(), districtStyleUc.lusdPartnerLogo(), true);
 		} else {
 			partnerLogo.setVisible(false);
 		}
@@ -413,6 +413,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					
 					try {
 						int count = 0;
+						count = collectionCount;
 						totalCollectionCount= profileLibraryListDo.getCount();
 						collectionCount= collectionCount+profileLibraryListDo.getSearchResult().size();
 						if(totalCollectionCount>collectionCount){

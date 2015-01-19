@@ -114,6 +114,16 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 		searchDo.setSearchResults(new ArrayList<T>());
 		try {
 			if (jsonRep != null) {
+				if(!jsonRep.getJsonObject().isNull("spellCheckQueryString"))
+				{
+				searchDo.setSpellCheckQueryString(jsonRep.getJsonObject().getString("spellCheckQueryString"));
+				searchDo.setUserQueryString(jsonRep.getJsonObject().getString("userQueryString"));
+				}
+				else
+				{
+				searchDo.setSpellCheckQueryString(null);
+				searchDo.setUserQueryString(null);
+				}
 				searchDo.setSearchHits(stringtoInteger(jsonRep.getJsonObject(), SEARCH_HITS, 0));
 				JSONArray searchResultJsonArray = jsonRep.getJsonObject().getJSONArray(SEARCH_RESULTS);
 				List<T> collectionSearchResults = searchDo.getSearchResults();

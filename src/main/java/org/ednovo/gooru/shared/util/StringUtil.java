@@ -243,7 +243,7 @@ public class StringUtil {
 				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
 				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) 
 				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) || userName.equalsIgnoreCase(PlaceTokens.LPS) 
-				|| userName.equalsIgnoreCase(PlaceTokens.CORE_LIBRARY) || userName.equalsIgnoreCase(PlaceTokens.ESYP) || userName.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC) || userName.equalsIgnoreCase(PlaceTokens.TICAL)) {
+				|| userName.equalsIgnoreCase(PlaceTokens.CORE_LIBRARY) || userName.equalsIgnoreCase(PlaceTokens.ESYP) || userName.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC) || userName.equalsIgnoreCase(PlaceTokens.ASPIRE_EPACS) || userName.equalsIgnoreCase(PlaceTokens.TICAL)) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -408,9 +408,10 @@ public class StringUtil {
 	 */
 	public static void setAttributes(Element object, String idValue, String altValue, String titleValue){
 		object.setAttribute("id",idValue);
-		if (altValue !=null)
+
+		if (altValue !=null )
 			object.setAttribute("alt",altValue);
-		if (titleValue !=null)
+		if (titleValue !=null )
 			object.setAttribute("title",titleValue);
 	}
 	

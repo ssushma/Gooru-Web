@@ -54,6 +54,7 @@
 .unitMenu li {
 	z-index: 97;
 	position: relative;
+	list-style: none !important;
 }
 
 .unitMenu li a {
@@ -1243,4 +1244,8 @@
 	border: 2px solid #fff;
 	background: #b9bbca url(../images/liners.png) -38px -22px no-repeat
 		!important;
+}
+.editButn  {
+	min-width: 112px;
+	margin-bottom: 5px;
 }

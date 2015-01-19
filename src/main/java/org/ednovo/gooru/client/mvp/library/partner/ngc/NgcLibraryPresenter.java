@@ -101,7 +101,6 @@ public class NgcLibraryPresenter extends BasePlacePresenter<IsNgcLibraryView, Ng
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
 		}
-		
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 		    //To show SignUp (Registration popup)
 		    if (AppClientFactory.isAnonymous()){

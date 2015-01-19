@@ -277,7 +277,7 @@ public enum UrlToken {
 	/*UPDATE_RESOURCE_INFO(
 			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}&mediaFileName={5}"),*/
 	UPDATE_RESOURCE_INFO(
-			"/v2/resource/{0}?sessionToken={1}"),
+			"/v2/collection/resource/{0}?sessionToken={1}"),
 			
 	UPDATE_RESOURCE_INFO_NO_MEDIA(
 			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}"),
@@ -364,7 +364,7 @@ public enum UrlToken {
 
 	V2_JOIN_CLASS("/v2/class/{0}/member/join?sessionToken={1}"),
 	
-	V2_UPDATE_USER_RESOURCE("/v2/resource/{0}?sessionToken={1}"),
+	V2_UPDATE_USER_RESOURCE("/v2/collection/resource/{0}?sessionToken={1}"),
 	
 	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?sessionToken={0}"),
 	
@@ -660,13 +660,21 @@ public enum UrlToken {
 
 	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
 	
-	GET_COLLECTION_SUMMARY("/insights-api/v1/classpage/{0}?sessionToken={1}&data={2}"),
+	GET_COLLECTION_SUMMARY("/insights/api/v1/classpage/{0}.json?sessionToken={1}&data={2}"),
 
 	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?sessionToken={0}&resetToken={1}"),
 
 	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
 
-	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}");
+	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}"),
+
+
+	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?sessionToken={0}&data={1}"),
+
+	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
+	
+	V2_DOWNLOADFILE("/v2/media/download?sessionToken={0}&url={1}&filename={2}");
+
 
 	private String url;
 

@@ -114,14 +114,14 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 		assignmentCollectiontitle.setText(title);
 	
 		studyButtonText.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
+				triggerPathwayViewEvent();
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("id", collectionId);
 				parms.put("cid", collectionItemId);
 				parms.put("page", "study");
-				
+				parms.put("eventid", AppClientFactory.getPlaceManager().getPathwayEventId());
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
 			}
 		});
@@ -149,5 +149,8 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 		DateTimeFormat fmt = DateTimeFormat.getFormat ("MM/dd/yyyy");
 		String date=fmt.format(currentDate);
 		return date;
+	}
+	public void triggerPathwayViewEvent(){
+		
 	}
 }

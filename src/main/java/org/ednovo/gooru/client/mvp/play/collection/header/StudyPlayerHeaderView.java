@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.collection.header;
 
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -115,7 +116,7 @@ public class StudyPlayerHeaderView extends Composite{
 		return authorContainer;
 	}
 	
-	public void displayAuthorName(){
+	public void displayAuthorName(String collectionType){
 		if(AppClientFactory.isAnonymous()){
 			authorContainer.removeStyleName(headerStyle.loggedIn());
 			authorContainer.addStyleName(headerStyle.loggedOut());
@@ -123,7 +124,7 @@ public class StudyPlayerHeaderView extends Composite{
 		}else{
 			authorContainer.removeStyleName(headerStyle.loggedOut());
 			authorContainer.addStyleName(headerStyle.loggedIn());
-			setLoggedInWishingText();
+			setLoggedInWishingText(collectionType);
 			loginMessageText.setText(StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
 			loginMessageText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
 			loginMessageText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
@@ -140,16 +141,22 @@ public class StudyPlayerHeaderView extends Composite{
 		wishingText.getElement().setAttribute("alt","");
 		wishingText.getElement().setAttribute("title","");
 	}
-	public void setLoggedInWishingText(){
+	public void setLoggedInWishingText(String collectionType){
 		wishLabel.setText(i18n.GL1529());
 		wishLabel.getElement().setAttribute("alt",i18n.GL1529());
 		wishLabel.getElement().setAttribute("title",i18n.GL1529());
 		loginUserName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
-		wishingText.setText(i18n.GL1530());
-		wishingText.getElement().setAttribute("alt",i18n.GL1530());
-		wishingText.getElement().setAttribute("title",i18n.GL1530());
+		if(collectionType!=null&&collectionType.equals(ShelfPresenter.ASSESSMENT)){
+			wishingText.setText(i18n.GL1530());
+			wishingText.getElement().setAttribute("alt",i18n.GL1530());
+			wishingText.getElement().setAttribute("title",i18n.GL1530());
+		}else{
+			wishingText.setText(i18n.GL3041());
+			wishingText.getElement().setAttribute("alt",i18n.GL3041());
+			wishingText.getElement().setAttribute("title",i18n.GL3041());
+		}
 	}
 	
 

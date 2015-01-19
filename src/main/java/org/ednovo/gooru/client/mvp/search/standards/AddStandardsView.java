@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.search.standards;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
@@ -46,8 +45,6 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -116,7 +113,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
 	
-	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip(i18n.GL3050(),i18n.GL0192());
 	private boolean isBrowseStandardsToolTip = false;
 	
 	@UiTemplate("AddStandardsView.ui.xml")

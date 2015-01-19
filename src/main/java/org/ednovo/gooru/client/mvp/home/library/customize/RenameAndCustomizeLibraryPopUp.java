@@ -6,7 +6,9 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle;
+import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
@@ -265,30 +267,32 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						if(value){
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
 						}else{	
-								String collectionTitle = copycollectionTextbox.getText();
-								if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
-								{
-								
-									hide();
+							String collectionTitle = copycollectionTextbox.getText();
+							if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
+							{
+
+								hide();
+								LibraryTopicListView.isCustomizePopup=false;
+								ProfileTopicListView.isCustomizePopup=false;
 								//	closePoup();
 								if(!isCustomizePopup){
 									isCustomizePopup=true;
-								Boolean loginFlag = false;
-								if (AppClientFactory.isAnonymous()){
-									loginFlag = true;
+									Boolean loginFlag = false;
+									if (AppClientFactory.isAnonymous()){
+										loginFlag = true;
+									}
+									else
+									{
+										loginFlag = false;
+									}
+									collectionDo.setTitle(collectionTitle);
+									AppClientFactory
+									.getInjector()
+									.getResourceService()
+									.copyCollection(collectionDo, "true", null,
+											getSaveCollectionAsyncCallback());
 								}
-								else
-								{
-									loginFlag = false;
-								}
-								collectionDo.setTitle(collectionTitle);
-								AppClientFactory
-								.getInjector()
-								.getResourceService()
-								.copyCollection(collectionDo, "true", null,
-										getSaveCollectionAsyncCallback());
-								}
-						
+
 							}
 							else
 							{

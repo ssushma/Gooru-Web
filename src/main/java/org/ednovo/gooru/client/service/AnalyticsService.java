@@ -52,8 +52,8 @@ public interface AnalyticsService extends BaseService {
 	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId);
 
 	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder);
-	
-	public String setHTMLtoPDF(String htmlString);
+
+	public String setHTMLtoPDF(String htmlString,String fileName,boolean isClickedOnEmail);
 	
 	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId);
 	

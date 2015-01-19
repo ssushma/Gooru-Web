@@ -12,6 +12,9 @@
 	text-align: center;
 	width: auto;
 }
+.alignLeft{
+	text-align: left;
+}
 .reaction_explain1 {
 	background: url(../images/analyticsReactions.png) no-repeat scroll 0px 0px transparent;
 	height: 35px;
@@ -123,7 +126,7 @@
 }
 .collectionBreakDown_infobox_print{
 	display: inline-block;
-	width: 264px;
+		width: 264px;
 	white-space: pre;
 }
 .collectionBreakDown_infobox_titles_print{
@@ -144,7 +147,7 @@
 	font-weight: bold;
 	line-height: 50px;
 	text-align: center;
-	width: 264px;
+		width: 264px;
 	border-bottom: 1px solid #ccc;
 	padding-left: 5px;
 }

@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**
  * @author Search Team
@@ -120,6 +121,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String shelfResourceSequencePanel();
 
 		String reorderLabelContainer();
+		
+		String reorderLabelContainerRFormat();
 
 		String newResourceLabel();
 
@@ -220,6 +223,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myFolderCollectionFormInputNoneborder();
 		String myFolderCollectionCategoryDiv();
 		String myFolderCollectionCategoryInputDiv();
+		String myFolderCollectionCategoryInputDivRFormat();
 		String myEducationPanelInputDiv();
 		String myEducationDropdown();
 		String myFolderCollectionCategoryDivText();
@@ -236,6 +240,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myFolderCollectionThumbOrtext();
 		String myFolderCollectionThumbUploadImagetext();
 		String myFolderCollectionRefreshMainContainer();
+		String myFolderCollectionRefreshMainContainerWeb();
 		String myFolderCollectionRefreshContainer();
 		String myFolderCollectionRefreshInnerContainer();
 		String myFolderCollectionRefreshIcon();
@@ -360,6 +365,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 	    String loadingImageMainDiv();
 	    
 		String loadingImageForResource();
+		
+		String loadingImageForResource1();
 
 		String copyPopupResourcesButtonContainerClick();
 
@@ -485,13 +492,31 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String OnButtonDeActive();
         String accessHazard();
         String charLimit();
-        String upDownBtn();
+        /**
+         * Following line is commented for hotfix
+         */
+        /*String upDownBtn();*/
         
         String coursePopupStyle();
-       
+        String generateImage();
+        String generateMessage();
+        String myFolderCollectionThumbOrtextWeb();
+        String generateImageContainer();
+        String  myFolderCollectionThumbRectWeb();
+        String eHeader();
+        String eInput();
+        String advncedOption();
+        String shelfGradeInfoBottomWeb();
+        String myFolderCollectionFolderVideoInnerdivRFormat();
+        String myFolderCollectionFolderVideoOuterContainerRFormat();
+        String myFolderCollectionFolderDropdownRFormat();
+        String setBorder();
+        
+        String urlTopPadding();
            
 	}
-
+	
+	@NotStrict
 	@Source("CollectionEditResource.css")
 	CollectionEditResourceCss css();
 

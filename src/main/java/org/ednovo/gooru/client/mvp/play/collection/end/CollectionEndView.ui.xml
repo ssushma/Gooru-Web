@@ -11,7 +11,7 @@
             <g:FlowPanel styleName="{playerStyle.leftPanel}">
 	            <g:FlowPanel styleName="{playerStyle.collections} {playerStyle.Playlast}">
 					<g:FlowPanel styleName="">
-						<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}"></g:Label>
+						<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
 					</g:FlowPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="bodyContent">
@@ -64,15 +64,15 @@
 			</g:FlowPanel>
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
            	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
-	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1"/>
-	             	<g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+           	    	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1"/>
+           	    	
+           	    	<g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
 						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
 					</g:HTMLPanel>
-					
 					<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
-	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}">Collection Summary</g:HTMLPanel>
-					             	 <!-- Collection Summary Top -->
-					     <g:HTMLPanel>
+	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}" ui:field="collectionSummaryText"></g:HTMLPanel>
+					      <!-- Collection Summary Top -->
+					     <g:HTMLPanel ui:field="collectionMetaDataPnl">
 						    <g:HTMLPanel styleName="{unitStyle.collectionSummaryDetailsWrapper}">
 							<g:HTMLPanel styleName="{unitStyle.left_container}">
 							<g:Image ui:field="collectionImage" styleName="{unitStyle.collection_teacher_img}"></g:Image>
@@ -82,7 +82,7 @@
 							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
-							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}">Collection Last Accessed</g:InlineLabel> 
+							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}" text="{i18n.GL2271}"></g:InlineLabel> 
 							<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
 							</g:HTMLPanel>
@@ -94,13 +94,13 @@
 						   <g:HTMLPanel styleName="{unitStyle.gooru_session_data_content}">
 					       		<g:HTMLPanel styleName="{unitStyle.left_session}">
 									<g:HTMLPanel styleName="{unitStyle.collection_last_accessed}">
-										<span class="collectionLastAccessed">Session Start Time : </span>
+										<g:InlineLabel  styleName="collectionLastAccessed" text="{i18n.GL2272}"></g:InlineLabel>
 										<g:InlineLabel ui:field="lastModifiedTime"></g:InlineLabel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
 					       		<g:HTMLPanel styleName="{unitStyle.right_session}">
 					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image> :</span></g:HTMLPanel>
 								<g:HTMLPanel styleName="{unitStyle.session_data}">
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>
@@ -114,15 +114,23 @@
 					 <g:VerticalPanel ui:field="pnlSummary" styleName="{unitStyle.pnlSummary}"/>
 					 </g:HTMLPanel>
 	             	</g:FlowPanel>
-					
 	                <g:FlowPanel styleName="{playerStyle.messageContainer}" ui:field="messageContainer">
 	                	<g:Label styleName="{playerStyle.messageTextHeader}" ui:field="insightsHeaderText"></g:Label>
 	                	<g:Label styleName="{playerStyle.messagecontentText}" ui:field="insightsContentText"></g:Label>
 	                </g:FlowPanel>
             		</g:FlowPanel>
             <g:Label styleName="{playerStyle.hrShadow}"></g:Label>
-				<g:HTMLPanel styleName="{playerStyle.commentsSection}">
+				<g:HTMLPanel styleName="{playerStyle.commentsSection}" ui:field="commentssection">
 					   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
+					    <g:HTMLPanel styleName="{playerStyle.onoffbtns}" ui:field="switchContainer">
+						<g:InlineLabel ui:field="requiredLabel" text="{i18n.GL3046}"></g:InlineLabel>
+						<label class="{playerStyle.switchContainer} switchGreen">
+						 	<g:SimpleCheckBox styleName="switchInput" ui:field="changeAssignmentStatusButton" checked="true"></g:SimpleCheckBox>
+							<g:InlineLabel styleName="switchLabel"></g:InlineLabel>
+							<g:InlineLabel styleName="switchHandle" ui:field="sequenceNumberLabel"></g:InlineLabel>
+						</label> 
+						<g:InlineLabel ui:field="optionalLabel" text="{i18n.GL3047}"></g:InlineLabel>
+					</g:HTMLPanel>
 					   <g:VerticalPanel ui:field="commentsContainer"/>
 					   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
 					   <g:Label ui:field="noCommentsLbl"/>

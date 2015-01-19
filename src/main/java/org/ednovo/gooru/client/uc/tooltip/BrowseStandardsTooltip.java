@@ -1,18 +1,13 @@
 package org.ednovo.gooru.client.uc.tooltip;
 
+
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.HasMouseOutHandlers;
-import com.google.gwt.event.dom.client.HasMouseOverHandlers;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
@@ -45,10 +40,16 @@ public class BrowseStandardsTooltip extends PopupPanel {
 	
     public BrowseStandardsTooltip(String description, String value){
     	setWidget(toolTipBrowseStandardsUiBinder.createAndBindUi(this));
-		desLbl.setText(description);
-		anchorLbl.setText(value);
-		anchorLbl.setHref("#settings");
-		anchorLbl.setVisible(true);
+
+		anchorLbl.setText(value.toLowerCase());
+		if(AppClientFactory.isAnonymous()){
+			desLbl.setText(i18n.GL1613());
+			anchorLbl.setVisible(false);
+		}else{
+			desLbl.setText(description);
+			anchorLbl.setHref("#settings");
+			anchorLbl.setVisible(true);
+		}
 		descPanel.add(desLbl);
 		descPanel.add(anchorLbl);
 		confirmationPanel.getElement().setId("epnlConfirmationPanel");

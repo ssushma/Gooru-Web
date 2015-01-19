@@ -184,6 +184,12 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
+	public TinyMCE getAnswerTextBox() {
+		return answerTextBox;
+	}
+	public void setAnswerTextBox(TinyMCE answerTextBox) {
+		this.answerTextBox = answerTextBox;
+	}
 	
 //	@UiHandler("answerTextBox")
 //	public void keyUponAnswerTextBox(KeyUpEvent event){

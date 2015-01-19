@@ -84,6 +84,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -153,6 +154,8 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String CALLBACK = "callback";
+	
+	public static final String ASSESSMENT = "quiz";
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SHELF)
@@ -386,6 +389,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		if (idParm == null){
 			int windowHeight=Window.getClientHeight();
+			
 			getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
 			getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
 			getView().getEditPanel().getElement().getStyle().setMarginTop(38, Unit.PX);
@@ -539,14 +543,16 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			addToSlot(TYPE_COLLECTION_INFO_TAB, collectionInfoTabPresenter);
 			collectionInfoTabPresenter.getView().setData(collectionDo);
 		}else if(tabType.equals(TYPE_ASSIGN_INFO_TAB)){
-			addToSlot(TYPE_ASSIGN_INFO_TAB, collectionAssignTabPresenter);
-			collectionAssignTabPresenter.getClasspage(collectionDo, collectionDo.getSharing());
+			/*addToSlot(TYPE_ASSIGN_INFO_TAB, collectionAssignTabPresenter);
+			collectionAssignTabPresenter.getClasspage(collectionDo, collectionDo.getSharing());*/
 		}else if(tabType.equals(TYPE_COLLABORATOR_TAB)){
 			addToSlot(TYPE_COLLABORATOR_TAB, collectionCollaboratorsTabPresenter);
 			collectionCollaboratorsTabPresenter.setData(collectionDo);
 		}
 		
 	}
+	
+	
 
 	@Override
 	public void clearTabSlot() {
@@ -676,6 +682,14 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
 		folderItemTabPresenter.setFolderMetaData(folderMetaData);
 		this.folderMetaData = folderMetaData;
+	}
+
+	@Override
+	public void revealAssignTab(Type<RevealContentHandler<?>> tabType,
+			CollectionDo collectionDo, ScrollPanel spanel) {
+		addToSlot(TYPE_ASSIGN_INFO_TAB, collectionAssignTabPresenter);
+		collectionAssignTabPresenter.getClasspage(collectionDo, collectionDo.getSharing(),spanel);
+		
 	}
 	
 }

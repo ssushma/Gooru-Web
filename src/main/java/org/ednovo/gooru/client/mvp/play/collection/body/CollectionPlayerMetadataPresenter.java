@@ -32,16 +32,15 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
-import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
@@ -99,8 +98,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
-		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
-		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
+		//addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo){
@@ -191,6 +189,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 
 	@Override
 	public void createCommentForCollection(String gooruOid, String comment) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(null, PlayerDataLogEvents.COMMENT_CREATE, comment);
 		this.playerAppService.createCommentForCollection(gooruOid, comment, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo commentsDo) {
@@ -200,13 +199,14 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		});
 	}
 
-	@Override
+	
 	public void updateCommentChildView(String commentUid, String action) {
 		getView().updateCommentChildView(commentUid, action);
 	}
 
 	@Override
-	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit) {
+	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit,String commentText) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,commentText);
 		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void noResult) {
@@ -223,8 +223,9 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 			}
 		});
 	}
-	@Override
+	
 	public void editCommentChildView(String commentUid, String commentText, String action) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);
 		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo result) {
@@ -297,8 +298,8 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		previewHomePresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 	}
 
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
-		getView().setTeacherInfo(classpageItemDo);
+	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) { 
+		getView().setTeacherInfo(assignmentParentDo);
 	}
 
 	public void setDataInsightsSummaryUrl(String sessionId){
@@ -319,6 +320,16 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	}
 	public void hideTeacherInfo() { 
 		getView().hideTeachPanelDetails(false);
+	}
+	@Override
+	public void updateCommentsStatus(String commentsStatus){
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateCommentsStatus(commentsStatus);
+		}
+	}
+	
+	public void changeCommentsButton(CollectionDo collectionDoObj){
+		getView().changeCommentsButton(collectionDoObj);
 	}
 
 }

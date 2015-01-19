@@ -50,6 +50,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -81,7 +82,7 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 	}
 	
 	@UiField Label lblCreateFolder,lblCreateCollection, lblEditMyCollections;
-	
+	@UiField Anchor anchCreateAsseement;
 	@UiField HTMLPanel tooltipPanel,panelCode;
 	
 	public OrganizeToolTip() {
@@ -91,6 +92,11 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 		lblCreateCollection.getElement().setId("lblLblCreateCollection");
 		lblCreateCollection.getElement().setAttribute("alt", i18n.GL1757());
 		lblCreateCollection.getElement().setAttribute("title", i18n.GL1757());
+		
+		anchCreateAsseement.setText(i18n.GL3011());
+		anchCreateAsseement.getElement().setId("lblLblAssessment");
+		anchCreateAsseement.getElement().setAttribute("alt", i18n.GL3011());
+		anchCreateAsseement.getElement().setAttribute("title", i18n.GL3011());
 		
 		lblCreateFolder.setText(i18n.GL1758());
 		lblCreateFolder.getElement().setId("lblLblCreateFolder");
@@ -169,6 +175,8 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 			}
 		});
         
+        setAssessmentUrl();
+        
         lblEditMyCollections.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -183,6 +191,37 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
+	/**
+	 * 
+	 * @function setAssessmentUrl 
+	 * 
+	 * @created_date : 08-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setAssessmentUrl(){
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT;
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				anchCreateAsseement.setHref(result);
+				anchCreateAsseement.setTarget("_blank");
+			}
+		});
+	}
+	
 	
 	public void createFolderInParent(String folderName,
 			final String parentId, final HashMap<String, String> params) {

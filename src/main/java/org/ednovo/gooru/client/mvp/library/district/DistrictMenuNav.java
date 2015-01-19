@@ -219,7 +219,7 @@ public abstract class DistrictMenuNav extends Composite {
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
 			setGooruAnrText(i18n.GL2071(), i18n.GL2072());
 		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
-			setGooruAnrText(i18n.GL2184(), i18n.GL2185());
+			setGooruAnrText(i18n.GL2184_1(), i18n.GL2185_1());
 		}
 
 		aboutGooruAnr.setTarget("_blank");
@@ -306,6 +306,7 @@ public abstract class DistrictMenuNav extends Composite {
 					@Override
 					public void onClick(ClickEvent event) {
 						Window.scrollTo(0, 0);
+						DistrictView.scrollFlag = false;
 						setTabSelection(subjectname);
 						getCourse(courseId, subjectname, profileLibraryDo);
 					}

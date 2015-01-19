@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetCollabCountEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetPanelVisibilityEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetPanelVisibilityHandler;
+import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.CollaboratorViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -215,10 +216,8 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		lblAddCollaborator.getElement().setAttribute("alt",i18n.GL0941());
 		lblAddCollaborator.getElement().setAttribute("title",i18n.GL0941());
 		
-		lblCollaboratorsDesc.setText(i18n.GL0942());
 		lblCollaboratorsDesc.getElement().setId("lblCollaboratorsDesc");
-		lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL0942());
-		lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL0942());
+		
 		
 		lblInviteCollaborators.setText(i18n.GL0943());
 		lblInviteCollaborators.getElement().setId("lblInviteCollaborators");
@@ -565,6 +564,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	public void displayView(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		setLabelsAndIds();
+		modifyStaticText(collectionDo.getCollectionType());
 		overAllCollabCount = 0;
 		setInviteButtonEnable(overAllCollabCount);
 
@@ -601,6 +601,17 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 //			panelEditMode.add(suggestBox);
 		}
 		
+	}
+	public void modifyStaticText(String collectionType){
+		if(collectionType!=null&&collectionType.equals(ShelfPresenter.ASSESSMENT)){
+			lblCollaboratorsDesc.setText(i18n.GL3035());
+			lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL3035());
+			lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL3035());
+		}else{
+			lblCollaboratorsDesc.setText(i18n.GL0942());
+			lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL0942());
+			lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL0942());
+		}
 	}
 	private void updateCollabCount(int count, String type) {
 //		collectionDo.getMeta().setCollaboratorCount(count);

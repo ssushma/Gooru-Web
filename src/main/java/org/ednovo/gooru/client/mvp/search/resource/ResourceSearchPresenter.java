@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.search.resource;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
@@ -38,6 +39,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
@@ -55,6 +57,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -77,9 +80,11 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	
 	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 	
-	AddStandardsPresenter addStandardsPresenter = null;
+	private	AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter;
 	
 	private TagsTabPresenter tagsTabPresenter;
+	
+	AddStandardsPresenter addStandardsPresenter = null;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RESOURCE_SEARCH)
@@ -95,12 +100,13 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 */
 	@Inject
 	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,
-			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter, TagsTabPresenter tagsTabPresenter) {
+			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter, TagsTabPresenter tagsTabPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		this.collectionFormInPlayPresenter= collectionFormInPlayPresenter;
+		this.analyticsInfoContainerPresenter = analyticsInfoContainerPresenter;
 		this.tagsTabPresenter = tagsTabPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(UpdateRatingsInSearchEvent.TYPE,this);
@@ -148,6 +154,30 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		}
 		if (getSearchDo().getSearchQuery().trim().equals(ALL) && !AppClientFactory.isContentAdmin()) {
 			return;
+		}
+		if(getPlaceManager().getRequestParameter("flt.rating") != null)
+		{
+			String ratingsVal = getPlaceManager().getRequestParameter("flt.rating");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("flt.rating", ratingsVal);
+			searchDo.setFilters(filterMap);
+		}
+		if(getPlaceManager().getRequestParameter("flt.isReviewed") != null)
+		{
+			String reviewsVal = getPlaceManager().getRequestParameter("flt.isReviewed");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("flt.isReviewed", reviewsVal);
+			searchDo.setFilters(filterMap);
+		}
+		if(getPlaceManager().getRequestParameter("disableSpellCheck") != null)
+		{
+			String disableSpellCheckVal = getPlaceManager().getRequestParameter("disableSpellCheck");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("disableSpellCheck", "true");
+			searchDo.setFilters(filterMap);
 		}
 		getSearchService().getResourceSearchResults(searchDo, searchAsyncCallback);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -225,14 +255,33 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		});
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo, boolean)
+	@Override
+	public void setAnalyticsTabData(SimplePanel addResourceContainerPanel,
+			ResourceSearchResultDo searchResultDo, String type) {
+		// TODO Auto-generated method stub
+		addResourceContainerPanel.clear();
+		analyticsInfoContainerPresenter.setAnalyticsResourcesData(searchResultDo);
+		addResourceContainerPanel.setWidget(analyticsInfoContainerPresenter.getWidget());
+	}
+
+	@Override
+	public void setAnalyticsTabDataForCollections(
+			SimplePanel addResourceContainerPanel,
+			CollectionSearchResultDo searchResultDo, String type) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
 	 */
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen) { 
+	@Override
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl) { 
 		simplePanel.clear();
 		if(!isTagsPanelOpen){
-			tagsTabPresenter.setData("0dd8c9a4-9f38-4d8e-8775-a4fca41ba244",searchResultDo.getGooruOid());   
+			tagsTabPresenter.setData(searchResultDo.getGooruOid(), tagsLbl);   
 			simplePanel.setWidget(tagsTabPresenter.getWidget());
 		}
 	}
