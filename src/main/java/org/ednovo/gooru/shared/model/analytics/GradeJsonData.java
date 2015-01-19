@@ -48,7 +48,7 @@ public class GradeJsonData implements Serializable{
 
 	private String aggregateData;
 
-	GradeJsonData(){}
+	public GradeJsonData(){}
 
 	public String getEstimatedTime() {
 		return estimatedTime;
