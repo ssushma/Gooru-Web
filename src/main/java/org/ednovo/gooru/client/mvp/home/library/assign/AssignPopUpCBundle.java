@@ -278,7 +278,7 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String directionsChrLimit();
 
 		String marginTop();
-
+		String privacyText();
 	}
 
 	@Source("AssignPopUp.css")
