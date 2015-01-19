@@ -73,7 +73,7 @@
 								<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox"
 									password="true" styleName="form-control {res1.css.form_control}"/>
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{res1.css.forgotPasswordLink}">
+							<g:HTMLPanel styleName="{res1.css.forgotPasswordLink} {res1.css.forgotPwdMargin}">
 									<g:Anchor ui:field="forgotPwd"></g:Anchor>
 								</g:HTMLPanel>
 							<g:HTMLPanel styleName="{res1.css.loginPopupbtnContainer}">

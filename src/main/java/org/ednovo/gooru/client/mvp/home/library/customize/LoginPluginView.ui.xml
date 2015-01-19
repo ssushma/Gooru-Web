@@ -17,9 +17,6 @@
 			      <g:Label styleName="{res1.css.dividerText}" ui:field="lblOr"/>
 			  </g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.inputBlockOuter}">
-		       	<gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true"/>
-
-
 		        <gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true" styleName="form-control {res1.css.form_control}"/>
 
 				<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox" password="true"  styleName="form-control {res1.css.form_control}"/>
@@ -38,14 +35,11 @@
 					<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
 				</g:HTMLPanel>
 		      </g:HTMLPanel>
-		      </g:HTMLPanel>
-		      
-		      
 		      <g:HTMLPanel styleName="{res1.css.haveAccountContainer}" ui:field="signUpPanel">
 		          <g:HTMLPanel styleName="{res1.css.haveAccount}">
 		        	  <g:InlineLabel ui:field="donotHaveAcount"></g:InlineLabel>
 		          	  <g:Anchor ui:field="ancSignUp"></g:Anchor>      
 		          </g:HTMLPanel>
 		     </g:HTMLPanel>
-			
+			</g:HTMLPanel>
 </ui:UiBinder> 
