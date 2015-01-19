@@ -254,7 +254,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				//standardsPreferenceOrganizeToolTip.hide();
 				errorContainer.setVisible(false);

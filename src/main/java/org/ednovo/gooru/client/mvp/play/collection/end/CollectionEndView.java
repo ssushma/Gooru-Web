@@ -70,7 +70,6 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -130,7 +129,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
-	@UiField HTMLPanel sessionspnl,collectionMetaDataPnl,collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
+	@UiField HTMLPanel pnlCollectionLastAccessed,sessionspnl,collectionMetaDataPnl,collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
@@ -215,6 +214,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public CollectionEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
+		pnlCollectionLastAccessed.setVisible(false);
 		//teacherContainer.setVisible(false);
 		collectionImage.setSize("59px", "44px");
 		messageContainer.setVisible(false);

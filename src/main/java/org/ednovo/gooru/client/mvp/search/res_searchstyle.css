@@ -241,7 +241,7 @@ margin: 32px;
 }
 
 .innerResult {
-	
+	display: inline-block;
 }
 
 .secondaryICactive {

@@ -26,7 +26,7 @@ public class CollectionSummaryWidget extends Composite {
 			UiBinder<Widget, CollectionSummaryWidget> {
 	}
 	@UiField Image collectionImage;
-	@UiField HTMLPanel sessionsPnl;
+	@UiField HTMLPanel pnlCollectionLastAccessed,sessionsPnl;
 	@UiField InlineLabel sessionValue,sessionText,sessionAccessedTime,collectionLastAccessedlbl,collectionTitle,collectionResourcesCount,collectionLastAccessed;
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -62,7 +62,7 @@ public class CollectionSummaryWidget extends Composite {
 		sessionsPnl.setVisible(false);
 		collectionLastAccessedlbl.setText(i18n.GL2271());
 		collectionTitle.setText(result.getTitle());
-		collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastModified())));
+		collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastAccessed())));
 		if(result.getThumbnail()!=null && !result.getThumbnail().equalsIgnoreCase("")){
 			collectionImage.setUrl(result.getThumbnail());
 		}else{
@@ -109,5 +109,8 @@ public class CollectionSummaryWidget extends Composite {
 			collectionLastAccessed.setText(i18n.GL2289());
 			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
 		}
+	}
+	public HTMLPanel getCollectionLastAccessPnl(){
+		return pnlCollectionLastAccessed;
 	}
 }

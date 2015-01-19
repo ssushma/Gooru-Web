@@ -507,11 +507,34 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}*/
 			setGrades(gradesdetails);
 			}
-		
-		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+		if(collectionItemDo.getResource() != null)
+		{
+		if(collectionItemDo.getResource().getResourceType() != null)
+		{
+		if(collectionItemDo.getResource().getResourceType().getName() != null)
+		{
+		if (collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("video/youtube") || collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("resource/url"))
 		{
 		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
+		}
+		else
+		{
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+		}
+		}
+		else
+		{
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+		}
+		}
+		else
+		{
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+		}
 		}
 		else
 		{

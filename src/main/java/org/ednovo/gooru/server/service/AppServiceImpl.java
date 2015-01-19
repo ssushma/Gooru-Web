@@ -202,4 +202,11 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		return analyticsUrl;
 	}
 	
+	@Override
+	public UserDo getUserFilterProperties(){
+		UserDo userDo=new UserDo();
+		userDo.setSettings(getFilterProperties());
+		return userDo;
+	}
+	
 }

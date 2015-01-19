@@ -370,7 +370,7 @@ padding-bottom: 18%;
 	text-overflow: ellipsis;
 }
 .assignHeader {
-	height: 31px;
+	height: 36px;
 	padding: 10px 0px 0px 10px;
 	background-color: rgb(81,81,81);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
@@ -704,7 +704,6 @@ button.LoginText {
 }
 .contentBorder {
 	text-align: center;
-	margin-top: -13px;
 	margin-bottom: 5px;
 	border-bottom: 1px solid rgb(221,221,221);
 }
@@ -712,7 +711,7 @@ button.LoginText {
 	width: 300px;
 	margin: 0 auto;
 	padding-top: 10px;
-	padding-left: 35px;
+	/* padding-left: 35px; */
 }
 .inputBlock {
 	display: block;
@@ -723,6 +722,10 @@ button.LoginText {
 }
 .popupTitle {
 	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	color: #515151;
+	padding: 15px;
 }
 .popupTitleLogin {
 	text-align: center;
@@ -894,7 +897,7 @@ button.LoginText {
 	border:1px solid #1076BB;
 	/* margin-bottom: 15px; */
 	cursor: pointer;
-	margin-top:28px;
+	margin-top:16px;
 }
 
 .gConnectButton:hover {
@@ -918,9 +921,9 @@ button.LoginText {
 }
 .dividerCustomize {
 	border-bottom:1px solid #ddd;
-	width:94%;
 	height:1em;
 	margin:10px 0px 20px 0px;
+	padding-top: 5px;
 }
 
 /*End Success popup */
@@ -966,12 +969,14 @@ button.LoginText {
 	background-color: #f0f0f0;
 	border: 1px solid #ddd;
 	text-align: center;
-	margin-left: 48px;
+	margin: 0px auto;
 	width: 74%;
 }
 .loginWithGooru{
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: normal;
+	padding-top: 20px;
+	margin-bottom: 20px;
 }
 
 .directionsChrLimit{
@@ -984,4 +989,8 @@ button.LoginText {
 }
 .marginTop{
 	margin-top:10px;
+}
+
+.privacyText{
+	text-align: left;	
 }

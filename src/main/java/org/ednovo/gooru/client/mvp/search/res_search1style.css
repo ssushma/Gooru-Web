@@ -127,7 +127,7 @@ body, html {
 }
 
 .innerResult {
-	
+	display: inline-block;
 }
 
 .share {

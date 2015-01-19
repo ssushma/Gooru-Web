@@ -52,5 +52,6 @@
 	 </g:HTMLPanel>
 	 </g:HTMLPanel>
 	 </g:HTMLPanel>
+    <g:Label text="{i18n.GL3099}" title="{i18n.GL3099}" ui:field="errorMessage" styleName="{unitStyle.showEmptyMessage}"></g:Label>
 	</g:HTMLPanel>
 </ui:UiBinder> 

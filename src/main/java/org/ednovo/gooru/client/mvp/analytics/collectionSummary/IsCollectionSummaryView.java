@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 
 
 public interface IsCollectionSummaryView extends IsViewWithHandlers<CollectionSummaryUiHandlers>{
@@ -67,4 +68,6 @@ public interface IsCollectionSummaryView extends IsViewWithHandlers<CollectionSu
 	 * @return
 	 */
 	Frame getFrame();
+	
+    void resetDataIfNoSessions();
 }

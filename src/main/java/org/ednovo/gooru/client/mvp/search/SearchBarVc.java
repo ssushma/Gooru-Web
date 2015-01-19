@@ -88,7 +88,7 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 			}
 
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
 				autoSuggestKeywordDo.setQuery(text);

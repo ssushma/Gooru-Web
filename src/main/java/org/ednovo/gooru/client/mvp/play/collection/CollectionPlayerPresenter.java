@@ -45,7 +45,6 @@ import org.ednovo.gooru.client.mvp.play.collection.add.AddCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
-import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
@@ -83,7 +82,6 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
@@ -770,7 +768,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		
 		collectionEndPresenter.clearslot();
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
-		collectionEndPresenter.setCollectionMetadata(collectionDo);
+		collectionEndPresenter.setCollectionMetadata(collectionDo,classpageId);
 		collectionEndPresenter.clearDashBoardIframe();
 		 showSignupPopup(); 
 		if(this.collectionSummaryId!=null){
@@ -820,12 +818,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(AppClientFactory.isAnonymous()){
 			resetSummary();
 		}
-		else{
+		else{/*
 			this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
 				@Override
 				public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
-					if(insightsCollectionDo!=null){
-						if(insightsCollectionDo.getCompletionStatus()!=null&&insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
+						if( insightsCollectionDo!=null && insightsCollectionDo.getCompletionStatus()!=null && insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
 							collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
 							convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
 							displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
@@ -834,18 +831,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							if(count<10){
 								displayCollectionSummaryData(collectionId,classpageId,sessionId);
 								count++;
-							}
+							}else{
+								collectionEndPresenter.showAvgReaction(0);
+								convertMilliSecondsToTime(0L);
+								displayScoreCount(0,0);
 						}
-					}else{
-						collectionEndPresenter.showAvgReaction(0);
-						convertMilliSecondsToTime(0L);
-						displayScoreCount(0,0);
-					
 					}
-					
 				}
 			});
-		}
+		*/}
 	}
 	
 	public void resetSummary(){
@@ -1849,7 +1843,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						if(result.get(i).getContentReportList()!=null){
 							for(int j=0; j<result.get(i).getContentReportList().size(); j++){
 								flagType=result.get(i).getContentReportList().get(j);
-								System.out.println("flagType::"+flagType);
 								if(flagType.equals("not-loading")){
 									isNotLoad=true;
 								}
