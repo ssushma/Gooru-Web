@@ -194,3 +194,9 @@
 .questionCountlbl{
 	padding-bottom: 12px;
 }
+.teacher_name{
+	padding: 0;
+	padding-left: 14px;
+	padding-bottom: 9px;
+	font-weight: bold;
+}

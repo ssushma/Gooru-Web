@@ -22,6 +22,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -894,7 +895,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	@Override
 	public void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId,String questionType,String session) {
-			popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true,session);
+			popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true,session,new ClasspageItemDo());
 			popupPanel.setStyleName(res.css().setOETextPopupCenter());
 		     if(popupPanel.isShowing()){
 		    	 popupPanel.hide();
