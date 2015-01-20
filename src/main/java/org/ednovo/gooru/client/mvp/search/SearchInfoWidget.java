@@ -163,7 +163,7 @@ public class SearchInfoWidget extends Composite {
 	}
 
 	private void setResourceInfoData() {
-		publisherText.setText(i18n.GL0566()+" ");
+		publisherText.setText(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(publisherText,"PublisherText",i18n.GL0566()+" ");
 		
 		lblAggregation.setText(i18n.GL1628().trim()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -428,7 +428,7 @@ public class SearchInfoWidget extends Composite {
 			}*/
 	        
 	        if(grade!=null && !grade.equals("")){
-			
+				
 				List<String> gradesSorted = new ArrayList<String>();
 				
 				List<Integer> listI = new ArrayList<Integer>();
@@ -445,14 +445,7 @@ public class SearchInfoWidget extends Composite {
 						listS.add(newst[i]);
 					}
 				}
-	        }
-		}
-	}
-			//	gradeListInt = sortList(gradeListInt);
-/*				for(int glevel=0;glevel<gradeListInt.size();glevel++){
-=======
 				Collections.sort(listS, Collections.reverseOrder());
->>>>>>> release-6.6.3.a1
 
 				Collections.sort(listI);
 				
