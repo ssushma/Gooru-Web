@@ -867,9 +867,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		}
 		if(hours!=0){
 			if(createdTime!=null){
-				createdTime=createdTime+hours+" ";
+				createdTime=createdTime+hours+"hr ";
 			}else{
-				createdTime=hours+" ";
+				createdTime=hours+"hr ";
 			}
 		}
 		if(minutes!=0){
