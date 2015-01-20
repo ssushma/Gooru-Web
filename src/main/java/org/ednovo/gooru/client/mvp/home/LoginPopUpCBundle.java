@@ -146,6 +146,7 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String popupInnerLeaveReg();
 	String subjectOption();
 	String PopupMainMedium();
+	String PopupMainMediumReport();
 	String parentRole();
 	String  SliderHolderPrev();
 	String title();
