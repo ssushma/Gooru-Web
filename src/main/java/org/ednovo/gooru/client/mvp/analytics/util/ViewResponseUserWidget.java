@@ -1,3 +1,27 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics.util;
 
 import java.util.Iterator;
@@ -7,7 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
-import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -27,7 +51,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -43,17 +66,15 @@ public class ViewResponseUserWidget extends Composite {
 	interface ViewResponseUserWidgetUiBinder extends
 			UiBinder<Widget, ViewResponseUserWidget> {
 	}
-	@UiField Label questionCountlbl,usernamelbl,editedText,createOn;
+	@UiField Label teacherName,questionCountlbl,usernamelbl,userResponselbl,editedText,createOn;
 	@UiField HTMLPanel giveFeedBackpnl,editFeedBackpnl,userAnswerspnl;
 	@UiField TextBox feedBacktxt;
 	@UiField InlineLabel spnEdit,spnDelete;
 	@UiField Button btnSubmit;
 	@UiField Image userProfileImage,userProfileImage1;
-	@UiField HTML userResponselbl;
 	
 	OetextDataDO oetextDataDO;
-	
-	static MessageProperties i18n = GWT.create(MessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Constructor
@@ -65,10 +86,10 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionType
 	 * @param isSummary
 	 */
-	public ViewResponseUserWidget(OetextDataDO oetextDataDO,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary,String session) {
+	public ViewResponseUserWidget(OetextDataDO oetextDataDO,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary,String session,ClasspageItemDo classpageItemDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setData(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session);
-	 	feedBacktxt.getElement().setAttribute("placeholder", "Leave feedback for this answer");
+		setData(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session,classpageItemDo);
+	 	feedBacktxt.getElement().setAttribute("placeholder", i18n.GL3117());
 		questionCountlbl.setVisible(false);
 	}
 	/**
@@ -76,39 +97,21 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionCount
 	 * @param questionText
 	 * @param questionAnswers
-	 * @param questionType
 	 */
-
-	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers, String questionType) {
+	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers,String questionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		questionCountlbl.setVisible(true);
-		questionCountlbl.setText("Question "+questionCount);
+		questionCountlbl.setText(i18n.GL0308()+" "+questionCount);
 		usernamelbl.setText(questionText);
-
-		questionAnswers = questionAnswers.trim();
-		String text="";
+		String answerVal="";
 		if(questionType.equalsIgnoreCase("MA")){
-			String[] split = questionAnswers.split(",");
-			for (int i=0; i<split.length;i++){
-				if (split[i].contains("1")){
-					if (i==split.length-1){
-						text = text + "<p class='yes'>" + i18n.GL_GRR_YES() +" </p>";
-					}else{
-						text = text + "<p class='yes'>" + i18n.GL_GRR_YES() + ", </p>";
-					}
-				}else{
-					if (i==split.length-1){
-						text = text + "<p class='no'>" + i18n.GL_GRR_NO() +" </p>";
-					}else{
-						text = text + "<p class='no'>" + i18n.GL_GRR_NO() + ", </p>";
-					}
-				}
-			}
-			userResponselbl.setHTML(text);
+			 answerVal=questionAnswers.replaceAll("1", "Yes");
+			 answerVal=answerVal.replaceAll("0", "No");
 		}else{
-			userResponselbl.setHTML(questionAnswers);
+			answerVal=questionAnswers;
 		}
-		
+
+		userResponselbl.setText(answerVal);
 		giveFeedBackpnl.setVisible(false);
 		editFeedBackpnl.setVisible(false);
 		spnEdit.setVisible(false);
@@ -131,7 +134,7 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionType
 	 * @param isSummary
 	 */
-	void setData(final OetextDataDO oetextDataDO,final String resourceGooruId,final String collectionId, final String classpageId,final String pathwayId,String questionType,boolean isSummary,final String session){
+	void setData(final OetextDataDO oetextDataDO,final String resourceGooruId,final String collectionId, final String classpageId,final String pathwayId,String questionType,boolean isSummary,final String session,ClasspageItemDo classpageItemDo){
 		this.oetextDataDO=oetextDataDO;
 		giveFeedBackpnl.setVisible(false);
 		editFeedBackpnl.setVisible(false);
@@ -144,14 +147,26 @@ public class ViewResponseUserWidget extends Composite {
 			spnEdit.setVisible(false);
 			spnDelete.setVisible(false);
 		}
-	
-		if(AppClientFactory.getLoggedInUser().getProfileImageUrl()!=null){
-			userProfileImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
-			userProfileImage1.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
+		if(classpageItemDo!=null && classpageItemDo.getUserNameDispaly()!=null){
+			teacherName.setText(classpageItemDo.getUserNameDispaly()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL0195());
+			if(classpageItemDo!=null && classpageItemDo.getProfileImageUrl()!=null){
+				userProfileImage.setUrl(classpageItemDo.getProfileImageUrl());
+				userProfileImage1.setUrl(classpageItemDo.getProfileImageUrl());
+			}else{
+				userProfileImage.setUrl("../images/settings/setting-user-image.png");
+				userProfileImage1.setUrl("../images/settings/setting-user-image.png");
+			}
 		}else{
-			userProfileImage.setUrl("../images/settings/setting-user-image.png");
-			userProfileImage1.setUrl("../images/settings/setting-user-image.png");
+			teacherName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL0195());
+			if(AppClientFactory.getLoggedInUser().getProfileImageUrl()!=null){
+				userProfileImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
+				userProfileImage1.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
+			}else{
+				userProfileImage.setUrl("../images/settings/setting-user-image.png");
+				userProfileImage1.setUrl("../images/settings/setting-user-image.png");
+			}
 		}
+		
 		userProfileImage.addErrorHandler(new OnErrorProfileImage());
 		userProfileImage1.addErrorHandler(new OnErrorProfileImage());
 		
@@ -181,21 +196,15 @@ public class ViewResponseUserWidget extends Composite {
 						if(questionType.equalsIgnoreCase("MA")) {
 							if(matext.equalsIgnoreCase("1")) {
 							    text = "Yes";
-							    colorCode = "#4E9746";
 							} else {
 							    text = "No";
-							    colorCode = "#FF0000";
 							}
 					    }else if(questionType.equalsIgnoreCase("FIB")) {
 							text=text+" "+matext;
 					    }
 	        		    if(skip == false)
 						{
-	        		    	if (j==attemptsObj.size()-1){
-	        		    		answerChoice.setText(text);
-	        		    	}else{
-	        		    		answerChoice.setText(text+", ");
-	        		    	}
+	        		    	answerChoice.setText(text+",");	
 	        		    	answerChoice.getElement().getStyle().setColor(colorCode);
 	        		    	answerChoice.getElement().getStyle().setFloat(Float.LEFT);
 	        		    	answerChoice.getElement().getStyle().setPaddingRight(1, Unit.PX);
@@ -203,7 +212,7 @@ public class ViewResponseUserWidget extends Composite {
 	        		    	answerChoice.getElement().getStyle().setFontSize(14, Unit.PX);
 	        		    	userAnswerspnl.add(answerChoice);
 						}else{
-							answerChoice.setText("No data found");	
+							answerChoice.setText(i18n.GL3115());	
 							userAnswerspnl.add(answerChoice);
 							break;
 						}
@@ -211,16 +220,16 @@ public class ViewResponseUserWidget extends Composite {
 	   		      }
 	   		}else{
 	   			Label answerChoice=new Label();
-	   			answerChoice.setText("No data found");	
+	   			answerChoice.setText(i18n.GL3115());	
 				userAnswerspnl.add(answerChoice);
 	   		}
 		}else{
 			userResponselbl.setVisible(true);
 			String feedBackStatus=oetextDataDO.getFeedbackStatus();
 			if(oeText==null || oeText.trim().isEmpty()){
-				userResponselbl.setHTML("The Student is not provided any responses..");
+				userResponselbl.setText(i18n.GL3116());
 			}else{
-				userResponselbl.setHTML(oetextDataDO.getOEText());
+				userResponselbl.setText(oetextDataDO.getOEText());
 			}
 			if((isSummary && feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("false")) && (oeText!=null && !oeText.trim().isEmpty())){
 				giveFeedBackpnl.setVisible(true);
