@@ -169,6 +169,9 @@
 	overflow:hidden;
 	position:relative;
 }
+ .PopupMainMediumReport{
+ width:90%;
+ }
  .normalText{}
  .flagbuttonDeSelected{}
  .rightFlagPanel{}
@@ -333,6 +336,7 @@
  .errorLabel{}
   .emailSignIn{}
  .forgotPwdMargin{}
+
   
  
   
