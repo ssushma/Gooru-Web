@@ -48,5 +48,6 @@ public interface PlayerSmallMobileBundle extends ClientBundle {
 	public interface PlayerSmallMobileStyleResource extends CssResource {
 		String playBoxTime();
 		String endButtonsContainer();
+		String container();
 	}
 }
