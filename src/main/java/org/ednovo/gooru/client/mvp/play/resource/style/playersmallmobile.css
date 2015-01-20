@@ -16,3 +16,7 @@
 .endButtonsContainer button{
 	float:none !important;
 }
+
+.container{
+	  padding-top: 0px;
+	}

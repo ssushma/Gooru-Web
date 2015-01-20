@@ -2359,7 +2359,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void adjustCollectionMetadaBody(boolean isHome){
 		if(isHome){
-			  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+			  /*Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 			  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 			  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 			  if(isIpad)
@@ -2373,7 +2373,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			  else
 			  {
 				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX); 
-			  }
+			  }*/
 			
 		}else{
 			addFixedPositionNavArrows();
