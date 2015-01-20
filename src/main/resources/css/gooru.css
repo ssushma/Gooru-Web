@@ -2667,7 +2667,7 @@ overflow: visible;
 
 @media(max-width:767px){
 	html{
- 		overflow:visible !important;
+ 		overflow:hidden !important;
  	}
  	
 	#__printingFrame{
@@ -2731,7 +2731,9 @@ overflow: visible;
  	width:100% !important;
  }
  
-   
+   html{
+ 		overflow:hidden !important;
+ 	}
 }
 @media (min-width: 240px) and (max-width: 319px){
 		 .borderLeft{
@@ -2768,7 +2770,9 @@ overflow: visible;
  	left:0% !important;
  	width:100% !important;
  }
-  
+  html{
+ 		overflow:hidden !important;
+ 	}
 
 }
 @media (max-width: 991px) and (min-width: 768px){
@@ -2783,7 +2787,10 @@ overflow: visible;
  		left:29% !important;
  		
  }
- 
+ html{
+ 		overflow:hidden !important;
+ 	}
+	
  
 }
 
