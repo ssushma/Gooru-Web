@@ -191,6 +191,9 @@
 .leftFlagPanel .leftFlagMenu a{
 	font-size:16px;
 }
+.PopupMainMediumReport{
+	width:86%;
+}
  .rightFlagPanel{}
  .normalText{}
  .flagbuttonDeSelected{}
@@ -354,3 +357,4 @@
  .errorLabel{}
  .emailSignIn{}
  .forgotPwdMargin{}
+ 
