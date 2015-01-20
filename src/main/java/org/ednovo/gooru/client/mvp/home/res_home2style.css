@@ -137,11 +137,15 @@ header{
 .social {
     padding-left: 0;
     padding-right: 0;
-    text-align: left;
+    text-align: center;
 }
 .social{
 	text-align:center !important;
 	margin-top:25px;
+}
+ footer .col-md-2 {
+	border-right: 1px solid #616161;
+	min-height: 132px;
 }
 .margin {
 	margin: 15px 0;

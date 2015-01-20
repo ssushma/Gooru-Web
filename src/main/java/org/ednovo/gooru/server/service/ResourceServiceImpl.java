@@ -157,17 +157,18 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		
 		JSONObject jsonObj = new JSONObject();
 		try {
-		jsonObj = new JSONObject(form);	
-		jsonObj.put(ADD_TO_SHELF, TRUE);
+			jsonObj = new JSONObject(form);	
+			jsonObj.put(ADD_TO_SHELF, TRUE);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//form.add(ADD_TO_SHELF, TRUE);
-
-
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObj.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation(); 
+		
+		logger.info("createCollection 1 : "+url);
+		logger.info("jsonObj.toString() : "+jsonObj.toString());
+		logger.info("jsonResponseRep.getStatusCode() : "+jsonResponseRep.getStatusCode());
+		
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());

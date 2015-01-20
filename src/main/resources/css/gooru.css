@@ -1718,17 +1718,18 @@ color:#999;
 	background-size: 20px 15px;
 }
 .oerContainer  input[type="checkbox"] {
-	margin: 3px 0.5ex !important;
+	margin: 5px 0.5ex !important;
 }
 
 .oerContainer .filterCheckBox label {
 	background: url(../images/oer_icon.png) 0px 0px no-repeat transparent;
- 	padding-left: 29px;
+ 	padding-left: 23px;
 	height: 20px;
 	position: relative;
 	vertical-align: top;
 	display: inline-block;
-	
+	padding-top: 4px;
+
 }
 .navigationText span.AM img{
 	max-height:23px;

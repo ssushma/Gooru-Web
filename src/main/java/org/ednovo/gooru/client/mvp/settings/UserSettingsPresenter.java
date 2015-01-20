@@ -282,9 +282,10 @@ public class UserSettingsPresenter
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		this.getUserService().getUserProfilePage(
+/*		this.getUserService().getV2UserProfileDetails(
 				AppClientFactory.getPlaceManager().getRequestParameter(
-						GOORU_UID), getUserProfilePageAsyncCallback());
+						GOORU_UID), getUserV2ProfilePageAsyncCallback());*/
+
 		getView().setUserProfileImageUrl("EMPTY");
 	}
 
@@ -389,12 +390,12 @@ public class UserSettingsPresenter
 					getView().getLbUserName().setText(
 							user.getUser().getUsername());
 					getView().hideuserDetailsContainerOnClickOfTab();
+					if(user.getUserType() != null && user.getUserType().length() > 1)
+					{
+						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
+					}
 					if (user.getUser().getLoginType()
 							.equalsIgnoreCase("credential")) {					
-						if(user.getUserType() != null && user.getUserType().length() > 1)
-						{
-						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
-						}
 						if (dob != null) {
 							getView().getLbUName().getElement()
 									.setAttribute("dob", "" + dob);
@@ -521,13 +522,19 @@ public class UserSettingsPresenter
 						getView().getAboutUsContainer().setVisible(true);
 						setUserUnder13(false);
 					}
+					getView().setData(user);
+					
+					if(AppClientFactory.getLoggedInUser().getSettings()!=null && AppClientFactory.getLoggedInUser().getSettings()
+							.getProfileImageUrl() != null)
+					{
 					getView().setUserProfileImageUrl(
 							AppClientFactory.getLoggedInUser().getSettings()
 									.getProfileImageUrl()
 									+ user.getUser().getGooruUId()
 									+ "-158x158.png");
+					}
 
-					getView().setData(user);
+				
 				} else {
 					
 				}
@@ -804,13 +811,18 @@ public class UserSettingsPresenter
 						getView().getAboutUsContainer().setVisible(true);
 						setUserUnder13(false);
 					}
+
+					getView().setData(user);
+					if(AppClientFactory.getLoggedInUser().getSettings()!=null && AppClientFactory.getLoggedInUser().getSettings()
+							.getProfileImageUrl() != null)
+					{
 					getView().setUserProfileImageUrl(
 							AppClientFactory.getLoggedInUser().getSettings()
 									.getProfileImageUrl()
 									+ user.getUser().getGooruUId()
 									+ "-158x158.png");
+					}
 
-					getView().setData(user);
 				} else {
 					
 				}

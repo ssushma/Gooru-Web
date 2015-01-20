@@ -34,25 +34,35 @@
 							ui:field="shareLinkTxtBox">
 						</g:TextArea>
 					</g:HTMLPanel>
+
 					<g:HTMLPanel styleName="{res1.css.sharenEmbedContainer}">
 						<g:Anchor  ui:field="swithUrlLbl" />
 						<g:Anchor  ui:field="swithToEmbedLbl" />    
 					</g:HTMLPanel>
-					<hr></hr>
+					<g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
+					<!-- <g:HTMLPanel styleName="{res.css.sociaMediaText}">Share this link 
+						via </g:HTMLPanel> <g:HTMLPanel ui:field="socialSharePanel" styleName="{res.css.socialiconContainer}"> 
+						</g:HTMLPanel> -->
+					<g:HTMLPanel styleName="{res.css.contentBorder}"></g:HTMLPanel>
+
 					<uc:HTMLEventPanel ui:field="htmlLoginPanel" styleName="{res1.css.loginShareContainer}">
-						<g:Label styleName="{res1.css.dontWorrkText}" ui:field="lblLoginPopupTitle" />
-						<g:Label styleName="{res1.css.contentDesc}" ui:field="lblAssignPopDes" />
-						<g:HTMLPanel styleName="{res1.css.signInContainer}">
-							<g:Button ui:field="gmailButton" styleName="{res1.css.gConnectButton}"></g:Button>
+						<g:Label styleName="{res.css.popupTitle}" ui:field="lblLoginPopupTitle" />
+						<g:Label styleName="{res.css.popupDesc}" ui:field="lblAssignPopDes" />
+						<g:HTMLPanel styleName="{res.css.loginPopupStyle}">
+							
+						<g:Label styleName="{res.css.loginWithGooru}" ui:field="lblLoginwithGooru"></g:Label>
+						
+						<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
+						
 							<g:HTMLPanel styleName="{res.css.divider}">
 								<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
 							</g:HTMLPanel>
-						<g:HTMLPanel styleName="emailSignIn">		
-						<g:Label styleName="{res.css.loginWithGooru}" ui:field="lblLoginwithGooru"></g:Label>
-							<g:HTMLPanel styleName="{res1.css.logInput}">
+							
+							<g:HTMLPanel styleName="{res.css.inputBlockOuter}">
+
 								<gg:TextBoxWithPlaceholder ui:field="loginTxtBox"
 									setFocus="true" styleName="form-control {res1.css.form_control}" />
-								<g:HTMLPanel>
+								<g:HTMLPanel styleName="{res.css.privacyText}">
 									<g:InlineLabel styleName="{res.css.popupDesc}"
 										ui:field="lblPii"></g:InlineLabel>
 									<g:Anchor ui:field="ancprivacy"
@@ -63,7 +73,7 @@
 								<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox"
 									password="true" styleName="form-control {res1.css.form_control}"/>
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{res1.css.forgotPasswordLink}">
+							<g:HTMLPanel styleName="{res1.css.forgotPasswordLink} {res1.css.forgotPwdMargin}">
 									<g:Anchor ui:field="forgotPwd"></g:Anchor>
 								</g:HTMLPanel>
 							<g:HTMLPanel styleName="{res1.css.loginPopupbtnContainer}">
@@ -76,9 +86,7 @@
 						    	<g:InlineLabel ui:field="donothaveAC"></g:InlineLabel>
 								<g:Anchor ui:field="ancSignUp"></g:Anchor>    
 						    </g:HTMLPanel>
-						</g:HTMLPanel>
-						</g:HTMLPanel>
-								
+						</g:HTMLPanel>		
 					</uc:HTMLEventPanel>
 
 					<uc:HTMLEventPanel ui:field="htmlEvenPanelContainer"	styleName="{res.css.heightClasspagecontainer}">

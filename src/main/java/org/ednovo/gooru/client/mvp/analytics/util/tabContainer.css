@@ -142,7 +142,6 @@
 	border: 1px solid rgb(221, 221, 221);
 }
 .viewResponsepnl{
-	min-height: 95px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -218,7 +217,11 @@
 .questionCountlbl{
 	padding-bottom: 12px;
 }
+
 .no-gutter >[class*='col-md-']{
 	padding-left:0;
 	padding-right:0;
+}
+.popupContainer{
+	background-color: #fff;
 }

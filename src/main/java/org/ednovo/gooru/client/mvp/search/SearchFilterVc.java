@@ -301,7 +301,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				if(AppClientFactory.isAnonymous()) {
 					standardSearchDo.setSearchResults(null);
@@ -359,7 +359,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		sourceSgstBox = new AppSuggestBox(sourceSuggestOracle) {
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				if (resourceSearch) {
 					sourceSearchDo.setSearchResults(null);
 					sourceSearchDo.setQuery(text);
@@ -386,7 +386,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 			
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				if (resourceSearch) {
 					aggregatorSearchDo.setSearchResults(null);
 					aggregatorSearchDo.setQuery(text);
@@ -522,7 +522,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+" ");
 		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+" ");
 		
-		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
+//		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
 		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);
 		
 		browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
@@ -1207,6 +1207,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase().replaceAll(" ",""));
+		chkNotFriendly.addStyleName(value.toLowerCase());
+		
+//		chkNotFriendly.getElement().getFirstChildElement().getStyle().setTop(2, Unit.PX);
+		chkNotFriendly.getElement().getFirstChildElement().getStyle().setPosition(Position.RELATIVE);
+
 		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
 		{
 			String reviewedVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
@@ -1214,8 +1219,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			{
 				chkNotFriendly.setValue(true);
 			}
-
-		}		
+		}else{
+			String reviewedVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed", null);
+			if(reviewedVal != null  && reviewedVal.equalsIgnoreCase("0") && value.equalsIgnoreCase("Only Resources with Reviews"))
+			{
+				chkNotFriendly.setValue(false);
+			}
+		}
 		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")||value.equalsIgnoreCase("zerostar")){
 			chkNotFriendly.setText("");
 			chkNotFriendly.addStyleName(value.toLowerCase().replaceAll(" ",""));
@@ -1463,10 +1473,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			panelNotMobileFriendly.addStyleName("mobilefriendlyContainer");
 			panelNotMobileFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
-			imgNotFriendly.getElement().getStyle().setLeft(142, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(35, Unit.PX);
-/*			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
-*/			imgNotFriendly.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			imgNotFriendly.getElement().getStyle().setLeft(131, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(-23, Unit.PX);
+//			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
+
 	
 			
 			
@@ -1506,8 +1517,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			oerPanel.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(85, Unit.PX);
-			oer.getElement().getStyle().setTop(0, Unit.PX);
-			oer.getElement().getStyle().setPosition(Position.ABSOLUTE);
+
+			oer.getElement().getStyle().setTop(-23, Unit.PX);
+			oer.getElement().getStyle().setPosition(Position.RELATIVE);
+
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(i18n.GL0732());
 			oer.setTitle(i18n.GL0732());
@@ -2240,6 +2253,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(subjectPanelUc);
 		clearFilter(accessModePanel);
 		clearFilter(ratingPanelUc);
+		clearFilter(reviewPanelUc);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -2584,19 +2598,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
 					{
 					ratingsText = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
-					if(filterName.equalsIgnoreCase("5 star"))
+					if(filterName.equalsIgnoreCase("5 stars"))
 					{			
 						ratingsText= ratingsText.replaceAll("5", "");
 					}
-					else if(filterName.equalsIgnoreCase("4 star"))
+					else if(filterName.equalsIgnoreCase("4 stars"))
 					{
 						ratingsText= ratingsText.replaceAll("4", "");	
 					}
-					else if(filterName.equalsIgnoreCase("3 star"))
+					else if(filterName.equalsIgnoreCase("3 stars"))
 					{
 						ratingsText = ratingsText.replaceAll("3", "");						
 					}
-					else if(filterName.equalsIgnoreCase("2 star"))
+					else if(filterName.equalsIgnoreCase("2 stars"))
 					{
 						ratingsText = ratingsText.replaceAll("2", "");
 					}

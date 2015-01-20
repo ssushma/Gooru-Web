@@ -70,6 +70,7 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -857,16 +858,17 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 		if(collectionDo.getSharing()!=null){
 			final String share=collectionDo.getSharing();
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 				@Override
-				public void onSuccess(SettingDo result) {
+				public void onSuccess(V2UserDo result) {
 					if(result.getUser().getAccountTypeId()==2){
 						rbPublicPanel.setVisible(false);
 						publishedPanel.setVisible(false);
 					}else{
 						rbPublicPanel.setVisible(true);
 						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+							if(collectionDo!=null){
 							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
 								rbPublic.setVisible(false);
 								lblPublishPending.setVisible(true);
@@ -881,6 +883,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 							lblPublishPending.setVisible(false);
 							publishedPanel.setVisible(true);
 						}
+					}else{
+						rbPublic.setVisible(false);
+						lblPublishPending.setVisible(false);
+						publishedPanel.setVisible(true);
+					}
 					}
 				}
 			});

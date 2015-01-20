@@ -4,8 +4,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -25,6 +27,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -40,15 +43,17 @@ public class ViewResponseUserWidget extends Composite {
 	interface ViewResponseUserWidgetUiBinder extends
 			UiBinder<Widget, ViewResponseUserWidget> {
 	}
-	@UiField Label questionCountlbl,usernamelbl,userResponselbl,editedText,createOn;
+	@UiField Label questionCountlbl,usernamelbl,editedText,createOn;
 	@UiField HTMLPanel giveFeedBackpnl,editFeedBackpnl,userAnswerspnl;
 	@UiField TextBox feedBacktxt;
 	@UiField InlineLabel spnEdit,spnDelete;
 	@UiField Button btnSubmit;
 	@UiField Image userProfileImage,userProfileImage1;
+	@UiField HTML userResponselbl;
 	
 	OetextDataDO oetextDataDO;
 	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Constructor
@@ -71,13 +76,39 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionCount
 	 * @param questionText
 	 * @param questionAnswers
+	 * @param questionType
 	 */
-	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers) {
+
+	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers, String questionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		questionCountlbl.setVisible(true);
 		questionCountlbl.setText("Question "+questionCount);
 		usernamelbl.setText(questionText);
-		userResponselbl.setText(questionAnswers);
+
+		questionAnswers = questionAnswers.trim();
+		String text="";
+		if(questionType.equalsIgnoreCase("MA")){
+			String[] split = questionAnswers.split(",");
+			for (int i=0; i<split.length;i++){
+				if (split[i].contains("1")){
+					if (i==split.length-1){
+						text = text + "<p class='yes'>" + i18n.GL_GRR_YES() +" </p>";
+					}else{
+						text = text + "<p class='yes'>" + i18n.GL_GRR_YES() + ", </p>";
+					}
+				}else{
+					if (i==split.length-1){
+						text = text + "<p class='no'>" + i18n.GL_GRR_NO() +" </p>";
+					}else{
+						text = text + "<p class='no'>" + i18n.GL_GRR_NO() + ", </p>";
+					}
+				}
+			}
+			userResponselbl.setHTML(text);
+		}else{
+			userResponselbl.setHTML(questionAnswers);
+		}
+		
 		giveFeedBackpnl.setVisible(false);
 		editFeedBackpnl.setVisible(false);
 		spnEdit.setVisible(false);
@@ -134,6 +165,7 @@ public class ViewResponseUserWidget extends Composite {
 	   			 Set<String> keys=answerObject.keySet();
 	   			 Iterator<String> itr = keys.iterator();
 	   		      while(itr.hasNext()) {
+	   		    	userAnswerspnl.clear();
 	   		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 	   		         for(int j=0;j<attemptsObj.size();j++){
 	   		        	Label answerChoice=new Label();
@@ -149,15 +181,21 @@ public class ViewResponseUserWidget extends Composite {
 						if(questionType.equalsIgnoreCase("MA")) {
 							if(matext.equalsIgnoreCase("1")) {
 							    text = "Yes";
+							    colorCode = "#4E9746";
 							} else {
 							    text = "No";
+							    colorCode = "#FF0000";
 							}
 					    }else if(questionType.equalsIgnoreCase("FIB")) {
 							text=text+" "+matext;
 					    }
 	        		    if(skip == false)
 						{
-	        		    	answerChoice.setText(text+",");	
+	        		    	if (j==attemptsObj.size()-1){
+	        		    		answerChoice.setText(text);
+	        		    	}else{
+	        		    		answerChoice.setText(text+", ");
+	        		    	}
 	        		    	answerChoice.getElement().getStyle().setColor(colorCode);
 	        		    	answerChoice.getElement().getStyle().setFloat(Float.LEFT);
 	        		    	answerChoice.getElement().getStyle().setPaddingRight(1, Unit.PX);
@@ -180,9 +218,9 @@ public class ViewResponseUserWidget extends Composite {
 			userResponselbl.setVisible(true);
 			String feedBackStatus=oetextDataDO.getFeedbackStatus();
 			if(oeText==null || oeText.trim().isEmpty()){
-				userResponselbl.setText("The Student is not provided any responses..");
+				userResponselbl.setHTML("The Student is not provided any responses..");
 			}else{
-				userResponselbl.setText(oetextDataDO.getOEText());
+				userResponselbl.setHTML(oetextDataDO.getOEText());
 			}
 			if((isSummary && feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("false")) && (oeText!=null && !oeText.trim().isEmpty())){
 				giveFeedBackpnl.setVisible(true);

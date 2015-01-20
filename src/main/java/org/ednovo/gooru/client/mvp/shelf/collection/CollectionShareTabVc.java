@@ -31,7 +31,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
@@ -51,7 +50,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -512,9 +511,9 @@ public class CollectionShareTabVc extends Composite {
 	}
 	
 	public void getUserType() {
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 				@Override
-				public void onSuccess(SettingDo result) {
+				public void onSuccess(V2UserDo result) {
 					if(result.getUser().getAccountTypeId()!=null) {
 						if(result.getUser().getAccountTypeId()==2) {
 							rbPublicPanel.getElement().getStyle().setDisplay(Display.NONE);
@@ -729,7 +728,14 @@ public class CollectionShareTabVc extends Composite {
 				}
 				
 			}
+			try
+			{
 			collectionShareAlertPopup.center();
+			}
+			catch(Exception e)
+			{
+				
+			}
 		}
 	}
 

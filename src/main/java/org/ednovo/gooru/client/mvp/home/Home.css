@@ -2559,6 +2559,7 @@ footer .col-md-4 {
 
 .searchbox .navbar-form .form-control {
 	width: 100% !important;
+	padding-right: 20px;
 }
 
 .searchbox .form-control {
@@ -3018,14 +3019,14 @@ color: #ffffff !important;
 .searchbox .form-group{
 	position:relative;
 }
- .arrowLable{
-        background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
-		position: absolute;
-		top: 3px;
-		right: 8px;
-		z-index: 9999999;
-		width: 10px;
-		height: 17px;
-		cursor: pointer;
-       }
+.arrowLable{
+	background: url(images/ratings/down-arrow.png) 0 12px no-repeat;
+	position: absolute;
+	top: 3px;
+	right: 6px;
+	z-index: 9999999;
+	width: 10px;
+	height: 17px;
+	cursor: pointer;
+}
 

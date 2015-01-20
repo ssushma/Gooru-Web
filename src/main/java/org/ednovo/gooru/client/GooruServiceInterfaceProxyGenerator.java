@@ -22,29 +22,19 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.service;
 
-import org.ednovo.gooru.shared.model.user.UserDo;
+package org.ednovo.gooru.client;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
-/**
- * @author Search Team
- * 
- */
-public interface AppServiceAsync extends BaseServiceAsync {
-	
-	void getLoggedInUser(AsyncCallback<UserDo> callback);
+import com.google.gwt.core.ext.typeinfo.JClassType;
+import com.google.gwt.user.rebind.rpc.ProxyCreator;
+import com.google.gwt.user.rebind.rpc.ServiceInterfaceProxyGenerator;
 
-	void signin(String username, String password, AsyncCallback<UserDo> callback);
-
-	void signout(AsyncCallback<UserDo> callback);
+public class GooruServiceInterfaceProxyGenerator extends ServiceInterfaceProxyGenerator{
+	@Override
+    protected ProxyCreator createProxyCreator(JClassType remoteService) {
+        return new GooruProxyCreator(remoteService);
+    }
 	
-	void v2Signin(String postData,AsyncCallback<UserDo> callback);
 	
-	void v2Signout(AsyncCallback<UserDo> callback);
-	
-	void getAnalyticsURL(String type, String id, AsyncCallback<String> callback);
-	
-	void getUserFilterProperties(AsyncCallback<UserDo> callback);
 }

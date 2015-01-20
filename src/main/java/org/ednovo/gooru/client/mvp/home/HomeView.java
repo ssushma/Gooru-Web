@@ -71,6 +71,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -111,7 +112,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 
 	@UiField H2Panel lblHeading;
-	@UiField PPanel  lblSubHeading, panelCopyRight;
+	@UiField PPanel  lblSubHeading, panelCopyRight, panelCopyRightR;
 	
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
@@ -174,7 +175,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
 				
@@ -292,13 +293,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		panelCopyRight.setText(copyRightTxt);
 		panelCopyRight.getElement().setId("lblCopyRightYearText");
-		panelCopyRight.getElement().setAttribute("alt",copyRightTxt);
-		panelCopyRight.getElement().setAttribute("title",copyRightTxt);
-
+		StringUtil.setAttributes(panelCopyRight.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
 		
-//		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
-//		};
-//		error.show();
+		panelCopyRightR.setText(copyRightTxt);
+		panelCopyRightR.getElement().setId("lblCopyRightYearText");
+		StringUtil.setAttributes(panelCopyRightR.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
 		
 	}
 	
