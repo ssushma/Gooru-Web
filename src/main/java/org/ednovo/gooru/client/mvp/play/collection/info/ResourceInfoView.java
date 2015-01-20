@@ -1763,8 +1763,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		courseInfo.clear();
 		if(coursesList.size()>0){
+			System.out.println("coursesList.get(0)::"+coursesList.get(0));
 			final Label courseInfoLabel=new Label(" "+coursesList.get(0));
 			courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
+			System.out.println("courseInfoLabel::"+courseInfoLabel);
 			courseInfo.add(courseInfoLabel);
 			coursePanel.setVisible(true);
 		}
