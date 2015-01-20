@@ -110,6 +110,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
+	ClasspageItemDo classpageItemDo=null;
+	
 	int count=0;
 	
 	@Inject
@@ -175,6 +177,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			getView().getLoadingImageLabel().setVisible(false);
 		}
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
+		collectionSummaryIndividualPresenter.setTeacherImage(classpageItemDo);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 	}
 	public void clearslot(){
@@ -365,7 +368,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
-		getView().setTeacherInfo(classpageItemDo);
+		this.classpageItemDo=classpageItemDo;
+		//getView().setTeacherInfo(classpageItemDo);
 	}
 
 	public void setDataInsightsSummaryUrl(String sessionId){

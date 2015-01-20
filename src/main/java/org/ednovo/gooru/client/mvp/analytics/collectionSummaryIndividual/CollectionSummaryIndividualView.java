@@ -21,6 +21,7 @@ import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -537,7 +538,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        if(result.size()==0){
 	        	Label erroeMsg=new Label();
 	        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
-	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
+	        	erroeMsg.setText(i18n.GL3118());
 	        	printOpendedData.add(erroeMsg);
 	        }
 		}catch(Exception e){
@@ -1004,8 +1005,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setViewResponseData(java.util.ArrayList, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	@Override
-	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary,String session) {
-		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session);
+	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary,String session,ClasspageItemDo classpageItemDo) {
+		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session,classpageItemDo);
 		 popupPanel.setStyleName(res.css().setOETextPopupCenter());
 	     if(popupPanel.isShowing()){
 	    	 popupPanel.hide();

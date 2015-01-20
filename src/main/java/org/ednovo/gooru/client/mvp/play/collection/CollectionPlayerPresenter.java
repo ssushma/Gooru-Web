@@ -504,6 +504,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
 				metadataPresenter.setTeacherInfo(classpageItemDo);
+				collectionEndPresenter.setTeacherInfo(classpageItemDo);
 				classpageId=classpageItemDo.getClasspageId();
 				AppClientFactory.getPlaceManager().setDataLogClasspageId(classpageId);
 				if(getPlaceManager().getRequestParameter("view")!=null){
