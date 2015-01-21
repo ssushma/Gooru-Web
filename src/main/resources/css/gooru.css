@@ -2176,6 +2176,9 @@ overflow: visible;
  .loginFailureAlert{
  	left:35% !important;
  }
+ .tableDivStyles{
+ width:60%;
+ }
  .positionFixed{
  	position:fixed !important;
  }
@@ -2667,7 +2670,8 @@ overflow: visible;
 
 @media(max-width:767px){
 	html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
  	
 	#__printingFrame{
@@ -2697,6 +2701,9 @@ overflow: visible;
  	left:22% !important;
  }
  
+ .tableDivStyles{
+ width:60% !important;
+ }
 	
 }
 @media (min-width: 320px) and (max-width: 479px){
@@ -2732,7 +2739,8 @@ overflow: visible;
  }
  
    html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
 }
 @media (min-width: 240px) and (max-width: 319px){
@@ -2771,7 +2779,8 @@ overflow: visible;
  	width:100% !important;
  }
   html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
 
 }
@@ -2788,7 +2797,8 @@ overflow: visible;
  		
  }
  html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
 	
  
@@ -2797,7 +2807,8 @@ overflow: visible;
 @media(min-width:768px){
  
  	html{
- 		overflow:hidden;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
 	
 	.reviewPopup{

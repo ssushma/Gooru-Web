@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
 import org.ednovo.gooru.client.mvp.search.SimpleResourceVc;
 import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchHandler;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
@@ -82,7 +83,12 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 		usedInResource.setCollectionId(collectionId);
 		SimpleResourceVc simpleReosurceView=new SimpleResourceVc(usedInResource, getUsedInResourcesPanel().getWidgetCount() + 1);
 		getSimpleResourceMap().put(usedInResource.getCollectionItemId(), simpleReosurceView);
-		getUsedInResourcesPanel().addDraggable(simpleReosurceView);
+		boolean device = BrowserAgent.isDevice();
+		if (device){
+			getUsedInResourcesPanel().add(simpleReosurceView);
+		}else{
+			getUsedInResourcesPanel().addDraggable(simpleReosurceView);
+		}
 	}
 
 	@Override

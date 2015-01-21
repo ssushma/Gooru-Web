@@ -42,6 +42,7 @@ public class AlertBoxUc extends DialogBoxUc{
 		super();
 		this.setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVVSmall());
 		this.addStyleName("loginFailureAlert");
+		this.addStyleName("tableDivStyles");
 	}
 	
 	/**
