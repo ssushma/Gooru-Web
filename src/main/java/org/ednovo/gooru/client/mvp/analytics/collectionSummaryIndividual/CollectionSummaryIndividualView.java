@@ -268,7 +268,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		         	if(result.get(i).getStatus()==0){
 		        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
-		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
+		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
 		              String categoryStyle="";
 		    		  if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 					      resourceCategory = "webpage";
@@ -386,7 +386,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	if(result.get(i).getStatus()==0){
 	        		data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
-		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
+		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
 		              String categoryStyle="";
 		              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 					      resourceCategory = "webpage";
