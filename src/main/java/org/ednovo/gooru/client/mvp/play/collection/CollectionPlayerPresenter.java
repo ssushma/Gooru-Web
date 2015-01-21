@@ -84,6 +84,8 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -99,6 +101,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -501,6 +504,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
 				metadataPresenter.setTeacherInfo(classpageItemDo);
+				collectionEndPresenter.setTeacherInfo(classpageItemDo);
 				classpageId=classpageItemDo.getClasspageId();
 				AppClientFactory.getPlaceManager().setDataLogClasspageId(classpageId);
 				if(getPlaceManager().getRequestParameter("view")!=null){
@@ -2355,7 +2359,22 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void adjustCollectionMetadaBody(boolean isHome){
 		if(isHome){
-			metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX);
+			  /*Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+			  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+			  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+			  if(isIpad)
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX); 
+			  }
+			  else if(isAndriod)
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX); 
+			  }
+			  else
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX); 
+			  }*/
+			
 		}else{
 			addFixedPositionNavArrows();
 		}

@@ -5,7 +5,7 @@
 		field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
-	<g:HTMLPanel    styleName="{res1.css.PopupMainMedium}">
+	<g:HTMLPanel    styleName="{res1.css.PopupMainMediumReport}">
 		<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
 		<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
 		        <g:HTMLPanel styleName="row">

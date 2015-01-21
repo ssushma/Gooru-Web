@@ -225,3 +225,9 @@
 .popupContainer{
 	background-color: #fff;
 }
+.teacher_name{
+	padding: 0;
+	padding-left: 14px;
+	padding-bottom: 9px;
+	font-weight: bold;
+}

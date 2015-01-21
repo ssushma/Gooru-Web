@@ -490,6 +490,20 @@ button.secondary:hover {
 	padding: 3px 3px;
 }
 
+
+.PopupMainMediumReport {
+	width: 800px;
+	color: #515151;
+	margin: 30px auto;
+	position: relative;
+	font-family: arial;
+	font-size: 12px;
+	background: #ffffff;
+	border-radius: 0 0;
+	border: 1px solid #999;
+	padding: 3px 3px;
+}
+
 .PopupMainLarge {
 	width: 902px;
 	color: #515151;

@@ -22,6 +22,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -450,7 +451,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	         	if(result.get(i).getStatus()==0){
 	        	data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	        	 String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
+	        	 String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
 	              String categoryStyle="";
 	              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 				      resourceCategory = "webpage";
@@ -572,7 +573,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	if(result.get(i).getStatus()==0){
 	        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
+	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
 	              String categoryStyle="";
 	              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 				      resourceCategory = "webpage";
@@ -867,9 +868,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		}
 		if(hours!=0){
 			if(createdTime!=null){
-				createdTime=createdTime+hours+" ";
+				createdTime=createdTime+hours+"hr ";
 			}else{
-				createdTime=hours+" ";
+				createdTime=hours+"hr ";
 			}
 		}
 		if(minutes!=0){
@@ -894,7 +895,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	@Override
 	public void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId,String questionType,String session) {
-			popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true,session);
+			popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true,session,new ClasspageItemDo());
 			popupPanel.setStyleName(res.css().setOETextPopupCenter());
 		     if(popupPanel.isShowing()){
 		    	 popupPanel.hide();
