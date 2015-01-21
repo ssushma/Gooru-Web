@@ -2176,6 +2176,9 @@ overflow: visible;
  .loginFailureAlert{
  	left:35% !important;
  }
+ .tableDivStyles{
+ width:60%;
+ }
  .positionFixed{
  	position:fixed !important;
  }
@@ -2697,6 +2700,9 @@ overflow: visible;
  	left:22% !important;
  }
  
+ .tableDivStyles{
+ width:60% !important;
+ }
 	
 }
 @media (min-width: 320px) and (max-width: 479px){
