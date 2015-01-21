@@ -2524,7 +2524,7 @@ footer p {
 footer .col-md-2 {
 	border-right: 1px solid #616161;
 	min-height: 132px;
-	padding-left: 50px;
+	/* padding-left: 50px; */
 }
 
 footer .col-md-2:last-child {
