@@ -2376,7 +2376,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			  }*/
 			
 		}else{
-			addFixedPositionNavArrows();
+			//addFixedPositionNavArrows();
 		}
 	}
 	public void addFixedPositionNavArrows(){

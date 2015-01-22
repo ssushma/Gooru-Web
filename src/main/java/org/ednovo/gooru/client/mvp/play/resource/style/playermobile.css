@@ -16,7 +16,9 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-.whitebg{}
+.whitebg{
+	padding-top: 0px;
+}
 .loginStatus{
 	margin-right:35px;
 }
