@@ -139,24 +139,18 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  headerView.getParent().getElement().setAttribute("style", "position:relative;");
-			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(true);
 			  androidSectiondiv.setVisible(false);
 
 		  }
 		  else if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  headerView.getParent().getElement().setAttribute("style", "position:relative;");
-			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
 			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
 		  else
 		  {
-			  headerView.getParent().getElement().setAttribute("style", "position:fixed;");
-			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
 
@@ -210,7 +204,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	
 	@UiHandler("closeIpadBtn")
 	public void onIpadCloseClick(ClickEvent clickEvent){
-		  headerView.getElement().setAttribute("style", "position:fixed;");
+		  
 		  ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
@@ -220,7 +214,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 
 	@UiHandler("closeAndriodBtn")
 	public void onAndriodCloseClick(ClickEvent clickEvent){
-		headerView.getElement().setAttribute("style", "position:fixed;");
+		
 		  ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;

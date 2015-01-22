@@ -195,16 +195,16 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+			//  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
 			 
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+			//  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
 		  }
 		  else
 		  {
-			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
+			 // mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
 	}
@@ -1380,6 +1380,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		 mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
+		// mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
 	}
 }
