@@ -361,7 +361,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	private void createAutoSuggestBox() {
 		panelSuggestBox.setStyleName("auto_suggest");
-		autoSuggetTextBox = new AutoSuggestForm(oracle) {
+		autoSuggetTextBox = new AutoSuggestForm(oracle, "email") {
 
 			@Override
 			public void onSubmit(DomEvent<EventHandler> event) {

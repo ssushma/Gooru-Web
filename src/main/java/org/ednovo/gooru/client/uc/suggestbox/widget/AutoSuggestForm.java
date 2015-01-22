@@ -52,7 +52,7 @@ public abstract class AutoSuggestForm extends Composite {
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public AutoSuggestForm(MultiWordSuggestOracle oracle) {
+	public AutoSuggestForm(MultiWordSuggestOracle oracle, String type) {
 		form = new FlowPanel();
 		form.setStyleName("form");
 		initWidget(form);
@@ -64,7 +64,7 @@ public abstract class AutoSuggestForm extends Composite {
 
 		// form.add(box);
 		if (txtInput == null){
-			 txtInput = new InputListWidget(oracle);
+			 txtInput = new InputListWidget(oracle, type);
 		}
 		form.add(txtInput);
 		txtInput.getTxtInputBox().setFocus(true);
@@ -170,7 +170,7 @@ public abstract class AutoSuggestForm extends Composite {
 		MultiWordSuggestOracle oracle = null;
 		BulletList list=null;
 
-		public InputListWidget(MultiWordSuggestOracle oracle) {
+		public InputListWidget(MultiWordSuggestOracle oracle, String type) {
 			FlowPanel panel = new FlowPanel();
 			initWidget(panel);
 			

@@ -513,7 +513,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@Override
 	public void createAutoSuggestBox() {
 		panelSuggestBox.setStyleName("auto_suggest");
-		autoSuggetTextBox = new AutoSuggestForm(oracle) {
+		autoSuggetTextBox = new AutoSuggestForm(oracle, "email") {
 
 			@Override
 			public void onSubmit(DomEvent<EventHandler> event) {
