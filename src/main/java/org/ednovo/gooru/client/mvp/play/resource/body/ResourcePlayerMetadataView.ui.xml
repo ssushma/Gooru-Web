@@ -13,7 +13,7 @@
 	<g:FlowPanel ui:field="wrapperContainerField" styleName="container {palyerStyleResource.getPlayerStyleResource.whitebg}">
 		<g:FlowPanel styleName="row">
 			<html5:SectionTag styleName="{palyerStyleResource.getPlayerStyleResource.blocksmall}" ui:field="collectionContainer">
-				<g:FlowPanel styleName="col-md-7 col-xs-6">
+				<g:FlowPanel styleName="col-md-7">
 					<g:FlowPanel styleName="leftBigarrow">
 						<g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button>
 						<g:Button styleName="" ui:field="narrationButton"></g:Button>
@@ -29,7 +29,7 @@
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
-				<g:FlowPanel styleName=" col-md-5 col-xs-6  {palyerStyleResource.getPlayerStyleResource.rightWrapper}">
+				<g:FlowPanel styleName=" col-md-5 {palyerStyleResource.getPlayerStyleResource.rightWrapper}">
 					<g:FlowPanel styleName="rightBigarrow">
 						<g:Button styleName="{playerStyle.spriteType} {playerStyle.prev}" ui:field="forwardButton"></g:Button>
 					</g:FlowPanel>

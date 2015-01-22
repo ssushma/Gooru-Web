@@ -3,8 +3,8 @@
 	padding:10px 0 5px 0;
 	width:100%;
 	float:left;
-	position:fixed;
 	bottom:0;
+	z-index: 999;
 }
 .footerContainer .infoButtonNormal{
 	display:inline-block;

@@ -888,11 +888,10 @@ font-size: 31px;
 	left: 0 !important;
 	right: 0 !important;
 	bottom: 0 !important;
-	position: fixed !important;
 	overflow: visible;
 	z-index: 99999;
 	background-color: #ddd;
-	overflow-y: scroll !important;
+	overflow-y: auto !important;
 }
 .rightPanel{
 	padding-top: 30px;
@@ -920,7 +919,7 @@ font-size: 31px;
 }
 .blocksmall{
 	float: left;
-	padding: 25px 10px;
+	padding: 5px 10px;
 	width: 100%;
 	background: #ffffff;
 	border-bottom: 1px solid #ddd;
@@ -946,7 +945,6 @@ font-size: 31px;
 	margin-left: 18px;
 }
 .fixedContainer{
-	position:fixed;
 	width:100%;
 	z-index:999;
 }
@@ -1122,5 +1120,5 @@ font-size: 31px;
 	border-top:1px solid #ddd;
 }
 .metatDataContainer{
-	padding-top:172px;
+
 }
