@@ -154,6 +154,10 @@ public abstract class AutoSuggestForm extends Composite {
 	public class InputListWidget extends Composite {
 		List<String> itemsSelected = new ArrayList<String>();
 		TextBox txtInputBox = null;
+		String type = null;
+		MultiWordSuggestOracle oracle = null;
+		BulletList list=null;
+		
 		/** 
 		 * This method is to get the txtInputBox
 		 */
@@ -167,15 +171,15 @@ public abstract class AutoSuggestForm extends Composite {
 		public void setTxtInputBox(TextBox txtInputBox) {
 			this.txtInputBox = txtInputBox;
 		}
-		MultiWordSuggestOracle oracle = null;
-		BulletList list=null;
+		
 
-		public InputListWidget(MultiWordSuggestOracle oracle, String type) {
+		public InputListWidget(MultiWordSuggestOracle oracle, final String type) {
 			FlowPanel panel = new FlowPanel();
 			initWidget(panel);
 			
 			this.oracle = oracle;
-
+			this.type = type;
+			
 			list = new BulletList();
 			list.setStyleName("token-input-list-gooru");
 			final ListItem item = new ListItem();
@@ -193,6 +197,7 @@ public abstract class AutoSuggestForm extends Composite {
 			list.add(item);
 
 			txtInputBox.addKeyUpHandler(new KeyUpHandler() {
+				
 				public void onKeyUp(KeyUpEvent event) {
 					errorMsgVisibility(false, null);
 					if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
@@ -200,13 +205,15 @@ public abstract class AutoSuggestForm extends Composite {
 						// addresses)
 						if (txtInputBox.getValue() !=null && !txtInputBox.getValue().trim().equalsIgnoreCase("")){
 //							if (txtInputBox.getValue().contains("@")){
-							boolean isValidEmailId = txtInputBox.getValue().trim().matches(EMAIL_REGEX);
-							if (isValidEmailId){
-								deselectItem(txtInputBox, list);
-							}else{
-								// Show error message
-								txtInputBox.setValue(txtInputBox.getValue().trim());
-								errorMsgVisibility(true, txtInputBox.getValue());
+							if (type.equalsIgnoreCase("email")){
+								boolean isValidEmailId = txtInputBox.getValue().trim().matches(EMAIL_REGEX);
+								if (isValidEmailId){
+									deselectItem(txtInputBox, list);
+								}else{
+									// Show error message
+									txtInputBox.setValue(txtInputBox.getValue().trim());
+									errorMsgVisibility(true, txtInputBox.getValue());
+								}
 							}
 						}
 					}
@@ -214,7 +221,33 @@ public abstract class AutoSuggestForm extends Composite {
 					if (txtInputBox.getValue().contains(",")){
 						
 						if (txtInputBox.getValue() !=null && !txtInputBox.getValue().equalsIgnoreCase("")){
-							String emailIds[] = txtInputBox.getValue().trim().split(",");
+							if (type.equalsIgnoreCase("email")){
+								String emailIds[] = txtInputBox.getValue().trim().split(",");
+								boolean isValid=false;
+								for (int k=0; k<emailIds.length;k++){
+									boolean isValidEmailId = emailIds[k].trim().matches(EMAIL_REGEX);
+									if (isValidEmailId){
+										isValid=true;
+									}else{
+										isValid=false;
+										errorMsgVisibility(true, emailIds[k].trim());
+										break;
+									}
+								}
+								if (isValid){
+									if (txtInputBox.getValue().contains("@")){
+										deselectItem(txtInputBox, list);
+									}else{
+										//TODO
+										errorMsgVisibility(true, txtInputBox.getValue());
+									}
+								}
+							}
+						}
+					}
+					if (txtInputBox.getValue().contains(" ") ){
+						if (type.equalsIgnoreCase("email")){
+							String emailIds[] = txtInputBox.getValue().trim().split(" ");
 							boolean isValid=false;
 							for (int k=0; k<emailIds.length;k++){
 								boolean isValidEmailId = emailIds[k].trim().matches(EMAIL_REGEX);
@@ -226,38 +259,16 @@ public abstract class AutoSuggestForm extends Composite {
 									break;
 								}
 							}
+							
+	//						boolean isValidEmailId = txtInputBox.getValue().trim().matches(EMAIL_REGEX);
+							
 							if (isValid){
-								if (txtInputBox.getValue().contains("@")){
-									deselectItem(txtInputBox, list);
-								}else{
-									//TODO
-									errorMsgVisibility(true, txtInputBox.getValue());
-								}
-							}
-						}
-					}
-					if (txtInputBox.getValue().contains(" ") ){
-						String emailIds[] = txtInputBox.getValue().trim().split(" ");
-						boolean isValid=false;
-						for (int k=0; k<emailIds.length;k++){
-							boolean isValidEmailId = emailIds[k].trim().matches(EMAIL_REGEX);
-							if (isValidEmailId){
-								isValid=true;
+								deselectItem(txtInputBox, list);
 							}else{
-								isValid=false;
-								errorMsgVisibility(true, emailIds[k].trim());
-								break;
+								// Show error message
+								txtInputBox.setValue(txtInputBox.getValue().trim());
+								errorMsgVisibility(true, txtInputBox.getValue());
 							}
-						}
-						
-//						boolean isValidEmailId = txtInputBox.getValue().trim().matches(EMAIL_REGEX);
-						
-						if (isValid){
-							deselectItem(txtInputBox, list);
-						}else{
-							// Show error message
-							txtInputBox.setValue(txtInputBox.getValue().trim());
-							errorMsgVisibility(true, txtInputBox.getValue());
 						}
 					}
 					dataObjectModel(txtInputBox.getText().trim());
