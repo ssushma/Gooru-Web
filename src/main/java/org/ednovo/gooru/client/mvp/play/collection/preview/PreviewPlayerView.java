@@ -139,6 +139,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
+			  headerView.getParent().getElement().setAttribute("style", "position:relative;");
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(true);
 			  androidSectiondiv.setVisible(false);
@@ -146,6 +147,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		  }
 		  else if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
+			  headerView.getParent().getElement().setAttribute("style", "position:relative;");
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
@@ -153,6 +155,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		  }
 		  else
 		  {
+			  headerView.getParent().getElement().setAttribute("style", "position:fixed;");
 			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);

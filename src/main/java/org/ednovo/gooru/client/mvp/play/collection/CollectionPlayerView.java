@@ -158,6 +158,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
+		  headerView.getParent().getElement().setAttribute("style", "position:relative;");
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			 ipadSectiondiv.setVisible(true);
 			 androidSectiondiv.setVisible(false);
@@ -165,6 +166,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
+			  headerView.getParent().getElement().setAttribute("style", "position:relative;");
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
@@ -172,9 +174,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  }
 		  else
 		  {
+			  headerView.getParent().getElement().setAttribute("style", "position:fixed;");
+			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
-			 // headerView.getElement().setAttribute("style", "position:fixed;");
 			  
 		  }
 		  setUiText();
