@@ -2171,7 +2171,7 @@ overflow: visible;
  }
  
  .borderRight{
- 	border-left: 1px solid #cacaca;
+ 	
  }
  .loginFailureAlert{
  	left:35% !important;
@@ -2457,7 +2457,11 @@ overflow: visible;
 		min-width:100%
 	}
 }
-
+@media (min-width: 480px) and (max-width: 767px) {
+ 	 .positionFixed{
+ 	position:relative !important;
+ 	}
+}
 
 @media (min-width: 768px) and (max-width: 991px) {
 		.containerMain {
@@ -2466,6 +2470,9 @@ overflow: visible;
 		.container {
 			width: auto !important;
 		}
+		 	 	 .positionFixed{
+ 	position:relative !important;
+ }
 }
 
 #searchPush{
@@ -2742,6 +2749,9 @@ overflow: visible;
  		overflow-x: hidden;
 		overflow-y: auto;
  	}
+ 	 	 .positionFixed{
+ 	position:relative !important;
+ }
 }
 @media (min-width: 240px) and (max-width: 319px){
 		 .borderLeft{
@@ -2782,6 +2792,9 @@ overflow: visible;
  		overflow-x: hidden;
 		overflow-y: auto;
  	}
+ 	 .positionFixed{
+ 	position:relative !important;
+ }
 
 }
 @media (max-width: 991px) and (min-width: 768px){
