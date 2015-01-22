@@ -96,7 +96,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	@UiField FlowPanel tagsButtonContainer;
 	@UiField SectionTag resourceWidgetContainer;
-	@UiField FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
+	@UiField
+	static FlowPanel wrapperContainerField;
+	@UiField
+	FlowPanel tagsContainer;
+	@UiField
+	FlowPanel resourcePublisher;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
@@ -234,6 +239,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		plusAddTagsButton.getElement().setId("plusAddTagsButton");
 		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL2081());
 		plusAddTagsButton.getElement().setAttribute("title",i18n.GL2081());
+
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -273,15 +279,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			//  wrapperContainerField.getElement().setAttribute("style", "padding-top:0px;");
 			 
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			  //wrapperContainerField.getElement().setAttribute("style", "padding-top:0px;");
 		  }
 		  else
 		  {
+			//  wrapperContainerField.getElement().setAttribute("style", "padding-top:88px;");
 			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
@@ -1582,7 +1590,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+		//  wrapperContainerField.getElement().setAttribute("style", "padding-top:88px;");
 	}
 
 	/**
