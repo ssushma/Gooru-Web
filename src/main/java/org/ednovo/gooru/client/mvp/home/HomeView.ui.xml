@@ -930,7 +930,7 @@
 						    </div>
 							<div class="{res.css.getContentContainer}">
 								<h4>
-								    <g:Anchor href="http://support.goorulearning.org/hc/en-us/articles/200600838" target="_blank" text="{i18n.GL2134}"></g:Anchor>
+								    <g:Anchor href="https://drive.google.com/file/d/0Bx97a7QgWf0HdndiRGY0UTJrTzY0N1NyNU5kT2VVVWdUM2hN/view" target="_blank" text="{i18n.GL2134}"></g:Anchor>
 								</h4>
 								<tbp:PPanel  text="{i18n.GL2136}"/>
 								<h4>
