@@ -2152,7 +2152,7 @@ fieldset {
 	left: 63% !important;
  }
  .preFilterPopup{
-	left:20% !important;
+	left:26.4% !important;
 	top:48px !important;
 	z-index: 99999;
 visibility: visible;
@@ -2182,6 +2182,7 @@ overflow: visible;
  .positionFixed{
  	position:fixed !important;
  }
+
   
  .dropdownListContainerScrollPanel{
  	margin-left:46px;
@@ -2456,11 +2457,19 @@ overflow: visible;
 		width:100%;
 		min-width:100%
 	}
+	.preFilterPopup{
+	left:20% !important;
+	top:48px !important;
+  }
 }
 @media (min-width: 480px) and (max-width: 767px) {
  	 .positionFixed{
  	position:relative !important;
  	}
+ 		.preFilterPopup{
+	left:4% !important;
+	top:48px !important;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -2473,6 +2482,10 @@ overflow: visible;
 		 	 	 .positionFixed{
  	position:relative !important;
  }
+ 	.preFilterPopup{
+	left:16.5% !important;
+	top:48px !important;
+  }
 }
 
 #searchPush{
@@ -2828,10 +2841,7 @@ overflow: visible;
 		left:69% !important;
 		width: 100%;	
 	}
-	.preFilterPopup{
-	left:4% !important;
-	top:48px !important;
-  }
+
 	.reviewPopupPoor{
 		left:63% !important;
 		width:300px;
