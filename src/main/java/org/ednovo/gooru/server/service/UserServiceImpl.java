@@ -258,7 +258,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return resourceDeserializer.resetPassword(jsonRep,jsonResponseRep.getStatusCode(),jsonResponseRep.getErrorMessage()); 
+		String message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";
+		return resourceDeserializer.resetPassword(jsonRep,jsonResponseRep.getStatusCode(),jsonResponseRep.getResponseDo().getErrorMessage(), jsonResponseRep.getResponseDo() !=null ? jsonResponseRep.getResponseDo() : null); 
 	}
 
 	@Override
