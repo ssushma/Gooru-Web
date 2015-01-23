@@ -139,11 +139,21 @@ public class LoginPopupUc extends PopupPanel{
 	
 
 	private static final String LOGINEVENT = "loginEvent";
-	private static final int UNAUTHORISED_STATUS_CODE = 401;
-	private static final int PASSWORDERROR_STATUS_CODE = 400;
+	private static final int HTTP_UNAUTHORISED_STATUS_CODE = 401;
+	private static final int HTTP_SUCCESS_STATUS_CODE = 200;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
 	private static final String UNAUTHORIZED_MSG ="Please double-check your password and try signing in again.";
 	private static final String USER_ID_WRONG_MSG = "Please double-check your email address and password, and then try logging in again.";
+	
+	
+	private static final String ERR_GL0078 = "401-GL0078";
+	private static final String ERR_GL0079 = "401-GL0079";
+	private static final String ERR_GL010501 = "401-GL010501";
+	private static final String ERR_GL010502 = "401-GL010502";
+	private static final String ERR_GL010503 = "401-GL010503";
+	private static final String ERR_GL0081="401-GL0081";
+	
+	
 	
 	@UiTemplate("LoginPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, LoginPopupUc> {
@@ -254,15 +264,10 @@ public class LoginPopupUc extends PopupPanel{
 	 */
 	public void setTextAndIds(){
 		lblLoginHeading.setText(i18n.GL0187());
-		lblLoginHeading.getElement().setId("lblLoginHeading");
-		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0187());
-		lblLoginHeading.getElement().setAttribute("title",i18n.GL0187());
+		StringUtil.setAttributes(lblLoginHeading.getElement(), "lblLoginHeading", i18n.GL0187(), i18n.GL0187());
 		
 		gmailButton.setText(i18n.GL0203());
-		gmailButton.getElement().setId("btnGmail");
-		gmailButton.getElement().setAttribute("alt",i18n.GL0203()) ;
-		gmailButton.getElement().setAttribute("title",i18n.GL0203());
-		
+		StringUtil.setAttributes(gmailButton.getElement(), "gmailButton", i18n.GL0203(), i18n.GL0203());
 		
         loginTxtBox.setPlaceholder(i18n.GL0202());
         loginTxtBox.getElement().setAttribute("placeholder", i18n.GL0202());
@@ -270,51 +275,38 @@ public class LoginPopupUc extends PopupPanel{
         passwordTxtBox.setPlaceholder(i18n.GL0204());
        
         forgotPwd.setText(i18n.GL0205());
-        forgotPwd.getElement().setId("lnkForgotPwd");
-        forgotPwd.getElement().setAttribute("alt",i18n.GL0205());
-        forgotPwd.getElement().setAttribute("title",i18n.GL0205());
+        StringUtil.setAttributes(forgotPwd.getElement(), "lnkForgotPwd", i18n.GL0205(), i18n.GL0205());
+        
+        
 //        lblKeepMeLogedIn.setText(i18n.GL0206);
         loginButton.setText(i18n.GL0187());
-        loginButton.getElement().setAttribute("alt",i18n.GL0187());
-        loginButton.getElement().setAttribute("title",i18n.GL0187());
+        StringUtil.setAttributes(loginButton.getElement(), "btnLogin", i18n.GL0187(), i18n.GL0187());
 		
         ancRegisterHere.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
-        ancRegisterHere.getElement().setAttribute("alt",i18n.GL0207());
-        ancRegisterHere.getElement().setAttribute("title",i18n.GL0207());
-        ancRegisterHere.getElement().setId("lnkRegisterHere");
+        StringUtil.setAttributes(ancRegisterHere.getElement(), "lnkRegisterHere", i18n.GL0207()+i18n.GL_SPL_EXCLAMATION(), i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
        
         lblDoYouHaveAccount.setText(i18n.GL0208());
-        lblDoYouHaveAccount.getElement().setId("lblDoYouHaveAccount");
-        lblDoYouHaveAccount.getElement().setAttribute("alt",i18n.GL0208());
-        lblDoYouHaveAccount.getElement().setAttribute("title",i18n.GL0208());
+        StringUtil.setAttributes(lblDoYouHaveAccount.getElement(), "lblDoYouHaveAccount", i18n.GL0208(), i18n.GL0208());
+        
         
         lblOr.setText(i18n.GL0209());
-        lblOr.getElement().setId("lblOr");
-        lblOr.getElement().setAttribute("alt",i18n.GL0209());
-        lblOr.getElement().setAttribute("title",i18n.GL0209());
+        StringUtil.setAttributes(lblOr.getElement(), "lblOr", i18n.GL0209(), i18n.GL0209());
         
         lblPleaseWait.setText(i18n.GL0242());
-        lblPleaseWait.getElement().setId("lblPleaseWait");
-        lblPleaseWait.getElement().setAttribute("alt",i18n.GL0242());
-        lblPleaseWait.getElement().setAttribute("title",i18n.GL0242());
+        StringUtil.setAttributes(lblPleaseWait.getElement(), "lblPleaseWait", i18n.GL0242(), i18n.GL0242());
         
         loginTxtBox.getElement().setId("tbLoginUsername");
         passwordTxtBox.getElement().setId("tbLoginPassword");
-        loginButton.getElement().setId("btnLogin");
         
         lblPleaseWait.setVisible(false);
         
         lblWelcomeBack.setText(i18n.GL0345());
-        lblWelcomeBack.getElement().setId("lblWelcomeBack");
-        lblWelcomeBack.getElement().setAttribute("alt",i18n.GL0345());
-        lblWelcomeBack.getElement().setAttribute("title",i18n.GL0345());
+        StringUtil.setAttributes(lblWelcomeBack.getElement(), "lblWelcomeBack", i18n.GL0345(), i18n.GL0345());
         
         lblLoginWithGooru.setText(i18n.GL0346());
-        lblLoginWithGooru.getElement().setId("lblLoginWithGooru");
-        lblLoginWithGooru.getElement().setAttribute("alt",i18n.GL0346());
-        lblLoginWithGooru.getElement().setAttribute("title",i18n.GL0346());
+        StringUtil.setAttributes(lblLoginWithGooru.getElement(), "lblLoginWithGooru", i18n.GL0346(), i18n.GL0346());
         
-        cancelButton.getElement().setId("btnCancelButton");
+        cancelButton.getElement().setId("btnCancel");
 	}
 
 	
@@ -356,18 +348,27 @@ public class LoginPopupUc extends PopupPanel{
 			final String username = loginTxtBox.getText().trim();
 			String password = passwordTxtBox.getText().trim();
 			
-			JSONObject login = new JSONObject();
-			login.put("username", new JSONString(username));
-			login.put("password", new JSONString(password));
 			if (username.length() > 1 && password.length() > 1) {
+				
+				JSONObject login = new JSONObject();
+				login.put("username", new JSONString(username));
+				login.put("password", new JSONString(password));
 				
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
-//				AppClientFactory.getInjector().getAppService().signin(username, password, new AsyncCallback<UserDo>() {
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE && result.getStatusCode()!=PASSWORDERROR_STATUS_CODE){
+						
+						int statusCode = result.getStatusCode();
+						String errorCode = null;
+						String errorMessage = null;
+						if (result.getResponseDo() !=null){
+							 errorCode = result.getResponseDo().getErrorCode();
+							 errorMessage = result.getResponseDo().getErrorMessage();
+						}
+
+						if(statusCode==HTTP_SUCCESS_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
 								MixpanelUtil.Registration_turns13(); 
@@ -402,22 +403,11 @@ public class LoginPopupUc extends PopupPanel{
 							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 								AppClientFactory.fireEvent(new SetCommentsOptionsEvent());
 							}
-							if(getWidgetMode()!=null){
-								//AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
-							}
+							
 							hide();
-							//headerUc.setLoggedInUser(result);
+							
 						    AppClientFactory.fireEvent(new SetHeaderEvent(result));
-							//AppClientFactory.resetPlace();
 						    
-	/*					    if(result.getUsername().equalsIgnoreCase("TexasTeacher")) {
-								AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));
-								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
-							}else{
-								AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
-								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
-							}
-	*/					    
 						    AppClientFactory.setUserflag(true);
 							AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
@@ -465,11 +455,6 @@ public class LoginPopupUc extends PopupPanel{
 						    	AppClientFactory.fireEvent(new SetLoginStatusEvent(true));
 						    }
 						    
-						    if(nameToken.equals(PlaceTokens.TEACH)) {
-//						    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
-						    }  else if(nameToken.equals(PlaceTokens.SHELF)){
-								//getCollectionFirstItem();
-						    }
 						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
 						    	AppClientFactory.fireEvent(new SetMarkButtonEvent());
@@ -484,94 +469,63 @@ public class LoginPopupUc extends PopupPanel{
 							    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SAUSD_LIBRARY);
 							    }
 						    }
-						    
-						    /*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
-						    	String newMailId = AppClientFactory.getPlaceManager()
-										.getRequestParameter("newMailId");
-								String userId = AppClientFactory.getPlaceManager().getRequestParameter(
-										"userId");
-								String confirmStatus = AppClientFactory.getPlaceManager()
-										.getRequestParameter("confirmStatus");
-								if(newMailId!=null && userId!=null && confirmStatus!=null){
-									Map<String, String> params = new HashMap<String, String>();
-									params.put("confirmStatus", confirmStatus);
-									params.put("newMailId", newMailId);
-									params.put("userId", userId);
-									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SETTINGS, params);
-									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
-								}
-						    }*/
 						}
-						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && (result.getErrorMsg().equalsIgnoreCase(UNAUTHORIZED_MSG) || result.getErrorMsg().equalsIgnoreCase( USER_ID_WRONG_MSG))){
-							loginButton.setVisible(true);
-							lblPleaseWait.setVisible(false);
-							new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+						else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
+							handleInProgress();
+							
+							if (errorCode.equalsIgnoreCase(ERR_GL0078)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
+								// For blocked users
+								new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL3114());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
+								// TODO - waiting for message
+							}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
+								// TODO - waiting for message
+							}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+							}
+						}else{
+							new AlertContentUc(i18n.GL1966(), errorMessage);
 						}
-						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && (!result.getErrorMsg().equalsIgnoreCase(UNAUTHORIZED_MSG) || !result.getErrorMsg().equalsIgnoreCase( USER_ID_WRONG_MSG))){
-							loginButton.setVisible(true);
-							lblPleaseWait.setVisible(false);
-							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
-						}
+						//To get the refresh token once user is logged in to the system.
 						AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
 							
 							@Override
 							public void onSuccess(String result) {
-								
-								/*if(result==null)
-								{
-									StringUtil.clearCookies(GOOGLE_REFRESH_TOKEN, "/", result);
-								}else{*/
-								//	Cookies.setCookie(GOOGLE_REFRESH_TOKEN, result);
-									UserDo user = AppClientFactory.getLoggedInUser();
-									user.setRefreshToken(result);
-								
-									AppClientFactory.setLoggedInUser(user);
-								//}
-								
+								UserDo user = AppClientFactory.getLoggedInUser();
+								user.setRefreshToken(result);
+							
+								AppClientFactory.setLoggedInUser(user);
 							}
 							
 							@Override
 							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
+								caught.printStackTrace();
 							}
 						});
 					}
-
 					
 
 					@Override
 					public void onFailure(Throwable caught) {
 						caught.printStackTrace(); 
-						loginButton.setVisible(true);
-						lblPleaseWait.setVisible(false);
-//						new AlertContentUc(i18n.GL0061(), i18n.GL0347());
+						handleInProgress();
 					}
 				});
 			} else {
-				loginButton.setVisible(true);
-				lblPleaseWait.setVisible(false);
+				handleInProgress();
 				new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 			}
 		} else  { 
-			loginButton.setVisible(true);
-			lblPleaseWait.setVisible(false);
+			handleInProgress();
 			new AlertMessageUc(i18n.GL0738(), new HTML(i18n.GL0348()));
 		}
 	}
 
-	/*private void getCollectionFirstItem() {
-		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
-            public void onSuccess(List<CollectionDo> result) {				                	
-            	for (CollectionDo collection : result) {
-        			if (!collection.getCollectionType().toString().trim().equalsIgnoreCase("folder")){
-        				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", collection.getGooruOid() });
-        				break;
-        			}
-        		}
-            }
-        });
-	}*/
+
 	/**
 	 * Added click handler to hide the login popup.
 	 * 
@@ -637,10 +591,6 @@ public class LoginPopupUc extends PopupPanel{
 		MixpanelUtil.Arrive_Register_popup();
 		DataLogEvents.signUp(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "");
 		
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("callback", "signup");
-//		params.put("type", "1");
-//		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME, params );
 		 PlaceRequest checkTabvalue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
          String tabValue = checkTabvalue.getParameter("tab", null);
 		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
@@ -799,23 +749,6 @@ public class LoginPopupUc extends PopupPanel{
 
 	}
 	public void openClasspage() {
-		/**
-		 * As per the new requirement for 6.4 should land on my classes landing page so commented the following code.
-		 */
-		/*AppClientFactory
-				.getInjector()
-				.getClasspageService()
-				.v2GetAllClass("2", "0",
-						new SimpleAsyncCallback<ClasspageListDo>() {
-							@Override
-							public void onSuccess(ClasspageListDo result) {
-								if (result.getSearchResults().size() > 0){
-									OpenClasspageEdit(result.getSearchResults().get(0).getGooruOid());
-								}else{
-									
-								}
-							}
-						});*/
 		
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 	}
@@ -828,6 +761,29 @@ public class LoginPopupUc extends PopupPanel{
 		AppClientFactory.getPlaceManager().revealPlace(
 				PlaceTokens.EDIT_CLASSPAGE, params);
 	}
-
+	
+	/**
+	 * 
+	 * @function handleInProgress 
+	 * 
+	 * @created_date : 22-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private void handleInProgress(){
+		loginButton.setVisible(true);
+		lblPleaseWait.setVisible(false);
+	}
 }
 
