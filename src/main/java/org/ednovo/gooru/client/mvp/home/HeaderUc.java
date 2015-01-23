@@ -1722,7 +1722,7 @@ public class HeaderUc extends Composite implements
 	}
 
 	public void showMarketingPopup(UserDo userDo) {
-		new ImprovedGooruPopUpView();
+//		new ImprovedGooruPopUpView();
 	}
 
 	/**

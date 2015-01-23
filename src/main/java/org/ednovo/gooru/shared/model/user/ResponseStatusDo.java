@@ -32,7 +32,21 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-
+/**
+ * 
+ * @fileName : ResponseStatusDo.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 22-Jan-2015
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
 @JsonInclude(Include.NON_NULL)
 public class ResponseStatusDo implements Serializable {
 
@@ -43,6 +57,9 @@ public class ResponseStatusDo implements Serializable {
 
 	private Integer code;
 	private String status;
+	
+	private String errorCode;
+	private String errorMessage;
 	
 	public ResponseStatusDo(){}
 	/** 
@@ -68,6 +85,94 @@ public class ResponseStatusDo implements Serializable {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	/**
+	 * 
+	 * @function getErrorCode 
+	 * 
+	 * @created_date : 22-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public String getErrorCode() {
+		return errorCode;
+	}
+	/**
+	 * 
+	 * @function setErrorCode 
+	 * 
+	 * @created_date : 22-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param errorCode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+	/**
+	 * 
+	 * @function getErrorMessage 
+	 * 
+	 * @created_date : 22-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	/**
+	 * 
+	 * @function setErrorMessage 
+	 * 
+	 * @created_date : 22-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param errorMessage
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 	
 	

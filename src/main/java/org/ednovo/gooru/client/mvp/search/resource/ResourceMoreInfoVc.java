@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.search.MoreInfoFieldVc;
 import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
 import org.ednovo.gooru.client.mvp.search.SimpleCollectionVc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -58,12 +59,17 @@ public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo,
 	 * @param searchDragController instance of {@link ResourceDragController}
 	 */
 	public ResourceMoreInfoVc(ResourceDragController searchDragController) {
-		super(searchDragController,true);
+		super(searchDragController,false);
 	}
 
 	@Override
 	public void renderUsedInResource(CollectionSearchResultDo childResource) {
-		getUsedInResourcesPanel().addDraggable(new SimpleCollectionVc(childResource));
+		boolean device = BrowserAgent.isDevice();
+		if (device){
+			getUsedInResourcesPanel().add(new SimpleCollectionVc(childResource));
+		}else{
+			getUsedInResourcesPanel().addDraggable(new SimpleCollectionVc(childResource));
+		}
 	}
 
 	@Override

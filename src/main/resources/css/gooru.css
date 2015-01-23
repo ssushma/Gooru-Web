@@ -2171,10 +2171,13 @@ overflow: visible;
  }
  
  .borderRight{
- 	border-left: 1px solid #cacaca;
+ 	
  }
  .loginFailureAlert{
  	left:35% !important;
+ }
+ .tableDivStyles{
+ width:60%;
  }
  .positionFixed{
  	position:fixed !important;
@@ -2454,7 +2457,11 @@ overflow: visible;
 		min-width:100%
 	}
 }
-
+@media (min-width: 480px) and (max-width: 767px) {
+ 	 .positionFixed{
+ 	position:relative !important;
+ 	}
+}
 
 @media (min-width: 768px) and (max-width: 991px) {
 		.containerMain {
@@ -2463,6 +2470,9 @@ overflow: visible;
 		.container {
 			width: auto !important;
 		}
+		 	 	 .positionFixed{
+ 	position:relative !important;
+ }
 }
 
 #searchPush{
@@ -2667,7 +2677,8 @@ overflow: visible;
 
 @media(max-width:767px){
 	html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
  	
 	#__printingFrame{
@@ -2697,6 +2708,9 @@ overflow: visible;
  	left:22% !important;
  }
  
+ .tableDivStyles{
+ width:60% !important;
+ }
 	
 }
 @media (min-width: 320px) and (max-width: 479px){
@@ -2732,8 +2746,12 @@ overflow: visible;
  }
  
    html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
+ 	 	 .positionFixed{
+ 	position:relative !important;
+ }
 }
 @media (min-width: 240px) and (max-width: 319px){
 		 .borderLeft{
@@ -2771,8 +2789,12 @@ overflow: visible;
  	width:100% !important;
  }
   html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
+ 	 .positionFixed{
+ 	position:relative !important;
+ }
 
 }
 @media (max-width: 991px) and (min-width: 768px){
@@ -2788,7 +2810,8 @@ overflow: visible;
  		
  }
  html{
- 		overflow:hidden !important;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
 	
  
@@ -2797,7 +2820,8 @@ overflow: visible;
 @media(min-width:768px){
  
  	html{
- 		overflow:hidden;
+ 		overflow-x: hidden;
+		overflow-y: auto;
  	}
 	
 	.reviewPopup{

@@ -49,6 +49,12 @@
 	border-right: 1px solid #CCCCCC;
 	border-left: 1px solid #CCCCCC;
 }
+.viewSummaryTextSummary {
+	float: left;
+	border: 1px solid #ccc;
+	border-left: 1px solid #CCCCCC;
+	margin-top: 2px;
+}
 .addButonStyle{
 	height: 39px;
 	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED) !important;

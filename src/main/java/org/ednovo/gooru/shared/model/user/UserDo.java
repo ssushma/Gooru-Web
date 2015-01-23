@@ -98,6 +98,8 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	
 	private String errorMsg;
 	
+	private ResponseStatusDo responseDo;  
+	
 	public UserDo(){}
 	
 	
@@ -476,6 +478,22 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	 */
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+
+	/** 
+	 * This method is to get the responseDo
+	 */
+	public ResponseStatusDo getResponseDo() {
+		return responseDo;
+	}
+
+
+	/** 
+	 * This method is to set the responseDo
+	 */
+	public void setResponseDo(ResponseStatusDo responseDo) {
+		this.responseDo = responseDo;
 	}
 	
 	
