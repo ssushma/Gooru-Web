@@ -147,7 +147,7 @@ public class ViewResponseUserWidget extends Composite {
 			spnEdit.setVisible(false);
 			spnDelete.setVisible(false);
 		}
-		/*if(classpageItemDo!=null && classpageItemDo.getUserNameDispaly()!=null){
+		if(classpageItemDo!=null && classpageItemDo.getUserNameDispaly()!=null){
 			teacherName.setText(classpageItemDo.getUserNameDispaly()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL0195());
 			if(classpageItemDo.getProfileImageUrl()!=null){
 				userProfileImage.setUrl(classpageItemDo.getProfileImageUrl());
@@ -157,7 +157,7 @@ public class ViewResponseUserWidget extends Composite {
 				userProfileImage1.setUrl("../images/settings/setting-user-image.png");
 			}
 		}else{
-			teacherName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL0195());*/
+			teacherName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL0195());
 			if(AppClientFactory.getLoggedInUser().getProfileImageUrl()!=null){
 				userProfileImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
 				userProfileImage1.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
@@ -165,7 +165,7 @@ public class ViewResponseUserWidget extends Composite {
 				userProfileImage.setUrl("../images/settings/setting-user-image.png");
 				userProfileImage1.setUrl("../images/settings/setting-user-image.png");
 			}
-		/*}*/
+		}
 		
 		userProfileImage.addErrorHandler(new OnErrorProfileImage());
 		userProfileImage1.addErrorHandler(new OnErrorProfileImage());

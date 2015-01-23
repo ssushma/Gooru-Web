@@ -1,3 +1,4 @@
+@external .collectionLastAccessed;
 .maincontainer {
 	background-color: white;
 	text-align: center;
@@ -14,7 +15,9 @@
 	margin-top: 3%;
 	/* margin-left: 14%; */
 }
-
+.container{}
+.collectionsProgressContainerMain{}
+.collectionSummaryDetailsWrapper{}
 .htmlpanlProgress {
 	overflow: hidden;
 	width: 100%;
@@ -54,17 +57,20 @@
 }
 
 .collectionSummaryDetailsWrapper {
-	font-size: 13px;
-	padding: 10px 0;
-	margin: -1px 0;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	clear: both;
-}
-.container{}
-.collectionsProgressContainerMain{
+	float: left;
+	/* width: 91%; */
 	width: 100%;
+	border-top: 1px solid #DDDDDD;
+	padding: 15px 0px;
+	border-bottom: 1px solid #DDDDDD;
+	color: #515151;
+	font-size: 13px;
+	margin-top: 15px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: rgb(221, 221, 221);
 }
+
 .left_container {
 	width: 100%;
 	float: left;
@@ -94,6 +100,8 @@
 
 .collectionLastAccessed {
 	font-weight: bold;
+	display:block;
+	line-height: 33px;
 }
 
 .gooru_session_data_content {
@@ -120,7 +128,8 @@
 	float: left;
 	clear: both;
 	font-size: 13px;
-	padding-left: 10px;
+	padding-left:0px;
+	line-height: 20px;
 }
 
 .right_session {
@@ -164,13 +173,16 @@
 	z-index: 5;
 	margin-left: 375px;
 }
+.container{
+	
+}
+.collectionsProgressContainerMain{
+	
+}
 .sessionpnl{
-	line-height: 39px;
-	width: 71%;
+	padding:0;
+	width:50%
 }
 .collection_session_panel{
-	width:27%;
 }
-.collection_image{
-	width:11%;
-}
+.collection_image{}

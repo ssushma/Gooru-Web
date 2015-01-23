@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -66,7 +67,7 @@ public class SampleReportEndView extends PopupPanel {
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	@UiField
-	HTMLPanel imageContainer;
+	HTMLPanel imageContainer,panelMain;
 	@UiField
 	Label lblsummaryText, lblCollectionProgress, lblCollectionProgressDetails,
 			lblHeading;
@@ -78,7 +79,13 @@ public class SampleReportEndView extends PopupPanel {
 	public SampleReportEndView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		this.setHeight("584px");
+		if (!BrowserAgent.isDevice()){
+			this.setHeight("584px"); 
+			int clientHeight = Window.getClientHeight();
+			int marginTop = (clientHeight - 584) / 2;
+			
+			panelMain.getElement().getStyle().setMarginTop(marginTop <0 ? 0 : marginTop, Unit.PX);
+		}
 		this.show();
 		this.center();
 		Window.enableScrolling(false);

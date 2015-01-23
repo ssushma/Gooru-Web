@@ -134,16 +134,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		String content = null;
 		try {
-			if(jsonResponseRep.getStatusCode()==401){
-				user = new UserDo();
-				user.setStatusCode(jsonResponseRep.getStatusCode());
-				user.setErrorMsg(jsonResponseRep.getErrorMessage());
-				return user;
-			}else if(jsonResponseRep.getStatusCode()==400){
-				user = new UserDo();
-				user.setStatusCode(jsonResponseRep.getStatusCode());
-				return user;
-			}else{
+			if (jsonResponseRep.getStatusCode()==200){
 				content = jsonRep.getText();
 				if (content.contains("{")) {
 					v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
@@ -169,6 +160,11 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 					AppClientFactory.setLoggedInUser(user);
 					return user;
 				}
+			}else {
+				user = new UserDo();
+				user.setStatusCode(jsonResponseRep.getStatusCode());
+				user.setResponseDo(jsonResponseRep.getResponseDo());
+				return user;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

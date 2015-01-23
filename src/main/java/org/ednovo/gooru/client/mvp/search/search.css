@@ -95,7 +95,7 @@ padding-bottom: 10px;
 }
 
 .innerResult{
-	display: none;
+	display: inline;
 }
 
 .searchInner .panel-body{

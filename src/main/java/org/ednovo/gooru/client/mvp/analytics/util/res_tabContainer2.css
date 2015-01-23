@@ -6,62 +6,31 @@
 	top: -3px;
 	padding-left: 5px;
 }
-.collectionsGroupBtns button.btn-default {
-	color: #515151;
-	padding: 10px 28px;
-	border-radius: 0 0;
-	background: #efefef;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
-	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
-	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
-	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
-	background: -o-linear-gradient(top, #fdfdfd, #ddd);
-	border: 1px solid #ccc;
-	font-size:12px;
-}
 
-.collectionsGroupBtns button.btn-default:hover {
-	background: #4c98cc;
-	cursor:pointer;
-	color:#ffffff;
-}
-
-.collectionsGroupBtns button.btn-default.active {
-	background: #4c98cc;
-	cursor:pointer;
-	color:#ffffff;
-}
 .tabs_teacher_Summary {
-	margin-top:20px;
-/* 	font-size: 13px;
+	font-size: 13px;
 	float: left;
-	width: 93%;
+	/* width: 93%; */
 	border-radius: 5px;
 	margin-top: 25px;
-	margin-left: 20px; */
+	margin-left: 20px;
 }
 .buttonsPanel{
-	position: relative;
-	display: inline-block;
-	vertical-align: middle;
+	border: 1px solid #CCCCCC;
+	border-bottom: 40px solid #CCCCCC;
 }
 .viewSummaryText {
 	float: left;
 	border-right: 1px solid #CCCCCC;
 	border-left: 1px solid #CCCCCC;
 }
-.viewSummaryTextSummary {
-	float: left;
-	border: 1px solid #ccc;
-	border-left: 1px solid #CCCCCC;
-	margin-top: 2px;
-}
 .addButonStyle{
 	height: 39px;
+	background: #EDEDED !important;
 	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED) !important;
 	background: -moz-linear-gradient(top,#FDFDFD, #EDEDED) !important;
 	color: #515151 !important;
-	border: 1px solid #ccc !important;
+	border: none !important;
 	border-radius: 0px !important;
 	padding: 12px 30px !important;
 }
@@ -149,6 +118,7 @@
 	border: 1px solid rgb(221, 221, 221);
 }
 .viewResponsepnl{
+	min-height: 95px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -224,17 +194,4 @@
 .questionCountlbl{
 	padding-bottom: 12px;
 }
-
-.no-gutter >[class*='col-md-']{
-	padding-left:0;
-	padding-right:0;
-}
-.popupContainer{
-	background-color: #fff;
-}
-.teacher_name{
-	padding: 0;
-	padding-left: 14px;
-	padding-bottom: 9px;
-	font-weight: bold;
-}
+.collectionsGroupBtns{}
