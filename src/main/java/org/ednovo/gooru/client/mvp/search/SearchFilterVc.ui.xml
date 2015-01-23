@@ -75,8 +75,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		.helpIconBtnPublisher {
 			position: absolute;
 			right: 0;
-			margin-top: -20px;
-			margin-right: 85px;
+			margin-top: -24px;
+			margin-right: 63px;
 			color: #0f76bb;
 			cursor: pointer;
 			font-size: 11px;
