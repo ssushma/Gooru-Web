@@ -1254,7 +1254,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		//studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
+		studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
 	/**
