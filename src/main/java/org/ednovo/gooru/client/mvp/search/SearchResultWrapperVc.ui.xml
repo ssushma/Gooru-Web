@@ -4,6 +4,13 @@ xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:rating="urn:import
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle" field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle" field="res1" />
 	
+		<ui:style>
+		
+		.btn {
+			padding: 7px 20px !important;
+		}
+		
+		</ui:style>
 	<g:FlowPanel >
 		<g:FocusPanel ui:field="dragHandleFocPanel">
 			<g:FlowPanel styleName="panel-body {res1.css.panel_body}">
@@ -22,25 +29,25 @@ xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:rating="urn:import
 					<g:Label styleName="{res.css.infoLbl}" ui:field="infoLbl" />
 				</g:FocusPanel> -->
 				<g:FocusPanel ui:field="moreInfoLinkFocPanel" styleName="btn-group">
-					<g:Anchor  ui:field="moreInfoLbl"  styleName="btn {res.css.setFont}" />
+					<g:Anchor  ui:field="moreInfoLbl"  styleName="{style.btn} {res.css.setFont}" />
 				</g:FocusPanel>
 				<g:FocusPanel ui:field="collectionFocPanel" styleName="btn-group">
-					<g:Anchor  ui:field="collcResLbl" styleName="btn {res.css.setFont}"/>
+					<g:Anchor  ui:field="collcResLbl" styleName="{style.btn} {res.css.setFont}"/>
 				</g:FocusPanel> 
 
 				<g:FocusPanel ui:field="analyticsLinkFocPanel" styleName="btn-group">
-					<g:Anchor styleName="{res.css.infoLbl} btn {res.css.setFont}" ui:field="analyticsInfoLbl" />
+					<g:Anchor styleName="{res.css.infoLbl} {style.btn} {res.css.setFont}" ui:field="analyticsInfoLbl" />
 				</g:FocusPanel>
 
 				<g:FocusPanel ui:field="shareLinkFocPanel" styleName="btn-group">
-					<g:Anchor  ui:field="shareLbl" styleName="btn {res.css.setFont}"/>
+					<g:Anchor  ui:field="shareLbl" styleName="{style.btn} {res.css.setFont}"/>
 
 				</g:FocusPanel>
 				<g:FocusPanel ui:field="tagsLinkFocPanel" styleName="btn-group">
-					<g:Anchor styleName="{res.css.share} btn {res.css.setFont}" ui:field="tagsLbl" />
+					<g:Anchor styleName="{res.css.share} {style.btn} {res.css.setFont}" ui:field="tagsLbl" />
 				</g:FocusPanel>
 				<g:FocusPanel ui:field="addLinkFocPanel"  styleName="btn-group">
-					<g:Anchor styleName="{res.css.share} btn {res.css.setFont}" ui:field="addLbl" />
+					<g:Anchor styleName="{res.css.share} {style.btn} {res.css.setFont}" ui:field="addLbl" />
 				</g:FocusPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>

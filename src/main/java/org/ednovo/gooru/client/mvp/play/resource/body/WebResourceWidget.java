@@ -60,9 +60,9 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 		resourcePreviewFrame.getElement().setAttribute("id", "resourcePlayerContainer");
 		int windowHeight=Window.getClientHeight();
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			resourcePreviewFrame.setHeight((windowHeight-(116+3))+"px");
+			resourcePreviewFrame.setHeight((windowHeight-(116))+"px");
 		}else{
-			resourcePreviewFrame.setHeight((windowHeight-(202+3))+"px");
+			resourcePreviewFrame.setHeight((windowHeight-(202))+"px");
 		}
 	}
 	

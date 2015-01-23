@@ -7,7 +7,7 @@
 		field="res1" />
 	
 
-	<g:HTMLPanel   styleName="{res1.css.PopupMainMediumReport}">
+	<g:HTMLPanel   styleName="{res1.css.PopupMainMediumReport}" ui:field="panelMain">
 		<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
 		<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
 		        <g:HTMLPanel styleName="row">
