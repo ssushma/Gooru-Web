@@ -102,7 +102,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	private boolean isArrowIcon = false;
 	
 	PreFilterPopup preFilter =	null;
-	
+	Boolean isIpad,isAndriod,isWinDskp;
 	/**
 	 * Class constructor 
 	 */
@@ -125,9 +125,9 @@ public class WrapView extends BaseView implements IsWrapView {
 		searchPush.getElement().setId("searchPush");
 		menuRight.getElement().setId("menuRight");
 		
-		 Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
-		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 		
@@ -215,7 +215,13 @@ public class WrapView extends BaseView implements IsWrapView {
 							|| place.equalsIgnoreCase(PlaceTokens.STUDENT)) {
 						wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 					}else{
-						wrapperPanel.getElement().setAttribute("style", "margin-top:50px;");
+						if(isIpad){
+							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+						}else if(isAndriod){
+							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+						}else{
+							  wrapperPanel.getElement().setAttribute("style", "margin-top:50px;");
+						}
 					}
 				}
 				wrapperPanel.setWidget(content);
@@ -466,7 +472,6 @@ public class WrapView extends BaseView implements IsWrapView {
 			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 				addStandardsPresenter.callDefaultStandardsLoad();
-			
 			}
 		}
 
