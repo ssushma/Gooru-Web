@@ -483,6 +483,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		super.onReveal();
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
+		Window.scrollTo(0, 0);
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 	}
 	@Override
@@ -490,6 +491,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		super.onReset();
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
+		Window.scrollTo(0, 0);
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 	}
 
