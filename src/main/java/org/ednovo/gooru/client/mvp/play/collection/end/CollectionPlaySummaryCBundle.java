@@ -25,6 +25,9 @@ public interface CollectionPlaySummaryCBundle extends ClientBundle{
 			String htmlpanlProgress();
 			String pnlSummary();
 			String sessionpnl();
+			String resource_in_collection_teacher_summary();
+			String collection_session_panel();
+			String collection_image();
 			
 	}
 	@NotStrict

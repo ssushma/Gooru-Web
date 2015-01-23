@@ -62,7 +62,9 @@
 	clear: both;
 }
 .container{}
-.collectionsProgressContainerMain{}
+.collectionsProgressContainerMain{
+	width: 100%;
+}
 .left_container {
 	width: 100%;
 	float: left;
@@ -163,5 +165,12 @@
 	margin-left: 375px;
 }
 .sessionpnl{
-	
+	line-height: 39px;
+	width: 71%;
+}
+.collection_session_panel{
+	width:27%;
+}
+.collection_image{
+	width:11%;
 }
