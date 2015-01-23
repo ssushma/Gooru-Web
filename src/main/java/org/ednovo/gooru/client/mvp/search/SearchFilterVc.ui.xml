@@ -3,10 +3,12 @@
 xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style type="org.ednovo.gooru.client.mvp.search.SearchFilterVc.Style">
 		.reviewCheckBoxStyle{
+			float: left;
+			margin: 0px 4px 4px 4px !important;
 		}
 
 		.reviewLabelForCheckbox{
-
+			width: 134px;
 		}
 		.searchFilterVcContainer {
 			float: left;

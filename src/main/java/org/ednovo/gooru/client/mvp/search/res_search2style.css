@@ -107,7 +107,9 @@ html {
 }
 
 .oerContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .filtersInner {
@@ -260,7 +262,9 @@ html {
 }
 
 .mobilefriendlyContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .form-control {

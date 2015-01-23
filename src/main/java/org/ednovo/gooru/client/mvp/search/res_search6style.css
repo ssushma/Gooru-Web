@@ -85,7 +85,9 @@ padding-bottom: 10px;
 }
 
 .oerContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .panelFooterMenuInfo {
@@ -149,7 +151,9 @@ padding-bottom: 10px;
 }
 
 .mobilefriendlyContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .closeBtn {
