@@ -538,17 +538,19 @@ public class MetadataWidget extends Composite {
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
-		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
-			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
-		}else{
-			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+collectionDo.getUser().getUsername();
-			anchor.setHref(token);
+		if(collectionDo!=null){
+			if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+				anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+			}else{
+				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+collectionDo.getUser().getUsername();
+				anchor.setHref(token);
+			}
+			anchor.setText(userName);
+			anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+			anchor.setTarget("_blank");
+			userNameLabel.setText("");
+			userNameLabel.getElement().appendChild(anchor.getElement());
 		}
-		anchor.setText(userName);
-		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
-		anchor.setTarget("_blank");
-		userNameLabel.setText("");
-		userNameLabel.getElement().appendChild(anchor.getElement());
 	}
 	
 	public void displayAuthorDetails(boolean isDisplayDetails) {
