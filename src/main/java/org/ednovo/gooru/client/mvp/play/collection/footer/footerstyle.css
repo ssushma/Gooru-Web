@@ -1,6 +1,7 @@
 .footerContainer{
 	background:#333333;
 	padding:10px 0 5px 0;
+	position:fixed;
 	width:100%;
 	float:left;
 	bottom:0;
