@@ -132,8 +132,8 @@
 				<header:StudyPlayerHeaderView ui:field="headerView"></header:StudyPlayerHeaderView>
 				<g:FlowPanel ui:field="navigationContainer" styleName="{playerStyle.resource-container}"></g:FlowPanel>
 			</g:FlowPanel>
-			<g:FlowPanel ui:field="playerBodyContainer" styleName="{playerHeaderStyle.getPlayerStyleResource.bodyContent}"></g:FlowPanel>
-			<footer:StudyPlayerFooterView ui:field="footerView"></footer:StudyPlayerFooterView>
+			<g:FlowPanel ui:field="playerBodyContainer" styleName="{playerHeaderStyle.getPlayerStyleResource.bodyContent}"></g:FlowPanel>			
 		</g:FlowPanel>
+		<footer:StudyPlayerFooterView ui:field="footerView"></footer:StudyPlayerFooterView>
 	</g:FlowPanel>
 </ui:UiBinder>

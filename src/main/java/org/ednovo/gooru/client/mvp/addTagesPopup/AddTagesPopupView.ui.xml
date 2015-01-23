@@ -14,7 +14,7 @@
 		            <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		        </g:HTMLPanel>
 		      </g:HTMLPanel >
-		    <g:HTMLPanel  styleName="{res1.css.addTagsContent}">
+		    <g:HTMLPanel ui:field="addTagesContent" styleName="{res1.css.addTagsContent}">
 		        <gg:PPanel ui:field="popupContentText"></gg:PPanel>
 		        <br/><br/>
 		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_h5}">
