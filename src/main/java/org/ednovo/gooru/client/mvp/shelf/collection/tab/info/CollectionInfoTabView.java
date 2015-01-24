@@ -555,22 +555,18 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						lblInstructionalPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
 						
 				
-						if(collectionDo.getInstructionalMethod() != null)
+						if(collectionDo.getInstructionalMethod() != null && collectionDo.getInstructionalMethod().size()>0)
 						{
-							if(collectionDo.getInstructionalMethod().size()>0)
+							for(int i=0;i<collectionDo.getInstructionalMethod().size();i++)
 							{
-								for(int i=0;i<collectionDo.getInstructionalMethod().size();i++)
-								{
-									if(collectionDo.getInstructionalMethod().get(i).isSelected()){
-									AppClientFactory.getInjector().getResourceService().updateCollectionInstructionalMethod(collectionDo, collectionDo.getInstructionalMethod().get(i).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
-										@Override
-										public void onSuccess(CollectionDo result) {
-											
-										}
-									});	
+								if(collectionDo.getInstructionalMethod().get(i).isSelected()){
+								AppClientFactory.getInjector().getResourceService().updateCollectionInstructionalMethod(collectionDo, collectionDo.getInstructionalMethod().get(i).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
+									@Override
+									public void onSuccess(CollectionDo result) {
+										
 									}
+								});	
 								}
-								
 							}
 						}
 						
@@ -614,23 +610,19 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						lblAudiencePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
 						
 				
-						if(collectionDo.getAudience() != null)
+						if(collectionDo.getAudience() != null && collectionDo.getAudience().size()>0)
 						{
-							if(collectionDo.getAudience().size()>0)
+							for(int j=0;j<collectionDo.getAudience().size();j++)
 							{
-								for(int j=0;j<collectionDo.getAudience().size();j++)
-								{
-									if(collectionDo.getAudience().get(j).isSelected()){
-									AppClientFactory.getInjector().getResourceService().updateCollectionAudience(collectionDo, collectionDo.getAudience().get(j).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
-										@Override
-										public void onSuccess(CollectionDo result) {
-										
-										}
-									});
+								if(collectionDo.getAudience().get(j).isSelected()){
+								AppClientFactory.getInjector().getResourceService().updateCollectionAudience(collectionDo, collectionDo.getAudience().get(j).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
+									@Override
+									public void onSuccess(CollectionDo result) {
 									
 									}
+								});
+								
 								}
-											
 							}
 						}
 						
@@ -738,25 +730,35 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		spanelAudiencePanel.setVisible(false);
 		
 	}
-	
+	/**
+	 * 
+	 * @function modifyStaticText 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param collectionType
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void modifyStaticText(String collectionType){
-		if(collectionType!=null&&collectionType.equals("quiz")){
-			addAttributesToWidget(selectGradeLbl,i18n.GL3025());
-			addAttributesToWidget(selectCourseLbl,i18n.GL3026());
-			addAttributesToWidget(standardsDefaultText, i18n.GL3027());
-			addAttributesToWidget(depthOfKnowledgeTitle, i18n.GL3028());
-			addAttributesToWidget(learningInnovationTitle, i18n.GL3029());
-			addAttributesToWidget(instructionalTitle, i18n.GL3030());
-			addAttributesToWidget(audienceTitle, i18n.GL3031());
-		}else{
-			addAttributesToWidget(selectGradeLbl,i18n.GL0820());
-			addAttributesToWidget(selectCourseLbl,i18n.GL0846());
-			addAttributesToWidget(standardsDefaultText, i18n.GL0749());
-			addAttributesToWidget(depthOfKnowledgeTitle, i18n.GL1644());
-			addAttributesToWidget(learningInnovationTitle, i18n.GL1650());
-			addAttributesToWidget(instructionalTitle, i18n.GL1639());
-			addAttributesToWidget(audienceTitle, i18n.GL1640());
-		}
+		
+		addAttributesToWidget(selectGradeLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3025() : i18n.GL0820());
+		addAttributesToWidget(selectCourseLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3026() : i18n.GL0846());
+		addAttributesToWidget(standardsDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3027() : i18n.GL0749());
+		addAttributesToWidget(depthOfKnowledgeTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3028() : i18n.GL1644());
+		addAttributesToWidget(learningInnovationTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3029() : i18n.GL1650());
+		addAttributesToWidget(instructionalTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3030() : i18n.GL1639());
+		addAttributesToWidget(audienceTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3031() : i18n.GL1640());
+
 	}
 	
 	public void addAttributesToWidget(Label labelText, String text){
@@ -772,15 +774,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				  CheckBox checkBox = (CheckBox) event.getSource();
-			        boolean checked = checkBox.getValue();
-
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1645(),checked, new SimpleAsyncCallback<CollectionDo>() {
-						@Override
-						public void onSuccess(CollectionDo result) {
-							
-						}
-					});
-				
+			      boolean checked = checkBox.getValue();
+			      updateDepthOfKnowledge(collectionDo, i18n.GL1645(),checked);
 			}
 		});
 		
@@ -789,15 +784,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				  CheckBox checkBox = (CheckBox) event.getSource();
-			        boolean checked = checkBox.getValue();
-
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1646(),checked, new SimpleAsyncCallback<CollectionDo>() {
-						@Override
-						public void onSuccess(CollectionDo result) {
-							
-						}
-					});
-				
+			      boolean checked = checkBox.getValue();
+			      updateDepthOfKnowledge(collectionDo, i18n.GL1646(),checked);
 			}
 		});
 		
@@ -805,16 +793,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				  CheckBox checkBox = (CheckBox) event.getSource();
-			        boolean checked = checkBox.getValue();
-
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1647(),checked, new SimpleAsyncCallback<CollectionDo>() {
-						@Override
-						public void onSuccess(CollectionDo result) {
-							
-						}
-					});
-				
+				CheckBox checkBox = (CheckBox) event.getSource();
+		        boolean checked = checkBox.getValue();
+		        updateDepthOfKnowledge(collectionDo, i18n.GL1647(),checked);
 			}
 		});
 		
@@ -823,15 +804,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				  CheckBox checkBox = (CheckBox) event.getSource();
-			        boolean checked = checkBox.getValue();
-
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1648(),checked, new SimpleAsyncCallback<CollectionDo>() {
-						@Override
-						public void onSuccess(CollectionDo result) {
-							
-						}
-					});
-				
+			      boolean checked = checkBox.getValue();
+			      updateDepthOfKnowledge(collectionDo, i18n.GL1648(),checked);
 			}
 		});
 		
@@ -840,15 +814,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				  CheckBox checkBox = (CheckBox) event.getSource();
-			        boolean checked = checkBox.getValue();
-
-					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, i18n.GL1651(),checked, new SimpleAsyncCallback<CollectionDo>() {
-						@Override
-						public void onSuccess(CollectionDo result) {
-							
-						}
-					});
-				
+			      boolean checked = checkBox.getValue();
+			      updateLearningSkills(collectionDo, i18n.GL1651(),checked);
 			}
 		});
 		
@@ -857,15 +824,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				  CheckBox checkBox = (CheckBox) event.getSource();
-			        boolean checked = checkBox.getValue();		
-
-					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, i18n.GL1652(),checked, new SimpleAsyncCallback<CollectionDo>() {
-						@Override
-						public void onSuccess(CollectionDo result) {
-							
-						}
-					});
-				
+			      boolean checked = checkBox.getValue();		
+			      updateLearningSkills(collectionDo, i18n.GL1652(),checked);
 			}
 		});
 		
@@ -874,16 +834,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				  CheckBox checkBox = (CheckBox) event.getSource();
-			        boolean checked = checkBox.getValue();
-
-
-					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, i18n.GL1653(),checked, new SimpleAsyncCallback<CollectionDo>() {
-						@Override
-						public void onSuccess(CollectionDo result) {
-							
-						}
-					});
-				
+			      boolean checked = checkBox.getValue();
+			      updateLearningSkills(collectionDo, i18n.GL1653(),checked);
 			}
 		});
 	}
@@ -1708,5 +1660,63 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 	public Button getBrowseBtn() {
 		return browseBtn;
 	}
-
+	/**
+	 * 
+	 * @function updateDepthOfKnowledge 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param collectionDo
+	 * @parm(s) : @param depthOfKnowlwedgevalues
+	 * @parm(s) : @param selectedVal
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private void updateDepthOfKnowledge(CollectionDo collectionDo, String depthOfKnowlwedgevalues, Boolean selectedVal ){
+		AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, depthOfKnowlwedgevalues, selectedVal, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * @function updateLearningSkills 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param collectionDo
+	 * @parm(s) : @param learningSkillsValues
+	 * @parm(s) : @param selectedVal
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private void updateLearningSkills(CollectionDo collectionDo, String learningSkillsValues, Boolean selectedVal ){
+		AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, learningSkillsValues,selectedVal, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				
+			}
+		});
+	}
 }
