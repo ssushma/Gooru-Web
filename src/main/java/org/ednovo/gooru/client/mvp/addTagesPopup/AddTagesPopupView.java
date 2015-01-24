@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -64,9 +65,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -129,6 +132,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField InlineLabel addTagesTitle,moblieFriendly;
 	@UiField PPanel popupContentText;
 	
+	@UiField HTMLPanel addTagesContent;
+	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
 	@UiField(provided = true)
@@ -151,7 +156,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	private boolean isClickedOnDropDwn=false;
 	String mediaFeatureStr = i18n.GL1767();
 	String resourceId=null;
-
+	Boolean isIpad,isAndriod,isWinDskp;
 
 	public AddTagesPopupView(String resourceId) {
 		super(false);
@@ -509,6 +514,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		};
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
+		if(isIpad || isAndriod){
+			addTagesContent.getElement().getStyle().setHeight(Window.getClientHeight()-10, Unit.PX);
+			addTagesContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
+			addTagesContent.getElement().getStyle().setOverflowX(Overflow.AUTO);
+		}
 	}
 	/**
 	 * 

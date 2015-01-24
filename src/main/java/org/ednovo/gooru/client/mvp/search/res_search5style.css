@@ -45,7 +45,9 @@
 	text-overflow: ellipsis;
 }
 .oerContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .btn {
@@ -153,7 +155,9 @@
 }
 
 .mobilefriendlyContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .secondaryIC1 {

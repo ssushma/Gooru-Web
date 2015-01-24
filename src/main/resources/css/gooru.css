@@ -2152,7 +2152,7 @@ fieldset {
 	left: 63% !important;
  }
  .preFilterPopup{
-	left:20% !important;
+	left:26.4% !important;
 	top:48px !important;
 	z-index: 99999;
 visibility: visible;
@@ -2182,6 +2182,7 @@ overflow: visible;
  .positionFixed{
  	position:fixed !important;
  }
+
   
  .dropdownListContainerScrollPanel{
  	margin-left:46px;
@@ -2193,6 +2194,21 @@ overflow: visible;
 @media screen and (min-width: 0px) and (max-width: 1000px) {
 	.searchResults > .mediaCssToHide{
 		display: none;
+	}
+	  	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
 	}
 }
 
@@ -2456,11 +2472,49 @@ overflow: visible;
 		width:100%;
 		min-width:100%
 	}
+	.preFilterPopup{
+		left:20% !important;
+		top:48px !important;
+  	}
+  	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
 }
 @media (min-width: 480px) and (max-width: 767px) {
- 	 .positionFixed{
- 	position:relative !important;
+ 	.positionFixed{
+ 		position:relative !important;
  	}
+ 	.preFilterPopup{
+		left:4% !important;
+		top:48px !important;
+  	}
+  	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -2470,9 +2524,28 @@ overflow: visible;
 		.container {
 			width: auto !important;
 		}
-		 	 	 .positionFixed{
- 	position:relative !important;
- }
+		.positionFixed{
+ 			position:relative !important;
+ 		}
+ 		.preFilterPopup{
+			left:16.5% !important;
+			top:48px !important;
+  		}
+	  	span.fivestar input[type="checkbox"], 
+		span.fourstar input[type="checkbox"],
+		span.threestar input[type="checkbox"],
+		span.twostar input[type="checkbox"],
+		span.onestar input[type="checkbox"],
+		span.zerostar input[type="checkbox"],
+		span.review input[type="checkbox"]{
+			margin: 0px 4px 4px 4px !important;
+		}
+		
+		.mobilefriendlyContainer, .oerContainer{
+			position: relative;
+			margin-bottom: 0px;
+			height: 30px;
+		}
 }
 
 #searchPush{
@@ -2617,6 +2690,22 @@ overflow: visible;
 
 @media (min-width: 1200px) {
 	
+	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+	
 	.reviewPopup{
 		left:63% !important;
 		width:100%;	
@@ -2663,14 +2752,29 @@ overflow: visible;
 @media (min-width: 992px) and (max-width: 1199px) {
 	
 	#main, #menuRight {
-	-webkit-backface-visibility: hidden;
-	-webkit-perspective:0;
+		-webkit-backface-visibility: hidden;
+		-webkit-perspective:0;
 	
-}
+	}
+		
+	.loginFailureAlert{
+	 	left:32% !important;
+	 }
+	   	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
 	
-.loginFailureAlert{
- 	left:32% !important;
- }
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
 }
 
 
@@ -2704,13 +2808,28 @@ overflow: visible;
 		width:500px;
 	 }
  
-  .loginFailureAlert{
- 	left:22% !important;
- }
+	 .loginFailureAlert{
+	 	left:22% !important;
+	 }
  
- .tableDivStyles{
- width:60% !important;
- }
+	 .tableDivStyles{
+	 	width:60% !important;
+	 }
+ 	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
 	
 }
 @media (min-width: 320px) and (max-width: 479px){
@@ -2740,18 +2859,33 @@ overflow: visible;
    	  margin:0px !important;
    	 
    }
-   .loginFailureAlert{
- 	left:0% !important;
- 	width:100% !important;
- }
+	 .loginFailureAlert{
+	 	left:0% !important;
+	 	width:100% !important;
+	 }
  
    html{
  		overflow-x: hidden;
 		overflow-y: auto;
  	}
- 	 	 .positionFixed{
- 	position:relative !important;
- }
+	.positionFixed{
+ 		position:relative !important;
+ 	}
+ 	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
 }
 @media (min-width: 240px) and (max-width: 319px){
 		 .borderLeft{
@@ -2795,6 +2929,21 @@ overflow: visible;
  	 .positionFixed{
  	position:relative !important;
  }
+ 	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
 
 }
 @media (max-width: 991px) and (min-width: 768px){
@@ -2808,12 +2957,26 @@ overflow: visible;
  	.loginFailureAlert{
  		left:29% !important;
  		
- }
- html{
+ 	}
+ 	html{
  		overflow-x: hidden;
 		overflow-y: auto;
  	}
+	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
 	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
  
 }
 
@@ -2828,10 +2991,7 @@ overflow: visible;
 		left:69% !important;
 		width: 100%;	
 	}
-	.preFilterPopup{
-	left:4% !important;
-	top:48px !important;
-  }
+
 	.reviewPopupPoor{
 		left:63% !important;
 		width:300px;
@@ -2863,6 +3023,21 @@ overflow: visible;
 
 	#searchPush{
 		display:none !important;
+	}
+	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
 	}
 }
 
@@ -2979,4 +3154,21 @@ overflow: visible;
 
 .contentBoxStyles{
 	box-sizing: content-box;
+}
+
+
+span.fivestar input[type="checkbox"], 
+span.fourstar input[type="checkbox"],
+span.threestar input[type="checkbox"],
+span.twostar input[type="checkbox"],
+span.onestar input[type="checkbox"],
+span.zerostar input[type="checkbox"],
+span.review input[type="checkbox"]{
+	margin: 0px 4px 4px 4px !important;
+}
+
+.mobilefriendlyContainer, .oerContainer{
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }

@@ -1,10 +1,13 @@
 .footerContainer{
 	background:#333333;
 	padding:10px 0 5px 0;
+	position:fixed;
 	width:100%;
 	float:left;
 	bottom:0;
 	z-index: 999;
+	bottom:0 !important;
+	overflow: hidden;
 }
 .footerContainer .infoButtonNormal{
 	display:inline-block;
