@@ -110,6 +110,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
 		headerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
 		
+		
 		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
 		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());*/
 		//resourceInfoView.getHideButton().addClickHandler(new ShowTabWidgetView("info"));
