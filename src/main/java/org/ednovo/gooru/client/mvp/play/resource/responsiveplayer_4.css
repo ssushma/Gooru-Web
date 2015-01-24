@@ -1,0 +1,43 @@
+.ResourceRightBlock .inner{
+		padding:10px 10px;
+	}
+	
+	.ResourceRightBlock .collectionTxt {
+    display: inline-block;
+    vertical-align: top;
+    width: 54%;
+}
+
+.collectionTxt .headBlue{
+	width:100%;
+}
+.close-button a{
+    right: 5px;
+}
+.rPlayerMenu .tabs{
+	padding-right:25px;
+}
+
+.bodyresourcePlayer{
+		padding-top:0 !important;
+	}
+
+.fixedDivMain{
+	
+}
+.playerResourceTitle{
+	
+}
+.add-button-normal{
+	
+}
+.info-button-normal{
+	
+}
+.flagButtonOrange{
+	
+}
+.flagButtonNormal{
+	
+}
+.resourcePlayer{}
