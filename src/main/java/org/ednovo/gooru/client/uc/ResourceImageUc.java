@@ -100,7 +100,9 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 //	private static final String PNG = i18n.GL0899;
 	
 	boolean suggestFlag;
-
+	/**
+	 * 
+	 */
 	public ResourceImageUc() {
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -152,7 +154,35 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 			}
 		}
 		
+		
 	}
+	/**
+	 * 
+	 * @function renderSearch 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param category
+	 * @parm(s) : @param thumbnailUrl
+	 * @parm(s) : @param realUrl
+	 * @parm(s) : @param gooruOid
+	 * @parm(s) : @param playerName
+	 * @parm(s) : @param title
+	 * @parm(s) : @param generateYoutube
+	 * @parm(s) : @param collectionId
+	 * @parm(s) : @param suggestedtype
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void renderSearch(String category, String thumbnailUrl, String realUrl, String gooruOid, String playerName, String title, boolean generateYoutube, String collectionId, String suggestedtype) {
 			final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
 		resourceType.addStyleName(categoryString.trim() + i18n.GL0900());
@@ -166,8 +196,32 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 				setCollectionId(collectionId);
 			}
 		}
-		
 	}
+	/**
+	 * 
+	 * @function renderSearch 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param category
+	 * @parm(s) : @param thumbnailUrl
+	 * @parm(s) : @param realUrl
+	 * @parm(s) : @param collectionItemId
+	 * @parm(s) : @param title
+	 * @parm(s) : @param youtube
+	 * @parm(s) : @param narration
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void renderSearch(String category, String thumbnailUrl, String realUrl,String collectionItemId,String title, boolean youtube, String narration) {
 		String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
 		String cssName = categoryString.trim() + i18n.GL0900();
@@ -176,7 +230,32 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		setResourceId(collectionItemId);
 		setNarration(narration);
 	}
-	
+	/**
+	 * 
+	 * @function renderSearch 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param category
+	 * @parm(s) : @param thumbnailUrl
+	 * @parm(s) : @param realUrl
+	 * @parm(s) : @param collectionItemId
+	 * @parm(s) : @param title
+	 * @parm(s) : @param youtube
+	 * @parm(s) : @param narration
+	 * @parm(s) : @param collectionId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void renderSearch(String category, String thumbnailUrl, String realUrl,String collectionItemId, String title, boolean youtube,String narration, String collectionId) {
 		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
 		resourceType.addStyleName(categoryString.trim() + i18n.GL0900());
@@ -185,7 +264,29 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		setNarration(narration);
 		setProfilePageMoreInfoCollectionId(collectionId);
 	}
-
+	/**
+	 * 
+	 * @function setUrl 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param thumbnailUrl
+	 * @parm(s) : @param realUrl
+	 * @parm(s) : @param category
+	 * @parm(s) : @param title
+	 * @parm(s) : @param generateYoutube
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUrl(final String thumbnailUrl, final String realUrl, final String category, final String title, final boolean generateYoutube) {
 		failedThumbnailGeneration = false;
 		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category;
@@ -206,9 +307,31 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		image.setAltText(title);
 		image.setTitle(title);
 	}
- 
+	/**
+	 * 
+	 * @function setDefaultThumbnail 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param thumbnailUrl
+	 * @parm(s) : @param url
+	 * @parm(s) : @param categoryString
+	 * @parm(s) : @param generateYoutube
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setDefaultThumbnail(String thumbnailUrl, String url, String categoryString, boolean generateYoutube) {
 		categoryString = categoryString.trim();
+		categoryString = categoryString.replaceAll("gooru_classplan", "webpage");
 		if(categoryString.contains("lesson")||categoryString.contains("textbook")||categoryString.contains("handout"))
 		{
 			categoryString=categoryString.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
@@ -230,6 +353,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		} else {
 			image.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		}
+		
 	}
 
 	@Override
@@ -286,27 +410,135 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);*/
 		
 	}
-
+	/**
+	 * 
+	 * @function setResourceId 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param resourceId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setResourceId(String resourceId) {
 		this.resourceId = resourceId;
 	}
-
+	/**
+	 * 
+	 * @function getResourceId 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String getResourceId() {
 		return resourceId;
 	}
-
+	/**
+	 * 
+	 * @function setPlayerName 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param playerName
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
 	}
-
+	/**
+	 * 
+	 * @function getPlayerName 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String getPlayerName() {
 		return playerName;
 	}
-
+	/**
+	 * 
+	 * @function getCollectionId 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String getCollectionId() {
 		return collectionId;
 	}
-
+	/**
+	 * 
+	 * @function setCollectionId 
+	 * 
+	 * @created_date : 23-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param collectionId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setCollectionId(String collectionId) {
 		this.collectionId = collectionId;
 	}
