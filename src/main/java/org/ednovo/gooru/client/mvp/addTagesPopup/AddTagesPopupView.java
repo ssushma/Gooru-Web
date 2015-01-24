@@ -109,7 +109,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField(provided = true)
 	AddTagesCBundle res;
 	
-	@UiField Anchor headerEducationalUse ,kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
+	@UiField Anchor  kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
+	
+	@UiField Label headerEducationalUse;
 	
 	@UiField Anchor  handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
 	

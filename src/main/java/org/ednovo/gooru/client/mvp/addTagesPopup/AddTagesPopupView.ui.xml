@@ -18,7 +18,7 @@
 		        <gg:PPanel ui:field="popupContentText"></gg:PPanel>
 		        <br/><br/>
 		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_h5}">
-		      		<g:Anchor  ui:field="headerEducationalUse"></g:Anchor>    
+		      		<g:Label  ui:field="headerEducationalUse"></g:Label>    
 		      </g:HTMLPanel>  
 		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
 		     		 <g:Anchor  ui:field="activity"></g:Anchor>     
