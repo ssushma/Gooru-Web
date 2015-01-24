@@ -2667,6 +2667,9 @@ overflow: visible;
 	background: none !important;
 }
 
+.addResourcePopup{
+		margin-top:50px ;	
+	}
 
 /* @media (min-width: 240px) and (max-width: 319px){
 	.gwt-PopupPanel{
@@ -2784,10 +2787,13 @@ overflow: visible;
  		overflow-x: hidden;
 		overflow-y: auto;
  	}
- 	
+ 	 .addResourcePopup{
+		margin-top:0px !important;	
+	}
 	#__printingFrame{
 		display: none;
 	}
+	
 	
 	.reviewPopup{
 		left:44% !important;
@@ -2833,6 +2839,9 @@ overflow: visible;
 	
 }
 @media (min-width: 320px) and (max-width: 479px){
+	 .addResourcePopup{
+		margin-top:0px !important;	
+	}
 	 .borderLeft{
  		border-right:0px !important;
  	}
@@ -2866,7 +2875,7 @@ overflow: visible;
  
    html{
  		overflow-x: hidden;
-		overflow-y: auto;
+		overflow-y: auto ;
  	}
 	.positionFixed{
  		position:relative !important;
@@ -2888,6 +2897,9 @@ overflow: visible;
 	}
 }
 @media (min-width: 240px) and (max-width: 319px){
+		.addResourcePopup{
+		margin-top:0px !important;	
+	}
 		 .borderLeft{
  			border-right:0px !important;
  		}
@@ -2984,14 +2996,14 @@ overflow: visible;
  
  	html{
  		overflow-x: hidden;
-		overflow-y: auto;
+		overflow-y: auto ;
  	}
 	
 	.reviewPopup{
 		left:69% !important;
 		width: 100%;	
 	}
-
+	
 	.reviewPopupPoor{
 		left:63% !important;
 		width:300px;
