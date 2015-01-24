@@ -731,7 +731,7 @@ color: #1076BB;
 .player-container{
 	visibility: visible;
 	width: 100%;
-	min-width: 1020px;
+	/* min-width: 1020px; */
 	top: 0 !important;
 	right: 0 !important;
 	bottom: 0 !important;
@@ -747,7 +747,7 @@ color: #1076BB;
 .studyplayer-container{
 	visibility: visible;
 	width: 100%;
-	min-width: 1020px;
+	/* min-width: 1020px; */
 	top: 0 !important;
 	right: 0 !important;
 	bottom: 0 !important;
