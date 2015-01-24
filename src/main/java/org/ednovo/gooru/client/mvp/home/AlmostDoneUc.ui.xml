@@ -73,7 +73,7 @@
 					</g:HTMLPanel>
 						<g:Label styleName="{res.css.unameStep2}" text="{i18n.GL2203}" />
 					<g:HTMLPanel styleName="{res.css.chooseUsername}">
-						<gg:TextBoxWithPlaceholder ui:field="txtChooseUsername" styleName="{res.css.textUserName} {res.css.submitRegistration}" />
+						<gg:TextBoxWithPlaceholder ui:field="txtChooseUsername" styleName="form-control {res.css.textUserName} {res.css.submitRegistration}" />
 						<g:HTMLPanel styleName="{res.css.usernameToolTipContainer}" ui:field="panelUsernameTooltip">
 							<div class="arrowBorder"></div>
 							<div class="arrow"></div>
