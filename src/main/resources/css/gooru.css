@@ -2793,7 +2793,9 @@ overflow: visible;
 	#__printingFrame{
 		display: none;
 	}
-	
+	.borderLeft{
+		border:0px !important;
+	}
 	
 	.reviewPopup{
 		left:44% !important;
@@ -3010,6 +3012,9 @@ overflow: visible;
 	}
 	.addResourceContainer{
 		width:500px;
+    }
+    .borderLeft{
+    	border:0px solid;
     }
 	#menuRight {
 		-webkit-backface-visibility: hidden;
