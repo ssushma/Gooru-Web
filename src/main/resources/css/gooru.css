@@ -3013,9 +3013,7 @@ overflow: visible;
 	.addResourceContainer{
 		width:500px;
     }
-    .borderLeft{
-    	border:0px solid;
-    }
+    
 	#menuRight {
 		-webkit-backface-visibility: hidden;
 		-webkit-perspective:0;
