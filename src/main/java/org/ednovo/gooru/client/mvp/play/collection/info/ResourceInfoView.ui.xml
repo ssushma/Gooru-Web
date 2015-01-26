@@ -5,7 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field= "playerStyle" src="resourceinfo.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource" />
-  <g:HTMLPanel styleName="container {playerStyle.resource-info-backgroundContainer} text-left" ui:field="resouceInfoContainer">
+  <g:HTMLPanel styleName="container {playerStyle.resource-info-backgroundContainer} addResourcePopup text-left" ui:field="resouceInfoContainer">
   	<g:FlowPanel styleName="row">
 	     <uc:HTMLEventPanel styleName="{playerStyle.resource-info-bottomImageContainer}" ui:field="hideButton">
 	      	<g:Label styleName="{playerStyle.resource-info-hideImage}" ui:field="hideImageLabel"/>
