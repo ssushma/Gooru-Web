@@ -157,6 +157,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	private static final String ERROR = "error";
 	
+	private static final String CREDENTIAL = "Credential";
+	
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
@@ -332,7 +334,9 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
+		//Show Popup where user can update his details like, username and role. Show this only for non regular user and if he is logging for the first time.
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase(CREDENTIAL)) {
+			Window.enableScrolling(false);
 			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
 			update.setGlassEnabled(true);
 			update.show();

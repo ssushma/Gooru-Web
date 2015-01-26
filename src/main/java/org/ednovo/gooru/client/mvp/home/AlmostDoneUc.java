@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -542,28 +543,21 @@ public class AlmostDoneUc extends PopupPanel{
 			String userName = txtChooseUsername.getText();
 			String userRole=selectedRole;
 			
-			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new SimpleAsyncCallback<Void>(){
+			AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", "", "", "", "", userName,"", false, userRole, new SimpleAsyncCallback<V2UserDo>() {
+
 				@Override
-				public void onSuccess(Void result) {
+				public void onSuccess(V2UserDo result) {
+					AppClientFactory.setLoggedInUser(result.getUser());
+					AppClientFactory.fireEvent(new SetHeaderEvent(result.getUser()));  
+//					Window.enableScrolling(true);
+//					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+					hide();
 					
-//					MixpanelUtil.Click_OK_AlmostDone();
-					AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
-						@Override
-						public void onSuccess(UserDo newUser) {
-							AppClientFactory.setLoggedInUser(newUser);
-							AppClientFactory.fireEvent(new SetHeaderEvent(newUser));  
-//							Window.enableScrolling(true);
-//							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-							hide();
-							
-							
-							SignUpGradeCourseView setCourseView = new SignUpGradeCourseView(AppClientFactory.getLoggedInUser());
-							setCourseView.show();
-							setCourseView.center();
-						}
-					});
 					
-				}				
+					SignUpGradeCourseView setCourseView = new SignUpGradeCourseView(AppClientFactory.getLoggedInUser());
+					setCourseView.show();
+					setCourseView.center();
+				}
 			});
 		}
 		
