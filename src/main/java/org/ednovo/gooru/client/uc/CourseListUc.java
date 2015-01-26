@@ -123,8 +123,7 @@ public class CourseListUc extends PopupPanel {
 	  	this.getElement().getStyle().setZIndex(99999);
 		setGlassEnabled(true);
 		isSelected=false;
-		this.center();
-		this.show();
+		
 		titleLbl.setText(i18n.GL0847());
 		titleLbl.getElement().setId("errlblErrorLabel");
 		titleLbl.getElement().setAttribute("alt", i18n.GL0847());
@@ -147,6 +146,12 @@ public class CourseListUc extends PopupPanel {
 		setCourseData();
 		collectionId=collectionDo.getGooruOid();
 		Window.enableScrolling(false);
+		
+		this.setHeight("469px");
+		this.setWidth("542px");
+		
+		this.center();
+		this.show();
 	}
 	
  

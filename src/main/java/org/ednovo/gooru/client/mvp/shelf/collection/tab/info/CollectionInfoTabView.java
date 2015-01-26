@@ -1181,16 +1181,18 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	@UiHandler("addCourseBtn")
 	public void onAddCourseClick(ClickEvent clickEvent) {final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
-	
-		if(courseListUc!=null){
-			courseListUc.center();
-			courseListUc.show();
-			courseListUc.setDefaultCourseData();
-		}else{
-			courseListUc=new CourseListUc(collectionDo);
-			courseListUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft()-(450), Window.getScrollTop()+50);
-		}
+		int left = (Window.getClientWidth() - 542) /2;
+		int top = (Window.getClientHeight() - 469) /2;
 		
+		if (courseListUc == null){
+			courseListUc=new CourseListUc(collectionDo);
+		}else{
+			courseListUc.setDefaultCourseData();
+		}			
+		
+		courseListUc.center();
+		courseListUc.show();
+		courseListUc.setPopupPosition(left, top);
 		Window.enableScrolling(false);
 	}
 	
