@@ -465,3 +465,10 @@
 .resourceTagsGlassPanel{
 	z-index: 99999;
 }
+.totalWidth{
+	width:100%;
+}
+.popupWidth{
+	width:100%;
+	margin:0;'
+}
