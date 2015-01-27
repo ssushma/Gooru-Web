@@ -178,7 +178,7 @@ public class AssignmentEditLabelUc extends Composite implements
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		editLabel.getElement().setId("lblEditLabel");
 		editTextBox.getElement().setId("txtEditTextBox");
-		
+		editTextBox.getElement().getStyle().setColor("black");
 		StringUtil.setAttributes(editTextBox, true);
 	}
 

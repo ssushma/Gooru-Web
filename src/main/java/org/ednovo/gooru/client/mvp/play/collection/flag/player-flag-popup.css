@@ -616,6 +616,7 @@ margin-top: 10px;
 	max-height:86px;
 	/* width: 310px; */
 	position:absolute !important;
+	overflow-x: hidden !important;
 }
 /*Scroll bar style for default scrolls*/
 .dropdownListContainerScrollPanel::-webkit-scrollbar {
@@ -644,6 +645,7 @@ margin-top: 10px;
 	padding:0;
 	margin:0;
 	z-index:9999;
+	width: 270px;
 }
 .dropdownListItemContainer{
 	padding: 5px;

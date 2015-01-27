@@ -1017,7 +1017,7 @@ public class UserSettingsPresenter
 //						GOORU_UID), updateUserDetails,
 //				getUserprofileAsyncCallback());
 		
-		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, getUserV2ProfilePageAsyncCallback());
+		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, null, getUserV2ProfilePageAsyncCallback());
 
 	}
 
