@@ -30,12 +30,12 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView.ResizeEvent;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -329,33 +329,8 @@ public class EmailShareUc extends PopupPanel{
 				body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
-		
-		Window.addResizeHandler(new ResizeEvent());
-		setSharePopupOnResize();
-
+		ScrollPopupUtil.ScrollPopupUtilWidget(mainShareContainer);
 	}
-	
-	/**
-	 * This inner class is used to handle the window resizes
-	 * @author Gooru
-	 */
-	public class ResizeEvent implements ResizeHandler{
-		@Override
-		public void onResize(com.google.gwt.event.logical.shared.ResizeEvent event) {
-			setSharePopupOnResize();		
-		}
-	}
-	/**
-	 * This method is used to handle the window resize for add tags popup.
-	 */
-	void setSharePopupOnResize(){
-		if(isIpad || isAndriod){
-			mainShareContainer.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
-			mainShareContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
-			mainShareContainer.getElement().getStyle().setOverflowX(Overflow.AUTO);
-		}	
-	}
-
 	/**
 	 * Hide {@link EmailShareUc} popup
 	 * @param clickEvent instOLance of {@link ClickEvent}
