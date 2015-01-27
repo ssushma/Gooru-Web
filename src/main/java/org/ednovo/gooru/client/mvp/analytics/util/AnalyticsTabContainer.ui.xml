@@ -14,10 +14,12 @@
 									  <g:Button ui:field="btnOpenEndedQuestions" styleName="primary {unitStyle.css.addButonStyle}" text="{i18n.GL2283}" title="{i18n.GL2283}"></g:Button> 
 								</g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-4 col-sm-2">
+						<g:HTMLPanel styleName="col-md-4 col-sm-3">
+							<g:HTMLPanel styleName="analyticsPrintSave">
 									  <g:Button styleName="{unitStyle.css.print_icon_image}" ui:field="btnPtint"></g:Button> 
 									  <g:Button styleName="{unitStyle.css.mail_icon_image}" ui:field="btnEmail"></g:Button>
 								      <g:Button styleName="{unitStyle.css.save_icon_image}" ui:field="btnSave"></g:Button> 
+							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="clearfix"> 	</g:HTMLPanel>
 					</g:HTMLPanel>
