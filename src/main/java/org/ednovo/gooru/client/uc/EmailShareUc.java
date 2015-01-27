@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -44,6 +45,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -52,12 +54,14 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -100,6 +104,8 @@ public class EmailShareUc extends PopupPanel{
 	
 	@UiField
 	TextBox subTxt;
+	
+	@UiField HTMLPanel mainShareContainer;
 
 	@UiField
 	RichTextArea msgTxa;
@@ -129,6 +135,9 @@ public class EmailShareUc extends PopupPanel{
 	private int count=0;
 	
 	private TermsOfUse termsOfUse;
+	
+	Boolean isIpad,isAndriod,isWinDskp;
+
 
 	private static final String AT_SYMBOL = "@";
 
@@ -320,9 +329,8 @@ public class EmailShareUc extends PopupPanel{
 				body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
-
+		ScrollPopupUtil.ScrollPopupUtilWidget(mainShareContainer);
 	}
-
 	/**
 	 * Hide {@link EmailShareUc} popup
 	 * @param clickEvent instOLance of {@link ClickEvent}

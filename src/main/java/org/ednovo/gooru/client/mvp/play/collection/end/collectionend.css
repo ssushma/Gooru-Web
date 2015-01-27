@@ -196,14 +196,15 @@
 .loginMessaging {
    width: 100%;
 	/* min-height: 100px; */
-	height: auto;
+	height: 100px;
 	background: #f0f0f0;
 	border: 1px solid #ddd;
 	color: #999;
 	/* line-height: 100px; */
 	text-align: center;
 	padding: 5px;
-	line-height: 1.5em;
+	line-height: 6.25em;
+	vertical-align: middle;
 }
 
 .commentsSection .addComment button#post,
