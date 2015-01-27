@@ -973,7 +973,7 @@ body {
 	z-index:9999;
 	max-height:86px;
 	background-color: #f9f9f9;
-	min-width: 312px;
+	width: 242px;
 }
 
 .dropdownListItemContainer{
