@@ -47,11 +47,13 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -64,6 +66,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -94,7 +98,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class AssignPopupVc extends PopupPanel {
 
 	@UiField
-	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer;
+	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer,assignPopupContent;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -271,6 +275,13 @@ public abstract class AssignPopupVc extends PopupPanel {
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();	
 		Window.enableScrolling(false);
+		 boolean device = BrowserAgent.isDevice();
+		if(device){
+			ScrollPopupUtil.ScrollPopupUtilWidget(assignPopupContent);
+		}else{
+			assignPopupContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
+			assignPopupContent.getElement().getStyle().setHeight(550, Unit.PX);
+		}
 	}
 
 	public void hideContainers() {
