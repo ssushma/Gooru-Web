@@ -1036,7 +1036,7 @@ button.primary:hover {
 
 .forgotEmailIdLabel, .resetPwdLabel {
 	float: left;
-	width: 30%;
+	width: 40%;
 }
 
 .forgotPwdFormButtonDiv {
@@ -1127,7 +1127,6 @@ button.primary:hover {
 	float: left;
 	margin-left: 30px;
 	padding: 11px;
-	width: 440px;
 }
 
 .resetPwdContentDiv {
