@@ -38,6 +38,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
@@ -152,6 +153,8 @@ public class ResetPasswordVc extends Composite{
 			resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
 			resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
 			resetNewPwdTxtBox.getElement().setId("txtNewPwd");
+			resetNewPwdTxtBox.getElement().getStyle().setWidth(60, Unit.PX);
+			resetConfirmPwdTxtBox.getElement().getStyle().setWidth(60, Unit.PX);
 			newPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
 					.passwordErrorLabel());
 			newPwdValidationUc.setVisible(false);
