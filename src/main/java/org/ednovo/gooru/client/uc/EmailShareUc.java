@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView.ResizeEvent;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -44,6 +45,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -52,12 +54,14 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -100,6 +104,8 @@ public class EmailShareUc extends PopupPanel{
 	
 	@UiField
 	TextBox subTxt;
+	
+	@UiField HTMLPanel mainShareContainer;
 
 	@UiField
 	RichTextArea msgTxa;
@@ -129,6 +135,9 @@ public class EmailShareUc extends PopupPanel{
 	private int count=0;
 	
 	private TermsOfUse termsOfUse;
+	
+	Boolean isIpad,isAndriod,isWinDskp;
+
 
 	private static final String AT_SYMBOL = "@";
 
@@ -320,7 +329,31 @@ public class EmailShareUc extends PopupPanel{
 				body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
+		
+		Window.addResizeHandler(new ResizeEvent());
+		setSharePopupOnResize();
 
+	}
+	
+	/**
+	 * This inner class is used to handle the window resizes
+	 * @author Gooru
+	 */
+	public class ResizeEvent implements ResizeHandler{
+		@Override
+		public void onResize(com.google.gwt.event.logical.shared.ResizeEvent event) {
+			setSharePopupOnResize();		
+		}
+	}
+	/**
+	 * This method is used to handle the window resize for add tags popup.
+	 */
+	void setSharePopupOnResize(){
+		if(isIpad || isAndriod){
+			mainShareContainer.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
+			mainShareContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
+			mainShareContainer.getElement().getStyle().setOverflowX(Overflow.AUTO);
+		}	
 	}
 
 	/**
