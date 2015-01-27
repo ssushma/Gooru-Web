@@ -5,17 +5,18 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field= "playerStyle" src="resourceinfo.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource" />
-  <g:HTMLPanel styleName="container {playerStyle.resource-info-backgroundContainer} {playerStyle.totalWidth} addResourcePopup text-left" ui:field="resouceInfoContainer">
+ 
+   <g:HTMLPanel styleName="{playerStyle.resource-info-backgroundContainer} addResourcePopup text-left">
+   <g:HTMLPanel styleName="container" ui:field="resouceInfoContainer">
   	<g:FlowPanel styleName="row">
 	     <uc:HTMLEventPanel styleName="{playerStyle.resource-info-bottomImageContainer}" ui:field="hideButton">
 	      	<g:Label styleName="{playerStyle.resource-info-hideImage}" ui:field="hideImageLabel"/>
 	      	<g:Label styleName="{playerStyle.resource-info-hideText}" ui:field="hideText"></g:Label>
 	 	</uc:HTMLEventPanel>
 	    <g:Label styleName="{playerStyle.resource-info-name}" ui:field="resourceInfoText"></g:Label>
+    <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
     </g:FlowPanel>
-    <g:HTMLPanel styleName="clearfix"/>
-
-  		<g:FlowPanel ui:field="resourceInfoContainerPanel" styleName="row {playerStyle.resource-info-container} {playerStyle.popupWidth}">
+ 		<g:FlowPanel ui:field="resourceInfoContainerPanel" styleName="row {playerStyle.resource-info-container}">
 	    <g:HTMLPanel styleName="col-md-6 col-sm-6 {palyerStyleResource.getPlayerStyleResource.infoMetadataWrapper}">
 	      <g:HTMLPanel styleName="{palyerStyleResource.getPlayerStyleResource.infoMetadataInnerWrapper} ">	
 	              <g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>	 
@@ -280,6 +281,9 @@
 	           	<g:HTMLPanel ui:field="reosourceReleatedCollections"></g:HTMLPanel>
 	          </g:ScrollPanel>
          </g:HTMLPanel>
+         <g:HTMLPanel styleName="clearfix"/>
     </g:FlowPanel>
     </g:HTMLPanel>
+  </g:HTMLPanel>
+ 
 </ui:UiBinder>
