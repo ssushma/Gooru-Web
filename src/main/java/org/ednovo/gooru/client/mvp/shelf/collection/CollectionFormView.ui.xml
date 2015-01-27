@@ -9,20 +9,20 @@
 			<g:Label ui:field="collPopUpMainheading" styleName="{res.css.dontWorrkText}"></g:Label>
 			<g:Label ui:field="collPopUpSubheading" styleName="{res.css.contentDesc}"></g:Label>
 			<g:HTMLPanel styleName="{res.css.collectionSel}" ui:field="bodyContainer">
-				<g:Label  ui:field="collTitleLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables}"></g:Label>
+				<g:Label  ui:field="collTitleLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables} {createCollectionStyle.labelPadding}" ></g:Label>
 				<g:HTMLPanel styleName="col-md-8 col-xs-8 col-sm-8">
 					<uc:TextBoxWithPlaceholder ui:field="collectionTitleTxtBox" styleName="form-control {res.css.form_control}" />
 					<g:Label ui:field="mandatoryErrorLbl" styleName="{createCollectionStyle.mandatoryLabel}" />
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 				<g:HTMLPanel ui:field="gradeContainer">
-					<g:Label ui:field="gradeLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables}"></g:Label>
+					<g:Label ui:field="gradeLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables} {createCollectionStyle.labelPadding}"></g:Label>
 					<g:SimplePanel ui:field="collectionGradeTxtBox" styleName="col-md-8 col-xs-8 col-sm-8"></g:SimplePanel>
 					<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 				</g:HTMLPanel>
 				
 				<g:HTMLPanel  ui:field="courseContainer">
-					<g:Label ui:field="courseLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables}"></g:Label>
+					<g:Label ui:field="courseLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables} {createCollectionStyle.labelPadding}"></g:Label>
 					<g:SimplePanel styleName="col-md-8 col-xs-8 col-sm-8" ui:field="groupSimPanel"/>
 				<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 				</g:HTMLPanel>

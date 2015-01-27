@@ -91,7 +91,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void updateNewEmailStatus(String emailId, boolean isEmailConfirmed,
 		AsyncCallback<Void> callback);
    
-   void updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biographyString ,String password,String userName, String gender, boolean isSendConfirmEmail, AsyncCallback<V2UserDo> callback);
+   void updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biographyString ,String password,String userName, String gender, boolean isSendConfirmEmail,String userType, AsyncCallback<V2UserDo> callback);
    
    void sendWelcomeMail(String gooruUId, String emailType, AsyncCallback<Object> callback);
    

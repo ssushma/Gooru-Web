@@ -127,7 +127,9 @@ margin: 32px;
 }
 
 .oerContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .navbar-form {
@@ -251,7 +253,9 @@ margin: 32px;
 }
 
 .mobilefriendlyContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .modal-dialog {

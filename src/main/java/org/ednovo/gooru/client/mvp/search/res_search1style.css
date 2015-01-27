@@ -70,7 +70,7 @@
 
 body, html {
 	overflow-x: hidden;
-	overflow-y: auto !important;
+	overflow-y: auto;
 }
 
 .searchStandardHint {
@@ -135,7 +135,9 @@ body, html {
 }
 
 .mobilefriendlyContainer {
-	
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
 }
 
 .webpage {
@@ -175,7 +177,11 @@ body, html {
  .mainHeadContainer{}
 .form-control1{}
 .infoBtnContainer{}
-.oerContainer{}
+.oerContainer{
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
+}
 .filtersInner{}
 .twitterbtn{}
 .filteraggContainer{}

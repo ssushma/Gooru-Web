@@ -429,7 +429,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail) {
+	public V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail, String userType) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_PROFILE, getLoggedInUserUid(), getLoggedInSessionToken());
 		V2UserDo userv2Do = new V2UserDo();
@@ -452,6 +452,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			user.setAccountTypeId(3);
 		}
 		profileV2Do.setUser(user);
+		
+		if (userType != null || !userType.equalsIgnoreCase("")){
+			profileV2Do.setUserType(userType);
+		}
+		
 		if(!biography.equalsIgnoreCase("")){
 			profileV2Do.setAboutMe(biography);
 		}

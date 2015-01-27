@@ -117,6 +117,10 @@ public class SocialShareLinksView extends Composite {
 		shareLbl.getElement().setId("lblShareLbl");
 		shareLbl.getElement().setAttribute("alt", i18n.GL0512());
 		shareLbl.getElement().setAttribute("title", i18n.GL0512());
+		
+		
+		swithUrlLbl.getElement().getStyle().setWidth(30, Unit.PCT);
+		swithToEmbedLbl.getElement().getStyle().setWidth(30, Unit.PCT);
 	}
 
 	public void setData(Map<String, String> shortenUrl) {

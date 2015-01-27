@@ -268,3 +268,12 @@ button.secondary {
 	position: relative;
 	margin-right: 41px;
 }
+
+.txtBoxCollectionName{
+	border-color: rgb(204, 204, 204);
+	margin-bottom: 5px !important
+}
+
+.labelPadding{
+	padding-top: 7px;
+}

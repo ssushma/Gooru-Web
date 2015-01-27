@@ -258,8 +258,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			emoticsContainer.removeFromParent();
 			resourceTitleLbl.setVisible(false);
 			resourcePublisher.setVisible(false);
-			ratingsContainer.getElement().getStyle().setFloat(Float.RIGHT);
-			ratingsContainer.getElement().getStyle().setMarginRight(430,Unit.PX);
+		/*	ratingsContainer.getElement().getStyle().setFloat(Float.RIGHT);
+			ratingsContainer.getElement().getStyle().setMarginRight(430,Unit.PX);*/
 			if(isChildAccount()){
 				collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 			}else{

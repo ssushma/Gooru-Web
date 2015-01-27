@@ -59,6 +59,7 @@ import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -109,7 +110,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField(provided = true)
 	AddTagesCBundle res;
 	
-	@UiField Anchor headerEducationalUse ,kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
+	@UiField Anchor  kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
+	
+	@UiField Label headerEducationalUse;
 	
 	@UiField Anchor  handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
 	
@@ -514,11 +517,28 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		};
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
+		Window.addResizeHandler(new ResizeEvent());
+		setAddTagesPopupOnResize();
+	}
+	/**
+	 * This inner class is used to handle the window resizes
+	 * @author Gooru
+	 */
+	public class ResizeEvent implements ResizeHandler{
+		@Override
+		public void onResize(com.google.gwt.event.logical.shared.ResizeEvent event) {
+			setAddTagesPopupOnResize();		
+		}
+	}
+	/**
+	 * This method is used to handle the window resize for add tags popup.
+	 */
+	void setAddTagesPopupOnResize(){
 		if(isIpad || isAndriod){
-			addTagesContent.getElement().getStyle().setHeight(Window.getClientHeight()-10, Unit.PX);
+			addTagesContent.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
 			addTagesContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
 			addTagesContent.getElement().getStyle().setOverflowX(Overflow.AUTO);
-		}
+		}	
 	}
 	/**
 	 * 
