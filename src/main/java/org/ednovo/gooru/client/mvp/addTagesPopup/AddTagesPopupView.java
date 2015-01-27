@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
@@ -517,28 +518,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		};
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
-		Window.addResizeHandler(new ResizeEvent());
-		setAddTagesPopupOnResize();
-	}
-	/**
-	 * This inner class is used to handle the window resizes
-	 * @author Gooru
-	 */
-	public class ResizeEvent implements ResizeHandler{
-		@Override
-		public void onResize(com.google.gwt.event.logical.shared.ResizeEvent event) {
-			setAddTagesPopupOnResize();		
-		}
-	}
-	/**
-	 * This method is used to handle the window resize for add tags popup.
-	 */
-	void setAddTagesPopupOnResize(){
-		if(isIpad || isAndriod){
-			addTagesContent.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
-			addTagesContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
-			addTagesContent.getElement().getStyle().setOverflowX(Overflow.AUTO);
-		}	
+		ScrollPopupUtil.ScrollPopupUtilWidget(addTagesContent);
 	}
 	/**
 	 * 
