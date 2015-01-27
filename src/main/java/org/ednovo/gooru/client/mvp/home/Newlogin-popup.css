@@ -461,7 +461,7 @@ button.secondary:hover {
 .popupInnerforgotPassword {
 	border: 1px solid #ddd;
 	position: relative;
-	background: url(../images/registration-bg.png) no-repeat 30px -30px;
+	background: url(../images/login/registration-bg.png) no-repeat 30px -30px;
 }
 
 .PopupMainSmall {
@@ -542,6 +542,7 @@ button.secondary:hover {
 .popupInnerGrey {
 	border: 1px solid #ddd;
 	position: relative;
+	
 }
 
 .popupContentGrey {
@@ -1641,7 +1642,8 @@ display:inline-block;
 
 .popupInner {
 	border: 1px solid #DDD;
-	position:relative;	
+	position:relative;
+	background: url(../images/login/registration-bg.png) no-repeat 30px -30px;	
 }
 
 .popup {
