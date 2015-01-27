@@ -326,6 +326,7 @@
 	padding: 4px;
 	height: 20px;
 	border: 1px solid #DDDDDD;
+	box-sizing: content-box;
 }
 
 .resourceDragWithImg {
@@ -360,6 +361,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	margin-top: 3px;
 }
 
 .resourceDragImage {
