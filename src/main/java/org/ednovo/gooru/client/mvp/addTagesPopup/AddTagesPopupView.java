@@ -535,7 +535,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 */
 	void setAddTagesPopupOnResize(){
 		if(isIpad || isAndriod){
-			addTagesContent.getElement().getStyle().setHeight(Window.getClientHeight()-10, Unit.PX);
+			addTagesContent.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
 			addTagesContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
 			addTagesContent.getElement().getStyle().setOverflowX(Overflow.AUTO);
 		}	
