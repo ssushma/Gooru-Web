@@ -2809,6 +2809,7 @@ overflow: visible;
  	}
 	
 	.reviewPopupPoor{
+		top:120px !important;
 		left:24% !important;
 		width:300px;
 	}
@@ -2853,6 +2854,7 @@ overflow: visible;
 		.reviewPopup{
 			left:20% !important;
 			width: 100%;
+			top:120px !important;
 		}
 		.preFilterPopup{
 			left:0% !important;
@@ -2911,6 +2913,7 @@ overflow: visible;
 		.reviewPopup{
 		left:10% !important;
 		width: 100%;
+		top:100px !important;
 		}
 		.preFilterPopup{
 			left:0% !important;
