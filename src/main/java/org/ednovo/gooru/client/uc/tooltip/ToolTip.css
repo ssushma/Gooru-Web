@@ -500,8 +500,13 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 	-moz-border-radius: 4px;
 	position: relative;
+<<<<<<< HEAD
 	width: 260px;
 	height: 425px;
+=======
+	width: 260px;
+	height: 458px;
+>>>>>>> release-6.6.3.a1
 	cursor: pointer;
 	color: #515151;
 }

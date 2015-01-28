@@ -160,6 +160,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 	boolean isMoreThanLimit = false; // Limit = 10
 	private TermsOfUse termsOfUse;
 	private static final int UNAUTHORISED_STATUS_CODE = 401;
+	private static final String UNAUTHORIZED_MSG ="Please double-check your password and try signing in again.";
+	private static final String USER_ID_WRONG_MSG = "Please double-check your email address and password, and then try logging in again.";
+	private static final int PASSWORDERROR_STATUS_CODE = 400;
+	
 	
 	public HTMLPanel getAssignContainer(){
 		return assignContainer;
@@ -721,7 +725,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
+										if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE&& result.getStatusCode()!=PASSWORDERROR_STATUS_CODE){
 											MixpanelUtil.Regular_User_Logged_In();
 											AppClientFactory.setLoggedInUser(result);
 											AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
@@ -742,7 +746,11 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 											loadListContainers();
 											MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
-										}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
+										}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && (result.getErrorMsg().equalsIgnoreCase(UNAUTHORIZED_MSG) || result.getErrorMsg().equalsIgnoreCase( USER_ID_WRONG_MSG))){
+											loginButton.setVisible(true);
+											lblPleaseWait.setVisible(false);
+											new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+										}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE && (!result.getErrorMsg().equalsIgnoreCase(UNAUTHORIZED_MSG) || !result.getErrorMsg().equalsIgnoreCase( USER_ID_WRONG_MSG))){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
 											new AlertContentUc(i18n.GL1966(), i18n.GL1938());

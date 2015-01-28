@@ -174,7 +174,7 @@ public class SearchUiUtil{
 			return;
 		}
 		
-		renderMetaData(flowPanel, datas.size() > 0 ? i18n.GL0566()+datas.get(0) : null, null, 0);
+		renderMetaData(flowPanel, datas.size() > 0 ? i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+datas.get(0) : null, null, 0);
 		FlowPanel toolTipwidgets = new FlowPanel();
 		FlowPanel toolTipwidget1 = new FlowPanel();
 		for (int count = 0; count < datas.size(); count++) {

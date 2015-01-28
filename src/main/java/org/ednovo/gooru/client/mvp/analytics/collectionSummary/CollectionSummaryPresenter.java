@@ -51,6 +51,8 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
 	
+	String collectionId;
+	
 	/**
 	 * Constructor
 	 * @param eventBus
@@ -87,6 +89,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	 */
 	@Override
 	public void setCollectionSummaryData(final String collectionId,final String pathwayId) {
+		this.collectionId=collectionId;
 		getView().getLoadinImage().setVisible(true);
 		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		this.analyticService.getCollectionSummaryUsersData(classpageId,new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
@@ -127,8 +130,12 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 				getView().setUserSessionsData(result);
 				if(result.size()!=0){
 					printUserDataDO.setSession("1st Session");
-					printUserDataDO.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getTimeStamp())));
+					printUserDataDO.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(result.get(0).getTimeStamp())));
 					setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId,printUserDataDO);
+				}else{
+					getView().resetDataIfNoSessions();
+					clearSlot(TEACHER_STUDENT_SLOT);
+					setInSlot(TEACHER_STUDENT_SLOT, null,false);	
 				}
 			}
 			
@@ -159,6 +166,11 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId,true,getView().getLoadinImage(),printUserDataDO);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
 	}
+	@Override
+	protected void onHide() {
+		super.onHide();
+		clearFrames();
+	}
 
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#exportCollectionSummary(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
@@ -169,12 +181,19 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			
 			@Override
 			public void onSuccess(String result) {
-				System.out.println("result::"+result);
+				getView().getFrame().setUrl(result);
+				//Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 		});
+	}
+	@Override
+	public void clearFrames(){
+		getView().getFrame().setUrl("");
+		collectionSummaryTeacherPresenter.clearFrame();
+		collectionSummaryIndividualPresenter.clearFrame();
 	}
 }

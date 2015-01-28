@@ -16,6 +16,10 @@
 	background-color: inherit;
 	font-size:11px;
 }
+.exportImage{
+	float: right;
+	margin-top: -4%;
+}
 .mainDataVpnl{
 	margin: 0 auto;
 	vertical-align: baseline;
@@ -61,8 +65,8 @@
 	width: 35px
 }
 .htmlpanlProgress{
-	overflow-x: auto;
-	width: 784px;
+	overflow:hidden;
+	width: 95%;
 	margin: 2%;
 	border-left: 1px solid #eee;
 	clear:both;
@@ -75,8 +79,9 @@
 	clear:both;
 }
 .maincontainer{
-	background-color: white;
+	background-color: inherit;
 	text-align: center;
+	clear:both;
 }
 .summary_title {
 	float: left;
@@ -150,14 +155,16 @@
 	padding-left: 23px;
 	padding-bottom: 10px;
 }
-#scrollForCollectionProgress::-webkit-scrollbar {
+#pnlScrollForCollectionProgress::-webkit-scrollbar {
 	width: 8px;
-	height: 4px;
-	background: #6f6d6d;
+	height: 8px;
 }
-#scrollForCollectionProgress::-webkit-scrollbar-thumb {
+#pnlScrollForCollectionProgress::-webkit-scrollbar-thumb {
 	background-color: #bdbebd;
-	-webkit-border-radius: 1ex;
+	-webkit-border-radius: 2ex;
+}
+#pnlScrollForCollectionProgress:hover {
+    overflow-x: scroll;
 }
 .setOETextPopupCenter {
 	left: 0 !important;
@@ -175,4 +182,50 @@
 	background-color: #000;
 	opacity: 0.3;
 	z-index: 99999;
+}
+.loadingImageMainDiv {
+	width: 100%;
+    height: 300px;
+	position: relative;
+	/* background-color: #FFF; */
+	/* opacity: 0.4; */
+	top: 0px;
+    left: 0px;
+    z-index:1;
+}
+
+.loadingImageForSelfEdit {
+	background: url("images/core/B-Dot.gif");
+	width: 166px;
+	height: 170px;
+	margin: 0 auto;
+	margin-top: 65px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
+}
+.leftArrow{
+	width: 6%;
+	height: 40px;
+	z-index: 999;
+	bottom: 12%;
+	left: -23px;
+	position: absolute;
+	cursor:pointer;
+	background: url(images/analytics/leftArrow.png)  no-repeat ;
+}
+.rightArrow{
+	float: right;
+	z-index: 999;
+	position: absolute;
+	width: 4%;
+	bottom: 12%;
+	right: -20px;
+	height: 40px;
+	cursor:pointer;
+	background: url(images/analytics/rightArrow.png)  no-repeat ;
+}
+.mainPanelContainer{
+	position: relative;
+	clear: both;
 }

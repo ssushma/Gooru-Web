@@ -275,8 +275,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			libraryUserDo.setPartnerUrl(i18n.GL2188_1());
 
 		}else if(partnerPlace.equals(PlaceTokens.ASPIRE_EPACS)) {
-			courseDo.setLabel(i18n.GL3107());    
-			thumbnailDo.setUrl("../images/library/partners/tical.png");
+			courseDo.setLabel(i18n.GL3107());  
+			thumbnailDo.setUrl("../images/library/partners/EPACS_banner.png");
 			libraryUserDo.setPartnerName(i18n.GL3108());
 			libraryUserDo.setPartnerUrl(i18n.GL3109());
 		}

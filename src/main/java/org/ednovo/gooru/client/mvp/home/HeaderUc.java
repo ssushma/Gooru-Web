@@ -82,6 +82,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -367,7 +368,7 @@ public class HeaderUc extends Composite implements
 			}
 
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
 				autoSuggestKeywordDo.setQuery(text);
@@ -376,6 +377,14 @@ public class HeaderUc extends Composite implements
 				if (text != null && text.trim().length() > 0) {
 					requestAutoSuggestKeyword(autoSuggestKeywordDo);
 				} else {
+					getEditSearchTxtBox().hideSuggestionList();
+				}
+
+				arrowLbl.setVisible(true);
+				if(prefilter!=null){
+					prefilter.hide();
+				}
+				if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 					getEditSearchTxtBox().hideSuggestionList();
 				}
 			}
@@ -431,7 +440,7 @@ public class HeaderUc extends Composite implements
 
 //		registerLinkLbl.addClickHandler(new studyClickHandler());
 	/*	getEditSearchTxtBox().addKeyUpHandler(new SearchKeyUpHandler());*/
-		getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
+		//getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
 //		getEditSearchTxtBox().addFocusListener(new SearchClickHandler());
 		editSearchInputFloPanel.setVisible(false);
 		// gooruGuideImgLbl.setStyleName(GooruCBundle.INSTANCE.css().gooruGuideImg());
@@ -1362,7 +1371,7 @@ public class HeaderUc extends Composite implements
 		{
 			//else is for * query search.
 			
-			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			if(getEditSearchTxtBox().getText().isEmpty())
 			{
 				Map<String, String> params = new HashMap<String, String>();
 				params = updateParams(params);
@@ -1424,32 +1433,46 @@ public class HeaderUc extends Composite implements
 		if(prefilter!=null){
 			params=prefilter.getFilter();
 			String subject = params.get(IsSearchView.SUBJECT_FLT);
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
-			{
-				subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
-			}
+
 			if (subject != null) {
 				params.put(IsSearchView.SUBJECT_FLT, subject);
 			}else{
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT)!=null)
+				{
+					subject = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+				}
+				else
+				{
 				params.remove(IsSearchView.SUBJECT_FLT);
+				}
 			}
 			String grade = params.get(IsSearchView.GRADE_FLT);
-			
-			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
-			{
-				grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
-			}
+		
 			
 			if (grade != null) {
 				params.put(IsSearchView.GRADE_FLT, grade);
 			}else{
+				if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT)!=null)
+				{
+					grade = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+				}
+				else
+				{
 				params.remove(IsSearchView.GRADE_FLT);
+				}
 			}
 			String standardsUrlParam = null;
 			if(AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT)!=null)
 			{
+				if(stadardCode!=null && !stadardCode.equals("")){
+					params.put(IsSearchView.STANDARD_FLT, stadardCode);
+					stadardCode=null;
+				}
+				else
+				{
 				standardsUrlParam = AppClientFactory.getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
 				params.put(IsSearchView.STANDARD_FLT, standardsUrlParam);
+				}
 			}
 			else
 			{
@@ -1458,14 +1481,11 @@ public class HeaderUc extends Composite implements
 				stadardCode=null;
 				}
 			}
-
-			
-
 		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH))
+		if(!currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH))
 		{
 		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		}
@@ -1546,7 +1566,7 @@ public class HeaderUc extends Composite implements
 			if (userDo.isBeforeProductionSwitch()) {
 				// goToClasicGooruPanel.setVisible(true);
 				logoutPanelVc.displayClassicGooruLink(true);
-				// goToClasicGooruPanel.getElement().getStyle().setVisibility(Visibility.VISIBLE);SearchKeyDownHandler
+				// goToClasicGooruPanel.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			} else {
 				// goToClasicGooruPanel.setVisible(false);
 				logoutPanelVc.displayClassicGooruLink(false);
@@ -1640,7 +1660,7 @@ public class HeaderUc extends Composite implements
 			if(prefilter!=null){
 				prefilter.hide();
 			}
-			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			if (event.getNativeKeyCode() == (char) KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
 					if (AppClientFactory.getCurrentPlaceToken()
@@ -2002,6 +2022,9 @@ public class HeaderUc extends Composite implements
 
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
+		System.out.println("event.getSelectedItem().getDisplayString()::"+event.getSelectedItem().getDisplayString());
+		System.out.println("editSearchTxtBox.getText()::"+editSearchTxtBox.getText());
+		//System.out.println("enterkey::"+event.);
 		String searchText = editSearchTxtBox.getText();
 		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
 		editSearchTxtBox.setText(searchText.trim());
@@ -2151,6 +2174,55 @@ public class HeaderUc extends Composite implements
 		}
 	}
 	
+	private void changeQueryParams() {
+		String searchText = editSearchTxtBox.getText();
+		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
+		editSearchTxtBox.setText(searchText.trim());
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (editSearchTxtBox.getText() != null && editSearchTxtBox.getText().length() > 0) {
+			MixpanelUtil.Perform_Search(editSearchTxtBox.getText().trim().toLowerCase(),"HeaderUc");
+			Map<String, String> params = new HashMap<String, String>();
+			params = updateParams(params);
+			savePlaceRequest();
+			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+					PlaceTokens.COLLECTION_SEARCH)) {
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.COLLECTION_SEARCH, params);
+			} else {
+				String queryVal = params.get("query");
+				//queryVal = queryVal.replaceAll("%5C1", "&");
+				Map<String, String> map = params;
+				map.put("query", queryVal);
+				editSearchTxtBox.setText(queryVal);
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
+			editSearchTxtBox.setText("");
+			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+			editSearchTxtBox.hideSuggestionList();
+			getEditSearchTxtBox().setText(searchText.trim());
+		}
+		else
+		{
+			//else is for * query search.
+			if(!prefilter.getFilter().isEmpty()&&getEditSearchTxtBox().getText().isEmpty())
+			{
+				getEditSearchTxtBox().setText("");
+				Map<String, String> params = new HashMap<String, String>();
+				params = updateParams(params);
+				Map<String, String> map = params;
+				map.put("query", "*");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
+		}
+		
+		hasAutoSelected=true;
+		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
+	}
+	
+	
 	public static void closeClassContainer()
 	{
 		if(myClassesPop != null)
@@ -2170,6 +2242,9 @@ public class HeaderUc extends Composite implements
 
 	public static void setStandardsCode(String stadardCodeId, int id, String code){
 		stadardCode=stadardCodeId;
+		
+		
+		
 		/*SearchFilterVc searchFilterVc= new SearchFilterVc(true);
 		System.out.println("id::"+id);
 		System.out.println("code::"+code	);

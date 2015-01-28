@@ -489,7 +489,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		if (!AppClientFactory.isAnonymous()){
 			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 			int flag = AppClientFactory.getLoggedInUser().getViewFlag();
-			if (flag<=7 && !loginType.equalsIgnoreCase("apps")){
+			if (flag<=7 && loginType.equalsIgnoreCase("Credential")){
 				Window.enableScrolling(false);
 			}else{
 				Window.enableScrolling(true);

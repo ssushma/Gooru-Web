@@ -50,6 +50,7 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	private int avgReaction;
 	private String thumbnail;
 	private long lastModified;
+	private long lastAccessed;
 	private String gooruOId;
 	private int views;
 	private int score;
@@ -148,5 +149,11 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	}
 	public void setNonResourceCount(int nonResourceCount) {
 		this.nonResourceCount = nonResourceCount;
+	}
+	public long getLastAccessed() {
+		return lastAccessed;
+	}
+	public void setLastAccessed(long lastAccessed) {
+		this.lastAccessed = lastAccessed;
 	}
 }
