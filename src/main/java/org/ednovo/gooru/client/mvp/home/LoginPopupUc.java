@@ -668,7 +668,7 @@ public class LoginPopupUc extends PopupPanel{
 				
 				//new TryItOutVc();
 				
-				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
+				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo newUser) {
 						UserDo user = AppClientFactory.getLoggedInUser();
@@ -676,8 +676,6 @@ public class LoginPopupUc extends PopupPanel{
 						AppClientFactory.setLoggedInUser(user);
 					}
 				});
-			} else if((flag == 2||flag == 6||flag==1) && !AppClientFactory.isAnonymous()){
-//				new ImprovedGooruPopUpView();				
 			}
 		}
 	}
