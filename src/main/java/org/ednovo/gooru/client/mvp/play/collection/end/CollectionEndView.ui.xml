@@ -12,7 +12,7 @@
 
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 
-      <g:FlowPanel ui:field="studyMainContianer" styleName="container">
+      <g:FlowPanel ui:field="studyMainContianer" styleName="container studyMainContainer">
           <g:HTMLPanel>
       	<g:FlowPanel styleName="row">
       		<!--  new design start -->
