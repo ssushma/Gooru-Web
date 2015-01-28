@@ -6,4 +6,5 @@ import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 
 public interface LoadBannerActionInterface {
 	public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo, LibraryUserDo libraryUserDo);
+	public CourseDo getUpdatedCourseDo();
 }
