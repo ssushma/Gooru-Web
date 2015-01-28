@@ -199,7 +199,7 @@ width: 50%;
 	border-style:solid;
 	top: 33px;
 	left: -1px;
-	z-index: 9;
+	z-index: 99999;
 	overflow-x:hidden !important;
 	position:absolute !important;
 }

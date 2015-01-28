@@ -2676,6 +2676,9 @@ overflow: visible;
 .addResourcePopup{
 		margin-top:50px ;	
 	}
+.studyMainContainer{
+	width:1000px;
+}	
 
 /* @media (min-width: 240px) and (max-width: 319px){
 	.gwt-PopupPanel{
@@ -2757,7 +2760,6 @@ overflow: visible;
 
 }
 
-
 @media (min-width: 992px) and (max-width: 1199px) {
 	
 	#main, #menuRight {
@@ -2783,6 +2785,14 @@ overflow: visible;
 		position: relative;
 		margin-bottom: 0px;
 		height: 30px;
+	}
+	
+}
+
+@media (min-width: 992px) {
+
+	.studyMainContainer{
+		width:990px !important;
 	}
 }
 
