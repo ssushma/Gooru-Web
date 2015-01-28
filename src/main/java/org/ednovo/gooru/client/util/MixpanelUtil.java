@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.util;
 
-import org.ednovo.gooru.client.uc.BrowserAgent;
 
 
 public class MixpanelUtil {
@@ -1612,4 +1611,17 @@ public class MixpanelUtil {
 	//$wnd.mixpanel.track("Click_AnalyticsTab_Search",{},function() { });
 			   	$wnd.hewlettTracking("Click_AnalyticsTab_Search");
 		}-*/;
+	
+	public static native void setIdentity(String userId, String userName, String emailId, String role, String createdDate, String firstLastName, String clientIpAddress)/*-{
+		$wnd.FS.identify(userId, {
+			"displayName": ""+userName,
+			"email": ""+emailId,
+			"firstLastName_str": ""+firstLastName,
+			"role_str":""+role
+		});
+	}-*/;
+	
+	
+	
+	
 }
