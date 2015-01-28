@@ -21,7 +21,9 @@
  .flagbuttonDeSelected{}
  .rightFlagPanel{}
  .leftFlagMenu{}
- .leftFlagPanel{}
+ .leftFlagPanel{
+  height:86px !important;
+ }
  
 .firstInputGroup{}
 .childUserInfoContainer{}
