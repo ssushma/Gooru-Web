@@ -116,7 +116,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		//resourceInfoView.getHideButton().addClickHandler(new ShowTabWidgetView("info"));
 		setAutoHideOnNavigationEventEnabled(true);
 		
-/*		
+		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
@@ -145,7 +145,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  
 		  }
-*/		  setUiText();
+		  setUiText();
 	}
 	 
 	  @Override
