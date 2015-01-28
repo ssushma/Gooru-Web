@@ -87,8 +87,8 @@
 						    <g:HTMLPanel styleName="{unitStyle.css.collectionSummaryDetailsWrapper}">
 								<g:HTMLPanel styleName="{unitStyle.css.left_container}">
 									<g:HTMLPanel styleName="col-md-9 col-sm-8 {playerStyle.paddingClear}"> 
-									 <g:HTMLPanel styleName="col-md-2 col-sm-2 {playerStyle.paddingClear} {unitStyle.css.collection_image}">
-									     <g:Image ui:field="collectionImage"></g:Image>
+									 <g:HTMLPanel styleName="col-md-2 col-sm-2 {playerStyle.paddingClear}">
+									     <g:Image  ui:field="collectionImage"></g:Image>
 									 </g:HTMLPanel>      
 									<g:HTMLPanel styleName="col-md-10 col-sm-10 {playerStyle.paddingClear}">
 										<g:InlineLabel ui:field="collectionTitle"></g:InlineLabel>

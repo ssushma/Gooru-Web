@@ -24,8 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.library.partner;
 
+
+
+
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -41,6 +47,9 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.StringUtil;
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -74,7 +83,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	interface PartnerLibraryViewUiBinder extends UiBinder<Widget, PartnerLibraryView> {
 	}
 	
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -175,7 +184,19 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		CourseDo courseDo = new CourseDo();
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		LibraryUserDo libraryUserDo = new LibraryUserDo();
-		if(partnerPlace.equals(PlaceTokens.AUTODESK)) {
+		Map<String, LoadBannerActionInterface> libraryVal = new HashMap<String,LoadBannerActionInterface>();
+		libraryVal = addAllPartnerLibraries();
+		
+		
+		try {
+			LoadBannerActionInterface actionInterface = libraryVal.get(partnerPlace); 
+			actionInterface.loadLibBanner(courseDo, thumbnailDo, libraryUserDo); 
+		} catch (Exception e) {
+			System.out.println("-- "+e); 
+		}
+		
+		
+		/*if(partnerPlace.equals(PlaceTokens.AUTODESK)) {
 			
 			courseDo.setLabel(i18n.GL2027());
 			thumbnailDo.setUrl("../images/library/partners/autodesk.png");
@@ -278,11 +299,35 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			thumbnailDo.setUrl("../images/library/partners/EPACS_banner.png");
 			libraryUserDo.setPartnerName(i18n.GL3108());
 			libraryUserDo.setPartnerUrl(i18n.GL3109());
-		}
+		}*/
 		
 		courseDo.setThumbnails(thumbnailDo);
 		courseDo.setCreator(libraryUserDo);
 		return courseDo;
+	}
+	
+	public Map<String, LoadBannerActionInterface> addAllPartnerLibraries() {
+
+		Map<String, LoadBannerActionInterface> map = new HashMap<String,LoadBannerActionInterface>();
+		map.put(PlaceTokens.AUTODESK,AutodeskBanner.getAutodeskInstance());
+		map.put(PlaceTokens.ONR,ONRBanner.getOnrInstance());
+		map.put(PlaceTokens.NGC,NgcBanner.getNgcInstance());
+		map.put(PlaceTokens.FTE,FteBanner.getFteInstance());
+		map.put(PlaceTokens.WSPWH,WspwhBanner.getWsphInstance());
+		map.put(PlaceTokens.LESSONOPOLY,LessonopolyBanner.getLessonpolyInstance());
+		map.put(PlaceTokens.FINCAPINC,FincapIncBanner.getfincapInstance());
+		map.put(PlaceTokens.PSDPAL,PsdlBanner.getPsdpalIstance());
+		map.put(PlaceTokens.YOUTHVOICES, YouthVoicesBanner.getYouthVoicesIstance());
+		map.put(PlaceTokens.GEOEDUCATION, GeoEduBanner.getGeoEduIstance());
+		map.put(PlaceTokens.LPS, LpsBanner.getLpsIstance());
+		map.put(PlaceTokens.CORE_LIBRARY, CoreBanner.getcoreIstance());
+		map.put(PlaceTokens.ESYP, EsypBanner.getEsypIstance());
+		map.put(PlaceTokens.CCST_Cal_TAC, CcstBanner.getCcstIstance());
+		map.put(PlaceTokens.TICAL, TicalBanner.getTicalInstance());
+		map.put(PlaceTokens.ASPIRE_EPACS, AspireBanner.getAspireInstance());
+
+		return map;
+
 	}
 
 	@Override
@@ -304,5 +349,394 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	}
 	
 	
+	private static class AutodeskBanner implements LoadBannerActionInterface{
+		
+		private static AutodeskBanner autodeskBannerInstance;
+	    // SingletonExample prevents any other class from instantiating
+	    private AutodeskBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static AutodeskBanner getAutodeskInstance() {
+	        if (null == autodeskBannerInstance) { 
+	        	autodeskBannerInstance = new AutodeskBanner();
+	        }
+	        return autodeskBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2027());
+			thumbnailDo.setUrl(Constants.AUTODESK_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1566());
+			libraryUserDo.setPartnerUrl(i18n.GL1567());
+		}
+	}
 	
+	private static class ONRBanner implements LoadBannerActionInterface{
+		
+		private static ONRBanner ONRBannerInstance;
+		 
+	    // SingletonExample prevents any other class from instantiating
+	    private ONRBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static ONRBanner getOnrInstance() {
+	        if (null == ONRBannerInstance) { 
+	        	ONRBannerInstance = new ONRBanner();
+	        }
+	        return ONRBannerInstance;
+	    }
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2028());
+			thumbnailDo.setUrl(Constants.ONR_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1568());
+			libraryUserDo.setPartnerUrl(i18n.GL1569());		}
+	}
+	
+	private static class NgcBanner implements LoadBannerActionInterface{
+		
+		private static NgcBanner ngcBannerInstance;
+		 
+	    // SingletonExample prevents any other class from instantiating
+	    private NgcBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static NgcBanner getNgcInstance() {
+	        if (null == ngcBannerInstance) { 
+	        	ngcBannerInstance = new NgcBanner();
+	        }
+	        return ngcBannerInstance;
+	    }
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2030());
+			thumbnailDo.setUrl(Constants.NGC_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1572());
+			libraryUserDo.setPartnerUrl(i18n.GL1573());
+		}
+	}
+	
+	private static class FteBanner implements LoadBannerActionInterface{
+
+		private static FteBanner fteBannerInstance;
+		 
+	    // SingletonExample prevents any other class from instantiating
+	    private FteBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static FteBanner getFteInstance() {
+	        if (null == fteBannerInstance) { 
+	        	fteBannerInstance = new FteBanner();
+	        }
+	        return fteBannerInstance;
+	    }
+
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2029());
+			thumbnailDo.setUrl(Constants.FTE_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1570());
+			libraryUserDo.setPartnerUrl(i18n.GL1571());
+		}
+	}
+	
+	private static class WspwhBanner implements LoadBannerActionInterface{
+
+		private static WspwhBanner wsphBannerInstance;
+		 
+	    // SingletonExample prevents any other class from instantiating
+	    private WspwhBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static WspwhBanner getWsphInstance() {
+	        if (null == wsphBannerInstance) { 
+	        	wsphBannerInstance = new WspwhBanner();
+	        }
+	        return wsphBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2031());
+			thumbnailDo.setUrl(Constants.WSPH_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1574());
+			libraryUserDo.setPartnerUrl(i18n.GL1575());
+		}
+	}
+	
+	private static class LessonopolyBanner implements LoadBannerActionInterface{
+
+		private static LessonopolyBanner lessonopolyBannerInstance;
+		 
+	    // SingletonExample prevents any other class from instantiating
+	    private LessonopolyBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static LessonopolyBanner getLessonpolyInstance() {
+	        if (null == lessonopolyBannerInstance) { 
+	        	lessonopolyBannerInstance = new LessonopolyBanner();
+	        }
+	        return lessonopolyBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2032());
+			thumbnailDo.setUrl(Constants.LESSONOPOLY_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1576());
+			libraryUserDo.setPartnerUrl(i18n.GL1577());
+		}
+	}
+	
+	private static class FincapIncBanner implements LoadBannerActionInterface{
+
+
+		private static FincapIncBanner fincapIncBannerInstance;
+		 
+	    // SingletonExample prevents any other class from instantiating
+	    private FincapIncBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static FincapIncBanner getfincapInstance() {
+	        if (null == fincapIncBannerInstance) { 
+	        	fincapIncBannerInstance = new FincapIncBanner();
+	        }
+	        return fincapIncBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2033());
+			thumbnailDo.setUrl(Constants.FINCAP_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1765());
+			libraryUserDo.setPartnerUrl(i18n.GL1766());
+		}
+	}
+	
+	private static class PsdlBanner implements LoadBannerActionInterface{
+
+		private static PsdlBanner psdlBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private PsdlBanner() {
+		}
+
+		// Providing Global point of access
+		public static PsdlBanner getPsdpalIstance() {
+			if (null == psdlBannerInstance) { 
+				psdlBannerInstance = new PsdlBanner();
+			}
+			return psdlBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2034());
+			thumbnailDo.setUrl(Constants.PSDPAL_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1763());
+			libraryUserDo.setPartnerUrl(i18n.GL1764());
+		}
+	}
+	
+	private static class YouthVoicesBanner implements LoadBannerActionInterface{
+
+		private static YouthVoicesBanner youthVoiceBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private YouthVoicesBanner() {
+		}
+
+		// Providing Global point of access
+		public static YouthVoicesBanner getYouthVoicesIstance() {
+			if (null == youthVoiceBannerInstance) { 
+				youthVoiceBannerInstance = new YouthVoicesBanner();
+			}
+			return youthVoiceBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2040());
+			thumbnailDo.setUrl(Constants.YOUTH_VOICES_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2042());
+			libraryUserDo.setPartnerUrl(i18n.GL2043());
+		}
+	}
+
+	private static class GeoEduBanner implements LoadBannerActionInterface{
+
+		private static GeoEduBanner geoEduBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private GeoEduBanner() {
+		}
+
+		// Providing Global point of access
+		public static GeoEduBanner getGeoEduIstance() {
+			if (null == geoEduBannerInstance) { 
+				geoEduBannerInstance = new GeoEduBanner();
+			}
+			return geoEduBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2041());
+			thumbnailDo.setUrl(Constants.GEOEDU_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2044());
+			libraryUserDo.setPartnerUrl(i18n.GL2045());
+		}
+	}
+	
+	private static class LpsBanner implements LoadBannerActionInterface{
+
+		private static LpsBanner lpsBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private LpsBanner() {
+		}
+
+		// Providing Global point of access
+		public static LpsBanner getLpsIstance() {
+			if (null == lpsBannerInstance) { 
+				lpsBannerInstance = new LpsBanner();
+			}
+			return lpsBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2053());
+			thumbnailDo.setUrl(Constants.LPS_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2065());
+			libraryUserDo.setPartnerUrl(i18n.GL2066());
+		}
+	}
+	
+	private static class CoreBanner implements LoadBannerActionInterface{
+
+		private static CoreBanner coreBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private CoreBanner() {
+		}
+
+		// Providing Global point of access
+		public static CoreBanner getcoreIstance() {
+			if (null == coreBannerInstance) { 
+				coreBannerInstance = new CoreBanner();
+			}
+			return coreBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2108());
+			thumbnailDo.setUrl(Constants.CORE_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2110());
+			libraryUserDo.setPartnerUrl(i18n.GL2111());
+		}
+	}
+	
+	private static class EsypBanner implements LoadBannerActionInterface{
+
+		private static EsypBanner esypBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private EsypBanner() {
+		}
+
+		// Providing Global point of access
+		public static EsypBanner getEsypIstance() {
+			if (null == esypBannerInstance) { 
+				esypBannerInstance = new EsypBanner();
+			}
+			return esypBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2174());
+			thumbnailDo.setUrl(Constants.ESYP_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2175());
+			libraryUserDo.setPartnerUrl(i18n.GL2176());
+		}
+	}
+
+	private static class CcstBanner implements LoadBannerActionInterface{
+
+		private static CcstBanner ccstBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private CcstBanner() {
+		}
+
+		// Providing Global point of access
+		public static CcstBanner getCcstIstance() {
+			if (null == ccstBannerInstance) { 
+				ccstBannerInstance = new CcstBanner();
+			}
+			return ccstBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2179());
+			thumbnailDo.setUrl(Constants.CCST_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2177());
+			libraryUserDo.setPartnerUrl(i18n.GL2178());
+		}
+	}
+
+	private static class TicalBanner implements LoadBannerActionInterface{
+
+		private static TicalBanner ticalBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private TicalBanner() {
+		}
+
+		// Providing Global point of access
+		public static TicalBanner getTicalInstance() {
+			if (null == ticalBannerInstance) { 
+				ticalBannerInstance = new TicalBanner();
+			}
+			return ticalBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2186());
+			thumbnailDo.setUrl(Constants.TICAL_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2187());
+			libraryUserDo.setPartnerUrl(i18n.GL2188());
+		}
+	}
+
+	private static class AspireBanner implements LoadBannerActionInterface{
+
+		private static AspireBanner aspireBannerInstance;
+		// SingletonExample prevents any other class from instantiating
+		private AspireBanner() {
+		}
+
+		// Providing Global point of access
+		public static AspireBanner getAspireInstance() {
+			if (null == aspireBannerInstance) { 
+				aspireBannerInstance = new AspireBanner();
+			}
+			return aspireBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL3107());  
+			thumbnailDo.setUrl(Constants.ASPIRE_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL3108());
+			libraryUserDo.setPartnerUrl(i18n.GL3109());
+		}
+	}
 }

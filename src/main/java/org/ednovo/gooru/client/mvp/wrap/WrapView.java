@@ -220,7 +220,7 @@ public class WrapView extends BaseView implements IsWrapView {
 						}else if(isAndriod){
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 						}else{
-							  wrapperPanel.getElement().setAttribute("style", "margin-top:50px;");
+							  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 						}
 					}
 				}

@@ -62,7 +62,7 @@ public class ScrollPopupUtil {
 	 */
 	 static void setAddTagesPopupOnResize(){
 		if(device){
-			widgetContainer.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
+			widgetContainer.getElement().getStyle().setHeight(Window.getClientHeight()-50, Unit.PX);
 			widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
 			widgetContainer.getElement().getStyle().setOverflowX(Overflow.AUTO);
 		}

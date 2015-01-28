@@ -83,6 +83,31 @@
      }
      
 </script>
+<script>
+	window['_fs_debug'] = false;
+	window['_fs_host'] = 'www.fullstory.com';
+	window['_fs_org'] = 'H9B';
+	(function(m,n,e,t,l,o,g,y){
+	  g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
+	  o=n.createElement(t);o.async=1;o.src='https://'+_fs_host+'/s/fs.js';
+	  y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+	  g.identify=function(i,v){g(l,{uid:i});if(v)g(l,v)};g.setUserVars=function(v){FS(l,v)};
+	  g.setSessionVars=function(v){FS('session',v)};g.setPageVars=function(v){FS('page',v)};
+	})(window,document,'FS','script','user');
+	
+	// To integrate with a customer support tool, make sure to set the email field using FS.identify.
+	// The customer id should be whatever you use to identify a unique user in your system. For example:
+	// FS.identify('YOUR_CUSTOMER_ID', {
+	//   displayName: 'Daniel Falko',
+	//   email: 'danielfalko@example.com'
+	// });
+	
+	// You can also determine the current session's URL using the following snippet.
+	// window['_fs_ready'] = function() {
+	//   var sessionUrl = FS.getCurrentSessionURL();
+	//    ...do something with the session URL...
+	// };
+</script>
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/NQx3lF2RAdAcYft8tWKZKA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
 
