@@ -125,7 +125,9 @@ display: none;
  .flagbuttonDeSelected{}
  .rightFlagPanel{}
  .leftFlagMenu{}
- .leftFlagPanel{}
+ .leftFlagPanel{
+ height:86px !important;
+ }
 .PopupMainV1Small{
 }
 .firstInputGroup{}
