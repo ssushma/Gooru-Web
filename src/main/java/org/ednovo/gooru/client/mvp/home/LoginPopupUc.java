@@ -481,9 +481,9 @@ public class LoginPopupUc extends PopupPanel{
 							}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
 								new AlertContentUc(i18n.GL1966(), i18n.GL3114());
 							}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
-								// TODO - waiting for message
+								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
 							}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
-								// TODO - waiting for message
+								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
 							}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
 								new AlertContentUc(i18n.GL1966(), i18n.GL3119());
 							}
