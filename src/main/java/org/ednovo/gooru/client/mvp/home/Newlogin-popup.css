@@ -106,7 +106,7 @@ body {
 .LoginpopupInner {
 	border: 1px solid #ddd;
 	position: relative;
-	background: url(../images/registration-bg.png) no-repeat -50px 30px;
+	background: url(../images/login/registration-bg.png) no-repeat -50px 30px;
 }
 
 .LoginpopupHeader {
@@ -368,7 +368,7 @@ button.disabled, button.disabled:hover {
 .popupInnerLeaveReg {
 	border: 1px solid #ddd;
 	position: relative;
-	background: url(../images/registration-bg.png) no-repeat -50px 30px;
+	background: url(../images/login/registration-bg.png) no-repeat -50px 30px;
 }
 
 .SignUp-green-h1 {
@@ -658,7 +658,7 @@ button.secondary:hover {
 .PopupInner {
 	border: 1px solid #ddd;
 	position: relative;
-	background: url(../images/registration-bg.png) no-repeat -50px 30px;
+	background: url(../images/login/registration-bg.png) no-repeat -50px 30px;
 }
 
 .PopupContent {
