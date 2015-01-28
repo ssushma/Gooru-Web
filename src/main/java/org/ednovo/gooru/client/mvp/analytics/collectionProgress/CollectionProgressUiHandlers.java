@@ -35,4 +35,6 @@ public interface CollectionProgressUiHandlers extends BaseUiHandlers{
  * @param collectionTitle
  */
 void setCollectionProgressData(String collectionId,String pathwayId,boolean isCollectionView,String collectionTitle);
+
+void exportCollectionProgress(String collectionId,String classpageId,String timeZone);
 }

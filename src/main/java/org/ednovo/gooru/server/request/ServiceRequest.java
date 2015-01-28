@@ -212,8 +212,13 @@ public abstract class ServiceRequest {
 	}
 	
 	public void setUserAgent(){
-		if(clientResource!=null){
-			clientResource.getClientInfo().setAgent(AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT));
+		try{
+			String userAgentValue=AppSessionHolder.getInstance()!=null&&AppSessionHolder.getInstance().getRequest()!=null?AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT):"";
+			if(clientResource!=null){
+				clientResource.getClientInfo().setAgent(userAgentValue);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	

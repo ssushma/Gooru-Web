@@ -106,9 +106,10 @@
 	/* font-size: 16px; */
 	/* font-weight: bold; */
 	/* margin: 1%; */
-	padding-top: 25px;
+	/* padding-top: 25px; */
 	padding-left: 23px;
 	padding-bottom: 10px;
+	padding-top: 12px;
 }
 
 .category_new_type_audio {
@@ -267,7 +268,7 @@
 }
 
 .tableMain {
-	width: 98%;;
+	width: 96%;;
 	/* height: 100px; */
 	float: left;
 	padding: 2px;

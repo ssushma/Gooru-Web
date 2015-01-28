@@ -60,7 +60,7 @@ public enum UrlToken {
 			"/scollection/resource/moreinfo?sessionToken={0}&resourceId={1}"),
 
 	RESOURCE_COLLECTION_LIST(
-			"/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0"),
+			"/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
 
 	COLLECTION_RESOURCE_LIST(
 			"/search/resource?sessionToken={0}&pageNum={1}&pageSize={2}&flt.collectionGooruOIds={3}"),
@@ -672,6 +672,8 @@ public enum UrlToken {
 	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?sessionToken={0}&data={1}"),
 
 	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
+
+	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}&data={2}&&timeZone={3}"),
 	
 	V2_DOWNLOADFILE("/v2/media/download?sessionToken={0}&url={1}&filename={2}");
 
