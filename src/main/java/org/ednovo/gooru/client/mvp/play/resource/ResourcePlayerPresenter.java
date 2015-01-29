@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -532,7 +533,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			//addResourceContainerPresenter.setplayerStyle();
 			//addResourceContainerPresenter.setCollectionItemData("", collectionItemDo);
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
-			addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+			if(BrowserAgent.isDevice()){
+				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
+			}else{
+				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+
+			}
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
@@ -541,7 +547,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void setResourceInfoView(String resourceId){
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
-		resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+		if(BrowserAgent.isDevice()){
+			resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
+		}else{
+			resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+		}
+		
 		setInSlot(TAB_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
 	}
