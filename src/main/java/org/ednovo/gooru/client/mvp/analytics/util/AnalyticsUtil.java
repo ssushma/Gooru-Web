@@ -1,9 +1,9 @@
 package org.ednovo.gooru.client.mvp.analytics.util;
 
-import java.util.Date;
 import java.util.List;
+
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
-import com.google.gwt.i18n.client.DateTimeFormat;
+
 import com.google.gwt.user.client.ui.Label;
 
 public class AnalyticsUtil {
@@ -117,11 +117,9 @@ public class AnalyticsUtil {
 		}
 		return msg;
 	}	
-
 	public static native String roundToTwo(double number) /*-{
 		return ""+(Math.round(number + "e+2")  + "e-2");
 	}-*/;
-
 	/**
 	 * This is used to convert long time format
 	 * @param commentCreatedTime
@@ -151,10 +149,6 @@ public class AnalyticsUtil {
 			}
 		}
 		if(seconds!=0){
-			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
-			}else{
-				createdTime="0min"+" "+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
 			Double secondsInMille=Double.valueOf(roundToTwo(seconds));
 			String formattedTime="";
 			if(secondsInMille > 0 && secondsInMille<1){
@@ -168,11 +162,8 @@ public class AnalyticsUtil {
 				createdTime="0min"+" "+formattedTime+"sec";
 			}
 		}
-		
+		return createdTime;
 	}
-	return createdTime;
-	}
-		
 	/**
 	 * This will return the char based on the passed integer.
 	 * @param i
