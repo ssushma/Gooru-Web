@@ -21,6 +21,7 @@ import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -79,11 +80,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	final String INCORRECT="#db0f0f",CORRECT="#4d9645",ONMULTIPULEATTEMPTS="#FBB03B";
 	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",EMAIL="email";
 	private static final String QUESTION = "question";
-	private static final String VIEWRESPONSE = i18n.GL2286();
+	private static final String VIEWRESPONSE = "View Response";
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
-	EmailPopup emailPopup=new EmailPopup();
+	EmailPopup emailPopup=null;
 	String collectionTitle=null;
 	
 	//Used for print
@@ -94,7 +95,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
-	String style="<link rel='styleSheet' type='text/css' href='../css/googleVisualization.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+	String style="";
+	String urlDomain = "";
 
 	/**
 	 * Constructor
@@ -103,8 +105,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		urlDomain=Window.Location.getProtocol()+"//"+Window.Location.getHost();
+		style="<link rel='styleSheet' type='text/css' href='"+urlDomain+"/css/googleVisualization.css'><link href='"+urlDomain+"/css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		setData();
 		setStaticData();
+		noErrorMesage.setVisible(false);
+		maincontainer.setVisible(false);
+		downloadFile.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -112,7 +119,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	void setStaticData(){
 		StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 		StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
-		StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
+		//StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
 		StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
 		StringUtil.setAttributes(individualOpenendedData.getElement(), "pnlIndividualOpenendedData", null, null);
 		StringUtil.setAttributes(individualScoredDatapnl.getElement(), "pnlIndividualScoredDatapnl", null, null);
@@ -156,6 +163,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					setPrintIndividualSummayData(false,false);
 				}else if(tabClicked.equalsIgnoreCase(EMAIL)){
 					setPrintIndividualSummayData(true,true);
+					emailPopup=new EmailPopup();
 					emailPopup.setData();
 					emailPopup.show();
 				}else{
@@ -174,8 +182,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	@Override
 	public void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage) {
+			noErrorMesage.setVisible(false);
+			maincontainer.setVisible(true);
+			individualTabContainer.clearStyles();
+			individualTabContainer.setScoredQuestionsHilight();
+			
 			hideAllPanels();
-			individualScoredDatapnl.setVisible(true);
+			individualResourceBreakdownDatapnl.setVisible(true);
 			
 			individualScoredData.clear();
 			individualOpenendedData.clear();
@@ -194,17 +207,19 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	}
 	        });
 			for (UserDataDo userDataDo : result) {
-				if(userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
-					if(!userDataDo.getType().equalsIgnoreCase("OE")){
-						questionsData.add(userDataDo);
+				if(userDataDo.getStatus()==0){
+					if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+						if(userDataDo.getType()!=null && !userDataDo.getType().equalsIgnoreCase("OE")){
+							questionsData.add(userDataDo);
+						}else{
+							openendedData.add(userDataDo);
+						}
+						questionRowIndex.add(collectionProgressCount);
 					}else{
-						openendedData.add(userDataDo);
+						resourceRowIndex.add(collectionProgressCount);
 					}
-					questionRowIndex.add(collectionProgressCount);
-				}else{
-					resourceRowIndex.add(collectionProgressCount);
+					collectionProgressCount++;
 				}
-				collectionProgressCount++;
 			}
 			setQuestionsData(questionsData);
 			setQuestionsPrintData(questionsData);
@@ -227,13 +242,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	     return obj1.compareTo(obj2);
 		        	}
 		        });
-		        UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
+		       /* UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
 		        	public int compare(UserDataDo o1, UserDataDo o2) {
 		        		 Integer obj1 = new Integer(o1.getViews());
 		        		 Integer obj2 = new Integer(o2.getViews());
 		        	     return obj1.compareTo(obj2);
 		        	}
-		        });
+		        });*/
 			    final DataTable data = DataTable.create();
 			    data.addColumn(ColumnType.NUMBER, "No.");
 		        data.addColumn(ColumnType.STRING, "Format");
@@ -241,43 +256,55 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 		        data.addColumn(ColumnType.STRING, "Views");
 		        data.addColumn(ColumnType.STRING, "Reaction");
-		        data.addRows(result.size());
+		        int rowCount=0,rowVal=0;
+		        for(int i=0;i<result.size();i++) {
+		        	if(result.get(i).getStatus()==0){
+		        		rowCount=rowCount+1;
+		        	}
+		        }
+		        data.addRows(rowCount);
 		        
 		        for(int i=0;i<result.size();i++) {
-		        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
+		         	if(result.get(i).getStatus()==0){
+		        	data.setCell(rowVal, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
-		              String  resourceCategory =result.get(i).getCategory();
+		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
 		              String categoryStyle="";
-					  if(resourceCategory.equalsIgnoreCase("website")){
+		    		  if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_webpage();
-					  } else if(resourceCategory.equalsIgnoreCase("slide")){
+					  } else if(resourceCategory.equalsIgnoreCase("slide") || resourceCategory.equalsIgnoreCase("image")){
 					      resourceCategory = "image";
 					      categoryStyle=res.css().category_new_type_image();
-					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")) {
+					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")|| resourceCategory.equalsIgnoreCase("text")) {
 					      resourceCategory = "text";
 					      categoryStyle=res.css().category_new_type_text();
 					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_webpage();
 					  } else if(resourceCategory.equalsIgnoreCase("video")) {
-					      resourceCategory = "webpage";
+					      resourceCategory = "video";
 					      categoryStyle=res.css().category_new_type_video();
 					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
 					      resourceCategory = "webpage";
 					      categoryStyle=res.css().category_new_type_interactive();
+					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+					      resourceCategory = "audio";
+					      categoryStyle=res.css().category_new_type_audio();
 					  } else{
 						  categoryStyle=res.css().category_new_type_other();
 					  }
 		            Label categorylbl=new Label();
 		            categorylbl.addStyleName(categoryStyle);
 		            categorylbl.addStyleName(res.css().setMarginAuto());
-		            data.setValue(i, 1,categorylbl.toString());
+		            data.setValue(rowVal, 1,categorylbl.toString());
 		            
 		            //Set Question Title
-		            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-		            data.setValue(i, 2, questionTitle.toString());
+		            questionTitle.addStyleName(res.css().alignLeft());
+		            
+		            data.setValue(rowVal, 2, questionTitle.toString());
 		          
 		           //Set time spent
 		            HorizontalPanel timeSpentpnl=new HorizontalPanel();
@@ -287,23 +314,25 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            timeSpentpnl.add(progressBar);
 		            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
 		            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
-		            data.setValue(i, 3, timeSpentpnl.toString());
+		            data.setValue(rowVal, 3, timeSpentpnl.toString());
 		           
 		            //set Views label
-		            HorizontalPanel viewpnl=new HorizontalPanel();
+		            // HorizontalPanel viewpnl=new HorizontalPanel();
 		            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 		            viewlbl.setStyleName(res.css().alignCenterAndBackground());
-		            viewpnl.add(viewlbl);
+		           /* viewpnl.add(viewlbl);
 		            Label viewProgressBar=new Label();
 		            viewProgressBar.setStyleName(res.css().setProgressBar());
 		            viewpnl.add(viewProgressBar);
 		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
-		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-		            data.setValue(i, 4, viewpnl.toString());
+		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);*/
+		            data.setValue(rowVal, 4, viewlbl.toString());
 		            
 		            //Set reactions
 		            int reaction=result.get(i).getReaction();
-		            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
+		            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
+		            rowVal++;
+		        }
 		        }
 		        final Options options = Options.create();
 		        options.setAllowHtml(true);
@@ -319,6 +348,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 * @param loadingImage
 	 */
 	void setCollectionBreakDown(ArrayList<UserDataDo> result,HTMLPanel loadingImage){
+		try{
 		
 		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
 		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceRowIndex);
@@ -330,13 +360,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	     return obj1.compareTo(obj2);
 	        	}
 	        });
-	        UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
+	       /* UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
 	        	public int compare(UserDataDo o1, UserDataDo o2) {
 	        		 Integer obj1 = new Integer(o1.getViews());
 	        		 Integer obj2 = new Integer(o2.getViews());
 	        	     return obj1.compareTo(obj2);
 	        	}
-	        });
+	        });*/
 		    final DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
 	        data.addColumn(ColumnType.STRING, "Format");
@@ -344,75 +374,88 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Views");
 	        data.addColumn(ColumnType.STRING, "Reaction");
-	        data.addRows(result.size());
+	        int rowCount=0,rowVal=0;
+	        for(int i=0;i<result.size();i++) {
+	        	if(result.get(i).getStatus()==0){
+	        		rowCount=rowCount+1;
+	        	}
+	        }
+	        data.addRows(rowCount);
 	        
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
-	            //set Format
-	              String  resourceCategory =result.get(i).getCategory();
-	              String categoryStyle="";
-				  if(resourceCategory.equalsIgnoreCase("website")){
-				      resourceCategory = "webpage";
-				      categoryStyle=res.css().category_new_type_webpage();
-				  } else if(resourceCategory.equalsIgnoreCase("slide")){
-				      resourceCategory = "image";
-				      categoryStyle=res.css().category_new_type_image();
-				  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")) {
-				      resourceCategory = "text";
-				      categoryStyle=res.css().category_new_type_text();
-				  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
-				      resourceCategory = "webpage";
-				      categoryStyle=res.css().category_new_type_webpage();
-				  } else if(resourceCategory.equalsIgnoreCase("video")) {
-				      resourceCategory = "webpage";
-				      categoryStyle=res.css().category_new_type_video();
-				  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
-				      resourceCategory = "webpage";
-				      categoryStyle=res.css().category_new_type_interactive();
-				  } else{
-					  categoryStyle=res.css().category_new_type_other();
-				  }
-	            Label categorylbl=new Label();
-	            categorylbl.addStyleName(categoryStyle);
-	            categorylbl.addStyleName(res.css().setMarginAuto());
-	            data.setValue(i, 1,categorylbl.toString());
-	            
-	            //Set Question Title
-	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
-	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 2, questionTitle.toString());
-	          
-	           //Set time spent
-	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
-	            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
-	            Label progressBar=new Label();
-	            progressBar.setStyleName(res.css().setProgressBar());
-	            timeSpentpnl.add(progressBar);
-	            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
-	            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
-	            data.setValue(i, 3, timeSpentpnl.toString());
-	           
-	            //set Views label
-	            HorizontalPanel viewpnl=new HorizontalPanel();
-	            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
-	            viewlbl.setStyleName(res.css().alignCenterAndBackground());
-	            viewpnl.add(viewlbl);
-	            Label viewProgressBar=new Label();
-	            viewProgressBar.setStyleName(res.css().setProgressBar());
-	            viewpnl.add(viewProgressBar);
-	            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
-	            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
-	            data.setValue(i, 4, viewpnl.toString());
-	            
-	            //Set reactions
-	            int reaction=result.get(i).getReaction();
-	            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
+	        	if(result.get(i).getStatus()==0){
+	        		data.setCell(rowVal, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
+		            //set Format
+		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
+		              String categoryStyle="";
+		              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
+					      resourceCategory = "webpage";
+					      categoryStyle=res.css().category_new_type_webpage();
+					  } else if(resourceCategory.equalsIgnoreCase("slide") || resourceCategory.equalsIgnoreCase("image")){
+					      resourceCategory = "image";
+					      categoryStyle=res.css().category_new_type_image();
+					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")|| resourceCategory.equalsIgnoreCase("text")) {
+					      resourceCategory = "text";
+					      categoryStyle=res.css().category_new_type_text();
+					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
+					      resourceCategory = "webpage";
+					      categoryStyle=res.css().category_new_type_webpage();
+					  } else if(resourceCategory.equalsIgnoreCase("video")) {
+					      resourceCategory = "video";
+					      categoryStyle=res.css().category_new_type_video();
+					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
+					      resourceCategory = "webpage";
+					      categoryStyle=res.css().category_new_type_interactive();
+					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
+					      resourceCategory = "audio";
+					      categoryStyle=res.css().category_new_type_audio();
+					  } else{
+						  categoryStyle=res.css().category_new_type_other();
+					  }
+		            Label categorylbl=new Label();
+		            categorylbl.addStyleName(categoryStyle);
+		            categorylbl.addStyleName(res.css().setMarginAuto());
+		            data.setValue(rowVal, 1,categorylbl.toString());
+		            
+		            //Set Question Title
+		            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
+		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+		            questionTitle.addStyleName(res.css().alignLeft());
+		            data.setValue(rowVal, 2, questionTitle.toString());
+		          
+		           //Set time spent
+		            HorizontalPanel timeSpentpnl=new HorizontalPanel();
+		            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
+		            Label progressBar=new Label();
+		            progressBar.setStyleName(res.css().setProgressBar());
+		            timeSpentpnl.add(progressBar);
+		            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
+		            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
+		            data.setValue(rowVal, 3, timeSpentpnl.toString());
+		           
+		            //set Views label
+		            // HorizontalPanel viewpnl=new HorizontalPanel();
+		            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
+		            viewlbl.setStyleName(res.css().alignCenterAndBackground());
+		            /* viewpnl.add(viewlbl);
+		            Label viewProgressBar=new Label();
+		            viewProgressBar.setStyleName(res.css().setProgressBar());
+		            viewpnl.add(viewProgressBar);
+		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
+		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);*/
+		            data.setValue(rowVal, 4, viewlbl.toString());
+		            
+		            //Set reactions
+		            int reaction=result.get(i).getReaction();
+		            data.setValue(rowVal, 5, new AnalyticsReactionWidget(reaction).toString());
+		        	rowVal++;
+	        	}
 	        }
 	        final Options options = Options.create();
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
 	        individualResourceBreakdownData.add(table);
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override
@@ -432,6 +475,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				}
 			});
+	    	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	        if(loadingImage!=null)
 	        loadingImage.setVisible(false);
 	}
@@ -451,11 +498,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "Response");
 	        data.addRows(result.size());
 	        for(int i=0;i<result.size();i++) {
+	        	if(result.get(i).getStatus()==0){
 	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	        	
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
 	            //Set completion
@@ -480,6 +529,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            Label viewResponselbl=new Label(result.get(i).getText());
 	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 	            data.setValue(i, 5, viewResponselbl.toString());
+	        	}
 	        }
 	        Options options = Options.create();
 	        options.setAllowHtml(true);
@@ -488,7 +538,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        if(result.size()==0){
 	        	Label erroeMsg=new Label();
 	        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
-	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
+	        	erroeMsg.setText(i18n.GL3118());
 	        	printOpendedData.add(erroeMsg);
 	        }
 		}catch(Exception e){
@@ -514,6 +564,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            questionTitle.addStyleName(res.css().alignLeft());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
 	            //Set completion
@@ -552,7 +603,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	individualOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}
 	/**
 	 * This class is used to handle the click event on the table cell
@@ -591,6 +642,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            questionTitle.setStyleName(res.css().alignLeft());
 				            data.setValue(i, 1, questionTitle.toString());
 				            int noOfAttempts=result.get(i).getAttempts();
 				           
@@ -679,6 +731,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        			 Iterator<String> itr = keys.iterator();
 				        			 boolean isCorrect=false;
 				        		      while(itr.hasNext()) {
+				        		    	  answerspnl.clear();
 				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				        		         for(int j=0;j<attemptsObj.size();j++){
 				        		        	Label answerChoice=new Label();
@@ -717,11 +770,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		 data.setValue(i, 3, answerspnl.toString());
 				        	}
 				        	
-				        	Image correctImg=new Image();
+				        	Image correctImg=new Image();      	            
 				        	if(isTickdisplay){
-				        		 correctImg.setUrl("/images/analytics/tick.png");
+				        		 correctImg.setUrl(urlDomain+"/images/analytics/tick.png");
 				        	}else{ 
-				        		correctImg.setUrl("/images/analytics/wrong.png");				        		
+				        		correctImg.setUrl(urlDomain+"/images/analytics/wrong.png");				        		
 				        	}
 				            data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
 				            //Set attempts
@@ -771,6 +824,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            questionTitle.setStyleName(res.css().alignLeft());
 				            data.setValue(i, 1, questionTitle.toString());
 				            int noOfAttempts=result.get(i).getAttempts();
 				           
@@ -850,6 +904,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        			 Set<String> keys=answerObject.keySet();
 				        			 Iterator<String> itr = keys.iterator();
 				        		      while(itr.hasNext()) {
+				        		    	  answerspnl.clear();
 				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				        		         for(int j=0;j<attemptsObj.size();j++){
 				        		        	Label answerChoice=new Label();
@@ -906,7 +961,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
 	        	individualScoredData.add(erroeMsg);
 	        }
-	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}
 	/**
 	 * This will return the correct answers
@@ -950,8 +1005,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setViewResponseData(java.util.ArrayList, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	@Override
-	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary,String session) {
-		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session);
+	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary,String session,ClasspageItemDo classpageItemDo) {
+		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session,classpageItemDo);
 		 popupPanel.setStyleName(res.css().setOETextPopupCenter());
 	     if(popupPanel.isShowing()){
 	    	 popupPanel.hide();
@@ -999,7 +1054,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		printWidget.add(collectionOverViewWidget);
 		printWidget.add(printResourceData);
 		if(isClickedOnSave){
-				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),collectionTitle,isClickedOnEmail);
+				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.getElement().getInnerHTML().toString().replaceAll("\"", "\\\\\""),collectionTitle,isClickedOnEmail);
 				 printWidget.clear();
 		}else{
 			Print.it(style,printWidget);
@@ -1011,7 +1066,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 */
 	@Override 
 	public void setPdfForEmail(String path){
-		emailPopup.setEmailData(collectionTitle,path);
+		if(emailPopup!=null){
+			emailPopup.setEmailData(collectionTitle,path);
+		}
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#enableAndDisableEmailButton(boolean)
@@ -1026,7 +1083,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		maincontainer.setVisible(false);
 	}
 	@Override
-	public Frame getFrame() {
+	public Frame getFrame(){
 		return downloadFile;
 	}
 }

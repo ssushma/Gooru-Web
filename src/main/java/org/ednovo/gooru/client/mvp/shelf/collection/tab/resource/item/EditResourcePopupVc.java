@@ -253,7 +253,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				//standardsPreferenceOrganizeToolTip.hide();
 				errorContainer.setVisible(false);
@@ -1328,7 +1328,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 		}
-
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
 		
@@ -1388,7 +1387,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void setImage(String thumbnailUrlImage, String category){
-		if (thumbnailUrlImage.endsWith("null")) {
+		if (thumbnailUrlImage.endsWith("null") || thumbnailUrlImage.contains("images/defaultRes.png")) {
 			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 		} 
 		if (thumbnailUrlImage!=null && thumbnailUrlImage.indexOf("youtube") >0){
@@ -2184,7 +2183,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("momentsOfLearningDropDownContianer")
 	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
 		hasClickedOnDropDwn=true;
-		System.out.println("momentsOfLearningOpen1::::"+momentsOfLearningOpen1);
 		if (momentsOfLearningOpen1 == false) {
 			momentsOfLearningPanel.setVisible(true);
 			momentsOfLearningOpen1 = true;

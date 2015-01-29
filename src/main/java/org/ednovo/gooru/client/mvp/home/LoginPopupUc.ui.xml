@@ -13,13 +13,15 @@
 			<g:HTMLPanel styleName="{res.css.popupContent}">
 				<g:Label styleName="{res.css.h1} {res.css.green}" ui:field="lblWelcomeBack" />
 				<g:HTMLPanel styleName="{res.css.signInContainer}">
-					<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
-					<g:HTMLPanel styleName="{res.css.divider}">
-						<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
-					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.emailSignIn}">
-					    <g:Label ui:field="lblLoginWithGooru" />
+					    <g:Label ui:field="lblLoginWithGooru" styleName="{res.css.loginWithGooru}" />
 						<br />
+						<g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
+						
+						<g:HTMLPanel styleName="{res.css.divider}">
+							<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
+						</g:HTMLPanel>
+						
 						<gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true"/>
 						<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox"
 							password="true" />

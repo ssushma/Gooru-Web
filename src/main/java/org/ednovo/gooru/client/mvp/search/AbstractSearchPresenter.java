@@ -287,7 +287,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		
 		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
 			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
 			update.setGlassEnabled(true);
 			update.show();
@@ -505,7 +505,12 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			Map<String, String> params = getView().getSearchFilters();
 			if(!viewToken.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())) {
 				params.clear();
-				params.put(IsSearchView.CATEGORY_FLT, "all");
+				String categoryParam = getPlaceManager().getRequestParameter(IsSearchView.CATEGORY_FLT,null);
+				if (categoryParam != null && viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) && !categoryParam.equals("onlyQuestion")) {
+					params.put(IsSearchView.CATEGORY_FLT, categoryParam);
+				}else{
+					params.put(IsSearchView.CATEGORY_FLT, "all");					
+				}
 				String subject = getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
 				if (subject != null) {
 					params.put(IsSearchView.SUBJECT_FLT, subject);
@@ -523,7 +528,14 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
 					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
 					String reviewTag = getPlaceManager().getRequestParameter(IsSearchView.REVIEWS_FLT);
+					String ratingsFilter = getPlaceManager().getRequestParameter(IsSearchView.RATINGS_FLT);
+					if (ratingsFilter != null) {
+						params.put(IsSearchView.RATINGS_FLT, ratingsFilter);	
+					}
+					else
+					{
 					params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+					}
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 					}
@@ -542,6 +554,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					params.remove(IsSearchView.MEDIATYPE_FLT);
 					params.remove(IsSearchView.OER_FLT);
 					params.remove(IsSearchView.ACCESS_MODE_FLT);
+					params.remove(IsSearchView.REVIEWS_FLT);
 				}
 				
 				

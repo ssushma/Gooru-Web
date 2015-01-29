@@ -274,7 +274,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				errorContainer.setVisible(false);
 				//standardsPreferenceOrganizeToolTip.hide();

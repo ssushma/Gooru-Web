@@ -63,7 +63,7 @@ public class PersonalizeUnitPresenter extends
 
 	private int offSet=0;
 
-	private int limit=2; 
+	private int limit=5; 
 	
 	
 	@Inject

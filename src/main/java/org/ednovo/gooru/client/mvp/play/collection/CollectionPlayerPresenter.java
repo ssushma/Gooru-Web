@@ -82,7 +82,6 @@ import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
@@ -782,7 +781,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		
 		collectionEndPresenter.clearslot();
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
-		collectionEndPresenter.setCollectionMetadata(collectionDo);
+		collectionEndPresenter.setCollectionMetadata(collectionDo,classpageId);
 		collectionEndPresenter.clearDashBoardIframe();
 		 showSignupPopup(); 
 		if(this.collectionSummaryId!=null){
@@ -832,12 +831,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(AppClientFactory.isAnonymous()){
 			resetSummary();
 		}
-		else{
+		else{/*
 			this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
 				@Override
 				public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
-					if(insightsCollectionDo!=null){
-						if(insightsCollectionDo.getCompletionStatus()!=null&&insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
+						if( insightsCollectionDo!=null && insightsCollectionDo.getCompletionStatus()!=null && insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
 							collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
 							convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
 							displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
@@ -846,18 +844,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							if(count<10){
 								displayCollectionSummaryData(collectionId,classpageId,sessionId);
 								count++;
-							}
+							}else{
+								collectionEndPresenter.showAvgReaction(0);
+								convertMilliSecondsToTime(0L);
+								displayScoreCount(0,0);
 						}
-					}else{
-						collectionEndPresenter.showAvgReaction(0);
-						convertMilliSecondsToTime(0L);
-						displayScoreCount(0,0);
-					
 					}
-					
 				}
 			});
-		}
+		*/}
 	}
 	
 	public void resetSummary(){
@@ -1372,13 +1367,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void startPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-		this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+/*		this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
 				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String activityEventId) {
 
 			}
-		});
+		});*/
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){

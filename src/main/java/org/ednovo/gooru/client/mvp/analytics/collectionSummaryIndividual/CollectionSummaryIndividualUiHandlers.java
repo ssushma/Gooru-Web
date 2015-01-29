@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 
@@ -55,7 +56,6 @@ public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
 	 * @param questionType
 	 */
 	void setOEtextData(String resourceGooruId,String questionType);
-
 	/**
 	 * This method is used to set error message
 	 * @param loadingImage
@@ -63,5 +63,9 @@ public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
 	void setNoDataMessage(HTMLPanel loadingImage);
 	
 	public void clearFrame();
-
+	/**
+	 * This method is used to set teacher image
+	 * @param teacherImage
+	 */
+	public void setTeacherImage(ClasspageItemDo classpageItemDo);
 }

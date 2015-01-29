@@ -20,6 +20,7 @@
 	</g:HTMLPanel>
 	<g:HTMLPanel ui:field="editFeedBackpnl">
 	<div class="{unitStyle.dashboard_view_teacher_feedback}">
+				<g:Label styleName="{unitStyle.teacher_name}" ui:field="teacherName"/>
 				<div class="{unitStyle.assignee_profile_image}">
 					<g:Image ui:field="userProfileImage1" styleName="{unitStyle.profileImage}"/>
 				</div>

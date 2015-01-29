@@ -52,6 +52,5 @@ public interface IsCollectionSummaryTeacherView extends IsViewWithHandlers<Colle
 	 * @param questionType
 	 */
 	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId,String classpageId,String pathwayId,String questionType,String session);
-
 	Frame getFrame();
 }
