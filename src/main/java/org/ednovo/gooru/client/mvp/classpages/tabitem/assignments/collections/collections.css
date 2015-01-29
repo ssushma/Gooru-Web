@@ -39,6 +39,7 @@
 .unitMenu li{
 	z-index:99;
 	position:relative;
+	list-style: none !important;
 }
 .unitMenu li a{
 	color:#666666;

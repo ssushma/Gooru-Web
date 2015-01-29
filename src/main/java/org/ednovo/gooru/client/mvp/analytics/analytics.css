@@ -45,6 +45,7 @@
 .unitMenu li {
 	z-index: 97;
 	position: relative;
+	list-style: none !important;
 }
 
 .unitMenu li a {
