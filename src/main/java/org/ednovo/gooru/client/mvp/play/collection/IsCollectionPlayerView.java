@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.mvp.play.collection;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 
 import com.google.gwt.user.client.ui.Button;
@@ -57,4 +59,7 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public void setNarrationButton(Button narrationButton);
 	public void showFlaggedResourcePopup(PlaceRequest previousResoruceRequest, PlaceRequest nextResoruceRequest);
 	public void setCollectionType(String collectionType);
+	public void restFullScreenChanges();
+	public void setFullScreenMode();
+	public void setNarrationInFullScreenMode(CollectionItemDo collectionItemDo, CollectionDo collectionDo);
 }

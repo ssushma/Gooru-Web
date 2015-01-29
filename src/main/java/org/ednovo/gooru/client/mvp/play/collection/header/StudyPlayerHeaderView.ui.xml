@@ -8,6 +8,10 @@
 	<g:FlowPanel styleName="{playerHeaderStyle.getPlayerStyleResource.headerbar} {headerStyle.studyPlayer} {palyerBundle.getPlayerStyle.studyPlayer}">
 		<g:FlowPanel styleName="{playerHeaderStyle.getPlayerStyleResource.headerInner}">
 			<g:HTML styleName="{headerStyle.player-resource-title}" ui:field="resourceTitle"></g:HTML>
+			<panel:HTMLEventPanel styleName="{headerStyle.fullScreenContainer}" ui:field="btnFullScreen">
+				<g:Image styleName="{headerStyle.fullScreenImage}" url="images/player/fullscreen.png"></g:Image>
+				<g:Label styleName="{headerStyle.fullScreenText}">Full Screen</g:Label>
+			</panel:HTMLEventPanel>
 			<panel:HTMLEventPanel styleName="{headerStyle.loginStatus} {headerStyle.loggedIn}" ui:field="authorContainer">
 	          <!--   <g:HTMLPanel styleName="{headerStyle.loggingIcon}">
 	                <g:Label styleName="{headerStyle.progress}"></g:Label>
