@@ -69,6 +69,7 @@ public class ViewResponsesPopup extends PopupPanel {
 	 * @param pathwayId
 	 * @param questionType
 	 * @param isSummary
+	 * @param session
 	 */
 	public ViewResponsesPopup(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary,String session,ClasspageItemDo classpageItemDo) {
 	 	setWidget(uiBinder.createAndBindUi(this));
