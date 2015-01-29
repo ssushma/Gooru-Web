@@ -40,6 +40,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -386,7 +387,11 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		  androidSectiondiv.setVisible(false);
 		  headerView.getElement().setAttribute("style", "position:fixed;");
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		  CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
+		  int count=navigationContainer.getWidgetCount();
+		  if(count>0){
+			  getNavigationContainer().getWidget(0).getElement().getStyle().setMarginTop(50, Unit.PX);
+		  }
+		 // CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
 		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
 	}
 
@@ -396,10 +401,17 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		  androidSectiondiv.setVisible(false);
 		  headerView.getElement().setAttribute("style", "position:fixed;");
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		  CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
+		 setMarginTopToNav();
+		  //CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
 		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
 	}
 	
+	public void setMarginTopToNav(){
+		 int count=navigationContainer.getWidgetCount();
+		  if(count>0){
+			  getNavigationContainer().getWidget(0).getElement().getStyle().setMarginTop(50, Unit.PX);
+		  }
+	}
 	
 	@Override
 	public Button getFlagButton() {
