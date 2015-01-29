@@ -3,6 +3,7 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:footer="urn:import:org.ednovo.gooru.client.mvp.play.collection.footer">
 	<ui:style field= "playerStyle" src="collectionplayer.css"/>
 		<ui:style>
@@ -96,6 +97,57 @@
 	margin-top: 30px;
 	cursor: pointer;
 }
+	.pnlFullScreenNarrationContainer{
+		padding-left: 20px;
+		background: #121212;
+		color: #FFFFFA;
+		padding-bottom: 22px;
+	}
+	.pnlExitContainer{
+		display: inline-block;
+		width: 18%;
+		cursor: pointer;
+		font-size: 13px;
+		margin-bottom: 20px;
+	}
+	.pnlExitImage{
+		float: left;
+	}
+	.pnlExitText{
+		float: left;
+		line-height: 27px;
+	}
+	.seemoreText{
+		cursor: pointer;
+		color:#12509F;
+		width: 132px;
+		float: right;
+		bottom: 19px;
+		font-size: 15px;
+	}
+	.narrationText{
+		font-size: 20px;
+	}
+	.narrationRightContainer{
+		margin-left: 31px;
+		margin-right: 29px;
+		float: left;
+		width: 88%;
+	}
+	.authorImage{
+		width: 50px;
+		/* height: 80px; */
+		/* margin: 0 auto; */
+		/* margin-bottom: 5px; */
+		border-radius: 65px;
+		-moz-border-radius: 65px;
+		-webkit-border-radius: 65px;
+		background-color: #515151;
+	}
+	.pnlAuthorImage{
+		float:left;
+		margin-left: 43px;
+	}
 	</ui:style>
 	<g:FlowPanel>
 	<g:HTMLPanel styleName="{style.tabSection}" ui:field="androidSectiondiv">
@@ -126,6 +178,22 @@
 </g:HTMLPanel>
 		<g:FlowPanel>
 			<header:StudyPlayerHeaderView ui:field="headerView"></header:StudyPlayerHeaderView>
+		</g:FlowPanel>
+		<g:FlowPanel styleName="{style.pnlFullScreenNarrationContainer}" ui:field="pnlFullScreenNarration">
+			<panel:HTMLEventPanel ui:field="pnlBackToCollection" styleName="{style.pnlExitContainer}">
+				<g:Image styleName="{style.pnlExitImage}" url="images/player/backtoCollection.png"></g:Image>
+				<g:Label styleName="{style.pnlExitText}" >Back to collection</g:Label>
+			</panel:HTMLEventPanel>
+			<g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.pnlAuthorImage}" >
+				 	<g:Image ui:field="authorImage" styleName="{style.authorImage}"></g:Image>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.narrationRightContainer}" >
+					<g:Label styleName="{style.narrationText}" ui:field="lblNarrationText"></g:Label>
+					<g:Label styleName="{style.seemoreText}" ui:field="lblSeeMore"></g:Label>
+				</g:HTMLPanel>
+				<div class="clearfix"></div>
+			</g:HTMLPanel>
 		</g:FlowPanel>
 		<g:FlowPanel ui:field="navigationContainer"></g:FlowPanel>
 		<g:FlowPanel ui:field="playerBodyContainer"></g:FlowPanel>

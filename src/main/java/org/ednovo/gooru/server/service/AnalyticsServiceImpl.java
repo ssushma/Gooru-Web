@@ -437,14 +437,12 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			setPlayLoadObj.put("classCode", classCode);
 			setPlayLoadObj.put("pathwayId", pathwayId);
 			setPlayLoadObj.put("classId",classpageId);
-
 			setPlayLoadObj.put("sessionId",session);
 			if(contentItemId.equalsIgnoreCase("commentsDelete")){
 				setPlayLoadObj.put("active","false");
 			}else{
 				setPlayLoadObj.put("active","true");
 			}
-
 			mainObj.put("contentGooruOId",resourceId);
 			mainObj.put("contentItemId",contentItemId);
 			mainObj.put("parentItemId",parentItemId);
