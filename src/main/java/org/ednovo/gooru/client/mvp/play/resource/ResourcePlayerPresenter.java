@@ -46,11 +46,9 @@ import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
-import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.share.ResourceSharePresenter;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -558,6 +556,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void setResourceShareView(String resourceId){
 		resourceSharePresenter.setResourceShareData(collectionItemDo);
+		if(BrowserAgent.isDevice()){
+			resourceSharePresenter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
+		}
 		setInSlot(TAB_PRESENTER_SLOT, resourceSharePresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
 	}
