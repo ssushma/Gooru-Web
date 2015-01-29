@@ -40,6 +40,7 @@ import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -74,7 +75,9 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	public void setResourcePlayerPresenter(ResourcePlayerPresenter resourcePlayerPresenter){
 		this.resourcePlayerPresenter=resourcePlayerPresenter;
 	}
-	
+	public FlowPanel getQuestioncontainer(){
+		return	getView().getQuestionContainer();
+	}
 	public AttemptedAnswersDo getUserAttemptedResult(String collectionItemId) {
 		if(isCollectionPlayer){
 			return collectionPlayerPresenter.getAttemptAnswersMap().get(collectionItemId);
