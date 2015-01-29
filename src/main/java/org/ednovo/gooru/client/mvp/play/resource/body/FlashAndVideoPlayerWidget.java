@@ -26,8 +26,6 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.uc.BrowserAgent;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
@@ -54,23 +52,22 @@ public class FlashAndVideoPlayerWidget extends Composite {
 			startTimeEndTime=startTimeEndTime+"&end="+endTimeInSeconds+";";
 		}
 		int windowHeight=Window.getClientHeight();
+		int windowWidth=Window.getClientWidth();
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			windowHeight=windowHeight-116;
 		}else{
 			windowHeight=windowHeight-202;
 		}
+		if(windowWidth>=1000)
+		{
+			windowWidth = 1000;
+		}
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		int autoPlay=tabView!=null&&tabView.equalsIgnoreCase("narration")?0:1;
-		String embeddableHtmlString = null;
-		
-		String sourceUrl = getProtocal()+"//www.youtube.com/v/"+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1";
-		
-		if (BrowserAgent.isDevice()){
-			embeddableHtmlString =  "<iframe id=\"playerid\" width=\"100%\" height=\""+windowHeight+"\" src=\""+sourceUrl+"\" frameborder=\"0\" allowfullscreen></iframe>";
-		}else{
-			embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+sourceUrl+ "\""
-					+ " width=\"100%\" height=\""+windowHeight+"px\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" wmode=\"transparent\">";
-		}
+		String embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+getProtocal()+"//www.youtube.com/v/"
+				+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1\""
+				+ " width=\""+windowWidth+"px\" height=\""+windowHeight+"px\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" wmode=\"transparent\">";
+
 		HTMLPanel resourcePreviewPanel = new HTMLPanel(embeddableHtmlString);
 		resourcePreviewPanel.setStyleName("resourcePreviewWebResourceContainer");
 		resourcePreviewPanel.setSize("100%", windowHeight+"px");
