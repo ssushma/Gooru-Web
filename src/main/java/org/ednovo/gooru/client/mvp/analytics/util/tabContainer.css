@@ -1,3 +1,4 @@
+@external .addButonStyleActive;
 .collection_teacher_tab_container {
 	Width: 100%;
 	float: left;
@@ -12,13 +13,37 @@
 	/* width: 93%; */
 	border-radius: 5px;
 	margin-top: 25px;
+	margin-left: 20px;
 }
-
+.buttonsPanel{
+	border: 1px solid #CCCCCC;
+	border-bottom: 40px solid #CCCCCC;
+}
 .viewSummaryText {
-	padding-left: 5px;
-	padding-right: 10px;
+	float: left;
+	border-right: 1px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
 }
-
+.addButonStyle{
+	height: 39px;
+	background: #EDEDED !important;
+	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED) !important;
+	background: -moz-linear-gradient(top,#FDFDFD, #EDEDED) !important;
+	color: #515151 !important;
+	border: none !important;
+	border-radius: 0px !important;
+	padding: 12px 30px !important;
+}
+.addButonStyle:hover{
+	background: #4C98CC !important;
+	cursor: pointer;
+	color: #FFFFFF !important;
+}
+.addButonStyleActive{
+	background: #4C98CC !important;
+	cursor: pointer;
+	color: #FFFFFF !important;
+}
 .list_inline {
 	padding-left: 0;
 	margin-left: -5px;
