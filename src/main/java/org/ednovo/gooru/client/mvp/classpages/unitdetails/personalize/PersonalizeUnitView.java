@@ -70,7 +70,7 @@ public class PersonalizeUnitView extends
 	
 	int currentPage = 0;
 	
-	int limit = 2;
+	int limit = 5;
 	
 	int pageNumber = 0;
 	

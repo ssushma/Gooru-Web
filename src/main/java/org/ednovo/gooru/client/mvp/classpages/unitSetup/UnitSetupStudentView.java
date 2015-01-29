@@ -166,7 +166,11 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			sequenceNum = sequenceNum + 1;
 			System.out.println("studentsequenceNum::"+sequenceNum);
 	    	ClassUnitsListDo classListUnitsListDo = classDo.getSearchResults().get(i);
-			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo,true);
+			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo,true){
+				public void triggerPathwayViewEvent(String unitId){
+					getUiHandlers().triggerUnitDataLogStartStopEvent(unitId);
+				}
+			};
 			unitsAssignmentWidgetView.setClassDo(classDo);
 			if (classListUnitsListDo.getResource().getItemCount() != null) {
 				unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());

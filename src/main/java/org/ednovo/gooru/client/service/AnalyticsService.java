@@ -68,4 +68,6 @@ public interface AnalyticsService extends BaseService {
 	public void sendEmail(String to,String subject,String message,String displayName,String fileName,String path);
 
 	public String exportTeacherSummary(String collectionGooruOId,String pathwayId,String classId,String timeZone); 
+	
+	public String exportProgress(String collectionId,String classpageId,String timeZone);
 }

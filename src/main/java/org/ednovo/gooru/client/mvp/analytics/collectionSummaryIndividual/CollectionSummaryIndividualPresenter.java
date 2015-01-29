@@ -30,6 +30,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -42,6 +43,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	
 	private String collectionId,classpageId,pathwayId,userId,sessionId;
 	private boolean isSummary;
+	ClasspageItemDo classpageItemDo=null;
 	
 	/**
 	 * Constructor
@@ -138,7 +140,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {
 			@Override
 			public void onSuccess(ArrayList<OetextDataDO> result) {
-				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
+				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId,classpageItemDo);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -154,5 +156,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	@Override
 	public void clearFrame(){
 		getView().getFrame().setUrl("");
+	}
+	@Override
+	public void setTeacherImage(ClasspageItemDo classpageItemDo){
+      this.classpageItemDo=classpageItemDo;
 	}
 }

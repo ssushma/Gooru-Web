@@ -1,4 +1,4 @@
-@external .tickMarkImg,.tickMarkImgCss,.assignment_quesiton_ans_bar,.wrongSelectStyle,.tickMarkImg,.tableMain,.tableHeader,.tableRowEven,.tableRowOdd,.printWidget,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand;
+@external .alignLeft,.tickMarkImg,.tickMarkImgCss,.assignment_quesiton_ans_bar,.wrongSelectStyle,.tickMarkImg,.tableMain,.tableHeader,.tableRowEven,.tableRowOdd,.printWidget,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand;
 
 .reportsTableContainer {
 	padding-top: 15px;
@@ -9,7 +9,9 @@
 	text-align: center;
 	width: auto;
 }
-
+.alignLeft{
+	text-align: left;
+}
 .setMarginAuto {
 	margin: 0 auto;
 }
@@ -104,9 +106,10 @@
 	/* font-size: 16px; */
 	/* font-weight: bold; */
 	/* margin: 1%; */
-	padding-top: 25px;
+	/* padding-top: 25px; */
 	padding-left: 23px;
 	padding-bottom: 10px;
+	padding-top: 12px;
 }
 
 .category_new_type_audio {
@@ -265,7 +268,7 @@
 }
 
 .tableMain {
-	width: 98%;;
+	width: 96%;;
 	/* height: 100px; */
 	float: left;
 	padding: 2px;

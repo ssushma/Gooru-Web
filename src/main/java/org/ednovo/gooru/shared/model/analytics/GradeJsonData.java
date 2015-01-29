@@ -35,12 +35,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class GradeJsonData implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
-
 	private String estimatedTime;
 	private String title;
 	private int status;
@@ -52,10 +47,8 @@ public class GradeJsonData implements Serializable{
 	private long timeSpent;
 
 	private String aggregateData;
-	
-	public GradeJsonData(){
-		
-	}
+
+	public GradeJsonData(){}
 
 	public String getEstimatedTime() {
 		return estimatedTime;

@@ -70,6 +70,7 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -85,8 +86,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.dom.client.ScrollEvent;
-import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -94,6 +93,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -164,6 +164,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	@UiField
 	Button collectionPreviewBtn,editSelfCollectionDescSaveButton,editSelfCollectionSaveButton,editSelfCollectionSaveButtonCancel,editSelfCollectionDescSaveButtonCancel;
 
+	@UiField
+	Anchor assessmentPreviewBtn;
+	
 	@UiField
 	CollectionUploadImageUc collectionImageShelfUc;
 
@@ -476,6 +479,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionPreviewBtn.getElement().setAttribute("alt",i18n.GL0633());
 		collectionPreviewBtn.getElement().setAttribute("title",i18n.GL0633());
 		
+		
+		assessmentPreviewBtn.setText(i18n.GL0633());
+		assessmentPreviewBtn.getElement().setId("btnAssessmentPreview");
+		assessmentPreviewBtn.getElement().setAttribute("alt",i18n.GL0633());
+		assessmentPreviewBtn.getElement().setAttribute("title",i18n.GL0633());
+		
+		
 		copyCollectionLbl.setText(i18n.GL0827());
 		copyCollectionLbl.getElement().setId("lblCopyCollection");
 		copyCollectionLbl.getElement().setAttribute("alt",i18n.GL0827());
@@ -735,8 +745,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}else{
 			Window.enableScrolling(false);
 		}
-		
-		
+		collectionPreviewBtn.setVisible(false);
+		assessmentPreviewBtn.setVisible(false);
 	}
 	
 	
@@ -771,13 +781,54 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public static String getCollectionTitle() {
 		return collectionDo.getTitle();
 	}
-
+	/**
+	 * 
+	 * @function setAssessmentUrl 
+	 * 
+	 * @created_date : 08-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setAssessmentUrl(){
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.PLAY_ASSIGNMENT+collectionDo.getGooruOid();
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				assessmentPreviewBtn.setHref(result);
+				assessmentPreviewBtn.setTarget("_blank");
+			}
+		});
+	}
 	@Override
 	public void setCollection(CollectionDo collection) {
 		noCollectionResetPanel.setVisible(false);
 		this.collectionDo = collection;
+		
+		setAssessmentUrl();
+		
+		if (collectionDo!=null && collectionDo.getCollectionType().equals(ShelfPresenter.ASSESSMENT)){
+			collectionPreviewBtn.setVisible(false);
+			assessmentPreviewBtn.setVisible(true);
+		}else{
+			collectionPreviewBtn.setVisible(true);
+			assessmentPreviewBtn.setVisible(false);
+		}
+		
 		panelFoooter.setVisible(true);
 		editPanel.getElement().getStyle().setBackgroundColor("white");
+		editPanel.getElement().getStyle().setHeight(Window.getClientHeight(), Unit.PX);
 		collectionFloPanel.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-100)+"px");
 		if(collection != null) {
 			if (AppClientFactory.isContentAdmin() || collectionDo
@@ -790,10 +841,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			
 			if(collectionDo.getSharing()!=null){
 				final String share=collectionDo.getSharing();
-				AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+				AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 					@Override
-					public void onSuccess(SettingDo result) {
+					public void onSuccess(V2UserDo result) {
 						if(result.getUser().getAccountTypeId()==2){
 							rbPublicPanel.setVisible(false);
 							publishedPanel.setVisible(false);
@@ -907,6 +958,38 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}else{
 			editPanel.getElement().getStyle().clearMarginTop();
 		}
+
+		if(collectionDo.getSharing()!=null){
+			final String share=collectionDo.getSharing();
+			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
+
+				@Override
+				public void onSuccess(V2UserDo result) {
+					if(result.getUser().getAccountTypeId()==2){
+						rbPublicPanel.setVisible(false);
+						publishedPanel.setVisible(false);
+					}else{
+						rbPublicPanel.setVisible(true);
+						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
+								rbPublic.setVisible(false);
+								lblPublishPending.setVisible(true);
+								publishedPanel.setVisible(false);
+							}else{
+								rbPublic.setVisible(true);
+								lblPublishPending.setVisible(false);
+								publishedPanel.setVisible(false);
+							}
+						}else{
+							rbPublic.setVisible(false);
+							lblPublishPending.setVisible(false);
+							publishedPanel.setVisible(true);
+						}
+					}
+				}
+			});
+		}
+
 		
 		Integer resourcesCount = 0;
 		if (collectionDo.getCollectionItems() != null && collectionDo.getCollectionItems().size() != 0) {
@@ -1545,6 +1628,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 		
 	}*/
+	
 	/**
 	 * allows user to play collection
 	 * 

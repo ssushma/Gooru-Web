@@ -555,7 +555,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
 		loadcollectionsmap.clear();
 		graphWidget.clear();
+		if(gradeData.size()>0)
+		{
 		graphWidget.add(new HCLineChart().chart(gradeData));
+		}
 		loadCollections.clear();
 		if(gradeData!=null){
 			for (GradeJsonData gradeJsonData : gradeData) {

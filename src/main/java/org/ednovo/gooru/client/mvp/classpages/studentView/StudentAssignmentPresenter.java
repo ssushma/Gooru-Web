@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPrese
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
+import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
@@ -87,6 +88,10 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	private Integer defaultLimitForPath=20;
 	private static final Integer DEFAULT_LIMITVALUE=5;
 	
+	private String unitId=null;
+	
+	private String pathwayId=null;
+	
 	public static final  Object STUDY_SLOT = new Object();
 	
 	private ClasspageDo classpageDo=null;
@@ -106,6 +111,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.unitSetupStudentPresenter = unitSetupStudentPresenter;
 		this.unitAssignmentPresenter =unitAssignmentPresenter;
+		this.unitSetupStudentPresenter.setStudentAssignmentPresenter(this);
 		getView().setUiHandlers(this);	
 		
 	}
@@ -119,7 +125,10 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	protected void onHide() {
 		super.onHide();
 		classpageDo=null;
+		this.unitId=null;
+		this.pathwayId=null;
 		getView().hidePanel();
+		AppClientFactory.getPlaceManager().setPathwayEventId(null);
 	}
 	
 	
@@ -189,8 +198,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 //							//getView().setSortingOrderInDropdown(sortingOrder);
 //							getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
 							getView().setClasspageData(classpageDo);
-							showTabWidget(tabMode);
 							triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
+							showTabWidget(tabMode);
 							
 					}else{
 						ErrorPopup error = new ErrorPopup(i18n.GL1632());
@@ -206,67 +215,64 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	}
 	
 	public void showTabWidget(String tab){
-		if(tab!=null)
-		{
-		 if(tab.equalsIgnoreCase("classList")){
-			 
-			 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				int offsetVal = 0;
-				if(pageNum != null)
-				{
-					offsetVal = Integer.parseInt(pageNum);
-					if(offsetVal!=0)
-					{
-					offsetVal = (offsetVal-1);
+		if(tab!=null){
+			 if(tab.equalsIgnoreCase("classList")){
+				 this.pathwayId=null;
+				 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int offsetVal = 0;
+					if(pageNum != null){
+						offsetVal = Integer.parseInt(pageNum);
+						if(offsetVal!=0){
+							offsetVal = (offsetVal-1);
+						}
 					}
-				}
-			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
-	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
-	     }else if(tab.equalsIgnoreCase("reports")){
-	     	
-	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
-	    	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				int offsetVal = 0;
-				if(pageNum != null)
-				{
-					offsetVal = Integer.parseInt(pageNum);
-					if(offsetVal!=0)
-					{
-					offsetVal = (offsetVal-1);
+				unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+		    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
+		     }else if(tab.equalsIgnoreCase("reports")){
+		     	
+		     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
+		    	 this.pathwayId=null;
+		    	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int offsetVal = 0;
+					if(pageNum != null){
+						offsetVal = Integer.parseInt(pageNum);
+						if(offsetVal!=0){
+							offsetVal = (offsetVal-1);
+						}
 					}
-				}
-			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
-	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
-	     }
-	     else if(tab.equalsIgnoreCase("unitdetails") || tab.equalsIgnoreCase("dashboard")){
-	    	 unitAssignmentPresenter.showDashBoardDetails();
-	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
-	    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);
-	     }
-	     else {
+				 unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+		    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
+		     }else if(tab.equalsIgnoreCase("unitdetails") || tab.equalsIgnoreCase("dashboard")){
+		    	 this.unitId=null;
+		    	 unitAssignmentPresenter.showDashBoardDetails();
+		    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
+		    	 String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
+		    	 if(this.pathwayId==null || !this.pathwayId.equals(unitId)){
+		    		 this.pathwayId=unitId;
+		    		 triggerUnitDataLogStartStopEvent(classpageDo.getClasspageId(), unitId, classpageDo.getClasspageCode());
+		    	 }
+		    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);
+		     }else {
+		    	 this.pathwayId=null;
+		     	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int offsetVal = 0;
+					if(pageNum != null){
+						offsetVal = Integer.parseInt(pageNum);
+						if(offsetVal!=0){
+							offsetVal = (offsetVal-1);
+						}
+					}
+				unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+		    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
+		     }
+		}else {
+			 this.pathwayId=null;
 	     	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				int offsetVal = 0;
-				if(pageNum != null)
-				{
+				if(pageNum != null){
 					offsetVal = Integer.parseInt(pageNum);
-					if(offsetVal!=0)
-					{
-					offsetVal = (offsetVal-1);
-					}
-				}
-			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
-	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
-	     }
-		}
-	     else {
-	     	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				int offsetVal = 0;
-				if(pageNum != null)
-				{
-					offsetVal = Integer.parseInt(pageNum);
-					if(offsetVal!=0)
-					{
-					offsetVal = (offsetVal-1);
+					if(offsetVal!=0){
+						offsetVal = (offsetVal-1);
 					}
 				}
 			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
@@ -344,6 +350,15 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			signUpViewPresenter.displayPopup(displayScreen);
 			addToPopupSlot(signUpViewPresenter);
 		}
+
+		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
+		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
+		}
 		
 	}
 
@@ -400,6 +415,34 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
+	
+	public void triggerUnitDataLogStartStopEvent(String unitId){
+		if(this.unitId==null || !this.unitId.equals(unitId)){
+			this.unitId=unitId;
+			triggerUnitDataLogStartStopEvent(classpageDo.getClasspageId(), unitId, classpageDo.getClasspageCode());
+		}
+	}
+	
+	public void triggerUnitDataLogStartStopEvent(String classpageId, String unitId, String classCode){
+		JSONObject classpageDataLog=new JSONObject();
+		String unitEventId=GwtUUIDGenerator.uuid();
+		AppClientFactory.getPlaceManager().setPathwayEventId(unitEventId);
+		classpageDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(unitEventId));
+		classpageDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.PATHWAY_VIEW));
+		classpageDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(null));
+		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(System.currentTimeMillis()));
+		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(System.currentTimeMillis()));
+		String path=classpageId+"/"+unitId;
+		String parentEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(unitId,classpageId, parentEventId, "", "","",null,path,"study"));
+		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0));
+		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
+		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
+	}
+
+	
 	@Override
 	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId){
 		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId, new SimpleAsyncCallback<Void>() {

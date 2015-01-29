@@ -85,6 +85,7 @@
 
 					<g:FlowPanel styleName="{res.css.panelAlignRight}">
 						<g:Button styleName="primary" ui:field="collectionPreviewBtn" />
+						<g:Anchor styleName="primary" ui:field="assessmentPreviewBtn" />
 						<g:Label styleName="{res.css.userCopyCollection}"
 							ui:field="copyCollectionLbl" />
 						<g:Label styleName="{res.css.userCopyCollection}"

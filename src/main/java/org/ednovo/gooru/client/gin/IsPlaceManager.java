@@ -129,4 +129,9 @@ public interface IsPlaceManager extends PlaceManager {
 	public void setUserShelfId(String userShelfId);
 	
 	public String getShelfParentGooruOid();
+	
+	public String getPathwayEventId();
+	
+	public void setPathwayEventId(String pathwayEventId);
+	
 }

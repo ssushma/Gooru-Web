@@ -81,7 +81,7 @@
 							<br/>
 							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
+							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}" ui:field="pnlCollectionLastAccessed">
 							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}" text="{i18n.GL2271}"></g:InlineLabel> 
 							<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
@@ -100,7 +100,7 @@
 								</g:HTMLPanel>
 					       		<g:HTMLPanel styleName="{unitStyle.right_session}">
 					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><g:InlineLabel text="{i18n.GL2273}"></g:InlineLabel><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image> :</span></g:HTMLPanel>
 								<g:HTMLPanel styleName="{unitStyle.session_data}">
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>

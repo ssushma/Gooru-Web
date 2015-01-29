@@ -152,7 +152,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		editUnitButton.setVisible(true);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
-		unitDetailsButton.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
+		//unitDetailsButton.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 	
@@ -172,7 +172,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 //		getAnalyticData(classUnitsDo.getResource().getUser().getGooruUId(), classUnitsDo.getResource().getGooruOid());
 		getAnalyticData();
 		setUnitNameDetails();
-		unitDetailsButton.addClickHandler(new UnitChangeEvent("dashboard",classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
+		//unitDetailsButton.addClickHandler(new UnitChangeEvent("dashboard",classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent("dashboard",classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 	}
 
@@ -196,7 +196,12 @@ public class UnitsAssignmentWidgetView extends Composite {
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 					if(isStudentMode){
-						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i+insightOffset)));
+						AssignmentsContainerWidget assignmentsContainerWidget=new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i+insightOffset)){
+							 public void triggerPathwayViewDatlogEvent(String unitId){
+								 triggerPathwayViewEvent(unitId);
+							 }
+						};
+						assignmentsContainer.add(assignmentsContainerWidget);
 					}else{
 						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
 					}
@@ -858,6 +863,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 				setAssignmentsForUnit();
 			}
 		});		
+	}
+	public void triggerPathwayViewEvent(String unitId){
+		
 	}
 
 }

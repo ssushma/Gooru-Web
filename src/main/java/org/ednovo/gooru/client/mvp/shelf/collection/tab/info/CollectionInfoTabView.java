@@ -70,6 +70,7 @@ import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -194,7 +195,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);

@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
@@ -41,7 +42,8 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 	String gooruUid;
 	String pathwayId;
 	ClassDo classDo;
-
+	private StudentAssignmentPresenter studentAssignmentPresenter=null;
+	
 	@Inject
 	public UnitSetupStudentPresenter(EventBus eventBus, IsUnitSetupStudentView view) {
 		super(eventBus, view);
@@ -96,6 +98,20 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 				System.out.println("sucesss:"+result.get(0).getTitle());
 			}
 		});		
+	}
+	
+	public void triggerUnitDataLogStartStopEvent(String unitId){
+		if(getStudentAssignmentPresenter()!=null){
+			getStudentAssignmentPresenter().triggerUnitDataLogStartStopEvent(unitId);
+		}
+	}
+
+	public StudentAssignmentPresenter getStudentAssignmentPresenter() {
+		return studentAssignmentPresenter;
+	}
+
+	public void setStudentAssignmentPresenter(StudentAssignmentPresenter studentAssignmentPresenter) {
+		this.studentAssignmentPresenter = studentAssignmentPresenter;
 	}
 	
 	

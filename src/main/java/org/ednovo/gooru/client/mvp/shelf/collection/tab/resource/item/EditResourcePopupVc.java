@@ -122,7 +122,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public Button addResourceBtn,cancelResourcePopupBtnLbl,mobileYes,mobileNo,browseStandards;
 	
 	@UiField
-	public Label generateImageLbl,resoureDropDownLbl;
+	public Label resoureDropDownLbl;
 
 	@UiField
 	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,educationalDropDownLbl;
@@ -142,13 +142,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiField HTMLEventPanel videoResourcePanel,lblContentRights,interactiveResourcePanel,websiteResourcePanel,imageResourcePanel,
 	textResourcePanel,audioResourcePanel,activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,
 	referenceMaterialPanel,quizPanel,curriculumPlanPanel,lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,
-	textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel;
+	textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 
 	/*@UiField
 	public ListBox resourceTypeListBox;*/
 
 	@UiField
-	Image setThumbnailImage;
+	Image setThumbnailImage,generateImageLbl;
 	
 	// Drop down for Resource Type//
 	@UiField
@@ -198,7 +198,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	String fileNameWithOutRespUrl = null;
 	
-	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,educationalDropDownLblOpen1=false,momentsOfLearningOpen=false,momentsOfLearningOpen1=false;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
@@ -253,7 +253,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				//standardsPreferenceOrganizeToolTip.hide();
 				errorContainer.setVisible(false);
@@ -428,7 +428,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		imagePanel.getElement().setId("pnlImagePanel");
 		imagePanel.getElement().setAttribute("alt", i18n.GL1046());
 		imagePanel.getElement().setAttribute("title", i18n.GL1046());
-		generateImageLbl.setText(i18n.GL0922());
+		generateImageLbl.setUrl("../images/NewResourcePopup/PreviewResourceThumbnail.png");
 		generateImageLbl.getElement().setId("lblGenerateImageLbl");
 		generateImageLbl.getElement().setAttribute("alt", i18n.GL0922());
 		generateImageLbl.getElement().setAttribute("title", i18n.GL0922());
@@ -791,20 +791,20 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		accessHazard.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		
-		flashingHazard.setText(i18n.GL1806());
+		flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL1806());
-		flashingHazard.getElement().setAttribute("title",i18n.GL1806());
+		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
+		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
 		
-		motionSimulationHazard.setText(i18n.GL1808());
+		motionSimulationHazard.setText(i18n.GL3111());
 		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL1808());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL1808());
+		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
+		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
 		
-		soundHazard.setText(i18n.GL1810());
+		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL1810());
-		soundHazard.getElement().setAttribute("title",i18n.GL1810());
+		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());
 		
 
 		mediaLabel.setText("Media Feature");
@@ -1328,7 +1328,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resourceTypePanel.setVisible(true);
 			resoureDropDownLblOpen=false;
 		}
-
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnails() != null ? collectionItemDo.getResource().getThumbnails().getUrl() : null;
 		setImage(thumbnailUrlStr, category);
 		
@@ -1388,7 +1387,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void setImage(String thumbnailUrlImage, String category){
-		if (thumbnailUrlImage.endsWith("null")) {
+		if (thumbnailUrlImage.endsWith("null") || thumbnailUrlImage.contains("images/defaultRes.png")) {
 			thumbnailUrlImage = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 		} 
 		if (thumbnailUrlImage!=null && thumbnailUrlImage.indexOf("youtube") >0){
@@ -2170,6 +2169,28 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			educationalDropDownLblOpen = false;
 		}
 	}
+	@UiHandler("educatioNalUseDropContainer")
+	public void educatioNalUseDropContainerDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (educationalDropDownLblOpen1 == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen1 = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen1 = false;
+		}
+	}
+	@UiHandler("momentsOfLearningDropDownContianer")
+	public void momentsOfLearningDropDownContainerClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
+		if (momentsOfLearningOpen1 == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen1 = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen1 = false;
+		}
+	}
 	@UiHandler("defaultPanelMomentsOfLearningPnl")
 	void defaultPanelMomentsOfLearningPnl(ClickEvent event) {
 		resourcemomentsOfLearningLabel.setText(i18n.GL1684());
@@ -2429,15 +2450,15 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 		String[] stringArry=accessHazardStr.split(" : ");
 		if(stringArry.length!=0){
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL1806()))
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3110()))
 			{
 					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL1808()))
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3111()))
 			{
 				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
-			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL1810()))
+			if(stringArry[1].trim().equalsIgnoreCase(i18n.GL3112()))
 			{
 				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}

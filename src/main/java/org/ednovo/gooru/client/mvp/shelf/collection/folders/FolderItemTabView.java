@@ -54,6 +54,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -75,13 +76,14 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField HTMLPanel mainSection, panelTitleSection;
 	@UiField VerticalPanel folderContentBlock;
 	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
-	@UiField Button newCollectionBtn, newFolderBtn,assessmentButton;
+	@UiField Button newCollectionBtn, newFolderBtn;
 	@UiField HTMLEventPanel editButtonEventPanel;
 	@UiField FlowPanel folderContentPanel;
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
 	@UiField FolderStyleBundle folderStyle;
 	@UiField HTMLPanel loadingImage;
 //	@UiField FolderItemPanelVc folderItemPanel;
+	@UiField Anchor assessmentButton;
 	
 	@UiField
 	FolderItemMetaDataUc folderItemMetaDataUc;
@@ -259,6 +261,18 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		assessmentButton.getElement().setAttribute("alt",i18n.GL3024());
 		assessmentButton.getElement().setAttribute("title",i18n.GL3024());
 
+		
+		String redirectUrl = AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT;
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(),"assessments", redirectUrl, new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				assessmentButton.setHref(result);
+				assessmentButton.setTarget("_blank");
+			}
+		});
+		
+		
 		
 		newFolderBtn.setText(i18n.GL1450());
 		newFolderBtn.getElement().setId("btnNewFolderBtn");
@@ -691,9 +705,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			}
 		}
 	
-	@UiHandler("assessmentButton")
-	public void onClickNewAssessmentBtn(ClickEvent clickEvent){
-		Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT, "_blank", "");
+//	@UiHandler("assessmentButton")
+//	public void onClickNewAssessmentBtn(ClickEvent clickEvent){
+//		Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.CREATE_ASSIGNMENT, "_blank", "");
 //		if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
 //			AppClientFactory.fireEvent(new InvokeLoginEvent());
 //		} else {
@@ -716,7 +730,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 //				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
 //				
 //			}
-		}
+//		}
 
 	@Override
 	public void setFolderTitle(String title) {

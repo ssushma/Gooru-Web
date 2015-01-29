@@ -8,6 +8,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
@@ -28,9 +29,11 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -47,13 +50,16 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	CollectionSummaryCBundle res;
 	
 	@UiField ListBox studentsListDropDown,sessionsDropDown;
-	@UiField Image exportImage,sessionsTooltip;
+	@UiField Image exportImage,sessionsTooltip,imgQuestionMark;
 	@UiField InlineLabel lastModifiedTime;
 	@UiField HTMLPanel collectionSummaryDetails,sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
-
+	@UiField Frame downloadFile;
+	@UiField Label subText,errorMessage;
+	
 	Map<String, String> sessionData=new HashMap<String, String>();
 	ToolTip toolTip;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	String collectionId=null,pathwayId=null,classpageId=null;
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
@@ -68,6 +74,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
 		setStaticData();
+		downloadFile.setVisible(false);
+		errorMessage.setVisible(false);
 	}
 	/**
 	 * This method is used to set static data.
@@ -91,43 +99,71 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	void setData(){
 		sessionspnl.setVisible(false);
+		
 		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
-		sessionsTooltip.addMouseOverHandler(new MouseOverHandler() {
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip("Select the student session (collection attempt) to be represented below.","");
-				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
-				toolTip.getElement().getStyle().setBackgroundColor("transparent");
-				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-				toolTip.setPopupPosition(sessionsTooltip.getAbsoluteLeft()-(50+22), sessionsTooltip.getAbsoluteTop()+22);
-				toolTip.show();
+
+		sessionsTooltip.addMouseOverHandler(new QuestionMouseToolTip("1", sessionsTooltip));
+		imgQuestionMark.addMouseOverHandler(new QuestionMouseToolTip("2", imgQuestionMark));
+		
+		sessionsTooltip.addMouseOutHandler(new QuestionMouseOutToolTip());
+		imgQuestionMark.addMouseOutHandler(new QuestionMouseOutToolTip());
+	}
+	/**
+	 * This inner class is used to handle the mouse over events.
+	 */
+	public class QuestionMouseToolTip implements MouseOverHandler{
+		String fromString="";
+		Image image;
+		QuestionMouseToolTip(String fromString,Image image){
+			this.fromString=fromString;
+			this.image=image;
+		}
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			String setText="";
+			if(fromString.equalsIgnoreCase("1")){
+				setText=i18n.GL3091();
+			}else if(fromString.equalsIgnoreCase("2")){
+				setText=i18n.GL3088();
 			}
-		});
-		sessionsTooltip.addMouseOutHandler(new MouseOutHandler() {
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				EventTarget target = event.getRelatedTarget();
-				  if (Element.is(target)) {
-					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
-						  toolTip.hide();
-					  }
+			toolTip = new ToolTip(setText,"");
+			toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
+			toolTip.getElement().getStyle().setBackgroundColor("transparent");
+			toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			toolTip.setPopupPosition(image.getAbsoluteLeft()-(50+22), image.getAbsoluteTop()+22);
+			toolTip.show();
+		}
+	}
+	/**
+	 * This class is used to hide the popup
+	 */
+	public class QuestionMouseOutToolTip implements MouseOutHandler{
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			EventTarget target = event.getRelatedTarget();
+			  if (Element.is(target)) {
+				  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+					  toolTip.hide();
 				  }
-				}
-		});
+			  }
+		}
 	}
     public class StudentsListChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
+			errorMessage.setVisible(false);
 			int selectedIndex=studentsListDropDown.getSelectedIndex();
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			if(selectedIndex==0){
 				sessionspnl.setVisible(false);
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
 				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
 				printUserDataDO.setUserName(studentsListDropDown.getItemText(studentsListDropDown.getSelectedIndex()));
 				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId,printUserDataDO);
 				sessionspnl.setVisible(true);
+				collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(false);
 			}
 		}
     }
@@ -148,12 +184,22 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	@Override
 	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
+		errorMessage.setVisible(false);
 		studentsListDropDown.clear();
-		studentsListDropDown.addItem("All");
+		studentsListDropDown.addItem("All Students");
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
 			studentsListDropDown.addItem(collectionSummaryUsersDataDo.getUserName(),collectionSummaryUsersDataDo.getGooruUId());
 		}
 		sessionspnl.setVisible(false);
+		String tabReports=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+		if(tabReports!=null && tabReports.equalsIgnoreCase("reports")){
+			exportImage.setVisible(true);
+			subText.setVisible(true);
+		}else{
+			exportImage.setVisible(false);
+			subText.setVisible(false);
+		}
+		collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
 	}
 
 	/* (non-Javadoc)
@@ -187,7 +233,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		sessionsDropDown.clear();
 		sessionData.clear();
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
-			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), AnalyticsUtil.getCreatedTime(Long.toString(collectionSummaryUsersDataDo.getTimeStamp())));
+			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), AnalyticsUtil.getSessionsCreatedTime(Long.toString(collectionSummaryUsersDataDo.getTimeStamp())));
 			int day=collectionSummaryUsersDataDo.getFrequency();
 			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",collectionSummaryUsersDataDo.getSessionId());
 		}
@@ -231,5 +277,16 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	@UiHandler("exportImage")
 	public void clickedOnExport(ClickEvent e){
 		getUiHandlers().exportCollectionSummary(collectionId, classpageId, "", "", pathwayId, AnalyticsUtil.getTimeZone());
+	}
+	@Override
+	public Frame getFrame() {
+		return downloadFile;
+	}
+	@Override
+	public void resetDataIfNoSessions() {
+		lastModifiedTime.setText("");
+		sessionspnl.setVisible(false);
+		errorMessage.setVisible(true);
+		collectionSummaryWidget.getCollectionLastAccessPnl().setVisible(true);
 	}
 }

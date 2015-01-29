@@ -83,6 +83,8 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	
 	private String classpageId=null;
 	
+	private String pathwayEventId=null;
+	
 	private String userShelfId=null;
 	
 	private boolean isLibraryEventTriggered=false;
@@ -639,10 +641,19 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return parentGooruId;
 		}
-		
 
 		public void setUserShelfId(String userShelfId) {
 			this.userShelfId = userShelfId;
+		}
+
+		@Override
+		public String getPathwayEventId() {
+			return pathwayEventId;
+		}
+
+		@Override
+		public void setPathwayEventId(String pathwayEventId) {
+			this.pathwayEventId=pathwayEventId;
 		}
 		
 		
