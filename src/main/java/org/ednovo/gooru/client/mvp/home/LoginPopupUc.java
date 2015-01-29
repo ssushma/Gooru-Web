@@ -470,20 +470,21 @@ public class LoginPopupUc extends PopupPanel{
 						}
 						else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 							handleInProgress();
-							
-							if (errorCode.equalsIgnoreCase(ERR_GL0078)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
-								// For blocked users
-								new AlertContentUc(i18n.GL1966(), i18n.GL1938());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL3114());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+							if (errorCode != null){
+								if (errorCode.equalsIgnoreCase(ERR_GL0078)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
+									// For blocked users
+									new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL3114());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+								}
 							}
 						}else{
 							new AlertContentUc(i18n.GL1966(), errorMessage);
