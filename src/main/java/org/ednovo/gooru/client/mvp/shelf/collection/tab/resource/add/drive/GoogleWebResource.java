@@ -43,6 +43,7 @@ public class GoogleWebResource extends Composite {
 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.driveDo = driveDo;
+		System.out.println("value s enter  wideget" + driveDo.getTitle());
 		driveText.setText(driveDo.getTitle());
 		driveText.getElement().setId("htmlDriveText");
 		driveText.getElement().setAttribute("alt", driveDo.getTitle());
@@ -53,6 +54,7 @@ public class GoogleWebResource extends Composite {
 		contentPanel.addDomHandler(contentClick, ClickEvent.getType());
 		type = driveDo.getMimeType();
 		String dataType[] = type.split("\\.");
+		System.out.println("dataypes" + dataType[0].toString());
 		dataIconType = dataType[0];
 
 	}
@@ -62,14 +64,17 @@ public class GoogleWebResource extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
+			System.out.println("datfaypeicon" + dataIconType);
 
 			if (type.equalsIgnoreCase(folderMimeType)) {
 
 				folderContent(driveDo.getId());
 
+				System.out.println("enter in folder condition");
 
 			} else {
 				AppClientFactory.fireEvent(new DriveEvent(driveDo));
+				System.out.println("elase condion in  widget");
 
 			}
 
@@ -92,9 +97,11 @@ public class GoogleWebResource extends Composite {
 //					@Override
 //					public void onSuccess(List<GoogleDriveItemDo> result) {
 //
+//						System.out.println("enteringb   successssssss");
 //						AppClientFactory.fireEvent(new FolderEvent(driveDo
 //								.getTitle(), driveDo.getId(), result));
 //						// TODO Auto-generated method stub
+//						// System.out.println("on sucesssss"+result.get(0).getTitle());
 //						/*
 //						 * if (result != null) {
 //						 * 

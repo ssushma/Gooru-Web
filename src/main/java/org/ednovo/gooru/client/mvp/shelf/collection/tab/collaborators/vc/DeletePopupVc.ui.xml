@@ -1,12 +1,11 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
-		field="res1" />
+
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle"
 		field="collaborators" />
-	<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
+	<g:HTMLPanel styleName="{collaborators.css.popup}">
 		<g:HTMLPanel styleName="{collaborators.css.popupInner}">
 			<g:Label styleName="{collaborators.css.popupHeader}"
 				ui:field="lblTitle" />

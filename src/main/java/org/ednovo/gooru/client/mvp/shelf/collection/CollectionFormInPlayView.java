@@ -30,7 +30,6 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -197,14 +196,11 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 //		buttonFloPanel.add(validationErrorFloPanel);
 //		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
-		mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-		collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 		//buttonFloPanel.add(btnOk);
 		//buttonFloPanel.add(cancelAnr);
 		publicShareFloPanel.setVisible(false);
-		/*appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
-		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);*/
-		appPopUp.getMainPanel().setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+		appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
 		collectionTitleTxtBox.getElement().setAttribute("maxlength", "50");
 		radioButtonPublic.getElement().setId("rdPublic");
 		radioButtonShare.getElement().setId("rdShare");
@@ -282,17 +278,12 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
 								mandatoryErrorLbl.setText(i18n.GL0554());
 								mandatoryErrorLbl.setVisible(true);
-								mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-								collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
-								mandatoryErrorLbl.getElement().getStyle().setMarginRight(0,Unit.PX);
 							}else{
 								btnOk.setEnabled(true);
 								btnOk.getElement().removeClassName("disabled");
 								collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
 								mandatoryErrorLbl.setVisible(false);
-								mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-								collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 							}
 						}
 					});
@@ -322,15 +313,11 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 							mandatoryErrorLbl.setVisible(true);
 							btnOk.setEnabled(true);
 							btnOk.getElement().removeClassName("disabled");
-							mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-							collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
 						}else{
 							collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 							collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
 							mandatoryErrorLbl.setVisible(false);
-							mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-							collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
-							collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
+							
 							if (validateCollectionForm().size() == 0) {
 								
 								//loadingTextLbl.setVisible(true);
@@ -468,13 +455,9 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryErrorLbl.setVisible(false);
-			mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-			collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 			if (collectionTitleTxtBox.getText().length() >= 50) {
 				mandatoryErrorLbl.setText(i18n.GL0143());
 				mandatoryErrorLbl.setVisible(true);
-				mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-				collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
 			}
 		}
 	}
@@ -586,8 +569,6 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		collectionTitleTxtBox.setText("");
 //		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
-		mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-		collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 		courseLisBox = new GroupedListBox();
 		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		groupSimPanel.setWidget(courseLisBox);
@@ -678,15 +659,11 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		if (tiltle.toLowerCase().contains("www.") || tiltle.toLowerCase().contains("http://") || tiltle.toLowerCase().contains("https://") || tiltle.toLowerCase().contains("ftp://")){
 			mandatoryErrorLbl.setText(i18n.GL0323());
 			mandatoryErrorLbl.setVisible(true);
-			mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-			collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
 			errorList.put("title", "title cannot be a url.");
 		}else if (tiltle.trim().equals("") || tiltle.equalsIgnoreCase("Untitled Collection")) {
 			errorList.put("title", "title can not be empty");
 			mandatoryErrorLbl.setText(i18n.GL0746());
 			mandatoryErrorLbl.setVisible(true);
-			mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-			collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
 		}
 		return errorList;
 	}

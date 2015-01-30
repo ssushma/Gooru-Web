@@ -358,7 +358,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				return null;
 			}
 		};
-		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
@@ -851,6 +850,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				};
 				
 				copyRightPolicy.show();
+				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();
 				copyRightPolicy.getElement().getStyle().setZIndex(999);
 			}
@@ -868,6 +868,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 					}
 				};
 				termsOfUse.show();
+				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(999);
 			}
@@ -887,6 +888,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				};
 				
 				termsAndPolicyVc.show();
+				termsAndPolicyVc.setSize("902px", "300px");
 				termsAndPolicyVc.center();
 				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 			}
@@ -1662,12 +1664,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			rightArrowLbl.setVisible(false);
 			leftArrowLbl.setVisible(false);
 			generateImageLbl.setVisible(true);
-
-			videoResourcePanel.removeStyleName("active");
-			resourceCategoryLabel.setText(i18n.GL0360());
-
 			clearCategorySelections();
-
 			final Map<String, String> parms = new HashMap<String, String>();
 			
 			parms.put("text", urlTextBox.getText().trim());

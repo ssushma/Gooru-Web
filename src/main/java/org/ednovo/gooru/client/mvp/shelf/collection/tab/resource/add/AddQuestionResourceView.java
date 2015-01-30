@@ -129,7 +129,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField public static Label errorMessageForQuestion;
 	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,questionNameErrorLbl,explainationErrorLbl,depthOfKnowledgeTitle;
 	@UiField Anchor addAnswerChoice,addHintsLabel;
-	@UiField HTMLPanel browseStantardContainer;
 
 	@UiField Anchor addQuestionImg;
 
@@ -357,7 +356,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardContainer.getElement().setId("fpnlStandardContainer");
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
-		standardSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:271px;height:19px");
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
 		standardsPanel.getElement().setId("fpnlStandardsPanel");
 		lblContentRights.getElement().setId("epnlLblContentRights");
@@ -366,7 +364,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
 		setTextForTheFields();
 		errorContainer.setVisible(false);
-		//browseStantardContainer.getElement().getStyle().setMarginTop(-2, Unit.PCT);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -2541,6 +2538,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		};
 		
 		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);
 	
@@ -2564,6 +2562,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		};
 		
 		termsAndPolicyVc.show();
+		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 	
@@ -2587,6 +2586,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		};
 		
 		copyRightPolicy.show();
+		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}

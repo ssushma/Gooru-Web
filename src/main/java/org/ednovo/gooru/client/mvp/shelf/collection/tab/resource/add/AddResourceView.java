@@ -730,6 +730,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			category=resourceCategory;
 			JSONObject jsonObject = setImageUploadJsonObject(originalFileName,mediaFileName, title, desc, category, ownResourceImgUrl,educationalLevel,momentsOfLearning,standardsDo,tagList); 
 			ownResourceImgUrl = null;
+			System.out.println("--- string payload -- "+jsonObject.toString());
 			getUiHandlers().addUserOwnResource(jsonObject.toString());
 		}
 
@@ -1016,9 +1017,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 //				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
 //				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
+				System.out.println("questionType===>"+collectionDo.getCollectionType());
 				if(collectionDo!=null&&collectionDo.getCollectionType().equalsIgnoreCase("quiz")){
+					System.out.println("if===>"+collectionDo.getCollectionType());
 					hideTabButtons(false, true, true);
 				}else{
+					System.out.println("else===>"+collectionDo.getCollectionType());
 					hideTabButtons(false, true, false);
 				}
 				setRadioButtonValues();

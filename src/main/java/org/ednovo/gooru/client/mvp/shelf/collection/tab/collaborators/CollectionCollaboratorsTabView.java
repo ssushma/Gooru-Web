@@ -361,7 +361,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	private void createAutoSuggestBox() {
 		panelSuggestBox.setStyleName("auto_suggest");
-		autoSuggetTextBox = new AutoSuggestForm(oracle, "email") {
+		autoSuggetTextBox = new AutoSuggestForm(oracle) {
 
 			@Override
 			public void onSubmit(DomEvent<EventHandler> event) {
@@ -458,8 +458,9 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			delete.setDescText(StringUtil.generateMessage(i18n.GL1119(), emailIdsToRemove.get(1) != null ? emailIdsToRemove.get(1) : emailIdsToRemove.get(0))); 
 			delete.setPositiveButtonText(i18n.GL_GRR_YES());
 			delete.setNegitiveButtonText(i18n.GL0142());
-			delete.show();
 			delete.center();
+			delete.show();
+			
 		}else{
 			//give message...
 		}
@@ -896,6 +897,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			
 		};
 		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
 	}
