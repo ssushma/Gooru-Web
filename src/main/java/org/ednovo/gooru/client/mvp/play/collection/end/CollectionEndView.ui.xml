@@ -180,12 +180,12 @@
 					      	<g:Label ui:field="toCommentText"></g:Label>
 				      </g:HTMLPanel>
 			      	  <g:TextArea styleName="{playerStyle.commentField} form-control" ui:field="commentField"></g:TextArea>
+			      	  <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessageCommentsSection}"/>
 			      </g:HTMLPanel>
 				  <g:Label styleName="col-md-10 col-xs-6 col-sm-8 {playerStyle.successPostMsg}" ui:field="successPostMsg" />
 			      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2">
 				      <g:Button styleName="secondary disabled" ui:field="postCommentBtn"/>
 				      <g:Button styleName="secondary {playerStyle.marginTop10}" ui:field="postCommentCancel"/>
-				      <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessage}"/>
 				  </g:HTMLPanel>
 				  <g:Label styleName="clearfix"></g:Label>
 			    </g:HTMLPanel>

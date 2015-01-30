@@ -46,7 +46,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class FolderPopupUc extends PopupPanel {
 	
-	@UiField HTMLPanel folderStructureTree, buttonsContainer;
+	@UiField HTMLPanel folderStructureTree, buttonsContainer,mainContainer;
 	@UiField Button cancelBtn, okBtn;
 	@UiField FolderPopupStyleBundle folderPopupStyle;
 	@UiField TextBox folderTitle;
@@ -107,7 +107,9 @@ public abstract class FolderPopupUc extends PopupPanel {
 		});
 		
 		if(isFolderType || moveType.equalsIgnoreCase(COLLECTION_MOVE)) {
+			
 			loadingImageLabel.setVisible(true);
+		
 		} else {
 			loadingImageLabel.setVisible(false);
 		}
@@ -134,6 +136,11 @@ public abstract class FolderPopupUc extends PopupPanel {
 			}
 		});
 		folderTitle.addBlurHandler(new CheckProfanityForFolders());
+		mainContainer.getElement().setAttribute("style", "min-height:450px");
+		this.setGlassEnabled(true);
+		this.show();
+		this.center();
+		
 	}
 	
 	public void setCollectionType(String collectionType){
