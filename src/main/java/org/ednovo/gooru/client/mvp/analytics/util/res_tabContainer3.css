@@ -18,6 +18,7 @@
 .buttonsPanel{
 	border: 1px solid #CCCCCC;
 	border-bottom: 40px solid #CCCCCC;
+	white-space: normal;
 }
 .viewSummaryText {
 	float: left;
