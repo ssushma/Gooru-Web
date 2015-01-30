@@ -19,7 +19,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 			   </g:HTMLPanel>	
-			<g:HTMLPanel styleName="col-md-12 col-xs-12">
+			<g:HTMLPanel styleName="col-md-12 col-xs-12 text-center">
 				<g:Label styleName="{res.css.congratsHeader}" ui:field="lblCongratsHeader"/>
 				<g:Label styleName="{res1.css.subheader}" ui:field="lblCheckYourEmail"/>
 				<g:Button styleName="primary {res.css.startUsingGooru}" ui:field="btnStartUsingGooru"/>

@@ -61,6 +61,7 @@
 	height: 39px;
 	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED) !important;
 	background: -moz-linear-gradient(top,#FDFDFD, #EDEDED) !important;
+	background: #ededed !important;
 	color: #515151 !important;
 	border: 1px solid #ccc !important;
 	border-radius: 0px !important;
