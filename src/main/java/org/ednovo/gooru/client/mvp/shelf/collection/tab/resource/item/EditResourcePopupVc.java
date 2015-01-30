@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
@@ -228,6 +227,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	List<String> tagListGlobal = new ArrayList<String>();
 	
 	HandlerRegistration videoClickHandler,websiteClickHandler,interactiveClickHandler,imageClickHandler,textClickHandler,audioClickHandler=null;
+
 	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
@@ -250,7 +250,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
-		super.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
 			@Override
@@ -313,7 +312,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				return null;
 			}
 		};
-		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
@@ -382,14 +380,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-        
-        videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
-        
         categorypanel.getElement().setId("pnlCategorypanel");
         mandatoryTitleLbl.getElement().setId("lblMandatoryTitleLbl");
         mandatoryTitleLbl.setText(i18n.GL0173());
@@ -692,6 +682,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				};
 				
 				copyRightPolicy.show();
+				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();
 				copyRightPolicy.getElement().getStyle().setZIndex(999);
 				
@@ -714,6 +705,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				};
 				
 				termsOfUse.show();
+				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(999);
 			}
@@ -732,6 +724,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				};
 				
 				termsAndPolicyVc.show();
+				termsAndPolicyVc.setSize("902px", "300px");
 				termsAndPolicyVc.center();
 				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 			}
@@ -1209,6 +1202,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
 						audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
 					}
+		
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription().substring(0, 300));
@@ -1790,6 +1784,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	}
 
+	
 	void setTextCategory() {
 		resourceCategoryLabel.setText(i18n.GL1044());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
@@ -1807,6 +1802,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		clearCategoryErrorMessage();
 	}
 
+	
 	void setAudioCategory() {
 		resourceCategoryLabel.setText(i18n.GL1045());
 		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1045());
@@ -1823,11 +1819,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		imageResourcePanel.removeStyleName("active");
 		clearCategoryErrorMessage();
 	}
-	
-	
-	
-	
-	
 
 //	@UiHandler("otherResourcePanel")
 //	void lessonResourcePanel(ClickEvent event) {

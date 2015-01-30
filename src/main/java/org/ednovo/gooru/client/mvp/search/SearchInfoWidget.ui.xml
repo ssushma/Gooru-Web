@@ -4,7 +4,7 @@
 	<ui:style>
 		/* Add CSS here. See the GWT docs on UI Binder for more details */
 	</ui:style>
-	<ui:style field="playerStyle" src="searchInfo.css" />
+	<ui:style field="playerStyle" src="searchInfo.css"/>
 		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
 			widget names. The ui:field attribute binds an element to a field in the owner 
 			class. See the GWT docs on UI Binder for more details. -->
@@ -14,7 +14,7 @@
 				  <g:Label styleName="{playerStyle.loadingImageForShare}" ui:field="lblloadingImage"/>
 		    </g:HTMLPanel>
 			<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}">
-			<g:HTMLPanel styleName="col-md-8">
+			<g:HTMLPanel styleName="col-md-8 col-sm-8">
 			    <g:HTMLPanel styleName="{playerStyle.floatLeft} hidden-sm hidden-xs ">
 			    	<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />    
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
@@ -25,7 +25,7 @@
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="col-md-4">
+			<g:HTMLPanel styleName="col-md-4 col-sm-4">
 				<g:Button styleName="{playerStyle.green}" ui:field="addTagsBtn">Add Tags</g:Button>	    
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>

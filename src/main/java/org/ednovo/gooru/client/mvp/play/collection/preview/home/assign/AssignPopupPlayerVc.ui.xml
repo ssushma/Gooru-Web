@@ -20,7 +20,7 @@
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="clearfix"/>	
 			</g:HTMLPanel>
-		<g:HTMLPanel styleName="{res1.css.shareSelection}">
+		<g:HTMLPanel ui:field="assignPopupContent" styleName="{res1.css.shareSelection}">
 		<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}" ui:field="loadingImageLabel">
 		      <g:Label  styleName="{res.css.loadingImageForSelfEdit}" />
 		   </g:HTMLPanel>

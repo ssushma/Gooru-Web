@@ -2363,7 +2363,9 @@ overflow: visible;
   background: #babcc9;
 }
 
-
+.analyticsPrintSave{
+	
+}
 .panelHeight{
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -2518,6 +2520,10 @@ overflow: visible;
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+		.analyticsPrintSave{
+			clear:both;
+			width:auto !important; 
+		}
 		.containerMain {
   	 		 width: auto !important;
 		}
@@ -2670,6 +2676,9 @@ overflow: visible;
 .addResourcePopup{
 		margin-top:50px ;	
 	}
+.studyMainContainer{
+	width:1000px;
+}	
 
 /* @media (min-width: 240px) and (max-width: 319px){
 	.gwt-PopupPanel{
@@ -2751,7 +2760,6 @@ overflow: visible;
 
 }
 
-
 @media (min-width: 992px) and (max-width: 1199px) {
 	
 	#main, #menuRight {
@@ -2777,6 +2785,14 @@ overflow: visible;
 		position: relative;
 		margin-bottom: 0px;
 		height: 30px;
+	}
+	
+}
+
+@media (min-width: 992px) {
+
+	.studyMainContainer{
+		width:990px !important;
 	}
 }
 
@@ -2809,6 +2825,7 @@ overflow: visible;
  	}
 	
 	.reviewPopupPoor{
+		top:120px !important;
 		left:24% !important;
 		width:300px;
 	}
@@ -2853,6 +2870,7 @@ overflow: visible;
 		.reviewPopup{
 			left:20% !important;
 			width: 100%;
+			top:120px !important;
 		}
 		.preFilterPopup{
 			left:0% !important;
@@ -2911,6 +2929,7 @@ overflow: visible;
 		.reviewPopup{
 		left:10% !important;
 		width: 100%;
+		top:100px !important;
 		}
 		.preFilterPopup{
 			left:0% !important;
@@ -3025,7 +3044,7 @@ overflow: visible;
 	}
 
 	.animating #menu, .menu-visible #menu {
-		display: none;
+		
 	}
 	.animating #page {
 	transition: transform .25s ease-in-out;

@@ -465,23 +465,26 @@ public class LoginPopupUc extends PopupPanel{
 							    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SAUSD_LIBRARY);
 							    }
 						    }
+						    UserDo user = AppClientFactory.getLoggedInUser();
+						    MixpanelUtil.setIdentity(user.getGooruUId(), user.getUsernameDisplay(), user.getEmailId(), user.getUserRoleSetString(), "", user.getFirstName(), "");
 						}
 						else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 							handleInProgress();
-							
-							if (errorCode.equalsIgnoreCase(ERR_GL0078)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
-								// For blocked users
-								new AlertContentUc(i18n.GL1966(), i18n.GL1938());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL3114());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
-								// TODO - waiting for message
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
-								// TODO - waiting for message
-							}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+							if (errorCode != null){
+								if (errorCode.equalsIgnoreCase(ERR_GL0078)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
+									// For blocked users
+									new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL3114());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+								}
 							}
 						}else{
 							new AlertContentUc(i18n.GL1966(), errorMessage);
@@ -666,7 +669,7 @@ public class LoginPopupUc extends PopupPanel{
 				
 				//new TryItOutVc();
 				
-				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
+				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo newUser) {
 						UserDo user = AppClientFactory.getLoggedInUser();
@@ -674,8 +677,6 @@ public class LoginPopupUc extends PopupPanel{
 						AppClientFactory.setLoggedInUser(user);
 					}
 				});
-			} else if((flag == 2||flag == 6||flag==1) && !AppClientFactory.isAnonymous()){
-//				new ImprovedGooruPopUpView();				
 			}
 		}
 	}

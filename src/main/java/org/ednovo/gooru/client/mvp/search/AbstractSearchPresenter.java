@@ -789,11 +789,6 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			}
 		}
 
-
-		addToPopupSlot(addStandardsPresenter);
-		getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-
-
 	}
 
 	@Override
