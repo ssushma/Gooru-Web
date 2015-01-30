@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -370,8 +371,8 @@ public class PreFilterPopup extends PopupPanel {
 			lblStandards.getElement().setAttribute("style", "background: #e5e5e5;");
 			//filterPanel.getElement().setAttribute("style", "width:922px;");
 			filterPanel.removeStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+			filterPanel.getElement().setAttribute("style", "width:auto");
 			filterPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainExtraLarge());
-	
 			lblGradesSubj.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(true);
 			gradesPanel.setVisible(false);

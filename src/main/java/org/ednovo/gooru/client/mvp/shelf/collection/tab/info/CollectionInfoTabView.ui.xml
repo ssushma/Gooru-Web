@@ -71,7 +71,7 @@
 							<g:FlowPanel styleName="{res.css.standardsCont}">
 							<g:Button ui:field="browseBtn" styleName="secondary">Browse</g:Button>
 								<uc:AppSuggestBox ui:field="standardSgstBox"
-									width="224px" height="31px" />
+									width="224px" height="19px" />
 								<g:Button styleName="{res.css.infoAddButton}" ui:field="addStandardBtn" />
 								<g:Label styleName="{res.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"

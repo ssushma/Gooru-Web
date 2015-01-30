@@ -32,7 +32,6 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
-import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.DownToolTipUc;
@@ -107,9 +106,6 @@ public class CollectionFormView extends
 
 	@UiField
 	FlowPanel buttonFloPanel;
-	
-	@UiField 
-	HTMLPanel bodyContainer;
 
 	/*@UiField
 	Anchor cancelAnr;*/
@@ -209,14 +205,11 @@ public class CollectionFormView extends
 		super(eventBus);
 		hideFromPopup(true);
 		appPopUp = new AppPopUp();
-		appPopUp.getMainPanel().setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());;
 		appPopUp.setContent(TITLE_THIS_COLLECTION,uiBinder.createAndBindUi(this));
 		if(!(AppClientFactory.isAnonymous())){
 			getAccountTypeId();
 		}
 		mandatoryErrorLbl.setVisible(false);
-		mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-		collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 		isCheckedValue=false;
 		publicShareFloPanel.setVisible(false);
 		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
@@ -234,7 +227,6 @@ public class CollectionFormView extends
 		appPopUp.setTitle(i18n.GL0993());
 		
 		buttonFloPanel.setVisible(false);
-		
 		
 		collectionTitleTxtBox.addBlurHandler(new BlurHandler() {
 			
@@ -254,15 +246,11 @@ public class CollectionFormView extends
 								mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0554());
 								mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0554());
 								mandatoryErrorLbl.setVisible(true);
-								mandatoryErrorLbl.getElement().getStyle().setMarginRight(0,Unit.PX);
-								mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-								collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
+								mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);
 							}else{
 								collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
 								mandatoryErrorLbl.setVisible(false);
-								mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-								collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 							}
 						}
 					});
@@ -277,11 +265,12 @@ public class CollectionFormView extends
 				collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 				collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
 				mandatoryErrorLbl.setVisible(false);
-				mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-				collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 			}
 		});
-						
+		
+		appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
+		
 		btnOk.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -290,6 +279,7 @@ public class CollectionFormView extends
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", collectionTitleTxtBox.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -300,15 +290,13 @@ public class CollectionFormView extends
 							mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0554());
 							mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0554());
 							mandatoryErrorLbl.setVisible(true);
-//							mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);
+							mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);
 							btnOk.setEnabled(true);
 							btnOk.getElement().removeClassName("disabled");
 						}else{
 							collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 							collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
 							mandatoryErrorLbl.setVisible(false);
-							mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-							collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 							if (validateCollectionForm().size() == 0) {
 								MixpanelUtil.Create_EmptyCollection();
 								String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
@@ -492,8 +480,7 @@ public class CollectionFormView extends
 	 * This method is used to get GrageList
 	 */
 	public void getGradeList() {
-		gradeDropDownList.setStyleName("form-control");
-		gradeDropDownList.addStyleName(LoginPopUpCBundle.INSTANCE.css().form_control());
+		gradeDropDownList.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		for (int i = 0; i < list.length; i++) {
 			gradeDropDownList.addItem(list[i]);
 		}
@@ -516,9 +503,6 @@ public class CollectionFormView extends
 
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryErrorLbl.setVisible(false);
-			mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-			collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
-			collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 			btnOk.setEnabled(true);
 			btnOk.getElement().removeClassName("disabled");
 			if (collectionTitleTxtBox.getText().length() >= 50) {
@@ -526,8 +510,6 @@ public class CollectionFormView extends
 				mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0143());
 				mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0143());
 				mandatoryErrorLbl.setVisible(true);
-				mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-				collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
 			}
 		}
 	}
@@ -610,8 +592,6 @@ public class CollectionFormView extends
 			cancelAnr.setText(i18n.GL0142());
 			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
 			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
-			bodyContainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().addSelection());
-
 			appPopUp.setViewTitle(i18n.GL1421());
 			setPopUpStyle();
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE).equalsIgnoreCase("")){
@@ -627,7 +607,6 @@ public class CollectionFormView extends
 			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("alt",AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("title",AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE));
-			bodyContainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().addSelection());
 			btnOk.setText(i18n.GL0636());
 			btnOk.getElement().setAttribute("alt",i18n.GL0636());
 			btnOk.getElement().setAttribute("title",i18n.GL0636());
@@ -699,11 +678,8 @@ public class CollectionFormView extends
 		}
 //		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
-		mandatoryErrorLbl.getElement().getStyle().clearMarginBottom();
-		collectionTitleTxtBox.getElement().getStyle().clearMarginBottom();
 		courseLisBox = new GroupedListBox();
-		courseLisBox.setStyleName("form-control");
-		courseLisBox.addStyleName(LoginPopUpCBundle.INSTANCE.css().form_control());
+		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		groupSimPanel.setWidget(courseLisBox);
 		gradeDropDownList.setSelectedIndex(0);
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
@@ -725,9 +701,9 @@ public class CollectionFormView extends
 		lblVisibility.getElement().getStyle().setDisplay(Display.NONE);
 		gradeContainer.getElement().getStyle().setDisplay(Display.NONE);
 		courseContainer.getElement().getStyle().setDisplay(Display.NONE);
-		/*appPopUp.getElement().getStyle().setHeight(200, Unit.PX);
-		appPopUp.getElement().getStyle().setTop(195, Unit.PX);*/
-		/*shelfItemContent.getElement().setAttribute("style", "min-height: 200px");	*/
+		appPopUp.getElement().getStyle().setHeight(200, Unit.PX);
+		appPopUp.getElement().getStyle().setTop(195, Unit.PX);
+		shelfItemContent.getElement().setAttribute("style", "min-height: 200px");	
 	}
 	
 	private void removePopUpStyle() {
@@ -735,7 +711,7 @@ public class CollectionFormView extends
 		lblVisibility.getElement().getStyle().setDisplay(Display.BLOCK);
 		gradeContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		courseContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-	/*	appPopUp.getElement().getStyle().setHeight(320, Unit.PX);*/
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
 		shelfItemContent.getElement().setAttribute("style", "min-height: 316px");	
 	}
 
@@ -804,8 +780,6 @@ public class CollectionFormView extends
 			mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0323());
 			mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0323());
 			mandatoryErrorLbl.setVisible(true);
-			mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-			collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
 			errorList.put("title", i18n.GL0323().toLowerCase());
 		} else if (tiltle.trim().equals("")
 				|| tiltle.equalsIgnoreCase(i18n.GL0319())) {
@@ -814,17 +788,13 @@ public class CollectionFormView extends
 			mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0173());
 			mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0173());
 			mandatoryErrorLbl.setVisible(true);
-			/*mandatoryErrorLbl.getElement().getStyle().setMarginRight(62,Unit.PX);*/
-			mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-			collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
+			mandatoryErrorLbl.getElement().getStyle().setMarginRight(62,Unit.PX);
 		}else if (isHavingBadWords){
 			errorList.put("title", i18n.GL0554());
 			mandatoryErrorLbl.setText(i18n.GL0554());
 			mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0554());
 			mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0554());
 			mandatoryErrorLbl.setVisible(true);
-			mandatoryErrorLbl.getElement().getStyle().setMarginBottom(10, Unit.PX);
-			collectionTitleTxtBox.getElement().getStyle().setMarginBottom(5, Unit.PX);
 		}
 		return errorList;
 	}

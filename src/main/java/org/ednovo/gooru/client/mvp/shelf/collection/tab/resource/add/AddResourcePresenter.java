@@ -202,6 +202,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	@Override
 	public void questionImageUpload(String collectionItemId) {
+		System.out.println("iam here collitemId::"+collectionItemId);
 		addToPopupSlot(imageUploadPresenter);
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setUpdateQuestionImage(true);

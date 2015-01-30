@@ -4,7 +4,7 @@
 	<ui:style field="FolderStyle" src="folderPopup.css"/>
 	<g:HTMLPanel>
 	     <div class="{FolderStyle.popupMain}">
-			<div>
+			<div class="{FolderStyle.popupInner}">
 			<!--  <g:Label styleName="{FolderStyle.popupHeader}" ui:field="titleLabel"/> -->
 				<g:HTMLPanel styleName="{FolderStyle.popupContent}" ui:field="contentPnl">
                     <div class="{FolderStyle.icon} {FolderStyle.complete}"></div>
