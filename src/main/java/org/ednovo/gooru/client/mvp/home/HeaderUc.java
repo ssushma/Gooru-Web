@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexHandler;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BPanel;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.HeaderPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -797,6 +798,12 @@ public class HeaderUc extends Composite implements
 									// StringUtil.consoleLog("Header UC onFailure...");
 								}
 							});
+		}
+		
+		//Handling specify case for IE. 
+		if (!BrowserAgent.isDevice() && BrowserAgent.getWebBrowserClient().equalsIgnoreCase("ie")){
+			editSearchBtn.setVisible(true);
+			headerMainPanel.getElement().getStyle().setWidth(50, Unit.PX);
 		}
 	}
 
