@@ -1053,8 +1053,8 @@ button.primary:hover {
 }
 
 .forgotPwdContentDiv, .resetPwdContentDiv {
-	border: 1px solid #CCCCCC;
 	margin: -4px 4px 4px;
+	border:none;
 }
 
 /*********** successForgotPassword **************/
