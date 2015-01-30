@@ -1131,7 +1131,7 @@ button.primary:hover {
 }
 
 .resetPwdContentDiv {
-	border: 1px solid #CCCCCC;
+	border: none;
 	margin: -4px 4px 4px;
 }
 
