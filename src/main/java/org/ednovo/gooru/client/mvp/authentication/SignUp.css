@@ -837,7 +837,7 @@ input.halfSize {
 
 #btnSignUp{
 	margin-top: 15px;
-	margin-bottom: 15px;	
+	/* margin-bottom: 15px; */	
 }
 
 #tbBirthday{

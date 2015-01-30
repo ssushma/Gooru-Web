@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -91,7 +92,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 	
 	@UiField Anchor  achSignUpWithEmail,achClickToLogin,lblCancel;
 	
-	@UiField HTMLPanel panelSignUp, panelUserInfo;
+	@UiField HTMLPanel panelSignUp, panelUserInfo, panelCreateAccount,panelLoginPopupContent;
 	
 	CreateAccountUc createAccount = null;
 	
@@ -126,7 +127,9 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		
 		
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
-		//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
+		
+		panelLoginPopupContent.getElement().getStyle().setPaddingTop(30, Unit.PX);
+		panelLoginPopupContent.getElement().getStyle().setPaddingBottom(30, Unit.PX);
 		
 		appPopUp.center();
 		

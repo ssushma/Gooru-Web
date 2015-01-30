@@ -3030,3 +3030,12 @@ color: #ffffff !important;
 	cursor: pointer;
 }
 
+
+.caption p div#htmlDescription{
+	font-size: 12px;
+}
+
+.caption p button#btnHomeSignUp {
+	font-size: 18px;
+	margin-top: 10px;
+}
