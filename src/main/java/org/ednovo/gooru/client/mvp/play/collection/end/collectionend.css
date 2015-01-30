@@ -264,6 +264,10 @@
 	margin-right: 80px;
 	margin-top: 10px;
 }
+.errorMessageCommentsSection {
+	float: right;
+	margin-top: 10px;
+}
 
 .conceptTitle {
 	color: #1076bb;

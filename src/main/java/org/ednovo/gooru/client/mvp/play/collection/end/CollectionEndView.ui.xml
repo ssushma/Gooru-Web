@@ -5,6 +5,11 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
 	xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field= "playerStyle" src="collectionend.css" type="org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle" />
+		<ui:style>
+		.commentsBtnContainer {
+			padding-left:10px;
+		}
+	</ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource"/>
 
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle" field="smallMobile"/>
@@ -180,12 +185,12 @@
 					      	<g:Label ui:field="toCommentText"></g:Label>
 				      </g:HTMLPanel>
 			      	  <g:TextArea styleName="{playerStyle.commentField} form-control" ui:field="commentField"></g:TextArea>
+			      	  <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessageCommentsSection}"/>
 			      </g:HTMLPanel>
 				  <g:Label styleName="col-md-10 col-xs-6 col-sm-8 {playerStyle.successPostMsg}" ui:field="successPostMsg" />
-			      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2">
+			      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2 {style.commentsBtnContainer}">
 				      <g:Button styleName="secondary disabled" ui:field="postCommentBtn"/>
 				      <g:Button styleName="secondary {playerStyle.marginTop10}" ui:field="postCommentCancel"/>
-				      <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessage}"/>
 				  </g:HTMLPanel>
 				  <g:Label styleName="clearfix"></g:Label>
 			    </g:HTMLPanel>

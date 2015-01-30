@@ -94,6 +94,8 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		resourceHeaderPanel.getElement().setId("sbResourceHeaderPanel");
 		privateResourcePanel.getElement().setId("pnlPrivateResourcePanel");
 		buttonContainer.getElement().setId("pnlButtonContainer");
+	/*	this.show();
+		this.center();*/
 	}
 
 	@UiHandler("okButton")
@@ -237,6 +239,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		} else {
 			setPopupMargins(false);
 		}
+	
 		gooruPublicShare.setVisible(false);
 		alertSuccessTxt.setVisible(true);
 		privateResourceLbl.setVisible(!isVisible);
@@ -244,6 +247,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		alertSuccessTitleTxt.setVisible(isVisible);
 //		goBackBtn.setVisible(isVisible);
 		showPopup();
+		shareAlertPopup.getElement().getStyle().clearMargin();
 	}
 	
 	private void setPopupMargins(boolean isZero) {
