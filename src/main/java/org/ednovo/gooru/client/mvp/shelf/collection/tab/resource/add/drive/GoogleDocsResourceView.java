@@ -231,6 +231,7 @@ public class GoogleDocsResourceView extends Composite {
 	public  void displayDropDown(ClickEvent event){
 		
 		resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+		System.out.println("entring the condition  resource panle type");
 	}
 	
 	

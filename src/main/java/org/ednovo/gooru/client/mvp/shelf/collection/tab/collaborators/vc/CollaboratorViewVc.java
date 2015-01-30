@@ -267,11 +267,11 @@ public abstract class CollaboratorViewVc extends Composite {
 		if (collaboratorsDo!=null){
 			if (collaboratorsDo.getStatus().equalsIgnoreCase("pending")){
 				imgProfileImage.getElement().getStyle().setDisplay(Display.NONE);
-				lblEmailId.getElement().getStyle().setWidth(81, Unit.PCT);
+				lblEmailId.getElement().getStyle().setWidth(85, Unit.PCT);
 				lblEmailId.getElement().getStyle().setPaddingLeft(15, Unit.PX);
-				lblEmailId.getElement().getStyle().setMarginTop(11, Unit.PX);
-				panelCollaborators.getElement().getStyle().setHeight(50, Unit.PX);
-				btnRemoveCollab.getElement().getStyle().setMarginTop(4, Unit.PX);
+				lblEmailId.getElement().getStyle().setMarginTop(9, Unit.PX);
+				panelCollaborators.getElement().getStyle().setHeight(35, Unit.PX);
+				btnRemoveCollab.getElement().getStyle().setMarginTop(0, Unit.PX);
 				
 			}else{
 				panelCollaborators.getElement().getStyle().clearHeight();;

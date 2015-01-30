@@ -332,7 +332,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				return null;
 			}
 		};
-		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
@@ -764,6 +763,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				};
 				
 				copyRightPolicy.show();
+				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();
 				copyRightPolicy.getElement().getStyle().setZIndex(999);
 				
@@ -783,6 +783,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				};
 				
 				termsOfUse.show();
+				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(999);
 			}
@@ -801,7 +802,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				};
 				
 				termsAndPolicyVc.show();
-				
+				termsAndPolicyVc.setSize("902px", "300px");
 				termsAndPolicyVc.center();
 				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 			}

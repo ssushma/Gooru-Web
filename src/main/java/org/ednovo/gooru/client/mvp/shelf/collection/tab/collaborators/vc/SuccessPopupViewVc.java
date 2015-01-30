@@ -29,8 +29,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Float;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -82,9 +80,6 @@ public abstract class SuccessPopupViewVc extends PopupPanel {
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
                 
         setElementId();
-        lblTitle.getElement().getStyle().setFloat(Float.LEFT);
-        tagImageForTagging.getElement().getStyle().setLeft(5, Unit.PX);
-        tagImageForTagging.getElement().getStyle().setBottom(0, Unit.PX);
         
 		this.center();
 

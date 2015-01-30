@@ -362,7 +362,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				return null;
 			}
 		};
-		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
@@ -717,6 +716,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				};
 				
 				copyRightPolicy.show();
+				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();
 				copyRightPolicy.getElement().getStyle().setZIndex(999);
 				
@@ -736,6 +736,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				};
 				
 				termsOfUse.show();
+				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(999);
 			}
@@ -754,6 +755,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				};
 				
 				termsAndPolicyVc.show();
+				termsAndPolicyVc.setSize("902px", "300px");
 				termsAndPolicyVc.center();
 				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 			}
