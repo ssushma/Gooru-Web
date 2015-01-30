@@ -2,6 +2,7 @@
 .buttonsPanel {
 	width: 660px;
 	margin: 0 auto;
+	white-space: normal;
 }
 
 .tabs_teacher_Summary {
