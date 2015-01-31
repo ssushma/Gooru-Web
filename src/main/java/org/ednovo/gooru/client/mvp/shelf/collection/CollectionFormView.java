@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -205,9 +206,14 @@ public class CollectionFormView extends
 		super(eventBus);
 		hideFromPopup(true);
 		appPopUp = new AppPopUp();
+		
 		appPopUp.setContent(TITLE_THIS_COLLECTION,uiBinder.createAndBindUi(this));
+		
 		if(!(AppClientFactory.isAnonymous())){
 			getAccountTypeId();
+		}
+		if (!BrowserAgent.isDevice()){
+			appPopUp.getMainPanel().getElement().getStyle().setWidth(550, Unit.PX);
 		}
 		mandatoryErrorLbl.setVisible(false);
 		isCheckedValue=false;

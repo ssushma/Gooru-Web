@@ -8,7 +8,7 @@
 		field="res" />
 
 
-	<g:HTMLPanel styleName="{res.css.LoginpopupMain}">
+	<g:HTMLPanel styleName="{res.css.LoginpopupMain}" ui:field="panelCreateAccount">
 		<g:HTMLPanel styleName="{res.css.LoginpopupInner}">
 			<g:HTMLPanel styleName="{res.css.LoginpopupHeader}">
 				<g:HTMLPanel styleName="row">
@@ -23,7 +23,7 @@
 			   </g:HTMLPanel>	
 			<!-- Sign Up Container -->
 			<g:HTMLPanel ui:field="panelSignUp">
-				<g:HTMLPanel  styleName="{res.css.LoginpopupContent}">
+				<g:HTMLPanel  styleName="{res.css.LoginpopupContent}" ui:field="panelLoginPopupContent">
 					<g:Label styleName="{res.css.LoginPopUpgreensmall}" ui:field="lblJoinGooruCommunity" />
 					<g:Label styleName="{res.css.subheader}" ui:field="lblDescription" />
 					<g:Label styleName="{res1.css.h1}" ui:field="lblParentInfo" />
