@@ -136,7 +136,11 @@ public abstract class FolderPopupUc extends PopupPanel {
 			}
 		});
 		folderTitle.addBlurHandler(new CheckProfanityForFolders());
-		mainContainer.getElement().setAttribute("style", "min-height:450px");
+		if (isFolderType){
+			mainContainer.getElement().setAttribute("style", "min-height:450px");
+		}else{
+			mainContainer.getElement().removeAttribute("style");
+		}
 		this.setGlassEnabled(true);
 		this.show();
 		this.center();
