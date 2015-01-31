@@ -1121,7 +1121,7 @@
 
 							</ul>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-6">
+						<div class="col-md-2 col-sm-2 col-xs-6 footerLastItem">
 							<tbp:H4Panel  text="{i18n.GL2168}" />
 							<ul class="list-unstyled">
 								<li>
