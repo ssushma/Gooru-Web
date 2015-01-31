@@ -131,23 +131,30 @@ public class LogoutPanelVc extends Composite{
 	}
 	*/
 	
+	@UiHandler("anrSettings")
+	public void onClickSetting(ClickEvent event){
+		hide();
+	}
 	@UiHandler("logoutAnr")
 	public void logoutPopupClicked(ClickEvent clickEvent) {
 		logPanel.setVisible(false);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
         logoutPopupVc = new LogoutPopupVc();
+        hide();
 	}
 	
 	@UiHandler("supportAnr")
 	public void supportLinkClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_Support();
+		hide();
 	}
 	
 	@UiHandler("classicGooruAnr")
 	public void classicGooruClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_ClassicGooru();
 		Window.Location.replace(AppClientFactory.getLoggedInUser().getSettings().getClassicEndPoint());
+		hide();
 	}
 
 	public void displayClassicGooruLink(boolean isVisible) {
@@ -182,7 +189,7 @@ public class LogoutPanelVc extends Composite{
 	public void feedbackPopupClick(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_FeedBack();
 		triggerUserVoiceFeedback();
-
+		hide();
 	}
 
 	protected final native void triggerUserVoice() /*-{ 
