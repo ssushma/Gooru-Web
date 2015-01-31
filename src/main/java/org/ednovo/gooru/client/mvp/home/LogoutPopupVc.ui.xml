@@ -3,13 +3,13 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle" field="res" />
 
-		<g:FlowPanel styleName="{res.css.shareSelection}">
+		<g:FlowPanel styleName="{res.css.shareSelection}" ui:field="mainPanel">
 			<g:FlowPanel styleName="contentDescription">
 				<g:Label ui:field="lblClassDismissed" />
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.actionField}" ui:field="buttonContainer">
-				<gg:BlueButtonUc ui:field="okBtnUc"	styleName="{res.css.overRideBlueButton}" />
-				<g:Anchor ui:field="cancelAnr"	styleName="{res.css.collectionFormCancelButton}" />
+				<gg:BlueButtonUc ui:field="okBtnUc"	styleName="primary" />
+				<g:Button ui:field="cancelAnr"	styleName="{res.css.collectionFormCancelButton} secondary" />
 			</g:FlowPanel>
 		</g:FlowPanel>
 </ui:UiBinder> 

@@ -42,13 +42,14 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -63,13 +64,13 @@ public class LogoutPopupVc extends Composite{
 	public AppPopUp appPopUp;
 
 	@UiField
-	Anchor cancelAnr;
+	Button cancelAnr;
 
 	@UiField
 	BlueButtonUc okBtnUc;
 	
 	@UiField Label lblClassDismissed;
-	@UiField FlowPanel buttonContainer;
+	@UiField FlowPanel buttonContainer, mainPanel;
 	
 //	private static final String HEAR_THE_BELL_TEXT = i18n.GL0188;
 
@@ -105,6 +106,8 @@ public class LogoutPopupVc extends Composite{
 		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
 		
 		buttonContainer.getElement().setId("fpnlButtonContainer");
+		
+		mainPanel.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 		
 		appPopUp.show();
 		appPopUp.center();
