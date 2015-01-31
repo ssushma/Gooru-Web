@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
@@ -188,7 +189,9 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		res.css().ensureInjected();*/
 
 		appPopUp = new AppPopUp();
-		
+		if (!BrowserAgent.isDevice()){
+			appPopUp.getMainPanel().getElement().getStyle().setWidth(550, Unit.PX);
+		}
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(CollectionCBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
