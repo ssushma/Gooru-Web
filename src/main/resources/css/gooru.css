@@ -2187,9 +2187,6 @@ overflow: visible;
  .dropdownListContainerScrollPanel{
  	margin-left:46px;
  }
-#uvTabLabel{
-	display:none !important;
-}
 
 @media screen and (min-width: 0px) and (max-width: 1000px) {
 	.searchResults > .mediaCssToHide{
@@ -2495,6 +2492,9 @@ overflow: visible;
 	}
 }
 @media (min-width: 480px) and (max-width: 767px) {
+	#uvTabLabel{
+		display:none !important;
+	}
  	.positionFixed{
  		position:relative !important;
  	}
@@ -2701,6 +2701,10 @@ overflow: visible;
 } */
 
 @media (min-width: 1200px) {
+	#uvTabLabel{
+		display:block;
+	}
+	
 	
 	span.fivestar input[type="checkbox"], 
 	span.fourstar input[type="checkbox"],
@@ -2796,9 +2800,8 @@ overflow: visible;
 	}
 }
 
-
-
 @media(max-width:767px){
+	
 	html{
  		overflow-x: hidden;
 		overflow-y: auto;
@@ -2806,6 +2809,10 @@ overflow: visible;
  	 .addResourcePopup{
 		margin-top:0px !important;	
 	}
+	#uvTabLabel{
+		display:none !important;
+	}
+
 	#__printingFrame{
 		display: none;
 	}
@@ -2864,6 +2871,7 @@ overflow: visible;
 	 .borderLeft{
  		border-right:0px !important;
  	}
+ 	
  		.borderRight{
  			border-left: 0px !important;
  		}
@@ -2915,10 +2923,18 @@ overflow: visible;
 		margin-bottom: 0px;
 		height: 30px;
 	}
+	
+	#uvTabLabel{
+		display:none !important;
+	}
 }
 @media (min-width: 240px) and (max-width: 319px){
 		.addResourcePopup{
 		margin-top:0px !important;	
+	}
+	
+	#uvTabLabel{
+		display:none !important;
 	}
 		 .borderLeft{
  			border-right:0px !important;
