@@ -426,10 +426,10 @@
 }
 
 .folderStucture {
-    width:395px;
+    width:364px;
 }
 .folderStucture table {
-    width:395px;
+    width:364px;
 }
 .folderStucture > div > div > div > div {
     margin-left:0px !important;
@@ -604,7 +604,7 @@
 	margin: 0;
 	z-index: 9999;
 	height: 275px;
-	width: 412px;
+	width: 382px;
 	background-color: #F9F9F9;
 	margin-top:20px;
 	/* position: absolute !important; */
