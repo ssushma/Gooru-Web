@@ -167,28 +167,9 @@
 }
 
 .goorulandingFooterContainerNew {
-	/* background-color: #333333; 
-	height: 85px;
-	width: 100%;
-	top: 75px;
-	position: relative;
-	clear: both;
-	z-index: 50;
-	text-align: center;*/
-	
-	/* height: 85px; */
-	
-/* 	width: 62%;
-	margin-left: 170px; */
-	
-	/* width:950px;
-	margin:auto; */
-	
 	height:102px;
 	padding-top: 30px;
-	margin-bottom:30px;
 	clear: both;
-	/* z-index: 50; */
 	text-align: center;
 	background-color:#f0f0f0;
 }
