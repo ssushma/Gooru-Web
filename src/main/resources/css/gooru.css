@@ -3222,3 +3222,8 @@ span.review input[type="checkbox"]{
 	margin-bottom: 0px;
 	height: 30px;
 }
+
+
+.tableDivStyles table{
+	width: 100%;
+}
