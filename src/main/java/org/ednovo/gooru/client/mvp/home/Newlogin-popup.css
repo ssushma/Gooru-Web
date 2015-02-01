@@ -1277,7 +1277,7 @@ text-align: left;
 }
 .scrollBar{
 	border: 1px solid #ccc;
-    height: 450px;
+    height: 372px;
     overflow: auto;
  
 }
@@ -1291,8 +1291,8 @@ text-align: left;
 .listGroup .col-md-2, .listGroup .col-md-4{
 	padding-left:0 !important;
 	padding-right:0 !important;
-		border-right:1px solid #cccccc;
-		 height: 450px;
+	border-right:1px solid #cccccc;
+	height: 372px;
 }
 
 .listGroup ul li a{

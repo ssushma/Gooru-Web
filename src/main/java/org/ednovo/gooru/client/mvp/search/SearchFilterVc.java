@@ -1473,8 +1473,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			panelNotMobileFriendly.addStyleName("mobilefriendlyContainer");
 			panelNotMobileFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
-			imgNotFriendly.getElement().getStyle().setLeft(131, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(-23, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setLeft(137, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(-20, Unit.PX);
 //			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 
