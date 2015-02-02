@@ -367,7 +367,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		
-		<g:HTMLPanel styleName="filterAccess ModeContainer">
+		<g:HTMLPanel styleName="modeContainer">
 		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblaccess" visible="true"></g:Label>
 			<uc:H5Panel  visible="false"  ui:field="accessModeLbl"></uc:H5Panel>
 			<g:HTMLPanel  ui:field="accessModePanel" />

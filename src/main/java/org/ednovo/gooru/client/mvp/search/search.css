@@ -131,7 +131,7 @@ padding-bottom: 10px;
 	padding-bottom:10px;
 }
 .searchFilters .filtersInner input[type="checkbox"]{
-	margin:0 0.5em !important;
+	/* margin:0 0.5em !important; */
 }
 .searchFilters .filtersInner .oerContainer input[type="checkbox"]{
 	margin:5px 0.5ex !important
