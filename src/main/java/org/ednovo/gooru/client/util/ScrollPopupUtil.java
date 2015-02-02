@@ -70,7 +70,7 @@ public class ScrollPopupUtil {
 				widgetContainer.getElement().getStyle().setOverflowX(Overflow.AUTO);
 			}else{
 				if(isFromAddtags){
-				widgetContainer.getElement().getStyle().setHeight(575, Unit.PX);
+				widgetContainer.getElement().getStyle().setHeight(590, Unit.PX);
 				}else{
 				widgetContainer.getElement().getStyle().setHeight(545, Unit.PX);
 				}

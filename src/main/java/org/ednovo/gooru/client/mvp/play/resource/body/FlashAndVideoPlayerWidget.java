@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.user.client.Window;
@@ -60,9 +61,17 @@ public class FlashAndVideoPlayerWidget extends Composite {
 		}
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		int autoPlay=tabView!=null&&tabView.equalsIgnoreCase("narration")?0:1;
-		String embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+getProtocal()+"//www.youtube.com/v/"
-				+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1\""
-				+ " width=\"100%\" height=\"100%\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" style='position:absolute;' wmode=\"transparent\">";
+		String embeddableHtmlString = null;
+		
+		String sourceUrl = getProtocal()+"//www.youtube.com/v/"+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1";
+		
+		if (!BrowserAgent.isDevice()){
+			//embeddableHtmlString =  "<iframe id=\"playerid\" width=\"100%\" height=\""+windowHeight+"\" src=\""+sourceUrl+"\" frameborder=\"0\" allowfullscreen></iframe>";
+			embeddableHtmlString = "<iframe id=\"playerid\" src=\""+sourceUrl+"\" frameborder=\"0\" allowfullscreen=\"\" style=\"width:100%;height:"+windowHeight+"px\"></iframe>";
+		}else{
+			embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+sourceUrl+ "\""
+					+ " width=\"100%\" height=\""+windowHeight+"px\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" wmode=\"transparent\">";
+		}
 
 		HTMLPanel resourcePreviewPanel = new HTMLPanel(embeddableHtmlString);
 		resourcePreviewPanel.setStyleName("resourcePreviewWebResourceContainer");

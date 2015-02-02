@@ -75,6 +75,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -226,8 +227,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_ANONYMOUS);
 		} else {
@@ -351,6 +352,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			update.setGlassEnabled(true);
 			update.show();
 			update.center();
+			Document doc=Document.get();
+			Element bodyelement = doc.getBody();
+			Window.scrollTo(0, 0);
+			bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 		}
 		else if(flag>0 && flag<=11 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
@@ -377,8 +382,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onReset() {
 		super.onReset();
-		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
 		if (AppClientFactory.isAnonymous()){
 			getView().getBtnSignUp().setVisible(true);
 		}else{
