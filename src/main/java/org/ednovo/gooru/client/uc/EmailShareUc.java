@@ -329,7 +329,7 @@ public class EmailShareUc extends PopupPanel{
 				body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
-		ScrollPopupUtil.ScrollPopupUtilWidget(mainShareContainer);
+		ScrollPopupUtil.ScrollPopupUtilWidget(mainShareContainer,false);
 	}
 	/**
 	 * Hide {@link EmailShareUc} popup

@@ -514,7 +514,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		};
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
-		ScrollPopupUtil.ScrollPopupUtilWidget(addTagesContent);
+		ScrollPopupUtil.ScrollPopupUtilWidget(addTagesContent,true);
 	}
 	/**
 	 * 

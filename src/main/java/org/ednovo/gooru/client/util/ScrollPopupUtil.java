@@ -42,9 +42,11 @@ import com.google.gwt.user.client.ui.Widget;
 public class ScrollPopupUtil {
 	static boolean device = BrowserAgent.isDevice();
 	static Widget widgetContainer;
-	public static void ScrollPopupUtilWidget(Widget widget){
+	static boolean isFromAddtags = false;
+	public static void ScrollPopupUtilWidget(Widget widget,boolean val){
 		widgetContainer=widget;
-		setAddTagesPopupOnResize();
+		isFromAddtags = val;
+		setAddTagesPopupOnResize(isFromAddtags);
 		Window.addResizeHandler(new ResizeEvent());
 	}
 	/**
@@ -54,20 +56,24 @@ public class ScrollPopupUtil {
 	public static class ResizeEvent implements ResizeHandler{
 		@Override
 		public void onResize(com.google.gwt.event.logical.shared.ResizeEvent event) {
-			setAddTagesPopupOnResize();		
+			setAddTagesPopupOnResize(isFromAddtags);		
 		}
 	}
 	/**
 	 * This method is used to handle the window resize for add tags popup.
 	 */
-	 static void setAddTagesPopupOnResize(){
+	 static void setAddTagesPopupOnResize(boolean value){
 		if(device){
 			if((Window.getClientHeight()-150)<=564){
 				widgetContainer.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
 				widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
 				widgetContainer.getElement().getStyle().setOverflowX(Overflow.AUTO);
 			}else{
-				widgetContainer.getElement().getStyle().setHeight(564, Unit.PX);
+				if(isFromAddtags){
+				widgetContainer.getElement().getStyle().setHeight(575, Unit.PX);
+				}else{
+				widgetContainer.getElement().getStyle().setHeight(545, Unit.PX);
+				}
 				widgetContainer.getElement().getStyle().setOverflow(Overflow.HIDDEN);
 			}
 		}

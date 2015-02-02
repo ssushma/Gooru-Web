@@ -257,7 +257,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
-		ScrollPopupUtil.ScrollPopupUtilWidget(assignPopupContent);
+		ScrollPopupUtil.ScrollPopupUtilWidget(assignPopupContent,false);
 	}
 
 	public void hideContainers() {
