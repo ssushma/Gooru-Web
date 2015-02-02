@@ -1054,6 +1054,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemFlagDataLogPayLoadObject(itemType,flagText,contentReportList));
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
+		if(getPlaceManager().getRequestParameter("id")!=null){
+			path=itemGooruOid;
+		}
 		
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemGooruOid, "", classpageId, "", PlayerDataLogEvents.STUDY, path, null, PlayerDataLogEvents.COLLECTION_FLAG_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
