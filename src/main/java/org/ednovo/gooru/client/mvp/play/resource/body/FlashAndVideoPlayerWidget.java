@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -52,25 +53,21 @@ public class FlashAndVideoPlayerWidget extends Composite {
 			startTimeEndTime=startTimeEndTime+"&end="+endTimeInSeconds+";";
 		}
 		int windowHeight=Window.getClientHeight();
-		int windowWidth=Window.getClientWidth();
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			windowHeight=windowHeight-116;
 		}else{
-			windowHeight=windowHeight-202;
-		}
-		if(windowWidth>=1000)
-		{
-			windowWidth = 1000;
+			windowHeight=windowHeight-190;
 		}
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		int autoPlay=tabView!=null&&tabView.equalsIgnoreCase("narration")?0:1;
 		String embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+getProtocal()+"//www.youtube.com/v/"
 				+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1\""
-				+ " width=\""+windowWidth+"px\" height=\""+windowHeight+"px\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" wmode=\"transparent\">";
+				+ " width=\"100%\" height=\"100%\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" style='position:absolute;' wmode=\"transparent\">";
 
 		HTMLPanel resourcePreviewPanel = new HTMLPanel(embeddableHtmlString);
 		resourcePreviewPanel.setStyleName("resourcePreviewWebResourceContainer");
 		resourcePreviewPanel.setSize("100%", windowHeight+"px");
+		resourcePreviewPanel.getElement().getStyle().setPosition(Position.RELATIVE);		
 		initWidget(resourcePreviewPanel);
 
 	}
