@@ -1721,6 +1721,18 @@ color:#999;
 	margin: 5px 0.5ex !important;
 }
 
+.categorySubjectContainer .filterCheckBox input[type="checkbox"] {
+	margin: 1px 0.5ex !important;
+}
+
+.modeContainer .filterCheckBox input[type="checkbox"] {
+	margin: 1px 0.5ex !important;
+}
+
+.filterGradeContainer .filterCheckBox input[type="checkbox"] {
+	margin: 1px 0.5ex !important;
+}
+
 .oerContainer .filterCheckBox label {
 	background: url(../images/oer_icon.png) 0px 0px no-repeat transparent;
  	padding-left: 23px;

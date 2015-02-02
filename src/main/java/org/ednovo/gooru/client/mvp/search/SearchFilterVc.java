@@ -631,6 +631,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			categoryPanelUc.getElement().addClassName("categoryFilterContainer");
 //			ratingPanelUc.getElement().addClassName("reStar");
 		}else{
+			resourceFormatLbl.getElement().getStyle().setMarginTop(3, Unit.PX);
 			resourceFormatLbl.setText(i18n.GL1465());
 		}
 		
@@ -1474,7 +1475,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			panelNotMobileFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 			imgNotFriendly.getElement().getStyle().setLeft(137, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(-20, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(-21, Unit.PX);
 //			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 
