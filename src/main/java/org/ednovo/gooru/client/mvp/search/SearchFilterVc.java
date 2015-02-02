@@ -631,6 +631,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			categoryPanelUc.getElement().addClassName("categoryFilterContainer");
 //			ratingPanelUc.getElement().addClassName("reStar");
 		}else{
+			resourceFormatLbl.getElement().getStyle().setMarginTop(3, Unit.PX);
 			resourceFormatLbl.setText(i18n.GL1465());
 		}
 		
