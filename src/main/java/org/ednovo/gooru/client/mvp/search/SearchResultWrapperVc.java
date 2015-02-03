@@ -184,6 +184,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		setAddedStatus(true);
 		disclosureContentSimPanel.getElement().getStyle().setWidth(100, Unit.PCT);
 		disclosureContentSimPanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
+		disclosureContentSimPanel.getElement().getStyle().setMargin(0, Unit.PX);
+		disclosureContentSimPanel.getElement().getStyle().setPadding(0, Unit.PX);
 	
 
 		moreInfoLbl.setText(i18n.GL1756());
@@ -247,6 +249,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		disclosureDisPanel.getElement().setId("discpnlDisclosureDisPanel");
 		disclosureDisPanel.getElement().getStyle().setWidth(100, Unit.PCT);
 		disclosureContentSimPanel.getElement().setId("spnlDisclosureContentSimPanel");
+//		disclosureContentSimPanel.getElement().getParentElement().getStyle().setMargin(20, Unit.PX);
 	}
 
 	void setResourcePlayerClickPanelMobile() {
@@ -287,11 +290,12 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiHandler("moreInfoLinkFocPanel")
 	public void onMoreInfoLinkClicked(ClickEvent clickEvent) {
 		openMoreInfoContainer();
+		
 	}
 	
 	public void openMoreInfoContainer() {
+		
 		if (moreInfoMode && (colleResMode || shareMode || addMode || analyticsMode || addTagsMode)) {
-
 			disclosureContentSimPanel.clear();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				disclosureContentSimPanel.setWidget(getSearchInfoWidget());
@@ -302,6 +306,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 				getCollectionInfo().setInfoData(this.searchResultDo.getGooruOid());
 			}
 			onDisclosureOpen();
+//			disclosureDisPanel.getElement().getStyle().setMargin(10, Unit.PX);
 			MixpanelUtil.Click_moreInfo();
 			setCssStyleForTabs(MORE_INFO);
 		} else {
@@ -316,6 +321,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	@UiHandler("shareLinkFocPanel")
 	public void onShareShortenUrlLink(ClickEvent clickEvent) {
+
 		if (shareMode && (colleResMode || moreInfoMode || addMode || addTagsMode || analyticsMode)) {
 		
 			disclosureContentSimPanel.clear();
@@ -336,12 +342,14 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	@UiHandler("collectionFocPanel")
 	public void onInfoTabClick(ClickEvent clickEvent) {
+		
 		if (colleResMode && (shareMode || moreInfoMode || addMode || analyticsMode || addTagsMode)) {
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchMoreInfoVc());
 			getSearchMoreInfoVc().setData(this.searchResultDo);
 			getSearchMoreInfoVc().reset(moreInfoMode);
 			onDisclosureOpen();
+//			disclosureDisPanel.getElement().getStyle().setMargin(10, Unit.PX);
 			setCssStyleForTabs(COLL_FOC_PNL);
 			MixpanelUtil.Click_moreInfo();
 		} else {
@@ -352,8 +360,11 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 
 	@UiHandler("addLinkFocPanel")
 	public void onaddTabClick(ClickEvent clickEvent) {
+		
 		if (addMode && (shareMode || moreInfoMode || colleResMode || addTagsMode || analyticsMode)) {
+			
 			onDisclosureOpen();
+//			disclosureDisPanel.getElement().getStyle().setMargin(10, Unit.PX);
 			MixpanelUtil.Click_addInfo();
 			setCssStyleForTabs(ADD_TO_FOLDERS);
 		} else {
@@ -367,6 +378,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	public void onaddTagsTabClick(ClickEvent clickEvent) {
 		if (addTagsMode && (shareMode || moreInfoMode || colleResMode || addMode || analyticsMode )) {
 			onDisclosureOpen();
+//			disclosureDisPanel.getElement().getStyle().setMargin(10, Unit.PX);
 			setCssStyleForTabs(TAGS);
 		} else {
 
@@ -379,6 +391,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		public void onAnalyticsTabClick(ClickEvent clickEvent) {
 		if (analyticsMode && (shareMode || moreInfoMode || colleResMode || addMode || addTagsMode)) {
 				onDisclosureOpen();
+//				disclosureDisPanel.getElement().getStyle().setMargin(10, Unit.PX);
 				setCssStyleForTabs(ANALYTICS);
 			} else {
 				onDisclosureClose();
@@ -516,7 +529,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	/**
 	 * Close disclosure panel widget
 	 */
+	
 	public void onDisclosureClose() {
+		
 		openedResult = null;
 		moreInfoMode = true;
 		shareMode = true;
@@ -525,6 +540,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		analyticsMode = true;
 		addTagsMode = true;
 		disclosureDisPanel.setOpen(false);
+		disclosureDisPanel.setVisible(false);
+		disclosureDisPanel.getElement().getStyle().clearMargin();
 	}
 
 	/**
@@ -539,7 +556,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			}
 		} else {
 			getDisclosurePanel().setOpen(true);
+			
 		}
+		disclosureDisPanel.setVisible(true);
 		openedResult = this;
 	}
 
