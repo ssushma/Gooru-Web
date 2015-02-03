@@ -6,6 +6,11 @@
 		field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
+		<ui:style>
+		.marginTop{
+			margin-top: 50px;
+		}
+		</ui:style>
 	<g:HTMLPanel styleName="{res1.css.LoginpopupMain}">
 		<g:HTMLPanel styleName="{res1.css.LoginpopupInner}"  ui:field="panelPopupInner">
 			<g:HTMLPanel styleName="{res1.css.LoginpopupHeader}">
@@ -19,7 +24,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 			   </g:HTMLPanel>	
-			<g:HTMLPanel styleName="col-md-12 col-xs-12 text-center">
+			<g:HTMLPanel styleName="col-md-12 col-xs-12 text-center {style.marginTop}">
 				<g:Label styleName="{res.css.congratsHeader}" ui:field="lblCongratsHeader"/>
 				<g:Label styleName="{res1.css.subheader}" ui:field="lblCheckYourEmail"/>
 				<g:Button styleName="primary {res.css.startUsingGooru}" ui:field="btnStartUsingGooru"/>
