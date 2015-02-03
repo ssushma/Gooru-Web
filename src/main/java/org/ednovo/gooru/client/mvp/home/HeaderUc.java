@@ -700,6 +700,8 @@ public class HeaderUc extends Composite implements
 			public void onClick(ClickEvent event) {
 				if (!isSettingIcon) {
 					isOpenSettingDropDown = true;
+					settingOptionsPopup.setVisible(false);
+					logoutPanelVc.hide();
 				} else {
 					isSettingIcon = false;
 				}
@@ -1367,14 +1369,16 @@ public class HeaderUc extends Composite implements
 			logoutPanelVc.hide();
 			isOpenSettingDropDown = true;
 		}*/
-		
+		isSettingIcon = true;
 		if(logoutPanelVc.isShowing()){
 			settingOptionsPopup.setVisible(false);
 			logoutPanelVc.hide();
+			isOpenSettingDropDown = true;
 
-		}else{
+		}else if(isOpenSettingDropDown){
 			settingOptionsPopup.setVisible(true);
 			logoutPanelVc.show();
+			isOpenSettingDropDown = false;
 
 		}
 		
