@@ -212,6 +212,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			setResourcePlayerClickPanelMobile();
 //			disclosureHeaderFloPanel.setVisible(true);
 		} else {
+			resourcePlayerClickPanel.setVisible(false);
 			addMouseOutHandler(this);
 			addMouseOverHandler(this);
 //			disclosureHeaderFloPanel.setVisible(true);
@@ -256,6 +257,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			resourcePlayerClickPanel.getElement().getStyle().setWidth(100, Unit.PX);
 		}
 		resourcePlayerClickPanel.getElement().getStyle().setHeight(107, Unit.PX);
+		resourcePlayerClickPanel.setVisible(true);
 	}
 	
 	@Override
