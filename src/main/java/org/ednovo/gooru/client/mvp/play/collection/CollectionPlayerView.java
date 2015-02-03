@@ -855,7 +855,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	@Override
 	public void setNarrationInFullScreenMode(CollectionItemDo collectionItemDo,CollectionDo collectionDo) {
-		headerView.getFullScreenPlayer().setVisible(false);
+		headerView.getFullScreenPlayer().setVisible(true);
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			setUserProfileImage(collectionDo.getUser().getGooruUId());
 			String narrationText=removeHtmlTags(collectionItemDo.getNarration());
