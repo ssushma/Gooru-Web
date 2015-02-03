@@ -1381,6 +1381,10 @@ position: relative;
    font-style: italic;
    margin-right: -9px;
 }
+.checkBoxlevels input[type="checkbox"]{
+		margin: 2px 0;
+		vertical-align: middle;
+}
 .checkBoxlevels label{
 	font-weight: normal;
 }
