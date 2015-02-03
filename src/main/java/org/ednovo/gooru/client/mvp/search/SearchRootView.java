@@ -44,6 +44,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -101,6 +102,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 	@UiField
 	SearchCBundle res;
+	
+	Boolean isIpad,isAndriod,isWinDskp;
 
 	/**
 	 * Class constructor
@@ -118,12 +121,24 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		int windowHeight=Window.getClientHeight();
 		/*	int windowHeight=Window.getClientHeight();
 		panelSearchPage.setStyleName("panelHeight");
-<<<<<<< HEAD
+
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);*/
 
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
 		panelSearchPage.getElement().getStyle().setOverflowY(Overflow.AUTO);
 		panelSearchPage.getElement().getStyle().setOverflowX(Overflow.HIDDEN);
+		
+		isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		
+		if(isIpad){
+			lodingImage.getElement().getStyle().clearMarginTop();
+		}else if(isAndriod){
+			lodingImage.getElement().getStyle().clearMarginTop();  
+		}else{
+			lodingImage.getElement().getStyle().setMarginTop(100, Unit.PX);
+		}
 		
 		panelSearchPage.addScrollHandler(new ScrollHandler() {
 			
