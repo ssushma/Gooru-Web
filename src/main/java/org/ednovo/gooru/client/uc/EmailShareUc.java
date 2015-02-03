@@ -35,7 +35,7 @@ import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
-import org.ednovo.gooru.client.util.ScrollPopupUtil;
+import org.ednovo.gooru.client.util.ScrollPopupShareUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -45,7 +45,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -54,7 +53,6 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
-import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -329,7 +327,7 @@ public class EmailShareUc extends PopupPanel{
 				body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
-		ScrollPopupUtil.ScrollPopupUtilWidget(mainShareContainer,false);
+		ScrollPopupShareUtil.ScrollPopupUtilWidget(mainShareContainer);
 	}
 	/**
 	 * Hide {@link EmailShareUc} popup
