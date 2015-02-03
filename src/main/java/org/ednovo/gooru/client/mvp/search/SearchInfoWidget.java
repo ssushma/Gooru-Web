@@ -106,7 +106,7 @@ public class SearchInfoWidget extends Composite {
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,
 	authorPanel,schLevelPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel,gradesText,totalContainer;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel,gradesText,totalContainer, panelContent;
 	
 	@UiField
 	HTMLPanel aggregationPanel,aggregationType;
@@ -158,7 +158,8 @@ public class SearchInfoWidget extends Composite {
 		isResourceInfo=false;
 		isAccessibilityInfo=false;
 		isGrades =false;
-		totalContainer.getElement().getStyle().setPadding(15, Unit.PX);
+		totalContainer.getElement().getStyle().setMargin(15, Unit.PX);
+		panelContent.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		setResourceInfoData();
 	}
 

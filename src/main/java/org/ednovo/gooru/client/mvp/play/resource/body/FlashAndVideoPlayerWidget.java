@@ -64,10 +64,10 @@ public class FlashAndVideoPlayerWidget extends Composite {
 		String embeddableHtmlString = null;
 		
 		String sourceUrl = getProtocal()+"//www.youtube.com/v/"+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1";
+		String sourceUrl1 = getProtocal()+"//www.youtube.com/embed/"+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1";
 		
 		if (BrowserAgent.isDevice()){
-			//embeddableHtmlString =  "<iframe id=\"playerid\" width=\"100%\" height=\""+windowHeight+"\" src=\""+sourceUrl+"\" frameborder=\"0\" allowfullscreen></iframe>";
-			embeddableHtmlString = "<iframe id=\"playerid\" src=\""+sourceUrl+"\" frameborder=\"0\" allowfullscreen=\"\" style=\"width:100%;height:"+windowHeight+"px\"></iframe>";
+			embeddableHtmlString = "<iframe id=\"playerid\" src=\""+sourceUrl1+"\" frameborder=\"0\" allowfullscreen=\"\" style=\"width:100%;height:"+windowHeight+"px\"></iframe>";
 		}else{
 			embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+sourceUrl+ "\""
 					+ " width=\"100%\" height=\""+windowHeight+"px\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" wmode=\"transparent\">";

@@ -329,6 +329,10 @@
 	float:left;
 }
 
+.resource-type-info-interactive{
+	margin-left: 0px;
+}
+
 .resource-type-info-video{
 	background-position: 0px 1px !important;
 }
