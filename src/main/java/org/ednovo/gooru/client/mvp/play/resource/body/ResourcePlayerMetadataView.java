@@ -547,7 +547,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			resourceWidgetContainer.setHeight((windowHeight-(116))+"px");
 		}else{
-			resourceWidgetContainer.setHeight((windowHeight-(202))+"px");
+			resourceWidgetContainer.setHeight((windowHeight-(193))+"px");
 		}
 		
 	}
