@@ -38,6 +38,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author GooruTeam
+ * This class is used to handle the window resize handler and to add the scroll for Addtags and assign popups in web and device resolutions.
  */
 public class ScrollPopupUtil {
 	static boolean device = BrowserAgent.isDevice();
