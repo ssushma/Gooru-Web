@@ -4,16 +4,22 @@
 	<ui:style field="createCollectionStyle" src="CreateCollectionPopUp.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res" />
+		<ui:style>
+		.collectionSelFormView{
+			margin: 0 10% 10px 3%;
+			}
+	
+		</ui:style>
 	
 		<g:HTMLPanel  ui:field="shelfItemContent">
 			<g:Label ui:field="collPopUpMainheading" styleName="{res.css.dontWorrkText}"></g:Label>
 			<g:Label ui:field="collPopUpSubheading" styleName="{res.css.contentDesc}"></g:Label>
-			<g:HTMLPanel styleName="{res.css.collectionSel}" ui:field="bodyContainer">
+			<g:HTMLPanel styleName="{res.css.collectionSel} {style.collectionSelFormView}" ui:field="bodyContainer">
 				<g:Label  ui:field="collTitleLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables} {createCollectionStyle.labelPadding}" ></g:Label>
 				<g:HTMLPanel styleName="col-md-8 col-xs-8 col-sm-8">
 					<uc:TextBoxWithPlaceholder ui:field="collectionTitleTxtBox" styleName="form-control {res.css.form_control}" />
-					<g:Label ui:field="mandatoryErrorLbl" styleName="{createCollectionStyle.mandatoryLabel}" />
 				</g:HTMLPanel>
+				<g:Label ui:field="mandatoryErrorLbl" styleName="{createCollectionStyle.mandatoryLabel}" />
 				<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 				<g:HTMLPanel ui:field="gradeContainer">
 					<g:Label ui:field="gradeLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables} {createCollectionStyle.labelPadding}"></g:Label>

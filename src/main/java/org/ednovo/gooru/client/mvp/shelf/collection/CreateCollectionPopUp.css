@@ -266,7 +266,9 @@ button.secondary {
 	color: rgb(250, 176, 58);
 	text-align: right;
 	position: relative;
-	margin-right: 41px;
+	margin-right: 12px;
+	margin-bottom: 5px;
+	clear: both;
 }
 
 .txtBoxCollectionName{
