@@ -120,7 +120,7 @@ public class SocialShareLinksView extends Composite {
 		
 		
 		swithUrlLbl.getElement().getStyle().setWidth(30, Unit.PCT);
-		swithToEmbedLbl.getElement().getStyle().setWidth(30, Unit.PCT);
+		swithToEmbedLbl.getElement().getStyle().setWidth(45, Unit.PCT);
 	}
 
 	public void setData(Map<String, String> shortenUrl) {

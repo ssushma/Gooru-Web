@@ -6,7 +6,7 @@
 		/* Add CSS here. See the GWT docs on UI Binder for more
 		details */
 		.standardDiv {
-		padding: 10px 0px 0px 18px;
+		
 		}
 		.title {
 		display:
