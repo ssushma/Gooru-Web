@@ -13,8 +13,8 @@
 				  ui:field="loadingImagePanel">
 				  <g:Label styleName="{playerStyle.loadingImageForShare}" ui:field="lblloadingImage"/>
 		    </g:HTMLPanel>
-			<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}">
-			<g:HTMLPanel styleName="col-md-8 col-sm-8">
+			<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}" ui:field="panelContent">
+			<g:HTMLPanel styleName="col-md-8 col-sm-8 {playerStyle.clearPadding}">
 			    <g:HTMLPanel styleName="{playerStyle.floatLeft} hidden-sm hidden-xs ">
 			    	<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />    
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
@@ -25,7 +25,7 @@
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="col-md-4 col-sm-4">
+			<g:HTMLPanel styleName="col-md-4 col-sm-4 {playerStyle.clearPadding}">
 				<g:Button styleName="{playerStyle.green}" ui:field="addTagsBtn">Add Tags</g:Button>	    
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
@@ -61,12 +61,12 @@
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="resourceDescription" />
 				</g:HTMLPanel> -->
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 " ui:field="generalPanel">
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}" ui:field="generalPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
 						ui:field="generalLbl"></g:Label>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="gradesPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="gradeTitle"></g:Label>
@@ -76,7 +76,7 @@
 				
 				</g:HTMLPanel>
 
-				<g:HTMLPanel ui:field="coursePanel" styleName="col-md-12 col-xs-12 ">
+				<g:HTMLPanel ui:field="coursePanel" styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="courseText"></g:Label>
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
@@ -84,7 +84,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="standardsContentContainer">
 					<g:Label styleName="{playerStyle.resource-info-stand-text}"
 						ui:field="standardsText"></g:Label>
@@ -93,22 +93,22 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:FlowPanel ui:field="standardsInfoConatiner"
-					styleName="col-md-12 col-xs-12 " />
+					styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}" />
 				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 ">
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}">
 					<g:Label styleName="{playerStyle.resource-info-stand-text}"
 					ui:field="originalUrlTitle"></g:Label>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="col-md-12 ">
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}">
 					<g:HTMLPanel ui:field="originalUrlText">
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 				
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="thumbnailPanel">
 					<g:Label styleName="{playerStyle.resource-info-stand-text}"
 						ui:field="thumbnailText"></g:Label>
@@ -118,7 +118,7 @@
 					
 				</g:HTMLPanel>
 				
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="aggregationPanel">
 					<g:Label styleName="{playerStyle.resource-info-stand-text}"
 						ui:field="lblAggregation"></g:Label>
@@ -128,7 +128,7 @@
 				</g:HTMLPanel>
 				
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="publisherPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="publisherText"></g:Label>
@@ -137,7 +137,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="hostPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="hostLbl"></g:Label>
@@ -146,7 +146,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:FlowPanel styleName="col-md-12 col-xs-12 "
+				<g:FlowPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="licenceContainer">
 					<!-- <g:HTMLPanel styleName="{playerStyle.resource-info-more-leftinner-wrapper}"> -->
 					<g:HTMLPanel styleName="{playerStyle.resource-info-rights-wrapper}">
@@ -159,7 +159,7 @@
 					<!-- </g:HTMLPanel> -->
 				</g:FlowPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="licenceCodePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="licenceCodeLbl"></g:Label>
@@ -168,13 +168,13 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 ">
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
 						ui:field="educationallLbl"></g:Label>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="eduAllignPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="eduAllignLbl"></g:Label>
@@ -183,7 +183,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="eduUsePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="eduUseLbl"></g:Label>
@@ -192,7 +192,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="eduRolePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="eduRoleLbl"></g:Label>
@@ -201,7 +201,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="interactivityTypePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="interactiveLbl"></g:Label>
@@ -210,7 +210,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="ageRangePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="ageRangeLbl"></g:Label>
@@ -219,7 +219,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="dKnowledgePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="dKnowledgeLbl"></g:Label>
@@ -228,7 +228,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="momentsoflearningPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="momentsoflearningLbl"></g:Label>
@@ -237,7 +237,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="readingLevelPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="readingLevelLbl"></g:Label>
@@ -246,7 +246,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="schLevelPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="schLevelLbl"></g:Label>
@@ -263,13 +263,13 @@
 						ui:field="gooruCourseInfo" />
 				</g:HTMLPanel> -->
 
-				<g:HTMLPanel styleName="col-md-12">
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
 						ui:field="resourceInfoLbl"></g:Label>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="dateCreatedPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="dateCreatedLbl"></g:Label>
@@ -278,7 +278,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="countryCodePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="countryCodeLbl"></g:Label>
@@ -287,7 +287,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="languagePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="languageLbl"></g:Label>
@@ -296,7 +296,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="dataTypePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="dataTypeLbl"></g:Label>
@@ -305,7 +305,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="authorPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="authorLbl"></g:Label>
@@ -314,7 +314,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12 col-xs-12 "
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="copyRightPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="copyRightLbl"></g:Label>
@@ -323,7 +323,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="keyWordsPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="keywordsTitle"></g:Label>
@@ -332,7 +332,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 				
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="adsPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="adsTitle"></g:Label>
@@ -341,14 +341,14 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="accessibilityPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
 						ui:field="accesibilityLbl"></g:Label>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="mobileFriendlyPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="mbFriendlyLbl"></g:Label>
@@ -357,7 +357,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="accessModePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="accessModelLbl"></g:Label>
@@ -366,7 +366,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="mediaFeaturePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="mediaFeatureLbl"></g:Label>
@@ -375,7 +375,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="controlPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="controlLbl"></g:Label>
@@ -384,7 +384,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="accessHazardPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="acessHazardlLbl"></g:Label>
@@ -393,7 +393,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="hasAdaptationPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="hasAdaptationLbl"></g:Label>
@@ -401,7 +401,7 @@
 						ui:field="hasAdaptationType" />
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="isAdaptationPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="isAdaptationLbl"></g:Label>
@@ -410,7 +410,7 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="col-md-12"
+				<g:HTMLPanel styleName="col-md-12 {playerStyle.clearPadding}"
 					ui:field="accessibilityAPIPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="accessibilityAPILbl"></g:Label>

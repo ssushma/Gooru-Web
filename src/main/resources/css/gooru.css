@@ -3239,3 +3239,8 @@ span.review input[type="checkbox"]{
 .tableDivStyles table{
 	width: 100%;
 }
+
+
+div#spnlDisclosureContentSimPanel>div:first-child {
+	padding: 15px;
+}

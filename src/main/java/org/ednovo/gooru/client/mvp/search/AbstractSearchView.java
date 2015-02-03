@@ -359,7 +359,6 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		searchResultPanel.setClonnable(true);
 		
 		boolean device = BrowserAgent.isDevice();
-		System.out.println("device here for drag and drop::::::"+device);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
