@@ -37,7 +37,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 /**
- * @author SearchTeam
+ * @author GooruTeam
+ * This class is used to handle the window resize handler and to add the scroll for Addtags and assign popups in web and device resolutions.
  */
 public class ScrollPopupUtil {
 	static boolean device = BrowserAgent.isDevice();
@@ -50,7 +51,7 @@ public class ScrollPopupUtil {
 		Window.addResizeHandler(new ResizeEvent());
 	}
 	/**
-	 * This inner class is used to handle the window resizes
+	 * This inner class is used to handle the window resizes for Popups
 	 * @author Gooru
 	 */
 	public static class ResizeEvent implements ResizeHandler{
@@ -60,7 +61,7 @@ public class ScrollPopupUtil {
 		}
 	}
 	/**
-	 * This method is used to handle the window resize for add tags popup.
+	 * This method is used to handle the window resize for add tags popup, Assign Popup.
 	 */
 	 static void setAddTagesPopupOnResize(boolean value){
 		if(device){
