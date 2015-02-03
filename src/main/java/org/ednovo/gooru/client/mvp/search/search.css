@@ -518,7 +518,8 @@ input.form-control1{
     display: inline-block;
     font-size: 12px;
     height: 29px;
-    width: 60%;
+    width: 63%;
+    padding: 6px 5px;
 }
 
 .closeBtn{
