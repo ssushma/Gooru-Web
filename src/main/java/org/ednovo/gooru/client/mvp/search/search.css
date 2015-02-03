@@ -4,9 +4,9 @@
 	margin-top:51px;
 }
 .searchResult1 {
-color: #515151;
-margin: 32px 0 0 215px;
-padding-bottom: 10px;
+	color: #515151;
+	/* margin: 32px 0 0 215px; */
+	padding-bottom: 10px;
 }
 .searchMainContainer{
 	padding:9px 0;
@@ -115,6 +115,10 @@ padding-bottom: 10px;
 	background: -o-linear-gradient(top, #fdfdfd, #ededed);
 	border: 1px solid #ddd;
 	
+}
+
+.panel-footer{
+	margin-top:0px;
 }
 
 .panelFooterMenuInfo{

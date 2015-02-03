@@ -1,6 +1,6 @@
 .searchResult1 {
-color: #515151;
-margin: 32px;
+	color: #515151;
+	/* margin: 32px; */
 }
 .searchResultScroll {
 	height: auto;

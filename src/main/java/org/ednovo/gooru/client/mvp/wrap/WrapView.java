@@ -163,8 +163,13 @@ public class WrapView extends BaseView implements IsWrapView {
 			headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
-				  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-
+				if(isIpad){
+					  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+				}else if(isAndriod){
+					  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+				}else{
+					  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
+				}
 			}
 		  setUiText();
 		  
