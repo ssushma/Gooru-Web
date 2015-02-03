@@ -175,7 +175,6 @@ a.flaggedCollection {
 
 	/* -webkit-box-shadow:0 2px 2px rgba(0,0,0,.08),0 1px 0 rgba(0,0,0,.08);
   box-shadow:0 2px 2px rgba(0,0,0,.08),0 1px 0 rgba(0,0,0,.08);*/
-background: #efefef; /* Old browsers */
 background: -moz-linear-gradient(top,  #efefef 0%, #f9f9f9 20%, #ffffff 40%, #ffffff 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efefef), color-stop(20%,#f9f9f9), color-stop(40%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
 background: -webkit-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
