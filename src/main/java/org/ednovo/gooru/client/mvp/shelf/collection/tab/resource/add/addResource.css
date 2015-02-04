@@ -1074,6 +1074,10 @@ width: 114px;
 	margin-left: -3px;
 	margin-top: 30px;	
 }
+.resourceRightsCheckBox input[type="checkbox"]{
+margin: 1px 0;
+vertical-align: middle;
+}
 .resourceRightsContainer {
 	margin-left: 45px;
 	width: 100%;
