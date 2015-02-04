@@ -25,8 +25,8 @@
 package org.ednovo.gooru.client.mvp.play.collection;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerHandler;
+import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEventHandler;
@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewH
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayHandler;
+
+import com.google.gwt.user.client.ui.FlowPanel;
 
 public interface CollectionPlayerUiHandlers extends BaseUiHandlers,ShowResourceViewEventHandler,UpdateCollectionViewCountEventHandler,
 					ShowCollectionTabWidgetEventHandler,RefreshCollectionInShelfListInPlayHandler,UpdateFlagIconColorEventHandler,EditCommentChildViewHandler,UpdateCommentChildViewHandler,CloseCollectionPlayerHandler,PostUserReviewEventHandler{
@@ -44,4 +46,5 @@ public interface CollectionPlayerUiHandlers extends BaseUiHandlers,ShowResourceV
 	public void revealTeachOrStudypage(String page);
 	public boolean isOpenEndedAnswerSubmited();
 	public void navigateToNext(String direction);
+	public void setFullScreenMode(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
 	}

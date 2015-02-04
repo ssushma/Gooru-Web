@@ -451,4 +451,8 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			}
 		}
 	}
+	@Override
+	public FlowPanel getQuestionContainer(){
+		return questionContainer;
+	}
 }
