@@ -413,7 +413,7 @@ public enum UrlToken {
     
     COPY_RESOURCCE("/scollection/item?sessionToken={0}"),
     
-    V2_GET_USER_WORKSPACE("/v2/collection/{0}/workspace?sessionToken={1}&offset={2}&limit={3}"),
+    V2_GET_USER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&offset={2}&limit={3}"),
     
     GET_USER_WORKSPACE("/myshelf?format=json&sessionToken={0}&pageNum={1}&pageSize={2}"),
     
