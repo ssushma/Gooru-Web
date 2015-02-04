@@ -88,7 +88,7 @@ public class GooruEntry implements EntryPoint {
 		    loadLibraries.add(LoadLibrary.PLACES);
 		    loadLibraries.add(LoadLibrary.WEATHER);
 		    loadLibraries.add(LoadLibrary.VISUALIZATION);
-		    
+		     
 		    
 		String device = BrowserAgent.returnFormFactorWithSizeView();
 		String size[] = device.split("-");
