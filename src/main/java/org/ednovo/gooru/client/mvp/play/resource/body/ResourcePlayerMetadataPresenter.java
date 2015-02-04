@@ -38,15 +38,11 @@ import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -56,7 +52,6 @@ import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -122,6 +117,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 
 	@Override
 	public void showQuestionView(CollectionItemDo collectionItemDo) {
+		System.out.println("full screen question");
 		questionResourcePresenter.setCollectionPlayer(isCollectionPlayer);
 		questionResourcePresenter.setResourcePlayer(isResourcePlayer);
 		questionResourcePresenter.setPreviewPlayer(isPreviewPlayer);
@@ -141,6 +137,10 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		questionResourcePresenter.getWidget().getParent().getElement().getStyle().clearPaddingTop();
 	}
 	
+	@Override
+	public FlowPanel getQuestioncontainer(){
+		return questionResourcePresenter.getQuestioncontainer();
+	}
 	public void setCollectionPlayerPresnter(CollectionPlayerPresenter collectionPlayerPresenter,boolean isCollectionPlayer){
 		this.collectionPlayerPresenter=collectionPlayerPresenter;
 		//collectionEndPresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
@@ -572,4 +572,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		}
 	}
 
+	@Override
+	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration) {
+		getView().setFullScreen(isFullScreen,pnlFullScreenNarration);
+	}
 }

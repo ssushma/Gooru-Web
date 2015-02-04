@@ -30,11 +30,10 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
+import com.google.gwt.user.client.ui.FlowPanel;
 
 public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,OpenReviewPopUpEventHandler,UpdateUserStarReviewEventHandler,DeletePlayerStarReviewHandler,DeletePlayerStarRatingsEventHandler {
 	
@@ -70,4 +69,6 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,OpenRev
 	public void updateResourceReview(String gooruOid,Integer reviewCount);
 
 	public void updateResourceRatings(String gooruOid,double average); 
+	public FlowPanel getQuestioncontainer();
+	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
 }

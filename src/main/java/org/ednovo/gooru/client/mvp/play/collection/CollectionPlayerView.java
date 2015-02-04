@@ -41,8 +41,11 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -50,6 +53,7 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -63,6 +67,8 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -72,9 +78,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPlayerUiHandlers> implements IsCollectionPlayerView{
 	
-	
-	@UiField FlowPanel playerBodyContainer,navigationContainer,playerContent,menuContent,headerFixedContainer;
-	
+	@UiField FlowPanel pnlFullScreenNarration,playerBodyContainer,navigationContainer,playerContent,menuContent,headerFixedContainer;
+
 	@UiField StudyPlayerHeaderView headerView;
 	
 	@UiField StudyPlayerFooterView footerView;
@@ -86,6 +91,12 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@UiField Anchor viewAnchor,menuButton;
 	
 	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+	
+	@UiField Label lblNarrationText,lblSeeMore;
+	
+	@UiField HTMLEventPanel pnlBackToCollection;
+	
+	@UiField Image authorImage;
 	
 	private PopupPanel appPopUp;
 	
@@ -107,6 +118,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	
 	GlobalTooltipWithButton globalTooltipWithButton,logOutToolTip;
+	
+	CollectionItemDo  collectionItemDo=null;
+	CollectionDo collectionDo=null;
+	boolean isSeeMoreClicked=false;
 	
 	private int userRating=0;
 	private String resourceId;
@@ -141,6 +156,12 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		footerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
 		getResourceAnimationContainer().getElement().getStyle().setProperty("display", "none");
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
+		
+		pnlFullScreenNarration.setVisible(false);
+		headerView.getFullScreenPlayer().setVisible(false);
+		headerView.getFullScreenPlayer().addClickHandler(new FullScreenPlayerEvent("fullScreen"));
+		pnlBackToCollection.addClickHandler(new ExitFullScreenPlayer());
+		
 		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
 		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());*/
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
@@ -422,6 +443,77 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			
 		}
 	}
+	/**
+	 * This inner class is used to handle the click event for exit full screen mode
+	 * @author Gooru
+	 */
+	public class ExitFullScreenPlayer implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+			Map<String,String> params = new LinkedHashMap<String,String>();
+			params.put("id", collectionId);
+			if(resourceId!=null&&!resourceId.equalsIgnoreCase("")){
+				params.put("rid", resourceId);
+			}
+			params.put("view", null);
+			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			restFullScreenChanges();
+		}
+	}
+	/**
+	 * This inner class is used to handle the click event on Full screen button.
+	 * @author Gooru
+	 */
+	public class FullScreenPlayerEvent implements ClickHandler{
+		String tabView="";
+		public FullScreenPlayerEvent(String tabView){
+			this.tabView=tabView;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+			Map<String,String> params = new LinkedHashMap<String,String>();
+			params.put("id", collectionId);
+			if(resourceId!=null&&!resourceId.equalsIgnoreCase("")){
+				params.put("rid", resourceId);
+			}
+			params.put("view", tabView);
+			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			setFullScreenMode();
+		}
+	}
+	/**
+	 * This method is used to set full screen mode
+	 */
+	@Override
+	public void setFullScreenMode(){
+		System.out.println("in the set");
+		pnlFullScreenNarration.setVisible(true);
+		headerView.setVisible(false);
+		footerView.setVisible(false);
+		navigationContainer.setVisible(false);
+		getUiHandlers().setFullScreenMode(true,pnlFullScreenNarration);
+		
+	}
+	/**
+	 * This method is used to reset the full screen changes.
+	 */
+	@Override
+	public void restFullScreenChanges(){
+		System.out.println("in the reset");
+		pnlFullScreenNarration.setVisible(false);
+		headerView.setVisible(true);
+		footerView.setVisible(true);
+		navigationContainer.setVisible(true);
+		getUiHandlers().setFullScreenMode(false,pnlFullScreenNarration);
+	}
 	
 	public void closePlayer(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page",null);
@@ -676,9 +768,11 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
+			headerView.getFullScreenPlayer().setVisible(false);
 		}else{
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
+				headerView.getFullScreenPlayer().setVisible(false);
 				headerView.getAuthorContainer().setVisible(false);
 			}else{
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
@@ -783,5 +877,57 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		this.collectionType = collectionType;
 	}
 
+
+    /**
+     * This event will handle the click event on the see more for narration. 
+     * @param event
+     */
+	@UiHandler("lblSeeMore") 
+	public void clickOnSeeMoreBtn(ClickEvent event){
+		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
+			if(!isSeeMoreClicked){
+				String narrationText=removeHtmlTags(collectionItemDo.getNarration());
+				lblSeeMore.setText(i18n.GL_SPL_OPEN_SMALL_BRACKET()+i18n.GL0509()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+				lblNarrationText.setText(narrationText);
+				isSeeMoreClicked=true;
+			}else{
+				setNarrationInFullScreenMode(collectionItemDo,collectionDo);
+				isSeeMoreClicked=false;
+			}
+		}
+	}
+	private void setUserProfileImage(String profileUserId) {
+		authorImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png");
+	}
+	@UiHandler("authorImage")
+	public void setDefaultProfileImage(ErrorEvent event){
+		authorImage.setUrl("images/settings/setting-user-image.png");
+	}
+	/**
+	 * This method will set the narration text.
+	 */
+	@Override
+	public void setNarrationInFullScreenMode(CollectionItemDo collectionItemDo,CollectionDo collectionDo) {
+		headerView.getFullScreenPlayer().setVisible(true);
+		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
+			setUserProfileImage(collectionDo.getUser().getGooruUId());
+			String narrationText=removeHtmlTags(collectionItemDo.getNarration());
+			this.collectionItemDo=collectionItemDo;
+			this.collectionDo=collectionDo;
+			if(narrationText.length()>0 && narrationText.length()>240){
+				lblNarrationText.setText(narrationText.substring(0, 240)+"...");
+				lblSeeMore.setVisible(true);
+				lblSeeMore.setText(i18n.GL_SPL_OPEN_SMALL_BRACKET()+i18n.GL0508()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+			}else{
+				lblNarrationText.setText(narrationText);
+				lblSeeMore.setVisible(false);
+			}
+		}
+	}
+	private String removeHtmlTags(String html){
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
+        return html;
+	}
 }
 
