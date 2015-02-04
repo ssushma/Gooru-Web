@@ -436,7 +436,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		mediaLabel.getElement().setAttribute("alt",i18n.GL1706());
 		mediaLabel.getElement().setAttribute("title",i18n.GL1706());
 		
-		lblMediaPlaceHolder.setHTML(i18n.GL3051()+i18n.GL_SPL_SEMICOLON()+"<span class=\"caret\"></span>");
+		lblMediaPlaceHolder.setHTML(i18n.GL3051()+i18n.GL_SPL_SEMICOLON()+"<span class=\"caret caretStyle\"></span>");
 
 		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
 		lblMediaPlaceHolder.getElement().setAttribute("alt",i18n.GL3051());
@@ -474,7 +474,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 					
 						spanelMediaFeaturePanel.setVisible(false);
 						lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
-						lblMediaPlaceHolder.setHTML(optionSelected+"<span class=\"caret\"/>");
+						lblMediaPlaceHolder.setHTML(optionSelected+"<span class=\"caret caretStyle\"/>");
 					}
 				});
 				liPanel.add(titleLabel);

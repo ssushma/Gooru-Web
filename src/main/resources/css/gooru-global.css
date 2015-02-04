@@ -897,3 +897,8 @@ button.backArrowButton:hover {
 .no{
 	color: red;
 }
+.caretStyle{
+	float: right;
+	position: relative;
+	top: 9px;
+}
