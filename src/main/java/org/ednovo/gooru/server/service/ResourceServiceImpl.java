@@ -1857,19 +1857,17 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 	public String getShelfGooruOid(JsonRepresentation jsonRep){
 		String shelfGooruOid=null;
+		JSONObject jsonObject = null;
 		if(jsonRep!=null){
 			try {
-				JSONArray jsonArray=jsonRep.getJsonArray();
+				jsonObject = jsonRep.getJsonObject();
+				JSONArray jsonArray=jsonObject.getJSONArray("searchResult"); 
 				if(jsonArray!=null&&jsonArray.length()>0){
 					for(int i=0;i<jsonArray.length();i++){
-						JSONObject jsonObject=jsonArray.getJSONObject(i);
+						JSONObject searchJsonObject=jsonArray.getJSONObject(i);
 						if(jsonObject!=null){
-							JSONObject collectionObject=jsonObject.isNull("collection")?null:jsonObject.getJSONObject("collection");
-							String collectionType=collectionObject.isNull("collectionType")?null:collectionObject.getString("collectionType");
-							if(collectionType!=null&&collectionType.equals("shelf")){
-								shelfGooruOid=collectionObject.getString("gooruOid");
-								return shelfGooruOid;
-							}
+							shelfGooruOid=searchJsonObject.isNull("parentGooruOid")?null:searchJsonObject.getString("parentGooruOid");
+							return shelfGooruOid;
 						}
 					}
 				}
