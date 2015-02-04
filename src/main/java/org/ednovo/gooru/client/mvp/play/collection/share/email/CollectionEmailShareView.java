@@ -180,7 +180,7 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		toUsText.getElement().setAttribute("alt",i18n.GL1894());
 		toUsText.getElement().setAttribute("title",i18n.GL1894());
 		
-		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
+	//	lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
 		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
 		
 		mandatoryErrorLbl.setVisible(false);
@@ -447,7 +447,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}

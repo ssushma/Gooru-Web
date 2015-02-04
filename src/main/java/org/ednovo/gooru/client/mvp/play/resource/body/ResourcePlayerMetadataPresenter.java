@@ -33,6 +33,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
@@ -135,7 +136,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		}else{
 			questionResourcePresenter.getWidget().setHeight((windowHeight-202)+"px");
 		}
+		
 		getView().getResourceWidgetContainer().add(questionResourcePresenter.getWidget());
+		questionResourcePresenter.getWidget().getParent().getElement().getStyle().clearPaddingTop();
 	}
 	
 	public void setCollectionPlayerPresnter(CollectionPlayerPresenter collectionPlayerPresenter,boolean isCollectionPlayer){
@@ -484,11 +487,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		});
 		
 	}
-	public HTMLPanel getCollectionContainer(){
+	public SectionTag getCollectionContainer(){
 		return getView().getCollectionContainer();
 	}
 	
-	public FlowPanel getResourceWidgetContainer(){
+	public SectionTag getResourceWidgetContainer(){
 		return getView().getResourceWidgetContainer();
 	}
 	

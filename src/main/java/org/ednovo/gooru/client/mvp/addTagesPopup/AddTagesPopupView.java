@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
  * 
@@ -42,7 +41,10 @@ import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
@@ -50,6 +52,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -61,9 +64,9 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -103,23 +106,28 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField(provided = true)
 	AddTagesCBundle res;
 	
-	@UiField Label lexileHeader,AdsHeader, kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
+	@UiField Anchor headerEducationalUse ,kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
 	
-	@UiField Label headerEducationalUse, handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
+	@UiField Anchor  handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
 	
 	@UiField Button cancelBtn,addTagsBtn,mobileYes,mobileNo;
+
+	@UiField UlPanel htmlMediaFeatureListContainer;
 	
-	@UiField HTMLPanel htmlMediaFeatureListContainer;
+	@UiField Label lexileHeader,AdsHeader, mediaLabel;
+	@UiField Anchor lblMediaPlaceHolder;
+	
+	@UiField Label standardMaxMsg,standardsDefaultText;
+	
+	@UiField Anchor noAds,modAds,aggreAds;
 	
 	@UiField ScrollPanel spanelMediaFeaturePanel;
 	
-	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
+	@UiField Label accessHazard;
+	@UiField Anchor flashingHazard,motionSimulationHazard,soundHazard;
 	
-	@UiField Label noAds,modAds,aggreAds,standardMaxMsg,standardsDefaultText;
-	
-	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
-	
-	@UiField InlineLabel addTagesTitle,popupContentText,moblieFriendly;
+	@UiField InlineLabel addTagesTitle,moblieFriendly;
+	@UiField PPanel popupContentText;
 	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
@@ -147,23 +155,24 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 
 	public AddTagesPopupView(String resourceId) {
 		super(false);
-
 		initializeAutoSuggestedBox();
 		this.res = AddTagesCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
+		lblMediaPlaceHolder.getElement().setAttribute("data-toggle","dropdown");
+		/*htmlMediaFeatureListContainer.setHeight("100px");
+		htmlMediaFeatureListContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);*/
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
-				this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+		//		this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
 			}else{
 			
-				this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
-				this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+			//	this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+				//this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 				this.getElement().setAttribute("style", "z-index:999999;");
 		}
-		this.setWidth("596px");
-		this.setHeight("586px");
+	
 		//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
 		
@@ -404,42 +413,36 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		mobileNo.getElement().setAttribute("title",i18n.GL1735());
 		
 		
+		spanelMediaFeaturePanel.setVisible(false);
+		spanelMediaFeaturePanel.getElement().setId("sbMediaFeaturesPanel");
+		spanelMediaFeaturePanel.getElement().setAttribute("alt","");
+		spanelMediaFeaturePanel.getElement().setAttribute("title","");
+		
+		
 		standardsDefaultText.setText(i18n.GL1682());
 		standardsDefaultText.getElement().setId("lblStandards");
 		standardsDefaultText.getElement().setAttribute("alt",i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title",i18n.GL1682());
 		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
-		spanelMediaFeaturePanel.setVisible(false);
 		
 		mediaLabel.setText(i18n.GL1706());
 		mediaLabel.getElement().setId("lblMediaFeature");
 		mediaLabel.getElement().setAttribute("alt",i18n.GL1706());
 		mediaLabel.getElement().setAttribute("title",i18n.GL1706());
 		
-		lblMediaPlaceHolder.setText(i18n.GL3051()+i18n.GL_SPL_SEMICOLON());
+		lblMediaPlaceHolder.setHTML(i18n.GL3051()+i18n.GL_SPL_SEMICOLON()+"<span class=\"caret\"></span>");
+
 		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
 		lblMediaPlaceHolder.getElement().setAttribute("alt",i18n.GL3051());
 		lblMediaPlaceHolder.getElement().setAttribute("title",i18n.GL3051());
 		
-		lblMediaFeatureArrow.getElement().setId("lblMediaFeatureArrow");
-		lblMediaFeatureArrow.getElement().setAttribute("alt","");
-		lblMediaFeatureArrow.getElement().setAttribute("title","");
-		
-		spanelMediaFeaturePanel.getElement().setId("sbMediaFeaturesPanel");
-		spanelMediaFeaturePanel.getElement().setAttribute("alt","");
-		spanelMediaFeaturePanel.getElement().setAttribute("title","");
-		
+			
 		htmlMediaFeatureListContainer.getElement().setId("pnlMediaFeaturesList");
 		htmlMediaFeatureListContainer.getElement().setAttribute("alt","");
 		htmlMediaFeatureListContainer.getElement().setAttribute("title","");
 		
-		lblMediaFeatureArrow.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				OpenMediaFeatureDropdown();
-			}
-		});
+		
 		lblMediaPlaceHolder.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -455,6 +458,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				String mediaTitleVal = mediaFeatureList.get(n);
 				
 				final Label titleLabel = new Label(mediaTitleVal);
+				LiPanel liPanel=new LiPanel();
 				titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
 				titleLabel.getElement().setAttribute("id", mediaTitleVal);
 				//Set Click event for title
@@ -462,14 +466,14 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 					@Override
 					public void onClick(ClickEvent event) {		
 						String optionSelected = titleLabel.getElement().getId();
-						lblMediaPlaceHolder.setText(optionSelected);
+					
 						spanelMediaFeaturePanel.setVisible(false);
 						lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
-						lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
-						lblMediaPlaceHolder.setText(optionSelected);
+						lblMediaPlaceHolder.setHTML(optionSelected+"<span class=\"caret\"/>");
 					}
 				});
-				htmlMediaFeatureListContainer.add(titleLabel);
+				liPanel.add(titleLabel);
+				htmlMediaFeatureListContainer.add(liPanel);
 		}
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 			@Override
@@ -1257,7 +1261,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				tagList.add("\"" + educationArr[i].toString() +"\"");
 			}
 		}
-		//System.out.println(tagList);
 		String[] lexileMainarr = setLexileLevel();
 		if(lexileMainarr != null)
 		{
@@ -1276,7 +1279,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		String hazardArr[] = setAccessHazards();
 		for(int i=0;i<hazardArr.length;i++){
 			
-			System.out.println(hazardArr[i]);
 		}
 		if(hazardArr != null)
 		{

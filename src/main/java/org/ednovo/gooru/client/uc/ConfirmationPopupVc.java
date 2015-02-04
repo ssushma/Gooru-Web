@@ -62,11 +62,11 @@ public abstract class ConfirmationPopupVc extends Composite {
 	@UiField
 	FlowPanel buttonContainer;
 	
-	private static RemoveResourcePopupVcUiBinder uiBinder = GWT.create(RemoveResourcePopupVcUiBinder.class);
+	private static ConfirmationPopupVcUiBinder uiBinder = GWT.create(ConfirmationPopupVcUiBinder.class);
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface RemoveResourcePopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
+	interface ConfirmationPopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
 	}
 
 	/**
@@ -77,7 +77,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 	public ConfirmationPopupVc(String messageHeader, String  messageContent) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
+//		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(messageHeader, uiBinder.createAndBindUi(this));
 		contentText.setText(messageContent);
 		contentText.getElement().setId("lblContentText");
@@ -140,7 +140,6 @@ public abstract class ConfirmationPopupVc extends Composite {
 
 	@UiHandler("okButton")
 	public void onClickDelete(ClickEvent clickEvent){
-		System.out.println("con--inin");
 		loadingTextLbl.setVisible(true);
         buttonContainer.setVisible(false);
 		onDelete(clickEvent);

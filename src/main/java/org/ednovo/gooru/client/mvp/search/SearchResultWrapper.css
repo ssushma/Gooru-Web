@@ -77,11 +77,9 @@
 .share,.infoLbl, .embed {
     color: #333333;
     cursor: pointer;
-    float: left;
     font-size: 12px;
     padding: 6px;
     text-align: center;
-    width: 75px;
     box-shadow: none;
 }
 .moreInfo {
@@ -209,6 +207,8 @@
 	float: right;
 	padding-top: 10px;	
 	padding-right: 8px;
+	
+	text-align:center;
 }
 
 
@@ -230,5 +230,7 @@
 	cursor:pointer;
 	box-shadow: none;
 }
-
-
+.setFont{
+	font-size:12px;
+	white-space: normal;
+}

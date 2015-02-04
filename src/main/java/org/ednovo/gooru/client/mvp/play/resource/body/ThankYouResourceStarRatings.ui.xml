@@ -5,8 +5,8 @@
 
 	<g:HTMLPanel>
 	    <g:HTMLPanel styleName="{playerStyle.ratingConfirmationContainer}">
-        	<g:HTMLPanel styleName="{playerStyle.arrowBorder}"></g:HTMLPanel>
-            <g:HTMLPanel styleName="{playerStyle.arrow}"></g:HTMLPanel>
+        	<g:HTMLPanel styleName="{playerStyle.arrowBorder} hidden-xs"></g:HTMLPanel>
+            <g:HTMLPanel styleName="{playerStyle.arrow} hidden-xs"></g:HTMLPanel>
                 <g:Label styleName="{playerStyle.thankYouLbl}" ui:field="thankYouRatingLbl"></g:Label>
                   <g:HTMLPanel styleName="{playerStyle.rating}">
                 <!--     <g:Label ui:field="avgRatingLbl"></g:Label> -->

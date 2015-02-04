@@ -25,7 +25,9 @@
 
 .assignmentButtonsContainer {
 	float: left;
-	margin: 18px 0 15px 241px;
+	margin: 18px 0 15px 0px;
+	text-align: center;
+	width: 100%;
 }
 .navigateButtonsContainer{
 	float: left;
@@ -600,6 +602,7 @@
     list-style-type: none;
     margin: 20px auto auto 44px;
     width: 91%;
+    color:#999;
  }
  .assignmentsystemMessage{
  	font-family: Arial, Helvetica, sans-serif;
@@ -717,7 +720,7 @@
 .addPlayerStyle{
 	display: inline-block;
 	float: center;
-	margin-left: 275px;
+/*	margin-left: 275px;*/
 	/* height: 258px; */
 	background-color: #fff;
 }
@@ -734,7 +737,9 @@
 	 }
  .addCollectionTextStyles{
 	/* float: left; */
-	left: 43px;
+	left: 12px;
 	position: relative;
 	top:10px;
+	margin-bottom:22px;
+	color:#999;
 	 }

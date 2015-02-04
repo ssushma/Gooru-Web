@@ -87,6 +87,7 @@
     line-height: 50px;
     padding-right:15px;
     position:relative;
+    box-sizing:content-box;
 	/* width: 280px; */
 	/* width: 176px; */
 }
@@ -724,6 +725,7 @@
     right: 0px;
     padding: 12px 12px 12px 75px;
     line-height: normal;
+    box-sizing:content-box;
 }
 
 .folderLevel .myShelfEditButtonContainer:hover {
@@ -938,7 +940,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 }
 
 .upDownBtn input[type="text"]{
-	width:22px;
+	width:34px;
 	margin:8px 0;
 	height:25px;
 	padding:1px 6px;

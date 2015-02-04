@@ -1376,7 +1376,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 						}
 						setUnitListData(unitDoListTemp);
 					}
-
 					@Override
 					public void onFailure(Throwable caught) {
 						

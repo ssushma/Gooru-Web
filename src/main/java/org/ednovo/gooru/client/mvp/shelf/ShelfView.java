@@ -868,6 +868,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					}else{
 						rbPublicPanel.setVisible(true);
 						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+							if(collectionDo!=null){
 							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
 								rbPublic.setVisible(false);
 								lblPublishPending.setVisible(true);
@@ -882,6 +883,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 							lblPublishPending.setVisible(false);
 							publishedPanel.setVisible(true);
 						}
+					}else{
+						rbPublic.setVisible(false);
+						lblPublishPending.setVisible(false);
+						publishedPanel.setVisible(true);
+					}
 					}
 				}
 			});
@@ -1374,8 +1380,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
+		delete.center();
+
 	}
 	
 	public void showCollectionIsByBoth(int collabCount){
@@ -1412,9 +1419,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
-	
+		delete.center();
+
 	}
 	
 	public void showCollectionIsUserByCollab(){
@@ -1444,9 +1451,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
-	
+		delete.center();
 	}
 	
 	public void showCollectionIsUsedByOwner(){
@@ -1501,10 +1507,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		
-		delete.center();
 		delete.show();
-	
+		delete.center();
 	}
 	
 	
@@ -1565,12 +1569,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		folderPopupUc.setGlassEnabled(true);
-		folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);
+		/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);*/
 		Window.enableScrolling(false);
 		folderPopupUc.setCollectionType(collectionDo.getCollectionType());
 		/*folderPopupUc.center();*/
 		folderPopupUc.show();
+		folderListPanel.clear();
 	}
 
 	/**

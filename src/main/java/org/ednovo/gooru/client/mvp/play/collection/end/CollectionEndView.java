@@ -36,7 +36,11 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+
+import org.ednovo.gooru.client.htmltags.SectionTag;
+
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
@@ -112,8 +116,17 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
 	@UiField
-	FlowPanel frameContainer,frameContainer1,dataInsightsPanel;
+	FlowPanel frameContainer1;
+	
+	@UiField SectionTag dataInsightsPanel;
+	
+	@UiField
+	FlowPanel frameContainer;
+
+
 	@UiField VerticalPanel commentsContainer,pnlSummary;
+	
+
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
 	@UiField HTMLPanel pnlCollectionLastAccessed,sessionspnl,collectionMetaDataPnl,collectionSummaryText,loadingImageLabel,addComment,loginMessaging,commentssection,switchContainer;
@@ -203,6 +216,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		setLabelAndIds();
 		pnlCollectionLastAccessed.setVisible(false);
 		//teacherContainer.setVisible(false);
+		collectionImage.setSize("59px", "44px");
 		messageContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
@@ -758,10 +772,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("471px");
-				successPopupVc.show();
+				//successPopupVc.setWidth("500px");
+				
 				successPopupVc.center();
+				successPopupVc.show();
+			
+				
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -774,6 +790,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
 					params.put("customize", "yes");
 					
+
 				}
 		/*		params.put("view", "end");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -817,14 +834,22 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		int clientHeight=Window.getClientHeight();
 		if(clientHeight>625){
 			clientHeight=625;
-			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
 		}else{
-			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
 		}
 		successPopupVc.show();
 		int left = (Window.getClientWidth() - 500) >> 1;
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
-	    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
+
+		//added newly
+	    successPopupVc.center();
+		if(AppClientFactory.isAnonymous()){
+			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
+		}
+	    //till here 
+	    params.put("assign", "yes");
+
 	/*	params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
@@ -890,7 +915,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer1.setVisible(false);
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
+
 			loadingImageLabel.setVisible(false);
+
 //		}else if(page!=null&&page.equals("teach")){
 //			frameContainer1.clear();
 //			frameContainer1.setVisible(false);

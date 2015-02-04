@@ -188,7 +188,7 @@
 .collectionViewer {
 	float:left;
 	padding:20px;
-	width: 53%;
+	width: 60%;
 }
 
 .collectionImage {
@@ -259,6 +259,7 @@
 
 .folderLevel {
 	background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 10px 13px;
+	box-sizing: content-box;
 }
 
 .open {
@@ -298,7 +299,7 @@
 	margin-left: 150px;
 }
 .collectionViewerSubStyle {
-	width: 94% !important;
+	width: 100% !important;
 	margin-top: 25px !important;
 }
 .collectionInfoSubStyle {

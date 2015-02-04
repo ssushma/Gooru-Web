@@ -30,11 +30,13 @@ import java.util.List;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
 
 /**
@@ -52,7 +54,7 @@ import com.google.gwt.user.client.ui.Label;
  *
  * @Reviewer:
  */
-public class SignupGradeLabel extends Label implements ClickHandler {
+public class SignupGradeLabel extends Anchor implements ClickHandler {
 	
 	private static final List<String> gradeList = new ArrayList<String>();
 	
@@ -74,20 +76,16 @@ public class SignupGradeLabel extends Label implements ClickHandler {
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 		addDomHandler(this, ClickEvent.getType());
 		this.profileDo = profileDo;
-		this.addStyleName(SignUpCBundle.INSTANCE.css().gradeOption());
-		if(label.equals(KIDER_GARTEN)||label.equals(HIGHER_EDUCATION)){
-			this.addStyleName(SignUpCBundle.INSTANCE.css().longWidth());
-		}
 	}
 
 	@Override
 	public void onClick(ClickEvent event) {
-		if(this.getStyleName().toString().contains("active")){
+		if(this.getStyleName().toString().contains("activeGrade")){
 			removeGrade(this.getText());
-			this.removeStyleName(SignUpCBundle.INSTANCE.css().active());
+			this.removeStyleName(LoginPopUpCBundle.INSTANCE.css().activeGrade());
 		} else {
 			updateGrade(this.getText());
-			this.addStyleName(SignUpCBundle.INSTANCE.css().active());
+			this.addStyleName(LoginPopUpCBundle.INSTANCE.css().activeGrade());
 		}
 	}
 	/**

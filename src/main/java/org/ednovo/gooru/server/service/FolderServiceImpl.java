@@ -55,6 +55,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,6 +89,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
+	
+	private static final Logger logger = LoggerFactory.getLogger(FolderServiceImpl.class);
+	
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
 
@@ -114,6 +119,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), form);
+		logger.info("CreteFolder Url : "+url);
+		logger.info("form : "+form);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 
@@ -145,6 +152,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), form);
+		logger.info("createFolderToParentFolder : "+url);
+		logger.info("form : "+form);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 	}
@@ -254,7 +263,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset+"", limit+"");
-		System.out.println("--- child folders -- "+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);
@@ -284,9 +292,11 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			if(addToShelf) {
 				folderObject.put(ADD_TO_SHELF, addToShelf);
 			}
-			System.out.println("--- create folder url -- "+url); 
-			System.out.println("--- payload-- "+folderObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),folderObject.toString());
+			
+			logger.info("createFolderToParentFolder : "+url);
+			logger.info("folderObject : "+folderObject.toString());
+			
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRep);
 		} catch (JSONException e) {
@@ -307,7 +317,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public void deleteCollectionsFolder(String folderId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_FOLDER, folderId, getLoggedInSessionToken());
-		System.out.println("--- delete folder -- "+url); 
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -323,7 +332,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				folderObject.put(TARGET_ID, targetId);
 			}
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
-			
+			logger.info("moveCollectionIntoFolder : "+url);
+			logger.info("folderObject 1 :" +folderObject.toString() );
 		} catch (Exception e) {
 			
 		}
@@ -353,13 +363,13 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			}
 			FolderDataObject.put("collection", collectionDataObject);
 			FolderDataObject.put("parentId", folderId);
-			System.out.println("createCollectionInParent urll==>"+url);
-			System.out.println("FolderDataObject object==>"+FolderDataObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),FolderDataObject.toString());
+			logger.info("FolderDataObject.toString() : "+FolderDataObject.toString());
+			logger.info("createCollectionInParent : "+url);
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			System.out.println("outputt==>==>"+jsonRep.getText());
 			collectionDo = deserializeCreatedCollInFolder(jsonRep);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return collectionDo;
 	}
@@ -444,7 +454,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_RESOURCE_LIST, parentId, sessionToken);
-		System.out.println("--- get coll res -- "+url);  
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);

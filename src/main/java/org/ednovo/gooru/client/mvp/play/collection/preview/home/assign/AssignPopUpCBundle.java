@@ -262,6 +262,8 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		
 		String errorLabel();
 		
+		String popupStyle();
+		String classContainer();
 	}
 	@Source("AssignPopUp.css")
 	CollectionAssignCss css();

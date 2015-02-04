@@ -74,17 +74,22 @@ public class NgcLibraryPresenter extends BasePlacePresenter<IsNgcLibraryView, Ng
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 	}
 	
 	@Override
 	public void onReset() {
 		super.onReset();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

@@ -113,11 +113,11 @@ IsCollectionAssign {
 	
 	@UiField ScrollPanel spanelClasspagesPanel;
 	
-	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer;
+	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer,assignContainer;
 	
 	@UiField HTMLPanel  panelNoClasspages,htmlPanelContainer,panelTitleContainer,loadingImageLabel;
 	
-	@UiField HTMLPanel controlsContainer;
+	@UiField HTMLPanel controlsContainer,mainContainer;
 	
 	@UiField HTMLPanel assignMoreCpContainer;
 	
@@ -177,9 +177,10 @@ IsCollectionAssign {
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		loadingImageLabel.setVisible(true);
-		
+		lblNoClassPageImage.getElement().getStyle().setWidth(100, Unit.PCT);
 		toAssignStr = collectionDoObject.getGooruOid();
 		collectionDoGlobal = collectionDoObject;
+		mainContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 		
 		lblDirections.setText(i18n.GL1166());
 		lblDirections.getElement().setAttribute("alt",i18n.GL1166());
@@ -290,6 +291,7 @@ IsCollectionAssign {
 		panelNoClasspages.setVisible(false);
 		onLoaded();
 		panelTitleContainer.getElement().getStyle().setMarginBottom(15, Unit.PX);
+		panelTitleContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 		spanelClasspagesPanel.setVisible(false);
 		spanelClasspagesPanel.addScrollHandler(new ScrollHandler() {
 			@Override
@@ -868,7 +870,7 @@ IsCollectionAssign {
 		//Ids
 		btnAssign.getElement().setAttribute("id", "btnAssign");
 		btnAssign.setStyleName(res.css().disableAssignButon());
-		btnAssign.getElement().getStyle().setMarginLeft(190, Unit.PX);
+		assignContainer.getElement().setAttribute("style","float:left;margin-top:10px;width:100%;margin:0 auto;text-align:center");
 		btnAssign.setEnabled(false);
 		btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().disableAssignButon());
 
@@ -892,6 +894,7 @@ IsCollectionAssign {
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		directionsErrorLbl.getElement().setId("errlblDirectionsErrorLbl");
 		assignMoreCpContainer.getElement().setId("pnlAssignMoreCpContainer");
+		assignMoreCpContainer.getElement().setAttribute("style", "text-align:center");
 		assignMoreCpLbl.getElement().setId("spnAssignMoreCpLbl");
 		ancClasspageTitle.getElement().setId("spnAncClasspageTitle");
 	}

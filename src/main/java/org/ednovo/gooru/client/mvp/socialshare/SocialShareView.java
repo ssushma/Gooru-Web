@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEv
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.EmailShareUc;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
@@ -52,6 +53,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -86,11 +88,17 @@ IsSocialShareView {
 
 
 	@UiField
-	HTMLEventPanel fbPanel,twitterPanel,emailPanel,fbIconPanel,twIconPanel,emailIconPanel;
+	HTMLEventPanel twitterPanel,emailPanel,fbIconPanel,twIconPanel,emailIconPanel;
 
 	@UiField
-	HTMLPanel shareTextPanel,shareIconPanel,panelfbIcon,panelTwIcon, panelEmailIcon,panelTwitter,panelEmail,socialShareContainer,facbookText,twitterText,emailText;
-
+	HTMLPanel shareTextPanel,shareIconPanel,panelfbIcon,panelTwIcon, panelEmailIcon,socialShareContainer;
+	
+	@UiField
+	Anchor facbookText,twitterText,emailText;
+	
+	@UiField
+	PPanel fbPanel,panelTwitter,panelEmail;
+	
 	private SocialShareDo socialDo;
 
 	private UserServiceAsync userService;
@@ -149,14 +157,18 @@ IsSocialShareView {
 		panelEmail.getElement().setId("pnlPanelEmail");
 		emailText.getElement().setInnerHTML(i18n.GL0212());
 		emailText.getElement().setId("pnlEmailText");
+		
 		emailText.getElement().setAttribute("alt", i18n.GL0212());
 		emailText.getElement().setAttribute("title", i18n.GL0212());
 		twitterText.getElement().setInnerHTML(i18n.GL0647());
 		twitterText.getElement().setId("pnlTwitterText");
+		twitterText.getElement().getStyle().setMarginBottom(5, Unit.PX);
+
 		twitterText.getElement().setAttribute("alt", i18n.GL0647());
 		twitterText.getElement().setAttribute("title", i18n.GL0647());
 		facbookText.getElement().setInnerHTML(i18n.GL0646());
 		facbookText.getElement().setId("pnlFacbookText");
+		facbookText.getElement().getStyle().setMarginBottom(5, Unit.PX);
 		facbookText.getElement().setAttribute("alt", i18n.GL0646());
 		facbookText.getElement().setAttribute("title", i18n.GL0646());
 		shareIconPanel.getElement().setId("pnlShareIconPanel");
@@ -184,14 +196,14 @@ IsSocialShareView {
 		setPresenter(new SocialSharePresenter(this));
 		//		shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 
-		try {
+	/*	try {
 			if(socialDo.getIsSearchShare()){
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
 			}
 		} catch (Exception e) {
 
 		}
-
+*/
 		if (socialDo.isOnlyIcon()) {
 			shareTextPanel.setVisible(false);
 			shareIconPanel.setVisible(true);
@@ -218,9 +230,9 @@ IsSocialShareView {
 			panelTwIcon.setStyleName(socialShareStyle.classPageShareButtonsFTEBgDisable());
 			panelEmailIcon.setStyleName(socialShareStyle.classPageShareButtonsFTEBgDisable());
 
-			fbPanel.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
-			panelTwitter.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
-			panelEmail.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
+		//	fbPanel.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
+		//	panelTwitter.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
+		//	panelEmail.setStyleName(socialShareStyle.classPageShareButtonsBgDisable());
 
 			//				shareTextPanel.getElement().getStyle().setCursor(Cursor.DEFAULT);
 			//				shareIconPanel.getElement().getStyle().setCursor(Cursor.DEFAULT);
@@ -230,9 +242,9 @@ IsSocialShareView {
 			panelTwIcon.setStyleName(socialShareStyle.twitterPageShareIconButtonsBg());
 			panelEmailIcon.setStyleName(socialShareStyle.classPageShareButtonsFTEBg());
 
-			fbPanel.setStyleName(socialShareStyle.fbPageShareButtonsBg());
-			panelTwitter.setStyleName(socialShareStyle.twitterPageShareButtonsBg());
-			panelEmail.setStyleName(socialShareStyle.classPageShareButtonsBg());
+			//fbPanel.setStyleName(socialShareStyle.fbPageShareButtonsBg());
+			//panelTwitter.setStyleName(socialShareStyle.twitterPageShareButtonsBg());
+			//panelEmail.setStyleName(socialShareStyle.classPageShareButtonsBg());
 
 			//				shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 			//				shareIconPanel.getElement().getStyle().setCursor(Cursor.POINTER);

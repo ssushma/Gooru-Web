@@ -41,6 +41,7 @@
 	font-size:14px;
 	border-left:1px solid #ddd;
 	cursor:default;
+	box-sizing: content-box;
 /* 	width: 9.1%;*/
 /*  A temporary Fix - Bottom Line of code*/
 	width: 8.4%;
@@ -531,6 +532,7 @@
 	margin-left: 0px;
 	height: 113px;
 	vertical-align: top;
+	box-sizing: content-box;
 }
 
 #featuredCourseTabs .courseTitle {
@@ -896,7 +898,7 @@ margin-bottom: 15px;
 	font-weight:bold;
 	text-align:center;
 	padding-top:100px;
-	height: 45px;
+	/* height: 45px; */
 }
 
 .subheader {
@@ -904,7 +906,7 @@ margin-bottom: 15px;
 	font-size:16px;
 	text-align:center;
 	margin-top:10px;
-	height: 19px;
+	/* height: 19px; */
 }
 .sausdPartnerLogo {
 	background: url("../images/library/district/sausd-logo.png") no-repeat;
@@ -933,7 +935,7 @@ margin-bottom: 15px;
 	font-size: 24px !important;
 	font-weight: bold;
 	line-height: 120%;
-	width: 131px !important;
+	width: 160px !important;
 }
 .large-Title {
 	height: 35px;
@@ -942,7 +944,7 @@ margin-bottom: 15px;
 	vertical-align: middle;
 }
 .box {
-	width: 180px;
+	width: 205px;
 	height: 58px;
 	font-size: 12px;
 	font-weight: bold;

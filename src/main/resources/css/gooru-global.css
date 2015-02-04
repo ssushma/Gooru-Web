@@ -19,7 +19,7 @@ a, a:visited, a:active {
 
 a:hover {
 	text-decoration:none !important;
-	opacity:.6;
+/* 	opacity:.6; */
 	cursor:pointer;
 }
 
@@ -139,15 +139,15 @@ button.secondary:hover {
 }
 
 button.disabled, button.disabled:hover {
-	color: #999;
-	background: #efefef;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
-	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
-	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
-	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
-	background: -o-linear-gradient(top, #fdfdfd, #ddd);
-	border: 1px solid #ddd;
-	cursor: default;
+	color: #999 !important;
+	background: #efefef !important;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd)) !important;
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd) !important;
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd) !important;
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd) !important;
+	background: -o-linear-gradient(top, #fdfdfd, #ddd) !important;
+	border: 1px solid #ddd !important;
+	cursor: default !important;
 }
 
 .arrowButton {
@@ -423,9 +423,24 @@ button.disabled, button.disabled:hover {
 	padding-left: 46%;
 }
 
-.categoryFilterContainer .filterCheckBox label {
+ .categoryFilterContainer .filterCheckBox label {
 	padding: 3px 31px;
 	background: url(../images/resource-type-icons.png) no-repeat transparent;
+	
+}
+.showonlyquizzes{
+	display:block;
+}
+.showonlyquizzes label{
+	padding:0 !important;
+	background:none !important;
+}
+.onlyresourceswithreviews{
+	display:inline;	
+}
+
+.onlyresourceswithreviews label{
+	display:inline !important;	
 }
 
 .filterCheckBox {
@@ -862,3 +877,21 @@ button.backArrowButton:hover {
 	}
 } */
 
+.filterCheckBox label {
+    font-weight: normal;
+}
+
+
+.yes, .no{
+	margin: 0px;
+	display: inline-block;
+	font-weight: bold;
+}
+
+.yes{
+	color: green;
+}
+
+.no{
+	color: red;
+}

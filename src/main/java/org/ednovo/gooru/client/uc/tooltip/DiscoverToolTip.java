@@ -151,6 +151,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 				public void onClick(ClickEvent event) {
 					MixpanelUtil.mixpanelEvent("Community_Library_Click_"+publicPartnerList.get(key));
 					setHeaderBrowserTitle(partnerTitle.getText());
+					Window.enableScrolling(true);
 					AppClientFactory.getPlaceManager().revealPlace(publicPartnerList.get(key));
 				}
 			});
@@ -170,6 +171,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
         lblGooruLibrary.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				Window.enableScrolling(true);
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DISCOVER);
 			}
 		});

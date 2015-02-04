@@ -85,6 +85,7 @@ margin-top: -2px;
 	float: left;
 	padding: 10px 0px 25px 10px;
 	width: 600px;
+	box-sizing: content-box;
 }
 
 .actionPanel {
@@ -203,7 +204,7 @@ margin-top: -2px;
 	padding-top: 13px;
 	font-size: 2em;
 	position: relative;
-	height: 100px;
+	height: 118px;
 	width:100%;
 	text-align: right;
 	/* margin-bottom: 10px; */
@@ -249,20 +250,19 @@ margin-top: -2px;
 	position: relative;
 	text-align: left;
 	left: -20px;
-	width: 412px;
+	width: 360px;
 	color: #999999;
 }
 
 .resourceVideoTime {
 	word-wrap: break-word;
-	float: left;
+	/* float: left; */
 	padding-left: 0;
 	position: relative;
 	text-align: left;
-	width: 505px;
+	width: 440px;
 	color: #999999;
-	left: 0px;
-	top: 0px;
+	
 }
 
 .resourceNarrationEdit {
@@ -892,7 +892,7 @@ user agent stylesheetdiv {
 .myFolderCollectionFormContainer {
 	float: left;
 	padding: 0px 10px 0px 10px;
-	width: 70%;
+	width: 75%;
 	border-left: 1px solid #DDD;
 	/* height: 518px; */
 	background-color: white;
@@ -1229,7 +1229,7 @@ user agent stylesheetdiv {
 .inputTextBox {
 	outline: 0;
 	/* width: 308px; */
-	width: 98%;
+	width: 100%;
 	height: 28px;
 	font-size: 12px;
 	border: 0px;
@@ -1489,8 +1489,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 9999999;
-	top: -51px;
-	width: 365px;
+	top: -11px;
+	width: 389px;
 }
 .myEducationQuestionDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -1817,12 +1817,13 @@ input[type="text"] {
 .myWebResourceContainer {
 	float: left;
 	padding: 0px 25px 33px 18px;
-	width: 91%;
+	width: 100%;
 	border-left: 1px solid #DDD;
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
 	max-height: 550px;
 	min-height: 300px;
+	background-color: white;
 }
 
 .reportResource {
@@ -2428,8 +2429,9 @@ margin-top: 18px; */
 	/* left: 653px; 
 	top: 45px;*/
 	left: 484px;
-    top: 41px;
+    top: 45px;
 	z-index: 99;
+	box-sizing:content-box;
 }
 
 .editButtonText {
@@ -2442,6 +2444,7 @@ margin-top: 18px; */
 	text-decoration: none !important;
 	padding: 4px 0;
 	padding-left: 11px;
+	box-sizing:content-box;
 }
 
 .editButtonText:hover {
@@ -2922,7 +2925,7 @@ margin-top: 18px; */
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:1px;
 	border-style:solid;
-	top: 7px;
+	top: 4px;
 	left: -1px;
 	z-index: 9;
 	overflow-x:hidden !important;
@@ -3071,7 +3074,7 @@ vertical-align: top;
 .setBorder{
 border-top: 1px solid #999;
 text-align: left;
-width: 92%;
+width: 100%;
 padding-left: 16px;
 background: url(../images/NewResourcePopup/clear.png) no-repeat center left;
 }

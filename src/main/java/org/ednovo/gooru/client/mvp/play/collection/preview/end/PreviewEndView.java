@@ -299,10 +299,10 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("440px");
-				successPopupVc.show();
+			//	successPopupVc.setWidth("500px");
 				successPopupVc.center();
+				successPopupVc.show();
+				
 			}
 				
 				Map<String,String> params = new HashMap<String,String>();
@@ -394,10 +394,10 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+		//	successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
+
 		}
 		if(assign!=null && assign.equals("yes")){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {

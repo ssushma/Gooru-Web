@@ -56,8 +56,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -278,7 +278,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
 	 */
 	@Override
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl) { 
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Anchor tagsLbl) { 
 		simplePanel.clear();
 		if(!isTagsPanelOpen){
 			tagsTabPresenter.setData(searchResultDo.getGooruOid(), tagsLbl);   

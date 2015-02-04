@@ -40,7 +40,6 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Widget;
@@ -167,7 +166,6 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	 */
 	@Override
 	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter) {
-//		System.out.println("inside::::"+resourceSearchResultVc);
 //		if(resourceSearchResultVc!=null){
 //			resourceSearchResultVc.getAddResourceContainerPanel().clear();
 //			resourceSearchResultVc.getAddResourceContainerPanel().setWidget(addResourceContainerPresenter.getWidget());

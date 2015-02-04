@@ -442,7 +442,7 @@
 							<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
 								<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
 									<uc:AppSuggestBox ui:field="standardSgstBox"
-										width="255px" height="19px" />
+										width="255px" height="19px" styleName="contentBoxStyles"/>
 										<g:HTMLPanel styleName="{res1.css.browseContainer}">
 											<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
 										</g:HTMLPanel>

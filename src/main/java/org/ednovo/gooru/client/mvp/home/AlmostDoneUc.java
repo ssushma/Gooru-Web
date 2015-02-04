@@ -191,6 +191,7 @@ public class AlmostDoneUc extends PopupPanel{
 
 			@Override
 			public void onClick(ClickEvent event) {
+
 				MixpanelUtil.select_student();
 				selectedRole = "student";
 				lblSelectRole.setVisible(false);
@@ -203,6 +204,7 @@ public class AlmostDoneUc extends PopupPanel{
 				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
 //				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
 				panelParent.getElement().removeClassName(res.css().parentRoleSelected());
+
 			}
 		});
 		rbParent.addClickHandler(new ClickHandler() {
@@ -239,6 +241,7 @@ public class AlmostDoneUc extends PopupPanel{
 				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
 				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
 				panelParent.getElement().removeClassName(res.css().parentRoleSelected());
+
 			}
 		});
 

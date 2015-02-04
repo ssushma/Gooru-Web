@@ -353,6 +353,11 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	}
 
 	protected void setUserFilterProperties(UserDo user) {
+		FilterSettings filterProperties = getFilterProperties();
+		user.setSettings(filterProperties);
+	}
+	
+	protected FilterSettings getFilterProperties() {
 		FilterSettings filterProperties = new FilterSettings();
 		filterProperties.setRestEndPoint(getRestEndPoint());
 		filterProperties.setHomeEndPoint(getHomeEndPoint());
@@ -372,7 +377,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		filterProperties.setTaxonomyPreferences(getTaxonomyPreferences());
 		filterProperties.setAnalyticsEndPoint(getAnalyticsEndPoint());
 		filterProperties.setCommunityLibraryGooruOid(getCommunityLibaryGooruOid());
-		user.setSettings(filterProperties);
+		return filterProperties;
 	}
 
 	public String getDomainName() {
@@ -712,11 +717,9 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		try {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_USER_BY_SESSIONTOKEN, getLoggedInSessionToken(), getLoggedInSessionToken());
 			JsonRepresentation jsonRep = null;
-			System.out.println("data object==>"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			String data = jsonRep.getJsonObject().toString();
-			System.out.println("data object==>"+data);
 			userDo = JsonDeserializer.deserialize(data, UserDo.class);
 //			if (userDo.getCreatedOn()!=null){
 				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				

@@ -3,19 +3,28 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
+	
 
-	<g:HTMLPanel styleName="{res.css.summaryPopupContainer}">
-		<g:HTMLPanel styleName="{res.css.popupInner}">
-			<g:Label styleName="{res.css.reportPopupHeader}" ui:field="lblHeading"></g:Label>
-			<panel:HTMLEventPanel ui:field="cancelButton"
-				styleName="{res.css.closeButton}"></panel:HTMLEventPanel>
-			<g:FlowPanel styleName="{res.css.summaryPopupContainer}"
-				height="100px">
+	<g:HTMLPanel   styleName="{res1.css.PopupMainMediumReport}">
+		<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
+		<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
+		        <g:HTMLPanel styleName="row">
+		        	<g:Label styleName="col-md-9 col-xs-9" ui:field="lblHeading"></g:Label>
+		        	<g:HTMLPanel styleName="col-md-3 col-xs-3 {res1.css.closeContainer}">
+		        		<panel:HTMLEventPanel ui:field="cancelButton" styleName="{res1.css.closeButton}"></panel:HTMLEventPanel>    
+		        	</g:HTMLPanel>
+		        	<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		        	
+		        </g:HTMLPanel>
+		  </g:HTMLPanel>      
+			<g:FlowPanel styleName="{res1.css.popupContentGrey}">
 				<g:FlowPanel styleName="{res.css.summaryText}">
 					<g:Label ui:field="lblsummaryText" />
 				</g:FlowPanel>
-				<g:Label ui:field="lblCollectionProgress" styleName="{res.css.lblCollectionProgress}" />
-				<g:Label ui:field="lblCollectionProgressDetails" styleName="{res.css.lblCollectionProgressDetails}" />
+				<g:Label ui:field="lblCollectionProgress" styleName="{res1.css.lblCollectionProgress}" />
+				<g:Label ui:field="lblCollectionProgressDetails" styleName="{res1.css.lblCollectionProgressDetails}" />
 				<g:HTMLPanel styleName="{res.css.rightImageContainer}">
 				<g:Image ui:field="rightImage" />
 				</g:HTMLPanel>

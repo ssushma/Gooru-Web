@@ -7,17 +7,13 @@
 		<ui:style field="FolderStyle" src="AddResourceContainerSuccess.css"/>
 		
 	 <g:FlowPanel ui:field="addContent">
-	 			<!-- <g:HTMLPanel ui:field="createCollectionbuttonsContainer" styleName="{res.css.addTextButtonsContainer}">
-					<g:Label ui:field="addResourceText" styleName=""></g:Label>
-					<g:Button styleName="secondary"  ui:field="createCollectionBtnLbl"/>
-				</g:HTMLPanel> -->
-				<g:HTMLPanel ui:field="createCollectionbuttonsContainer">
+	 			<g:HTMLPanel ui:field="createCollectionbuttonsContainer">
 				<g:Label ui:field="addResourceText" styleName=""></g:Label>
 				<g:Anchor ui:field="addCollectiorOrReourceText"></g:Anchor>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="loadingImage" styleName="loadingImage"/>
 			
-				<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel}">
+				<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel} dropdownListContainerScrollPanel ">
 	            	<g:HTMLPanel ui:field="floderTreeContainer" styleName="{res.css.folderStucture}">
 			   		</g:HTMLPanel>
 				</g:ScrollPanel>

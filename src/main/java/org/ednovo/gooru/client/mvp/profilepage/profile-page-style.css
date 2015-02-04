@@ -71,6 +71,7 @@ a:hover {
 	float: right;
 	padding: 10px;
 	margin-top:5px;
+	box-sizing:content-box;
 	
 }
 
@@ -1044,6 +1045,7 @@ li.resources {
 	-webkit-box-shadow:0px 0px 2px 1px rgba(221,221,221,0.5);
 	box-shadow:0px 0px 2px 1px rgba(221,221,221,0.5);
 	z-index: 1;	
+	box-sizing:content-box;
 }
 .userCourseName {
 	color: white;
@@ -1093,7 +1095,7 @@ li.resources {
 .gooru-social-buttons {
 	float: right;
 	clear: right;
-	width: 102px;
+	width: 115px;
 	margin-top: -10px;
 	margin-left: 10px;
 }

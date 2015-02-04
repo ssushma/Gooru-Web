@@ -43,11 +43,14 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
+import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -57,6 +60,7 @@ import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -92,7 +96,6 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextBox;
@@ -107,7 +110,10 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText, panelGooruStories;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
-	@UiField Label lblHeading, lblSubHeading, lblCopyRight; 
+
+	@UiField H2Panel lblHeading;
+	@UiField PPanel  lblSubHeading, panelCopyRight, panelCopyRightR;
+	
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright, achGooruStories;//achDataPolicy
@@ -128,6 +134,22 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public AppSuggestBox txtSearch;
 	
 	String jsonDataString = null;
+
+	boolean isGetLibApiCalling = false;
+
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	PreFilterPopup preFilter =	null;
+	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	private boolean isArrowIcon = false;
+	private boolean isOpenPrefilterPopup = true;
 
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
@@ -177,7 +199,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 		    @Override
 		    public void onWindowScroll(ScrollEvent event) {
-		    	getEditSearchTxtBox().hideSuggestionList();   	
+		    	getEditSearchTxtBox().hideSuggestionList(); 
+		    	if (panelPartnerLibraries.getWidgetCount() <= 0 && !isGetLibApiCalling){
+		    		getUiHandlers().generatePartnerLibraries();
+		    		isGetLibApiCalling= true;
+		    	}
 			}
 		});
 		
@@ -188,13 +214,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		gooruPanel.setVisible(false);
 		setIds();
 		
-		
 		generateSubjectsData();
 		generateCourseData();
 		
 		generateStandardLibraries();
 		generateDistrictLibraries();
-		generatePartnerLibraries();
+//		generatePartnerLibraries();
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
 	//	StringUtil.consoleLog("emailId..in home."+emailId);
@@ -218,7 +243,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				}
 			});
 		}
-	
 
 		
 		
@@ -248,11 +272,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		});
 		
+
 		/*ClickHandler rootClick = new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("-->> "+preFilter);
 				if(!isArrowIcon && preFilter!=null){
 					isOpenPrefilterPopup=true;
 					preFilter.hide();
@@ -267,27 +291,26 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		Date todaysYear = new Date();
 		String copyRightTxt = i18n.GL1246() + "" + (todaysYear.getYear() + 1900);
 		
-		lblCopyRight.setText(copyRightTxt);
-		lblCopyRight.getElement().setId("lblCopyRightYearText");
-		lblCopyRight.getElement().setAttribute("alt",copyRightTxt);
-		lblCopyRight.getElement().setAttribute("title",copyRightTxt);
+		panelCopyRight.setText(copyRightTxt);
+		panelCopyRight.getElement().setId("lblCopyRightYearText");
+		StringUtil.setAttributes(panelCopyRight.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
 		
-//		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
-//		};
-//		error.show();
+		panelCopyRightR.setText(copyRightTxt);
+		panelCopyRightR.getElement().setId("lblCopyRightYearText");
+		StringUtil.setAttributes(panelCopyRightR.getElement(), "lblCopyRightYearText", copyRightTxt, copyRightTxt);
 		
 	}
 	
 	
 	
 	/**
-	 * @function generatePartnerLibraries 
+	 * @function displayPartnerLibraries 
 	 * 
 	 * @created_date : Aug 12, 2014
 	 * 
 	 * @description
 	 * 
-	 * 
+	 * @param : ArrayList<LibraryUserDo> partnersList
 	 * 
 	 * @return : void
 	 *
@@ -297,26 +320,24 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 *
 	 * 
 	*/
-	
-	private void generatePartnerLibraries() {
-		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
-			@Override
-			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
-				if (partnersList != null){
-					for(int i=0;i<partnersList.size();i++) {
-						final LibraryUserDo libraryUserDo = partnersList.get(i);
-						PeListPanel pTag = new PeListPanel();
-						Anchor anchor = new Anchor();
-						anchor.setText(libraryUserDo.getDisplayName());
-						String url = "#"+libraryUserDo.getUsername();
-						anchor.setHref(url);
-						pTag.add(anchor);
-						panelPartnerLibraries.add(pTag);
-					}
-				}
+	@Override
+	public void displayPartnerLibraries(ArrayList<LibraryUserDo> partnersList) {
+		isGetLibApiCalling = false;
+		if (partnersList != null){
+			for(int i=0;i<partnersList.size();i++) {
+				final LibraryUserDo libraryUserDo = partnersList.get(i);
+				PeListPanel pTag = new PeListPanel();
+				Anchor anchor = new Anchor();
+				anchor.setText(libraryUserDo.getDisplayName());
+				String url = "#"+libraryUserDo.getUsername();
+				anchor.setHref(url);
+				pTag.add(anchor);
+				panelPartnerLibraries.add(pTag);
 			}
-		});
+		}
 	}
+	
+	
 	/**
 	 * 
 	 * @function generateDistrictLibraries 
@@ -654,8 +675,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		}else{
 			btnSignUp.setVisible(false);
 		}
-		
-		
 		Window.enableScrolling(true);
 	}
 
@@ -828,7 +847,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 	}
 	@UiHandler("achPrivacy")
@@ -843,7 +861,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		};
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 	}
 //	@UiHandler("achDataPolicy")
@@ -862,7 +879,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				//No need to set.
 			}
 		};
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.show();
 
@@ -969,6 +985,130 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		this.btnSignUp = btnSignUp;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.IsHomeView#showPrefilter()
+	 */
+	@Override
+	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
+		this.addStandardsPresenter=addStandardsPresenter;
+//		HeaderUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
+	}
+	
+	/**
+	 * @description This class is used to show the pre-filter search popup
+	 * @author search team
+	 * @date 27-Nov-2014
+	 */
+	public class showPrefilterPopup implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			if(preFilter!=null && preFilter.isShowing()){
+				preFilter.hide();
+				isArrowIcon=true;
+			}else{
+				isArrowIcon=true;
+				//if(preFilter==null){
+					preFilter =	new PreFilterPopup();
+					preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							preFilter.ShowSTandardsPanel().clear();
+							getAddStandards();
+							preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
+							
+						//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+							addStandardsPresenter.getAddBtn().setVisible(false);
+							
+						}
+					});
+				//}
+				HeaderUc.setPrefilterObj(preFilter);
+			//	preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+40);
+				preFilter.setFilter();
+				preFilter.show();
+				preFilter.hidePlanels();
+				ClickHandler handler = new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						preFilter.show();
+						isArrowIcon = true;
+					}
+				};
+				preFilter.addDomHandler(handler, ClickEvent.getType());
+				
+			}
+			
+		}
+		
+	}
+     /**
+      * To show particular user standards 
+      */
+	
+	public void getAddStandards() {
+		
+		if(!AppClientFactory.isAnonymous()){
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+						
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addStandardsPresenter.callDefaultStandardsLoad();
+									//addToPopupSlot(addStandardsPresenter);
+									//getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+							
+					}
+						
+					}
+
+				});
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+				addStandardsPresenter.callDefaultStandardsLoad();
+//				addToPopupSlot(addStandardsPresenter);
+//				getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+			}
+		}
+	}
 }
 
 

@@ -60,8 +60,8 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 		dateBox.setReadOnly(true);
 		if (!isRegistration){
 				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());
-				dateBox.getElement().getStyle().setWidth(271, Unit.PX);
-		}else{
+/*				dateBox.getElement().getStyle().setWidth(271, Unit.PX);
+*/		}else{
 			dateBox.getElement().setAttribute("Placeholder", i18n.GL0211());
 			if (!isSmall){
 				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBox());

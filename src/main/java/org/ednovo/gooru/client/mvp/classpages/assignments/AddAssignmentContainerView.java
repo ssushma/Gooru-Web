@@ -536,8 +536,6 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 */
 	public void addCollectionToAssign(){
 		
-		System.out.println("cureentcollectionTreeItem::"+cureentcollectionTreeItem);
-		System.out.println("currentFolderSelectedTreeItem::"+currentFolderSelectedTreeItem);
 		
 		if(cureentcollectionTreeItem!=null){
 			addResourceBtnLbl.setVisible(false);
@@ -1006,8 +1004,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		hide();
 		clearShelfData();
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		new SuccessMessagePopupView(collectionTitle);
 		Window.enableScrolling(false);
+		new SuccessMessagePopupView(collectionTitle);
 	}
 	
 	public TreeItem loadingTreeItem(){

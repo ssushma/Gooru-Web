@@ -44,6 +44,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -68,11 +69,13 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ThanksPopupUc extends PopupPanel{
  
-	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo,lblClose; //lblDiscover,lblOrganize,lblTeach
+	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo; //lblDiscover,lblOrganize,lblTeach
 	
 	@UiField Button btnStartUsingGooru, btnStartCreatingStudent;//btnDiscover, btnOrganize, btnTeach,
 	
 	@UiField HTML htmlSupport;
+	
+	@UiField Anchor lblClose;
 	
 	@UiField HTMLPanel panelPopupInner,panelFooter;
 	
@@ -113,13 +116,14 @@ public class ThanksPopupUc extends PopupPanel{
         userName = AppClientFactory.getPlaceManager().getRequestParameter("userName") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("userName") : null;
         privateGooruUId = AppClientFactory.getPlaceManager().getRequestParameter("privateGooruUId") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("privateGooruUId") : null;
 //        if (account.equalsIgnoreCase("parent")){
-        	this.getElement().getStyle().setHeight(450, Unit.PX);
-        	panelPopupInner.getElement().getStyle().setHeight(360, Unit.PX);
+        //	this.getElement().getStyle().setHeight(450, Unit.PX);
+        //	panelPopupInner.getElement().getStyle().setHeight(360, Unit.PX);
 //        }else{
 //        	this.getElement().getStyle().clearHeight();
 //        	panelPopupInner.getElement().getStyle().clearHeight();
 //        }
 
+     
         setTextAndIds();
         
         setHandlers();
@@ -153,9 +157,9 @@ public class ThanksPopupUc extends PopupPanel{
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		
 //		this.setStyleName(res.css().thanksPopup());
-		this.removeStyleName("gwt-PopupPanel");
-		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
-	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+		/*this.removeStyleName("gwt-PopupPanel");*/
+	/*	this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());*/
 		
 	
 	}

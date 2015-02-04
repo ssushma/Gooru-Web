@@ -382,7 +382,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		reosourceReleatedCollections.getElement().setId("pnlReosourceReleatedCollections");
 		hideButton.getElement().setId("btnHideButton");
 		
-		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
+	//	resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		AppClientFactory.getEventBus().addHandler(DeletePlayerStarReviewEvent.TYPE,deleteStarRating);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceReviewCountEvent.TYPE,setReviewCount);
@@ -495,7 +495,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 			//gradeListInt = sortList(gradeListInt);
 			/*for(int glevel=0;glevel<gradeListInt.size();glevel++){
-				System.out.println("gradeListInt::"+gradeListInt.get(glevel));
 				if(gradeListInt.get(glevel) == 1000)
 				{
 					//here
@@ -1764,8 +1763,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		courseInfo.clear();
 		if(coursesList.size()>0){
+			System.out.println("coursesList.get(0)::"+coursesList.get(0));
 			final Label courseInfoLabel=new Label(" "+coursesList.get(0));
 			courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
+			System.out.println("courseInfoLabel::"+courseInfoLabel);
 			courseInfo.add(courseInfoLabel);
 			coursePanel.setVisible(true);
 		}
@@ -2241,8 +2242,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 								}
 							};
 							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
-							success.setHeight("253px");
-							success.setWidth("450px");
+						/*	success.setHeight("253px");
+							success.setWidth("450px");*/
 							success.setPopupTitle(i18n.GL1795());
 							success.setDescText(i18n.GL1796());
 							success.enableTaggingImage();
@@ -2335,9 +2336,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setCollectionType(String collectionType) {
-		System.out.println("Enter");
 		String message=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3043():i18n.GL0620();
-		System.out.println("message:::"+message);
 		collectionsText.getElement().setInnerHTML(message);
 		collectionsText.getElement().setAttribute("alt",message);
 		collectionsText.getElement().setAttribute("title",message);

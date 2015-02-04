@@ -459,17 +459,17 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		if(tabView!=null){
 			//getView().clearActiveButtion();
 			if(tabView.equalsIgnoreCase("add")){
-				ResourcePlayerMetadataView.addPadding();
+				
 				getView().clearActiveButton(false,true, true,true);
 				getView().makeButtonActive(true,false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("info")){
-				ResourcePlayerMetadataView.addPadding();
+				
 				getView().clearActiveButton(true,false, true,true);
 				getView().makeButtonActive(false,true, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("share")){
-				ResourcePlayerMetadataView.addPadding();
+				
 				getView().clearActiveButton(true,true, false,true);
 				getView().makeButtonActive(false,false, true,false);
 			}else if(tabView.equalsIgnoreCase("flag")){
@@ -607,13 +607,13 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void startPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-		this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String activityEventId) {
-				
-			}
-		});
+//		this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String activityEventId) {
+//				
+//			}
+//		});
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){

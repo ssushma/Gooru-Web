@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.ResourceCurosal;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
+import org.ednovo.gooru.client.mvp.search.SimpleCollectionVc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TocCollectionEndView;
@@ -58,7 +60,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView{
 
-	@UiField FlowPanel navgationTocContainer;
+	@UiField FlowPanel navgationTocContainer,carouselContainer;
 	@UiField Label previousButton,nextButton,hideText,resourceCountLabel;
 	
 	@UiField HTMLEventPanel hideButton;
@@ -155,16 +157,25 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 					tocCollectionEndView.hideResourceThumbnailContainer(true);
 				}
 				navgationTocContainer.add(tocCollectionEndView);
-				//resources width with padding and margin constitutes 100px for each and collection home and end with padding and margin width
-				//have 100px each. navgationTocContainer width is derived from this.
-				if(resourcesSize>7){
+				boolean device = BrowserAgent.isDevice();
+				if (device){
 					navgationTocContainer.getElement().removeAttribute("style");
-					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100);
+					//new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100,carouselContainer);
+					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100,carouselContainer);
 				}else{
-					nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-					previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize+2)*100)+"px !important;");
+					//resources width with padding and margin constitutes 100px for each and collection home and end with padding and margin width
+					//have 100px each. navgationTocContainer width is derived from this.
+					if(resourcesSize>7){
+						navgationTocContainer.getElement().removeAttribute("style");
+						//new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100,carouselContainer);
+						new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100,carouselContainer);
+					}else{
+						nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+						previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+						navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize+2)*100)+"px !important;");
+					}
 				}
+				
 				String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 				String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
 				String finalMessage = "";

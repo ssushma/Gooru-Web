@@ -51,6 +51,8 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -116,6 +118,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 	}	
 	
@@ -123,6 +126,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
@@ -294,6 +298,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	@Override
 	protected void onReset() {
 		super.onReset();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 		if(AppClientFactory.getPlaceManager().getRequestParameter("b") != null){
 			if (AppClientFactory.getPlaceManager().getRequestParameter("b").equalsIgnoreCase("true")){
 				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.INLINE);

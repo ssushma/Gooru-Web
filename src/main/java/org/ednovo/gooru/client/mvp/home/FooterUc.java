@@ -47,6 +47,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -61,7 +62,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class FooterUc extends Composite {
 
 	private static FooterUcUiBinder uiBinder = GWT.create(FooterUcUiBinder.class);
-
+	
+	@UiTemplate("FooterUc.ui.xml")
 	interface FooterUcUiBinder extends UiBinder<Widget, FooterUc> {
 	}
 	
@@ -163,7 +165,6 @@ public class FooterUc extends Composite {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("902px", "300px");
 				termsAndPolicyVc.center();
 			}
 		});
@@ -173,7 +174,6 @@ public class FooterUc extends Composite {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				termsOfUse.show();
-				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 			}
 		});
@@ -188,7 +188,7 @@ public class FooterUc extends Composite {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("902px", "300px");
+			
 				copyRightPolicy.center();				
 			}
 		});

@@ -311,7 +311,7 @@ public class LibraryTopicListView extends Composite{
 		if(maps.containsKey("emailId")){
 			showPopupAfterGmailSignin();
 		}
-		
+		Window.enableScrolling(true);
 	}
 	
 
@@ -462,6 +462,7 @@ public class LibraryTopicListView extends Composite{
 		if(maps.containsKey("emailId")){
 			showPopupAfterGmailSignin();
 		}
+		Window.enableScrolling(true);
 	}
 
 	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
@@ -536,6 +537,7 @@ public class LibraryTopicListView extends Composite{
 		if(maps.containsKey("emailId")){
 			showPopupAfterGmailSignin();
 		}
+		Window.enableScrolling(true);
 	}
 
 	private void setPartnerLibraryLessonData(final ArrayList<PartnerFolderDo> lessonDoList) {
@@ -913,7 +915,6 @@ public class LibraryTopicListView extends Composite{
 				resourcesInside.clear();
 				ArrayList<LibraryCollectionItemDo> libraryResources =  conceptDo.getCollectionItems();
 				int resourceCount = 0;
-				//System.out.println("AppClientFactory.getCurrentPlaceToken()87878::"+AppClientFactory.getCurrentPlaceToken());
 				if(libraryResources!=null) {
 					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
 						resourceCount = libraryResources.size();
@@ -1350,7 +1351,6 @@ public class LibraryTopicListView extends Composite{
 		
 				if(!isAssignPopup){
 					isAssignPopup=true;
-				//	Window.enableScrolling(false);
 				//final Map<String,String> params = new HashMap<String,String>();
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 					
@@ -1366,8 +1366,8 @@ public class LibraryTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("658px");
+				/*successPopupVc.setWidth("500px");*/
+				//successPopupVc.setHeight("658px");
 				if(!successPopupVc.isVisible()){
 					successPopupVc.show();
 					successPopupVc.center();
@@ -1375,11 +1375,11 @@ public class LibraryTopicListView extends Composite{
 				Window.enableScrolling(false);
 				   
 				if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 				}
 				else
 				{
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.center();
 				}
 				
 				params.put(ASSIGN, "yes");
@@ -1447,8 +1447,8 @@ public class LibraryTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("471px");
+			/*	successPopupVc.setWidth("500px");*/
+			//successPopupVc.setHeight("471px");
 			successPopupVc.show();
 			successPopupVc.center();
 			
@@ -1502,8 +1502,8 @@ public class LibraryTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("471px");
+				/*successPopupVc.setWidth("500px");*/
+				//successPopupVc.setHeight("471px");
 				successPopupVc.show();
 				successPopupVc.center();
 			}
@@ -1525,18 +1525,19 @@ public class LibraryTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("658px");
+			//	successPopupVc.setWidth("500px");
+				//successPopupVc.setHeight("658px");
 				if(!successPopupVc.isVisible()){
 					successPopupVc.show();
 					successPopupVc.center();
 				}
 				if (AppClientFactory.isAnonymous()){
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 				}
 				else
 				{
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.center();
+
 				}
 			}
 			

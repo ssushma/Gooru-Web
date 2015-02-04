@@ -36,6 +36,7 @@ import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -64,6 +65,8 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndReviewPopupUiHandlers> implements IsRatingAndReviewPopupView{
 
 	public PopupPanel appPopUp =new PopupPanel();
+	
+	@UiField HTMLPanel maincontainer;
 
 	@UiField Label closeButton;
 
@@ -113,14 +116,16 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		}
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-
+		reviewsContainer.getElement().getStyle().setWidth(100, Unit.PCT);
+		reviewScrollPanel.setHeight("500px");
+		reviewScrollPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
+//		this.center();
+//		appPopUp.center();
 	}
 
 	@UiHandler("closeButton")
 	public void closeRatingAndReviewPopup(ClickEvent event){
 		String currentToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-
-		
 		hide();
 		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);
@@ -337,6 +342,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		}
 		
 		apiInprogress=false;
+//		appPopUp.center();
 
 	}
 

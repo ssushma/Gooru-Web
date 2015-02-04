@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -69,7 +70,7 @@ public abstract class NavigationConfirmPopup extends PopupPanel{
 		setStaticTexts();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		this.getElement().getStyle().setZIndex(999999);
-		this.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainer());
+		//this.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainer());
 		this.setGlassEnabled(true);
 		this.setAutoHideOnHistoryEventsEnabled(true);
 		this.getGlassElement().getStyle().setZIndex(999999);
@@ -90,6 +91,8 @@ public abstract class NavigationConfirmPopup extends PopupPanel{
 		
 		continueButton.setText(i18n.GL1663());
 		continueButton.getElement().setId("backtoresponse");
+		continueButton.getElement().getStyle().setMarginRight(5, Unit.PX);
+		continueButton.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		continueButton.getElement().setAttribute("alt",i18n.GL1663());
 		continueButton.getElement().setAttribute("title",i18n.GL1663());
 		

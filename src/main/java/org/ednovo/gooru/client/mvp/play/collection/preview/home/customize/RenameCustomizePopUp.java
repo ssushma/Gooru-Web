@@ -112,14 +112,16 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 	public RenameCustomizePopUp(String collectionId, final Boolean loginFlag,final String collectionTitle) {
 		super(false);
 		this.res = AssignPopUpCBundle.INSTANCE;
+		
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		errorLabel.setVisible(false);
+	//	this.setStyleName(res.css().popupStyle());
 		this.setGlassEnabled(true);
 		customizeText.getElement().setInnerHTML(i18n.GL0743());
 		customizeText.getElement().setAttribute("alt",i18n.GL0743());
 		customizeText.getElement().setAttribute("title",i18n.GL0743());
-		
+		this.setHeight("550px");
 		backtoLibrary.setText(i18n.GL0142());
 		backtoLibrary.getElement().setAttribute("alt",i18n.GL0142());
 		backtoLibrary.getElement().setAttribute("title",i18n.GL0142());
@@ -129,11 +131,13 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		editCollection.getElement().setAttribute("title",i18n.GL0636());
 		
 		panelAssign.getElement().getStyle().setMarginBottom(3, Unit.PX);
-		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
+		//loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		isDraggedFromSearch=false;
 		Window.enableScrolling(false);
 		this.getElement().setAttribute("style", "z-index:99999;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+		//this.getElement().setAttribute("style", "min-height:420px");
+		//	this.getElement().setAttribute("style", "top:26px");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 
 		popupcontentCustomize.setVisible(false);
@@ -213,13 +217,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		});
 
 		MixpanelUtil.mixpanelEvent("CoursePage_customize_collection");
-		
-		
-		
-		
-		
-		
-		
 		setId();
 		this.center();
 

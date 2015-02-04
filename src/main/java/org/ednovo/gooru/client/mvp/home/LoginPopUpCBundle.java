@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.home;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**
  * 
@@ -38,121 +39,245 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	
 	static final LoginPopUpCBundle INSTANCE = GWT.create(LoginPopUpCBundle.class);
 	
+	@NotStrict
+	@Source("res_loginpopup1.css")
+	LoginPopUpCss getResponsiveStyle();
+	
+	@NotStrict
+	@Source("res_loginpopup2.css")
+	LoginPopUpCss getResponsive1Style();
+
+	@NotStrict
+	@Source("res_loginpopup3.css")
+	LoginPopUpCss getResponsive2Style();
+	
+	@NotStrict
+	@Source("res_loginpopup4.css")
+	LoginPopUpCss getResponsive3Style();
+	
+	@NotStrict
+	@Source("res_loginpopup5.css")
+	LoginPopUpCss getResponsive4Style();
+	
+	@NotStrict
+	@Source("res_loginpopup6.css")
+	LoginPopUpCss getResponsive5Style();
+	
+	@NotStrict
+	@Source("res_loginpopup7.css")
+	LoginPopUpCss getResponsive6Style();
+	
+	
 	public interface LoginPopUpCss extends CssResource{
 		
-		String loginPopupContainer();
-		String loginPopupInnerdiv();
-		String loginPopupHeaderBg();
-		String loginPopupHeaderTitle();
-		String loginPopupCloseBtnContainer();
-		String textBoxPlaceHolderWidth();
-		String keepMeLoginContainer();
-		String loginPopupCheckBoxDescText();
-		
-		String loginPopupBtnSprite();
-		String loginPopupCloseBtn();
-		String loginPopupGooruLogoContainer();
-		String loginPopupGooruLogo();
-		String loginPopupInputContainer();
-		String loginPopupInputControl();
-		String loginPopupInputPwdText();
-		String loginPopupCheckBoxContainer();
-		String loginPopupCheckBoxControl();
-		String loginPopupCheckBox();
-		String loginPopupCheckBoxDesc();
-		String loginPopupButtonContainer();
-		String loginPopupButtonBg();
-		String loginPopupButtonText();
-		
-		String loginPopupBottomTextContainer();
-		String loginPopupBottomText();
-		String loginPopupBottomBlueText();
-		
-		String loginPopupBorderBottom();
-		String loginPopupOrText();
-		String loginPopupGplusButtonContainer();
-		String loginPopupGplusButton();
-//		String loginPopupGplusButtonQ();
-		String loginPopupGplusOuterdiv();
-		
-		String loginPopupGplusBtn();
-		String loginPopupGplusDesc();
-		String clear();
-		
-		String loginPopupGlassStyle();
-		
-		// New Login popup css.//
-		
-		String processing();
+	String LoginpopupMain();
+	String LoginpopupInner();
+	String LoginpopupHeader();
+	String LoginpopupContent();
+	String LoginPopUpgreen();
+	String PopupMainV1Small();
+	String LoginPopUpgreensmall();
+	String subheader();
+	String signInContainer();
+	String gConnectButton();
+	String divider();
+	String dividerText();
+	String logInput();
+	@ClassName("form-control")
+	String form_control();
+	String forgotPasswordLink();
+	String loginPopupbtnContainer();
+	String haveAccount();
+	String haveAccountContainer();
+	String closeContainer();
+	String closeButton();
+	String whyGoogle();
+	String questionHover();
+	String lblDontHaveGoogleAccount();
+	String processing();
+	String loginPopupGlassStyle();
+	String  lnkSignUpWithEmail();
+	String subjectOptionSS();
+	String  policyTextLine();
+	String privacyLinkText();
+	String paragraph();
+	String popupInnerGrey();
+	String contactUs();
+	String forgotPasswordText();
+	String  forgotPasswordDescription();
+	String roleOption();
+	String roleOptionImage();
+	String Grades();
+	String PopupMainSmall();
+	String lblCollectionProgress();
+	String forgotPasswordButtonContainer();
+	String primary();
+	String policyTextHeade();
+	String PopupInner();
+	@ClassName("SignUp-h2")
+	String SignUp_h2();
+	String courseContainer();
+	String subjectOptionScience();
+	String  leaveRegistrationButtonContainer();
+	String otherRole();
+	String PopupContent();
+	@ClassName("SignUp-green-h1")
+	String SignUp_green_h1();
+	String  termsTextLine();
+	String lastUpdated();
+	String leaveRegistrationBottomContainer();
+	String popupgreyFooter();
+	String  forgotPasswordTextBoxContainer();
+	String  termsOfUserMessageText();
+	String privacyCloseButton();
+	String popupgreenHeader();
+	String sampleReportSliderHolder();
+	String courseOption();
+	String teacherRole();
+	String  active();
+	String studentRole();
+	String popupContentLeaveRegistration();
+	String popupFooter();
+	String subjectOptionMath();
+	String subjectOptionELA();
+	String  secondary();
+	String  selectGrades();
+	String greyBGContainer();
+	String popupInnerLeaveReg();
+	String subjectOption();
+	String PopupMainMedium();
+	String PopupMainMediumReport();
+	String parentRole();
+	String  SliderHolderPrev();
+	String title();
+	String popupContentGrey();
+	String leaveRegistarionFooterText();
+	String selectCourses();
+	String popupContentforgotPassword();
+	String SliderHolderNext();
+	String popupInnerforgotPassword();
+	String inputGroup();
+	String lblCollectionProgressDetails();
+	String userInfoContainer();
+	String PopupMainLarge();
+	String popupContentScroll();
+	String roleLabel();
+	String GreenHeader();
+	String termsSubTitle();
+	String noOverflow();
+	String  popupgreyHeader();
+	String textContentDiv();
+	String  disabled();
+	String teacherRoleSelected();
+	String studentRoleSelected();
+	String parentRoleSelected();
+	String otherRoleSelected();
+	String forgotPasswordErrorMessage();
+	String sceinceActive();
+	String mathActive();
+	String ssActive();
+	String elaActive();
+	String subj();
+	@ClassName("menu-icon")
+	String menu_icon();
+	String activeGrade();
+	String collectionSelected();
+	String PopupMainVVSmall();
+	String PopupMainVSmall();
+	String shareSelection();
+	String sharenEmbedContainer();
+	String addButtonContainer();
+	String actionField();
+	String contentDesc();
+	String dontWorrkText();
+	String popupcornerBg();
+	String overRideBlueButton();
+	String collectionFormCancelButton();
+	String whatNew();
+	String whatLeft();
+	String whatRight();
+	String improveGooruDesc();
+	String borderLeft();
+	String improveGooruDescriptionx();
+	String improveGooruLinkDesc();
+	String improveGooruSubHeading();
+	String improveGooruBlueText();
+	String improveGooruBlueTextDesc();
+	String collectionSel();
+	String lables();
+	String assignContainer();
+	String addSelection();
+	String emailSelection();
+	String loginShareContainer();
+	String formViewButtonContainer();
+	@ClassName("AddTagesPopup-levelType")
+	String  AddTagesPopup_levelType();
+	@ClassName("AddTagesPopup-okcancel")
+	String  AddTagesPopup_okcancel();
+	@ClassName("AddTagesPopup-li")
+	String AddTagesPopup_li();
+	@ClassName("AddTagesPopup-levelnumbers")
+	String AddTagesPopup_levelnumbers();
+	String standardsCont();
+	@ClassName("AddTagesPopup-h5")
+	String AddTagesPopup_h5();
+	String addTagsContent();
+	String addQuestionStandard();
+	@ClassName("AddTagesPopup-selected")
+	String AddTagesPopup_selected();
+	String emailContainer();
+	String lblNoteTxt();
+	String classPageEmailButtonCancel();
+	String PopupMainExtraLarge();
+	String standarBodyContainer();
+	String scrollBar();
+	String listGroup();
+	String reviewsContent();
+	String rHeader();
+	String panelRatingLabels();
+	String ratingLabel();
+	String panelRatingValues();
+	String bar();
+	String count();
+	String reviewContainer();
+	String reviewContainerHeader();
+	String review();
+	String date();
+	String ratingStars();
+	String childInputGroup();
+	String parentsAccount();
+	String contentDescr();
+	String orContainerDown();
+	String childUserInfoContainer();
+	String firstInputGroup();
+	String remixContainer();
+	String labels();
+	String leftFlagPanel();
+	String leftFlagMenu();
+	String flagbuttonDeSelected();
+	String rightFlagPanel();
+	String normalText();
+	String popupHeader();
 	
-		String popupInner();
-
-		String popupHeader();
-
-		String popup(); 
-		
-		String closeButton();
-
-		String popupContent();
-
-		String imgBG();
-
-		String h1();
-
-		String signInContainer();
-
-		String gConnectButton();
-
-		String divider();
-
-		String dividerText();
+	
+	String forgotPasswordSuccessText();
+	String h1();
+	String btnSubmit();
+	String forgotPasswordSuceessButtonContainer();
+	String forgotPasswordSuccessPopupContent();
+	String footerText();
+	String forgotPasswordBottomContainer();
+	String popupInner();
+	String popup();
+	String forgetImgBG();
+	
+		String errorLabel();
+		String loginWithGooru();
 
 		String emailSignIn();
-
-		String btnLogin();
-
-		String forgotPasswordLink();
-
-		String haveAccount();
-		
-		String haveAccountContainer();
-		 
-		String forgotPasswordText();
-		
-		String forgotPasswordTextBoxContainer();
-		
-		String btnSubmit();
-		
-		String forgotPasswordBottomContainer();
-		
-		String footerText();
-		
-		String forgetImgBG();
-		
-		String forgotPasswordErrorMessage();
-		
-		String forgotPasswordPopupContent();
-		
-		String forgotPasswordSuccessText();
-		
-		String forgotPasswordSuccessPopupContent();
-		
-		String forgotPasswordSuceessButtonContainer();
-		
-		String forgotPasswordPopupResendContent();
-		
-		String h1SuccessConfirmMessage();
-		
-		String h1SuccessConfirmMessage1();
-		
-		String separator();
-		
-		String green();
-		
-		String errorLabel();
-		
-		String loginWithGooru();
+		String forgotPwdMargin();
 	}
+	@NotStrict
 	@Source("Newlogin-popup.css")
 	LoginPopUpCss css();
 

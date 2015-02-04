@@ -24,6 +24,12 @@
 	border-right: 1px solid #CCCCCC;
 	border-left: 1px solid #CCCCCC;
 }
+.viewSummaryTextSummary {
+	float: left;
+	border: 1px solid #ccc;
+	border-left: 1px solid #CCCCCC;
+	margin-top: 2px;
+}
 .addButonStyle{
 	height: 39px;
 	background: #EDEDED !important;
@@ -118,7 +124,6 @@
 	border: 1px solid rgb(221, 221, 221);
 }
 .viewResponsepnl{
-	height: 250px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -193,6 +198,10 @@
 }
 .questionCountlbl{
 	padding-bottom: 12px;
+}
+
+.popupContainer{
+	background-color: #fff;
 }
 .teacher_name{
 	padding: 0;

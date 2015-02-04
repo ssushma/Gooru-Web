@@ -4,6 +4,8 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,8 +39,8 @@ public class SampleReportNextView extends PopupPanel {
 
 	public SampleReportNextView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		this.setStyleName("reportPopup");
 		this.setGlassEnabled(true);
+		this.setHeight("603px");
 		this.show();
 		this.center();
 		Window.enableScrolling(false);

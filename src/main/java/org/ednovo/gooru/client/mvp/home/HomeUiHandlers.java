@@ -85,4 +85,25 @@ public interface HomeUiHandlers extends BaseUiHandlers {
 	*/
 	
 	Object getContributorsSlot();
+
+	/**
+	 * 
+	 * @function generatePartnerLibraries 
+	 * 
+	 * @created_date : 24-Nov-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void generatePartnerLibraries();
 }

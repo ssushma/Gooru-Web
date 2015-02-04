@@ -84,6 +84,8 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -99,6 +101,8 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -872,19 +876,19 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(tabView!=null){
 			//getView().clearActiveButtion();
 			if(tabView.equalsIgnoreCase("add")){
-				ResourcePlayerMetadataView.addPadding();
+				
 				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(false,true, true, true, true,false);
 				getView().makeButtonActive(true, false,false, false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("info")){
-				ResourcePlayerMetadataView.addPadding();
+				
 				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,false, true, true, true,false);
 				getView().makeButtonActive(false,true, false, false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("share")){
-				ResourcePlayerMetadataView.addPadding();
+				
 				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, false, true, true,false);
 				getView().makeButtonActive(false,false, true, false, false,false);
@@ -894,7 +898,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getView().makeButtonActive(false,false, false, true, false,false);
 			}
 			else if(tabView.equalsIgnoreCase("navigation")){
-				ResourcePlayerMetadataView.addPadding();
+				
 				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, true, true, false,false);
 				getView().makeButtonActive(false,false, false, false, true,false);
@@ -1843,7 +1847,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						if(result.get(i).getContentReportList()!=null){
 							for(int j=0; j<result.get(i).getContentReportList().size(); j++){
 								flagType=result.get(i).getContentReportList().get(j);
-								System.out.println("flagType::"+flagType);
 								if(flagType.equals("not-loading")){
 									isNotLoad=true;
 								}
@@ -2352,20 +2355,35 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	
 	public void addFixedPostionForNavigation(){
-		collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
+		//collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
 	}
 	public void adjustCollectionMetadaBody(boolean isHome){
 		if(isHome){
-			metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX);
+			  /*Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+			  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+			  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+			  if(isIpad)
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX); 
+			  }
+			  else if(isAndriod)
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX); 
+			  }
+			  else
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX); 
+			  }*/
+			
 		}else{
-			addFixedPositionNavArrows();
+			//addFixedPositionNavArrows();
 		}
 	}
 	public void addFixedPositionNavArrows(){
 		resoruceMetadataPresenter.getWidget().getElement().getStyle().setPaddingTop(38+50, Unit.PX);
-		resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);
-		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
-		resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
+		/*resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);*/
+		//int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
+		//resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
 	}
 
 	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {
@@ -2499,4 +2517,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		
 	}
+	public FlowPanel getMenuContainer(){
+		return getView().menuContent();
+		}
+	
 }

@@ -419,5 +419,27 @@ public class StringUtil {
 		result = htmText.replace(regex, "");
 		return result;
 	}-*/;
-
+	
+	/**
+	 * 
+	 * @function SysOut 
+	 * 
+	 * @created_date : 24-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param message
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public static void SysOut(String message){
+//		System.out.println(message);
+	}
 }

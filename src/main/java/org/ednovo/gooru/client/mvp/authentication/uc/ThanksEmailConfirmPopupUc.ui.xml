@@ -4,14 +4,24 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
 		field="res" />
-	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
-		<g:HTMLPanel styleName="{res.css.popupInner}" ui:field="panelPopupInner">
-			<g:Label styleName="{res.css.popupHeader}" ui:field="lblLoginHeading"></g:Label>
-			<g:Label ui:field="lblClose"
-				styleName="{res.css.closeButton}"></g:Label>
-			<g:HTMLPanel styleName="{res.css.thanksPopupContent}">
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
+	<g:HTMLPanel styleName="{res1.css.LoginpopupMain}">
+		<g:HTMLPanel styleName="{res1.css.LoginpopupInner}"  ui:field="panelPopupInner">
+			<g:HTMLPanel styleName="{res1.css.LoginpopupHeader}">
+				<g:HTMLPanel styleName="row">
+					<g:HTMLPanel styleName="col-md-8 col-xs-8">
+						<g:Label  ui:field="lblLoginHeading"></g:Label>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="col-md-4 col-xs-4 {res1.css.closeContainer}">
+						<g:Anchor styleName="{res1.css.closeButton}" ui:field="lblClose"></g:Anchor>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+				</g:HTMLPanel>
+			   </g:HTMLPanel>	
+			<g:HTMLPanel styleName="col-md-12 col-xs-12">
 				<g:Label styleName="{res.css.congratsHeader}" ui:field="lblCongratsHeader"/>
-				<g:Label styleName="{res.css.subheader}" ui:field="lblCheckYourEmail"/>
+				<g:Label styleName="{res1.css.subheader}" ui:field="lblCheckYourEmail"/>
 				<g:Button styleName="primary {res.css.startUsingGooru}" ui:field="btnStartUsingGooru"/>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

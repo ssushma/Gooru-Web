@@ -29,12 +29,17 @@ import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHan
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
 
-public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers,SetPlayerLoginStatusHandler {
+import com.google.gwt.user.client.ui.FlowPanel;
+
+public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers,SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
+
 	public void createCommentForCollection(String gooruOid, String comment);
 	
 	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);
 	
 	public void getPaginationResults(String gooruOid, String offset, String limit);
+	
+	public FlowPanel getMenuContainer();
 
 	void updateCommentsStatus(String commentsStatus);
 }

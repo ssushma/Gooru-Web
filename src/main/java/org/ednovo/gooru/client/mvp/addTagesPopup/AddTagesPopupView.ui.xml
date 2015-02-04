@@ -1,111 +1,185 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
-	<ui:with
-		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
-		field="res" />
-	<g:HTMLPanel styleName="{res.css.popup}">
-		  <g:HTMLPanel  styleName="{res.css.popupInner}">
-		    <g:HTMLPanel styleName="{res.css.popupHeader}" > 
-		   	 <g:InlineLabel ui:field="addTagesTitle"></g:InlineLabel>
-		      <g:Label styleName="{res.css.tag}"></g:Label>
-		    </g:HTMLPanel >
-		    <g:HTMLPanel  styleName="{res.css.popupContent}"><g:InlineLabel ui:field="popupContentText"></g:InlineLabel><br />
-		      <br />
-		      <g:Label styleName="{res.css.h5}" ui:field="headerEducationalUse"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="activity"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="handout"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="homework"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="game"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="presentation"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="refMaterial"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="quiz"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="currPlan"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="lessonPlan"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="unitPlan"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="projectPlan"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="reading"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="textbook"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="article"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="book"></g:Label>
+	<ui:with type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle" field="res" /> 
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"	field="res1" />
+	<g:HTMLPanel styleName="{res1.css.PopupMainSmall}">
+		  <g:HTMLPanel  styleName="{res1.css.popupInnerGrey}">
+		    <g:HTMLPanel styleName="{res1.css.popupgreyHeader}" > 
+		        <g:HTMLPanel styleName="row">
+		            <g:HTMLPanel styleName="col-md-12 col-xs-12">
+		            	<g:InlineLabel ui:field="addTagesTitle"></g:InlineLabel>
+		      			<g:Label styleName="{res.css.tag}"></g:Label>          
+		            </g:HTMLPanel>
+		            <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		        </g:HTMLPanel>
+		      </g:HTMLPanel >
+		    <g:HTMLPanel  styleName="{res1.css.addTagsContent}">
+		        <gg:PPanel ui:field="popupContentText"></gg:PPanel>
+		        <br/><br/>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_h5}">
+		      		<g:Anchor  ui:field="headerEducationalUse"></g:Anchor>    
+		      </g:HTMLPanel>  
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		     		 <g:Anchor  ui:field="activity"></g:Anchor>     
+		      </g:HTMLPanel>
+		     <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	<g:Anchor ui:field="handout"></g:Anchor>   
+		     </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	<g:Anchor ui:field="homework"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		     		 <g:Anchor  ui:field="game"></g:Anchor>     
+		      </g:HTMLPanel>
+		     <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	<g:Anchor  ui:field="presentation"></g:Anchor>   
+		     </g:HTMLPanel>
+		     <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		     	 <g:Anchor  ui:field="refMaterial"></g:Anchor>    
+		     </g:HTMLPanel> 
+		     <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	<g:Anchor  ui:field="quiz"></g:Anchor>   
+		     </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      		<g:Anchor  ui:field="currPlan"></g:Anchor>
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      		<g:Anchor  ui:field="lessonPlan"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      		<g:Anchor  ui:field="unitPlan"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      		<g:Anchor  ui:field="projectPlan"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		     		 <g:Anchor  ui:field="reading"></g:Anchor>     
+		      </g:HTMLPanel>
+		     <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		     	 <g:Anchor  ui:field="textbook"></g:Anchor>    
+		     </g:HTMLPanel>
+		     <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	<g:Anchor  ui:field="article"></g:Anchor>	   
+		     </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		     	 <g:Anchor  ui:field="book"></g:Anchor>	     
+		      </g:HTMLPanel>
+		     
 		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
-		      <!-- <g:HTMLPanel styleName="{res.css.h5} {res.css.qmark}">Standards<br />
+		      <!-- <g:HTMLPanel styleName="{res1.css.AddTagesPopup_h5} {res.css.qmark}">Standards<br />
 		        <g:TextBox styleName="{res.css.inputtype}" />
 		      </g:HTMLPanel> -->
 		      <!-- Standards Start -->
 			 <g:FlowPanel ui:field="standardContainer">
-					<g:Label styleName="{res.css.addQuestionStandard}"	ui:field="standardsDefaultText"></g:Label>
-					<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
-						<g:FlowPanel styleName="{res.css.addResourceSuggestedBoxForQuestion}">
-							<g:FlowPanel styleName="{res.css.standardsCont}">
-								<gg:AppSuggestBox ui:field="standardSgstBox" width="271px" height="19px" />
-								<g:Label styleName="{res.css.standardMaxHide}" ui:field="standardMaxMsg" />
-								<g:FlowPanel ui:field="standardsPanel"
-									styleName="{res.css.collectionStandardsMargin}" />
-							</g:FlowPanel>
-						</g:FlowPanel>
+					<g:Label styleName="{res1.css.addQuestionStandard}"	ui:field="standardsDefaultText"></g:Label>
+					<g:FlowPanel styleName="{res1.css.standardsCont}">
+						<gg:AppSuggestBox ui:field="standardSgstBox" styleName="form-control {res1.css.form_control}" />
+							<g:Label styleName="{res.css.standardMaxHide}" ui:field="standardMaxMsg" />
+							<g:FlowPanel ui:field="standardsPanel"	styleName="{res.css.collectionStandardsMargin}" />
 					</g:FlowPanel>
-				</g:FlowPanel>
+			 </g:FlowPanel>
        		 <!-- Standards End -->
-		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
-		      <g:HTMLPanel styleName="{res.css.levelType}">
-		        <g:Label  styleName="{res.css.h5}" ui:field="lexileHeader"></g:Label >
-	<!-- 	        <gg:SlideBarView ui:field="slideBar"></gg:SlideBarView> -->
-<!-- 		        <gg:HTMLEventPanel styleName="{res.css.sliderBg}" ui:field="barSlider">
-		          <g:HTMLPanel styleName="{res.css.sliderLeft}"></g:HTMLPanel>
-		          <g:HTMLPanel styleName="{res.css.sliderRight}"></g:HTMLPanel>
-		          <g:HTMLPanel styleName="{res.css.sliderCircle}" ui:field="moveCircle"></g:HTMLPanel>
-		        </gg:HTMLEventPanel> -->
-		        <g:HTMLPanel styleName="{res.css.levels}">
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="kindergarden"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level1"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level2"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level3"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level4"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level5"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level6"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level7"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level8"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level9"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level10"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level11"></g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level12"></g:Label>
-		        </g:HTMLPanel>
+		      <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelType}">
+		        <g:Label  styleName="{res1.css.AddTagesPopup_h5}" ui:field="lexileHeader"></g:Label >
+		        <g:HTMLPanel styleName="AddTagesPopup-levels">
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         	 <g:Anchor  ui:field="kindergarden"></g:Anchor>
+		           </g:HTMLPanel> 
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		           		<g:Anchor  ui:field="level1"></g:Anchor>    
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level2"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level3"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level4"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level5"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level6"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level7"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level8"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level9"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level10"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level11"></g:Anchor>      
+		           </g:HTMLPanel>
+		           <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelnumbers}">
+		         		 <g:Anchor  ui:field="level12"></g:Anchor>      
+		           </g:HTMLPanel>
+		       </g:HTMLPanel>
 		      </g:HTMLPanel>
-		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
-		      <g:Label styleName="{res.css.h5}" ui:field="AdsHeader"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="noAds"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="modAds"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="aggreAds"></g:Label>
+		      <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		      <g:Label styleName="{res1.css.AddTagesPopup_h5}" ui:field="AdsHeader"></g:Label>
+		   	  <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		   	  		<g:Anchor  ui:field="noAds"></g:Anchor>    
+		   	  </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      		<g:Anchor  ui:field="modAds"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	    <g:Anchor  ui:field="aggreAds"></g:Anchor>    
+		      </g:HTMLPanel>
 		      <br />
 		      <br />
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
-		      <g:Label styleName="{res.css.h5}" ui:field="accessHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="soundHazard"></g:Label>
-		      <g:Label styleName="{res.css.clearfix}"></g:Label>
-		      <br />
-			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
- 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" >
- 		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
-							<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
-		       <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
-								styleName="{res.css.scrollPanelContainerInstructional}">
-								<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"
-									styleName=""></g:HTMLPanel>
-							</g:ScrollPanel>
-		      </g:HTMLPanel> 
-		      <g:HTMLPanel styleName="{res.css.h5} {res.css.selectsection} {res.css.fRight}"><g:InlineLabel ui:field="moblieFriendly"></g:InlineLabel><br />
+		      <g:Label styleName="{res1.css.AddTagesPopup_h5}" ui:field="accessHazard"></g:Label>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	<g:Anchor  ui:field="flashingHazard"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      	<g:Anchor  ui:field="motionSimulationHazard"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
+		      		<g:Anchor  ui:field="soundHazard"></g:Anchor>    
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		      <br/>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_levelType}">
+		      <g:HTMLPanel styleName="row">
+		      <g:HTMLPanel styleName="col-md-8 mediaFeature">
+		       <g:Label styleName="{res1.css.AddTagesPopup_h5}" ui:field="mediaLabel"/>
+			   <g:HTMLPanel styleName="btn-group">
+  				<g:Anchor ui:field="lblMediaPlaceHolder" styleName="btn btn-default dropdown-toggle">
+    			</g:Anchor>
+			      <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
+					styleName="{res.css.scrollPanelContainerInstructional}" >
+    				<gg:UlPanel ui:field="htmlMediaFeatureListContainer"></gg:UlPanel>    
+    			</g:ScrollPanel>
+  				
+			  </g:HTMLPanel>
+		       </g:HTMLPanel>	
+		     <g:HTMLPanel styleName="col-md-4">      
+		        <g:HTMLPanel styleName="{res1.css.AddTagesPopup_h5}"><g:InlineLabel ui:field="moblieFriendly"></g:InlineLabel><br />
 		        <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes"></g:Button>
 		        <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo"></g:Button>
 		      </g:HTMLPanel>
-		      <g:HTMLPanel styleName="{res.css.okcancel}">
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="clearfix"/>
+		       </g:HTMLPanel>
+		    </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_okcancel}">
 		          
 		      <g:Button styleName="primary" ui:field="addTagsBtn"></g:Button>
 		      <g:Button styleName="secondary" ui:field="cancelBtn"></g:Button>
-		      
-		    </g:HTMLPanel>
+		      </g:HTMLPanel>
+		   
 		    </g:HTMLPanel>
 		  </g:HTMLPanel>
 	</g:HTMLPanel>

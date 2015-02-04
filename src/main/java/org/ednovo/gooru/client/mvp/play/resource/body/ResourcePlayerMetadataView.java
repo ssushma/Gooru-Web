@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
@@ -93,16 +94,21 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView{
 
-	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
+	@UiField FlowPanel tagsButtonContainer;
+	@UiField SectionTag resourceWidgetContainer;
 	@UiField
-	static FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
+	static FlowPanel wrapperContainerField;
+	@UiField
+	FlowPanel tagsContainer;
+	@UiField
+	FlowPanel resourcePublisher;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
+	@UiField HTMLPanel singleEmoticsContainer,ratingsContainer;
+	@UiField SectionTag collectionContainer;
 	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
-	@UiField
-	static ResourcePlayerMetadataBundle playerStyle;
+	@UiField ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
 	
 //	@UiField(provided = true)
@@ -169,7 +175,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	int currentRating=0;
 	
-	public HTMLPanel getCollectionContainer(){
+	public SectionTag getCollectionContainer(){
 		return collectionContainer;
 	}
 	
@@ -233,6 +239,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		plusAddTagsButton.getElement().setId("plusAddTagsButton");
 		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL2081());
 		plusAddTagsButton.getElement().setAttribute("title",i18n.GL2081());
+
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -272,15 +279,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			//  wrapperContainerField.getElement().setAttribute("style", "padding-top:0px;");
 			 
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			  //wrapperContainerField.getElement().setAttribute("style", "padding-top:0px;");
 		  }
 		  else
 		  {
+			//  wrapperContainerField.getElement().setAttribute("style", "padding-top:88px;");
 			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
@@ -482,7 +491,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
 //					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
-//					System.out.println("webResourceWidget"+webResourceWidget);
 					HTMLPanel htmlPanel = new HTMLPanel("");
 					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
 					Image img = new Image();
@@ -518,7 +526,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 				String signedFlag=resourceSourceUrl.contains("http")||resourceSourceUrl.contains("https")?"0":"1";
 				String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
-				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceSourceUrl));
+				String endPage=collectionItemDo.getStop()!=null?collectionItemDo.getStop():"";
+				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage="+endPage+"&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceSourceUrl));
 			}
 			else
 			{
@@ -536,10 +545,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public void setResourceWidgetContainerHeight(){
 		int windowHeight=Window.getClientHeight();
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			resourceWidgetContainer.setHeight((windowHeight-116)+"px");
+			resourceWidgetContainer.setHeight((windowHeight-(116+3))+"px");
 		}else{
-			resourceWidgetContainer.setHeight((windowHeight-202)+"px");
+			resourceWidgetContainer.setHeight((windowHeight-(202+3))+"px");
 		}
+		
 	}
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
@@ -727,7 +737,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 
 	@Override
-	public FlowPanel getResourceWidgetContainer(){
+	public SectionTag getResourceWidgetContainer(){
 		return resourceWidgetContainer;
 	}
 
@@ -949,15 +959,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		
 	}
-	public static void addPadding(){
-		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapper());
-		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapperPadding());
-	}
-	
-	public static void removePadding(){
-		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapperPadding());
-		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapper());
-	}
+
 
 	/**
 	 * If no reaction available, sets the default reaction for all the resources.
@@ -1373,25 +1375,25 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 		if(result!=null){
 			setStyle();
-			currentRating = result.getScore();
-			if(result.getScore()==1){
+			currentRating = result.getScore()!= null && result.getScore() > 0 ? result.getScore() : 0;
+			if(currentRating==1){
 				starValue.setVisible(true);
 				starValue.setText(POOR);
 				setStarRatingValue(1); 
-			}else if(result.getScore()==2){
+			}else if(currentRating==2){
 				starValue.setVisible(true);
 				starValue.setText(FAIR);
 				setStarRatingValue(2); 
-			}else if(result.getScore()==3){
+			}else if(currentRating==3){
 				starValue.setVisible(true);
 				starValue.setText(GOOD);
 				setStarRatingValue(3);
-			}else if(result.getScore()==4){
+			}else if(currentRating==4){
 				starValue.setVisible(true);
 				starValue.setText(VERY_GOOD);
 				setStarRatingValue(4);
 				
-			}else if(result.getScore()==5){
+			}else if(currentRating==5){
 				starValue.setVisible(true);
 				starValue.setText(EXCELLENT);
 				setStarRatingValue(5);
@@ -1588,7 +1590,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+		//  wrapperContainerField.getElement().setAttribute("style", "padding-top:88px;");
 	}
 
 	/**
@@ -1849,8 +1851,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 								}
 							};
 							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
-							success.setHeight("253px");
-							success.setWidth("450px");
+							/*success.setHeight("253px");
+							success.setWidth("450px");*/
 							success.setPopupTitle(i18n.GL1795());
 							success.setDescText(i18n.GL1796());
 							success.enableTaggingImage();

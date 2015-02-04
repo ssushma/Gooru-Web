@@ -69,7 +69,7 @@ background-color: #DDD;
 .goal{
 	color:#515151;
 	font-size:12px;
-	height:75px;
+	margin-bottom: 15px;
 	font-family: Arial, sans-serif !important;
 }
 .infoSection h3{
@@ -101,4 +101,7 @@ background-color: #DDD;
 .preview:hover {
     background: url("images/preview-arrow.png") 125px center no-repeat, #1076BB;
     cursor: pointer;
+}
+.block{
+	padding: 30px 0;
 }

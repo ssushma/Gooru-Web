@@ -78,6 +78,7 @@
 	padding-top: 5px;
 	border-radius: 5px;
 	background-color: transparent;
+	height: 50px;
 	/* min-height: 55px; */
 	/* display: inline-block; */
 	/* margin-top: 15px; */
@@ -90,8 +91,8 @@
 
 .btnRemoveCollab{
 	vertical-align: middle;
-	margin-top: -36px;
-	margin-left: -10px;
+	/* margin-top: -36px;
+	margin-left: -10px; */
 }
 
 .radioButton {
@@ -278,7 +279,7 @@
 	width: 100%;
     text-align:center;
 	margin:auto;
-	margin-bottom:15px;
+	margin-bottom:5px;
 	/* margin-top: 25px; */
 }
 #btnNegitive, #btnPositive{
@@ -373,6 +374,7 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 	font-size: 12px;
 	border: 1px solid #ccc;
 	padding: 3px;
+	box-sizing:content-box;
 }
 .deleteContainer{
 	text-align: center;
@@ -407,6 +409,6 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 }
 .deleteTextLable{
 	text-align: left;
-	margin-left: 72px;
+	margin-left: 115px;
 	margin-bottom: -6px;
 }

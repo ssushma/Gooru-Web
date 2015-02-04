@@ -658,6 +658,7 @@ public class CollectionShareTabVc extends Composite {
 							updateShare("private");
 							selectPrivateResource("private");
 						}
+						collectionConfirmationPopup.center();
 					}
 				}
 			});
@@ -725,6 +726,14 @@ public class CollectionShareTabVc extends Composite {
 					updateShare("anyonewithlink");
 					selectPrivateResource("shareable");
 				}
+				
+			}
+			try
+			{
+			collectionShareAlertPopup.center();
+			}
+			catch(Exception e)
+			{
 				
 			}
 		}
@@ -1116,6 +1125,7 @@ public class CollectionShareTabVc extends Composite {
 					}
 				};
 				collectionShareAlertPopup.setPublicMsgData(collection);
+				collectionShareAlertPopup.center();
 			}
 		}
 	}
@@ -1124,7 +1134,6 @@ public class CollectionShareTabVc extends Composite {
 		rbPublic.setVisible(false);
 		lblPublishPending.setVisible(true);
 		publishedPanel.setVisible(false);
-		System.out.println("else-end:"+lblPublishPending.isVisible());
 	}*/
 	
 	private void selectPrivateResource(String visibilityType) {

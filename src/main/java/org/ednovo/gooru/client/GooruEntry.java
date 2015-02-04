@@ -26,7 +26,6 @@
 package org.ednovo.gooru.client;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +33,10 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
+import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
@@ -80,6 +82,7 @@ public class GooruEntry implements EntryPoint {
 	public void onModuleLoad() {
 
 		DelayedBindRegistry.bind(appInjector);
+		AppClientFactory.setAppGinjector(appInjector);
 		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
 		    loadLibraries.add(LoadLibrary.ADSENSE);
 		    loadLibraries.add(LoadLibrary.DRAWING);
@@ -92,13 +95,14 @@ public class GooruEntry implements EntryPoint {
 		    
 		String device = BrowserAgent.returnFormFactorWithSizeView();
 		String size[] = device.split("-");
-		if (size[0].equalsIgnoreCase("mobile") || size[0].equalsIgnoreCase("iphone")){
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("device", size[0]);
-			params.put("size", size[1]);
-			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
-//			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
-		}else{
+
+//		if (size[0].equalsIgnoreCase("mobile") || size[0].equalsIgnoreCase("iphone")){
+//			Map<String, String> params = new HashMap<String, String>();
+//			params.put("device", size[0]);
+//			params.put("size", size[1]);
+//			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
+////			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
+//		}else{
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
@@ -111,18 +115,43 @@ public class GooruEntry implements EntryPoint {
 					AppClientFactory.setProtocol(getHttpOrHttpsProtocol());
 					registerWindowEvents();
 				}
-	
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-//				}
-				
 			});
 			AppClientFactory.setAppGinjector(appInjector);
-		}
+		
+
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
-		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 1000px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 550px) {" + PlayerSmallMobileBundle.INSTANCE.getPlayerSmallMobile().getText() + "}");
 		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+HomeCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+		StyleInjector.injectAtEnd("@media (max-width: 767px){"+HomeCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+		StyleInjector.inject("@media (min-width: 320px) and (max-width: 479px){"+ HomeCBundle.INSTANCE.getResponsive2Style().getText()+"}");
+		StyleInjector.inject("@media (min-width: 480px) and (max-width: 767px) {"+ HomeCBundle.INSTANCE.getResponsive3Style().getText()+"}");
+
+		StyleInjector.injectAtEnd("@media (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:portrait){"+SearchCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (max-width: 767px) and (orientation:landscape){"+SearchCBundle.INSTANCE.getResponsive2Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+SearchCBundle.INSTANCE.getResponsive3Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+SearchCBundle.INSTANCE.getResponsive4Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+SearchCBundle.INSTANCE.getResponsive5Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media screen and (min-width: 768px){"+SearchCBundle.INSTANCE.getResponsive6Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+SearchCBundle.INSTANCE.getResponsive7Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+SearchCBundle.INSTANCE.getResponsive8Style().getText()+"}");
+
+		SearchCBundle.INSTANCE.css().ensureInjected();
+		
+		HomeCBundle.INSTANCE.css().ensureInjected();
+		
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+LoginPopUpCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+LoginPopUpCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+LoginPopUpCBundle.INSTANCE.getResponsive2Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px){"+LoginPopUpCBundle.INSTANCE.getResponsive3Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+LoginPopUpCBundle.INSTANCE.getResponsive4Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media screen and (max-width: 767px) {"+LoginPopUpCBundle.INSTANCE.getResponsive5Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media screen and (min-width: 768px) {"+LoginPopUpCBundle.INSTANCE.getResponsive6Style().getText()+"}");
+
+		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
+
 	}
 	
 	/* 

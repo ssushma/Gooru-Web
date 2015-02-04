@@ -2,10 +2,6 @@
 /* CSS Document */
 
 
-html
-{
-	width:760px;
-}
 .container{
 	width:760px;
  	margin-left: auto;
@@ -20,7 +16,9 @@ html
     padding-left: 15px;
     padding-right: 15px;
 }
-.whitebg{}
+.whitebg{
+	padding-top: 0px;
+}
 .loginStatus{
 	margin-right:35px;
 }
@@ -64,10 +62,8 @@ header{
 	min-width:100%;
 }
 .studyplayer-container{
-	width:760px;
-	position:relative !important;
 	overflow-x:hidden !important;
-	overflow-y:hidden !important;
+	overflow-y:scroll !important;
 }
 .rightPanel{
 	
@@ -80,9 +76,146 @@ header{
 .collectionPlayerContainer{
 	
 }
-.blocksmall{}
+.blocksmall{
+	
+	float: left;
+padding: 5px 10px;
+width: 100%;
+background: #ffffff;
+border-bottom: 1px solid #ddd;
+position: relative;
+}
+
+/* new responsive css*/
+
+.loginStatus{
+		display:inline;
+		float:none !important;
+		margin-right:0 !important;
+}
+.player-resource-title{
+	float:none;
+	max-width:100%;
+}
+
+.resourceCountStyle{
+	text-align: center;
+	margin-left: 0;
+}
+
+.fixedContainer{
+	position:relative;
+}
+
+.bodyContent{
+	padding-top:0px;
+}
+
+.greybackground{
+	
+}
+.collectionImageContainer{
+	margin-bottom:25px;
+}
+.collectionImage{}
+.buttonsContainer{
+	width:100%;
+	display:inline-block;
+	margin-top:25px;
+}
+.buttonsContainer{
+	
+}
+.collectionbuttons{
+	
+}
+
+.logStatus{
+	margin:20px 0;
+	text-align:center;
+	display: inline-block;
+}
+.closeButton{
+	right:50px;
+}
+.bodysection{
+	
+}
+.narrationPopup {
+	width: 90%;
+}
+.narrationPopupContainer{
+	right:0px;
+}
+.resource-info-metadata-wrapper{
+	height: 120px;
+}
+.resource-info-metadata-innerwrapper{
+	max-height: 120px;
+	height: 120px;
+}
+.resource-info-collections-wrapper{
+	max-height: 120px;
+	height: 120px;
+}
+.playerResourcesRightSection {
+       height: 90px;
+}
+.collection-thumbnail{
+	width: 100%;
+	height: auto;
+	border-left: 7px solid #1076BB;
+}
+.timespend{
+	margin-bottom:0;
+	display:block;
+}
+.collectionEndImageContainer{
+	display: block;
+    float: none;
+    height: 160px;
+    margin: 0 auto;
+    position: relative;
+    width: 220px;
+}
+.playRight{
+	 display: block;
+    float: none;
+}
+.playBlockTop{
+	padding-top: 30px;
+	text-align: center;
+}
+.endButtonsContainer{
+	margin-top: 25px;
+	text-align:center;
+}
+.endButtonsContainer buttons{
+	float:none;
+}
+.whatsnext{
+	width:100%;
+	background:#444444;
+	border-top:2px solid #222222;
+	border-bottom:2px solid #222222;
+	padding:10px 15px;
+}
 
 
+.whatsnext .smallTxt{
+	text-align:left;
+}
 
+.whatsnext .bigTxt{
+	text-align:left;
+}
 
-
+.whatsnext .smallerTxt{
+	text-align:left;
+}
+.endPageIframe{
+	margin:30px 30px ;
+}
+.metatDataContainer{
+	padding-top:0px;
+}

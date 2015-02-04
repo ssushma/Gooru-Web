@@ -1113,15 +1113,15 @@ public class ProfileTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("657px");
+		/*	successPopupVc.setWidth("500px");*/
+			//successPopupVc.setHeight("657px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 			}
 			else {				
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				successPopupVc.center();
 			}
 			
 			params.put(ASSIGN, "yes");
@@ -1157,8 +1157,8 @@ public class ProfileTopicListView extends Composite{
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("475px");
+		/*	successPopupVc.setWidth("500px");*/
+			//successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
 			
@@ -1205,8 +1205,8 @@ public class ProfileTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				customizePopup.setWidth("500px");
-				customizePopup.setHeight("440px");
+			/*	customizePopup.setWidth("500px");*/
+				//customizePopup.setHeight("440px");
 				customizePopup.show();
 				customizePopup.center();
 
@@ -1231,15 +1231,15 @@ public class ProfileTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				assignPopup.setWidth("500px");
-				assignPopup.setHeight("657px");
+				//assignPopup.setWidth("500px");
+				//assignPopup.setHeight("657px");
 				assignPopup.show();
 				assignPopup.center();
 				if (AppClientFactory.isAnonymous()){
-					assignPopup.setPopupPosition(assignPopup.getAbsoluteLeft(), 10);
+					assignPopup.setPopupPosition(assignPopup.getAbsoluteLeft(), -30);
 				}
 				else {				
-					assignPopup.setPopupPosition(assignPopup.getAbsoluteLeft(), 10);
+					assignPopup.center();
 				}
 
 			}
