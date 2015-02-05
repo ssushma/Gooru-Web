@@ -139,9 +139,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton;
 	
-	@UiField HTMLEventPanel singleCorrectResponseButton,multipleSelectButton,evidenceBasedResponseButton,hotTextButton,reorderTextButton,matchingTablesButton/*,shortTextResponseButton,writtenResponseButton*/;
-	@UiField RadioButton singleCorrectResponseRadioButton,multipleSelectRadioButton,evidenceBasedResponseRadioButton,hotTextRadioButton,reorderTextRadioButton,matchingTablesRadioButton/*,shortTextResponseRadioButton,writtenResponseRadioButton*/;
-	@UiField Anchor singleCorrectResponseText,multipleSelectText,evidenceBasedResponseText,hotTextRadioText,reorderTextText,matchingTablesText/*,shortTextResponseText,writtenResponseText*/;
+	//@UiField HTMLEventPanel singleCorrectResponseButton,multipleSelectButton,evidenceBasedResponseButton,hotTextButton,reorderTextButton,matchingTablesButton/*,shortTextResponseButton,writtenResponseButton*/;
+//	@UiField RadioButton singleCorrectResponseRadioButton,multipleSelectRadioButton,evidenceBasedResponseRadioButton,hotTextRadioButton,reorderTextRadioButton,matchingTablesRadioButton/*,shortTextResponseRadioButton,writtenResponseRadioButton*/;
+//	@UiField Anchor singleCorrectResponseText,multipleSelectText,evidenceBasedResponseText,hotTextRadioText,reorderTextText,matchingTablesText/*,shortTextResponseText,writtenResponseText*/;
 	
 	private ResourceMetaInfoDo resMetaInfo;
 	
@@ -234,12 +234,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		openEndedRadioButton.getElement().setId("rdOpenEndedRadioButton");
 		
 		//assessments tabs
-		singleCorrectResponseButton.addClickHandler(new AssessmentQuestionsEvent());
+/*		singleCorrectResponseButton.addClickHandler(new AssessmentQuestionsEvent());
 		multipleSelectButton.addClickHandler(new AssessmentQuestionsEvent());
 		evidenceBasedResponseButton.addClickHandler(new AssessmentQuestionsEvent());
 		hotTextButton.addClickHandler(new AssessmentQuestionsEvent());
 		reorderTextButton.addClickHandler(new AssessmentQuestionsEvent());
-		matchingTablesButton.addClickHandler(new AssessmentQuestionsEvent());
+		matchingTablesButton.addClickHandler(new AssessmentQuestionsEvent());*/
 		
 		
 		urlTabButton.addClickHandler(new ClickHandler() {	
@@ -328,12 +328,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		fillInTheBlankTabButton.setVisible(isQuestionWidget);
 		
 		//assessment tabs
-		singleCorrectResponseButton.setVisible(isAssementsWidget);
+/*		singleCorrectResponseButton.setVisible(isAssementsWidget);
 		multipleSelectButton.setVisible(isAssementsWidget);
 		evidenceBasedResponseButton.setVisible(isAssementsWidget);
 		hotTextButton.setVisible(isAssementsWidget);
 		reorderTextButton.setVisible(isAssementsWidget);
-		matchingTablesButton.setVisible(isAssementsWidget);
+		matchingTablesButton.setVisible(isAssementsWidget);*/
 	}
 	
 	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo){
@@ -1214,7 +1214,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		}
 	}
-	private class AssessmentQuestionsEvent implements ClickHandler{
+/*	private class AssessmentQuestionsEvent implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(collectionDo!=null&&collectionDo.getCollectionType().equals("quiz")){
@@ -1222,7 +1222,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				tabViewContainer.add(new HTML("<h3>Comming soon........</h3>"));
 			}
 		}
-	}
+	}*/
 	
 	private void deselectSelectedButton(){
 		int widgetsCount=addResourceTabContainer.getWidgetCount();

@@ -335,17 +335,17 @@ public class CollectionResourceTabView extends
 
 				// newResourceLabel.setVisible(true);
 			}
-			showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
+			//showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
 		}
 		panelLoading.getElement().getStyle().setDisplay(Display.NONE);
 		contentPanel.setVisible(true);
 	}
-	public void showOrHideResourceButton(String collectionType, int size){
+/*	public void showOrHideResourceButton(String collectionType, int size){
 		if(collectionType!=null&&collectionType.equals("quiz")){
 			buttonContainerAddGray.setVisible(false);
 			buttonContainer.setVisible(false);
 		}
-	}
+	}*/
 	
 	public void modifyExistingCollectionItemWidget(final CollectionItemDo collectionItemDo){
 		collectionItemDo.setCollection(collectionDo);
@@ -1006,21 +1006,21 @@ public class CollectionResourceTabView extends
 	}
 	
 	public void showNoCollectionsItemsMessage(String collectionType){
-		if(collectionType!=null&&collectionType.equals("quiz")){
+	/*	if(collectionType!=null&&collectionType.equals("quiz")){
 			setAttributeToWidget(noResourceLineOneLabel,i18n.GL3014());
 			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());
 			setAttributeToWidget(noResourceLineThreeLabel,"");
 			setAttributeToWidget(noResourceLineFourLabel," "+i18n.GL3015());
 			setAttributeToWidget(noResourceLineSixLabel,"");
 			setAttributeToWidget(noResourceLineFiveLabel," "+i18n.GL0857());
-		}else{
+		}else{*/
 			setAttributeToWidget(noResourceLineOneLabel,i18n.GL0854());
 			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());
 			setAttributeToWidget(noResourceLineThreeLabel," "+i18n.GL0856());
 			setAttributeToWidget(noResourceLineFourLabel," "+i18n.GL0858());
 			setAttributeToWidget(noResourceLineSixLabel," "+i18n.GL0209()+" ");
 			setAttributeToWidget(noResourceLineFiveLabel," "+i18n.GL0857());
-		}
+		/*}*/
 	}
 	
 	public void setAttributeToWidget(Label textLabel,String text){

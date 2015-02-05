@@ -1164,26 +1164,26 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+/*			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
-			}else{
+			}else{*/
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
-			}
+			/*}*/
 		}else{
 			//imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+	/*		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
 				lblFriendly.setText(i18n.GL3013());
-			}else{
+			}else{*/
 				lblFriendly.setText(i18n.GL0453());
-			}
+			/*}*/
 		}
 	}
 	
 	public void modifyStaticText(String collectionType){
-		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3007().toLowerCase():i18n.GL2001();
+		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL2001().toLowerCase():i18n.GL2001();
 		collectionDescriptionUc.setPlaceholder(StringUtil.generateMessage(WHAT_IS_THIS_COLLECTION_ABOUT, collectionType));
 	}
 
@@ -1363,13 +1363,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
-		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
-			delete.setNotes(StringUtil.generateMessage(i18n.GL3038(), collectionDo.getTitle()));
-			delete.setDescText(i18n.GL3039());
-		}else{
+/*		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
 			delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
 			delete.setDescText(i18n.GL1238());
-		}
+		}else{*/
+			delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
+			delete.setDescText(i18n.GL1238());
+		/*}*/
 		delete.setDeleteValidate("delete");
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());

@@ -71,7 +71,7 @@
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
 							<g:Anchor  ui:field="openended" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+						<!-- <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="singleCorrectResponseButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="singleCorrectResponseRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
@@ -105,7 +105,7 @@
 							<g:RadioButton name="questionTypeGrouop" ui:field="matchingTablesRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
 							<g:Anchor  ui:field="matchingTablesText" styleName="{res.css.myFolderCollectionUrlbgTitle}" text="{i18n.GL3021}"></g:Anchor>
-						</uc:HTMLEventPanel>
+						</uc:HTMLEventPanel> -->
 						<!-- <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="shortTextResponseButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="shortTextResponseRadioButton"
