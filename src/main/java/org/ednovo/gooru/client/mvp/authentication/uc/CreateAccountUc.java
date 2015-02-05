@@ -856,7 +856,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 		lblOther.getElement().setAttribute("alt",i18n.GL0419());
 		lblOther.getElement().setAttribute("title",i18n.GL0419());
 		
-		lblAgree.setText(i18n.GL0420());
+		lblAgree.setText(i18n.GL0420()+" ");
 		lblAgree.getElement().setId("lblAgree");
 		lblAgree.getElement().setAttribute("alt",i18n.GL0420());
 		lblAgree.getElement().setAttribute("title",i18n.GL0420());
@@ -1047,7 +1047,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 		panelParent.getElement().setId("pnlParent");
 		panelOther.getElement().setId("pnlOther");
 		
-		andText.setText(i18n.GL_GRR_AND());
+		andText.setText(i18n.GL_GRR_AND()+" ");
 		andText.getElement().setId("spnAndText");
 		andText.getElement().setAttribute("alt",i18n.GL_GRR_AND());
 		andText.getElement().setAttribute("title",i18n.GL_GRR_AND());
