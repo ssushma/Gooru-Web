@@ -523,7 +523,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+" ");
 		
 //		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
-		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);
+		standardSgstBox.getElement().getStyle().setMarginLeft(2, Unit.PX);
 		
 		browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
 		
