@@ -185,9 +185,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		disclosureContentSimPanel.getElement().getStyle().setWidth(100, Unit.PCT);
 		disclosureContentSimPanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		disclosureContentSimPanel.getElement().getStyle().setMargin(0, Unit.PX);
-		disclosureContentSimPanel.getElement().getStyle().setPadding(0, Unit.PX);
-	
-
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			disclosureContentSimPanel.getElement().getStyle().setPadding(0, Unit.PX);
+		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			disclosureContentSimPanel.getElement().getStyle().setPaddingTop(15, Unit.PX);
+			disclosureContentSimPanel.getElement().getStyle().setBottom(10, Unit.PX);
+			disclosureContentSimPanel.getElement().getStyle().setPosition(Position.RELATIVE);
+		}
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
