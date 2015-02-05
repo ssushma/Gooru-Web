@@ -75,7 +75,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField HTMLPanel mainSection, panelTitleSection;
 	@UiField VerticalPanel folderContentBlock;
 	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
-	@UiField Button newCollectionBtn, newFolderBtn,assessmentButton;
+	@UiField Button newCollectionBtn, newFolderBtn,assessmentButton,folderPlayBtn;
 	@UiField HTMLEventPanel editButtonEventPanel;
 	@UiField FlowPanel folderContentPanel;
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
@@ -267,6 +267,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderItemMetaDataUc.setVisible(false);
 		loadingImage.getElement().setId("pnlLoadingImage");
 		folderContentBlock.getElement().setId("vpnlFolderContentBlock");
+		
+		organizeTitleLbl.getTextBoxSource().getElement().setAttribute("style", "width: 338px !important;");
 	}
 	
 	public class AddNewFolderClick implements ClickHandler {
@@ -333,11 +335,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		if(O1_LEVEL_VALUE==null&&O2_LEVEL_VALUE==null&&O3_LEVEL_VALUE==null) {
 			isRootFolder = true;
 			editButtonEventPanel.setVisible(false);
+			folderPlayBtn.setVisible(false);
 			editFolderLbl.addStyleName("disabled");
 			deleteFolderLbl.addStyleName("disabled");
 		} else {
 			isRootFolder = false;
 			editButtonEventPanel.setVisible(true);
+			folderPlayBtn.setVisible(true);
 			editFolderLbl.removeStyleName("disabled");
 			deleteFolderLbl.removeStyleName("disabled");
 		}
