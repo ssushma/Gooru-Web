@@ -37,6 +37,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOutHideToolTip;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOverShowToolTip;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
@@ -1149,7 +1151,7 @@ public class SearchInfoWidget extends Composite {
 			}else{
 				authorPanel.setVisible(false);
 			}
-			if(keywords!=null && !keywords.equals("")){
+			/*if(keywords!=null && !keywords.equals("")){
 				isResourceInfo=true;
 				keywordsInfo.getElement().setInnerText(" "+keywords);
 				keywordsInfo.getElement().setAttribute("alt"," "+keywords);
@@ -1157,7 +1159,16 @@ public class SearchInfoWidget extends Composite {
 				keyWordsPanel.setVisible(true);
 			}else{
 				keyWordsPanel.setVisible(false);
-			}
+			}*/
+			if(customField.getCfKeywords()!=null && !customField.getCfKeywords().equals("")){
+				isResourceInfo=true;
+				List<String> keyworddetails = new ArrayList<String>();
+				String[] keywordslist=customField.getCfKeywords().split(",");										
+				for(int klevel=0;klevel<keywordslist.length;klevel++){
+					keyworddetails.add(keywordslist[klevel]);
+				}
+				setkeywordsDetails(keyworddetails);
+				}
 			if(ads!=null && !ads.equals("")){
 				isResourceInfo=true;
 				adsName.setText(" "+ads);
@@ -1190,6 +1201,49 @@ public class SearchInfoWidget extends Composite {
 		}
 	}
 	
+	private void setkeywordsDetails(List<String> keywords) {
+		keywordsInfo.clear();
+		if(keywords == null || keywords.size() == 0 || keywords.contains(null) || keywords.contains("") ){
+			keyWordsPanel.setVisible(false);
+		}else{
+		if(keywords.size()>0){
+			if(keywords.size()==1){
+				keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+				final Label keywordLabel=new Label(" "+keywords.get(0));
+				keywordLabel.getElement().setAttribute("style", "float: left;");
+				keywordsInfo.add(keywordLabel);
+				keyWordsPanel.setVisible(true);
+			} if(keywords.size()==2){
+				keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+				final Label keywordLabel=new Label(" "+keywords.get(0)+","+keywords.get(1));
+				keywordLabel.getElement().setAttribute("style", "float: left;");
+				keywordsInfo.add(keywordLabel);
+				keyWordsPanel.setVisible(true);
+			}
+		}
+		if(keywords.size()>2){
+			keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+			keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+			keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
+			keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label keywordsLabelNew=new Label(" "+keywords.get(0)+","+keywords.get(1));
+			keywordsLabelNew.getElement().setAttribute("style", "float:left;");
+			keywordsInfo.add(keywordsLabelNew);
+			keywordsInfo.add(keywordCountLabel);
+			Widget keywordwidget = getCommonwidget(keywords);
+			keywordCountLabel.addMouseOverHandler(new MouseOverShowToolTip(keywordwidget));
+			keywordCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+			keyWordsPanel.setVisible(true);
+		}
+		}
+	
+	}
+
 	/**
 	 * To set the Resource Accessibility details 
 	 * @param collectionItem instance of {@link CollectionItemDo} 
