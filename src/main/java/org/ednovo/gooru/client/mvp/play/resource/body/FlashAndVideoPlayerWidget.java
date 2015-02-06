@@ -111,7 +111,7 @@ public class FlashAndVideoPlayerWidget extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			resourcePreviewPanel.setHeight((windowHeight-116)+"px");
 		}else{
-			resourcePreviewPanel.setHeight((windowHeight-202)+"px");
+			resourcePreviewPanel.setHeight((windowHeight-190)+"px");
 		}
 		resourcePreviewPanel.setWidth("100%");
 	}
