@@ -974,7 +974,11 @@ font-size: 31px;
 .collectionbuttons hr{
 	margin:10px 0;
 }
-.logStatus{}
+.logStatus{
+	margin-top: -23px;
+position: relative;
+float: right;
+}
 
 .closeButton{
 	background:url("images/player/close-button.png") no-repeat;

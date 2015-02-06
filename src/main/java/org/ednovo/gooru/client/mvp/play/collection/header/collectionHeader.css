@@ -335,16 +335,14 @@
 }
 .fullScreenContainer{
 	float:right;
-	width: 19%;
-	display: inline-block;
-	padding-top: 12px;
+	width: 10%;
 	cursor: pointer;
 }
 .fullScreenImage{
 	float:left;
 }
 .fullScreenText{
-	float: left;
-	line-height: 31px;
-	padding-left: 5px;
+	margin-left: 10px;
+	margin-top: 9px;
+	color: white;
 }
