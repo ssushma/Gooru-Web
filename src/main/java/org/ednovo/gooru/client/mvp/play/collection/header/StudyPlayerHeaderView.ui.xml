@@ -9,7 +9,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:html5="urn:import:org.
 	<html5:HeaderTag styleName="{headerStyle.studyPlayer}">
 		<g:HTMLPanel styleName="container">
 			<g:HTMLPanel styleName="row">
-				<g:HTMLPanel styleName="col-md-12 col-xs-8 col-sm-5">
+				<g:HTMLPanel styleName="col-md-12 col-xs-8 col-sm-9">
 					<g:HTML styleName="{playerHeaderStyle.getPlayerStyleResource.playerResourceTitle}" ui:field="resourceTitle"></g:HTML>
 			<panel:HTMLEventPanel styleName="{headerStyle.fullScreenContainer}" ui:field="btnFullScreen">
 				<g:Image styleName="{headerStyle.fullScreenImage}" url="images/player/fullscreen.png"></g:Image>
