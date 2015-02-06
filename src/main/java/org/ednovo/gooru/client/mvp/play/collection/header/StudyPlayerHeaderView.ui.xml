@@ -16,7 +16,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:html5="urn:import:org.
 				<g:Label styleName="{headerStyle.fullScreenText}">Full Screen</g:Label>
 			</panel:HTMLEventPanel>
 				</g:HTMLPanel>
-				<g:FlowPanel  styleName=" col-md-6 col-xs-12 col-sm-5  {playerHeaderStyle.getPlayerStyleResource.logStatus}">
+				<g:FlowPanel  styleName="{playerHeaderStyle.getPlayerStyleResource.logStatus}">
 					<panel:HTMLEventPanel styleName="{playerHeaderStyle.getPlayerStyleResource.loginStatus} {headerStyle.loginStatus} {headerStyle.loggedIn}" ui:field="authorContainer">
 			            <!-- <g:HTMLPanel styleName="{headerStyle.loggingIcon}">
 			                <g:Label styleName="{headerStyle.progress}"></g:Label>
