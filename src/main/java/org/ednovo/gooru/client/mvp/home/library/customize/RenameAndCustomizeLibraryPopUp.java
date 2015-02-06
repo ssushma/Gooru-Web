@@ -102,9 +102,6 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 			public void onSuccess(CollectionDo result) {
 				collectionDo = result;
 				MixpanelUtil.Preview_Click_Customize_successful();
-
-			
-
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
@@ -123,11 +120,11 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						}
 					};
 					loginCustom.add(assignWidget);
+					panelAssign.getElement().getStyle().setHeight(550, Unit.PX);
 				} else {
 					loginCustom.setVisible(false);
 					copyCollectionSuccess.setVisible(true);
-			
-
+					panelAssign.getElement().getStyle().setHeight(367, Unit.PX);
 				}
 				popupcontentCustomize.setVisible(true);
 				loadingImageLabel.setVisible(false);
@@ -150,9 +147,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		editCollection.getElement().setId("btnEditCollection");
 		editCollection.getElement().setAttribute("alt",i18n.GL0590());
 		editCollection.getElement().setAttribute("title",i18n.GL0590());
-		
+		panelAssign.getElement().setAttribute("style", "min-height:367px");
 		panelAssign.getElement().getStyle().setMarginBottom(3, Unit.PX);
-		panelAssign.getElement().setAttribute("style","min-height:520px");
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		copycollectionTextbox.setMaxLength(50);
 		Window.enableScrolling(false);
@@ -229,6 +225,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
 		customizeText.getElement().setInnerHTML(i18n.GL0743());
+		panelAssign.getElement().getStyle().setHeight(367, Unit.PX);
 	}
 
 	/**
