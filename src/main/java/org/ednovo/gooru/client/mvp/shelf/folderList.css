@@ -498,7 +498,7 @@
     background-color:white;
     border-bottom:1px solid #ddd;
     overflow:auto;
-    padding: 25px 30px 15px 30px;
+    padding: 25px 40px 15px 30px;
     margin-top:12px;
 }
 
@@ -697,7 +697,7 @@
 
 
 .editPanelContent .titleSection .saveCancelContainer {
-    width:125px;
+    width:213px;
     float:right;
     text-align:right;
 }
