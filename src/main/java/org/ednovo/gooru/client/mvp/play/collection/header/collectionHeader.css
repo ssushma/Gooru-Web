@@ -333,3 +333,17 @@
 	top: 10px;
 	right: 10px;
 }
+.fullScreenContainer{
+	float:right;
+	width: 12%;
+	cursor: pointer;
+}
+.fullScreenImage{
+	float:left;
+}
+.fullScreenText{
+	margin-left: 10px;
+	margin-top: 9px;
+	color: white;
+	width:100%;
+}

@@ -22,17 +22,22 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource.question;
+package org.ednovo.gooru.client.mvp.folder.toc;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-
-import com.google.gwt.user.client.ui.FlowPanel;
-
-public interface IsQuestionResourceView extends IsViewWithHandlers<QuestionResourceUiHandlers>{
-	public void showQuestionPreview(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo);
-	public void resetQuestionView();
-	public void createSessionAttemptTryWhenNavigation(int questionType);
-	public FlowPanel getQuestionContainer();
+/**
+ * @fileName : IsFolderTocView.java
+ *
+ * @description : 
+ *
+ * @version : 1.3
+ *
+ * @date: 06-02-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
+public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
+	
 }

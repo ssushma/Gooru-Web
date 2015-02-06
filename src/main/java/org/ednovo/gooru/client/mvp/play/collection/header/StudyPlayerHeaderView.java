@@ -35,7 +35,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -43,9 +42,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -59,7 +55,7 @@ public class StudyPlayerHeaderView extends Composite{
 	
 	@UiField Label closeButtonForCollection,loginMessageText/*,thumbsDownButton,thumbsUpButton*/;
 	
-	@UiField HTMLEventPanel authorContainer;
+	@UiField HTMLEventPanel btnFullScreen,authorContainer;
 	
 	@UiField InlineLabel wishLabel,loginUserName,wishingText;
 	
@@ -159,7 +155,9 @@ public class StudyPlayerHeaderView extends Composite{
 	}
 	
 
-	
+	public HTMLEventPanel getFullScreenPlayer(){
+		return btnFullScreen;
+	}
 
 	public Label getCloseButton(){
 		return closeButtonForCollection;

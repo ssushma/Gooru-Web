@@ -64,9 +64,12 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -74,6 +77,8 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -96,6 +101,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	@UiField FlowPanel tagsButtonContainer;
 	@UiField SectionTag resourceWidgetContainer;
+
 	@UiField
 	static FlowPanel wrapperContainerField;
 	@UiField
@@ -105,14 +111,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
+
 	@UiField HTMLPanel singleEmoticsContainer,ratingsContainer;
 	@UiField SectionTag collectionContainer;
+
 	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
 	@UiField ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
 	
 //	@UiField(provided = true)
 	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
+	
+	@UiField FlowPanel rowPanel;
 	
 	/*@UiField SimpleRadioButton rating1;
 	@UiField SimpleRadioButton rating2;
@@ -170,7 +180,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	String assocGooruOId;
 	Integer score,count;
 	double average;
-	
+	FlowPanel pnlNarrationFullScreen;
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
 	int currentRating=0;
@@ -318,6 +328,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			mehEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
 			understandEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
 			canExplainEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			
+			Window.addResizeHandler(new ResizeHandler() {
+				@Override
+				public void onResize(ResizeEvent event) {
+					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+					if(view!=null && view.equals("fullScreen")){
+						setFullScreen(true,pnlNarrationFullScreen);
+					}
+				}
+			});
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -1586,8 +1606,66 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 	}
-	
-	
+	@Override
+	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration){
+		this.pnlNarrationFullScreen=pnlFullScreenNarration;
+		if(isFullScreen){
+			  collectionContainer.setVisible(false);
+			  wrapperContainerField.getElement().getStyle().setWidth(100, Unit.PCT);
+			  wrapperContainerField.getElement().getStyle().setHeight((Window.getClientHeight()-(pnlFullScreenNarration.getOffsetHeight()))+4, Unit.PX);
+			  wrapperContainerField.getElement().getStyle().setPadding(0, Unit.PX);
+			  
+			  rowPanel.getElement().setAttribute("style", "margin-right:0px !important;margin-left:0px !important;");
+			 
+			  resourceWidgetContainer.getElement().getStyle().setWidth(100, Unit.PCT);
+			  resourceWidgetContainer.getElement().getStyle().setPadding(0, Unit.PX);
+			  
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
+			  resourceWidgetContainer.getElement().getStyle().setHeight(wrapperContainerField.getOffsetHeight()-4,  Unit.PX);
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(wrapperContainerField.getOffsetHeight()-1,  Unit.PX);
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflowY(Overflow.AUTO);
+			
+			  Element youTubeEle=Document.get().getElementById("playerid");
+			  if(youTubeEle!=null){
+				  youTubeEle.getStyle().setHeight(Window.getClientHeight()-pnlFullScreenNarration.getOffsetHeight(),  Unit.PX);
+			  }
+			 /* if(getUiHandlers().getQuestioncontainer()!=null){
+				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setWidth(100, Unit.PCT);
+				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setHeight(Window.getClientHeight()-pnlFullScreenNarration.getOffsetHeight(),  Unit.PX);
+				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setOverflow(Overflow.AUTO);
+			  }*/
+		}else{
+			  collectionContainer.setVisible(true);
+			  wrapperContainerField.getElement().getStyle().clearWidth();
+			  wrapperContainerField.getElement().getStyle().clearHeight();
+			  rowPanel.getElement().setAttribute("style", "margin-right:-15px !important;margin-left:-15px !important;");
+			 // wrapperContainerField.getElement().getStyle().setPaddingTop(88, Unit.PX);
+			  resourceWidgetContainer.getElement().getStyle().clearWidth();
+			//  resourceWidgetContainer.getElement().getStyle().setPaddingTop(67, Unit.PX);
+			  Element youTubeEle=Document.get().getElementById("playerid");
+			  if(youTubeEle!=null){
+				  youTubeEle.getStyle().clearHeight();
+			  }
+			  
+			  Element isIframe=Document.get().getElementById("resourcePlayerContainer");
+			  if(isIframe==null){
+				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().clearWidth();
+				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().clearHeight();
+			  }else{
+				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(100, Unit.PCT);
+			  }
+			 
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflowY(Overflow.HIDDEN);
+			 /* if(getUiHandlers().getQuestioncontainer()!=null){
+				  getUiHandlers().getQuestioncontainer().getElement().getStyle().clearWidth();
+				  getUiHandlers().getQuestioncontainer().getElement().getStyle().clearHeight();
+				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setOverflowY(Overflow.AUTO);
+			  }*/
+		}
+	}
+	public void getdata(){
+		
+	}
 	public static void onClosingAndriodorIpaddiv()
 	{
 		//  wrapperContainerField.getElement().setAttribute("style", "padding-top:88px;");

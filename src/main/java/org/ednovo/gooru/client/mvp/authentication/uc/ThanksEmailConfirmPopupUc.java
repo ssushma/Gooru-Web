@@ -29,6 +29,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -80,6 +81,8 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
 	String userName = null;
 	String privateGooruUId = null;
 	
+	protected AppPopUp appPopUp;
+	
 	@UiTemplate("ThanksEmailConfirmPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, ThanksEmailConfirmPopupUc> {
 
@@ -99,8 +102,12 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
 		
         this.res = SignUpCBundle.INSTANCE;
         res.css().ensureInjected();
-        add(binder.createAndBindUi(this));
-
+        
+        appPopUp = new AppPopUp(i18n.GL0501());
+		appPopUp.setContent(binder.createAndBindUi(this));
+        //add(binder.createAndBindUi(this));
+		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
     	this.getElement().getStyle().setHeight(332, Unit.PX);
     	panelPopupInner.getElement().getStyle().setHeight(277, Unit.PX);
 
@@ -108,7 +115,7 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
         
         setHandlers();
         
-		this.center();
+        appPopUp.center();
 	}
 
 	
@@ -136,8 +143,8 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		
-		this.removeStyleName("gwt-PopupPanel");
-		this.getElement().getStyle().setZIndex(99999);
+		//this.removeStyleName("gwt-PopupPanel");
+		//this.getElement().getStyle().setZIndex(99999);
 	
 	}
 	
@@ -227,6 +234,7 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params);
 		
 		hide();
+		appPopUp.hide();
 	}
 
 }

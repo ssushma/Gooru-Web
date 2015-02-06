@@ -22,17 +22,48 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource.question;
+ 
+package org.ednovo.gooru.client.mvp.folder.toc;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
+/**
+ * @fileName : FolderTocView.java
+ *
+ * @description : 
+ *
+ * @version : 1.3
+ *
+ * @date: 06-02-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
+public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> implements IsFolderTocView {
 
-public interface IsQuestionResourceView extends IsViewWithHandlers<QuestionResourceUiHandlers>{
-	public void showQuestionPreview(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo);
-	public void resetQuestionView();
-	public void createSessionAttemptTryWhenNavigation(int questionType);
-	public FlowPanel getQuestionContainer();
+	private static FolderTocViewUiBinder uiBinder = GWT
+			.create(FolderTocViewUiBinder.class);
+
+	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
+	}
+
+	/**
+	 * Because this class has a default constructor, it can
+	 * be used as a binder template. In other words, it can be used in other
+	 * *.ui.xml files as follows:
+	 * <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	 *   xmlns:g="urn:import:**user's package**">
+	 *  <g:**UserClassName**>Hello!</g:**UserClassName>
+	 * </ui:UiBinder>
+	 * Note that depending on the widget that is used, it may be necessary to
+	 * implement HasHTML instead of HasText.
+	 */
+	public FolderTocView() {
+		setWidget(uiBinder.createAndBindUi(this));
+	}
+
 }

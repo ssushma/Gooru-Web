@@ -22,17 +22,63 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource.question;
+/**
+ * 
+*/
+package org.ednovo.gooru.client.mvp.folder.toc;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+/**
+ * @fileName : FolderTocPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.3
+ *
+ * @date: 06-02-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
+public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFolderTocProxy> implements FolderTocUiHandlers {
+	
+	@ProxyCodeSplit
+	@NameToken(PlaceTokens.FOLDER_TOC)
+	public interface IsFolderTocProxy extends ProxyPlace<FolderTocPresenter> {
+	}
 
-public interface IsQuestionResourceView extends IsViewWithHandlers<QuestionResourceUiHandlers>{
-	public void showQuestionPreview(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo);
-	public void resetQuestionView();
-	public void createSessionAttemptTryWhenNavigation(int questionType);
-	public FlowPanel getQuestionContainer();
+	@Inject
+	public FolderTocPresenter(EventBus eventBus, IsFolderTocView view, IsFolderTocProxy proxy) {
+		super(view, proxy);
+		getView().setUiHandlers(this);
+	}
+	
+	@Override
+	public String getViewToken() {
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	protected void onReveal() {
+	   super.onReveal();
+	}
+	
+	@Override
+	protected void onReset() {
+	}
+	
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
 }

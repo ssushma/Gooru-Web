@@ -3,6 +3,12 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle" field="res" /> 
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"	field="res1" />
+	<ui:style>
+	.mediaFeature{
+	width: 243px;
+	text-align: left;
+	}
+	</ui:style>
 	<g:HTMLPanel styleName="{res1.css.PopupMainSmall}">
 		  <g:HTMLPanel  styleName="{res1.css.popupInnerGrey}">
 		    <g:HTMLPanel styleName="{res1.css.popupgreyHeader}" > 
@@ -156,7 +162,7 @@
 		      <g:HTMLPanel styleName="col-md-8 mediaFeature">
 		       <g:Label styleName="{res1.css.AddTagesPopup_h5}" ui:field="mediaLabel"/>
 			   <g:HTMLPanel styleName="btn-group">
-  				<g:Anchor ui:field="lblMediaPlaceHolder" styleName="btn btn-default dropdown-toggle">
+  				<g:Anchor ui:field="lblMediaPlaceHolder" styleName="btn btn-default dropdown-toggle {style.mediaFeature}">
     			</g:Anchor>
 			      <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
 					styleName="{res.css.scrollPanelContainerInstructional}" >

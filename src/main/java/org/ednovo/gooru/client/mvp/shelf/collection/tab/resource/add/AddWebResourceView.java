@@ -279,7 +279,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private boolean isGenerateURL =false;
 	
-	
+	boolean processing = false;
 	
 	
 	
@@ -1548,9 +1548,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 										}
 										//AreYouSurceToolTip AreYouSurceToolTip=new AreYouSurceToolTip();
 										if (isValidate && !isShortenedUrl()) {
+											if (!processing) {
 											MixpanelUtil.Create_NewResource();
 											// getUiHandlers().addResource(idStr, urlStr, titleStr,
 											// descriptionStr, categoryStr, thumbnailUrlStr);
+											processing = true;
 											loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 											buttonsPanel.getElement().getStyle().setDisplay(Display.NONE);
 											descriptionStr = descriptionTxtAera.getText().trim();
@@ -1602,6 +1604,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												//													}
 											}
 
+										
+										
+											}
+										
 										}
 										/*				addResourceBtnLbl.setEnabled(true);
 											addResourceBtnLbl.getElement().removeClassName("secondary");
