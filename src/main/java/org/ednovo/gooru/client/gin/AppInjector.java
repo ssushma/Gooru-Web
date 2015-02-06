@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
+import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
@@ -73,7 +74,6 @@ import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibrar
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.folder.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
 import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;

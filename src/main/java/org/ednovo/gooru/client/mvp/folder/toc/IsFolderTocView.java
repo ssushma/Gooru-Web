@@ -22,10 +22,22 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.folder;
+package org.ednovo.gooru.client.mvp.folder.toc;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-
+/**
+ * @fileName : IsFolderTocView.java
+ *
+ * @description : 
+ *
+ * @version : 1.3
+ *
+ * @date: 06-02-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
 public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
 	
 }

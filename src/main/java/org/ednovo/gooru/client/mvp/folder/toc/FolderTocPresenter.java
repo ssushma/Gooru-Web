@@ -22,50 +22,63 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
- 
-package org.ednovo.gooru.client.mvp.play.folder;
-
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Widget;
-
 /**
- * @fileName : FolderTocView.java
+ * 
+*/
+package org.ednovo.gooru.client.mvp.folder.toc;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
+
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+/**
+ * @fileName : FolderTocPresenter.java
  *
  * @description : 
  *
  *
  * @version : 1.3
  *
- * @date: Feb 6, 2015
+ * @date: 06-02-2015
  *
  * @Author Gooru Team
  *
  * @Reviewer: 
  */
-public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> implements IsFolderTocView {
-
-	private static FolderTocViewUiBinder uiBinder = GWT
-			.create(FolderTocViewUiBinder.class);
-
-	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
+public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFolderTocProxy> implements FolderTocUiHandlers {
+	
+	@ProxyCodeSplit
+	@NameToken(PlaceTokens.FOLDER_TOC)
+	public interface IsFolderTocProxy extends ProxyPlace<FolderTocPresenter> {
 	}
 
-	/**
-	 * Because this class has a default constructor, it can
-	 * be used as a binder template. In other words, it can be used in other
-	 * *.ui.xml files as follows:
-	 * <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	 *   xmlns:g="urn:import:**user's package**">
-	 *  <g:**UserClassName**>Hello!</g:**UserClassName>
-	 * </ui:UiBinder>
-	 * Note that depending on the widget that is used, it may be necessary to
-	 * implement HasHTML instead of HasText.
-	 */
-	public FolderTocView() {
-		setWidget(uiBinder.createAndBindUi(this));
+	@Inject
+	public FolderTocPresenter(EventBus eventBus, IsFolderTocView view, IsFolderTocProxy proxy) {
+		super(view, proxy);
+		getView().setUiHandlers(this);
+	}
+	
+	@Override
+	public String getViewToken() {
+		throw new RuntimeException("Not implemented");
 	}
 
+	@Override
+	protected void onReveal() {
+	   super.onReveal();
+	}
+	
+	@Override
+	protected void onReset() {
+	}
+	
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
 }
