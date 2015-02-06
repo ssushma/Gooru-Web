@@ -335,7 +335,7 @@
 }
 .fullScreenContainer{
 	float:right;
-	width: 10%;
+	width: 12%;
 	cursor: pointer;
 }
 .fullScreenImage{
@@ -345,4 +345,5 @@
 	margin-left: 10px;
 	margin-top: 9px;
 	color: white;
+	width:100%;
 }

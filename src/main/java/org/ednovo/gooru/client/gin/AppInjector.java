@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
+import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
@@ -197,6 +198,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<SignUpPresenter> getSignUpPresenter();
 	
 	AsyncProvider<CollectionPlayerPresenter> getCollectionPlayerPresenter();
+	
+	AsyncProvider<FolderTocPresenter> getFolderTocPresenter();
 	
 	AsyncProvider<ResourcePlayerPresenter> getResourcePlayerPresenter();
 	
