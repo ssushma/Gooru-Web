@@ -152,6 +152,8 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		form.add("eventName", "profile-visit");
 		form.add("sessionToken", getLoggedInSessionToken());
 		form.add("visitorUid", visitorUid);
+		getLogger().info("profileVisitEvent:::"+url);
+		getLogger().info("profileVisitEventform:::"+form);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 	}
