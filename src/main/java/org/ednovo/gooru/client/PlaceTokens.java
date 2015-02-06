@@ -50,6 +50,7 @@ public interface PlaceTokens {
 	String COLLECTION_PLAY_OLD = "collection-play-old";
 	String PREVIEW_PLAY = "preview-play";
 	String RESOURCE_PLAY="resource-play";
+	String FOLDER_TOC= "folder-toc";
 	String TEACH = "no-teach";		//This is not used...
 	String FOLDERS = "organizee";
 	String EDIT_FOLDERS = "organize-folder";

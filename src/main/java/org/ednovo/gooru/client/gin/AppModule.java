@@ -270,6 +270,10 @@ import org.ednovo.gooru.client.mvp.play.collection.share.IsCollectionShareView;
 import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocView;
 import org.ednovo.gooru.client.mvp.play.collection.toc.IsCollectionPlayerTocView;
+import org.ednovo.gooru.client.mvp.play.folder.FolderTocPresenter;
+import org.ednovo.gooru.client.mvp.play.folder.FolderTocPresenter.IsFolderTocProxy;
+import org.ednovo.gooru.client.mvp.play.folder.FolderTocView;
+import org.ednovo.gooru.client.mvp.play.folder.IsFolderTocView;
 import org.ednovo.gooru.client.mvp.play.resource.IsResourcePlayerView;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter.IsResourcePlayerProxy;
@@ -544,6 +548,7 @@ public class AppModule extends AppPresenterModule {
 				IsCollectionAssignTab.class, CollectionAssignTabView.class);
 		bindPresenterWidget(SignUpPresenter.class, IsSignUpView.class,SignUpView.class);
 		bindPresenter(CollectionPlayerPresenter.class, IsCollectionPlayerView.class, CollectionPlayerView.class,IsCollectionPlayerProxy.class);
+		bindPresenter(FolderTocPresenter.class, IsFolderTocView.class, FolderTocView.class,IsFolderTocProxy.class);
 		bindPresenter(ResourcePlayerPresenter.class, IsResourcePlayerView.class, ResourcePlayerView.class,IsResourcePlayerProxy.class);
 		bindPresenterWidget(CollectionPlayerMetadataPresenter.class, IsCollectionPlayerMetadataView.class, CollectionPlayerMetadataView.class);
 		bindPresenterWidget(CollectionPlayerTocPresenter.class, IsCollectionPlayerTocView.class, CollectionPlayerTocView.class);

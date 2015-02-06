@@ -73,6 +73,7 @@ import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibrar
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.folder.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
 import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;
@@ -197,6 +198,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<SignUpPresenter> getSignUpPresenter();
 	
 	AsyncProvider<CollectionPlayerPresenter> getCollectionPlayerPresenter();
+	
+	AsyncProvider<FolderTocPresenter> getFolderTocPresenter();
 	
 	AsyncProvider<ResourcePlayerPresenter> getResourcePlayerPresenter();
 	
