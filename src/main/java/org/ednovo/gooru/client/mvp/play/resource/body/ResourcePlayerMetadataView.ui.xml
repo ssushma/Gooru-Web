@@ -92,7 +92,7 @@
 				</g:FlowPanel>
 			</html5:SectionTag>
 		</g:FlowPanel>
-		<g:FlowPanel styleName="row">
+		<g:FlowPanel styleName="row1">
 			<g:FlowPanel styleName="col-md-12 {palyerStyleResource.getPlayerStyleResource.bodysection}">
 				<html5:SectionTag styleName="" ui:field="resourceWidgetContainer"></html5:SectionTag>
 			</g:FlowPanel>

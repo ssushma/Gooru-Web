@@ -531,12 +531,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			//addResourceContainerPresenter.setplayerStyle();
 			//addResourceContainerPresenter.setCollectionItemData("", collectionItemDo);
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
-			if(BrowserAgent.isDevice()){
+			addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+			/*if(BrowserAgent.isDevice()){
 				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
 			}else{
 				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
-
-			}
+			}*/
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
@@ -545,6 +545,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void setResourceInfoView(String resourceId){
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
+		System.out.println("BrowserAgent.isDevice() resource info view:::::"+BrowserAgent.isDevice());
 		if(BrowserAgent.isDevice()){
 			resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
 		}else{
