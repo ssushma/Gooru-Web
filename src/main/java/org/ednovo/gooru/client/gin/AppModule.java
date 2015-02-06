@@ -101,9 +101,9 @@ import org.ednovo.gooru.client.mvp.error.ErrorPresenter.IsErrorProxy;
 import org.ednovo.gooru.client.mvp.error.ErrorView;
 import org.ednovo.gooru.client.mvp.error.IsErrorView;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
+import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocView;
 import org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView;
-import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter.IsFoldersProxy;
 import org.ednovo.gooru.client.mvp.folders.FoldersView;
@@ -296,14 +296,6 @@ import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourceView;
 import org.ednovo.gooru.client.mvp.play.resource.share.IsResourceShareView;
 import org.ednovo.gooru.client.mvp.play.resource.share.ResourceSharePresenter;
 import org.ednovo.gooru.client.mvp.play.resource.share.ResourceShareView;
-import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
-import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter.IsCollectionPlayProxy;
-import org.ednovo.gooru.client.mvp.player.CollectionPlayView;
-import org.ednovo.gooru.client.mvp.player.IsCollectionPlayView;
-import org.ednovo.gooru.client.mvp.player.IsResourcePlayView;
-import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;
-import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter.IsResourcePlayProxy;
-import org.ednovo.gooru.client.mvp.player.ResourcePlayView;
 import org.ednovo.gooru.client.mvp.prime.IsPrimeView;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter.IsPrimeProxy;
@@ -493,11 +485,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(CollectionFormPresenter.class,
 				IsCollectionFormView.class, CollectionFormView.class,
 				IsCollectionFormProxy.class);
-		bindPresenter(ResourcePlayPresenter.class, IsResourcePlayView.class,
-				ResourcePlayView.class, IsResourcePlayProxy.class);
-		bindPresenter(CollectionPlayPresenter.class,
-				IsCollectionPlayView.class, CollectionPlayView.class,
-				IsCollectionPlayProxy.class);
 		bindPresenterWidget(ImageUploadPresenter.class,
 				IsImageUploadView.class, ImageUploadView.class);
 		bindPresenterWidget(AddResourcePresenter.class,

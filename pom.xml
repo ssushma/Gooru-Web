@@ -212,11 +212,6 @@
 			<version>3.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.code.gwt-dnd</groupId>
-			<artifactId>gwt-dnd</artifactId>
-			<version>2.5.6</version>
-		</dependency>
-		<dependency>
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-mvp-client</artifactId>
 			<version>0.7</version>
@@ -326,11 +321,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
-			<version>4.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.2</version>
 		</dependency>
@@ -354,11 +344,6 @@
             <artifactId>GwtEarth3</artifactId>
             <version>1.0</version>
         </dependency>
-		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itextpdf</artifactId>
-			<version>5.4.3</version>
-		</dependency>
 		<dependency>
 			<groupId>code.google.com</groupId>
 			<artifactId>gwt-print-it</artifactId>
