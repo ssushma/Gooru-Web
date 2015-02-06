@@ -22,20 +22,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
- 
-package org.ednovo.gooru.client.mvp.folder.toc;
-
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
+package org.ednovo.gooru.client.mvp.folder.toc.util;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
- * @fileName : FolderTocView.java
+ * @fileName : FolderCollectionView.java
  *
  * @description : 
  *
@@ -47,27 +44,20 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> implements IsFolderTocView {
+public class FolderCollectionView extends Composite {
 
-	private static FolderTocViewUiBinder uiBinder = GWT
-			.create(FolderTocViewUiBinder.class);
+	private static FolderCollectionViewUiBinder uiBinder = GWT
+			.create(FolderCollectionViewUiBinder.class);
 
-	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
+	interface FolderCollectionViewUiBinder extends
+			UiBinder<Widget, FolderCollectionView> {
 	}
+	@UiField FlowPanel pnlCollectionResources;
+	@UiField Label lblCollectionTitle;
 	
-	@UiField VerticalPanel pnlAddFoldersCollections;
-	
-	public FolderTocView() {
-		setWidget(uiBinder.createAndBindUi(this));
-		setData();
-	}
-	/**
-	 * This method is used to set folder TOC Data.
-	 */
-	private void setData() {
-		pnlAddFoldersCollections.clear();
-		for(int i=0;i<5;i++){
-			pnlAddFoldersCollections.add(new FolderCollectionView());
-		}
+	public FolderCollectionView() {
+		initWidget(uiBinder.createAndBindUi(this));
+		  lblCollectionTitle.setText("Why England Was the First to Industrialize Why England Was the First to Industrialize");
+		  pnlCollectionResources.add(new FolderCollectionResourceView());
 	}
 }

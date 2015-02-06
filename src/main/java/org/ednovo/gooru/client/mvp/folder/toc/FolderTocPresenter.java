@@ -41,7 +41,6 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  *
  * @description : 
  *
- *
  * @version : 1.3
  *
  * @date: 06-02-2015

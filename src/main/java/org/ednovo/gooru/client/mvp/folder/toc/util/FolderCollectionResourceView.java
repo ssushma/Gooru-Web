@@ -22,52 +22,46 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
- 
-package org.ednovo.gooru.client.mvp.folder.toc;
+package org.ednovo.gooru.client.mvp.folder.toc.util;
 
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherCBundle;
+import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.UlPanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : FolderTocView.java
- *
- * @description : 
- *
- * @version : 1.3
- *
- * @date: 06-02-2015
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
-public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> implements IsFolderTocView {
 
-	private static FolderTocViewUiBinder uiBinder = GWT
-			.create(FolderTocViewUiBinder.class);
+public class FolderCollectionResourceView extends Composite {
 
-	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
+	private static FolderCollectionResourceViewUiBinder uiBinder = GWT
+			.create(FolderCollectionResourceViewUiBinder.class);
+
+	interface FolderCollectionResourceViewUiBinder extends
+			UiBinder<Widget, FolderCollectionResourceView> {
 	}
+	@UiField UlPanel ulCollectionResources;
 	
-	@UiField VerticalPanel pnlAddFoldersCollections;
+	FolderTocCBundle res;
 	
-	public FolderTocView() {
-		setWidget(uiBinder.createAndBindUi(this));
-		setData();
+	LiPanel liPanel;
+	public FolderCollectionResourceView() {
+		this.res = FolderTocCBundle.INSTANCE;
+		res.css().ensureInjected();
+		initWidget(uiBinder.createAndBindUi(this));
+		setListData();
 	}
-	/**
-	 * This method is used to set folder TOC Data.
-	 */
-	private void setData() {
-		pnlAddFoldersCollections.clear();
-		for(int i=0;i<5;i++){
-			pnlAddFoldersCollections.add(new FolderCollectionView());
+
+	private void setListData() {
+		for(int i=0;i<10;i++){
+			liPanel=new LiPanel();
+			Label text=new Label("By the time you finlsh this play., you should he able to define By the time you finlsh this play., you should he able to define");
+			liPanel.add(text);
+			liPanel.setStyleName(res.css().audio());
+			ulCollectionResources.add(liPanel);
 		}
 	}
 }
