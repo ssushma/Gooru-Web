@@ -5,7 +5,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:footer="urn:import:org.ednovo.gooru.client.mvp.play.collection.footer">
-	<ui:style field= "playerStyle" src="collectionplayer.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="playerHeaderStyle" />
 	<g:HTMLPanel>
 	    
