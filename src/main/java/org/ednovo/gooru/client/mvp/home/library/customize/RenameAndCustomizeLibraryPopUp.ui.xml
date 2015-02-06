@@ -6,6 +6,11 @@
 		field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
+		<ui:style>
+		.addButtonContainer{
+			margin:50px 0;
+			}
+		</ui:style>
 		
 		<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}" ui:field="panelAssign">
 		<g:HTMLPanel styleName="{res.css.assignContentLoginCustomize}">
@@ -29,7 +34,7 @@
         <g:TextBox styleName="{res.css.inputTextBoxSyle}" ui:field="copycollectionTextbox"></g:TextBox>
          <g:Label styleName="{res.css.txtboxerrorColor}" ui:field="errorLabel"/>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{res.css.popupButtons}">
+		<g:HTMLPanel styleName="{res.css.popupButtons} {style.addButtonContainer}">
 			<g:Button ui:field="backtoLibrary" styleName="secondary"></g:Button>
 			<g:Button ui:field="editCollection" styleName="primary"></g:Button>
 			</g:HTMLPanel>
