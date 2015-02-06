@@ -465,8 +465,6 @@ public class LoginPopupUc extends PopupPanel{
 							    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SAUSD_LIBRARY);
 							    }
 						    }
-						    UserDo user = AppClientFactory.getLoggedInUser();
-						    MixpanelUtil.setIdentity(user.getGooruUId(), user.getUsernameDisplay(), user.getEmailId(), user.getUserRoleSetString(), "", user.getFirstName(), "");
 						}
 						else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 							handleInProgress();

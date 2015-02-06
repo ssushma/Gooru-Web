@@ -800,6 +800,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url, getLoggedInSessionToken());
+		getLogger().info("checkResourceExists::"+urlStr);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceItem(jsonRep);

@@ -1612,16 +1612,6 @@ public class MixpanelUtil {
 			   	$wnd.hewlettTracking("Click_AnalyticsTab_Search");
 		}-*/;
 	
-	public static native void setIdentity(String userId, String userName, String emailId, String role, String createdDate, String firstLastName, String clientIpAddress)/*-{
-		$wnd.FS.identify(userId, {
-			"displayName": ""+userName,
-			"email": ""+emailId,
-			"firstLastName_str": ""+firstLastName,
-			"role_str":""+role
-		});
-	}-*/;
-	
-	
 	
 	
 }
