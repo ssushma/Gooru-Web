@@ -122,6 +122,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 //	@UiField(provided = true)
 	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
 	
+	@UiField FlowPanel rowPanel;
+	
 	/*@UiField SimpleRadioButton rating1;
 	@UiField SimpleRadioButton rating2;
 	@UiField SimpleRadioButton rating3;
@@ -1610,15 +1612,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(isFullScreen){
 			  collectionContainer.setVisible(false);
 			  wrapperContainerField.getElement().getStyle().setWidth(100, Unit.PCT);
-			  wrapperContainerField.getElement().getStyle().setHeight(Window.getClientHeight()-pnlFullScreenNarration.getOffsetHeight(), Unit.PX);
+			  wrapperContainerField.getElement().getStyle().setHeight((Window.getClientHeight()-(pnlFullScreenNarration.getOffsetHeight()))+4, Unit.PX);
 			  wrapperContainerField.getElement().getStyle().setPadding(0, Unit.PX);
+			  
+			  rowPanel.getElement().setAttribute("style", "margin-right:0px !important;margin-left:0px !important;");
 			 
 			  resourceWidgetContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 			  resourceWidgetContainer.getElement().getStyle().setPadding(0, Unit.PX);
 			  
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(Window.getClientHeight()-pnlFullScreenNarration.getOffsetHeight(),  Unit.PX);
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflow(Overflow.HIDDEN);
+			  resourceWidgetContainer.getElement().getStyle().setHeight(wrapperContainerField.getOffsetHeight()-4,  Unit.PX);
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(wrapperContainerField.getOffsetHeight()-1,  Unit.PX);
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflowY(Overflow.AUTO);
 			
 			  Element youTubeEle=Document.get().getElementById("playerid");
 			  if(youTubeEle!=null){
@@ -1633,6 +1638,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  collectionContainer.setVisible(true);
 			  wrapperContainerField.getElement().getStyle().clearWidth();
 			  wrapperContainerField.getElement().getStyle().clearHeight();
+			  rowPanel.getElement().setAttribute("style", "margin-right:-15px !important;margin-left:-15px !important;");
 			 // wrapperContainerField.getElement().getStyle().setPaddingTop(88, Unit.PX);
 			  resourceWidgetContainer.getElement().getStyle().clearWidth();
 			//  resourceWidgetContainer.getElement().getStyle().setPaddingTop(67, Unit.PX);
