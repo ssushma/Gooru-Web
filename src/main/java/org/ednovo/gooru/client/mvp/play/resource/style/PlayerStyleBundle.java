@@ -76,6 +76,8 @@ public interface PlayerStyleBundle extends ClientBundle {
 		@ClassName("studyplayer-container")
 		String studyplayerContainer();
 		
+		String scrollStudyContainer();
+		
 		String rightPanel();
 		
 		String leftPanel();

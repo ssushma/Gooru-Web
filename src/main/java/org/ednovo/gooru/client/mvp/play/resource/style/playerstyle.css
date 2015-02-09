@@ -891,7 +891,7 @@ font-size: 31px;
 	overflow: visible;
 	z-index: 99999;
 	background-color: #ddd;
-	overflow-y: auto !important;
+	
 }
 .rightPanel{
 	padding-top: 30px;
@@ -1125,4 +1125,7 @@ float: right;
 }
 .metatDataContainer{
 
+}
+.scrollStudyContainer{
+	overflow-y: auto !important;
 }
