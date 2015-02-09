@@ -37,13 +37,11 @@
 								what factors lead to Industrial Revolution In Europe and
 								beyond?
 							</p>
-						</g:HTMLPanel>
-					</g:HTMLPanel>
+						<g:VerticalPanel styleName="{tocStyle.perTaskContainer}" ui:field="pnlAddFoldersCollections"/>
+				</g:HTMLPanel>
+				</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel>
-		<g:VerticalPanel ui:field="pnlAddFoldersCollections"/>
-		</g:HTMLPanel>	
 	</g:HTMLPanel>
 </ui:UiBinder>

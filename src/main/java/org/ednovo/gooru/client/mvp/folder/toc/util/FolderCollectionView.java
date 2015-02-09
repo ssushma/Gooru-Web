@@ -24,12 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folder.toc.util;
 
+import org.ednovo.gooru.client.uc.H4Panel;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : FolderCollectionView.java
@@ -53,7 +54,7 @@ public class FolderCollectionView extends Composite {
 			UiBinder<Widget, FolderCollectionView> {
 	}
 	@UiField FlowPanel pnlCollectionResources;
-	@UiField Label lblCollectionTitle;
+	@UiField H4Panel lblCollectionTitle;
 	
 	public FolderCollectionView() {
 		initWidget(uiBinder.createAndBindUi(this));
