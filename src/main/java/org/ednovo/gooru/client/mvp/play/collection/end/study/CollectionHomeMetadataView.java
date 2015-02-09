@@ -170,7 +170,14 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 					AppClientFactory.fireEvent(new UpdateCollectionViewCountEvent());
 				}else{
+					try
+					{
 					AppClientFactory.fireEvent(new UpdatePreviewViewCountEvent());
+					}
+					catch(Exception ex)
+					{
+						
+					}
 				}
 				if(collectionItems.size()>0){
 					CollectionItemDo collectionItemDo=collectionItems.get(0);
