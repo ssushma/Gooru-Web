@@ -1,0 +1,46 @@
+.perTaskContainer{
+	padding:30px 0;
+}
+.collectionTitle{
+	color: #0066cc;
+	font-weight: bold;
+	margin: 30px 0 10px 0;
+}
+.video {
+    background-position: 0 0 !important;
+}
+.webpage {
+    background-position: 0 -223px !important;
+}
+
+.interactives{
+    background-position: 0 -27px !important;
+}
+
+.questions{
+    background-position: 0 -139px !important;
+}
+
+.images{
+    background-position: 0 -251px !important;
+}
+
+.texts{
+    background-position: 0 -55px !important;
+}
+
+.audio{
+    background-position: 0 -279px !important;
+}
+
+.perTaskContainer ul{
+	margin:0 0;
+	padding:0 0;
+}
+.perTaskContainer ul li{
+	margin:10px 0;
+	background: url("../images/resource-type-icons.png") no-repeat scroll 0 0 transparent;
+    padding: 3px 31px;
+	list-style:none;
+	cursor: pointer;
+}

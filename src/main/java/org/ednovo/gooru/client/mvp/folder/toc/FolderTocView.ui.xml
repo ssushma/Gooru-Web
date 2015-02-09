@@ -4,20 +4,13 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="tocStyle" src="floderToc.css" />
-	
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
-
 			<g:HTMLPanel styleName="container">
-
 				<g:HTMLPanel styleName="row">
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
-
-
 						<g:HTMLPanel styleName="{tocStyle.marginDiv}">
-
 							<tbp:H3Panel styleName="{tocStyle.pageHeader}" text="Industrial Revolution Causes"> </tbp:H3Panel>
-
 							<p>
 								<strong>Big Ideas:</strong>
 								<br> By the time you finlsh this play., you should he able to
@@ -28,7 +21,6 @@
 								Agriculture Movement
 								Agriculture Movement
 							</p>
-
 							<p>
 								By the time you finlsh this play., you should he able to define
 								and give an example of the following terms:
@@ -39,19 +31,17 @@
 								2) By the time you finlsh this play., you should he able to
 								define
 							</p>
-
-
 							<p>
 								<strong>Eseentlal questions:</strong>
 								<br />
 								what factors lead to Industrial Revolution In Europe and
 								beyond?
 							</p>
-						</g:HTMLPanel>
-					</g:HTMLPanel>
+						<g:VerticalPanel styleName="{tocStyle.perTaskContainer}" ui:field="pnlAddFoldersCollections"/>
+				</g:HTMLPanel>
+				</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel> </g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

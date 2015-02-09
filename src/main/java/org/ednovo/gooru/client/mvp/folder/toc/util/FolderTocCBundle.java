@@ -22,52 +22,27 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
- 
-package org.ednovo.gooru.client.mvp.folder.toc;
-
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
+package org.ednovo.gooru.client.mvp.folder.toc.util;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : FolderTocView.java
- *
- * @description : 
- *
- * @version : 1.3
- *
- * @date: 06-02-2015
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
-public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> implements IsFolderTocView {
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
-	private static FolderTocViewUiBinder uiBinder = GWT
-			.create(FolderTocViewUiBinder.class);
-
-	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
-	}
+public interface FolderTocCBundle extends ClientBundle{
+	static final FolderTocCBundle INSTANCE = GWT.create(FolderTocCBundle.class);
 	
-	@UiField VerticalPanel pnlAddFoldersCollections;
+	@NotStrict
+	@Source("folderCollectionView.css")
+	FolderTocCss css();
 	
-	public FolderTocView() {
-		setWidget(uiBinder.createAndBindUi(this));
-		setData();
-	}
-	/**
-	 * This method is used to set folder TOC Data.
-	 */
-	private void setData() {
-		pnlAddFoldersCollections.clear();
-		for(int i=0;i<5;i++){
-			pnlAddFoldersCollections.add(new FolderCollectionView());
-		}
+	public interface FolderTocCss extends CssResource{
+		String video();
+		String webpage();
+		String interactives();
+		String questions();
+		String images();
+		String texts();
+		String audio();
 	}
 }
