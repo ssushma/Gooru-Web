@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.client.util.ScrollPopupShareUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -58,6 +59,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -81,6 +83,8 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 	
 	@UiField InlineLabel lblPii,toUsText;
 	@UiField Anchor ancprivacy;
+	
+	@UiField HTMLPanel mainShareContainer;
 
 	private static boolean isvalid;
 
@@ -245,6 +249,7 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		fromTxt.addBlurHandler(new CheckProfanityInOnBlur(fromTxt,null, fromValidation));
 		subTxt.addBlurHandler(new CheckProfanityInOnBlur(subTxt,null, mandatoryErrorLbl));
 		msgTxa.addBlurHandler(new CheckProfanityInOnBlur(null,msgTxa, mandatoryErrorRichTextArea));
+		ScrollPopupShareUtil.ScrollPopupUtilWidget(mainShareContainer);
 	}
 	
 	@UiHandler("cancelLbl")

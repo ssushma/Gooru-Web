@@ -13,7 +13,7 @@
 	                </g:HTMLPanel>
 				</g:HTMLPanel>
 	       </g:HTMLPanel>
-		<g:HTMLPanel styleName="{res1.css.emailContainer}">
+		<g:HTMLPanel styleName="{res1.css.emailContainer}" ui:field="mainShareContainer">
 		   <g:HTMLPanel styleName="{res1.css.emailSelection}">
 				<g:Label styleName="col-md-2 col-sm-3 {res1.css.lables}" ui:field="lblFrom"/>
 				<g:HTMLPanel styleName="col-md-10 col-sm-9">

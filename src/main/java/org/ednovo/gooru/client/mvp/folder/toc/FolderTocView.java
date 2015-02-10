@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
-import org.ednovo.gooru.client.mvp.folder.toc.util.FolderTocCBundle;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -85,7 +84,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}
 		}
 	};
-	private CollectionTreeItem cureentcollectionTreeItem = null;
 	private CollectionTreeItem previousSelectedItem = null;
 	private FolderTreeItem currentFolderSelectedTreeItem = null;
 	private FolderTreeItem previousFolderSelectedTreeItem = null;
@@ -126,19 +124,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					currentFolderSelectedTreeItem
 							.addStyleName(FolderContainerCBundle.INSTANCE
 									.css().selected());
-					previousSelectedItem = cureentcollectionTreeItem = null;
 					TreeItem parent = item.getParentItem();
-					item.getTree().setSelectedItem(parent, false); // TODO FIX
-																	// ME
+					item.getTree().setSelectedItem(parent, false); 
 					if (!folderTreeItemWidget.isApiCalled()) {
 						folderTreeItemWidget.setApiCalled(true);
 						getFolderItems(item, folderTreeItemWidget.getGooruOid());
 					}
-					//selectedFolderGooruOid = folderTreeItemWidget.getGooruOid();
 					if (parent != null)
-						parent.setSelected(false); // TODO FIX ME
+						parent.setSelected(false); 
 						item.setState(!item.getState(), false);
-					// setSelectedCollectionsCount(item.getChildCount());
 				} 
 			}
 		});
@@ -151,7 +145,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					 System.out.println("type::"+floderDo.getType());
 					 if(floderDo.getType().equals("folder")){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
@@ -236,7 +229,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				folderContainer.addStyleName(levelStyleName);
 			}
 			this.gooruOid=gooruOid;
-			System.out.println("foldername::"+folderTitle);
 			floderName.setText(folderTitle);
 		}
 		public boolean isOpen() {

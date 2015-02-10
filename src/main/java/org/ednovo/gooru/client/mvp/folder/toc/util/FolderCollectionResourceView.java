@@ -91,6 +91,8 @@ public class FolderCollectionResourceView extends Composite {
 			String resourceType = "";
 			for (int i = 0; i < resourceCount; i++) {
 				liPanel = new LiPanel();
+				Label sequenceNumber = new Label((i+1)+" ");
+				liPanel.add(sequenceNumber);
 				// To set the resource title and resource format image
 				String resTitle = folderDo.getCollectionItems().get(i)
 						.getTitle();
@@ -119,7 +121,6 @@ public class FolderCollectionResourceView extends Composite {
 				}else if(resourceType.equalsIgnoreCase("audio")){
 					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().audio());
 				}
-				System.out.println("resourcetype;;" + resourceType);
 				liPanel.addClickHandler(new clickOnResource(folderDo
 						.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);

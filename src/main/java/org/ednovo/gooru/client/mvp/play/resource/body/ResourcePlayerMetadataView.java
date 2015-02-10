@@ -67,9 +67,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -338,7 +336,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				public void onResize(ResizeEvent event) {
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && view.equals("fullScreen")){
-						//setFullScreen(true,pnlNarrationFullScreen);
+						setFullScreen(true,pnlNarrationFullScreen);
 					}
 				}
 			});
@@ -1626,11 +1624,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 					windowHeight=windowHeight-116;
 				}else{
-					windowHeight=windowHeight-198;
+					windowHeight=windowHeight-193;
 				}				
-				windowHeight=windowHeight+76;			  
+				windowHeight=windowHeight+71;			  
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
-			  if(resourceWidgetContainer.getElement().getFirstChildElement().hasChildNodes())
+			  if(resourceWidgetContainer.getElement().getFirstChildElement().getChildCount()>=1)
 			  {
 			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", windowHeight+"px");
 			  }
@@ -1656,15 +1654,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 					windowHeight=windowHeight-116;
 				}else{
-					windowHeight=windowHeight-198;
+					windowHeight=windowHeight-193;
 				}
 			  
 			  resourceWidgetContainer.setSize("100%", windowHeight+"px");
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
-			  if(resourceWidgetContainer.getElement().getFirstChildElement().hasChildNodes())
+			  if(resourceWidgetContainer.getElement().getFirstChildElement().getChildCount()>=1)
 			  {
 			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", windowHeight+"px");
 			  }
+			  
 		}
 	}
 	public void getdata(){
