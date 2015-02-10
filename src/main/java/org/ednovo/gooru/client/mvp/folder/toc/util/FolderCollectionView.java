@@ -24,15 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folder.toc.util;
 
+import java.util.HashMap;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.H4Panel;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * @fileName : FolderCollectionView.java
  *
@@ -58,7 +65,7 @@ public class FolderCollectionView extends Composite {
 	@UiField H4Panel lblCollectionTitle;
 	FolderTocCBundle res;
 	
-	public FolderCollectionView(String levelStyleName,FolderDo folderDo) {
+	public FolderCollectionView(String levelStyleName,final FolderDo folderDo) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
@@ -66,5 +73,15 @@ public class FolderCollectionView extends Composite {
 		 if(folderDo.getCollectionItems().size()>0){
 			 pnlResources.add(new FolderCollectionResourceView(folderDo));
 		 }
+		 lblCollectionTitle.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				HashMap<String,String> params = new HashMap<String,String>();
+				params.put("id", folderDo.getGooruOid());
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}
+		});
 	}
 }
