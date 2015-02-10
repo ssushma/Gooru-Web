@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.folder.toc;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 /**
  * @fileName : IsFolderTocView.java
  *
@@ -39,5 +40,7 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
  * @Reviewer: 
  */
 public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
+
+	void setFolderItems(FolderListDo folderListDo);
 	
 }

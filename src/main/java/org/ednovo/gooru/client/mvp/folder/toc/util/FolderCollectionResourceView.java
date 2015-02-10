@@ -24,9 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folder.toc.util;
 
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherCBundle;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -44,23 +44,29 @@ public class FolderCollectionResourceView extends Composite {
 			UiBinder<Widget, FolderCollectionResourceView> {
 	}
 	@UiField UlPanel ulCollectionResources;
+	FolderDo folderDo;
 	
 	FolderTocCBundle res;
 	
 	LiPanel liPanel;
-	public FolderCollectionResourceView() {
+	public FolderCollectionResourceView(FolderDo folderDo) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
+		this.folderDo=folderDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		setListData();
 	}
 
 	private void setListData() {
-		for(int i=0;i<10;i++){
+		int collectionItemsCount=folderDo.getCollectionItems().size();
+		String resourceType="";
+		for(int i=0;i<collectionItemsCount;i++){
 			liPanel=new LiPanel();
-			Label text=new Label("By the time you finlsh this play., you should he able to define By the time you finlsh this play., you should he able to define");
+			Label text=new Label(folderDo.getCollectionItems().get(i).getTitle());
 			liPanel.add(text);
-			liPanel.setStyleName(res.css().audio());
+			resourceType=folderDo.getCollectionItems().get(i).getResourceFormat().getValue();
+			System.out.println("resourcetype;;"+resourceType);
+			liPanel.addStyleName(resourceType);
 			ulCollectionResources.add(liPanel);
 		}
 	}

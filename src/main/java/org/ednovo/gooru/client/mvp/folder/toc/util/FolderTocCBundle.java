@@ -44,5 +44,7 @@ public interface FolderTocCBundle extends ClientBundle{
 		String images();
 		String texts();
 		String audio();
+		String folderTitleStyle();
+		String folderTitlearrow();
 	}
 }

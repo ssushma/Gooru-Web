@@ -44,3 +44,18 @@
 	list-style:none;
 	cursor: pointer;
 }
+
+.folderTitleStyle {
+	color: #0066cc;
+	font-weight: bold;
+	font-size: 18px
+}
+
+.folderTitlearrow {
+    width:25px;
+    height:25px;
+    border-radius:2px;
+    position:absolute;
+    top:0px;
+    background: url('../images/folders/panel/arrow-closed.png') no-repeat center;
+}
