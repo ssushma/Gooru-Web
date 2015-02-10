@@ -22,25 +22,29 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.folder.toc;
+package org.ednovo.gooru.client.mvp.folder.toc.util;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
-/**
- * @fileName : IsFolderTocView.java
- *
- * @description : 
- *
- * @version : 1.3
- *
- * @date: 06-02-2015
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
-public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
-	void setFolderItems(FolderListDo folderListDo);
+public interface FolderTocCBundle extends ClientBundle{
+	static final FolderTocCBundle INSTANCE = GWT.create(FolderTocCBundle.class);
 	
+	@NotStrict
+	@Source("folderCollectionView.css")
+	FolderTocCss css();
+	
+	public interface FolderTocCss extends CssResource{
+		String video();
+		String webpage();
+		String interactives();
+		String questions();
+		String images();
+		String texts();
+		String audio();
+		String folderTitleStyle();
+		String folderTitlearrow();
+	}
 }

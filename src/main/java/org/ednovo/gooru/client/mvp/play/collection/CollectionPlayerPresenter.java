@@ -1364,13 +1364,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void startPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-		this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+	/*	this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
 				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String activityEventId) {
 
 			}
-		});
+		});*/
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
@@ -1935,6 +1935,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		triggerSaveOeAnswerTextDataEvent(oeDataLogEventId,resourceActivityResourceId,oeStartTime,oeStartTime,0);
 	}
 	public void triggerCollectionNewDataLogStartStopEvent(Long collectionStartTime,Long collectionEndTime,String eventType,Integer score){
+		try
+		{
 		JSONObject collectionDataLog=new JSONObject(); 
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(collectionNewDataLogEventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_PLAY));
@@ -1980,8 +1982,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 			updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
 		}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("logging this issue:::"+"Event start stop issue");
+		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
+		try
+		{
 		JSONObject collectionDataLog=new JSONObject(); 
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(resourceNewDataLogEventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_RESOURCE_PLAY));
@@ -2008,6 +2017,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 			updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemDo.getCollectionItemId());
+		}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("logging this issue for item wise:::"+"Event start stop issue");
 		}
 		
 	}

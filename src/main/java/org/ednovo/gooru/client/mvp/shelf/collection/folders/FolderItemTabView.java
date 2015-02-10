@@ -62,6 +62,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -1190,7 +1191,22 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params, shelfFolderItemChildView.getFolderDo(),shelfFolderItemChildView.getItemNumber().getText()));
 	}
 	
-	
+	@UiHandler("folderPlayBtn")
+	public void clickOnViewBtn(ClickEvent clickEvent){
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
+		
+		Map<String, String> params = new HashMap<String, String>();
+		if(o3!=null) {
+			params.put("o3",o3);
+		} else if(o2!=null) {
+			params.put("o2",o2);
+		} else if(o1!=null) {
+			params.put("o1",o1);
+		}
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+	}
 	
 	/**
 	 * @return css instance of {@link CollectionEditResourceCss}
