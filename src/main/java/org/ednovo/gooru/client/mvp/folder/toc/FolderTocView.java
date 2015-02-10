@@ -27,11 +27,11 @@ package org.ednovo.gooru.client.mvp.folder.toc;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 /**
@@ -59,7 +59,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	
 	public FolderTocView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		setData();
+		//setData();
 	}
 	/**
 	 * This method is used to set folder TOC Data.
@@ -67,7 +67,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private void setData() {
 		pnlAddFoldersCollections.clear();
 		for(int i=0;i<5;i++){
-			pnlAddFoldersCollections.add(new FolderCollectionView());
+			//pnlAddFoldersCollections.add(new FolderCollectionView());
 		}
+	}
+	@Override
+	public void setFolderItems(FolderListDo folderListDo) {
+		// TODO Auto-generated method stub
+		pnlAddFoldersCollections.clear();
+		pnlAddFoldersCollections.add(new FolderCollectionView(folderListDo));
 	}
 }

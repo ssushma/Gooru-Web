@@ -28,8 +28,11 @@
 package org.ednovo.gooru.client.mvp.folder.toc;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -79,5 +82,13 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	public void onBind() {
 		super.onBind();
+		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo folderListDo) {
+				System.out.println("sucess;;;");
+				getView().setFolderItems(folderListDo);
+			}
+		});
 	}
 }
