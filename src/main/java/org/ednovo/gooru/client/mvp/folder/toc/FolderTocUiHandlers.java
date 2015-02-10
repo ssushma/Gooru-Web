@@ -26,6 +26,8 @@
 package org.ednovo.gooru.client.mvp.folder.toc;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.user.client.ui.TreeItem;
 /**
  * @fileName : FolderTocUiHandlers.java
  *
@@ -41,5 +43,10 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  * @Reviewer: 
  */
 public interface FolderTocUiHandlers extends BaseUiHandlers{
-
+	/**
+	 * This method is used to get the folders and collections based on parent folder Id.
+	 * @param item
+	 * @param parentId
+	 */
+	void getFolderItems(TreeItem item, String parentId);
 }

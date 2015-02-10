@@ -65,7 +65,6 @@ public class FolderCollectionResourceView extends Composite {
 			Label text=new Label(folderDo.getCollectionItems().get(i).getTitle());
 			liPanel.add(text);
 			resourceType=folderDo.getCollectionItems().get(i).getResourceFormat().getValue();
-			System.out.println("resourcetype;;"+resourceType);
 			liPanel.addStyleName(resourceType);
 			ulCollectionResources.add(liPanel);
 		}

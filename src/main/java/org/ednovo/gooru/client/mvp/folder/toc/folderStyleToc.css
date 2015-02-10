@@ -421,6 +421,7 @@
 
 .folderStucture {
     /* width:395px; */
+    margin-left: 12px;
 }
 .folderStucture table {
    /*  width:395px; */
@@ -448,7 +449,7 @@
 
 .folderLevel,.foldercollection { /* grandparent level - default */
     box-sizing:border-box;
-    padding-left:65px;
+    padding-left:35px;
 }
 
 .folderLevel.root {
@@ -462,7 +463,7 @@
 }
 
 .folderLevel.child {
-    padding-left:121px;
+    padding-left:75px;
 }
 .folderLevel.innerchild,.foldercollection.innerchild {
     padding-left:149px;
@@ -481,7 +482,7 @@
 
 
 .folderLevel { /* grandparent level - default */
-    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 33px 4px;
+    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 6px 4px;
 }
 
 .folderLevel.parent {
@@ -489,7 +490,7 @@
 }
 
 .folderLevel.child {
-    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 89px 4px;
+    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 47px 4px;
 }
 .folderLevel.innerchild{
 	 background: url('../images/folders/panel/folder-small-icon.png') no-repeat 117px 4px;
@@ -566,14 +567,14 @@
 }
 
 .folderLevel:hover,.foldercollection:hover {
-    background-color:#f0f0f0;
+   /*  background-color:#f0f0f0; */
 }
 
 .foldercollection.selected {
-    background-color:#CFE3F1;
+    /* background-color:#CFE3F1; */
 }
 .folderLevel.selected {
-    background-color:#CFE3F1;
+   /*  background-color:#CFE3F1; */
 }
  .dropdowncontainer{
 	 width: 324px;
@@ -598,9 +599,7 @@
 	font-family: Arial, Helvetica, sans-serif, Calibri;
  }
  .dropdownListContainerScrollPanel{
-   	height: 275px;
     list-style-type: none;
-    margin: 20px auto auto 44px;
     width: 91%;
     color:#999;
  }
@@ -696,7 +695,6 @@
 	margin-top:5px;
 	font-weight: bold;
 	height:10px;
-	margin-bottom: 15px;
 }
 .selectionErrorLabel{
 	width: 89%;
@@ -745,8 +743,23 @@
 	color:#999;
 	 }
 .collectionChild1{
-	padding-left:87px !important;
+	padding-left:42px !important;
 }
 .collectionChild2{
-	padding-left:177px !important;
+	padding-left:84px !important;
+}
+.folderTitlearrow {
+    width:25px;
+    height:25px;
+    border-radius:2px;
+    position:absolute;
+    top:0px;
+    margin-left: -54px;
+    background: url('../images/folders/panel/arrow-closed.png') no-repeat center;
+}
+
+.folderTitleStyle {
+	color: #0066cc;
+	font-weight: bold;
+	font-size: 18px
 }
