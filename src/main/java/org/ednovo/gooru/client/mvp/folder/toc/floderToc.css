@@ -116,6 +116,7 @@ button.primary:hover {
 .marginDiv h4 {
 	color: #0066cc;
 	font-weight: bold;
+	line-height: 25px;
 	/* margin: 30px 0 10px 0; */
 }
 

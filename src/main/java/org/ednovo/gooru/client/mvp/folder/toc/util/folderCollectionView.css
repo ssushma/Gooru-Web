@@ -9,19 +9,19 @@
 .video {
     background-position: 0 0 !important;
 }
-.webpage{
+.webpage {
     background-position: 0 -223px !important;
 }
 
-.interactive{
+.interactives{
     background-position: 0 -27px !important;
 }
 
-.question{
+.questions{
     background-position: 0 -139px !important;
 }
 
-.image{
+.images{
     background-position: 0 -251px !important;
 }
 
@@ -43,4 +43,11 @@
     padding: 3px 31px;
 	list-style:none;
 	cursor: pointer;
+}
+.foldercollection { 
+    background: url('../images/folders/panel/collection-small-icon.png') no-repeat 0px 4px;
+    padding-left: 29px;
+}
+.foldercollection.child {
+    background: url('../images/folders/panel/collection-small-icon.png') no-repeat 89px 4px;
 }
