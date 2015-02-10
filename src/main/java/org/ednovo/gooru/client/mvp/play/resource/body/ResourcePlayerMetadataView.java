@@ -336,7 +336,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				public void onResize(ResizeEvent event) {
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && view.equals("fullScreen")){
-						//setFullScreen(true,pnlNarrationFullScreen);
+						setFullScreen(true,pnlNarrationFullScreen);
 					}
 				}
 			});
