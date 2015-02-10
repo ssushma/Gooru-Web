@@ -50,11 +50,14 @@ public class StudyPlayerFooterView extends Composite{
 	
 	private Button narrationButton=null;
 	
+	private Button fullScreenButton=null;
+	
 	@UiField FooterStyleResource footerstyle;
 	
 	private boolean isInfoButtonEnabled=false;
 	private boolean isShareButtonEnabled=false;
 	private boolean isNarrationButtonEnabled=false;
+	private boolean isFullScreenButtonEnabled=false;
 	private static boolean isNavigationButtonEnabledClass=false;
 	private boolean isAddButtonEnabled=false;
 	private boolean isFlagButtonEnabled=false;
@@ -101,9 +104,19 @@ public class StudyPlayerFooterView extends Composite{
 		narrationButton.getElement().setId("btnNarrationButton");
 		getNarrationButton().setStyleName(footerstyle.narrationButtonNormal());
 	}
+	
+	public void setFullScreenButton(Button fullScreenButton){
+		this.fullScreenButton=fullScreenButton;
+		fullScreenButton.getElement().setId("btnFullScreenButton");
+		getFullScreenButton().setStyleName(footerstyle.fullscreenButtonNormal());
+	}
 
 	public Button getNarrationButton() {
 		return narrationButton;
+	}
+	
+	public Button getFullScreenButton() {
+		return fullScreenButton;
 	}
 
 	public Button getAddButton() {
@@ -112,7 +125,7 @@ public class StudyPlayerFooterView extends Composite{
 	public Button getFlagButton(){
 		return flagButton;
 	}
-	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive){
+	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive,boolean makefullScreenButtonActive){
 		if(makeAddButtonActive){
 			makeAddButtonActive();
 		}
@@ -127,13 +140,16 @@ public class StudyPlayerFooterView extends Composite{
 		}
 		else if(makeFlagButtonActive){
 			makeFlagButtonActive();
+		}else if(makefullScreenButtonActive){
+			makefullScreenButtonActive();
 		}
 	}
-	public void enableButtons(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable,boolean isFlagButtonEnable){
+	public void enableButtons(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable,boolean isFlagButtonEnable,boolean isFullScreenButtonEnable){
 		enableAddButton(isAddButtonEnable);
 		enableInfoButton(isInfoButtonEnable);
 		enableShareButton(isShareButtonEnable);
 		enableNarrationButton(isNarrationButtonEnable);
+		enableFullScreennButton(isFullScreenButtonEnable);		
 		enableNavigationButton(isNavigationButtonEnable);
 		enableFlagButton(isFlagButtonEnable);
 	}
@@ -190,6 +206,19 @@ public class StudyPlayerFooterView extends Composite{
 			getNarrationButton().removeStyleName(footerstyle.narrationButtonActive());
 			getNarrationButton().removeStyleName(footerstyle.narrationButtonNormal());
 			getNarrationButton().addStyleName(footerstyle.narrationButtonDisabled());
+		}		
+	}
+	public void enableFullScreennButton(boolean isFullScreenButtonEnable){
+		setFullScreenButtonEnabled(isFullScreenButtonEnable);
+		getFullScreenButton().getElement().removeAttribute("button");
+		if(isFullScreenButtonEnable){
+			getFullScreenButton().removeStyleName(footerstyle.fullscreenButtonDisabled());
+			getFullScreenButton().removeStyleName(footerstyle.fullscreenButtonActive());
+			getFullScreenButton().addStyleName(footerstyle.fullscreenButtonNormal());
+		}else{
+			getFullScreenButton().removeStyleName(footerstyle.fullscreenButtonActive());
+			getFullScreenButton().removeStyleName(footerstyle.fullscreenButtonNormal());
+			getFullScreenButton().addStyleName(footerstyle.fullscreenButtonDisabled());
 		}		
 	}
 	
@@ -262,6 +291,18 @@ public class StudyPlayerFooterView extends Composite{
 			getNarrationButton().getElement().setAttribute("button","active");
 		}	
 	}
+	public void makefullScreenButtonActive(){
+		String button=getFullScreenButton().getElement().getAttribute("button");
+		if(button!=null&&button.equalsIgnoreCase("active")){
+			getFullScreenButton().removeStyleName(footerstyle.fullscreenButtonActive());
+			getFullScreenButton().addStyleName(footerstyle.fullscreenButtonNormal());
+			getFullScreenButton().getElement().removeAttribute("button");
+		}else{
+			getFullScreenButton().removeStyleName(footerstyle.fullscreenButtonNormal());
+			getFullScreenButton().addStyleName(footerstyle.fullscreenButtonActive());
+			getFullScreenButton().getElement().setAttribute("button","active");
+		}	
+	}
 	public void makeNavigationButtonActive(){
 		
 	}
@@ -293,7 +334,7 @@ public class StudyPlayerFooterView extends Composite{
 		getFlagButton().removeStyleName(footerstyle.flagButtonDisable());
 		getFlagButton().addStyleName(footerstyle.flagButtonOrange());
 	}
-	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton){
+	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton,boolean deselectFullScreenButton){
 		if(deselectAddButton){
 			deselectAddButton();
 		}
@@ -311,6 +352,9 @@ public class StudyPlayerFooterView extends Composite{
 		}
 		if(deselectFlagButton){
 			deselectFlagButton();
+		}
+		if(deselectFullScreenButton){
+			deselectFullScreenButton();
 		}
 	}
 	public void deselectAddButton(){
@@ -344,6 +388,14 @@ public class StudyPlayerFooterView extends Composite{
 			getNarrationButton().removeStyleName(footerstyle.narrationButtonActive());
 			getNarrationButton().addStyleName(footerstyle.narrationButtonNormal());
 			getNarrationButton().getElement().removeAttribute("button");
+		}
+	}
+	public void deselectFullScreenButton(){
+		String fullscreenButtonVal=getFullScreenButton().getElement().getAttribute("button");
+		if(fullscreenButtonVal!=null&&fullscreenButtonVal.equalsIgnoreCase("active")&&isFullScreenButtonEnabled){
+			getFullScreenButton().removeStyleName(footerstyle.fullscreenButtonActive());
+			getFullScreenButton().addStyleName(footerstyle.fullscreenButtonNormal());
+			getFullScreenButton().getElement().removeAttribute("button");
 		}
 	}
 	public void deselectNavigationButton(){
@@ -385,6 +437,10 @@ public class StudyPlayerFooterView extends Composite{
 
 	public void setNarrationButtonEnabled(boolean isNarrationButtonEnabled) {
 		this.isNarrationButtonEnabled = isNarrationButtonEnabled;
+	}
+	
+	public void setFullScreenButtonEnabled(boolean isFullScreenButtonEnabled) {
+		this.isFullScreenButtonEnabled = isFullScreenButtonEnabled;
 	}
 
 	public boolean isNavigationButtonEnabled() {

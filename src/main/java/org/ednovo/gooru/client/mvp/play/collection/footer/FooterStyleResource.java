@@ -36,6 +36,9 @@ public interface FooterStyleResource extends CssResource {
 	String narrationButtonNormal();
 	String narrationButtonActive();
 	String narrationButtonDisabled();
+	String fullscreenButtonNormal();
+	String fullscreenButtonActive();
+	String fullscreenButtonDisabled();
 	String addButtonNormal();
 	String addButtonActive();
 	String addButtonDisabled();

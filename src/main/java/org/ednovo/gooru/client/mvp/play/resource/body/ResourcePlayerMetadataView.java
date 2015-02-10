@@ -109,7 +109,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField
 	FlowPanel resourcePublisher;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
-					needHelpButton,plusAddTagsButton,narrationButton;
+					needHelpButton,plusAddTagsButton,narrationButton,fullScreenButton;
 	@UiField HTMLEventPanel emoticsContainer;
 
 	@UiField HTMLPanel singleEmoticsContainer,ratingsContainer;
@@ -191,6 +191,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public Button getNarrationButton(){
 		return narrationButton;
+	}
+	
+	public Button getFullScreenButton(){
+		return fullScreenButton;
 	}
 	
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
@@ -334,7 +338,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				public void onResize(ResizeEvent event) {
 					String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 					if(view!=null && view.equals("fullScreen")){
-						setFullScreen(true,pnlNarrationFullScreen);
+						//setFullScreen(true,pnlNarrationFullScreen);
 					}
 				}
 			});
@@ -1613,40 +1617,33 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  collectionContainer.setVisible(false);
 			  wrapperContainerField.getElement().getStyle().setWidth(100, Unit.PCT);
 			  wrapperContainerField.getElement().getStyle().setHeight((Window.getClientHeight()-(pnlFullScreenNarration.getOffsetHeight()))+4, Unit.PX);
-			  wrapperContainerField.getElement().getStyle().setPadding(0, Unit.PX);
-			  
-			  rowPanel.getElement().setAttribute("style", "margin-right:0px !important;margin-left:0px !important;");
-			 
+			  wrapperContainerField.getElement().getStyle().setPadding(0, Unit.PX);			  
+			  rowPanel.getElement().setAttribute("style", "margin-right:0px !important;margin-left:0px !important;");			 
 			  resourceWidgetContainer.getElement().getStyle().setWidth(100, Unit.PCT);
-			  resourceWidgetContainer.getElement().getStyle().setPadding(0, Unit.PX);
-			  
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
-			  resourceWidgetContainer.getElement().getStyle().setHeight(wrapperContainerField.getOffsetHeight()-4,  Unit.PX);
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(wrapperContainerField.getOffsetHeight()-1,  Unit.PX);
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflowY(Overflow.AUTO);
-			
-			  Element youTubeEle=Document.get().getElementById("playerid");
-			  if(youTubeEle!=null){
-				  youTubeEle.getStyle().setHeight(Window.getClientHeight()-pnlFullScreenNarration.getOffsetHeight(),  Unit.PX);
+			  resourceWidgetContainer.getElement().getStyle().setPadding(0, Unit.PX);			  
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);				  
+				int windowHeight=Window.getClientHeight();
+				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+					windowHeight=windowHeight-116;
+				}else{
+					windowHeight=windowHeight-198;
+				}				
+				windowHeight=windowHeight+76;			  
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
+			  if(resourceWidgetContainer.getElement().getFirstChildElement().hasChildNodes())
+			  {
+			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", windowHeight+"px");
 			  }
-			 /* if(getUiHandlers().getQuestioncontainer()!=null){
-				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setWidth(100, Unit.PCT);
-				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setHeight(Window.getClientHeight()-pnlFullScreenNarration.getOffsetHeight(),  Unit.PX);
-				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setOverflow(Overflow.AUTO);
-			  }*/
 		}else{
 			  collectionContainer.setVisible(true);
 			  wrapperContainerField.getElement().getStyle().clearWidth();
 			  wrapperContainerField.getElement().getStyle().clearHeight();
 			  rowPanel.getElement().setAttribute("style", "margin-right:-15px !important;margin-left:-15px !important;");
-			 // wrapperContainerField.getElement().getStyle().setPaddingTop(88, Unit.PX);
 			  resourceWidgetContainer.getElement().getStyle().clearWidth();
-			//  resourceWidgetContainer.getElement().getStyle().setPaddingTop(67, Unit.PX);
 			  Element youTubeEle=Document.get().getElementById("playerid");
 			  if(youTubeEle!=null){
 				  youTubeEle.getStyle().clearHeight();
-			  }
-			  
+			  }			  
 			  Element isIframe=Document.get().getElementById("resourcePlayerContainer");
 			  if(isIframe==null){
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().clearWidth();
@@ -1654,13 +1651,20 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  }else{
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(100, Unit.PCT);
 			  }
-			 
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflowY(Overflow.HIDDEN);
-			 /* if(getUiHandlers().getQuestioncontainer()!=null){
-				  getUiHandlers().getQuestioncontainer().getElement().getStyle().clearWidth();
-				  getUiHandlers().getQuestioncontainer().getElement().getStyle().clearHeight();
-				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setOverflowY(Overflow.AUTO);
-			  }*/
+			  
+				int windowHeight=Window.getClientHeight();
+				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+					windowHeight=windowHeight-116;
+				}else{
+					windowHeight=windowHeight-198;
+				}
+			  
+			  resourceWidgetContainer.setSize("100%", windowHeight+"px");
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
+			  if(resourceWidgetContainer.getElement().getFirstChildElement().hasChildNodes())
+			  {
+			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", windowHeight+"px");
+			  }
 		}
 	}
 	public void getdata(){
