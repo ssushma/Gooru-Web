@@ -22,15 +22,15 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.search;
+package org.ednovo.gooru.client.mvp.folder.toc;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 
-public interface AddResourceContainerCBundle extends ClientBundle {
-	static final AddResourceContainerCBundle INSTANCE = GWT.create(AddResourceContainerCBundle.class);
+public interface FolderContainerCBundle extends ClientBundle {
+	static final FolderContainerCBundle INSTANCE = GWT.create(FolderContainerCBundle.class);
 	
 	public interface  NewAddresourcePopupCss extends CssResource{
 		
@@ -152,7 +152,9 @@ public interface AddResourceContainerCBundle extends ClientBundle {
 		String addCollectionTextStyles();
 		String collectionChild1();
 		String collectionChild2();
+		String folderTitlearrow();
+		String folderTitleStyle();
 	}
-	@Source("addresourcepopup.css")
+	@Source("folderStyleToc.css")
 	NewAddresourcePopupCss css();
 }
