@@ -75,7 +75,7 @@ public class ScrollPopupUtil {
 				}else{
 				widgetContainer.getElement().getStyle().setHeight(545, Unit.PX);
 				}
-				widgetContainer.getElement().getStyle().setOverflow(Overflow.HIDDEN);
+				widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
 			}
 		}
 	}
