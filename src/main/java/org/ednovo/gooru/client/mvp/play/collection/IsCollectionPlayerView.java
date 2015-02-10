@@ -39,9 +39,9 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public FlowPanel getPlayerBodyContainer();
 	public void setResourceTitle(String resourceTitle);
 	public FlowPanel getResourceAnimationContainer();
-	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable,boolean isShareButtonEnable, boolean isNarrationButtonEnable,boolean isNavigationButtonEnable,boolean isFlagButtonActive);
-	public void makeButtonActive(boolean makeAddButtionActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive);
-	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton);
+	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable,boolean isShareButtonEnable, boolean isNarrationButtonEnable,boolean isNavigationButtonEnable,boolean isFlagButtonActive,boolean isFullScreenButtonActive);
+	public void makeButtonActive(boolean makeAddButtionActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive,boolean makeFullScreenButtonActive);
+	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton,boolean deselectFullScreenButton);
 	public void updateThumbsRatingView(int userThumbRating);
 	public void resetThumbsButtons();
 	public void defaultReportView();
@@ -58,6 +58,7 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public void showClasspage(String classpageId,String page);
 	public void updateAuthorDetails();
 	public void setNarrationButton(Button narrationButton);
+	public void setFullScreenButton(Button fullscreenButton);
 
 	public void showFlaggedResourcePopup(PlaceRequest previousResoruceRequest, PlaceRequest nextResoruceRequest);
 

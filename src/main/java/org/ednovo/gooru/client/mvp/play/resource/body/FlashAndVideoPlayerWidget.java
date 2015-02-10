@@ -32,6 +32,7 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class FlashAndVideoPlayerWidget extends Composite {
 
@@ -57,11 +58,19 @@ public class FlashAndVideoPlayerWidget extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			windowHeight=windowHeight-116;
 		}else{
-			windowHeight=windowHeight-190;
+			windowHeight=windowHeight-198;
 		}
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		int autoPlay=tabView!=null&&tabView.equalsIgnoreCase("narration")?0:1;
 		String embeddableHtmlString = null;
+		
+		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		String chkViewParam = collectionRequest.getParameter("view", null);	
+		if(chkViewParam!= null && chkViewParam.equalsIgnoreCase("fullScreen"))
+		{
+			windowHeight=windowHeight+76;
+		}
+		
 		
 		String sourceUrl = getProtocal()+"//www.youtube.com/v/"+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1";
 		String sourceUrl1 = getProtocal()+"//www.youtube.com/embed/"+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1";

@@ -40,6 +40,35 @@ display:inline-block;
 	height:30px;
 }
 
+ .fullscreenButtonNormal{
+	display:inline-block;
+	background:url(images/Player_FullScreen.png) no-repeat;
+	/* transition:all 0.5s ease-in-out 0s; */
+	width:45px;
+	height:43px;
+}
+
+ .fullscreenButtonNormal:hover{
+	background:url(images/Player_FullScreen.png) no-repeat;
+	opacity:.6;
+	cursor: pointer;
+}
+.fullscreenButtonActive{
+	display:inline-block;
+	background:url(images/Player_FullScreen.png) no-repeat;
+	opacity:1;
+	width:45px;
+	height:43px;
+	cursor: pointer;
+}
+.fullscreenButtonDisabled{
+	display:inline-block;
+	background:url(images/Player_FullScreen.png) no-repeat;
+	opacity:.6;
+	width:45px;
+	height:43px;
+}
+
  .narrationButtonNormal{
 	display:inline-block;
 	background:url(images/player/narration.png) no-repeat;

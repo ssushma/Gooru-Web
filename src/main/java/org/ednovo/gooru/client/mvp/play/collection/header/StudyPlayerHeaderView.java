@@ -55,7 +55,7 @@ public class StudyPlayerHeaderView extends Composite{
 	
 	@UiField Label closeButtonForCollection,loginMessageText/*,thumbsDownButton,thumbsUpButton*/;
 	
-	@UiField HTMLEventPanel btnFullScreen,authorContainer;
+	@UiField HTMLEventPanel authorContainer;
 	
 	@UiField InlineLabel wishLabel,loginUserName,wishingText;
 	
@@ -155,9 +155,7 @@ public class StudyPlayerHeaderView extends Composite{
 	}
 	
 
-	public HTMLEventPanel getFullScreenPlayer(){
-		return btnFullScreen;
-	}
+
 
 	public Label getCloseButton(){
 		return closeButtonForCollection;

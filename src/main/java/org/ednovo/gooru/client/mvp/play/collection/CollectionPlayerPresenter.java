@@ -431,6 +431,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
 		/*resoruceMetadataPresenter.removeRatingContainer(false);*/
+		getView().setFullScreenButton(resoruceMetadataPresenter.getFullScreenButton());
 		getView().setNarrationButton(resoruceMetadataPresenter.getNarrationButton());
 		resourceFlagPresenter.setCollectionPlayerPresenter(this);
 		collectionFlagPresenter.setCollectionPlayerPresenter(this);
@@ -714,10 +715,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				isSharable=false;
 			}
 			if(tabView!=null&&tabView.equals("narration")){
-				enablePlayerButton(true,true, isSharable, true, true,true);
+				enablePlayerButton(true,true, isSharable, true, true,true,true);
 				makeButtonActive(tabView);
-			}else{
-				enablePlayerButton(true,true, isSharable, false, true,true);
+			}else if(tabView!=null&&tabView.equals("fullscreen")){
+				enablePlayerButton(true,true, isSharable, true, true,true,true);
+				makeButtonActive(tabView);
+			}
+			else{
+				enablePlayerButton(true,true, isSharable, false, true,true,true);
 				makeButtonActive(tabView);
 			}
 			collectionPlayerTocPresenter.hideResourceCountLabel(true);
@@ -761,7 +766,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}*/
 		}
 		else{
-			enablePlayerButton(false, false, false, false, false, false);
+			enablePlayerButton(false, false, false, false, false, false,false);
 			getView().getPlayerBodyContainer().clear();
 			getView().getPlayerBodyContainer().add(new ResourceNonExitView());
 			getView().getResourceAnimationContainer().getElement().getStyle().setProperty("display", "block");
@@ -884,34 +889,38 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			if(tabView.equalsIgnoreCase("add")){
 				
 				//CollectionPlayerMetadataView.addPadding();
-				getView().clearActiveButton(false,true, true, true, true,false);
-				getView().makeButtonActive(true, false,false, false, false,false);	
+				getView().clearActiveButton(false,true, true, true, true,false,true);
+				getView().makeButtonActive(true, false,false, false, false,false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("info")){
 				
 				//CollectionPlayerMetadataView.addPadding();
-				getView().clearActiveButton(true,false, true, true, true,false);
-				getView().makeButtonActive(false,true, false, false, false,false);	
+				getView().clearActiveButton(true,false, true, true, true,false,true);
+				getView().makeButtonActive(false,true, false, false, false,false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("share")){
 				
 				//CollectionPlayerMetadataView.addPadding();
-				getView().clearActiveButton(true,true, false, true, true,false);
-				getView().makeButtonActive(false,false, true, false, false,false);
+				getView().clearActiveButton(true,true, false, true, true,false,true);
+				getView().makeButtonActive(false,false, true, false, false,false,false);
 			}
 			else if(tabView.equalsIgnoreCase("narration")){
-				getView().clearActiveButton(true,true, true, false, true,false);
-				getView().makeButtonActive(false,false, false, true, false,false);
+				getView().clearActiveButton(true,true, true, false, true,false,true);
+				getView().makeButtonActive(false,false, false, true, false,false,false);
+			}
+			else if(tabView.equalsIgnoreCase("fullscreen")){
+				getView().clearActiveButton(true,true, true, true, true,true,false);
+				getView().makeButtonActive(false,false, false, false, false,false,true);
 			}
 			else if(tabView.equalsIgnoreCase("navigation")){
 				
 				//CollectionPlayerMetadataView.addPadding();
-				getView().clearActiveButton(true,true, true, true, false,false);
-				getView().makeButtonActive(false,false, false, false, true,false);
+				getView().clearActiveButton(true,true, true, true, false,false,true);
+				getView().makeButtonActive(false,false, false, false, true,false,false);
 				
 			}else if(tabView.equalsIgnoreCase("flag")){
-				getView().clearActiveButton(true,true, true, true, true,false);
-				getView().makeButtonActive(false,false, false, false, false,true);
+				getView().clearActiveButton(true,true, true, true, true,false,true);
+				getView().makeButtonActive(false,false, false, false, false,true,false);
 			}
 		}
 	}
@@ -926,7 +935,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void showTabWidget(String tabView,String collectionId,String resourceId,boolean isCollectionHome,boolean isCollectionEnd,String viewFrom){
 		if(tabView==null||tabView.equals("")){
-			getView().clearActiveButton(true,true, true, true, true,true);
+			getView().clearActiveButton(true,true, true, true, true,true,true);
 			new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 		}
 		else if(tabView.equals("add")){
@@ -954,7 +963,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setCollectionShareView(collectionId,resourceId);
 		}else if(tabView.equals("narration")){
 			showNarrationPopup(resourceId);
-		 }else if(tabView.equals("info")){
+		 }/*else if(tabView.equals("fullscreen")){
+				showNarrationPopup(resourceId);
+		}*/else if(tabView.equals("info")){
 			 setResourceInfoView(resourceId);
 		 }else if(tabView.equals("flag")){
 			 if(AppClientFactory.isAnonymous()&&(isCollectionHome||isCollectionEnd)){
@@ -1222,8 +1233,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		clearSlot(COLLECTION_PLAYER_NAVIGATION_SLOT);
 	}
 
-	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable,boolean isFlagButtonEnable){
-		getView().enablePlayerButton(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonEnable);
+	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable,boolean isFlagButtonEnable,boolean isFullScreenButtonEnable){
+		getView().enablePlayerButton(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonEnable,isFullScreenButtonEnable);
 	}
 
 
@@ -1752,7 +1763,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	protected void showCollectionErrorMessage(){
 		clearSlot(METADATA_PRESENTER_SLOT);
-		enablePlayerButton(false, false, false, false, false, false);
+		enablePlayerButton(false, false, false, false, false, false,false);
 		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
 		getView().getPlayerBodyContainer().add(new CollectionNonExistView());
@@ -1809,7 +1820,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			isExplanationUsed=false;
 			getView().hideFlagButton(false);
 			getView().setResourceTitle("");
-			enablePlayerButton(false, false, false, false, false,false);
+			enablePlayerButton(false, false, false, false, false,false,false);
 			getView().resetThumbsButtons();
 			clearTabSlot();
 			clearSlot(METADATA_PRESENTER_SLOT);
