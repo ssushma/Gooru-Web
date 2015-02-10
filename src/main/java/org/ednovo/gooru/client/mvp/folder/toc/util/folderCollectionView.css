@@ -44,3 +44,10 @@
 	list-style:none;
 	cursor: pointer;
 }
+.foldercollection { 
+    background: url('../images/folders/panel/collection-small-icon.png') no-repeat 0px 4px;
+    padding-left: 29px;
+}
+.foldercollection.child {
+    background: url('../images/folders/panel/collection-small-icon.png') no-repeat 89px 4px;
+}
