@@ -39,9 +39,9 @@ public interface FolderTocCBundle extends ClientBundle{
 	public interface FolderTocCss extends CssResource{
 		String video();
 		String webpage();
-		String interactives();
-		String questions();
-		String images();
+		String interactive();
+		String question();
+		String image();
 		String texts();
 		String audio();
 		String folderTitleStyle();
