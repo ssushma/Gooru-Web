@@ -498,6 +498,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	public Button getNarrationButton(){
 		return getView().getNarrationButton();
 	}
+	public Button getFullScreenButton(){
+		return getView().getFullScreenButton();
+	}
 	
 	public void clearMarginTop(){
 		getView().clearMarginTop();

@@ -820,6 +820,7 @@ input.halfSize {
 .popupBackground{
 	background: none !important;
 	z-index: 99999 !important;
+	left:0px !important;
 }
 
 .whyGoogle{

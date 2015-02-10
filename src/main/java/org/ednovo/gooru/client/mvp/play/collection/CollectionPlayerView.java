@@ -158,8 +158,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
 		
 		pnlFullScreenNarration.setVisible(false);
-		headerView.getFullScreenPlayer().setVisible(false);
-		headerView.getFullScreenPlayer().addClickHandler(new FullScreenPlayerEvent("fullScreen"));
+	
 		pnlBackToCollection.addClickHandler(new ExitFullScreenPlayer());
 		
 		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
@@ -283,12 +282,19 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		footerView.setNarrationButton(narrationButton);
 		footerView.getNarrationButton().addClickHandler(new ShowTabWidgetView("narration"));
 	}
+	
+	public void setFullScreenButton(Button fullScreenButton){
+		footerView.setFullScreenButton(fullScreenButton);
+		footerView.getFullScreenButton().addClickHandler(new FullScreenPlayerEvent("fullScreen"));
+/*		headerView.getFullScreenPlayer().setVisible(false);
+		headerView.getFullScreenPlayer().addClickHandler(new FullScreenPlayerEvent("fullScreen"));*/
+	}
 
 	@Override
 	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable,
 			boolean isShareButtonEnable, boolean isNarrationButtonEnable,
-			boolean isNavigationButtonEnable, boolean isFlagButtonActive) {
-		footerView.enableButtons(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonActive);
+			boolean isNavigationButtonEnable, boolean isFlagButtonActive, boolean isFullScreenButtonActive) {
+		footerView.enableButtons(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonActive,isFullScreenButtonActive);
 	}
 	
 	public class ShowTabWidgetView implements ClickHandler{
@@ -399,8 +405,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 
 	@Override
 	public void makeButtonActive(boolean makeAddButtionActive,boolean makeInfoButtionActive,boolean makeShareButtonActive, boolean makeNarrationButtonActive,
-			boolean makeNavigationButtonActive,boolean makeFlagButtonActive) {
-		footerView.makeButtonActive(makeAddButtionActive,makeInfoButtionActive, makeShareButtonActive, makeNarrationButtonActive, makeNavigationButtonActive,makeFlagButtonActive);
+			boolean makeNavigationButtonActive,boolean makeFlagButtonActive,boolean makeFullScreenButtonActive) {
+		footerView.makeButtonActive(makeAddButtionActive,makeInfoButtionActive, makeShareButtonActive, makeNarrationButtonActive, makeNavigationButtonActive,makeFlagButtonActive,makeFullScreenButtonActive);
 		setActiveButton(makeAddButtionActive,makeInfoButtionActive, makeShareButtonActive, makeNarrationButtonActive, makeNavigationButtonActive,makeFlagButtonActive);
 		if(makeNavigationButtonActive || makeInfoButtionActive || makeShareButtonActive)
 		{
@@ -414,8 +420,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 
 	@Override
-	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton) {
-		footerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion, deselectNarrationButton, deselectNavigationButton,deselectFlagButton);	
+	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton,boolean deselectFullScreenButton) {
+		footerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion, deselectNarrationButton, deselectNavigationButton,deselectFlagButton,deselectFullScreenButton);	
 		setActiveButton(false,false,false,false,false,false);
 		
 		//CollectionPlayerMetadataView.addPadding();
@@ -497,7 +503,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	@Override
 	public void setFullScreenMode(){
-		System.out.println("in the set");
 		pnlFullScreenNarration.setVisible(true);
 		headerView.setVisible(false);
 		footerView.setVisible(false);
@@ -510,7 +515,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	@Override
 	public void restFullScreenChanges(){
-		System.out.println("in the reset");
 		pnlFullScreenNarration.setVisible(false);
 		headerView.setVisible(true);
 		footerView.setVisible(true);
@@ -772,12 +776,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
-			headerView.getFullScreenPlayer().setVisible(false);
 		}else{
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
-				headerView.getFullScreenPlayer().setVisible(false);
 				headerView.getAuthorContainer().setVisible(false);
 			}
 			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
@@ -929,7 +931,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	@Override
 	public void setNarrationInFullScreenMode(CollectionItemDo collectionItemDo,CollectionDo collectionDo) {
-		headerView.getFullScreenPlayer().setVisible(true);
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			setUserProfileImage(collectionDo.getUser().getGooruUId());
 			String narrationText=removeHtmlTags(collectionItemDo.getNarration());
