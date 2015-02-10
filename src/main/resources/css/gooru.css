@@ -2681,7 +2681,7 @@ overflow: visible;
 	display:block;
 }
 .gwt-PopupPanel{
-	width:100%;
+	width:100% !important;
 	background: none !important;
 }
 

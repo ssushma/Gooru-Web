@@ -1168,6 +1168,8 @@ public class SearchInfoWidget extends Composite {
 					keyworddetails.add(keywordslist[klevel]);
 				}
 				setkeywordsDetails(keyworddetails);
+				}else{
+					keyWordsPanel.setVisible(false);
 				}
 			if(ads!=null && !ads.equals("")){
 				isResourceInfo=true;
