@@ -40,6 +40,7 @@ public class FolderItemDo implements Serializable{
 	private String title;
 	private ResourceFormatDo resourceFormat;
 	private String type;
+	private String collectionItemId;
 	
 	public FolderItemDo(){}
 
@@ -98,4 +99,19 @@ public class FolderItemDo implements Serializable{
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	/**
+	 * @return the collectionItemId
+	 */
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	/**
+	 * @param collectionItemId the collectionItemId to set
+	 */
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
+	}
+	
 }
