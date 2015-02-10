@@ -58,7 +58,7 @@ public class FlashAndVideoPlayerWidget extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			windowHeight=windowHeight-116;
 		}else{
-			windowHeight=windowHeight-198;
+			windowHeight=windowHeight-193;
 		}
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		int autoPlay=tabView!=null&&tabView.equalsIgnoreCase("narration")?0:1;
@@ -68,7 +68,7 @@ public class FlashAndVideoPlayerWidget extends Composite {
 		String chkViewParam = collectionRequest.getParameter("view", null);	
 		if(chkViewParam!= null && chkViewParam.equalsIgnoreCase("fullScreen"))
 		{
-			windowHeight=windowHeight+76;
+			windowHeight=windowHeight+71;
 		}
 		
 		
