@@ -171,7 +171,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		htmlMediaFeatureListContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);*/
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
 		//		this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
-			}else{
+		}else{
 			
 			//	this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
 				//this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
@@ -682,7 +682,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	public void standardMaxShow() {
 		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
 		standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
-		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
+		/*standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());*/
 		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
 	/**
