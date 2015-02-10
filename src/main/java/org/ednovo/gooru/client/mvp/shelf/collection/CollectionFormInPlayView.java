@@ -194,7 +194,6 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		}
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(CollectionCBundle.INSTANCE.css().gwtGlassPanel());
-		/*appPopUp.center();*/
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 //		buttonFloPanel.add(validationErrorFloPanel);
