@@ -333,6 +333,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
 			
 			if(resourceId!=null&&!resourceId.equalsIgnoreCase("")){
+				appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
 				if(isButtonActive){
 					params.put("rid", resourceId);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -346,6 +347,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				}
 			}
 			else if(view!=null&&view.equalsIgnoreCase("end")){
+				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
 				if(isButtonActive){
 					params.put("view", "end");
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -357,6 +359,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			}else{
+				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
 				if(isButtonActive){
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -764,6 +767,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@Override
 	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId) {
+		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		if(collectionId==null){
 			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
@@ -772,9 +776,26 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		}else{
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
+				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
 				headerView.getFullScreenPlayer().setVisible(false);
 				headerView.getAuthorContainer().setVisible(false);
-			}else{
+			}
+			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
+			{
+				appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				headerView.displayAuthorName(getCollectionType());
+				showLogoutMessage(!isHidePlayerButtons);
+			}
+			else{
+				if(view==null && resourceId != null)
+				{
+				appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				}
+				else
+				{
+				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+				}
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);

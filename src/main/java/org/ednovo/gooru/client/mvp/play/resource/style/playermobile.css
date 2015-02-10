@@ -63,6 +63,10 @@ header{
 	overflow-x:hidden !important;
 	overflow-y:scroll !important;
 }
+.scrollStudyContainer{
+	overflow-x:hidden !important;
+	overflow-y:scroll !important;
+}
 .rightPanel{
 	
 }
