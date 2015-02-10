@@ -4,6 +4,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="tocStyle" src="floderToc.css" />
+	<ui:style field="tocStyle1" src="folderStyleToc.css" />
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
 			<g:HTMLPanel styleName="container">
@@ -37,6 +38,10 @@
 								what factors lead to Industrial Revolution In Europe and
 								beyond?
 							</p>
+						<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{tocStyle1.dropdownListContainerScrollPanel}">
+	            			<g:HTMLPanel ui:field="floderTreeContainer" styleName="{tocStyle1.folderStucture}">
+			   				</g:HTMLPanel>
+						</g:ScrollPanel>
 						<g:VerticalPanel styleName="{tocStyle.perTaskContainer}" ui:field="pnlAddFoldersCollections"/>
 				</g:HTMLPanel>
 				</g:HTMLPanel>

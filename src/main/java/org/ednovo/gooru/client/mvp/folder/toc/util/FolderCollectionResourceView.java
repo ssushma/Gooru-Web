@@ -111,6 +111,7 @@ public class FolderCollectionResourceView extends Composite {
 				ulCollectionResources.add(liPanel);
 
 			}
+
 		}
 
 	}
