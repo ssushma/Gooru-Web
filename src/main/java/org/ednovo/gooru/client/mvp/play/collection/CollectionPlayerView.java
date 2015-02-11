@@ -503,6 +503,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	@Override
 	public void setFullScreenMode(){
+		//menuButton.setVisible(false);
+		menuButton.getElement().setAttribute("style", "display:none !important;");
 		pnlFullScreenNarration.setVisible(true);
 		headerView.setVisible(false);
 		footerView.setVisible(false);
@@ -515,6 +517,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	@Override
 	public void restFullScreenChanges(){
+		menuButton.getElement().removeAttribute("style");
 		pnlFullScreenNarration.setVisible(false);
 		headerView.setVisible(true);
 		footerView.setVisible(true);

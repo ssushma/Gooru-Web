@@ -1664,7 +1664,6 @@ p{
 }
 #resourcePlayerContainer{
 		-webkit-overflow-scrolling: touch;
-	  overflow: scroll;
 }
 iframe#taMessage body{
 	font-family: Arial, sans-serif;
