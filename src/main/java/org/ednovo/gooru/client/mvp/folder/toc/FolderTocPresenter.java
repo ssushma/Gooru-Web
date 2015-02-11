@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProx
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -78,18 +79,24 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	
 	@Override
 	protected void onReset() {
+		super.onReset();
+		Window.enableScrolling(true);
+		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+		
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().clearTocData();
+				getView().setData();
+				getView().setFolderItems(folderListDo);
+			}
+		});
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
-		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
-			@Override
-			public void onSuccess(FolderListDo folderListDo) {
-				getView().setFolderItems(folderListDo);
-			}
-		});
+		
 	}
 
 	@Override

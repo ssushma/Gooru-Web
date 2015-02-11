@@ -91,13 +91,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public FolderTocView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
-		setData();
+		//setData();
 	}
 	/**
 	 * This method is used to set folder TOC Data.
 	 */
-	private void setData() {
+	@Override
+	public void setData() {
 		pnlAddFoldersCollections.clear();
+		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTocTree);
 		folderTocTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
@@ -325,5 +327,17 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			return FolderContainerCBundle.INSTANCE.css().collectionChild2();
 		}
 		return ""; 
+	}
+	
+	/**
+	 * To clear the Tree panels
+	 */
+	@Override
+	public void clearTocData() {
+		folderTocTree.clear();
+		//folderTocTree.addItem(loadingTreeItem());
+		currentFolderSelectedTreeItem=null;
+		previousSelectedItem=null;
+		//dropdownListPlaceHolder.setText(GL1377);
 	}
 }

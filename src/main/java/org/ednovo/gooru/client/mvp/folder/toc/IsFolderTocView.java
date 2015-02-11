@@ -45,5 +45,7 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 
 	void setFolderItems(FolderListDo folderListDo);
 	public void setFolderItems(TreeItem item, FolderListDo folderListDo);
+	void setData();
+	void clearTocData();
 	
 }
