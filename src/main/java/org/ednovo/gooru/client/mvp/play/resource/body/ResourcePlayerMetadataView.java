@@ -1614,6 +1614,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration){
 		this.pnlNarrationFullScreen=pnlFullScreenNarration;
+		try
+		{
 		if(isFullScreen){
 			  collectionContainer.setVisible(false);
 			  wrapperContainerField.getElement().getStyle().setWidth(100, Unit.PCT);
@@ -1623,9 +1625,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  resourceWidgetContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 			  resourceWidgetContainer.getElement().getStyle().setPadding(0, Unit.PX);
 			  
+			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+			  {			  
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(Window.getClientHeight()-pnlFullScreenNarration.getOffsetHeight(),  Unit.PX);
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflow(Overflow.HIDDEN);
+			  }
 			
 			  Element youTubeEle=Document.get().getElementById("playerid");
 			  if(youTubeEle!=null){
@@ -1650,18 +1655,31 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  
 			  Element isIframe=Document.get().getElementById("resourcePlayerContainer");
 			  if(isIframe==null){
+				  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+				  {	
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().clearWidth();
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().clearHeight();
+				  }
 			  }else{
+				  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+				  {	
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(100, Unit.PCT);
+				  }
 			  }
-			 
+			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+			  {	
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setOverflowY(Overflow.HIDDEN);
+			  }
 			 /* if(getUiHandlers().getQuestioncontainer()!=null){
 				  getUiHandlers().getQuestioncontainer().getElement().getStyle().clearWidth();
 				  getUiHandlers().getQuestioncontainer().getElement().getStyle().clearHeight();
 				  getUiHandlers().getQuestioncontainer().getElement().getStyle().setOverflowY(Overflow.AUTO);
 			  }*/
+		}
+		}
+		catch(Exception ex)
+		{
+			
 		}
 	}
 	public void getdata(){
