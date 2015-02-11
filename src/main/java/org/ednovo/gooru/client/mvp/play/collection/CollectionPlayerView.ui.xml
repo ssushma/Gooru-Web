@@ -115,7 +115,7 @@
 		float: left;
 	}
 	.pnlExitText{
-		float: left;
+		width:150px;
 		line-height: 27px;
 	}
 	.seemoreText{
@@ -132,7 +132,6 @@
 	.narrationRightContainer{
 		margin-left: 31px;
 		margin-right: 29px;
-		float: left;
 		width: 88%;
 	}
 	.authorImage{
