@@ -83,7 +83,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	public void onBind() {
 		super.onBind();
-		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
+		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
