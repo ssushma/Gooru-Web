@@ -92,6 +92,7 @@ public class FolderCollectionResourceView extends Composite {
 			for (int i = 0; i < resourceCount; i++) {
 				liPanel = new LiPanel();
 				Label sequenceNumber = new Label((i+1)+" ");
+				sequenceNumber.setStyleName(res.css().sequenceNumner());
 				liPanel.add(sequenceNumber);
 				// To set the resource title and resource format image
 				String resTitle = folderDo.getCollectionItems().get(i)
@@ -124,11 +125,8 @@ public class FolderCollectionResourceView extends Composite {
 				liPanel.addClickHandler(new clickOnResource(folderDo
 						.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);
-
 			}
-
 		}
-
 	}
 
 	/**

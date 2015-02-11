@@ -108,14 +108,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				if (folderWidget instanceof FolderTreeItem) {
 					folderTreeItemWidget = (FolderTreeItem) folderWidget;
 					if (folderTreeItemWidget.isOpen()) {
-						folderTreeItemWidget
-								.removeStyleName(FolderContainerCBundle.INSTANCE
-										.css().open());
+						folderTreeItemWidget.removeStyleName(FolderContainerCBundle.INSTANCE.css().open());
+						folderTreeItemWidget.arrowLabel.removeStyleName(FolderContainerCBundle.INSTANCE.css().arrowActive());
 						folderTreeItemWidget.setOpen(false);
 					} else {
-						folderTreeItemWidget
-								.addStyleName(FolderContainerCBundle.INSTANCE
-										.css().open());
+						folderTreeItemWidget.addStyleName(FolderContainerCBundle.INSTANCE.css().open());
+						folderTreeItemWidget.arrowLabel.addStyleName(FolderContainerCBundle.INSTANCE.css().arrowActive());
 						folderTreeItemWidget.setOpen(true);
 					}
 					removePreviousSelectedItem();
@@ -216,7 +214,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		public FolderTreeItem(){
 			initWidget(folderContainer=new FlowPanel());
 			folderContainer.setStyleName(FolderContainerCBundle.INSTANCE.css().folderLevel());
-			Label arrowLabel=new Label();
+			arrowLabel=new Label();
 			arrowLabel.setStyleName(FolderContainerCBundle.INSTANCE.css().folderTitlearrow());
 			folderContainer.add(arrowLabel);
 			floderName=new Label();
@@ -265,6 +263,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 							.selected());
 		}
 	}
+	/**
+	 * This method is used to get the child folder and collections.
+	 * @param item
+	 * @param parentId
+	 */
 	private void getFolderItems(TreeItem item, String parentId) {
 		getUiHandlers().getFolderItems(item, parentId);
 	}
@@ -273,6 +276,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setFolderItems(TreeItem item, FolderListDo folderListDo) {
 		displayWorkspaceData(item, folderListDo);
 	}
+	/**
+	 * This method is used to set folders and collections for selected tree item.
+	 * @param item
+	 * @param folderListDo
+	 */
 	private void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if (folderListDo != null) {
 			List<FolderDo> foldersArrayList = folderListDo.getSearchResult();
@@ -305,6 +313,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}
 		}
 	}
+	/**
+	 * This method is used to set the style for collections based on the folder level.
+	 * @param folderLevel
+	 * @return
+	 */
 	private String getTreeItemStyleName(int folderLevel) {
 		if (folderLevel == 1) {
 			return FolderContainerCBundle.INSTANCE.css().collectionChild1();
