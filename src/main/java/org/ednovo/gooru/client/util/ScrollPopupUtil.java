@@ -77,6 +77,13 @@ public class ScrollPopupUtil {
 				}
 				widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
 			}
+		}else{
+			if(Window.getClientHeight()>564){
+				if(isFromAddtags){
+				widgetContainer.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
+				widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
+				}
+			}
 		}
 	}
 }
