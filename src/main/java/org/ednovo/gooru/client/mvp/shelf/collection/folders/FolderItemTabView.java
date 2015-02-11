@@ -76,7 +76,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField HTMLPanel mainSection, panelTitleSection;
 	@UiField VerticalPanel folderContentBlock;
 	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
-	@UiField Button newCollectionBtn, newFolderBtn,assessmentButton,folderPlayBtn;
+	@UiField Button newCollectionBtn, newFolderBtn,assessmentButton,folderViewBtn;
 	@UiField HTMLEventPanel editButtonEventPanel;
 	@UiField FlowPanel folderContentPanel;
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
@@ -336,13 +336,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		if(O1_LEVEL_VALUE==null&&O2_LEVEL_VALUE==null&&O3_LEVEL_VALUE==null) {
 			isRootFolder = true;
 			editButtonEventPanel.setVisible(false);
-			folderPlayBtn.setVisible(false);
+			folderViewBtn.setVisible(false);
 			editFolderLbl.addStyleName("disabled");
 			deleteFolderLbl.addStyleName("disabled");
 		} else {
 			isRootFolder = false;
 			editButtonEventPanel.setVisible(true);
-			folderPlayBtn.setVisible(true);
+			folderViewBtn.setVisible(true);
 			editFolderLbl.removeStyleName("disabled");
 			deleteFolderLbl.removeStyleName("disabled");
 		}
@@ -1191,7 +1191,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params, shelfFolderItemChildView.getFolderDo(),shelfFolderItemChildView.getItemNumber().getText()));
 	}
 	
-	@UiHandler("folderPlayBtn")
+	@UiHandler("folderViewBtn")
 	public void clickOnViewBtn(ClickEvent clickEvent){
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
@@ -1199,11 +1199,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		
 		Map<String, String> params = new HashMap<String, String>();
 		if(o3!=null) {
-			params.put("o3",o3);
+			params.put("id",o3);
 		} else if(o2!=null) {
-			params.put("o2",o2);
+			params.put("id",o2);
 		} else if(o1!=null) {
-			params.put("o1",o1);
+			params.put("id",o1);
 		}
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 	}

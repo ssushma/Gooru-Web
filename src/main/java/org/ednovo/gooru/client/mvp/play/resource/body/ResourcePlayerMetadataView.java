@@ -1625,22 +1625,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  {
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);	
 			  }
-				int windowHeight=Window.getClientHeight();
-				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-					windowHeight=windowHeight-116;
-				}else{
-					windowHeight=windowHeight-193;
-				}				
-				windowHeight=windowHeight+71;
 			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
 			  {
-				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
+				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(((Window.getClientHeight()-(pnlFullScreenNarration.getOffsetHeight()))+1),  Unit.PX);
 			  }
 			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
 			  {
 			  if(resourceWidgetContainer.getElement().getFirstChildElement().getChildCount()>=1)
 			  {
-			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", windowHeight+"px");
+			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", ((Window.getClientHeight()-(pnlFullScreenNarration.getOffsetHeight()))+1)+"px");
 			  }
 			  }
 		}else{
