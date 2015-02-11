@@ -483,17 +483,21 @@
 
 .folderLevel { /* grandparent level - default */
     background: url('../images/folders/panel/folder-small-icon.png') no-repeat 6px 4px;
+    cursor:pointer;
 }
 
 .folderLevel.parent {
     background: url('../images/folders/panel/folder-small-icon.png') no-repeat 61px 4px;
+	cursor:pointer;
 }
 
 .folderLevel.child {
     background: url('../images/folders/panel/folder-small-icon.png') no-repeat 47px 4px;
+	cursor:pointer;
 }
 .folderLevel.innerchild{
 	 background: url('../images/folders/panel/folder-small-icon.png') no-repeat 117px 4px;
+	cursor:pointer;
 }
 
 .foldercollection { /* grandparent level - default */
@@ -537,10 +541,9 @@
     cursor:pointer;
      display:none;
 }
-
-.folderLevel.open .arrow {
-    background-image: url('../images/folders/panel/arrow-open.png');
-    display:none;
+.arrowActive {
+    background-image: url('../images/folders/panel/arrow-open.png') !important;
+    display:block;
 }
 
 .folderLevel.empty .arrow {

@@ -154,6 +154,7 @@ public interface FolderContainerCBundle extends ClientBundle {
 		String collectionChild2();
 		String folderTitlearrow();
 		String folderTitleStyle();
+		String arrowActive();
 	}
 	@Source("folderStyleToc.css")
 	NewAddresourcePopupCss css();
