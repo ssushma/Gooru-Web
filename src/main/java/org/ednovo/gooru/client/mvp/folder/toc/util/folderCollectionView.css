@@ -51,3 +51,8 @@
 .foldercollection.child {
     background: url('../images/folders/panel/collection-small-icon.png') no-repeat 89px 4px;
 }
+.sequenceNumner{
+	position: absolute;
+	margin-left: -44px;
+	color:#06c;
+}
