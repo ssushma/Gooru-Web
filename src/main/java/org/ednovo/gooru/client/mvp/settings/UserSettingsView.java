@@ -302,6 +302,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnConnect.getElement().setId("btnBtnConnect");
 		btnConnect.getElement().setAttribute("alt", i18n.GL2008());
 		btnConnect.getElement().setAttribute("title", i18n.GL2008());
+		btnConnect.getElement().addClassName("primary");
 		btnConnect.getElement().removeClassName("green");
 		userStandardEditView.getElement().setId("pnlUserStandardEditView");
 		userEducation.getElement().setId("pnlUserEducation");
@@ -2296,11 +2297,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		this.isDriveConnected = isConnected;
 		lblDisconnect.setVisible(isConnected);
 		if (isConnected){
+			btnConnect.getElement().removeClassName("primary");
 			btnConnect.getElement().addClassName("green");
 			btnConnect.setText(i18n.GL2012());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2012());
 			btnConnect.getElement().setAttribute("title", i18n.GL2012());
 		}else{
+			btnConnect.getElement().addClassName("primary");
 			btnConnect.getElement().removeClassName("green");
 			btnConnect.setText(i18n.GL2008());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2008());

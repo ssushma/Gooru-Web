@@ -15,7 +15,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="ccb" />
-
+		
 	<g:HTMLPanel styleName="{Settings.settingWrapper}">
 		<!-- right panel -->
 		<g:HTMLPanel styleName="{RightPanel.settingContentWrapperNew}">
@@ -237,7 +237,7 @@
 							</panel:HTMLEventPanel>
 							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}">
 							    <g:HTMLPanel styleName="{Settings.div1}">
-							        <g:Button ui:field="btnConnect" styleName="primary {Settings.buttonConnect}"></g:Button>
+							        <g:Button ui:field="btnConnect" styleName="{Settings.buttonConnect}"></g:Button>
 							        <g:Label ui:field="lblDisconnect"/>
 							    </g:HTMLPanel>
 							    <g:HTMLPanel styleName="{Settings.div2}">
