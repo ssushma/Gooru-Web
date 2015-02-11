@@ -1611,6 +1611,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration){
 		this.pnlNarrationFullScreen=pnlFullScreenNarration;
+		try
+		{
 		if(isFullScreen){
 			  collectionContainer.setVisible(false);
 			  wrapperContainerField.getElement().getStyle().setWidth(100, Unit.PCT);
@@ -1618,19 +1620,28 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  wrapperContainerField.getElement().getStyle().setPadding(0, Unit.PX);			  
 			  rowPanel.getElement().setAttribute("style", "margin-right:0px !important;margin-left:0px !important;");			 
 			  resourceWidgetContainer.getElement().getStyle().setWidth(100, Unit.PCT);
-			  resourceWidgetContainer.getElement().getStyle().setPadding(0, Unit.PX);			  
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);				  
+			  resourceWidgetContainer.getElement().getStyle().setPadding(0, Unit.PX);		
+			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+			  {
+			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);	
+			  }
 				int windowHeight=Window.getClientHeight();
 				if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 					windowHeight=windowHeight-116;
 				}else{
 					windowHeight=windowHeight-193;
 				}				
-				windowHeight=windowHeight+71;			  
-			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
+				windowHeight=windowHeight+71;
+			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+			  {
+				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
+			  }
+			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+			  {
 			  if(resourceWidgetContainer.getElement().getFirstChildElement().getChildCount()>=1)
 			  {
 			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", windowHeight+"px");
+			  }
 			  }
 		}else{
 			  collectionContainer.setVisible(true);
@@ -1644,10 +1655,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  }			  
 			  Element isIframe=Document.get().getElementById("resourcePlayerContainer");
 			  if(isIframe==null){
+				  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+				  {
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().clearWidth();
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().clearHeight();
+				  }
 			  }else{
+				  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+				  {
 				  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(100, Unit.PCT);
+				  }
 			  }
 			  
 				int windowHeight=Window.getClientHeight();
@@ -1658,12 +1675,23 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			  
 			  resourceWidgetContainer.setSize("100%", windowHeight+"px");
+			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+			  {
 			  resourceWidgetContainer.getElement().getFirstChildElement().getStyle().setHeight(windowHeight,  Unit.PX);
+			  }
+			  if(resourceWidgetContainer.getElement().getChildCount()>=1)
+			  {
 			  if(resourceWidgetContainer.getElement().getFirstChildElement().getChildCount()>=1)
 			  {
 			  resourceWidgetContainer.getElement().getFirstChildElement().getFirstChildElement().setAttribute("height", windowHeight+"px");
 			  }
+			  }
 			  
+		}
+		}
+		catch(Exception ex)
+		{
+			
 		}
 	}
 	public void getdata(){
