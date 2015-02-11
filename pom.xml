@@ -47,7 +47,7 @@
     </repository>
 	  </repositories>
 	<dependencies>
- <dependency>
+ 		<dependency>
 	            <groupId>highcharts.com</groupId>
 	            <artifactId>gwt-highcharts</artifactId>
 	            <version>1.0</version>
@@ -390,21 +390,20 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-	     <groupId>com.googlecode.gwtquery</groupId>
-	     <artifactId>gwtquery</artifactId>
-	     <!-- Check last available version in the downloads page -->
-	     <version>1.4.0</version>
-	     <!-- If you are using old versions of gwt, uncomment the appropriate line -->
-	     <!-- <classifier>2.1.0</classifier> -->
-	     <!-- <classifier>2.0.1</classifier> -->
-	     <scope>provided</scope>
-	   </dependency>
+			<groupId>com.googlecode.gwtquery</groupId>
+			<artifactId>gwtquery</artifactId>
+			<!-- Check last available version in the downloads page -->
+			<version>1.4.0</version>
+			<!-- If you are using old versions of gwt, uncomment the appropriate line -->
+			<!-- <classifier>2.1.0</classifier> -->
+			<!-- <classifier>2.0.1</classifier> -->
+			<scope>provided</scope>
+	   	</dependency>
 		<dependency>
-		<groupId>com.github.branflake2267</groupId>
-   <artifactId>gwt-maps-api</artifactId>
-   <version>3.10.0-alpha-7</version>
-</dependency>
-		
+			<groupId>com.github.branflake2267</groupId>
+		   <artifactId>gwt-maps-api</artifactId>
+		   <version>3.10.0-alpha-7</version>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>
@@ -443,37 +442,33 @@
 				<env>qagenx</env>
 			</properties>
 		</profile>
-		
-	 <profile>
-                        <id>qa</id>
-                        <properties>
-                                <env>qa</env>
-                        </properties>
-                </profile>
-	<profile>
+	 	<profile>
+			<id>qa</id>
+            <properties>
+				<env>qa</env>
+			</properties>
+		</profile>
+		<profile>
 			<id>elbprod</id>
 			<properties>
 				<env>elbprod</env>
 			</properties>
 		</profile>
-
-  <profile>
-                        <id>www2</id>
-                        <properties>
-                                <env>www2</env>
-                        </properties>
-                </profile>
+  		<profile>
+        	<id>www2</id>
+            <properties>
+            	<env>www2</env>
+			</properties>
+		</profile>
 	</profiles>
 	<build>
 		<filters>
 			<filter>build/filter-${env}.properties</filter>
 		</filters>
 		<finalName>${artifactId}</finalName>
-
 		<!-- Generate compiled stuff in the folder used for developing mode -->
 		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
 		<plugins>
-
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
@@ -482,7 +477,6 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-
 			<!-- GWT Maven Plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -499,7 +493,6 @@
 						</goals>
 					</execution>
 				</executions>
-
 				<!-- Plugin configuration. There are many available options, see gwt-maven-plugin 
 					documentation at codehaus.org -->
 				<configuration>
@@ -528,7 +521,60 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>minify-css</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                        <configuration>
+                            <charset>utf-8</charset>
+                            <jsEngine>closure</jsEngine>
+                            <cssSourceDir>css</cssSourceDir>
+                            <cssSourceIncludes>
+                                <cssSourceInclude>*.css</cssSourceInclude>
+                            </cssSourceIncludes>
+                            <cssSourceExcludes>
+                                <cssSourceExclude>*.min.css</cssSourceExclude>
+                                <cssSourceExclude>embed.css</cssSourceExclude>
+                                <cssSourceExclude>bootstrap_old.css</cssSourceExclude>
+                                <cssSourceExclude>ie9.css</cssSourceExclude>
+                            </cssSourceExcludes>
+                            <cssFinalFile>main-styles.css</cssFinalFile>
+                        </configuration>
+                    </execution>
+                </executions>
 
+            </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>${basedir}/src/main/webapp/index.html</file>
+                    <regex>true</regex>
+                    <regexFlags><regexFlag>DOTALL</regexFlag></regexFlags>
+                    <replacements>
+                        <replacement>
+                            <token><![CDATA[<!--BeginCssReplacer.*EndToBeCssReplacer-->]]></token>
+                            <value><![CDATA[<link href="${cdn.endpoint}/css/main-styles.min.css" rel='stylesheet' type='text/css'>]]></value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
 			<!-- Copy static web files before executing gwt:run -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
