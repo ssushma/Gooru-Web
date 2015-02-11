@@ -68,6 +68,7 @@ public class SocialShareLinksView extends Composite {
 	FlowPanel shareLinkFlwPl;
 
 	@UiField Anchor swithUrlLbl, swithToEmbedLbl;
+	
 	@UiField PPanel  shareLbl,shareLinkContainer;
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -160,6 +161,14 @@ public class SocialShareLinksView extends Composite {
 	
 	public PPanel getShareLinkContainer() {
 		return shareLinkContainer;
+	}
+	
+	public Anchor getSwithToEmbedLbl() {
+		return swithToEmbedLbl;
+	}
+
+	public Anchor getSwithUrlLbl() {
+		return swithUrlLbl;
 	}
 
 	/**

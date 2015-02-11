@@ -55,6 +55,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -472,6 +473,8 @@ public class CollectionShareTabVc extends Composite {
 		loadingImageLabel.setVisible(true);
 		mainShareContainer.setVisible(false);
 		socialShareLinksViewContainer.add(socialShareLinksView);
+		socialShareLinksView.getSwithUrlLbl().getElement().getStyle().setWidth(25, Unit.PCT);
+		socialShareLinksView.getSwithToEmbedLbl().getElement().getStyle().setWidth(25, Unit.PCT);
 		getUserType();
 		
 		
