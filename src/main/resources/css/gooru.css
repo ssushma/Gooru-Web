@@ -2430,7 +2430,8 @@ overflow: visible;
 #toggle-menu {
 	position: absolute;
 	top: 10px;
-	right: 10px;
+	/* right: 10px; */
+	right: 4.5%;
 	padding: 5px 5px;
 /*	border: 1px solid #eee;*/
 	z-index:999999;
