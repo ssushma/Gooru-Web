@@ -142,8 +142,6 @@
 		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">
 		      	    <g:Anchor  ui:field="aggreAds"></g:Anchor>    
 		      </g:HTMLPanel>
-		      <br />
-		      <br />
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		      <g:Label styleName="{res1.css.AddTagesPopup_h5}" ui:field="accessHazard"></g:Label>
 		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_li}">

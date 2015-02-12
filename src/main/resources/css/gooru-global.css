@@ -899,6 +899,7 @@ button.backArrowButton:hover {
 }
 .caretStyle{
 	float: right;
-	position: relative;
-	top: 9px;
+	position: absolute;
+	margin-top: 9px;
+	right: 3%;
 }
