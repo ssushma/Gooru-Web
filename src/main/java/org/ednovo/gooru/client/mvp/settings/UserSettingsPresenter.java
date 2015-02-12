@@ -1010,13 +1010,6 @@ public class UserSettingsPresenter
 			gender = "X";
 		}
 		
-//		updateUserDetails.put("aboutMe", getView().getProfileBiographyEditUC()
-//				.getText());
-//		this.getUserService().updateProfileSettings(
-//				AppClientFactory.getPlaceManager().getRequestParameter(
-//						GOORU_UID), updateUserDetails,
-//				getUserprofileAsyncCallback());
-		
 		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, getUserV2ProfilePageAsyncCallback());
 
 	}

@@ -261,25 +261,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return userDo;
 	}
 
-	@Override
-	public SettingDo updateProfileSettings(String gooruUid,	 Map<String, String> params) throws GwtException {
-		SettingDo settingDo = null;
-		String userUid = getLoggedInUserUid();
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
-		
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		String text="";
-		try {
-			text = jsonRep.getText();
-			settingDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SettingDo.class);
-		} catch (Exception e) {
-			throw new GwtException(text != null ? text : e.getMessage());
-		}
-		return settingDo;
-	}
-
 	
 	public ProfilePageDo deserializeProfilePage(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {

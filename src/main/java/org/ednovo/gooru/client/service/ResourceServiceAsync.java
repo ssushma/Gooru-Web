@@ -83,8 +83,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void addCollaborator(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
 	
-	void getCollaborators(String gooruOid,AsyncCallback<List<UserDo>> callback);
-	
 	void deleteCollaborators(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
 
 //	void copyCollectionItem(String collectionItemId,AsyncCallback<CollectionItemDo> callback);

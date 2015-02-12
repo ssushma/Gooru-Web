@@ -89,8 +89,6 @@ public enum UrlToken {
 	
 	GET_USER_PROFILE_PAGE("/v2/party/{0}/custom-field/show_profile_page?sessionToken={1}"),
 
-	UPDATE_USER_PROFILE_DETAILS("/user/{0}/profile/personal.json?sessionToken={1}"),
-	
 	UPDATE_USER_PROFILE_VISIBILTY("/v2/party/{0}/custom-field?sessionToken={1}"),	
 	
 	UPDATE_USER_BIOGRAPHY("/v2/user/{0}?sessionToken={1}"),
@@ -99,33 +97,20 @@ public enum UrlToken {
 
 	UPDATE_USER_GRADE_COURSE("/v2/user/{0}?sessionToken={1}"),
 
-	UPDATE_COLLLECTION_METADATA("/scollection/{0}/metadata?sessionToken={1}"),
-
-	UPDATE_COLLLECTION_ITEM_METADATA(
-			"/scollection/item/{0}/metadata?sessionToken={1}"),
+	UPDATE_COLLLECTION_ITEM_METADATA("/scollection/item/{0}/metadata?sessionToken={1}"),
 			
-	GET_COLLLECTION_ITEM(
-			"/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
+	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
 
 	UPDATE_REGISTER_USER("/user/{0}?sessionToken={1}"),
 
-	SIGNOUT("/account/signout.json?sessionToken={0}"),
+	ADD_COLLABORATOR("/scollection/addCollaborators/{0}?collaborator={1}&sessionToken={2}"),
 
-	GET_COLLABORATOR("/scollection/getCollaborators/{0}?sessionToken={1}"),
-
-	ADD_COLLABORATOR(
-			"/scollection/addCollaborators/{0}?collaborator={1}&sessionToken={2}"),
-
-	DELETE_COLLABORATOR(
-			"/scollection/deleteCollaborators/{0}?collaborator={1}&sessionToken={2}"),
+	DELETE_COLLABORATOR("/scollection/deleteCollaborators/{0}?collaborator={1}&sessionToken={2}"),
 
 	SEND_CONFIRMATION_MAIL("/user/register/confirm/mail.json?sessionToken={0}"),
 
-	/*COPY_COLLLECTION_ITEM(
-			"/scollection/item/{0}/copy?sessionToken={1}&collectionId={2}"),
-*/			
-	V2_COPY_COLLLECTION_ITEM(
-					"/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
+	V2_COPY_COLLLECTION_ITEM("/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
+	
 	FORGOT_PASSWORD("/user/password/reset.json?sessionToken={0}&emailId={1}"),
 
 //	RESET_CREDENTIAL(

@@ -1250,17 +1250,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	}
 
-	/**
-	 * get collection collaborator tab view
-	 * 
-	 * @return collection collaborator view
-	 */
-	public CollectionCollaboratorTabVc getCollectionCollaboratorTabVc() {
-		if (collectionCollaboratorTabVc == null) {
-			collectionCollaboratorTabVc = new CollectionCollaboratorTabVc(collectionDo);
-		}
-		return collectionCollaboratorTabVc;
-	}
 
 	/**
 	 * get collection share tab view

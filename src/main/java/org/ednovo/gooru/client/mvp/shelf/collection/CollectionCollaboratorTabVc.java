@@ -100,7 +100,6 @@ public class CollectionCollaboratorTabVc extends Composite {
 		addRecentText.getElement().setAttribute("alt",i18n.GL0833());
 		addRecentText.getElement().setAttribute("title",i18n.GL0833());
 		
-		getCollaboratorUsers(collectionDo.getGooruOid());
 		collaboratorTxtBox.addKeyUpHandler(new OnTextPress());
 		collaboratorTxtBox.getElement().setId("txtCollaboratorTxtBox");
 		StringUtil.setAttributes(collaboratorTxtBox, true);
@@ -211,23 +210,4 @@ public class CollectionCollaboratorTabVc extends Composite {
 		return false;
 	}
 
-	/**
-	 * get added collaborator for the collection by gooruOid
-	 *  
-	 * @param gooruOid an absolute gooruOid returns the collaborator list
-	 */
-	private void getCollaboratorUsers(String gooruOid) {
-		if (gooruOid != null) {
-			AppClientFactory.getInjector().getResourceService().getCollaborators(gooruOid, new SimpleAsyncCallback<List<UserDo>>() {
-				@Override
-				public void onSuccess(List<UserDo> users) {
-					if (users != null) {
-						for (UserDo user : users) {
-							handleEvent(user.getUsername(), user.getEmailId());
-						}
-					}
-				}
-			});
-		}
-	}
 }

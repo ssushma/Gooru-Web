@@ -640,14 +640,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return userDo;
 	}
 	
-	@Override
-	public List<UserDo> getCollaborators(String gooruOid){
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLABORATOR, gooruOid, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url,getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollaborators(jsonRep);
-	}
 	
 	@Override
 	public UserDo deleteCollaborators(String gooruOid,String collaboratorId){
