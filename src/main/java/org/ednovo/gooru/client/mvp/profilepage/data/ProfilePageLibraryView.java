@@ -64,7 +64,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	@UiField Label noCollectionsMsg, collectionsRedirectionMsg;
 	
-	@UiField Button myCollectionsBtn;
+	@UiField Button myCollectionsBtn,viewAllBtn;
 	
 	private static final String FOLDERID = "folderId";
 	
@@ -108,10 +108,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		collectionsRedirectionMsg.getElement().setAttribute("title",i18n.GL1788());
 		
 		emptyContainer.getElement().setId("pnlEmptyContainer");
+		viewAllBtn.getElement().setId("btnViewAll");
 		noCollectionsMsg.getElement().setId("lblNoCollectionsMsg");
 		leftNav.getElement().setId("pnlLeftNav");
 		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
+		viewAllBtn.getElement().setAttribute("style", "float:right;");
+		viewAllBtn.setVisible(false);
 	}
 	
 	public void setData() {
@@ -147,13 +150,16 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				unitListId = folderList.get(i).getGooruOid();
 				if(folderList.get(i).getType().equals("scollection")) {
 					setTopicListData(folderList.get(i),  unitListId);
+					viewAllBtn.setVisible(false);
 				} else {
+					viewAllBtn.setVisible(true);
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
 			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					System.out.println("leftmenuitemclick");
 					if(leftMenuItemView.getWidgetCount()>10) {
 						Window.scrollTo(0, 0);
 					}
@@ -169,7 +175,10 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					unitListId = leftMenuItemView.getUnitId();
 					if(leftMenuItemView.getType().equals("scollection")) {
 						getPresenter().getProfileLibraryCollection(unitListId, false);
+						viewAllBtn.setVisible(false);
 					} else {
+						System.out.println("folderitems");
+						viewAllBtn.setVisible(true);
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
