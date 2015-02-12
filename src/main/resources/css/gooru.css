@@ -2162,6 +2162,9 @@ fieldset {
 .reviewPopup{
 	left: 63% !important;
  }
+  .narrationRightContainerFullScreen{
+ width:59% !important;
+ }
  .preFilterPopup{
 	left:26.4% !important;
 	top:48px !important;
@@ -2177,6 +2180,7 @@ overflow: visible;
  .reviewPopupPoor{
 	left: 63% !important;
  }
+
  .borderLeft{
  	border-right:1px solid #999;
  }
@@ -2738,6 +2742,9 @@ overflow: visible;
 		left:63% !important;
 		width:100%;	
 	}
+	 .narrationRightContainerFullScreen{
+ width:86% !important;
+ }
 	
 	 .borderLeft{
  		border-right:1px solid #999;
@@ -2892,6 +2899,9 @@ overflow: visible;
 			width: 100%;
 			top:120px !important;
 		}
+		 .narrationRightContainerFullScreen{
+ width:59% !important;
+ }
 		.preFilterPopup{
 			left:0% !important;
 			top:48px !important;
@@ -2959,6 +2969,9 @@ overflow: visible;
 		width: 100%;
 		top:100px !important;
 		}
+		 .narrationRightContainerFullScreen{
+ width:59% !important;
+ }
 		.preFilterPopup{
 			left:0% !important;
 			top:48px !important;
@@ -3052,6 +3065,10 @@ overflow: visible;
 		left:69% !important;
 		width: 100%;	
 	}
+	
+	 .narrationRightContainerFullScreen{
+
+ }
 	
 	.reviewPopupPoor{
 		left:63% !important;
