@@ -137,4 +137,12 @@ public interface FolderService extends BaseService {
 	
 	public void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId) throws GwtException, ServerDownException;
 	
+	/**
+	 * This method is used to get the sub folders and collections based on the folder id
+	 * @param folderId
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	public List<FolderDo> getTocFolders(String folderId) throws GwtException, ServerDownException;
 }

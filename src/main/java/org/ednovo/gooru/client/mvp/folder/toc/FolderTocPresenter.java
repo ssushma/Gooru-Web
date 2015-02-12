@@ -27,11 +27,14 @@
 */
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -81,11 +84,10 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
-		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-		
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<List<FolderDo>>() {
 			@Override
-			public void onSuccess(FolderListDo folderListDo) {
+			public void onSuccess(List<FolderDo> folderListDo) {
 				getView().clearTocData();
 				getView().setData();
 				getView().setFolderItems(folderListDo);
@@ -100,10 +102,10 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	}
 
 	@Override
-	public void getFolderItems(final TreeItem item, String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+	public void getFolderItems(final TreeItem item, String folderId) {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,new SimpleAsyncCallback<List<FolderDo>>() {
 			@Override
-			public void onSuccess(FolderListDo folderListDo) {
+			public void onSuccess(List<FolderDo> folderListDo) {
 				getView().setFolderItems(item,folderListDo);
 			}
 		});
