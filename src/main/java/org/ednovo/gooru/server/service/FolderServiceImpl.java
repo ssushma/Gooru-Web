@@ -477,8 +477,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		String sessionToken=getLoggedInSessionToken();
-		url = UrlGenerator.generateUrl("http://54.177.225.101:8080", UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
 		getLogger().info("-- Folder toc API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
