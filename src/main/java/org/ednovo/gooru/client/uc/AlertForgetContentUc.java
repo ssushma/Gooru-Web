@@ -90,7 +90,7 @@ public class AlertForgetContentUc extends PopupPanel {
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		this.setSize("475px", "225px");
+		//this.setSize("475px", "225px");
 		this.center();
 		setIds();
 		forgetPopupHeaderText.setText(i18n.GL0061());
@@ -133,6 +133,7 @@ public class AlertForgetContentUc extends PopupPanel {
 	public void onCancelClicked(ClickEvent clickEvent) {
 		//this.setVisible(false);
 		hide();
+		Window.enableScrolling(true);
 
 	}
 	@UiHandler("gmailButton")

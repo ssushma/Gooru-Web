@@ -102,7 +102,19 @@ body {
 	border:1px solid #999;
 	padding:3px 3px;
 }
-
+.PopupMainV2Small{
+	width:480px;
+	color:#515151;
+	margin: 30px auto;
+	position:relative;
+	font-family:arial;
+	font-size:12px;
+	background:#ffffff;
+	border-radius:0 0;
+	border:1px solid #999;
+	padding:3px 3px;
+	z-index:999;
+}
 .LoginpopupInner {
 	border: 1px solid #ddd;
 	position: relative;
