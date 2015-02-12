@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.user.client.ui.TreeItem;
@@ -43,8 +46,8 @@ import com.google.gwt.user.client.ui.TreeItem;
  */
 public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
 
-	void setFolderItems(FolderListDo folderListDo);
-	public void setFolderItems(TreeItem item, FolderListDo folderListDo);
+	void setFolderItems(List<FolderDo>  foldersArrayList);
+	public void setFolderItems(TreeItem item, List<FolderDo> folderListDo);
 	void setData();
 	void clearTocData();
 	

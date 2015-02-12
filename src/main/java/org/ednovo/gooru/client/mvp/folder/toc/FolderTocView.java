@@ -138,9 +138,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		});
 	}
 	@Override
-	public void setFolderItems(FolderListDo folderListDo) {
-		if(folderListDo!=null){
-			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
+	public void setFolderItems(List<FolderDo>  foldersArrayList) {
+		if(foldersArrayList!=null){
+			System.out.println("size::"+foldersArrayList.size());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
@@ -274,7 +274,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 
 	@Override
-	public void setFolderItems(TreeItem item, FolderListDo folderListDo) {
+	public void setFolderItems(TreeItem item, List<FolderDo> folderListDo) {
 		displayWorkspaceData(item, folderListDo);
 	}
 	/**
@@ -282,9 +282,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param item
 	 * @param folderListDo
 	 */
-	private void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
-		if (folderListDo != null) {
-			List<FolderDo> foldersArrayList = folderListDo.getSearchResult();
+	private void displayWorkspaceData(TreeItem item, List<FolderDo> foldersArrayList) {
+		if (foldersArrayList != null) {
 			if (foldersArrayList != null && foldersArrayList.size() > 0) {
 				FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
 						.getWidget();
