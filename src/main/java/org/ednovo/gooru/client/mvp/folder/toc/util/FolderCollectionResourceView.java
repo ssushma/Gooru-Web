@@ -108,21 +108,6 @@ public class FolderCollectionResourceView extends Composite {
 							.getResourceFormat().getValue();
 				}
 				liPanel.addStyleName(ResourceCategoryClass.getInstance().getCategoryStyle(resourceType));
-				/*if(resourceType.equalsIgnoreCase("webpage")){
-					liPanel.addStyleName(FolderTocCBundle.INSTANCE.css().webpage());
-				}else if(resourceType.equalsIgnoreCase("video")){
-					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().video());
-				}else if(resourceType.equalsIgnoreCase("question")){
-					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().question());
-				}else if(resourceType.equalsIgnoreCase("image")){
-					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().image());
-				}else if(resourceType.equalsIgnoreCase("interactive")){
-					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().interactive());
-				}else if(resourceType.equalsIgnoreCase("texts")){
-					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().texts());
-				}else if(resourceType.equalsIgnoreCase("audio")){
-					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().audio());
-				}*/
 				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);
 			}
@@ -142,14 +127,11 @@ public class FolderCollectionResourceView extends Composite {
 	 */
 
 	private class clickOnResource implements ClickHandler {
-
 		FolderItemDo folderItemDo;
 		String resourceLink = "";
-
 		public clickOnResource(FolderItemDo folderItemDo) {
 			this.folderItemDo = folderItemDo;
 		}
-
 		@Override
 		public void onClick(ClickEvent event) {
 			String collectionId = folderDo.getGooruOid();

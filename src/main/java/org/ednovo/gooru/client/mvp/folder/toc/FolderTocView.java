@@ -74,6 +74,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel floderTreeContainer; 
+	final String FOLDER="folder";
+	final String SCOLLECTION="scollection";
+	
 	private Tree folderTocTree = new Tree(new TreeMenuImages()) {
 		@Override
 		public void onBrowserEvent(Event event) {
@@ -143,11 +146,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					 if(floderDo.getType().equals("folder")){
+					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
+					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
@@ -294,7 +297,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				int folderLevel = folderTreeItemWidget.getFolerLevel();
 				for (int i = 0; i < foldersArrayList.size(); i++) {
 					FolderDo floderDo = foldersArrayList.get(i);
-					 if(floderDo.getType().equals("folder")){
+					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
 							String styleName = FolderContainerCBundle.INSTANCE.css().child();
 							FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
 									styleName, floderDo.getTitle(),
@@ -304,7 +307,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 									innerFolderTreeItem);
 							item.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
+					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 	String styleName = getTreeItemStyleName(folderLevel);
 						 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
 						 	folderItem.addStyleName(styleName);
