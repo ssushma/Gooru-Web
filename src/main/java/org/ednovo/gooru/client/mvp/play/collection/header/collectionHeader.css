@@ -142,6 +142,7 @@
 	float: right;
 	line-height: 12px;
 	margin-right: 35px;
+	position: relative;
 	padding: 7px 15px;
 	color: #ffffff;
 }
