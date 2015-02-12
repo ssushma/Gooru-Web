@@ -542,7 +542,6 @@
                             <cssSourceExcludes>
                                 <cssSourceExclude>*.min.css</cssSourceExclude>
                                 <cssSourceExclude>embed.css</cssSourceExclude>
-                                <cssSourceExclude>bootstrap_old.css</cssSourceExclude>
                                 <cssSourceExclude>ie9.css</cssSourceExclude>
                             </cssSourceExcludes>
                             <cssFinalFile>main-styles.css</cssFinalFile>
