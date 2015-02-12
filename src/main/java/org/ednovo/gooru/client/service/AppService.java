@@ -49,14 +49,6 @@ public interface AppService extends BaseService {
 	 */
 	UserDo getLoggedInUser() throws GwtException, ServerDownException;
 
-	/**
-	 * User signin
-	 * @param username of the user account for signin
-	 * @param password of the user account
-	 * @return serialized to {@link UserDo} loggedIn user details 
-	 * @throws GwtException
-	 */
-	UserDo signin(String username, String password) throws GwtException, ServerDownException;
 	
 	/**
 	 * signout from the account

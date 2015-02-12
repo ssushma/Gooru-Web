@@ -35,8 +35,6 @@ public enum UrlToken {
 
 	GET_USER("/v2/user/{0}?sessionToken={1}"),
 
-	SIGNIN("/account/signin.json?apiKey={0}&sessionToken={1}"),
-
 	RESOURCE_SEARCH(
 			"/search/resource?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&queryType={4}&allowDuplicates={5}&fetchHitsInMulti={6}&allowScripting={7}"),
 

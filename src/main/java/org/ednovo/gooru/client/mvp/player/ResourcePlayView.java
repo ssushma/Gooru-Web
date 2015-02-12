@@ -156,7 +156,7 @@ public class ResourcePlayView extends
 						&& gooruResourcePlayer.getUserDo() != null) {
 					if (gooruResourcePlayer.getUserDo().getUsername() != null
 							&& gooruResourcePlayer.getUserDo()
-									.getUserPassword() != null) {
+									.getUserPassword() != null) {/*
 						AppClientFactory
 								.getInjector()
 								.getAppService()
@@ -183,7 +183,7 @@ public class ResourcePlayView extends
 //												new AlertContentUc(i18n.GL0061(),caught.getMessage());
 											}
 										});
-					}
+					*/}
 				}
 				/*if (gooruResourcePlayer.getIsResourceAdded()) {
 					// redirect(reloadUrl);

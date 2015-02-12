@@ -241,6 +241,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
+		getLogger().info("----ppp "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);

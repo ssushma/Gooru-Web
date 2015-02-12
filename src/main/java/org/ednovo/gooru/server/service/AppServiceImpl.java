@@ -71,55 +71,9 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		return user;
 	}
 
-	@Override
-	public UserDo signin(String username, String password) {
-		UserDo user = null;
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNIN, getApiKey(), getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), AppFormFactory.getSigninForm(username, password));
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		String content = null;
-		try {
-			content = jsonRep.getText();
-			
-			if (content.contains("{")) {
-				user = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
-				// if user created after production switch
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					user.setBeforeProductionSwitch(false);
-				}else{
-					user.setBeforeProductionSwitch(true);
-				}
-				
-				setUserFilterProperties(user);
-				deleteLoggedInInfo();
-				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
-				return user;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new GwtException(e.getMessage());
-		}
-		if (content != null) {
-			String[] parsed = content.split(":");
-			if (parsed.length > 1) {
-				content = parsed[1];
-			}
-		}
-		throw new GwtException(content);
-	}
 
 	@Override
-	public UserDo signout() {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNOUT, getLoggedInSessionToken());
-		ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		deleteLoggedInInfo();
-		UserDo user = guestSignIn();
-		setUserFilterProperties(user);
-		return user;
-	}
+	public UserDo signout() {return null;}
 
 	
 	/// V2 Apis
