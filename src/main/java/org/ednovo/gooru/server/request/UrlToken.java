@@ -153,53 +153,23 @@ public enum UrlToken {
 	
 	GET_COLLECTION_PARENT_FOLDERS("/v2/collection/{0}/parents?sessionToken={1}"),
 	
-	CLASSPAGE_DELETE("/classpage/{0}?sessionToken={1}"),
-
-	UPDATE_QUESTION_IMAGE("/quiz-question/{0}/media?sessionToken={1}&mediaFileName={2}&assetKey=asset-question"),
-
 	REMOVE_QUESTION_IMAGE("/quiz-question/{0}/asset?sessionToken={1}"),
 
-	ATTACH_IMAGE_TO_QUESTION(
-			"/quiz-question/{0}/asset?sessionToken={1}&fileNames={2}&assetKey=asset-question"),
+	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?sessionToken={1}&fileNames={2}&assetKey=asset-question"),
 
-	CREATE_ASSIGNMENT(
-			"/assignment?sessionToken={0}&classpageId={1}&assignmentDueDate={2}"),
-
-	UPDATE_ASSIGNMENT("/assignment/{0}?sessionToken={1}&assignmentDueDate={2}"),
-
-	DELETE_ASSIGNMENT("/assignment/{0}?sessionToken={1}"),
-
-	/*UPDATE_RESOURCE_INFO(
-			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}&mediaFileName={5}"),*/
-	UPDATE_RESOURCE_INFO(
-			"/v2/collection/resource/{0}?sessionToken={1}"),
+	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?sessionToken={1}"),
 			
-	UPDATE_RESOURCE_INFO_NO_MEDIA(
-			"/resource/{0}.json?sessionToken={1}&resourceTitle={2}&description={3}&category={4}"),
-	
-	ADD_COLLECTIONS_TO_ASSIGNMENT("/assignment/item?resourceId={0}&assignmentId={1}&sessionToken={2}"),
-	
-	GET_ASSIGNMENT_COLLECTIONS("/assignment/{0}/item?sessionToken={1}"),
-	
-	DELETE_ASSIGNMENT_COLLECION_ITEM("/assignment/item/{0}?sessionToken={1}"),
-	
 	UPDATE_USER("/user/{0}?sessionToken={1}&format=json&username={2}&userrole={3}"),
 
-//	GET_CLASSPAGE_ASSIGNMENTS("/classpage/{0}/item?sessionToken={1}");
-	
-	GET_CLASSPAGE_ASSIGNMENTS("/classpage/{0}/item?sessionToken={1}&pageSize={2}&pageNum={3}"),
-	
 	V2_GET_CLASSPAGE_TITLES("/v2/classpage/collection/{0}?sessionToken={1}"),
-	
-	UPDATE_CLASSPAGE("/classpage/{0}?sessionToken={1}"),
-	
-	PERMISSION_COLLECTION("/user/content/{0}/check-access.json?sessionToken={1}"),
 	
 	V2_CREATE_CLASSPAGE("/v2/class?sessionToken={0}"),
 	
 	V2_UPDATE_CLASSPAGE("/v2/class/{0}?sessionToken={1}"),
 	
 	V2_SOCIAL_SHARE("/v2/share/mail?sessionToken={0}"),
+	
+	PERMISSION_COLLECTION("/user/content/{0}/check-access.json?sessionToken={1}"),
 	
 	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?sessionToken={0}&limit={1}&offset={2}"),
 	
