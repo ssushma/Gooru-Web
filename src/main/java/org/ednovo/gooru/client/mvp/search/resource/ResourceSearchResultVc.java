@@ -178,7 +178,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 
 		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
 		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
-		resourceTitlePanel.getElement().getStyle().setWidth(77.667, Unit.PCT);
+		/*resourceTitlePanel.getElement().getStyle().setWidth(77.667, Unit.PCT);*/
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		resourceDescriptionHtml.getElement().setId(
