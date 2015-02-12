@@ -352,14 +352,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	}*/
 
-	@Override
-	public List<CollectionDo> getUserCollection() {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_COLLECTION, JSON, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollections(jsonRep);
-	}
 
 	public ResourceMetaInfoDo deserializeResourceMetaInfo(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {

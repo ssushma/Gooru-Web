@@ -73,8 +73,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 //	void listCollections(Integer pageSize,Integer pageNum,String scollection,AsyncCallback<List<CollectionDo>> callback);
 	
-	void getUserCollection(AsyncCallback<List<CollectionDo>> callback);
-	
 	void createCollectionWithItem(CollectionDo collectionDo, String codeId, String resourceId, AsyncCallback<CollectionDo> callback);
 	
 //	void updateCollectionItem(CollectionItemDo collectionItem, AsyncCallback<CollectionItemDo> callback);

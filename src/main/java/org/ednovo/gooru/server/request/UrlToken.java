@@ -35,108 +35,51 @@ public enum UrlToken {
 
 	GET_USER("/v2/user/{0}?sessionToken={1}"),
 
-	RESOURCE_SEARCH(
-			"/search/resource?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&queryType={4}&allowDuplicates={5}&fetchHitsInMulti={6}&allowScripting={7}"),
+	RESOURCE_SEARCH("/search/resource?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&queryType={4}&allowDuplicates={5}&fetchHitsInMulti={6}&allowScripting={7}"),
 
-	COLLECTION_SEARCH(
-			"/search/collection?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&accessType={4}"),
+	SIMPLE_COLLECTION_SEARCH("/search/scollection?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&accessType={4}"),
 
-	SIMPLE_COLLECTION_SEARCH(
-			"/search/scollection?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&accessType={4}"),
-
-	SELF_STUDY("/taxonomy/course.json?sessionToken={0}"),
-
-	FEATURED_COLLECTION("/featured/theme?sessionToken={0}&limit={1}"),
-
-	RESOURCE_INSTANCE_LIST("/scollection/{0}?sessionToken={1}"),
-
-	COLLECTION_LEARN_MORE(
-			"/scollection/resource/moreinfo?sessionToken={0}&resourceId={1}"),
-
-	RESOURCE_COLLECTION_LIST(
-			"/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
-
-	COLLECTION_RESOURCE_LIST(
-			"/search/resource?sessionToken={0}&pageNum={1}&pageSize={2}&flt.collectionGooruOIds={3}"),
+	RESOURCE_COLLECTION_LIST("/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
 
 	COLLECTION_ITEMS_LIST("/scollection/{0}?sessionToken={1}"),
 
 	SEARCH_FILTER("/search/index/filters?sessionToken={0}&type={1}"),
 
-	SEARCH_SUGGEST_QUERY(
-			"/search/searchquery?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
-
 	SEARCH_SUGGEST_STANDARD("/search/{0}?sessionToken={1}&query={2}&pageSize={3}&pageNum={4}"),
 	
 	SUGGEST_STANDARD_BY_FILTER("/v2/collection/standards?sessionToken={0}&query={1}"),
 	
-	SEARCH_AUTO_SUGGEST_KEYWORD(
-					"/search/searchquery?sessionToken={0}&query={1}&pageSize={2}&queryType={3}&pageNum={4}"),
+	SEARCH_AUTO_SUGGEST_KEYWORD("/search/searchquery?sessionToken={0}&query={1}&pageSize={2}&queryType={3}&pageNum={4}"),
 
-	SEARCH_SUGGEST_SOURCE(
-			"/search/publisher?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
+	SEARCH_SUGGEST_SOURCE("/search/publisher?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
 
-	CREATE_COLLLECTION("/scollection?sessionToken={0}"),
-
-	UPDATE_COLLLECTION("/scollection/{0}?sessionToken={1}"),
-	
 	UPDATE_V2_COLLLECTION("/v2/collection/{0}?sessionToken={1}"),
 
 	DELETE_COLLECTION("/v2/collection/{0}?sessionToken={1}"),
 	
-	/*CREATE_COLLECTION_ITEM(
-			"/scollection/item?sessionToken={0}&resourceId={1}&collectionId={2}"),*/
-	
-	V2_CREATE_COLLECTION_ITEM(
-			"/v2/collection/{0}/item?sessionToken={1}"),
+	V2_CREATE_COLLECTION_ITEM("/v2/collection/{0}/item?sessionToken={1}"),
 			
-	UPDATE_COLLECTION_ITEM("/scollection/item/{0}?sessionToken={1}"),
-
-	/*DELETE_COLLECTION_ITEM("/scollection/item/{0}?sessionToken={1}"),*/
-	
 	V2_DELETE_COLLECTION_ITEM("/v2/collection/item/{0}?sessionToken={1}"),
 
 	SHARE_SHORTEN_URL("/url/shorten/{0}?sessionToken={1}"),
 	
 	SHARE_SHORTEN_URL_PLAY("/url/shorten/{0}?sessionToken={1}&realUrl={2}"),
 	
-	/*REORDER_COLLECTION_ITEM(
-			"/scollection/item/{0}/reorder?sessionToken={1}&newSequence={2}"),
-*/
-	V2_REORDER_COLLECTION_ITEM_SEQUENCE(
-			"/v2/collection/item/{0}/reorder/{1}?sessionToken={2}"),
+	V2_REORDER_COLLECTION_ITEM_SEQUENCE("/v2/collection/item/{0}/reorder/{1}?sessionToken={2}"),
 
-	COPY_COLLECTION(
-			"/scollection/{0}/copy?sessionToken={1}&skipCollectionItem={2}&addToShelf={3}"),
+	GET_COLLECTION_ITEMS("/scollection/{0}/item?sessionToken={1}&pageSize={2}&pageNo={3}"),
 
-	GET_COLLECTION_ITEMS(
-			"/scollection/{0}/item?sessionToken={1}&pageSize={2}&pageNo={3}"),
-
-	/*GET_COLLECTION(
-			"/scollection/{0}?sessionToken={1}&skipCollectionItem={2}&includeMetaInfo=true&merge=permissions"),*/
-		
-	V2_GET_COLLECTION(
-					"/v2/collection/{0}?sessionToken={1}&skipCollectionItem={2}&includeMetaInfo=true&merge=permissions"),
+	V2_GET_COLLECTION("/v2/collection/{0}?sessionToken={1}&skipCollectionItem={2}&includeMetaInfo=true&merge=permissions"),
 					
-	V2_GET_COLLECTIONForStandards(
-					"/v2/collection/{0}?sessionToken={1}&rootNodeId={2}&skipCollectionItem={3}&includeMetaInfo=true&merge=permissions"),
+	V2_GET_COLLECTIONForStandards("/v2/collection/{0}?sessionToken={1}&rootNodeId={2}&skipCollectionItem={3}&includeMetaInfo=true&merge=permissions"),
 					
-	GET_TREE("/taxonomy/{0}/tree.json?sessionToken={1}"),
-
-	LIST_COLLECTION(
-			"/scollection/list?sessionToken={0}&pageSize={1}&pageSize={2}&sCollection={3}"),
-
 	TAXONOMY_COURSE("/taxonomy/course.json?sessionToken={0}"),
-
-	USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&filterBy=collection&merge=permissions"),
 	
+	USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&filterBy=collection&merge=permissions"),
+
 	SHARABLE_USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&sharing=public,anyonewithlink&filterBy=collection&merge=permissions"),
 	
-	/*USER_AVAILABILITY(
-			"/user/check/availability.json?type={0}&keyword={1}&sessionToken={2}"),*/
-	
-	V2_USER_AVAILABILITY(
-			"/v2/user/{0}/availability?sessionToken={1}&keyword={2}"),
+	V2_USER_AVAILABILITY("/v2/user/{0}/availability?sessionToken={1}&keyword={2}"),
 			
 	REGISTER_USER("/user?sessionToken={0}"),
 

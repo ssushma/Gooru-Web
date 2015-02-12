@@ -158,12 +158,6 @@ public interface ResourceService extends BaseService {
 	 */
 //	public List<CollectionDo> listCollections(Integer pageSize,Integer pageNum,String scollection)  throws GwtException, ServerDownException;
 	
-	/**
-	 * Get user collection
-	 * @return List of serialized {@link CollectionDo}
-	 * @throws GwtException
-	 */
-	public List<CollectionDo> getUserCollection()  throws GwtException, ServerDownException;
 	
 	/**
 	 * Create collection with collection item 

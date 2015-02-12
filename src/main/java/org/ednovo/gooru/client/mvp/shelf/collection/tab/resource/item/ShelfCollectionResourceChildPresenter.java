@@ -91,9 +91,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	}
 
 	
-	/*public void getUserCollections(){
-		getResourceService().getUserCollection(getUserCollectionsAsyncCallback());
-	}*/
+	
 	public void getUserColletionsList(Integer pageSize,Integer pageNum)
 	{
 		getResourceService().getUserCollectionList(pageSize,pageNum,false,getUserCollectionsAsyncCallback());
