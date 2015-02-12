@@ -130,8 +130,22 @@
 	display: inline-block;
 }
 .closeButton{
-	right:50px;
+	/* right:50px; */
 }
+.loginStatus {
+	display: inline-block;
+    background-color: #46873f;
+	border: 1px solid #386d32;
+	border-radius: 20px;
+	box-shadow: 0 0 6px #3c7335 inset;
+	float: right;
+	line-height: 12px;
+	margin-right: 35px;
+	position: relative;
+	padding: 7px 15px;
+	color: #ffffff;
+	right: 10%;
+	}
 .bodysection{
 	
 }
