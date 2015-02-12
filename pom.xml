@@ -545,6 +545,15 @@
                                 <cssSourceExclude>ie9.css</cssSourceExclude>
                             </cssSourceExcludes>
                             <cssFinalFile>main-styles.css</cssFinalFile>
+                            <!-- JS Minify -->
+                            <jsSourceDir>scripts</jsSourceDir>
+                            <jsSourceIncludes>
+                                <jsSourceInclude>*.js</jsSourceInclude>
+                            </jsSourceIncludes>
+                            <jsSourceExcludes>
+                                <jsSourceExclude>*.min.js</jsSourceExclude>
+                            </jsSourceExcludes>
+                            <jsFinalFile>main-script.js</jsFinalFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -570,6 +579,10 @@
                         <replacement>
                             <token><![CDATA[<!--BeginCssReplacer.*EndToBeCssReplacer-->]]></token>
                             <value><![CDATA[<link href="${cdn.endpoint}/css/main-styles.min.css" rel='stylesheet' type='text/css'>]]></value>
+                        </replacement>
+                        <replacement>
+                            <token><![CDATA[<!--BeginJsReplacer.*EndJsReplacer-->]]></token>
+                            <value><![CDATA[<script src="${cdn.endpoint}/scripts/main-styles.min.js" type='text/javascript' async></script>]]></value>
                         </replacement>
                     </replacements>
                 </configuration>
@@ -605,9 +618,10 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>**/*.xml</include>
-					<include>**/*.css</include>
+					<include>**/*.min.css</include>
+					<include>**/embed.css</include>
 					<include>**/*.html</include>
-					<include>**/*.js</include>
+					<include>**/*.min.js</include>
 					<include>**/*.</include>
 					<include>**/*.properties</include>
 				</includes>
