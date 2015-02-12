@@ -25,7 +25,9 @@
 package org.ednovo.gooru.client.mvp.profilepage.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
@@ -153,9 +155,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					viewAllBtn.setVisible(false);
 				} else {
 					viewAllBtn.setVisible(true);
+					viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getCollectionItemId()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
+			System.out.println("collectionid"+folderList.get(i).getCollectionItemId());
 			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -177,8 +181,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 						getPresenter().getProfileLibraryCollection(unitListId, false);
 						viewAllBtn.setVisible(false);
 					} else {
-						System.out.println("folderitems");
+						System.out.println("folderitems"+unitListId);
+						
 						viewAllBtn.setVisible(true);
+						viewAllBtn.addClickHandler(new clickOnViewAll(unitListId));
+						
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
@@ -287,5 +294,19 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				getPresenter().getPartnerWorkspaceFoldersOnScroll(leftNav.getWidgetCount());
 			}
 		}
+	}
+	
+	public class clickOnViewAll implements ClickHandler{
+		String folderId="";
+		public clickOnViewAll(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
 	}
 }
