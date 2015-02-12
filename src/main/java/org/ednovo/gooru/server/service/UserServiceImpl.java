@@ -174,23 +174,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public SettingDo getUserProfileDetails(String gooruUid) {
-		SettingDo settingeDo = null;
-		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
-		
-		JsonRepresentation jsonRep = null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			settingeDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SettingDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} 
-		return settingeDo;
-	}
-	
-	@Override
 	public V2UserDo getV2UserProfileDetails(String gooruUid) {
 		V2UserDo settingeDo = null;
 		String userUid = getLoggedInUserUid();

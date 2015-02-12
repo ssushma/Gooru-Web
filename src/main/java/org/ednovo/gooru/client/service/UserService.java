@@ -136,12 +136,6 @@ public interface UserService extends BaseService {
 	 */
 	UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException, ServerDownException;
 
-	/**
-	 * Get User profile details for settings page
-	 * @return serialized {@link SettingDo}
-	 * @throws GwtException
-	 */
-	SettingDo getUserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get User profile details for settings page

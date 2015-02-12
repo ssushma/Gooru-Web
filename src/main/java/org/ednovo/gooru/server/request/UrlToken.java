@@ -85,14 +85,11 @@ public enum UrlToken {
 
 	GET_REGISTERED_USER_DETAILS("/user/{0}/registration?sessionToken={1}"),
 
-	GET_USER_PROFILE_DETAILS("/user/{0}/profile.json?sessionToken={1}"),
-	
 	GET_USER_PROFILE_V2_DETAILS("/v2/user/{0}?sessionToken={1}"),
 	
 	GET_USER_PROFILE_PAGE("/v2/party/{0}/custom-field/show_profile_page?sessionToken={1}"),
 
-	UPDATE_USER_PROFILE_DETAILS(
-			"/user/{0}/profile/personal.json?sessionToken={1}"),
+	UPDATE_USER_PROFILE_DETAILS("/user/{0}/profile/personal.json?sessionToken={1}"),
 	
 	UPDATE_USER_PROFILE_VISIBILTY("/v2/party/{0}/custom-field?sessionToken={1}"),	
 	
