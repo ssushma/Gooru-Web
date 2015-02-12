@@ -65,7 +65,6 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 //			user.setEmailId(getLoggedInEmailId());
 		}
 		if (user == null) {
-//			user = guestSignIn();
 			user = v2GuestSignIn();
 		}
 		setUserFilterProperties(user);

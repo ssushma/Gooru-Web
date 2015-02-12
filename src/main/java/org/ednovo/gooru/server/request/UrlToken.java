@@ -35,10 +35,6 @@ public enum UrlToken {
 
 	GET_USER("/v2/user/{0}?sessionToken={1}"),
 
-	GET_USERBYTOKEN("/usertoken/user?sessionToken={0}"),
-
-	GUEST_SIGNIN("/account/signin.json?isGuestUser=true&apiKey={0}"),
-
 	SIGNIN("/account/signin.json?apiKey={0}&sessionToken={1}"),
 
 	RESOURCE_SEARCH(
