@@ -107,7 +107,8 @@ public class FolderCollectionResourceView extends Composite {
 					resourceType = folderDo.getCollectionItems().get(i)
 							.getResourceFormat().getValue();
 				}
-				if(resourceType.equalsIgnoreCase("webpage")){
+				liPanel.addStyleName(ResourceCategoryClass.getInstance().getCategoryStyle(resourceType));
+				/*if(resourceType.equalsIgnoreCase("webpage")){
 					liPanel.addStyleName(FolderTocCBundle.INSTANCE.css().webpage());
 				}else if(resourceType.equalsIgnoreCase("video")){
 					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().video());
@@ -121,9 +122,8 @@ public class FolderCollectionResourceView extends Composite {
 					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().texts());
 				}else if(resourceType.equalsIgnoreCase("audio")){
 					liPanel.setStyleName(FolderTocCBundle.INSTANCE.css().audio());
-				}
-				liPanel.addClickHandler(new clickOnResource(folderDo
-						.getCollectionItems().get(i)));
+				}*/
+				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);
 			}
 		}
