@@ -76,6 +76,7 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String LoginpopupContent();
 	String LoginPopUpgreen();
 	String PopupMainV1Small();
+	String PopupMainV2Small();
 	String LoginPopUpgreensmall();
 	String subheader();
 	String signInContainer();
