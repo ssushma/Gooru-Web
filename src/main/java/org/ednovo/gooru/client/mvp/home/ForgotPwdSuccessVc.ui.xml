@@ -8,7 +8,7 @@
 		<g:HTMLPanel styleName="{res.css.popupInner}">
 		    <g:HTMLPanel styleName="{res.css.LoginpopupHeader}">
 		        <g:HTMLPanel styleName="row">
-		    		<g:Label styleName="col-md-9 col-xs-9 {res.css.popupHeader}" ui:field="lblLoginHeading"></g:Label>
+		    		<g:Label styleName="col-md-9 col-xs-9" ui:field="lblLoginHeading"></g:Label>
 		    		<g:HTMLPanel styleName="col-md-3 col-xs-3 {res.css.closeContainer}">
 		    			<panel:HTMLEventPanel ui:field="closeButton" styleName="{res.css.closeButton}"></panel:HTMLEventPanel>    
 		    		</g:HTMLPanel>
