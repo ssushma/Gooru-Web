@@ -62,13 +62,13 @@ public class ScrollPopupShareUtil {
 	 */
 	 static void setAddTagesPopupOnResize(){
 		if(device){
-			if((Window.getClientHeight()-150)<=465){
+			if((Window.getClientHeight()-150)<=564){
 				widgetContainer.getElement().getStyle().setHeight(Window.getClientHeight()-150, Unit.PX);
 				widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
 				widgetContainer.getElement().getStyle().setOverflowX(Overflow.AUTO);
 			}else{
-				widgetContainer.getElement().getStyle().setHeight(465, Unit.PX);
-				widgetContainer.getElement().getStyle().setOverflow(Overflow.HIDDEN);
+				widgetContainer.getElement().getStyle().setHeight(564, Unit.PX);
+				widgetContainer.getElement().getStyle().setOverflow(Overflow.AUTO);
 			}
 		}
 	}
