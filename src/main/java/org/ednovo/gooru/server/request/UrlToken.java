@@ -113,31 +113,21 @@ public enum UrlToken {
 	
 	FORGOT_PASSWORD("/user/password/reset.json?sessionToken={0}&emailId={1}"),
 
-//	RESET_CREDENTIAL(
-//			"/user/reset/credential.json?sessionToken={0}&password={1}&token={2}"),
-	V2_RESET_CREDENTIAL(
-					"/v2/user/reset-password?sessionToken={0}"),
+	V2_RESET_CREDENTIAL("/v2/user/reset-password?sessionToken={0}"),
 
-	MEDIA_FILE_UPLOAD(
-			"/v2/media?sessionToken={0}"),
+	MEDIA_FILE_UPLOAD("/v2/media?sessionToken={0}"),
 
 	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}&mediaFileName={2}"),
 
-	IMAGE_CROP(
-			"/media/{0}/crop?sessionToken={1}&height={2}&width={3}&xPosition={4}&yPosition={5}&&cropEngine=bufferImage"),
+	IMAGE_CROP("/media/{0}/crop?sessionToken={1}&height={2}&width={3}&xPosition={4}&yPosition={5}&&cropEngine=bufferImage"),
 
 	UPDATE_USER_VIEW("/user/{0}/view/flag?sessionToken={1}&viewFlag={2}"),
 
-	GET_USER_COLLECTIONS("/scollection/list?sessionToken={0}&fetchType=my"),
+	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?sessionToken={1}&title={2}&url={3}&category={4}&description={5}&thumbnailImgSrc={6}&stop={7}"),
 
-	ADD_NEW_RESOURCE(
-			"/v2/collection/{0}/resource?sessionToken={1}&title={2}&url={3}&category={4}&description={5}&thumbnailImgSrc={6}&stop={7}"),
+	GET_RESOURCE_INFO("/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
 
-	GET_RESOURCE_INFO(
-			"/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
-
-	CHECK_RESOURCE_EXISTS(
-			"/resource/search.json?url={0}&checkShortenedUrl=true&sessionToken={1}"),
+	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&sessionToken={1}"),
 
 	CREATE_FOLDER("/folder?sessionToken={0}"),
 
@@ -145,8 +135,6 @@ public enum UrlToken {
 
 	LIST_MY_FOLDER_LEVELS("/folder/{0}/item?sessionToken={1}"),
 	
-	LIST_MY_FOLDERS_COLLECTIONS("/folder/{0}?sessionToken={1}"),
-
 	GET_A_FOLDER_INFORMATION("/folder/{0}?sessionToken={1}"),
 
 	CREATE_CLASSPAGE("/classpage?sessionToken={0}"),
