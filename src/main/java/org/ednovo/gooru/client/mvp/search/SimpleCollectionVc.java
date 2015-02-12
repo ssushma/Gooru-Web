@@ -55,6 +55,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.query.client.css.ClearProperty.Clear;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -140,6 +141,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		containerPanel.getElement().setId("pnlContainerPanel");
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
 		standardsDataPanel.getElement().setId("fpnlStandardsDataPanel");
+		standardsDataPanel.getElement().getStyle().setClear(com.google.gwt.dom.client.Style.Clear.BOTH);
 		resourceCountLbl.getElement().setId("lblResourceCountLbl");
 		questionCountLbl.getElement().setId("lblQuestionCountLbl");
 		collectionGradePanel.getElement().setId("fpnlCollectionGradePanel");
