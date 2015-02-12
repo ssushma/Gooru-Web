@@ -259,7 +259,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		assessmentButton.getElement().setId("btnNewCollectionBtn");
 		assessmentButton.getElement().setAttribute("alt",i18n.GL3024());
 		assessmentButton.getElement().setAttribute("title",i18n.GL3024());
-		assessmentButton.removeFromParent();
+		//assessmentButton.removeFromParent();
 		
 		newFolderBtn.setText(i18n.GL1450());
 		newFolderBtn.getElement().setId("btnNewFolderBtn");
