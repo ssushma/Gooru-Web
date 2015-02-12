@@ -176,7 +176,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		if(AppClientFactory.isAnonymous()){
 			getView().getLoadingImageLabel().setVisible(false);
 		}
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId, this.classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId, this.classpageId!=null?this.classpageId:"", userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 		collectionSummaryIndividualPresenter.setTeacherImage(classpageItemDo);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 	}
