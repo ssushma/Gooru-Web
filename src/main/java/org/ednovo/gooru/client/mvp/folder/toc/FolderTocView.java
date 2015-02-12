@@ -140,7 +140,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void setFolderItems(List<FolderDo>  foldersArrayList) {
 		if(foldersArrayList!=null){
-			System.out.println("size::"+foldersArrayList.size());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
@@ -283,10 +282,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param folderListDo
 	 */
 	private void displayWorkspaceData(TreeItem item, List<FolderDo> foldersArrayList) {
-		//This will remove the loading text for the child items
+		//This will remove the loading text for the child items.
 		if(item.getChildCount() > 0){
 			item.getChild(0).remove();
 		}
+		//This will set the data to the selected tree item.
 		if (foldersArrayList != null) {
 			if (foldersArrayList != null && foldersArrayList.size() > 0) {
 				FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
@@ -339,6 +339,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		currentFolderSelectedTreeItem=null;
 		previousSelectedItem=null;
 	}
+	/**
+	 * This method is used to display loading text to the user.
+	 * @return
+	 */
 	public TreeItem loadingTreeItem() {
 		Label loadingText = new Label(i18n.GL3120());
 		loadingText.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingText());
