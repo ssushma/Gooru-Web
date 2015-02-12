@@ -42,7 +42,6 @@
 	            			<g:HTMLPanel ui:field="floderTreeContainer" styleName="{tocStyle1.folderStucture}">
 			   				</g:HTMLPanel>
 						</g:ScrollPanel>
-						<g:VerticalPanel styleName="{tocStyle.perTaskContainer}" ui:field="pnlAddFoldersCollections"/>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>

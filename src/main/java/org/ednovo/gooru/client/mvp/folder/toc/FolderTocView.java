@@ -31,8 +31,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -50,7 +50,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : FolderTocView.java
@@ -72,9 +71,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 
 	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
 	}
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField VerticalPanel pnlAddFoldersCollections;
 	@UiField HTMLPanel floderTreeContainer; 
+	final String FOLDER="folder";
+	final String SCOLLECTION="scollection";
+	
 	private Tree folderTocTree = new Tree(new TreeMenuImages()) {
 		@Override
 		public void onBrowserEvent(Event event) {
@@ -91,6 +93,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public FolderTocView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
+		floderTreeContainer.clear();
+		floderTreeContainer.add(folderTocTree);
+		folderTocTree.addItem(loadingTreeItem());
 		//setData();
 	}
 	/**
@@ -98,9 +103,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void setData() {
-		pnlAddFoldersCollections.clear();
-		floderTreeContainer.clear();
-		floderTreeContainer.add(folderTocTree);
 		folderTocTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
@@ -128,6 +130,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					item.getTree().setSelectedItem(parent, false); 
 					if (!folderTreeItemWidget.isApiCalled()) {
 						folderTreeItemWidget.setApiCalled(true);
+						item.addItem(loadingTreeItem());
 						getFolderItems(item, folderTreeItemWidget.getGooruOid());
 					}
 					if (parent != null)
@@ -140,15 +143,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void setFolderItems(List<FolderDo>  foldersArrayList) {
 		if(foldersArrayList!=null){
-			System.out.println("size::"+foldersArrayList.size());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					 if(floderDo.getType().equals("folder")){
+					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
+					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
@@ -283,6 +285,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param folderListDo
 	 */
 	private void displayWorkspaceData(TreeItem item, List<FolderDo> foldersArrayList) {
+		//This will remove the loading text for the child items.
+		if(item.getChildCount() > 0){
+			item.getChild(0).remove();
+		}
+		//This will set the data to the selected tree item.
 		if (foldersArrayList != null) {
 			if (foldersArrayList != null && foldersArrayList.size() > 0) {
 				FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
@@ -290,7 +297,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				int folderLevel = folderTreeItemWidget.getFolerLevel();
 				for (int i = 0; i < foldersArrayList.size(); i++) {
 					FolderDo floderDo = foldersArrayList.get(i);
-					 if(floderDo.getType().equals("folder")){
+					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
 							String styleName = FolderContainerCBundle.INSTANCE.css().child();
 							FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
 									styleName, floderDo.getTitle(),
@@ -300,7 +307,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 									innerFolderTreeItem);
 							item.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
+					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 	String styleName = getTreeItemStyleName(folderLevel);
 						 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
 						 	folderItem.addStyleName(styleName);
@@ -332,9 +339,16 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void clearTocData() {
 		folderTocTree.clear();
-		//folderTocTree.addItem(loadingTreeItem());
 		currentFolderSelectedTreeItem=null;
 		previousSelectedItem=null;
-		//dropdownListPlaceHolder.setText(GL1377);
+	}
+	/**
+	 * This method is used to display loading text to the user.
+	 * @return
+	 */
+	public TreeItem loadingTreeItem() {
+		Label loadingText = new Label(i18n.GL3120());
+		loadingText.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingText());
+		return new TreeItem(loadingText);
 	}
 }
