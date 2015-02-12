@@ -174,23 +174,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public SettingDo getUserProfileDetails(String gooruUid) {
-		SettingDo settingeDo = null;
-		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
-		
-		JsonRepresentation jsonRep = null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			settingeDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SettingDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} 
-		return settingeDo;
-	}
-	
-	@Override
 	public V2UserDo getV2UserProfileDetails(String gooruUid) {
 		V2UserDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
@@ -276,25 +259,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 		return userDo;
-	}
-
-	@Override
-	public SettingDo updateProfileSettings(String gooruUid,	 Map<String, String> params) throws GwtException {
-		SettingDo settingDo = null;
-		String userUid = getLoggedInUserUid();
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
-		
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		String text="";
-		try {
-			text = jsonRep.getText();
-			settingDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SettingDo.class);
-		} catch (Exception e) {
-			throw new GwtException(text != null ? text : e.getMessage());
-		}
-		return settingDo;
 	}
 
 	

@@ -158,12 +158,6 @@ public interface ResourceService extends BaseService {
 	 */
 //	public List<CollectionDo> listCollections(Integer pageSize,Integer pageNum,String scollection)  throws GwtException, ServerDownException;
 	
-	/**
-	 * Get user collection
-	 * @return List of serialized {@link CollectionDo}
-	 * @throws GwtException
-	 */
-	public List<CollectionDo> getUserCollection()  throws GwtException, ServerDownException;
 	
 	/**
 	 * Create collection with collection item 
@@ -221,13 +215,7 @@ public interface ResourceService extends BaseService {
 	 */
 	public UserDo addCollaborator(String gooruOid,String collaboratorId)  throws GwtException, ServerDownException;
 	
-	/**
-	 * Get added collaborator list for the collection
-	 * @param gooruOid of collection 
-	 * @return List of serialized collaborator
-	 * @throws GwtException
-	 */
-	public List<UserDo> getCollaborators(String gooruOid)  throws GwtException, ServerDownException;
+	
 	
 	/**
 	 * Delete added collaborator for the collection
@@ -294,8 +282,6 @@ public interface ResourceService extends BaseService {
 	
 	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException, ServerDownException;
 	
-	public CollectionItemDo updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException;
-
 	/**
 	 * To update Resource Info.
 	 * @param gooruOid

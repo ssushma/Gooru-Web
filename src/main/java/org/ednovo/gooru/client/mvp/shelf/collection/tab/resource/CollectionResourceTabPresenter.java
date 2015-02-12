@@ -191,7 +191,6 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
-		//getResourceService().updateQuestionResource(questionItemId, collectionQuestionItemDo,thumbnailUrl, getUpdateQuestionItemResourceAsyncCallback());
 		
 	}
 	

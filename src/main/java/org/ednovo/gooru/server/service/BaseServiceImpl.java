@@ -397,7 +397,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			token = (String) getHttpRequest().getSession().getAttribute(GOORU_SESSION_TOKEN);
 			//Fix for handling when cookie get disabled.
 			if (token == null || token.equalsIgnoreCase("null")) { 
-//				UserDo user = guestSignIn();
 				UserDo user = v2GuestSignIn();
 				token = (user != null) ? user.getToken() : token;
 				getHttpRequest().getSession().setAttribute(GOORU_SESSION_TOKEN, token);
@@ -524,7 +523,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		UserDo user = null;
 
 		if (sessionTimedOutUser || switchedUser) {
-//			user = getUserInfoByToken(cookieSessionToken);
 			user = v2GetUserInfoByToken(cookieSessionToken);
 		} else if (!inUser) {
 			user = v2GuestSignIn();
@@ -575,37 +573,9 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return getLoggedInUserUid() == null || getLoggedInUserUid().equals(GOORU_ANONYMOUS);
 	}
 
-	protected UserDo guestSignIn() {
-		UserDo user = null;
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GUEST_SIGNIN, getApiKey());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		try {
-			setLoggedInSessionToken(jsonRep.getJsonObject().getString(TOKEN));
-			user = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-			setLoggedInUserUid(user.getGooruUId());
-			setLoggedInEmailId("");
-			setLoggedInDateOfBirth("");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return user;
-	}
 	
-	protected UserDo guestSignInForEmbed(String restEndPointFromEmbed){
-		UserDo user = null;
-		String url = UrlGenerator.generateUrl(restEndPointFromEmbed, UrlToken.GUEST_SIGNIN, getApiKey());
-		JsonRepresentation jsonRep = null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		try {
-			user = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return user;
-	}
+	
+	
 
 	protected UserDo getUserInfo(String userUid) {
 		UserDo userDo = null;
@@ -635,31 +605,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			catch (ParseException e) {
 				e.printStackTrace();
 			}
-		}
-		return userDo;
-	}
-
-	protected UserDo getUserInfoByToken(String token) {
-		UserDo userDo = null;
-		try {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USERBYTOKEN, getLoggedInSessionToken());
-			JsonRepresentation jsonRep = null;
-			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-			jsonRep =jsonResponseRep.getJsonRepresentation();
-			String data = jsonRep.getJsonObject().toString();
-			userDo = JsonDeserializer.deserialize(data, UserDo.class);
-//			if (userDo.getCreatedOn()!=null){
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(userDo.getCreatedOn());
-				// if user created after production switch
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					userDo.setBeforeProductionSwitch(false);
-				}else{
-					userDo.setBeforeProductionSwitch(true);
-				}
-//			}
-		} catch (Exception e) {
-			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);
 		}
 		return userDo;
 	}

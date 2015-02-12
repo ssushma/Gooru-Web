@@ -132,19 +132,7 @@ public class ErrorPopup extends PopupPanel{
 //		closePopup();
 //	}
 	
-	/*private void navigateShelf(){
-		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
-            @Override
-            public void onSuccess(List<CollectionDo> result) {
-                if(result.size()>0) {
-                    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", result.get(0).getGooruOid() });
-                } else {
-                    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
-                }
-                AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
-            }
-        });
-	}*/
+	
 	private void navigateClasspage(){
 		AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages("1", "0", new SimpleAsyncCallback<ClasspageListDo>() {
 

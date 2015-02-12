@@ -850,8 +850,7 @@ public class CollectionResourceTabView extends
 		@Override
 		public void updateQuestionResource(String collectionItemId,
 				CollectionQuestionItemDo collectionQuestionItemDo) {
-			// getUiHandlers().updateQuestionResource(collectionItemId,
-			// collectionQuestionItemDo);
+			
 			if (editQuestionPopupWidget.getQuestionImageContainer()
 					.getElement().hasChildNodes()) {
 				UpdateQuestionImageView updateQuestionImage = (UpdateQuestionImageView) editQuestionPopupWidget

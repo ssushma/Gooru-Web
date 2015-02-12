@@ -470,10 +470,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		getResourceService().addQuestionResource(collectionDo.getGooruOid(), mediaFileName, collectionQuestionItemDo, getAddQuestionResourceAsyncCallback());
 		
 	}
-	@Override
-	public void updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
-		getResourceService().updateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getUpdateQuestionResourceAsyncCallback());
-	}
+	
 
 	@Override
 	public CollectionDo getParentCollectionDetails() {

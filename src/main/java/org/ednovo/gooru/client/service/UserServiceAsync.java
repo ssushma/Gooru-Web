@@ -58,8 +58,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
     
     void getRegistredUserDetails(String gooruUid, AsyncCallback<UserDo> callback);
     
-    void getUserProfileDetails(String gooruUid, AsyncCallback<SettingDo> callback);
-    
     void getV2UserProfileDetails(String gooruUid, AsyncCallback<V2UserDo> callback);
     
     void updateUserDetails(String gooruUid, String token, Map<String, String> params, AsyncCallback<ProfileDo> callback);
@@ -72,8 +70,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
     
     void updateUserViewFlag(String gooruUid, Integer viewFlag, AsyncCallback<UserDo> callback);
 
-    void updateProfileSettings(String gooruUid, Map<String, String> params, AsyncCallback<SettingDo> callback);
-    
     void updateUserProfileVisibility(String gooruUid,String optionalValue,AsyncCallback<ProfilePageDo> callback);
     
     void  getUserProfilePage(String gooruUid, AsyncCallback<ProfilePageDo> callback);

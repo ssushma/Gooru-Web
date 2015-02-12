@@ -136,12 +136,6 @@ public interface UserService extends BaseService {
 	 */
 	UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException, ServerDownException;
 
-	/**
-	 * Get User profile details for settings page
-	 * @return serialized {@link SettingDo}
-	 * @throws GwtException
-	 */
-	SettingDo getUserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get User profile details for settings page
@@ -150,15 +144,8 @@ public interface UserService extends BaseService {
 	 */
 	V2UserDo getV2UserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 
-	/**
-	 * Update user profile details
-	 * @param gooruUid of the user
-	 * @param token session token to set for loogedIn user
-	 * @param params has user details
-	 * @return serialized {@link ProfileDo}
-	 * @throws GwtException
-	 */
-	SettingDo updateProfileSettings(String gooruUid, Map<String, String> params) throws GwtException, ServerDownException;
+	
+	
 	/**
 	 * Update user profile visibilty
 	 * @param gooruUid of the user

@@ -352,14 +352,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	}*/
 
-	@Override
-	public List<CollectionDo> getUserCollection() {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_COLLECTION, JSON, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollections(jsonRep);
-	}
 
 	public ResourceMetaInfoDo deserializeResourceMetaInfo(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -648,14 +640,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return userDo;
 	}
 	
-	@Override
-	public List<UserDo> getCollaborators(String gooruOid){
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLABORATOR, gooruOid, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url,getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollaborators(jsonRep);
-	}
 	
 	@Override
 	public UserDo deleteCollaborators(String gooruOid,String collaboratorId){
@@ -841,23 +825,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return deserializeCollectionItem(jsonRep);
 	}
 
-	@Override
-	public CollectionItemDo updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_QUESTION_ITEM, collectionItemDo.getResource().getGooruOid(), getLoggedInSessionToken());
-		if(thumbnailUrl!=null){
-			updateQuestionImage(collectionItemDo.getResource().getGooruOid(),thumbnailUrl);
-		}
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateDataForm(collectionQuestionItemDo, "question"));
-//		try {
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		ResourceDo resourceDo=deserializeResourceDoItem(jsonRep);
-		return convertResourceToCollectionItemDo(resourceDo,collectionItemDo);
-	}
 
 	@Override
 	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList)
