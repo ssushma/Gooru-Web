@@ -101,8 +101,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 			CollectionQuestionItemDo collectionQuestionItemDo,
 			AsyncCallback<CollectionItemDo> addQuestionResourceAsyncCallback);
 	
-	void updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl, AsyncCallback<CollectionItemDo> updateQuestionItemResourceAsyncCallback);
-	
 	void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList,AsyncCallback<CollectionItemDo> callback);
 	
 	void removeQuestionImage(String collectionQuestionId, AsyncCallback<Void> callback);

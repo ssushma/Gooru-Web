@@ -282,8 +282,6 @@ public interface ResourceService extends BaseService {
 	
 	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException, ServerDownException;
 	
-	public CollectionItemDo updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException;
-
 	/**
 	 * To update Resource Info.
 	 * @param gooruOid

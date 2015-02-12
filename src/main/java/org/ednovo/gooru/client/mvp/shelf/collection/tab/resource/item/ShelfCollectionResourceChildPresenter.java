@@ -132,10 +132,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	public void createCollectionItem(String collectionId, String collectionItemId) {
 		getResourceService().copyCollectionItem(collectionId, collectionItemId, getCopyCollectionItemAsyncCallback());
 	}
-    /*public void updateResourceQuestion(String collectionItemId,CollectionQuestionItemDo collectionQuestionItemDo){
-    //	getResourceService().updateQuestionResource(collectionItemId, collectionQuestionItemDo, getUpdateQuestionItemResourceAsyncCallback());
-    	
-    }*/
+    
 	/**
 	 * @return instance of {@link CollectionItemDo} after update the collection item
 	 */

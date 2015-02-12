@@ -78,8 +78,6 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	
 	void removeQuestionImage(String collectionItemId);
 	
-	public void updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl);
-
 	void addUserOwnResource(String jsonString);
 
 	void saveUserResource(String filePath);

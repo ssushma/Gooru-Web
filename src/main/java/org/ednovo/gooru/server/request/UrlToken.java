@@ -153,21 +153,9 @@ public enum UrlToken {
 	
 	GET_COLLECTION_PARENT_FOLDERS("/v2/collection/{0}/parents?sessionToken={1}"),
 	
-	// LIST_MY_CLASSPAGES("/classpage/list?sessionToken={0}"),
-	LIST_MY_CLASSPAGES("/classpage/my?sessionToken={0}"),
-
-	GET_CLASSPAGE_BY_CODE("/classpage/code/{0}?sessionToken={1}"),
-
-	GET_CLASSPAGE_BY_ID("/classpage/{0}?sessionToken={1}&includeCollectionItem=true"),
-
-	ADD_QUESTION_ITEM("/scollection/{0}/question?sessionToken={1}"),
-
-	UPDATE_QUESTION_ITEM("/assessment-question/{0}.json?sessionToken={1}"),
-
 	CLASSPAGE_DELETE("/classpage/{0}?sessionToken={1}"),
 
-	UPDATE_QUESTION_IMAGE(
-			"/quiz-question/{0}/media?sessionToken={1}&mediaFileName={2}&assetKey=asset-question"),
+	UPDATE_QUESTION_IMAGE("/quiz-question/{0}/media?sessionToken={1}&mediaFileName={2}&assetKey=asset-question"),
 
 	REMOVE_QUESTION_IMAGE("/quiz-question/{0}/asset?sessionToken={1}"),
 
