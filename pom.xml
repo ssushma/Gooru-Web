@@ -554,6 +554,10 @@
                                 <jsSourceExclude>*.min.js</jsSourceExclude>
                             </jsSourceExcludes>
                             <jsFinalFile>main-script.js</jsFinalFile>
+                            <warSourceExcludes>*.css</warSourceExcludes>
+                            <warSourceExcludes>*.js</warSourceExcludes>
+                            <warSourceIncludes>*min.css</warSourceIncludes>
+                            <warSourceIncludes>*min.js</warSourceIncludes>
                         </configuration>
                     </execution>
                 </executions>
@@ -582,19 +586,19 @@
                         </replacement>
                         <replacement>
                             <token><![CDATA[<!--BeginJsReplacer.*EndJsReplacer-->]]></token>
-                            <value><![CDATA[<script src="${cdn.endpoint}/scripts/main-styles.min.js" type='text/javascript' async></script>]]></value>
+                            <value><![CDATA[<script src="${cdn.endpoint}/scripts/main-script.min.js" type='text/javascript' async></script>]]></value>
                         </replacement>
                     </replacements>
                 </configuration>
             </plugin>
 			<!-- Copy static web files before executing gwt:run -->
-			<plugin>
+			<!-- <plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<!-- here the phase you need -->
+						here the phase you need
 						<phase>validate</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -610,7 +614,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 		</plugins>
 		<resources>
 			<resource>
