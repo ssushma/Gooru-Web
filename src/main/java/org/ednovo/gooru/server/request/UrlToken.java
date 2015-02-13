@@ -199,8 +199,6 @@ public enum UrlToken {
 	
 	V2_DELETE_ASSIGNMENT_COLLECION_ITEM("/v2/assignment/{0}/item/{1}?sessionToken={2}"), 
 	
-	GET_PROFILE_WORKSPACE("/scollection/{0}/workspace?sessionToken={1}&pageNum={2}&pageSize={3}"),
-	
 	GENERATE_BITLY_LINK("/v2/share/url/shorten?sessionToken={0}"),
 	
 	UPLOAD_PROFILE_IMAGE("/user/{0}/profile/picture?sessionToken={1}&mediaFileName={2}"),
