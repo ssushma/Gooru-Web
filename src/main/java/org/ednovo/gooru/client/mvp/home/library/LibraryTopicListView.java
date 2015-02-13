@@ -274,7 +274,6 @@ public class LibraryTopicListView extends Composite{
 		}
 		addCollectionQuizTitleData("lesson");
 		
-		
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			searchLink.getElement().getStyle().setDisplay(Display.NONE);
@@ -371,6 +370,17 @@ public class LibraryTopicListView extends Composite{
 			
 		}
 	}
+	/**
+	 * To handle the Events of All fields here
+	 */
+	public void renderEvents(){
+		
+		viewAllBtn.addClickHandler(new ViewAllBtnClickEvent());
+	}
+	
+	/**
+	 * To set the Id's for all fields
+	 */
 	public void setIds(){
 		topicBlock.getElement().setId("pnlTopicBlock");
 		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
@@ -393,6 +403,7 @@ public class LibraryTopicListView extends Composite{
 		noCollectionLbl.getElement().setId("lnlNoCollectionLbl");
 		collectionTitle.getElement().setId("collectionTitle");
 		quizTitle.getElement().setId("quizTitle");
+		viewAllBtn.getElement().setAttribute("style", "float: right;margin: -25px -7px 0 0;");
 	}
 	
 	private void setAssets() {
@@ -758,7 +769,7 @@ public class LibraryTopicListView extends Composite{
 	
 	/**
 	 * 
-	 * @fileName : LibraryTopicListView.java
+	 * @fileName : OnSearchLinkClick.java
 	 *
 	 * @description : 
 	 *
@@ -1737,6 +1748,16 @@ public class LibraryTopicListView extends Composite{
 			toolTipPopupPanelNew.clear();
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
+			
+		}
+		
+	}
+	
+	public class ViewAllBtnClickEvent implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
 			
 		}
 		
