@@ -509,7 +509,7 @@
 					<compileReport>true</compileReport>
 					<module>org.ednovo.gooru.Gooru</module>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<logLevel>ERROR</logLevel>
+					<logLevel>INFO</logLevel>
 					<style>${gwt.style}</style>
 					<extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs>
 					<copyWebapp>true</copyWebapp>

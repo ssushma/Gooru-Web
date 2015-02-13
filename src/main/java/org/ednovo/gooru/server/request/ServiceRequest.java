@@ -86,6 +86,7 @@ public abstract class ServiceRequest {
 		try {
 			return run();
 		} catch (ResourceException exception) {
+			logger.error(ERROR, exception);
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
 			int statusCode=exception.getStatus().getCode();
 			jsonResponseRepresentation.setStatusCode(statusCode);
