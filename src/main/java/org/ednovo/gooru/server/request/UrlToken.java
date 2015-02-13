@@ -211,8 +211,6 @@ public enum UrlToken {
 	
 	V2_FEATURED_THEME_COLLECTIONS("/v2/theme/{0}?sessionToken={1}"),
 	
-	CHECK_CLASSPAGE_PERMISSIONS_BY_ID("/user/content/{0}/check-access.json?sessionToken={1}"),
-	
 	V2_CREATE_USER("/v2/user?sessionToken={0}"),
 	
 	V2_SIGNIN("/v2/account/login?apiKey={0}"),
@@ -231,13 +229,8 @@ public enum UrlToken {
 	
 	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?sessionToken={0}"),
 	
-	//V2_CREATE_USER("/v2/user?sessionToken={0}"),
-	
-	SEARCH_SUGGEST_NO_RESULT(
-			"/suggest/resource?sessionToken={0}&context={1}"),
+	SEARCH_SUGGEST_NO_RESULT("/suggest/resource?sessionToken={0}&context={1}"),
 			
-	SEARCH_SUGGEST_COLLECTION_NO_RESULT(
-			"/suggest/scollection?sessionToken={0}&context={1}"),
 	UPDATE_VIEW_COUNT("/resource/update/views/{0}.json?sessionToken={1}"),
 	
     START_ACTIVITY_LOG("/activity/log/{0}/start?sessionToken={1}"),
