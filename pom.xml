@@ -576,7 +576,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <file>${basedir}/src/main/webapp/index.html</file>
+                    <file>${basedir}/src/main/resources/index.html</file>
                     <regex>true</regex>
                     <regexFlags><regexFlag>DOTALL</regexFlag></regexFlags>
                     <replacements>
