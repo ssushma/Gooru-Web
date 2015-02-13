@@ -166,7 +166,6 @@ button.primary:hover {
 	padding: 3px 31px;
 	list-style: none;
 }
-
 @media ( min-width : 240px) and (max-width: 319px) {
 	header {
 		position: relative;
