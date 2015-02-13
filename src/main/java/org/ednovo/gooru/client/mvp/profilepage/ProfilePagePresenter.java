@@ -167,7 +167,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				userId = userResetId;
 				createProfileUserData();
 			}
-			getUserWorkSpace();
 			if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
 				//To show SignUp (Registration popup)
 				Window.enableScrolling(false);
@@ -194,19 +193,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		}
 	}
 	
-	protected void getUserWorkSpace() {
-		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
-		getView().setContentTabVisibility(true);
-		if(folderId!=null&&!isRefresh) {
-			isRefresh = true;
-			getProfilePageService().getUserWorkSpace(userId, getFolderItemsAsyncCallback());
-		}
-		if(folderId!=null) {
-			getProfilePageService().getFolders(folderId, getGetWorkSpaceAsyncCallback());
-		} else {
-			getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
-		}
-	}
 	
 	@Override
 	protected void onUnbind() {

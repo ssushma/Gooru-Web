@@ -57,8 +57,6 @@ public interface PlayerAppService extends BaseService {
 	
 	public ResoruceCollectionDo getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize) throws GwtException, ServerDownException;
 	
-	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId,String tabView) throws GwtException, ServerDownException;
-	
 	public CollectionItemDo getResourceInfoDetails(String apiKey,String resourceId,String tabView) throws GwtException, ServerDownException;
 	
 	public CollectionItemDo getResourceObj(String resourceId) throws GwtException, ServerDownException;

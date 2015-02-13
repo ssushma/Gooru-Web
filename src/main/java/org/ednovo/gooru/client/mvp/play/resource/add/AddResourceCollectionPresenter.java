@@ -69,7 +69,6 @@ public class AddResourceCollectionPresenter extends PresenterWidget<IsAddResourc
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo){
 		getView().setCollectionItemData(collectionId, collectionItemDo);
 		pageNum=1;
-		//getUserWorkspace(true);
 		getUserShelfData();
 	}
 	
@@ -88,20 +87,6 @@ public class AddResourceCollectionPresenter extends PresenterWidget<IsAddResourc
 		pageNum=1;
 		getUserShelfData();
 	}
-	@Override
-	public void getUserShelfCollections(int dropdownListContainertWidgetCount) {
-		pageNum++;
-		getUserWorkspace(false);
-	}
-	
-	public void getUserWorkspace(final boolean isClearPanel){
-		AppClientFactory.getInjector().getPlayerAppService().getWorkspaceCollections("", pageNum+"", pageSize+"", new SimpleAsyncCallback<ArrayList<CollectionItemsList>>() {
-			@Override
-			public void onSuccess(ArrayList<CollectionItemsList> userCollectionsList) {
-				getView().addCollectionItems(userCollectionsList, isClearPanel);
-			}
-		});
-	}		
 	
 	public void getUserShelfData(){
 		getView().resetSelectionData();

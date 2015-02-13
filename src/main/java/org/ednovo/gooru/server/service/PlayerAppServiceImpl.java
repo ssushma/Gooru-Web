@@ -195,43 +195,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return deserializeResourceCollection(jsonRep);
 	}
 
-	@Override
-	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId, String tabView) {
-		JsonRepresentation jsonRepresentation = null;
-		CollectionItemDo collectionItemDo=null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
-		System.out.println("urlcollectionItem::"+url);
-		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-		try {
-			if(jsonResponseRep.getStatusCode()==200){
-				collectionItemDo=ResourceCollectionDeSerializer.deserializeCollectionItemDo(jsonRepresentation.getJsonObject());
-				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
-				String decodeUrl=collectionItemDo.getResource().getUrl();
-				if(decodeUrl!=null&&!decodeUrl.equals("")&&!decodeUrl.equals("null")){
-					if(decodeUrl.substring(0, 4).equalsIgnoreCase("http")){
-					}else{
-						String encodeUrl;
-						try {
-							encodeUrl = URLEncoder.encode(collectionItemDo.getResource().getUrl(),"UTF-8").replaceAll("\\+", "%20");
-							collectionItemDo.getResource().setUrl(encodeUrl);
-						} catch (UnsupportedEncodingException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}else{
-				collectionItemDo=new CollectionItemDo();
-				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
-			}
-			//Added this line because of URL encoding is not supported in Shared and View packages.
-			//collectionItemDo.getResource().setEncodedUrl(URLEncoder.encode(collectionItemDo.getResource().getUrl()));
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return collectionItemDo;
-	}
+
 	public ResourceInfoObjectDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
