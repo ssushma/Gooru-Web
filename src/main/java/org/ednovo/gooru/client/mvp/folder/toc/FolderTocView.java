@@ -93,16 +93,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public FolderTocView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
-		floderTreeContainer.clear();
-		floderTreeContainer.add(folderTocTree);
-		folderTocTree.addItem(loadingTreeItem());
-		//setData();
+		setData();
 	}
 	/**
 	 * This method is used to set folder TOC Data.
 	 */
-	@Override
 	public void setData() {
+		floderTreeContainer.clear();
+		floderTreeContainer.add(folderTocTree);
+		folderTocTree.addItem(getLoadingImage());
 		folderTocTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
@@ -142,6 +141,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	@Override
 	public void setFolderItems(List<FolderDo>  foldersArrayList) {
+		folderTocTree.clear();
 		if(foldersArrayList!=null){
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
@@ -158,6 +158,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				 }
 			 }
 		}
+		floderTreeContainer.clear();
+		floderTreeContainer.add(folderTocTree);
 	}
 
 	/**
@@ -338,7 +340,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void clearTocData() {
-		folderTocTree.clear();
+		floderTreeContainer.clear();
 		currentFolderSelectedTreeItem=null;
 		previousSelectedItem=null;
 	}
@@ -350,5 +352,17 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		Label loadingText = new Label(i18n.GL3120());
 		loadingText.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
+	}
+	/**
+	 * This method is used to display loading text to the user.
+	 * @return
+	 */
+	public TreeItem getLoadingImage() {
+		HTMLPanel loadingImg= new HTMLPanel(i18n.GL3120());
+		loadingImg.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingImageMainDiv());
+		Label loadingText = new Label("");
+		loadingText.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingImageForSelfEdit());
+		loadingImg.add(loadingText);
+		return new TreeItem(loadingImg);
 	}
 }

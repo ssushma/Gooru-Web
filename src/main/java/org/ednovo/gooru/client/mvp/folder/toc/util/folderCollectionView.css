@@ -53,6 +53,8 @@
 }
 .sequenceNumner{
 	position: absolute;
-	margin-left: -44px;
-	color:#06c;
+	margin-left: -56px;
+	text-align: right;
+	color: #06c;
+	width: 3%;
 }

@@ -89,7 +89,6 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			@Override
 			public void onSuccess(List<FolderDo> folderListDo) {
 				getView().clearTocData();
-				getView().setData();
 				getView().setFolderItems(folderListDo);
 			}
 		});
