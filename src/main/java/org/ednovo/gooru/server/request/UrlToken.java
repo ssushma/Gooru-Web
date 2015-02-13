@@ -105,8 +105,6 @@ public enum UrlToken {
 
 	ADD_COLLABORATOR("/scollection/addCollaborators/{0}?collaborator={1}&sessionToken={2}"),
 
-	DELETE_COLLABORATOR("/scollection/deleteCollaborators/{0}?collaborator={1}&sessionToken={2}"),
-
 	SEND_CONFIRMATION_MAIL("/user/register/confirm/mail.json?sessionToken={0}"),
 
 	V2_COPY_COLLLECTION_ITEM("/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
@@ -293,8 +291,6 @@ public enum UrlToken {
 	
 	V2_UPDATE_USER_PROFILE("/v2/user/{0}?sessionToken={1}"),
 		
-	GET_LIBRARY_CONCEPT("/scollection/{0}?sessionToken={1}&requestContext=library"),
-
 	V2_GET_LIBRARY_UNIT_OFFSET("/v2/library/{0}/unit/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
 	V2_GET_COLLECTION_COMMENTS("/v2/comment?sessionToken={0}&gooruOid={1}&offset={2}&limit={3}"),
@@ -324,8 +320,6 @@ public enum UrlToken {
 	V2_GET_LIBRARY_COLLECTIONS("/v2/library/{0}/collection/{1}?sessionToken={2}"),
 	
 	V2_SEND_WELCOME_MAIL("/v2/user/sendmail/{0}?sessionToken={1}"),
-	
-	POPULAR_COLLECTION("/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.course={3}"),
 	
 	V2_GET_COLLABORATORS("/v2/collaborator/content/{0}?filterBy={1}&sessionToken={2}&groupByStatus=true"),
 	

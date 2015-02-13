@@ -206,25 +206,6 @@ public interface ResourceService extends BaseService {
 	 */
 	public CollectionItemDo updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop)  throws GwtException, ServerDownException;
 	
-	/**
-	 * Add collaborator for the collection
-	 * @param gooruOid of collection
-	 * @param collaboratorId user id
-	 * @return serialized {@link UserDo}  of collaborator
-	 * @throws GwtException
-	 */
-	public UserDo addCollaborator(String gooruOid,String collaboratorId)  throws GwtException, ServerDownException;
-	
-	
-	
-	/**
-	 * Delete added collaborator for the collection
-	 * @param gooruOid of the collection
-	 * @param collaboratorId of the collection
-	 * @return serialized {@link UserDo}  of collaborator
-	 * @throws GwtException
-	 */
-	public UserDo deleteCollaborators(String gooruOid,String collaboratorId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Copy collection item

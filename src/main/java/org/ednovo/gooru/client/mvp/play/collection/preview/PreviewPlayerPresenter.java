@@ -1461,12 +1461,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}else{
 			resourceGooruOid=getPlaceManager().getRequestParameter("id", null);
 		}
-		this.playerAppService.updateContentThumbsRating(resourceGooruOid, userThumbsRataing, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
-				updateThumbsRatingView(userThumbsRataing);
-			}
-		});
 	}
 	
 	public void updateThumbsRatingView(int userThumbsRataing) {

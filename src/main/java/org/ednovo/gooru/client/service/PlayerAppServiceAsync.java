@@ -89,8 +89,6 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void getWorkspaceCollections(String userId,String offset,String limit,AsyncCallback<ArrayList<CollectionItemsList>> callback);
 	
-	public void updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing,AsyncCallback<String> callback);
-	
 	public void getContentReport(String associatedGooruOid,String gooruUid,AsyncCallback<ArrayList<ContentReportDo>> callback);
 	
 	public void createContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids,AsyncCallback<ContentReportDo> callback);

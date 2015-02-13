@@ -624,38 +624,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	}
 	
-	
-	@Override
-	public UserDo addCollaborator(String gooruOid,String collaboratorId){
-		UserDo userDo = null;
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_COLLABORATOR, gooruOid, collaboratorId, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), new Form());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return userDo;
-	}
-	
-	
-	@Override
-	public UserDo deleteCollaborators(String gooruOid,String collaboratorId){
-		UserDo userDo = null;
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_COLLABORATOR, gooruOid, collaboratorId, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return userDo;
-	}
-	
 	/*@Override
 	public CollectionItemDo copyCollectionItem(String collectionItemId) {
 		
