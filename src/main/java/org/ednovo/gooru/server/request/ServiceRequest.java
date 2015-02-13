@@ -173,6 +173,11 @@ public abstract class ServiceRequest {
 			return responseDo;
 		}catch(Exception exception){
 			logger.error(ERROR, exception);
+			try{
+				logger.error(ERROR, errorRepresentation.getText());
+			}catch(Exception exc){
+				logger.error(ERROR+" while printing error representation : ", exc);
+			}
 			return responseDo;
 		}
 
