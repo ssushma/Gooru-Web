@@ -35,7 +35,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -85,9 +85,9 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		super.onReset();
 		Window.enableScrolling(true);
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<List<FolderDo>>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
-			public void onSuccess(List<FolderDo> folderListDo) {
+			public void onSuccess(FolderTocDo folderListDo) {
 				getView().clearTocData();
 				getView().setFolderItems(folderListDo);
 			}
@@ -102,7 +102,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 
 	@Override
 	public void getFolderItems(final TreeItem item, String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,new SimpleAsyncCallback<List<FolderDo>>() {
+		AppClientFactory.getInjector().getfolderService().getTocFoldersDetails(folderId,new SimpleAsyncCallback<List<FolderDo>>() {
 			@Override
 			public void onSuccess(List<FolderDo> folderListDo) {
 				getView().setFolderItems(item,folderListDo);

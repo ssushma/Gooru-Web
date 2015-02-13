@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -473,8 +474,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public List<FolderDo> getTocFolders(String folderId) throws GwtException,
-			ServerDownException {
+	public FolderTocDo getTocFolders(String folderId) throws GwtException,ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
@@ -483,7 +483,26 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderTocList(jsonRep);
 	}
-	public List<FolderDo> deserializeFolderTocList(JsonRepresentation jsonRep) {
+	public FolderTocDo deserializeFolderTocList(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderTocDo>() {});
+			}
+		} catch (Exception e) {}
+		return new FolderTocDo();
+	}
+
+	@Override
+	public List<FolderDo> getTocFoldersDetails(String folderId) throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
+		getLogger().info("-- Folder toc API - - - - "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeFolderTocChildDetails(jsonRep);
+	}
+	public List<FolderDo> deserializeFolderTocChildDetails(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<FolderDo>>() {});
@@ -491,4 +510,5 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		} catch (Exception e) {}
 		return new ArrayList<FolderDo>();
 	}
+
 }

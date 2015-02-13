@@ -38,6 +38,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
@@ -63,6 +64,7 @@ public class FolderCollectionView extends Composite {
 	}
 	@UiField FlowPanel pnlResources;
 	@UiField H4Panel lblCollectionTitle;
+	@UiField Label lblCollectionDesc;
 	FolderTocCBundle res;
 	
 	public FolderCollectionView(String levelStyleName,final FolderDo folderDo) {
@@ -70,6 +72,7 @@ public class FolderCollectionView extends Composite {
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		lblCollectionTitle.setText(folderDo.getTitle());
+		lblCollectionDesc.setText("You're receiving notifications because you authored the thread. You're receiving notifications because you authored the thread.You're receiving notifications because you authored the thread.");
 		 if(folderDo.getCollectionItems().size()>0){
 			 pnlResources.add(new FolderCollectionResourceView(folderDo));
 		 }

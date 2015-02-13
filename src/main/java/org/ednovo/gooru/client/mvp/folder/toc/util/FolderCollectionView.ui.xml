@@ -4,6 +4,7 @@
 	<ui:style field="playerStyle" src="folderCollectionView.css" />
 	<g:HTMLPanel styleName="{playerStyle.perTaskContainer} {playerStyle.foldercollection}">
 		<tbp:H4Panel ui:field="lblCollectionTitle"></tbp:H4Panel>
+		<g:Label ui:field="lblCollectionDesc" styleName="{playerStyle.collectionDesc}"></g:Label> 
 		<g:FlowPanel ui:field="pnlResources"></g:FlowPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

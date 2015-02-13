@@ -10,7 +10,7 @@
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row">
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
-						<g:HTMLPanel styleName="{tocStyle.marginDiv}">
+						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 							<tbp:H3Panel styleName="{tocStyle.pageHeader}" text="Industrial Revolution Causes"> </tbp:H3Panel>
 							<p>
 								<strong>Big Ideas:</strong>
