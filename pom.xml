@@ -528,7 +528,7 @@
                 <executions>
                     <execution>
                         <id>minify-css</id>
-                        <phase>process-resources</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>minify</goal>
                         </goals>
