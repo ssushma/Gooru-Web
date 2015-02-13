@@ -199,8 +199,6 @@ public enum UrlToken {
 	
 	V2_DELETE_ASSIGNMENT_COLLECION_ITEM("/v2/assignment/{0}/item/{1}?sessionToken={2}"), 
 	
-	GET_PROFILE_WORKSPACE("/scollection/{0}/workspace?sessionToken={1}&pageNum={2}&pageSize={3}"),
-	
 	GENERATE_BITLY_LINK("/v2/share/url/shorten?sessionToken={0}"),
 	
 	UPLOAD_PROFILE_IMAGE("/user/{0}/profile/picture?sessionToken={1}&mediaFileName={2}"),
@@ -212,8 +210,6 @@ public enum UrlToken {
 	V2_ADD_QUESTION_ITEM("/v2/collection/{0}/question?sessionToken={1}"),
 	
 	V2_FEATURED_THEME_COLLECTIONS("/v2/theme/{0}?sessionToken={1}"),
-	
-	CHECK_CLASSPAGE_PERMISSIONS_BY_ID("/user/content/{0}/check-access.json?sessionToken={1}"),
 	
 	V2_CREATE_USER("/v2/user?sessionToken={0}"),
 	
@@ -233,13 +229,8 @@ public enum UrlToken {
 	
 	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?sessionToken={0}"),
 	
-	//V2_CREATE_USER("/v2/user?sessionToken={0}"),
-	
-	SEARCH_SUGGEST_NO_RESULT(
-			"/suggest/resource?sessionToken={0}&context={1}"),
+	SEARCH_SUGGEST_NO_RESULT("/suggest/resource?sessionToken={0}&context={1}"),
 			
-	SEARCH_SUGGEST_COLLECTION_NO_RESULT(
-			"/suggest/scollection?sessionToken={0}&context={1}"),
 	UPDATE_VIEW_COUNT("/resource/update/views/{0}.json?sessionToken={1}"),
 	
     START_ACTIVITY_LOG("/activity/log/{0}/start?sessionToken={1}"),

@@ -87,17 +87,6 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		return new CollectionDo();
 	}
 
-	@Override
-	public List<CollectionItemDo> getUserWorkSpace(String userId) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_PROFILE_WORKSPACE, userId, getLoggedInSessionToken(), pageNum, pageSize);
-		url+="&sharing=public";
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		List<CollectionItemDo> collectionItemDo = deserializeWorkspace(jsonRep);
-		//Collections.sort(collectionItemDo, new ArrayListSorter("itemSequence", true));
-		return collectionItemDo;
-	}
 
 	public List<CollectionItemDo> deserializeWorkspace(JsonRepresentation jsonRep) {
 		try {

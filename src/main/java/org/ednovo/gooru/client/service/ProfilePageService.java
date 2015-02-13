@@ -40,12 +40,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("gwt-service/profilePageService")
 public interface ProfilePageService extends BaseService {
 	
-	/**
-	 * Get All folders/collections by the user inside the public profile page
-	 * @return serialized created {@link List<CollectionItemDo>}
-	 * @throws GwtException
-	 */
-	public List<CollectionItemDo> getUserWorkSpace(String userId) throws GwtException, ServerDownException;
 		
 	/**
 	 * Get a folder information
