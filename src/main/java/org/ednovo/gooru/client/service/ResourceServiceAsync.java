@@ -81,8 +81,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop, AsyncCallback<CollectionItemDo> callback);
 	
-	void addCollaborator(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
-	
 	void deleteCollaborators(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
 
 //	void copyCollectionItem(String collectionItemId,AsyncCallback<CollectionItemDo> callback);

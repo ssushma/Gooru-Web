@@ -903,12 +903,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	@Override
 	public void updateResourceThumbsRating(final int userThumbsRataing) {
 		String resourceGooruOid=collectionItemDo.getResource().getGooruOid();
-		this.playerAppService.updateContentThumbsRating(resourceGooruOid, userThumbsRataing, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
-				updateThumbsRatingView(userThumbsRataing);
-			}
-		});
 	}
 	
 	public void updateThumbsRatingView(int userThumbsRataing) {

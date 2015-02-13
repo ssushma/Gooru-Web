@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCollaboratorTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionShareTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionStatisticsTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionTabTitleVc;
@@ -69,7 +68,6 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -197,7 +195,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	private FolderPopupUc folderPopupUc;
 
-	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
+//	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
 
 	private CollectionShareTabVc collectionShareTabVc;
 	
@@ -997,7 +995,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void reset() {
 		super.reset();
 		this.collectionDo = null;
-		collectionCollaboratorTabVc = null;
+//		collectionCollaboratorTabVc = null;
 		collectionShareTabVc = null;
 		collectionStatisticsTabVc = null;
 		collectionMetaDataSimPanel.clear();

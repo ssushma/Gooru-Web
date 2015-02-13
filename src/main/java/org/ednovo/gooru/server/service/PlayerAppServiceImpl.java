@@ -614,22 +614,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 		return resourceModelList;
 	}
-	@Override
-	public String updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing) {
-		JSONObject scoreObject=new JSONObject();
-		try {
-			scoreObject.put("score",userThumbsRataing);
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CONTENT_THUMBS_RATING,resourceGooruOid,getLoggedInSessionToken());
-			Form form=new Form();
-			form.add("score",""+userThumbsRataing);
-			form.add("sessionToken",getLoggedInSessionToken());
-			//ServiceProcessor.put(url, getRestUsername(), getRestPassword(),scoreObject.toString());
-			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),form);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 	
 	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid){
 		JsonRepresentation jsonRep = null;

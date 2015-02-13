@@ -99,8 +99,6 @@ public interface PlayerAppService extends BaseService {
 	
 	public ArrayList<CollectionItemsList> getWorkspaceCollections(String userId,String offset,String limit)  throws GwtException, ServerDownException;
 	
-	public String updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing) throws GwtException, ServerDownException;
-	
 	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid) throws GwtException, ServerDownException;
 	
 	public ContentReportDo createContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids) throws GwtException, ServerDownException;
