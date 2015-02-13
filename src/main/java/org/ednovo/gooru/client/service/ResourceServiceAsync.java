@@ -81,10 +81,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop, AsyncCallback<CollectionItemDo> callback);
 	
-	void deleteCollaborators(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
-
-//	void copyCollectionItem(String collectionItemId,AsyncCallback<CollectionItemDo> callback);
-	
 	void getYoutubeDuration(String videoId,AsyncCallback<String> callback);
 	
 //	void getMyUserCollections(AsyncCallback<List<CollectionItemsListDo>> callback) throws GwtException;

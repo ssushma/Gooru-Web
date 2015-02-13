@@ -208,15 +208,6 @@ public interface ResourceService extends BaseService {
 	
 	
 	/**
-	 * Delete added collaborator for the collection
-	 * @param gooruOid of the collection
-	 * @param collaboratorId of the collection
-	 * @return serialized {@link UserDo}  of collaborator
-	 * @throws GwtException
-	 */
-	public UserDo deleteCollaborators(String gooruOid,String collaboratorId)  throws GwtException, ServerDownException;
-	
-	/**
 	 * Copy collection item
 	 * @param collectionItemId of the collection item
 	 * @return Serialized copied {@link CollectionItemDo}
