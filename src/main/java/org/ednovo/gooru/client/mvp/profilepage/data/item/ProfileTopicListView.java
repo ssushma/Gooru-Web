@@ -97,7 +97,7 @@ public class ProfileTopicListView extends Composite{
 	@UiField Label topicTitleLbl, noCollectionLbl, libraryTopicLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
-	@UiField Button assignCollectionBtn, customizeCollectionBtn;
+	@UiField Button assignCollectionBtn, customizeCollectionBtn,viewAllBtn;
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	@UiField FlowPanel standardsFloPanel;
 	@UiField ProfilePageLibraryStyleBundle style;
@@ -256,6 +256,10 @@ public class ProfileTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		setId();
+		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -37px 9px 0 0;");
+		viewAllBtn.getElement().setId("btnViewAll");
+		viewAllBtn.setVisible(true);
+		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid()));
 
 	}
 	public void setId(){
@@ -343,6 +347,8 @@ public class ProfileTopicListView extends Composite{
 		if(maps.containsKey("emailId")){
 			showPopupAfterGmailSignin();
 		}
+		
+		viewAllBtn.setVisible(false);
 
 	}
 	
@@ -1282,4 +1288,18 @@ public class ProfileTopicListView extends Composite{
 
 		}
 	}
+	private class ViewAllBtnClickHandler implements ClickHandler{
+		String folderId="";
+		public ViewAllBtnClickHandler(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
+	}
+	
 }

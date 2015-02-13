@@ -60,11 +60,11 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView {
 
-	@UiField HTMLPanel leftNav, contentScroll, emptyContainer, loadingIconPanel;
+	@UiField HTMLPanel leftNav, contentScroll, emptyContainer, loadingIconPanel,folderListPanel;
 	
 	@UiField ProfilePageLibraryStyleBundle style;
 	
-	@UiField Label noCollectionsMsg, collectionsRedirectionMsg;
+	@UiField Label noCollectionsMsg, collectionsRedirectionMsg,folderTopicTitleLbl;
 	
 	@UiField Button myCollectionsBtn,viewAllBtn;
 	
@@ -115,7 +115,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		leftNav.getElement().setId("pnlLeftNav");
 		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
-		viewAllBtn.getElement().setAttribute("style", "float:right;");
+		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -37px 9px 0 0;");
+		folderListPanel.setVisible(false);
 		viewAllBtn.setVisible(false);
 	}
 	
@@ -153,8 +154,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				if(folderList.get(i).getType().equals("scollection")) {
 					setTopicListData(folderList.get(i),  unitListId);
 					viewAllBtn.setVisible(false);
+					folderListPanel.setVisible(false);
 				} else {
 					viewAllBtn.setVisible(true);
+					folderListPanel.setVisible(true);
+					folderTopicTitleLbl.setText(folderList.get(i).getTitle());
 					viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getCollectionItemId()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
@@ -180,10 +184,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					if(leftMenuItemView.getType().equals("scollection")) {
 						getPresenter().getProfileLibraryCollection(unitListId, false);
 						viewAllBtn.setVisible(false);
+						folderListPanel.setVisible(false);
 					} else {
 						System.out.println("folderitems"+unitListId);
-						
+						folderListPanel.setVisible(true);
 						viewAllBtn.setVisible(true);
+						System.out.println("title::"+leftMenuItemView.getTitle());
+						folderTopicTitleLbl.setText(leftMenuItemView.getTitle());
 						viewAllBtn.addClickHandler(new clickOnViewAll(unitListId));
 						
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
