@@ -25,7 +25,9 @@
 package org.ednovo.gooru.client.mvp.profilepage.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
@@ -64,7 +66,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	@UiField Label noCollectionsMsg, collectionsRedirectionMsg;
 	
-	@UiField Button myCollectionsBtn;
+	@UiField Button myCollectionsBtn,viewAllBtn;
 	
 	private static final String FOLDERID = "folderId";
 	
@@ -108,10 +110,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		collectionsRedirectionMsg.getElement().setAttribute("title",i18n.GL1788());
 		
 		emptyContainer.getElement().setId("pnlEmptyContainer");
+		viewAllBtn.getElement().setId("btnViewAll");
 		noCollectionsMsg.getElement().setId("lblNoCollectionsMsg");
 		leftNav.getElement().setId("pnlLeftNav");
 		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
+		viewAllBtn.getElement().setAttribute("style", "float:right;");
+		viewAllBtn.setVisible(false);
 	}
 	
 	public void setData() {
@@ -147,13 +152,18 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				unitListId = folderList.get(i).getGooruOid();
 				if(folderList.get(i).getType().equals("scollection")) {
 					setTopicListData(folderList.get(i),  unitListId);
+					viewAllBtn.setVisible(false);
 				} else {
+					viewAllBtn.setVisible(true);
+					viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getCollectionItemId()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
+			System.out.println("collectionid"+folderList.get(i).getCollectionItemId());
 			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					System.out.println("leftmenuitemclick");
 					if(leftMenuItemView.getWidgetCount()>10) {
 						Window.scrollTo(0, 0);
 					}
@@ -169,7 +179,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					unitListId = leftMenuItemView.getUnitId();
 					if(leftMenuItemView.getType().equals("scollection")) {
 						getPresenter().getProfileLibraryCollection(unitListId, false);
+						viewAllBtn.setVisible(false);
 					} else {
+						System.out.println("folderitems"+unitListId);
+						
+						viewAllBtn.setVisible(true);
+						viewAllBtn.addClickHandler(new clickOnViewAll(unitListId));
+						
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
@@ -278,5 +294,19 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				getPresenter().getPartnerWorkspaceFoldersOnScroll(leftNav.getWidgetCount());
 			}
 		}
+	}
+	
+	public class clickOnViewAll implements ClickHandler{
+		String folderId="";
+		public clickOnViewAll(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
 	}
 }

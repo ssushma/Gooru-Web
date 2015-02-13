@@ -124,7 +124,7 @@ public class LibraryTopicListView extends Composite{
 	@UiField Label topicTitleLbl, noCollectionLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
-	@UiField Button assignCollectionBtn, customizeCollectionBtn;
+	@UiField Button assignCollectionBtn, customizeCollectionBtn,viewAllBtn;
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	
 	@UiField LibraryStyleBundle libraryStyle;
@@ -278,10 +278,12 @@ public class LibraryTopicListView extends Composite{
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			searchLink.getElement().getStyle().setDisplay(Display.NONE);
+			viewAllBtn.setVisible(true);
 		}
 		else
 		{
 			searchLink.getElement().getStyle().setDisplay(Display.BLOCK);
+			viewAllBtn.setVisible(false);
 		}
 		
 		searchLink.addClickHandler(new OnSearchLinkClick());
@@ -373,6 +375,7 @@ public class LibraryTopicListView extends Composite{
 		topicBlock.getElement().setId("pnlTopicBlock");
 		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
 		searchLink.getElement().setId("epnlSearchLink");
+		viewAllBtn.getElement().setId("btnViewAll");
 		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
 		lessonScrollPanel.getElement().setId("sbLessonScrollPanel");
 		conceptList.getElement().setId("pnlConceptList");
@@ -471,6 +474,7 @@ public class LibraryTopicListView extends Composite{
 		this.libraryGooruOid=libraryGooruOid;
 		setPlaceToken(placeToken);
 		searchLink.getElement().getStyle().setDisplay(Display.NONE);
+		viewAllBtn.setVisible(true);
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());

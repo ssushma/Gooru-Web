@@ -67,8 +67,8 @@ public class ScrollPopupShareUtil {
 				widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
 				widgetContainer.getElement().getStyle().setOverflowX(Overflow.AUTO);
 			}else{
-				widgetContainer.getElement().getStyle().setHeight(564, Unit.PX);
-				widgetContainer.getElement().getStyle().setOverflow(Overflow.AUTO);
+				widgetContainer.getElement().getStyle().setHeight(500, Unit.PX);
+				widgetContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
 			}
 		}
 	}

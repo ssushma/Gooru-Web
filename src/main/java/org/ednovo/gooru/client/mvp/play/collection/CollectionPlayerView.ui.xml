@@ -125,6 +125,7 @@
 		float: right;
 		bottom: 19px;
 		font-size: 15px;
+		text-align: right;
 	}
 	.narrationText{
 		font-size: 20px;
@@ -132,7 +133,8 @@
 	.narrationRightContainer{
 		margin-left: 31px;
 		margin-right: 29px;
-		width: 88%;
+		width: 59%;
+		float: left;
 	}
 	.authorImage{
 		width: 50px;
@@ -191,7 +193,7 @@
 						<g:HTMLPanel styleName="{style.pnlAuthorImage}" >
 						 	<g:Image ui:field="authorImage" styleName="{style.authorImage}"></g:Image>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{style.narrationRightContainer}" >
+						<g:HTMLPanel styleName="{style.narrationRightContainer} narrationRightContainerFullScreen" >
 							<g:Label styleName="{style.narrationText}" ui:field="lblNarrationText"></g:Label>
 							<g:Label styleName="{style.seemoreText}" ui:field="lblSeeMore"></g:Label>
 						</g:HTMLPanel>
