@@ -278,3 +278,9 @@ button.primary:hover {
 		width: 85%;
 	}
 }
+.lblFolderMetadata{
+	font-size: 12px;
+	color: #515151;
+	line-height: 1.42857143;
+	font-family: Arial, Helvetica, sans-serif !important;
+}

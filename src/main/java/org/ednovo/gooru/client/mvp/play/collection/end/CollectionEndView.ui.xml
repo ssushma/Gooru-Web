@@ -27,7 +27,7 @@
 							<g:FlowPanel styleName="">
 								<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
 							</g:FlowPanel>
-						</g:FlowPanel>      				
+						</g:FlowPanel>     
 						<html5:SectionTag styleName="{playerStyle.block}">
       					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.timespend}">
 							<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.collectionEndImageContainer}" >
