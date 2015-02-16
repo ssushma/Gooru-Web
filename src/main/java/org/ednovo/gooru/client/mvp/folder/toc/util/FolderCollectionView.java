@@ -71,8 +71,12 @@ public class FolderCollectionView extends Composite {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		lblCollectionTitle.setText(folderDo.getTitle());
-		lblCollectionDesc.setText("You're receiving notifications because you authored the thread. You're receiving notifications because you authored the thread.You're receiving notifications because you authored the thread.");
+		if(folderDo.getTitle()!=null && !folderDo.getTitle().isEmpty()){
+			lblCollectionTitle.setText(folderDo.getTitle());
+		}
+		if(folderDo.getDescription()!=null && !folderDo.getDescription().isEmpty()){
+			lblCollectionDesc.setText(folderDo.getDescription());
+		}
 		 if(folderDo.getCollectionItems().size()>0){
 			 pnlResources.add(new FolderCollectionResourceView(folderDo));
 		 }
