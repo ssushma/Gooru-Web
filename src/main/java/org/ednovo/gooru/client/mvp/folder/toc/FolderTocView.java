@@ -33,16 +33,20 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTre
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -73,7 +77,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer; 
+	@UiField HTMLPanel floderTreeContainer,marginDiv; 
 	final String FOLDER="folder";
 	final String SCOLLECTION="scollection";
 	
@@ -94,6 +98,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 		setData();
+		//This will handle the window resize
+		Window.addResizeHandler(new ResizeLogicEvent());
 	}
 	/**
 	 * This method is used to set folder TOC Data.
@@ -140,10 +146,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		});
 	}
 	@Override
-	public void setFolderItems(List<FolderDo>  foldersArrayList) {
+	public void setFolderItems(FolderTocDo  foldersTocObj) {
 		folderTocTree.clear();
-		if(foldersArrayList!=null){
-			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
+		if(foldersTocObj!=null){
+			List<FolderDo> foldersArrayList=foldersTocObj.getCollectionItems();
+			 if(foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
 					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
@@ -278,47 +285,48 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 
 	@Override
-	public void setFolderItems(TreeItem item, List<FolderDo> folderListDo) {
-		displayWorkspaceData(item, folderListDo);
+	public void setFolderItems(TreeItem item,FolderTocDo foldersTocObj) {
+		displayWorkspaceData(item, foldersTocObj);
 	}
 	/**
 	 * This method is used to set folders and collections for selected tree item.
 	 * @param item
 	 * @param folderListDo
 	 */
-	private void displayWorkspaceData(TreeItem item, List<FolderDo> foldersArrayList) {
+	private void displayWorkspaceData(TreeItem item,FolderTocDo foldersTocObj) {
 		//This will remove the loading text for the child items.
 		if(item.getChildCount() > 0){
 			item.getChild(0).remove();
 		}
 		//This will set the data to the selected tree item.
-		if (foldersArrayList != null) {
+		if(foldersTocObj!=null){
+			List<FolderDo> foldersArrayList=foldersTocObj.getCollectionItems();
 			if (foldersArrayList != null && foldersArrayList.size() > 0) {
-				FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
-						.getWidget();
-				int folderLevel = folderTreeItemWidget.getFolerLevel();
-				for (int i = 0; i < foldersArrayList.size(); i++) {
-					FolderDo floderDo = foldersArrayList.get(i);
-					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
-							String styleName = FolderContainerCBundle.INSTANCE.css().child();
-							FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
-									styleName, floderDo.getTitle(),
-									floderDo.getGooruOid());
-							innerFolderTreeItem.setFolerLevel(folderLevel + 1);
-							TreeItem folderItem = new TreeItem(
-									innerFolderTreeItem);
-							item.addItem(folderItem);
-							adjustTreeItemStyle(folderItem);
-					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
-						 	String styleName = getTreeItemStyleName(folderLevel);
-						 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
-						 	folderItem.addStyleName(styleName);
-						 	item.addItem(folderItem);
-							adjustTreeItemStyle(folderItem);
-					 }
+					FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
+							.getWidget();
+					int folderLevel = folderTreeItemWidget.getFolerLevel();
+					for (int i = 0; i < foldersArrayList.size(); i++) {
+						FolderDo floderDo = foldersArrayList.get(i);
+						 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
+								String styleName = FolderContainerCBundle.INSTANCE.css().child();
+								FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
+										styleName, floderDo.getTitle(),
+										floderDo.getGooruOid());
+								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
+								TreeItem folderItem = new TreeItem(
+										innerFolderTreeItem);
+								item.addItem(folderItem);
+								adjustTreeItemStyle(folderItem);
+						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+							 	String styleName = getTreeItemStyleName(folderLevel);
+							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
+							 	folderItem.addStyleName(styleName);
+							 	item.addItem(folderItem);
+								adjustTreeItemStyle(folderItem);
+						 }
+					}
+					item.setState(folderTreeItemWidget.isOpen());
 				}
-				item.setState(folderTreeItemWidget.isOpen());
-			}
 		}
 	}
 	/**
@@ -364,5 +372,31 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		loadingText.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingImageForSelfEdit());
 		loadingImg.add(loadingText);
 		return new TreeItem(loadingImg);
+	}
+	/**
+	 * This method will give the margin value based on the window width and it will set to the main div (For Responsive UI)
+	 * @return
+	 */
+	public int getTotalViewableWidth(){
+		int totalClientWidth=Window.getClientWidth();
+		int getMargin=0;
+		if(totalClientWidth>767){
+			getMargin=100;
+		}else{
+			getMargin=10;
+		}
+		return getMargin;
+	}
+	/**
+	 * This inner class is used to handle the resize logic
+	 */
+	public class ResizeLogicEvent implements ResizeHandler{
+		@Override
+		public void onResize(ResizeEvent event) {
+			marginDiv.getElement().getStyle().setMarginTop(0, Unit.PX);
+			marginDiv.getElement().getStyle().setMarginBottom(0,  Unit.PX);
+			marginDiv.getElement().getStyle().setMarginLeft(getTotalViewableWidth(),  Unit.PX);
+			marginDiv.getElement().getStyle().setMarginRight(getTotalViewableWidth(),  Unit.PX);
+		}
 	}
 }

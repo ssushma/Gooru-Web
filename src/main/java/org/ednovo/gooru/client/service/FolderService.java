@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -144,5 +145,5 @@ public interface FolderService extends BaseService {
 	 * @throws GwtException
 	 * @throws ServerDownException
 	 */
-	public List<FolderDo> getTocFolders(String folderId) throws GwtException, ServerDownException;
+	public FolderTocDo getTocFolders(String folderId) throws GwtException, ServerDownException;
 }

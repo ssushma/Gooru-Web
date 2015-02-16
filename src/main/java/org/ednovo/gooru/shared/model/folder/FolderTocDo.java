@@ -22,30 +22,72 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.folder.toc;
+package org.ednovo.gooru.shared.model.folder;
 
+import java.io.Serializable;
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import com.google.gwt.user.client.ui.TreeItem;
-/**
- * @fileName : IsFolderTocView.java
- *
- * @description : 
- *
- * @version : 1.3
- *
- * @date: 06-02-2015
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
-public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
-	void setFolderItems(FolderTocDo  foldersArrayList);
-	public void setFolderItems(TreeItem item,FolderTocDo folderListDo);
-	void clearTocData();
+@JsonInclude(Include.NON_NULL)
+public class FolderTocDo implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	String collectionType;
+	String ideas;
+	String title;
+	private List<FolderDo> collectionItems;
+	String performanceTasks;
+	String questions;
+	
+	public FolderTocDo(){}
+
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
+	public String getIdeas() {
+		return ideas;
+	}
+
+	public void setIdeas(String ideas) {
+		this.ideas = ideas;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public List<FolderDo> getCollectionItems() {
+		return collectionItems;
+	}
+
+	public void setCollectionItems(List<FolderDo> collectionItems) {
+		this.collectionItems = collectionItems;
+	}
+
+	public String getPerformanceTasks() {
+		return performanceTasks;
+	}
+
+	public void setPerformanceTasks(String performanceTasks) {
+		this.performanceTasks = performanceTasks;
+	}
+
+	public String getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(String questions) {
+		this.questions = questions;
+	}
 }
