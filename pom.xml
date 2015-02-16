@@ -546,7 +546,7 @@
                             </cssSourceExcludes>
                             <cssFinalFile>main-styles.css</cssFinalFile>
                             <!-- JS Minify -->
-                            <jsSourceDir>scripts</jsSourceDir>
+                            <!-- <jsSourceDir>scripts</jsSourceDir>
                             <jsSourceIncludes>
                                 <jsSourceInclude>*.js</jsSourceInclude>
                             </jsSourceIncludes>
@@ -555,7 +555,7 @@
                             </jsSourceExcludes>
                             <jsFinalFile>main-script.js</jsFinalFile>
                             <warSourceIncludes>*.min.css</warSourceIncludes>
-                            <warSourceIncludes>*.min.js</warSourceIncludes>
+                            <warSourceIncludes>*.min.js</warSourceIncludes> -->
                         </configuration>
                     </execution>
                 </executions>
@@ -582,21 +582,17 @@
                             <token><![CDATA[<!--BeginCssReplacer.*EndToBeCssReplacer-->]]></token>
                             <value><![CDATA[<link href="${cdn.endpoint}/css/main-styles.min.css" rel='stylesheet' type='text/css'>]]></value>
                         </replacement>
-                        <replacement>
-                            <token><![CDATA[<!--BeginJsReplacer.*EndJsReplacer-->]]></token>
-                            <value><![CDATA[<script src="${cdn.endpoint}/scripts/main-script.min.js" type='text/javascript' async></script>]]></value>
-                        </replacement>
                     </replacements>
                 </configuration>
             </plugin>
 			<!-- Copy static web files before executing gwt:run -->
-			<!-- <plugin>
+			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						here the phase you need
+						<!-- here the phase you need -->
 						<phase>validate</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -612,7 +608,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin> -->
+			</plugin> 
 		</plugins>
 		<resources>
 			<resource>
@@ -620,8 +616,7 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>**/*.xml</include>
-					<include>**/*.min.css</include>
-					<include>**/embed.css</include>
+					<include>**/*.css</include>
 					<include>**/*.html</include>
 					<include>**/*.min.js</include>
 					<include>**/*.</include>
