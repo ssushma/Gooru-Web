@@ -195,7 +195,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		V2UserDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, userUid, getLoggedInSessionToken());
-		System.out.println("urlval::"+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -413,7 +412,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),postData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
-			System.out.println("jsonRep.getJsonObject().toString(.."+jsonRep.getJsonObject().toString());
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -809,7 +807,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		JsonRepresentation jsonRep = null;
 		String url =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_TOKEN_EXPIRE,getLoggedInSessionToken(),resetToken);
-		System.out.println("isValidResetPasswordLink:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResetToken(jsonRep);
@@ -831,7 +828,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
 		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlDataParameterValue);
-		System.out.println("getUsersPublishedCollectionsCount url::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDoObj = null;
@@ -929,7 +925,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfRating5",
 				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
 		String url= UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(), urlparameters);
-		System.out.println("getFiveStarRatedResources url:::"+url);
 		JsonResponseRepresentation jsonRespRep=ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonrep	=jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDOObject = null;
@@ -949,7 +944,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfICanExplain",
 				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);
-		System.out.println("getFiveStarReviewdResources url::::::"+url);
 		JsonResponseRepresentation jsonRespRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep	= jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
@@ -1057,7 +1051,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String urlparameters = getTopViewedCollectionPayloadObject(offsetval, limitval);
 		/*String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);*/
 		String url = "http://www.goorulearning.org/insights/api/v2/query?sessionToken=419c6c56-5295-11e4-8d6c-123141016e2a&data="+urlparameters;
-		System.out.println("getTopViewedCollectionsInfo:::::"+url);
 		JsonResponseRepresentation jsonRespRep	= ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
@@ -1141,7 +1134,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
 		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
 
-		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeMapData(jsonRep,operator);
@@ -1273,13 +1265,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileRatingsJsonPayloadObject());
 		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileRatingsJsonPayloadObject());
 		//String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileRatingsJsonPayloadObject();
-		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		ProfileRatingsReactionsDO profileRatingsReactionsDO = null;
 			try {
 				if(jsonRep!=null && jsonRep.getJsonObject().getJSONArray("content").length()>0){
-					System.out.println(jsonRep.getJsonObject().getJSONArray("content").get(0).toString());;
 					profileRatingsReactionsDO=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").get(0).toString(), ProfileRatingsReactionsDO.class);
 					}
 				} catch (JSONException e) {

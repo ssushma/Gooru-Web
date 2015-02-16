@@ -712,11 +712,9 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		try {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_USER_BY_SESSIONTOKEN, getLoggedInSessionToken(), getLoggedInSessionToken());
 			JsonRepresentation jsonRep = null;
-			System.out.println("data object==>"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			String data = jsonRep.getJsonObject().toString();
-			System.out.println("data object==>"+data);
 			userDo = JsonDeserializer.deserialize(data, UserDo.class);
 //			if (userDo.getCreatedOn()!=null){
 				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
@@ -728,6 +726,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 					userDo.setBeforeProductionSwitch(true);
 				}
 //			}
+			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);
 			e.printStackTrace();

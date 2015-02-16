@@ -913,7 +913,6 @@ public class LibraryTopicListView extends Composite{
 				resourcesInside.clear();
 				ArrayList<LibraryCollectionItemDo> libraryResources =  conceptDo.getCollectionItems();
 				int resourceCount = 0;
-				//System.out.println("AppClientFactory.getCurrentPlaceToken()87878::"+AppClientFactory.getCurrentPlaceToken());
 				if(libraryResources!=null) {
 					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
 						resourceCount = libraryResources.size();

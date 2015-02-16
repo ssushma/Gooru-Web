@@ -378,12 +378,10 @@ public class PlayerDataLogEvents {
 		JSONObject attemptedAnswersArray=new JSONObject();
 		for(int i=0;i<answerObjectArray.size();i++){
 			List<JSONObject> jsonArray=answerObjectArray.get(i);
-			System.out.println("jsonArray+- : "+jsonArray+"");
 			attemptedAnswersArray.put("attempt"+(i+1), new JSONString(jsonArray+""));
 		}
 		String tempArray = attemptedAnswersArray+"";
 		tempArray = tempArray.replaceAll("\\\\", "");
-		System.out.println("tempArray : "+tempArray);
 		return tempArray;
 	}
 	

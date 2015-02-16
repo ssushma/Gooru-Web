@@ -170,13 +170,11 @@ public class ResourceDeserializer extends DeSerializer {
 		Map<String, Object> resetPassword = new HashMap<String, Object>();
 			try {
 				if(code==400){
-					System.out.println("inside if");
 					resetPassword.put("statusCode", 400);
 					resetPassword.put("errorCode", responseDo.getErrorCode());
 					resetPassword.put("statusMessage", errorMessage);
 				}else{
 					if (jsonRep != null ) {
-						System.out.println("inside else");
 						jsonObject = jsonRep.getJsonObject();
 						JSONObject userJsonObject = jsonObject.getJSONObject(USER);
 						resetPassword.put("statusCode", 200);
