@@ -240,7 +240,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	
 	public void resetPlayer(){
 		hide();
-		resetThumbsButtons();
 		resetResourcePlayer();
 	}
 	
@@ -262,16 +261,20 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		
 	@Override
     public void setInSlot(Object slot, Widget content) {
-		if(slot==ResourcePlayerPresenter.TAB_PRESENTER_SLOT){
-			getNavigationContainer().clear();
-			getNavigationContainer().setVisible(false);
-			if(content!=null){
-				getNavigationContainer().add(content);
-			}
-		}else if(slot==ResourcePlayerPresenter.METADATA_PRESENTER_SLOT){
-			getPlayerBodyContainer().clear();
-			getPlayerBodyContainer().add(content);
-		}  
+		if(slot!=null){
+			if(slot==ResourcePlayerPresenter.TAB_PRESENTER_SLOT){
+				getNavigationContainer().clear();
+				getNavigationContainer().setVisible(false);
+				if(content!=null){
+					getNavigationContainer().add(content);
+				}
+			}else if(slot==ResourcePlayerPresenter.METADATA_PRESENTER_SLOT){
+				getPlayerBodyContainer().clear();
+				if(content!=null){
+				getPlayerBodyContainer().add(content);
+				}
+			}  
+		}
 	}
 
 	@Override
@@ -316,55 +319,9 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void resetResourcePlayer(){
 		getUiHandlers().resetResourcePlayer();
 	}
-	/*private class UpdateThumbsDownEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(AppClientFactory.isAnonymous()){
-				getUiHandlers().showLoginPopupWidget(RESOURCE_THUMBS_WIDGET_MODE);
-			}else{
-				int thumbsStaus=userRating==0||userRating==1?-1:0;
-				getUiHandlers().updateResourceThumbsRating(thumbsStaus);
-			}
-		}
-	}
 	
-	private class UpdateThumbsUpEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(AppClientFactory.isAnonymous()){
-				getUiHandlers().showLoginPopupWidget(RESOURCE_THUMBS_WIDGET_MODE);
-			}else{
-				int thumbsStaus=userRating==0||userRating==-1?1:0;
-				getUiHandlers().updateResourceThumbsRating(thumbsStaus);
-			}
-		}
-	}*/
 	@Override
-	public void updateThumbsRatingView(int userThumbRating) {
-		/*userRating=userThumbRating;
-		if(userThumbRating==0){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
-		}else if(userThumbRating==-1){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownActive());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
-		}else if(userThumbRating==1){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpActive());
-		}*/
-		
-/*		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
-		if(resourcePlayerFirstTimeUser==null){
-			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0681, i18n.GL0543);
-			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
-			globalTooltipWithButton.setStyleName("");
-			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
-			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
-			globalTooltipWithButton.show();
-		}*/
-		
-	}
+	public void updateThumbsRatingView(int userThumbRating) {}
 
 	public int getUserRating() {
 		return userRating;
@@ -374,11 +331,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		this.userRating = userRating;
 	}
 	
-	public void resetThumbsButtons(){
-		/*userRating=0;
-		headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-		headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());*/
-	}
+
 	@UiHandler("closeIpadBtn")
 	public void onIpadCloseClick(ClickEvent clickEvent){
 		 ipadSectiondiv.setVisible(false);

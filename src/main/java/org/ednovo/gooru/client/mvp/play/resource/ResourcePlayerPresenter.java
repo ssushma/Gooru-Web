@@ -369,12 +369,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		  final String tabView=getPlaceManager().getRequestParameter("tab", null);
 		  final String apiKey=getPlaceManager().getRequestParameter("key", null);
 		  if(this.collectionItemDo!=null){
-			  if(resourceId!=null&&!resourceId.equals("")){
+			  if(resourceId!=null&&!resourceId.isEmpty()){
 				  showResourceView(resourceId,tabView);
 				  showTabWidget(tabView,resourceId);
 			  }
 		  }else{
-		      if(resourceId!=null && !resourceId.equalsIgnoreCase("")){
+		      if(resourceId!=null && !resourceId.isEmpty()){
 		    	  this.playerAppService.getResourceInfoDetails(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
 		    			@Override
 		    			public void onSuccess(CollectionItemDo collectionItemDo) {
@@ -405,12 +405,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void showResoruceView(CollectionItemDo collectionItemDo,String resourceId, String tabView){
 		  this.collectionItemDo=collectionItemDo;
-		  if(resourceId==null || resourceId.equalsIgnoreCase("")){
-			  return;
-		  }
-		  else{  
+		  if(resourceId!=null && !resourceId.isEmpty()){
 			  showResourceView(resourceId,tabView);
 			  showTabWidget(tabView,resourceId);
+		  }
+		  else{  
+			  return;
 		  }
 	}
 	
@@ -431,29 +431,36 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 
 	public void showResourceView(String resourceId,String tabView) {
-		if(gooruOid!=null&&gooruOid.equals(this.collectionItemDo.getResource().getGooruOid())){
+			if(gooruOid!=null&&gooruOid.equals(this.collectionItemDo.getResource().getGooruOid())){
+				makeButtonActive(tabView);
+				return;
+			}
+			enablePlayerButton(true,true,true,true);
 			makeButtonActive(tabView);
-			return;
-		}
-		enablePlayerButton(true,true,true,true);
-		makeButtonActive(tabView);
-		resetAnswerLists();
-		createResourceDataLogs();
-		gooruOid=this.collectionItemDo.getResource().getGooruOid();
-		updateResourceViewCount(gooruOid,collectionItemDo.getViews().toString(),null);
-		getView().setResourceTitle(collectionItemDo.getResource().getTitle());
-		updateThumbsRatingView(collectionItemDo.getResource().getUserRating()!=null?collectionItemDo.getResource().getUserRating():0);
-		resoruceMetadataPresenter.showResourceWidget(collectionItemDo);
-		if(!AppClientFactory.isAnonymous()){
-			resoruceMetadataPresenter.setReaction(collectionItemDo);
-			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
-			getContentReport(collectionItemDo.getResource().getGooruOid());
-		}else{
-			resoruceMetadataPresenter.clearStarRatings();
-		}
-		setUserAttemptedQuestionTypeAndStatus(false,0);
-		setOpenEndedAnswerSubmited(true);
-		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter,false);
+			resetAnswerLists();
+			createResourceDataLogs();
+			gooruOid=this.collectionItemDo.getResource().getGooruOid();
+			if(collectionItemDo.getViews()!=null){
+			updateResourceViewCount(gooruOid,collectionItemDo.getViews().toString(),null);
+			}
+			if(collectionItemDo.getResource()!=null){
+			getView().setResourceTitle(collectionItemDo.getResource().getTitle()!=null?collectionItemDo.getResource().getTitle():"");
+			updateThumbsRatingView(collectionItemDo.getResource().getUserRating()!=null?collectionItemDo.getResource().getUserRating():0);
+			}
+			resoruceMetadataPresenter.showResourceWidget(collectionItemDo);
+			if(!AppClientFactory.isAnonymous()){
+				resoruceMetadataPresenter.setReaction(collectionItemDo);
+				resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+				if(collectionItemDo.getResource().getGooruOid()!=null){
+				getContentReport(collectionItemDo.getResource().getGooruOid());
+				}
+			}else{
+				resoruceMetadataPresenter.clearStarRatings();
+			}
+			setUserAttemptedQuestionTypeAndStatus(false,0);
+			setOpenEndedAnswerSubmited(true);
+			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter,false);
+		
 	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
@@ -493,7 +500,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	
 	public void showTabWidget(String tabView,String resourceId){
-		if(tabView==null||tabView.equals("")){
+		if(tabView==null||tabView.isEmpty()){
 			getView().clearActiveButton(true,true,true,true);
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
@@ -567,7 +574,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		resourceActivityEventId=GwtUUIDGenerator.uuid();
 		startPlayerActivityEvent(resourceActivityEventId, "", PlayerConstants.RESOURCE_PLAYER_EVENT_NAME, "", collectionItemDo.getResource().getGooruOid(), PlayerConstants.RESOURCE_PLAYER_CONTEXT+collectionItemDo.getResource().getGooruOid(), getUserAgent());
 		createSession(collectionItemDo.getResource().getGooruOid());
-		
 	}
 	public void startResourceInsightDataLog(){
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
@@ -863,7 +869,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 					showResourceErrorMessage();
 				}else{
 					ResourcePlayerPresenter.this.collectionItemDo=collectionItemDo;
-					updateThumbsRatingView(collectionItemDo.getResource().getUserRating());	
+					updateThumbsRatingView(collectionItemDo.getResource().getUserRating()!=null?collectionItemDo.getResource().getUserRating():0);	
 				}
 				
 			}
