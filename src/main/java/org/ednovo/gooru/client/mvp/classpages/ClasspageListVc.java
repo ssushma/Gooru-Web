@@ -665,7 +665,6 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 											StudentAssignmentView
 													.setPublicPageActive();
 										} else {
-											System.out.println("iam in classpagelistvc::setPublicPagePending");
 											StudentAssignmentView
 													.setPublicPagePending();
 										}

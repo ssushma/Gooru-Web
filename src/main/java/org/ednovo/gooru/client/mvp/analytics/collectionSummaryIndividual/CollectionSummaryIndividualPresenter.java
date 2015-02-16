@@ -120,7 +120,6 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 				if(isClickedOnEmail){
 					getView().setPdfForEmail(result);
 				}else{
-					System.out.println("result::"+result);
 					getView().getFrame().setUrl(result);
 					//Window.open("http://www.goorulearning.org/gooruapi/rest/v2/media/download?sessionToken=93bc84d8-8cd0-11e4-8d16-123141016e2a&url=http://westrepository.goorulearning.org/prod1/uploaded-media/summary/Mymedia-1419578993351.pdf&filename=Classroom_Rules_Collection_Summary.pdf", "_blank", "status=0,toolbar=0,menubar=0,location=0");
 				}

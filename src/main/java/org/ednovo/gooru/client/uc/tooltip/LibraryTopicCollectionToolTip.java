@@ -98,7 +98,6 @@ public class LibraryTopicCollectionToolTip extends Composite {
 				sourceLbl.getElement().setInnerHTML("");
 			}
 		}
-		System.out.println("inside tooltip");
 		sourceLbl.getElement().setId("lblSourceLbl");
 //		sourceLbl.getElement().setAttribute("alt", source);
 //		sourceLbl.getElement().setAttribute("title", source);

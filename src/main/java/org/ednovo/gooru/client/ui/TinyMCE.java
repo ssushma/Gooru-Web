@@ -488,7 +488,6 @@ public class TinyMCE extends Composite{
 		AddQuestionResourceView.errorMessageForQuestion.setText("");
 		//This regex is used to get text count with out html tags
 		String noHTMLString = content.replaceAll("\\<.*?>","");
-		System.out.println();
 		if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
 			setErrorMessage(ERROR_MESSAGE,tinyMceId);
 			if(noHTMLString.length()>=503)

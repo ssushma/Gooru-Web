@@ -189,7 +189,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ResoruceCollectionDo getResourceCollectionsList(String gooruOid,String pageNum,String pageSize) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESOURCE_COLLECTION_LIST, getLoggedInSessionToken(),pageNum, pageSize, gooruOid);
-		System.out.println("urlresourceinfotab::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceCollection(jsonRep);
@@ -200,7 +199,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
-		System.out.println("urlcollectionItem::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -285,7 +283,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
-		System.out.println("getResourceObj::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -407,8 +404,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			createSessionObject.put("session", sessionObject);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION, getLoggedInSessionToken());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createSessionObject.toString());
-			System.out.println("session tracker API:"+url);
-			System.out.println("session tracker INPUT DATA:"+createSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
 			seesionId=createSessionResponse.getString("sessionId");
@@ -670,7 +665,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REPORT,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
-		System.out.println("getContentReport::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
@@ -1085,8 +1079,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 }
 			 createStarRatingsJsonObj.put("target",new JSONObject().put("value","content"));
 			 createStarRatingsJsonObj.put("type",new JSONObject().put("value","star"));
-			 System.out.println("--- create star -- "+url);
-			 System.out.println("--- create str payload -- "+createStarRatingsJsonObj.toString()); 
 			 JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(), getRestPassword(), createStarRatingsJsonObj.toString());
 			 jsonRep= jsonResponseRep.getJsonRepresentation();
 			 jsonObject= jsonRep.getJsonObject();
@@ -1463,10 +1455,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try{
 			String url = "http://gdata.youtube.com/feeds/api/videos/"+utubeId+"?v=2&alt=jsonc&prettyprint=true";
 //			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_RATINGS,;
-			System.out.println("getyoutube::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 			JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
-			System.out.println("embed:"+jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").get("embed").toString());
 			if(jsonRep.getJsonObject()!=null && jsonRep.getJsonObject().getJSONObject("data")!=null && jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl")!=null){
 				String embed=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("embed");
 				String syndicate=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("syndicate");
@@ -1484,7 +1474,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId){
 		String formdata=insightsJsonPayload(collectionId,classpageId,sessionId,getLoggedInUserUid());
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.GET_COLLECTION_SUMMARY,collectionId, getLoggedInSessionToken(),formdata);
-		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 		JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
 		InsightsCollectionDo insightCollectionDo=null;

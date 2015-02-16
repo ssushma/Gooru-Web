@@ -244,7 +244,6 @@ public class CollectionFlagView extends
 			public void onClick(ClickEvent event) {
 				if(!isClickedOnDropDwn){
 					if(!dropdownListContainerScrollPanel.getElement().getStyle().getProperty("display").equals("none")){
-						System.out.println("LLK:::LKLLK::::::");
 						new CustomAnimation(dropdownListContainerScrollPanel).run(400);
 					}
 				}else{

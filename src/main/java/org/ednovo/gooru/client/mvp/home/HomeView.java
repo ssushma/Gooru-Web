@@ -252,7 +252,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("-->> "+preFilter);
 				if(!isArrowIcon && preFilter!=null){
 					isOpenPrefilterPopup=true;
 					preFilter.hide();
