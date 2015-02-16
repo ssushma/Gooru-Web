@@ -554,10 +554,8 @@
                                 <jsSourceExclude>*.min.js</jsSourceExclude>
                             </jsSourceExcludes>
                             <jsFinalFile>main-script.js</jsFinalFile>
-                            <warSourceExcludes>*.css</warSourceExcludes>
-                            <warSourceExcludes>*.js</warSourceExcludes>
-                            <warSourceIncludes>*min.css</warSourceIncludes>
-                            <warSourceIncludes>*min.js</warSourceIncludes>
+                            <warSourceIncludes>*.min.css</warSourceIncludes>
+                            <warSourceIncludes>*.min.js</warSourceIncludes>
                         </configuration>
                     </execution>
                 </executions>
