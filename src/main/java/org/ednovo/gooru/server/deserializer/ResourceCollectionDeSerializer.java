@@ -285,7 +285,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		StringTokenizer courses = null;
 		try{
 			resourceDo = recordJsonObject.getResource();
-			if(recordJsonObject.getCourse()!=null && recordJsonObject.getCourse().size()!=0){
+			if(recordJsonObject.getCourse()!=null && recordJsonObject.getCourse().size()>0){
 				size=recordJsonObject.getCourse().size();
 			}else{
 				if(resourceDo.getCustomFieldValues()!=null && !resourceDo.getCustomFieldValues().equals("")){

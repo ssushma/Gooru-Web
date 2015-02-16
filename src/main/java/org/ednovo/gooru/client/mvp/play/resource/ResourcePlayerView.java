@@ -70,7 +70,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
 	
 	@UiField ResourcePlayerHeaderView headerView;
-	//ResourceInfoView resourceInfoView=new ResourceInfoView();
 
 	@UiField Anchor viewAnchor;
 	
@@ -110,9 +109,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
 		headerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
 		
-		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
-		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());*/
-		//resourceInfoView.getHideButton().addClickHandler(new ShowTabWidgetView("info"));
 		setAutoHideOnNavigationEventEnabled(true);
 		
 		
@@ -135,7 +131,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
 		  else
 		  {
