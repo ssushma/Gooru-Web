@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
@@ -77,7 +78,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv; 
+	@UiField HTMLPanel floderTreeContainer,marginDiv;
+	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks;
+	@UiField H3Panel lblFolderTitle;
+	
 	final String FOLDER="folder";
 	final String SCOLLECTION="scollection";
 	
@@ -148,6 +152,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void setFolderItems(FolderTocDo  foldersTocObj) {
 		folderTocTree.clear();
+		setFolderMetaData(foldersTocObj);
 		if(foldersTocObj!=null){
 			List<FolderDo> foldersArrayList=foldersTocObj.getCollectionItems();
 			 if(foldersArrayList.size()>0){
@@ -167,6 +172,18 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		}
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTocTree);
+	}
+	/**
+	 * This method will set the folder meta data on the toc page.
+	 * @param foldersTocObj
+	 */
+	void setFolderMetaData(FolderTocDo  foldersTocObj){
+		if(foldersTocObj!=null){
+			lblBigIdeas.setText(foldersTocObj.getIdeas()!=null?foldersTocObj.getIdeas():"");
+			lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
+			lblEssentalQuestions.setText(foldersTocObj.getQuestions()!=null?foldersTocObj.getQuestions():"");
+			lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks()!=null?foldersTocObj.getPerformanceTasks():"");
+		}
 	}
 
 	/**
