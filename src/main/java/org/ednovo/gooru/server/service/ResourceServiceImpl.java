@@ -142,6 +142,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
+		getLogger().info("createCollection API post url::::"+url);
 		//collectionDo.setAddToShelf(TRUE);
 		if (codeId != null) {
 			Set<CodeDo> codeDo=new HashSet<CodeDo>();
@@ -160,11 +161,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		jsonObj = new JSONObject(form);	
 		jsonObj.put(ADD_TO_SHELF, TRUE);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//form.add(ADD_TO_SHELF, TRUE);
-
+		getLogger().info("payload data create collection API:::"+jsonObj.toString());
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObj.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation(); 
@@ -177,39 +176,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return collectionDoObj;
 	}
-
-	/*@Override
-	public CollectionDo createCollectionInParent(CollectionDo collectionDo, String codeId, String parentId) {
-		JsonRepresentation jsonRep = null;
-		CollectionDo collectionDoObj=new CollectionDo();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_COLLLECTION, getLoggedInSessionToken());
-		Form form = ResourceFormFactory.generateDataForm(collectionDo, COLLECTION);
-		form.add(ADD_TO_SHELF, FALSE);
-		if (codeId != null) {
-			form.add(TAXONOMY_CODE, codeId);
-		}
-		form.add(PARENT_ID, parentId);
-		
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		if(jsonResponseRep.getStatusCode()==200){
-			collectionDoObj = deserializeCollection(jsonRep);
-			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
-		}else{
-			collectionDoObj=new CollectionDo();
-			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
-		}
-		return collectionDoObj;
-
-	}*/
-
-	/*@Override
-	public CollectionDo updateCollection(CollectionDo collectionDo) {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateDataForm(collectionDo, COLLECTION));
-		return deserializeCollection(jsonRep);
-	}*/
 
 	@Override
 	public void deleteCollection(String collectionId) {
@@ -230,20 +196,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			createCollectionJsonObject.put("resourceId", resourceId);
 		}
 		
-//		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}catch(Exception e){}
 		return deserializeCollectionItem(jsonRep);
 	}
-
-	/*@Override
-	public CollectionItemDo updateCollectionItem(CollectionItemDo collectionItemDo) {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_COLLECTION_ITEM, collectionItemDo.getCollectionItemId(), getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateDataForm(collectionItemDo, "collectionItem"));
-		return deserializeCollectionItem(jsonRep);
-	}*/
 
 	@Override
 	public void deleteCollectionItem(String collectionItemId) {
@@ -292,17 +249,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return collectionDoObj;
 	}
 
-	/*@Override
-	public List<CollectionItemDo> getCollectionItems(CollectionDo collectionDo) {
-		String pageNum = "1";
-		String pageSize = "10";
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLECTION_ITEMS, collectionDo.getGooruOid(), getLoggedInSessionToken(), pageSize, pageNum);
-		return deserializeCollectionItems(ServiceProcessor.get(url, getRestUsername(), getRestPassword()));
-
-	}*/
-	
-	
-
 	@Override
 	public CollectionDo getCollection(String collectionGooruOid, boolean skipCollectionItem) {
 		CollectionDo collectionDoObj=new CollectionDo();
@@ -337,21 +283,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return collectionDoObj;
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.ednovo.gooru.client.mvp.search.ResourceService#listCollections(java
-	 * .lang.Integer, java.lang.Integer)
-	 */
-	/*@Override
-	public List<CollectionDo> listCollections(Integer pageSize, Integer pageNum, String scollection) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.LIST_COLLECTION, getLoggedInSessionToken(), pageSize + "", pageNum + "", scollection);
-		return deserializeCollections(ServiceProcessor.get(url, getRestUsername(), getRestPassword()));
-
-	}*/
-
 
 	public ResourceMetaInfoDo deserializeResourceMetaInfo(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -462,7 +393,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj= new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
-		//collectionDo.setAddToShelf(TRUE);
 		if (codeId != null) {
 			Set<CodeDo> codeDo=new HashSet<CodeDo>();
 			CodeDo codeDoObj=new CodeDo();
@@ -483,7 +413,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			jsonObj.put(RESOURCE_ID,resourceId);
 		}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObj.toString());
@@ -624,15 +553,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	}
 	
-	/*@Override
-	public CollectionItemDo copyCollectionItem(String collectionItemId) {
-		
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), new Form());
-		return deserializeCollectionItem(jsonRep);
-	}*/
-
 	@Override
 	public String getYoutubeDuration(String videoId) throws GwtException {
 		JsonRepresentation jsonRep = null;
@@ -641,17 +561,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		try {
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 			jsonRep = jsonResponseRep.getJsonRepresentation();
+			if(jsonRep != null && jsonRep.getSize() != -1){
 			return resourceDeserializer.serializeYoutubeInfo(jsonRep);
+			}
 		} catch(Exception e) {}
 		
 		return youtubeDuration;
 	}
-
-	/*@Override
-	public List<CollectionItemsListDo> getMyUserCollections() throws GwtException{
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_COLLECTIONS, getLoggedInSessionToken());
-		return deserializeMyUserCollections(ServiceProcessor.get(url, getRestUsername(), getRestPassword()));
-	}*/
 
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
@@ -663,6 +579,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 		newResourceDo.setTitle(titleStr);
 		
+		if(standards!=null && standards.size()>0 ){
 		Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 		for(CodeDo item:standards)
 		{
@@ -671,8 +588,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			 codeObj.setCodeId(item.getCodeId());
 			 standardsDo.add(codeObj);
 		}
-		
 		newResourceDo.setTaxonomySet(standardsDo);
+		}
+		
 		newResourceDo.setDescription(descriptionStr);
 		newResourceDo.setCategory(categoryStr);
 		newResourceDo.setStop(endTime);
@@ -703,7 +621,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			thumbnailImgSrcStr="";
 		}
 		
-		if (urlStr.indexOf("youtube") > 0){
+		if (urlStr!=null&&urlStr.indexOf("youtube") > 0){
 			newResourceDo.setThumbnail("");
 		}else{
 			newResourceDo.setThumbnail(thumbnailImgSrcStr);
@@ -799,17 +717,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url =null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO, collectionItemDo.getCollectionItemId(), getLoggedInSessionToken());
 		
-		/*if (collectionItemDo.getResource().getThumbnails().getUrl() == null){ 
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO_NO_MEDIA, collectionItemDo.getResource().getGooruOid(), getLoggedInSessionToken(), collectionItemDo.getResource().getTitle(), collectionItemDo.getResource().getDescription(), collectionItemDo.getResource().getCategory());
-		}else{
-	*/		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO, collectionItemDo.getCollectionItemId(), getLoggedInSessionToken());
-		//}
 		NewResourceDo newResourceDo = new NewResourceDo();
 			
 		String urlStr=collectionItemDo.getResource().getUrl();
 		
-//		newResourceDo.setUrl(urlStr);
 		newResourceDo.setTitle(collectionItemDo.getResource().getTitle());
 		newResourceDo.setDescription(collectionItemDo.getResource().getDescription());
 		newResourceDo.setCategory(collectionItemDo.getResource().getCategory().trim());
@@ -822,7 +735,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			thumbnailImgSrcStr="";
 		}
 		
-		if (urlStr.indexOf("youtube") > 0){
+		if (urlStr!=null && urlStr.indexOf("youtube") > 0){
 			newResourceDo.setThumbnail("");
 		}else{
 			newResourceDo.setThumbnail(thumbnailImgSrcStr);
@@ -844,7 +757,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		getLogger().info("---- Updating Web url --- "+url);
 		getLogger().info("--- pay load -- "+form);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
-		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
 	}
@@ -870,17 +782,29 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	 */
 	public CollectionItemDo deserializeCollectionResourceItem(JsonRepresentation jsonRep) {
 		CollectionItemDo collectionItemDo = new CollectionItemDo();
-		
+		UserDo user = null;
+		UserDo creator =null;
+		ResourceTypeDo resourceType= null;
+		ResourceFormatDo resourceFormat = null;
+		ThumbnailDo thumbnails = null;
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				String responseString = jsonRep.getJsonObject().toString();
 				ResourceDo resourceDo = new ResourceDo();
 				Map<String, Object> map = JsonDeserializer.deserialize(responseString, new TypeReference<Map<String, Object>>() {
 				});
-				UserDo user = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("user").toString(), UserDo.class);
-				UserDo creator = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("creator").toString(), UserDo.class);
-				ResourceTypeDo resourceType = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resourceType").toString(), ResourceTypeDo.class);
-				ResourceFormatDo resourceFormat = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resourceFormat").toString(), ResourceFormatDo.class);
+				if(!jsonRep.getJsonObject().isNull("user")){
+				user = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("user").toString(), UserDo.class);
+				}
+				if(!jsonRep.getJsonObject().isNull("creator")){
+					 creator = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("creator").toString(), UserDo.class);
+				}
+				if(!jsonRep.getJsonObject().isNull("resourceType")){
+					resourceType = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resourceType").toString(), ResourceTypeDo.class);
+				}
+				if(!jsonRep.getJsonObject().isNull("resourceFormat")){
+				 resourceFormat = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resourceFormat").toString(), ResourceFormatDo.class);	
+				}
 				if (!jsonRep.getJsonObject().isNull("ratings")){
 					SearchRatingsDo ratings = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("ratings").toString(), SearchRatingsDo.class);
 					resourceDo.setRatings(ratings);
@@ -905,10 +829,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					});
 					resourceDo.setResourceTags(resourceTags);
 				}
-			
-				
-				ThumbnailDo thumbnails = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("thumbnails").toString(), ThumbnailDo.class);
-				
+				if(!jsonRep.getJsonObject().isNull("thumbnails")){
+					thumbnails = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("thumbnails").toString(), ThumbnailDo.class);
+				}
 				resourceDo.setCategory(map.get("category") != null ? map.get("category").toString() : null);
 				resourceDo.setTitle(map.get("title") != null ? map.get("title").toString() : null);
 				resourceDo.setUrl(map.get("url") !=null ? map.get("url").toString() : null);
@@ -919,12 +842,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				resourceDo.setGoals(map.get("goals") != null ? map.get("goals").toString() : null);
 				resourceDo.setDescription(map.get("description") != null ? map.get("description").toString() : null);
 				
-				resourceDo.setThumbnails(thumbnails);
-				resourceDo.setResourceType(resourceType);
 				resourceDo.setUser(user);
 				resourceDo.setCreator(creator);
+				resourceDo.setResourceType(resourceType);	
 				resourceDo.setResourceFormat(resourceFormat);
-				
+				resourceDo.setThumbnails(thumbnails);
+
 				collectionItemDo.setItemSequence(map.get("itemSequence") != null ? Integer.parseInt(map.get("itemSequence").toString()) : 1 );
 				collectionItemDo.setResource(resourceDo);
 			} catch (JSONException e) {
@@ -948,17 +871,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ATTACH_IMAGE_TO_QUESTION, collectionItemId, getLoggedInSessionToken(),fileName);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword());  
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-//		try {
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
 	}
 	@Override
 	public CollectionItemDo copyCollectionItem(String collectionId, String resourceId) {
 		JsonRepresentation jsonRep = null;
 		CollectionProfileItemDo collectionItemDo = new CollectionProfileItemDo();
-		//collectionItemDo.setItemType(ADDED);
 		String url = null;		
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_COPY_COLLLECTION_ITEM, resourceId, collectionId,getLoggedInSessionToken());
 
@@ -1012,14 +929,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		boolean isShortenUrl=false;
 		try {
-			
-			isShortenUrl=jsonRep.getJsonObject().getBoolean("shortenedUrlStatus");
+			if(!jsonRep.getJsonObject().isNull("shortenedUrlStatus")){
+				isShortenUrl=jsonRep.getJsonObject().getBoolean("shortenedUrlStatus");
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return isShortenUrl ? "true" : "false";
-		
-		
 	}
 
 	public CollectionDo getCollection(String collectionGooruOid){
@@ -1048,7 +964,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 
         } catch (UnsupportedEncodingException e) {  
-            // TODO Auto-generated catch block  
             e.printStackTrace();  
         }	
 		
@@ -1081,7 +996,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 
         } catch (UnsupportedEncodingException e) {  
-            // TODO Auto-generated catch block  
             e.printStackTrace();  
         }	
 		
@@ -1108,8 +1022,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),	getRestPassword(),fileName);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		if (jsonRep != null) {
 		mediaUploadDo = JsonDeserializer.deserialize(jsonRep.toString(), MediaUploadDo.class);
-		
+		  }
 		return mediaUploadDo;
 	}
 	
@@ -1202,9 +1117,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public List<ProfanityCheckDo> checkProfanityForList(
 			List<ProfanityCheckDo> profanityList) {
 		Map<String, String> parms = new HashMap<String, String>();
+		if(profanityList!=null){
 		for (int i = 0; i < profanityList.size(); i++) {
 			parms.put("text", profanityList.get(i).getQuestionText());
 			profanityList.get(i).setQuestionValue(checkProfanityForLsit(parms));
+		}
 		}
 		return profanityList;
 	}
@@ -1533,35 +1450,35 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		} catch (Exception ex) {
 			
 		}
-		// return null;
 
 	}
 
 	@Override
 	public void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj) throws GwtException {
 		JsonRepresentation jsonRep = null;
-
-		for (CodeDo codeDo : taxonomyObj) {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(),
-					UrlToken.UPDATE_TAXONOMY_RESOURCE, resourceId,
-					getLoggedInSessionToken());
-			
-			try {
-				JSONObject taxonomyObject = new JSONObject();
-				JSONObject taxonomySetObj = new JSONObject();
-
-				JSONArray codeIdJsonArray = new JSONArray();
-				codeIdJsonArray.put(new JSONObject().put("codeId", codeDo.getCodeId()));
-
-				taxonomySetObj.put("taxonomySet", codeIdJsonArray);
-				taxonomyObject.put("resource", taxonomySetObj);
-				JsonResponseRepresentation jsonResponseRep = ServiceProcessor
-						.put(url, getRestUsername(), getRestPassword(),
-								taxonomyObject.toString());
-				jsonRep = jsonResponseRep.getJsonRepresentation();
+		if(taxonomyObj!=null){
+			for (CodeDo codeDo : taxonomyObj) {
+				String url = UrlGenerator.generateUrl(getRestEndPoint(),
+						UrlToken.UPDATE_TAXONOMY_RESOURCE, resourceId,
+						getLoggedInSessionToken());
 				
-			} catch (Exception ex) {
-				
+				try {
+					JSONObject taxonomyObject = new JSONObject();
+					JSONObject taxonomySetObj = new JSONObject();
+	
+					JSONArray codeIdJsonArray = new JSONArray();
+					codeIdJsonArray.put(new JSONObject().put("codeId", codeDo.getCodeId()));
+	
+					taxonomySetObj.put("taxonomySet", codeIdJsonArray);
+					taxonomyObject.put("resource", taxonomySetObj);
+					JsonResponseRepresentation jsonResponseRep = ServiceProcessor
+							.put(url, getRestUsername(), getRestPassword(),
+									taxonomyObject.toString());
+					jsonRep = jsonResponseRep.getJsonRepresentation();
+					
+				} catch (Exception ex) {
+					
+				}
 			}
 		}
 	}
@@ -1676,17 +1593,19 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public List<GoogleDriveItemDo> deserializegetGoogleDriveContent(JSONArray GoogleDriveJsonArray){
 		GoogleDriveItemDo driveObj=new GoogleDriveItemDo();
 		List<GoogleDriveItemDo> googleResult=new ArrayList<GoogleDriveItemDo>();
-		for (int pointer = 0; pointer < GoogleDriveJsonArray.length(); pointer++) {
-		try {
-		driveObj = deserializeDriveDetails(GoogleDriveJsonArray.getJSONObject(pointer));
-		if (driveObj != null) {
-		googleResult.add(driveObj);
-		}
-
-		} catch (JSONException e) {
-		throw new RuntimeException("message", e); 
-		}
-
+		if(GoogleDriveJsonArray!=null && GoogleDriveJsonArray.length()>0){
+			for (int pointer = 0; pointer < GoogleDriveJsonArray.length(); pointer++) {
+			try {
+			driveObj = deserializeDriveDetails(GoogleDriveJsonArray.getJSONObject(pointer));
+			if (driveObj != null) {
+			googleResult.add(driveObj);
+			}
+	
+			} catch (JSONException e) {
+			throw new RuntimeException("message", e); 
+			}
+	
+			}
 		}
 
 		return googleResult;
@@ -1704,19 +1623,20 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public List<GoogleDriveItemDo> deserializeFolderContent(JSONArray FolderContentJsonArray){
 		GoogleDriveItemDo driveObj=new GoogleDriveItemDo();
 		List<GoogleDriveItemDo> folderResult=new ArrayList<GoogleDriveItemDo>();
-		for (int pointer = 0; pointer < FolderContentJsonArray.length(); pointer++) {
-		try {
-		driveObj = deserializeFolderDetails(FolderContentJsonArray.getJSONObject(pointer));
-		if (driveObj != null) {
-			folderResult.add(driveObj);
+		if(FolderContentJsonArray!=null&& FolderContentJsonArray.length()>0){	
+			for (int pointer = 0; pointer < FolderContentJsonArray.length(); pointer++) {
+			try {
+			driveObj = deserializeFolderDetails(FolderContentJsonArray.getJSONObject(pointer));
+			if (driveObj != null) {
+				folderResult.add(driveObj);
+			}
+	
+			} catch (JSONException e) {
+			throw new RuntimeException("message", e); 
+			}
+	
+			}
 		}
-
-		} catch (JSONException e) {
-		throw new RuntimeException("message", e); 
-		}
-
-		}
-
 		return folderResult;
 
 		}
@@ -1739,9 +1659,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 		String str = null;
 		try {
-			str = jsonRep.getJsonObject().toString();
-			token =  deserializeGoogleToken(str);
-			setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
+			if(jsonRep!=null && jsonRep.getSize()!=-1){
+				str = jsonRep.getJsonObject().toString();
+				token =  deserializeGoogleToken(str);
+				setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
+			}
 		} catch (JSONException eJson) {
 			eJson.printStackTrace(); 
 		}
@@ -1772,8 +1694,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		collectionItemDoNew=deserializeCollectionItem(jsonRep);
+		if(collectionItemDoNew.getQuestionInfo()!=null){
 		collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
+		}
+		if(collectionItemDoNew.getStandards()!=null){
 		collItemDo.setStandards(collectionItemDoNew.getStandards());
+		}
 		return collectionItemDoNew;
 	}
 	
