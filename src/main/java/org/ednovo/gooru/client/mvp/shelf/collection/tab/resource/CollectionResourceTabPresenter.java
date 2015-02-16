@@ -220,7 +220,6 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void updateQustionImage(String collectionItemId) {
-		System.out.println("collectionItemIdset:::"+collectionItemId);
 		addToPopupSlot(imgUploadPresenter);
         imgUploadPresenter.setCollectionImage(false);
         imgUploadPresenter.setUpdateQuestionImage(true);

@@ -512,7 +512,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("incatch:::");
 		}
 		
 		
