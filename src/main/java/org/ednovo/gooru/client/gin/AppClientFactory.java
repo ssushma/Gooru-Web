@@ -27,9 +27,10 @@
  */
 package org.ednovo.gooru.client.gin;
 
+import java.util.logging.Logger;
+
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserRoleDo.UserRoleType;
-
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.MetaElement;
@@ -58,6 +59,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class AppClientFactory {
 
 	public static UserDo loggedInUser;
+	
+	private static Logger clientLogger = Logger.getLogger("");
 	
 	private static final String GOORU_ACTIVE_USER = "gooru-active-user";
 
@@ -403,6 +406,10 @@ public class AppClientFactory {
      */
 	public static void setPreviousPlaceRequest(PlaceRequest previousRequest) {
 		getInjector().getPlaceManager().setPreviousRequest(previousRequest);
+	}
+	
+	public static Logger getClientSideLogger() {
+		return clientLogger;
 	}
 
 }

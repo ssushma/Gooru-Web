@@ -20,7 +20,7 @@
 	<inherits name='br.com.freller.tool.PrintIt' />
 	<inherits name='com.google.gwt.query.Query' />
 	<inherits name='com.googlecode.gwt.Serialization' />
-
+ 	<inherits name="com.google.gwt.logging.Logging"/>
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name="com.google.gwt.http.HTTP" />
 
@@ -98,5 +98,11 @@
 	<!-- In any real-world application, you will define at least -->
 	<!-- one locale in addition to the default locale. -->
 	<extend-property name="locale" values="en" />
+	
+	<!-- This configuration enables client side loggers -->
+	<set-property name="gwt.logging.logLevel" value="SEVERE"/>
+	<set-property name="gwt.logging.logLevel" value="INFO"/> 
+ 	<set-property name="gwt.logging.enabled" value="TRUE"/>            
+    <set-property name="gwt.logging.popupHandler" value="DISABLED" />
 
 </module>
