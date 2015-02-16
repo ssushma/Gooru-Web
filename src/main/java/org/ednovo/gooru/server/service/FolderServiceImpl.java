@@ -477,7 +477,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	public FolderTocDo getTocFolders(String folderId) throws GwtException,ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		url = UrlGenerator.generateUrl("http://54.177.225.101:8080/gooruv2api/api", UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
 		getLogger().info("-- Folder toc API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
