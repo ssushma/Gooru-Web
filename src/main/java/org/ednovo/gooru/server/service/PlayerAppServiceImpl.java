@@ -213,13 +213,14 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		getLogger().info("player APp Service impl getResourceInfoDetails:::::"+url);
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {
 			if(jsonResponseRep.getStatusCode()==200){
 				collectionItemDo=ResourceCollectionDeSerializer.deserializeCollectionItemDoV2API(deserializeResourceInfoObj(jsonRepresentation));
 				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
 				String decodeUrl=collectionItemDo.getResource().getUrl();
-				if(decodeUrl!=null&&!decodeUrl.equals("")&&!decodeUrl.equals("null")){
+				if(decodeUrl!=null&&!decodeUrl.isEmpty()&&!decodeUrl.equals("null")){
 					if(decodeUrl.substring(0, 4).equalsIgnoreCase("http")){
 					}else{
 						String encodeUrl;
@@ -235,9 +236,9 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				collectionItemDo=new CollectionItemDo();
 				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
 			}
+			
 			//Added this line because of URL encoding is not supported in Shared and View packages.
 			//collectionItemDo.getResource().setEncodedUrl(URLEncoder.encode(collectionItemDo.getResource().getUrl()));
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -249,7 +250,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
-		System.out.println("getResourceObj::"+url);
+		getLogger().info("getResourceObj::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {

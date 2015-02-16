@@ -285,16 +285,15 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		StringTokenizer courses = null;
 		try{
 			resourceDo = recordJsonObject.getResource();
-			if(recordJsonObject.getCourse().size()==0){
+			if(recordJsonObject.getCourse()!=null && recordJsonObject.getCourse().size()>0){
+				size=recordJsonObject.getCourse().size();
+			}else{
 				if(resourceDo.getCustomFieldValues()!=null && !resourceDo.getCustomFieldValues().equals("")){
 					if(resourceDo.getCustomFieldValues().getCfGooruCourse()!=null && !resourceDo.getCustomFieldValues().getCfGooruCourse().equalsIgnoreCase("")&&!resourceDo.getCustomFieldValues().getCfGooruCourse().equalsIgnoreCase("null")){
 					courses = new StringTokenizer(resourceDo.getCustomFieldValues().getCfGooruCourse(), ",");
 					size=courses.countTokens();
 					}
 				}
-				
-			}else{
-				size=recordJsonObject.getCourse().size();
 			}
 			
 			for(int j=0;j<size;j++){
@@ -319,7 +318,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		}
 		collectionItemDo.setResource(resourceDo);
 		return collectionItemDo;
-		
 	}
 	
 	public static CollectionItemDo deserializeCollectionItemDo(JSONObject recordJsonObject){

@@ -1236,7 +1236,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				newCollectionStartTime=collectionStartTime;
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(), 
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
-				startPlayerActivityEvent(collectionActivityEventId, "", PlayerConstants.COLLECTION_EVENT_NAME, collectionDo.getGooruOid(), collectionDo.getGooruOid(), PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid(), getUserAgent());
 				if(sessionIdCreationCount==1){
 					sessionId=null;
 				}
@@ -1250,7 +1249,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resourceActivityEventId=GwtUUIDGenerator.uuid();
 		resourceActivityResourceId=collectionItemDo.getResource().getGooruOid();
 		String resourceContext=PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid()+"/"+resourceActivityResourceId;
-		startPlayerActivityEvent(resourceActivityEventId, collectionActivityEventId, PlayerConstants.RESOURCE_EVENT_NAME, collectionDo.getGooruOid(), resourceActivityResourceId, resourceContext, getUserAgent());
 		startResourceInsightDataLog();
 	}
 	
@@ -1263,7 +1261,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void stopResourceDataLog(){
 		if(resourceActivityResourceId!=null){
 			String resourceContext=PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid()+"/"+resourceActivityResourceId;
-			stopPlayerActivityEvent(resourceActivityEventId, collectionActivityEventId, PlayerConstants.RESOURCE_EVENT_NAME, collectionDo.getGooruOid(), resourceActivityResourceId, resourceContext, getUserAgent());
 			stopResourceInsightDataLog();
 			resourceActivityResourceId=null;
 		}
@@ -1272,7 +1269,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void stopResourceDataLogFromHomePage(){
 		if(resourceActivityResourceId!=null){
 			String resourceContext=PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid()+"/"+resourceActivityResourceId;
-			stopPlayerActivityEvent(resourceActivityEventId, collectionActivityEventId, PlayerConstants.RESOURCE_EVENT_NAME, collectionDo.getGooruOid(), resourceActivityResourceId, resourceContext, getUserAgent());
 			stopResourceInsightDataLog();
 			resourceActivityResourceId=null;
 			stopCollectionDataLog();
@@ -1284,7 +1280,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void stopCollectionDataLog(){
 		if(collectionActivityEventId!=null){
-			stopPlayerActivityEvent(collectionActivityEventId, "", PlayerConstants.COLLECTION_EVENT_NAME, collectionDo.getGooruOid(), collectionDo.getGooruOid(), PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid(), getUserAgent());
 			collectionEndTime=PlayerDataLogEvents.getUnixTime();
 			PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(), 
 					PlayerDataLogEvents.STOP_EVENT_TYPE, collectionStartTime, collectionEndTime, collectionEndTime-collectionStartTime-totalTimeSpentOnSummaryPage, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
@@ -1346,27 +1341,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 //			@Override
 //			public void onSuccess(String result) {
 				updateViewCount(collectionItemId);
-//			}
-//		});
-	}
-
-	public void startPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
-			String context,String userAgent){
-/*		this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String activityEventId) {
-
-			}
-		});*/
-	}
-	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
-			String context,String userAgent){
-//		this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-//			@Override
-//			public void onSuccess(String activityEventId) {
-//
 //			}
 //		});
 	}
