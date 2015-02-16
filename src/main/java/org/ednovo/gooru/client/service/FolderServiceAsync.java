@@ -72,6 +72,4 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId, AsyncCallback<Void> simpleAsyncCallback);
 	
 	void getTocFolders(String folderId, AsyncCallback<FolderTocDo> callback);
-	
-	void getTocFoldersDetails(String folderId,AsyncCallback<List<FolderDo>> callback);
 }

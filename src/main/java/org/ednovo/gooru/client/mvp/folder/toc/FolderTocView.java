@@ -285,7 +285,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 
 	@Override
-	public void setFolderItems(TreeItem item,List<FolderDo> foldersTocObj) {
+	public void setFolderItems(TreeItem item,FolderTocDo foldersTocObj) {
 		displayWorkspaceData(item, foldersTocObj);
 	}
 	/**
@@ -293,38 +293,41 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param item
 	 * @param folderListDo
 	 */
-	private void displayWorkspaceData(TreeItem item,List<FolderDo> foldersArrayList) {
+	private void displayWorkspaceData(TreeItem item,FolderTocDo foldersTocObj) {
 		//This will remove the loading text for the child items.
 		if(item.getChildCount() > 0){
 			item.getChild(0).remove();
 		}
 		//This will set the data to the selected tree item.
-		if (foldersArrayList != null && foldersArrayList.size() > 0) {
-				FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
-						.getWidget();
-				int folderLevel = folderTreeItemWidget.getFolerLevel();
-				for (int i = 0; i < foldersArrayList.size(); i++) {
-					FolderDo floderDo = foldersArrayList.get(i);
-					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
-							String styleName = FolderContainerCBundle.INSTANCE.css().child();
-							FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
-									styleName, floderDo.getTitle(),
-									floderDo.getGooruOid());
-							innerFolderTreeItem.setFolerLevel(folderLevel + 1);
-							TreeItem folderItem = new TreeItem(
-									innerFolderTreeItem);
-							item.addItem(folderItem);
-							adjustTreeItemStyle(folderItem);
-					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
-						 	String styleName = getTreeItemStyleName(folderLevel);
-						 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
-						 	folderItem.addStyleName(styleName);
-						 	item.addItem(folderItem);
-							adjustTreeItemStyle(folderItem);
-					 }
+		if(foldersTocObj!=null){
+			List<FolderDo> foldersArrayList=foldersTocObj.getCollectionItems();
+			if (foldersArrayList != null && foldersArrayList.size() > 0) {
+					FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
+							.getWidget();
+					int folderLevel = folderTreeItemWidget.getFolerLevel();
+					for (int i = 0; i < foldersArrayList.size(); i++) {
+						FolderDo floderDo = foldersArrayList.get(i);
+						 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
+								String styleName = FolderContainerCBundle.INSTANCE.css().child();
+								FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
+										styleName, floderDo.getTitle(),
+										floderDo.getGooruOid());
+								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
+								TreeItem folderItem = new TreeItem(
+										innerFolderTreeItem);
+								item.addItem(folderItem);
+								adjustTreeItemStyle(folderItem);
+						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+							 	String styleName = getTreeItemStyleName(folderLevel);
+							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
+							 	folderItem.addStyleName(styleName);
+							 	item.addItem(folderItem);
+								adjustTreeItemStyle(folderItem);
+						 }
+					}
+					item.setState(folderTreeItemWidget.isOpen());
 				}
-				item.setState(folderTreeItemWidget.isOpen());
-			}
+		}
 	}
 	/**
 	 * This method is used to set the style for collections based on the folder level.

@@ -146,6 +146,4 @@ public interface FolderService extends BaseService {
 	 * @throws ServerDownException
 	 */
 	public FolderTocDo getTocFolders(String folderId) throws GwtException, ServerDownException;
-	
-	public List<FolderDo> getTocFoldersDetails(String folderId) throws GwtException, ServerDownException;
 }

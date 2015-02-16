@@ -102,9 +102,9 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 
 	@Override
 	public void getFolderItems(final TreeItem item, String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFoldersDetails(folderId,new SimpleAsyncCallback<List<FolderDo>>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
-			public void onSuccess(List<FolderDo> folderListDo) {
+			public void onSuccess(FolderTocDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
 			}
 		});

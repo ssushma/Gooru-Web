@@ -46,6 +46,6 @@ import com.google.gwt.user.client.ui.TreeItem;
  */
 public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
 	void setFolderItems(FolderTocDo  foldersArrayList);
-	public void setFolderItems(TreeItem item,List<FolderDo> folderListDo);
+	public void setFolderItems(TreeItem item,FolderTocDo folderListDo);
 	void clearTocData();
 }
