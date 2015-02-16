@@ -1,0 +1,270 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field="addCenturyStyle" src="AddCentury.css"/>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
+
+	<g:HTMLPanel styleName="{res1.css.standarBodyContainer}">
+		 <g:HTMLPanel styleName="skillsCategory">
+      <ul>
+        <li><span styleName="smallCircle greenCircle"></span>Hewlett Deeper Learning Model</li>
+        <li><span styleName="smallCircle blueCircle"></span>Conley 4 keys</li>
+        <li><span styleName="smallCircle yellowCircle"></span>P21 Framework</li>
+        <li><span styleName="smallCircle purpleCircle"></span>National Research Center for Life and Work</li>
+      </ul>
+    </g:HTMLPanel>
+    <g:HTMLPanel styleName="skillsCategoryList">
+    
+    
+    <g:HTMLPanel styleName="less-gutter">
+      <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 devider">
+        <uc:UlPanel  ui:field="levelTwoStandards"  styleName="list-unstyled standeredList">        
+          <uc:LiPanel>
+            <g:HTMLPanel styleName="circlesBlock">
+           <g:InlineHTML styleName="smallCircle purpleCircle"></g:InlineHTML>  
+           <g:InlineHTML styleName="smallCircle greenCircle"></g:InlineHTML> 
+           <g:InlineHTML styleName="smallCircle blueCircle"></g:InlineHTML > 
+           <g:InlineHTML styleName="smallCircle yellowCircle"></g:InlineHTML>
+           </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </uc:LiPanel>
+           
+         <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle greenCircle"></span> 
+            <span styleName="smallCircle blueCircle"></span > 
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+                  <li>
+            <g:HTMLPanel styleName="circlesBlock">
+           <span styleName="smallCircle purpleCircle"></span>  
+           <span styleName="smallCircle greenCircle"></span> 
+           <span styleName="smallCircle blueCircle"></span > 
+           <span styleName="smallCircle yellowCircle"></span>
+           </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+         <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle greenCircle"></span> 
+            <span styleName="smallCircle blueCircle"></span > 
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+           
+        </uc:UlPanel>
+      </g:HTMLPanel>
+   <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 devider">
+        <ul>
+         
+          <li>
+            <g:HTMLPanel styleName="circlesBlock">
+           <span styleName="smallCircle purpleCircle"></span>  
+           <span styleName="smallCircle greenCircle"></span> 
+           <span styleName="smallCircle blueCircle"></span > 
+           <span styleName="smallCircle yellowCircle"></span>
+           </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+         <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle greenCircle"></span> 
+            <span styleName="smallCircle blueCircle"></span > 
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+                  <li>
+            <g:HTMLPanel styleName="circlesBlock">
+           <span styleName="smallCircle purpleCircle"></span>  
+           <span styleName="smallCircle greenCircle"></span> 
+           <span styleName="smallCircle blueCircle"></span > 
+           <span styleName="smallCircle yellowCircle"></span>
+           </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+         <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle greenCircle"></span> 
+            <span styleName="smallCircle blueCircle"></span > 
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+           
+        </ul>
+      </g:HTMLPanel>
+     <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 devider">
+        <ul>
+         
+          <li>
+            <g:HTMLPanel styleName="circlesBlock">
+           <span styleName="smallCircle purpleCircle"></span>  
+           <span styleName="smallCircle greenCircle"></span> 
+           <span styleName="smallCircle blueCircle"></span > 
+           <span styleName="smallCircle yellowCircle"></span>
+           </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+         <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle greenCircle"></span> 
+            <span styleName="smallCircle blueCircle"></span > 
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+                  <li>
+            <g:HTMLPanel styleName="circlesBlock">
+           <span styleName="smallCircle purpleCircle"></span>  
+           <span styleName="smallCircle greenCircle"></span> 
+           <span styleName="smallCircle blueCircle"></span > 
+           <span styleName="smallCircle yellowCircle"></span>
+           </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+         <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle greenCircle"></span> 
+            <span styleName="smallCircle blueCircle"></span > 
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+             <li>
+            <g:HTMLPanel styleName="circlesBlock">
+            
+            <span styleName="smallCircle yellowCircle"></span>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+           </li>
+           
+           
+           
+        </ul>
+      </g:HTMLPanel>
+      <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+      </g:HTMLPanel>
+      
+      
+      <g:HTMLPanel styleName="buttonGroup">
+      
+      <button type="button" styleName="secondary" id="lnkCancel" alt="Cancel" title="Cancel">Cancel</button>
+      <button type="button" styleName="primary" id="btnOk" alt="Save" title="Save">Add</button>
+      </g:HTMLPanel>
+      
+      
+      
+      
+    </g:HTMLPanel>
+		
+	</g:HTMLPanel>
+</ui:UiBinder>

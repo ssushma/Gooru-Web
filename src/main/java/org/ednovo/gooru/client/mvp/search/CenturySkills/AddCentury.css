@@ -103,7 +103,7 @@
 	float: left;
 	height: 120px;
 	padding: 20px;
-	width: 200px;
+	width: 170px;
 	padding-right:10px;
 }
 
@@ -151,7 +151,6 @@
 	width: 104px;
 	margin-left: 28px;
 	float: left;
-	height: 32px;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB');
 }
 .changeImage:hover{
@@ -159,7 +158,7 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB', endColorstr='#1076BB');
 }
 .shelfGradeInfoTitle {
-	color: #515151;
+	color: #cccccc;
 	font-size: 16px;
 }
 
@@ -172,9 +171,10 @@
 }
 
 .gradeInfoContainer {
-	display:inline-block;
-	margin-right: 10px;
-	width: 47%;
+	float: left;
+	margin-right: 45px;
+	margin-bottom: 50px;
+	width: 42%;
 }
 
 .gradeInfoTitleContainer {
@@ -234,7 +234,7 @@
 	margin-right: 23px;
 	height: 68px;
 	resize:none;
-	/* margin-top: -15px; */
+	margin-top: -15px;
 }
 
 .shelfGradeSelectResources {
@@ -384,7 +384,7 @@
 }
 
 .shelfVocabularyStandard {
-	color: #515151;
+	color: #cccccc;
 	font-size: 16px;
 	margin-right: 60px;
 	width: 42%;
@@ -542,8 +542,8 @@
 	display: block;
 	float: left;
 	font-size: 12px;
-	margin-top: 41px;
-	width: 50%;
+	margin-top: 5px;
+	width: 130px;
 	font-style: italic;
 }
 
@@ -857,7 +857,7 @@
 	padding-left: 5px;
 	float: left;
 	cursor: pointer;
-	width: 91%;
+	width: 90%;
 }
 
 .arrow {
@@ -907,7 +907,6 @@
 
 
 .profileEditImageButton {
-	box-sizing:content-box;
 	display:none;
 	position: relative;
 	text-align: center;
@@ -934,7 +933,6 @@
 	margin-left: 45.5px;
 	float: left;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdfdfd', endColorstr='#dddddd');
-	
 }
 .profileEditImageButton:hover{
 	background: #eee;
@@ -955,10 +953,9 @@
 	font-size: 14px;
 	text-align: center;
 	width: 126px;
-	padding: 4px;
-	/* margin-left: 0px !important;
-	height: 20px; */
-	margin: 5px;
+	padding-bottom: 4px;
+	margin-left: 0px !important;
+	height: 20px;
 }
 
 .userNumber {
@@ -1136,8 +1133,7 @@ float: left;
 	border: 1px solid #CCCCCC;
 	height: 28px;
 	padding-left: 2px;
-	width: 100%;
-	margin-bottom: 2px;
+	width: 298px;
 }
 .primaryLabel{
 		font-family: Arial, Helvetica, sans-serif;
@@ -1151,10 +1147,10 @@ float: left;
 	margin-top:20px;
 }
 .primaryLabelContainer{
-	width: 25%;
+	width: 24%;
 }
 .secondaryLabelContainer{
-	width: 29%;
+	width: 27%;
 }
 .primaryToggleArrowBottom {
 	background: url("images/toggle_arrow_down.png") no-repeat transparent;
@@ -1185,25 +1181,27 @@ transition: .5s;
 {
 	padding:20px;
 	float: left;
-	width: 100%;
-	padding-left:40px;
+width: 96%;
+padding-left:40px;
 }
 .secondaryInfoContainer {
 	float: left;
-	margin-right: 10px;
+	margin-right: 45px;
 	margin-bottom: 50px;
-	width: 47%;
+	width: 42%;
 	margin-top:-8px;
 }
 .languageObjectiveContainer{
 		float: left;
-	width: 100%;
+	margin-right: 45px;
+	width: 91%;
 	margin-top:20px;
 }
 .depthOfKnowledgeContainer
 {
 	float: left;
-	width: 100%;
+	margin-right: 45px;
+	width: 91%;
 	clear: both;
 }
 .languageObjectiveTextArea
@@ -1220,7 +1218,7 @@ height: 73px;
 	float: left;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	width: 96%;
+	width: 98%;
 	opacity: 0.6;
 }
 .questionDepthOfKnoweldgeContainer{
@@ -1286,6 +1284,7 @@ height: 73px;
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:1px;
 	border-style:solid;
+	position: absolute;
 }
 .arrowInstructional {
     width: 0;
@@ -1295,7 +1294,7 @@ height: 73px;
 	left: 130px;
 	top: -9px;
 	float: right;
-	margin-top: 10px;
+	margin-top: -12px;
 	margin-right: 7px;
 	border-bottom: none;
 	cursor: pointer;
@@ -1321,14 +1320,14 @@ height: 73px;
 
 
 .learningInnovationSkills{
-	width: 100%;
+	width: 50%;
 }
 
 .deptOfKnowledge{
-	width: 100%;
+	width: 35%;
 }
 .languageObjectives{
-	width: 100%;
+	width: 35%;
 }
 .teacherTipLabel {
 	color: black;
@@ -1355,77 +1354,4 @@ height: 73px;
 width: 100%;
 float: right;
 padding-top: 10px;
-}
-.gradeInfoLabel{
-	font-size: 14px;
-margin-top: 92px;
-position: relative;
-}
-.browseContainer{
- 	float: right;
-	right: -27%;
-	position: relative;
-	margin-top: -12%;
-
-}
-.charLimit{
-	float: right;
-	color: #999;
-	margin-right: 66px;
-}
-.learningObjErrStyle{
-	float: right;
-	color: #fbb03b;
-	font-size: 12px;
-   font-style: italic;
-   margin-right: -9px;
-}
-.checkBoxlevels input[type="checkbox"]{
-		margin: 1px 0;
-		vertical-align: middle;
-}
-.checkBoxlevels label{
-	font-weight: normal;
-}
-.centuryContainer{
-position: relative;
-}
-.rightCourseContainer{
-	margin-right: 0px;
-width: 50%;
-}
-.languageTextAreaCont{
-width: 100%;
-}
-.scrollPanelContainerAudience{
-	background-color:rgb(255,255,255);
-	width:292px;
-	height:80px;
-	border-color:rgb(221,221,221);
-	border-width:1px;
-	/* Firefox v1.0+ */
-	-moz-border-radius:1px;
-	/* Safari v3.0+ and by Chrome v0.2+ */
-	-webkit-border-radius:1px;
-	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
-	border-radius:1px;
-	border-style:solid;
-	top: 7px;
-	left: -1px;
-	z-index: 9;
-	overflow-x:hidden !important;
-}
-.dropdownContainerAudience{
-	background-color:rgb(255,255,255);
-	width:291px;
-	height:28px;
-	border-color:rgb(221,221,221);
-	border-width:1px;
-	/* Firefox v1.0+ */
-	-moz-border-radius:1px;
-	/* Safari v3.0+ and by Chrome v0.2+ */
-	-webkit-border-radius:1px;
-	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
-	border-radius:1px;
-	border-style:solid;
 }
