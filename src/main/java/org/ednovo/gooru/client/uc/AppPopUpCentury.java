@@ -55,10 +55,7 @@ public class AppPopUpCentury extends PopupPanel {
 	 */
 	public AppPopUpCentury() {
 		super(false);
-		//<div class="org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMarker org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignSprite org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMark" id="btnCancelButton"></div>
 		ShelfCBundle.INSTANCE.css().ensureInjected();
-	/*	this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
-		this.setStyleName(ShelfCBundle.INSTANCE.css().standardsBrowsePopup());*/
 		
 		mainPanel=new FlowPanel();
 		innerPanel=new FlowPanel();
@@ -124,16 +121,6 @@ public class AppPopUpCentury extends PopupPanel {
 		this.setWidget(content);
 		setGlassEnabled(true);
 	}
-	/**
-	 * Class constructor with two parameter
-	 * @param title of  AppPopUp
-	 * @param widget instance of {@link Widget} 
-	 */
-	/*public AppPopUp(String title, Widget widget) {
-		this();
-		setContent(title, widget);
-	}*/
-
 	/**
 	 * Set appPopUp content
 	 * @param title for appPopUp

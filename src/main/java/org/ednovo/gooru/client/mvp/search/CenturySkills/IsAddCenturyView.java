@@ -44,24 +44,9 @@ import com.gwtplatform.mvp.client.PopupView;
  */
 public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCenturyUiHandlers> {
 
-	String setStandardsVal();
-
 	void hidePopup();
 
 	void SetData(StandardsLevel1DO levelOneData, int valArr);
 
-	void loadData();
-
-	void setDefaultCCSS();
-
-	Integer setStandardsIdVal();
-	
-	String setStandardsDesc();
-
-	void setEnableStandardButtons(boolean isCCSSAvailable,
-			boolean isNGSSAvailable, boolean isTEKSAvailable,
-			boolean isCAAvailable);
-
-	void setStandardsStyles(String standardVal);
-	
+	void loadData();	
 }

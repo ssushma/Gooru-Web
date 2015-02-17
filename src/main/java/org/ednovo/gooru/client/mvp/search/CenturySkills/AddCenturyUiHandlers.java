@@ -34,10 +34,6 @@ import com.google.gwt.user.client.ui.Button;
  */
 public interface AddCenturyUiHandlers extends BaseUiHandlers {
 
-	void callDefaultStandardsLoad();
-
-	String setStandardsVal();
-
 	void hidePopup();
 
 	void loadStateStandards(String string);

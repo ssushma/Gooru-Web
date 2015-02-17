@@ -65,10 +65,10 @@ public abstract class AppCenturyTagSuggestBox extends SuggestBox implements KeyU
 //		this.getTextBox().getElement().setAttribute("placeholder", "e.g. CCSS.M.8.F.A.3");
 		if (AppClientFactory.getLoggedInUser().getUsername()!=null){
 
-				this.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122());
+				this.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
 			
 		}else{
-			this.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122());
+			this.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
 		}
 		this.getValueBox().addKeyUpHandler(this);
 		this.getValueBox().addKeyDownHandler(this);

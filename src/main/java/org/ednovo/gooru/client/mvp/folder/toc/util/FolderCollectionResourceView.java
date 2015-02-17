@@ -105,6 +105,7 @@ public class FolderCollectionResourceView extends Composite {
 				resTitle = resTitle.length() > 50 ? resTitle.substring(0, 50)
 						+ "..." : resTitle;
 				final Label text = new Label(removeHtmlTags(resTitle));
+				text.setStyleName(res.css().resourceTitle());
 				liPanel.add(text);
 				if (folderDo.getCollectionItems().get(i).getResourceFormat() != null
 						&& folderDo.getCollectionItems().get(i)
@@ -116,6 +117,7 @@ public class FolderCollectionResourceView extends Composite {
 				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);
 				final String description=removeHtmlTags(folderDo.getCollectionItems().get(i).getDescription()!=null?folderDo.getCollectionItems().get(i).getDescription():"");
+				//Mouse over handler on resource title
 				MouseOverHandler mouseOverHandler=new MouseOverHandler() {
 					@Override
 					public void onMouseOver(MouseOverEvent event) {
@@ -127,7 +129,7 @@ public class FolderCollectionResourceView extends Composite {
 					}
 				};
 				text.addDomHandler(mouseOverHandler, MouseOverEvent.getType());
-				
+				//Mouse out handler on resource title
 				MouseOutHandler mouseOutHandler=new MouseOutHandler() {
 					@Override
 					public void onMouseOut(MouseOutEvent event) {

@@ -376,10 +376,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardLabel.getElement().setAttribute("alt",i18n.GL0575());
 		standardLabel.getElement().setAttribute("title",i18n.GL0575());
 		
-		centLabel.setText(i18n.GL3121());
+		centLabel.setText(i18n.GL3121_1());
 		centLabel.getElement().setId("lblCentLabel");
-		centLabel.getElement().setAttribute("alt",i18n.GL3121());
-		centLabel.getElement().setAttribute("title",i18n.GL3121());
+		centLabel.getElement().setAttribute("alt",i18n.GL3121_1());
+		centLabel.getElement().setAttribute("title",i18n.GL3121_1());
 		
 		addStandardBtn.setText(i18n.GL0590());
 		addStandardBtn.getElement().setId("btnAddStandardBtn");
@@ -835,7 +835,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addAttributesToWidget(selectGradeLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3025() : i18n.GL0820());
 		addAttributesToWidget(selectCourseLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3026() : i18n.GL0846());
 		addAttributesToWidget(standardsDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3027() : i18n.GL0749());
-		addAttributesToWidget(centDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3124() : i18n.GL3123());
+		addAttributesToWidget(centDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3124_1() : i18n.GL3123_1());
 		addAttributesToWidget(depthOfKnowledgeTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3028() : i18n.GL1644());
 		addAttributesToWidget(learningInnovationTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3029() : i18n.GL1650());
 		addAttributesToWidget(instructionalTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3030() : i18n.GL1639());

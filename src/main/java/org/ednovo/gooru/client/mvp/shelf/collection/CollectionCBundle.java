@@ -352,6 +352,8 @@ public interface CollectionCBundle extends ClientBundle{
 		String languageTextAreaCont();
 		String scrollPanelContainerAudience();
 		String dropdownContainerAudience();
+		String deselecteAssessment();
+		String selecteAssessment();
 	}
 	@Source("Collection.css")
 	CollectionCss css();
