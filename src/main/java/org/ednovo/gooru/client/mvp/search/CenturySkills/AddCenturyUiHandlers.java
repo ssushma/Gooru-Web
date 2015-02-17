@@ -38,9 +38,5 @@ public interface AddCenturyUiHandlers extends BaseUiHandlers {
 
 	void loadStateStandards(String string);
 
-	Integer setStandardsIdVal();
-
-	String setStandardDesc();
-
 
 }
