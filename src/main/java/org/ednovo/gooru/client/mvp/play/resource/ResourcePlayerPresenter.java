@@ -531,7 +531,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			clearSlot(TAB_PRESENTER_SLOT);
 			showLoginPopupWidget(i18n.GL0590().toUpperCase());
 		}else{
+			if(collectionItemDo!=null){
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
+			}
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
