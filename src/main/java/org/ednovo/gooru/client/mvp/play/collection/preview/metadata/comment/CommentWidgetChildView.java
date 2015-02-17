@@ -98,6 +98,8 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	
 	private static final String CONTENT_ADMIN_ROLE = "Content_Admin";
 	
+	private static final String SUPER_ADMIN_ROLE = "superadmin";
+	
 	private static boolean CHECK_COLLOBORATOR =false;
 	
 	private List<String> getPermissionsList = null;
@@ -175,23 +177,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		
 		
 		setCommentData(commentsDo, collectionDo);
-		
-		if(collectionDo.getSettings()!=null)
-		{
-			if(collectionDo.getSettings().getComment()!=null)
-			{
 	
-				if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on"))
-				{
-					editButton.setVisible(true);
-				}
-				else
-				{
-					editButton.setVisible(false);
-				}
-			}
-		}
-		
 		userPhoto.getElement().setId("imgUserPhoto");
 		messageInfo.getElement().setId("pnlMessageInfo");
 		userName.getElement().setId("lblUserName");
@@ -274,10 +260,6 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			commentField.getElement().setAttribute("alt",commentsDo.getComment());
 			commentField.getElement().setAttribute("title",commentsDo.getComment());
 			
-			
-			
-			
-			
 			setOptionsButtons();
 			
 		}catch(Exception e){
@@ -286,24 +268,52 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @function setOptionsButtons 
+	 * 
+	 * @created_date : 10-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setOptionsButtons(){
 		loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
-		if(!AppClientFactory.isAnonymous() && (commentOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
-			editButton.setVisible(true);
-			deleteButton.setVisible(false);
-		} else if(!AppClientFactory.isAnonymous() && (collectionOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
-			deleteButton.setVisible(true);
-			editButton.setVisible(false);
-		} else if(AppClientFactory.isAnonymous()){
-			editButton.setVisible(false);
-			deleteButton.setVisible(false);
-		} else if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
-			deleteButton.setVisible(true);
-			editButton.setVisible(false);
-		}else if(!AppClientFactory.isAnonymous() && getPermissionsList!=null && getPermissionsList.toString().contains("edit")){
+		if(collectionDo.getSettings()!=null && collectionDo.getSettings().getComment()!=null){
+			if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on")){
+//				editButton.setVisible(true);
+				if(!AppClientFactory.isAnonymous() && (commentOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
+					editButton.setVisible(true);
+					deleteButton.setVisible(false);
+				} else if(!AppClientFactory.isAnonymous() && (collectionOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
+					deleteButton.setVisible(true);
+					editButton.setVisible(false);
+				} else if(AppClientFactory.isAnonymous()){
+					editButton.setVisible(false);
+					deleteButton.setVisible(false);
+				} else if(!AppClientFactory.isAnonymous() && 
+						(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE) 
+						|| AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(SUPER_ADMIN_ROLE))){
+					deleteButton.setVisible(false);
+					editButton.setVisible(true);
+				}else if(!AppClientFactory.isAnonymous() && getPermissionsList!=null && getPermissionsList.toString().contains("edit")){
+					deleteButton.setVisible(false);
+					editButton.setVisible(true);
+				}	
+			}else{
+				editButton.setVisible(false);
 				deleteButton.setVisible(false);
-				editButton.setVisible(true);
+			}
 		}
 	}
 	
@@ -396,19 +406,74 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(i18n.GL0558(),i18n.GL0559());
 			enableEditFunction(true);
 		}
-	}		
+	}	
+	/**
+	 * 
+	 * @function enableEditFunction 
+	 * 
+	 * @created_date : 10-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param isVisible
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void enableEditFunction(boolean isVisible) {
 		messageInfo.setVisible(!isVisible);
 		commentField.setVisible(isVisible);
 		postCommentBtn.setVisible(isVisible);
 		postCommentCancel.setVisible(isVisible);
 	}
-
+	/**
+	 * 
+	 * @function displaySuccessMsg 
+	 * 
+	 * @created_date : 10-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param isVisible
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void displaySuccessMsg(boolean isVisible) {
 		commentField.setVisible(!isVisible);
 		successPostMsg.setVisible(isVisible);
 	}
-	
+	/**
+	 * 
+	 * @function getCommentField 
+	 * 
+	 * @created_date : 10-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : TextArea
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public TextArea getCommentField() {
 		return commentField;
 	}
@@ -489,7 +554,21 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @fileName : CommentWidgetChildView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 10-Feb-2015
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
+	 */
 	private class DeleteConfirmationPopupVc extends ConfirmationPopupVc{
 		public DeleteConfirmationPopupVc(String messageHeader,String messageContent){
 			super(messageHeader, messageContent);
@@ -600,7 +679,26 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			postCommentBtn.addStyleName(DISABLED_STYLE);
 		}
 	}
-	
+	/**
+	 * 
+	 * @function setMixPanelEvent 
+	 * 
+	 * @created_date : 10-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param collectionAuthor
+	 * @parm(s) : @param loggedInUser
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setMixPanelEvent(String collectionAuthor, String loggedInUser) {
 		if(collectionAuthor.equalsIgnoreCase(loggedInUser)) {
 			MixpanelUtil.mixpanelEvent("Preview_Author_Comments");
@@ -629,15 +727,49 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
         return html;
 	}
 
-
+	/**
+	 * 
+	 * @function getEditButton 
+	 * 
+	 * @created_date : 10-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : HTMLPanel
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public HTMLPanel getEditButton() {
 		return editButton;
 	}
 
-
+	/**
+	 * 
+	 * @function setEditButton 
+	 * 
+	 * @created_date : 10-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param editButton
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setEditButton(HTMLPanel editButton) {
 		this.editButton = editButton;
 	}
-	
-	
 }
