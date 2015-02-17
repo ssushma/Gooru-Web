@@ -48,6 +48,7 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.Constants;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,7 +63,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
  * @author Search Team
  * 
  */
-public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteService {
+public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteService,Constants {
 
 	/**
 	 * 
@@ -73,98 +74,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	@Resource(name = "restConstants")
 	private Properties restConstants;
-	
-	public static final String GOORU_ANONYMOUS = "ANONYMOUS";
-
-	private static final String REST_ENDPOINT = "rest.endpoint";
-
-	private static final String SEARCH_ENDPOINT = "search.endpoint";
-
-	private static final String REST_USERNAME = "rest.username";
-
-	private static final String REST_PASSWORD = "rest.password";
-
-	private static final String SEARCH_USERNAME = "search.username";
-
-	private static final String SEARCH_PASSWORD = "search.password";
-
-	private static final String API_KEY = "api.key";
-
-	private static final String HOME_ENDPOINT = "home.endpoint";
-	
-	private static final String ANALYTICS_ENDPOINT = "analytics.endpoint";
-
-	private static final String DOMAIN_NAME = "domain.name";
-	
-	private static final String DOCVIEWER_HOME = "docViewer.home";
-	
-	private static final String DOCVIEWER_CACHE = "docViewer.cache";
-
-	private static final String GOOGLE_ANALTICS_ADDITIONAL_ACCOUNTS = "google.analtics.additional.accounts";
-
-	private static final String CLASSIC_ENDPOINT = "classic.endpoint";
-
-	private static final String GOORU_SESSION_TOKEN = "gooru-session-token";
-	
-	private static final String GOORU_ACCESS_TOKEN = "google-access-token";
-	
-	private static final String GOORU_ACTIVE_USER = "gooru-active-user";
-
-	private static final String SIGNED_USER_UID = "signed-user-uid";
-
-	private static final String SIGNED_USER_EMAILID = "signed-user-emailid";
-
-	private static final String COOKIE_PATH = "/";
-
-	private static final String TOKEN = "token";
-
-	private static final String USER_INFO_FAILED_ON_TOKEN = "Get User info failed on token : ";
-
-	public static final int COOKIE_AGE = 86400;//24 hrs
-	
-	private static final String PRODUCTION_SWITCH = "production.switch";
-	
-	private static final String GOOGLE_SIGNIN = "google.signin";
-	
-	private static final String ENABLE_CLIENT_LOGGERS = "clientside.loggers";
-	
-	private static final String GOOGLE_DRIVE = "drive.api";
-	
-	private static final String PROFILE_IMAGE_RESPOSITORY_URL="profile.image.url";
-	
-	private static final String CDN_ENDPOINT = "cdn.endpoint";
-	
-	private static final String DATA_LOG_API_KEY = "log.api.key";
-	
-	private static final String WHATS_NEW_MOS_LINK = "whats.new.mos.link";
-	
-	private static final String WHATS_NEW_FIB_LINK = "whats.new.fib.link";
-	
-	private static final String MOS_LINK = "mos.link";
-
-	private static final String GOORU_RELEASE_VERSION = "gooru.release.version";
-	
-	private static final String FACEBOOK_APP_ID="facebook.app_id";
-	
-	private static final String FACEBOOK_FEED_URL="facebook.dialogfeedurl";
-	
-	private static final String TAXONOMY_PREFERENCES = "taxonomy.preferences";
-	
-	private static final String SIGNED_USER_DOB = "signed-user-dob";
-	
-	private static final String SERVER_REDIRECT_URL="redirect.url";
-	
-	private static final String GOOGLE_RESTENDPOINT="google.restendpoint";
-	
-	private static final String STORIES_URL = "stories.url";
-	
-	private static final String SHOW_STORIES = "show.stories";
-	
-	private static final String COMMUNITY_LIBRARY_ID = "community.library.gooruOid";
-	
-	private static final String HTTPS = "https";
-	
-	private static final String HTTP = "http";
 	
 	public BaseServiceImpl() {
 

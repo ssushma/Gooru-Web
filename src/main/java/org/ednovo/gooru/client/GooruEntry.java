@@ -26,7 +26,6 @@
 package org.ednovo.gooru.client;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +43,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
 import com.google.gwt.user.client.Cookies;
@@ -77,8 +77,24 @@ public class GooruEntry implements EntryPoint {
 	
 	private static final String GOORU_USER_INACTIVE = "in-active";
 	
+	static{
+		
+	}
+	
 	public void onModuleLoad() {
-
+		
+		/**
+		 * Capturing all uncaught exception on client side.
+		 */
+		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+			
+			@Override
+			public void onUncaughtException(Throwable e) {
+				Throwable unwrapped = getExceptionToDisplay(e);
+				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
+			}
+		});	
+		
 		DelayedBindRegistry.bind(appInjector);
 		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
 		    loadLibraries.add(LoadLibrary.ADSENSE);
@@ -114,11 +130,11 @@ public class GooruEntry implements EntryPoint {
 			});
 			AppClientFactory.setAppGinjector(appInjector);
 		}
+		getloggersStatus();
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 1000px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
 		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
 		
-		getloggersStatus();
 	}
 	
 	
@@ -250,16 +266,20 @@ public class GooruEntry implements EntryPoint {
 		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js","js");
 		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/errorImageFunction.js","js");
 	}
-	/*Timer t = new Timer() {
-		@Override
-		public void run() {
-			if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) && flag){
-				flag= false;
-				redirectToLandingPage();
-				
-			}
-		}
-	};*/
 	
-
+	/**
+	 *  Method used to unwrap GWT umbrella exception.
+	 *  
+	 * @param e {@link Throwable}
+	 * @return {@link Throwable}
+	 */
+	public Throwable getExceptionToDisplay(Throwable e) {
+	    if(e instanceof UmbrellaException) {
+	      UmbrellaException ue = (UmbrellaException) e;
+	      if(ue.getCauses().size() == 1) {
+	        return getExceptionToDisplay(ue.getCauses().iterator().next());
+	      }
+	    }
+	    return e;
+	  }
 }

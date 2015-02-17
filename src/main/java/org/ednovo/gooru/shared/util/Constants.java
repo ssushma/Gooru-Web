@@ -37,10 +37,96 @@ public interface Constants {
 	
 	String GOORU_ANONYMOUS = "ANONYMOUS";
 	
-	/* ****************** Base service Impl Constants ******************** */
+	/* ****************** Base service Impl Constants Start ******************** */
 	
-	
-	 
 
+	String REST_ENDPOINT = "rest.endpoint";
+
+	String SEARCH_ENDPOINT = "search.endpoint";
+
+	String REST_USERNAME = "rest.username";
+
+	String REST_PASSWORD = "rest.password";
+
+	String SEARCH_USERNAME = "search.username";
+
+	String SEARCH_PASSWORD = "search.password";
+
+	String API_KEY = "api.key";
+
+	String HOME_ENDPOINT = "home.endpoint";
 	
+	String ANALYTICS_ENDPOINT = "analytics.endpoint";
+
+	String DOMAIN_NAME = "domain.name";
+	
+	String DOCVIEWER_HOME = "docViewer.home";
+	
+	String DOCVIEWER_CACHE = "docViewer.cache";
+
+	String GOOGLE_ANALTICS_ADDITIONAL_ACCOUNTS = "google.analtics.additional.accounts";
+
+	String CLASSIC_ENDPOINT = "classic.endpoint";
+
+	String GOORU_SESSION_TOKEN = "gooru-session-token";
+	
+	String GOORU_ACCESS_TOKEN = "google-access-token";
+	
+	String SIGNED_USER_UID = "signed-user-uid";
+
+	String SIGNED_USER_EMAILID = "signed-user-emailid";
+
+	String COOKIE_PATH = "/";
+
+	String TOKEN = "token";
+
+	String USER_INFO_FAILED_ON_TOKEN = "Get User info failed on token : ";
+
+	int COOKIE_AGE = 86400;//24 hrs
+	
+	String PRODUCTION_SWITCH = "production.switch";
+	
+	String GOOGLE_SIGNIN = "google.signin";
+	
+	String ENABLE_CLIENT_LOGGERS = "clientside.loggers";
+	
+	String GOOGLE_DRIVE = "drive.api";
+	
+	String PROFILE_IMAGE_RESPOSITORY_URL="profile.image.url";
+	
+	String CDN_ENDPOINT = "cdn.endpoint";
+	
+	String DATA_LOG_API_KEY = "log.api.key";
+	
+	String WHATS_NEW_MOS_LINK = "whats.new.mos.link";
+	
+	String WHATS_NEW_FIB_LINK = "whats.new.fib.link";
+	
+	String MOS_LINK = "mos.link";
+
+	String GOORU_RELEASE_VERSION = "gooru.release.version";
+	
+	String FACEBOOK_APP_ID="facebook.app_id";
+	
+	String FACEBOOK_FEED_URL="facebook.dialogfeedurl";
+	
+	String TAXONOMY_PREFERENCES = "taxonomy.preferences";
+	
+	String SIGNED_USER_DOB = "signed-user-dob";
+	
+	String SERVER_REDIRECT_URL="redirect.url";
+	
+	String GOOGLE_RESTENDPOINT="google.restendpoint";
+	
+	String STORIES_URL = "stories.url";
+	
+	String SHOW_STORIES = "show.stories";
+	
+	String COMMUNITY_LIBRARY_ID = "community.library.gooruOid";
+	
+	String HTTPS = "https";
+	
+	String HTTP = "http";
+	
+	/* ****************** Base service Impl Constants End ******************** */
 }
