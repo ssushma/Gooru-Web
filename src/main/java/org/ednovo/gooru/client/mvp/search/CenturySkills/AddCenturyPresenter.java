@@ -68,15 +68,6 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	private SimpleAsyncCallback<List<LibraryCodeDo>> courseAsyncCallback;
 
 	private String resourceOid;
-	
-	private String playerType=null;
-	
-	private boolean isCCSSAvailable =false;
-	private boolean isNGSSAvailable =false;
-	private boolean isTEKSAvailable =false;
-	private boolean isCAAvailable =false;
-	
-	private String standardVal="";
 
 	public String getResourceUid() {
 		return resourceOid;
@@ -134,21 +125,6 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 		callDefaultStandardsLoad();
 	}
 
-	@Override
-	public String setStandardsVal() {
-		return getView().setStandardsVal();
-	}
-	
-	@Override
-	public Integer setStandardsIdVal() {
-		return getView().setStandardsIdVal();
-	}
-	
-	@Override
-	public String setStandardDesc() {
-		return getView().setStandardsDesc();
-	}
-	
 	
 	@Override
 	public void hidePopup() {
@@ -157,14 +133,6 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 
 
 
-	public void enableStandardsData(boolean isCCSSAvailable,
-			boolean isTEKSAvailable, boolean isNGSSAvailable,
-			boolean isCAAvailable) {
-		// TODO Auto-generated method stub
-		this.isCCSSAvailable= isCCSSAvailable;
-		this.isNGSSAvailable= isNGSSAvailable;
-		this.isTEKSAvailable= isTEKSAvailable;
-		this.isCAAvailable= isCAAvailable;
-	}
+
 
 }
