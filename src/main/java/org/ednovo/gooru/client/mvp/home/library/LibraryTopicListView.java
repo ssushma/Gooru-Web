@@ -281,9 +281,10 @@ public class LibraryTopicListView extends Composite{
 		}
 		else
 		{
-			searchLink.getElement().getStyle().setDisplay(Display.BLOCK);
-			viewAllBtn.setVisible(false);
+			searchLink.getElement().getStyle().setDisplay(Display.NONE);
+			viewAllBtn.setVisible(true);
 		}
+		//viewAllBtn.addClickHandler(new ViewAllBtnClickEvent());
 		
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		loadingImage.setVisible(false);
@@ -375,7 +376,7 @@ public class LibraryTopicListView extends Composite{
 	 */
 	public void renderEvents(){
 		
-		viewAllBtn.addClickHandler(new ViewAllBtnClickEvent());
+		//viewAllBtn.addClickHandler(new ViewAllBtnClickEvent(lessonCode));
 	}
 	
 	/**
@@ -527,6 +528,7 @@ public class LibraryTopicListView extends Composite{
 		
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		loadingImage.setVisible(false);
+		viewAllBtn.addClickHandler(new ViewAllBtnClickEvent(partnerFolderDo.getGooruOid()));
 		
 		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
@@ -1754,10 +1756,15 @@ public class LibraryTopicListView extends Composite{
 	}
 	
 	public class ViewAllBtnClickEvent implements ClickHandler{
-
+		String folderId="";
+		public ViewAllBtnClickEvent(String folderId){
+			this.folderId=folderId;
+		}
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 			
 		}
 		
