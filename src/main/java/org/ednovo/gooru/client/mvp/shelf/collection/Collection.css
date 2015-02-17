@@ -1388,3 +1388,19 @@ position: relative;
 .checkBoxlevels label{
 	font-weight: normal;
 }
+.selecteAssessment{
+	background: #87badd !important;
+	display: block;
+	border: 1px solid #4c98cc !important;
+	color: #ffffff !important;
+	width: 100%;
+	font-size: 12px;
+}
+.deselecteAssessment{
+	background: #d8d8d8 !important;
+	display: block;
+	border: 1px solid #979797 !important;
+	color: #515151 !important;
+	width: 100%;
+	font-size: 12px;
+}

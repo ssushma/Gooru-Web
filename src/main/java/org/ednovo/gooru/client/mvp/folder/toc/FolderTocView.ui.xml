@@ -14,19 +14,19 @@
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 							<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"> </tbp:H3Panel>
 							<p>
-								<g:Label text="{i18n.GL1731} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>
+								<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1731} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>
 								<br> 
 								<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblBigIdeas"></g:Label>
 								</br>
 							</p>
 							<p>
-								<g:Label text="{i18n.GL1732} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1732}"></g:Label>
+								<g:Label  styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1732} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1732}"></g:Label>
 								<br> 
 								<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblEssentalQuestions"></g:Label>
 								</br>
 							</p>
 							<p>
-								<g:Label text="{i18n.GL1733} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1733}"></g:Label>
+								<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1733} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1733}"></g:Label>
 								<br> 
 								<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblPerformanceTasks"></g:Label>
 								</br>
