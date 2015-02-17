@@ -104,7 +104,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	Button addCourseBtn, addStandardBtn,removeCourseBtn;
 
 	@UiField
-	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
+	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel,centPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
 	Label  GradeUpdate, languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel,centLabel, standardsDefaultText,centDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
@@ -134,7 +134,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	ToolTip toolTip=null;
 	
-	@UiField public Button browseBtn;
+	@UiField public Button browseBtn,centbrowseBtn;
 	
 	@UiField Label lblCharLimit,charLimitErrLbl;
 	
@@ -332,6 +332,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 		});
 
+		centbrowseBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+				
+			}
+		});
+		
 		BlurHandler blurhander=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -949,6 +958,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		gradeMiddleList.clear();
 		gradeBottomList.clear();
 		standardsPanel.clear();
+		centPanel.clear();
 		KinderGarten.clear();
 		higherEducation.clear();
 		standardSuggestOracle.clear();
@@ -1693,6 +1703,22 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 		});
 	}
 	
+	public void OnCenturyClickEvent(Button centuryButtonClicked)
+	{
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=centuryButtonClicked.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedCentury();
+		
+				
+			}
+		});
+	}
+	
 	public void setUpdatedStandards(String standardsCode, Integer codeId,String descroption)
 	{
 		standardsPanel.add(createStandardLabel(standardsCode, codeId + "", descroption));
@@ -1793,5 +1819,15 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 				
 			}
 		});
+	}
+	@Override
+	public void setUpdatedCentury(String setStandardsVal,
+			Integer setStandardsIdVal, String setStandardDesc) {
+		// TODO Auto-generated method stub
+		centPanel.add(createStandardLabel("sample", "samp" + "", "sample1"));
+		this.resetStandardCount();
+		getUiHandlers().updateCentury(collectionDo.getGooruOid(), "787", "add");
+		getUiHandlers().closeCenturyPopup();
+		
 	}
 }

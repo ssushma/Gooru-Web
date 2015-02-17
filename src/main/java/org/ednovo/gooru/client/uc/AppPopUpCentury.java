@@ -64,7 +64,7 @@ public class AppPopUpCentury extends PopupPanel {
 		innerPanel=new FlowPanel();
 		row=new FlowPanel();
 		close=new Anchor();
-		mainPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainExtraLarge());
+		mainPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupCenturyLarge());
 		innerPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().popupInnerGrey());
 		row.setStyleName("row");
 		headerPanel = new FlowPanel();

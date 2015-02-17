@@ -46,17 +46,9 @@ public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCentu
 
 	String setStandardsVal();
 
-	Button getAddBtn();
-
 	void hidePopup();
 
 	void SetData(StandardsLevel1DO levelOneData, int valArr);
-
-	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
-
-	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
-
-	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
 
 	void loadData();
 

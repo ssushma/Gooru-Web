@@ -109,30 +109,9 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	
 	public void callDefaultStandardsLoad()
 	{
-		getView().setEnableStandardButtons(isCCSSAvailable,isNGSSAvailable,isTEKSAvailable,isCAAvailable);
-		if(isCCSSAvailable){
-			standardVal = "CCSS";
-			getView().setStandardsStyles(standardVal);
-		}else if(isTEKSAvailable){
-			standardVal = "TEKS";
-			getView().setStandardsStyles(standardVal);
-		}else if(isNGSSAvailable){
-			standardVal = "NGSS";
-			getView().setStandardsStyles(standardVal);
-		}else if(isCAAvailable){
-			standardVal = "CA";
-			getView().setStandardsStyles(standardVal);
-		}
 		getView().loadData();
 		getView().reset();
-		AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", standardVal, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
-			@Override
-			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
-				for(int i=0;i<result.size();i++) {
-					getView().SetData(result.get(i),i);
-				}
-			}
-		});
+
 	}
 	
 	public void loadStateStandards(String stateCode)
@@ -148,17 +127,7 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 		});
 	}
 	
-	public void getFirstLevelObjects(String levelOrder, final String standardCode)
-	{
-		AppClientFactory.getInjector().getSearchService().getSecondLevelStandards(levelOrder, standardCode, new SimpleAsyncCallback<ArrayList<StandardsLevel2DO>>() {
-			@Override
-			public void onSuccess(ArrayList<StandardsLevel2DO> result) {
-			
-					getView().loadSecondLevelContianerObjects(result);
-				
-			}
-		});
-	}
+
 
 	@Override
 	protected void onReveal(){
@@ -180,43 +149,13 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 		return getView().setStandardsDesc();
 	}
 	
-	@Override
-	public Button getAddBtn() {
-		return getView().getAddBtn();
-	}
 	
 	@Override
 	public void hidePopup() {
 		getView().hidePopup();
 	}
 
-	@Override
-	public void getSecondLevelObjects(String levelOrder,
-			String standardCodeSelected) {
-		AppClientFactory.getInjector().getSearchService().getThirdLevelStandards(levelOrder, standardCodeSelected, new SimpleAsyncCallback<ArrayList<StandardsLevel3DO>>() {
-			@Override
-			public void onSuccess(ArrayList<StandardsLevel3DO> result) {
-			
-					getView().loadThirdLevelContianerObjects(result);
-				
-			}
-		});
-		
-	}
 
-	@Override
-	public void getThirdLevelObjects(String levelOrder,
-			String standardCodeSelected) {
-		AppClientFactory.getInjector().getSearchService().getFourthLevelStandards(levelOrder, standardCodeSelected, new SimpleAsyncCallback<ArrayList<StandardsLevel4DO>>() {
-			@Override
-			public void onSuccess(ArrayList<StandardsLevel4DO> result) {
-			
-					getView().loadFourthLevelContianerObjects(result);
-				
-			}
-		});
-		
-	}
 
 	public void enableStandardsData(boolean isCCSSAvailable,
 			boolean isTEKSAvailable, boolean isNGSSAvailable,

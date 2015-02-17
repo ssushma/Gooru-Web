@@ -184,7 +184,7 @@
 .shelfGradeInfoBottom {
 	color: rgb(112, 109, 109);
 	margin: 10px 0px 10px 0px;
-	width: 100%;
+	width: 104%;
 }
 .addQuestionStandard {
 	color: rgb(112, 109, 109);
@@ -1388,11 +1388,12 @@ position: relative;
 	font-weight: normal;
 }
 .centuryContainer{
-position: relative;
+margin-top: 15px;
+margin-bottom: 0px;
 }
 .rightCourseContainer{
 	margin-right: 0px;
-width: 50%;
+width: 49.5%;
 }
 .languageTextAreaCont{
 width: 100%;

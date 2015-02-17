@@ -4,261 +4,318 @@
 	<ui:style field="addCenturyStyle" src="AddCentury.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res1" />
-
-	<g:HTMLPanel styleName="{res1.css.standarBodyContainer}">
-		 <g:HTMLPanel styleName="skillsCategory">
-      <ul>
-        <li><span styleName="smallCircle greenCircle"></span>Hewlett Deeper Learning Model</li>
-        <li><span styleName="smallCircle blueCircle"></span>Conley 4 keys</li>
-        <li><span styleName="smallCircle yellowCircle"></span>P21 Framework</li>
-        <li><span styleName="smallCircle purpleCircle"></span>National Research Center for Life and Work</li>
-      </ul>
+<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<g:HTMLPanel>
+		 <g:HTMLPanel styleName="{addCenturyStyle.skillsCategory}">
+      <uc:UlPanel>
+        <uc:LiPanel><g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML><g:InlineLabel text="{i18n.GL3128}"></g:InlineLabel></uc:LiPanel>
+        <uc:LiPanel><g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML><g:InlineLabel text="{i18n.GL3129}"></g:InlineLabel></uc:LiPanel>
+        <uc:LiPanel><g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML><g:InlineLabel text="{i18n.GL3130}"></g:InlineLabel></uc:LiPanel>
+        <uc:LiPanel><g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML><g:InlineLabel text="{i18n.GL3131}"></g:InlineLabel></uc:LiPanel>
+      </uc:UlPanel>
     </g:HTMLPanel>
-    <g:HTMLPanel styleName="skillsCategoryList">
+    <g:HTMLPanel styleName="{addCenturyStyle.skillsCategoryList}">
     
     
     <g:HTMLPanel styleName="less-gutter">
-      <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 devider">
-        <uc:UlPanel  ui:field="levelTwoStandards"  styleName="list-unstyled standeredList">        
+      <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 {addCenturyStyle.devider}">
+      <g:HTMLPanel styleName="{addCenturyStyle.dividerHeader}"><g:InlineLabel text="{i18n.GL3125}"></g:InlineLabel></g:HTMLPanel>
+        <uc:UlPanel  styleName="">        
           <uc:LiPanel>
-            <g:HTMLPanel styleName="circlesBlock">
-           <g:InlineHTML styleName="smallCircle purpleCircle"></g:InlineHTML>  
-           <g:InlineHTML styleName="smallCircle greenCircle"></g:InlineHTML> 
-           <g:InlineHTML styleName="smallCircle blueCircle"></g:InlineHTML > 
-           <g:InlineHTML styleName="smallCircle yellowCircle"></g:InlineHTML>
-           </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3132}"></g:InlineLabel></g:HTMLPanel>
            </uc:LiPanel>
            
-         <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle greenCircle"></span> 
-            <span styleName="smallCircle blueCircle"></span > 
-            <span styleName="smallCircle yellowCircle"></span>
+         <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3133}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML >
+             <g:InlineHTML styleName="smallCircle yellowCircle"></g:InlineHTML>
+             </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3134}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML>  
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3135}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+           
+                  <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3136}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+         <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3137}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+           
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML > <g:InlineHTML styleName="smallCircle yellowCircle"></g:InlineHTML></g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3138}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+           
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
             
-            <span styleName="smallCircle yellowCircle"></span>
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3139}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
-           
-                  <li>
-            <g:HTMLPanel styleName="circlesBlock">
-           <span styleName="smallCircle purpleCircle"></span>  
-           <span styleName="smallCircle greenCircle"></span> 
-           <span styleName="smallCircle blueCircle"></span > 
-           <span styleName="smallCircle yellowCircle"></span>
-           </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
-           
-         <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle greenCircle"></span> 
-            <span styleName="smallCircle blueCircle"></span > 
-            <span styleName="smallCircle yellowCircle"></span>
+           <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3140}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
-           
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
-           
-           
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
+            <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
             
-            <span styleName="smallCircle yellowCircle"></span>
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3141}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                        <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3142}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
            
         </uc:UlPanel>
       </g:HTMLPanel>
-   <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 devider">
-        <ul>
+   <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 {addCenturyStyle.devider}">
+      <g:HTMLPanel styleName="{addCenturyStyle.dividerHeader}"><g:InlineLabel text="{i18n.GL3126}"></g:InlineLabel></g:HTMLPanel>
+        <uc:UlPanel>
          
-          <li>
-            <g:HTMLPanel styleName="circlesBlock">
-           <span styleName="smallCircle purpleCircle"></span>  
-           <span styleName="smallCircle greenCircle"></span> 
-           <span styleName="smallCircle blueCircle"></span > 
-           <span styleName="smallCircle yellowCircle"></span>
+          <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+          <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
            </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3143}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
-         <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle greenCircle"></span> 
-            <span styleName="smallCircle blueCircle"></span > 
-            <span styleName="smallCircle yellowCircle"></span>
+         <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3144}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
-           
-           
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            
-            <span styleName="smallCircle yellowCircle"></span>
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3145}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-                  <li>
-            <g:HTMLPanel styleName="circlesBlock">
-           <span styleName="smallCircle purpleCircle"></span>  
-           <span styleName="smallCircle greenCircle"></span> 
-           <span styleName="smallCircle blueCircle"></span > 
-           <span styleName="smallCircle yellowCircle"></span>
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3146}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+           
+                  <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
            </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3147}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
-         <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle greenCircle"></span> 
-            <span styleName="smallCircle blueCircle"></span > 
-            <span styleName="smallCircle yellowCircle"></span>
+         <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3148}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
-           
-           
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            
-            <span styleName="smallCircle yellowCircle"></span>
-            </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
-           
-           
-           
-        </ul>
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > <g:InlineHTML styleName="smallCircle yellowCircle"></g:InlineHTML></g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3149}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+        
+        </uc:UlPanel>
       </g:HTMLPanel>
-     <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 devider">
-        <ul>
+     <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 {addCenturyStyle.devider}">
+        <g:HTMLPanel styleName="{addCenturyStyle.dividerHeader}"><g:InlineLabel text="{i18n.GL3127}"></g:InlineLabel></g:HTMLPanel>
+        <uc:UlPanel>
          
-          <li>
-            <g:HTMLPanel styleName="circlesBlock">
-           <span styleName="smallCircle purpleCircle"></span>  
-           <span styleName="smallCircle greenCircle"></span> 
-           <span styleName="smallCircle blueCircle"></span > 
-           <span styleName="smallCircle yellowCircle"></span>
+          <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML>  
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
            </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3150}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
-         <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle greenCircle"></span> 
-            <span styleName="smallCircle blueCircle"></span > 
-            <span styleName="smallCircle yellowCircle"></span>
+         <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3151}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML></g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3152}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
             
-            <span styleName="smallCircle yellowCircle"></span>
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3153}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-                  <li>
-            <g:HTMLPanel styleName="circlesBlock">
-           <span styleName="smallCircle purpleCircle"></span>  
-           <span styleName="smallCircle greenCircle"></span> 
-           <span styleName="smallCircle blueCircle"></span > 
-           <span styleName="smallCircle yellowCircle"></span>
+                  <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
            </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3154}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
-         <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle greenCircle"></span> 
-            <span styleName="smallCircle blueCircle"></span > 
-            <span styleName="smallCircle yellowCircle"></span>
+         <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3155}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
-            <span styleName="smallCircle blueCircle"></span > <span styleName="smallCircle yellowCircle"></span></g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML></g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3156}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
-             <li>
-            <g:HTMLPanel styleName="circlesBlock">
+             <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
             
-            <span styleName="smallCircle yellowCircle"></span>
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
             </g:HTMLPanel>
-           <g:HTMLPanel styleName="listText"> Hewlett Deeper Learning Model</g:HTMLPanel>
-           </li>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3157}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                   <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+             <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML >
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3158}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                   <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3159}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                   <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3160}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                   <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3161}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                            <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3162}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                            <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3163}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
+           
+                            <uc:LiPanel>
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+            
+            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+            </g:HTMLPanel>
+           <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3164}"></g:InlineLabel></g:HTMLPanel>
+           </uc:LiPanel>
            
            
            
-        </ul>
+        </uc:UlPanel>
       </g:HTMLPanel>
       <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
       </g:HTMLPanel>
       
       
-      <g:HTMLPanel styleName="buttonGroup">
+      <g:HTMLPanel styleName="{addCenturyStyle.buttonGroup}">
       
-      <button type="button" styleName="secondary" id="lnkCancel" alt="Cancel" title="Cancel">Cancel</button>
-      <button type="button" styleName="primary" id="btnOk" alt="Save" title="Save">Add</button>
+      <g:Button styleName="secondary">Cancel</g:Button>
+      <g:Button styleName="primary">Add</g:Button>
       </g:HTMLPanel>
       
       

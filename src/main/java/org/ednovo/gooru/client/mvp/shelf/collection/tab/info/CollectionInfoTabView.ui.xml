@@ -60,7 +60,7 @@
 					<g:Button styleName="primary {res.css.shelfTeacherTipButtons}" text="Save" 
 					ui:field="addTeacherTip" /> <g:Button styleName="secondary {res.css.shelfTeacherTipButtonsCancel}" 
 					text="Cancel" ui:field="cancelTeacherTip" /> </g:HTMLPanel> -->
-			<g:FlowPanel styleName="{res.css.gradeInfoContainer}">			
+			<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.centuryContainer}">			
 				<g:FlowPanel ui:field="standardContainer">
 					<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
 						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
@@ -85,7 +85,7 @@
 				</g:FlowPanel>
 				</g:FlowPanel>
 				
-				<g:FlowPanel styleName="{res.css.gradeInfoContainer} {res.css.centuryContainer} {res.css.rightCourseContainer}">
+				<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.centuryContainer} {res.css.rightCourseContainer}">
 					<g:FlowPanel ui:field="centContainer">
 				<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
 						<g:Label styleName="{res.css.shelfGradeInfoTitle}"

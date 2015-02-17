@@ -38,15 +38,7 @@ public interface AddCenturyUiHandlers extends BaseUiHandlers {
 
 	String setStandardsVal();
 
-	Button getAddBtn();
-
 	void hidePopup();
-
-	void getFirstLevelObjects(String levelOrder, String standardCodeSelected);
-
-	void getSecondLevelObjects(String levelOrder, String standardCodeSelected);
-
-	void getThirdLevelObjects(String levelOrder, String standardCodeSelected);
 
 	void loadStateStandards(String string);
 
