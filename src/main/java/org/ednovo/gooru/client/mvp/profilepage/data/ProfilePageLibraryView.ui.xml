@@ -19,8 +19,8 @@
 		<g:HTMLPanel ui:field="folderListPanel">
 			<g:Label styleName="{style.topicTitle} {style.folderLevel} {style.open}"
 				ui:field="folderTopicTitleLbl" />
-			<g:Button styleName="secondary" ui:field="viewAllBtn" text="{i18n.GL1946}"
-				title="{i18n.GL1946}"></g:Button>
+			<g:Button styleName="secondary" ui:field="viewAllBtn" text="{i18n.GL3121}"
+				title="{i18n.GL3121}"></g:Button>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.contentScroll}" ui:field="contentScroll">
 

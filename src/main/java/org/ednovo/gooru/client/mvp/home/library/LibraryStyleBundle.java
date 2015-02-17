@@ -96,5 +96,6 @@ public interface LibraryStyleBundle extends CssResource {
 	String districtLibraryHeaderTextlps();
 	String districtLibrarySubHeaderTextlps();
 	
-
+	String topicTitleStyle();
+	String topicBlockStyle();
 																																								}

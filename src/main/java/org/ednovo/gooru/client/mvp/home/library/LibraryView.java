@@ -84,6 +84,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -124,9 +125,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 	HTMLPanel featuredEducator;
 
 	@UiField
-	HTMLPanel featuredCourses;
+	HTMLPanel featuredCourses,folderListPanel;
 
-	@UiField Label featuredCousesLbl,featuredContributor,comingSoonLbl;
+	@UiField Label featuredCousesLbl,featuredContributor,comingSoonLbl,folderTopicTitleLbl;
 	
 	@UiField HTML courseTitle;
 	
@@ -137,6 +138,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 	@UiField HTMLPanel scrollPanel, loadingIconPanel,partnerLogo;
 	
 	@UiField Image courseImage, educatorPhoto;
+	
+	@UiField Button listAllBtn;
 	
 	/*@UiField Button viewStandardButton;*/
 	
@@ -256,6 +259,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
 		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
 		contributorsContainer.getElement().setId("pnlContributorsContainer");
+		listAllBtn.getElement().setAttribute("style", "float:right;margin: -25px 3px 0 0;");
+		//listAllBtn.addClickHandler(new ListAllBtnHandler());
 	}
 	
 	/**
@@ -851,6 +856,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 				unitListId = unitDoList.get(i).getCodeId()+"";
 				if(unitDoList.get(i).getTopic()!=null&&unitDoList.get(i).getTopic().size()>0) {
 					setLibraryTopicListData(unitDoList.get(i).getTopic());
+					folderTopicTitleLbl.setText(unitDoList.get(i).getLabel());
+					//listAllBtn.addClickHandler(new ListAllBtnHandler(unitDoList.get(i).getTopic()));
+
 				} else {
 					setLibraryConceptOnlyData(unitDoList.get(i).getCollection(), unitDoList.get(i).getCount());
 				}
@@ -876,6 +884,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						unitListId = unitDoList.get(widgetCountTemp).getCodeId()+"";
 						if(unitDoList.get(widgetCountTemp).getTopic()!=null&&unitDoList.get(widgetCountTemp).getTopic().size()>0) {
 							setLibraryTopicListData(unitDoList.get(widgetCountTemp).getTopic());
+							
 						} else {
 							setLibraryConceptOnlyData(unitDoList.get(widgetCountTemp).getCollection(), libraryUnitMenuView.getChildCount());
 						}
@@ -897,7 +906,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						widgetsPanel.next().removeStyleName(libraryStyleUc.unitLiActive());
 					}
 					widget.addStyleName(libraryStyleUc.unitLiActive());
-					
+					folderTopicTitleLbl.setText(libraryUnitMenuView.getTitle());
 					String callBack = AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE,FEATURED_COURSE_PAGE);
 					String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID,null);
 					if(unitDoList.get(widgetCountTemp).getLabel().equalsIgnoreCase("Popular")){
@@ -1438,7 +1447,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
 					setTopicListData(folderList.get(i).getFolderItems(), unitListId);
-					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
+					folderTopicTitleLbl.setText(folderList.get(i).getTitle());
+					//getUiHandlers().getPartnerChildFolderItems(unitListId, );
 				}
 			}
 		}
@@ -1459,6 +1469,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					}
 					widget.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = libraryUnitMenuView.getUnitId();
+					folderTopicTitleLbl.setText(libraryUnitMenuView.getTitle());
 					if(finalWidgetCount==0) {
 						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId);
 					} else {
