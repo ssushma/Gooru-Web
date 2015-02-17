@@ -126,6 +126,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String GOOGLE_SIGNIN = "google.signin";
 	
+	private static final String ENABLE_CLIENT_LOGGERS = "clientside.loggers";
+	
 	private static final String GOOGLE_DRIVE = "drive.api";
 	
 	private static final String PROFILE_IMAGE_RESPOSITORY_URL="profile.image.url";
@@ -189,6 +191,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getGoogleSignin(){
 		return restConstants.getProperty(GOOGLE_SIGNIN);
+	}
+	
+	public String getClientSideLoggersStatus(){
+		return restConstants.getProperty(ENABLE_CLIENT_LOGGERS);
 	}
 	
 	public String getDriveGoogle(){
