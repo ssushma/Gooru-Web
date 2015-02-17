@@ -347,6 +347,8 @@ public interface CollectionCBundle extends ClientBundle{
 		String browseContainer();
 		String charLimit();
 		String learningObjErrStyle();
+		String deselecteAssessment();
+		String selecteAssessment();
 	}
 	@Source("Collection.css")
 	CollectionCss css();

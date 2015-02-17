@@ -103,6 +103,7 @@ button.primary:hover {
 .pageHeader {
 	margin: 0 0 10px 0;
 	color: #0066cc;
+	font-size:20px;
 }
 
 .marginDiv {
@@ -283,4 +284,7 @@ button.primary:hover {
 	color: #515151;
 	line-height: 1.42857143;
 	font-family: Arial, Helvetica, sans-serif !important;
+}
+.lblFolderTitles{
+	font-weight: bold;
 }

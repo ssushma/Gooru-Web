@@ -67,6 +67,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -112,7 +113,7 @@ public class CollectionFormView extends
 	Anchor cancelAnr;*/
 	
 	@UiField
-	Button cancelAnr;
+	Button cancelAnr,btnCancelAssessment;
 
 	
 
@@ -120,7 +121,7 @@ public class CollectionFormView extends
 	BlueButtonUc btnOk;*/
 	
 	@UiField
-	Button btnOk;
+	Button btnOk,btnExistingAssessment,btnNewAssessment,btnCreateAssessment;
 	
 	@UiField
 	Label publicLbl,mandatoryErrorLbl, lblVisibility,lblPublic,lblAllow,lblShareable,lblShareableDesc,lblPrivate, lblPrivateDesc;
@@ -129,7 +130,7 @@ public class CollectionFormView extends
 	FlowPanel  linkShareFloPanel, privateShareFloPanel;
 	
 	@UiField
-	HTMLPanel publicRadioButtonPanel, shareRadioButtonPanel,
+	HTMLPanel pnlExistingAssessmentContainer,pnlNewAssessmentContainer,bodyContainer,pnlCreateNewAssessment,publicRadioButtonPanel, shareRadioButtonPanel,
 			privateRadioButtonPanel,buttonMainContainer,visibilitySection,courseContainer,gradeContainer,shelfItemContent;
 
 	@UiField
@@ -137,6 +138,8 @@ public class CollectionFormView extends
 	
 	@UiField
 	HTMLEventPanel publicShareFloPanel;
+	
+	@UiField TextBoxWithPlaceholder lblNewAssessmentTitle,lblExistingAssessmentTitle,lblExistingAssessmentURL;
 	
 	boolean fromAddResourcePresenter=false;
 	
@@ -187,6 +190,8 @@ public class CollectionFormView extends
 	private static final String O3_LEVEL = "o3";
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
+	
+	boolean isAssessmentEditClicked=false;
 
 	private static CollectionFormViewUiBinder uiBinder = GWT
 			.create(CollectionFormViewUiBinder.class);
@@ -206,7 +211,7 @@ public class CollectionFormView extends
 		super(eventBus);
 		hideFromPopup(true);
 		appPopUp = new AppPopUp();
-		
+		CollectionCBundle.INSTANCE.css().ensureInjected();
 		appPopUp.setContent(TITLE_THIS_COLLECTION,uiBinder.createAndBindUi(this));
 		
 		if(!(AppClientFactory.isAnonymous())){
@@ -346,6 +351,15 @@ public class CollectionFormView extends
 				toolTipPopupPanel.hide();
 			}
 		});
+		btnCancelAssessment.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				hide();
+				toolTipPopupPanel.hide();
+			}
+		});
 		setAutoHideOnNavigationEventEnabled(true);
 		collectionTitleTxtBox.addKeyUpHandler(new TitleKeyUpHandler());
         getGradeList();
@@ -403,11 +417,84 @@ public class CollectionFormView extends
 			}
 
 		});
+		//Handling the click event on existing assessment click
+		btnExistingAssessment.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				isAssessmentEditClicked=true;
+				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+				btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+				btnNewAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+				
+				pnlExistingAssessmentContainer.setVisible(true);
+				pnlNewAssessmentContainer.setVisible(false);
+				btnCreateAssessment.setVisible(true);
+				btnCancelAssessment.setVisible(true);
+			}
+		});
+		//Handling the click event on new assessment click
+		btnNewAssessment.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				isAssessmentEditClicked=false;
+				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+				btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+				btnNewAssessment.addStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+				
+				pnlExistingAssessmentContainer.setVisible(false);
+				pnlNewAssessmentContainer.setVisible(true);
+				btnCreateAssessment.setVisible(true);
+				btnCancelAssessment.setVisible(true);
+			}
+		});
+		btnCreateAssessment.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(isAssessmentEditClicked){
+					//Add code when edit assessment selected
+				}else{
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", lblNewAssessmentTitle.getText());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+						@Override
+						public void onSuccess(Boolean value) {
+							if(value){
+								//Display error message
+							}else{
+								String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+								final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+								final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+								final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+								getUiHandlers().saveCollection(folderId, o1, o2, o3);
+							}
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+					});
+				}
+			}
+		});
 		setTextAndIds();
+		pnlNewAssessmentContainer.setVisible(false);
+		pnlExistingAssessmentContainer.setVisible(false);
+		btnCreateAssessment.setVisible(false);
+		btnCancelAssessment.setVisible(false);
+		btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+		btnNewAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
 	}
 	
 	public void setTextAndIds(){
 		collectionTitleTxtBox.setPlaceholder(i18n.GL0319());
+		lblNewAssessmentTitle.setPlaceholder(i18n.GL3122());
+		lblExistingAssessmentTitle.setPlaceholder(i18n.GL3123());
+		lblExistingAssessmentURL.setPlaceholder(i18n.GL3124());
+		
 		mandatoryErrorLbl.setText(i18n.GL0173());
 		mandatoryErrorLbl.getElement().setId("lblMandatoryErrorLbl");
 		mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0173());
@@ -457,6 +544,10 @@ public class CollectionFormView extends
 		courseLbl.getElement().setId("lblCourseLbl");
 		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
 		courseLbl.getElement().setAttribute("title",i18n.GL0326());
+		
+		btnCancelAssessment.setText(i18n.GL0142());
+		btnCancelAssessment.getElement().setAttribute("alt",i18n.GL0142());
+		btnCancelAssessment.getElement().setAttribute("title",i18n.GL0142());
 		
 		btnOk.getElement().setId("btnOk");
 		cancelAnr.getElement().setId("lnkCancel");
@@ -525,12 +616,24 @@ public class CollectionFormView extends
 	 */
 	@Override
 	public CollectionDo getData() {
-
+		String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type", null);
+	
 		CollectionDo collection = new CollectionDo();
 		if (this.collectionDo != null) {
 			collection.setGooruOid(this.collectionDo.getGooruOid());
 		}
-		collection.setTitle(collectionTitleTxtBox.getText());
+		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
+			collection.setCollectionType("quiz");
+			if(isAssessmentEditClicked){
+				//collection.setTitle(lblExistingAssessmentTitle.getText());
+			}else{
+				collection.setTitle(lblNewAssessmentTitle.getText());
+			}
+		}else{
+			collection.setCollectionType("collection");
+			collection.setTitle(collectionTitleTxtBox.getText());
+		}
+	
 		if (!(gradeDropDownList.getSelectedIndex() == 0)) {
 			collection.setGrade(list[gradeDropDownList.getSelectedIndex()]);
 		}
@@ -542,12 +645,6 @@ public class CollectionFormView extends
 		}
 		if (radioButtonPrivate.isChecked() == true) {
 			collection.setSharing("private");
-		}
-		String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type", null);
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
-			collection.setCollectionType("quiz");
-		}else{
-			collection.setCollectionType("collection");
 		}
 		if(isCheckedValue){
 			collection.setMediaType("iPad_friendly");
@@ -577,8 +674,8 @@ public class CollectionFormView extends
 		collectionDo = null;
 		collectionTitleTxtBox.setText("");
 		removePopUpStyle();
-		
-		
+		bodyContainer.setVisible(true);
+		pnlCreateNewAssessment.setVisible(false);
 		if(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE).equalsIgnoreCase("")){
 			collPopUpMainheading.setText(i18n.GL1421());
 			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL1421());
@@ -624,8 +721,18 @@ public class CollectionFormView extends
 		}else{
 			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
 		if(collectionType!=null&&collectionType.equals("assessment")){
+			System.out.println("assenment");
+			pnlCreateNewAssessment.setVisible(true);
+			bodyContainer.setVisible(false);
+			collPopUpMainheading.setVisible(false);
+			collPopUpSubheading.setVisible(false);
+			pnlNewAssessmentContainer.setVisible(false);
+			pnlExistingAssessmentContainer.setVisible(false);
+			
 			appPopUp.setViewTitle(i18n.GL3008());
-			collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
+			shelfItemContent.getElement().removeAttribute("style");	
+			
+		   /*collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
 			collPopUpMainheading.setText(i18n.GL3009());
 			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL3009());
 			collPopUpMainheading.getElement().setAttribute("title",i18n.GL3009());
@@ -640,7 +747,7 @@ public class CollectionFormView extends
 			btnOk.getElement().setAttribute("title",i18n.GL0141());
 			cancelAnr.setText(i18n.GL0142());
 			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
-			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+			cancelAnr.getElement().setAttribute("title",i18n.GL0142());*/
 		}else if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
 				collPopUpMainheading.setText(i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
