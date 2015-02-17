@@ -105,6 +105,7 @@ public class FolderCollectionResourceView extends Composite {
 				resTitle = resTitle.length() > 50 ? resTitle.substring(0, 50)
 						+ "..." : resTitle;
 				final Label text = new Label(removeHtmlTags(resTitle));
+				text.setStyleName(res.css().resourceTitle());
 				liPanel.add(text);
 				if (folderDo.getCollectionItems().get(i).getResourceFormat() != null
 						&& folderDo.getCollectionItems().get(i)
