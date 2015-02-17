@@ -111,25 +111,31 @@ public class GooruEntry implements EntryPoint {
 					AppClientFactory.setProtocol(getHttpOrHttpsProtocol());
 					registerWindowEvents();
 				}
-	
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-//				}
-				
 			});
 			AppClientFactory.setAppGinjector(appInjector);
 		}
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 1000px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
 		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
+		
+		getloggersStatus();
 	}
 	
-	/* 
-	 * Registering the native events.
-	 * 
-	 * */
 	
+	/**
+	 * Checks the status of loggers from property file whether it is enabled or not.
+	 */
+	private void getloggersStatus() { 
+		AppClientFactory.getInjector().getSearchService().isClientSideLoggersEnabled(new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				AppClientFactory.setClientLoggersEnabled(result);
+			}
+			
+		});
+	}
+
 	private void registerWindowEvents(){
 		nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
 			

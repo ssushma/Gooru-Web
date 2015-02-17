@@ -716,6 +716,12 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		return searchResourcesTagsDo;
 	}
+
+	@Override
+	public String isClientSideLoggersEnabled() throws GwtException,	ServerDownException {
+		String loggersStatus = getClientSideLoggersStatus();
+		return loggersStatus;
+	}
 	
 	/*@Override
 	public SearchDo<CollectionSearchResultDo> getSuggestedSearchResultForCollectionNoResult(

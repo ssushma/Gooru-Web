@@ -27,8 +27,13 @@
  */
 package org.ednovo.gooru.client.gin;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserRoleDo.UserRoleType;
+import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -55,11 +60,11 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @Reviewer: Gooru Team
  */
 @Singleton
-public class AppClientFactory {
+public class AppClientFactory implements Constants {
 
 	public static UserDo loggedInUser;
-	
-	private static final String GOORU_ACTIVE_USER = "gooru-active-user";
+
+	private static Logger clientLogger = Logger.getLogger("");
 
 	private UserDo emailId;
 
@@ -67,14 +72,14 @@ public class AppClientFactory {
 
 	private AppInjector appGinjector;
 
-	public static String GOORU_ANONYMOUS = "ANONYMOUS";
-	
 	private static  boolean userflag = true ;
-	
+
 	private static  boolean enableScroll ;
 
 	private static String protocol;
 	
+	private static String isClientLoggersEnabled; 
+
 	/**
 	 * Class constructor
 	 */
@@ -303,9 +308,9 @@ public class AppClientFactory {
 	 *
 	 */
 	public static void setBrowserWindowTitle(String newTitle) {
-	    if (Document.get() != null) {
-	        Document.get().setTitle(newTitle);
-	    }
+		if (Document.get() != null) {
+			Document.get().setTitle(newTitle);
+		}
 	}
 	/**
 	 * 
@@ -342,67 +347,105 @@ public class AppClientFactory {
 	 * @throws : <Mentioned if any exceptions>
 	 */
 	public static void setMetaDataDescription(String newDescription) {
-	    NodeList<Element> tags = Document.get().getElementsByTagName("meta");
-	    for (int i = 0; i < tags.getLength(); i++) {
-	        MetaElement metaTag = ((MetaElement) tags.getItem(i));
-	        if (metaTag.getName().equals("description")) {
-	            metaTag.setContent(newDescription);
-	            metaTag.setId("gooru-seo-meta-content");
-	        }
-	        if (metaTag.getName().equals("author")) {
-	            metaTag.setContent("");
-	            metaTag.setId("");
-	        }
-	    }
+		NodeList<Element> tags = Document.get().getElementsByTagName("meta");
+		for (int i = 0; i < tags.getLength(); i++) {
+			MetaElement metaTag = ((MetaElement) tags.getItem(i));
+			if (metaTag.getName().equals("description")) {
+				metaTag.setContent(newDescription);
+				metaTag.setId("gooru-seo-meta-content");
+			}
+			if (metaTag.getName().equals("author")) {
+				metaTag.setContent("");
+				metaTag.setId("");
+			}
+		}
 	}
-	  /**
-     * Gets Logged in user flag.
-     * @return {@link boolean}
-     */
+	/**
+	 * Gets Logged in user flag.
+	 * @return {@link boolean}
+	 */
 	public static boolean isUserflag() {
 		return userflag;
 	}
-	 /**
-     * Set Logged in user flag.
-     * @return {@link void}
-     */
+	/**
+	 * Set Logged in user flag.
+	 * @return {@link void}
+	 */
 	public static void setUserflag(boolean userflag) {
 		AppClientFactory.userflag = userflag;
 	}
-	 /**
-     * It will check the scroll enabled or not .
-     * @return {@link boolean}
-     */
+	/**
+	 * It will check the scroll enabled or not .
+	 * @return {@link boolean}
+	 */
 	public static boolean isEnableScroll() {
 		return enableScroll;
 	}
-	 /**
-     * Enabling the scroll.
-     * @return {@link void}
-     */
+	/**
+	 * Enabling the scroll.
+	 * @return {@link void}
+	 */
 	public static void setEnableScroll(boolean enableScroll) {
 		AppClientFactory.enableScroll = enableScroll;
 	}
-	 /**
-     * To get the protocol.
-     * @return {@link String}
-     */
+	/**
+	 * To get the protocol.
+	 * @return {@link String}
+	 */
 	public static String getProtocol() {
 		return protocol;
 	}
-	 /**
-     * To set the protocol.
-     * @return {@link String}
-     */
+	/**
+	 * To set the protocol.
+	 * @return {@link String}
+	 */
 	public static void setProtocol(String protocol) {
 		AppClientFactory.protocol = protocol;
 	}
-	 /**
-     * To set the Previous Place Request.
-     * @return {@link String}
-     */
+	/**
+	 * To set the Previous Place Request.
+	 * @return {@link String}
+	 */
 	public static void setPreviousPlaceRequest(PlaceRequest previousRequest) {
 		getInjector().getPlaceManager().setPreviousRequest(previousRequest);
 	}
 
+	
+	/**
+	 * Logging Info on client side.
+	 * 
+	 * @param msg {@link String}
+	 */
+	public static void printInfoLogger(String msg) {
+		if(TRUE.equals(isClientLoggersEnabled())){ 
+			clientLogger.log(Level.INFO, msg);
+		}
+	}
+	
+
+	/**
+	 * Logging Error on client side.
+	 * 
+	 * @param msg {@link String}
+	 */
+	public static void printSevereLogger(String msg) {
+		if(TRUE.equals(isClientLoggersEnabled())){ 
+			clientLogger.log(Level.SEVERE, msg);
+		}
+	}
+	
+	/**
+	 * @return the isClientLoggersEnabled
+	 */
+	public static String isClientLoggersEnabled() {
+		return isClientLoggersEnabled;
+	}
+	/**
+	 * @param isClientLoggersEnabled the isClientLoggersEnabled to set
+	 */
+	public static void setClientLoggersEnabled(String isClientLoggersEnabled) {
+		AppClientFactory.isClientLoggersEnabled = isClientLoggersEnabled;
+	}
 }
+
+
