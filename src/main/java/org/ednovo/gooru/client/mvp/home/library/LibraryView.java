@@ -392,8 +392,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			for(int i = 0; i <topicDoList.size(); i++) {
 				contentScroll.add(new LibraryTopicListView(topicDoList.get(i), (i+1), getPlaceToken()));
 			}
-			contentScroll.setVisible(true);
-			loadingIconPanel.setVisible(false);
+			loadingPanel(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -423,8 +422,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				}
 				contentScroll.add(paginationFloPanel);
 			}
-			contentScroll.setVisible(true);
-			loadingIconPanel.setVisible(false);
+			loadingPanel(false);
 		} catch (Exception e) {
 			
 		}
@@ -867,8 +865,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		}
 		else
 		{
-			contentScroll.setVisible(false);
-			loadingIconPanel.setVisible(true);
+			loadingPanel(true);
 		}
 		
 		int widgetCount = 0;
@@ -890,8 +887,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						}
 					} else {
 						unitListId = unitDoList.get(widgetCountTemp).getCodeId()+"";
-						contentScroll.setVisible(false);
-						loadingIconPanel.setVisible(true);
+						loadingPanel(true);
 						getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
 					}
 				}
@@ -918,8 +914,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 								setLibraryConceptOnlyData(unitDoList.get(widgetCountTemp).getCollection(), libraryUnitMenuView.getChildCount());
 							}
 						} else {
-							contentScroll.setVisible(false);
-							loadingIconPanel.setVisible(true);
+							loadingPanel(true);
 							getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
 						}
 					}
@@ -932,8 +927,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 								setLibraryConceptOnlyData(unitDoList.get(widgetCountTemp).getCollection(), libraryUnitMenuView.getChildCount());
 							}
 						} else {
-							contentScroll.setVisible(false);
-							loadingIconPanel.setVisible(true);
+							loadingPanel(true);
 							getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
 						}	
 					}
@@ -1413,6 +1407,20 @@ public class LibraryView extends Composite implements  ClickHandler {
 		return contentScroll;
 	}
 
+	/**
+	 * @return the folderTopicTitleLbl
+	 */
+	public Label getFolderTopicTitleLbl() {
+		return folderTopicTitleLbl;
+	}
+
+	/**
+	 * @return the listAllBtn
+	 */
+	public Button getListAllBtn() {
+		return listAllBtn;
+	}
+
 	public void getPartnerWorkspaceFolders(String partnerName) {
 		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(partnerName, 20, SHARING_TYPE, null, getPlaceToken(), new SimpleAsyncCallback<PartnerFolderListDo>(){
 			@Override
@@ -1506,4 +1514,20 @@ public class LibraryView extends Composite implements  ClickHandler {
 	public HTMLPanel getContainer() {
 		return container;
 	}
+	
+	public void loadingPanel(boolean isVisible) {
+		loadingIconPanel.setVisible(isVisible);
+		contentScroll.setVisible(!isVisible);
+		folderListPanel.setVisible(!isVisible);
+		libraryMetaDataContainer.setVisible(!isVisible);
+	}
+
+	/**
+	 * @return the folderListPanel
+	 */
+	public HTMLPanel getFolderListPanel() {
+		return folderListPanel;
+	}
+	
+
 }
