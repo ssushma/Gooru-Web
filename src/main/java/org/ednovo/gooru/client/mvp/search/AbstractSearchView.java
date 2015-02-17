@@ -320,7 +320,6 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		}
 		
 		standardsConatiner.clear();
-		System.out.println("presearch:::");
 		
 		showCategoryFilter();
 		showSubjectsFilter();

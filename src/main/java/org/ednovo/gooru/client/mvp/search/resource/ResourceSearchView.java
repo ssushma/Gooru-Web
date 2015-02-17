@@ -167,7 +167,6 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	 */
 	@Override
 	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter) {
-//		System.out.println("inside::::"+resourceSearchResultVc);
 //		if(resourceSearchResultVc!=null){
 //			resourceSearchResultVc.getAddResourceContainerPanel().clear();
 //			resourceSearchResultVc.getAddResourceContainerPanel().setWidget(addResourceContainerPresenter.getWidget());

@@ -1317,7 +1317,6 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 		}
 		else if(tab!=null && tab.equalsIgnoreCase("reports")){
-			System.out.println("reports");
 			reportsTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
 			classListTab.getElement().setClassName("");
@@ -1346,7 +1345,6 @@ public class EditClasspageView extends
 		}
 		else if(analyticsId!=null)
 		{
-			System.out.println("1");
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			hideToggleButtons.setVisible(true);
@@ -1370,7 +1368,6 @@ public class EditClasspageView extends
 		}
 		else if(monitorId!=null)
 		{
-			System.out.println("2");
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			hideToggleButtons.setVisible(true);
@@ -1391,7 +1388,6 @@ public class EditClasspageView extends
 			getUiHandlers().setCollectionProgressData(PROGRESS,monitorId,collectionTitleUc.getText());
 		}
 		else{
-			System.out.println("3");
 			removeLoadingPanel();
 			panelAssignmentPath.setVisible(true);
 			headerAssignments.setVisible(true);
