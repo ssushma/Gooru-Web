@@ -126,6 +126,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					loadingPanel(true);
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
+					libraryView.getFolderTopicTitleLbl().setText(folderList.get(i).getTitle());
+					libraryView.getListAllBtn().addClickHandler(new ListAllBtnClickHandler(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getFolderItems(), unitListId,folderList.get(i).getParentGooruOid());
 					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
 				}
@@ -149,6 +151,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					}
 					widget.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = libraryUnitMenuView.getUnitId();
+					libraryView.getFolderTopicTitleLbl().setText(libraryUnitMenuView.getTitle());
+					libraryView.getListAllBtn().addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getLibraryGooruOid()));
 					if(finalWidgetCount==0) {
 						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId,libraryUnitMenuView.getLibraryGooruOid());
 					} else {
@@ -223,6 +227,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
 		libraryView.getCourseTabs().setVisible(false);
 		libraryView.getLoadingIconPanel().setVisible(isVisible);
+		libraryView.getFolderListPanel().setVisible(!isVisible);
 	}
 	
 	@Override
@@ -758,5 +763,23 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		courseDo.setThumbnails(thumbnailDo);
 		courseDo.setCreator(libraryUserDo);
 		return courseDo;
+	}
+	
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
+	 *
+	 */
+	public class ListAllBtnClickHandler implements ClickHandler{
+		String folderId="";
+		public ListAllBtnClickHandler(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
 	}
 }

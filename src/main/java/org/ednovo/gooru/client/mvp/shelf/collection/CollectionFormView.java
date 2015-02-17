@@ -67,6 +67,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -189,6 +190,8 @@ public class CollectionFormView extends
 	private static final String O3_LEVEL = "o3";
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
+	
+	boolean isAssessmentEditClicked=false;
 
 	private static CollectionFormViewUiBinder uiBinder = GWT
 			.create(CollectionFormViewUiBinder.class);
@@ -419,6 +422,7 @@ public class CollectionFormView extends
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				isAssessmentEditClicked=true;
 				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
 				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
 				btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
@@ -435,6 +439,7 @@ public class CollectionFormView extends
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				isAssessmentEditClicked=false;
 				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
 				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
 				btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
@@ -444,6 +449,35 @@ public class CollectionFormView extends
 				pnlNewAssessmentContainer.setVisible(true);
 				btnCreateAssessment.setVisible(true);
 				btnCancelAssessment.setVisible(true);
+			}
+		});
+		btnCreateAssessment.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(isAssessmentEditClicked){
+					//Add code when edit assessment selected
+				}else{
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", lblNewAssessmentTitle.getText());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+						@Override
+						public void onSuccess(Boolean value) {
+							if(value){
+								//Display error message
+							}else{
+								String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+								final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+								final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+								final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+								getUiHandlers().saveCollection(folderId, o1, o2, o3);
+							}
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+					});
+				}
 			}
 		});
 		setTextAndIds();
@@ -582,12 +616,24 @@ public class CollectionFormView extends
 	 */
 	@Override
 	public CollectionDo getData() {
-
+		String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type", null);
+	
 		CollectionDo collection = new CollectionDo();
 		if (this.collectionDo != null) {
 			collection.setGooruOid(this.collectionDo.getGooruOid());
 		}
-		collection.setTitle(collectionTitleTxtBox.getText());
+		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
+			collection.setCollectionType("quiz");
+			if(isAssessmentEditClicked){
+				//collection.setTitle(lblExistingAssessmentTitle.getText());
+			}else{
+				collection.setTitle(lblNewAssessmentTitle.getText());
+			}
+		}else{
+			collection.setCollectionType("collection");
+			collection.setTitle(collectionTitleTxtBox.getText());
+		}
+	
 		if (!(gradeDropDownList.getSelectedIndex() == 0)) {
 			collection.setGrade(list[gradeDropDownList.getSelectedIndex()]);
 		}
@@ -599,12 +645,6 @@ public class CollectionFormView extends
 		}
 		if (radioButtonPrivate.isChecked() == true) {
 			collection.setSharing("private");
-		}
-		String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type", null);
-		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
-			collection.setCollectionType("quiz");
-		}else{
-			collection.setCollectionType("collection");
 		}
 		if(isCheckedValue){
 			collection.setMediaType("iPad_friendly");

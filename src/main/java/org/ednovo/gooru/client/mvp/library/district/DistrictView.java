@@ -1,7 +1,9 @@
 package org.ednovo.gooru.client.mvp.library.district;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -26,6 +28,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -37,18 +40,20 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> implements IsDistrictView {
 
-	@UiField HTMLPanel courseTabs;
+	@UiField HTMLPanel courseTabs,folderListPanel;
 
 	@UiField HTMLPanel landingBanner, container, featuredCourseTabs, leftNav, contentScroll, libraryMetaDataContainer, contributorsContainer, courseBanner, featuredEducator,
 	featuredCourses, scrollPanel, loadingIconPanel,partnerLogo;
 
-	@UiField Label courseTitle, featuredCousesLbl,featuredContributor;
+	@UiField Label courseTitle, featuredCousesLbl,featuredContributor,folderTopicTitleLbl;
 	
 	@UiField Anchor featuredContributorsLink;
 	
 	@UiField DistrictStyleBundle districtStyleUc;
 	
 	@UiField Image courseImage, educatorPhoto;
+	
+	@UiField Button listAllBtn;
 	
 	private String placeToken;
 	
@@ -153,12 +158,10 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		Window.addWindowScrollHandler(new LeftPanelScroll(libraryGooruOid));
 		if(profileLibraryDoList.get(0).getItemCount()>20){
 			totalCollectionCount = profileLibraryDoList.get(0).getItemCount();
-			
 		}
 		int firstWidgetCount = leftNav.getWidgetCount();
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(profileLibraryDoList.get(i),libraryGooruOid);
-			
 			leftNav.add(libraryUnitMenuView);
 			libraryUnitMenuView.setWidgetCount(leftNav.getWidgetCount()+1);
 			libraryUnitMenuView.setType(profileLibraryDoList.get(i).getType());
@@ -170,6 +173,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				if(profileLibraryDoList.get(i).getType().equals("scollection")) {
 					setTopicListData(profileLibraryDoList.get(i), unitListId,libraryGooruOid);
 				} else {
+					folderTopicTitleLbl.setText(profileLibraryDoList.get(i).getTitle());
+					listAllBtn.addClickHandler(new ListAllBtnClickHandler(profileLibraryDoList.get(i).getGooruOid()));
 					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(), unitListId, profileLibraryDoList.get(i),libraryGooruOid);
 				}
 			}
@@ -199,6 +204,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					if(libraryUnitMenuView.getType().equals("scollection")) {
 						setTopicListData(profileLibraryDoList.get(widgetCountTemp),  unitListId,libraryUnitMenuView.getLibraryGooruOid());
 					} else {
+						folderTopicTitleLbl.setText(libraryUnitMenuView.getTitle());
+						listAllBtn.addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getLibraryGooruOid()));
 						if(widgetCountTemp==0) {
 							totalCollectionCount=profileLibraryDoList.get(widgetCountTemp).getItemCount();
 							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp),libraryUnitMenuView.getLibraryGooruOid());
@@ -271,6 +278,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	public void loadingPanel(boolean isVisible) {
 		loadingIconPanel.setVisible(isVisible);
 		contentScroll.setVisible(!isVisible);
+		folderListPanel.setVisible(!isVisible);
 		libraryMetaDataContainer.setVisible(!isVisible);
 	}
 
@@ -347,6 +355,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				setSubjectUnits(unitList,getLibraryGooruOid());
 			}
 		};
+		listAllBtn.getElement().setAttribute("style", "float:right;margin: -25px 3px 0 0;");
 		courseTabs.add(districtMenuNav);
 		landingBanner.add(new DistrictBannerView(getPlaceToken()));
 		featuredContributorsLink.setText(i18n.GL1005());
@@ -372,6 +381,24 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	private void setSubjectUnits(ArrayList<ProfileLibraryDo> unitList,String libraryGooruOid) {
 		leftNav.clear();
 		setUnitList(unitList,libraryGooruOid);
+	}
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
+	 * @author janamitra
+	 *
+	 */
+	public class ListAllBtnClickHandler implements ClickHandler{
+		String folderId="";
+		public ListAllBtnClickHandler(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
 	}
 	
 	private void showCourseBanner(ProfileLibraryDo profileLibraryDo, boolean isCoursePageVisible) {
