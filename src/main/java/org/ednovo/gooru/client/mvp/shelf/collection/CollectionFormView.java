@@ -728,7 +728,7 @@ public class CollectionFormView extends
 			collPopUpSubheading.setVisible(false);
 			pnlNewAssessmentContainer.setVisible(false);
 			pnlExistingAssessmentContainer.setVisible(false);
-			
+			resetAssessmentFields();
 			appPopUp.setViewTitle(i18n.GL3008());
 			shelfItemContent.getElement().removeAttribute("style");	
 			
@@ -981,5 +981,18 @@ public class CollectionFormView extends
 	@Override
 	public void setStaticData(String collectionType) {
 		
+	}
+
+	@Override
+	public void resetAssessmentFields() {
+		btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+		btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+		btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+		btnNewAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+		btnCreateAssessment.setVisible(false);
+		btnCancelAssessment.setVisible(false);
+		lblNewAssessmentTitle.setText("");
+		lblExistingAssessmentTitle.setText("");
+		lblExistingAssessmentURL.setText("");
 	}
 }
