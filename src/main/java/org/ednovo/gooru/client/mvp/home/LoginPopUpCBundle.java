@@ -230,6 +230,7 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String lblNoteTxt();
 	String classPageEmailButtonCancel();
 	String PopupMainExtraLarge();
+	String PopupCenturyLarge();
 	String standarBodyContainer();
 	String scrollBar();
 	String listGroup();

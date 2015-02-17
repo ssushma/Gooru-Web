@@ -22,68 +22,32 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.district;
-/**
- * @fileName : LibraryStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
-public interface DistrictStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
 
-	String bannerSpanBlock();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
-	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
-	String collectionSmall();
-	String conceptTitleLeft();
+/**
+ * @author Search Team
+ *
+ */
+public interface AddCenturyBundle extends ClientBundle{
 	
-	String sausdPartnerLogo();
-	String gradeOption();
+	static final AddCenturyBundle INSTANCE = GWT.create(AddCenturyBundle.class);
 	
-	String lifeboardBannerStyle();
-	String lastLifeboard();
-	String boxLifeboard();
-	String rusdPartnerLogo();
-	String susdPartnerLogo();
-	String lpsPartnerLogo();
-	String valverdePartnerLogo();
-	String lusdPartnerLogo();
-	
-	String topicTitleStyle();
-	String topicBlockStyle();
+	public interface  addCentury extends CssResource{
+		
+		String dropMenu();
+		String gwtGlassPanel();
+		String dropMenuSelected();
+		String btnStandardsStyle();
+	}
+	@NotStrict
+	@Source("centuryPopup.css")
+	addCentury css();
+
 }

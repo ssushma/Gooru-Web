@@ -145,7 +145,7 @@
 	white-space: nowrap !important;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 98%;
+	width: 100%;
 }
 .classpageTitleText:hover {
  	background-color: #CFE3F1;

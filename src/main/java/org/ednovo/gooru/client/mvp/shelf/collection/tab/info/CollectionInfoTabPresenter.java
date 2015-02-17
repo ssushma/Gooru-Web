@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
@@ -47,7 +48,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -77,6 +77,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	private boolean isCAAvailable =false;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
+	AddCenturyPresenter addCenturyPresenter = null;
 	BrowseStandardsTooltip browseStandardsTooltip;
 	private boolean isBrowseStandardsToolTip = false;
 	private boolean isBrowseTooltip =false;
@@ -88,9 +89,10 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	 * @param view {@link View}
 	 */
 	@Inject
-	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view,AddStandardsPresenter addStandardsPresenter) {
+	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter) {
 		super(eventBus, view);
 		this.addStandardsPresenter = addStandardsPresenter;
+		this.addCenturyPresenter=addCenturyPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -441,6 +443,48 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	public void enableStandards(){
 		getView().getBrowseBtn().getElement().getStyle().clearColor();
 		getView().getBrowseBtn().getElement().removeClassName("disabled");
+	}
+
+	@Override
+	public void getAutoSuggestedCenturyList(SearchDo<CodeDo> standardSearchDo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setUpdatedCentury() {
+		// TODO Auto-generated method stub
+		getView().setUpdatedCentury(addStandardsPresenter.setStandardsVal(), addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc());
+		
+	}
+
+	@Override
+	public void getAddCentury() {
+		//addCenturyPresenter.enableStandardsData();
+		addToPopupSlot(addCenturyPresenter);
+		//getView().OnCenturyClickEvent(addCenturyPresenter.getAddBtn());
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeCenturyPopup() {
+		// TODO Auto-generated method stub
+		addCenturyPresenter.hidePopup();
+		
+	}
+
+	@Override
+	public void updateCentury(String gooruOid, String string, String string2) {
+		// TODO Auto-generated method stub
+	/*	AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, taxonomyCodeId, "false", null,action, new SimpleAsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				getView().onPostStandardUpdate(result);
+			}
+		});*/
+		
 	}
 
 }
