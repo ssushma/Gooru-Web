@@ -731,6 +731,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 					userDo.setBeforeProductionSwitch(true);
 				}
 //			}
+			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);
 			e.printStackTrace();

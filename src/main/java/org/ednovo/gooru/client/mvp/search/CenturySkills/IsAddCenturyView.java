@@ -22,73 +22,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
+package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.gwtplatform.mvp.client.PopupView;
 
 /**
  * @author Search Team
  *
  */
-public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionInfoTabUiHandlers> {
-	
-	/**
-	 * Set collection meta data info
-	 * @param collectionDo instance of {@link CollectionDo}
-	 */
-	void setData(CollectionDo collectionDo);
-	
-	/**
-	 * Set suggest standards
-	 * @param mapSearchDo instance of {@link SearchDo} type of {@link CodeDo}
-	 */
-	void setStandardSuggestions(SearchDo<CodeDo> mapSearchDo);
-	
-	/**
-	 * Set collection default course
-	 * @param libraryCode instance {@link LibraryCodeDo} as List
-	 */
-	void setCourseList(List<LibraryCodeDo> libraryCode);
-	
-	/**
-	 * Update collection course
-	 * @param collectionDo instance of {@link CollectionDo}
-	 */
-	void onPostCourseUpdate(CollectionDo collectionDo);
-	
-	/**
-	 * Update collection standards 
-	 * @param collectionDo instance of {@link CollectionDo}
-	 */
-	void onPostStandardUpdate(CollectionDo collectionDo);
+public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCenturyUiHandlers> {
 
-	void closeAllOpenedPopUp();
-	
-	FlowPanel getStandardContainer();
-	
-	void getUserStandardPrefCodeId(List<String> list);
+	void hidePopup();
 
-	void OnStandardsClickEvent(Button addBtn);
+	void SetData(StandardsLevel1DO levelOneData, int valArr);
 
-	void setUpdatedStandards(String standardsCode, Integer codeId,String description);
-
-	Button getBrowseBtn();
-/*	void displayErrorMsgTeacherTip();
-
-	void setExistingTeacherTip(CollectionDo collectionDo);*/
-
-	void OnCenturyClickEvent(Button addBtn);
-
-	void setUpdatedCentury(String setStandardsVal, Integer setStandardsIdVal,
-			String setStandardDesc);
-	
+	void loadData();	
 }

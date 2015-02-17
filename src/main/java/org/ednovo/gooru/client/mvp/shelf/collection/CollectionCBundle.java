@@ -347,6 +347,11 @@ public interface CollectionCBundle extends ClientBundle{
 		String browseContainer();
 		String charLimit();
 		String learningObjErrStyle();
+		String centuryContainer();
+		String rightCourseContainer();
+		String languageTextAreaCont();
+		String scrollPanelContainerAudience();
+		String dropdownContainerAudience();
 		String deselecteAssessment();
 		String selecteAssessment();
 	}

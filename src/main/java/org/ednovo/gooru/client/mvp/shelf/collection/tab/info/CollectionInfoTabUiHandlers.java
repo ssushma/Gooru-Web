@@ -72,12 +72,22 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 	void deleteCourseOrStandard(String collectionId, String courseCode);
 
 	void getAutoSuggestedStandardsList(SearchDo<CodeDo> standardSearchDo);
+	
+	void getAutoSuggestedCenturyList(SearchDo<CodeDo> standardSearchDo);
 
 	void getAddStandards();
 
 	void setUpdatedStandards();
+	
+	void setUpdatedCentury();
+	
+	void getAddCentury();
+	
+	void closeCenturyPopup();
 
 	void closeStandardsPopup();
+
+	void updateCentury(String gooruOid, String string, String string2);
 	
 	
 

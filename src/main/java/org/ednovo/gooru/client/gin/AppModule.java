@@ -330,6 +330,9 @@ import org.ednovo.gooru.client.mvp.search.SearchRootPresenter.IsSearchRootProxy;
 import org.ednovo.gooru.client.mvp.search.SearchRootView;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabView;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyView;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.IsAddCenturyView;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter.IsCollectionSearchProxy;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchView;
@@ -591,6 +594,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
 		
 		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
+		bindPresenterWidget(AddCenturyPresenter.class, IsAddCenturyView.class, AddCenturyView.class);
 		bindPresenterWidget(AddStandardsPreSearchPresenter.class, IsAddStandardsPreSearchView.class, AddStandardsPreSearchView.class);
 		bindPresenterWidget(ContributorsPresenter.class, IsContributorsView.class, ContributorsView.class);
 

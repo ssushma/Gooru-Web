@@ -927,6 +927,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			loginMessaging.setVisible(false);
 			String commentorImage = AppClientFactory.loggedInUser.getUserUid();
 			userPhoto.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+commentorImage+".png");
+//			userPhoto.setUrl(AppClientFactory.loggedInUser.getSettings() != null ? AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+commentorImage+".png" : "");
 			userPhoto.addErrorHandler(new ErrorHandler() {
 				@Override
 				public void onError(ErrorEvent event) {

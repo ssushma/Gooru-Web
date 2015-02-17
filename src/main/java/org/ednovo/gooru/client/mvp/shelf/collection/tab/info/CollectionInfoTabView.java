@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignC
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseHandler;
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.uc.AppCenturyTagSuggestBox;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
@@ -103,10 +104,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	Button addCourseBtn, addStandardBtn,removeCourseBtn;
 
 	@UiField
-	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
+	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel,centPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  GradeUpdate, languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
+	Label  GradeUpdate, languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel,centLabel, standardsDefaultText,centDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
 	
 	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow,languageObjectiveerrLabel;
 	
@@ -124,13 +125,16 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
+	
+	@UiField(provided = true)	
+	AppCenturyTagSuggestBox centurySgstBox;
 
 	@UiField(provided = true)
 	CollectionCBundle res;
 	
 	ToolTip toolTip=null;
 	
-	@UiField public Button browseBtn;
+	@UiField public Button browseBtn,centbrowseBtn;
 	
 	@UiField Label lblCharLimit,charLimitErrLbl;
 	
@@ -251,6 +255,68 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		};
 		
 		standardSgstBox.addSelectionHandler(this);
+		
+		centurySgstBox = new AppCenturyTagSuggestBox(standardSuggestOracle) {
+			
+			@Override
+			public void keyAction(String text,KeyUpEvent event) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				//standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					filters.put(FLT_SOURCE_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					standardSuggestOracle.clear();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CASK5")||text.contains("CAELD")||text.contains("CSC")) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+							}else{
+								standardsPrefDisplayPopup = true;
+							}
+						}
+						
+					}
+						
+					if(standardsPrefDisplayPopup){
+						standardsPreferenceOrganizeToolTip.hide();
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
+						//standardSgstBox.showSuggestionList();
+					}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+						//standardSuggestOracle.add(i18n.GL1613);
+					}
+					
+					}
+			}
+
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		centurySgstBox.addSelectionHandler(this);
+		
 		res = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
@@ -266,6 +332,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 		});
 
+		centbrowseBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+				
+			}
+		});
+		
 		BlurHandler blurhander=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -300,6 +375,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardLabel.getElement().setId("lblStandardLabel");
 		standardLabel.getElement().setAttribute("alt",i18n.GL0575());
 		standardLabel.getElement().setAttribute("title",i18n.GL0575());
+		
+		centLabel.setText(i18n.GL3121_1());
+		centLabel.getElement().setId("lblCentLabel");
+		centLabel.getElement().setAttribute("alt",i18n.GL3121_1());
+		centLabel.getElement().setAttribute("title",i18n.GL3121_1());
 		
 		addStandardBtn.setText(i18n.GL0590());
 		addStandardBtn.getElement().setId("btnAddStandardBtn");
@@ -694,6 +774,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		});
 		teacherTipTextLabel.setText(MessageProperties.i18n.GL0750);*/
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
+		centDefaultText.getElement().setId("lblCenturyDefaultText");
 		
 		
 		panelLoading.getElement().setId("pnlPanelLoading");
@@ -754,6 +835,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addAttributesToWidget(selectGradeLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3025() : i18n.GL0820());
 		addAttributesToWidget(selectCourseLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3026() : i18n.GL0846());
 		addAttributesToWidget(standardsDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3027() : i18n.GL0749());
+		addAttributesToWidget(centDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3124_1() : i18n.GL3123_1());
 		addAttributesToWidget(depthOfKnowledgeTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3028() : i18n.GL1644());
 		addAttributesToWidget(learningInnovationTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3029() : i18n.GL1650());
 		addAttributesToWidget(instructionalTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3030() : i18n.GL1639());
@@ -876,6 +958,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		gradeMiddleList.clear();
 		gradeBottomList.clear();
 		standardsPanel.clear();
+		centPanel.clear();
 		KinderGarten.clear();
 		higherEducation.clear();
 		standardSuggestOracle.clear();
@@ -1620,6 +1703,22 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 		});
 	}
 	
+	public void OnCenturyClickEvent(Button centuryButtonClicked)
+	{
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=centuryButtonClicked.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedCentury();
+		
+				
+			}
+		});
+	}
+	
 	public void setUpdatedStandards(String standardsCode, Integer codeId,String descroption)
 	{
 		standardsPanel.add(createStandardLabel(standardsCode, codeId + "", descroption));
@@ -1720,5 +1819,15 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 				
 			}
 		});
+	}
+	@Override
+	public void setUpdatedCentury(String setStandardsVal,
+			Integer setStandardsIdVal, String setStandardDesc) {
+		// TODO Auto-generated method stub
+		centPanel.add(createStandardLabel("sample", "samp" + "", "sample1"));
+		this.resetStandardCount();
+		getUiHandlers().updateCentury(collectionDo.getGooruOid(), "787", "add");
+		getUiHandlers().closeCenturyPopup();
+		
 	}
 }
