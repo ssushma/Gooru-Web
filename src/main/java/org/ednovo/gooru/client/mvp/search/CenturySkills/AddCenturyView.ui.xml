@@ -47,11 +47,11 @@
            
            
              <uc:LiPanel>
-            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">            
-            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML>  
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">         
            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML> 
             </g:HTMLPanel>
            <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3135}"></g:InlineLabel></g:HTMLPanel>
            </uc:LiPanel>
@@ -183,11 +183,11 @@
         <uc:UlPanel>
          
           <uc:LiPanel>
-            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
-           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML>  
+            <g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">            
            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"></g:InlineHTML> 
            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"></g:InlineHTML > 
            <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}"></g:InlineHTML>
+           <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}"></g:InlineHTML> 
            </g:HTMLPanel>
            <g:HTMLPanel styleName="{addCenturyStyle.listText}"> <g:InlineLabel text="{i18n.GL3150}"></g:InlineLabel></g:HTMLPanel>
            </uc:LiPanel>
