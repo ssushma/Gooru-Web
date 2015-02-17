@@ -404,6 +404,16 @@
 		   <artifactId>gwt-maps-api</artifactId>
 		   <version>3.10.0-alpha-7</version>
 		</dependency>
+		<dependency>		
+			<groupId>com.samaxes.maven</groupId>		
+			<artifactId>minify-maven-plugin</artifactId>		
+			<version>1.7</version>		
+		</dependency>		
+		<dependency>		
+			<groupId>com.google.code.maven-replacer-plugin</groupId>		
+			<artifactId>replacer</artifactId>		
+			<version>1.5.3</version>		
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>
@@ -528,7 +538,6 @@
                 <executions>
                     <execution>
                         <id>minify-css</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>minify</goal>
                         </goals>
@@ -559,20 +568,19 @@
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
                 <version>1.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <executions>		
+					<execution>		
+						<phase>generate-sources</phase>		
+						<goals>		
+							<goal>replace</goal>		
+						</goals>		
+					</execution>		
+				</executions>
                 <configuration>
                     <file>${basedir}/src/main/resources/index.html</file>
                     <regex>true</regex>
