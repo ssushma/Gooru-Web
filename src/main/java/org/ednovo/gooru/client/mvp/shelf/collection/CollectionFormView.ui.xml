@@ -18,26 +18,27 @@
 			<g:HTMLPanel styleName="{createCollectionStyle.paddingSelection}" ui:field="pnlCreateNewAssessment">
 				<div class="{createCollectionStyle.logInput}  less-gutter">
 					<div class="col-md-5 {createCollectionStyle.exstingURL}">
-						<g:Button ui:field="btnExistingAssessment" styleName="secondary">Insert Existing Assessment URL</g:Button>
+						<g:Button ui:field="btnExistingAssessment" styleName="secondary" text="{i18n.GL3125}" title="{i18n.GL3125}"></g:Button>
 				    </div>
 					<div class="col-md-1"><g:Label styleName="{createCollectionStyle.textMiddle}" text="{i18n.GL0466}"></g:Label></div> 
 					<div class="col-md-6 creatNew">
-						<g:Button ui:field="btnNewAssessment" styleName="secondary">Create New Assessment from Scratch</g:Button>
+						<g:Button ui:field="btnNewAssessment" styleName="secondary" text="{i18n.GL3126}" title="{i18n.GL3126}"></g:Button>
 					</div>
 					<div class="clearfix"></div>
 					<div class="{createCollectionStyle.logInput} less-gutter">
 					<g:HTMLPanel ui:field="pnlNewAssessmentContainer" styleName="col-md-12">
-			 		 	<uc:TextBoxWithPlaceholder styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
+			 		 	<uc:TextBoxWithPlaceholder ui:field="lblNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
 			 		</g:HTMLPanel>
 			 		<g:HTMLPanel ui:field="pnlExistingAssessmentContainer" styleName="col-md-12">
-			 			<uc:TextBoxWithPlaceholder styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
-			 			<uc:TextBoxWithPlaceholder styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
+			 			<uc:TextBoxWithPlaceholder ui:field="lblExistingAssessmentTitle" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
+			 			<uc:TextBoxWithPlaceholder ui:field="lblExistingAssessmentURL" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
 			 		</g:HTMLPanel>
 					</div>				
 					</div>
 				
 					<div class="{createCollectionStyle.formViewButtonContainer}">
 						<g:Button ui:field="btnCreateAssessment" styleName="primary" text="{i18n.GL3024}"></g:Button>
+					    <g:Button ui:field="btnCancelAssessment" styleName="secondary"></g:Button>
 				    </div>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.collectionSel} {style.collectionSelFormView}" ui:field="bodyContainer">

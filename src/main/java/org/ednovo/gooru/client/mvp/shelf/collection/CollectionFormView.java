@@ -112,7 +112,7 @@ public class CollectionFormView extends
 	Anchor cancelAnr;*/
 	
 	@UiField
-	Button cancelAnr;
+	Button cancelAnr,btnCancelAssessment;
 
 	
 
@@ -137,6 +137,8 @@ public class CollectionFormView extends
 	
 	@UiField
 	HTMLEventPanel publicShareFloPanel;
+	
+	@UiField TextBoxWithPlaceholder lblNewAssessmentTitle,lblExistingAssessmentTitle,lblExistingAssessmentURL;
 	
 	boolean fromAddResourcePresenter=false;
 	
@@ -346,6 +348,15 @@ public class CollectionFormView extends
 				toolTipPopupPanel.hide();
 			}
 		});
+		btnCancelAssessment.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				hide();
+				toolTipPopupPanel.hide();
+			}
+		});
 		setAutoHideOnNavigationEventEnabled(true);
 		collectionTitleTxtBox.addKeyUpHandler(new TitleKeyUpHandler());
         getGradeList();
@@ -415,7 +426,8 @@ public class CollectionFormView extends
 				
 				pnlExistingAssessmentContainer.setVisible(true);
 				pnlNewAssessmentContainer.setVisible(false);
-				btnCreateAssessment.setVisible(false);
+				btnCreateAssessment.setVisible(true);
+				btnCancelAssessment.setVisible(true);
 			}
 		});
 		//Handling the click event on new assessment click
@@ -431,18 +443,24 @@ public class CollectionFormView extends
 				pnlExistingAssessmentContainer.setVisible(false);
 				pnlNewAssessmentContainer.setVisible(true);
 				btnCreateAssessment.setVisible(true);
+				btnCancelAssessment.setVisible(true);
 			}
 		});
 		setTextAndIds();
 		pnlNewAssessmentContainer.setVisible(false);
 		pnlExistingAssessmentContainer.setVisible(false);
 		btnCreateAssessment.setVisible(false);
+		btnCancelAssessment.setVisible(false);
 		btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
 		btnNewAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
 	}
 	
 	public void setTextAndIds(){
 		collectionTitleTxtBox.setPlaceholder(i18n.GL0319());
+		lblNewAssessmentTitle.setPlaceholder(i18n.GL3122());
+		lblExistingAssessmentTitle.setPlaceholder(i18n.GL3123());
+		lblExistingAssessmentURL.setPlaceholder(i18n.GL3124());
+		
 		mandatoryErrorLbl.setText(i18n.GL0173());
 		mandatoryErrorLbl.getElement().setId("lblMandatoryErrorLbl");
 		mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0173());
@@ -492,6 +510,10 @@ public class CollectionFormView extends
 		courseLbl.getElement().setId("lblCourseLbl");
 		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
 		courseLbl.getElement().setAttribute("title",i18n.GL0326());
+		
+		btnCancelAssessment.setText(i18n.GL0142());
+		btnCancelAssessment.getElement().setAttribute("alt",i18n.GL0142());
+		btnCancelAssessment.getElement().setAttribute("title",i18n.GL0142());
 		
 		btnOk.getElement().setId("btnOk");
 		cancelAnr.getElement().setId("lnkCancel");
