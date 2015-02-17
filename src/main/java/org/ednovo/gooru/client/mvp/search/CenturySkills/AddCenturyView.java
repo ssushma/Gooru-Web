@@ -88,7 +88,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		
 		AddCenturyBundle.INSTANCE.css().ensureInjected();
 
-		appPopUp.setViewTitle(i18n.GL3121());
+		appPopUp.setViewTitle(i18n.GL3121_1());
 		
 		
 	}
