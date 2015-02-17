@@ -63,3 +63,7 @@
 	font-weight: bold;
 	color:#252525;
 }
+.resourceTitle{
+	min-width: 50px;
+	width: 10%;
+}
