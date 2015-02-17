@@ -495,7 +495,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 			//gradeListInt = sortList(gradeListInt);
 			/*for(int glevel=0;glevel<gradeListInt.size();glevel++){
-				System.out.println("gradeListInt::"+gradeListInt.get(glevel));
 				if(gradeListInt.get(glevel) == 1000)
 				{
 					//here
@@ -2335,9 +2334,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setCollectionType(String collectionType) {
-		System.out.println("Enter");
 		String message=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3043():i18n.GL0620();
-		System.out.println("message:::"+message);
 		collectionsText.getElement().setInnerHTML(message);
 		collectionsText.getElement().setAttribute("alt",message);
 		collectionsText.getElement().setAttribute("title",message);

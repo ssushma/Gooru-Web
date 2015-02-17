@@ -536,9 +536,6 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 */
 	public void addCollectionToAssign(){
 		
-		System.out.println("cureentcollectionTreeItem::"+cureentcollectionTreeItem);
-		System.out.println("currentFolderSelectedTreeItem::"+currentFolderSelectedTreeItem);
-		
 		if(cureentcollectionTreeItem!=null){
 			addResourceBtnLbl.setVisible(false);
 			cancelResourcePopupBtnLbl.setVisible(false);
