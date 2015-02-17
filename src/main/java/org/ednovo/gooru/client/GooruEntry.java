@@ -83,6 +83,9 @@ public class GooruEntry implements EntryPoint {
 	
 	public void onModuleLoad() {
 		
+		/**
+		 * Capturing all uncaught exception on client side.
+		 */
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			
 			@Override
@@ -264,6 +267,12 @@ public class GooruEntry implements EntryPoint {
 		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/errorImageFunction.js","js");
 	}
 	
+	/**
+	 *  Method used to unwrap GWT umbrella exception.
+	 *  
+	 * @param e {@link Throwable}
+	 * @return {@link Throwable}
+	 */
 	public Throwable getExceptionToDisplay(Throwable e) {
 	    if(e instanceof UmbrellaException) {
 	      UmbrellaException ue = (UmbrellaException) e;
