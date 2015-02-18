@@ -129,4 +129,28 @@ public interface Constants {
 	String HTTP = "http";
 	
 	/* ****************** Base service Impl Constants End ******************** */
+	
+	/*************** Analytics start **************************************************/
+	
+	String CLEARSUMMARY="ClearSummary";
+	
+	String CLEARPROGRESS="ClearProgress";
+	
+	String SUMMARY="Summary";
+	
+	String PROGRESS="Progress";
+	
+	String BELOWSCORE="BelowScore";
+	
+	String ABOVESCORE="AboveScore";
+	
+	String ONE = "1";
+
+	String TWO = "2";
+	
+	String THREE = "3";
+	
+	/*************** Analytics End **************************************************/
+	
+	
 }
