@@ -27,12 +27,14 @@
 					<div class="clearfix"></div>
 					<div class="{createCollectionStyle.logInput} less-gutter">
 					<g:HTMLPanel ui:field="pnlNewAssessmentContainer" styleName="col-md-12">
-			 		 	<uc:TextBoxWithPlaceholder ui:field="lblNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
+			 		 	<uc:TextBoxWithPlaceholder ui:field="txtNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
 			 		 	<g:Label ui:field="lblNewAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 		</g:HTMLPanel>
 			 		<g:HTMLPanel ui:field="pnlExistingAssessmentContainer" styleName="col-md-12">
-			 			<uc:TextBoxWithPlaceholder ui:field="lblExistingAssessmentTitle" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
-			 			<uc:TextBoxWithPlaceholder ui:field="lblExistingAssessmentURL" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
+			 			<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
+			 			<g:Label ui:field="lblExistingAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
+			 			<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentURL" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
+			 			<g:Label ui:field="lblExistingAssessmentURLError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 		</g:HTMLPanel>
 					</div>				
 					</div>

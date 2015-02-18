@@ -104,6 +104,9 @@ button.primary:hover {
 	margin: 0 0 10px 0;
 	color: #0066cc;
 	font-size:20px;
+	background: url(../images/folders/panel/folder-icon.png) no-repeat 1px 0px;
+	height: 26px;
+	padding-left: 41px;
 }
 
 .marginDiv {
@@ -287,4 +290,7 @@ button.primary:hover {
 }
 .lblFolderTitles{
 	font-weight: bold;
+}
+.btnBackToPrevious{
+	margin-bottom: 15px;
 }
