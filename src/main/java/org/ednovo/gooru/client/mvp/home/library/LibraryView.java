@@ -261,6 +261,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		contributorsContainer.getElement().setId("pnlContributorsContainer");
 		listAllBtn.getElement().setAttribute("style", "float:right;margin: -25px 3px 0 0;");
 		//listAllBtn.addClickHandler(new ListAllBtnHandler());
+		folderListPanel.setVisible(false);
 	}
 	
 	/**
@@ -1518,7 +1519,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	public void loadingPanel(boolean isVisible) {
 		loadingIconPanel.setVisible(isVisible);
 		contentScroll.setVisible(!isVisible);
-		folderListPanel.setVisible(!isVisible);
+		//folderListPanel.setVisible(!isVisible);
 		libraryMetaDataContainer.setVisible(!isVisible);
 	}
 
