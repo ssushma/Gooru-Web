@@ -58,4 +58,5 @@ public interface ProfilePageLibraryStyleBundle extends CssResource {
 	String libraryConceptTitle();
 	String libraryConceptActive();
 	String marginTop5();
+	String folderTitleStyle();
 }
