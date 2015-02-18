@@ -115,7 +115,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		leftNav.getElement().setId("pnlLeftNav");
 		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
-		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -37px 9px 0 0;");
+		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -60px 9px 0 0;");
 		folderListPanel.setVisible(false);
 		viewAllBtn.setVisible(false);
 	}
@@ -184,10 +184,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 						viewAllBtn.setVisible(false);
 						folderListPanel.setVisible(false);
 					} else {
-						System.out.println("folderitems"+unitListId);
 						folderListPanel.setVisible(true);
 						viewAllBtn.setVisible(true);
-						System.out.println("title::"+leftMenuItemView.getTitle());
 						folderTopicTitleLbl.setText(leftMenuItemView.getTitle());
 						viewAllBtn.addClickHandler(new clickOnViewAll(unitListId));
 						
@@ -241,6 +239,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void loadingPanel(boolean isVisible) {
 		loadingIconPanel.setVisible(isVisible);
 		contentScroll.setVisible(!isVisible);
+		folderListPanel.setVisible(!isVisible);
 	}
 
 	@Override
