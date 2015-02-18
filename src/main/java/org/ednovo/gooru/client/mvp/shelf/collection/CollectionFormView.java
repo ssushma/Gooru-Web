@@ -463,7 +463,7 @@ public class CollectionFormView extends
 				if(isAssessmentEditClicked){
 					//Code when edit assessment selected
 					String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
-					final String assessmentURL=txtExistingAssessmentTitle.getText();
+					final String assessmentURL=txtExistingAssessmentURL.getText();
 					if(assessmentExistingTitle.isEmpty()){
 						lblExistingAssessmentError.setVisible(true);
 						lblExistingAssessmentError.setText(i18n.GL1026());
@@ -714,11 +714,12 @@ public class CollectionFormView extends
 			collection.setGooruOid(this.collectionDo.getGooruOid());
 		}
 		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
-			collection.setCollectionType("assessment");
 			if(isAssessmentEditClicked){
 				collection.setTitle(txtExistingAssessmentTitle.getText());
 				collection.setUrl(txtExistingAssessmentURL.getText());
+				collection.setCollectionType("assessment/url");
 			}else{
+				collection.setCollectionType("assessment");
 				collection.setTitle(txtNewAssessmentTitle.getText());
 			}
 		}else{
