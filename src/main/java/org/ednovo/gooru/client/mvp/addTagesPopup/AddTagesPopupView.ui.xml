@@ -22,7 +22,17 @@
 		      </g:HTMLPanel >
 		    <g:HTMLPanel ui:field="addTagesContent" styleName="{res1.css.addTagsContent}">
 		        <gg:PPanel ui:field="popupContentText"></gg:PPanel>
-		        <br/><br/>
+		        <!-- 21Centuary Start -->
+			 <g:FlowPanel ui:field="centuaryContainer">
+					<g:Label styleName="{res1.css.addQuestionStandard}"	ui:field="centuaryDefaultText"></g:Label>
+					<g:FlowPanel styleName="{res1.css.standardsCont}">
+						<gg:AppCenturyTagSuggestBox ui:field="centuarySgstBox" styleName="form-control {res1.css.form_control}" />
+							<g:Label styleName="{res.css.standardMaxHide}" ui:field="centuaryMaxMsg" />
+							<g:FlowPanel ui:field="centuaryPanel"	styleName="{res.css.collectionStandardsMargin}" />
+					</g:FlowPanel>
+			 </g:FlowPanel>
+       		 <!-- 21Centuary End -->
+		        <br/>
 		      <g:HTMLPanel styleName="{res1.css.AddTagesPopup_h5}">
 		      		<g:Label  ui:field="headerEducationalUse"></g:Label>    
 		      </g:HTMLPanel>  

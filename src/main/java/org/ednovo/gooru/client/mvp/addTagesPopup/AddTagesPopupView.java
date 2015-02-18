@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
+import org.ednovo.gooru.client.uc.AppCenturyTagSuggestBox;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
@@ -51,6 +52,7 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -120,7 +122,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField Label lexileHeader,AdsHeader, mediaLabel;
 	@UiField Anchor lblMediaPlaceHolder;
 	
-	@UiField Label standardMaxMsg,standardsDefaultText;
+	@UiField Label standardMaxMsg,standardsDefaultText,centuaryMaxMsg,centuaryDefaultText;
 	
 	@UiField Anchor noAds,modAds,aggreAds;
 	
@@ -139,7 +141,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
 	
-	@UiField FlowPanel standardContainer,standardsPanel;
+	@UiField(provided = true)	
+	AppCenturyTagSuggestBox centuarySgstBox;
+	
+	@UiField FlowPanel standardContainer,standardsPanel,centuaryContainer,centuaryPanel;
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 	private static final String FLT_CODE_ID = "id";
@@ -151,6 +156,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
+	private static final String FLT_SOURCE_CODE_ID = "flt.sourceCodeId";
 
 	boolean isCancelclicked=false;
 	private boolean isClickedOnDropDwn=false;
@@ -429,6 +435,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		standardsDefaultText.getElement().setAttribute("alt",i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title",i18n.GL1682());
 		
+		centuaryDefaultText.setText(i18n.GL3121_1());
+		StringUtil.setAttributes(centuaryDefaultText.getElement(), i18n.GL3121_1(), i18n.GL3121_1(), i18n.GL3121_1());
+		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
 		mediaLabel.setText(i18n.GL1706());
@@ -590,11 +599,73 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				return null;
 			}
 		};
+		
 		standardSgstBox.getElement().setId("tbautoStandardSgstBox");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
 		
 		standardSgstBox.addSelectionHandler(this);
+		
+		centuarySgstBox = new AppCenturyTagSuggestBox(standardSuggestOracle) {
+			
+			@Override
+			public void keyAction(String text,KeyUpEvent event) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				//standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					filters.put(FLT_SOURCE_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					standardSuggestOracle.clear();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CASK5")||text.contains("CAELD")||text.contains("CSC")) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+							}else{
+								standardsPrefDisplayPopup = true;
+							}
+						}
+						
+					}
+						
+					if(standardsPrefDisplayPopup){
+						standardsPreferenceOrganizeToolTip.hide();
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
+						//standardSgstBox.showSuggestionList();
+					}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+						//standardSuggestOracle.add(i18n.GL1613);
+					}
+					
+					}
+			}
+
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		centuarySgstBox.addSelectionHandler(this);
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
