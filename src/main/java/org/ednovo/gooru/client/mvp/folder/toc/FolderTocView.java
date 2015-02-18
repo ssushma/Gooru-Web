@@ -39,6 +39,8 @@ import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -47,7 +49,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -81,6 +85,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField HTMLPanel floderTreeContainer,marginDiv;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks;
 	@UiField H3Panel lblFolderTitle;
+	@UiField Button btnBackToPrevious;
 	
 	final String FOLDER="folder";
 	final String SCOLLECTION="scollection";
@@ -109,6 +114,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * This method is used to set folder TOC Data.
 	 */
 	public void setData() {
+		btnBackToPrevious.setText(i18n.GL3165());
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTocTree);
 		folderTocTree.addItem(getLoadingImage());
@@ -146,6 +152,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						parent.setSelected(false); 
 						item.setState(!item.getState(), false);
 				} 
+			}
+		});
+		btnBackToPrevious.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				History.back();
 			}
 		});
 	}

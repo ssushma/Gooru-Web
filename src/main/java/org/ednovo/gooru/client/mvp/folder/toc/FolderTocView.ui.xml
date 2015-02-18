@@ -12,6 +12,7 @@
 				<g:HTMLPanel styleName="row">
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
+							<g:Button ui:field="btnBackToPrevious" styleName="backArrowButton" />
 							<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"> </tbp:H3Panel>
 							<p>
 								<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1731} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>
