@@ -153,14 +153,9 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		poorRatingSubHeaderLbl.getElement().setAttribute("title",i18n.GL2035());
 		
 		setUserReview(review);
-//		setAvgRatingWidget();
 		setGlassEnabled(true);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
-		/*ratingText.getElement().setInnerHTML(i18n.GL1991());
-		ratingText.getElement().setId("pnlRatingText");
-		ratingText.getElement().setAttribute("alt",i18n.GL1991());
-		ratingText.getElement().setAttribute("title",i18n.GL1991());*/
 		
 		btnSkip.setText(i18n.GL0142());
 		btnSkip.getElement().setId("btnSkip");
@@ -191,7 +186,6 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(average);
 		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-//		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
 	/**
@@ -284,7 +278,6 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 							AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
 								@Override
 								public void onSuccess(ContentReportDo result) {
-									//getView().showSuccesmessagePopup();
 									isResourceflagged();
 									
 									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
@@ -474,59 +467,6 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		}else if(autoClose && !ratingCommentTxtArea.getText().trim().equals("") && !btnPost.getText().equalsIgnoreCase("Save")){
 			setUserPoorReview();
 		}
-		
-		/*if(autoClose && !ratingCommentTxtArea.getText().equals("") && !btnPost.getText().equalsIgnoreCase("Save")){
-			Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text", ratingCommentTxtArea.getText());
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-				@Override
-				public void onSuccess(Boolean value) {
-						if(!value){
-							saveAndPsotLbl.setText("");
-							saveAndPsotLbl.setVisible(true);
-							buttonsContainer.setVisible(false);
-							if(btnPost.getText().equalsIgnoreCase("Save")){
-								saveAndPsotLbl.setText(saving);
-								saveAndPsotLbl.getElement().setAttribute("alt",saving);
-								saveAndPsotLbl.getElement().setAttribute("title",saving);
-								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
-							}else if(btnPost.getText().equalsIgnoreCase("Submit")){
-								saveAndPsotLbl.setText(posting);
-								saveAndPsotLbl.getElement().setAttribute("alt",posting);
-								saveAndPsotLbl.getElement().setAttribute("title",posting);
-								if(resourceCheckBox1.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("missing-concept");
-								}
-								if(resourceCheckBox2.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("not-loading");
-								}
-								if(resourceCheckBox3.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("inappropriate");
-								}
-								if(resourceCheckBox4.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("other");
-								}
-								
-								AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
-									@Override
-									public void onSuccess(ContentReportDo result) {
-										isResourceflagged();
-										AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
-									}
-								});	  
-							}
-						}
-						SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
-				}
-			});
-		}*/
+	
 	}
 }

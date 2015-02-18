@@ -615,7 +615,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(!AppClientFactory.isAnonymous()){
 			metadataPresenter.getFlagedReport(collectionDo.getGooruOid());
 		}
-		stopResourceDataLogFromHomePage();// if resource event is not stoped , then this method 
+		stopResourceDataLogFromHomePage();
+		// if resource event is not stoped , then this method 
         //will call resource stop event and collection stop data log event.
 		attemptAnswersMap.clear();
 		setUserAttemptedQuestionTypeAndStatus(false,0);
@@ -648,7 +649,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}else{
 			enablePlayerButton(true,true, isSharable, false, true,true);
 			makeButtonActive(tabView);
-			//resourceNarrationPresenter.showAddToolTip();
 		}
 		clearIframeContent();
 		this.collectionItemDo=collectionItemDo;
@@ -753,7 +753,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	}
 	@Override
 	public void showResourceView(Integer collectionItemSequence, boolean isForwardDirection) {
-		//getCollectionItemDo(collectionItemSequence,isForwardDirection);
 	}
 	
 	public void showTabWidget(String tabView,String collectionId,String resourceId,boolean isCollectionHome,boolean isCollectionEnd){
@@ -1065,7 +1064,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	public void createPlayerDataLogs(){
 		if(collectionActivityEventId!=null&&!collectionActivityEventId.isEmpty()){
 			stopResourceDataLog();
-			createSessionAttemptTryWhenNavigation();
 			resetAnswerLists();
 			createResourceDataLog();
 			createSessionItem();
@@ -1095,13 +1093,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		startPlayerActivityEvent(resourceActivityEventId, collectionActivityEventId, PlayerConstants.RESOURCE_EVENT_NAME, collectionDo.getGooruOid(), resourceActivityResourceId, resourceContext, getUserAgent());
 		startResourceInsightDataLog();
 	}
-	
-	public void createSessionAttemptTryWhenNavigation(){
-		if(isUserAttemptedAnswer()){
-			resoruceMetadataPresenter.createSessionAttemptTryWhenNavigation(getUserAttemptedQuestionType());
-		}
-	}
-	
+
 	public void stopResourceDataLog(){
 		if(resourceActivityResourceId!=null){
 			String resourceContext=PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid()+"/"+resourceActivityResourceId;
@@ -1210,13 +1202,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	}
 	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
-//			this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
-//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
-//			@Override
-//			public void onSuccess(String activityEventId) {
-//				
-//			}
-//		});
 	}
 	
 	public void createSession(String collectionGooruOid){
@@ -1524,7 +1509,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			metadataPresenter.setPlayerLoginStatusHandler(true);//This will enable the comments.
 		}
 		else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(COLLECTION_RESOURCE_THUMBS_WIDGET_MODE)){
-			//getCollection();
 		}else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(COLLECTION_RESOURCE_FLAG)){
 			String collectionItemId=getPlaceManager().getRequestParameter("rid", null);
 			CollectionItemDo collectionItemDo=getCollectionItemDo(collectionItemId);

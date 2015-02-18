@@ -425,6 +425,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 
 	public void showResourceView(String resourceId,String tabView) {
+		if(collectionItemDo!=null){
 			if(gooruOid!=null&&gooruOid.equals(this.collectionItemDo.getResource().getGooruOid())){
 				makeButtonActive(tabView);
 				return;
@@ -456,7 +457,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			setUserAttemptedQuestionTypeAndStatus(false,0);
 			setOpenEndedAnswerSubmited(true);
 			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter,false);
-		
+       }
 	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
@@ -481,11 +482,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			
 		}
 	}
-	public void createSessionAttemptTryWhenNavigation(){
-		if(isUserAttemptedAnswer()){
-			resoruceMetadataPresenter.createSessionAttemptTryWhenNavigation(getUserAttemptedQuestionType());
-		}
-	}
+	
 	public void increaseUserAttemptCount(){
 		setAttemptCount(getAttemptCount()+1);
 	}
@@ -600,7 +597,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void stopDataLogEvents(){
 		if(collectionItemDo!=null){
 			stopResourceInsightDataLog();
-			createSessionAttemptTryWhenNavigation();
 			updateSession(sessionId);
 		}
 	}

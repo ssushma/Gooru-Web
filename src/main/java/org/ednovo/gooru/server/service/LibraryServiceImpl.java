@@ -127,6 +127,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPIC_OFFSET, subjectName, topicId, getLoggedInSessionToken(), ""+offset, ""+limit);
 		url+=getLibraryName(libraryName);
+		getLogger().info("community - getLessonsOnPagination- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLessons(jsonRepresentation);
@@ -995,6 +996,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<CourseDo> getLibraryCourses(String subjectName, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES_OPTIMIZED, subjectName, getLoggedInSessionToken(), libraryName);
+		getLogger().info("-- community lib - getLibraryCourses - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLibraryCourses(jsonRepresentation, subjectName, libraryName);
@@ -1048,6 +1050,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId, getLoggedInSessionToken());
 		url=url+getLibraryName(libraryName);
+		getLogger().info("Community -- getLibraryUnits - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLibraryUnits(jsonRepresentation, subjectName);

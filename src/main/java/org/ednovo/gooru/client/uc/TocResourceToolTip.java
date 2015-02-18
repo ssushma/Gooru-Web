@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.uc;
 
 
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,32 +41,15 @@ import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
-import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.HasMouseOutHandlers;
-import com.google.gwt.event.dom.client.HasMouseOverHandlers;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -122,9 +104,7 @@ public class TocResourceToolTip extends PopupPanel{
 			setResourceTypeIcon(collectionItemDo.getResource().getResourceFormat().getDisplayName());
 		}
 		if(addHyperlink){
-			//setResourcePlayLink();
 		}else{
-			//this.addClickHandler(new ResourceRequest());
 		}
 		setResourceSequence(itemIndex);
 		setResourceCategory();
@@ -146,7 +126,6 @@ public class TocResourceToolTip extends PopupPanel{
 			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 			ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		}
-//		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 
@@ -266,17 +245,13 @@ public class ResourceRequest implements ClickHandler{
 	}
 	
 	public void setNavigationResourceTitle(String title){
-		//resourceTitle.add(getHTML(title));
-		//resourceTitle.getElement().setAttribute("alt", getHTML(title).toString());
-		//resourceTitle.getElement().setAttribute("title", ""+getHTML(title).toString());
+		
 		resourceHoverTitle.setHTML(getHTML(title).toString());
 		resourceHoverTitle.getElement().setAttribute("alt", getHTML(title).toString());
 		resourceHoverTitle.getElement().setAttribute("title", getHTML(title).toString());
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
-		//resourceTitle.add(getHTML(itemIndex+""));
-		//resourceTitle.getElement().setAttribute("alt", itemIndex+". "+title);
-		//resourceTitle.getElement().setAttribute("title", itemIndex+". "+title);
+		
 		String titleLbl	=InfoUtil.removeQuestionTagsOnBoldClick(title.toString());
 		resourceHoverTitle.setHTML(titleLbl);
 		resourceHoverTitle.getElement().setAttribute("alt", title.toString());
@@ -410,9 +385,11 @@ public class ResourceRequest implements ClickHandler{
 		@Override
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
 			if(collectionItemDo.getResource()!=null){
-				if(collectionItemDo.getResource().getGooruOid().equals(gooruOid)){
-					ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
-					ratingWidgetView.setAvgStarRating(average);
+				if(gooruOid.equals(collectionItemDo.getResource().getGooruOid())){
+					if(count!=null){
+						ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
+						ratingWidgetView.setAvgStarRating(average);
+					}
 				}
 			}
 		}
