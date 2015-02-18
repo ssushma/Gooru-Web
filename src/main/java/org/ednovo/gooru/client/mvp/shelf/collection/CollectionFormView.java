@@ -494,6 +494,7 @@ public class CollectionFormView extends
 				}
 			}
 		});
+		//This will handle the focus on new assessment.
 		lblNewAssessmentTitle.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {
@@ -643,7 +644,7 @@ public class CollectionFormView extends
 			collection.setGooruOid(this.collectionDo.getGooruOid());
 		}
 		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
-			collection.setCollectionType("quiz");
+			collection.setCollectionType("assessment");
 			if(isAssessmentEditClicked){
 				//collection.setTitle(lblExistingAssessmentTitle.getText());
 			}else{

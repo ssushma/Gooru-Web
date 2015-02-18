@@ -182,6 +182,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	String newInstructionalVal = "";
 	
+	final String ASSESSMENT="assessment";
+	
 	private static CollectionInfoTabViewUiBinder uiBinder = GWT.create(CollectionInfoTabViewUiBinder.class);
 
 	interface CollectionInfoTabViewUiBinder extends UiBinder<Widget, CollectionInfoTabView> {
@@ -832,14 +834,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	public void modifyStaticText(String collectionType){
 		
-		addAttributesToWidget(selectGradeLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3025() : i18n.GL0820());
-		addAttributesToWidget(selectCourseLbl,collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3026() : i18n.GL0846());
-		addAttributesToWidget(standardsDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3027() : i18n.GL0749());
-		addAttributesToWidget(centDefaultText, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3124_1() : i18n.GL3123_1());
-		addAttributesToWidget(depthOfKnowledgeTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3028() : i18n.GL1644());
-		addAttributesToWidget(learningInnovationTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3029() : i18n.GL1650());
-		addAttributesToWidget(instructionalTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3030() : i18n.GL1639());
-		addAttributesToWidget(audienceTitle, collectionType!=null&&collectionType.equals("quiz") ? i18n.GL3031() : i18n.GL1640());
+		addAttributesToWidget(selectGradeLbl,collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3025() : i18n.GL0820());
+		addAttributesToWidget(selectCourseLbl,collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3026() : i18n.GL0846());
+		addAttributesToWidget(standardsDefaultText, collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3027() : i18n.GL0749());
+		addAttributesToWidget(centDefaultText, collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3124_1() : i18n.GL3123_1());
+		addAttributesToWidget(depthOfKnowledgeTitle, collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3028() : i18n.GL1644());
+		addAttributesToWidget(learningInnovationTitle, collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3029() : i18n.GL1650());
+		addAttributesToWidget(instructionalTitle, collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3030() : i18n.GL1639());
+		addAttributesToWidget(audienceTitle, collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3031() : i18n.GL1640());
 
 	}
 	

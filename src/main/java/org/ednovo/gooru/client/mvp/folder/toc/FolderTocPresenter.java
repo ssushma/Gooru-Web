@@ -27,14 +27,11 @@
 */
 package org.ednovo.gooru.client.mvp.folder.toc;
 
-import java.util.List;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
-import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -97,7 +94,6 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	public void onBind() {
 		super.onBind();
-		
 	}
 
 	@Override
