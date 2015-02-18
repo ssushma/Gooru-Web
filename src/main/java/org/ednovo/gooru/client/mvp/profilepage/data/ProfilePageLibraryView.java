@@ -166,7 +166,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					System.out.println("leftmenuitemclick");
 					if(leftMenuItemView.getWidgetCount()>10) {
 						Window.scrollTo(0, 0);
 					}
