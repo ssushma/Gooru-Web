@@ -195,7 +195,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return deserializeResourceCollection(jsonRep);
 	}
 
-
 	public ResourceInfoObjectDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -599,6 +598,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REPORT,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
 		getLogger().info("getContentReport::"+url);
+
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
@@ -997,6 +997,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 createStarRatingsJsonObj.put("type",new JSONObject().put("value","star"));
 			 getLogger().info("--- create star -- "+url);
 			 getLogger().info("--- create str payload -- "+createStarRatingsJsonObj.toString()); 
+
 			 JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(), getRestPassword(), createStarRatingsJsonObj.toString());
 			 jsonRep= jsonResponseRep.getJsonRepresentation();
 			 if(jsonRep!=null && jsonRep.getSize()!=-1){

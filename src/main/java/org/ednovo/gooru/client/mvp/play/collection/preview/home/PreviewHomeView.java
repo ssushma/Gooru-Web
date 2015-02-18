@@ -322,7 +322,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Preview_Click_Assign();
 		   String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-		    System.out.println("assign-collectionId:"+collectionId);
 
 				if(!isAssignPopup){
 					isAssignPopup=true;

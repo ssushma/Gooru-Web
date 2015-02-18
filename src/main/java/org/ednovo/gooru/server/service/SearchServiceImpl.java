@@ -199,7 +199,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("getResourceSearchResults:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
@@ -249,7 +248,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("getCollectionSearchResults.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
@@ -327,7 +325,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
 			url = url + "&"+COURSE_CODE_ID+"="+searchDo.getFilters().get(COURSE_CODE_ID);
 		}
-		System.out.println("getSuggestStandardByFilterCourseId:::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
@@ -582,7 +579,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("getFirstLevelStandards::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -658,7 +654,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("getFourthLevelStandards:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -682,11 +677,9 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		// TODO Auto-generated method stub
 		JsonRepresentation jsonRep=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
-		System.out.println("searchDo.getFilters():::::::"+searchDo.getFilters());
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
 			url = url + "&"+FLT_SOURCE_CODE_ID+"="+searchDo.getFilters().get(FLT_SOURCE_CODE_ID);
 		}
-		System.out.println("getSuggestStandardByFiltersource course id 1 CourseId api new:::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
@@ -715,6 +708,12 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			
 		}
 		return searchResourcesTagsDo;
+	}
+
+	@Override
+	public String isClientSideLoggersEnabled() throws GwtException,	ServerDownException {
+		String loggersStatus = getClientSideLoggersStatus();
+		return loggersStatus;
 	}
 	
 	/*@Override

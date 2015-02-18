@@ -442,5 +442,7 @@ public interface SearchService extends BaseService {
 	
 	
 	public SearchResourcesTagsDo getResourceTags(String resourceId, String offSet, String limit) throws GwtException, ServerDownException; 
+	
+	public String isClientSideLoggersEnabled() throws GwtException, ServerDownException;
 
-}
+} 
