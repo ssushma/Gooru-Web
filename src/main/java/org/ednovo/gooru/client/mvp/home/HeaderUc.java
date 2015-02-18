@@ -1391,7 +1391,7 @@ public class HeaderUc extends Composite implements
 			loggedInfoLbl.setTitle(userDo.getUsername());
 			loggedInfoLbl.getElement().setAttribute("alt", userDo.getUsername());
 			
-			imgUserProfile.setUrl(userDo.getProfileImageUrl() != "" && userDo.getProfileImageUrl() !=null ? userDo.getProfileImageUrl() : null);
+			imgUserProfile.setUrl(userDo.getProfileImageUrl() != "" && userDo.getProfileImageUrl() !=null ? userDo.getProfileImageUrl() : DEFAULT_PROFILE_IMAGE);
 			
 			imgUserProfile.getElement().setAttribute("onerror","imgError(this);");
 			imgUserProfile.setAltText(userDo.getUsername());
