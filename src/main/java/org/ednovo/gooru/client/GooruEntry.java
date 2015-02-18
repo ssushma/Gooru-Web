@@ -113,13 +113,11 @@ public class GooruEntry implements EntryPoint {
 			params.put("device", size[0]);
 			params.put("size", size[1]);
 			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
-//			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
 		}else{
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
 					AppClientFactory.setLoggedInUser(loggedInUser);
-//					loadCssJsFiles();
 					UcCBundle.INSTANCE.css().ensureInjected();
 					HomeCBundle.INSTANCE.css().ensureInjected();
 					AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
@@ -202,11 +200,6 @@ public class GooruEntry implements EntryPoint {
 				HomeCBundle.INSTANCE.css().ensureInjected();
 				AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 			}
-
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-//			}
 		});
 	}
 	
@@ -235,14 +228,7 @@ public class GooruEntry implements EntryPoint {
 					params.put("loginEvent", "true");
 					appInjector.getPlaceManager().revealPlace(PlaceTokens.HOME, params);
 				}
-                //	appInjector.getPlaceManager().redirectPlace(PlaceTokens.HOME); 
-//				loginPopupTimer.schedule(LOGIN_POPUP_DELAY_TIME);
 			}
-
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-//			}
 		});
 	}
 	
