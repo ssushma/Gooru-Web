@@ -17,7 +17,7 @@
 		<g:HTMLPanel styleName="{style.leftNav}" ui:field="leftNav" />
 		<g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage"></g:HTMLPanel>
 		<g:HTMLPanel ui:field="folderListPanel">
-			<g:Label styleName="{style.topicTitle} {style.folderLevel} {style.open}"
+			<g:Label styleName="{style.topicTitle} {style.folderTitleStyle} {style.folderLevel} {style.open}"
 				ui:field="folderTopicTitleLbl" />
 			<g:Button styleName="secondary" ui:field="viewAllBtn" text="{i18n.GL3121}"
 				title="{i18n.GL3121}"></g:Button>
