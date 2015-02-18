@@ -273,7 +273,6 @@ public class LibraryTopicListView extends Composite{
 			setDefaultCollectionLbl();
 		}
 		addCollectionQuizTitleData("lesson");
-		
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			searchLink.getElement().getStyle().setDisplay(Display.NONE);
@@ -281,8 +280,8 @@ public class LibraryTopicListView extends Composite{
 		}
 		else
 		{
-			searchLink.getElement().getStyle().setDisplay(Display.NONE);
-			viewAllBtn.setVisible(true);
+			searchLink.getElement().getStyle().setDisplay(Display.BLOCK);
+			viewAllBtn.setVisible(false);
 		}
 		//viewAllBtn.addClickHandler(new ViewAllBtnClickEvent());
 		
