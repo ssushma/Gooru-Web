@@ -28,6 +28,7 @@
 					<div class="{createCollectionStyle.logInput} less-gutter">
 					<g:HTMLPanel ui:field="pnlNewAssessmentContainer" styleName="col-md-12">
 			 		 	<uc:TextBoxWithPlaceholder ui:field="lblNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
+			 		 	<g:Label ui:field="lblNewAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 		</g:HTMLPanel>
 			 		<g:HTMLPanel ui:field="pnlExistingAssessmentContainer" styleName="col-md-12">
 			 			<uc:TextBoxWithPlaceholder ui:field="lblExistingAssessmentTitle" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
