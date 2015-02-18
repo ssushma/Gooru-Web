@@ -150,6 +150,22 @@ public interface Constants {
 	
 	String THREE = "3";
 	
+	String REPORTS = "reports";
+	
+	String GREEN = "#BCD1B9 !important";
+	String RED = "#EAB4B3 !important";
+	String ORANGE = "#FFE7C2 !important";
+	String WHITE = "#FFF";
+	String VIEWRESPONSE = "View Response";
+	String QUESTION = "question";
+	String RESOURCE="resource";
+	String OE = "OE";
+	String MA = "MA";
+	String FIB = "FIB";
+	String TF = "TF";
+	String ANS_A = "A";
+	String ANS_B = "B";
+	
 	/*************** Analytics End **************************************************/
 	
 	
