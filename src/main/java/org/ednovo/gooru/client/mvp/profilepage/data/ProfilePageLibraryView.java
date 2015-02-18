@@ -159,11 +159,10 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					viewAllBtn.setVisible(true);
 					folderListPanel.setVisible(true);
 					folderTopicTitleLbl.setText(folderList.get(i).getTitle());
-					viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getCollectionItemId()));
+					viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
-			System.out.println("collectionid"+folderList.get(i).getCollectionItemId());
 			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {

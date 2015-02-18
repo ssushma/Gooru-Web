@@ -291,3 +291,6 @@ button.primary:hover {
 .lblFolderTitles{
 	font-weight: bold;
 }
+.btnBackToPrevious{
+	margin-bottom: 15px;
+}
