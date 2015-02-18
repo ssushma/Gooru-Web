@@ -110,7 +110,6 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private void renderQuestionView(){
 		hintsLength=0;
 		String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getQuestionText());
-		//openEndedQuestionText.setHTML(removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 		openEndedQuestionText.setHTML(removeHtmlTags(titlelbl1));
 		openEndedQuestionText.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 		openEndedQuestionText.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
@@ -132,7 +131,6 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		
 	}
 	private void renderAnswerView(AttemptedAnswersDo attemptedAnswerDo){
-		//answerOptionsContainer.clear();
 		clearAnswerOptionsContainer();
 		if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
 			multipleChoicesQuestionWidget=new MultipleChoicesQuestionWidget(collectionItemDo,attemptedAnswerDo);
@@ -229,7 +227,6 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		explanationContainer.removeStyleName(oeStyle.explanationTextBorder());
 		hintsContainer.clear();
 		explanationContainer.clear();
-		//answerOptionsContainer.clear();
 		clearAnswerOptionsContainer();
 		openEndedQuestionImage.getElement().removeAttribute("src");
 	}
@@ -434,21 +431,5 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
 		}
 	}
-
-	@Override
-	public void createSessionAttemptTryWhenNavigation(int questionType) {
-		if(questionType==1){
-			if(multipleChoicesQuestionWidget!=null){
-				//multipleChoicesQuestionWidget.createSessionItemAttemptWhenNavigation();
-			}
-		}else if(questionType==4){
-			if(fillInTheBlankQuestionWidget!=null){
-				//fillInTheBlankQuestionWidget.createSesstionItemAttemptOeWhenNavigation();
-			}
-		}else if(questionType==6){
-			if(opendEndedQuestionWidget!=null){
-				//opendEndedQuestionWidget.createSesstionItemAttemptOeWhenNavigation();
-			}
-		}
-	}
+	
 }

@@ -112,7 +112,6 @@ public class ThankYouResourceStarRatings extends PopupPanel{
 		thankYouRatingLbl.getElement().setAttribute("alt",i18n.GL1854());
 		thankYouRatingLbl.getElement().setAttribute("title",i18n.GL1854());
 		
-		//avgRatingLbl.setText(i18n.GL1848);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
 		ratingCommentTxtArea.getElement().setAttribute("maxlength", "500");
@@ -132,12 +131,12 @@ public class ThankYouResourceStarRatings extends PopupPanel{
 	 */
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
+		if(count!=null){
 		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(count.toString());
 		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(average);
-		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-		//ratingWidgetPanel.add(ratingWidgetView);
+		}
 	}
 	
 	/**
