@@ -2,6 +2,7 @@
 package org.ednovo.gooru.client.util;
 
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
@@ -30,7 +31,36 @@ import com.google.gwt.user.client.ui.TextBox;
 public class SetStyleForProfanity {
 	
     static MessageProperties i18n = GWT.create(MessageProperties.class); 
-	
+  
+    /**
+     * This method will set the profanity error message for TextBoxWithPlaceholder control
+     * @param textbox
+     * @param errorlabel
+     * @param value
+     */
+    public static void SetStyleForProfanityForTextBoxWithPlaceholder(TextBoxWithPlaceholder textbox,Label errorlabel,boolean value) {
+		CollectionCBundle.INSTANCE.css().ensureInjected();
+		if (value){
+			textbox.getElement().getStyle().setBorderColor("orange");
+			textbox.getElement().getStyle().setBorderStyle(BorderStyle.SOLID);
+			textbox.getElement().getStyle().setBorderWidth(1, Unit.PX);
+			
+			errorlabel.setText(i18n.GL0554());
+			errorlabel.setVisible(true);
+			errorlabel.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
+		}else{
+			textbox.getElement().getStyle().clearBorderColor();
+			textbox.getElement().getStyle().clearBorderStyle();
+			textbox.getElement().getStyle().clearBorderWidth();
+			errorlabel.setVisible(false);
+		}
+	}
+    /**
+     * This method will set the profanity error message for TextBox control
+     * @param textbox
+     * @param errorlabel
+     * @param value
+     */
 	public static void SetStyleForProfanityForTextBox(TextBox textbox,Label errorlabel,boolean value) {
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
@@ -48,6 +78,12 @@ public class SetStyleForProfanity {
 			errorlabel.setVisible(false);
 		}
 	}
+	/**
+     * This method will set the profanity error message for TextArea control
+     * @param textbox
+     * @param errorlabel
+     * @param value
+     */
 	public static void SetStyleForProfanityForTextArea(TextArea textArea,Label errorlabel,boolean value) {
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
@@ -65,6 +101,12 @@ public class SetStyleForProfanity {
 			errorlabel.setVisible(false);
 		}
 	}
+	/**
+     * This method will set the profanity error message for RichTextArea control
+     * @param textbox
+     * @param errorlabel
+     * @param value
+     */
 	public static void SetStyleForProfanityForRichTextArea(RichTextArea richTextArea,Label errorlabel,boolean value) {
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
@@ -82,6 +124,12 @@ public class SetStyleForProfanity {
 			errorlabel.setVisible(false);
 		}
 	}
+	/**
+     * This method will set the profanity error message for TextBox control
+     * @param textbox
+     * @param errorlabel
+     * @param value
+     */
 	public static void SetStyleForProfanityForSearchRenameCollTextBox(TextBox copycollectionTextbox, Label errorLabel,boolean isHavingBadWords) {
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (isHavingBadWords){
@@ -99,6 +147,12 @@ public class SetStyleForProfanity {
 			errorLabel.setVisible(false);
 		}
 	}
+	/**
+     * This method will set the profanity error message for TinyMCE control
+     * @param textbox
+     * @param errorlabel
+     * @param value
+     */
 	public static void SetStyleForProfanityForTinyMCE(TinyMCE tinyMCE,Label errorlabel,boolean value) {
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
