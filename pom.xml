@@ -569,7 +569,32 @@
                     </execution>
                 </executions>
             </plugin>
-			 <plugin>
+			 
+			<!-- Copy static web files before executing gwt:run -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/main/webapp</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
                 <version>1.5.3</version>
@@ -588,39 +613,15 @@
                     <replacements>
                         <replacement>
                             <token><![CDATA[<!--BeginCssReplacer.*EndCssReplacer-->]]></token>
-                            <value><![CDATA[<link href="${cdn.endpoint}/css/main-styles.min.css" rel='stylesheet' type='text/css'>]]></value>
+                            <value><![CDATA[<link href="css/main-styles.min.css" rel="stylesheet" type="text/css">]]></value>
                         </replacement>
                         <replacement>
                             <token><![CDATA[<!--BeginJsReplacer.*EndJsReplacer-->]]></token>
-                            <value><![CDATA[<script src="${cdn.endpoint}/script/main-script.min.js" type='text/javascript' async></script>]]></value>
+                            <value><![CDATA[<script src="scripts/main-script.min.js" type="text/javascript" async></script>]]></value>
                         </replacement>
                     </replacements>
                 </configuration>
             </plugin>
-			<!-- Copy static web files before executing gwt:run -->
-			<!-- <plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						here the phase you need
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/src/main/webapp</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/resources</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> --> 
 		</plugins>
 		<resources>
 			<resource>

@@ -89,7 +89,7 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 	}
 	@Override
 	public void updateProfile(String fname,String lname,String aboutMe,String password) {
-		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, new SimpleAsyncCallback<V2UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, null, new SimpleAsyncCallback<V2UserDo>() {
 
 			@Override
 			public void onSuccess(V2UserDo result) {
