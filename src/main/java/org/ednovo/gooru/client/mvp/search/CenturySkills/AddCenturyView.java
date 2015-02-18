@@ -34,7 +34,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -64,6 +67,8 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	@UiTemplate("AddCenturyView.ui.xml")
 	interface AddCenturyViewUiBinder extends UiBinder<Widget, AddCenturyView> {
 	}
+	
+	@UiField Button cancelBtn,addCenturyBtn;
 
 	/**
 	 * Class constructor 
@@ -91,6 +96,16 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		appPopUp.setViewTitle(i18n.GL3121_1());
 		
 		
+	}
+	
+	@UiHandler("cancelBtn")
+	public void clickOnCancelBtn(ClickEvent clickEvent){
+		appPopUp.hide();
+	}
+	
+	@UiHandler("addCenturyBtn")
+	public void clickOnAddCenturyBtn(ClickEvent clickEvent){
+		//Add century event here..
 	}
 	
 	@Override
