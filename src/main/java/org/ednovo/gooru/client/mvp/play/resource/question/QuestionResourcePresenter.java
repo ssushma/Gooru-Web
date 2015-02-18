@@ -229,10 +229,6 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 		}
 	}
 	
-	public void createSessionAttemptTryWhenNavigation(int questionType){
-		getView().createSessionAttemptTryWhenNavigation(questionType);
-	}
-	
 	public void setHintIdWithTime(Integer hintId) {
 		if(isCollectionPlayer){
 			collectionPlayerPresenter.getHintIdsObject().put(hintId.toString(), new JSONNumber(getUnixTimeStamp()));
@@ -271,19 +267,16 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	
 	public void setAnswerIdWithTimeForMa(List<Integer> answerId,Integer attemptStatus,Integer attemptSequence) {
 		if(isCollectionPlayer){
-			//collectionPlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
 			collectionPlayerPresenter.setAnswerIdsObject(new JSONObject());
 			setAnswerIds(answerId);
 			collectionPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
 			collectionPlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
 		}else if(isResourcePlayer){
-			//resourcePlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
 			resourcePlayerPresenter.setAnswerIdsObject(new JSONObject());
 			setAnswerIds(answerId);
 			resourcePlayerPresenter.getAttemptStatusArray().add(attemptStatus);
 			resourcePlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
 		}else if(isPreviewPlayer){
-			//previewPlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
 			previewPlayerPresenter.setAnswerIdsObject(new JSONObject());
 			setAnswerIds(answerId);
 			previewPlayerPresenter.getAttemptStatusArray().add(attemptStatus);

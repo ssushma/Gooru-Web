@@ -84,7 +84,7 @@ public class ResourceFrameBreakerView extends Composite{
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	
-	/*
+	/**
 	 * Default constructor
 	 */
 	public ResourceFrameBreakerView(){
@@ -111,40 +111,46 @@ public class ResourceFrameBreakerView extends Composite{
 			supportTip.getElement().setAttribute("title",i18n.GL1453());
 			btnResourceLink.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().btnResourceLink());
 		}else{
+			if(btnResourceLink!=null){
 			btnResourceLink.removeFromParent();
-		}
-		imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
-			defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName();
-		}
-		if(defaultResourceCategory!=null){
-			if(defaultResourceCategory.equalsIgnoreCase("Lesson")||defaultResourceCategory.equalsIgnoreCase("Textbook")||defaultResourceCategory.equalsIgnoreCase("Handout"))
-			{
-				defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
-			}
-			if(defaultResourceCategory.equalsIgnoreCase("Slide"))
-			{
-				defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
-			}
-			if(defaultResourceCategory.equalsIgnoreCase("Exam") || defaultResourceCategory.equalsIgnoreCase("Challenge")||defaultResourceCategory.equalsIgnoreCase("Website"))
-			{
-				defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
 			}
 		}
-		imgFieldTrip.addErrorHandler(new ErrorHandler() {
-			
-			@Override
-			public void onError(ErrorEvent event) {
-				imgFieldTrip.setUrl(DEFULT_IMAGE_PREFIX + defaultResourceCategory.toLowerCase() + PNG);
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName();
 			}
-		});
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
-			resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()));
+			if(defaultResourceCategory!=null){
+				if(defaultResourceCategory.equalsIgnoreCase("Lesson")||defaultResourceCategory.equalsIgnoreCase("Textbook")||defaultResourceCategory.equalsIgnoreCase("Handout"))
+				{
+					defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
+				}
+				if(defaultResourceCategory.equalsIgnoreCase("Slide"))
+				{
+					defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
+				}
+				if(defaultResourceCategory.equalsIgnoreCase("Exam") || defaultResourceCategory.equalsIgnoreCase("Challenge")||defaultResourceCategory.equalsIgnoreCase("Website"))
+				{
+					defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
+				}
+			}
+			imgFieldTrip.addErrorHandler(new ErrorHandler() {
+				
+				@Override
+				public void onError(ErrorEvent event) {
+					imgFieldTrip.setUrl(DEFULT_IMAGE_PREFIX + defaultResourceCategory.toLowerCase() + PNG);
+				}
+			});
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()));
+			}
 		}
 		
 	}
 	public void setFileDeletedMessage(){
+		if(btnResourceLink!=null){
 		btnResourceLink.removeFromParent();
+		}
 		lblGooruFieldTrip.getElement().getStyle().setPaddingLeft(50, Unit.PX);
 		lblGooruFieldTrip.getElement().getStyle().setPaddingRight(50, Unit.PX);
 		lblGooruFieldTrip.setText(i18n.GL2169());
@@ -184,8 +190,6 @@ public class ResourceFrameBreakerView extends Composite{
 		lblGooruFieldTrip.getElement().setAttribute("alt",i18n.GL0549());
 		lblGooruFieldTrip.getElement().setAttribute("title",i18n.GL0549());
 		
-		//lblGooruFieldTripDescUnforseen.setText(i18n.GL0550);
-		//lblGooruFieldTripDescOriginal.setText(i18n.GL0552);
 		lblGooruFieldTripDescOriginal.setText("");
 		lblGooruFieldTripDescOriginal.getElement().setId("lblGooruFieldTripDescOriginal");
 		lblGooruFieldTripDescOriginal.getElement().setAttribute("alt","");
@@ -203,7 +207,6 @@ public class ResourceFrameBreakerView extends Composite{
 		resourceCategory.getElement().setId("pnlResourceCategory");
 		lblGooruFieldTripDescUnforseen.getElement().setId("lblGooruFieldTripDescUnforseen");
 		supportTip.getElement().setId("lblSupportTip");
-//		learnMoreLbl.setText("Learn more.");
 	}
 	/**
 	 * default method.
@@ -211,11 +214,7 @@ public class ResourceFrameBreakerView extends Composite{
 	public void onLoad(){
 		super.onLoad();
 	}
-//	@UiHandler("learnMoreLbl")
-//	public void clickOnLearnMore(ClickEvent event)
-//	{
-//		Window.open("http://support.goorulearning.org/hc/en-us/articles/201678243", "_blank", "");
-//	}
+
 	/**
 	 * 
 	 * @function openResurceLink 

@@ -83,13 +83,10 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
     	 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
  			@Override
  			public void execute() {
- 				//timer.schedule(100); 
  				try{
  				 Document document = IFrameElement.as(getResourcePreviewFrame().getElement()).getContentDocument();
  	             BodyElement body = document.getBody();
  			 	 Element html=document.getDocumentElement();
- 			 	/*getResourcePreviewFrame().getElement().getStyle().setVisibility(Visibility.HIDDEN);
- 			 	getResourcePreviewFrame().getElement().getStyle().setPosition(Position.ABSOLUTE);*/
  	             int bodyHeight=Math.max(body.getScrollHeight(), body.getOffsetHeight());
  	             bodyHeight=Math.max(bodyHeight, html.getOffsetHeight());
  	             bodyHeight=Math.max(bodyHeight, html.getClientHeight());
@@ -106,12 +103,7 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 
 	@Override
 	public HandlerRegistration addLoadHandler(LoadHandler handler) {
-		// TODO Auto-generated method stub
 		  return addHandler(handler, LoadEvent.getType());
 	}
-	
-    	
-   
-   
    
 }

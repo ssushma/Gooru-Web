@@ -31,5 +31,4 @@ import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 public interface IsQuestionResourceView extends IsViewWithHandlers<QuestionResourceUiHandlers>{
 	public void showQuestionPreview(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo);
 	public void resetQuestionView();
-	public void createSessionAttemptTryWhenNavigation(int questionType);
 }

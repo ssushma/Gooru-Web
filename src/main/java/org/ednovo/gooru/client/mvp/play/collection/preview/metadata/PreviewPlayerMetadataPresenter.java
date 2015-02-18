@@ -224,20 +224,22 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 		playerAppService.getContentReport(collectionDo.getGooruOid(), AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
-				String gooruFlagId="";
-				if(result.size()==0){
-					getView().getFlagButton().setText(i18n.GL0556());
-					getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-					getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-				}else{
-					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						getView().getFlagButton().setText(i18n.GL0557());
-						getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-						
+				if(result!=null){
+						String gooruFlagId="";
+						if(result.size()==0){
+							getView().getFlagButton().setText(i18n.GL0556());
+							getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+							getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+						}else{
+							for(int i =0;i<result.size();i++){
+								gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+								getView().getFlagButton().setText(i18n.GL0557());
+								getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+								getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+								
+						}
 					}
-			}
+				}
 			}
 		});
 		
