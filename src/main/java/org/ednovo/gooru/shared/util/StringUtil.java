@@ -414,6 +414,15 @@ public class StringUtil {
 			object.setAttribute("title",titleValue);
 	}
 	
+	/**
+	 * Generalised method for converting object to toString (This will avoid NPE)
+	 * @param obj
+	 * @return
+	 */
+	public static String toString(Object obj) {
+		return obj == null ? "" : obj.toString().trim();
+	}
+	
 	public static native String removeHtml(String htmText) /*-{
 		var regex = /(<([^>]+)>)/ig;
 		result = htmText.replace(regex, "");
