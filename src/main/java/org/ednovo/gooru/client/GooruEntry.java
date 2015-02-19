@@ -232,25 +232,8 @@ public class GooruEntry implements EntryPoint {
 		});
 	}
 	
-	Timer loginPopupTimer = new Timer() {
-		@Override
-		public void run() {
-			
-//			Window.Location.reload();
-		}
-	};
-	
 	public String getHttpOrHttpsProtocol() {
 		return Window.Location.getProtocol();
-	}
-	
-	private void loadCssJsFiles() {
-		String cdnEndPoint = AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint();
-		BrowserAgent.loadCssFile(cdnEndPoint+"/css/gooru.css?r=59","css");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/css/gooru-global.css?r=59","css");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js","js");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js","js");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/errorImageFunction.js","js");
 	}
 	
 	/**
