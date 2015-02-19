@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/resourceService")
@@ -431,5 +432,11 @@ public interface ResourceService extends BaseService {
 			String comments);
 	
 	public String getUserShelfDetails(String userUid) throws GwtException, ServerDownException;
-		 
+	
+	/**
+	 * This method is used to get the assessment url
+	 * @param collectionId
+	 * @return
+	 */
+	String getAssessmentUrl(String collectionId);
 }

@@ -552,7 +552,7 @@ public class CollectionFormView extends
 			public void onFocus(FocusEvent event) {
 				if(lblNewAssessmentError.isVisible()){
 					lblNewAssessmentError.setVisible(false);
-					lblNewAssessmentError.getElement().removeAttribute("style");
+					txtNewAssessmentTitle.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -562,7 +562,7 @@ public class CollectionFormView extends
 			public void onFocus(FocusEvent event) {
 				if(lblExistingAssessmentError.isVisible()){
 					lblExistingAssessmentError.setVisible(false);
-					lblExistingAssessmentError.getElement().removeAttribute("style");
+					txtExistingAssessmentTitle.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -572,7 +572,7 @@ public class CollectionFormView extends
 			public void onFocus(FocusEvent event) {
 				if(lblExistingAssessmentURLError.isVisible()){
 					lblExistingAssessmentURLError.setVisible(false);
-					lblExistingAssessmentURLError.getElement().removeAttribute("style");
+					txtExistingAssessmentURL.getElement().removeAttribute("style");
 				}
 			}
 		});

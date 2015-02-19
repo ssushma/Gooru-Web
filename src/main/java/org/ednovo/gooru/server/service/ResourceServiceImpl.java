@@ -1878,4 +1878,22 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		return shelfGooruOid;
 	}
+
+	@Override
+	public String getAssessmentUrl(String collectionId) {
+		String assessmentUrl="";
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION,collectionId, getLoggedInSessionToken());
+		logger.info("assessment Details API=>"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		JSONObject jsonObject = null;
+		if(jsonRep!=null){
+			try {
+				jsonObject = jsonRep.getJsonObject();
+				assessmentUrl=jsonObject.isNull("url")?"":jsonObject.getString("url");
+			}catch(Exception e){}
+		}
+		return assessmentUrl;
+	}
 }

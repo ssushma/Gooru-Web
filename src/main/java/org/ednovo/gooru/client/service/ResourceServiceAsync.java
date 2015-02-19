@@ -186,4 +186,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     void updateCollectionSettingForComments(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType, String action, String comments, AsyncCallback<CollectionDo> callback);
     
     void getUserShelfDetails(String userUid,AsyncCallback<String> callback);
+    
+    void getAssessmentUrl(String collectionId,AsyncCallback<String> callback);
 }
