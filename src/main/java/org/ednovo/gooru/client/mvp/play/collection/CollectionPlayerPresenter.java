@@ -1740,9 +1740,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					for(int i =0;i<result.size();i++){
 						if(result.get(i).getDeleteContentGooruOid()!=null){
 							gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						}
-						if(result.size()!=(i+1)){
-							gooruFlagId=gooruFlagId+",";
+							if(result.size()!=(i+1)){
+								gooruFlagId=gooruFlagId+",";
+							}
 						}
 						/*getting reasons of flagging resource */
 						if(result.get(i).getContentReportList()!=null && result.get(i).getContentReportList().size()>0){

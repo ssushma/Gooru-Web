@@ -107,11 +107,11 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 					for(int i =0;i<result.size();i++){
 						 if(result.get(i).getDeleteContentGooruOid()!=null){
 						  gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+						  if(result.size()!=(i+1)){
+								gooruFlagId=gooruFlagId+",";
+								getView().getreportData(result.get(0), gooruFlagId);
+							}
 						 }
-						if(result.size()!=(i+1)){
-							gooruFlagId=gooruFlagId+",";
-							getView().getreportData(result.get(0), gooruFlagId);
-						}
 					}
 				}else{
 				}

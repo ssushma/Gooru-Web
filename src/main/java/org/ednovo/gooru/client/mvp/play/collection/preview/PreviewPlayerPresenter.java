@@ -1391,9 +1391,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 					for(int i =0;i<result.size();i++){
 						if(result.get(i).getDeleteContentGooruOid()!=null){
 							gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						}
-						if(result.size()!=(i+1)){
-							gooruFlagId=gooruFlagId+",";
+							if(result.size()!=(i+1)){
+								gooruFlagId=gooruFlagId+",";
+							}
 						}
 					}
 					getView().makeFlagButtonOrange();
