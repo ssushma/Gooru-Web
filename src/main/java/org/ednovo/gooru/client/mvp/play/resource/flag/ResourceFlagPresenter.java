@@ -100,21 +100,21 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 	@Override
 	public void getContentReport(String associatedGooruOid) {
 		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
-
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
-				if(result.size()==0){
-					//getView().setDefaultView();
-				}else{
+				if(result!=null &result.size()>0){
 					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+						 if(result.get(i).getDeleteContentGooruOid()!=null){
+						  gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+						 }
 						if(result.size()!=(i+1)){
 							gooruFlagId=gooruFlagId+",";
 							getView().getreportData(result.get(0), gooruFlagId);
 						}
 					}
-			}
+				}else{
+				}
 			}
 		});
 	}

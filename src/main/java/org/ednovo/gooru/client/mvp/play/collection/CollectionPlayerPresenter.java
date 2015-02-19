@@ -83,6 +83,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.Constants;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
 import com.google.gwt.dom.client.Document;
@@ -106,7 +107,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers,RefreshDisclosurePanelHandler{
+public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers,RefreshDisclosurePanelHandler,Constants{
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -1737,15 +1738,17 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				boolean isNotLoad=false;
 				if(result!=null&&result.size()>0){
 					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+						if(result.get(i).getDeleteContentGooruOid()!=null){
+							gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+						}
 						if(result.size()!=(i+1)){
 							gooruFlagId=gooruFlagId+",";
 						}
 						/*getting reasons of flagging resource */
-						if(result.get(i).getContentReportList()!=null){
+						if(result.get(i).getContentReportList()!=null && result.get(i).getContentReportList().size()>0){
 							for(int j=0; j<result.get(i).getContentReportList().size(); j++){
 								flagType=result.get(i).getContentReportList().get(j);
-								if(flagType.equals("not-loading")){
+								if(NOTLODING.equals(flagType)){
 									isNotLoad=true;
 								}
 							}
