@@ -314,8 +314,8 @@
       
       <g:HTMLPanel styleName="{addCenturyStyle.buttonGroup}">
       
-      <g:Button styleName="secondary">Cancel</g:Button>
-      <g:Button styleName="primary">Add</g:Button>
+      <g:Button styleName="secondary" ui:field="cancelBtn">Cancel</g:Button>
+      <g:Button styleName="primary" ui:field="addCenturyBtn">Add</g:Button>
       </g:HTMLPanel>
       
       

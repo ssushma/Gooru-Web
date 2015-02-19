@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
@@ -128,5 +129,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void getProfileAnalyticsRatings(AsyncCallback<ProfileRatingsReactionsDO> callback);
    
    void getTopViewedCollectionsInfo(String offsetval,String limitval,AsyncCallback<UserDashBoardCommonInfoDO> callback);
+   
+   void setUserProperties(UserDo user, AsyncCallback<FilterSettings> callback);
 
 }
