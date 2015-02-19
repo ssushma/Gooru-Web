@@ -48,7 +48,7 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,7 +63,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
  * @author Search Team
  * 
  */
-public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteService,Constants {
+public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteService,ClientConstants {
 
 	/**
 	 * 

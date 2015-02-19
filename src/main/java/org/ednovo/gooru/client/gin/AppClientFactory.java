@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserRoleDo.UserRoleType;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -60,7 +60,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @Reviewer: Gooru Team
  */
 @Singleton
-public class AppClientFactory implements Constants {
+public class AppClientFactory implements ClientConstants {
 
 	public static UserDo loggedInUser;
 
