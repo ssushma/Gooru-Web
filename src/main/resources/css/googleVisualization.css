@@ -721,6 +721,9 @@
 	background: #fefefe;
 	border-color: #fefefe
 }
+.google-visualization-table{
+    width:auto !important;
+ }
 
 .google-visualization-table-loadtest {
 	padding-left: 6px
