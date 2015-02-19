@@ -488,7 +488,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	@Override
 	public void showResourceView(Integer collectionItemSequence, boolean isForwardDirection) {
-		//getCollectionItemDo(collectionItemSequence,isForwardDirection);
 	}
 	
 	public void showTabWidget(String tabView,String resourceId){
@@ -903,9 +902,11 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 				String gooruFlagId="";
 				if(result!=null&&result.size()>0){
 					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						if(result.size()!=(i+1)){
-							gooruFlagId=gooruFlagId+",";
+						if(result.get(i).getDeleteContentGooruOid()!=null){
+							gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+							if(result.size()!=(i+1)){
+								gooruFlagId=gooruFlagId+",";
+							}
 						}
 					}
 					getView().makeFlagButtonOrange();
