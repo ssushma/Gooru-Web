@@ -338,6 +338,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        options.setAllowHtml(true);
 		        Table table = new Table(data, options);
 		        printResourceData.add(table);
+		        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+		        	table.getElement().getFirstChildElement().removeAttribute("style");
+		        }
 		}catch(Exception e){
 			
 		}
@@ -455,6 +458,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
 	        individualResourceBreakdownData.add(table);
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
 	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
@@ -473,6 +479,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					     table.setStyleName("collectionProgressTable");
 					     individualResourceBreakdownData.add(table);	
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+					     if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+					    	 table.getElement().getFirstChildElement().removeAttribute("style");
+					     }
 				}
 			});
 	    	
@@ -541,6 +550,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	erroeMsg.setText(i18n.GL3118());
 	        	printOpendedData.add(erroeMsg);
 	        }
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
 		}catch(Exception e){
 			
 		}
@@ -603,6 +615,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	individualOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+	        table.getElement().getFirstChildElement().removeAttribute("style");
 	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}
 	/**
@@ -800,6 +813,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
 	        	printScoredData.add(erroeMsg);
 	        }
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	 table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
+	       
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -960,6 +977,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
 	        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
 	        	individualScoredData.add(erroeMsg);
+	        }
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	table.getElement().getFirstChildElement().removeAttribute("style");
 	        }
 	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}

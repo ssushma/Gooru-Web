@@ -308,6 +308,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
 	        	printOpendedData.add(erroeMsg);
 	        }
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
 	    	//To add OE questions
 			opendedQuestionHeading.setText("OE Questions");
 			opendedQuestionHeading.getElement().getStyle().setPaddingTop(15, Unit.PX);
@@ -397,6 +400,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	teacherOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
 	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	}
 	/**
@@ -526,6 +532,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
 	        printResourceData.add(table);
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
 	        printWidget.add(printResourceData);
 		}catch(Exception e){
 		}
@@ -649,6 +658,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        Table table = new Table(data, options);
 	        table.getElement().setId("collectionBreakDown");
 	        teacherResourceBreakdownData.add(table);
+	        if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
 	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setProperty("width", "98% !important");
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
@@ -684,6 +696,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					teacherResourceBreakdownData.add(table);
 				}
 				table.addDomHandler(new ClickOnTableCell(),ClickEvent.getType());
+				if(table.getElement().hasChildNodes() && table.getElement().getFirstChildElement().hasAttribute("style")){
+					table.getElement().getFirstChildElement().removeAttribute("style");
+				}
 				}
 			});
 	        loadingImage.setVisible(false);
