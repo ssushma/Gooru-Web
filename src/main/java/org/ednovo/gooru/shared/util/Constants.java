@@ -173,5 +173,7 @@ public interface Constants {
 	String POSTING = "Posting..";
 	String SUBMIT ="Submit";
 	String NOTLODING ="not-loading";
+	String VIDEOS ="Videos";
+	String CHALLENGE ="Challenge";
 	
 }
