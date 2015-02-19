@@ -343,7 +343,11 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	        htmlpnlProgress.add(table);	
 	        getLoadingImage().setVisible(false);
 		
-		} catch (Exception e) {
+	        if(table.getElement().hasChildNodes() &&  table.getElement().getFirstChildElement().hasAttribute("style")){
+	        	 table.getElement().getFirstChildElement().removeAttribute("style");
+	        }
+		}
+		catch(Exception e){
 			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
