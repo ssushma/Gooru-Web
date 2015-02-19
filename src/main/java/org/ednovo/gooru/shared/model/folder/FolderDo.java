@@ -39,6 +39,7 @@ public class FolderDo implements Serializable{
 
 	private static final long serialVersionUID = -3298220423508874309L;
 
+	private String collectionType;
 	private String gooruOid;
 	private String title;
 	private String sharing;
@@ -56,6 +57,20 @@ public class FolderDo implements Serializable{
 	
 
 	public FolderDo(){}
+	
+	
+
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+
+
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
+
 
 	/** 
 	 * This method is to get the gooruOid

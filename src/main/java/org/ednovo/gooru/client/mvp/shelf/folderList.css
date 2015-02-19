@@ -964,3 +964,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 	margin-top: 18px;
 	font-size: 20px;
 }
+.assessmentContainer{
+	text-align: center;
+	padding-top:63px !important
+}
