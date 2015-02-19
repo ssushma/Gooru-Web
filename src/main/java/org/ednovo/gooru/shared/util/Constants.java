@@ -165,6 +165,9 @@ public interface Constants {
 	String TF = "TF";
 	String ANS_A = "A";
 	String ANS_B = "B";
+	String FIRST_SESSION = "1st Session";
+	String ALL_STUDENTS ="All Students";
+	String SORT_BY = "Sort BY:";
 	
 	/*************** Analytics End **************************************************/
 	
