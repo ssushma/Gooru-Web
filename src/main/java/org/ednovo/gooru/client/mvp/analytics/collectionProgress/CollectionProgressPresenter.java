@@ -28,14 +28,14 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class CollectionProgressPresenter extends PresenterWidget<IsCollectionProgressView> implements CollectionProgressUiHandlers,Constants{
+public class CollectionProgressPresenter extends PresenterWidget<IsCollectionProgressView> implements CollectionProgressUiHandlers,ClientConstants{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
 	

@@ -27,7 +27,7 @@
 package org.ednovo.gooru.shared.util;
 
 
-public interface Constants {
+public interface ClientConstants {
 	
 	String TRUE = "true";
 	
@@ -168,6 +168,26 @@ public interface Constants {
 	String FIRST_SESSION = "1st Session";
 	String ALL_STUDENTS ="All Students";
 	String SORT_BY = "Sort BY:";
+	String INCORRECT="#db0f0f";
+	String CORRECT="#4d9645";
+	String ONMULTIPULEATTEMPTS="#FBB03B";
+	String SCORED="scoredTab";
+	String OPENENDED="openendedTab";
+	String BREAKDOWN="breakdownTab";
+	String PRINT="print";
+	String EMAIL="email";
+	String WEBSITE ="website";
+	String WEBPAGE = "webpage";		
+	String SLIDE = "slide";
+	String IMAGE ="image";
+	String HANDOUT = "handout";
+	String LESSON ="lesson";
+	String TEXTBOOK = "textbook";
+	String TEXT = "text";
+	String EXAM = "exam";
+	String VIDEO = "video";
+	String INTERACTIVE ="interactive";
+	String AUDIO = "audio";
 	
 	/*************** Analytics End **************************************************/
 	

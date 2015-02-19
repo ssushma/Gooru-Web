@@ -33,14 +33,14 @@ import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSummaryView> implements CollectionSummaryUiHandlers,Constants{
+public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSummaryView> implements CollectionSummaryUiHandlers,ClientConstants{
 	
 	public static final  Object TEACHER_STUDENT_SLOT = new Object();
 	
