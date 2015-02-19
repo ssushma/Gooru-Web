@@ -171,5 +171,10 @@ public interface Constants {
 	
 	/*************** Analytics End **************************************************/
 	
+	/***** Resource Player Related **************/
+	String SAVING = "Saving..";
+	String POSTING = "Posting..";
+	String SUBMIT ="Submit";
+	String NOTLODING ="not-loading";
 	
 }
