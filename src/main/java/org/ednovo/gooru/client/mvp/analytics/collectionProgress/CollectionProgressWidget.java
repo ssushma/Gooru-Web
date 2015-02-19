@@ -11,7 +11,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -43,7 +43,7 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
 
-public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionProgressUiHandlers> implements IsCollectionProgressView,Constants  {
+public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionProgressUiHandlers> implements IsCollectionProgressView,ClientConstants  {
 
 	private static CollectionProgressWidgetUiBinder uiBinder = GWT
 			.create(CollectionProgressWidgetUiBinder.class);

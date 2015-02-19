@@ -22,6 +22,7 @@ import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -53,7 +54,7 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
 
-public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<CollectionSummaryIndividualUiHandlers> implements IsCollectionSummaryIndividualView  {
+public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<CollectionSummaryIndividualUiHandlers> implements IsCollectionSummaryIndividualView,ClientConstants  {
 
 	private static CollectionSummaryIndividualViewUiBinder uiBinder = GWT
 			.create(CollectionSummaryIndividualViewUiBinder.class);
@@ -76,11 +77,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 	final List<Integer> resourceRowIndex=new ArrayList<Integer>();
-	
-	final String INCORRECT="#db0f0f",CORRECT="#4d9645",ONMULTIPULEATTEMPTS="#FBB03B";
-	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",EMAIL="email";
-	private static final String QUESTION = "question";
-	private static final String VIEWRESPONSE = "View Response";
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
@@ -119,7 +115,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	void setStaticData(){
 		StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
 		StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
-		//StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
 		StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
 		StringUtil.setAttributes(individualOpenendedData.getElement(), "pnlIndividualOpenendedData", null, null);
 		StringUtil.setAttributes(individualScoredDatapnl.getElement(), "pnlIndividualScoredDatapnl", null, null);
@@ -150,18 +145,18 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		individualTabContainer=new AnalyticsTabContainer() {
 			@Override
 			public void onTabClick(String tabClicked) {
-				if(tabClicked.equalsIgnoreCase(SCORED)){
+				if(SCORED.equalsIgnoreCase(tabClicked)){
 					hideAllPanels();
 					individualScoredDatapnl.setVisible(true);
-				}else if(tabClicked.equalsIgnoreCase(OPENENDED)){
+				}else if(OPENENDED.equalsIgnoreCase(tabClicked)){
 					hideAllPanels();
 					individualOpenendedData.setVisible(true);
-				}else if(tabClicked.equalsIgnoreCase(BREAKDOWN)){
+				}else if(BREAKDOWN.equalsIgnoreCase(tabClicked)){
 					hideAllPanels();
 					individualResourceBreakdownDatapnl.setVisible(true);
-				}else if(tabClicked.equalsIgnoreCase(PRINT)){
+				}else if(PRINT.equalsIgnoreCase(tabClicked)){
 					setPrintIndividualSummayData(false,false);
-				}else if(tabClicked.equalsIgnoreCase(EMAIL)){
+				}else if(EMAIL.equalsIgnoreCase(tabClicked)){
 					setPrintIndividualSummayData(true,true);
 					emailPopup=new EmailPopup();
 					emailPopup.setData();
@@ -208,8 +203,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        });
 			for (UserDataDo userDataDo : result) {
 				if(userDataDo.getStatus()==0){
-					if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
-						if(userDataDo.getType()!=null && !userDataDo.getType().equalsIgnoreCase("OE")){
+					if(QUESTION.equalsIgnoreCase(userDataDo.getCategory())){
+						if(!OE.equalsIgnoreCase(userDataDo.getType())){
 							questionsData.add(userDataDo);
 						}else{
 							openendedData.add(userDataDo);
@@ -242,13 +237,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        	     return obj1.compareTo(obj2);
 		        	}
 		        });
-		       /* UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
-		        	public int compare(UserDataDo o1, UserDataDo o2) {
-		        		 Integer obj1 = new Integer(o1.getViews());
-		        		 Integer obj2 = new Integer(o2.getViews());
-		        	     return obj1.compareTo(obj2);
-		        	}
-		        });*/
+		     
 			    final DataTable data = DataTable.create();
 			    data.addColumn(ColumnType.NUMBER, "No.");
 		        data.addColumn(ColumnType.STRING, "Format");
@@ -270,14 +259,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //set Format
 		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
 		              String categoryStyle="";
-		    		  if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
-					      resourceCategory = "webpage";
+		    		  if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory)){
+					      resourceCategory = WEBPAGE;
 					      categoryStyle=res.css().category_new_type_webpage();
-					  } else if(resourceCategory.equalsIgnoreCase("slide") || resourceCategory.equalsIgnoreCase("image")){
-					      resourceCategory = "image";
+					  } else if(SLIDE.equalsIgnoreCase(resourceCategory) || IMAGE.equalsIgnoreCase(resourceCategory)){
+					      resourceCategory = IMAGE;
 					      categoryStyle=res.css().category_new_type_image();
-					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")|| resourceCategory.equalsIgnoreCase("text")) {
-					      resourceCategory = "text";
+					  } else if(HANDOUT.equalsIgnoreCase(resourceCategory) || LESSON.equalsIgnoreCase(resourceCategory) || TEXTBOOK.equalsIgnoreCase(resourceCategory)|| TEXT.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = TEXT;
 					      categoryStyle=res.css().category_new_type_text();
 					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
 					      resourceCategory = "webpage";
@@ -388,26 +377,26 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            //set Format
 		              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory().trim():"";
 		              String categoryStyle="";
-		              if(resourceCategory.equalsIgnoreCase("website") || resourceCategory.equalsIgnoreCase("webpage")){
-					      resourceCategory = "webpage";
+		              if(WEBSITE.equalsIgnoreCase(resourceCategory) || WEBPAGE.equalsIgnoreCase(resourceCategory)){
+					      resourceCategory = WEBPAGE;
 					      categoryStyle=res.css().category_new_type_webpage();
-					  } else if(resourceCategory.equalsIgnoreCase("slide") || resourceCategory.equalsIgnoreCase("image")){
-					      resourceCategory = "image";
+					  } else if(SLIDE.equalsIgnoreCase(resourceCategory) || IMAGE.equalsIgnoreCase(resourceCategory)){
+					      resourceCategory = IMAGE;
 					      categoryStyle=res.css().category_new_type_image();
-					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")|| resourceCategory.equalsIgnoreCase("text")) {
-					      resourceCategory = "text";
+					  } else if(HANDOUT.equalsIgnoreCase(resourceCategory) || LESSON.equalsIgnoreCase(resourceCategory) || TEXTBOOK.equalsIgnoreCase(resourceCategory)|| TEXT.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = TEXT;
 					      categoryStyle=res.css().category_new_type_text();
-					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
-					      resourceCategory = "webpage";
+					  }  else if(EXAM.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = WEBPAGE;
 					      categoryStyle=res.css().category_new_type_webpage();
-					  } else if(resourceCategory.equalsIgnoreCase("video")) {
-					      resourceCategory = "video";
+					  } else if(VIDEO.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = VIDEO;
 					      categoryStyle=res.css().category_new_type_video();
-					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
-					      resourceCategory = "webpage";
+					  } else if(INTERACTIVE.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = WEBPAGE;
 					      categoryStyle=res.css().category_new_type_interactive();
-					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
-					      resourceCategory = "audio";
+					  }else if(AUDIO.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = AUDIO;
 					      categoryStyle=res.css().category_new_type_audio();
 					  } else{
 						  categoryStyle=res.css().category_new_type_other();
@@ -433,16 +422,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
 		            data.setValue(rowVal, 3, timeSpentpnl.toString());
 		           
-		            //set Views label
-		            // HorizontalPanel viewpnl=new HorizontalPanel();
 		            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 		            viewlbl.setStyleName(res.css().alignCenterAndBackground());
-		            /* viewpnl.add(viewlbl);
-		            Label viewProgressBar=new Label();
-		            viewProgressBar.setStyleName(res.css().setProgressBar());
-		            viewpnl.add(viewProgressBar);
-		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
-		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);*/
 		            data.setValue(rowVal, 4, viewlbl.toString());
 		            
 		            //Set reactions

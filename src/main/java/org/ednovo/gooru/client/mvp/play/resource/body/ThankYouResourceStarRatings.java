@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -69,7 +69,7 @@ import com.google.gwt.user.client.ui.Widget;
 * 
 * @Reviewer: Gooru Team.
 */
-public class ThankYouResourceStarRatings extends PopupPanel implements Constants{
+public class ThankYouResourceStarRatings extends PopupPanel implements ClientConstants{
 	
 	private static ThankYouResourceStarRatingsUiBinder uiBinder = GWT.create(ThankYouResourceStarRatingsUiBinder.class);
 

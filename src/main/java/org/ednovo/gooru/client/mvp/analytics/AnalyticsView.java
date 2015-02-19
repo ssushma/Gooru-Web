@@ -10,7 +10,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
-import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -40,7 +40,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author ibc
  *
  */
-public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> implements IsAnalyticsView, Constants {
+public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> implements IsAnalyticsView, ClientConstants {
 
 	private static AnalyticsViewUiBinder uiBinder = GWT.create(AnalyticsViewUiBinder.class);
 
