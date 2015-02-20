@@ -61,16 +61,20 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	@UiField Label lblExistingAssessmentError,lblExistingAssessmentURLError;
 	@UiField TextBoxWithPlaceholder txtExistingAssessmentTitle,txtExistingAssessmentURL;
 	
-	public String collectionId=null;
+	public FolderDo folderDo=null;
 	
 	public EditAssessmentPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
 	}
-	public EditAssessmentPopup(String collectionId) {
+	public EditAssessmentPopup(FolderDo folderDo) {
 		setWidget(uiBinder.createAndBindUi(this));
-		this.collectionId=collectionId;
+		this.folderDo=folderDo;
 		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3168());
 		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
+		if(folderDo.getTitle()!=null)
+		txtExistingAssessmentTitle.setText(folderDo.getTitle());
+		if(folderDo.getUrl()!=null)
+		txtExistingAssessmentURL.setText(folderDo.getUrl());
 		// This will handle the focus on existing assessment title.
 		txtExistingAssessmentTitle.addFocusHandler(new FocusHandler() {
 			@Override
@@ -128,7 +132,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 									lblExistingAssessmentURLError.setVisible(false);
 									lblExistingAssessmentURLError.setText("");
 									//Write the update code and API call here
-									AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(collectionId, assessmentExistingTitle, assessmentURL, new AsyncCallback<FolderDo>() {
+									AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL, new AsyncCallback<FolderDo>() {
 										
 										@Override
 										public void onSuccess(FolderDo result) {

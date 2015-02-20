@@ -278,7 +278,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@UiHandler("collectionImage")
 	public void clickOnCollectionImage(ClickEvent event) {
 		if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
-			editAssessmentPopup=new EditAssessmentPopup(folderDo.getGooruOid()) {
+			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					folderDo=result;
