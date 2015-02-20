@@ -28,6 +28,8 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -61,8 +63,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class ResourceFrameBreakerView extends Composite{
-	
+public class ResourceFrameBreakerView extends Composite implements ClientConstants{
 	
 	@UiField Button btnResourceLink;
 	@UiField Label lblGooruFieldTrip, lblGooruFieldTripDescUnforseen, lblDontForget, lblGooruFieldTripDescOriginal,supportTip;//learnMoreLbl	
@@ -75,15 +76,13 @@ public class ResourceFrameBreakerView extends Composite{
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 	
 	private static final String PNG = ".png";
-	String defaultResourceCategory;
+	String defaultResourceCategory="";
 	private static ResourceFrameBreakerViewUiBinder uiBinder = GWT.create(ResourceFrameBreakerViewUiBinder.class);
 
 	interface ResourceFrameBreakerViewUiBinder extends UiBinder<Widget, ResourceFrameBreakerView> {
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	
 	/**
 	 * Default constructor
 	 */
@@ -92,7 +91,6 @@ public class ResourceFrameBreakerView extends Composite{
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		setLabelsAndIds();
 	}
-	
 	/**
 	 * 
 	 * @param collectionItemDo
@@ -118,18 +116,19 @@ public class ResourceFrameBreakerView extends Composite{
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
 			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
 			if(collectionItemDo.getResource().getResourceFormat()!=null){
-				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName();
+				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():"";
+				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():""));
 			}
 			if(defaultResourceCategory!=null){
-				if(defaultResourceCategory.equalsIgnoreCase("Lesson")||defaultResourceCategory.equalsIgnoreCase("Textbook")||defaultResourceCategory.equalsIgnoreCase("Handout"))
+				if(LESSON.equalsIgnoreCase(defaultResourceCategory)||TEXTBOOK.equalsIgnoreCase(defaultResourceCategory)||HANDOUT.equalsIgnoreCase(defaultResourceCategory))
 				{
 					defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
 				}
-				if(defaultResourceCategory.equalsIgnoreCase("Slide"))
+				if(SLIDE.equalsIgnoreCase(defaultResourceCategory))
 				{
 					defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
 				}
-				if(defaultResourceCategory.equalsIgnoreCase("Exam") || defaultResourceCategory.equalsIgnoreCase("Challenge")||defaultResourceCategory.equalsIgnoreCase("Website"))
+				if(EXAM.equalsIgnoreCase(defaultResourceCategory) || CHALLENGE.equalsIgnoreCase(defaultResourceCategory)||WEBSITE.equalsIgnoreCase(defaultResourceCategory))
 				{
 					defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
 				}
@@ -141,9 +140,6 @@ public class ResourceFrameBreakerView extends Composite{
 					imgFieldTrip.setUrl(DEFULT_IMAGE_PREFIX + defaultResourceCategory.toLowerCase() + PNG);
 				}
 			});
-			if(collectionItemDo.getResource().getResourceFormat()!=null){
-				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()));
-			}
 		}
 		
 	}
@@ -174,9 +170,6 @@ public class ResourceFrameBreakerView extends Composite{
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
 	 *
 	 */
 	private void setLabelsAndIds() {
@@ -230,16 +223,12 @@ public class ResourceFrameBreakerView extends Composite{
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
-	 *
 	 *
 	 */
 	@UiHandler("btnResourceLink")
 	public void openResurceLink(ClickEvent event){
 		MixpanelUtil.mixpanelEvent("Player_Click_Linked_Out_Resource");
-		
 		Window.open(collectionItemDo.getResource().getUrl(), "_blank", "");
-		
 	}
 	
 	/**
@@ -250,7 +239,6 @@ public class ResourceFrameBreakerView extends Composite{
 	 * 
 	 * @description
 	 * 
-	 * 
 	 * @parm(s) : @param resourceType
 	 * @parm(s) : @return
 	 * 
@@ -258,31 +246,29 @@ public class ResourceFrameBreakerView extends Composite{
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
-	 *
 	 *
 	 */
 	public String getResourceTypeImage(String resourceType){
-		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
+		if(VIDEO.equalsIgnoreCase(resourceType)||VIDEOS.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceType();
-		}else if(resourceType.equalsIgnoreCase("Interactive")){
+		}else if(INTERACTIVE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceType();
 		}
-		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")||resourceType.equalsIgnoreCase("Challenge")){
+		else if(WEBSITE.equalsIgnoreCase(resourceType)||WEBPAGE.equalsIgnoreCase(resourceType)||CHALLENGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceType();		
 		}
-		else if(resourceType.equalsIgnoreCase("Slide")||resourceType.equalsIgnoreCase("Image")){
+		else if(SLIDE.equalsIgnoreCase(resourceType)||IMAGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceType();
 		}
-		else if(resourceType.equalsIgnoreCase("Textbook")||resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("Handout")||resourceType.equalsIgnoreCase("Text")){
+		else if(TEXTBOOK.equalsIgnoreCase(resourceType)||LESSON.toLowerCase().equalsIgnoreCase(resourceType)||HANDOUT.equalsIgnoreCase(resourceType)||TEXT.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceType();
 		}
-		else if(resourceType.equalsIgnoreCase("Question")){
+		else if(QUESTION.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceType();
 		}
-		else if(resourceType.equalsIgnoreCase("Audio")){
+		else if(AUDIO.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceType();
-		}else if(resourceType.equalsIgnoreCase("Other")){
+		}else if(OTHER.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceType();
 		}
 		else {
@@ -307,30 +293,29 @@ public class ResourceFrameBreakerView extends Composite{
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 * 
-	 *
-	 *
 	 */
+	
 	public String getResourceDefaultImage(String resourceType){
-		if(resourceType.equalsIgnoreCase("Video")){
+		if(VIDEO.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceDefault();
-		}else if(resourceType.equalsIgnoreCase("Interactive")){
+		}else if(INTERACTIVE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceDefault();
 		}
-		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")||resourceType.equalsIgnoreCase("Exam")||resourceType.equalsIgnoreCase("Challenge")){
+		else if(WEBSITE.equalsIgnoreCase(resourceType)||WEBPAGE.equalsIgnoreCase(resourceType)||EXAM.equalsIgnoreCase(resourceType)||CHALLENGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceDefault();		
 		}
-		else if(resourceType.equalsIgnoreCase("Slide")||resourceType.equalsIgnoreCase("Image")){
+		else if(SLIDE.equalsIgnoreCase(resourceType)||IMAGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceDefault();
 		}
-		else if(resourceType.equalsIgnoreCase("Textbook")||resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("Handout")||resourceType.equalsIgnoreCase("Text")){
+		else if(TEXTBOOK.equalsIgnoreCase(resourceType)||LESSON.toLowerCase().equalsIgnoreCase(resourceType)||HANDOUT.equalsIgnoreCase(resourceType)||TEXT.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceDefault();
 		}
-		else if(resourceType.equalsIgnoreCase("Question")){
+		else if(QUESTION.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceDefault();
 		}
-		else if(resourceType.equalsIgnoreCase("Audio")){
+		else if(AUDIO.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceDefault();
-		}else if(resourceType.equalsIgnoreCase("Other")){
+		}else if(OTHER.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceDefault();
 		}else {
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceDefault();
