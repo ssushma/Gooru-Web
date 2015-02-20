@@ -650,7 +650,9 @@ V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	V2_DOWNLOADFILE("/v2/media/download?sessionToken={0}&url={1}&filename={2}"),
 	
 	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}&data={2}&&timeZone={3}"),
-	
+
+	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
+
 	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink");
 	
 
