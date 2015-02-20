@@ -359,7 +359,7 @@ public interface ResourceService extends BaseService {
   	
 	public List<ProfanityCheckDo> checkProfanityForList(List<ProfanityCheckDo> parms)  throws GwtException, ServerDownException;
 	
-	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType) throws GwtException, ServerDownException;
+	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException, ServerDownException;
 
 	public CollectionDo updateCollectionInfo(CollectionDo collectionDo,
 			String teacherTips) throws GwtException, ServerDownException;
