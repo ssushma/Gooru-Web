@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.ednovo.gooru.client.service.PlayerAppService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceCollectionDeSerializer;
@@ -53,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
@@ -68,6 +68,8 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.StringRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 
 @Service("playerService")
@@ -1514,6 +1516,24 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			e.printStackTrace();
 		}
 		return jsonObject.toString();
+	}
+	
+	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId){
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, collectionItemId, getLoggedInSessionToken());
+		getLogger().info("-- FolderWhatsNextCollectionDo API - - - - "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeFolderTocList(jsonRep);
+	}
+	public FolderWhatsNextCollectionDo deserializeFolderTocList(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderWhatsNextCollectionDo>() {});
+			}
+		} catch (Exception e) {}
+		return new FolderWhatsNextCollectionDo();
 	}
 	
 	
