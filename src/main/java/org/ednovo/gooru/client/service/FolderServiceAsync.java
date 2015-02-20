@@ -53,7 +53,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 //	void updateFolderMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String action, AsyncCallback<CollectionDo> callback);
 
 	//New APIs for 6.0
-	void getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
+	void getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType,boolean isExcludeAssessment, AsyncCallback<FolderListDo> callback);
 	
 	void deleteCollectionsFolder(String folderId, AsyncCallback<Void> callback);
 

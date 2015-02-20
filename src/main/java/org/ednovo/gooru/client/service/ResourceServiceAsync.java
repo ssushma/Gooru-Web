@@ -139,7 +139,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 	void checkProfanityForList(List<ProfanityCheckDo> parms, AsyncCallback<List<ProfanityCheckDo>> callback);
 
-	void getFolderWorkspace(int offset, int limit,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
+	void getFolderWorkspace(int offset, int limit,String sharingType, String collectionType,boolean isExcludeAssessment, AsyncCallback<FolderListDo> callback);
 	
 	void updateCollectionInfo(CollectionDo collectionDo,
 			String teacherTips, AsyncCallback<CollectionDo> asyncCallback);
