@@ -188,6 +188,9 @@ public interface ClientConstants {
 	String VIDEO = "video";
 	String INTERACTIVE ="interactive";
 	String AUDIO = "audio";
+	String CHALLENGE ="Challenge";
+	String VIDEOS ="Videos";
+	String OTHER ="Other";
 	
 	/*************** Analytics End **************************************************/
 	

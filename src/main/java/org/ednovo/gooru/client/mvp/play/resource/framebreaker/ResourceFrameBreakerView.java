@@ -28,6 +28,7 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.core.client.GWT;
@@ -62,7 +63,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class ResourceFrameBreakerView extends Composite implements Constants{
+public class ResourceFrameBreakerView extends Composite implements ClientConstants{
 	
 	@UiField Button btnResourceLink;
 	@UiField Label lblGooruFieldTrip, lblGooruFieldTripDescUnforseen, lblDontForget, lblGooruFieldTripDescOriginal,supportTip;//learnMoreLbl	
@@ -119,15 +120,15 @@ public class ResourceFrameBreakerView extends Composite implements Constants{
 				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():""));
 			}
 			if(defaultResourceCategory!=null){
-				if(i18n.GL0910().equalsIgnoreCase(defaultResourceCategory)||i18n.GL1839().equalsIgnoreCase(defaultResourceCategory)||i18n.GL0907().equalsIgnoreCase(defaultResourceCategory))
+				if(LESSON.equalsIgnoreCase(defaultResourceCategory)||TEXTBOOK.equalsIgnoreCase(defaultResourceCategory)||HANDOUT.equalsIgnoreCase(defaultResourceCategory))
 				{
 					defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
 				}
-				if(i18n.GL0908().equalsIgnoreCase(defaultResourceCategory))
+				if(SLIDE.equalsIgnoreCase(defaultResourceCategory))
 				{
 					defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
 				}
-				if(i18n.GL0921().equalsIgnoreCase(defaultResourceCategory) || CHALLENGE.equalsIgnoreCase(defaultResourceCategory)||i18n.GL0920().equalsIgnoreCase(defaultResourceCategory))
+				if(EXAM.equalsIgnoreCase(defaultResourceCategory) || CHALLENGE.equalsIgnoreCase(defaultResourceCategory)||WEBSITE.equalsIgnoreCase(defaultResourceCategory))
 				{
 					defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
 				}
@@ -248,26 +249,26 @@ public class ResourceFrameBreakerView extends Composite implements Constants{
 	 *
 	 */
 	public String getResourceTypeImage(String resourceType){
-		if(i18n.GL1711().equalsIgnoreCase(resourceType)||VIDEOS.equalsIgnoreCase(resourceType)){
+		if(VIDEO.equalsIgnoreCase(resourceType)||VIDEOS.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceType();
-		}else if(i18n.GL0919().equalsIgnoreCase(resourceType)){
+		}else if(INTERACTIVE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceType();
 		}
-		else if(i18n.GL0920().equalsIgnoreCase(resourceType)||i18n.GL1396().equalsIgnoreCase(resourceType)||CHALLENGE.equalsIgnoreCase(resourceType)){
+		else if(WEBSITE.equalsIgnoreCase(resourceType)||WEBPAGE.equalsIgnoreCase(resourceType)||CHALLENGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceType();		
 		}
-		else if(i18n.GL0908().equalsIgnoreCase(resourceType)||i18n.GL1046().equalsIgnoreCase(resourceType)){
+		else if(SLIDE.equalsIgnoreCase(resourceType)||IMAGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceType();
 		}
-		else if(i18n.GL1839().equalsIgnoreCase(resourceType)||i18n.GL0910().toLowerCase().equalsIgnoreCase(resourceType)||i18n.GL0907().equalsIgnoreCase(resourceType)||i18n.GL1044().equalsIgnoreCase(resourceType)){
+		else if(TEXTBOOK.equalsIgnoreCase(resourceType)||LESSON.toLowerCase().equalsIgnoreCase(resourceType)||HANDOUT.equalsIgnoreCase(resourceType)||TEXT.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceType();
 		}
-		else if(i18n.GL0308().equalsIgnoreCase(resourceType)){
+		else if(QUESTION.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceType();
 		}
-		else if(i18n.GL1045().equalsIgnoreCase(resourceType)){
+		else if(AUDIO.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceType();
-		}else if(i18n.GL1047().equalsIgnoreCase(resourceType)){
+		}else if(OTHER.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceType();
 		}
 		else {
@@ -295,26 +296,26 @@ public class ResourceFrameBreakerView extends Composite implements Constants{
 	 */
 	
 	public String getResourceDefaultImage(String resourceType){
-		if(i18n.GL1711().equalsIgnoreCase(resourceType)){
+		if(VIDEO.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceDefault();
-		}else if(i18n.GL0919().equalsIgnoreCase(resourceType)){
+		}else if(INTERACTIVE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceDefault();
 		}
-		else if(i18n.GL0920().equalsIgnoreCase(resourceType)||i18n.GL1396().equalsIgnoreCase(resourceType)||i18n.GL0921().equalsIgnoreCase(resourceType)||CHALLENGE.equalsIgnoreCase(resourceType)){
+		else if(WEBSITE.equalsIgnoreCase(resourceType)||WEBPAGE.equalsIgnoreCase(resourceType)||EXAM.equalsIgnoreCase(resourceType)||CHALLENGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceDefault();		
 		}
-		else if(i18n.GL0908().equalsIgnoreCase(resourceType)||i18n.GL1046().equalsIgnoreCase(resourceType)){
+		else if(SLIDE.equalsIgnoreCase(resourceType)||IMAGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceDefault();
 		}
-		else if(i18n.GL1839().equalsIgnoreCase(resourceType)||i18n.GL0910().toLowerCase().equalsIgnoreCase(resourceType)||i18n.GL0907().equalsIgnoreCase(resourceType)||i18n.GL1044().equalsIgnoreCase(resourceType)){
+		else if(TEXTBOOK.equalsIgnoreCase(resourceType)||LESSON.toLowerCase().equalsIgnoreCase(resourceType)||HANDOUT.equalsIgnoreCase(resourceType)||TEXT.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceDefault();
 		}
-		else if(i18n.GL0308().equalsIgnoreCase(resourceType)){
+		else if(QUESTION.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceDefault();
 		}
-		else if(i18n.GL1045().equalsIgnoreCase(resourceType)){
+		else if(AUDIO.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceDefault();
-		}else if(i18n.GL1047().equalsIgnoreCase(resourceType)){
+		}else if(OTHER.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceDefault();
 		}else {
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceDefault();
