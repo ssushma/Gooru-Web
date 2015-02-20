@@ -396,6 +396,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		public void onClick(ClickEvent event) {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", folderId);
+			params.put("libName", AppClientFactory.getCurrentPlaceToken());
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 		}
 		

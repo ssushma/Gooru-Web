@@ -10,6 +10,18 @@
 		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row">
+				     <!--  Banner image start here -->
+				    <g:HTMLPanel styleName="{tocStyle1.bannerImageContainer}" ui:field="bannerImagePanel">
+						<!-- <g:Image url="/images/library/district/landing-image-rusd.png" styleName="img-responsive"/> -->
+							<g:HTMLPanel styleName="{tocStyle1.bannerImageCaption}">
+								<tbp:H2Panel ui:field="bannerTitle"></tbp:H2Panel>
+					
+								<g:HTMLPanel styleName="{tocStyle1.sublogoContainer}">
+									<g:Image  ui:field="logoImage"/>
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+					</g:HTMLPanel>
+					<!--  Banner image ends here -->
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />

@@ -157,6 +157,10 @@ public interface FolderContainerCBundle extends ClientBundle {
 		String arrowActive();
 		String loadingImageMainDiv();
 		String loadingImageForSelfEdit();
+		
+		String bannerImageContainer();
+		String bannerImageCaption();
+		String sublogoContainer();
 	}
 	@Source("folderStyleToc.css")
 	NewAddresourcePopupCss css();
