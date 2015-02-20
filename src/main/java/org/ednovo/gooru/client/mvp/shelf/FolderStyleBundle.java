@@ -39,4 +39,5 @@ public interface FolderStyleBundle extends CssResource {
 	String shelfFolderItemTitle();
 	String shelfFolderPanel();
 	String folderTitleElipses();
+	String assessmentContainer();
 }

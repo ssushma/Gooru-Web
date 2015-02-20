@@ -36,6 +36,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -67,6 +69,8 @@ public class FolderCollectionView extends Composite {
 	@UiField Label lblCollectionDesc;
 	FolderTocCBundle res;
 	
+	final String ASSESSMENTURL="assessment/url";
+	
 	public FolderCollectionView(String levelStyleName,final FolderDo folderDo) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -84,10 +88,21 @@ public class FolderCollectionView extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				HashMap<String,String> params = new HashMap<String,String>();
-				params.put("id", folderDo.getGooruOid());
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				if(ASSESSMENTURL.equalsIgnoreCase(folderDo.getCollectionType())){
+					AppClientFactory.getInjector().getResourceService().getAssessmentUrl(folderDo.getGooruOid(), new AsyncCallback<String>() {
+						@Override
+						public void onSuccess(String result) {
+							Window.open(result, "", "");
+						}
+						@Override
+						public void onFailure(Throwable caught) {}
+					});
+				}else{
+					HashMap<String,String> params = new HashMap<String,String>();
+					params.put("id", folderDo.getGooruOid());
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				}
 			}
 		});
 	}

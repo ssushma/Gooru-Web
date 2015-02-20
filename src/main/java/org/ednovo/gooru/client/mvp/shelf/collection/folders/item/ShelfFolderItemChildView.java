@@ -24,7 +24,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -37,6 +36,8 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -73,6 +74,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	private static final String COLLECTION = "collection";
 
 	private static final String SCOLLECTION = "scollection";
+	
+	private static final String ASSESSMENTURL = "assessment/url";
 
 	private static final String RESOURCE = "resource";
 	
@@ -110,6 +113,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
+	EditAssessmentPopup editAssessmentPopup=null;
+	
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
@@ -194,9 +199,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			collectionImage.setWidth("120px");
 			contentBlock.addStyleName(folderStyle.collection());
 		}
-		
 		List<FolderItemDo> folderItemDo = folderDo.getCollectionItems();
-		if(folderItemDo!=null&&folderItemDo.size()>0) {
+		if(!ASSESSMENTURL.equals(folderDo.getCollectionType()) && folderItemDo!=null&&folderItemDo.size()>0) {
 			for(int i=0;i<folderItemDo.size();i++) {
 				FolderItemDo folderItem = folderItemDo.get(i);
 				Label folderItemLbl = new Label(folderItem.getTitle());
@@ -243,7 +247,28 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				contents.add(seeMoreLbl);
 			}
 		} else {
-			contents.addStyleName(folderStyle.empty());
+			if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
+				Button folderItemLbl = new Button("Go to Assessment");
+				folderItemLbl.addStyleName("secondary");
+				folderItemLbl.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						AppClientFactory.getInjector().getResourceService().getAssessmentUrl(folderDo.getGooruOid(), new AsyncCallback<String>() {
+							@Override
+							public void onSuccess(String result) {
+								Window.open(result, "", "");
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {}
+						});
+					}
+				});
+				contents.addStyleName(folderStyle.assessmentContainer());
+				contents.add(folderItemLbl);
+			}else{
+				contents.addStyleName(folderStyle.empty());
+			}
 		}
 		/*reorderTxtBox.setText(getItemNo()+""); 
 		itemNumber.setText(getItemNo()+"");*/ 
@@ -260,8 +285,26 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	@UiHandler("collectionImage")
 	public void clickOnCollectionImage(ClickEvent event) {
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
-		AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
+		if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
+			editAssessmentPopup=new EditAssessmentPopup() {
+				@Override
+				void clickEventOnSaveAssessmentHandler(ClickEvent event) {
+
+				}
+				
+				@Override
+				void clickEventOnCancelAssessmentHandler(ClickEvent event) {
+					editAssessmentPopup.hide();
+				}
+			};
+			editAssessmentPopup.setGlassEnabled(true);
+			editAssessmentPopup.setAutoHideEnabled(true);
+			editAssessmentPopup.show();
+			editAssessmentPopup.center();
+		}else{
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
+			AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
+		}
 	}
 	
 	@UiHandler("itemTitle")

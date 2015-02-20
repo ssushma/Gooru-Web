@@ -352,9 +352,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return form;
 	}
 
+
+	
 	protected void setUserFilterProperties(UserDo user) {
-		FilterSettings filterProperties = getFilterProperties();
-		user.setSettings(filterProperties);
+		user.setSettings(getFilterProperties());
 	}
 	
 	protected FilterSettings getFilterProperties() {
@@ -705,7 +706,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		try {
 			V2UserDo v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 			user = v2UserDo.getUser();
-			user.setToken(v2UserDo.getToken());
+			setUserFilterProperties(user);
+			getLogger().info("v2GuestSignInForEmbed::"+v2UserDo.getUser().getToken());
+			getLogger().info("v2GuestSignInForEmbedtoken::"+v2UserDo.getToken());
+			user.setToken(v2UserDo.getUser().getToken());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -731,6 +735,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 					userDo.setBeforeProductionSwitch(true);
 				}
 //			}
+				userDo.setToken(token);
 			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);

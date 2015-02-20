@@ -463,13 +463,15 @@ public class CollectionFormView extends
 				if(isAssessmentEditClicked){
 					//Code when edit assessment selected
 					String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
-					final String assessmentURL=txtExistingAssessmentTitle.getText();
+					final String assessmentURL=txtExistingAssessmentURL.getText();
 					if(assessmentExistingTitle.isEmpty()){
 						lblExistingAssessmentError.setVisible(true);
 						lblExistingAssessmentError.setText(i18n.GL1026());
 					}else if(assessmentURL.isEmpty()){
+						lblExistingAssessmentError.setVisible(false);
+						lblExistingAssessmentError.setText("");
 						lblExistingAssessmentURLError.setVisible(true);
-						lblExistingAssessmentError.setText(i18n.GL3166());
+						lblExistingAssessmentURLError.setText(i18n.GL3166());
 					}else{
 						final Map<String, String> parms = new HashMap<String, String>();
 						parms.put("text", assessmentExistingTitle);
@@ -550,7 +552,7 @@ public class CollectionFormView extends
 			public void onFocus(FocusEvent event) {
 				if(lblNewAssessmentError.isVisible()){
 					lblNewAssessmentError.setVisible(false);
-					lblNewAssessmentError.getElement().removeAttribute("style");
+					txtNewAssessmentTitle.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -560,7 +562,7 @@ public class CollectionFormView extends
 			public void onFocus(FocusEvent event) {
 				if(lblExistingAssessmentError.isVisible()){
 					lblExistingAssessmentError.setVisible(false);
-					lblExistingAssessmentError.getElement().removeAttribute("style");
+					txtExistingAssessmentTitle.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -570,7 +572,7 @@ public class CollectionFormView extends
 			public void onFocus(FocusEvent event) {
 				if(lblExistingAssessmentURLError.isVisible()){
 					lblExistingAssessmentURLError.setVisible(false);
-					lblExistingAssessmentURLError.getElement().removeAttribute("style");
+					txtExistingAssessmentURL.getElement().removeAttribute("style");
 				}
 			}
 		});
@@ -714,11 +716,12 @@ public class CollectionFormView extends
 			collection.setGooruOid(this.collectionDo.getGooruOid());
 		}
 		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
-			collection.setCollectionType("assessment");
 			if(isAssessmentEditClicked){
 				collection.setTitle(txtExistingAssessmentTitle.getText());
 				collection.setUrl(txtExistingAssessmentURL.getText());
+				collection.setCollectionType("assessment/url");
 			}else{
+				collection.setCollectionType("assessment");
 				collection.setTitle(txtNewAssessmentTitle.getText());
 			}
 		}else{

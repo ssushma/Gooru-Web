@@ -107,13 +107,10 @@ public class FolderCollectionResourceView extends Composite {
 				final Label text = new Label(removeHtmlTags(resTitle));
 				text.setStyleName(res.css().resourceTitle());
 				liPanel.add(text);
-				if (folderDo.getCollectionItems().get(i).getResourceFormat() != null
-						&& folderDo.getCollectionItems().get(i)
-						.getResourceFormat().getValue() != null) {
-					resourceType = folderDo.getCollectionItems().get(i)
-							.getResourceFormat().getValue();
+				if (folderDo.getCollectionItems().get(i).getResourceFormat() != null && folderDo.getCollectionItems().get(i).getResourceFormat().getValue() != null) {
+					resourceType = folderDo.getCollectionItems().get(i).getResourceFormat().getValue();
+					liPanel.addStyleName(ResourceCategoryClass.getInstance().getCategoryStyle(resourceType));
 				}
-				liPanel.addStyleName(ResourceCategoryClass.getInstance().getCategoryStyle(resourceType));
 				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);
 				final String description=removeHtmlTags(folderDo.getCollectionItems().get(i).getDescription()!=null?folderDo.getCollectionItems().get(i).getDescription():"");
