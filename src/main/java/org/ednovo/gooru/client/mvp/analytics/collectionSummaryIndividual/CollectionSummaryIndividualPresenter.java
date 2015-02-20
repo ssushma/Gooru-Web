@@ -31,13 +31,15 @@ import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsCollectionSummaryIndividualView> implements CollectionSummaryIndividualUiHandlers{
+public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsCollectionSummaryIndividualView> implements CollectionSummaryIndividualUiHandlers,ClientConstants{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
 	
@@ -87,7 +89,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				getView().setIndividualCollectionMetaData(result,printUserDataDO);
+				if(!StringUtil.checkNull(result)){
+					getView().setIndividualCollectionMetaData(result,printUserDataDO);
+				}
 			}
 			
 			@Override
@@ -99,7 +103,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> result) {
-				getView().setIndividualData(result,loadingImage);
+				if(!StringUtil.checkNull(result)){
+					getView().setIndividualData(result,loadingImage);
+				}
 			}
 			
 			@Override
@@ -117,11 +123,12 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		this.analyticService.setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
-				if(isClickedOnEmail){
-					getView().setPdfForEmail(result);
-				}else{
-					getView().getFrame().setUrl(result);
-					//Window.open("http://www.goorulearning.org/gooruapi/rest/v2/media/download?sessionToken=93bc84d8-8cd0-11e4-8d16-123141016e2a&url=http://westrepository.goorulearning.org/prod1/uploaded-media/summary/Mymedia-1419578993351.pdf&filename=Classroom_Rules_Collection_Summary.pdf", "_blank", "status=0,toolbar=0,menubar=0,location=0");
+				if(!StringUtil.checkNull(result)){
+					if(isClickedOnEmail){
+						getView().setPdfForEmail(result);
+					}else{
+						getView().getFrame().setUrl(result);
+					}
 				}
 			}
 			
@@ -139,7 +146,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {
 			@Override
 			public void onSuccess(ArrayList<OetextDataDO> result) {
-				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId,classpageItemDo);
+				if(!StringUtil.checkNull(result)){
+					getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId,classpageItemDo);
+				}
 			}
 			@Override
 			public void onFailure(Throwable caught) {

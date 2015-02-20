@@ -408,9 +408,9 @@ public class StringUtil {
 	 */
 	public static void setAttributes(Element object, String idValue, String altValue, String titleValue){
 		object.setAttribute("id",idValue);
-		if (altValue !=null )
+		if (!isEmpty(altValue) )
 			object.setAttribute("alt",altValue);
-		if (titleValue !=null )
+		if (!isEmpty(titleValue) )
 			object.setAttribute("title",titleValue);
 	}
 	
@@ -421,6 +421,15 @@ public class StringUtil {
 	 */
 	public static String toString(Object obj) {
 		return obj == null ? "" : obj.toString().trim();
+	}
+	
+	/**
+	 * A generic method to check for null
+	 * @param e
+	 * @return
+	 */
+	public static <T> boolean checkNull(T e){
+		return e==null;
 	}
 	
 	public static native String removeHtml(String htmText) /*-{
