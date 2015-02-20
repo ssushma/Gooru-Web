@@ -3271,3 +3271,6 @@ span.review input[type="checkbox"]{
 div#spnlDisclosureContentSimPanel>div:first-child {
 	/* padding: 15px; */
 }
+.google-visualization-table{
+    width:auto !important;
+}

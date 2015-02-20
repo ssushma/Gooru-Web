@@ -129,6 +129,9 @@
 	width: 210px;
 	white-space: pre;
 }
+.google-visualization-table .content{
+    width: auto !important;
+}
 .collectionBreakDown_infobox_titles_print{
 	clear: both;
 	color: #515151;
@@ -332,6 +335,9 @@
 	height: 22px;
 	top: 7px;
 	width: 20px;	
+}
+.google-visualization-table{
+    width:auto !important;
 }
 /*End */
 @media print
