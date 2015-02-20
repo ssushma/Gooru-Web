@@ -2434,4 +2434,32 @@ fieldset {
 .google-visualization-table{
    width:auto !important;
 }
- 
+
+span.fivestar input[type="checkbox"], 
+span.fourstar input[type="checkbox"],
+span.threestar input[type="checkbox"],
+span.twostar input[type="checkbox"],
+span.onestar input[type="checkbox"],
+span.zerostar input[type="checkbox"],
+span.review input[type="checkbox"]{
+	margin: 0px 4px 4px 4px !important;
+}
+
+.mobilefriendlyContainer, .oerContainer{
+	position: relative;
+	margin-bottom: 0px;
+	height: 30px;
+}
+
+
+.tableDivStyles table{
+	width: 100%;
+}
+
+
+div#spnlDisclosureContentSimPanel>div:first-child {
+	/* padding: 15px; */
+}
+.google-visualization-table{
+    width:auto !important;
+}

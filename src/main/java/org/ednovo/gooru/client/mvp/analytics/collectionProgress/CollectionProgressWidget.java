@@ -307,48 +307,44 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        }
 			}
 			
-	        final Options options = Options.create();
-	        options.setAllowHtml(true);
 	        
-	        final DataView view =DataView.create(data);
-	        
-	        table = new Table(view, options);
-	        table.setStyleName("collectionProgressTable");
-	     
-	        filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
-	        filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
-	        filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
-	        filterDropDown.addChangeHandler(new ChangeHandler() {
-			
-				@Override
-				public void onChange(ChangeEvent event) {
-						htmlpnlProgress.clear();
-						int selectedIndex=filterDropDown.getSelectedIndex();
-					 	operationsView=DataView.create(data);
-						 if(selectedIndex==1){
-							 operationsView.hideColumns(primitivesResources); 
-						 }
-						 if(selectedIndex==2){
-							 operationsView.hideColumns(primitivesQuestions); 
-						 }
-						 table = new Table(operationsView, options);
-					     table.setStyleName("collectionProgressTable");
-					     htmlpnlProgress.add(table);	
-					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-					     leftArrow.setVisible(true);
-					     rightArrow.setVisible(true);
-				}
-			});
-	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-	        htmlpnlProgress.add(table);	
-	        getLoadingImage().setVisible(false);
+        final Options options = Options.create();
+        options.setAllowHtml(true);
+        
+        final DataView view =DataView.create(data);
+        
+        table = new Table(view, options);
+        table.setStyleName("collectionProgressTable");
+     
+        filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
+        filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
+        filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
+        filterDropDown.addChangeHandler(new ChangeHandler() {
 		
-	        if(table.getElement().hasChildNodes() &&  table.getElement().getFirstChildElement().hasAttribute("style")){
-	        	 table.getElement().getFirstChildElement().removeAttribute("style");
-	        }
-		}
-		catch(Exception e){
-			AppClientFactory.printSevereLogger(e.getMessage());
+			@Override
+			public void onChange(ChangeEvent event) {
+					htmlpnlProgress.clear();
+					int selectedIndex=filterDropDown.getSelectedIndex();
+				 	operationsView=DataView.create(data);
+					 if(selectedIndex==1){
+						 operationsView.hideColumns(primitivesResources); 
+					 }
+					 if(selectedIndex==2){
+						 operationsView.hideColumns(primitivesQuestions); 
+					 }
+					 table = new Table(operationsView, options);
+				     table.setStyleName("collectionProgressTable");
+				     htmlpnlProgress.add(table);	
+				     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+				     leftArrow.setVisible(true);
+				     rightArrow.setVisible(true);
+			}
+		});
+        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+        htmlpnlProgress.add(table);	
+        getLoadingImage().setVisible(false);
+		}catch(Exception e){
+ 			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
