@@ -181,14 +181,6 @@ public class AppClientFactory {
 	public static void setLoggedInUser(UserDo loggedInUser) {
 		if (loggedInUser != null) {
 			getClientFactory().loggedInUser = loggedInUser;
-			AppClientFactory.getInjector().getUserService().setUserProperties(loggedInUser, new SimpleAsyncCallback<FilterSettings>() {
-
-				@Override
-				public void onSuccess(FilterSettings result) {
-				getClientFactory().loggedInUser.setSettings(result);
-				getClientFactory().loggedInUser.setToken(getLoginSessionToken());
-				}
-				});
 		}
 	}
 	/**
