@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -388,8 +389,10 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			this.attemptedAnswerDo=attemptedAnswerDo;
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
+			if(collectionItemDo!=null){
 			attemptAnswerDo.setQuestionType(collectionItemDo.getResource().getType());
 			getUiHandlers().setAttemptStatus(collectionItemDo.getCollectionItemId(), attemptAnswerDo);
+			}
 		}
 		public void increaseUserAttemptCount(){
 			getUiHandlers().increaseUserAttemptCount();
@@ -398,16 +401,18 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		public void createSesstionItemAttemptOe(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus){
 			String attemptedAnswers="";
 			String answerId="";
-			for(int i=0;i<userAttemptedAnswers.size();i++){
-				attemptedAnswers=attemptedAnswers+userAttemptedAnswers.get(i);
-				try{
-					answerId=answerId+(answerIds.get(i).toString());
-				}catch(Exception e){
-					
-				}
-				if((i+1)!=userAttemptedAnswers.size()){
-					attemptedAnswers=attemptedAnswers+",";
-					answerId=answerId+",";
+			if(userAttemptedAnswers!=null && userAttemptedAnswers.size()>0){
+				for(int i=0;i<userAttemptedAnswers.size();i++){
+					attemptedAnswers=attemptedAnswers+userAttemptedAnswers.get(i);
+					try{
+						answerId=answerId+(StringUtil.toString(answerIds.get(i)));
+					}catch(Exception e){
+						
+					}
+					if((i+1)!=userAttemptedAnswers.size()){
+						attemptedAnswers=attemptedAnswers+",";
+						answerId=answerId+",";
+					}
 				}
 			}
 			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
@@ -417,10 +422,12 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		public void setFibAnswerIdsWithTime(List<Integer> attemptAnswerIds,List<Integer> attemptTrySequenceArray,List<Integer> attemptStatusArray,Integer score,boolean isFirstAttempt,List<String> attemptedAnswersList){
 			String attemptedAnswersText="";
-			for(int i=0;i<attemptedAnswersList.size();i++){
-				attemptedAnswersText=attemptedAnswersText+"["+attemptedAnswersList.get(i)+"]";
-				if((i+1)!=attemptedAnswersList.size()){
-					attemptedAnswersText=attemptedAnswersText+",";
+			if(attemptedAnswersList!=null && attemptedAnswersList.size()>0){
+				for(int i=0;i<attemptedAnswersList.size();i++){
+					attemptedAnswersText=attemptedAnswersText+"["+attemptedAnswersList.get(i)+"]";
+					if((i+1)!=attemptedAnswersList.size()){
+						attemptedAnswersText=attemptedAnswersText+",";
+					}
 				}
 			}
 			getUiHandlers().setOeQuestionAnswerText(attemptedAnswersText);

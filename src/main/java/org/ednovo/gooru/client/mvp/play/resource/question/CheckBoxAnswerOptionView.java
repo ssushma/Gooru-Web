@@ -42,17 +42,17 @@ public class CheckBoxAnswerOptionView extends Composite{
 	@UiField public Label answerChoiceResult,radioYesButton,radioNoButton;
 	@UiField HTML answerOptionText;
 	@UiField public RadioButton answerOptionYesRadioButton,answerOptionNoRadioButton;
-	//@UiField public CheckBox answerOptionCheckBoxButton;
 	private int answerId;
 	private boolean isAnswerCorrect;
 	private String answerText="";
 	public static CheckBoxAnswerOptionViewUiBinder questionAnswerOptionViewUiBinder=GWT.create(CheckBoxAnswerOptionViewUiBinder.class);
-	
+	/**
+	 * Constructor to set values for Answer options
+	 */
 	public CheckBoxAnswerOptionView(String questionText,String questionSerialNum){
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
-		//optionAlpahabeticSerialNo.setText(questionSerialNum);
 		this.answerText=questionText;
-		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
+		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText!=null?questionText:""));
 		answerOptionYesRadioButton.setName(questionSerialNum);
 		answerOptionNoRadioButton.setName(questionSerialNum);
 		
@@ -63,17 +63,15 @@ public class CheckBoxAnswerOptionView extends Composite{
 		answerOptionYesRadioButton.getElement().setId("rdAnswerOptionYesRadioButton");
 		answerOptionNoRadioButton.getElement().setId("rdAnswerOptionNoRadioButton");
 	}
-	private HTML getHTML(String html){
-		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		HTML contentHtml=new HTML(html);
-		contentHtml.setStyleName("");
-		return contentHtml;
-	}
+	/**
+	 * This method is used to remove HTMLTags from the String
+	 * @param text
+	 * @return
+	 */
 	private String removeHtmlTags(String text){
 		/**
 		 * Commented the following line to fix issue with displaying math symbols. 
 		 */
-//		text = text.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
 		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return text;
 	}
