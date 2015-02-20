@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -60,8 +61,14 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	@UiField Label lblExistingAssessmentError,lblExistingAssessmentURLError;
 	@UiField TextBoxWithPlaceholder txtExistingAssessmentTitle,txtExistingAssessmentURL;
 	
+	public String collectionId=null;
+	
 	public EditAssessmentPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
+	}
+	public EditAssessmentPopup(String collectionId) {
+		setWidget(uiBinder.createAndBindUi(this));
+		this.collectionId=collectionId;
 		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3168());
 		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
 		// This will handle the focus on existing assessment title.
@@ -85,11 +92,10 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 			}
 		});
 	}
-
 	@UiHandler("btnSaveAssessment")
 	public void clickEventOnSaveAssessment(final ClickEvent event){
 		//Code when save or update assessment clicked
-		String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
+		final String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
 		final String assessmentURL=txtExistingAssessmentURL.getText();
 		if(assessmentExistingTitle.isEmpty()){
 			lblExistingAssessmentError.setVisible(true);
@@ -122,7 +128,17 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 									lblExistingAssessmentURLError.setVisible(false);
 									lblExistingAssessmentURLError.setText("");
 									//Write the update code and API call here
-									clickEventOnSaveAssessmentHandler(event);
+									AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(collectionId, assessmentExistingTitle, assessmentURL, new AsyncCallback<FolderDo>() {
+										
+										@Override
+										public void onSuccess(FolderDo result) {
+											clickEventOnSaveAssessmentHandler(result);
+										}
+										
+										@Override
+										public void onFailure(Throwable caught) {
+										}
+									});
 								}
 							}
 							@Override
@@ -142,6 +158,6 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	public void clickEventOnCancelAssessment(ClickEvent event){
 		clickEventOnCancelAssessmentHandler(event);
 	}
-	abstract void clickEventOnSaveAssessmentHandler(ClickEvent event);
+	abstract void clickEventOnSaveAssessmentHandler(FolderDo result);
 	abstract void clickEventOnCancelAssessmentHandler(ClickEvent event);
 }

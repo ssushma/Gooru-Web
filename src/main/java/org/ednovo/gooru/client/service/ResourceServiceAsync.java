@@ -40,6 +40,7 @@ import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
@@ -187,5 +188,5 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     
     void getUserShelfDetails(String userUid,AsyncCallback<String> callback);
     
-    void getAssessmentUrl(String collectionId,AsyncCallback<String> callback);
+    void updateAssessmentDetails(String assessmentId,String title,String assessmentUrl,AsyncCallback<FolderDo> callback);
 }

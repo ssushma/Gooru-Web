@@ -89,14 +89,7 @@ public class FolderCollectionView extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				if(ASSESSMENTURL.equalsIgnoreCase(folderDo.getCollectionType())){
-					AppClientFactory.getInjector().getResourceService().getAssessmentUrl(folderDo.getGooruOid(), new AsyncCallback<String>() {
-						@Override
-						public void onSuccess(String result) {
-							Window.open(result, "", "");
-						}
-						@Override
-						public void onFailure(Throwable caught) {}
-					});
+					Window.open(folderDo.getUrl(), "", "");
 				}else{
 					HashMap<String,String> params = new HashMap<String,String>();
 					params.put("id", folderDo.getGooruOid());
