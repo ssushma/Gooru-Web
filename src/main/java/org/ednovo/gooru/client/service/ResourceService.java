@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,12 +41,12 @@ import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/resourceService")
@@ -432,11 +431,12 @@ public interface ResourceService extends BaseService {
 			String comments);
 	
 	public String getUserShelfDetails(String userUid) throws GwtException, ServerDownException;
-	
 	/**
-	 * This method is used to get the assessment url
-	 * @param collectionId
+	 * This method is used to update assessment details.
+	 * @param assessmentId
+	 * @param title
+	 * @param assessmentUrl
 	 * @return
 	 */
-	String getAssessmentUrl(String collectionId);
+	FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl);
 }
