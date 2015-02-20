@@ -121,7 +121,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	 *
 	 */
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel){
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null,false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo.getCount()==0){
@@ -135,7 +135,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null,false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);

@@ -25,16 +25,25 @@
  
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.client.uc.H2Panel;
 import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -55,6 +64,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -82,13 +92,19 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv;
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
+	@UiField H2Panel bannerTitle;
+	@UiField Image logoImage;
+	
 	
 	final String FOLDER="folder";
 	final String SCOLLECTION="scollection";
+	
+	private Map<String, List<String>> bannerVal= new HashMap<String, List<String>>();
+	ArrayList<String> arrylist=new ArrayList<String>();
 	
 	private Tree folderTocTree = new Tree(new TreeMenuImages()) {
 		@Override
@@ -107,9 +123,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 		setData();
+		setBannerStaticImages();
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
+		
 	}
+	
 	/**
 	 * This method is used to set folder TOC Data.
 	 */
@@ -160,6 +179,36 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				History.back();
 			}
 		});
+	}
+	/**
+	 * To set the Banner images into Map 
+	 */
+	private void setBannerStaticImages() {
+		// TODO Auto-generated method stub
+		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px;",i18n.GL0532(),Constants.RUSD_LOGO));
+		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png);",i18n.GL2108(),Constants.CORE_LOGO));
+		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-lps.png);",i18n.GL2053(), Constants.LPS_LOGO));
+		bannerVal.put(PlaceTokens.LUSD, Arrays.asList("background: url(../images/library/district/landing-image-lusd.png) -7px -47px;",i18n.GL2181(), Constants.LUSD_LOGO));
+		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -47px;",i18n.GL2061(), Constants.VALVERDE_LOGO));
+		bannerVal.put(PlaceTokens.SUSD, Arrays.asList("background: url(../images/library/district/landing-image-susd.png) -7px -47px;",i18n.GL2058(), Constants.SUSD_LOGO));
+		bannerVal.put(PlaceTokens.SAUSD_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-sausd.png) -7px -47px;",i18n.GL1902(), Constants.SAUSD_LOGO));
+		
+		bannerVal.put(PlaceTokens.AUTODESK, Arrays.asList("background: url("+Constants.AUTODESK_BANNER +") center;",i18n.GL2027(),""));
+		bannerVal.put(PlaceTokens.CCST_Cal_TAC, Arrays.asList("background: url("+Constants.CCST_BANNER +") center;",i18n.GL2179(),""));
+		bannerVal.put(PlaceTokens.NGC, Arrays.asList("background: url("+Constants.NGC_BANNER +") center;",i18n.GL2030(),""));
+		bannerVal.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList("background: url("+Constants.ASPIRE_BANNER +") center;",i18n.GL3107(),""));
+		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center;",i18n.GL2174(),""));
+		bannerVal.put(PlaceTokens.FTE, Arrays.asList("background: url("+Constants.FTE_BANNER +") center;",i18n.GL2029(),""));
+		bannerVal.put(PlaceTokens.LESSONOPOLY, Arrays.asList("background: url("+Constants.LESSONOPOLY_BANNER +"); center",i18n.GL2032(),""));
+		bannerVal.put(PlaceTokens.LIFEBOARD, Arrays.asList("background: url("+Constants.LIFEBOARD_BANNER +"); center","",""));
+		bannerVal.put(PlaceTokens.FINCAPINC, Arrays.asList("background: url("+Constants.FINCAP_BANNER +") center;",i18n.GL2033(),""));
+		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center;",i18n.GL2041(),""));
+		bannerVal.put(PlaceTokens.ONR, Arrays.asList("background: url("+Constants.ONR_BANNER +") center;",i18n.GL2028(),""));
+		bannerVal.put(PlaceTokens.PSDPAL, Arrays.asList("background: url("+Constants.PSDPAL_BANNER +") center;",i18n.GL2034(),""));
+		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center;",i18n.GL2186(),""));
+		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center;",i18n.GL2031(),""));
+		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center;",i18n.GL2040(),""));
+		
 	}
 	@Override
 	public void setFolderItems(FolderTocDo  foldersTocObj) {
@@ -426,6 +475,24 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			marginDiv.getElement().getStyle().setMarginBottom(0,  Unit.PX);
 			marginDiv.getElement().getStyle().setMarginLeft(getTotalViewableWidth(),  Unit.PX);
 			marginDiv.getElement().getStyle().setMarginRight(getTotalViewableWidth(),  Unit.PX);
+		}
+	}
+	/**
+	 * To set the bannner images, titles and logo based on the library name.
+	 */
+	@Override
+	public void setBannerImages(){
+		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+		if(!StringUtil.isEmpty(placetoken)){
+			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
+			bannerTitle.setText(bannerVal.get(placetoken).get(1));
+			logoImage.setUrl(bannerVal.get(placetoken).get(2));
+			if(bannerVal.get(placetoken).get(2).equals("")){
+				bannerTitle.getElement().setAttribute("style", "background-color: rgba(16, 118, 187, 0.5);");
+			}else{
+				bannerTitle.getElement().getStyle().clearBackgroundColor();
+			}
+
 		}
 	}
 }

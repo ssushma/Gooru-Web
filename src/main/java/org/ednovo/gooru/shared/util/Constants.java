@@ -35,4 +35,23 @@ public interface Constants {
 	
 	String ASPIRE_BANNER = "../images/library/partners/EPACS_banner.png";
 	
+	String LIFEBOARD_BANNER = "../images/library/partners/lifeboard.png";
+	
+	String CORE_LOGO = "../images/library/district/core-logo.png";
+	
+	String RUSD_LOGO = "../images/library/district/rusd-logo.png";
+	
+	String LPS_LOGO = "../images/library/district/lps-logo.png";
+
+	String LUSD_LOGO = "../images/library/district/lusd-logo.png";
+	
+	String SAUSD_LOGO = "../images/library/district/sausd-logo.png";
+	
+	String SUSD_LOGO = "../images/library/district/susd-logo.png";
+	
+	String VALVERDE_LOGO = "../images/library/district/valverde-logo.png";
+
+	
+
+	
 }

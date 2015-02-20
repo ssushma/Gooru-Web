@@ -248,20 +248,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		} else {
 			if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
-				Button folderItemLbl = new Button("Go to Assessment");
+				Button folderItemLbl = new Button(i18n.GL3169());
 				folderItemLbl.addStyleName("secondary");
 				folderItemLbl.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						AppClientFactory.getInjector().getResourceService().getAssessmentUrl(folderDo.getGooruOid(), new AsyncCallback<String>() {
-							@Override
-							public void onSuccess(String result) {
-								Window.open(result, "", "");
-							}
-							
-							@Override
-							public void onFailure(Throwable caught) {}
-						});
+						Window.open(folderDo.getUrl(), "", "");
 					}
 				});
 				contents.addStyleName(folderStyle.assessmentContainer());
@@ -286,19 +278,19 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@UiHandler("collectionImage")
 	public void clickOnCollectionImage(ClickEvent event) {
 		if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
-			editAssessmentPopup=new EditAssessmentPopup() {
+			editAssessmentPopup=new EditAssessmentPopup(folderDo.getGooruOid()) {
 				@Override
-				void clickEventOnSaveAssessmentHandler(ClickEvent event) {
-
+				void clickEventOnSaveAssessmentHandler(FolderDo result) {
+					folderDo=result;
+					itemTitle.setText(folderDo.getTitle());
+					editAssessmentPopup.hide();
 				}
-				
 				@Override
 				void clickEventOnCancelAssessmentHandler(ClickEvent event) {
 					editAssessmentPopup.hide();
 				}
 			};
 			editAssessmentPopup.setGlassEnabled(true);
-			editAssessmentPopup.setAutoHideEnabled(true);
 			editAssessmentPopup.show();
 			editAssessmentPopup.center();
 		}else{
@@ -309,12 +301,14 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	@UiHandler("itemTitle")
 	public void clickOnTitle(ClickEvent event) {
-		if(folderDo.getType().equals("folder")){
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
-		}else{
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
+		if(!ASSESSMENTURL.equals(folderDo.getCollectionType())){
+			 	if(folderDo.getType().equals("folder")){
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
+				}else{
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
+				}
+				AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 		}
-		AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 	}
 	
 	@Override
