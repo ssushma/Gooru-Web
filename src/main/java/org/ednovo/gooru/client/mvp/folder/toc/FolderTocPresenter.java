@@ -89,6 +89,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				getView().setFolderItems(folderListDo);
 			}
 		});
+		getView().setBannerImages();
 	}
 	
 	@Override

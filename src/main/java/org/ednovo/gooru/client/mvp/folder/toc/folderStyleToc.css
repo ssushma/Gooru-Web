@@ -787,3 +787,31 @@
 	z-index: 5;
 	margin-left: 375px;
 }
+
+/* Banner Image  css here*/
+.bannerImageContainer {
+	position: relative;
+	height: 191px;
+}
+
+.bannerImageCaption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.bannerImageCaption h2 {
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 35px;
+	background-color: rgba(16, 118, 187, 0.5);
+	padding: 10px 0px;
+	text-align: center;
+}
+
+.sublogoContainer {
+	position: absolute;
+	bottom: 17px;
+	right: 29px;
+}
