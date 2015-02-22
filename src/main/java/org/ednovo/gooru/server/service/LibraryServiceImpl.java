@@ -638,8 +638,10 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"","0","20");
+		getLogger().info("--- partner WS API -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("----Partners WS API - Time stamp to get data from API on server side --"+System.currentTimeMillis());
 		if(placeToken.equals(PlaceTokens.PROFILE_PAGE)) {
 			//partnerFolderListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
 		} else {
@@ -678,6 +680,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"","0");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("----UNITS API - Time stamp to get data from API on server side --"+System.currentTimeMillis());
 		return deserializePaginatedWorkspaceFolders(jsonRep);
 	}
 	
