@@ -105,6 +105,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
+		long uiStartTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger(" Ui Start Time --- "+uiStartTime);
 		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASPIRE_EPACS)){
 			loadingPanel(false);
 			getComingSoonText(true);
@@ -141,6 +143,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					long unticlickStarttime = System.currentTimeMillis();
+					AppClientFactory.printInfoLogger("---- Lib unit Clicked Start time -- "+AppClientFactory.getCurrentPlaceToken()+" -- "+unticlickStarttime);
 					libraryView.getContentScroll().setVisible(false);
 					loadingPanel(true);
 					final Iterator<Widget> widgetsPanel = libraryView.getLeftNav().iterator();
@@ -158,19 +162,23 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			});
 			widgetCount++;
 		}
+		AppClientFactory.printInfoLogger(" over all  End Time consumed for ui --- "+(System.currentTimeMillis() -uiStartTime));
 	}
 
 	@Override
 	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId,String libraryGooruOid) {
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("on unit selected ---- "+startTime);
 		libraryView.getContentScroll().clear();
 		try {
-			int count = 0;
+			int count = 0; 
 			for(int i = 0; i <folderListDo.size(); i++) {
 				count++;
 				libraryView.getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),libraryGooruOid));
 			}
 			libraryView.getContentScroll().setVisible(true);
 			loadingPanel(false);
+			AppClientFactory.printInfoLogger(" ---- on unit selected Ui End time consumed --- "+(System.currentTimeMillis()-startTime));
 		} catch (Exception e) {
 			e.printStackTrace();
 			loadingPanel(false);
