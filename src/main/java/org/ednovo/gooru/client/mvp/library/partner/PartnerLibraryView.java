@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.library.partner;
 
 
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,15 +40,13 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.player.collection.client.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.Constants;
-import org.ednovo.gooru.shared.util.StringUtil;
-
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -64,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHandlers> implements IsPartnerLibraryView{
+public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHandlers> implements IsPartnerLibraryView,ClientConstants{
 
 	@UiField HTMLPanel partnerPanel;
 	
@@ -78,6 +75,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	
 	private static final String LIBRARY_PAGE = "partner-page";
 	
+	private static Map<String, LoadBannerActionInterface> libraryVal;
+	
 	private CourseDo courseDo;
 
 	private static PartnerLibraryViewUiBinder uiBinder = GWT.create(PartnerLibraryViewUiBinder.class);
@@ -87,6 +86,12 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
+	
+	static{
+		libraryVal = new HashMap<String,LoadBannerActionInterface>();
+		libraryVal = addAllPartnerLibraries();
+	}
+	
 	/**
 	 * Class constructor
 	 */
@@ -103,11 +108,15 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	}
 	
 
+	/**
+	 * Sets the library unit data. receiving from an API.
+	 */
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
+		int listofFoldres = folderList.size();
 		long uiStartTime = System.currentTimeMillis();
 		AppClientFactory.printInfoLogger(" Ui Start Time --- "+uiStartTime);
-		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ASPIRE_EPACS)){
+		if(folderList.size()==0 && PlaceTokens.ASPIRE_EPACS.equals(AppClientFactory.getCurrentPlaceToken())){
 			loadingPanel(false);
 			getComingSoonText(true);
 		}else{
@@ -118,8 +127,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.getContentScroll().clear();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
 		int j = 0;
-		for(int i = 0; i<folderList.size(); i++) {
-			if(folderList.get(i).getType().equalsIgnoreCase("folder")) {
+		for(int i = 0; i<listofFoldres; i++) {
+			if(FOLDER.equalsIgnoreCase(folderList.get(i).getType())) {
 				PlayerDataLogEvents.triggerLibraryViewEvent(folderList.get(i).getParentGooruOid());
 				LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(folderList.get(i));
 				libraryView.getLeftNav().add(libraryUnitMenuView);
@@ -129,13 +138,15 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
 					setTopicListData(folderList.get(i).getFolderItems(), unitListId,folderList.get(i).getParentGooruOid());
-					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
 				}
 			}
 		}
 		
 		final Iterator<Widget> widgets = libraryView.getLeftNav().iterator();
 		int widgetCount = 0;
+		/**
+		 * Iterates the unit wdigets and providing click events for each unit widgets.
+		 */
 		while (widgets.hasNext()) {
 			final Widget widget = widgets.next();
 			final LibraryUnitMenuView libraryUnitMenuView = ((LibraryUnitMenuView) widget);
@@ -165,6 +176,9 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		AppClientFactory.printInfoLogger(" over all  End Time consumed for ui --- "+(System.currentTimeMillis() -uiStartTime));
 	}
 
+	/**
+	 * Creates each units topic widgets.
+	 */
 	@Override
 	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId,String libraryGooruOid) {
 		long startTime = System.currentTimeMillis();
@@ -185,24 +199,34 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Calls the method to get the respective library banner image.
+	 */
 	private void setCourseImageData() {
 		libraryView.setCourseData(getPartnerName());
 	}
 	
+	/**
+	 * Sets the respective library banner image.
+	 * @return
+	 */
 	private CourseDo getPartnerName() {
 		String partnerPlace = AppClientFactory.getCurrentPlaceToken();
 		CourseDo courseDo = new CourseDo();
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		LibraryUserDo libraryUserDo = new LibraryUserDo();
-		Map<String, LoadBannerActionInterface> libraryVal = new HashMap<String,LoadBannerActionInterface>();
-		libraryVal = addAllPartnerLibraries();
+		
 		LoadBannerActionInterface actionInterface = libraryVal.get(partnerPlace); 
 		actionInterface.loadLibBanner(courseDo, thumbnailDo, libraryUserDo);
 		courseDo = actionInterface.getUpdatedCourseDo();
 		return courseDo;
 	}
 	
-	public Map<String, LoadBannerActionInterface> addAllPartnerLibraries() {
+	/**
+	 * Loads all the libraries into a hash map.
+	 * @return {@link Map}
+	 */
+	public static Map<String, LoadBannerActionInterface> addAllPartnerLibraries() {
 
 		Map<String, LoadBannerActionInterface> map = new HashMap<String,LoadBannerActionInterface>();
 		map.put(PlaceTokens.AUTODESK,AutodeskBanner.getAutodeskInstance());
@@ -225,7 +249,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		return map;
 
 	}
-
+	
+	/**
+	 * This method will display the loading image.
+	 */
 	@Override
 	public void loadingPanel(boolean isVisible) {
 		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
@@ -244,7 +271,11 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.getLeftNav().clear();
 	}
 	
-	
+	/**
+	 * Inner class for implementing autodesk library banner.
+	 * 
+	 *
+	 */
 	private static class AutodeskBanner implements LoadBannerActionInterface{
 		
 		private static AutodeskBanner autodeskBannerInstance;
@@ -277,6 +308,12 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	
+	/**
+	 * Inner class for implementing library banner.
+	 * 
+	 *
+	 */
 	private static class ONRBanner implements LoadBannerActionInterface{
 		
 		private static ONRBanner ONRBannerInstance;
@@ -309,6 +346,12 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	
+	/**
+	 * Inner class for implementing NgC library banner.
+	 * 
+	 *
+	 */
 	private static class NgcBanner implements LoadBannerActionInterface{
 		
 		private static NgcBanner ngcBannerInstance;
@@ -341,6 +384,11 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing FTE library banner.
+	 * 
+	 *
+	 */
 	private static class FteBanner implements LoadBannerActionInterface{
 
 		private static FteBanner fteBannerInstance;
@@ -374,6 +422,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing WSPH library banner.
+	 * 
+	 */
 	private static class WspwhBanner implements LoadBannerActionInterface{
 
 		private static WspwhBanner wsphBannerInstance;
@@ -407,6 +459,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing Lessonopoly library banner.
+	 *
+	 */
 	private static class LessonopolyBanner implements LoadBannerActionInterface{
 
 		private static LessonopolyBanner lessonopolyBannerInstance;
@@ -439,6 +495,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing Fincap library banner.
+	 * 
+	 */
 	private static class FincapIncBanner implements LoadBannerActionInterface{
 
 
@@ -472,6 +532,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing PSDL library banner.
+	 * 
+	 */
 	private static class PsdlBanner implements LoadBannerActionInterface{
 
 		private static PsdlBanner psdlBannerInstance;
@@ -505,6 +569,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing Youthvoice library banner.
+	 * 
+	 */
 	private static class YouthVoicesBanner implements LoadBannerActionInterface{
 
 		private static YouthVoicesBanner youthVoiceBannerInstance;
@@ -537,6 +605,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 
+	/**
+	 * Inner class for implementing GeoEdu library banner.
+	 * 
+	 */
 	private static class GeoEduBanner implements LoadBannerActionInterface{
 
 		private static GeoEduBanner geoEduBannerInstance;
@@ -569,6 +641,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing LPS library banner.
+	 * 
+	 */
 	private static class LpsBanner implements LoadBannerActionInterface{
 
 		private static LpsBanner lpsBannerInstance;
@@ -601,6 +677,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing CORE library banner.
+	 * 
+	 */
 	private static class CoreBanner implements LoadBannerActionInterface{
 
 		private static CoreBanner coreBannerInstance;
@@ -633,6 +713,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Inner class for implementing ESYP library banner.
+	 * 
+	 */
 	private static class EsypBanner implements LoadBannerActionInterface{
 
 		private static EsypBanner esypBannerInstance;
@@ -665,6 +749,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 
+	/**
+	 * Inner class for implementing CCST library banner.
+	 * 
+	 */
 	private static class CcstBanner implements LoadBannerActionInterface{
 
 		private static CcstBanner ccstBannerInstance;
@@ -697,6 +785,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 
+	/**
+	 * Inner class for implementing TICAl library banner.
+	 L
+	 */
 	private static class TicalBanner implements LoadBannerActionInterface{
 
 		private static TicalBanner ticalBannerInstance;
@@ -728,7 +820,11 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
-
+	
+	/**
+	 * Inner class for implementing Aspire library banner.
+	 * 
+	 */
 	private static class AspireBanner implements LoadBannerActionInterface{
 
 		private static AspireBanner aspireBannerInstance;
@@ -762,6 +858,13 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+	/**
+	 * Setting the course Do obj
+	 * @param courseDo {@link CourseDo}
+	 * @param thumbnailDo {@link ThumbnailDo}
+	 * @param libraryUserDo {@link LibraryUserDo}
+	 * @return courseDo {@link CourseDo}
+	 */
 	public static CourseDo setCourseDoObject(CourseDo courseDo,ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo){
 		courseDo.setThumbnails(thumbnailDo);
 		courseDo.setCreator(libraryUserDo);

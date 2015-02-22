@@ -201,4 +201,13 @@ public interface ClientConstants {
 	String NOTLODING ="not-loading";
 	String FIB_SEPARATOR = "_______";
 	
+	
+	
+	/*************** Library End **************************************************/
+	
+	String FOLDER = "folder";
+	
+	/*************** Library End **************************************************/
+	
+	
 }
