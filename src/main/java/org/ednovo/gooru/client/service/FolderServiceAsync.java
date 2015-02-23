@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.service;
 
 import java.util.List;
 
+import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -72,4 +74,6 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId, AsyncCallback<Void> simpleAsyncCallback);
 	
 	void getTocFolders(String folderId, AsyncCallback<FolderTocDo> callback);
+	
+	void getFolderMetaData(String folderId, AsyncCallback<FolderDo> callback);
 }

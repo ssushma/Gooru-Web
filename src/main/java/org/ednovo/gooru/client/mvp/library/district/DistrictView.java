@@ -24,6 +24,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -57,6 +58,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	
 	private String placeToken;
 	
+	HandlerRegistration handlerRegistration = null;
+	
 	DistrictMenuNav districtMenuNav = null;
 	ProfileLibraryDo ProfileLibraryDoObj;
 	public static boolean scrollFlag=false;
@@ -79,7 +82,6 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	public DistrictView() {		
 		setWidget(uiBinder.createAndBindUi(this));
 		setAssets(AppClientFactory.getCurrentPlaceToken());
-		
 	}
 	
 	@Override
@@ -159,6 +161,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		if(profileLibraryDoList.get(0).getItemCount()>20){
 			totalCollectionCount = profileLibraryDoList.get(0).getItemCount();
 		}
+		final String parentId=profileLibraryDoList.get(0).getParentGooruOid();
 		int firstWidgetCount = leftNav.getWidgetCount();
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(profileLibraryDoList.get(i),libraryGooruOid);
@@ -174,8 +177,13 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					setTopicListData(profileLibraryDoList.get(i), unitListId,libraryGooruOid);
 				} else {
 					folderTopicTitleLbl.setText(profileLibraryDoList.get(i).getTitle());
-					listAllBtn.addClickHandler(new ListAllBtnClickHandler(profileLibraryDoList.get(i).getGooruOid()));
-					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(), unitListId, profileLibraryDoList.get(i),libraryGooruOid);
+					String parent = profileLibraryDoList.get(i).getParentGooruOid();
+					if(handlerRegistration!=null){
+						handlerRegistration.removeHandler();
+					}
+					handlerRegistration = listAllBtn.addClickHandler(new ListAllBtnClickHandler(profileLibraryDoList.get(i).getGooruOid(),parent));
+					
+					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(), unitListId, profileLibraryDoList.get(i),libraryGooruOid,parent);
 				}
 			}
 		}
@@ -205,10 +213,13 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						setTopicListData(profileLibraryDoList.get(widgetCountTemp),  unitListId,libraryUnitMenuView.getLibraryGooruOid());
 					} else {
 						folderTopicTitleLbl.setText(libraryUnitMenuView.getTitle());
-						listAllBtn.addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getLibraryGooruOid()));
+						if(handlerRegistration!=null){
+							handlerRegistration.removeHandler();
+						}
+						handlerRegistration=listAllBtn.addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getLibraryGooruOid(), parentId));
 						if(widgetCountTemp==0) {
 							totalCollectionCount=profileLibraryDoList.get(widgetCountTemp).getItemCount();
-							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp),libraryUnitMenuView.getLibraryGooruOid());
+							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp),libraryUnitMenuView.getLibraryGooruOid(),parentId);
 						} else {
 							getUnitTopics(unitListId, profileLibraryDoList.get(widgetCountTemp),libraryUnitMenuView.getLibraryGooruOid());
 							ProfileLibraryDoObj= profileLibraryDoList.get(widgetCountTemp);
@@ -232,7 +243,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				totalCollectionCount = profileLibraryListDo.getCount();
-				setTopicListData(profileLibraryListDo.getSearchResult(), unitListId, profileLibraryDo,libraryGooruOid);
+				setTopicListData(profileLibraryListDo.getSearchResult(), unitListId, profileLibraryDo,libraryGooruOid,"");
 			}
 		});
 	}
@@ -249,7 +260,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		}
 	}
 
-	public void setTopicListData(ArrayList<ProfileLibraryDo> folderListDo, String folderId, ProfileLibraryDo profileLibraryDo,String libraryGooruOid) {
+	public void setTopicListData(ArrayList<ProfileLibraryDo> folderListDo, String folderId, ProfileLibraryDo profileLibraryDo,String libraryGooruOid, String parentId) {
 		contentScroll.clear();
 		try {
 			int count = 0;
@@ -345,6 +356,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		} else {
 			partnerLogo.setVisible(false);
 		}
+		folderListPanel.setVisible(false);
 		contributorsContainer.setVisible(false);
 		courseBanner.setVisible(false);
 		featuredEducator.setVisible(false);
@@ -388,15 +400,17 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	 *
 	 */
 	public class ListAllBtnClickHandler implements ClickHandler{
-		String folderId="";
-		public ListAllBtnClickHandler(String folderId){
+		String folderId="",parentId="";
+		public ListAllBtnClickHandler(String folderId, String parentId){
 			this.folderId=folderId;
+			this.parentId=parentId;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", folderId);
-			params.put("libName", AppClientFactory.getCurrentPlaceToken());
+			params.put("libName", getPlaceToken());
+			params.put("parentId",parentId);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 		}
 		
