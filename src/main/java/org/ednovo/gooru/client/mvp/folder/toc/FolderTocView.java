@@ -191,8 +191,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					}
 					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
 				}
-				//AppClientFactory.getPlaceManager().revealPlace(true,placeRequest);
-				//History.back();
 			}
 		});
 	}
@@ -254,14 +252,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param foldersTocObj
 	 */
 	void setFolderMetaData(FolderTocDo  foldersTocObj){
-			String paramerersString="";
-			Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
-			if(parameters.size()>0){
-				for (String paramString : parameters) {
-					paramerersString=paramerersString+paramString+"="+AppClientFactory.getPlaceManager().getPreviousRequest().getParameter(paramString, null)+"&";
-				}
-			}
+			//This is used for handling folder toc back button code
 			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null){
+				String paramerersString="";
+				Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
+				if(parameters.size()>0){
+					for (String paramString : parameters) {
+						paramerersString=paramerersString+paramString+"="+AppClientFactory.getPlaceManager().getPreviousRequest().getParameter(paramString, null)+"&";
+					}
+				}
 				Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
 			}
 		if(foldersTocObj!=null){
