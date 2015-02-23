@@ -787,6 +787,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					
 
 				}
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null){
+					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+				
+
+				}
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null){
+					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
+				
+
+				}
 		/*		params.put("view", "end");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/

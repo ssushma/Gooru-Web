@@ -1761,6 +1761,10 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
 		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
 		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
+		
+		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId",null);
+		String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId",null);
+		
 		if(classpageItemId!=null){
 			params.put("cid", classpageItemId);
 		}
@@ -1785,6 +1789,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(eventId!=null) {
 			params.put("eventid", eventId);
 		}
+		if(folderId!=null) {
+			params.put("folderId", folderId);
+		}
+		if(folderItemId!=null) {
+			params.put("folderItemId", folderItemId);
+		}
 		return params;
 	}
 
@@ -1793,6 +1803,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String classpageItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 		String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject", null);
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
+		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId", null);
+		String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId", null);
 		String library = AppClientFactory.getPlaceManager().getRequestParameter("library", null);
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
@@ -1809,6 +1821,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}
 		if(lessonId!=null) {
 			anchorLink += "&lessonId="+lessonId;
+		}
+		if(folderId!=null) {
+			anchorLink += "&folderId="+folderId;
+		}
+		if(folderItemId!=null) {
+			anchorLink += "&folderItemId="+folderItemId;
 		}
 		if(library!=null) {
 			anchorLink += "&library="+library;

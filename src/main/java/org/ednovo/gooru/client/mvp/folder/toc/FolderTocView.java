@@ -242,7 +242,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
-						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo));
+						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -391,15 +391,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 
 	@Override
-	public void setFolderItems(TreeItem item,FolderTocDo foldersTocObj) {
-		displayWorkspaceData(item, foldersTocObj);
+	public void setFolderItems(TreeItem item,FolderTocDo foldersTocObj,String parentId) {
+		displayWorkspaceData(item, foldersTocObj,parentId);
 	}
 	/**
 	 * This method is used to set folders and collections for selected tree item.
 	 * @param item
 	 * @param folderListDo
 	 */
-	private void displayWorkspaceData(TreeItem item,FolderTocDo foldersTocObj) {
+	private void displayWorkspaceData(TreeItem item,FolderTocDo foldersTocObj,String parentId) {
 		//This will remove the loading text for the child items.
 		if(item.getChildCount() > 0){
 			item.getChild(0).remove();
@@ -425,7 +425,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								adjustTreeItemStyle(folderItem);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	String styleName = getTreeItemStyleName(folderLevel);
-							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
+							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
 							 	folderItem.addStyleName(styleName);
 							 	item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
