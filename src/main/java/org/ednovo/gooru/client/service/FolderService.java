@@ -146,4 +146,6 @@ public interface FolderService extends BaseService {
 	 * @throws ServerDownException
 	 */
 	public FolderTocDo getTocFolders(String folderId) throws GwtException, ServerDownException;
+
+	FolderDo getFolderMetaData(String folderId) throws GwtException,ServerDownException;
 }
