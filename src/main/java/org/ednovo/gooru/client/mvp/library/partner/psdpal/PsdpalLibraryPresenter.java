@@ -86,10 +86,13 @@ public class PsdpalLibraryPresenter extends BasePlacePresenter<IsPsdpalView, Psd
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Entered into PSD start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
+			AppClientFactory.printInfoLogger(" PSD End time -- "+(System.currentTimeMillis() - startTime));
 			
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {

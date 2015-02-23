@@ -95,10 +95,13 @@ public class WspwhLibraryPresenter extends BasePlacePresenter<IsWspwhLibraryView
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Entered into WSPH start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
+			AppClientFactory.printInfoLogger("WSPH end time -- "+(System.currentTimeMillis() - startTime));
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 		    //To show SignUp (Registration popup)

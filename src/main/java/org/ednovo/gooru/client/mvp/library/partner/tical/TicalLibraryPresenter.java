@@ -77,10 +77,13 @@ public class TicalLibraryPresenter extends BasePlacePresenter<IsTicalLibraryView
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Entered into TICAL start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
+			AppClientFactory.printInfoLogger("TICAL sEndtart time -- "+(System.currentTimeMillis() - startTime));
 			
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {

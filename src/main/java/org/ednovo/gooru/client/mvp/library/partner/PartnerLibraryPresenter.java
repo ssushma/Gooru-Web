@@ -61,10 +61,14 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 
 	@Override
 	public void getPartnerWorkspaceFolders() {
+		final long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("API Hit start --- "+AppClientFactory.getCurrentPlaceToken()+" ------ "+startTime); 
 		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, null, AppClientFactory.getCurrentPlaceToken(), new SimpleAsyncCallback<PartnerFolderListDo>(){
-			
+			 
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
+				AppClientFactory.printInfoLogger(" API Totaltime consumed on success @ client --- "+(System.currentTimeMillis()-startTime));
+				AppClientFactory.printInfoLogger(" ---- Ui Rendering --- ");
 				getView().setUnitList(result.getSearchResult());
 			}
 		});
@@ -72,10 +76,15 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	
 	@Override
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber,final String libraryGooruOid) {
+		final long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Lib unit API call start --- "+AppClientFactory.getCurrentPlaceToken()+" ---- "+startTime);
 		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
+				AppClientFactory.printInfoLogger("Lib unit API call consumed on success @ client --- "+(System.currentTimeMillis() - startTime));
+				AppClientFactory.printInfoLogger(" ---- Ui Rendering --- ");
 				getView().setTopicListData(result.getSearchResult(), folderId,libraryGooruOid);
+				
 			}
 		});
 	}

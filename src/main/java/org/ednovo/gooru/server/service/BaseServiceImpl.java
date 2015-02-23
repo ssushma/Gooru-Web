@@ -28,9 +28,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.text.ParseException;
-
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
@@ -267,7 +265,13 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return form;
 	}
 
+
+	
 	protected void setUserFilterProperties(UserDo user) {
+		user.setSettings(getFilterProperties());
+	}
+	
+	protected FilterSettings getFilterProperties() {
 		FilterSettings filterProperties = new FilterSettings();
 		filterProperties.setRestEndPoint(getRestEndPoint());
 		filterProperties.setHomeEndPoint(getHomeEndPoint());
@@ -287,7 +291,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		filterProperties.setTaxonomyPreferences(getTaxonomyPreferences());
 		filterProperties.setAnalyticsEndPoint(getAnalyticsEndPoint());
 		filterProperties.setCommunityLibraryGooruOid(getCommunityLibaryGooruOid());
-		user.setSettings(filterProperties);
+		return filterProperties;
 	}
 
 	public String getDomainName() {
@@ -560,7 +564,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		try {
 			V2UserDo v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 			user = v2UserDo.getUser();
-			user.setToken(v2UserDo.getToken());
+			setUserFilterProperties(user);
+			getLogger().info("v2GuestSignInForEmbed::"+v2UserDo.getUser().getToken());
+			getLogger().info("v2GuestSignInForEmbedtoken::"+v2UserDo.getToken());
+			user.setToken(v2UserDo.getUser().getToken());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -586,6 +593,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 					userDo.setBeforeProductionSwitch(true);
 				}
 //			}
+				userDo.setToken(token);
 			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);

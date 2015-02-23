@@ -63,10 +63,13 @@ public class EsypLibraryPresenter extends BasePlacePresenter<IsEsypLibraryView, 
 	@Override
 	public void prepareFromRequest(PlaceRequest request){
 		super.prepareFromRequest(request);
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Entered into ESYP start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
+			AppClientFactory.printInfoLogger(" ESYP ENd time -- "+(System.currentTimeMillis() - startTime));
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
