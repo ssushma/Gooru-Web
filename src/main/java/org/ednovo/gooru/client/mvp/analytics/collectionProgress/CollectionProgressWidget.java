@@ -340,10 +340,6 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		});
         table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
         htmlpnlProgress.add(table);	
-        if(table.getElement().hasChildNodes() &&  table.getElement().getFirstChildElement().hasAttribute("style")){
-        	 table.getElement().getFirstChildElement().removeAttribute("style");
-        }
-       
         getLoadingImage().setVisible(false);
 	}
 	
