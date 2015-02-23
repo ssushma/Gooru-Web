@@ -288,11 +288,11 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	public void setAnswerIds(List<Integer> answerId){
 		for(int i=0;i<answerId.size();i++){
 			if(isCollectionPlayer){
-				collectionPlayerPresenter.getAnswerIdsObject().put(answerId.get(i).toString(), new JSONNumber(getUnixTimeStamp()));
+				collectionPlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
 			}else if(isResourcePlayer){
-				resourcePlayerPresenter.getAnswerIdsObject().put(answerId.get(i).toString(), new JSONNumber(getUnixTimeStamp()));
+				resourcePlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
 			}else if(isPreviewPlayer){
-				previewPlayerPresenter.getAnswerIdsObject().put(answerId.get(i).toString(), new JSONNumber(getUnixTimeStamp()));
+				previewPlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
 			}		
 		}
 		
@@ -356,9 +356,9 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 			for(int i=0;i<answerOptionAttemptList.size();i++){
 				AnswerAttemptDo answerAttemptDo=answerOptionAttemptList.get(i);
 				JSONObject attemptAnswerJsonObject=new JSONObject();
-				attemptAnswerJsonObject.put(PlayerDataLogEvents.TEXT, new JSONString(answerAttemptDo.getText().toString()));
-				attemptAnswerJsonObject.put(PlayerDataLogEvents.STATUS, new JSONString(answerAttemptDo.getStatus().toString()));
-				attemptAnswerJsonObject.put(PlayerDataLogEvents.ORDER, new JSONString(answerAttemptDo.getOrder().toString()));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.TEXT, new JSONString(StringUtil.toString(answerAttemptDo.getText())));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.STATUS, new JSONString(StringUtil.toString(answerAttemptDo.getStatus())));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.ORDER, new JSONString(StringUtil.toString(answerAttemptDo.getOrder())));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.ANSWERID, new JSONNumber(answerAttemptDo.getAnswerId()));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.TIMESTAMP, new JSONNumber(timeStamp));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.SKIP, JSONBoolean.getInstance(answerAttemptDo.isSkip()));
