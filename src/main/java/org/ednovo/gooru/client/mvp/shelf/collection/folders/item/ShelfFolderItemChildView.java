@@ -281,7 +281,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
-					folderDo=result;
+					folderDo.setTitle(result.getTitle());
+					folderDo.setUrl(result.getUrl());
 					itemTitle.setText(folderDo.getTitle());
 					editAssessmentPopup.hide();
 				}
