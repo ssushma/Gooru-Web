@@ -29,8 +29,7 @@ package org.ednovo.gooru.client.gin;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.shared.model.user.FilterSettings;
+
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserRoleDo.UserRoleType;
 import org.ednovo.gooru.shared.util.ClientConstants;
@@ -184,14 +183,6 @@ public class AppClientFactory implements ClientConstants {
 	public static void setLoggedInUser(UserDo loggedInUser) {
 		if (loggedInUser != null) {
 			getClientFactory().loggedInUser = loggedInUser;
-			AppClientFactory.getInjector().getUserService().setUserProperties(loggedInUser, new SimpleAsyncCallback<FilterSettings>() {
-
-				@Override
-				public void onSuccess(FilterSettings result) {
-				getClientFactory().loggedInUser.setSettings(result);
-				getClientFactory().loggedInUser.setToken(getLoginSessionToken());
-				}
-				});
 		}
 	}
 	/**
