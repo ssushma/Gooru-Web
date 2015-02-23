@@ -590,9 +590,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
 		final String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId");
 		
-		System.out.println("folderId::::"+folderId);
-		System.out.println("folderItemId::::"+folderItemId);
-		
 		if(folderId!=null && folderItemId!=null) {			
 			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
 				@Override

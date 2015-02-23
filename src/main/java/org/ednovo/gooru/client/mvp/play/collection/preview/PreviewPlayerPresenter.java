@@ -1761,6 +1761,10 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
 		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
 		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
+		
+		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId",null);
+		String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId",null);
+		
 		if(classpageItemId!=null){
 			params.put("cid", classpageItemId);
 		}
@@ -1784,6 +1788,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}
 		if(eventId!=null) {
 			params.put("eventid", eventId);
+		}
+		if(folderId!=null) {
+			params.put("folderId", folderId);
+		}
+		if(folderItemId!=null) {
+			params.put("folderItemId", folderItemId);
 		}
 		return params;
 	}
