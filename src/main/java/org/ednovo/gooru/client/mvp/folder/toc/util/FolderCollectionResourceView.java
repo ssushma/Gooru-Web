@@ -194,7 +194,6 @@ public class FolderCollectionResourceView extends Composite {
 					PlaceTokens.COLLECTION_PLAY, params);
 
 		}
-
 	}
 
 	/**

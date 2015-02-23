@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -58,18 +59,19 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * @fileName : FolderTocView.java
  *
@@ -99,10 +101,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField H2Panel bannerTitle;
 	@UiField Image logoImage;
 	
+	@UiField Hidden myHiddenField;
 	
 	final String FOLDER="folder";
 	final String SCOLLECTION="scollection";
-	
+	PlaceRequest placeRequest =null;
 	private Map<String, List<String>> bannerVal= new HashMap<String, List<String>>();
 	ArrayList<String> arrylist=new ArrayList<String>();
 	
@@ -120,13 +123,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private FolderTreeItem previousFolderSelectedTreeItem = null;
 	
 	public FolderTocView() {
+		
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 		setData();
 		setBannerStaticImages();
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
-		
 	}
 	
 	/**
@@ -176,7 +179,24 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		btnBackToPrevious.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				History.back();
+				System.out.println(myHiddenField.getValue());
+				String lastAccessedUrl=myHiddenField.getValue();
+				String[] placeToken=lastAccessedUrl.split("#");
+				String[] entries = placeToken[1].split("&");
+				System.out.println("entries::"+entries);
+				Map<String, String> params = new HashMap<String, String>();
+				if(placeToken.length>0){
+					for (String entry : entries) {
+							String[] keyValue = entry.split("=");
+							System.out.println("keyValue[0]::"+keyValue[0]);
+							System.out.println("keyValue[1]::"+keyValue[1]);
+						  params.put(keyValue[0],keyValue[1]);
+					}
+					System.out.println();
+					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
+				}
+				//AppClientFactory.getPlaceManager().revealPlace(true,placeRequest);
+				//History.back();
 			}
 		});
 	}
@@ -184,7 +204,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * To set the Banner images into Map 
 	 */
 	private void setBannerStaticImages() {
-		// TODO Auto-generated method stub
 		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px;",i18n.GL0532(),Constants.RUSD_LOGO));
 		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png);",i18n.GL2108(),Constants.CORE_LOGO));
 		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-lps.png);",i18n.GL2053(), Constants.LPS_LOGO));
@@ -239,6 +258,22 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param foldersTocObj
 	 */
 	void setFolderMetaData(FolderTocDo  foldersTocObj){
+		System.out.println("placeRequest:"+  AppClientFactory.getPlaceManager().getPreviousRequest());
+		System.out.println("placeRequest:"+  AppClientFactory.getPlaceManager().getCurrentPlaceRequest());
+		if(AppClientFactory.getPlaceManager().getPreviousRequest().equals(AppClientFactory.getPlaceManager().getCurrentPlaceRequest())){
+			System.out.println("true");
+		}else{
+			System.out.println("false");
+			String paramerersString="";
+			Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
+			if(parameters.size()>0){
+				for (String paramString : parameters) {
+					paramerersString=paramerersString+paramString+"="+AppClientFactory.getPlaceManager().getPreviousRequest().getParameter(paramString, null)+"&";
+				}
+			}
+			System.out.println("paramerersString:"+ paramerersString);
+			myHiddenField.setValue(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
+		}
 		if(foldersTocObj!=null){
 			lblBigIdeas.setText(foldersTocObj.getIdeas()!=null?foldersTocObj.getIdeas():"");
 			lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
