@@ -131,7 +131,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 								}else{
 									lblExistingAssessmentURLError.setVisible(false);
 									lblExistingAssessmentURLError.setText("");
-									//Write the update code and API call here
+									//Update code here
 									AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL, new AsyncCallback<FolderDo>() {
 										
 										@Override
