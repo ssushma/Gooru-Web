@@ -57,6 +57,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
@@ -179,20 +180,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		btnBackToPrevious.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println(myHiddenField.getValue());
-				String lastAccessedUrl=myHiddenField.getValue();
+				String lastAccessedUrl=Cookies.getCookie("backToToc")!=null?Cookies.getCookie("backToToc"):"";
 				String[] placeToken=lastAccessedUrl.split("#");
 				String[] entries = placeToken[1].split("&");
-				System.out.println("entries::"+entries);
 				Map<String, String> params = new HashMap<String, String>();
 				if(placeToken.length>0){
 					for (String entry : entries) {
 							String[] keyValue = entry.split("=");
-							System.out.println("keyValue[0]::"+keyValue[0]);
-							System.out.println("keyValue[1]::"+keyValue[1]);
-						  params.put(keyValue[0],keyValue[1]);
+							params.put(keyValue[0],keyValue[1]);
 					}
-					System.out.println();
 					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
 				}
 				//AppClientFactory.getPlaceManager().revealPlace(true,placeRequest);
@@ -258,12 +254,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param foldersTocObj
 	 */
 	void setFolderMetaData(FolderTocDo  foldersTocObj){
-		System.out.println("placeRequest:"+  AppClientFactory.getPlaceManager().getPreviousRequest());
-		System.out.println("placeRequest:"+  AppClientFactory.getPlaceManager().getCurrentPlaceRequest());
-		if(AppClientFactory.getPlaceManager().getPreviousRequest().equals(AppClientFactory.getPlaceManager().getCurrentPlaceRequest())){
-			System.out.println("true");
-		}else{
-			System.out.println("false");
 			String paramerersString="";
 			Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
 			if(parameters.size()>0){
@@ -271,9 +261,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					paramerersString=paramerersString+paramString+"="+AppClientFactory.getPlaceManager().getPreviousRequest().getParameter(paramString, null)+"&";
 				}
 			}
-			System.out.println("paramerersString:"+ paramerersString);
-			myHiddenField.setValue(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
-		}
+			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null){
+				Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
+			}
 		if(foldersTocObj!=null){
 			lblBigIdeas.setText(foldersTocObj.getIdeas()!=null?foldersTocObj.getIdeas():"");
 			lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
@@ -281,7 +271,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks()!=null?foldersTocObj.getPerformanceTasks():"");
 		}
 	}
-
 	/**
 	 * @function adjustTreeItemStyle 
 	 * 
