@@ -37,7 +37,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -85,7 +84,6 @@ public class FolderCollectionView extends Composite {
 			 pnlResources.add(new FolderCollectionResourceView(folderDo));
 		 }
 		 lblCollectionTitle.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				if(ASSESSMENTURL.equalsIgnoreCase(folderDo.getCollectionType())){
