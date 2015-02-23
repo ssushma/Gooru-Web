@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -57,20 +58,22 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * @fileName : FolderTocView.java
  *
@@ -100,12 +103,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField H2Panel bannerTitle;
 	@UiField Image logoImage,bannerImage;
 	
+	@UiField Hidden myHiddenField;
 	
 	final String FOLDER="folder";
 	final String SCOLLECTION="scollection";
 	
 	private Map<String, List<String>> bannerVal;
-	
+	PlaceRequest placeRequest =null;
+		
 	private Tree folderTocTree = new Tree(new TreeMenuImages()) {
 		@Override
 		public void onBrowserEvent(Event event) {
@@ -120,6 +125,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private FolderTreeItem previousFolderSelectedTreeItem = null;
 	
 	public FolderTocView() {
+		
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 		setData();
@@ -127,7 +133,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
 		setBannerStaticImages();
-		
 	}
 	
 	/**
@@ -177,7 +182,17 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		btnBackToPrevious.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				History.back();
+				String lastAccessedUrl=Cookies.getCookie("backToToc")!=null?Cookies.getCookie("backToToc"):"";
+				String[] placeToken=lastAccessedUrl.split("#");
+				String[] entries = placeToken[1].split("&");
+				Map<String, String> params = new HashMap<String, String>();
+				if(placeToken.length>0){
+					for (String entry : entries) {
+							String[] keyValue = entry.split("=");
+							params.put(keyValue[0],keyValue[1]);
+					}
+					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
+				}
 			}
 		});
 	}
@@ -242,6 +257,17 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param foldersTocObj
 	 */
 	void setFolderMetaData(FolderTocDo  foldersTocObj){
+			//This is used for handling folder toc back button code
+			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null){
+				String paramerersString="";
+				Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
+				if(parameters.size()>0){
+					for (String paramString : parameters) {
+						paramerersString=paramerersString+paramString+"="+AppClientFactory.getPlaceManager().getPreviousRequest().getParameter(paramString, null)+"&";
+					}
+				}
+				Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
+			}
 		if(foldersTocObj!=null){
 			lblBigIdeas.setText(foldersTocObj.getIdeas()!=null?foldersTocObj.getIdeas():"");
 			lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
@@ -249,7 +275,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks()!=null?foldersTocObj.getPerformanceTasks():"");
 		}
 	}
-
 	/**
 	 * @function adjustTreeItemStyle 
 	 * 

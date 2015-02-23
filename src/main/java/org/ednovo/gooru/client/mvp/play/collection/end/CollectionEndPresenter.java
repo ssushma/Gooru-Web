@@ -51,6 +51,7 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
@@ -583,5 +584,21 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			}
 		});
 		
+	}
+	
+	public void getNextCollectionItem() {
+		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+		final String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId");
+		
+		if(folderId!=null && folderItemId!=null) {			
+			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
+				@Override
+				public void onSuccess(FolderWhatsNextCollectionDo result) {
+					getView().displayWhatsNextContent(result);
+				}
+			});
+		} else {
+			getView().hideNextCollectionContainer(true);
+		}
 	}
 }

@@ -39,6 +39,7 @@ import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
@@ -188,5 +189,7 @@ public interface PlayerAppService extends BaseService {
 	public Map<String,String> getYoutubeFeedCallback(String utubeId) throws GwtException, ServerDownException;
 	
 	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId) throws GwtException, ServerDownException;
+	
+	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId) throws GwtException, ServerDownException;
 	
 }

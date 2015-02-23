@@ -386,7 +386,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 	}
 
 	private void getFolderData(final String moveType) {
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace((getPageNumber()-1)*20, 20,null, FOLDER, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace((getPageNumber()-1)*20, 20,null, FOLDER,false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
 				setData(result.getSearchResult(), moveType);
@@ -454,7 +454,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 		if(collectionOpenedStatus) {
 			setChildFolderItems(null, 0, false);
 		} else {
-			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, collectionOid,null, FOLDER, new SimpleAsyncCallback<FolderListDo>() {
+			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, collectionOid,null, FOLDER,false, new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					setChildFolderItems(result.getSearchResult(), folderNavigation, isRefresh);

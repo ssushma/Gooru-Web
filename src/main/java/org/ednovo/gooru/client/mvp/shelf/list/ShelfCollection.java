@@ -596,7 +596,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     	        		});
     	        		
     	        		/** Previously used API Call **/
-    	        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+    	        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
 		    				@Override
 		    				public void onSuccess(FolderListDo result) { 
 		    					setAllResources(result.getSearchResult());
@@ -695,7 +695,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
         		
         		
         		/** Previously used API call **/
-        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(collectionDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(collectionDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
     				@Override
     				public void onSuccess(FolderListDo result) { 
     	                if (result.getCount()<25){
@@ -787,7 +787,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     		});
 			
 			/**Previously used API call **/
-			/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+			/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					if(result.getSearchResult().size()==0){

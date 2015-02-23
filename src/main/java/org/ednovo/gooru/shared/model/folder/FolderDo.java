@@ -54,7 +54,7 @@ public class FolderDo implements Serializable{
 	private String questions;
 	private String collectionItemId;
 	private String description;
-	
+	private String url;
 
 	public FolderDo(){}
 	
@@ -243,4 +243,13 @@ public class FolderDo implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 }

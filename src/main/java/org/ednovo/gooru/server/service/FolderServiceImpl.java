@@ -253,7 +253,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public FolderListDo getChildFolders(int offset, int limit, String parentId,String sharingType, String collectionType) throws GwtException {
+	public FolderListDo getChildFolders(int offset, int limit, String parentId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		String sessionToken=getLoggedInSessionToken();
@@ -264,6 +264,10 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset+"", limit+"");
+		if(isExcludeAssessment){
+			url=url+"&excludeType=assessment/url";
+		}
+		logger.info("getChildFolders folder service : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);

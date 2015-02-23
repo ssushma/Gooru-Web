@@ -59,6 +59,7 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
@@ -1672,6 +1673,22 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			}
 		}else{
 			hideNextCollectionContainer(true);
+		}
+		
+		getUiHandlers().getNextCollectionItem();
+	}
+	
+	public void displayWhatsNextContent(FolderWhatsNextCollectionDo folderCollectionWhatsNext)
+	{
+		if(folderCollectionWhatsNext.getTitle()!=null)
+		{
+			whatNextCollectionTitle.setText(collectionDo.getTitle().toString().length()>10?collectionDo.getTitle().substring(0,10)+"...":collectionDo.getTitle());
+			whatNextCollectionTitle.setTitle(collectionDo.getTitle());
+			nextCollectionThumbnail.setUrl(collectionDo.getThumbnails().getUrl());	
+		}
+		else
+		{
+		hideNextCollectionContainer(true);	
 		}
 	}
 	

@@ -623,7 +623,7 @@ public enum UrlToken {
 	
 	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
 	
-V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
+	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	
 	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?sessionToken={1}&data={2}"),
 	
@@ -653,7 +653,9 @@ V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	
 	V2_FOLDER_META_DATA("/v2/folder/{0}?sessionToken={1}"),
 	
-	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}");
+	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
+
+	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink");
 	
 
 	private String url;

@@ -110,6 +110,20 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		}
 	
 		//getView().setBannerImages();
+		/*//Checking whether the user is logged in user or not
+        if(AppClientFactory.isAnonymous()){
+        	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+        }else{
+        	String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+    		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
+    			@Override
+    			public void onSuccess(FolderTocDo folderListDo) {
+    				getView().clearTocData();
+    				getView().setFolderItems(folderListDo);
+    			}
+    		});
+    		getView().setBannerImages();
+        }*/
 	}
 	
 	@Override

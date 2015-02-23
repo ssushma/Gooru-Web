@@ -97,7 +97,7 @@ public interface FolderService extends BaseService {
 	 * @return serialized created {@link List<CollectionDo>}
 	 * @throws GwtException
 	 */
-	public FolderListDo getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType) throws GwtException, ServerDownException;
+	public FolderListDo getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException, ServerDownException;
 	
 	/**
 	 * Create Folder - generic method for first, second and third levels.

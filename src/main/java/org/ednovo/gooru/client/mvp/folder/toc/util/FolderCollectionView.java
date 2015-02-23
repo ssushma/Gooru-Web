@@ -37,7 +37,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -85,18 +84,10 @@ public class FolderCollectionView extends Composite {
 			 pnlResources.add(new FolderCollectionResourceView(folderDo));
 		 }
 		 lblCollectionTitle.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				if(ASSESSMENTURL.equalsIgnoreCase(folderDo.getCollectionType())){
-					AppClientFactory.getInjector().getResourceService().getAssessmentUrl(folderDo.getGooruOid(), new AsyncCallback<String>() {
-						@Override
-						public void onSuccess(String result) {
-							Window.open(result, "", "");
-						}
-						@Override
-						public void onFailure(Throwable caught) {}
-					});
+					Window.open(folderDo.getUrl(), "", "");
 				}else{
 					HashMap<String,String> params = new HashMap<String,String>();
 					params.put("id", folderDo.getGooruOid());

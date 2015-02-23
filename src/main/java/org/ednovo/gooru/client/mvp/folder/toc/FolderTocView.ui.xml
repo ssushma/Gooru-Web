@@ -7,6 +7,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<ui:style field="tocStyle1" src="folderStyleToc.css" />
 	<g:HTMLPanel>
+	 	<g:Hidden ui:field="myHiddenField"/>
 		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row">

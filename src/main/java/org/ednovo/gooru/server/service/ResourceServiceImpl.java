@@ -69,6 +69,7 @@ import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.drive.ErrorDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
@@ -1298,7 +1299,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType) throws GwtException {
+	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException {
 		String offsetSize =Integer.toString(offset);
 		String limitSize = Integer.toString(limit);
 		if(sharingType!=null){
@@ -1310,6 +1311,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_WORKSPACE_FOLDER_LIST, getLoggedInSessionToken(), offsetSize, limitSize);
+		if(isExcludeAssessment){
+			url=url+"&excludeType=assessment/url";
+		}
 		getLogger().info("---- getFolderWorkspace ---  "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1880,20 +1884,28 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public String getAssessmentUrl(String collectionId) {
-		String assessmentUrl="";
+	public FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl) {
+		FolderDo folderDo=null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION,collectionId, getLoggedInSessionToken());
-		logger.info("assessment Details API=>"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		JSONObject jsonObject = null;
-		if(jsonRep!=null){
-			try {
-				jsonObject = jsonRep.getJsonObject();
-				assessmentUrl=jsonObject.isNull("url")?"":jsonObject.getString("url");
-			}catch(Exception e){}
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION,assessmentId, getLoggedInSessionToken());
+		logger.info("assessment update API=>"+url);
+		JSONObject assessmentMainObject=new JSONObject();
+		JSONObject assessmentJsonObject=new JSONObject();
+		try{
+			assessmentJsonObject.put("title",title);
+			assessmentJsonObject.put("url",assessmentUrl);
+			
+			assessmentMainObject.put("collection",assessmentJsonObject);
+			logger.info("data for update API=>"+assessmentMainObject.toString());
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),assessmentMainObject.toString());
+			
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			if(jsonRep!=null){
+					return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), FolderDo.class);
+			}
+		}catch(Exception e){
+			
 		}
-		return assessmentUrl;
+		return new FolderDo();
 	}
 }
