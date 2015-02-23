@@ -1793,6 +1793,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String classpageItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
 		String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject", null);
 		String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", null);
+		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId", null);
+		String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId", null);
 		String library = AppClientFactory.getPlaceManager().getRequestParameter("library", null);
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
@@ -1809,6 +1811,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}
 		if(lessonId!=null) {
 			anchorLink += "&lessonId="+lessonId;
+		}
+		if(folderId!=null) {
+			anchorLink += "&folderId="+folderId;
+		}
+		if(folderItemId!=null) {
+			anchorLink += "&folderItemId="+folderItemId;
 		}
 		if(library!=null) {
 			anchorLink += "&library="+library;

@@ -249,6 +249,10 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
+					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
+					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("view")!=null)
 					params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
 				params.put("assign", "yes");
