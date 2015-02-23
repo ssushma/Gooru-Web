@@ -174,16 +174,13 @@ public class FolderCollectionResourceView extends Composite {
 			resourceLink = "#" + PlaceTokens.COLLECTION_PLAY + "&id="
 					+ collectionId + "&rid="
 					+ folderItemDo.getCollectionItemId();
-			System.out.println("resourceLink::" + resourceLink);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", collectionId);
 			params.put("rid", folderItemDo.getCollectionItemId());
-
 			AppClientFactory.getPlaceManager().revealPlace(
 					PlaceTokens.COLLECTION_PLAY, params);
 
 		}
-
 	}
 
 	/**
