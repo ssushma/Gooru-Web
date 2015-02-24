@@ -199,5 +199,15 @@ public interface ClientConstants {
 	String POSTING = "Posting..";
 	String SUBMIT ="Submit";
 	String NOTLODING ="not-loading";
+	String FIB_SEPARATOR = "_______";
+	
+	
+	
+	/*************** Library End **************************************************/
+	
+	String FOLDER = "folder";
+	
+	/*************** Library End **************************************************/
+	
 	
 }

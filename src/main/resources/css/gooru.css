@@ -2431,3 +2431,7 @@ fieldset {
 .errorBorderMessage{
 	border: 1px solid orange !important;
 }
+.google-visualization-table{
+   width:auto !important;
+}
+ 
