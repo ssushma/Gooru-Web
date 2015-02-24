@@ -217,7 +217,26 @@ public interface ClientConstants {
 	String U_EXAM = "Exam";
 	String U_VIDEO = "Video";
 	String U_INTERACTIVE ="Interactive";
+	String DEFULT_IMAGE_PREFIX = "images/default-";
+	String PNG = ".png";
+	String SMALL = "Small";
+	String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
+	String PAGE = "page";
+	String COURSE_PAGE = "course-page";
+	String STANDARD_CODE = "code";
+	String STANDARD_DESCRIPTION = "description";
+	String PNG_CROP = "-80x60.";
+	String CUSTOMIZE = "customize";
+	String ASSIGN = "assign";
+	String COLLECTION_TITLE = "collectionTitle";
+	String SUBJECT_NAME = "subject";
+	String STANDARDS="standard";
+	String SHARING_TYPE = "public";
+	String STANDARD_ID = "standardId";
+	String PARTNER = "partner";
+	String CONCEPT = "concept";
 	
+
 	
 	
 	/*************** Library End **************************************************/

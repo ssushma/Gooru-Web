@@ -460,7 +460,6 @@ public class StringUtil implements ClientConstants {
 	 * @return
 	 */
 	public static String getEquivalentCategory(String type){
-		System.out.println("--- return -- "+categoryMap.get(type));
 		return categoryMap.get(type)==null?type:categoryMap.get(type);
 	}
 
