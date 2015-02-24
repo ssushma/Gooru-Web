@@ -182,7 +182,7 @@ public class ProfileTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
+	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, String placeToken,String libraryGooruOid,int topicNumber,String parentId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		this.libraryGooruOid=libraryGooruOid;
@@ -259,7 +259,7 @@ public class ProfileTopicListView extends Composite{
 		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -37px 9px 0 0;");
 		viewAllBtn.getElement().setId("btnViewAll");
 		viewAllBtn.setVisible(true);
-		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid()));
+		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid(),parentId));
 
 	}
 	public void setId(){
@@ -1290,13 +1290,21 @@ public class ProfileTopicListView extends Composite{
 	}
 	private class ViewAllBtnClickHandler implements ClickHandler{
 		String folderId="";
-		public ViewAllBtnClickHandler(String folderId){
+		String parentId="";
+		public ViewAllBtnClickHandler(String folderId, String parentId){
 			this.folderId=folderId;
+			this.parentId=parentId;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", folderId);
+			if(!parentId.equals("")){
+				params.put("parentId", parentId);
+			}
+			if(getPlaceToken()!=PlaceTokens.PROFILE_PAGE){
+				params.put("libName", getPlaceToken());
+			}
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 		}
 		

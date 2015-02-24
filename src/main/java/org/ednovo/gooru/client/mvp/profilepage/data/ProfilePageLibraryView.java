@@ -220,7 +220,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					if(folderListDo.get(i).getType().equals("scollection")) {
 						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection",null));
 					} else {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),null));
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), AppClientFactory.getCurrentPlaceToken(),null,count,""));
 					}
 				}
 			} else {
