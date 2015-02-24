@@ -235,6 +235,7 @@ public interface ClientConstants {
 	String STANDARD_ID = "standardId";
 	String PARTNER = "partner";
 	String CONCEPT = "concept";
+	String POPULAR = "Popular";
 	
 
 	
