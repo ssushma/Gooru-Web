@@ -68,6 +68,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			CALLBACK = "callback", ACTIVE_STYLE = "active",LIBRARY_PAGE = "page";
 
 	private String unitListId = "";
+	
+	private String parentId = "";
 
 	private final static String COURSE_DEFAULT_IMG = "../images/library/course-1000x300.png";
 
@@ -161,7 +163,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		if(profileLibraryDoList.get(0).getItemCount()>20){
 			totalCollectionCount = profileLibraryDoList.get(0).getItemCount();
 		}
-		final String parentId=profileLibraryDoList.get(0).getParentGooruOid();
+		//final String parentId=profileLibraryDoList.get(0).getParentGooruOid();
 		int firstWidgetCount = leftNav.getWidgetCount();
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(profileLibraryDoList.get(i),libraryGooruOid);
@@ -177,13 +179,13 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					setTopicListData(profileLibraryDoList.get(i), unitListId,libraryGooruOid);
 				} else {
 					folderTopicTitleLbl.setText(profileLibraryDoList.get(i).getTitle());
-					String parent = profileLibraryDoList.get(i).getParentGooruOid();
+				    parentId = profileLibraryDoList.get(i).getParentGooruOid();
 					if(handlerRegistration!=null){
 						handlerRegistration.removeHandler();
 					}
-					handlerRegistration = listAllBtn.addClickHandler(new ListAllBtnClickHandler(profileLibraryDoList.get(i).getGooruOid(),parent));
+					handlerRegistration = listAllBtn.addClickHandler(new ListAllBtnClickHandler(profileLibraryDoList.get(i).getGooruOid(),parentId));
 					
-					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(), unitListId, profileLibraryDoList.get(i),libraryGooruOid,parent);
+					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(), unitListId, profileLibraryDoList.get(i),libraryGooruOid,parentId);
 				}
 			}
 		}
@@ -272,7 +274,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					if(folderListDo.get(i).getType().equals("scollection")) {
 						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection",libraryGooruOid));
 					} else {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),libraryGooruOid));
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), AppClientFactory.getCurrentPlaceToken(),libraryGooruOid,count,parentId));
 					}
 				}
 			} else {
@@ -468,7 +470,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 								if(profileLibraryListDo.getSearchResult().get(i).getType().equals("scollection")) {
 									contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection",libraryGooruOid));
 								} else {
-									contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken(),libraryGooruOid));
+									contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), AppClientFactory.getCurrentPlaceToken(),libraryGooruOid,count,parentId));
 								}
 							}
 						} else {
