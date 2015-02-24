@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -77,6 +78,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	private int totalLeftPanelCount = 0;
 	
 	private boolean isApiProgress  = true;
+	
+	HandlerRegistration handlerRegistration = null;
 	
 	private static ProfilePageLibraryViewUiBinder uiBinder = GWT.create(ProfilePageLibraryViewUiBinder.class);
 
@@ -159,7 +162,10 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					viewAllBtn.setVisible(true);
 					folderListPanel.setVisible(true);
 					folderTopicTitleLbl.setText(folderList.get(i).getTitle());
-					viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getGooruOid()));
+					if(handlerRegistration!=null){
+						handlerRegistration.removeHandler();
+					}
+					handlerRegistration=viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
@@ -187,7 +193,10 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 						folderListPanel.setVisible(true);
 						viewAllBtn.setVisible(true);
 						folderTopicTitleLbl.setText(leftMenuItemView.getTitle());
-						viewAllBtn.addClickHandler(new clickOnViewAll(unitListId));
+						if(handlerRegistration!=null){
+							handlerRegistration.removeHandler();
+						}
+						handlerRegistration=viewAllBtn.addClickHandler(new clickOnViewAll(unitListId));
 						
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
