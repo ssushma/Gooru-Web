@@ -27,24 +27,30 @@
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />
 							<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"> </tbp:H3Panel>
-							<p>
-								<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1731} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>
-								<br> 
-								<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblBigIdeas"></g:Label>
-								</br>
-							</p>
-							<p>
-								<g:Label  styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1732} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1732}"></g:Label>
-								<br> 
-								<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblEssentalQuestions"></g:Label>
-								</br>
-							</p>
-							<p>
-								<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1733} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1733}"></g:Label>
-								<br> 
-								<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblPerformanceTasks"></g:Label>
-								</br>
-							</p>
+							<g:HTMLPanel ui:field="bigIdeasPanel">
+								<p>
+									<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1731} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>
+									<br> 
+									<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblBigIdeas"></g:Label>
+									</br>
+								</p>
+							</g:HTMLPanel>
+							<g:HTMLPanel ui:field="essentialPanel">
+								<p>
+									<g:Label  styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1732} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1732}"></g:Label>
+									<br> 
+									<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblEssentalQuestions"></g:Label>
+									</br>
+								</p>
+							</g:HTMLPanel>
+							<g:HTMLPanel ui:field="performancePanel">
+								<p>
+									<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1733} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1733}"></g:Label>
+									<br> 
+									<g:Label styleName="{tocStyle.lblFolderMetadata}" ui:field="lblPerformanceTasks"></g:Label>
+									</br>
+								</p>
+							</g:HTMLPanel>
 						<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{tocStyle1.dropdownListContainerScrollPanel}">
 	            			<g:HTMLPanel ui:field="floderTreeContainer" styleName="{tocStyle1.folderStucture}">
 			   				</g:HTMLPanel>

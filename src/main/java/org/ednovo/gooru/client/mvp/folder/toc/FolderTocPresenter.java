@@ -34,7 +34,6 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -85,6 +84,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		Window.enableScrolling(true);
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
+		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
@@ -92,24 +92,29 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				getView().setFolderItems(folderListDo);
 			}
 		});
-		//This api used for to get the course image details of library.
-		if(parentId!=null){
-			AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
+		if(libName!=null){
+			//This api used for to get the course image details of library.
+			if(parentId!=null){
+				AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
 
-				@Override
-				public void onSuccess(FolderDo result) {
-					// TODO Auto-generated method stub
-					if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
-						getView().setCourseBanner(result);
-					}else{
-						getView().setBannerImages();
+					@Override
+					public void onSuccess(FolderDo result) {
+						// TODO Auto-generated method stub
+						if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
+							getView().setCourseBanner(result);
+						}else{
+							getView().setBannerImages();
+						}
 					}
-				}
-				
-			});
+					
+				});
+			}else{
+				getView().setBannerImages();
+			}
 		}else{
-			getView().setBannerImages();
+			getView().hidePanels();
 		}
+		
 	
 		//getView().setBannerImages();
 		/*//Checking whether the user is logged in user or not

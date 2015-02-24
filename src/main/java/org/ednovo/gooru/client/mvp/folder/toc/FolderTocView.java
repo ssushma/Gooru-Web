@@ -47,7 +47,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -104,6 +103,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField H2Panel bannerTitle;
 	@UiField Image logoImage,bannerImage;
 	
+	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel;
+	
 	@UiField Hidden myHiddenField;
 	
 	final String FOLDER="folder";
@@ -131,6 +132,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 		setData();
 		bannerImage.setVisible(false);
+		bannerImagePanel.setVisible(false);
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
 		setBannerStaticImages();
@@ -198,7 +200,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		});
 	}
 	/**
-	 * To set the Banner images into Map 
+	 * To set the static Banner images into Map 
 	 */
 	@Override
 	public void setBannerStaticImages() {
@@ -270,10 +272,29 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
 			}
 		if(foldersTocObj!=null){
-			lblBigIdeas.setText(foldersTocObj.getIdeas()!=null?foldersTocObj.getIdeas():"");
+			if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
+				bigIdeasPanel.setVisible(true);
+				lblBigIdeas.setText(foldersTocObj.getIdeas());
+			}else{
+			    bigIdeasPanel.setVisible(false);
+			}
+			if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
+				essentialPanel.setVisible(true);
+				lblEssentalQuestions.setText(foldersTocObj.getQuestions());
+			}else{
+				essentialPanel.setVisible(false);
+			}
+			if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
+				performancePanel.setVisible(true);
+				lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks());
+			}else{
+				performancePanel.setVisible(false);
+			}
 			lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
+			/*lblBigIdeas.setText(foldersTocObj.getIdeas()!=null?foldersTocObj.getIdeas():"");
+			
 			lblEssentalQuestions.setText(foldersTocObj.getQuestions()!=null?foldersTocObj.getQuestions():"");
-			lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks()!=null?foldersTocObj.getPerformanceTasks():"");
+			lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks()!=null?foldersTocObj.getPerformanceTasks():"");*/
 		}
 	}
 	/**
@@ -533,6 +554,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void setCourseBanner(FolderDo folderDo) {
 		// TODO Auto-generated method stub
+		bannerImagePanel.setVisible(true);
 		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
 		bannerTitle.getElement().setAttribute("style", "background-color: rgba(16, 118, 187, 0.5);");
@@ -541,7 +563,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImagePanel.getElement().setAttribute("style", "background: url("+folderDo.getThumbnails().getUrl() +") center;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
 		bannerImage.addErrorHandler(new ErrorHandler() {
-			
 			@Override
 			public void onError(ErrorEvent event) {
 				// TODO Auto-generated method stub
@@ -550,5 +571,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		});
 
 		
+	}
+	/**
+	 * To hide the panels based on Placetokens
+	 */
+	@Override
+	public void hidePanels() {
+		// TODO Auto-generated method stub
+		bannerImagePanel.setVisible(false);
 	}
 }
