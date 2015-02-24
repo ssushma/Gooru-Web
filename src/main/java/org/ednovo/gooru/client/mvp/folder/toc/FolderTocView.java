@@ -258,7 +258,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	void setFolderMetaData(FolderTocDo  foldersTocObj){
 			//This is used for handling folder toc back button code
-			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null){
+			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken())){
 				String paramerersString="";
 				Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
 				if(parameters.size()>0){
