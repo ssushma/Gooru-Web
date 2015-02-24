@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -525,19 +526,20 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 
 		}
 	}
-
+  /**
+   * To set the course Banner Images details 
+   * @param folderDo {@link FolderDo}
+   */
 	@Override
 	public void setCourseBanner(FolderDo folderDo) {
 		// TODO Auto-generated method stub
-		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
-		bannerImage.setVisible(true);
-		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%;");
+		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
 		bannerTitle.getElement().setAttribute("style", "background-color: rgba(16, 118, 187, 0.5);");
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		logoImage.setUrl(bannerVal.get(placetoken).get(2));
-		//bannerImagePanel.getElement().setAttribute("style", "background: url("+folderDo.getThumbnails().getUrl()+") -7px -47px;");
-		
+		bannerImagePanel.getElement().setAttribute("style", "background: url("+folderDo.getThumbnails().getUrl() +") center;");
+		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
 		bannerImage.addErrorHandler(new ErrorHandler() {
 			
 			@Override

@@ -92,7 +92,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				getView().setFolderItems(folderListDo);
 			}
 		});
-		
+		//This api used for to get the course image details of library.
 		if(parentId!=null){
 			AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
 
@@ -107,6 +107,8 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}
 				
 			});
+		}else{
+			getView().setBannerImages();
 		}
 	
 		//getView().setBannerImages();
