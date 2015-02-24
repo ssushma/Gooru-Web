@@ -156,32 +156,6 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	
 	private String searchTitle="";
 	
-	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
-	
-	private static final String PNG = ".png";
-	
-	private static final String SMALL = "Small";
-	
-	private static final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
-	
-	private static Integer LESSON_PAGE_INITIAL_LIMIT = 3;
-	
-	private static String PAGE = "page";
-	
-	private static final String COURSE_PAGE = "course-page";
-	
-	private static final String STANDARD_CODE = "code";
-
-	private static final String STANDARD_DESCRIPTION = "description";
-	
-	private static final String PNG_CROP = "-80x60.";
-	
-	private static final String CUSTOMIZE = "customize";
-	
-	private static final String ASSIGN = "assign";
-	
-	private static final String COLLECTION_TITLE = "collectionTitle";
-	
 	private static LibraryTopicViewUiBinder uiBinder = GWT.create(LibraryTopicViewUiBinder.class);
 	
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
@@ -191,30 +165,30 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 
 	private String placeToken = null;
 	
-	private static final String SUBJECT_NAME = "subject";
-	
-	private static final String STANDARDS="standard";
-	
-	private static final String SHARING_TYPE = "public";
-	
 	private int pageNumber = 2;
 	
 	String lessonCode="";
 	
 	List<String> standPrefCode = new ArrayList<String>();
 
-	private static final String STANDARD_ID = "standardId";
+	private static Integer LESSON_PAGE_INITIAL_LIMIT = 3;
 	
 	private TopicDo topicDo = null;
 	
 	Map<String,String> topicDetails = new HashMap<String,String>();
 	
-	interface LibraryTopicViewUiBinder extends
-			UiBinder<Widget, LibraryTopicListView> {
+	interface LibraryTopicViewUiBinder extends	UiBinder<Widget, LibraryTopicListView> {
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
+	
+	/**
+	 * Class constructor.(Calling from Library view {community library})
+	 * @param topicDo {@link TopicDo}
+	 * @param topicNumber {@link Integer}
+	 * @param placeToken {@link String}
+	 */
 	public LibraryTopicListView(TopicDo topicDo, Integer topicNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicDo.getCodeId();
@@ -223,22 +197,12 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		if(PlaceTokens.COMMUNITY.equals(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){
 			libraryGooruOid=AppClientFactory.getLoggedInUser().getSettings().getCommunityLibraryGooruOid();
 		}
-		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
-		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
-		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
-		assignCollectionBtn.setText(i18n.GL0526());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
-		customizeCollectionBtn.setText(i18n.GL2037());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
-		noCollectionLbl.setText(i18n.GL1170());
-		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
-		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
+
 		topicTitleLbl.setText(i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
 		topicTitleLbl.getElement().setAttribute("alt",i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
 		topicTitleLbl.getElement().setAttribute("title",i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
 		searchTitle=topicDo.getLabel();
+		setElementsAttributes();
 		setIds();
 		setAssets();
 		
@@ -409,19 +373,13 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		collectionImage.getElement().setAttribute("collid", conceptDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute("collid", conceptDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,conceptDo.getTitle());
-		assignCollectionBtn.setText(i18n.GL0526());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
-		customizeCollectionBtn.setText(i18n.GL2037());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
+		
 		topicTitleLbl.setText(conceptDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
 		searchTitle=conceptDo.getTitle();
-		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
-		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
-		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		setElementsAttributes();
+		
 		try {
 			setConceptData(conceptDo,conceptNumber,null, null,null,null);
 		} catch(Exception e) {
@@ -430,7 +388,6 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			noCollectionLbl.setVisible(true);
 		}
 		
-		//searchLink.getElement().getStyle().setDisplay(Display.NONE);
 		
 		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
@@ -471,30 +428,21 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		this.libraryGooruOid=libraryGooruOid;
 		setPlaceToken(placeToken);
 		searchLink.getElement().getStyle().setDisplay(Display.NONE);
-		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
-		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
-		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
-		assignCollectionBtn.setText(i18n.GL0526());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
-		customizeCollectionBtn.setText(i18n.GL2037());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
-		noCollectionLbl.setText(i18n.GL1170());
+		
+		
 		toolTipPopupPanelCustomize.clear();
 		toolTipPopupPanelNew.clear();
 		toolTipPopupPanelCustomize.hide();
 		toolTipPopupPanelNew.hide();
-		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
-		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 		topicTitleLbl.setText(partnerFolderDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("alt",partnerFolderDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("title",partnerFolderDo.getTitle());
 		searchTitle=partnerFolderDo.getTitle();
 		setIds();
+		setElementsAttributes();
 		setAssets();
-		addCollectionQuizTitleData("partner");
-		if(partnerFolderDo.getCollections()!=null) {
+		addCollectionQuizTitleData(PARTNER);
+		if(!StringUtil.checkNull(partnerFolderDo.getCollections())) { 
 			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount(),libraryGooruOid);
 			try {
 				setConceptData(partnerFolderDo.getCollections().get(0),topicId, null, null,null,libraryGooruOid);
@@ -1594,7 +1542,10 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		noCollectionLbl.setVisible(true);
 	}
 	
-
+	/**
+	 * Inner class implementing Mouse over handler and calling on mouse over of Assign button. 
+	 *
+	 */
 	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -1609,15 +1560,17 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		
 	}
 	
+
+	/**
+	 * Inner class implementing Mouse out handler and calling on mouse out of Assign button. 
+	 *
+	 */
 	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanelNew.hide();
 		}
-
-		
-		
 	}
 	
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
@@ -1727,6 +1680,27 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
 		}
+	}
+	
+	
+	/**
+	 * Sets an attributes for elements.
+	 */
+	private void setElementsAttributes(){
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
 		
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
+		
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
+		
+		noCollectionLbl.setText(i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 	}
 }
