@@ -80,6 +80,7 @@ import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -116,7 +117,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class LibraryTopicListView extends Composite{
+public class LibraryTopicListView extends Composite implements ClientConstants{
 
 	@UiField ScrollPanel lessonScrollPanel;
 	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside,moreOnTopicText,standardsDescription;
@@ -219,7 +220,7 @@ public class LibraryTopicListView extends Composite{
 		this.topicId = topicDo.getCodeId();
 		setPlaceToken(placeToken);
 		libraryGooruOid="";
-		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COMMUNITY)){
+		if(PlaceTokens.COMMUNITY.equals(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken())){
 			libraryGooruOid=AppClientFactory.getLoggedInUser().getSettings().getCommunityLibraryGooruOid();
 		}
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
@@ -272,7 +273,7 @@ public class LibraryTopicListView extends Composite{
 		} catch(Exception e) {
 			setDefaultCollectionLbl();
 		}
-		addCollectionQuizTitleData("lesson");
+		addCollectionQuizTitleData(LESSON);
 		
 		
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
@@ -1402,7 +1403,7 @@ public class LibraryTopicListView extends Composite{
 	 * @parm(s) : @param clickEvent
 	 * 
 	 * @return : void
-	 *
+	 *category
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
@@ -1640,25 +1641,19 @@ public class LibraryTopicListView extends Composite{
 			toolTipPopupPanelCustomize.hide();
 		}
 	}
+	
+	/**
+	 * Returns back with default equivalent category.
+	 * @param category
+	 * @return
+	 */
 	public String getDetaultResourceImage(String category){
-		String categoryIcon=category;
-		if(category!=null){
-			if(category.equalsIgnoreCase("Lesson")||category.equalsIgnoreCase("Textbook")||category.equalsIgnoreCase("Handout"))
-			{
-				categoryIcon=category.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
-			}
-			if(category.equalsIgnoreCase("Slide"))
-			{
-				categoryIcon=category.replaceAll("Slide","Image").replaceAll("slide","Image");
-			}
-			if(category.equalsIgnoreCase("Exam") || category.equalsIgnoreCase("Challenge")||categoryIcon.equalsIgnoreCase("Website"))
-			{
-				categoryIcon=category.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
-			}
-		}
-		return categoryIcon.toLowerCase();
+		String categoryIcon=StringUtil.getEquivalentCategory(category==null?"":category.toLowerCase());
+		return categoryIcon ; 
 	}
 	
+
+
 	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	
 
 		@Override
@@ -1677,12 +1672,12 @@ public class LibraryTopicListView extends Composite{
 					setConceptData(conceptDoList.get(i),topicId,lessonId,lessonLabel,lessonCode,libraryGooruOid);
 				}
 			}
-			addCollectionQuizTitleData("lesson");
+			addCollectionQuizTitleData(LESSON);
 		}
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null&&setQuizTabVisiblity(conceptDoList)) {
+		if(LESSON.equals(pageType)&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null&&setQuizTabVisiblity(conceptDoList)) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 			quizTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
@@ -1731,7 +1726,6 @@ public class LibraryTopicListView extends Composite{
 			toolTipPopupPanelNew.clear();
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
-			
 		}
 		
 	}
