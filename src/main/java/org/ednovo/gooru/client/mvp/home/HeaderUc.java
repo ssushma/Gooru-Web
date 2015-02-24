@@ -271,8 +271,6 @@ public class HeaderUc extends Composite implements
 
 	private ClasspageListVc classpageListVc;
 
-	private SaveSharePanel saveSharePanel;
-
 	@Inject
 	HomeUiHandlers homeUiHandlers;
 
@@ -386,17 +384,6 @@ public class HeaderUc extends Composite implements
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
 
 		logoutPanelVc = new LogoutPanelVc();
-
-		saveSharePanel = new SaveSharePanel() {
-
-			@Override
-			@UiHandler("closeButton")
-			public void closeButton(ClickEvent clickEvent) {
-				isGooruGuidePanelOpen = false;
-				Window.enableScrolling(true);
-				hide();
-			}
-		};
 
 		logoutPanelVc.setStyleName(GooruCBundle.INSTANCE.css().logoutPanel());
 		editSearchInputFloPanel.setVisible(false);
