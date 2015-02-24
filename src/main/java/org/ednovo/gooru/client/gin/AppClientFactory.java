@@ -30,7 +30,6 @@ package org.ednovo.gooru.client.gin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserRoleDo.UserRoleType;
 import org.ednovo.gooru.shared.util.ClientConstants;

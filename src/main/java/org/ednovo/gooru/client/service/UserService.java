@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
@@ -248,5 +249,7 @@ public interface UserService extends BaseService {
     ProfileRatingsReactionsDO getProfileAnalyticsRatings();
     
     UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval);
+    
+    FilterSettings setUserProperties(UserDo user);
 
 }
