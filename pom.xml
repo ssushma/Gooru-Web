@@ -557,7 +557,10 @@
                             <!-- JS Minify -->
                             <jsSourceDir>scripts</jsSourceDir>
                             <jsSourceIncludes>
-                                <jsSourceInclude>*.js</jsSourceInclude>
+                                <jsSourceInclude>basicscripts.js</jsSourceInclude>
+                                <jsSourceInclude>errorImageFunction.js</jsSourceInclude>
+                                <!-- <jsSourceInclude>highcharts.js</jsSourceInclude> -->
+                                <jsSourceInclude>heatmap.js</jsSourceInclude>
                             </jsSourceIncludes>
                             <jsSourceExcludes>
                                 <jsSourceExclude>*.min.js</jsSourceExclude>
