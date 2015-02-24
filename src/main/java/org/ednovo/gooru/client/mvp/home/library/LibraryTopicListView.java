@@ -259,27 +259,16 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		
-		if(!AppClientFactory.isAnonymous()){
-			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
-			} catch (Exception e) {}
-		}else{
-			standardsFloPanel.setVisible(true);
-		}
+		loggedInUserStdPrefCode();
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		AppClientFactory.getEventBus().addHandler(SetConceptQuizDataEvent.TYPE,setConceptQuizDataHandler);
-		Map<String, String> maps = StringUtil.splitQuery(Window.Location
-				.getHref());
-		if(maps.containsKey("emailId")){
-			showPopupAfterGmailSignin();
-		}
+		getPopupAfterGMLogin();
 		
 	}
 	
-
 	private boolean setQuizTabVisiblity(ArrayList<ConceptDo> conceptDoList) {
 		boolean isCollectionTabVisible = false;
 		if(conceptDoList!=null&&conceptDoList.size()>0){
@@ -366,6 +355,14 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		quizTitle.getElement().setAttribute("title",i18n.GL1670());
 	}
 	
+	
+	
+	/**
+	 * Class constructor (calling from library view)
+	 * @param conceptDo {@link ConceptDo}
+	 * @param conceptNumber {@link Integer}
+	 * @param placeToken {@link String}
+	 */
 	public LibraryTopicListView(ConceptDo conceptDo, Integer conceptNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
@@ -397,31 +394,31 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		setIds();
 		setAssets();
-		addCollectionQuizTitleData("concept");
+		addCollectionQuizTitleData(CONCEPT);
 		lessonScrollPanel.setVisible(false);
 		collectionViewer.addStyleName(libraryStyle.collectionViewerSubStyle());
 		collectionInfo.addStyleName(libraryStyle.collectionInfoSubStyle());
 		resourcesInside.addStyleName(libraryStyle.resourcesInsideSubStyle());
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		loadingImage.setVisible(false);
-		if(!AppClientFactory.isAnonymous()){
-			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
-			} catch (Exception e) {}
-		}else{
-			standardsFloPanel.setVisible(true);
-		}
+		loggedInUserStdPrefCode();
+		getPopupAfterGMLogin();
 		
+		/**
+		 * Following events to set standard preference based on settings and to display ratings widget respectively
+		 */
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
-		
-		Map<String, String> maps = StringUtil.splitQuery(Window.Location
-				.getHref());
-		if(maps.containsKey("emailId")){
-			showPopupAfterGmailSignin();
-		}
 	}
 
+	
+	/**
+	 * Class constructor calling from library view and partner library view.
+	 * @param partnerFolderDo {@link PartnerFolderDo}
+	 * @param topicNumber {@link Integer}
+	 * @param placeToken {@link String}
+	 * @param libraryGooruOid {@link String}
+	 */
 	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
@@ -468,24 +465,15 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		
-		if(!AppClientFactory.isAnonymous()){
-			try {
-				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
-			} catch (Exception e) {}
-		}else{
-			standardsFloPanel.setVisible(true);
-		}
+		loggedInUserStdPrefCode();
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		
-		Map<String, String> maps = StringUtil.splitQuery(Window.Location
-				.getHref());
-		if(maps.containsKey("emailId")){
-			showPopupAfterGmailSignin();
-		}
+		getPopupAfterGMLogin();
 	}
+
 
 	private void setPartnerLibraryLessonData(final ArrayList<PartnerFolderDo> lessonDoList) {
 		boolean isLessonHighlighted = true;
@@ -1679,6 +1667,30 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			toolTipPopupPanelNew.clear();
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
+		}
+	}
+	
+	
+	/**
+	 * Displaying assign or customize pop up after gmail login. 
+	 */
+	private void getPopupAfterGMLogin() {
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
+	}
+	
+	/**
+	 * Gets the user taxonomy code if user has logged in.
+	 */
+	private void loggedInUserStdPrefCode() {
+		if(!AppClientFactory.isAnonymous()){
+			try {
+				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
+			} catch (Exception e) {}
+		}else{
+			standardsFloPanel.setVisible(true);
 		}
 	}
 	

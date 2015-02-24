@@ -234,6 +234,7 @@ public interface ClientConstants {
 	String SHARING_TYPE = "public";
 	String STANDARD_ID = "standardId";
 	String PARTNER = "partner";
+	String CONCEPT = "concept";
 	
 
 	
