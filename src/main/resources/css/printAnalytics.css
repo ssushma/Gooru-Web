@@ -337,7 +337,12 @@
 	width: 20px;	
 }
 .google-visualization-table{
-    width:auto !important;
+    width:900px !important;
+}
+.top-level{
+overflow:hidden;
+min-height:80px !important;
+height:auto !important;
 }
 /*End */
 @media print
