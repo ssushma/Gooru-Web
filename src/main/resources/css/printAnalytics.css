@@ -337,7 +337,7 @@
 	width: 20px;	
 }
 .google-visualization-table{
-    width:900px !important;
+    width:auto !important;
 }
 .top-level{
 overflow:hidden;
