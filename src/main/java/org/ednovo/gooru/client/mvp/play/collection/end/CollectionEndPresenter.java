@@ -348,7 +348,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		}
 		else
 		{
-		getNextCollectionItem();
+		getNextCollectionItem(folderId,folderItemId);
 		}
 		
 
@@ -597,10 +597,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		
 	}
 	
-	public void getNextCollectionItem() {
-		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-		final String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId");
-		
+	public void getNextCollectionItem(String folderId,String folderItemId) {
 		if(folderId!=null && folderItemId!=null) {			
 			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
 				@Override
