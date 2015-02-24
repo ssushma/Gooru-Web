@@ -594,7 +594,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
                 <artifactId>replacer</artifactId>
                 <version>1.5.3</version>
@@ -608,20 +608,21 @@
                 </executions>
                 <configuration>
                     <file>${basedir}/src/main/webapp/index.html</file>
+                    <escape>true</escape>
                     <regex>true</regex>
                     <regexFlags><regexFlag>DOTALL</regexFlag></regexFlags>
                     <replacements>
                         <replacement>
-                            <token><![CDATA[<!--BeginCssReplacer.*EndCssReplacer-->]]></token>
-                            <value><![CDATA[<link href="css/main-styles.min.css" rel="stylesheet" type="text/css">]]></value>
+                            <token><![CDATA[<!--BeginCssReplacer.*EndCssReplacer--><!-- ]]></token>
+                            <value><![CDATA[<link href="${cdn.endpoint}/css/main-styles.min.css" rel="stylesheet" type="text/css">]]></value>
                         </replacement>
                         <replacement>
-                            <token><![CDATA[<!--BeginJsReplacer.*EndJsReplacer-->]]></token>
-                            <value><![CDATA[<script src="scripts/main-script.min.js" type="text/javascript" async></script>]]></value>
+                            <token><![CDATA[<!--BeginJsReplacer.*EndJsReplacer--><!-- ]]></token>
+                            <value><![CDATA[<script src="${cdn.endpoint}/scripts/main-script.min.js" type="text/javascript" async></script>]]></value>
                         </replacement>
                     </replacements>
                 </configuration>
-            </plugin>
+            </plugin>-->
 		</plugins>
 		<resources>
 			<resource>
