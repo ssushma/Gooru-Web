@@ -1521,7 +1521,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public FolderWhatsNextCollectionDo getNextCollectionFromToc(String folderId,String collectionItemId){
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, collectionItemId, getLoggedInSessionToken());
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETNEXTTOCCOLLECTION, folderId, collectionItemId, getLoggedInSessionToken());
 		getLogger().info("-- FolderWhatsNextCollectionDo API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

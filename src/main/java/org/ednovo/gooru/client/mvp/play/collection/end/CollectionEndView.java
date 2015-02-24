@@ -1639,6 +1639,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	public void displayNextCollectionDetails(final CollectionDo collectionDo,final String subjectId,final String lessonId,final String libraryType){
+
 		if(collectionDo!=null){
 			hideNextCollectionContainer(true);
 			whatNextCollectionTitle.setText(collectionDo.getTitle().toString().length()>10?collectionDo.getTitle().substring(0,10)+"...":collectionDo.getTitle());
@@ -1685,16 +1686,26 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			hideNextCollectionContainer(true);
 		}
 		
-		getUiHandlers().getNextCollectionItem();
+
 	}
 	
-	public void displayWhatsNextContent(FolderWhatsNextCollectionDo folderCollectionWhatsNext)
+	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext)
 	{
 		if(folderCollectionWhatsNext.getTitle()!=null)
 		{
-			whatNextCollectionTitle.setText(collectionDo.getTitle().toString().length()>10?collectionDo.getTitle().substring(0,10)+"...":collectionDo.getTitle());
-			whatNextCollectionTitle.setTitle(collectionDo.getTitle());
-			nextCollectionThumbnail.setUrl(collectionDo.getThumbnails().getUrl());	
+			hideNextCollectionContainer(false);	
+			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>10?folderCollectionWhatsNext.getTitle().substring(0,10)+"...":folderCollectionWhatsNext.getTitle());
+			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
+			nextCollectionThumbnail.setUrl(folderCollectionWhatsNext.getThumbnails().getUrl());	
+			nextCollectionThumbnail.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					Map<String,String> params = new LinkedHashMap<String,String>();
+					params.put("id", folderCollectionWhatsNext.getGooruOid());
+					//need to add folderId and collectionItem of next item
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+				}
+			});
 		}
 		else
 		{
