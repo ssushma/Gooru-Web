@@ -70,7 +70,7 @@ public class FolderCollectionView extends Composite {
 	
 	final String ASSESSMENTURL="assessment/url";
 	
-	public FolderCollectionView(String levelStyleName,final FolderDo folderDo) {
+	public FolderCollectionView(String levelStyleName,final FolderDo folderDo,final String parentId) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
@@ -81,7 +81,7 @@ public class FolderCollectionView extends Composite {
 			lblCollectionDesc.setText(folderDo.getDescription());
 		}
 		 if(folderDo.getCollectionItems().size()>0){
-			 pnlResources.add(new FolderCollectionResourceView(folderDo));
+			 pnlResources.add(new FolderCollectionResourceView(folderDo,parentId));
 		 }
 		 lblCollectionTitle.addClickHandler(new ClickHandler() {
 			@Override
@@ -90,7 +90,15 @@ public class FolderCollectionView extends Composite {
 					Window.open(folderDo.getUrl(), "", "");
 				}else{
 					HashMap<String,String> params = new HashMap<String,String>();
+					String selectedfolderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 					params.put("id", folderDo.getGooruOid());
+					if(parentId!=null){
+						params.put("folderId", parentId);
+					}else{
+						params.put("folderId", selectedfolderId);
+					}
+					
+					params.put("folderItemId", folderDo.getCollectionItemId());
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 				}

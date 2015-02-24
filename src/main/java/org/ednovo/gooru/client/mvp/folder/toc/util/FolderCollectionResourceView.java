@@ -73,14 +73,17 @@ public class FolderCollectionResourceView extends Composite {
 	FolderDo folderDo;
 
 	FolderTocCBundle res;
+	
+	String parentId=null;
 
 	LiPanel liPanel;
 	ResourceTooltip resourceTooltip=new ResourceTooltip();
 
-	public FolderCollectionResourceView(FolderDo folderDo) {
+	public FolderCollectionResourceView(FolderDo folderDo,String parentId) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
 		this.folderDo = folderDo;
+		this.parentId=parentId;
 		initWidget(uiBinder.createAndBindUi(this));
 		if (folderDo != null) {
 			setListData();
@@ -161,6 +164,12 @@ public class FolderCollectionResourceView extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			String collectionId = folderDo.getGooruOid();
+			String selectedfolderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
+			if(parentId==null)
+			{
+				parentId = selectedfolderId;
+			}
+
 			/*
 			 * if(folderItemDo.getNarration()!=null&&!collectionItemDo.getNarration
 			 * ().trim().equals("")){
@@ -173,10 +182,14 @@ public class FolderCollectionResourceView extends Composite {
 			 */
 			resourceLink = "#" + PlaceTokens.COLLECTION_PLAY + "&id="
 					+ collectionId + "&rid="
-					+ folderItemDo.getCollectionItemId();
+					+ folderItemDo.getCollectionItemId()+"&folderId"+parentId+"&folderItemId"+folderItemDo.getCollectionItemId();
+			System.out.println("resourceLink::" + resourceLink);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", collectionId);
 			params.put("rid", folderItemDo.getCollectionItemId());
+			params.put("folderId", parentId);
+			params.put("folderItemId", folderItemDo.getCollectionItemId());
+
 			AppClientFactory.getPlaceManager().revealPlace(
 					PlaceTokens.COLLECTION_PLAY, params);
 

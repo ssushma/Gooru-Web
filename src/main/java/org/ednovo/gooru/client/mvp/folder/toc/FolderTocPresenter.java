@@ -32,7 +32,9 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -81,7 +83,34 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	protected void onReset() {
 		super.onReset();
 		Window.enableScrolling(true);
-		//Checking whether the user is logged in user or not
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
+			@Override
+			public void onSuccess(FolderTocDo folderListDo) {
+				getView().clearTocData();
+				getView().setFolderItems(folderListDo);
+			}
+		});
+		
+		if(parentId!=null){
+			AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
+
+				@Override
+				public void onSuccess(FolderDo result) {
+					// TODO Auto-generated method stub
+					if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
+						getView().setCourseBanner(result);
+					}else{
+						getView().setBannerImages();
+					}
+				}
+				
+			});
+		}
+	
+		//getView().setBannerImages();
+		/*//Checking whether the user is logged in user or not
         if(AppClientFactory.isAnonymous()){
         	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
         }else{
@@ -94,7 +123,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
     			}
     		});
     		getView().setBannerImages();
-        }
+        }*/
 	}
 	
 	@Override
@@ -103,11 +132,11 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	}
 
 	@Override
-	public void getFolderItems(final TreeItem item, String folderId) {
+	public void getFolderItems(final TreeItem item,final String folderId) {
 		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
-				getView().setFolderItems(item,folderListDo);
+				getView().setFolderItems(item,folderListDo,folderId);
 			}
 		});
 	}

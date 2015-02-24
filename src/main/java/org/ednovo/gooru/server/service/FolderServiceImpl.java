@@ -495,4 +495,15 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		} catch (Exception e) {}
 		return new FolderTocDo();
 	}
+	
+	@Override
+	public FolderDo getFolderMetaData(String folderId) throws GwtException,ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FOLDER_META_DATA, folderId, getLoggedInSessionToken());
+		getLogger().info("-- getFolderMetaData - - - - "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCreatedFolder(jsonRep);
+	}
 }

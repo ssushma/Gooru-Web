@@ -354,6 +354,10 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
+					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
+					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -411,6 +415,10 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 			if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 				params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+			if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
+				params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+			if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
+				params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
 			params.put("customize", "yes");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
