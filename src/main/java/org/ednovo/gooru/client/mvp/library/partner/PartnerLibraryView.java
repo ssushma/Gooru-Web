@@ -75,7 +75,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	
 	private static final String LIBRARY_PAGE = "partner-page";
 	
-	private static Map<String, LoadBannerActionInterface> libraryVal;
+	private static Map<String, LoadBannerActionInterface.setLibraryBanner> libraryVal;
 	
 	private CourseDo courseDo;
 
@@ -88,7 +88,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	
 	static{
-		libraryVal = new HashMap<String,LoadBannerActionInterface>();
+		libraryVal = new HashMap<String,LoadBannerActionInterface.setLibraryBanner>();
 		libraryVal = addAllPartnerLibraries();
 	}
 	
@@ -216,7 +216,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		LibraryUserDo libraryUserDo = new LibraryUserDo();
 		
-		LoadBannerActionInterface actionInterface = libraryVal.get(partnerPlace); 
+		LoadBannerActionInterface.setLibraryBanner actionInterface = libraryVal.get(partnerPlace); 
 		actionInterface.loadLibBanner(courseDo, thumbnailDo, libraryUserDo);
 		courseDo = actionInterface.getUpdatedCourseDo();
 		return courseDo;
@@ -226,9 +226,9 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Loads all the libraries into a hash map.
 	 * @return {@link Map}
 	 */
-	public static Map<String, LoadBannerActionInterface> addAllPartnerLibraries() {
+	public static Map<String, LoadBannerActionInterface.setLibraryBanner> addAllPartnerLibraries() {
 
-		Map<String, LoadBannerActionInterface> map = new HashMap<String,LoadBannerActionInterface>();
+		Map<String, LoadBannerActionInterface.setLibraryBanner> map = new HashMap<String,LoadBannerActionInterface.setLibraryBanner>();
 		map.put(PlaceTokens.AUTODESK,AutodeskBanner.getAutodeskInstance());
 		map.put(PlaceTokens.ONR,ONRBanner.getOnrInstance());
 		map.put(PlaceTokens.NGC,NgcBanner.getNgcInstance());
@@ -276,7 +276,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * 
 	 *
 	 */
-	private static class AutodeskBanner implements LoadBannerActionInterface{
+	private static class AutodeskBanner implements LoadBannerActionInterface.setLibraryBanner{
 		
 		private static AutodeskBanner autodeskBannerInstance;
 		private CourseDo libCourseDo;
@@ -314,7 +314,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * 
 	 *
 	 */
-	private static class ONRBanner implements LoadBannerActionInterface{
+	private static class ONRBanner implements LoadBannerActionInterface.setLibraryBanner{
 		
 		private static ONRBanner ONRBannerInstance;
 		private CourseDo libCourseDo;
@@ -352,7 +352,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * 
 	 *
 	 */
-	private static class NgcBanner implements LoadBannerActionInterface{
+	private static class NgcBanner implements LoadBannerActionInterface.setLibraryBanner{
 		
 		private static NgcBanner ngcBannerInstance;
 		private CourseDo libCourseDo;
@@ -389,7 +389,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * 
 	 *
 	 */
-	private static class FteBanner implements LoadBannerActionInterface{
+	private static class FteBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static FteBanner fteBannerInstance;
 		private CourseDo libCourseDo;
@@ -426,7 +426,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing WSPH library banner.
 	 * 
 	 */
-	private static class WspwhBanner implements LoadBannerActionInterface{
+	private static class WspwhBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static WspwhBanner wsphBannerInstance;
 		private CourseDo libCourseDo;
@@ -463,7 +463,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing Lessonopoly library banner.
 	 *
 	 */
-	private static class LessonopolyBanner implements LoadBannerActionInterface{
+	private static class LessonopolyBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static LessonopolyBanner lessonopolyBannerInstance;
 		private CourseDo libCourseDo;
@@ -499,7 +499,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing Fincap library banner.
 	 * 
 	 */
-	private static class FincapIncBanner implements LoadBannerActionInterface{
+	private static class FincapIncBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 
 		private static FincapIncBanner fincapIncBannerInstance;
@@ -536,7 +536,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing PSDL library banner.
 	 * 
 	 */
-	private static class PsdlBanner implements LoadBannerActionInterface{
+	private static class PsdlBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static PsdlBanner psdlBannerInstance;
 		private CourseDo libCourseDo;
@@ -573,7 +573,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing Youthvoice library banner.
 	 * 
 	 */
-	private static class YouthVoicesBanner implements LoadBannerActionInterface{
+	private static class YouthVoicesBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static YouthVoicesBanner youthVoiceBannerInstance;
 		private CourseDo libCourseDo;
@@ -609,7 +609,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing GeoEdu library banner.
 	 * 
 	 */
-	private static class GeoEduBanner implements LoadBannerActionInterface{
+	private static class GeoEduBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static GeoEduBanner geoEduBannerInstance;
 		private CourseDo libCourseDo;
@@ -645,7 +645,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing LPS library banner.
 	 * 
 	 */
-	private static class LpsBanner implements LoadBannerActionInterface{
+	private static class LpsBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static LpsBanner lpsBannerInstance;
 		private CourseDo libCourseDo;
@@ -681,7 +681,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing CORE library banner.
 	 * 
 	 */
-	private static class CoreBanner implements LoadBannerActionInterface{
+	private static class CoreBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static CoreBanner coreBannerInstance;
 		private CourseDo libCourseDo;
@@ -717,7 +717,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing ESYP library banner.
 	 * 
 	 */
-	private static class EsypBanner implements LoadBannerActionInterface{
+	private static class EsypBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static EsypBanner esypBannerInstance;
 		private CourseDo libCourseDo;
@@ -753,7 +753,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing CCST library banner.
 	 * 
 	 */
-	private static class CcstBanner implements LoadBannerActionInterface{
+	private static class CcstBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static CcstBanner ccstBannerInstance;
 		private CourseDo libCourseDo;
@@ -789,7 +789,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing TICAl library banner.
 	 L
 	 */
-	private static class TicalBanner implements LoadBannerActionInterface{
+	private static class TicalBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static TicalBanner ticalBannerInstance;
 		private CourseDo libCourseDo;
@@ -825,7 +825,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * Inner class for implementing Aspire library banner.
 	 * 
 	 */
-	private static class AspireBanner implements LoadBannerActionInterface{
+	private static class AspireBanner implements LoadBannerActionInterface.setLibraryBanner{
 
 		private static AspireBanner aspireBannerInstance;
 		

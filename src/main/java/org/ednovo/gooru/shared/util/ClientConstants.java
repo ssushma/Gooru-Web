@@ -203,9 +203,22 @@ public interface ClientConstants {
 	
 	
 	
-	/*************** Library End **************************************************/
+	/*************** Library Start **************************************************/
 	
 	String FOLDER = "folder";
+	String U_WEBSITE ="Website";
+	String U_WEBPAGE = "Webpage";		
+	String U_SLIDE = "Slide";
+	String U_IMAGE ="Image";
+	String U_HANDOUT = "Handout";
+	String U_LESSON ="Lesson";
+	String U_TEXTBOOK = "Textbook";
+	String U_TEXT = "Text";
+	String U_EXAM = "Exam";
+	String U_VIDEO = "Video";
+	String U_INTERACTIVE ="Interactive";
+	
+	
 	
 	/*************** Library End **************************************************/
 	
