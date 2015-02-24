@@ -41,6 +41,7 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 	    private String title;
 	    private String description;
 	    private String folder;
+	    private String gooruOid;
 	
 	public FolderWhatsNextCollectionDo(){}
 
@@ -83,6 +84,15 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 	public void setFolder(String folder) {
 		this.folder = folder;
 	}
+
+	public String getGooruOid() {
+		return gooruOid;
+	}
+
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+	
 
 	
 }

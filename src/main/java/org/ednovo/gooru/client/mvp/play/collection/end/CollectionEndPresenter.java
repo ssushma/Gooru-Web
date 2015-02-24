@@ -321,26 +321,37 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject");
 		final String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", "123");
 		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.DISCOVER);
-		getView().hideNextCollectionContainer(true);
-		if(subject!=null) {
-			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {
-				@Override
-				public void onSuccess(ArrayList<ConceptDo> conceptDoList) {
-					getView().isConceptsContainerVisible(true);
-					getView().setRelatedConceptsContent(conceptDoList, PAGE, subject, lessonId, libraryType);
-					if(conceptDoList!=null){
-						for(int i=0;i<conceptDoList.size();i++){
-							if(!conceptDoList.get(i).getGooruOid().equals(collectionDo.getGooruOid())){
-								getNextCollectionDetails(conceptDoList.get(i).getGooruOid(),PAGE,subject,lessonId,libraryType);
-								return;
+		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+		final String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId");
+		
+		if(folderId==null && folderItemId==null) {	
+			getView().hideNextCollectionContainer(true);
+			if(subject!=null) {
+				this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {
+					@Override
+					public void onSuccess(ArrayList<ConceptDo> conceptDoList) {
+						getView().isConceptsContainerVisible(true);
+						getView().setRelatedConceptsContent(conceptDoList, PAGE, subject, lessonId, libraryType);
+						if(conceptDoList!=null){
+							for(int i=0;i<conceptDoList.size();i++){
+								if(!conceptDoList.get(i).getGooruOid().equals(collectionDo.getGooruOid())){
+									getNextCollectionDetails(conceptDoList.get(i).getGooruOid(),PAGE,subject,lessonId,libraryType);
+									return;
+								}
 							}
 						}
 					}
-				}
-			});
-		} else {
-			getView().isConceptsContainerVisible(false);
+				});
+			} else {
+				getView().isConceptsContainerVisible(false);
+			}
 		}
+		else
+		{
+		getNextCollectionItem(folderId,folderItemId);
+		}
+		
+
 	}
 	
 	public void getNextCollectionDetails(String gooruOid, String page, final String subject,final  String lessonId, final String libraryType){
@@ -586,10 +597,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		
 	}
 	
-	public void getNextCollectionItem() {
-		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-		final String folderItemId = AppClientFactory.getPlaceManager().getRequestParameter("folderItemId");
-		
+	public void getNextCollectionItem(String folderId,String folderItemId) {
 		if(folderId!=null && folderItemId!=null) {			
 			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
 				@Override
