@@ -26,10 +26,12 @@ package org.ednovo.gooru.server.request;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.engine.application.DecodeRepresentation;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ClientResource;
+import org.restlet.data.Encoding;
 /**
  * @author Search Team
  * 
@@ -52,10 +54,12 @@ public class ServiceProcessor {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
                setMediaType(type);
+               setEncodings(Encoding.GZIP);
                setRepresentation(getClientResource().get());
+               Representation decodedRep = new DecodeRepresentation(getClientResource().get()); 
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(getRepresentation().getText()));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(decodedRep.getText()));
                return jsonResponseRepresentation;
            }
        }.execute();
@@ -72,6 +76,7 @@ public class ServiceProcessor {
            public JsonResponseRepresentation run() throws Exception {
                setClientResource(new ClientResource(url));
                setMediaType(type);
+               setEncodings(Encoding.GZIP);
                setRepresentation(getClientResource().get());
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation(getRepresentation().getText());
@@ -116,11 +121,12 @@ public class ServiceProcessor {
                if (username != null && username.length() > 0 && password != null && password.length() > 0) {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
+               setEncodings(Encoding.GZIP);
                setRepresentation(getClientResource().post(form));
+               Representation decodedRep = new DecodeRepresentation(getClientResource().post(form));
                // Get the representation as an JsonRepresentation
-               //return new JsonRepresentation(getRepresentation().getText());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(getRepresentation().getText()));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(decodedRep.getText()));
                return jsonResponseRepresentation;
            }
        }.execute();
@@ -138,25 +144,18 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-               
-               setClientResource(new ClientResource(url));
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
-//                getClientResource().getRequest().setEntity();
-               
-              Representation resp = null;
-               resp = getClientResource().post(new JsonRepresentation(formData));
-               /*try{
-//                    setRepresentation(getClientResource().post(new JsonRepresentation(formData)));
-                   resp = getClientResource().post(new JsonRepresentation(formData));
-               }catch(Exception e){
-                   resp = getClientResource().getResponse().getEntity();
-               }*/
-              // return new JsonRepresentation(resp.getText());
-               JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(resp.getText()));
-               return jsonResponseRepresentation;
+
+        	   setClientResource(new ClientResource(url));
+        	   if (username != null && username.length() > 0 && password != null && password.length() > 0) {
+        		   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
+        	   }
+        	   setEncodings(Encoding.GZIP);
+        	   Representation resp = null;
+        	   resp = getClientResource().post(new JsonRepresentation(formData));
+        	   Representation decodedRep = new DecodeRepresentation(resp);
+        	   JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
+        	   jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(decodedRep.getText()));
+        	   return jsonResponseRepresentation;
            }
        }.execute();    
    }
@@ -180,9 +179,10 @@ public class ServiceProcessor {
                if (username != null && username.length() > 0 && password != null && password.length() > 0) {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
-//                getClientResource().getRequest().setEntity();
+               setEncodings(Encoding.GZIP);
                setRepresentation(getClientResource().post(new JsonRepresentation(formData)));
-               return new StringRepresentation(getRepresentation().getText());
+               Representation decodedRep = new DecodeRepresentation(getClientResource().post(new JsonRepresentation(formData)));
+               return new StringRepresentation(decodedRep.getText());
            }}.executeString();    
    }
    
@@ -264,12 +264,14 @@ public class ServiceProcessor {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
                setMediaType(type);
+               setEncodings(Encoding.GZIP);
                setRepresentation(getClientResource().delete());
+               Representation decodedRep = new DecodeRepresentation(getClientResource().delete());
                
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():"");
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():""));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? decodedRep.getText():""));
                return jsonResponseRepresentation;
            }
        }.execute();    
@@ -290,11 +292,13 @@ public class ServiceProcessor {
                if (username != null && username.length() > 0 && password != null && password.length() > 0) {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
+               setEncodings(Encoding.GZIP);
                setRepresentation(getClientResource().put(form.getWebRepresentation()));
+               Representation decodedRep = new DecodeRepresentation(getClientResource().put(form.getWebRepresentation()));
                // Get the representation as an JsonRepresentation
                // return new JsonRepresentation(getRepresentation().getText());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(getRepresentation().getText()));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(decodedRep.getText()));
                return jsonResponseRepresentation;
                
            }
@@ -318,7 +322,6 @@ public class ServiceProcessor {
                }
 //               setRepresentation(getClientResource().delete(formData));
                // Get the representation as an JsonRepresentation
-               //return new JsonRepresentation(getRepresentation().getText());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():""));
                return jsonResponseRepresentation;
@@ -342,11 +345,12 @@ public class ServiceProcessor {
                if (username != null && username.length() > 0 && password != null && password.length() > 0) {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
+               setEncodings(Encoding.GZIP);
                setRepresentation(getClientResource().put(formData));
+               Representation decodedRep = new DecodeRepresentation(getClientResource().put(formData));
                // Get the representation as an JsonRepresentation
-               //return new JsonRepresentation(getRepresentation().getText());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():""));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? decodedRep.getText():""));
                return jsonResponseRepresentation;
            }
        }.execute();
