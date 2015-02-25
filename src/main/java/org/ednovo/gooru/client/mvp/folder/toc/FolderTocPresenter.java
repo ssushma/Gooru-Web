@@ -24,7 +24,7 @@
  ******************************************************************************/
 /**
  * 
-*/
+ */
 package org.ednovo.gooru.client.mvp.folder.toc;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -60,9 +60,9 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @Reviewer: 
  */
 public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFolderTocProxy> implements FolderTocUiHandlers {
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.FOLDER_TOC)
 	public interface IsFolderTocProxy extends ProxyPlace<FolderTocPresenter> {
@@ -73,7 +73,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		super(view, proxy);
 		getView().setUiHandlers(this);
 	}
-	
+
 	@Override
 	public String getViewToken() {
 		throw new RuntimeException("Not implemented");
@@ -81,16 +81,17 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 
 	@Override
 	protected void onReveal() {
-	    super.onReveal();
-	    getView().getTreePanel();
-	    String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+		super.onReveal();
+		getView().getTreePanel();
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
 		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
-	   //Check the user is logged in or not, and enabling the TOC if we are viewing from library
-	   if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
-		   AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
-	   }else{
-		   Window.enableScrolling(true);
+		String userId=AppClientFactory.getPlaceManager().getRequestParameter("userId",null);
+		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
+		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}else{
+			Window.enableScrolling(true);
 			AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
 				@Override
 				public void onSuccess(FolderTocDo folderListDo) {
@@ -115,23 +116,18 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 					getView().setBannerImages();
 				}
 				getView().setBackButtonText(i18n.GL3170());
-			}else{
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousRequest();
-				if(placeRequest!=null && PlaceTokens.PROFILE_PAGE.equalsIgnoreCase(placeRequest.getNameToken())){
-					getView().setBackButtonText(i18n.GL3171());
-				}else{
-					getView().setBackButtonText(i18n.GL3172());
-				}
+			}else if(userId==null){
+				//getView().showProfileBanner();
 				getView().hidePanels();
 			}
-	   }
+		}
 	}
-	
+
 	@Override
 	protected void onReset() {
 		super.onReset();
 	}
-	
+
 	@Override
 	public void onBind() {
 		super.onBind();

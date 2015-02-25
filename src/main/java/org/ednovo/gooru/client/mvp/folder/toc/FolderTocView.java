@@ -62,6 +62,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -96,12 +97,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel;
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
-	@UiField H2Panel bannerTitle;
-	@UiField Image logoImage,bannerImage;
+	@UiField H2Panel bannerTitle,userTitle;
+	@UiField Image logoImage,bannerImage,profImage;
+	@UiField Anchor mainTitle,firstTitle;
 	
 	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel;
 	
@@ -132,11 +134,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		setData();
 		bannerImage.setVisible(false);
 		bannerImagePanel.setVisible(false);
+		profileBannerPanel.setVisible(false);
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
 		setBannerStaticImages();
+		
 	}
-	
+
 	/**
 	 * This method is used to set folder TOC Data.
 	 */
@@ -302,8 +306,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					performancePanel.setVisible(false);
 				}
 				lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
+				String profId= AppClientFactory.getPlaceManager().getRequestParameter("userId", null);
+				if(profId!=null){
+					showProfileBanner();
+				}
 			}
-	}
+			
+		}
 	/**
 	 * @function adjustTreeItemStyle 
 	 * 
@@ -489,6 +498,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		floderTreeContainer.clear();
 		currentFolderSelectedTreeItem=null;
 		previousSelectedItem=null;
+		//bannerImagePanel.clear();
+		//profileBannerPanel.clear();
 	}
 	/**
 	 * This method is used to display loading text to the user.
@@ -544,6 +555,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBannerImages(){
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		bannerImage.setVisible(false);
+		profileAndLibraryPanels(false);
 		if(!StringUtil.isEmpty(placetoken)){
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(bannerVal.get(placetoken).get(1));
@@ -553,7 +565,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}else{
 				bannerTitle.getElement().getStyle().clearBackgroundColor();
 			}
-
+			setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		}
 	}
 	/* (non-Javadoc)
@@ -561,6 +573,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void setCourseBanner(FolderDo folderDo) {
+		profileAndLibraryPanels(false);
 		bannerImagePanel.setVisible(true);
 		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
@@ -569,6 +582,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		logoImage.setUrl(bannerVal.get(placetoken).get(2));
 		bannerImagePanel.getElement().setAttribute("style", "background: url("+folderDo.getThumbnails().getUrl() +") center;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
+		setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		bannerImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -584,6 +598,45 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void hidePanels() {
 		bannerImagePanel.setVisible(false);
+		profileBannerPanel.setVisible(false);
+	}
+	/**
+	 * To set the User profile details
+	 */
+	private void setProfileBannerDetails() {
+		userTitle.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
+		profImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
+		profImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				profImage.setUrl("images/profilepage/user-profile-pic.png");
+			}
+		});
+		setBreadCrumbsText(userTitle.getText(),lblFolderTitle.getText());
+	}
+	/**
+	 * To set the text of folder BreadCrumbs
+	 */
+	private void setBreadCrumbsText(String mTitle,String fTitle) {
+		mainTitle.setText(mTitle);
+		firstTitle.setText(fTitle);
+	}
+	/**
+	 * To show profile page details in Toc
+	 */
+	@Override
+	public void showProfileBanner() {
+		profileAndLibraryPanels(true);
+		setProfileBannerDetails();
+	}
+	/**
+	 * To hide the bannerImage panels 
+	 * @param isVisible {@link Boolean}
+	 */
+	public void profileAndLibraryPanels(boolean isVisible){
+		bannerImagePanel.setVisible(!isVisible);
+		profileBannerPanel.setVisible(isVisible);
+
 	}
 
 	/* (non-Javadoc)

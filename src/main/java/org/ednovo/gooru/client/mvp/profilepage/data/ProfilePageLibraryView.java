@@ -67,7 +67,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	@UiField Label noCollectionsMsg, collectionsRedirectionMsg,folderTopicTitleLbl;
 	
-	@UiField Button myCollectionsBtn,viewAllBtn;
+	@UiField Button myCollectionsBtn,listAllBtn;
 	
 	private static final String FOLDERID = "folderId";
 	
@@ -113,14 +113,14 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		collectionsRedirectionMsg.getElement().setAttribute("title",i18n.GL1788());
 		
 		emptyContainer.getElement().setId("pnlEmptyContainer");
-		viewAllBtn.getElement().setId("btnViewAll");
+		listAllBtn.getElement().setId("btnViewAll");
 		noCollectionsMsg.getElement().setId("lblNoCollectionsMsg");
 		leftNav.getElement().setId("pnlLeftNav");
 		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
-		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -60px 9px 0 0;");
+		listAllBtn.getElement().setAttribute("style", "float:right;margin: -60px 9px 0 0;");
 		folderListPanel.setVisible(false);
-		viewAllBtn.setVisible(false);
+		listAllBtn.setVisible(false);
 	}
 	
 	public void setData() {
@@ -156,16 +156,16 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				unitListId = folderList.get(i).getGooruOid();
 				if(folderList.get(i).getType().equals("scollection")) {
 					setTopicListData(folderList.get(i),  unitListId);
-					viewAllBtn.setVisible(false);
+					listAllBtn.setVisible(false);
 					folderListPanel.setVisible(false);
 				} else {
-					viewAllBtn.setVisible(true);
+					listAllBtn.setVisible(true);
 					folderListPanel.setVisible(true);
 					folderTopicTitleLbl.setText(folderList.get(i).getTitle());
 					if(handlerRegistration!=null){
 						handlerRegistration.removeHandler();
 					}
-					handlerRegistration=viewAllBtn.addClickHandler(new clickOnViewAll(folderList.get(i).getGooruOid()));
+					handlerRegistration=listAllBtn.addClickHandler(new ClickOnListAll(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
@@ -187,16 +187,16 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					unitListId = leftMenuItemView.getUnitId();
 					if(leftMenuItemView.getType().equals("scollection")) {
 						getPresenter().getProfileLibraryCollection(unitListId, false);
-						viewAllBtn.setVisible(false);
+						listAllBtn.setVisible(false);
 						folderListPanel.setVisible(false);
 					} else {
 						folderListPanel.setVisible(true);
-						viewAllBtn.setVisible(true);
+						listAllBtn.setVisible(true);
 						folderTopicTitleLbl.setText(leftMenuItemView.getTitle());
 						if(handlerRegistration!=null){
 							handlerRegistration.removeHandler();
 						}
-						handlerRegistration=viewAllBtn.addClickHandler(new clickOnViewAll(unitListId));
+						handlerRegistration=listAllBtn.addClickHandler(new ClickOnListAll(unitListId));
 						
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
@@ -308,16 +308,21 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			}
 		}
 	}
-	
-	public class clickOnViewAll implements ClickHandler{
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
+	 * @author janamitra
+	 *
+	 */
+	public class ClickOnListAll implements ClickHandler{
 		String folderId="";
-		public clickOnViewAll(String folderId){
+		public ClickOnListAll(String folderId){
 			this.folderId=folderId;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", folderId);
+			params.put("userId", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 		}
 		

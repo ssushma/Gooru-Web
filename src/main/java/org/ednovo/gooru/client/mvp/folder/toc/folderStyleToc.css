@@ -816,3 +816,42 @@
 	bottom: 17px;
 	right: 29px;
 }
+
+.bannerimageContainer1{
+	background:#dddddd;
+	text-align:center;
+	
+	
+}
+.bannerimageCaption1{
+	text-align:center;
+	padding:25px 0;
+}
+.bannerimageCaption1 .imgResponsive{
+	border:5px solid #87badd;
+	width:135px;
+	display:inline-block;
+	
+}
+.bannerimageCaption1 h2{
+	display:inline-block;
+	vertical-align:middle;
+	color:#ffffff;
+	font-weight:bold;
+	font-size:35px;
+	margin-left:12px;
+}
+
+.paginationBlock{
+	width:100%;
+	display:inline-block;
+	margin-bottom:15px;
+	font-size:17px;
+	color:#0066cc;
+}
+
+.shareButton{
+	text-align:right;
+}
+
+

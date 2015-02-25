@@ -78,6 +78,10 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	 */
 	void hidePanels();
 	/**
+	 * To show profile page banner
+	 */
+	void showProfileBanner();
+	/**
 	 * This method is used to set back button text based on the previous click
 	 * @param from
 	 */
