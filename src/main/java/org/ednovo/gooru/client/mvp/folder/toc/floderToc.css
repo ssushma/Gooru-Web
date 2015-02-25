@@ -107,10 +107,12 @@ button.primary:hover {
 	background: url(../images/folders/panel/folder-icon.png) no-repeat 1px 0px;
 	height: 26px;
 	padding-left: 41px;
+	border-bottom: 1px solid #E1DFDA;
+	padding-bottom: 35px;
 }
 
 .marginDiv {
-	margin: 0 100px;
+	margin: 0 35px;
 }
 
 .perTaskContainer {
