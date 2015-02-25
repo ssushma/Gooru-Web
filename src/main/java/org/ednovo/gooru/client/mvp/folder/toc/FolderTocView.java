@@ -555,11 +555,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBannerImages(){
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		bannerImage.setVisible(false);
-<<<<<<< HEAD
 		profileAndLibraryPanels(false);
-
-=======
->>>>>>> 54649b660998833fc378b33138ae772ad07f8199
 		if(!StringUtil.isEmpty(placetoken)){
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(bannerVal.get(placetoken).get(1));
@@ -577,11 +573,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void setCourseBanner(FolderDo folderDo) {
-<<<<<<< HEAD
 		profileAndLibraryPanels(false);
-=======
 		bannerImagePanel.setVisible(true);
->>>>>>> 54649b660998833fc378b33138ae772ad07f8199
 		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
 		bannerTitle.getElement().setAttribute("style", "background-color: rgba(16, 118, 187, 0.5);");
