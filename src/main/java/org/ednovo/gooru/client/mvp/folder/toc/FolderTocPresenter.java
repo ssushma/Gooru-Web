@@ -81,56 +81,41 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	protected void onReset() {
 		super.onReset();
-		Window.enableScrolling(true);
-		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
-		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
-			@Override
-			public void onSuccess(FolderTocDo folderListDo) {
-				getView().clearTocData();
-				getView().setFolderItems(folderListDo);
-			}
-		});
-		if(libName!=null){
-			//This api used for to get the course image details of library.
-			if(parentId!=null){
-				AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
-
-					@Override
-					public void onSuccess(FolderDo result) {
-						// TODO Auto-generated method stub
-						if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
-							getView().setCourseBanner(result);
-						}else{
-							getView().setBannerImages();
-						}
-					}
-					
-				});
-			}else{
-				getView().setBannerImages();
-			}
-		}else{
-			getView().hidePanels();
-		}
-		
-	
-		//getView().setBannerImages();
-		/*//Checking whether the user is logged in user or not
+		//Checking whether the user is logged in user or not
         if(AppClientFactory.isAnonymous()){
         	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
         }else{
-        	String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-    		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
-    			@Override
-    			public void onSuccess(FolderTocDo folderListDo) {
-    				getView().clearTocData();
-    				getView().setFolderItems(folderListDo);
-    			}
-    		});
-    		getView().setBannerImages();
-        }*/
+			Window.enableScrolling(true);
+			String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+			String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
+			String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+			AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
+				@Override
+				public void onSuccess(FolderTocDo folderListDo) {
+					getView().clearTocData();
+					getView().setFolderItems(folderListDo);
+				}
+			});
+			if(libName!=null){
+				//This api used for to get the course image details of library.
+				if(parentId!=null){
+					AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
+						@Override
+						public void onSuccess(FolderDo result) {
+							if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
+								getView().setCourseBanner(result);
+							}else{
+								getView().setBannerImages();
+							}
+						}
+					});
+				}else{
+					getView().setBannerImages();
+				}
+			}else{
+				getView().hidePanels();
+			}
+        }
 	}
 	
 	@Override

@@ -187,15 +187,18 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			public void onClick(ClickEvent event) {
 				String lastAccessedUrl=Cookies.getCookie("backToToc")!=null?Cookies.getCookie("backToToc"):"";
 				String[] placeToken=lastAccessedUrl.split("#");
-				String[] entries = placeToken[1].split("&");
 				Map<String, String> params = new HashMap<String, String>();
-				if(placeToken.length>0){
-					for (String entry : entries) {
-							String[] keyValue = entry.split("=");
-							params.put(keyValue[0],keyValue[1]);
-					}
+				if(placeToken.length>1){
+					String[] entries = placeToken[1].split("&");
+						for (String entry : entries) {
+								String[] keyValue = entry.split("=");
+								params.put(keyValue[0],keyValue[1]);
+						}
+						AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
+				}else{
+					//If we are viewing TOC from library 
 					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
-				}
+			  }
 			}
 		});
 	}
@@ -204,7 +207,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void setBannerStaticImages() {
-		// TODO Auto-generated method stub
 		bannerVal= new HashMap<String, List<String>>();
 		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px;",i18n.GL0532(),Constants.RUSD_LOGO));
 		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png);",i18n.GL2108(),Constants.CORE_LOGO));
@@ -229,7 +231,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center;",i18n.GL2186(),""));
 		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center;",i18n.GL2031(),""));
 		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center;",i18n.GL2040(),""));
-		
 	}
 	@Override
 	public void setFolderItems(FolderTocDo  foldersTocObj) {
@@ -261,7 +262,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	void setFolderMetaData(FolderTocDo  foldersTocObj){
 			//This is used for handling folder toc back button code
-			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken())){
+			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()) && !PlaceTokens.FOLDER_TOC.equalsIgnoreCase(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken())){
 				String paramerersString="";
 				Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
 				if(parameters.size()>0){
@@ -269,33 +270,36 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						paramerersString=paramerersString+paramString+"="+AppClientFactory.getPlaceManager().getPreviousRequest().getParameter(paramString, null)+"&";
 					}
 				}
-				Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
+				Cookies.removeCookie("backToToc");
+				if(StringUtil.isEmpty(paramerersString)){
+					//If we click the view all or list all button form the library
+					Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken());
+				}else{ 
+					//If we click the view all or list all button form the my collection or profile 
+					Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
+				}
 			}
-		if(foldersTocObj!=null){
-			if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
-				bigIdeasPanel.setVisible(true);
-				lblBigIdeas.setText(foldersTocObj.getIdeas());
-			}else{
-			    bigIdeasPanel.setVisible(false);
+			if(foldersTocObj!=null){
+				if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
+					bigIdeasPanel.setVisible(true);
+					lblBigIdeas.setText(foldersTocObj.getIdeas());
+				}else{
+				    bigIdeasPanel.setVisible(false);
+				}
+				if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
+					essentialPanel.setVisible(true);
+					lblEssentalQuestions.setText(foldersTocObj.getQuestions());
+				}else{
+					essentialPanel.setVisible(false);
+				}
+				if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
+					performancePanel.setVisible(true);
+					lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks());
+				}else{
+					performancePanel.setVisible(false);
+				}
+				lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
 			}
-			if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
-				essentialPanel.setVisible(true);
-				lblEssentalQuestions.setText(foldersTocObj.getQuestions());
-			}else{
-				essentialPanel.setVisible(false);
-			}
-			if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
-				performancePanel.setVisible(true);
-				lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks());
-			}else{
-				performancePanel.setVisible(false);
-			}
-			lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
-			/*lblBigIdeas.setText(foldersTocObj.getIdeas()!=null?foldersTocObj.getIdeas():"");
-			
-			lblEssentalQuestions.setText(foldersTocObj.getQuestions()!=null?foldersTocObj.getQuestions():"");
-			lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks()!=null?foldersTocObj.getPerformanceTasks():"");*/
-		}
 	}
 	/**
 	 * @function adjustTreeItemStyle 
@@ -534,7 +538,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBannerImages(){
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		bannerImage.setVisible(false);
-
 		if(!StringUtil.isEmpty(placetoken)){
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(bannerVal.get(placetoken).get(1));
@@ -553,7 +556,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
    */
 	@Override
 	public void setCourseBanner(FolderDo folderDo) {
-		// TODO Auto-generated method stub
 		bannerImagePanel.setVisible(true);
 		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
@@ -565,7 +567,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
-				// TODO Auto-generated method stub
 				setBannerImages();
 			}
 		});
@@ -577,7 +578,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void hidePanels() {
-		// TODO Auto-generated method stub
 		bannerImagePanel.setVisible(false);
 	}
 }
