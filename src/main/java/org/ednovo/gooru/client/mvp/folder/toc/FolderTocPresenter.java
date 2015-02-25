@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -75,15 +76,15 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 
 	@Override
 	protected void onReveal() {
-	   super.onReveal();
-	   //Check the user is logged in or not
-	   if(AppClientFactory.isAnonymous()){
+	    super.onReveal();
+	    String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
+		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+	   //Check the user is logged in or not, and enabling the TOC if we are viewing from library
+	   if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
 		   AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 	   }else{
 		   Window.enableScrolling(true);
-			String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-			String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
-			String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 			AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
 				@Override
 				public void onSuccess(FolderTocDo folderListDo) {
@@ -92,7 +93,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}
 			});
 			if(libName!=null){
-				//This api used for to get the course image details of library.
+				//This API used for to get the course image details of library.
 				if(parentId!=null){
 					AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
 						@Override
