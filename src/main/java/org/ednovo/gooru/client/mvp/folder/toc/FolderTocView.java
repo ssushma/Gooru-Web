@@ -129,7 +129,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private FolderTreeItem previousFolderSelectedTreeItem = null;
 	
 	public FolderTocView() {
-		
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 		setData();
@@ -146,7 +145,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * This method is used to set folder TOC Data.
 	 */
 	public void setData() {
-		btnBackToPrevious.setText(i18n.GL3165());
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTocTree);
 		folderTocTree.addItem(getLoadingImage());
@@ -191,24 +189,26 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			public void onClick(ClickEvent event) {
 				String lastAccessedUrl=Cookies.getCookie("backToToc")!=null?Cookies.getCookie("backToToc"):"";
 				String[] placeToken=lastAccessedUrl.split("#");
-				String[] entries = placeToken[1].split("&");
 				Map<String, String> params = new HashMap<String, String>();
-				if(placeToken.length>0){
-					for (String entry : entries) {
-							String[] keyValue = entry.split("=");
-							params.put(keyValue[0],keyValue[1]);
-					}
+				if(placeToken.length>1){
+					String[] entries = placeToken[1].split("&");
+						for (String entry : entries) {
+								String[] keyValue = entry.split("=");
+								params.put(keyValue[0],keyValue[1]);
+						}
+						AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
+				}else{
+					//If we are viewing TOC from library 
 					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
-				}
+			  }
 			}
 		});
 	}
-	/**
-	 * To set the static Banner images into Map 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBannerStaticImages()
 	 */
 	@Override
 	public void setBannerStaticImages() {
-		// TODO Auto-generated method stub
 		bannerVal= new HashMap<String, List<String>>();
 		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px;",i18n.GL0532(),Constants.RUSD_LOGO));
 		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png);",i18n.GL2108(),Constants.CORE_LOGO));
@@ -233,8 +233,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center;",i18n.GL2186(),""));
 		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center;",i18n.GL2031(),""));
 		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center;",i18n.GL2040(),""));
-		
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setFolderItems(org.ednovo.gooru.shared.model.folder.FolderTocDo)
+	 */
 	@Override
 	public void setFolderItems(FolderTocDo  foldersTocObj) {
 		folderTocTree.clear();
@@ -264,44 +266,53 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @param foldersTocObj
 	 */
 	void setFolderMetaData(FolderTocDo  foldersTocObj){
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousRequest();
+
 			//This is used for handling folder toc back button code
-			if(AppClientFactory.getPlaceManager().getPreviousRequest()!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken())){
+			if(placeRequest!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.FOLDER_TOC.equalsIgnoreCase(placeRequest.getNameToken())){
 				String paramerersString="";
-				Set<String> parameters=AppClientFactory.getPlaceManager().getPreviousRequest().getParameterNames();
+				Set<String> parameters=placeRequest.getParameterNames();
 				if(parameters.size()>0){
 					for (String paramString : parameters) {
-						paramerersString=paramerersString+paramString+"="+AppClientFactory.getPlaceManager().getPreviousRequest().getParameter(paramString, null)+"&";
+						paramerersString=paramerersString+paramString+"="+placeRequest.getParameter(paramString, null)+"&";
 					}
 				}
-				Cookies.setCookie("backToToc",AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken()+"#"+paramerersString);
+				Cookies.removeCookie("backToToc");
+				if(StringUtil.isEmpty(paramerersString)){
+					//If we click the view all or list all button form the library
+					Cookies.setCookie("backToToc",placeRequest.getNameToken());
+				}else{ 
+					//If we click the view all or list all button form the my collection or profile 
+					Cookies.setCookie("backToToc",placeRequest.getNameToken()+"#"+paramerersString);
+				}
 			}
-		if(foldersTocObj!=null){
-			if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
-				bigIdeasPanel.setVisible(true);
-				lblBigIdeas.setText(foldersTocObj.getIdeas());
-			}else{
-			    bigIdeasPanel.setVisible(false);
-			}
-			if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
-				essentialPanel.setVisible(true);
-				lblEssentalQuestions.setText(foldersTocObj.getQuestions());
-			}else{
-				essentialPanel.setVisible(false);
-			}
-			if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
-				performancePanel.setVisible(true);
-				lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks());
-			}else{
-				performancePanel.setVisible(false);
-			}
-			lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
-			String profId= AppClientFactory.getPlaceManager().getRequestParameter("userId", null);
-			if(profId!=null){
-				showProfileBanner();
+			if(foldersTocObj!=null){
+				if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
+					bigIdeasPanel.setVisible(true);
+					lblBigIdeas.setText(foldersTocObj.getIdeas());
+				}else{
+				    bigIdeasPanel.setVisible(false);
+				}
+				if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
+					essentialPanel.setVisible(true);
+					lblEssentalQuestions.setText(foldersTocObj.getQuestions());
+				}else{
+					essentialPanel.setVisible(false);
+				}
+				if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
+					performancePanel.setVisible(true);
+					lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks());
+				}else{
+					performancePanel.setVisible(false);
+				}
+				lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
+				String profId= AppClientFactory.getPlaceManager().getRequestParameter("userId", null);
+				if(profId!=null){
+					showProfileBanner();
+				}
 			}
 			
 		}
-	}
 	/**
 	 * @function adjustTreeItemStyle 
 	 * 
@@ -417,6 +428,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		getUiHandlers().getFolderItems(item, parentId);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setFolderItems(com.google.gwt.user.client.ui.TreeItem, org.ednovo.gooru.shared.model.folder.FolderTocDo, java.lang.String)
+	 */
 	@Override
 	public void setFolderItems(TreeItem item,FolderTocDo foldersTocObj,String parentId) {
 		displayWorkspaceData(item, foldersTocObj,parentId);
@@ -516,7 +530,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		int totalClientWidth=Window.getClientWidth();
 		int getMargin=0;
 		if(totalClientWidth>767){
-			getMargin=100;
+			getMargin=35;
 		}else{
 			getMargin=10;
 		}
@@ -534,15 +548,18 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			marginDiv.getElement().getStyle().setMarginRight(getTotalViewableWidth(),  Unit.PX);
 		}
 	}
-	/**
-	 * To set the bannner images, titles and logo based on the library name.
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBannerImages()
 	 */
 	@Override
 	public void setBannerImages(){
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		bannerImage.setVisible(false);
+<<<<<<< HEAD
 		profileAndLibraryPanels(false);
 
+=======
+>>>>>>> 54649b660998833fc378b33138ae772ad07f8199
 		if(!StringUtil.isEmpty(placetoken)){
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(bannerVal.get(placetoken).get(1));
@@ -555,13 +572,16 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		}
 	}
-  /**
-   * To set the course Banner Images details 
-   * @param folderDo {@link FolderDo}
-   */
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setCourseBanner(org.ednovo.gooru.shared.model.folder.FolderDo)
+	 */
 	@Override
 	public void setCourseBanner(FolderDo folderDo) {
+<<<<<<< HEAD
 		profileAndLibraryPanels(false);
+=======
+		bannerImagePanel.setVisible(true);
+>>>>>>> 54649b660998833fc378b33138ae772ad07f8199
 		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
 		bannerTitle.getElement().setAttribute("style", "background-color: rgba(16, 118, 187, 0.5);");
@@ -624,5 +644,20 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImagePanel.setVisible(!isVisible);
 		profileBannerPanel.setVisible(isVisible);
 
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBackButtonText(java.lang.String)
+	 */
+	@Override
+	public void setBackButtonText(String from) {
+		btnBackToPrevious.setText(i18n.GL3165()+" "+from);
+	}
+
+	@Override
+	public Tree getTreePanel() {
+		folderTocTree.clear();
+		folderTocTree.addItem(getLoadingImage());
+		return folderTocTree;
 	}
 }
