@@ -32,16 +32,19 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 /**
  * @fileName : FolderTocPresenter.java
@@ -57,6 +60,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @Reviewer: 
  */
 public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFolderTocProxy> implements FolderTocUiHandlers {
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.FOLDER_TOC)
@@ -77,6 +82,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	protected void onReveal() {
 	    super.onReveal();
+	    getView().getTreePanel();
 	    String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
 		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
@@ -108,7 +114,14 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}else{
 					getView().setBannerImages();
 				}
+				getView().setBackButtonText(i18n.GL3170());
 			}else{
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousRequest();
+				if(placeRequest!=null && PlaceTokens.PROFILE_PAGE.equalsIgnoreCase(placeRequest.getNameToken())){
+					getView().setBackButtonText(i18n.GL3171());
+				}else{
+					getView().setBackButtonText(i18n.GL3172());
+				}
 				getView().hidePanels();
 			}
 	   }

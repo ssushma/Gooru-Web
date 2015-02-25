@@ -134,7 +134,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	
 	@UiField
 	Label courseMoreInfoLbl;*/
-	@UiField HTMLPanel publicRadioButtonPanel,shareRadioButtonPanel,privateRadioButtonPanel,buttonMainContainer;
+	@UiField HTMLPanel  pnlExistingAssessmentContainer,pnlNewAssessmentContainer,pnlCreateNewAssessment,bodyContainer,shelfItemContent,publicRadioButtonPanel,shareRadioButtonPanel,privateRadioButtonPanel,buttonMainContainer;
 	
 	RadioButton radioButtonPublic=new RadioButton("","");
 	RadioButton radioButtonShare=new RadioButton("","");
@@ -194,6 +194,11 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		}
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(CollectionCBundle.INSTANCE.css().gwtGlassPanel());
+		
+
+		pnlCreateNewAssessment.setVisible(false);
+		bodyContainer.setVisible(true);
+		
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 //		buttonFloPanel.add(validationErrorFloPanel);
@@ -567,7 +572,6 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		btnOk.getElement().removeClassName("disabled");
 		collectionDo = null;
 		buttonMainContainer.setVisible(true);
-		
 		loadingTextLbl.setVisible(false);
 		collectionTitleTxtBox.setText("");
 //		validationErrorLbl.setVisible(false);
