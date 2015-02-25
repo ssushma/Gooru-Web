@@ -5,13 +5,15 @@
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=9"> -->
 <meta http-equiv="X-UA-Compatible" content="IE=9" />
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
-<!--BeginCssReplacer-->
-<link type="text/css" rel="stylesheet" href="${cdn.endpoint}/css/gooru.css">
+<!-- BeginCssReplacer -->
+<!-- <link type="text/css" rel="stylesheet" href="${cdn.endpoint}/css/gooru.css">
 <link type="text/css" rel="stylesheet" href="${cdn.endpoint}/css/gooru-global.css">
 <link href="${cdn.endpoint}/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="${cdn.endpoint}/css/landingpage.css" rel="stylesheet" type="text/css">
-<link href="${cdn.endpoint}/css/printAnalytics.css" rel="stylesheet" type="text/css">
-<!--EndCssReplacer-->
+<link href="${cdn.endpoint}/css/printAnalytics.css" rel="stylesheet" type="text/css"> -->
+<!-- EndCssReplacer -->
+
+<link href="${cdn.endpoint}/css/main-styles.min.css" rel="stylesheet" type="text/css">
 
 <link href="${cdn.endpoint}/css/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
 <link href='//fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -22,19 +24,25 @@
 <title>Gooru | Sign up, Sign in </title>
 <script type="text/javascript" src='newgooru/newgooru.nocache.js?v=${gooru.release.version}'></script>
 
-<script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js" async></script>
+<script type="text/javascript" src="${cdn.endpoint}/scripts/jquery-1.11.0.min.js"></script>
 
 <!-- BeginJsTinyReplacer -->
 <script type="text/javascript" src="${cdn.endpoint}/scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js" async></script>
 <script type="text/javascript" src="${cdn.endpoint}/scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js" async></script>
 <!-- BeginJsTinyReplacer -->
 
-<!--BeginJsReplacer-->
-<script type="text/javascript" src="${cdn.endpoint}/scripts/basicscripts.js" async></script>
+<!-- BeginJsReplacer -->
+<!-- <script type="text/javascript" src="${cdn.endpoint}/scripts/basicscripts.js" async></script>
 <script type="text/javascript" src="${cdn.endpoint}/scripts/errorImageFunction.js" async></script>
 <script type="text/javascript" src="${cdn.endpoint}/scripts/highcharts.js" async></script>
-<script type="text/javascript" src="${cdn.endpoint}/scripts/heatmap.js" async></script>
-<!--EndJsReplacer-->
+<script type="text/javascript" src="${cdn.endpoint}/scripts/heatmap.js" async></script> -->
+<!-- EndJsReplacer -->
+
+<!-- Already Minified -->
+<script type="text/javascript" src="${cdn.endpoint}/scripts/highcharts.js" async></script>
+
+<script type="text/javascript" src="${cdn.endpoint}/scripts/main-script.min.js" async></script>
+
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
  
@@ -75,14 +83,6 @@
 </script>
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/NQx3lF2RAdAcYft8tWKZKA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
-
-<script type="text/javascript">
-     (function() {
- 	    var et = document.createElement('script'); et.type = 'text/javascript'; et.async= true;
- 	    et.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js';
- 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(et, s);
- 	  })(); 
-</script>
 
 <link rel="icon" type="image/png" href="images/favicon.png?v=${gooru.release.version}" />
 <script type="text/javascript">

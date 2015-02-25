@@ -38,6 +38,7 @@ import org.ednovo.gooru.shared.model.drive.ErrorDo;
 import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.data.Encoding;
 import org.restlet.data.MediaType;
 import org.restlet.data.Preference;
 import org.restlet.engine.header.Header;
@@ -272,6 +273,20 @@ public abstract class ServiceRequest {
 			mediaTypes.add(contentType);
 			clientResource.getClientInfo().setAcceptedMediaTypes(mediaTypes);
 		}
+	}
+	
+	/**
+	 * Sets the encoding type.
+	 * 
+	 * @param encodingType {@link Encoding}
+	 */
+	public void setEncodings(Encoding encodingType){
+		if(clientResource!=null){
+			List<Preference<Encoding>> acceptedEncodings = new ArrayList<Preference<Encoding>>();
+			acceptedEncodings.add(new Preference<Encoding>(encodingType));
+			clientResource.getClientInfo().setAcceptedEncodings(acceptedEncodings);
+		}
+
 	}
 
 	public Representation getRepresentation() {

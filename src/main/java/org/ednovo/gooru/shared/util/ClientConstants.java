@@ -203,9 +203,42 @@ public interface ClientConstants {
 	
 	
 	
-	/*************** Library End **************************************************/
+	/*************** Library Start **************************************************/
 	
 	String FOLDER = "folder";
+	String U_WEBSITE ="Website";
+	String U_WEBPAGE = "Webpage";		
+	String U_SLIDE = "Slide";
+	String U_IMAGE ="Image";
+	String U_HANDOUT = "Handout";
+	String U_LESSON ="Lesson";
+	String U_TEXTBOOK = "Textbook";
+	String U_TEXT = "Text";
+	String U_EXAM = "Exam";
+	String U_VIDEO = "Video";
+	String U_INTERACTIVE ="Interactive";
+	String DEFULT_IMAGE_PREFIX = "images/default-";
+	String PNG = ".png";
+	String SMALL = "Small";
+	String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
+	String PAGE = "page";
+	String COURSE_PAGE = "course-page";
+	String STANDARD_CODE = "code";
+	String STANDARD_DESCRIPTION = "description";
+	String PNG_CROP = "-80x60.";
+	String CUSTOMIZE = "customize";
+	String ASSIGN = "assign";
+	String COLLECTION_TITLE = "collectionTitle";
+	String SUBJECT_NAME = "subject";
+	String STANDARDS="standard";
+	String SHARING_TYPE = "public";
+	String STANDARD_ID = "standardId";
+	String PARTNER = "partner";
+	String CONCEPT = "concept";
+	String POPULAR = "Popular";
+	
+
+	
 	
 	/*************** Library End **************************************************/
 	String ASSESSMENT_QUESTION="assessment-question";
