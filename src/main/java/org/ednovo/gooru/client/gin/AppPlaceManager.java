@@ -118,9 +118,6 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	
 	@Override
 	public void revealPlace(boolean refresh, PlaceRequest place,boolean isPlayerRequest) {
-//		if (previousRequest != null && !previousRequest.equals(place)) {
-//			playerBackRequest=previousRequest;
-//		}
 		setRefreshPlace(refresh);
 		super.revealPlace(place);
 	}
@@ -178,11 +175,6 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 				placeRequest = placeRequest.with(key, params.get(key));
 			}
 		}
-		
-		/*if (onlyIfNew && placeRequest.equals(AppClientFactory.getPlaceManager().getCurrentPlaceRequest())) {
-			
-			return;
-		}*/
 		revealPlace(placeRequest);
 	}
 
@@ -524,25 +516,9 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		}
 		
 		public String getDataLogClasspageId(){
-//			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
-//			String pageLocation=placeRequest.getNameToken();
-//			String classpageId="";
-//			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-//				classpageId=placeRequest.getParameter("classpageid", "");
-//			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
-//				classpageId=placeRequest.getParameter("id", "");
-//			}
 			return this.classpageId;
 		}
 		public String getClasspageEventId(){
-//			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
-//			String pageLocation=placeRequest.getNameToken();
-//			String classpageEventId="";
-//			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-//				classpageEventId=this.classpageEventId;
-//			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
-//				classpageEventId=this.classpageEventId;
-//			}
 			return this.classpageEventId;
 		}
 		public void setClasspageEventId(String classpageEventId){
@@ -605,7 +581,6 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		
 		@Override
 		public void resetLibraryEventData(String libraryName){
-			//isLibraryEventTriggered=false;
 			libraryEventMap.remove(libraryName);
 			isLibraryEventId=null;
 		}

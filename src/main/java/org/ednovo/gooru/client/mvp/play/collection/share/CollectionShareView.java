@@ -89,12 +89,6 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	
 	private String embedBitlyUrl="";
 
-//	private static final String SWITCH_FULL_URL = i18n.GL0643;
-
-//	private static final String SWITCH_EMBED_CODE = i18n.GL0640;
-
-//	private static final String SWITCH_BITLY = i18n.GL0639;
-	
 	private CollectionEmailShareView emailShareView=null;
 	
 	private Map<String, String> collectionShareMap=null;
@@ -161,7 +155,6 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		if(isResourceView){
 			socialSharePanel.setVisible(true);
 			collectionShareContainer.setVisible(false);
-//			resourceTitleText.setText("Resource");
 		}else{
 			resourceTitleText.setText(i18n.GL0645());
 			resourceTitleText.getElement().setAttribute("alt",i18n.GL0645());
@@ -360,7 +353,6 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 					resourceShareTextArea.setText(resourceShareMap.get(linkUrl));
 					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
 					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
-					//collectionShareTextArea.setText(collectionShareMap.get(linkUrl));
 				}else{
 					resourceShareTextArea.setText(collectionShareMap.get(linkUrl));
 					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
@@ -489,12 +481,10 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			 */
 			@Override
 			public void onEmail() {
-//				String emailSubject=i18n.GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle());
 				String emailSubject=removeHtmlTags(collectionItemDo.getResource().getTitle());
 				
 				String emailDescription = StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),collectionItemDo.getResource().getTitle(),resourceShareUrl,AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint());
 				
-//				String emailDescription= AppClientFactory.getLoggedInUser().getUsername()+" has shared a Gooru resource with you called, "+collectionItemDo.getResource().getTitle()+". Click the link below to view it: "+"<div><br/></div><div>"+resourceShareUrl+"</div><div><br/></div><div>"+"What is Gooru?"+"<div><br/></div><div>"+"Gooru is a free personalized learning solution that helps users find and remix the best K-12 learning resources on the web. With Gooru, you can organize these materials into teachable and shareable playlists, called collections. In the classroom, Gooru makes it easy to assign collections to students and monitor their progress."+"</div><div><br/></div><div>"+"Visit "+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+"to find more great resources. Happy learning!"+"</div>";
 				emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override
 					public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {

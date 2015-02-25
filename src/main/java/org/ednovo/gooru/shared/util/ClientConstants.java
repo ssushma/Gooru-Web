@@ -208,6 +208,13 @@ public interface ClientConstants {
 	String FOLDER = "folder";
 	
 	/*************** Library End **************************************************/
-	
+	String ASSESSMENT_QUESTION="assessment-question";
+	String EMBED="embed";
+	String COLLECTION="collection";
+	String VIDEO_YOUTUBE="video/youtube";
+	String PROFILE="profile";
+	String PRIVATE="private";
+	String COLLECTIONSHREVIEWTEXTLBL="collectionShareViewPage";
+	String COLLECTIONSUMMARYVIEWTEXTLBL="collectionShareSummaryPage";
 	
 }

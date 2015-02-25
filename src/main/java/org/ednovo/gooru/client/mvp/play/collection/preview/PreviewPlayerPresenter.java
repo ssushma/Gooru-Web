@@ -74,6 +74,7 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
 import com.google.gwt.dom.client.Document;
@@ -95,7 +96,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerView, PreviewPlayerPresenter.IsPreviewPlayerProxy> implements PreviewPlayerUiHandlers{
+public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerView, PreviewPlayerPresenter.IsPreviewPlayerProxy> implements PreviewPlayerUiHandlers,ClientConstants{
 	
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -1136,8 +1137,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceStartTime=PlayerDataLogEvents.getUnixTime();
-		if(collectionItemDo!=null){
-			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				questionType=PlayerDataLogEvents.getQuestionType(collectionItemDo.getResource().getType());
 				if(collectionItemDo.getResource().getType()==6){
 					resourcePlayEventName=PlayerDataLogEvents.COLLECTION_RESOURCE_OE_EVENT_NAME;
@@ -1303,8 +1304,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		this.hintId=hintId;
 		hintOrExplanationStartTime=PlayerDataLogEvents.getUnixTime();
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
-		if(collectionItemDo!=null){
-			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				if(collectionItemDo.getResource().getType()==6){
 					hintOrExplanationEventName=PlayerDataLogEvents.COLLECTION_RESOURCE_OE_HINT_EVENT_NAME;
 				}else{
@@ -1323,8 +1324,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		isExplanationUsed=true;
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
 		hintOrExplanationStartTime=PlayerDataLogEvents.getUnixTime();
-		if(collectionItemDo!=null){
-			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				if(collectionItemDo.getResource().getType()==6){
 					hintOrExplanationEventName=PlayerDataLogEvents.COLLECTION_RESOURCE_OE_EXPLANATION_EVENT_NAME;
 				}else{

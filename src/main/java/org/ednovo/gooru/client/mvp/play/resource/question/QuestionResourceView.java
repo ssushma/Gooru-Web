@@ -110,42 +110,45 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	
 	private void renderQuestionView(){
 		hintsLength=0;
-		String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getQuestionText());
-		openEndedQuestionText.setHTML(removeHtmlTags(titlelbl1));
-		openEndedQuestionText.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
-		openEndedQuestionText.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
-		if(collectionItemDo.getResource().getHints().size()>0){
-			hintsButton.setText(" "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
-			hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
-			hintsButton.getElement().setAttribute("title"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
-		}else{
-			hintsButton.setStyleName(oeStyle.hintsInActiveButton());
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText());
+			openEndedQuestionText.setHTML(removeHtmlTags(titlelbl1));
+			openEndedQuestionText.getElement().setAttribute("alt",removeHtmlTags(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
+			openEndedQuestionText.getElement().setAttribute("title",removeHtmlTags(StringUtil.isEmpty(collectionItemDo.getResource().getQuestionText())?"":collectionItemDo.getResource().getQuestionText()));
+			if(collectionItemDo.getResource().getHints()!=null && collectionItemDo.getResource().getHints().size()>0){
+				hintsButton.setText(" "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
+				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
+				hintsButton.getElement().setAttribute("title"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
+			}else{
+				hintsButton.setStyleName(oeStyle.hintsInActiveButton());
+			}
+			if(collectionItemDo.getResource().getExplanation()!=null && collectionItemDo.getResource().getExplanation().trim().length()>0){
+			}
+			else{
+				explanaionButton.setStyleName(oeStyle.hintsInActiveButton());
+			}
+			if(!StringUtil.isEmpty(getQuestionImage())){
+				openEndedQuestionImage.setUrl(getQuestionImage());
+			}
 		}
-		if(collectionItemDo.getResource().getExplanation()!=null && collectionItemDo.getResource().getExplanation().trim().length()>0){
-		}
-		else{
-			explanaionButton.setStyleName(oeStyle.hintsInActiveButton());
-		}
-		if(getQuestionImage()!=null && !getQuestionImage().equals("")){
-			openEndedQuestionImage.setUrl(getQuestionImage());
-		}
-		
 	}
 	private void renderAnswerView(AttemptedAnswersDo attemptedAnswerDo){
 		clearAnswerOptionsContainer();
-		if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
-			multipleChoicesQuestionWidget=new MultipleChoicesQuestionWidget(collectionItemDo,attemptedAnswerDo);
-			questionContainer.add(multipleChoicesQuestionWidget);
-		}else if(collectionItemDo.getResource().getType()==6){
-			opendEndedQuestionWidget=new OpendEndedQuestionWidget(collectionItemDo,attemptedAnswerDo);
-			questionContainer.add(opendEndedQuestionWidget);
-		}
-		else if(collectionItemDo.getResource().getType()==4){
-			fillInTheBlankQuestionWidget=new FillInTheBlankQuestionWidget(collectionItemDo,attemptedAnswerDo);
-			questionContainer.add(fillInTheBlankQuestionWidget);
-		}else if(collectionItemDo.getResource().getType()==7){
-			multipleAnswersQuestionWidget=new MultipleAnswersQuestionWidget(collectionItemDo,attemptedAnswerDo);
-			questionContainer.add(multipleAnswersQuestionWidget);
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
+				multipleChoicesQuestionWidget=new MultipleChoicesQuestionWidget(collectionItemDo,attemptedAnswerDo);
+				questionContainer.add(multipleChoicesQuestionWidget);
+			}else if(collectionItemDo.getResource().getType()==6){
+				opendEndedQuestionWidget=new OpendEndedQuestionWidget(collectionItemDo,attemptedAnswerDo);
+				questionContainer.add(opendEndedQuestionWidget);
+			}
+			else if(collectionItemDo.getResource().getType()==4){
+				fillInTheBlankQuestionWidget=new FillInTheBlankQuestionWidget(collectionItemDo,attemptedAnswerDo);
+				questionContainer.add(fillInTheBlankQuestionWidget);
+			}else if(collectionItemDo.getResource().getType()==7){
+				multipleAnswersQuestionWidget=new MultipleAnswersQuestionWidget(collectionItemDo,attemptedAnswerDo);
+				questionContainer.add(multipleAnswersQuestionWidget);
+			}
 		}
 	}
 	private void clearAnswerOptionsContainer(){
