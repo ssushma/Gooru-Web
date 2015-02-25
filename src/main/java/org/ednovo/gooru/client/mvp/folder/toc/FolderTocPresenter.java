@@ -76,16 +76,11 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	protected void onReveal() {
 	   super.onReveal();
-	}
-	
-	@Override
-	protected void onReset() {
-		super.onReset();
-		//Checking whether the user is logged in user or not
-        if(AppClientFactory.isAnonymous()){
-        	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
-        }else{
-			Window.enableScrolling(true);
+	   //Check the user is logged in or not
+	   if(AppClientFactory.isAnonymous()){
+		   AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	   }else{
+		   Window.enableScrolling(true);
 			String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 			String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
 			String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
@@ -115,7 +110,12 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			}else{
 				getView().hidePanels();
 			}
-        }
+	   }
+	}
+	
+	@Override
+	protected void onReset() {
+		super.onReset();
 	}
 	
 	@Override
