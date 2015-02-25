@@ -11,7 +11,7 @@
 		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row">
-				     <!--  Banner image start here -->
+				     <!-- Library banner image start here -->
 				    <g:HTMLPanel styleName="{tocStyle1.bannerImageContainer}" ui:field="bannerImagePanel">
 							<g:Image  styleName="img-responsive" ui:field="bannerImage"/>
 							<g:HTMLPanel styleName="{tocStyle1.bannerImageCaption}">
@@ -22,9 +22,22 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 					</g:HTMLPanel>
-					<!--  Banner image ends here -->
+					<!--  Library banner image ends here -->
+					<!--  Profile banner image starts here -->
+					<g:HTMLPanel styleName="{tocStyle1.bannerimageContainer1}" ui:field="profileBannerPanel">
+						<g:HTMLPanel styleName="{tocStyle1.bannerimageCaption1}">
+							  <g:Image styleName="{tocStyle1.img-responsive} img-circle" ui:field="profImage"/> <tbp:H2Panel ui:field="userTitle"></tbp:H2Panel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<!--  Profile banner image end here -->
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
+						    <g:HTMLPanel styleName="{tocStyle1.paginationBlock}">
+							   <g:HTMLPanel styleName="col-md-6"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
+							   <g:HTMLPanel styleName="col-md-6 {tocStyle1.shareButton}">
+							  		 <g:Button styleName="primary">Share </g:Button>
+							   </g:HTMLPanel>
+							</g:HTMLPanel>
 							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />
 							<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"> </tbp:H3Panel>
 							<g:HTMLPanel ui:field="bigIdeasPanel">

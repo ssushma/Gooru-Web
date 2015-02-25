@@ -80,6 +80,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
 		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+		String userId=AppClientFactory.getPlaceManager().getRequestParameter("userId",null);
 		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
@@ -88,13 +89,14 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			}
 		});
 		if(libName!=null){
-			//This api used for to get the course image details of library.
+			
 			if(parentId!=null){
+				//This api used for to get the course image details of library.
 				AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
 
 					@Override
 					public void onSuccess(FolderDo result) {
-						// TODO Auto-generated method stub
+						
 						if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
 							getView().setCourseBanner(result);
 						}else{
@@ -104,34 +106,18 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 					
 				});
 			}else{
+				//To set the static/default banner images.
 				getView().setBannerImages();
 			}
-		}else{
+		}else if(userId==null){
+			//getView().showProfileBanner();
 			getView().hidePanels();
 		}
-		
-
 	}
 	
 	@Override
 	protected void onReset() {
 		super.onReset();
-	
-		//getView().setBannerImages();
-		/*//Checking whether the user is logged in user or not
-        if(AppClientFactory.isAnonymous()){
-        	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
-        }else{
-        	String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-    		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
-    			@Override
-    			public void onSuccess(FolderTocDo folderListDo) {
-    				getView().clearTocData();
-    				getView().setFolderItems(folderListDo);
-    			}
-    		});
-    		getView().setBannerImages();
-        }*/
 	}
 	
 	@Override

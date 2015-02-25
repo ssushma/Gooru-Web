@@ -50,4 +50,5 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	void setBannerStaticImages();
 	void setCourseBanner(FolderDo folderDo);
 	void hidePanels();
+	void showProfileBanner();
 }
