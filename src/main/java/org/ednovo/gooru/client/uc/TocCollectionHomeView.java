@@ -85,8 +85,6 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 		resourceTitle.getElement().setId("pnlResourceTitle");
 		resourceTitle.getElement().setAttribute("alt", i18n.GL1052());
 		resourceTitle.getElement().setAttribute("title", i18n.GL1052());
-		//setResourcePlayLink();
-		//this.addClickHandler(new ResourceRequest());
 	}
 	
 	public void onLoad(){

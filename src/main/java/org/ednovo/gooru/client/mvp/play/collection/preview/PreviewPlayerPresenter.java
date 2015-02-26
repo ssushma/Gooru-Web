@@ -724,17 +724,14 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
 			if(tabView.equalsIgnoreCase("add")){
-				ResourcePlayerMetadataView.addPadding();
 				getView().clearActiveButton(false,true, true, true, true,false);
 				getView().makeButtonActive(true, false,false, false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("info")){
-				ResourcePlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,false, true, true, true,false);
 				getView().makeButtonActive(false,true, false, false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("share")){
-				ResourcePlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, false, true, true,false);
 				getView().makeButtonActive(false,false, true, false, false,false);
 			}
@@ -743,7 +740,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 				getView().makeButtonActive(false,false, false, true, false,false);
 			}
 			else if(tabView.equalsIgnoreCase("navigation")){
-				ResourcePlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, true, true, false,false);
 				getView().makeButtonActive(false,false, false, false, true,false);
 			}else if(tabView.equalsIgnoreCase("flag")){

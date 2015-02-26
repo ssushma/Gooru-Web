@@ -335,7 +335,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(collectionItemDo.getItemSequence()!=null){
 				sequenceNumber=collectionItemDo.getItemSequence();
 			}
-			if(collectionItemDo.getResource().getTitle()!=null){
+			if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getTitle()!=null){
 				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
 				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(titlelbl1));
 				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -864,9 +864,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		
 	}
-	public static void addPadding(){
-	}
-	
 	public static void removePadding(){
 	}
 

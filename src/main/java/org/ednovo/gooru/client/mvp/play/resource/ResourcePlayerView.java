@@ -290,7 +290,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectFlagButton) {
 		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion,deselectFlagButton);		
 		setActiveButton(false,false,false,false);
-		ResourcePlayerMetadataView.addPadding();
 	}
 	
 	public void setActiveButton(boolean makeAddButtonActive,boolean makeInfoButtionActive,
