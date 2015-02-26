@@ -178,8 +178,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	 */
 	public AssignPopupPlayerVc(String collectionIdVal) {
 		super(false);
-
-
 		res = AssignPopUpCBundle.INSTANCE;
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
@@ -191,7 +189,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		swithUrlLbl.setText(i18n.GL0639());
 		swithToEmbedLbl.setText(i18n.GL0640());
 		ancSignUp.getElement().setAttribute("style", "float: left;margin-left: 2%;");
-
 
 		setLabelsAndIds();
 		setHandlers();
@@ -206,7 +203,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 
 		try
 		{
-
 			AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new SimpleAsyncCallback<CollectionDo>(){
 
 				@Override

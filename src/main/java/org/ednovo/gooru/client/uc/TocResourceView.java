@@ -97,7 +97,6 @@ public class TocResourceView extends Composite implements HasClickHandlers,HasMo
 		resourceThumbnail.getElement().setId("imgResourceThumbnail");
 		resourceTypeImage.getElement().setId("lblResourceTypeImage");
 		resourceTitle.getElement().setId("pnlResourceTitle");
-
 	}
 	
 	@UiConstructor
@@ -123,7 +122,7 @@ public class TocResourceView extends Composite implements HasClickHandlers,HasMo
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				tocResourceToolTip=new TocResourceToolTip( collectionItemDo,itemIndex,showItemIndex,addHyperlink);
+				tocResourceToolTip=new TocResourceToolTip(collectionItemDo,itemIndex,showItemIndex,addHyperlink);
 				if(AppClientFactory.getPlaceManager().getRequestParameter("rid")!=null){
 				tocResourceToolTip.setPopupPosition(TocResourceView.this.getElement().getAbsoluteLeft()-112, TocResourceView.this.getElement().getAbsoluteTop()+30);
 				}else{
@@ -183,9 +182,11 @@ public class TocResourceView extends Composite implements HasClickHandlers,HasMo
 	}
 
 	public void setReourceSourceName(){
-		if(collectionItemDo.getResource().getResourceSource()!=null){
-			if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-			}
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceSource()!=null){
+			if(collectionItemDo.getResource().getUrl()!=null){
+					if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
+					}
+				}
 			}else{
 		}
 		

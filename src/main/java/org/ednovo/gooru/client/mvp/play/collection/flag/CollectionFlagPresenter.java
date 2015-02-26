@@ -48,8 +48,6 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 
 	public void displayCollectionFlagData(CollectionDo collectionDo) {
 		getView().getDisplayData(collectionDo);
-		
-			
 	}
 
 	@Override
@@ -84,7 +82,6 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 
 	@Override
 	public void getContentReport(String associatedGooruOid) {
-		//playerAppService.getContentReport(associatedGooruOid, new AsyncCallback<ContentReportDo>() {
 		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
 
 			@Override

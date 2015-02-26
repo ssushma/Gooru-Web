@@ -512,10 +512,10 @@ public class CollectionFlagView extends
 		dropdownListContainer.clear();
 		resourcesList.clear();
 		resourcesListId.clear();
-		if (collectionDo.getCollectionItems().size() > 0) {
+		if (collectionDo.getCollectionItems()!=null&&collectionDo.getCollectionItems().size() > 0) {
 			for (CollectionItemDo collectionItem : collectionDo
 					.getCollectionItems()) {
-				resourcesList.add(collectionItem.getResourceTitle());
+				resourcesList.add(collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"");
 				resourcesListId.add(collectionItem.getResource().getGooruOid());
 				String Resourcetitle = collectionItem.getResourceTitle().replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 				HTML dropDownListItemTitle=new HTML();
@@ -526,7 +526,6 @@ public class CollectionFlagView extends
 				dropDownListItemTitle.addClickHandler(new OnDropdownItemClick(Resourcetitle,collectionItem.getResource().getGooruOid(),collectionItem.getCollectionItemId(),resourcesList.size()));
 				dropdownListPlaceHolder.getElement().setAttribute("id", collectionItem.getResource().getGooruOid());
 				dropdownListPlaceHolder.getElement().setAttribute("cid", collectionItem.getCollectionItemId());
-			
 			}
 		}
 		displayView(collectionTitle,resourcesList,resourcesListId);

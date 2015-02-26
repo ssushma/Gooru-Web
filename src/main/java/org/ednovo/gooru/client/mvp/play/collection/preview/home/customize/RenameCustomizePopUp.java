@@ -158,23 +158,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copycollectionTextbox.addKeyPressHandler(new OnkeyPress());
 		copycollectionTextbox.addBlurHandler(new OnBlurr());
 		copycollectionTextbox.addKeyUpHandler(new OnkeyUp());
-		
-		/*copycollectionTextbox.addBlurHandler(new BlurHandler() {
-			
-			@Override
-			public void onBlur(BlurEvent event) {
-				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", copycollectionTextbox.getValue());
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-
-					@Override
-					public void onSuccess(Boolean value) {
-						isHavingBadWords=value;
-						SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
-					}
-				});
-			}
-		});*/
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
 
 			@Override
@@ -213,16 +196,8 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		});
 
 		MixpanelUtil.mixpanelEvent("CoursePage_customize_collection");
-		
-		
-		
-		
-		
-		
-		
 		setId();
 		this.center();
-
 	}
 	public void setId(){
 		panelAssign.getElement().setId("pnlPanelAssign");

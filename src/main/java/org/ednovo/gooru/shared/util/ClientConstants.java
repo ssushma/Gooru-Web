@@ -249,5 +249,38 @@ public interface ClientConstants {
 	String PRIVATE="private";
 	String COLLECTIONSHREVIEWTEXTLBL="collectionShareViewPage";
 	String COLLECTIONSUMMARYVIEWTEXTLBL="collectionShareSummaryPage";
+	String RESULT="res";
+	String COLLECTION_RESOURCE_RATING="collection_resource_rating";
+	String COLLECTION_RESOURCE_ADD ="collection_resource_add";
+	String COLLECTION_RESOURCE_FLAG = "collection_resource_flag";
+	String COLLECTION_FLAG = "collection_flag";
+	String UPDATE_HEADER="update_header";
+	String NARRATION="narration";
+	String ADD="add";
+	String INFO="info";
+	String SHARE="share";
+	String NAVIGATION="navigation";
+	String FLAG="flag";
+	String QUIZ="quiz";
+	String END="end";
+	String ACTIVE="active";
+	String TEACH="teach";
+	String STUDY="study";
+	String AUTODESK="Autodesk";
+	String LESSONOPOLOGY="Lessonopoly";
+	String COMMONSENCEMEDIA="CommonSenseMedia";
+	String FTE="FTE";
+	String WSPWH="WSPWH";
+	String LISANGC="lisaNGC";
+	String NGC = "NGC";
+	String ONR = "ONR";
+	String YES = "yes";
+	String ACESSTEXT ="public,anyonewithlink";
+	String SCOLLECTION ="scollection";
+	String EDIT ="edit";
+	String TURNON ="turn-on";
+	String TURNOFF ="turn-off";
+	
+	
 	
 }
