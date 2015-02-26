@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
@@ -97,4 +99,9 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	 * @param profileDo {@link ProfileDo}
 	 */
 	void setProfileBannerDetails(ProfileDo profileDo);
+	/**
+	 * To set the share link (bitly url)
+	 * @param shareResult {@link Map}
+	 */
+	void setBitlyLink(Map<String, String> shareResult);
 }

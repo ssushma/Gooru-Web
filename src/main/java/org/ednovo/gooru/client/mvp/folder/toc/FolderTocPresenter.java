@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -65,7 +66,12 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFolderTocProxy> implements FolderTocUiHandlers {
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	
+	public static final String ID = "id";
+	public static final String PARENT_ID = "parentId";
+	public static final String LIBRARY_NAME = "libName";
+	public static final String USER_ID = "userId";
+	public static final String TYPE = "type";
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.FOLDER_TOC)
 	public interface IsFolderTocProxy extends ProxyPlace<FolderTocPresenter> {
@@ -86,10 +92,11 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	protected void onReveal() {
 		super.onReveal();
 		getView().getTreePanel();
-		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-		final String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
-		final String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
-		final String userId=AppClientFactory.getPlaceManager().getRequestParameter("userId",null);
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		final String parentId=AppClientFactory.getPlaceManager().getRequestParameter(PARENT_ID,null);
+		final String libName=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
+		final String userId=AppClientFactory.getPlaceManager().getRequestParameter(USER_ID,null);
+		getShareLink();
 		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
 		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -133,6 +140,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		}
 	}
 
+
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -158,6 +166,10 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new AsyncCallback<Map<String,String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
+				System.out.println("sucess::"+result);
+				if(result!=null){
+					getView().setBitlyLink(result);
+				}
 			}
 			
 			@Override
@@ -179,5 +191,27 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}
 			}
 		});
+	}
+	/**
+	 * 
+	 */
+	private void getShareLink() {
+		Map<String, String> params = new HashMap<String, String>();
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+	    String parentId=AppClientFactory.getPlaceManager().getRequestParameter(PARENT_ID,null);
+		String libName=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
+		String userId=AppClientFactory.getPlaceManager().getRequestParameter(USER_ID,null);
+		
+		params.put("type", PlaceTokens.FOLDER_TOC);
+		if(parentId!=null){
+			params.put(PARENT_ID, parentId);
+		}
+		if(libName!=null){
+			params.put(LIBRARY_NAME, libName);
+		}
+		if(userId!=null){
+			params.put(USER_ID, userId);
+		}
+		getShortenUrl(folderId, params);
 	}
 }

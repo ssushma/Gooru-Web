@@ -32,9 +32,10 @@
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 						    <g:HTMLPanel styleName="{tocStyle1.paginationBlock}">
-							   <g:HTMLPanel styleName="col-md-6"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
+							   <g:HTMLPanel styleName="col-md-6" ui:field="breadCrumbsPanel"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
 							   <g:HTMLPanel styleName="col-md-6 {tocStyle1.shareButton}">
-							  		 <g:Button styleName="primary" ui:field="btnShare">Share</g:Button>
+							  		 <g:Button styleName="secondary" ui:field="btnShare" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Button>
+							  		 <g:TextBox ui:field="shareTxtBox"></g:TextBox>
 							   </g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />

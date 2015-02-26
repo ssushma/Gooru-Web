@@ -71,6 +71,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
@@ -105,8 +106,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField H2Panel bannerTitle,userTitle;
 	@UiField Image logoImage,bannerImage,profImage;
 	@UiField Anchor mainTitle,firstTitle;
+	@UiField TextBox shareTxtBox;
 	
-	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel;
+	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel;
 	
 	@UiField Hidden myHiddenField;
 	
@@ -203,7 +205,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		btnShare.addClickHandler(new ShareClickHandler());
 	}
 	/**
-	 * This inner class is used to handle the click enent on share button
+	 * This inner class is used to handle the click event on share button
 	 */
 	public class ShareClickHandler implements ClickHandler{
 		@Override
@@ -609,6 +611,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void hidePanels() {
 		bannerImagePanel.setVisible(false);
 		profileBannerPanel.setVisible(false);
+		breadCrumbsPanel.setVisible(false);
 	}
 	/**
 	 * To set the User profile details
@@ -668,4 +671,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		folderTocTree.addItem(getLoadingImage());
 		return folderTocTree;
 	}
+
+	@Override
+	public void setBitlyLink(Map<String, String> shareResult) {
+		shareTxtBox.setText(shareResult.get("shortenUrl"));
+	}
+	
 }

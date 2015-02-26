@@ -119,6 +119,13 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	
 	private static final String HTTP = "http";
 	
+	private static final String PARENT_ID = "parentId";
+	
+	private static final String LIBRARY_NAME = "libName";
+	
+	private static final String USER_ID = "userId";
+
+	
 	@Autowired
 	private CollectionSearchResultDeSerializer collectionSearchResultDeSerializer;
 
@@ -337,16 +344,26 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		Map<String, String> shortenUrl = new HashMap<String, String>();
 		        //This is used for to generate folder toc shorten url
 				if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.FOLDER_TOC)) {	
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL.getUrl(), contentGooruOid));
+					System.out.println("foldertoc::"+contentGooruOid);
+					if(params.containsKey(LIBRARY_NAME)){
+						if(params.containsKey(PARENT_ID)){
+							params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PARENT.getUrl(), contentGooruOid,params.get(LIBRARY_NAME),params.get(PARENT_ID)));
+						}
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_LIBRARY.getUrl(), contentGooruOid,params.get(LIBRARY_NAME)));
+					}else if(params.containsKey(USER_ID)){
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PROFILE.getUrl(), contentGooruOid, params.get(USER_ID)));
+					}else{
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL.getUrl(), contentGooruOid));
+					}
 				}else if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
 					if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
 					}else{
 						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
 					}
-				}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) 
+				}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
-				 else {
+				}else {
 					if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 						//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
 						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
