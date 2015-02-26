@@ -1288,6 +1288,11 @@ public class ProfileTopicListView extends Composite{
 
 		}
 	}
+	
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ViewAll button.
+	 */
+
 	private class ViewAllBtnClickHandler implements ClickHandler{
 		String folderId="";
 		String parentId="";

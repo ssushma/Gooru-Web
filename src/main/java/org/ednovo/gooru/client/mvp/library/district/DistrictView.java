@@ -398,8 +398,6 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 	/**
 	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
-	 * @author janamitra
-	 *
 	 */
 	public class ListAllBtnClickHandler implements ClickHandler{
 		String folderId="",parentId="";

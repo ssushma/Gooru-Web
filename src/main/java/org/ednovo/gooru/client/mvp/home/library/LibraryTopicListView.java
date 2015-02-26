@@ -1753,7 +1753,9 @@ public class LibraryTopicListView extends Composite{
 		}
 		
 	}
-	
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ViewAll button.
+	 */
 	public class ViewAllBtnClickEvent implements ClickHandler{
 		String folderId="";
 		public ViewAllBtnClickEvent(String folderId){

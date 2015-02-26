@@ -782,7 +782,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	
 	/**
 	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
-	 *
 	 */
 	public class ListAllBtnClickHandler implements ClickHandler{
 		String folderId="";
