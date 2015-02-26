@@ -107,7 +107,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	GlobalTooltipWithButton globalTooltipWithButton,logOutToolTip;
 	
 	private int userRating=0;
-	private String resourceId;
 	private HandlerRegistration autoHideHandler;
 
 	private final EventBus eventBus;
