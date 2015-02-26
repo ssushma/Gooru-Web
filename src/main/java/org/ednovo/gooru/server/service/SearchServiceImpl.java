@@ -335,19 +335,17 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public Map<String, String> getShortenShareUrl(String contentGooruOid, Map<String, String> params) {
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
-			if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
+			if (PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(params.get(TYPE))) {	
+				if (EMBED.equalsIgnoreCase(params.get(SHARETYPE))){
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
 				}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
 				}
-			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) 
+			}else if(PlaceTokens.EDIT_CLASSPAGE.equalsIgnoreCase(params.get(TYPE))) 
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
 			else {
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
-					//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
+				if (EMBED.equalsIgnoreCase(params.get(SHARETYPE))){
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
-				
 				}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 					}

@@ -232,11 +232,11 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	
 	public void setHintIdWithTime(Integer hintId) {
 		if(isCollectionPlayer){
-			collectionPlayerPresenter.getHintIdsObject().put(hintId.toString(), new JSONNumber(getUnixTimeStamp()));
+			collectionPlayerPresenter.getHintIdsObject().put(StringUtil.toString(hintId), new JSONNumber(getUnixTimeStamp()));
 		}else if(isResourcePlayer){
-			resourcePlayerPresenter.getHintIdsObject().put(hintId.toString(), new JSONNumber(getUnixTimeStamp()));
+			resourcePlayerPresenter.getHintIdsObject().put(StringUtil.toString(hintId), new JSONNumber(getUnixTimeStamp()));
 		}else if(isPreviewPlayer){
-			previewPlayerPresenter.getHintIdsObject().put(hintId.toString(), new JSONNumber(getUnixTimeStamp()));
+			previewPlayerPresenter.getHintIdsObject().put(StringUtil.toString(hintId), new JSONNumber(getUnixTimeStamp()));
 		}		
 	}
 	
@@ -286,14 +286,16 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	}
 	
 	public void setAnswerIds(List<Integer> answerId){
-		for(int i=0;i<answerId.size();i++){
-			if(isCollectionPlayer){
-				collectionPlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
-			}else if(isResourcePlayer){
-				resourcePlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
-			}else if(isPreviewPlayer){
-				previewPlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
-			}		
+		if(answerId!=null && answerId.size()>0){
+			for(int i=0;i<answerId.size();i++){
+				if(isCollectionPlayer){
+					collectionPlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
+				}else if(isResourcePlayer){
+					resourcePlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
+				}else if(isPreviewPlayer){
+					previewPlayerPresenter.getAnswerIdsObject().put(StringUtil.toString(answerId.get(i)), new JSONNumber(getUnixTimeStamp()));
+				}		
+			}
 		}
 		
 	}

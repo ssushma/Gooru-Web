@@ -85,6 +85,7 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.PlayerConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -1249,8 +1250,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceStartTime=PlayerDataLogEvents.getUnixTime();
-		if(collectionItemDo!=null){
-			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				questionType=PlayerDataLogEvents.getQuestionType(collectionItemDo.getResource().getType());
 				if(collectionItemDo.getResource().getType()==6){
 					resourcePlayEventName=PlayerDataLogEvents.COLLECTION_RESOURCE_OE_EVENT_NAME;
@@ -1388,8 +1389,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.hintId=hintId;
 		hintOrExplanationStartTime=PlayerDataLogEvents.getUnixTime();
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
-		if(collectionItemDo!=null){
-			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				if(collectionItemDo.getResource().getType()==6){
 					hintOrExplanationEventName=PlayerDataLogEvents.COLLECTION_RESOURCE_OE_HINT_EVENT_NAME;
 				}else{
@@ -1407,8 +1408,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		isExplanationUsed=true;
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
 		hintOrExplanationStartTime=PlayerDataLogEvents.getUnixTime();
-		if(collectionItemDo!=null){
-			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
+			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				if(collectionItemDo.getResource().getType()==6){
 					hintOrExplanationEventName=PlayerDataLogEvents.COLLECTION_RESOURCE_OE_EXPLANATION_EVENT_NAME;
 				}else{
@@ -1435,7 +1436,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(hintOrExplanationEventName!=null){
 			Long endTime=PlayerDataLogEvents.getUnixTime();
 			Long spendTime=endTime-hintOrExplanationStartTime;
-			if(hintOrExplanationEventName.equals(PlayerDataLogEvents.COLLECTION_RESOURCE_EXPLANATION_EVENT_NAME)){
+			if(PlayerDataLogEvents.COLLECTION_RESOURCE_EXPLANATION_EVENT_NAME.equals(hintOrExplanationEventName)){
 				PlayerDataLogEvents.explanationButtonDataLogEvent(hintOrExplanationEventId, PlayerDataLogEvents.COLLECTION_RESOURCE_EXPLANATION_EVENT_NAME, resourceDataLogEventId, resourceActivityResourceId, 
 						collectionDo.getGooruOid(), PlayerDataLogEvents.STOP_EVENT_TYPE, hintOrExplanationStartTime,endTime, spendTime, AppClientFactory.getLoginSessionToken(),
 						AppClientFactory.getGooruUid(), true,attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length(),hintId);
@@ -1911,7 +1912,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(oeEndTime));
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		String path="";
-		if(classpageId!=null&&!classpageId.equals("")){
+		if(!StringUtil.isEmpty(classpageId)){
 			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
@@ -1936,7 +1937,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		String questionTypeString=questionType.equals("RES")?"resource":"question";
 		String path="";
-		if(classpageId!=null&&!classpageId.equals("")){
+		if(!StringUtil.isEmpty(classpageId)){
 			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
