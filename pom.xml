@@ -32,6 +32,11 @@
 		<!-- This is the webapp container to which the WARs are deployed to -->
 		<webapp.container.home>${env.CATALINA_HOME}</webapp.container.home>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+		
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<buildNumber>${maven.build.timestamp}</buildNumber>
+		
 	</properties>
 	  <repositories>
 	    <repository>
@@ -487,6 +492,29 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>Displaying value of pom.xml element</echo>
+								<echo>[project.artifactId] ${project.artifactId}</echo>
+								<echo>-------------------------------------------------------------</echo>
+								<echo>[maven.build.timestamp.format]
+									${maven.build.timestamp.format}</echo>
+								<echo>[timestamp] ${timestamp}</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- GWT Maven Plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -551,7 +579,6 @@
                             <cssSourceExcludes>
                                 <cssSourceExclude>*.min.css</cssSourceExclude>
                                 <cssSourceExclude>embed.css</cssSourceExclude>
-                                <cssSourceExclude>ie9.css</cssSourceExclude>
                             </cssSourceExcludes>
                             <cssFinalFile>main-styles.css</cssFinalFile>
                             <!-- JS Minify -->

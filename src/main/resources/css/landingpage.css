@@ -246,7 +246,7 @@ footer .col-xs-4 {
 	height: 388px;
 	display: block;
 	border-radius: 50% 50%;
-	background: #1076bb url(../images/quote.png) no-repeat center top;
+	background: #1076bb url(${cdn.endpoint}/images/quote.png) no-repeat center top;
 	position: relative;
 	border: 5px solid #86a8cb;
 }
@@ -289,7 +289,7 @@ footer .col-xs-4 {
 }
 
 .rectangle {
-	background: #87badd url(../images/quote1.png) no-repeat 10px 10px;
+	background: #87badd url(${cdn.endpoint}/images/quote1.png) no-repeat 10px 10px;
 	padding: 25px 60px;
 }
 
