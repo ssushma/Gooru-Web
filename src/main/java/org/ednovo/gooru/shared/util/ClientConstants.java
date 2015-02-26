@@ -286,7 +286,7 @@ public interface ClientConstants {
 	String RESOURCE_URL ="resource/url";
 	String DELETE ="delete";
 	String NEXT ="next";
-	
+	String PREVIOUS ="previous";
 	
 	
 	/***Player share constants***/
