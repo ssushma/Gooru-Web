@@ -27,7 +27,9 @@ package org.ednovo.gooru.client.mvp.play.collection.share;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -41,7 +43,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SocialShareWidget extends Composite{
+public abstract class SocialShareWidget extends Composite implements ClientConstants{
 
 	private static SocialShareWidgetUiBinder uiBinder = GWT
 			.create(SocialShareWidgetUiBinder.class);
@@ -81,17 +83,15 @@ public abstract class SocialShareWidget extends Composite{
 		this.resourceDescription=resourceDescription;
 		this.resourceThumbnail=resourceThumbnail;
 		this.category=category;
-		if(category.equals("collection")){
-			//setThumbnaiUrl();
+		if(COLLECTION.equals(category)){
 		}
 	}
 	public SocialShareWidget(String resourceDescription,String resourceThumbnail,String category,CollectionItemDo collectionItemDo){
 		this(resourceDescription,resourceThumbnail,collectionItemDo.getResource().getCategory());
 		this.collectionItemDo=collectionItemDo;
-		//setThumbnaiUrl();
 	}
 	public String getResourceDescription(){
-		if(resourceDescription!=null&&!resourceDescription.equals("")&&!resourceDescription.equals("null")){
+		if(!StringUtil.isEmpty(resourceDescription)&&!resourceDescription.equals("null")){
 			return this.resourceDescription;
 		}else{
 			return "";
@@ -99,13 +99,13 @@ public abstract class SocialShareWidget extends Composite{
 	}
 	@Override
 	public void onLoad(){
-		if(category.equals("collection")){
+		if(COLLECTION.equals(category)){
 			resourceHiddenImage.setUrl(resourceThumbnail);
 		}else{
-			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+			if(ASSESSMENT_QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				resourceThumbnail=getQuestionImage();
 				resourceHiddenImage.setUrl(resourceThumbnail);
-			}else if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("video/youtube")){
+			}else if(VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName())){
 				resourceThumbnail=ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()),Window.Location.getProtocol());
 				resourceHiddenImage.setUrl(resourceThumbnail);
 			}else{
@@ -150,23 +150,23 @@ public abstract class SocialShareWidget extends Composite{
 	
 	@UiHandler("resourceHiddenImage")
 	public void setDefaultThumnialUrl(ErrorEvent event){
-		if (category.equalsIgnoreCase("collection")) {
+		if (COLLECTION.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_IMAGE;
-		} else if (category.equalsIgnoreCase("video")) {
+		} else if (VIDEO.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_VIMAGE;
-		} else if (category.equalsIgnoreCase("question")) {
+		} else if (QUESTION.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_QIMAGE;
-		} else if (category.equalsIgnoreCase("interactive")) {
+		} else if (INTERACTIVE.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_IIMAGE;
-		} else if (category.equalsIgnoreCase("website")||category.equalsIgnoreCase("exam")||category.equalsIgnoreCase("webpage")) {
+		} else if (WEBSITE.equalsIgnoreCase(category)||EXAM.equalsIgnoreCase(category)||WEBPAGE.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_WIMAGE;
-		} else if (category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")){
+		} else if (SLIDE.equalsIgnoreCase(category)||IMAGE.equalsIgnoreCase(category)){
 			resourceThumbnail=SocialShareView.DEFULT_ITYPEIMAGE;
-		} else if (category.equalsIgnoreCase("textbook")||category.equalsIgnoreCase("handout")||category.equalsIgnoreCase("lesson")||category.equalsIgnoreCase("text")) {
+		} else if (TEXTBOOK.equalsIgnoreCase(category)||HANDOUT.equalsIgnoreCase(category)||LESSON.equalsIgnoreCase(category)||TEXT.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_TEXTIMAGE;
-		} else if (category.equalsIgnoreCase("audio")) {
+		} else if (AUDIO.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_AIMAGE;
-		} else if (category.equalsIgnoreCase("other")) {
+		} else if (OTHER.equalsIgnoreCase(category)) {
 			resourceThumbnail=SocialShareView.DEFULT_OIMAGE;
 		}
 		resourceHiddenImage.setUrl(resourceThumbnail);

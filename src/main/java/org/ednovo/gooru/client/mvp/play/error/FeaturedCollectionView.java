@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.play.error;
 
 
 
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
@@ -56,8 +58,6 @@ public class FeaturedCollectionView extends Composite{
 	public interface FeaturedCollectionViewUiBinder extends UiBinder<Widget,FeaturedCollectionView>{
 
 	}
-	
-	
 	public static FeaturedCollectionViewUiBinder featuredCollectionViewUiBinder=GWT.create(FeaturedCollectionViewUiBinder.class);
 	Image featureCollectionImage =new Image();
 	@UiField HTMLPanel featureCollectionTitle;
@@ -76,15 +76,17 @@ public class FeaturedCollectionView extends Composite{
 	public FeaturedCollectionView(String title,String imageUrl,String featuredCollectionId){
 		initWidget(featuredCollectionViewUiBinder.createAndBindUi(this));
 		this.imageUrl=imageUrl;
-		featureCollectionTitle.add(getHTML(title));
-		//featureCollectionImage.setStyleName(CollectionPlayerImageBundle.IMAGEBUNDLEINSTANCE.style().collectionFeatured());
-		imageAnchor.setHref("#collection-play&id="+featuredCollectionId);
+		if(!StringUtil.isEmpty(title)){
+			featureCollectionTitle.add(getHTML(title));
+		}
+		if(!StringUtil.isEmpty(featuredCollectionId)){
+			imageAnchor.setHref("#collection-play&id="+featuredCollectionId);
+		}
 		imageAnchor.getElement().appendChild(featureCollectionImage.getElement());
 		featureCollectionImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
-				//featureCollectionImage.setResource(CollectionPlayerImageBundle.IMAGEBUNDLEINSTANCE.defaultCollecetionImage());
-				//featureCollectionImage.setStyleName(CollectionPlayerImageBundle.IMAGEBUNDLEINSTANCE.style().collectionFeatured());
+
 			}
 		});
 	}
@@ -111,16 +113,6 @@ public class FeaturedCollectionView extends Composite{
 		imageAnchor.getElement().setId("lnkImageAnchor");
 		featureCollectionTitle.getElement().setId("pnlFeatureCollectionTitle");
 	}
-	
-	/**
-	 * Checks for the given string is empty or not.
-	 * @param str {@link String}
-	 * @return {@link Boolean}
-	 */
-	public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
-    }
-	
 	/**
 	 * Manipulates the given string.
 	 * 
@@ -129,7 +121,7 @@ public class FeaturedCollectionView extends Composite{
 	 * @return
 	 */
 	public static String substringBeforeLast(String str, String separator) {
-        if (isEmpty(str) || isEmpty(separator)) {
+        if (StringUtil.isEmpty(str) || StringUtil.isEmpty(separator)) {
             return str;
         }
         int pos = str.lastIndexOf(separator);
@@ -147,10 +139,10 @@ public class FeaturedCollectionView extends Composite{
 	 * @return
 	 */
 	public static String substringAfterLast(String str, String separator) {
-        if (isEmpty(str)) {
+        if (StringUtil.isEmpty(str)) {
             return str;
         }
-        if (isEmpty(separator)) {
+        if (StringUtil.isEmpty(separator)) {
             return EMPTY;
         }
         int pos = str.lastIndexOf(separator);
