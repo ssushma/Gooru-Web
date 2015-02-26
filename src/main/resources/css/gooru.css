@@ -881,6 +881,11 @@ body {
 .other label {
 	background-position: 0px -307px !important;
 }
+
+.categoryFilterContainer .texts label {
+	background-position: 0px -55px !important;
+}
+
 .rightsToolTip {
 	float: left;
 }
