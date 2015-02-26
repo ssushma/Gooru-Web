@@ -26,7 +26,7 @@
 					<!--  Profile banner image starts here -->
 					<g:HTMLPanel styleName="{tocStyle1.bannerimageContainer1}" ui:field="profileBannerPanel">
 						<g:HTMLPanel styleName="{tocStyle1.bannerimageCaption1}">
-							  <g:Image styleName="{tocStyle1.img-responsive} img-circle" ui:field="profImage"/> <tbp:H2Panel ui:field="userTitle"></tbp:H2Panel>
+							  <g:Image styleName="{tocStyle1.imgResponsive} img-circle" ui:field="profImage"/> <tbp:H2Panel ui:field="userTitle"></tbp:H2Panel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<!--  Profile banner image end here -->

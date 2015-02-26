@@ -1763,6 +1763,9 @@ public class LibraryTopicListView extends Composite{
 		public void onClick(ClickEvent event) {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", folderId);
+			if(getPlaceToken()!=PlaceTokens.PROFILE_PAGE){
+				params.put("libName", getPlaceToken());
+			}
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 			
 		}
