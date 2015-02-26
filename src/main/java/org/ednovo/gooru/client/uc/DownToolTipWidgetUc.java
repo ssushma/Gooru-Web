@@ -54,7 +54,6 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	
 	List<Map<String, String>> standards = null;
 	
-	
 	/**
 	 * Class constructor with no parameter
 	 */
@@ -62,7 +61,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		addDomHandler(this, MouseOutEvent.getType());
 		addDomHandler(this, MouseOverEvent.getType());
 		addDomHandler(this, ClickEvent.getType());
-		}
+	}
 
 	/**
 	 * Class constructor with two parameter
@@ -102,7 +101,6 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		setWidget(widget);
 		setToolTipWidget(toolTipWidget);
 		this.standards = standards;
-
 	}
 
 	@UiChild(tagname = "widget")
@@ -130,7 +128,6 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 			if (tooltipPopUpUc != null) {
 				tooltipPopUpUc.hide();
 			}
-			
 			StandardsPopupVc standardsPopupVc = new StandardsPopupVc(standards);
 			standardsPopupVc.center();
 			standardsPopupVc.show();
@@ -152,17 +149,8 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 			isFireFox=isFirefoxBrowser();
 			if(isIe){
 				tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft() + (getWidget().getOffsetWidth() / 2) - (tooltipPopUpUc.getOffsetWidth() / 2), getWidget().getAbsoluteTop()+6 + getWidget().getOffsetHeight());	
-				
-				//tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft() + (getWidget().getOffsetWidth() / 2) - (tooltipPopUpUc.getOffsetWidth() / 2),20+event.getRelativeElement().getAbsoluteTop() + getWidget().getOffsetHeight()+(-1)*(toolTipWidget.getAbsoluteTop()));
-				
-				/*if(tooltipPopUpUc.getElement().getStyle().getTop().equalsIgnoreCase("0px")){
-					tooltipPopUpUc.hide();
-				}else{
-					tooltipPopUpUc.show();
-				}*/
 			}
-			else if(isFireFox)
-			{
+			else if(isFireFox){
 				tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-85,getWidget().getAbsoluteTop()+10);
 				tooltipPopUpUc.show();
 				if(tooltipPopUpUc.getElement().getStyle().getTop().equalsIgnoreCase("0px")){
@@ -171,22 +159,19 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 					tooltipPopUpUc.show();
 				}
 				if(newMsg !=null && newMsg!=""){
-				if(isFireFox && newMsg.contains("Team")){
-					tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-25,getWidget().getAbsoluteTop()+10);
-				}
+					if(isFireFox && newMsg.contains("Team")){
+						tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-25,getWidget().getAbsoluteTop()+10);
+					}
 				}
 				if(Count>=1){
 					if(isFireFox && Count>=1){
 						tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-50,getWidget().getAbsoluteTop()+10);
 					}
-					}
+				}
 			}
 			else{
 				tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft() + (getWidget().getOffsetWidth() / 2) - (tooltipPopUpUc.getOffsetWidth() / 2), getWidget().getAbsoluteTop() + getWidget().getOffsetHeight());	
-				
 			}
-			
-			
 		}
 	}
 
