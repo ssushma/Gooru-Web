@@ -335,25 +335,28 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public Map<String, String> getShortenShareUrl(String contentGooruOid, Map<String, String> params) {
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
-			if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
-				}else{
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
-				}
-			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) 
-				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
-			else {
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
-					//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
-				
-				}else{
+		        //This is used for to generate folder toc shorten url
+				if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.FOLDER_TOC)) {	
+					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL.getUrl(), contentGooruOid));
+				}else if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
+					if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
+					}else{
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
+					}
+				}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) 
+					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+				 else {
+					if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
+						//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
+					}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 					}
-			}
+				}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid, getLoggedInSessionToken());
-		
+		getLogger().info("getShortenShareUrl::"+url);
+		getLogger().info("getShortenShareUrl data::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{

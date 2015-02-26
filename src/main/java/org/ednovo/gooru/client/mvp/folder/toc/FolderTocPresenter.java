@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -40,11 +42,11 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 /**
  * @fileName : FolderTocPresenter.java
@@ -148,5 +150,19 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				getView().setFolderItems(item,folderListDo,folderId);
 			}
 		});
+	}
+
+	@Override
+	public void getShortenUrl(String folderId, Map<String, String> params) {
+		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new AsyncCallback<Map<String,String>>() {
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				System.out.println("short size::"+result.size());
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});		
 	}
 }
