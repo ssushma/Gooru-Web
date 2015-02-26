@@ -87,12 +87,6 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		
 		private String shareBitlyUrl="";
 
-//		private static final String SWITCH_FULL_URL = i18n.GL0643;
-
-//		private static final String SWITCH_EMBED_CODE = i18n.GL0640;
-
-//		private static final String SWITCH_BITLY = i18n.GL0639;
-		
 		private CollectionEmailShareView emailShareView=null;
 
 		private Map<String, String> resourceShareMap=null;
@@ -140,14 +134,18 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 	}
 	
 	public void setResourceShareData(Map<String, String> shareUrlsList){
-		
+		if(shareUrlsList.size()>0){
 		resourceShareMap=new HashMap<String,String>();
-		shareUrl= shareUrlsList.get("decodeRawUrl").toString();		
-		originalUrl=shareUrlsList.get("rawUrl").toString();	
-		/*String 	iframeText = "<iframe width=\"1024px\" height=\"768px\" src=\""
-				+ shareUrl + "\" frameborder=\"0\" ></iframe>";	*/	
+		if(shareUrlsList.containsKey("decodeRawUrl")){
+		shareUrl= shareUrlsList.get("decodeRawUrl").toString();
+		}
+		if(shareUrlsList.containsKey("rawUrl")){
+		originalUrl=shareUrlsList.get("rawUrl").toString();
+		}
 		setResourceIframeUrl(shareUrl);
+		if(shareUrlsList.containsKey("shortenUrl")){
 		shareBitlyUrl = shareUrlsList.get("shortenUrl").toString();
+		}
 		resourceShareMap.put(i18n.GL0643(), shareUrl);
 		resourceShareMap.put(i18n.GL0639(), shareBitlyUrl);
 		resourceShareTextArea.setText(shareUrl);
@@ -159,6 +157,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		bitlyLink.setText(i18n.GL0639());
 		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
 		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		}
 	}
 	
 	public void setResourceShareData(){
@@ -205,7 +204,6 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 					@Override
 					public void closeEmailPopup() {
 						getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,false);
-						
 					}
 				};
 				emailShareView.show();

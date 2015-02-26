@@ -204,25 +204,19 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		
 		fromTxt.setMaxLength(50);
 		if(AppClientFactory.isAnonymous()){
-//			fromLbl.setVisible(false);
 			fromTxt.setVisible(true);
-//			fromTxt.getElement().setAttribute("placeholder",i18n.GL1442);
 			fromTxt.setPlaceholder(i18n.GL1442_1());
 		}else{
-//			fromTxt.setText(AppClientFactory.getLoggedInUser().getEmailId());
 			if(AppClientFactory.getLoggedInUser().getFirstName()!=null && AppClientFactory.getLoggedInUser().getLastName()!=null){
-//				fromLbl.setVisible(true);
 				fromTxt.setVisible(true);
 				fromTxt.setText(AppClientFactory.getLoggedInUser().getFirstName() + " " +AppClientFactory.getLoggedInUser().getLastName());
 				fromTxt.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getFirstName() + " " +AppClientFactory.getLoggedInUser().getLastName());
 				fromTxt.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getFirstName() + " " +AppClientFactory.getLoggedInUser().getLastName());
 			}else{
-//				fromLbl.setVisible(false);
 				fromTxt.setVisible(true);
 				fromTxt.setPlaceholder(i18n.GL1442_1());
 			}
 		}
-//		toTxt.getElement().setAttribute("placeholder",i18n.GL1184_1);
 		toTxt.setPlaceholder(i18n.GL1184_1());
 		msgTxa.setHTML(mailDescription);
 		msgTxa.getElement().setAttribute("alt",i18n.GL1184_1());
@@ -233,7 +227,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		this.center();
 		this.getGlassElement().getStyle().setZIndex(99999);
 		
-		//this.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setGlassPanelStyle());
 		msgTxa.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -267,27 +260,7 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 					fromValidation.setVisible(true);
 					isvalid = false;
 				}
-				/*if(fromTxt.getText() != null ||!fromTxt.getText().equals("")){
-					String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-					String strEmails = fromTxt.getText().trim();
-					String emailIds[] = strEmails.split("\\s*,\\s*");
-					if (strEmails.contains(",")){
-						emailIds = strEmails.split("\\s*,\\s*");
-					}else if (strEmails.contains(";")){
-						emailIds = strEmails.split("\\s*;\\s*");
-					}
-					if(emailIds.length > 1 ){
-						fromValidation.setText(i18n.GL1027_1());
-						fromValidation.setVisible(true);
-						isvalid = false;
-					}
-				}
-				if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
-						&& !fromTxt.getText().contains(AT_SYMBOL)) {
-					fromValidation.setText(i18n.GL1027());
-					fromValidation.setVisible(true);
-					isvalid = false;
-				}*/
+				
 			}
 		}
 		
@@ -304,7 +277,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 			for (int i=0; i<emailIds.length; i++){
 				boolean to = emailIds[i].matches(EMAIL_REGEX);
 				if(to){
-//					isvalid = true;
 				}else{
 					toValidation.setText(StringUtil.generateMessage(i18n.GL1019(), emailIds[i]));
 					toValidation.setVisible(true);
@@ -351,11 +323,7 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 									}else{
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 											String fromEmail = "";
-					/*						if(fromTxt.isVisible()) {
 												fromEmail = fromTxt.getText();
-											} else {*/
-												fromEmail = fromTxt.getText();
-										/*	}*/
 											sendEmail(fromEmail, toTxt.getText(), cfm, subTxt.getText(), msgTxa.getHTML());
 										}
 									}
@@ -427,7 +395,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 	public void fromTxtKeyUpEvent(KeyUpEvent event){
 		String fromTxtText=fromTxt.getText();
 		if(fromTxtText.length()>=50){
-			//fromLbl.setVisible(true);
 		}else{
 			fromValidation.setVisible(false);
 		}
