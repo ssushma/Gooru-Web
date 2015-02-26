@@ -103,7 +103,6 @@ public class CollectionNonExistView extends Composite{
 		feautredCollectionContainer.getElement().setId("fpnlFeautredCollectionContainer");
 		
 		recycleImage.getElement().setId("imgRecycleImage");
-//		getFeaturedCollections();
 	}
 	
 	/**
@@ -115,36 +114,4 @@ public class CollectionNonExistView extends Composite{
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DISCOVER);
 		
 	}
-	
-	
-	/*
-	*//**
-	 * Gets all featured collections from API.s
-	 *//*
-	private void getFeaturedCollections(){
-		AppClientFactory.getInjector().getPlayerAppService().getFeaturedContent(new SimpleAsyncCallback<ArrayList<FeaturedContentDo>>() {
-			@Override
-			public void onSuccess(ArrayList<FeaturedContentDo> featuredContentList) {
-				showFeaturedContent(featuredContentList);
-			}
-		});
-	}
-	*//**
-	 * Sets all list featured collection, received as response from an API.
-	 * @param featuredContentList {@link List}
-	 *//*
-	 private void showFeaturedContent(List<FeaturedContentDo> featuredContentList){
-	    	if(featuredContentList.size()>0){
-	    		FlowPanel featuredContentContainer=new FlowPanel();
-	    		for(int i=0;i<featuredContentList.size();i++){
-	    			if(i<4){
-		    			FeaturedContentDo featuredContentDo=featuredContentList.get(i);
-		    			featuredContentContainer.add(new FeaturedCollectionView(featuredContentDo.getCollectionTitle(), featuredContentDo.getCollectionThumbnailUrl(),featuredContentDo.getCollectionGooruOid()));
-	    			}
-	    		}
-	    		feautredCollectionContainer.clear();
-	    		feautredCollectionContainer.add(featuredContentContainer);
-	    	}
-	    }
-	*/
 }
