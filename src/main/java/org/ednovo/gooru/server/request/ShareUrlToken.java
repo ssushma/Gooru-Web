@@ -47,6 +47,12 @@ public enum ShareUrlToken {
 	
 	FOLDERTOC_URL("%23folder-toc%26id={0}"),
 	
+	FOLDERTOC_URL_LIBRARY("%23folder-toc%26id={0}%26libName={1}"),
+	
+	FOLDERTOC_URL_PARENT("%23folder-toc%26id={0}%26libName={1}%26parentId={2}"),
+	
+	FOLDERTOC_URL_PROFILE("%23folder-toc%26id={0}%26userId={1}"),
+	
 	PROFILE_PAGE("%23profilepage%26id={0}");
 
 	private String url;
