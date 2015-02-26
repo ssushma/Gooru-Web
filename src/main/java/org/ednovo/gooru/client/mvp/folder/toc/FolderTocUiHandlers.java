@@ -49,4 +49,9 @@ public interface FolderTocUiHandlers extends BaseUiHandlers{
 	 * @param parentId
 	 */
 	void getFolderItems(TreeItem item, String parentId);
+	/**
+	 * To get the User profile details 
+	 * @param profId {@link String}
+	 */
+	void getProfilePageDetails(String profId);
 }

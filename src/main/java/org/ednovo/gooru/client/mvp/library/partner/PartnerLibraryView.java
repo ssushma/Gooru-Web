@@ -75,6 +75,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	private static final String LIBRARY_PAGE = "partner-page";
 	
 	private CourseDo courseDo;
+	
+	private String placeToken;
 
 	private static PartnerLibraryViewUiBinder uiBinder = GWT.create(PartnerLibraryViewUiBinder.class);
 
@@ -91,6 +93,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView = new LibraryView(PlaceTokens.DISCOVER);
 		partnerPanel.add(libraryView);
 		partnerPanel.getElement().setId("pnlPartnerPanel");
+		setPlaceToken(AppClientFactory.getCurrentPlaceToken());
 	}
 
 	@Override
@@ -529,6 +532,22 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
+	
+
+	/**
+	 * @return the placeToken
+	 */
+	public String getPlaceToken() {
+		return placeToken;
+	}
+
+	/**
+	 * @param placeToken the placeToken to set
+	 */
+	public void setPlaceToken(String placeToken) {
+		this.placeToken = placeToken;
+	}
+
 
 	private static class GeoEduBanner implements LoadBannerActionInterface{
 
@@ -763,7 +782,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	
 	/**
 	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
-	 *
 	 */
 	public class ListAllBtnClickHandler implements ClickHandler{
 		String folderId="";
@@ -774,7 +792,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		public void onClick(ClickEvent event) {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", folderId);
-			params.put("libName", AppClientFactory.getCurrentPlaceToken());
+			params.put("libName", getPlaceToken());
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 		}
 		

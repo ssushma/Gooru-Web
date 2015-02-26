@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.Constants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -111,6 +112,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	
 	final String FOLDER="folder";
 	final String SCOLLECTION="scollection";
+	public static final String USER_ID="userId";
+	public static final String BACK2TOC="backToToc";
 	
 	private Map<String, List<String>> bannerVal;
 	PlaceRequest placeRequest =null;
@@ -187,7 +190,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		btnBackToPrevious.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				String lastAccessedUrl=Cookies.getCookie("backToToc")!=null?Cookies.getCookie("backToToc"):"";
+				String lastAccessedUrl=Cookies.getCookie(BACK2TOC)!=null?Cookies.getCookie(BACK2TOC):"";
 				String[] placeToken=lastAccessedUrl.split("#");
 				Map<String, String> params = new HashMap<String, String>();
 				if(placeToken.length>1){
@@ -277,13 +280,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						paramerersString=paramerersString+paramString+"="+placeRequest.getParameter(paramString, null)+"&";
 					}
 				}
-				Cookies.removeCookie("backToToc");
+				Cookies.removeCookie(BACK2TOC);
 				if(StringUtil.isEmpty(paramerersString)){
 					//If we click the view all or list all button form the library
-					Cookies.setCookie("backToToc",placeRequest.getNameToken());
+					Cookies.setCookie(BACK2TOC,placeRequest.getNameToken());
 				}else{ 
 					//If we click the view all or list all button form the my collection or profile 
-					Cookies.setCookie("backToToc",placeRequest.getNameToken()+"#"+paramerersString);
+					Cookies.setCookie(BACK2TOC,placeRequest.getNameToken()+"#"+paramerersString);
 				}
 			}
 			if(foldersTocObj!=null){
@@ -306,10 +309,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					performancePanel.setVisible(false);
 				}
 				lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
-				String profId= AppClientFactory.getPlaceManager().getRequestParameter("userId", null);
+				String profId= AppClientFactory.getPlaceManager().getRequestParameter(USER_ID, null);
 				if(profId!=null){
-					showProfileBanner();
+					getUiHandlers().getProfilePageDetails(profId);
 				}
+				setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 			}
 			
 		}
@@ -498,8 +502,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		floderTreeContainer.clear();
 		currentFolderSelectedTreeItem=null;
 		previousSelectedItem=null;
-		//bannerImagePanel.clear();
-		//profileBannerPanel.clear();
 	}
 	/**
 	 * This method is used to display loading text to the user.
@@ -555,7 +557,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBannerImages(){
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		bannerImage.setVisible(false);
-		profileAndLibraryPanels(false);
+		hideProfileOrLibraryPanel(false);
 		if(!StringUtil.isEmpty(placetoken)){
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(bannerVal.get(placetoken).get(1));
@@ -573,7 +575,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void setCourseBanner(FolderDo folderDo) {
-		profileAndLibraryPanels(false);
+		hideProfileOrLibraryPanel(false);
 		bannerImagePanel.setVisible(true);
 		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
@@ -602,10 +604,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	/**
 	 * To set the User profile details
+	 * @param profileDo {@link ProfileDo}
 	 */
-	private void setProfileBannerDetails() {
-		userTitle.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
-		profImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
+	@Override
+	public void setProfileBannerDetails(ProfileDo profileDo) {
+		hideProfileOrLibraryPanel(true);
+		String userName=profileDo.getUser()==null?"":(profileDo.getUser().getUsernameDisplay()==null?"":profileDo.getUser().getUsernameDisplay());
+		String profileImage=profileDo.getUser()==null?"":(profileDo.getUser().getProfileImageUrl()==null?"":profileDo.getUser().getProfileImageUrl());
+		userTitle.setText(userName);
+		profImage.setUrl(profileImage);
 		profImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -626,14 +633,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void showProfileBanner() {
-		profileAndLibraryPanels(true);
-		setProfileBannerDetails();
+		hideProfileOrLibraryPanel(true);
+		//setProfileBannerDetails();
 	}
 	/**
 	 * To hide the bannerImage panels 
 	 * @param isVisible {@link Boolean}
 	 */
-	public void profileAndLibraryPanels(boolean isVisible){
+	public void hideProfileOrLibraryPanel(boolean isVisible){
 		bannerImagePanel.setVisible(!isVisible);
 		profileBannerPanel.setVisible(isVisible);
 

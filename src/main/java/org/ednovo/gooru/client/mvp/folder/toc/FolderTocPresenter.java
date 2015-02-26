@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProx
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -44,7 +45,6 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 /**
  * @fileName : FolderTocPresenter.java
@@ -139,6 +139,24 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().setFolderItems(item,folderListDo,folderId);
+			}
+		});
+	}
+    /**
+     * To get the User profile details 
+	 * @param profId {@link String}
+     */
+	@Override
+	public void getProfilePageDetails(String profId) {
+		
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(profId, "0", new SimpleAsyncCallback<ProfileDo>() {
+
+			@Override
+			public void onSuccess(ProfileDo profileDo) {
+				if(profileDo!=null){
+				 getView().setProfileBannerDetails(profileDo);	
+				}
+				
 			}
 		});
 	}
