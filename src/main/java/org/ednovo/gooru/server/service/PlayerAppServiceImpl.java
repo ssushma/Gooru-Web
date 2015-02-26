@@ -531,9 +531,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_RENAME_COLLECTION, collectionId,getLoggedInSessionToken(),"true",collectionTitle);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			if(jsonRep!=null){
+			if(jsonRep!=null && jsonRep.getSize()!=-1){
 				JSONObject copiedCollectionObj=jsonRep.getJsonObject();
+				if(!copiedCollectionObj.isNull("gooruOid")){
 				copiedCollectionId=copiedCollectionObj.getString("gooruOid");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

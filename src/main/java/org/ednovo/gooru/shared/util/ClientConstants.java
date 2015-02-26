@@ -287,6 +287,7 @@ public interface ClientConstants {
 	String DELETE ="delete";
 	String NEXT ="next";
 	String PREVIOUS ="previous";
+	String ADDTEXTLBL ="Add";
 	
 	
 	/***Player share constants***/
