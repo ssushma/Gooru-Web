@@ -298,6 +298,7 @@ public interface ClientConstants {
 	String SHARETYPE="shareType";
 	String TYPE="type";
 	String TWITTERURL="http://twitter.com/intent/tweet?text=";
+	String IMG="img";
 	/***Player share constants end***/
 	
 }
