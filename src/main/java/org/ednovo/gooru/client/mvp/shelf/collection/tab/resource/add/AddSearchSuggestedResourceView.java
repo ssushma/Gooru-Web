@@ -214,9 +214,9 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	}
 	
 	public void updateViews(String count, String contentId, String whatToUpdate){
-		if (resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
+		if (resourceSearchResultDo.getGooruOid()!=null && resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
 			metaDataFloPanel.clear();
-			String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
+			String category = (resourceSearchResultDo.getResourceFormat()!=null && resourceSearchResultDo.getResourceFormat().getValue() != null)? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 			
 			if(resourceSearchResultDo.getAggregator()!=null){
@@ -470,18 +470,20 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		if (datas == null) {
 			return;
 		}
-		renderMetaData(flowPanel, datas.size() > 0 ? datas.get(0) : null, null, wrapLength);
+		renderMetaData(flowPanel, (datas!=null&&datas.size() > 0)? datas.get(0) : null, null, wrapLength);
 		FlowPanel toolTipwidgets = new FlowPanel();
 		FlowPanel toolTipwidget1 = new FlowPanel();
-		for (int count = 0; count < datas.size(); count++) {
-			Label label = new Label(datas.get(count));
-			label.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
-			if(count==0){
-				toolTipwidget1.add(label);
-			}else{
-				toolTipwidgets.add(label);
+		if(datas!=null){
+			for (int count = 0; count < datas.size(); count++) {
+				Label label = new Label(datas.get(count));
+				label.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+				if(count==0){
+					toolTipwidget1.add(label);
+				}else{
+					toolTipwidgets.add(label);
+				}
+				
 			}
-			
 		}
 		if (datas != null && datas.size() > 1) {
 			Integer moreCount = datas.size() - 1;

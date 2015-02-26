@@ -283,6 +283,9 @@ public interface ClientConstants {
 	String EDIT ="edit";
 	String TURNON ="turn-on";
 	String TURNOFF ="turn-off";
+	String RESOURCE_URL ="resource/url";
+	String DELETE ="delete";
+	String NEXT ="next";
 	
 	
 	
