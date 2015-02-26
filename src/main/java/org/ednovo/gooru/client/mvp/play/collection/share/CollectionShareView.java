@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -56,7 +57,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiHandlers> implements IsCollectionShareView{
+public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiHandlers> implements IsCollectionShareView,ClientConstants{
 
 
 	private static CollectionShareViewUiBinder uiBinder = GWT.create(CollectionShareViewUiBinder.class);
@@ -94,6 +95,12 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	private Map<String, String> collectionShareMap=null;
 	
 	private Map<String, String> resourceShareMap=null;
+	
+	String resourceTitle="";
+	String resourceDesc="";
+	String resourceCategory="";
+	String resourceGooruId="";
+	String resoruceItemId="";
 
 	@Inject
 	public CollectionShareView(){
@@ -167,11 +174,13 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	public void setCollectionShareData(Map<String, String> shareUrlsList){
 		isResourceView=false;
 		collectionShareMap=new HashMap<String,String>();
-		shareBitlyUrl = shareUrlsList.get("shortenUrl").toString();
-		shareUrl= shareUrlsList.get("decodeRawUrl").toString();
-		originalUrl=shareUrlsList.get("rawUrl").toString();
-		embedurl=shareUrlsList.get("embedUrlRawUrl").toString();
-		setIframeUrl(embedurl);		
+		if(shareUrlsList!=null){
+			shareBitlyUrl = shareUrlsList.get(ClientConstants.SHORTENURL).toString();
+			shareUrl= shareUrlsList.get(ClientConstants.DECODERAWURL).toString();
+			originalUrl=shareUrlsList.get(ClientConstants.RAWURL).toString();
+			embedurl=shareUrlsList.get(ClientConstants.EMBEDURLRAWURL).toString();
+			setIframeUrl(embedurl);		
+		}
 		collectionShareMap.put(i18n.GL0643(), shareUrl);
 		collectionShareMap.put(i18n.GL0639(), shareBitlyUrl);
 		embedLink.setText(i18n.GL0640());
@@ -191,14 +200,16 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		isResourceView=true;
 		resourceShareTextArea.setValue(shareUrl);
 		resourceShareMap=new HashMap<String,String>();
-		String resourceShareBitlyUrl = shareUrlsList.get("shortenUrl").toString();
-		resourceShareUrl= shareUrlsList.get("decodeRawUrl").toString();
-		setResourceIframeUrl(resourceShareUrl);	
-		resourceShareMap.put(i18n.GL0643(), resourceShareUrl);
-		resourceShareMap.put(i18n.GL0639(), resourceShareBitlyUrl);
-		resourceShareTextArea.setText(resourceShareUrl);
-		resourceShareTextArea.getElement().setAttribute("alt",resourceShareUrl);
-		resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
+		if(shareUrlsList!=null){
+			String resourceShareBitlyUrl = shareUrlsList.get(ClientConstants.SHORTENURL).toString();
+			resourceShareUrl= shareUrlsList.get(ClientConstants.DECODERAWURL).toString();
+			setResourceIframeUrl(resourceShareUrl);	
+			resourceShareMap.put(i18n.GL0643(), resourceShareUrl);
+			resourceShareMap.put(i18n.GL0639(), resourceShareBitlyUrl);
+			resourceShareTextArea.setText(resourceShareUrl);
+			resourceShareTextArea.getElement().setAttribute("alt",resourceShareUrl);
+			resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
+		}
 		embedLink.setText(i18n.GL0640());
 		embedLink.getElement().setAttribute("alt",i18n.GL0640());
 		embedLink.getElement().setAttribute("title",i18n.GL0640());
@@ -232,48 +243,44 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
 	}
 	
-	
 	@Override
 	public void setData(final CollectionDo collectionDo) {
 		sharePanel.clear();
-		SocialShareWidget swidget= new SocialShareWidget(collectionDo.getGoals(),collectionDo.getThumbnails().getUrl(),"collection") {
+		SocialShareWidget swidget=null;
+		if(collectionDo!=null){
+			  final String collectionTitle=collectionDo.getTitle()!=null?collectionDo.getTitle():"";
+			  String collectionImg=collectionDo.getThumbnails()!=null?(collectionDo.getThumbnails().getUrl()!=null?collectionDo.getThumbnails().getUrl():""):"";
+			  swidget= new SocialShareWidget(collectionDo.getGoals()!=null?collectionDo.getGoals():"",collectionImg,ClientConstants.COLLECTION) {
 
-			@Override
-			public void onTwitter() {
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+" "+collectionDo.getTitle().replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
-			}
-			
-			@Override
-			public void onFacebook() {
-				 SocialShareView.postOnFacebook(collectionDo.getTitle(),SocialShareView.getEncodedUrl(shareUrl),getResourceDescription(),getThumbnailUrl());
-			}
-
-			@Override
-			public void onEmail() {
-				String emailSubject=i18n.GL1439()+" "+collectionDo.getTitle();
-				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+shareUrl+"</div><div><br/></div><div>"+i18n.GL1440()+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+i18n.GL1441()+"</div>";
-				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
-					@Override
-					public void sendEmail(String fromEmail, String toEmail,
-							String copyEmail, String subject, String message) {
-						getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
-					}
-
-					@Override
-					public void closeEmailPopup() {
-						
-					}
-				};
-				emailShareView.show();
+				@Override
+				public void onTwitter() {
+					Window.open(ClientConstants.TWITTERURL + i18n.GL1439()+" "+collectionTitle.replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
+				}
 				
+				@Override
+				public void onFacebook() {
+					 SocialShareView.postOnFacebook(collectionTitle,SocialShareView.getEncodedUrl(shareUrl),getResourceDescription(),getThumbnailUrl());
+				}
 
-			}
-		};
-
-		sharePanel.add(swidget);
+				@Override
+				public void onEmail() {
+					String emailSubject=i18n.GL1439()+" "+collectionTitle;
+					String emailDescription=collectionTitle+"<div><br/></div><div>"+shareUrl+"</div><div><br/></div><div>"+i18n.GL1440()+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+i18n.GL1441()+"</div>";
+					 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
+						@Override
+						public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {
+							getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
+						}
+						@Override
+						public void closeEmailPopup() {
+						}
+					};
+					emailShareView.show();
+				}
+			};
+			sharePanel.add(swidget);
+		}
 	}
-
-
 	
 	public void setIframeUrl(String iframeBitlyUrl){
 		embedBitlyUrl = "<iframe width=\"1024px\" height=\"768px\" src=\"" + iframeBitlyUrl + "\" frameborder=\"0\" ></iframe>";
@@ -287,8 +294,8 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	@Override
 	public void setIframeText(Map<String, String> embedLink) {
 		String iframeText;
-		if (embedLink != null && embedLink.containsKey("shortenUrl")) {
-			embedurl = embedLink.get("decodeRawUrl").toString();
+		if (embedLink != null && embedLink.containsKey(ClientConstants.SHORTENURL)) {
+			embedurl = embedLink.get(ClientConstants.DECODERAWURL).toString();
 			iframeText = "<iframe width=\"1024px\" height=\"768px\" src=\"" + embedurl + "\" frameborder=\"0\" ></iframe>";
 			collectionShareMap.put(i18n.GL0640(), iframeText);
 		}
@@ -322,12 +329,10 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 				}
 			}
 		}
-
 	}
 	
 	@UiHandler("resourceShareTextArea")
 	public void onClickresourceShareTextArea(ClickEvent clickEvent){
-	
 		resourceShareTextArea.selectAll();
 		resourceShareTextArea.setFocus(true);
 	}
@@ -374,7 +379,6 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	 * @created_date : 11-Dec-2013
 	 * 
 	 * @description
-	 * 
 	 * 
 	 * @parm(s) : @param clickEvent
 	 * 
@@ -463,44 +467,49 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	 */
 	@Override
 	public void showResourceData(final CollectionItemDo collectionItemDo) {
-		sharePanel.clear();
-		SocialShareWidget swidget= new SocialShareWidget(collectionItemDo.getResource().getDescription(),collectionItemDo.getResource().getThumbnails().getUrl(),collectionItemDo.getCategory(),collectionItemDo) {
-			@Override
-			public void onTwitter() {
-				getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+" "+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + SocialShareView.getEncodedUrl(resourceShareUrl), "_blank", "width=600,height=300");
+		if(collectionItemDo!=null){
+			sharePanel.clear();
+			if(collectionItemDo.getResource()!=null){
+				resourceTitle=collectionItemDo.getResource().getTitle()!=null?collectionItemDo.getResource().getTitle():"";
+			    resourceDesc=collectionItemDo.getResource()!=null?(collectionItemDo.getResource().getDescription()!=null?collectionItemDo.getResource().getDescription():""):"";
+				resourceCategory=collectionItemDo.getCategory()!=null?collectionItemDo.getCategory():"";
+				resourceGooruId=collectionItemDo.getResource().getGooruOid()!=null?collectionItemDo.getResource().getGooruOid():"";
+				resoruceItemId=collectionItemDo.getCollectionItemId()!=null?collectionItemDo.getCollectionItemId():"";
 			}
-			@Override
-			public void onFacebook() {
-				getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.FACEBOOK,false);
-				SocialShareView.postOnFacebook(removeHtmlTags(collectionItemDo.getResource().getTitle()),SocialShareView.getEncodedUrl(resourceShareUrl),getResourceDescription(),getThumbnailUrl());
-			}
-
-			/**
-			 * used in preview player resource share.
-			 */
-			@Override
-			public void onEmail() {
-				String emailSubject=removeHtmlTags(collectionItemDo.getResource().getTitle());
-				
-				String emailDescription = StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),collectionItemDo.getResource().getTitle(),resourceShareUrl,AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint());
-				
-				emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
-					@Override
-					public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {
-						getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,true);
-						getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
-					}
-					@Override
-					public void closeEmailPopup(){
-						getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,false);
-					}
-				};
-				emailShareView.show();
-			
-			}
-		};
-
-		sharePanel.add(swidget);
+			String resourceImageUrl=collectionItemDo.getResource()!=null?(collectionItemDo.getResource().getThumbnails()!=null?(collectionItemDo.getResource().getThumbnails().getUrl()!=null?collectionItemDo.getResource().getThumbnails().getUrl():""):""):"";
+			SocialShareWidget swidget= new SocialShareWidget(resourceDesc,resourceImageUrl,resourceCategory,collectionItemDo) {
+				@Override
+				public void onTwitter() {
+					getUiHandlers().triggerShareDatalogEvent(resourceGooruId,resoruceItemId,PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
+					Window.open(ClientConstants.TWITTERURL + i18n.GL1439()+" "+removeHtmlTags(resourceTitle).replaceAll("\\+", "%2B") +": " + SocialShareView.getEncodedUrl(resourceShareUrl), "_blank", "width=600,height=300");
+				}
+				@Override
+				public void onFacebook() {
+					getUiHandlers().triggerShareDatalogEvent(resourceGooruId,resoruceItemId,PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.FACEBOOK,false);
+					SocialShareView.postOnFacebook(removeHtmlTags(resourceTitle),SocialShareView.getEncodedUrl(resourceShareUrl),getResourceDescription(),getThumbnailUrl());
+				}
+				/**
+				 * used in preview player resource share.
+				 */
+				@Override
+				public void onEmail() {
+					String emailSubject=removeHtmlTags(resourceTitle);
+					String emailDescription = StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),resourceTitle,resourceShareUrl,AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint());
+					emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
+						@Override
+						public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {
+							getUiHandlers().triggerShareDatalogEvent(resourceGooruId,collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,true);
+							getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
+						}
+						@Override
+						public void closeEmailPopup(){
+							getUiHandlers().triggerShareDatalogEvent(resourceGooruId,resoruceItemId,PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,false);
+						}
+					};
+					emailShareView.show();
+				}
+			};
+			sharePanel.add(swidget);
+		}
 	}
 }

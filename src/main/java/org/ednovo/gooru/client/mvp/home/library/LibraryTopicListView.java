@@ -474,43 +474,20 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		getPopupAfterGMLogin();
 	}
 
-
+	/**
+	 * Sets the library lesson data
+	 * @param lessonDoList
+	 */
 	private void setPartnerLibraryLessonData(final ArrayList<PartnerFolderDo> lessonDoList) {
 		boolean isLessonHighlighted = true;
 		if(lessonDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
 			for(int i=0;i<LESSON_PAGE_INITIAL_LIMIT;i++) {
-				if(i==0) {
-					isLessonHighlighted = true;
-				} else {
-					isLessonHighlighted = false;
-				}
+				isLessonHighlighted = i==0?true:false;
 				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted, (i+1)));
 			}
-			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
-			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
-				@Override
-				public void onScroll(ScrollEvent event) {
-					if(isScrollable) {
-						isScrollable = false;
-						/*AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 5, getPlaceToken(), new SimpleAsyncCallback<ArrayList<LessonDo>>() {
-
-							@Override
-							public void onSuccess(ArrayList<LessonDo> result) {
-								for(int i=0;i<result.size();i++) {
-									conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i)));
-								}
-							}
-						});*/
-					}
-				}
-			});
 		} else {
 			for(int i=0;i<lessonDoList.size();i++) {
-				if(i==0) {
-					isLessonHighlighted = true;
-				} else {
-					isLessonHighlighted = false;
-				}
+				isLessonHighlighted = i==0?true:false;
 				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted,(i+1)));
 			}
 		}
@@ -624,9 +601,10 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		boolean isLessonHighlighted = true;
 		int pageCount = 0;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
-		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS) || StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())) {
+		LESSON_PAGE_INITIAL_LIMIT = (STANDARDS.equalsIgnoreCase(subjectName)|| StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())?20:3);
+		/*if(STANDARDS.equalsIgnoreCase(subjectName) || StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())) {
 			LESSON_PAGE_INITIAL_LIMIT = 20;
-		}
+		}*/
 		if(parentId!=null) {
 			LESSON_PAGE_INITIAL_LIMIT = 20;
 			pageCount = partnerItemCount;
@@ -677,11 +655,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				conceptSize = conceptDoList.size();
 			}
 			for(int i=0;i<conceptSize;i++) {
-				if(i==0) {
-					isLessonHighlighted = true;
-				} else {
-					isLessonHighlighted = false;
-				}
+				isLessonHighlighted = i==0?true:false;
 				conceptList.add(new LibraryLessonUc(conceptDoList,topicId,isLessonHighlighted,(i+1),libraryGooruOid));
 			}
 		}
@@ -766,32 +740,27 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		this.lessonCode=lessonCode;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(this.topicId==topicId) {
-		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-			standardsDescription.clear();
-			InlineLabel headerLbl = new InlineLabel(i18n.GL1363()+i18n.GL_SPL_SEMICOLON()+" ");
-			headerLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
-			InlineLabel textLbl = new InlineLabel("");
-			if(lessonLabel != null)
-			{
-			if(lessonLabel.length() > 400)
-			{
-			lessonLabel = lessonLabel.substring(0, 400) + "...";
+			if(STANDARDS.equalsIgnoreCase(subjectName)) {
+				standardsDescription.clear();
+				InlineLabel headerLbl = new InlineLabel(i18n.GL1363()+i18n.GL_SPL_SEMICOLON()+" ");
+				headerLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+				InlineLabel textLbl = new InlineLabel("");
+				if(lessonLabel != null){
+					if(lessonLabel.length() > 400){
+						lessonLabel = lessonLabel.substring(0, 400) + "...";
+					}
+					textLbl = new InlineLabel(lessonLabel);
+				}else{				
+					textLbl = new InlineLabel(conceptDo.getLabel());
+				}
+				standardsDescription.add(headerLbl);
+				standardsDescription.add(textLbl);
+				standardsDescription.setVisible(true);
+			} else {
+				standardsDescription.setVisible(false);
 			}
-			textLbl = new InlineLabel(lessonLabel);
-			}
-			else
-			{				
-			textLbl = new InlineLabel(conceptDo.getLabel());
-			}
-			
-			standardsDescription.add(headerLbl);
-			standardsDescription.add(textLbl);
-			standardsDescription.setVisible(true);
-		} else {
-			standardsDescription.setVisible(false);
-		}
-		
-	
+
+
 			String id = null;
 			if(conceptDo.getId()!=null)	{
 				id=conceptDo.getId();
@@ -799,11 +768,12 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			else if(conceptDo.getGooruOid()!=null){
 				id=conceptDo.getGooruOid();
 			}
+			
 			if(id!=null) {
 				collectionInfo.setVisible(true);
 				resourcesInside.setVisible(true);
 				noCollectionLbl.setVisible(false);
-				
+
 				try {
 					collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
 					collectionImage.addErrorHandler(new ErrorHandler() {
@@ -812,6 +782,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 							collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
 						}
 					});
+					
 					if(imageHandler!=null) {
 						imageHandler.removeHandler();
 					}
@@ -823,28 +794,26 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				} catch (Exception e) {
 					collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
 				}
-				
-				try
-				{
-				collectionTitleLbl.setHTML(conceptDo.getTitle());
-				collectionTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
-				collectionTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
-				String description = conceptDo.getGoals();
-				if(description!=null&&description.length()>=97) {
-					String browesr = BrowserAgent.getWebBrowserClient();
-					if(browesr.contains("chrome")||browesr.contains("safari")) {
-						description = description.substring(0,97)+"..."; 
-					} else {
-						description = description.substring(0,85)+"...";
+
+				try{
+					collectionTitleLbl.setHTML(conceptDo.getTitle());
+					collectionTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
+					collectionTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
+					String description = conceptDo.getGoals();
+					if(description!=null&&description.length()>=97) {
+						String browesr = BrowserAgent.getWebBrowserClient();
+						if(browesr.contains("chrome")||browesr.contains("safari")) {
+							description = description.substring(0,97)+"..."; 
+						} else {
+							description = description.substring(0,85)+"...";
+						}
 					}
+					collectionDescriptionLbl.setHTML(description);
+					collectionDescriptionLbl.getElement().setAttribute("alt",description);
+					collectionDescriptionLbl.getElement().setAttribute("title",description);
 				}
-				collectionDescriptionLbl.setHTML(description);
-				collectionDescriptionLbl.getElement().setAttribute("alt",description);
-				collectionDescriptionLbl.getElement().setAttribute("title",description);
-				}
-				catch(Exception ex)
-				{
-					
+				catch(Exception ex){
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 				setMetaDataInfo(conceptDo); 
 				resourcesInside.clear();
@@ -856,12 +825,10 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					}else{
 						if(conceptDo.getItemCount()!=null){
 							resourceCount = conceptDo.getItemCount();
-						}
-						else
-						{
+						}else{
 							resourceCount = libraryResources.size();
 						}
-						
+
 					}
 					int resources=resourceCount<=4?resourceCount:4;
 					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
@@ -870,18 +837,18 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 						try {
 							final LibraryCollectionItemDo libraryItem = libraryResources.get(i);
 							final LibraryResourceDo libraryResourceDo = libraryItem.getResource();
-							
+
 							String categoryString = "";
 							if(libraryResourceDo.getCategory()!=null) {
 								categoryString = libraryResourceDo.getCategory();
 							} else if(libraryResourceDo.getResourceFormat()!=null){
 								categoryString = libraryResourceDo.getResourceFormat().getDisplayName();
 							}
-							
+
 							final String category = categoryString;
 							final HTMLEventPanel resourcePanel = new HTMLEventPanel("");
 							resourcePanel.setStyleName(libraryStyle.resourceImage());
-							
+
 							final Image resourceImage = new Image();
 							resourceImage.setWidth("80px");
 							resourceImage.setHeight("60px");
@@ -893,15 +860,15 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 							}
 							resourceImage.setAltText(libraryResourceDo.getTitle());
 							resourceImage.setTitle(libraryResourceDo.getTitle());
-							
+
 							final String categoryImage=categoryString;
-							
+
 							final List<String> sourceAttribution = libraryResourceDo.getPublisher();
-//							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getAttribution()!=null) {
-//								sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
-//							}
-//							final String attribution = sourceAttribution;
-							
+							//							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getAttribution()!=null) {
+							//								sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
+							//							}
+							//							final String attribution = sourceAttribution;
+
 							String domainName = "";
 							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getDomainName()!=null) {
 								domainName = libraryResourceDo.getResourceSource().getDomainName();
@@ -909,7 +876,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 							final String domain = domainName;
 							final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
 							resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
-							   	
+
 								@Override
 								public void onMouseOver(MouseOverEvent event) {
 									try
@@ -922,18 +889,18 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									}
 									catch(Exception ex)
 									{
-										
+
 									}
 								}
 							});
 							resourceCategoryIcon.addMouseOutHandler(new MouseOutHandler() {
-								
+
 								@Override
 								public void onMouseOut(MouseOutEvent event) {
 									toolTipPopupPanel.hide();
 								}
 							});
-							
+
 							resourceCategoryIcon.addClickHandler(new ClickHandler() {
 								@Override
 								public void onClick(ClickEvent event) {
@@ -945,7 +912,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									}
 									Map<String, String> params = new HashMap<String, String>();
 									params.put("id", conceptDo.getGooruOid());
-									
+
 									String resourceId = libraryItem.getCollectionItemId();
 									if(resourceId==null) {
 										resourceId = libraryResourceDo.getCollectionItemId();
@@ -967,14 +934,14 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									if(standardId!=null){
 										params.put("rootNodeId", standardId);
 									}
-									
+
 									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 								}
 							});
-							
+
 							resourceImage.addMouseOverHandler(new MouseOverHandler() {
-							   	
+
 								@Override
 								public void onMouseOver(MouseOverEvent event) {
 									try
@@ -987,13 +954,13 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									}
 									catch(Exception ex)
 									{
-										
+
 									}
 								}
 							});
-							
+
 							resourceImage.addMouseOutHandler(new MouseOutHandler() {
-								
+
 								@Override
 								public void onMouseOut(MouseOutEvent event) {
 									toolTipPopupPanel.hide();
@@ -1022,7 +989,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 								resourceImage.setAltText(libraryResourceDo.getTitle());
 								resourceImage.setTitle(libraryResourceDo.getTitle());
 							}
-							
+
 							resourcePanel.addClickHandler(new ClickHandler() {
 								@Override
 								public void onClick(ClickEvent event) {
@@ -1034,7 +1001,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									}
 									Map<String, String> params = new HashMap<String, String>();
 									params.put("id", conceptDo.getGooruOid());
-									
+
 									String resourceId = libraryItem.getCollectionItemId();
 									if(resourceId==null) {
 										resourceId = libraryResourceDo.getCollectionItemId();
@@ -1056,13 +1023,13 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 									if(standardId!=null){
 										params.put("rootNodeId", standardId);
 									}
-									
+
 									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 								}
 							});
-							
-							
+
+
 							resourceCategoryIcon.addStyleName(UcCBundle.INSTANCE.css().resourceName());
 							resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
 							resourcePanel.add(resourceImage);

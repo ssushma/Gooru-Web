@@ -1,5 +1,7 @@
 package org.ednovo.gooru.client.mvp.analytics.util;
 
+import org.ednovo.gooru.shared.util.ClientConstants;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -9,7 +11,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AnalyticsTabContainer extends Composite {
+public abstract class AnalyticsTabContainer extends Composite implements ClientConstants{
 
 	private static AnalyticsTabContainerUiBinder uiBinder = GWT
 			.create(AnalyticsTabContainerUiBinder.class);
@@ -19,7 +21,6 @@ public abstract class AnalyticsTabContainer extends Composite {
 	}
 
 	@UiField Button btnScoredQuestions,btnOpenEndedQuestions,btnCollectionBreakDown,btnPtint,btnSave,btnEmail;
-	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",SAVEBTN="save",EMAIL="email";
 	
 	/**
 	 * Constructor
