@@ -246,7 +246,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		this.collectionItemDo = collectionItemDo;
 		getView().clearShelfData();
 		getWorkspaceData(0,20,true,"resource");
-		
 	}
 
 	@Override

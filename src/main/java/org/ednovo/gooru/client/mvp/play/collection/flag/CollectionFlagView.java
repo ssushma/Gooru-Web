@@ -529,7 +529,6 @@ public class CollectionFlagView extends
 			}
 		}
 		displayView(collectionTitle,resourcesList,resourcesListId);
-
 	}
 	@UiHandler("collectionSubmitButton")
 	public void onClickOfcollectionSubmitButton(ClickEvent event){
