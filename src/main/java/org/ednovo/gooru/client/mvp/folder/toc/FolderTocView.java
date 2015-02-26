@@ -106,7 +106,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField Image logoImage,bannerImage,profImage;
 	@UiField Anchor mainTitle,firstTitle;
 	
-	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel;
+	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel;
 	
 	@UiField Hidden myHiddenField;
 	
@@ -601,6 +601,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void hidePanels() {
 		bannerImagePanel.setVisible(false);
 		profileBannerPanel.setVisible(false);
+		breadCrumbsPanel.setVisible(false);
 	}
 	/**
 	 * To set the User profile details

@@ -33,7 +33,7 @@
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 						    <g:HTMLPanel styleName="{tocStyle1.paginationBlock}">
-							   <g:HTMLPanel styleName="col-md-6"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
+							   <g:HTMLPanel styleName="col-md-6" ui:field="breadCrumbsPanel"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
 							   <g:HTMLPanel styleName="col-md-6 {tocStyle1.shareButton}">
 							  		 <g:Button styleName="primary">Share </g:Button>
 							   </g:HTMLPanel>
