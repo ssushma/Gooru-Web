@@ -101,7 +101,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks;
 	@UiField H3Panel lblFolderTitle;
-	@UiField Button btnBackToPrevious;
+	@UiField Button btnShare,btnBackToPrevious;
 	@UiField H2Panel bannerTitle,userTitle;
 	@UiField Image logoImage,bannerImage,profImage;
 	@UiField Anchor mainTitle,firstTitle;
@@ -141,7 +141,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
 		setBannerStaticImages();
-		
 	}
 
 	/**
@@ -194,18 +193,27 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				String[] placeToken=lastAccessedUrl.split("#");
 				Map<String, String> params = new HashMap<String, String>();
 				if(placeToken.length>1){
-					String[] entries = placeToken[1].split("&");
-						for (String entry : entries) {
-								String[] keyValue = entry.split("=");
-								params.put(keyValue[0],keyValue[1]);
-						}
-						AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
+						AppClientFactory.getPlaceManager().revealPlace(placeToken[0], StringUtil.splitQuery(lastAccessedUrl));
 				}else{
 					//If we are viewing TOC from library 
 					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
 			  }
 			}
 		});
+		btnShare.addClickHandler(new ShareClickHandler());
+	}
+	/**
+	 * This inner class is used to handle the click enent on share button
+	 */
+	public class ShareClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("type", PlaceTokens.FOLDER_TOC);
+			String folderId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			if(folderId!=null)
+			getUiHandlers().getShortenUrl(folderId, params);
+		}
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBannerStaticImages()
