@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -222,14 +223,25 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		getPermissionsList = new ArrayList<String>();
 		characterLimit.setVisible(false);
 		try{
-			setCommentUid(commentsDo.getCommentUid());
-			collectionOwnerUid = collectionDo.getUser().getGooruUId() !=null ? collectionDo.getUser().getGooruUId() : null;
-			commentOwnerUid = commentsDo.getCommentorUid().getGooruUId() != null ? commentsDo.getCommentorUid().getGooruUId() : null;
+			if(commentsDo.getCommentUid()!=null){
+				setCommentUid(commentsDo.getCommentUid());
+			}
+			if(collectionDo.getUser()!=null){
+				collectionOwnerUid = collectionDo.getUser().getGooruUId() !=null ? collectionDo.getUser().getGooruUId() : null;
+			}
+			if(commentsDo.getCommentorUid()!=null){
+				commentOwnerUid = commentsDo.getCommentorUid().getGooruUId() != null ? commentsDo.getCommentorUid().getGooruUId() : null;
+				userName.setText(commentsDo.getCommentorUid().getUsername()!= null ?commentsDo.getCommentorUid().getUsername():"");
+			}
+			
 			loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
-			CHECK_COLLOBORATOR = collectionDo.getMeta().isIsCollaborator();
-			 if(collectionDo.getMeta().getPermissions()!=null){
-			getPermissionsList = collectionDo.getMeta().getPermissions();
-			 }
+			
+			if(collectionDo.getMeta()!=null){
+				 CHECK_COLLOBORATOR = collectionDo.getMeta().isIsCollaborator();
+				 if(collectionDo.getMeta().getPermissions().size()>0){
+					 getPermissionsList = collectionDo.getMeta().getPermissions();
+				 }
+			}
 			userPhoto.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+commentOwnerUid+PNG);
 			userPhoto.addErrorHandler(new ErrorHandler() {
 				@Override
@@ -238,18 +250,16 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				}
 			});
 			setMixPanelEvent(collectionOwnerUid, loggedInOwnerUid);
-			userName.setText(commentsDo.getCommentorUid().getUsername());
+			
 			if(collectionOwnerUid.equalsIgnoreCase(commentOwnerUid)) {
 				authorBadge.setVisible(true);
 			} else {
 				authorBadge.setVisible(false);
 			}
 			String commentTime = getCreatedTime(commentsDo.getCreatedOn());
-
 			if (commentsDo.getLastModifiedOn() !=null){
 				commentTime = commentTime+ " "+i18n.GL_GRR_Hyphen()+" "+i18n.GL1434();
 			}
-			
 			timestamp.setText(commentTime); 
 			timestamp.getElement().setAttribute("alt",commentTime);
 			timestamp.getElement().setAttribute("title",commentTime);
@@ -259,13 +269,10 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			commentField.setText(commentsDo.getComment());
 			commentField.getElement().setAttribute("alt",commentsDo.getComment());
 			commentField.getElement().setAttribute("title",commentsDo.getComment());
-			
 			setOptionsButtons();
-			
 		}catch(Exception e){
 			
 		}
-		
 	}
 	
 	/**
@@ -291,7 +298,6 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
 		if(collectionDo.getSettings()!=null && collectionDo.getSettings().getComment()!=null){
 			if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on")){
-//				editButton.setVisible(true);
 				if(!AppClientFactory.isAnonymous() && (commentOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
 					editButton.setVisible(true);
 					deleteButton.setVisible(false);
@@ -306,7 +312,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 						|| AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(SUPER_ADMIN_ROLE))){
 					deleteButton.setVisible(false);
 					editButton.setVisible(true);
-				}else if(!AppClientFactory.isAnonymous() && getPermissionsList!=null && getPermissionsList.toString().contains("edit")){
+				}else if(!AppClientFactory.isAnonymous() && getPermissionsList!=null && getPermissionsList.toString().contains(ClientConstants.EDIT)){
 					deleteButton.setVisible(false);
 					editButton.setVisible(true);
 				}	
@@ -350,12 +356,14 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	
 	@UiHandler("postCommentCancel")
 	public void clickOnPostCommentCancel(ClickEvent event) {
-    	commentHtml.setHTML(commentsDo.getComment());
-    	commentHtml.getElement().setAttribute("alt",commentsDo.getComment());
-		commentHtml.getElement().setAttribute("title",commentsDo.getComment());
-    	commentField.setText(commentsDo.getComment());
-    	commentField.getElement().setAttribute("alt",commentsDo.getComment());
-    	commentField.getElement().setAttribute("title",commentsDo.getComment());
+		if(commentsDo.getComment()!=null){
+			commentHtml.setHTML(commentsDo.getComment());
+	    	commentHtml.getElement().setAttribute("alt",commentsDo.getComment());
+			commentHtml.getElement().setAttribute("title",commentsDo.getComment());
+	    	commentField.setText(commentsDo.getComment());
+	    	commentField.getElement().setAttribute("alt",commentsDo.getComment());
+	    	commentField.getElement().setAttribute("title",commentsDo.getComment());
+		}
 		AppClientFactory.fireEvent(new UpdateCommentChildViewEvent("",EDIT));
 		enableEditFunction(false);
 		characterLimit.setVisible(false);
@@ -367,7 +375,6 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", removeHtmlTags(commentField.getText()));
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-
 				@Override
 				public void onSuccess(Boolean value) {
 					boolean isHavingBadWords = value;
@@ -382,8 +389,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				    	displaySuccessMsg(true);
 						Timer timer = new Timer(){
 				            @Override
-				            public void run()
-				            {
+				            public void run(){
 				            	commentsDo.setComment(removeHtmlTags(commentField.getText()));
 				            	commentHtml.setHTML(commentsDo.getComment());
 				            	String commentTime = getCreatedTime(commentsDo.getCreatedOn());
@@ -579,11 +585,9 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		}
 		@Override
 		public void onDelete(ClickEvent clickEvent) {
-			Timer timer = new Timer()
-	        {
+			Timer timer = new Timer(){
 	            @Override
-	            public void run()
-	            {
+	            public void run(){
 	            	AppClientFactory.fireEvent(new UpdateCommentChildViewEvent(getCommentUid(),DELETE));		            
 	            	deleteConfirmationPopupVc.hide();
 	            }
@@ -607,29 +611,32 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	 * @return : String
 	 */
 	private String getCreatedTime(String commentCreatedTime) {
-		String createdTime = null;
-		Long currentTime = System.currentTimeMillis();
-		Long commentTime = Long.parseLong(commentCreatedTime);
-		Long elapsedTime = (currentTime - commentTime);
-		int seconds = (int) (elapsedTime / 1000) % 60 ;
-		int minutes = (int) ((elapsedTime / (1000*60)) % 60);
-		int hours   = (int) ((elapsedTime / (1000*60*60)) % 24);
-		int days = (int) (elapsedTime / (1000*60*60*24));
-		Date currentDate = new Date(commentTime);
-		DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
-		if(days>6){
-			createdTime = fmt.format (currentDate);
+		if(!StringUtil.isEmpty(commentCreatedTime)){
+			String createdTime = null;
+			Long currentTime = System.currentTimeMillis();
+			Long commentTime = Long.parseLong(commentCreatedTime);
+			Long elapsedTime = (currentTime - commentTime);
+			int seconds = (int) (elapsedTime / 1000) % 60 ;
+			int minutes = (int) ((elapsedTime / (1000*60)) % 60);
+			int hours   = (int) ((elapsedTime / (1000*60*60)) % 24);
+			int days = (int) (elapsedTime / (1000*60*60*24));
+			Date currentDate = new Date(commentTime);
+			DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
+			if(days>6){
+				createdTime = fmt.format (currentDate);
+			}
+			else if(days>0&&days<=6) {
+				createdTime = days + getTimePrefix(days," "+i18n.GL0562(), i18n.GL0579(), i18n.GL0580());
+			} else if(hours>0&&hours<24) {
+				createdTime = hours + getTimePrefix(hours," "+i18n.GL0563(), i18n.GL1435(), i18n.GL1436());
+			} else if(minutes>0&&minutes<60) {
+				createdTime = minutes + getTimePrefix(minutes," "+i18n.GL0564(), i18n.GL1437(), i18n.GL1438());
+			} else if(seconds<=60) {
+				createdTime = i18n.GL0561();
+			}
+			return createdTime;
 		}
-		else if(days>0&&days<=6) {
-			createdTime = days + getTimePrefix(days," "+i18n.GL0562(), i18n.GL0579(), i18n.GL0580());
-		} else if(hours>0&&hours<24) {
-			createdTime = hours + getTimePrefix(hours," "+i18n.GL0563(), i18n.GL1435(), i18n.GL1436());
-		} else if(minutes>0&&minutes<60) {
-			createdTime = minutes + getTimePrefix(minutes," "+i18n.GL0564(), i18n.GL1437(), i18n.GL1438());
-		} else if(seconds<=60) {
-			createdTime = i18n.GL0561();
-		}
-		return createdTime;
+		return "";
 	}
 	
 	/**
@@ -648,7 +655,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	 *
 	 */
 	private String getTimePrefix(int count, String msg, String regex, String replacement) {
-		if(count==1) {
+		if(count==1 && !StringUtil.isEmpty(msg)) {
 			msg = msg.replaceAll(regex, replacement);
 		}
 		return msg;

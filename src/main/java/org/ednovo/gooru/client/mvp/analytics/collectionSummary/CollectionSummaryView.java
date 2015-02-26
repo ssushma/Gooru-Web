@@ -213,7 +213,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			CollectionSummaryMetaDataDo result,String pathwayId,String classpageId) {
 		this.classpageId=classpageId;
 		this.pathwayId=pathwayId;
-		if(StringUtil.checkNull(result)){
+		if(!StringUtil.checkNull(result)){
 			collectionId=result.getGooruOId();
 			collectionSummaryWidget.setData(result);
 			collectionSummaryDetails.add(collectionSummaryWidget);
