@@ -49,12 +49,9 @@ public class SentEmailSuccessVc extends PopupPanel{
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
 
-	@UiField
-	Label okLbl,toEmailLbl;
+	@UiField Label okLbl,toEmailLbl;
 	@UiField HTMLPanel emailToFriendText,thanksEmailText;
-	
 
 	/**
 	 * Class constructor , create a new pop up
