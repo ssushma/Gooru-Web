@@ -84,9 +84,9 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		super.onReveal();
 		getView().getTreePanel();
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
-		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
-		String userId=AppClientFactory.getPlaceManager().getRequestParameter("userId",null);
+		final String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
+		final String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+		final String userId=AppClientFactory.getPlaceManager().getRequestParameter("userId",null);
 		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
 		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -97,6 +97,14 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				public void onSuccess(FolderTocDo folderListDo) {
 					getView().clearTocData();
 					getView().setFolderItems(folderListDo);
+					//Set the back button text
+					if(libName!=null){
+						getView().setBackButtonText(i18n.GL3170());
+					}else if(userId!=null){
+						getView().setBackButtonText(i18n.GL3171());
+					}else{
+						getView().setBackButtonText(i18n.GL3172());
+					}
 				}
 			});
 			if(libName!=null){
@@ -115,7 +123,6 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}else{
 					getView().setBannerImages();
 				}
-				getView().setBackButtonText(i18n.GL3170());
 			}else if(userId==null){
 				//getView().showProfileBanner();
 				getView().hidePanels();

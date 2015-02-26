@@ -191,12 +191,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				String[] placeToken=lastAccessedUrl.split("#");
 				Map<String, String> params = new HashMap<String, String>();
 				if(placeToken.length>1){
-					String[] entries = placeToken[1].split("&");
-						for (String entry : entries) {
-								String[] keyValue = entry.split("=");
-								params.put(keyValue[0],keyValue[1]);
-						}
-						AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
+						AppClientFactory.getPlaceManager().revealPlace(placeToken[0], StringUtil.splitQuery(lastAccessedUrl));
 				}else{
 					//If we are viewing TOC from library 
 					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
