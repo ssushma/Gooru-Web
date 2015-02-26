@@ -80,7 +80,10 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 		this.analyticService.getCollectionResourceData(this.collectionId,this.classpageId,"",new AsyncCallback<ArrayList<UserDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> userData) {
-				getView().setTeacherResourceData(userData,result,loadingImage);
+				if(userData != null){
+					getView().setTeacherResourceData(userData,result,loadingImage);
+				}
+				
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -96,7 +99,9 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"AS","","", new AsyncCallback<ArrayList<OetextDataDO>>() {
 			@Override
 			public void onSuccess(ArrayList<OetextDataDO> result) {
-				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,"AS");
+				if(result !=null){
+					getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,"AS");
+				}
 			}
 			@Override
 			public void onFailure(Throwable caught) {

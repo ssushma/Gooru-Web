@@ -87,9 +87,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 	private String cfm = "no";
 	
 	private static final String AT_SYMBOL = "@";
-
-//	String i18n.GL_EMAIL_SUBJECT = i18n.GL1443;
-//	String i18n.GL0219 = i18n.GL1444;
 	
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	
@@ -260,7 +257,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 					fromValidation.setVisible(true);
 					isvalid = false;
 				}
-				
 			}
 		}
 		
@@ -347,7 +343,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 
 	@UiHandler("checkCopyEmail")
 	public void oncheckCopyEmailEvent(ClickEvent event) {
-
 		if (checkCopyEmail.getValue()) {
 			cfm = "yes";
 		} else {
@@ -385,7 +380,6 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 						isHavingBadWordsInRichText=value;
 						SetStyleForProfanity.SetStyleForProfanityForRichTextArea(richTextArea, label, value);
 					}
-					
 				}
 			});
 		}
@@ -405,22 +399,18 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		termsOfUse=new TermsOfUse(){
-
 			@Override
 			public void openParentPopup() {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			}
-			
 		};
 		termsOfUse.show();
 		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}
-	
-	
-	
+
 	public  abstract void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message);
 	public abstract void closeEmailPopup();
 }
