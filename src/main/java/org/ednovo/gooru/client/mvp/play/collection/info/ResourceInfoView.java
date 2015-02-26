@@ -59,6 +59,8 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -85,7 +87,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandlers> implements IsResourceInfoView{
+public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandlers> implements IsResourceInfoView,ClientConstants{
 	
 	public static final String STANDARD_CODE = "code";
 	public static final String STANDARD_DESCRIPTION = "description";
@@ -433,7 +435,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo) {
-		
 		isEducationalInfo=false;
 		isAccessibilityInfo=false;
 		isResourceInfo=false;
@@ -446,23 +447,25 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		
 		collectionItemDoGlobal = collectionItemDo;
 		setAvgRatingWidget();
-		if(collectionItemDo.getResource().getMediaType()!=null){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 			}
 		}
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
 			setResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName());
 		}
-		setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():
-				null,collectionItemDo.getResource().getTaxonomySet());
-		setResourceDescription(collectionItemDo.getResource().getDescription());
-		setResourceViewsCount(collectionItemDo.getViews());
+		if(collectionItemDo.getResource()!=null){
+			setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():null,collectionItemDo.getResource().getTaxonomySet());
+			setResourceDescription(collectionItemDo.getResource().getDescription()!=null?collectionItemDo.getResource().getDescription():"");
+		}
+		if(!StringUtil.isEmpty(collectionItemDo.getViews())){
+			setResourceViewsCount(collectionItemDo.getViews());
+		}
 		setResourceLicenceLogo(collectionItemDo.getResource().getAssetURI(), collectionItemDo.getResource().getLicense());
 		renderStandards(standardsInfoConatiner,collectionItemDo.getStandards());
 		
-		if(collectionItemDo.getResource().getGrade()!=null){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getGrade()!=null){
 			List<String> gradesdetails = new ArrayList<String>();
-			List<Integer> gradeListInt = new  ArrayList<Integer>();
 			String[] gradeslist=collectionItemDo.getResource().getGrade().split(",");
 			for (String eachGrade1 : gradeslist) {
 				if (!eachGrade1.trim().equalsIgnoreCase("Kindergarten")
@@ -488,7 +491,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		{
 		if(collectionItemDo.getResource().getResourceType().getName() != null)
 		{
-		if (collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("video/youtube") || collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("resource/url"))
+		if (VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()) || RESOURCE_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()))
 		{
 		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
@@ -518,12 +521,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
-		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
+		if(collectionItemDo.getResource()!=null && (collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null)){
 			if(collectionItemDo.getResource().getPublisher()!=null){
 				if(!collectionItemDo.getResource().getPublisher().isEmpty()){
 					setPublisherDetails(collectionItemDo.getResource().getPublisher());
 				}else if(collectionItemDo.getResource().getResourceFormat()!=null){
-					if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					if(QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceFormat().getValue())){
 						List<String> publisherQuestionUserName = new ArrayList<String>();
 						if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 						publisherQuestionUserName.add(collectionItemDo.getResource().getCreator().getUsername());
@@ -533,7 +536,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				}
 			}
 			else if(collectionItemDo.getResource().getResourceFormat()!=null){
-				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				if(QUESTION.equalsIgnoreCase(collectionItemDo.getResource().getResourceFormat().getValue())){
 					List<String> publisherQuestionUserName = new ArrayList<String>();
 					if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 					publisherQuestionUserName.add(collectionItemDo.getResource().getCreator().getUsername());
@@ -542,11 +545,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				}
 			}
 		}
-		if(collectionItemDo.getResource().getThumbnails()!=null){
+		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getThumbnails()!=null){
 			setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
 		}
 		
-		if(collectionItemDo.getResource().getAggregator()!=null){
+		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAggregator()!=null){
 			setAggregatorvalues(collectionItemDo.getResource().getAggregator());
 		}
 		
@@ -555,7 +558,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			lblcollectionName.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			lblcollectionName.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTitleStyleName());
 			
-			if(collectionItemDo.getResource().getCustomFieldValues()!=null ){
+			if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getCustomFieldValues()!=null){
 				clearALlPanels();
 				if(collectionItemDo.getResource().getHost()!=null){
 					setHostDetails(collectionItemDo.getResource().getHost());
@@ -651,7 +654,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 		List<String> eduUsedetails = new ArrayList<String>();
 
-		if(collectionItemDo.getResource().getEducationalUse()!=null){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getEducationalUse()!=null){
 		if(collectionItemDo.getResource().getEducationalUse().size()>0){
 		for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
 			if(collectionItemDo.getResource().getEducationalUse().get(i).isSelected())
@@ -1159,7 +1162,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setOerDetails(String oerdetails) {
 	
-		if(oerdetails!=null&&!oerdetails.equalsIgnoreCase("")&&!oerdetails.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(oerdetails)&&!oerdetails.equalsIgnoreCase("null")){
 			oerPanel.setVisible(true);
 			oerLbl.setText(i18n.GL1834().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 			oerLbl.getElement().setAttribute("alt",i18n.GL1834());
@@ -1502,7 +1505,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setCopyRightHolderDetails(String copyRightHolder) {
 	
-		if(copyRightHolder!=null&&!copyRightHolder.equalsIgnoreCase("")&&!copyRightHolder.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(copyRightHolder)&&!copyRightHolder.equalsIgnoreCase("null")){
 			copyRightPanel.setVisible(true);
 			copyRightType.setText(" "+copyRightHolder);
 			copyRightType.getElement().setAttribute("alt",copyRightHolder);
@@ -1517,7 +1520,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setAuthorDetails(String author) {
 	
-		if(author!=null&&!author.equalsIgnoreCase("")&&!author.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(author)&&!author.equalsIgnoreCase("null")){
 			authorPanel.setVisible(true);
 			authorLbl.setText(i18n.GL0573().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 			authorLbl.getElement().setAttribute("alt",i18n.GL0573());
@@ -1532,7 +1535,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setdataTypeDetails(String dataType) {
 	
-		if(dataType!=null&&!dataType.equalsIgnoreCase("")&&!dataType.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(dataType)&&!dataType.equalsIgnoreCase("null")){
 			DataTypePanel.setVisible(true);
 			dataTypeFormat.setText(" "+dataType);
 			dataTypeFormat.getElement().setAttribute("alt",dataType);
@@ -1547,7 +1550,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setlanguageDetails(String language) {
 	
-		if(language!=null&&!language.equalsIgnoreCase("")&&!language.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(language)&&!language.equalsIgnoreCase("null")){
 			languagePanel.setVisible(true);
 			languageType.setText(" "+language);
 			languageType.getElement().setAttribute("alt",language);
@@ -1562,7 +1565,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setCountryCodeDetails(String countryCode) {
 	
-		if(countryCode!=null&&!countryCode.equalsIgnoreCase("")&&!countryCode.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(countryCode)&&!countryCode.equalsIgnoreCase("null")){
 			countryCodePanel.setVisible(true);
 			countryCodeType.setText(" "+countryCode);
 			countryCodeType.getElement().setAttribute("alt",countryCode);
@@ -1577,7 +1580,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setageRangeDetails(String ageRange) {
 	
-		if(ageRange!=null&&!ageRange.equalsIgnoreCase("")&&!ageRange.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(ageRange)&&!ageRange.equalsIgnoreCase("null")){
 			ageRangePanel.setVisible(true);
 			ageRangeType.setText(" "+ageRange);
 			ageRangeType.getElement().setAttribute("alt",ageRange);
@@ -1592,7 +1595,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setinteractivityTypeDetails(String interactivityType) {
 	
-		if(interactivityType!=null&&!interactivityType.equalsIgnoreCase("")&&!interactivityType.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(interactivityType)&&!interactivityType.equalsIgnoreCase("null")){
 			interactivityTypePanel.setVisible(true);
 			interactiveType.setText(" "+interactivityType);
 			interactiveType.getElement().setAttribute("alt",interactivityType);
@@ -1606,7 +1609,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void seteducationalRoleDetails(String educationalRole) {
-		if(educationalRole!=null&&!educationalRole.equalsIgnoreCase("")&&!educationalRole.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(educationalRole)&&!educationalRole.equalsIgnoreCase("null")){
 			eduRolePanel.setVisible(true);
 			eduRoleType.setText(" "+educationalRole);
 			eduRoleType.getElement().setAttribute("alt",educationalRole);
@@ -1623,7 +1626,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 
 	private void setedAlignDetails(String educationalAlignment) {
-		if(educationalAlignment!=null&&!educationalAlignment.equalsIgnoreCase("")&&!educationalAlignment.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(educationalAlignment)&&!educationalAlignment.equalsIgnoreCase("null")){
 			eduAllignPanel.setVisible(true);
 			eduAllignType.setText(" "+educationalAlignment);
 			eduAllignType.getElement().setAttribute("alt",educationalAlignment);
@@ -1843,18 +1846,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	public void setResourceLicenceLogo(String assetUrl,LicenseDo licenseDo){
 		if(licenseDo!=null){
-			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
+			if(!StringUtil.isEmpty(licenseDo.getIcon())){
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
-				
-					
 				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode(),licenseDo.getName()));
 				image.addMouseOutHandler(new MouseOutHideToolTip());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
 				rightsLogoContainer.add(image);
-				
-				
 			}
 			else{
 				licenceContainer.setVisible(false);
@@ -2147,7 +2146,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setCollectionTitle(String mycollectionTitle) {
-	
 		this.title =mycollectionTitle;
 	}
 	

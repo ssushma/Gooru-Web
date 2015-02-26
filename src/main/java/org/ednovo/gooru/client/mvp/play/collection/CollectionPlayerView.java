@@ -107,7 +107,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	GlobalTooltipWithButton globalTooltipWithButton,logOutToolTip;
 	
 	private int userRating=0;
-	private String resourceId;
 	private HandlerRegistration autoHideHandler;
 
 	private final EventBus eventBus;
@@ -407,7 +406,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 	
 	public void showClasspage(String classpageId,String page){
-		//TODO reveal to classpage..
 		String viewToken=AppClientFactory.getPlaceManager().getPreviousPlayerRequestUrl().getNameToken();
 		if(PlaceTokens.DISCOVER.equals(viewToken)){
 			Map<String,String> paramsMap=new LinkedHashMap<String,String>();
@@ -499,13 +497,13 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			@UiHandler("okButton")
 			public void onDelete(ClickEvent clickEvent) {
 				hide();
-				getUiHandlers().navigateToNext("next");
+				getUiHandlers().navigateToNext(NEXT);
 			}
 			@Override
 			@UiHandler("cancelButton")
 			public void onCancelClick(ClickEvent clickEvent){
 				hide();
-				getUiHandlers().navigateToNext("previous");
+				getUiHandlers().navigateToNext(PREVIOUS);
 			}
 		};
 		String hasPrevious=previous.getParameter("rid", null);
@@ -643,7 +641,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 
 	@Override
 	public void removeStudentViewButton() {
-		// TODO Auto-generated method stub
 		
 	}
 

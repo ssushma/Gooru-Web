@@ -283,7 +283,11 @@ public interface ClientConstants {
 	String EDIT ="edit";
 	String TURNON ="turn-on";
 	String TURNOFF ="turn-off";
-	
+	String RESOURCE_URL ="resource/url";
+	String DELETE ="delete";
+	String NEXT ="next";
+	String PREVIOUS ="previous";
+	String ADDTEXTLBL ="Add";
 	
 	
 	/***Player share constants***/
@@ -294,6 +298,7 @@ public interface ClientConstants {
 	String SHARETYPE="shareType";
 	String TYPE="type";
 	String TWITTERURL="http://twitter.com/intent/tweet?text=";
+	String IMG="img";
 	/***Player share constants end***/
 	
 }

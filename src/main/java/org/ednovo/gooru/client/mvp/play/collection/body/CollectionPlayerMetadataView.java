@@ -830,27 +830,12 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	
 	
-//	@UiHandler("insightsFrame")
-//	public void ifrmaeContentLoaded(LoadEvent laodEvent){
-//		loginPopupTimer.schedule(500);
-//	}
-	
+
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(true);
-		}else if(page!=null&&page.equals("teach")){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(false);
+		}else if(page!=null&&TEACH.equals(page)){
 		}else{
-//			frameContainer.clear();
-//			frameContainer.setVisible(true);
-//			messageContainer.setVisible(false);
-//			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-//					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));
 		}
 	}
 	
@@ -859,41 +844,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			sessionId = "";
 		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-//		if(AppClientFactory.isAnonymous()){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(true);
-//		}else if(page!=null&&page.equals("teach")){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(false);
-//		}else{
-//			frameContainer.clear();
-//			frameContainer.setVisible(true);
-//			messageContainer.setVisible(false);
-//			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
-//					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
-//		}
 	}
 	
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-//		if(AppClientFactory.isAnonymous()){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(true);
-//		}else if(page!=null&&page.equals("teach")){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(false);
-//		}else{
-//			frameContainer.clear();
-//			frameContainer.setVisible(true);
-//			messageContainer.setVisible(false);
-//			sessionId=sessionId!=null?sessionId:"";
-//			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-//					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
-//		}
 	}
 	
 	public class DataInsightsIframe extends Composite{
@@ -911,7 +865,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	}
 	
 	public void clearDashBoardIframe(){
-		//insightsFrame.setUrl("");
 	}
 	
 	public void renderLanguageObjective(String languageObjective){	
@@ -929,7 +882,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("title",languageObjective.substring(0,200));
-					//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
 			}else{
 				seeMoreAnchor.setVisible(false);
 				lbllanguageObjective.setText(languageObjective);
@@ -1035,7 +987,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiHandler("seeMoreAnchor")
 	public void clickSeeAll(ClickEvent event)
 	{
-		//lbllanguageObjectiveAll.setVisible(true);
 		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText("");
 		lbllanguageObjective.setText(languageObjectiveValue);

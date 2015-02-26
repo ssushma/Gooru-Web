@@ -60,6 +60,7 @@ import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.user.CreatorDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,7 +109,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 					for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 						CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
 						String decodeUrl=collectionItemDo.getResource().getUrl();
-						if(decodeUrl!=null&&!decodeUrl.equals("")&&!decodeUrl.equals("null")){
+						if(!StringUtil.isEmpty(decodeUrl)&&!decodeUrl.equals("null")){
 							if(decodeUrl.substring(0, 4).equalsIgnoreCase("http")){
 								
 							}else{
@@ -374,8 +375,10 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			getLogger().info("session tracker API:"+url);
 			getLogger().info("session tracker INPUT DATA:"+createSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-			JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
-			seesionId=createSessionResponse.getString("sessionId");
+			if(jsonRepresentation!=null&&jsonRepresentation.getSize()!=-1){
+				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
+				seesionId=createSessionResponse.getString("sessionId");
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -394,9 +397,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_SESSION, sessionTrackerId,getLoggedInSessionToken());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-			if(jsonRepresentation !=null){
+			if(jsonRepresentation !=null && jsonRepresentation.getSize()!=-1){
 				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
+				if(!createSessionResponse.isNull("sessionId")){
 				sessionItemId=createSessionResponse.getString("sessionId");
+				}
 			}
 			
 		} catch (JSONException e) {
@@ -425,9 +430,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM, sessionTrackerId,getLoggedInSessionToken());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemObj.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-			JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
-			if(createSessionResponse.has("sessionItemId")){
-				sessionItemId=createSessionResponse.getString("sessionItemId");
+			if(jsonRepresentation!=null && jsonRepresentation.getSize()!=-1){
+				JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
+				if(createSessionResponse.has("sessionItemId")){
+					sessionItemId=createSessionResponse.getString("sessionItemId");
+				}
 			}
 			
 		} catch (JSONException e) {
@@ -524,9 +531,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_RENAME_COLLECTION, collectionId,getLoggedInSessionToken(),"true",collectionTitle);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			if(jsonRep!=null){
+			if(jsonRep!=null && jsonRep.getSize()!=-1){
 				JSONObject copiedCollectionObj=jsonRep.getJsonObject();
+				if(!copiedCollectionObj.isNull("gooruOid")){
 				copiedCollectionId=copiedCollectionObj.getString("gooruOid");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
