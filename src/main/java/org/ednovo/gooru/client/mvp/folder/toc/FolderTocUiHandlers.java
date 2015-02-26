@@ -57,4 +57,9 @@ public interface FolderTocUiHandlers extends BaseUiHandlers{
 	 * @param params
 	 */
 	void getShortenUrl(String folderId,Map<String, String> params);
+	/**
+	 * To get the User profile details 
+	 * @param profId {@link String}
+	 */
+	void getProfilePageDetails(String profId);
 }

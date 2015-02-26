@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProx
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -157,12 +158,26 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new AsyncCallback<Map<String,String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
-				System.out.println("short size::"+result.size());
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 		});		
+	}
+    /**
+     * To get the User profile details 
+	 * @param profId {@link String}
+     */
+	@Override
+	public void getProfilePageDetails(String profId) {
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(profId, "0", new SimpleAsyncCallback<ProfileDo>() {
+			@Override
+			public void onSuccess(ProfileDo profileDo) {
+				if(profileDo!=null){
+				 getView().setProfileBannerDetails(profileDo);	
+				}
+			}
+		});
 	}
 }

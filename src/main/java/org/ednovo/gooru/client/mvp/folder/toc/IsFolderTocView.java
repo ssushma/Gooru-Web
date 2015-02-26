@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.folder.toc;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -91,4 +92,9 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	 * @return
 	 */
 	Tree getTreePanel();
+	/**
+	 * This method used to set the user profile details.
+	 * @param profileDo {@link ProfileDo}
+	 */
+	void setProfileBannerDetails(ProfileDo profileDo);
 }
