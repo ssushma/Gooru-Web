@@ -250,4 +250,15 @@ public interface ClientConstants {
 	String COLLECTIONSHREVIEWTEXTLBL="collectionShareViewPage";
 	String COLLECTIONSUMMARYVIEWTEXTLBL="collectionShareSummaryPage";
 	
+	/***Player share constants***/
+	String SHORTENURL="shortenUrl";
+	String DECODERAWURL="decodeRawUrl";
+	String RAWURL="rawUrl";
+	String EMBEDURLRAWURL="embedUrlRawUrl";
+	String SHARETYPE="shareType";
+	String SHARE="share";
+	String TYPE="type";
+	String TWITTERURL="http://twitter.com/intent/tweet?text=";
+	/***Player share constants end***/
+	
 }
