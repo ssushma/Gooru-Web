@@ -503,13 +503,16 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
+			if(jsonRep!=null && jsonRep.getSize()!=-1){
 			jsonObject = jsonRep.getJsonObject();
+			if(!jsonObject.isNull("optionalValue")){
 			userProfileVisibility = jsonObject.getBoolean("optionalValue");
+			}
+			}
 		}catch(Exception exception){
 			
 		}
 		return userProfileVisibility;
-		
 	}
 	@Override
 	public String copyCollection(String collectionId, String collectionTitle) {

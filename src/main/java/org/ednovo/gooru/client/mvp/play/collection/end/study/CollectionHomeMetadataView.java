@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -73,15 +74,12 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionHomeMetadataUiHandlers> implements IsCollectionHomeMetadataView{
+public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionHomeMetadataUiHandlers> implements IsCollectionHomeMetadataView,ClientConstants{
 	
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn,studyButton;
-	/*@UiField HTMLPanel learningobjectiveText;*/
-	/*@UiField FlowPanel thumbnailContainer;*/
-	
-	
+
 	private boolean isAssignPopup = false;
 	
 	private boolean isCustomizePopup = false;
@@ -106,11 +104,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	@Inject
 	public CollectionHomeMetadataView(){
 		setWidget(uiBinder.createAndBindUi(this));
-//		assignCollectionBtn.setText(i18n.GL0104());
-//		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
-//		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-//		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
-		
 		customizeCollectionBtn.setText(i18n.GL2037());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
@@ -123,17 +116,13 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		
 				
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
-		//thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
 		collectionGoal.getElement().setId("htmlCollectionGoal");
 		
 		studyButton.setText(i18n.GL0594());
 		studyButton.getElement().setId("btnStudyCollectionBtn");
 		studyButton.getElement().setAttribute("alt",i18n.GL0594());
 		studyButton.getElement().setAttribute("title",i18n.GL0594());
-		
-		
-//		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
-//		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
+
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		shareCollectionBtn.addMouseOverHandler(new OnshareCollectionBtnMouseOver());
@@ -146,13 +135,11 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	
 	@Override
 	public void setCollectionMetadata(final CollectionDo collectionDo){
-		setCollectionImage(collectionDo.getThumbnails().getUrl());
-		setCollectionGoal(collectionDo.getGoals());
+		setCollectionImage((collectionDo.getThumbnails()!=null&&collectionDo.getThumbnails().getUrl()!=null)?collectionDo.getThumbnails().getUrl():"");
+		setCollectionGoal(collectionDo.getGoals()!=null?collectionDo.getGoals():"");
 		showPopupAfterGmailSignin();
-		//assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
-		//setReplyLink();
 		collectionTitle = collectionDo.getTitle();
 		this.collectionDo=collectionDo;
 		if(studyButtonClickHandler!=null) {
@@ -172,7 +159,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				}else{
 					AppClientFactory.fireEvent(new UpdatePreviewViewCountEvent());
 				}
-				if(collectionItems.size()>0){
+				if(collectionItems!=null&&collectionItems.size()>0){
 					CollectionItemDo collectionItemDo=collectionItems.get(0);
 					if(collectionItemDo.getCollectionItemId() != null)
 					{
@@ -207,8 +194,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		collectionReplayButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionreplayText());
 		collectionHTMLPanel.add(collectionReplayButton);
 		resourceAnchor.getElement().appendChild(collectionHTMLPanel.getElement());
-		//thumbnailContainer.clear();
-		//thumbnailContainer.add(resourceAnchor);
 	}
 	
 	private class ReplayCollectionEvent implements ClickHandler{
@@ -242,55 +227,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		}
 	}
 	
-	/**
-	 * 
-	 * @function onassignCollectionBtnClicked 
-	 * 
-	 * @created_date : 11-Dec-2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 */
-//	@UiHandler("assignCollectionBtn")
-//	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-//		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-//
-//				if(!isAssignPopup){
-//					isAssignPopup=true;
-//				AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-//					
-//					@Override
-//					public void closePoup() {
-//						Window.enableScrolling(true);
-//				        this.hide();
-//				    	isAssignPopup=false;
-//					}
-//				};
-//				Window.scrollTo(0, 0);
-//				successPopupVc.setWidth("500px");
-//				successPopupVc.setHeight("635px");
-//
-//				successPopupVc.show();
-//				successPopupVc.center();
-//				if (AppClientFactory.isAnonymous()){
-//				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-//				}
-//				else
-//				{
-//				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-//				}
-//				
-//			}
-//		
-//	}
+
 
 	/**
 	 * 
@@ -327,7 +264,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 
 					@Override
 					public void closePoup() {
-//						Window.enableScrolling(true);
 						this.hide();	
 						isCustomizePopup = false;
 					}
@@ -344,9 +280,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-	/*			params.put("customize", "yes");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
+
 			}
 		
 	}
@@ -371,77 +305,19 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		getUiHandlers().triggerCollectionShareDataEvent(null,PlayerDataLogEvents.COLLECTION,"gooru",false);
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		String collectionId = collectionDo.getGooruOid();
-				//	Window.enableScrolling(false);
-				//final Map<String,String> params = new HashMap<String,String>();
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
 				        this.hide();
-				    /*	params.remove("assign");
-				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
 					}
 				};
-				//Window.scrollTo(0, 0);
 				int clientHeight=Window.getClientHeight();
-				//successPopupVc.setWidth("500px");
-				//successPopupVc.setHeight("658px");
-				/*if(clientHeight>625){
-					clientHeight=625;
-					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
-				}else{
-					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
-				}*/
 				successPopupVc.show();
 				int left = (Window.getClientWidth() - 500) >> 1;
 			    int top = (Window.getClientHeight() - clientHeight) >> 1;
 			    successPopupVc.setHeight("658px");
 			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
-
-				//successPopupVc.center();
-				//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
-				
-//				if(!successPopupVc.isVisible()){
-//					successPopupVc.show();
-//					successPopupVc.center();
-//				}
-//				Window.enableScrolling(false);
-//				if (AppClientFactory.isAnonymous()){
-//					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
-//				}
-//				else{
-					//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
-//				}
-	/*			params.put("assign", "yes");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
-
-		
-//		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-//
-//				if(!isSharePopup){
-//					isSharePopup=true;
-//
-//				SharePlayerVc successPopupVc = new SharePlayerVc(collectionId) {
-//
-//					@Override
-//					public void closePoup() {
-//						Window.enableScrolling(true);
-//						this.hide();	
-//						isSharePopup = false;
-//					}
-//					public void triggerShareEvent(String shareType,boolean confirmStatus){
-//						getUiHandlers().triggerCollectionShareDataEvent(collectionId,PlayerDataLogEvents.COLLECTION,shareType,confirmStatus);
-//					}
-//				};
-//				Window.scrollTo(0, 0);
-//				successPopupVc.setWidth("500px");
-//				successPopupVc.setHeight("350px");
-//				successPopupVc.show();
-//				successPopupVc.center();
-//			}
-		
 	}
 	
 	/**
@@ -456,7 +332,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
-		if(customize!=null && customize.equals("yes") && emailId!=null){
+		if(customize!=null && YES.equals(customize) && emailId!=null){
 			Boolean loginFlag = false;
 			if (AppClientFactory.isAnonymous()){
 				loginFlag = true;
@@ -480,7 +356,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			successPopupVc.show();
 			successPopupVc.center();
 		}
-		if(assign!=null && assign.equals("yes") && emailId!=null){
+		if(assign!=null && YES.equals(assign) && emailId!=null){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
 				
 				@Override
@@ -508,32 +384,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 
 	}
 
-	
-//	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
-//
-//		@Override
-//		public void onMouseOver(MouseOverEvent event) {
-//			toolTipPopupPanel.clear();
-//			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0676()));
-//			toolTipPopupPanel.setStyleName("");
-//			toolTipPopupPanel.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
-//			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
-//			toolTipPopupPanel.show();
-//		}
-//		
-//	}
-	
-//	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
-//
-//		@Override
-//		public void onMouseOut(MouseOutEvent event) {
-//			toolTipPopupPanel.hide();
-//		}
-//
-//		
-//		
-//	}
-	
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -554,8 +404,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
 		
 	}
 	

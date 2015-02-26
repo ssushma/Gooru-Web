@@ -40,7 +40,9 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.InfoUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,7 +57,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class TocResourceToolTip extends PopupPanel{
+public class TocResourceToolTip extends PopupPanel implements ClientConstants{
 
 	@UiField Label resourceIndex,resourceCategory;
 	@UiField HTML resourceHoverTitle;
@@ -96,11 +98,11 @@ public class TocResourceToolTip extends PopupPanel{
 		resourceSourceName.getElement().setId("lblResourceSourceName");
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		if(showItemIndex){
-			setNavigationResourceTitle(collectionItemDo.getResource().getTitle(),itemIndex);
+			setNavigationResourceTitle(((collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""),itemIndex);
 		}else{
-			setNavigationResourceTitle(collectionItemDo.getResource().getTitle());
+			setNavigationResourceTitle((collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getTitle()!=null)? collectionItemDo.getResource().getTitle():"");
 		}
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
 			setResourceTypeIcon(collectionItemDo.getResource().getResourceFormat().getDisplayName());
 		}
 		if(addHyperlink){
@@ -145,7 +147,7 @@ public class TocResourceToolTip extends PopupPanel{
 	}
 
 	private void displayPublisher(){
-		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null || collectionItemDo.getResource()!=null &&  collectionItemDo.getResource().getPublisher()!=null){
+		if(collectionItemDo.getResource()!=null && (collectionItemDo.getResource().getResourceFormat()!=null || collectionItemDo.getResource().getPublisher()!=null)){
 			if(collectionItemDo.getResource().getPublisher()!=null){
 				if(!collectionItemDo.getResource().getPublisher().isEmpty()){
 					List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
@@ -166,20 +168,21 @@ public class TocResourceToolTip extends PopupPanel{
 			}
 		}
 	}
+	
 	public void setResourceCategory(){
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
 			String resourceType=collectionItemDo.getResource().getResourceFormat().getDisplayName();
 			resourceType=resourceType.toLowerCase();
 			
-			if(resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("textbook")||resourceType.equalsIgnoreCase("handout"))
+			if(LESSON.equalsIgnoreCase(resourceType)||TEXTBOOK.equalsIgnoreCase(resourceType)||HANDOUT.equalsIgnoreCase(resourceType))
 			{
 				resourceType=resourceType.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
 			}
-			if(resourceType.equalsIgnoreCase("slide"))
+			if(SLIDE.equalsIgnoreCase(resourceType))
 			{
 				resourceType=resourceType.replaceAll("slide","image");
 			}
-			if(resourceType.equalsIgnoreCase("exam")||resourceType.equalsIgnoreCase("website")|| resourceType.equalsIgnoreCase("challenge"))
+			if(EXAM.equalsIgnoreCase(resourceType)||WEBSITE.equalsIgnoreCase(resourceType)|| CHALLENGE.equalsIgnoreCase(resourceType))
 			{
 				resourceType=resourceType.replaceAll("exam","webpage").replaceAll("website","webpage").replaceAll("challenge","webpage");
 			}
@@ -252,10 +255,10 @@ public class ResourceRequest implements ClickHandler{
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
 		
-		String titleLbl	=InfoUtil.removeQuestionTagsOnBoldClick(title.toString());
+		String titleLbl	=InfoUtil.removeQuestionTagsOnBoldClick(StringUtil.toString(title));
 		resourceHoverTitle.setHTML(titleLbl);
-		resourceHoverTitle.getElement().setAttribute("alt", title.toString());
-		resourceHoverTitle.getElement().setAttribute("title", title.toString());
+		resourceHoverTitle.getElement().setAttribute("alt", StringUtil.toString(title));
+		resourceHoverTitle.getElement().setAttribute("title", StringUtil.toString(title));
 	}
 	
 

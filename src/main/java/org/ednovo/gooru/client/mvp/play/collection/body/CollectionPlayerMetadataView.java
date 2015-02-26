@@ -55,6 +55,7 @@ import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -93,7 +94,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView{
+public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView,ClientConstants{
 
 	@UiField
 	static FlowPanel studyMainContianer;
@@ -242,7 +243,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		teamContainer.clear();
-		//getUiHandlers().getFlagedReport(collectionDo.getGooruOid());
 		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
 			 teamContainer.add(collaboratorsUc);
@@ -254,17 +254,17 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		{
 			if(collectionDo.getMeta().getPermissions() != null)
 			{
-			if (collectionDo.getMeta().getPermissions().toString().contains("edit") || collectionDo.getMeta().isIsCollaborator()){
+			if (EDIT.contains(collectionDo.getMeta().getPermissions().toString()) || collectionDo.getMeta().isIsCollaborator()){
 				switchContainer.setVisible(true);
 				if(collectionDo.getSettings() != null)
 				{
 					if(collectionDo.getSettings().getComment() != null)
 					{
-						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on"))
+						if(TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment()))
 						{
 							commentField.setEnabled(true);
 							commentssection.getElement().getStyle().setOpacity(1);
-							changeAssignmentStatusButton.setChecked(true);
+							changeAssignmentStatusButton.setValue(true);
 							postCommentBtn.setEnabled(true);
 							postCommentBtn.setStyleName(PRIMARY_STYLE);
 						}
@@ -276,7 +276,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							postCommentBtn.addStyleName(SECONDARY_STYLE);
 							postCommentBtn.addStyleName(DISABLED_STYLE);
 							commentssection.getElement().getStyle().setOpacity(0.5);
-							changeAssignmentStatusButton.setChecked(false);
+							changeAssignmentStatusButton.setValue(false);
 						}
 					}
 					else
@@ -286,14 +286,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 						postCommentBtn.removeStyleName(DISABLED_STYLE);
 						postCommentBtn.addStyleName(PRIMARY_STYLE);
 						commentssection.getElement().getStyle().setOpacity(1);
-						changeAssignmentStatusButton.setChecked(true);
+						changeAssignmentStatusButton.setValue(true);
 					}
 				}
 				else
 				{
 					commentField.setEnabled(true);
 					commentssection.getElement().getStyle().setOpacity(1);
-					changeAssignmentStatusButton.setChecked(true);
+					changeAssignmentStatusButton.setValue(true);
 				}
 				
 				
@@ -305,7 +305,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				{
 					if(collectionDo.getSettings().getComment() != null)
 					{
-						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-off"))
+						if(TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
 						{
 							commentssection.setVisible(false);
 						}
@@ -607,7 +607,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		courseTitle.clear();
 		if(courseInfo!=null&&courseInfo.size()>0){
 			courseSection.setVisible(true);
-			//setCourseTitle(courseInfo.get(0));
 			SearchUiUtil.renderMetaData(courseTitle, courseInfo, 0);
 			Label dummyLabel=new Label();
 			dummyLabel.setStyleName(playerStyle.clearBoth());
@@ -617,7 +616,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		}
 	}
 	public void setCourseTitle(String title){
-		//courseTitle.setText(title);
 	}
 	public void setLikesCount(int likesCount){
 		
@@ -645,11 +643,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
-		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+		if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
 			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 		}else{
-			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+collectionDo.getUser().getUsername();
-			anchor.setHref(token);
+				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+((collectionDo.getUser()!=null && collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
+				anchor.setHref(token);
 		}
 		anchor.setText(userName);
 		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
@@ -772,12 +770,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
 		
 		teacherProfileContainer.clear();
-		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
 		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
 	}
 	
 	public void setDueDateText(String text){
-		if(text!=null&&!text.trim().equals("")){
+		if(StringUtil.isEmpty(text)){
 			dueDate.setText(text);
 			dueDate.getElement().setAttribute("alt",text);
 			dueDate.getElement().setAttribute("title",text);

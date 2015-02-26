@@ -45,8 +45,8 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -69,7 +69,7 @@ import com.gwtplatform.mvp.client.proxy.NavigationEvent;
 import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPlayerUiHandlers> implements IsCollectionPlayerView{
+public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPlayerUiHandlers> implements IsCollectionPlayerView,ClientConstants{
 	
 	
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
@@ -111,9 +111,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	private HandlerRegistration autoHideHandler;
 
 	private final EventBus eventBus;
-
-	private static final String COLLECTION_RESOURCE_THUMBS_WIDGET_MODE="COLLECTION_RESOURCE_RATING";
-	
 	private static CollectionPlayerViewUiBinder uiBinder = GWT.create(CollectionPlayerViewUiBinder.class);
 
 	interface CollectionPlayerViewUiBinder extends UiBinder<Widget, CollectionPlayerView> {
@@ -130,10 +127,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		appPopUp.setGlassEnabled(true);
 		appPopUp.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().studyplayerContainer());
 		appPopUp.add(uiBinder.createAndBindUi(this));
-		footerView.getShareButton().addClickHandler(new ShowTabWidgetView("share"));
-		footerView.getInfoButton().addClickHandler(new ShowTabWidgetView("info"));
-		footerView.getAddButton().addClickHandler(new ShowTabWidgetView("add"));
-		footerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
+		footerView.getShareButton().addClickHandler(new ShowTabWidgetView(SHARE));
+		footerView.getInfoButton().addClickHandler(new ShowTabWidgetView(INFO));
+		footerView.getAddButton().addClickHandler(new ShowTabWidgetView(ADD));
+		footerView.getFlagButton().addClickHandler(new ShowTabWidgetView(FLAG));
 		getResourceAnimationContainer().getElement().getStyle().setProperty("display", "none");
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
@@ -210,10 +207,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	    }
 	  }
 
-	
-	public void removeStudentViewButton(){
-	}
-
 	@Override
 	public FlowPanel getPlayerBodyContainer() {
 		return playerBodyContainer;
@@ -230,7 +223,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	public void setNarrationButton(Button narrationButton){
 		footerView.setNarrationButton(narrationButton);
-		footerView.getNarrationButton().addClickHandler(new ShowTabWidgetView("narration"));
+		footerView.getNarrationButton().addClickHandler(new ShowTabWidgetView(NARRATION));
 	}
 
 	@Override
@@ -247,26 +240,26 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			if(tabView.equalsIgnoreCase("add")){
+			if(ADD.equalsIgnoreCase(tabView)){
 				MixpanelUtil.clickInfo(STUDY_PLAYER);	
 				setTabPlaceRequest(tabView,footerView.isAddButtonEnabled(),isAddButtonActive);
 			}
-			else if(tabView.equalsIgnoreCase("info")){
+			else if(INFO.equalsIgnoreCase(tabView)){
 				MixpanelUtil.clickInfo(STUDY_PLAYER);
 				MixpanelUtil.OpenInfo();
 				setTabPlaceRequest(tabView,footerView.isInfoButtonEnabled(),isInfoButtonActive);
-			}else if(tabView.equalsIgnoreCase("share")){
+			}else if(SHARE.equalsIgnoreCase(tabView)){
 				MixpanelUtil.clickShareCollection(STUDY_PLAYER);
 				MixpanelUtil.OpenShare();
 				setTabPlaceRequest(tabView,footerView.isShareButtonEnabled(),isShareButtonActive);
-			}else if(tabView.equalsIgnoreCase("navigation")){
+			}else if(NAVIGATION.equalsIgnoreCase(tabView)){
 				MixpanelUtil.clickNavigation(STUDY_PLAYER);	
 				setTabPlaceRequest(tabView,footerView.isNavigationButtonEnabled(),isNavigationButtonActive);
-			}else if(tabView.equalsIgnoreCase("narration")){
+			}else if(NARRATION.equalsIgnoreCase(tabView)){
 				MixpanelUtil.ClickNarration(STUDY_PLAYER);	
 				setTabPlaceRequest(tabView,footerView.isNarrationButtonEnabled(),isNarrationButtonActive);
 			}
-			else if(tabView.equalsIgnoreCase("flag")){
+			else if(FLAG.equalsIgnoreCase(tabView)){
 				setTabPlaceRequest(tabView,true,false);
 			}	
 		}		
@@ -281,7 +274,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			params.put("id", collectionId);
 			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
 			
-			if(resourceId!=null&&!resourceId.equalsIgnoreCase("")){
+			if(!StringUtil.isEmpty(resourceId)){
 				if(isButtonActive){
 					params.put("rid", resourceId);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -294,7 +287,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					ResourcePlayerMetadataView.removePadding();
 				}
 			}
-			else if(view!=null&&view.equalsIgnoreCase("end")){
+			else if(view!=null&&END.equalsIgnoreCase(view)){
 				if(isButtonActive){
 					params.put("view", "end");
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -322,24 +315,26 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		
 	@Override
     public void setInSlot(Object slot, Widget content) {
-		if(slot==CollectionPlayerPresenter.COLLECTION_PLAYER_TOC_PRESENTER_SLOT){
-			getResourceAnimationContainer().clear();
-			getResourceAnimationContainer().setVisible(false);
-			if(content!=null){
-				getResourceAnimationContainer().add(content);
-			}
-		}else if(slot==CollectionPlayerPresenter.COLLECTION_PLAYER_NAVIGATION_SLOT){
-			navigationContainer.clear();
-			navigationContainer.setVisible(true);
-			if(content!=null){
-				navigationContainer.add(content);
-			}
-		}else if(slot==CollectionPlayerPresenter.METADATA_PRESENTER_SLOT){
-			getPlayerBodyContainer().clear();
-			if(content!=null){
-				getPlayerBodyContainer().add(content);
-			}
-		}  
+		if(slot!=null){
+			if(slot==CollectionPlayerPresenter.COLLECTION_PLAYER_TOC_PRESENTER_SLOT){
+				getResourceAnimationContainer().clear();
+				getResourceAnimationContainer().setVisible(false);
+				if(content!=null){
+					getResourceAnimationContainer().add(content);
+				}
+			}else if(slot==CollectionPlayerPresenter.COLLECTION_PLAYER_NAVIGATION_SLOT){
+				navigationContainer.clear();
+				navigationContainer.setVisible(true);
+				if(content!=null){
+					navigationContainer.add(content);
+				}
+			}else if(slot==CollectionPlayerPresenter.METADATA_PRESENTER_SLOT){
+				getPlayerBodyContainer().clear();
+				if(content!=null){
+					getPlayerBodyContainer().add(content);
+				}
+			}  
+		}
 	}
 
 	@Override
@@ -360,7 +355,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton) {
 		footerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion, deselectNarrationButton, deselectNavigationButton,deselectFlagButton);	
 		setActiveButton(false,false,false,false,false,false);
-		ResourcePlayerMetadataView.addPadding();
 	}
 	public void setActiveButton(boolean makeAddButtionActive,boolean makeInfoButtionActive,
 			boolean makeShareButtonActive,boolean makeNarrationButtonActive,boolean makeNavigationButtonActive,boolean makeFlagButtonActive){
@@ -392,11 +386,9 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void closePlayer(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page",null);
 		if(page!=null){
-			if(page.equals("teach")){
-				//TODO reveal to teach page
+			if(TEACH.equals(page)){
 				getUiHandlers().revealTeachOrStudypage(page);
-			}else if(page.equals("study")){
-				//TODO reveal to studypage
+			}else if(STUDY.equals(page)){
 				getUiHandlers().revealTeachOrStudypage(page);
 			}else{
 				hideFromPopup(true);
@@ -417,12 +409,12 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void showClasspage(String classpageId,String page){
 		//TODO reveal to classpage..
 		String viewToken=AppClientFactory.getPlaceManager().getPreviousPlayerRequestUrl().getNameToken();
-		if(viewToken.equals(PlaceTokens.DISCOVER)){
+		if(PlaceTokens.DISCOVER.equals(viewToken)){
 			Map<String,String> paramsMap=new LinkedHashMap<String,String>();
-			if(page.equals("teach")){
+			if(TEACH.equals(page)){
 				paramsMap.put("classpageid", classpageId);
 				revealToClassPage(PlaceTokens.EDIT_CLASSPAGE,paramsMap);
-			}else if(page.equals("study")){
+			}else if(STUDY.equals(page)){
 				paramsMap.put("id", classpageId);
 				revealToClassPage(PlaceTokens.STUDENT,paramsMap);
 			}
@@ -577,18 +569,18 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@Override
 	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId) {
-		if(collectionId==null){
-			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
-			footerView.setVisible(!isHidePlayerButtons);
-		}else{
+		if(!StringUtil.isEmpty(collectionId)){
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
-			if(view!=null&&view.equalsIgnoreCase("end")){
+			if(view!=null&&END.equalsIgnoreCase(view)){
 				headerView.getAuthorContainer().setVisible(false);
 			}else{
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
 				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
 			}
+			footerView.setVisible(!isHidePlayerButtons);
+		}else{
+			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
 		}
 	}
@@ -647,6 +639,12 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
+	}
+
+	@Override
+	public void removeStudentViewButton() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

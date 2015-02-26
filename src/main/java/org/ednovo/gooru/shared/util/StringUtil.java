@@ -246,11 +246,11 @@ public class StringUtil implements ClientConstants {
 
 	public static boolean isPartnerUser(String userName) {
 		boolean isPartner = false;
-		if(userName.equalsIgnoreCase("Autodesk") || userName.equalsIgnoreCase("Lessonopoly") || userName.equalsIgnoreCase("CommonSenseMedia") 
-				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
-				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) 
-				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) || userName.equalsIgnoreCase(PlaceTokens.LPS) 
-				|| userName.equalsIgnoreCase(PlaceTokens.CORE_LIBRARY) || userName.equalsIgnoreCase(PlaceTokens.ESYP) || userName.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC) || userName.equalsIgnoreCase(PlaceTokens.ASPIRE_EPACS) || userName.equalsIgnoreCase(PlaceTokens.TICAL)) {
+		if(AUTODESK.equalsIgnoreCase(userName) || LESSONOPOLOGY.equalsIgnoreCase(userName) || COMMONSENCEMEDIA.equalsIgnoreCase(userName) 
+				|| FTE.equalsIgnoreCase(userName) || WSPWH.equalsIgnoreCase(userName) || LISANGC.equalsIgnoreCase(userName) || NGC.equalsIgnoreCase(userName)
+				|| ONR.equalsIgnoreCase(userName) || PlaceTokens.FINCAPINC.equalsIgnoreCase(userName) || PlaceTokens.PSDPAL.equalsIgnoreCase(userName) 
+				|| PlaceTokens.YOUTHVOICES.equalsIgnoreCase(userName) || PlaceTokens.GEOEDUCATION.equalsIgnoreCase(userName) || PlaceTokens.LPS.equalsIgnoreCase(userName) 
+				|| PlaceTokens.CORE_LIBRARY.equalsIgnoreCase(userName) || PlaceTokens.ESYP.equalsIgnoreCase(userName) || PlaceTokens.CCST_Cal_TAC.equalsIgnoreCase(userName) || PlaceTokens.ASPIRE_EPACS.equalsIgnoreCase(userName) || PlaceTokens.TICAL.equalsIgnoreCase(userName)) {
 			isPartner = true;
 		}
 		return isPartner;

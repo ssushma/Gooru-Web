@@ -463,17 +463,14 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
 			if(tabView.equalsIgnoreCase("add")){
-				ResourcePlayerMetadataView.addPadding();
 				getView().clearActiveButton(false,true, true,true);
 				getView().makeButtonActive(true,false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("info")){
-				ResourcePlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,false, true,true);
 				getView().makeButtonActive(false,true, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("share")){
-				ResourcePlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, false,true);
 				getView().makeButtonActive(false,false, true,false);
 			}else if(tabView.equalsIgnoreCase("flag")){
