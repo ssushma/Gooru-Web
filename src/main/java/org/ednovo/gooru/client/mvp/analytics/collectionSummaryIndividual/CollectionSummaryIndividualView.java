@@ -268,17 +268,17 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					  } else if(HANDOUT.equalsIgnoreCase(resourceCategory) || LESSON.equalsIgnoreCase(resourceCategory) || TEXTBOOK.equalsIgnoreCase(resourceCategory)|| TEXT.equalsIgnoreCase(resourceCategory)) {
 					      resourceCategory = TEXT;
 					      categoryStyle=res.css().category_new_type_text();
-					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
-					      resourceCategory = "webpage";
+					  }  else if(EXAM.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = WEBPAGE;
 					      categoryStyle=res.css().category_new_type_webpage();
-					  } else if(resourceCategory.equalsIgnoreCase("video")) {
-					      resourceCategory = "video";
+					  } else if(VIDEO.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = VIDEO;
 					      categoryStyle=res.css().category_new_type_video();
-					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
-					      resourceCategory = "webpage";
+					  } else if(WEBPAGE.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = WEBPAGE;
 					      categoryStyle=res.css().category_new_type_interactive();
-					  }else if(resourceCategory.equalsIgnoreCase("audio")) {
-					      resourceCategory = "audio";
+					  }else if(AUDIO.equalsIgnoreCase(resourceCategory)) {
+					      resourceCategory = AUDIO;
 					      categoryStyle=res.css().category_new_type_audio();
 					  } else{
 						  categoryStyle=res.css().category_new_type_other();
@@ -306,15 +306,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		            data.setValue(rowVal, 3, timeSpentpnl.toString());
 		           
 		            //set Views label
-		            // HorizontalPanel viewpnl=new HorizontalPanel();
 		            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 		            viewlbl.setStyleName(res.css().alignCenterAndBackground());
-		           /* viewpnl.add(viewlbl);
-		            Label viewProgressBar=new Label();
-		            viewProgressBar.setStyleName(res.css().setProgressBar());
-		            viewpnl.add(viewProgressBar);
-		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
-		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);*/
 		            data.setValue(rowVal, 4, viewlbl.toString());
 		            
 		            //Set reactions
@@ -349,13 +342,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	     return obj1.compareTo(obj2);
 	        	}
 	        });
-	       /* UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
-	        	public int compare(UserDataDo o1, UserDataDo o2) {
-	        		 Integer obj1 = new Integer(o1.getViews());
-	        		 Integer obj2 = new Integer(o2.getViews());
-	        	     return obj1.compareTo(obj2);
-	        	}
-	        });*/
+	      
 		    final DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
 	        data.addColumn(ColumnType.STRING, "Format");
@@ -631,7 +618,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            //Set Answer choices
 				            String questionType= result.get(i).getType();
 				            String correctAnser = null;
-				        	if(questionType.equalsIgnoreCase("MC") ||questionType.equalsIgnoreCase("TF")){ 
+				        	if(questionType.equalsIgnoreCase(MC) ||questionType.equalsIgnoreCase(TF)){ 
 				        		Label anserlbl=new Label();
 				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
@@ -654,7 +641,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		}
 				        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
 				        		data.setValue(i, 3, anserlbl.toString());
-				        	}else if (questionType.equalsIgnoreCase("FIB")){
+				        	}else if (FIB.equalsIgnoreCase(questionType)){
 				        		VerticalPanel answerspnl=new VerticalPanel();
 				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 				        			String answerTextFormat = "";
@@ -703,7 +690,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		}
 				        		 answerspnl.setStyleName(res.css().setMarginAuto());
 				        		 data.setValue(i, 3, answerspnl.toString());
-				        	}else  if(questionType.equalsIgnoreCase("MA")){
+				        	}else  if(MA.equalsIgnoreCase(questionType)){
 				        		VerticalPanel answerspnl=new VerticalPanel();
 				        		if(result.get(i).getAnswerObject()!=null) {
 				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
@@ -722,18 +709,18 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 				 	        		         if(skip == false)
 				 							  {
-				 	        		        	if(matext.equalsIgnoreCase("0")) {
+				 	        		        	if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
 													  showMessage = "No";
-												} else if(matext.equalsIgnoreCase("1")) {
+												} else if(ONE.equalsIgnoreCase(matext)) {
 													   showMessage = "Yes";
 												}
 												answerChoice.setText(showMessage);
-				 									if(status.equalsIgnoreCase("0")) {
+				 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 				 										answerChoice.getElement().getStyle().setColor(INCORRECT);
 				 										 isCorrect=true;
-				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts == 1)) {
+				 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 				 										answerChoice.getElement().getStyle().setColor(CORRECT);
-				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts > 1)) {
+				 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
 				 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 				 									}
 				 							  }else{
@@ -812,7 +799,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            //Set Answer choices
 				            String questionType= result.get(i).getType();
 				            String correctAnser = null;
-				        	if(questionType.equalsIgnoreCase("MC") ||questionType.equalsIgnoreCase("TF")){ 
+				        	if(MC.equalsIgnoreCase(questionType) ||TF.equalsIgnoreCase(questionType)){ 
 				        		Label anserlbl=new Label();
 				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
@@ -834,7 +821,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		}
 				        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
 				        		data.setValue(i, 2, anserlbl.toString());
-				        	}else if (questionType.equalsIgnoreCase("FIB")){
+				        	}else if (FIB.equalsIgnoreCase(questionType)){
 				        		VerticalPanel answerspnl=new VerticalPanel();
 				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 				        			String answerTextFormat = "";
@@ -877,7 +864,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		}
 				        		 answerspnl.setStyleName(res.css().setMarginAuto());
 				        		 data.setValue(i, 2, answerspnl.toString());
-				        	}else  if(questionType.equalsIgnoreCase("MA")){
+				        	}else  if(MA.equalsIgnoreCase(questionType)){
 				        		VerticalPanel answerspnl=new VerticalPanel();
 				        		if(result.get(i).getAnswerObject()!=null) {
 				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
@@ -895,17 +882,17 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
 				 	        		         if(skip == false)
 				 							  {
-				 	        		        	if(matext.equalsIgnoreCase("0")) {
+				 	        		        	if(ZERO_NUMERIC.equalsIgnoreCase(matext)) {
 													  showMessage = "No";
-												} else if(matext.equalsIgnoreCase("1")) {
+												} else if(ONE.equalsIgnoreCase(matext)) {
 													   showMessage = "Yes";
 												}
 												answerChoice.setText(showMessage);
-				 									if(status.equalsIgnoreCase("0")) {
+				 									if(ZERO_NUMERIC.equalsIgnoreCase(status)) {
 				 										answerChoice.getElement().getStyle().setColor(INCORRECT);
-				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts == 1)) {
+				 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts == 1)) {
 				 										answerChoice.getElement().getStyle().setColor(CORRECT);
-				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts > 1)) {
+				 									} else if(ONE.equalsIgnoreCase(status) && (noOfAttempts > 1)) {
 				 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 				 									}
 				 							  }
