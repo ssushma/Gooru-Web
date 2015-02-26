@@ -191,6 +191,8 @@ public interface ClientConstants {
 	String CHALLENGE ="Challenge";
 	String VIDEOS ="Videos";
 	String OTHER ="Other";
+	String MC = "MC";
+	String ZERO_NUMERIC = "0";
 	
 	/*************** Analytics End **************************************************/
 	
@@ -236,6 +238,7 @@ public interface ClientConstants {
 	String PARTNER = "partner";
 	String CONCEPT = "concept";
 	String POPULAR = "Popular";
+	String SAVEBTN = "save";
 	
 
 	
