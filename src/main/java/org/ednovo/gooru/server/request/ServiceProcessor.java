@@ -80,8 +80,9 @@ public class ServiceProcessor {
                setRepresentation(getClientResource().get());
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation(getRepresentation().getText());
+               Representation decodedRep = new DecodeRepresentation(getClientResource().get());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(getRepresentation().getText()));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(decodedRep.getText()));
                return jsonResponseRepresentation;
            }
        }.execute();
