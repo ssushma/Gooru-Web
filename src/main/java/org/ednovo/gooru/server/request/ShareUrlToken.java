@@ -45,6 +45,8 @@ public enum ShareUrlToken {
 	
 	CLASSPAGE("%23students-view%26id={0}%26pageSize=10%26pageNum=0%26pos=0"),
 	
+	FOLDERTOC_URL("%23folder-toc%26id={0}"),
+	
 	PROFILE_PAGE("%23profilepage%26id={0}");
 
 	private String url;

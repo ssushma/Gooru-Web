@@ -16,7 +16,6 @@
 							<g:Image  styleName="img-responsive" ui:field="bannerImage"/>
 							<g:HTMLPanel styleName="{tocStyle1.bannerImageCaption}">
 								<tbp:H2Panel ui:field="bannerTitle"></tbp:H2Panel>
-					
 								<g:HTMLPanel styleName="{tocStyle1.sublogoContainer}">
 									<g:Image  ui:field="logoImage"/>
 								</g:HTMLPanel>
@@ -35,7 +34,7 @@
 						    <g:HTMLPanel styleName="{tocStyle1.paginationBlock}">
 							   <g:HTMLPanel styleName="col-md-6"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
 							   <g:HTMLPanel styleName="col-md-6 {tocStyle1.shareButton}">
-							  		 <g:Button styleName="primary">Share </g:Button>
+							  		 <g:Button styleName="primary" ui:field="btnShare">Share</g:Button>
 							   </g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />

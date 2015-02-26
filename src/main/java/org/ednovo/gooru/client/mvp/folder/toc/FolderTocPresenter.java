@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -41,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -84,9 +87,9 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		super.onReveal();
 		getView().getTreePanel();
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-		String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
-		String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
-		String userId=AppClientFactory.getPlaceManager().getRequestParameter("userId",null);
+		final String parentId=AppClientFactory.getPlaceManager().getRequestParameter("parentId",null);
+		final String libName=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+		final String userId=AppClientFactory.getPlaceManager().getRequestParameter("userId",null);
 		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
 		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -97,6 +100,14 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				public void onSuccess(FolderTocDo folderListDo) {
 					getView().clearTocData();
 					getView().setFolderItems(folderListDo);
+					//Set the back button text
+					if(libName!=null){
+						getView().setBackButtonText(i18n.GL3170());
+					}else if(userId!=null){
+						getView().setBackButtonText(i18n.GL3171());
+					}else{
+						getView().setBackButtonText(i18n.GL3172());
+					}
 				}
 			});
 			if(libName!=null){
@@ -115,7 +126,6 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}else{
 					getView().setBannerImages();
 				}
-				getView().setBackButtonText(i18n.GL3170());
 			}else if(userId==null){
 				//getView().showProfileBanner();
 				getView().hidePanels();
@@ -142,21 +152,31 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			}
 		});
 	}
+
+	@Override
+	public void getShortenUrl(String folderId, Map<String, String> params) {
+		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new AsyncCallback<Map<String,String>>() {
+			@Override
+			public void onSuccess(Map<String, String> result) {
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});		
+	}
     /**
      * To get the User profile details 
 	 * @param profId {@link String}
      */
 	@Override
 	public void getProfilePageDetails(String profId) {
-		
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(profId, "0", new SimpleAsyncCallback<ProfileDo>() {
-
 			@Override
 			public void onSuccess(ProfileDo profileDo) {
 				if(profileDo!=null){
 				 getView().setProfileBannerDetails(profileDo);	
 				}
-				
 			}
 		});
 	}
