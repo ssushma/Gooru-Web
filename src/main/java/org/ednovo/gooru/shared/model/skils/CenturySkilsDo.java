@@ -22,26 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.search.CenturySkills;
+package org.ednovo.gooru.shared.model.skils;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
+import java.io.Serializable;
+import java.util.List;
 
-import com.gwtplatform.mvp.client.PopupView;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
- *
+ * @fileName : CenturySkilsDo.java
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCenturyUiHandlers> {
-
-	void hidePopup();
-
+@JsonInclude(Include.NON_NULL)
+public class CenturySkilsDo implements Serializable{
 	/**
-	 * This method is used to set 21 century skills data
-	 * @param centurySkilsDo
 	 */
-	void SetData(CenturySkilsDo centurySkilsDo);
-
-	void loadData();	
+	private static final long serialVersionUID = 1L;
+    List<NodeDo> model;
+    List<KeyDo> key;
+    public CenturySkilsDo(){}
+	public List<NodeDo> getModel() {
+		return model;
+	}
+	public void setModel(List<NodeDo> model) {
+		this.model = model;
+	}
+	public List<KeyDo> getKey() {
+		return key;
+	}
+	public void setKey(List<KeyDo> key) {
+		this.key = key;
+	}
 }

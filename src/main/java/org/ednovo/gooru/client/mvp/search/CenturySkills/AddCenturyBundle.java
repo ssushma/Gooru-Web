@@ -45,6 +45,7 @@ public interface AddCenturyBundle extends ClientBundle{
 		String gwtGlassPanel();
 		String dropMenuSelected();
 		String btnStandardsStyle();
+		String listText();
 	}
 	@NotStrict
 	@Source("centuryPopup.css")
