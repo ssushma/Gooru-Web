@@ -344,7 +344,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		Map<String, String> shortenUrl = new HashMap<String, String>();
 		        //This is used for to generate folder toc shorten url
 				if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.FOLDER_TOC)) {	
-					System.out.println("foldertoc::"+contentGooruOid);
 					if(params.containsKey(LIBRARY_NAME)){
 						if(params.containsKey(PARENT_ID)){
 							params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PARENT.getUrl(), contentGooruOid,params.get(LIBRARY_NAME),params.get(PARENT_ID)));
@@ -373,7 +372,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid, getLoggedInSessionToken());
 		getLogger().info("getShortenShareUrl::"+url);
-		getLogger().info("getShortenShareUrl data::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{

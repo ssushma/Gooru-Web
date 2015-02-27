@@ -107,8 +107,9 @@ button.primary:hover {
 	background: url(../images/folders/panel/folder-icon.png) no-repeat 1px 0px;
 	height: 26px;
 	padding-left: 41px;
-	border-bottom: 1px solid #E1DFDA;
 	padding-bottom: 35px;
+	float: left;
+	width: 74%;
 }
 
 .marginDiv {
@@ -172,6 +173,28 @@ button.primary:hover {
 	padding: 3px 31px;
 	list-style: none;
 }
+
+/*Share css */
+
+.tocShareContainer{
+	clear: both;
+	border-bottom: 1px solid #e1dfda;
+	height: 34px;
+}
+.tocShareBtn{
+	clear: both;
+	display: inline-block;
+	background-color: #e1dfda;
+	padding: 7px;
+}
+.tocShareTxb{
+	clear: both;
+	display: inline-block;
+	border: 2px solid #e1dfda !important;
+	padding: 5px 4px;
+	margin-left: -4px;
+}
+
 @media ( min-width : 240px) and (max-width: 319px) {
 	header {
 		position: relative;

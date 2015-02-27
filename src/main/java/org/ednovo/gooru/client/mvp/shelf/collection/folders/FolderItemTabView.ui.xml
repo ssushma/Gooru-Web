@@ -18,7 +18,8 @@
 			</gg:HTMLEventPanel>
 			<g:HTMLPanel styleName="{folderStyle.saveCancelContainer}">
 				<g:Button ui:field="editFolderSaveBtn" styleName="primary"></g:Button>
-				<g:Button ui:field="editFolderCancelBtn" styleName="secondary {folderStyle.buttonMargins}"></g:Button>
+				<g:Button ui:field="editFolderCancelBtn" styleName="secondary"></g:Button>
+				<!-- <g:Button ui:field="editFolderCancelBtn" styleName="secondary {folderStyle.buttonMargins}"></g:Button> -->
 				<g:Button ui:field="folderViewBtn" styleName="primary" text="{i18n.GL1946}" title="{i18n.GL1946}"/>		
 			</g:HTMLPanel>
 			<g:Label styleName="errorMessage" ui:field="folderTitleErrorLbl"></g:Label>
