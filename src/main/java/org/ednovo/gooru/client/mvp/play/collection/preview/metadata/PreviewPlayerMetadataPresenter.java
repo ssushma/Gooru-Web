@@ -228,9 +228,11 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 							getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 							getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 					}else{
-						if(result.size()>0){
+						if(result!=null&&result.size()>0){
 							for(int i=0;i<result.size();i++){
-								gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+								if(result.get(i).getDeleteContentGooruOid()!=null){
+									gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+								}
 								getView().getFlagButton().setText(i18n.GL0557());
 								getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 								getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());

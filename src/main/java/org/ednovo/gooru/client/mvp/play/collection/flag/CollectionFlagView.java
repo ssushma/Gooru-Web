@@ -14,6 +14,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -56,7 +57,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class CollectionFlagView extends
 		PopupViewWithUiHandlers<CollectionFlagUiHandler> implements
-		IsCollectionFlagView {
+		IsCollectionFlagView,ClientConstants {
 	private static CollectionFlagPopUpUiBinder uiBinder = GWT
 			.create(CollectionFlagPopUpUiBinder.class);
 
@@ -92,7 +93,6 @@ public class CollectionFlagView extends
 	@UiField HTMLPanel flagCollectionText,flagResourceText;
 	HTMLEventPanel flagButtonOnCover = new HTMLEventPanel("");
 	HTMLEventPanel flagButtonOnSummary = new HTMLEventPanel("");
-//	private static final String HEADER_LINK =i18n.GL1430;
 	
 	String collectionGooruOid = "";
 	String getDeleteContentGooruOid="";
@@ -243,7 +243,7 @@ public class CollectionFlagView extends
 			@Override
 			public void onClick(ClickEvent event) {
 				if(!isClickedOnDropDwn){
-					if(!dropdownListContainerScrollPanel.getElement().getStyle().getProperty("display").equals("none")){
+					if(!dropdownListContainerScrollPanel.getElement().getStyle().getProperty("display").equals(NONE)){
 						new CustomAnimation(dropdownListContainerScrollPanel).run(400);
 					}
 				}else{
@@ -262,14 +262,15 @@ public class CollectionFlagView extends
 				.addResourceToCollectionStyles().ensureInjected();
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE
 				.closeFlagPopUpImages());
-		
-		collectionTitle = collectionTitle.replaceAll("</p>", " ")
-				.replaceAll("<p>", "")
-				.replaceAll("<br data-mce-bogus=\"1\">", "")
-				.replaceAll("<br>", "").replaceAll("</br>", "");
-		collectionTitleField.setHTML(i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
-		collectionTitleField.getElement().setAttribute("alt",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
-		collectionTitleField.getElement().setAttribute("title",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
+		if(collectionTitle!=null){
+			collectionTitle = collectionTitle.replaceAll("</p>", " ")
+					.replaceAll("<p>", "")
+					.replaceAll("<br data-mce-bogus=\"1\">", "")
+					.replaceAll("<br>", "").replaceAll("</br>", "");
+			collectionTitleField.setHTML(i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
+			collectionTitleField.getElement().setAttribute("alt",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
+			collectionTitleField.getElement().setAttribute("title",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
+		}
 		flagCollections.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
 				.flagButtonselected());
 		flagResources.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
@@ -301,8 +302,6 @@ public class CollectionFlagView extends
 			
 			getDeleteContentResourceGooruOid=getUiHandlers().getResourceContentReport(dropdownListPlaceHolder.getElement().getId());
 			new CustomAnimation(dropdownListContainerScrollPanel).run(400);
-			
-				
 		}
 	}
 
@@ -311,25 +310,23 @@ public class CollectionFlagView extends
 		public void onClick(ClickEvent event) {
 			isClickedOnDropDwn=true;
 			new CustomAnimation(dropdownListContainerScrollPanel).run(400);
-
 		}
 	}
 
 	@UiHandler("collectionCancelButton")
 	public void onClickOfCollectionCancelButton(ClickEvent event) {
 		clearAll();
-
 	}
 
 	@UiHandler("collectionCheckBox1")
 	public void onClickOfcollectionCheckBox1(ClickEvent event) {
-		if (collectionCheckBox1.isChecked() || collectionCheckBox2.isChecked()
-				|| collectionCheckBox3.isChecked()
-				|| collectionCheckBox4.isChecked()
-				|| resourceCheckBox1.isChecked()
-				|| resourceCheckBox2.isChecked()
-				|| resourceCheckBox3.isChecked()
-				|| resourceCheckBox4.isChecked()) {
+		if (collectionCheckBox1.getValue() || collectionCheckBox2.getValue()
+				|| collectionCheckBox3.getValue()
+				|| collectionCheckBox4.getValue()
+				|| resourceCheckBox1.getValue()
+				|| resourceCheckBox2.getValue()
+				|| resourceCheckBox3.getValue()
+				|| resourceCheckBox4.getValue()) {
 			submitButtonGray.setVisible(false);
 			collectionSubmitButton.setVisible(true);
 		} else {
@@ -341,13 +338,13 @@ public class CollectionFlagView extends
 	// }
 	@UiHandler("collectionCheckBox2")
 	public void onClickOfcollectionCheckBox2(ClickEvent event) {
-		if (collectionCheckBox1.isChecked() || collectionCheckBox2.isChecked()
-				|| collectionCheckBox3.isChecked()
-				|| collectionCheckBox4.isChecked()
-				|| resourceCheckBox1.isChecked()
-				|| resourceCheckBox2.isChecked()
-				|| resourceCheckBox3.isChecked()
-				|| resourceCheckBox4.isChecked()) {
+		if (collectionCheckBox1.getValue() || collectionCheckBox2.getValue()
+				|| collectionCheckBox3.getValue()
+				|| collectionCheckBox4.getValue()
+				|| resourceCheckBox1.getValue()
+				|| resourceCheckBox2.getValue()
+				|| resourceCheckBox3.getValue()
+				|| resourceCheckBox4.getValue()) {
 			submitButtonGray.setVisible(false);
 			collectionSubmitButton.setVisible(true);
 		} else {
@@ -358,13 +355,13 @@ public class CollectionFlagView extends
 
 	@UiHandler("collectionCheckBox3")
 	public void onClickOfcollectionCheckBox3(ClickEvent event) {
-		if (collectionCheckBox1.isChecked() || collectionCheckBox2.isChecked()
-				|| collectionCheckBox3.isChecked()
-				|| collectionCheckBox4.isChecked()
-				|| resourceCheckBox1.isChecked()
-				|| resourceCheckBox2.isChecked()
-				|| resourceCheckBox3.isChecked()
-				|| resourceCheckBox4.isChecked()) {
+		if (collectionCheckBox1.getValue() || collectionCheckBox2.getValue()
+				|| collectionCheckBox3.getValue()
+				|| collectionCheckBox4.getValue()
+				|| resourceCheckBox1.getValue()
+				|| resourceCheckBox2.getValue()
+				|| resourceCheckBox3.getValue()
+				|| resourceCheckBox4.getValue()) {
 			submitButtonGray.setVisible(false);
 			collectionSubmitButton.setVisible(true);
 		} else {
@@ -376,13 +373,13 @@ public class CollectionFlagView extends
 
 	@UiHandler("collectionCheckBox4")
 	public void onClickOfcollectionCheckBox4(ClickEvent event) {
-		if (collectionCheckBox1.isChecked() || collectionCheckBox2.isChecked()
-				|| collectionCheckBox3.isChecked()
-				|| collectionCheckBox4.isChecked()
-				|| resourceCheckBox1.isChecked()
-				|| resourceCheckBox2.isChecked()
-				|| resourceCheckBox3.isChecked()
-				|| resourceCheckBox4.isChecked()) {
+		if (collectionCheckBox1.getValue() || collectionCheckBox2.getValue()
+				|| collectionCheckBox3.getValue()
+				|| collectionCheckBox4.getValue()
+				|| resourceCheckBox1.getValue()
+				|| resourceCheckBox2.getValue()
+				|| resourceCheckBox3.getValue()
+				|| resourceCheckBox4.getValue()) {
 			submitButtonGray.setVisible(false);
 			collectionSubmitButton.setVisible(true);
 		} else {
@@ -393,8 +390,7 @@ public class CollectionFlagView extends
 	@UiHandler("resourceCheckBox1")
 	public void onClickOfresourceCheckBox1(ClickEvent event)
 	{
-		if(collectionCheckBox1.isChecked()||collectionCheckBox2.isChecked()||collectionCheckBox3.isChecked()||collectionCheckBox4.isChecked()||resourceCheckBox1.isChecked()||resourceCheckBox2.isChecked()||resourceCheckBox3.isChecked()||resourceCheckBox4.isChecked())
-			
+		if(collectionCheckBox1.getValue()||collectionCheckBox2.getValue()||collectionCheckBox3.getValue()||collectionCheckBox4.getValue()||resourceCheckBox1.getValue()||resourceCheckBox2.getValue()||resourceCheckBox3.getValue()||resourceCheckBox4.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			collectionSubmitButton.setVisible(true);
@@ -409,7 +405,7 @@ public class CollectionFlagView extends
 	@UiHandler("resourceCheckBox2")
 	public void onClickOfresourceCheckBox2(ClickEvent event)
 	{
-		if(collectionCheckBox1.isChecked()||collectionCheckBox2.isChecked()||collectionCheckBox3.isChecked()||collectionCheckBox4.isChecked()||resourceCheckBox1.isChecked()||resourceCheckBox2.isChecked()||resourceCheckBox3.isChecked()||resourceCheckBox4.isChecked())
+		if(collectionCheckBox1.getValue()||collectionCheckBox2.getValue()||collectionCheckBox3.getValue()||collectionCheckBox4.getValue()||resourceCheckBox1.getValue()||resourceCheckBox2.getValue()||resourceCheckBox3.getValue()||resourceCheckBox4.getValue())
 			{
 				submitButtonGray.setVisible(false);
 				collectionSubmitButton.setVisible(true);
@@ -425,7 +421,7 @@ public class CollectionFlagView extends
 	@UiHandler("resourceCheckBox3")
 	public void onClickOfresourceCheckBox3(ClickEvent event)
 	{
-		if(collectionCheckBox1.isChecked()||collectionCheckBox2.isChecked()||collectionCheckBox3.isChecked()||collectionCheckBox4.isChecked()||resourceCheckBox1.isChecked()||resourceCheckBox2.isChecked()||resourceCheckBox3.isChecked()||resourceCheckBox4.isChecked())
+		if(collectionCheckBox1.getValue()||collectionCheckBox2.getValue()||collectionCheckBox3.getValue()||collectionCheckBox4.getValue()||resourceCheckBox1.getValue()||resourceCheckBox2.getValue()||resourceCheckBox3.getValue()||resourceCheckBox4.getValue())
 			{
 				submitButtonGray.setVisible(false);
 				collectionSubmitButton.setVisible(true);
@@ -439,7 +435,7 @@ public class CollectionFlagView extends
 	@UiHandler("resourceCheckBox4")
 	public void onClickOfresourceCheckBox4(ClickEvent event)
 	{
-		if(collectionCheckBox1.isChecked()||collectionCheckBox2.isChecked()||collectionCheckBox3.isChecked()||collectionCheckBox4.isChecked()||resourceCheckBox1.isChecked()||resourceCheckBox2.isChecked()||resourceCheckBox3.isChecked()||resourceCheckBox4.isChecked())
+		if(collectionCheckBox1.getValue()||collectionCheckBox2.getValue()||collectionCheckBox3.getValue()||collectionCheckBox4.getValue()||resourceCheckBox1.getValue()||resourceCheckBox2.getValue()||resourceCheckBox3.getValue()||resourceCheckBox4.getValue())
 			{
 				submitButtonGray.setVisible(false);
 				collectionSubmitButton.setVisible(true);
@@ -481,19 +477,16 @@ public class CollectionFlagView extends
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUnload() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -513,7 +506,7 @@ public class CollectionFlagView extends
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				resourcesList.add(collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"");
 				resourcesListId.add(collectionItem.getResource().getGooruOid());
-				String Resourcetitle = collectionItem.getResourceTitle().replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+				String Resourcetitle = (collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"").replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 				HTML dropDownListItemTitle=new HTML();
 				dropDownListItemTitle.setHTML(Resourcetitle);
 				dropDownListItemTitle.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().dropdownListItemContainer());
@@ -529,51 +522,47 @@ public class CollectionFlagView extends
 	@UiHandler("collectionSubmitButton")
 	public void onClickOfcollectionSubmitButton(ClickEvent event){
 			//For Resource Flag
-			
-			
-			if(resourceCheckBox1.isChecked())
+			if(resourceCheckBox1.getValue())
 			{
 				reourceContentReportList.add("missing-concept");
 			}
-			if(resourceCheckBox2.isChecked())
+			if(resourceCheckBox2.getValue())
 			{
 				reourceContentReportList.add("not-loading");
 			}
-			if(resourceCheckBox3.isChecked())
+			if(resourceCheckBox3.getValue())
 			{
 				reourceContentReportList.add("inappropriate");
 			}
-			if(resourceCheckBox4.isChecked())
+			if(resourceCheckBox4.getValue())
 			{
 				reourceContentReportList.add("other");
 			}
 			//For Collection Flag
 		
-			if(collectionCheckBox1.isChecked())
+			if(collectionCheckBox1.getValue())
 			{
 				contentReportList.add("missing-concept");
 			}
-			if(collectionCheckBox2.isChecked())
+			if(collectionCheckBox2.getValue())
 			{
 				contentReportList.add("not-loading");
 			}
-			if(collectionCheckBox3.isChecked())
+			if(collectionCheckBox3.getValue())
 			{
 				contentReportList.add("inappropriate");
 			}
-			if(collectionCheckBox4.isChecked())
+			if(collectionCheckBox4.getValue())
 			{
 				contentReportList.add("other");
 			}
 			
-			if(resourceCheckBox1.isChecked()||resourceCheckBox2.isChecked()||resourceCheckBox3.isChecked()||resourceCheckBox4.isChecked()){
+			if(resourceCheckBox1.getValue()||resourceCheckBox2.getValue()||resourceCheckBox3.getValue()||resourceCheckBox4.getValue()){
 				String collectionItemId=dropdownListPlaceHolder.getElement().getAttribute("cid");
 				getUiHandlers().createCollectionContentReport(dropdownListPlaceHolder.getElement().getId(),resourceDescTextArea.getText(),reourceContentReportList,getDeleteContentResourceGooruOid,true,collectionItemId);
 			}else{
 				getUiHandlers().createCollectionContentReport(collectionGooruOid, collectionDescTextArea.getText(), contentReportList, getDeleteContentGooruOid,false,null);
 			}
-			
-	
 	}
 	public void showSuccesmessagePopup(){
 		appPopUp.hide();
@@ -586,15 +575,15 @@ public class CollectionFlagView extends
 	}
 	public void clearAll()
 	{
-		resourceCheckBox1.setChecked(false);
-		resourceCheckBox2.setChecked(false);
-		resourceCheckBox3.setChecked(false);
-		resourceCheckBox4.setChecked(false);
+		resourceCheckBox1.setValue(false);
+		resourceCheckBox2.setValue(false);
+		resourceCheckBox3.setValue(false);
+		resourceCheckBox4.setValue(false);
 		resourceDescTextArea.setText("");
-		collectionCheckBox1.setChecked(false);
-		collectionCheckBox2.setChecked(false);
-		collectionCheckBox3.setChecked(false);
-		collectionCheckBox4.setChecked(false);
+		collectionCheckBox1.setValue(false);
+		collectionCheckBox2.setValue(false);
+		collectionCheckBox3.setValue(false);
+		collectionCheckBox4.setValue(false);
 		collectionDescTextArea.setText("");
 		submitButtonGray.setVisible(true);
 		collectionSubmitButton.setVisible(false);
@@ -604,7 +593,6 @@ public class CollectionFlagView extends
 
 	@Override
 	public void setDefaultView() {
-		
 		
 	}
 
@@ -658,6 +646,4 @@ public class CollectionFlagView extends
 			this.getElement().getStyle().setZIndex(99999);
 		}
 	}
-	
-	
 }

@@ -639,7 +639,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	
 	public ContentReportDo createContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids){
 		JsonRepresentation jsonRep=null;
-		JSONObject jsonObject=null;
 		try{
 			if(deleteContentReportGooruOids!=null&&!deleteContentReportGooruOids.isEmpty()){
 				deleteContentReport(deleteContentReportGooruOids);
