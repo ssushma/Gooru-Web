@@ -83,21 +83,22 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 	@Override
 	public void getContentReport(String associatedGooruOid) {
 		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
-
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
-				if(result.size()==0){
-					getView().setDefaultView();
-				}else{
-					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						if(result.size()!=(i+1)){
-							gooruFlagId=gooruFlagId+",";
-							getView().setFlag(result.get(0), gooruFlagId);
+				if(result!=null){
+					if(result.size()==0){
+						getView().setDefaultView();
+					}else{
+						for(int i =0;i<result.size();i++){
+							gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+							if(result.size()!=(i+1)){
+								gooruFlagId=gooruFlagId+",";
+								getView().setFlag(result.get(0), gooruFlagId);
+							}
 						}
 					}
-			}
+				}
 			}
 		});
 	}

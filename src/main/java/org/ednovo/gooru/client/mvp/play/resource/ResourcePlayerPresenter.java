@@ -41,12 +41,10 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEvent;
-import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
-import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.share.ResourceSharePresenter;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
@@ -333,7 +331,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	@Override
 	public void onBind() {
 	  super.onBind();
-	  addRegisteredHandler(ShowResourceViewEvent.TYPE, this);
 	  addRegisteredHandler(ShowResourceTabWidgetEvent.TYPE, this);
 	  addRegisteredHandler(RefreshCollectionInShelfListInResourcePlayEvent.TYPE, this);
 	  addRegisteredHandler(PostUserReviewResourceEvent.TYPE, this);
@@ -483,9 +480,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void increaseUserAttemptCount(){
 		setAttemptCount(getAttemptCount()+1);
-	}
-	@Override
-	public void showResourceView(Integer collectionItemSequence, boolean isForwardDirection) {
 	}
 	
 	public void showTabWidget(String tabView,String resourceId){

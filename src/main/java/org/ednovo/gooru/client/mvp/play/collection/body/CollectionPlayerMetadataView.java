@@ -1167,14 +1167,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	 */	
 	@Override
 	public void updateCommentChildView(String commentUid, String action) {
-		if(!commentUid.isEmpty() && DELETE.equals(action)) {
+		if(!commentUid.isEmpty() && DELETE.equalsIgnoreCase(action)) {
 			deleteComment(commentUid);
 			addComment.setVisible(true);
-		} else if (!commentUid.isEmpty() && EDIT.equals(action)) {
+		} else if (!commentUid.isEmpty() && EDIT.equalsIgnoreCase(action)) {
 			addComment.setVisible(false);
 			lblCharLimitComments.setVisible(false);
 			editComment(commentUid);
-		} else if(!commentUid.isEmpty() && EDIT.equals(action)) {
+		} else if(!commentUid.isEmpty() && EDIT.equalsIgnoreCase(action)) {
 			lblCharLimitComments.setVisible(true);
 			addComment.setVisible(true);
 		}
