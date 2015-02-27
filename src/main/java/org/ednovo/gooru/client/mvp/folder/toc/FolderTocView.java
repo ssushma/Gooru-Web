@@ -116,6 +116,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	final String SCOLLECTION="scollection";
 	public static final String USER_ID="userId";
 	public static final String BACK2TOC="backToToc";
+    private static final String EMPTY_FOLDER = "Folder doesn't have any folders and collections";
 	
 	private Map<String, List<String>> bannerVal;
 	PlaceRequest placeRequest =null;
@@ -269,10 +270,17 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 adjustTreeItemStyle(folderItem);
 					 }
 				 }
-			 }
+				 floderTreeContainer.clear();
+				 floderTreeContainer.add(folderTocTree);
+			 }else{
+				 Label emptyLbl= new Label();
+				 emptyLbl.setText(EMPTY_FOLDER);
+				 emptyLbl.getElement().setAttribute("style", "font-size:17px; margin-top: 50px; margin-bottom: 50px; text-align: center; color:#e1dfda;");
+				 floderTreeContainer.clear();
+				 floderTreeContainer.add(emptyLbl);	
+				 }
 		}
-		floderTreeContainer.clear();
-		floderTreeContainer.add(folderTocTree);
+		
 	}
 	/**
 	 * This method will set the folder meta data on the toc page.
@@ -318,7 +326,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				}else{
 					performancePanel.setVisible(false);
 				}
-				lblFolderTitle.setText(foldersTocObj.getTitle()!=null?foldersTocObj.getTitle():"");
+				lblFolderTitle.setText(StringUtil.truncateText(foldersTocObj.getTitle(), 50));
 				String profId= AppClientFactory.getPlaceManager().getRequestParameter(USER_ID, null);
 				if(profId!=null){
 					getUiHandlers().getProfilePageDetails(profId);
