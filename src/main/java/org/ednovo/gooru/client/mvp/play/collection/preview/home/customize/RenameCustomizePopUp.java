@@ -159,14 +159,11 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copycollectionTextbox.addBlurHandler(new OnBlurr());
 		copycollectionTextbox.addKeyUpHandler(new OnkeyUp());
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
-
 			@Override
 			public void onSuccess(CollectionDo result) {
 				collectionDo = result;
 				MixpanelUtil.Preview_Click_Customize_successful();
-
 				copycollectionTextbox.setText(result.getTitle());
-
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
@@ -180,7 +177,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 						@Override
 						public void showSuccessMsgfromChild(String collectionId,String collectionTitle) {
 							showSuccessMsg(collectionId);
-
 						}
 					};
 					loginCustom.add(assignWidget);
@@ -286,7 +282,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
 		customizeText.getElement().setInnerHTML(i18n.GL0743());
-
 	}
 
 	/**
