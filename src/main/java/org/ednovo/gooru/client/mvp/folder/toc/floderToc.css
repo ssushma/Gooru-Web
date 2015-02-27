@@ -192,6 +192,7 @@ button.primary:hover {
 	display: inline-block;
 	border: 2px solid #e1dfda !important;
 	padding: 5px 4px;
+	margin-left: -4px;
 }
 
 @media ( min-width : 240px) and (max-width: 319px) {
