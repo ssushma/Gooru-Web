@@ -32,14 +32,20 @@
 					<g:HTMLPanel styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 						    <g:HTMLPanel styleName="{tocStyle1.paginationBlock}">
-							   <g:HTMLPanel styleName="col-md-6" ui:field="breadCrumbsPanel"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
-							   <g:HTMLPanel styleName="col-md-6 {tocStyle1.shareButton}">
-							  		 <g:Button styleName="secondary" ui:field="btnShare" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Button>
+							   <g:HTMLPanel ui:field="breadCrumbsPanel"><g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/> </g:HTMLPanel>
+							   <!-- <g:HTMLPanel styleName="col-md-6 {tocStyle1.shareButton}">
+							  		 <g:Label  ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
 							  		 <g:TextBox ui:field="shareTxtBox"></g:TextBox>
-							   </g:HTMLPanel>
+							   </g:HTMLPanel> -->
 							</g:HTMLPanel>
 							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />
-							<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"> </tbp:H3Panel>
+							<g:HTMLPanel styleName="{tocStyle.tocShareContainer}">
+								<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"/>
+								<g:HTMLPanel styleName="col-md-3 {tocStyle1.shareButton}">
+									<g:Label styleName="{tocStyle.tocShareBtn}" ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
+									<g:TextBox styleName="{tocStyle.tocShareTxb}" ui:field="shareTxtBox"></g:TextBox>
+								</g:HTMLPanel>
+							</g:HTMLPanel>
 							<g:HTMLPanel ui:field="bigIdeasPanel">
 								<p>
 									<g:Label styleName="{tocStyle.lblFolderTitles}" text="{i18n.GL1731} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL1731}"></g:Label>

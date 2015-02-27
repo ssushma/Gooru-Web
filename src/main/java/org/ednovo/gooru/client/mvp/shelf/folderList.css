@@ -511,13 +511,13 @@
 }
 
 .editPanelContent .titleSection .folder.title {
-    padding-left:60px;
+    padding-left:51px;
     background: url('../images/folders/panel/folder-icon-organize-title.png') no-repeat left center;
 }
 
 .editPanelContent .titleSection .dropdownButtonContainer {
     float:left;
-    width:76px;
+    width:26px;/*width:76px;*/
 }
 
 .editPanelContent .mainSection {
@@ -697,7 +697,7 @@
 
 
 .editPanelContent .titleSection .saveCancelContainer {
-    width:213px;
+    width:195px;
     float:right;
     text-align:right;
 }
