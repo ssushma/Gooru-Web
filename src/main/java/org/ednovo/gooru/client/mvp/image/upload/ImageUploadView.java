@@ -691,7 +691,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public final native String getFileNameSize() /*-{
  
 var fileSize;
-      if (getUserAgent().contains("msie")) 
+      if (getUserAgent().contains("msie") || getUserAgent().contains("trident")) 
          {
    
      	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");
