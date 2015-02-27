@@ -193,6 +193,7 @@ public interface ClientConstants {
 	String OTHER ="Other";
 	String MC = "MC";
 	String ZERO_NUMERIC = "0";
+	String INITIAL_COMMENT_LIMIT ="10";
 	
 	/*************** Analytics End **************************************************/
 	
@@ -288,6 +289,9 @@ public interface ClientConstants {
 	String NEXT ="next";
 	String PREVIOUS ="previous";
 	String ADDTEXTLBL ="Add";
+	String CREATE= "create";
+	String FEATCHINGCOMMENT="featchingcomment";
+	String ORANGE_COLOR="orange";
 	
 	
 	/***Player share constants***/
