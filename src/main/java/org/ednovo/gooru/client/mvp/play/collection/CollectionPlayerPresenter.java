@@ -2194,35 +2194,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 	}
 	
-	public void saveReactionToShowAvg(String reactionType){
-		String action=ADD;
-		Integer reactionCategeory = null;
-		if(ADD.equals(action)){
-			if(reactionTreeMap.containsKey(reactionType)){
-				reactionCategeory=reactionTreeMap.get(reactionType);
-			}
-			if(reactionCategeory!=null){
-				reactionTreeMap.put(reactionType, reactionCategeory+1);
-			}else{
-				reactionTreeMap.put(reactionType, 1);
-			}
-		}else if(DELETE.equals(action)){
-			if(reactionTreeMap.containsKey(reactionType)){
-			reactionCategeory=reactionTreeMap.get(reactionType);
-			}
-			if(reactionCategeory!=null){
-				if(reactionCategeory==1){
-					reactionTreeMap.remove(reactionType);
-				}else{
-					reactionTreeMap.put(reactionType, reactionCategeory-1);
-				}
-			}
-		}
-	}
-	
-	public Map<String, Integer> getReactionTreeMap(){
-		return reactionTreeMap;
-	}
 	
 	public void addFixedPostionForNavigation(){
 		collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
