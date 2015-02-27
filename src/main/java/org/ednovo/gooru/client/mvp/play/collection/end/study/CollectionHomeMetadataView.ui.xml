@@ -5,20 +5,15 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header">
 	<ui:style field= "playerStyle" src="previewend.css"/>
 	<g:FlowPanel>
-  		<g:FlowPanel styleName="{playerStyle.collectionImageContainer}" >
+  		<g:FlowPanel styleName="{playerStyle.collectionImageContainer}">
   			<g:Image ui:field="collectionThumbnail" styleName="{playerStyle.collectionImage}"></g:Image>
-  			<!-- <g:FlowPanel ui:field="thumbnailContainer">
-  				<g:HTMLPanel styleName="{playerStyle.collectionreplay}"><g:Label styleName="{playerStyle.collectionreplayText}" ui:field="replayCollection"></g:Label></g:HTMLPanel>
-  			</g:FlowPanel> -->
   		</g:FlowPanel>
         <g:HTMLPanel styleName="{playerStyle.clearfix} {playerStyle.collectionbuttons}">
-            <!-- <g:HTMLPanel  styleName="{playerStyle.endTitle}" ui:field="learningobjectiveText"></g:HTMLPanel> -->
             <g:Button styleName="secondary" ui:field="shareCollectionBtn"></g:Button>
             <g:Button styleName="secondary" ui:field="customizeCollectionBtn"></g:Button>
             <g:Button ui:field="studyButton" styleName="{playerStyle.preview}"></g:Button>
             <hr/>
             <g:HTML ui:field="collectionGoal" styleName="{playerStyle.goal}"></g:HTML>
-     		<!-- <g:Button styleName="secondary" ui:field="assignCollectionBtn"></g:Button> -->
         </g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder>

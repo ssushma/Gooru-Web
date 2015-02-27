@@ -92,11 +92,9 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
 		getView().setCollectionMetadata(collectionDo);
-		if(AppClientFactory.isAnonymous()){
-			getView().setPlayerLoginStatus(false);
-		} else {
-			getView().setPlayerLoginStatus(true);
-		}
+		
+		getView().setPlayerLoginStatus(AppClientFactory.isAnonymous() ? false : true);
+		
 		getCollectionCommentsList(collectionDo.getGooruOid(), ZERO_NUMERIC, INITIAL_COMMENT_LIMIT);
 		setRelatedConcepts(collectionDo);
 	}
