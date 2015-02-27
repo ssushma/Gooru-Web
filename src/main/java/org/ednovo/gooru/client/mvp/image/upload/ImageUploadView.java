@@ -691,7 +691,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public final native String getFileNameSize() /*-{
  
 var fileSize;
-      if ($wnd.$.browser.msie) 
+      if (getUserAgent().contains("msie") || getUserAgent().contains("trident")) 
          {
    
      	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");
@@ -721,6 +721,10 @@ var fileSize;
                  
     
   }-*/;
+	
+	public static native String getUserAgent() /*-{
+	return navigator.userAgent.toLowerCase();
+	}-*/;
 	
 	public void setAspectRatio(float aspectRatio){
 		this.aspectRatio=aspectRatio;
