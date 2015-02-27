@@ -112,11 +112,16 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	
 	@UiField Hidden myHiddenField;
 	
-	final String FOLDER="folder";
-	final String SCOLLECTION="scollection";
-	public static final String USER_ID="userId";
-	public static final String BACK2TOC="backToToc";
-    private static final String EMPTY_FOLDER = "Folder doesn't have any folders and collections";
+	final String FOLDER = "folder";
+	final String SCOLLECTION = "scollection";
+	private static final String USER_ID = "userId";
+	private static final String BACK2TOC = "backToToc";
+	private static final String EMPTY_FOLDER = "Folder doesn't have any folders and collections";
+	private static final String SHORTEN_URL = "shortenUrl";
+	private static final String ID = "id";
+	private static final String PARENT_ID = "parentId";
+	private static final String LIBRARY_NAME = "libName";
+	private static final String TYPE = "type";
 	
 	private Map<String, List<String>> bannerVal;
 	PlaceRequest placeRequest =null;
@@ -205,19 +210,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		});
 		shareTxtBox.addClickHandler(new OnTextBoxClick());
 	}
-	/**
-	 * This inner class is used to handle the click event on share button
-	 */
-	public class ShareClickHandler implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("type", PlaceTokens.FOLDER_TOC);
-			String folderId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-			if(folderId!=null)
-			getUiHandlers().getShortenUrl(folderId, params);
-		}
-	}
+	
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBannerStaticImages()
 	 */
@@ -669,8 +662,16 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBackButtonText(java.lang.String)
 	 */
 	@Override
-	public void setBackButtonText(String from) {
-		btnBackToPrevious.setText(i18n.GL3165()+" "+from);
+	public void setBackButtonText(Map<String, String> backTxtParams) {
+		String backBtnTxt="";
+		if(backTxtParams.containsKey(LIBRARY_NAME)){
+			backBtnTxt=i18n.GL3170();
+		}else if(backTxtParams.containsKey(USER_ID)){
+			backBtnTxt=i18n.GL3171();
+		}else{
+			backBtnTxt=i18n.GL3172();
+		}
+		btnBackToPrevious.setText(i18n.GL3165()+" "+backBtnTxt);
 	}
 
 	@Override
@@ -682,7 +683,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 
 	@Override
 	public void setBitlyLink(Map<String, String> shareResult) {
-		shareTxtBox.setText(shareResult.get("shortenUrl"));
+		shareTxtBox.setText(shareResult.get(SHORTEN_URL));
 	}
 	
 	/**

@@ -86,9 +86,9 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	void showProfileBanner();
 	/**
 	 * This method is used to set back button text based on the previous click
-	 * @param from
+	 * @param params {@link Map}
 	 */
-	void setBackButtonText(String from);
+	void setBackButtonText(Map<String, String> params);
 	/**
 	 * This is used to get tree panel
 	 * @return
