@@ -770,13 +770,10 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public CommentsDo createCommentForCollection(String gooruCollectionId, String userCommentsEntered){
 		JsonRepresentation jsonRep=null;
 		try{
-
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_COMMENT,getLoggedInSessionToken());
 			JSONObject commentObject=new JSONObject();
-	
 			commentObject.put("comment", userCommentsEntered);
 			commentObject.put("gooruOid", gooruCollectionId);
-
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),commentObject.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 		}catch (JSONException e) {
