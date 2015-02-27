@@ -238,7 +238,9 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 					}else{
 						for(int i =0;i<result.size();i++){
-							gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+							if(result.get(i).getDeleteContentGooruOid()!=null){
+								gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+							}
 							getView().getFlagButton().setText(i18n.GL0557());
 							getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 							getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());

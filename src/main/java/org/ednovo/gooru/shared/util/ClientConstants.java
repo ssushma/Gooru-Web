@@ -240,6 +240,7 @@ public interface ClientConstants {
 	String CONCEPT = "concept";
 	String POPULAR = "Popular";
 	String SAVEBTN = "save";
+	String NONE = "none";
 	
 
 	
