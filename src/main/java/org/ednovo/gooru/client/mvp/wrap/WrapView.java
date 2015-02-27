@@ -162,7 +162,7 @@ public class WrapView extends BaseView implements IsWrapView {
 			webcontainer.getElement().setId("main");
 			headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-			if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
+			if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!place.equals(PlaceTokens.FOLDER_TOC)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
 				if(isIpad){
 					  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 				}else if(isAndriod){
@@ -209,7 +209,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		if (slot == WrapPresenter.TYPE_VIEW) {
 			if (content != null) {
 				String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
+				if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!place.equals(PlaceTokens.FOLDER_TOC)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
 					if (place.equals(PlaceTokens.SHELF)
 							|| place.equalsIgnoreCase(PlaceTokens.COMMUNITY)
 							|| place.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)
