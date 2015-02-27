@@ -47,7 +47,6 @@ import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEvent;
-import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagPresenter;
@@ -60,7 +59,6 @@ import org.ednovo.gooru.client.mvp.play.error.CollectionNonExistView;
 import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
-import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
@@ -453,7 +451,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	@Override
 	public void onBind() {
 		super.onBind();
-		addRegisteredHandler(ShowResourceViewEvent.TYPE, this);
 		addRegisteredHandler(UpdateCollectionViewCountEvent.TYPE, this);
 		addRegisteredHandler(ShowCollectionTabWidgetEvent.TYPE, this);
 		addRegisteredHandler(RefreshCollectionInShelfListInPlayEvent.TYPE, this);
@@ -851,9 +848,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getView().makeButtonActive(false,false, false, false, false,true);
 			}
 		}
-	}
-	@Override
-	public void showResourceView(Integer collectionItemSequence, boolean isForwardDirection) {
 	}
 	
 	public void scrollStudyPage(){
@@ -1540,9 +1534,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("id", collectionDo.getGooruOid());
 		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-
 		if(isLoginRequestCancel){
-			String collectionId=getPlaceManager().getRequestParameter("id", null);
 			String collectionItemId=getPlaceManager().getRequestParameter("rid", null);
 			if(collectionItemId!=null){
 				params.put("rid", collectionItemDo.getCollectionItemId());

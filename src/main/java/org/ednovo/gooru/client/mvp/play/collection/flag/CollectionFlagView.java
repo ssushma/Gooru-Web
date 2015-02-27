@@ -274,11 +274,8 @@ public class CollectionFlagView extends
 				.flagButtonselected());
 		flagResources.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
 				.flagbuttonDeSelected());
-
 		// To get content report
-			
 		getUiHandlers().getContentReport(collectionGooruOid);
-		
 	}
 
 	private class OnDropdownItemClick implements ClickHandler {
@@ -513,8 +510,7 @@ public class CollectionFlagView extends
 		resourcesList.clear();
 		resourcesListId.clear();
 		if (collectionDo.getCollectionItems()!=null&&collectionDo.getCollectionItems().size() > 0) {
-			for (CollectionItemDo collectionItem : collectionDo
-					.getCollectionItems()) {
+			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				resourcesList.add(collectionItem.getResourceTitle()!=null?collectionItem.getResourceTitle():"");
 				resourcesListId.add(collectionItem.getResource().getGooruOid());
 				String Resourcetitle = collectionItem.getResourceTitle().replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
@@ -615,7 +611,6 @@ public class CollectionFlagView extends
 	@Override
 	public void setFlag(ContentReportDo contentReportDo, String gooruFlagId) {
 		getDeleteContentGooruOid=gooruFlagId;
-		
 	}
 
 	@Override
