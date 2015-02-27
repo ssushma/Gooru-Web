@@ -24,23 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.service.ShelfServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
-import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -61,11 +52,69 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	@Inject
 	private TaxonomyServiceAsync taxonomyService;
 
-	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
+	/**
+	 * Class constructor
+	 * @param view {@link View}
+	 * @param proxy {@link Proxy}
+	 */
+	@Inject
+	public AddCenturyPresenter( EventBus eventBus,IsAddCenturyView view) {
+		super(eventBus,view);
+		getView().setUiHandlers(this);
+	}
 
-	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
+	/* (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.HandlerContainerImpl#onBind()
+	 */
+	@Override
+	public void onBind() {
+		super.onBind();
+	
+	}
+	
+	public void callDefaultStandardsLoad(){
+		getView().loadData();
+		getView().reset();
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyUiHandlers#loadStateStandards()
+	 */
+	@Override
+	public void loadStateStandards(){
+		getView().reset();
+		/*AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", stateCode, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
+			@Override
+			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
+				for(int i=0;i<result.size();i++) {
+					getView().SetData(result.get(i),i);
+				}
+			}
+		});*/
+		AppClientFactory.getInjector().getSearchService().getCenturySkilsRestuls(new SimpleAsyncCallback<CenturySkilsDo>() {
+			@Override
+			public void onSuccess(CenturySkilsDo result) {
+				if(result!=null){
+					getView().SetData(result);
+				}
+			}
+		});
+	}
 
-	private SimpleAsyncCallback<List<LibraryCodeDo>> courseAsyncCallback;
+	/* (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.PresenterWidget#onReveal()
+	 */
+	@Override
+	protected void onReveal(){
+		super.onReveal();
+		callDefaultStandardsLoad();
+		loadStateStandards();
+	}
+	
+	@Override
+	public void hidePopup() {
+		getView().hidePopup();
+	}
 
 	private String resourceOid;
 
@@ -80,59 +129,4 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	public void setResourceUid(String resourceUid) {
 		this.resourceOid = resourceUid;
 	}
-
-	/**
-	 * Class constructor
-	 * @param view {@link View}
-	 * @param proxy {@link Proxy}
-	 */
-	@Inject
-	public AddCenturyPresenter( EventBus eventBus,IsAddCenturyView view) {
-		super(eventBus,view);
-		getView().setUiHandlers(this);
-	}
-
-	@Override
-	public void onBind() {
-		super.onBind();
-	
-	}
-	
-	public void callDefaultStandardsLoad()
-	{
-		getView().loadData();
-		getView().reset();
-
-	}
-	
-	public void loadStateStandards(String stateCode)
-	{
-		getView().reset();
-		AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", stateCode, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
-			@Override
-			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
-				for(int i=0;i<result.size();i++) {
-					getView().SetData(result.get(i),i);
-				}
-			}
-		});
-	}
-	
-
-
-	@Override
-	protected void onReveal(){
-		callDefaultStandardsLoad();
-	}
-
-	
-	@Override
-	public void hidePopup() {
-		getView().hidePopup();
-	}
-
-
-
-
-
 }

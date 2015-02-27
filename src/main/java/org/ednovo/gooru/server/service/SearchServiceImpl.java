@@ -63,6 +63,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
+import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -726,6 +727,23 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			
 		}
 		return searchResourcesTagsDo;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.SearchService#getCenturySkilsRestuls()
+	 */
+	@Override
+	public CenturySkilsDo getCenturySkilsRestuls() {
+		JsonRepresentation jsonRep = null;
+		CenturySkilsDo centurySkilsDo=new CenturySkilsDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_21CENTURYSKILLS,getLoggedInSessionToken());
+		getLogger().info("-- getCenturySkilsRestuls -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
+		try{
+			centurySkilsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CenturySkilsDo.class);
+		}catch(JSONException ex){}
+		return centurySkilsDo;
 	}
 	
 	/*@Override
