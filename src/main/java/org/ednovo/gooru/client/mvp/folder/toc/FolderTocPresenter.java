@@ -72,6 +72,9 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	public static final String LIBRARY_NAME = "libName";
 	public static final String USER_ID = "userId";
 	public static final String TYPE = "type";
+	
+	Map<String, String> params;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.FOLDER_TOC)
 	public interface IsFolderTocProxy extends ProxyPlace<FolderTocPresenter> {
@@ -93,10 +96,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		super.onReveal();
 		getView().getTreePanel();
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID);
-		final String parentId=AppClientFactory.getPlaceManager().getRequestParameter(PARENT_ID,null);
-		final String libName=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
-		final String userId=AppClientFactory.getPlaceManager().getRequestParameter(USER_ID,null);
-		getShareLink();
+		getMapParams();
 		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
 		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -107,39 +107,13 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				public void onSuccess(FolderTocDo folderListDo) {
 					getView().clearTocData();
 					getView().setFolderItems(folderListDo);
-					//Set the back button text
-					if(libName!=null){
-						getView().setBackButtonText(i18n.GL3170());
-					}else if(userId!=null){
-						getView().setBackButtonText(i18n.GL3171());
-					}else{
-						getView().setBackButtonText(i18n.GL3172());
-					}
+					getView().setBackButtonText(params);
 				}
 			});
-			if(libName!=null){
-				//This API used for to get the course image details of library.
-				if(parentId!=null){
-					AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
-						@Override
-						public void onSuccess(FolderDo result) {
-							if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
-								getView().setCourseBanner(result);
-							}else{
-								getView().setBannerImages();
-							}
-						}
-					});
-				}else{
-					getView().setBannerImages();
-				}
-			}else if(userId==null){
-				//getView().showProfileBanner();
-				getView().hidePanels();
-			}
+			setFolderMetaDataDetails();
 		}
+		getShortenUrl(folderId, params);
 	}
-
 
 	@Override
 	protected void onReset() {
@@ -160,13 +134,29 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			}
 		});
 	}
-
+	/**
+	 * To set the folder meta data details.
+	 */
+	private void setFolderMetaDataDetails() {
+		if(params.containsKey(LIBRARY_NAME)){
+			if(params.containsKey(PARENT_ID)){
+				getFolderMetaData(params.get(PARENT_ID));
+			}else{
+				getView().setBannerImages();
+			}
+		}else if(!params.containsKey(USER_ID)){
+			getView().hidePanels();
+		}
+	}
+	
+    /**
+     * To generate the bitly link of the TOC Page.
+     */
 	@Override
 	public void getShortenUrl(String folderId, Map<String, String> params) {
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new AsyncCallback<Map<String,String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
-				System.out.println("sucess::"+result);
 				if(result!=null){
 					getView().setBitlyLink(result);
 				}
@@ -193,16 +183,35 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		});
 	}
 	/**
-	 * 
+	 * This API used for to get the Parent folder Metadata of library.
+	 * @param parentId
 	 */
-	private void getShareLink() {
-		Map<String, String> params = new HashMap<String, String>();
-		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+	private void getFolderMetaData(String parentId) {
+		AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				if(result!=null && result.getThumbnails()!=null && result.getThumbnails().getUrl()!=""){
+					getView().setCourseBanner(result);
+				}else{
+					getView().setBannerImages();
+				}
+			}
+		});
+	}
+	/**
+	 * To store the request params into Map 
+	 */
+	private void getMapParams() {
+		params = new HashMap<String, String>();
+		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID,null);
 	    String parentId=AppClientFactory.getPlaceManager().getRequestParameter(PARENT_ID,null);
 		String libName=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
 		String userId=AppClientFactory.getPlaceManager().getRequestParameter(USER_ID,null);
 		
-		params.put("type", PlaceTokens.FOLDER_TOC);
+		params.put(TYPE, PlaceTokens.FOLDER_TOC);
+		if(folderId!=null){
+			params.put(ID, folderId);
+		}
 		if(parentId!=null){
 			params.put(PARENT_ID, parentId);
 		}
@@ -212,6 +221,5 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		if(userId!=null){
 			params.put(USER_ID, userId);
 		}
-		getShortenUrl(folderId, params);
 	}
 }
