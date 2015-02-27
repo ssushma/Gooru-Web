@@ -46,6 +46,7 @@ public interface AddCenturyBundle extends ClientBundle{
 		String dropMenuSelected();
 		String btnStandardsStyle();
 		String listText();
+		String hilighTitleText();
 	}
 	@NotStrict
 	@Source("centuryPopup.css")

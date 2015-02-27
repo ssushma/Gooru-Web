@@ -69,12 +69,7 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	@Override
 	public void onBind() {
 		super.onBind();
-	
-	}
-	
-	public void callDefaultStandardsLoad(){
-		getView().loadData();
-		getView().reset();
+		loadStateStandards();
 	}
 	
 	/* (non-Javadoc)
@@ -82,15 +77,6 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	 */
 	@Override
 	public void loadStateStandards(){
-		getView().reset();
-		/*AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", stateCode, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
-			@Override
-			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
-				for(int i=0;i<result.size();i++) {
-					getView().SetData(result.get(i),i);
-				}
-			}
-		});*/
 		AppClientFactory.getInjector().getSearchService().getCenturySkilsRestuls(new SimpleAsyncCallback<CenturySkilsDo>() {
 			@Override
 			public void onSuccess(CenturySkilsDo result) {
@@ -107,26 +93,10 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	@Override
 	protected void onReveal(){
 		super.onReveal();
-		callDefaultStandardsLoad();
-		loadStateStandards();
 	}
 	
 	@Override
 	public void hidePopup() {
 		getView().hidePopup();
-	}
-
-	private String resourceOid;
-
-	public String getResourceUid() {
-		return resourceOid;
-	}
-	
-	public String setPlayerType(String playerType){
-		return playerType;
-	}
-
-	public void setResourceUid(String resourceUid) {
-		this.resourceOid = resourceUid;
 	}
 }

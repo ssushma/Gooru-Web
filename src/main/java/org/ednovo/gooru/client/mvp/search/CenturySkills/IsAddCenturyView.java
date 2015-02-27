@@ -42,6 +42,4 @@ public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCentu
 	 * @param centurySkilsDo
 	 */
 	void SetData(CenturySkilsDo centurySkilsDo);
-
-	void loadData();	
 }

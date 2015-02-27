@@ -24,9 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.ednovo.gooru.client.uc.AppPopUpCentury;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -46,6 +48,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -66,7 +69,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	String selectedCodeVal = "";
 	Integer selectedCodeId = 0;
 	String selectedCodeDesc = "";
-	
+	LiPanel liPanel;
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
@@ -102,17 +105,57 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	
 	@UiHandler("cancelBtn")
 	public void clickOnCancelBtn(ClickEvent clickEvent){
+		resetPopupHilightedData();
 		appPopUp.hide();
 	}
-	
+	/**
+	 * This method is used for to reset the style for the title widgets
+	 */
+	private void resetPopupHilightedData() {
+		Iterator<Widget> widgets=ulCongitiveAndStrategies.iterator();
+		while (widgets.hasNext()){
+			final Widget widget = widgets.next();
+			if (widget instanceof LiPanel){
+				Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+				while (childWidgets.hasNext()){
+					final Widget childWidget = childWidgets.next();
+					if(childWidget instanceof HTMLPanel){
+						((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+					}
+				}
+			}
+		}
+		Iterator<Widget> widgets1=ulKeyContentKnowledge.iterator();
+		while (widgets1.hasNext()){
+			final Widget widget = widgets1.next();
+			if (widget instanceof LiPanel){
+				Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+				while (childWidgets.hasNext()){
+					final Widget childWidget = childWidgets.next();
+					if(childWidget instanceof HTMLPanel){
+						((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+					}
+				}
+			}
+		}
+		Iterator<Widget> widgets2=ulKeyLearningSkills.iterator();
+		while (widgets2.hasNext()){
+			final Widget widget = widgets2.next();
+			if (widget instanceof LiPanel){
+				Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+				while (childWidgets.hasNext()){
+					final Widget childWidget = childWidgets.next();
+					if(childWidget instanceof HTMLPanel){
+						((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+					}
+				}
+			}
+		}
+	}
+
 	@UiHandler("addCenturyBtn")
 	public void clickOnAddCenturyBtn(ClickEvent clickEvent){
 		//Add century event here..
-	}
-	
-	@Override
-	public void loadData(){
-		//API call to load data to be integrated here
 	}
 	
 	@Override
@@ -143,17 +186,32 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 			}
 		}
 	}
+	/**
+	 * This will set the 21 century data based passed parameters
+	 * @param nodeList
+	 * @param ulPanel
+	 */
 	public void setPanelData(List<NodeDo> nodeList,UlPanel ulPanel){
 		for (NodeDo nodeObj : nodeList) {
-			LiPanel liPanel=new LiPanel();
+			liPanel=new LiPanel();
 			if(!StringUtil.isEmpty(nodeObj.getCode())){
 				AddCenturyColorPanelWidget addCenturyColorPanelWidget=new AddCenturyColorPanelWidget(nodeObj.getCode());
 				liPanel.add(addCenturyColorPanelWidget);
 			}
 			HTMLPanel pnlTitle=new HTMLPanel("");
 			pnlTitle.setStyleName(AddCenturyBundle.INSTANCE.css().listText());
-			InlineLabel title=new InlineLabel(nodeObj.getLabel());
-			pnlTitle.add(title);
+			final InlineLabel titleText=new InlineLabel(nodeObj.getLabel());
+			titleText.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					if(titleText.getElement().getClassName().contains(AddCenturyBundle.INSTANCE.css().hilighTitleText())){
+						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+					}else{
+						titleText.addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+					}
+				}
+			});
+			pnlTitle.add(titleText);
 			liPanel.add(pnlTitle);
 			ulPanel.add(liPanel);
 		}
@@ -165,21 +223,18 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	}
 
 	@Override
-	public void reset() {
-		//reset or clear fields here
-	}
-	@Override
 	public void onLoad() {
 		reset();
 	}
 
 	@Override
-	public void onUnload() {
-		
-	}
+	public void onUnload() {}
 
 	@Override
 	public void hidePopup(){
 		appPopUp.hide();
 	}
+
+	@Override
+	public void reset() {}
 }
