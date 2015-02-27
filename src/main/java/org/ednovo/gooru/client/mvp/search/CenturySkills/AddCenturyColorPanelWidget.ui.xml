@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="addCenturyStyle" src="AddCentury.css"/>
+	<g:HTMLPanel styleName="{addCenturyStyle.circlesBlock}">
+	 	 <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.greenCircle}"  ui:field="spnGreenCircle"></g:InlineHTML> 
+         <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.blueCircle}"   ui:field="spnBlueCircle"></g:InlineHTML > 
+         <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.yellowCircle}" ui:field="spnYellowCircle"></g:InlineHTML>
+         <g:InlineHTML styleName="{addCenturyStyle.smallCircle} {addCenturyStyle.purpleCircle}" ui:field="spnPurpleCircle"></g:InlineHTML> 
+	</g:HTMLPanel>
+</ui:UiBinder> 

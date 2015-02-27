@@ -332,5 +332,10 @@ margin-top: 1%;
 }
 .dropMenuSelected{
 	background-color: #cfe3f1;
-color: #515151;
+	color: #515151;
+}
+.listText{
+	display:inline-block;
+	vertical-align:top;
+	width:184px;
 }

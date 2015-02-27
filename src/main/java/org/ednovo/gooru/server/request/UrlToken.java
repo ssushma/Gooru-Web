@@ -655,7 +655,9 @@ public enum UrlToken {
 	
 	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
 
-	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink");
+	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink"),
+	
+	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}");
 	
 
 	private String url;

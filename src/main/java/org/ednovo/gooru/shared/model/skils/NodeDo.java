@@ -22,26 +22,46 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.search.CenturySkills;
+package org.ednovo.gooru.shared.model.skils;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
+import java.io.Serializable;
 
-import com.gwtplatform.mvp.client.PopupView;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
- * @author Search Team
- *
+ * @fileName : NodeDo.java
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCenturyUiHandlers> {
-
-	void hidePopup();
+@JsonInclude(Include.NON_NULL)
+public class NodeDo implements Serializable{
 
 	/**
-	 * This method is used to set 21 century skills data
-	 * @param centurySkilsDo
 	 */
-	void SetData(CenturySkilsDo centurySkilsDo);
+	private static final long serialVersionUID = 1L;
 
-	void loadData();	
+	long codeId;
+	String label;
+	String code;
+	NodeDo(){}
+	public long getCodeId() {
+		return codeId;
+	}
+	public void setCodeId(long codeId) {
+		this.codeId = codeId;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 }

@@ -26,8 +26,6 @@ package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-import com.google.gwt.user.client.ui.Button;
-
 /**
  * @author Search Team
  *
@@ -35,8 +33,8 @@ import com.google.gwt.user.client.ui.Button;
 public interface AddCenturyUiHandlers extends BaseUiHandlers {
 
 	void hidePopup();
-
-	void loadStateStandards(String string);
-
-
+	/**
+	 * This method is used to load 21 century skils data.
+	 */
+	void loadStateStandards();
 }
