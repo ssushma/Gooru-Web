@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9" />
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-<link href="${cdn.endpoint}/css/main-styles.min.css" rel="stylesheet" type="text/css">
-
+<!-- <link href="${cdn.endpoint}/css/main-styles.min.css" rel="stylesheet" type="text/css">
+ -->
 <meta name="description" content="" />
 <meta name="author" content="" />
 <meta name="version" content='${gooru.release.version}'>
@@ -27,6 +27,14 @@
     google.load("visualization", "1", {'packages' : ["table"] });
  </script>
 <script>
+	(function() {
+	    var css = document.createElement('link'); css.type = 'text/css'; css.rel='stylesheet';
+	    css.href = ('https:' == document.location.protocol ? 'https://' : 'http://') + '${cdn.endpoint}/css/main-styles.min.css';
+	    var s = document.getElementsByTagName('head')[0]; 
+	    s.appendChild(css, s);
+	  })();
+
+
      (function() {
  	    var et = document.createElement('script'); et.type = 'text/javascript'; et.async= true;
  	    et.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'www.google.com/jsapi?key=ABQIAAAAda4WhJd6JK8w7AUcwc4FChRmAaOIOXFIJ_BmtIMHmVPHNHLDPxQ5kQWgJnLOe0-4giQzR5D8bv7WCg';
