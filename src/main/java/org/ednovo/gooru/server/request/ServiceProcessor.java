@@ -55,7 +55,6 @@ public class ServiceProcessor {
                }
                setMediaType(type);
                setEncodings(Encoding.GZIP);
-               setRepresentation(getClientResource().get());
                Representation decodedRep = new DecodeRepresentation(getClientResource().get()); 
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
@@ -77,7 +76,6 @@ public class ServiceProcessor {
                setClientResource(new ClientResource(url));
                setMediaType(type);
                setEncodings(Encoding.GZIP);
-               setRepresentation(getClientResource().get());
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation(getRepresentation().getText());
                Representation decodedRep = new DecodeRepresentation(getClientResource().get());
@@ -123,7 +121,6 @@ public class ServiceProcessor {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
                setEncodings(Encoding.GZIP);
-               setRepresentation(getClientResource().post(form));
                Representation decodedRep = new DecodeRepresentation(getClientResource().post(form));
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
@@ -181,7 +178,6 @@ public class ServiceProcessor {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
                setEncodings(Encoding.GZIP);
-               setRepresentation(getClientResource().post(new JsonRepresentation(formData)));
                Representation decodedRep = new DecodeRepresentation(getClientResource().post(new JsonRepresentation(formData)));
                return new StringRepresentation(decodedRep.getText());
            }}.executeString();    
@@ -266,7 +262,6 @@ public class ServiceProcessor {
                }
                setMediaType(type);
                setEncodings(Encoding.GZIP);
-               setRepresentation(getClientResource().delete());
                Representation decodedRep = new DecodeRepresentation(getClientResource().delete());
                
                // Get the representation as an JsonRepresentation
@@ -294,7 +289,6 @@ public class ServiceProcessor {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
                setEncodings(Encoding.GZIP);
-               setRepresentation(getClientResource().put(form.getWebRepresentation()));
                Representation decodedRep = new DecodeRepresentation(getClientResource().put(form.getWebRepresentation()));
                // Get the representation as an JsonRepresentation
                // return new JsonRepresentation(getRepresentation().getText());
@@ -321,7 +315,6 @@ public class ServiceProcessor {
                if (username != null && username.length() > 0 && password != null && password.length() > 0) {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
-//               setRepresentation(getClientResource().delete(formData));
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():""));
@@ -347,7 +340,6 @@ public class ServiceProcessor {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
                setEncodings(Encoding.GZIP);
-               setRepresentation(getClientResource().put(formData));
                Representation decodedRep = new DecodeRepresentation(getClientResource().put(formData));
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
