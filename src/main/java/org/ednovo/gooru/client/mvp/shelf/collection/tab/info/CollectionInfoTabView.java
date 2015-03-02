@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.uc.AppCenturyTagSuggestBox;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.CourseListUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.GradeLabel;
@@ -1183,19 +1184,25 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 							addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
 							removeCourseBtn.setVisible(false);
 						}
-						
 					}
 				}
 			}
-			
 			if (collectionDoVal.getMetaInfo() != null && collectionDoVal.getMetaInfo().getStandards() != null) {
 				for (StandardFo standard : collectionDoVal.getMetaInfo().getStandards()) {
 					standardsPanel.add(createStandardLabel(standard.getCode(), standard.getCodeId() + "", standard.getDescription()));
 				}
 			}
+			//Added this for to display 21 century skills 
+			if (collectionDoVal.getMetaInfo() != null && collectionDoVal.getMetaInfo().getSkills() != null) {
+				centPanel.clear();
+				for (StandardFo standard : collectionDoVal.getMetaInfo().getSkills()) {
+					centPanel.add(create21CenturyLabel(standard.getLabel(),standard.getCodeId()+"",standard.getDescription()));
+				}
+			}
 			resetStandardCount();
 			resetCourseCount();
 			setGradeList();
+			reset21CenturyCount();
 			/*if(collectionDo.getMediaType()!=null) {
 				if(collectionDo.getMediaType().equalsIgnoreCase("iPad_friendly")){
 					isCheckedValue=true;
@@ -1463,7 +1470,20 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			standardLabel.getElement().setAttribute("title",i18n.GL0575());
 		}
 	}
-
+	/**
+	 * set the 21 century text with count while adding and removing the 21 century value
+	 */
+	private void reset21CenturyCount() {
+		if (centPanel.getWidgetCount() > 0) {
+			centLabel.setText(i18n.GL3121_1() + " (" + centPanel.getWidgetCount() + ")");
+			centLabel.getElement().setAttribute("alt",i18n.GL3121_1() + " (" + centPanel.getWidgetCount() + ")");
+			centLabel.getElement().setAttribute("title",i18n.GL3121_1() + " (" + centPanel.getWidgetCount() + ")");
+		} else {
+			centLabel.setText(i18n.GL3121_1());
+			centLabel.getElement().setAttribute("alt",i18n.GL3121_1());
+			centLabel.getElement().setAttribute("title",i18n.GL3121_1());
+		}
+	}
 	/**
 	 * set the course text with count while adding and removing the course
 	 */
@@ -1616,7 +1636,25 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
 	}
-	
+	/**
+	 * new label is created for the standard which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc create21CenturyLabel(final String standardCode, final String id, String description) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(standardCode) {
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				this.getParent().removeFromParent();
+				resetCourseCount();
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), id);
+				resetStandardCount();				
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
 	public DownToolTipWidgetUc createCourseLabel(final String standardCode, final String id, String description) {
 		CloseLabel closeLabel = new CloseLabel(standardCode) {
 
@@ -1695,28 +1733,24 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 			handlerRegistration.removeHandler();
 		}
 		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().setUpdatedStandards();
-		
-				
 			}
 		});
 	}
 	
-	public void OnCenturyClickEvent(Button centuryButtonClicked)
-	{
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.shelf.collection.tab.info.IsCollectionInfoTabView#OnCenturyClickEvent(com.google.gwt.user.client.ui.Button)
+	 */
+	public void OnCenturyClickEvent(Button centuryButtonClicked){
 		if(handlerRegistration!=null){
 			handlerRegistration.removeHandler();
 		}
 		handlerRegistration=centuryButtonClicked.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().setUpdatedCentury();
-		
-				
 			}
 		});
 	}
@@ -1794,13 +1828,11 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 	}
 	
 	/**
-	 * 
 	 * @function updateLearningSkills 
 	 * 
 	 * @created_date : 23-Jan-2015
 	 * 
 	 * @description
-	 * 
 	 * 
 	 * @parm(s) : @param collectionDo
 	 * @parm(s) : @param learningSkillsValues
@@ -1809,9 +1841,6 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
 	 *
 	 */
 	private void updateLearningSkills(CollectionDo collectionDo, String learningSkillsValues, Boolean selectedVal ){
@@ -1822,14 +1851,19 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 			}
 		});
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.shelf.collection.tab.info.IsCollectionInfoTabView#setUpdatedCentury(java.util.Map)
+	 */
 	@Override
-	public void setUpdatedCentury(String setStandardsVal,
-			Integer setStandardsIdVal, String setStandardDesc) {
-		// TODO Auto-generated method stub
-		centPanel.add(createStandardLabel("sample", "samp" + "", "sample1"));
-		this.resetStandardCount();
-		getUiHandlers().updateCentury(collectionDo.getGooruOid(), "787", "add");
+	public void setUpdatedCentury(Map<Long, String> selectedValues){
+		int size=selectedValues.size();
+		if(size>0){
+			for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
+				centPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"",""));
+			}
+		}
+		this.reset21CenturyCount();
+		getUiHandlers().updateCentury(collectionDo.getGooruOid(),"add",selectedValues);
 		getUiHandlers().closeCenturyPopup();
-		
 	}
 }

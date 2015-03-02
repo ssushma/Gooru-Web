@@ -439,4 +439,12 @@ public interface ResourceService extends BaseService {
 	 * @return
 	 */
 	FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl);
+	/**
+	 * This method is used to add 21 skills data
+	 * @param collectionId
+	 * @param action
+	 * @param skillsData
+	 * @return
+	 */
+	public CollectionDo update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData);
 }

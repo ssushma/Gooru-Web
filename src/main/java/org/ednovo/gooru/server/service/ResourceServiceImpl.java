@@ -537,7 +537,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				code.put("codeId", taxonomyCode);
 				taxonomySet.put(code);
 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
-
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -546,13 +545,48 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionTypeJsonObject.put("action", action);
 			}
 			classPageJsonObject.put("collection", collectionTypeJsonObject);
-			  
-			
 		}catch(Exception e){
 			
 		}
-		
-	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), classPageJsonObject.toString());
+	 	getLogger().info("updateCollectionMetadata::API:"+url);
+	 	getLogger().info("data passed:::"+classPageJsonObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), classPageJsonObject.toString());
+	    jsonRep = jsonResponseRep.getJsonRepresentation();
+	    if(jsonResponseRep.getStatusCode()==200){
+			collectionDoObj = deserializeCollection(jsonRep);
+			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+		}else{
+			collectionDoObj=new CollectionDo();
+			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+		}
+	    return collectionDoObj;
+	}
+	@Override
+	public CollectionDo update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData){
+		JsonRepresentation jsonRep = null;
+		CollectionDo collectionDoObj= new CollectionDo();
+	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId, getLoggedInSessionToken());
+	    JSONObject classPageJsonObject=new JSONObject();
+		JSONObject collectionTypeJsonObject=new JSONObject();
+		try{
+			JSONArray taxonomySet = new JSONArray();
+			int size=skillsData.size();
+			if(size>0){
+				for (Map.Entry<Long, String> entry : skillsData.entrySet()){
+					JSONObject code = new JSONObject();
+					code.put("codeId", entry.getKey());
+					taxonomySet.put(code);
+				}
+			}
+			collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+			if(action!=null){
+				collectionTypeJsonObject.put("action", action);
+			}
+			classPageJsonObject.put("collection", collectionTypeJsonObject);
+		}catch(Exception e){}
+	 	getLogger().info("updateCollection 21 skills::API:"+url);
+	 	getLogger().info("data passed 21 skills:::"+classPageJsonObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), classPageJsonObject.toString());
 	    jsonRep = jsonResponseRep.getJsonRepresentation();
 	    if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
@@ -1094,7 +1128,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
-		
+		getLogger().info("getCollection::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){

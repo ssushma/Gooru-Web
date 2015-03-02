@@ -39,6 +39,7 @@ public class CollectionMetaInfoDo implements Serializable {
 	private List<String> course;
 	private List<String> acknowledgement;
 	private RatingDo rating;
+	private List<StandardFo> skills;
 	
 	public CollectionMetaInfoDo(){}
 	
@@ -78,6 +79,10 @@ public class CollectionMetaInfoDo implements Serializable {
 	public void setAcknowledgement(List<String> acknowledgement) {
 		this.acknowledgement = acknowledgement;
 	}
-
-
+	public List<StandardFo> getSkills() {
+		return skills;
+	}
+	public void setSkills(List<StandardFo> skills) {
+		this.skills = skills;
+	}
 }

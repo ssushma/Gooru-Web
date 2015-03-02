@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -87,7 +89,7 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 
 	void closeStandardsPopup();
 
-	void updateCentury(String gooruOid, String string, String string2);
+	void updateCentury(String gooruOid, String action,Map<Long, String> selectedValues);
 	
 	
 

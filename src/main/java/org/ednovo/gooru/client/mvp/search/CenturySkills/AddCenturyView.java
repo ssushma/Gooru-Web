@@ -24,11 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.uc.AppPopUpCentury;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -48,7 +49,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -63,6 +63,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	
 	@UiField UlPanel ulCongitiveAndStrategies,ulKeyContentKnowledge,ulKeyLearningSkills;
 	@UiField InlineLabel spnHewlettDeeperLearningModel,spnConley4Keys,spnP21Framework,spnNationalResearchCenter,spnKeyCongitiveAndStrategiesTitle,spnKeyContentKnowledgeTitle,spnKeyLearningSkillsTitle;
+	@UiField Button addCenturyBtn,cancelBtn;
 	
 	private AppPopUpCentury appPopUp;
 	
@@ -73,14 +74,11 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
-	
+	Map<Long,String> selectedValues=new HashMap<Long,String>();
 
 	@UiTemplate("AddCenturyView.ui.xml")
 	interface AddCenturyViewUiBinder extends UiBinder<Widget, AddCenturyView> {
 	}
-	
-	@UiField Button cancelBtn,addCenturyBtn;
-
 	/**
 	 * Class constructor 
 	 * @param eventBus {@link EventBus}
@@ -107,6 +105,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	public void clickOnCancelBtn(ClickEvent clickEvent){
 		resetPopupHilightedData();
 		appPopUp.hide();
+		selectedValues.clear();
 	}
 	/**
 	 * This method is used for to reset the style for the title widgets
@@ -192,7 +191,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	 * @param ulPanel
 	 */
 	public void setPanelData(List<NodeDo> nodeList,UlPanel ulPanel){
-		for (NodeDo nodeObj : nodeList) {
+		for (final NodeDo nodeObj : nodeList) {
 			liPanel=new LiPanel();
 			if(!StringUtil.isEmpty(nodeObj.getCode())){
 				AddCenturyColorPanelWidget addCenturyColorPanelWidget=new AddCenturyColorPanelWidget(nodeObj.getCode());
@@ -206,7 +205,11 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				public void onClick(ClickEvent event) {
 					if(titleText.getElement().getClassName().contains(AddCenturyBundle.INSTANCE.css().hilighTitleText())){
 						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+						if(selectedValues.containsKey(nodeObj.getCodeId())){
+							selectedValues.remove(nodeObj.getCodeId());
+						}
 					}else{
+						selectedValues.put(nodeObj.getCodeId(), nodeObj.getLabel());
 						titleText.addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
 					}
 				}
@@ -237,4 +240,14 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 
 	@Override
 	public void reset() {}
+
+	@Override
+	public Button getAddBtn() {
+		return addCenturyBtn;
+	}
+
+	@Override
+	public Map<Long, String> getSelectedValues() {
+			return selectedValues;
+	}
 }

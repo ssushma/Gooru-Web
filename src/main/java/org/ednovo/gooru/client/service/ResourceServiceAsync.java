@@ -189,4 +189,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     void getUserShelfDetails(String userUid,AsyncCallback<String> callback);
     
     void updateAssessmentDetails(String assessmentId,String title,String assessmentUrl,AsyncCallback<FolderDo> callback);
+    
+    void update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData,AsyncCallback<CollectionDo> callback);
 }
