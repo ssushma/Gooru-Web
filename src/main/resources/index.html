@@ -29,7 +29,7 @@
 <script>
 	(function() {
 	    var css = document.createElement('link'); css.type = 'text/css'; css.rel='stylesheet';
-	    css.href = ('https:' == document.location.protocol ? 'https://' : 'http://') + '${cdn.endpoint}/css/main-styles.min.css';
+	    css.href = ('https:' == document.location.protocol ? 'https:' : 'http:') + '${cdn.endpoint}/css/main-styles.min.css';
 	    var s = document.getElementsByTagName('head')[0]; 
 	    s.appendChild(css, s);
 	  })();
