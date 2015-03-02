@@ -63,7 +63,6 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -105,7 +104,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField Button btnBackToPrevious;
 	@UiField H2Panel bannerTitle,userTitle;
 	@UiField Image logoImage,bannerImage,profImage;
-	@UiField Anchor mainTitle,firstTitle;
+	//@UiField Anchor mainTitle,firstTitle;
 	@UiField TextBox shareTxtBox;
 	
 	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel;
@@ -637,8 +636,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * To set the text of folder BreadCrumbs
 	 */
 	private void setBreadCrumbsText(String mTitle,String fTitle) {
-		mainTitle.setText(mTitle);
-		firstTitle.setText(fTitle);
+		/*mainTitle.setText(mTitle);
+		firstTitle.setText(fTitle);*/
 	}
 	/**
 	 * To show profile page details in Toc
@@ -696,6 +695,38 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			shareTxtBox.selectAll();
 			shareTxtBox.setFocus(true);
 		}
+	}
+	@Override
+	public void setBreadCrumbs(final String key, String value, String separator) {
+		Label routeLbl= new Label();
+		routeLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().breadCrumbsStyle());
+		routeLbl.setText(value+" "+separator);
+		routeLbl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getTocFolders(key);
+			}
+		});
+		breadCrumbsPanel.add(routeLbl);
+	}
+
+	@Override
+	public void setBreadCrumbs(Map<String, String> result) {
+		breadCrumbsPanel.clear();
+		int size=0;
+		for (Map.Entry<String, String> entry : result.entrySet())
+		{
+		    setBreadCrumbs(entry.getKey(), entry.getValue(), ">");
+		    size++;
+		}
+		if(size==result.size()){
+			Label presentTile=new Label();
+			presentTile.getElement().setAttribute("style", "display: inline-block;");
+			presentTile.setText(lblFolderTitle.getText());
+			breadCrumbsPanel.add(presentTile);
+		}
+
 	}
 	
 }

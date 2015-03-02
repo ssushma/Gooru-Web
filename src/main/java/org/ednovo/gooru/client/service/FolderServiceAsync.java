@@ -24,10 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -76,4 +76,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void getTocFolders(String folderId, AsyncCallback<FolderTocDo> callback);
 	
 	void getFolderMetaData(String folderId, AsyncCallback<FolderDo> callback);
+	
+	void getFolderRouteNodes(String folderId, AsyncCallback<Map<String,String>> callback);
+	
 }
