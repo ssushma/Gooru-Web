@@ -68,7 +68,6 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
-	
 	private static CollectionPlayerHeaderViewUiBinder uiBinder = GWT.create(CollectionPlayerHeaderViewUiBinder.class);
 
 	interface CollectionPlayerHeaderViewUiBinder extends UiBinder<Widget, StudyPlayerHeaderView> {
@@ -98,7 +97,6 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 	public void setResourceTitle(String title){
 		resourceTitle.setHTML(title);
 	}
-
 	
 	public HTMLEventPanel getAuthorContainer() {
 		return authorContainer;
@@ -133,7 +131,7 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		wishLabel.setText(i18n.GL1529());
 		wishLabel.getElement().setAttribute("alt",i18n.GL1529());
 		wishLabel.getElement().setAttribute("title",i18n.GL1529());
-		loginUserName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
+		loginUserName.setText(!StringUtil.isEmpty(AppClientFactory.getLoggedInUser().getUsernameDisplay())?AppClientFactory.getLoggedInUser().getUsernameDisplay():"");
 		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		if(collectionType!=null&&QUIZ.equals(collectionType)){
@@ -146,17 +144,12 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 			wishingText.getElement().setAttribute("title",i18n.GL3041());
 		}
 	}
-	
-
-	
 
 	public Label getCloseButton(){
 		return closeButtonForCollection;
 	}
-
 	
 	public class OnStudentViewButtonMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -166,36 +159,25 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 			toolTipPopupPanel.show();
 			toolTipPopupPanel.getElement().getStyle().setMarginLeft(57, Unit.PX);
 		}
-		
 	}
 	
 	public class OnStudentViewButtonMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
+	
 	public class ShareButtonMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 		}
-		
 	}
 	
 	public class ShareButtonMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
-	
 }

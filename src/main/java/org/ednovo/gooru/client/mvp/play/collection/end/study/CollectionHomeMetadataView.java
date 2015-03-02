@@ -82,8 +82,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	
 	private boolean isCustomizePopup = false;
 	
-	private boolean isSharePopup = false;
-	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
 	private HandlerRegistration studyButtonClickHandler;
@@ -151,7 +149,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
 				
 				MixpanelUtil.Preview_Player_Click_Preview();
-				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
+				List<CollectionItemDo> collectionItems=(collectionDo!=null&&collectionDo.getCollectionItems()!=null)?collectionDo.getCollectionItems():null;
 				if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 					AppClientFactory.fireEvent(new UpdateCollectionViewCountEvent());
 				}else{
@@ -161,7 +159,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					CollectionItemDo collectionItemDo=collectionItems.get(0);
 					if(collectionItemDo.getCollectionItemId() != null)
 					{
-						if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+						if(!StringUtil.isEmpty(collectionItemDo.getNarration())){
 							params.put("rid", collectionItemDo.getCollectionItemId());
 							params.put("tab", "narration");
 							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
@@ -212,7 +210,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	}
 	public void setCollectionGoal(String collectionGoal){
 		this.collectionGoal.setHTML("");
-		if(collectionGoal!=null &&!collectionGoal.isEmpty()){
+		if(!StringUtil.isEmpty(collectionGoal)){
 			if(collectionGoal.length()>415){
 				collectionGoal =(collectionGoal.substring(0, 415))+"...";
 				this.collectionGoal.setHTML(collectionGoal);
@@ -224,9 +222,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			this.collectionGoal.setHTML(i18n.GL1374());
 		}
 	}
-	
-
-
 	/**
 	 * 
 	 * @function oncustomizeCollectionBtnClicked 
@@ -245,21 +240,12 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	 */
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
-		
 		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
 				if(!isCustomizePopup){
 					isCustomizePopup=true;
 				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
+				if(AppClientFactory.isAnonymous()?(loginFlag = true):(loginFlag = false));
 				RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag,collectionTitle) {
-
 					@Override
 					public void closePoup() {
 						this.hide();	
@@ -271,16 +257,13 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				successPopupVc.setHeight("471px");
 				successPopupVc.show();
 				successPopupVc.center();
-				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-
 			}
-		
 	}
 	/**
 	 * 
@@ -301,7 +284,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
 		getUiHandlers().triggerCollectionShareDataEvent(null,PlayerDataLogEvents.COLLECTION,"gooru",false);
-		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		String collectionId = collectionDo.getGooruOid();
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
 					@Override
@@ -310,10 +292,8 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				        this.hide();
 					}
 				};
-				int clientHeight=Window.getClientHeight();
 				successPopupVc.show();
 				int left = (Window.getClientWidth() - 500) >> 1;
-			    int top = (Window.getClientHeight() - clientHeight) >> 1;
 			    successPopupVc.setHeight("658px");
 			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
 	}
@@ -323,24 +303,14 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	 * Showing Customize or Assign popup after login with gmail account.
 	 * 
 	 */
-	
 	private void showPopupAfterGmailSignin() {
-		// TODO Auto-generated method stub
 		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
 		if(customize!=null && YES.equals(customize) && emailId!=null){
-			Boolean loginFlag = false;
-			if (AppClientFactory.isAnonymous()){
-				loginFlag = true;
-			}
-			else
-			{
-				loginFlag = false;
-			}
+			Boolean loginFlag = AppClientFactory.isAnonymous();
 			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
-
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -356,7 +326,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		}
 		if(assign!=null && YES.equals(assign) && emailId!=null){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-				
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -367,23 +336,17 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
 			successPopupVc.setHeight("635px");
-
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
 			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-			}
-			else
-			{
+			}else{
 			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 			}
 		}
-
-
 	}
 
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -393,20 +356,16 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OncustomizeCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-		
 	}
 	
 	public class OnshareCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -416,18 +375,12 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OnshareCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
-		
 }

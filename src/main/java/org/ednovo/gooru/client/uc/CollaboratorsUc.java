@@ -87,10 +87,12 @@ public class CollaboratorsUc extends Composite {
 	protected void renderTeamNames(FlowPanel teamContainer2,List<String> teamMembersNames) {
 		teamContainer2.clear();
 		FlowPanel toolTipwidgets = new FlowPanel();
-		for (int count = 0; count < teamMembersNames.size(); count++) {
-			Label label = new Label(teamMembersNames.get(count));
-			label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
-			toolTipwidgets.add(label);
+		if(teamMembersNames!=null && teamMembersNames.size()>0){
+			for (int count = 0; count < teamMembersNames.size(); count++) {
+				Label label = new Label(teamMembersNames.get(count));
+				label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+				toolTipwidgets.add(label);
+			}
 		}
 		if (teamMembersNames != null && teamMembersNames.size() > 0) {
 			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(" "+i18n.GL1117()), toolTipwidgets);

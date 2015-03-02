@@ -942,13 +942,13 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	 */	
 	@Override
 	public void updateCommentChildView(String commentUid, String action) {
-		if(!commentUid.isEmpty() && action.equals(DELETE)) {
+		if(!commentUid.isEmpty() && action.equalsIgnoreCase(DELETE)) {
 			deleteComment(commentUid);
 			addComment.setVisible(true);
-		} else if (!commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if (!commentUid.isEmpty() && action.equalsIgnoreCase(EDIT)) {
 			addComment.setVisible(false);
 			editComment(commentUid);
-		} else if(commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if(commentUid.isEmpty() && action.equalsIgnoreCase(EDIT)) {
 			addComment.setVisible(true);
 		}
 	}

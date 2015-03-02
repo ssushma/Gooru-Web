@@ -216,7 +216,7 @@ public class StudyPlayerFooterView extends Composite implements ClientConstants{
 	}
 	public void makeAddButtonActive(){
 		String button=getAddButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getAddButton().removeStyleName(footerstyle.addButtonActive());
 			getAddButton().addStyleName(footerstyle.addButtonNormal());
 			getAddButton().getElement().removeAttribute("button");
@@ -229,7 +229,7 @@ public class StudyPlayerFooterView extends Composite implements ClientConstants{
 	
 	public void makeInfoButtonActive(){
 		String button=getInfoButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getInfoButton().removeStyleName(footerstyle.infoButtonActive());
 			getInfoButton().addStyleName(footerstyle.infoButtonNormal());
 			getInfoButton().getElement().removeAttribute("button");
@@ -241,7 +241,7 @@ public class StudyPlayerFooterView extends Composite implements ClientConstants{
 	}
 	public void makeShareButtonActive(){
 		String button=getShareButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getShareButton().removeStyleName(footerstyle.shareButtonActive());
 			getShareButton().addStyleName(footerstyle.shareButtonNormal());
 			getShareButton().getElement().removeAttribute("button");
@@ -253,7 +253,7 @@ public class StudyPlayerFooterView extends Composite implements ClientConstants{
 	}
 	public void makeNarrationButtonActive(){
 		String button=getNarrationButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getNarrationButton().removeStyleName(footerstyle.narrationButtonActive());
 			getNarrationButton().addStyleName(footerstyle.narrationButtonNormal());
 			getNarrationButton().getElement().removeAttribute("button");
@@ -268,7 +268,7 @@ public class StudyPlayerFooterView extends Composite implements ClientConstants{
 	}
 	public void makeFlagButtonActive(){
 		String button=getFlagButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			if(getFlagButton().getStyleName().contains(footerstyle.flagButtonOrangeActive())){
 				getFlagButton().removeStyleName(footerstyle.flagButtonOrangeActive());
 				getFlagButton().addStyleName(footerstyle.flagButtonOrange());

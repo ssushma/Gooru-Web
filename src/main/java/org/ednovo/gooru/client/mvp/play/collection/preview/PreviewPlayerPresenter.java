@@ -44,7 +44,6 @@ import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.play.collection.add.AddCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.event.ClosePreviewPlayerEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowPreviewTabWidgetEvent;
-import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdatePreviewViewCountEvent;
 import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
@@ -56,7 +55,6 @@ import org.ednovo.gooru.client.mvp.play.error.CollectionNonExistView;
 import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
-import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -76,6 +74,7 @@ import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.PlayerConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -425,7 +424,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	@Override
 	public void onBind() {
 	  super.onBind();
-	  addRegisteredHandler(ShowResourceViewEvent.TYPE, this);
 	  addRegisteredHandler(UpdatePreviewViewCountEvent.TYPE, this);
 	  addRegisteredHandler(ShowPreviewTabWidgetEvent.TYPE, this);
 	  addRegisteredHandler(RefreshCollectionInShelfListInPreviewPlayEvent.TYPE, this);
@@ -748,9 +746,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			}
 		}
 	}
-	@Override
-	public void showResourceView(Integer collectionItemSequence, boolean isForwardDirection) {
-	}
 	
 	public void showTabWidget(String tabView,String collectionId,String resourceId,boolean isCollectionHome,boolean isCollectionEnd){
 
@@ -850,7 +845,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		 }
 	}
 	public CollectionItemDo getCollectionItemDo(String collectionItemId){
-		if(collectionItemId!=null&&!collectionItemId.equalsIgnoreCase("")&&collectionDo!=null&&collectionDo.getGooruOid()!=null){
+		if(!StringUtil.isEmpty(collectionItemId)&&collectionDo!=null&&collectionDo.getGooruOid()!=null){
 			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 				CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
 				if(collectionItemId.equalsIgnoreCase(collectionItemDo.getCollectionItemId())){
@@ -864,14 +859,18 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	
 	public void updatCollectionViewsCount(){
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null){
-			String viewsCount=collectionDo.getViews();
-			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
-			collectionDo.setViews(viewsCounts.toString());
-			metadataPresenter.setViewCount(viewsCounts.toString());
-			try{
-	    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionDo.getGooruOid(), "views"));
-	         }
-			catch(Exception ex){}
+			if(!StringUtil.isEmpty(collectionDo.getViews())){
+				String viewsCount=collectionDo.getViews();
+				Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+				collectionDo.setViews(StringUtil.toString(viewsCounts));
+				metadataPresenter.setViewCount(StringUtil.toString(viewsCounts));
+				try{
+		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionDo.getGooruOid(), "views"));
+		         }
+				catch(Exception ex){
+					
+				}
+			}
 		}
 	}
 	public void updateViewCount(String collectionItemId){
@@ -1488,9 +1487,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("id", collectionDo.getGooruOid());
 		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-		
 		if(isLoginRequestCancel){
-			String collectionId=getPlaceManager().getRequestParameter("id", null);
 			String collectionItemId=getPlaceManager().getRequestParameter("rid", null);
 			if(collectionItemId!=null){
 				params.put("rid", collectionItemDo.getCollectionItemId());
@@ -1593,7 +1590,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(),0, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
 			@Override
 			public void onSuccess(ArrayList<StarRatingsDo> result) {
-				if(result.size()>0){
+				if(result!=null&&result.size()>0){
 					resoruceMetadataPresenter.getView().setUserStarRatings(result.get(0),false); 
 				}else{
 					resoruceMetadataPresenter.getView().setUserStarRatings(null,false); 
@@ -1970,7 +1967,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
-		if(classpageId!=null&&!classpageId.equals("")){
+		if(!StringUtil.isEmpty(classpageId)){
 			path=classpageId+"/"+collectionDo.getGooruOid();
 			if(getPlaceManager().getRequestParameter("rid")!=null){
 				path=path+"/"+itemGooruOid;
