@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -505,5 +506,30 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCreatedFolder(jsonRep);
+	}
+
+	@Override
+	public Map<String,String> getFolderRouteNodes(String folderId)
+			throws GwtException, ServerDownException {
+		Map<String,String> folderList=new LinkedHashMap<String, String>();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_FOLDER_ROUTE_NODES, folderId,getLoggedInSessionToken());
+		getLogger().info("getFolderRouteNodes:"+url);
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			JsonRepresentation jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			try{
+				JSONArray foldersArray=jsonRepresentation.getJsonArray();
+				if(foldersArray!=null&&foldersArray.length()>0){
+					for(int i=0;i<foldersArray.length();i++){
+						JSONObject jsonObj=foldersArray.getJSONObject(i);
+						folderList.put(jsonObj.getString("gooruOid"), jsonObj.getString("title"));
+					}
+				}
+				return folderList;
+			}catch(Exception e){
+
+			}
+		}
+		return folderList;
 	}
 }

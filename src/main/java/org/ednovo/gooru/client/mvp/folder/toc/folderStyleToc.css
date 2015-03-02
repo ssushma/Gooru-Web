@@ -853,4 +853,8 @@
 .shareButton{
 	text-align:right;
 }
+.breadCrumbsStyle{
+	display: inline-block;
+	cursor: pointer;
+}
 

@@ -62,4 +62,9 @@ public interface FolderTocUiHandlers extends BaseUiHandlers{
 	 * @param profId {@link String}
 	 */
 	void getProfilePageDetails(String profId);
+	/**
+	 * To get the Folder Toc
+	 * @param folderId {@link String}
+	 */
+	void getTocFolders(String folderId);
 }
