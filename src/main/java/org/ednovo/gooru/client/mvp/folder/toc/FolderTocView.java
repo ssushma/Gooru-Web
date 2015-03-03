@@ -573,9 +573,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			bannerTitle.setText(bannerVal.get(placetoken).get(1));
 			logoImage.setUrl(bannerVal.get(placetoken).get(2));
 			if(bannerVal.get(placetoken).get(2).equals("")){
-				bannerTitle.getElement().setAttribute("style", "background-color: rgba(16, 118, 187, 0.5);");
+				bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 			}else{
 				bannerTitle.getElement().getStyle().clearBackgroundColor();
+				bannerTitle.removeStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 			}
 			setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		}
@@ -589,10 +590,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImagePanel.setVisible(true);
 		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
 		bannerTitle.setText(folderDo.getTitle());
-		bannerTitle.getElement().setAttribute("style", "background-color: rgba(16, 118, 187, 0.5);");
+		bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
 		logoImage.setUrl(bannerVal.get(placetoken).get(2));
-		bannerImagePanel.getElement().setAttribute("style", "background: url("+folderDo.getThumbnails().getUrl() +") center;");
+		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
 		setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		bannerImage.addErrorHandler(new ErrorHandler() {
