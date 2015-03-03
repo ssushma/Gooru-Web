@@ -102,15 +102,8 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		}else{
 			Window.enableScrolling(true);
-			AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
-				@Override
-				public void onSuccess(FolderTocDo folderListDo) {
-					getView().clearTocData();
-					getView().setFolderItems(folderListDo);
-					getView().setBackButtonText(params);
-				}
-			});
-			setFolderMetaDataDetails();
+			getTocFolders(folderId);
+			setFolderBanner();
 		}
 		getShortenUrl(folderId, params);
 	}
@@ -124,6 +117,21 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	public void onBind() {
 		super.onBind();
 	}
+	
+	@Override
+	public void getTocFolders(final String folderId) {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
+			@Override
+			public void onSuccess(FolderTocDo folderListDo) {
+				getView().clearTocData();
+				getView().setFolderItems(folderListDo);
+				getFolderRouteNodes(folderId);
+				getView().setBackButtonText(params);
+			}
+		});
+		
+	}
+
 
 	@Override
 	public void getFolderItems(final TreeItem item,final String folderId) {
@@ -137,7 +145,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	/**
 	 * To set the folder meta data details.
 	 */
-	private void setFolderMetaDataDetails() {
+	private void setFolderBanner() {
 		if(params.containsKey(LIBRARY_NAME)){
 			if(params.containsKey(PARENT_ID)){
 				getFolderMetaData(params.get(PARENT_ID));
@@ -222,4 +230,20 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			params.put(USER_ID, userId);
 		}
 	}
+	
+	/**
+	 * To get the folder route nodes
+	 * @param folderId {@link String}
+	 */
+	private void getFolderRouteNodes(String folderId) {
+		
+		AppClientFactory.getInjector().getfolderService().getFolderRouteNodes(folderId, new SimpleAsyncCallback<Map<String,String>>() {
+
+			@Override
+			public void onSuccess(Map<String,String> result) {
+				getView().setBreadCrumbs(result);
+			}
+		});
+	}
+	
 }

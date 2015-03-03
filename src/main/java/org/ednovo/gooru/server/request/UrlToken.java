@@ -653,6 +653,8 @@ public enum UrlToken {
 	
 	V2_FOLDER_META_DATA("/v2/folder/{0}?sessionToken={1}"),
 	
+	V2_FOLDER_ROUTE_NODES("/v2/folder/{0}/node?sessionToken={1}"),
+	
 	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
 
 	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink"),

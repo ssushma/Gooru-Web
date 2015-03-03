@@ -104,4 +104,16 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	 * @param shareResult {@link Map}
 	 */
 	void setBitlyLink(Map<String, String> shareResult);
+	/**
+	 * To set the folder route nodes
+	 * @param key {@link String}
+	 * @param value {@link String}
+	 * @param separator {@link String}
+	 */
+	void setBreadCrumbs(String key, String value,String separator);
+	/**
+	 * To set the folder route nodes
+	 * @param routeNodes {@link Map}
+	 */
+	void setBreadCrumbs(Map<String, String> routeNodes);
 }
