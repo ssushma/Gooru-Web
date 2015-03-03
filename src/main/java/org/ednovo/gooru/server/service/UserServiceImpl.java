@@ -418,7 +418,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		profileV2Do.setUser(user);
 		
-		if (userType != null || !userType.equalsIgnoreCase("")){
+		if (userType != null && !"".equalsIgnoreCase(userType)){
 			profileV2Do.setUserType(userType);
 		}
 		
