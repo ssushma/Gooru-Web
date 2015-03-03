@@ -1307,8 +1307,10 @@ public class ProfileTopicListView extends Composite{
 			if(!parentId.equals("")){
 				params.put("parentId", parentId);
 			}
-			if(getPlaceToken()!=PlaceTokens.PROFILE_PAGE){
+			if(!PlaceTokens.PROFILE_PAGE.equals(getPlaceToken())){
 				params.put("libName", getPlaceToken());
+			}else{
+				params.put("userId", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 			}
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 		}
