@@ -1677,7 +1677,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.ADD_TAGS, resourceId, getLoggedInSessionToken());
-		
+		getLogger().info("add tags::"+url);
+		getLogger().info("add tags::"+ResourceFormFactory.frameTagObject(addedTags).getValuesArray("data")[0]);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), ResourceFormFactory.frameTagObject(addedTags).getValuesArray("data")[0]);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1690,7 +1691,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.GET_TAGS, resourceId, getLoggedInSessionToken());
-		
+		getLogger().info("get tags::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceTags(jsonRep);
@@ -1716,6 +1717,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.DELETE_TAGS, resourceId, getLoggedInSessionToken(),addedTags);
+		getLogger().info("delete tags::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 	}
