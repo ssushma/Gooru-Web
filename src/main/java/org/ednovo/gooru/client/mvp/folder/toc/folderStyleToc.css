@@ -857,4 +857,7 @@
 	display: inline-block;
 	cursor: pointer;
 }
+.bannerImageTitle{
+	background-color: rgba(16, 118, 187, 0.5);
+}
 
