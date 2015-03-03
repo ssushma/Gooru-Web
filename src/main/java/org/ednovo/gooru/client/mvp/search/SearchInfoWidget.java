@@ -1364,7 +1364,6 @@ public class SearchInfoWidget extends Composite {
 		} else {
 			Window.enableScrolling(false);
 			popup=new AddTagesPopupView(searchResultDo.getGooruOid()) {
-
 				@Override
 				public void closePoup(boolean isCancelclicked) {
 					 this.hide();

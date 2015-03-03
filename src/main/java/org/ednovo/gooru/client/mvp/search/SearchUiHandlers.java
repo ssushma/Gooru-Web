@@ -90,12 +90,15 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 * 
 	 */
 	void getAddStandards();
+	
+	void getAddCentury();
 
 	/**
 	 * 
 	 */
 	void setUpdatedStandards();
 
+	void setUpdatedCentury();
 	/**
 	 * 
 	 */
@@ -127,4 +130,8 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 * @param tagsLbl 
 	 */
 	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Anchor tagsLbl);
+	/**
+	 * This method is used to hide the popup
+	 */
+	void closeCenturyPoup();
 }

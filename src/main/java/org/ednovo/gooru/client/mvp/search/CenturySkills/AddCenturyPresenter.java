@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
@@ -32,6 +34,8 @@ import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -98,5 +102,25 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	@Override
 	public void hidePopup() {
 		getView().hidePopup();
+	}
+
+	@Override
+	public Button getAddButton() {
+		return getView().getAddBtn();
+	}
+
+	@Override
+	public Map<Long, String> getSelectedValues() {
+		return getView().getSelectedValues();
+	}
+
+	@Override
+	public Button getCancelBtn() {
+		return getView().getCancelBtn();
+	}
+
+	@Override
+	public Anchor getCloseBtn() {
+		return getView().getCloseBtn();
 	}
 }

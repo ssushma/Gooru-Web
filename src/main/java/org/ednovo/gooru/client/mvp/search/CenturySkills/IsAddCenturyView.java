@@ -24,9 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.gwtplatform.mvp.client.PopupView;
 
 /**
@@ -42,4 +46,24 @@ public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCentu
 	 * @param centurySkilsDo
 	 */
 	void SetData(CenturySkilsDo centurySkilsDo);
+	/**
+	 * This method will return the add button of 21 century skills
+	 * @return
+	 */
+	Button getAddBtn();
+	/**
+	 * This will return the selected values
+	 * @return
+	 */
+	Map<Long,String> getSelectedValues();
+	/**
+	 * This method will return the cancel button
+	 * @return
+	 */
+	Button getCancelBtn();
+	/**
+	 * This method will return the close button
+	 * @return
+	 */
+	Anchor getCloseBtn();
 }

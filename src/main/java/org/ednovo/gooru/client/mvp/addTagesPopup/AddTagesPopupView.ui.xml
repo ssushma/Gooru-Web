@@ -26,9 +26,10 @@
 			 <g:FlowPanel ui:field="centuaryContainer">
 					<g:Label styleName="{res1.css.addQuestionStandard}"	ui:field="centuaryDefaultText"></g:Label>
 					<g:FlowPanel styleName="{res1.css.standardsCont}">
-						<gg:AppCenturyTagSuggestBox ui:field="centuarySgstBox" styleName="form-control {res1.css.form_control}" />
+						<g:Button ui:field="centbrowseBtn" styleName="secondary">Browse</g:Button>
+							<gg:AppCenturyTagSuggestBox ui:field="centuarySgstBox" styleName="form-control {res1.css.form_control}" />
 							<g:Label styleName="{res.css.standardMaxHide}" ui:field="centuaryMaxMsg" />
-							<g:FlowPanel ui:field="centuaryPanel"	styleName="{res.css.collectionStandardsMargin}" />
+							<g:FlowPanel ui:field="centuaryPanel" styleName="{res.css.collectionStandardsMargin}" />
 					</g:FlowPanel>
 			 </g:FlowPanel>
        		 <!-- 21Centuary End -->

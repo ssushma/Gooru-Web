@@ -98,11 +98,9 @@
 						<g:FlowPanel styleName="{res.css.shelfNameCourse}">
 							<g:FlowPanel styleName="{res.css.standardsCont}">
 							<g:Button ui:field="centbrowseBtn" styleName="secondary">Browse</g:Button>
-							<uc:AppCenturyTagSuggestBox ui:field="centurySgstBox"
-									width="221px" height="31px" />
+									<uc:AppCenturyTagSuggestBox ui:field="centurySgstBox"	width="221px" height="31px" />
 									<g:Label styleName="{res.css.standardMaxHide}" ui:field="centMaxMsg" />
-								<g:FlowPanel ui:field="centPanel"
-									styleName="{res.css.collectionStandardsMargin}" />
+									<g:FlowPanel ui:field="centPanel" styleName="{res.css.collectionStandardsMargin}" />
 							</g:FlowPanel>
 						</g:FlowPanel>
 					</g:FlowPanel>

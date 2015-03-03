@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -323,13 +324,11 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 			
 			@Override
 			public void onSuccess(SearchDo<CodeDo> result) {
-				// TODO Auto-generated method stub
 				getView().setStandardSuggestions(result);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -447,44 +446,33 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 
 	@Override
 	public void getAutoSuggestedCenturyList(SearchDo<CodeDo> standardSearchDo) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setUpdatedCentury() {
-		// TODO Auto-generated method stub
-		getView().setUpdatedCentury(addStandardsPresenter.setStandardsVal(), addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc());
-		
+		getView().setUpdatedCentury(addCenturyPresenter.getSelectedValues());
 	}
 
 	@Override
 	public void getAddCentury() {
 		//addCenturyPresenter.enableStandardsData();
 		addToPopupSlot(addCenturyPresenter);
-		//getView().OnCenturyClickEvent(addCenturyPresenter.getAddBtn());
-		// TODO Auto-generated method stub
-		
+		getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
 	}
 
 	@Override
 	public void closeCenturyPopup() {
-		// TODO Auto-generated method stub
 		addCenturyPresenter.hidePopup();
-		
 	}
 
 	@Override
-	public void updateCentury(String gooruOid, String string, String string2) {
-		// TODO Auto-generated method stub
-	/*	AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, taxonomyCodeId, "false", null,action, new SimpleAsyncCallback<CollectionDo>() {
-
+	public void updateCentury(String gooruOid, String action,Map<Long, String> selectedValues) {
+		AppClientFactory.getInjector().getResourceService().update21CenturySkills(gooruOid, action, selectedValues,new SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
 				getView().onPostStandardUpdate(result);
 			}
-		});*/
-		
+		});
 	}
-
 }

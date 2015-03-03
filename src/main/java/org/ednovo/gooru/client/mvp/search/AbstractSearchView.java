@@ -138,7 +138,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	String rootWebUrl = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 	
 	private HandlerRegistration handlerRegistration=null;
-	
+	private HandlerRegistration handlerForCentury=null;
 	public interface Style extends CssResource {
 
 		String resourceBtnActive();
@@ -208,16 +208,28 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				
 			}
 		});
+		//This is for handling click on browse 21 century
+		getCentruyBrowseBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+			}
+		});
 		
 		searchFilterVc1.browseStandards.addClickHandler(new ClickHandler() {
-	
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().getAddStandards();
 	
 			}
 		});
-
+		//This is for handling click on browse 21 century
+		searchFilterVc1.browse21Century.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+			}
+		});
 	}
 
 	@Override
@@ -518,9 +530,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		searchFilterVc1.clearAllFields();
 	}
 	
-	public Button getBrowseBtn()
-	{
+	public Button getBrowseBtn(){
 		return searchFilterVc.browseStandards;
+	}
+	public Button getCentruyBrowseBtn(){
+		return searchFilterVc.browse21Century;
 	}
 	
 	public void OnStandardsClickEvent(Button standardsButtonClicked)
@@ -533,8 +547,18 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().setUpdatedStandards();
-		
-				
+			}
+		});
+	}
+	public void OnCenturyClickEvent(Button centuryButtonClicked)
+	{
+		if(handlerForCentury!=null){
+			handlerForCentury.removeHandler();
+		}
+		handlerForCentury=centuryButtonClicked.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedCentury();
 			}
 		});
 	}
@@ -543,12 +567,21 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	{
 		if(!standardsCode.isEmpty())
 		{
-		searchFilterVc.addStandardFilter(standardsCode);
-		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+			searchFilterVc.addStandardFilter(standardsCode);
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 		}
 		getUiHandlers().closeStandardsPopup();
 	}
-	
+
+	public void setUpdatedCentury(Map<Long, String> centuryValues)
+	{
+		if(centuryValues.size()>0)
+		{
+			searchFilterVc.addCenturyFilter(centuryValues);
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+		}
+		getUiHandlers().closeCenturyPoup();
+	}
 	@Override
 	public String getSearchText() {
 //		return searchBarVc.getSearchText();

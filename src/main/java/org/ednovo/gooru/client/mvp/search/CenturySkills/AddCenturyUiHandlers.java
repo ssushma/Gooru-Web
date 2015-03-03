@@ -24,7 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 
 /**
  * @author Search Team
@@ -37,4 +42,25 @@ public interface AddCenturyUiHandlers extends BaseUiHandlers {
 	 * This method is used to load 21 century skils data.
 	 */
 	void loadStateStandards();
+	/**
+	 * This will return the add button
+	 * @return
+	 */
+	Button getAddButton();
+	/**
+	 * This will return the selected vlaues
+	 * @return
+	 */
+	Map<Long, String> getSelectedValues();
+	
+	/**
+	 * This method will return the cancel button
+	 * @return
+	 */
+	Button getCancelBtn();
+	/**
+	 * This method will return the close button
+	 * @return
+	 */
+	Anchor getCloseBtn();
 }

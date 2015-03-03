@@ -30,6 +30,7 @@ public class StandardFo implements Serializable {
 	private static final long serialVersionUID = 161874649372844127L;
 	private Integer codeId;
 	private String code;
+	private String label;
 	private String description;
 	public StandardFo(){}
 
@@ -56,5 +57,11 @@ public class StandardFo implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }
