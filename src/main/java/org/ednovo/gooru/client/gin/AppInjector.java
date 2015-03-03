@@ -279,5 +279,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
 	
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
+	
+	AddCenturyPresenter getAddCenturyPresenterWidget();
 
 }

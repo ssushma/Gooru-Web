@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 
 /**
@@ -51,4 +52,15 @@ public interface AddCenturyUiHandlers extends BaseUiHandlers {
 	 * @return
 	 */
 	Map<Long, String> getSelectedValues();
+	
+	/**
+	 * This method will return the cancel button
+	 * @return
+	 */
+	Button getCancelBtn();
+	/**
+	 * This method will return the close button
+	 * @return
+	 */
+	Anchor getCloseBtn();
 }

@@ -35,12 +35,14 @@ import java.util.Set;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.uc.AppCenturyTagSuggestBox;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.PPanel;
@@ -49,10 +51,12 @@ import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.json.JSONObject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -78,6 +82,8 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * 
@@ -115,7 +121,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	
 	@UiField Anchor  handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
 	
-	@UiField Button cancelBtn,addTagsBtn,mobileYes,mobileNo;
+	@UiField Button cancelBtn,addTagsBtn,mobileYes,mobileNo,centbrowseBtn;
 
 	@UiField UlPanel htmlMediaFeatureListContainer;
 	
@@ -143,6 +149,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	
 	@UiField(provided = true)	
 	AppCenturyTagSuggestBox centuarySgstBox;
+
+	PopupPanel centuryPopup=new PopupPanel();
+	
+	Map<Long, String> centurySelectedValues;
 	
 	@UiField FlowPanel standardContainer,standardsPanel,centuaryContainer,centuaryPanel;
 	private AppMultiWordSuggestOracle standardSuggestOracle;
@@ -163,8 +173,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	String mediaFeatureStr = i18n.GL1767();
 	String resourceId=null;
 	Boolean isIpad,isAndriod,isWinDskp;
-
-	public AddTagesPopupView(String resourceId) {
+	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	public AddTagesPopupView(final String resourceId) {
 		super(false);
 		initializeAutoSuggestedBox();
 		this.res = AddTagesCBundle.INSTANCE;
@@ -511,7 +521,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		});
 		
 		ClickHandler tagHandler= new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				if(!isClickedOnDropDwn){
@@ -519,11 +528,70 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				}else{
 					isClickedOnDropDwn=false;
 				}
-				
 			}
 		};
+		
+		//This will display the 21 century popup
+		centbrowseBtn.addClickHandler(new ClickHandler() {
+					@Override
+			public void onClick(ClickEvent event) {
+				centuryPopup.clear();
+				centuryPopup.add(centuryPresenterWidget.getWidget());
+				centuryPopup.show();
+				centuryPopup.center();
+			}
+		});
+		//This will hide the popup when clicked on the cancel button
+		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+						hideCenturyPopup();
+			}
+		});
+		//This will hide the popup when clicked on close button
+		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+						hideCenturyPopup();
+			}
+		});
+		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
+				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+						centuaryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+					}
+				}
+			}
+		});
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
 		ScrollPopupUtil.ScrollPopupUtilWidget(addTagesContent,true);
+	}
+	/**
+	 * new label is created for the 21 century which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				this.getParent().removeFromParent();
+				AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(resourceId, Integer.valueOf(centuryCode), new SimpleAsyncCallback<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+					}
+				});
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	public void hideCenturyPopup(){
+		centuryPopup.hide();
 	}
 	/**
 	 * 
@@ -533,15 +601,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 * 
 	 * @description
 	 * 
-	 * 
 	 * @parm(s) : 
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
 	 *
 	 */
 	public void initializeAutoSuggestedBox(){

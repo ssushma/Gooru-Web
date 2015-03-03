@@ -299,6 +299,27 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		
+		<g:HTMLPanel styleName="{res.css.filterStandardContainer}" ui:field="pnl21Century">
+		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblCentury" visible="true"></g:Label>
+		    <uc:H5Panel styleName="{style.headerLbl}" ui:field="centuryLbl"/>
+			<g:HTMLPanel  ui:field="centuryPanelUc">
+			    <g:Button ui:field="browse21Century" styleName="{res.css.btn} btn btn-default">Browse</g:Button>
+				<uc:AppSuggestBox ui:field="centurySgstBox" styleName="form-control {res.css.form_control}" />
+				<g:HTMLPanel>
+				 	<g:Label styleName="{style.helpIconBtn}" ui:field="centuryHelpicon" visible="false"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+				 	<panel:HTMLEventPanel ui:field="centuryToolTip" visible="false" styleName="{style.sourceToolTip}"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:Label styleName="{style.notFound}" ui:field="centuryNotFoundLbl" />
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:FlowPanel styleName="{style.flowPanelContainer}" ui:field="centuryContainerFloPanel" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		
 		<g:HTMLPanel styleName="ratingContainer">
 		    <g:Label styleName="{style.arrowLableTransform}" ui:field="arrowLblratings" visible="true"></g:Label>
 			<uc:H5Panel styleName="{style.headerLbl}" visible="false" ui:field="ratingsLbl"></uc:H5Panel>

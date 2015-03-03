@@ -29,6 +29,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.gwtplatform.mvp.client.PopupView;
 
@@ -55,4 +56,14 @@ public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCentu
 	 * @return
 	 */
 	Map<Long,String> getSelectedValues();
+	/**
+	 * This method will return the cancel button
+	 * @return
+	 */
+	Button getCancelBtn();
+	/**
+	 * This method will return the close button
+	 * @return
+	 */
+	Anchor getCloseBtn();
 }

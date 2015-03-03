@@ -46,6 +46,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -90,7 +91,9 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				resetPopupHilightedData();
 				appPopUp.hide();
+				selectedValues.clear();
 			}
 		});
 	
@@ -245,7 +248,14 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	public Button getAddBtn() {
 		return addCenturyBtn;
 	}
-
+	@Override
+	public Button getCancelBtn() {
+		return cancelBtn;
+	}
+	@Override
+	public Anchor getCloseBtn(){
+		return appPopUp.getCloseBtn();
+	}
 	@Override
 	public Map<Long, String> getSelectedValues() {
 			return selectedValues;
