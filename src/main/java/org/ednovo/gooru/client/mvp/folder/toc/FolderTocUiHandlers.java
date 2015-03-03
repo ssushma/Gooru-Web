@@ -67,4 +67,14 @@ public interface FolderTocUiHandlers extends BaseUiHandlers{
 	 * @param folderId {@link String}
 	 */
 	void getTocFolders(String folderId);
+	/**
+	 * This method used to update the folder toc page.
+	 * @param folderId {@link String}
+	 */
+	void getfolderTocList(String folderId);
+	/**
+	 * This method used to get the Banner images of folder
+	 * @param parentId {@link String}
+	 */
+	void getFolderMetaData(String parentId);
 }

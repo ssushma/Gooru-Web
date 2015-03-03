@@ -94,8 +94,23 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		getView().getTreePanel();
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		getfolderTocList(folderId);
+	}
+
+	@Override
+	protected void onReset() {
+		super.onReset();
+	}
+	
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
+	
+	@Override
+	public void getfolderTocList(String folderId) {
+		getView().getTreePanel();
 		getMapParams();
 		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
 		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
@@ -105,17 +120,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			getTocFolders(folderId);
 			setFolderBanner();
 		}
-		getShortenUrl(folderId, params);
-	}
-
-	@Override
-	protected void onReset() {
-		super.onReset();
-	}
-
-	@Override
-	public void onBind() {
-		super.onBind();
+		
 	}
 	
 	@Override
@@ -129,7 +134,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				getView().setBackButtonText(params);
 			}
 		});
-		
+		getShortenUrl(folderId, params);
 	}
 
 
@@ -194,7 +199,8 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	 * This API used for to get the Parent folder Metadata of library.
 	 * @param parentId
 	 */
-	private void getFolderMetaData(String parentId) {
+	@Override
+	public void getFolderMetaData(String parentId) {
 		AppClientFactory.getInjector().getfolderService().getFolderMetaData(parentId, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
