@@ -267,7 +267,7 @@ public class ServiceProcessor {
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():"");
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? decodedRep.getText():""));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((decodedRep!=null) ? decodedRep.getText():""));
                return jsonResponseRepresentation;
            }
        }.execute();    
@@ -343,7 +343,7 @@ public class ServiceProcessor {
                Representation decodedRep = new DecodeRepresentation(getClientResource().put(formData));
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? decodedRep.getText():""));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((decodedRep!=null) ? decodedRep.getText():""));
                return jsonResponseRepresentation;
            }
        }.execute();
