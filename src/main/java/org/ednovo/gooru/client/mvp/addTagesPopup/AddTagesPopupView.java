@@ -159,10 +159,12 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	String courseCode="";
 	boolean isEditResource=true;
 	ArrayList<String> standardsDo=new ArrayList<String>();
+	ArrayList<String> centuryDo=new ArrayList<String>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	private static final String FLT_SOURCE_CODE_ID = "flt.sourceCodeId";
+	String CENTURYSKILLS="CenturySkills";
 
 	boolean isCancelclicked=false;
 	private boolean isClickedOnDropDwn=false;
@@ -557,9 +559,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
 				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
 					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+						centuryDo.add(entry.getValue());
 						centuaryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 					}
 				}
+				hideCenturyPopup();
 			}
 		});
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
@@ -576,12 +580,12 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				this.getParent().removeFromParent();
-				AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(resourceId, Integer.valueOf(centuryCode), new SimpleAsyncCallback<Void>() {
-					@Override
-					public void onSuccess(Void result) {
+				for(int i=0;i<centuryDo.size();i++){
+					if(centuryDo.get(i).toString().equalsIgnoreCase(centuryCode)){
+						centuryDo.remove(centuryDo.get(i).toString());
 					}
-				});
+				}
+				this.getParent().removeFromParent();
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
@@ -808,6 +812,22 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		} else {
 			standardMaxShow();
 			standardSgstBox.setText("");
+		}
+	}
+	/**
+	 * This method is used to add century skils while loading
+	 * @param centuryVal
+	 * @param id
+	 */
+	public void addCentury(String centuryVal, String id) {
+		if (centuaryPanel.getWidgetCount() <5) {
+			if (!StringUtil.isEmpty(centuryVal)) {
+				centuryDo.add(centuryVal);
+				centuaryPanel.add(create21CenturyLabel(centuryVal, id, ""));
+			}
+		} else {
+			//standardMaxShow();
+			centuarySgstBox.setText("");
 		}
 	}
 	public void standardMaxShow() {
@@ -1424,7 +1444,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				tagList.add("\"" + hazardArr[i].toString() +"\"");
 			}
 		}
-		
+		for(final String codeObj:centuryDo){
+			tagList.add("\"" +CENTURYSKILLS+" : "+codeObj+"\"");
+		}
 		for(final String codeObj:standardsDo){
 			tagList.add("\"" +standardsDefaultText.getText()+" : "+codeObj+"\"");
 		}
@@ -1559,6 +1581,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	{
 		tagListGlobal.clear();
 		standardsDo.clear();
+		centuryDo.clear();
+		centuaryPanel.clear();
 		for(int objVal=0;objVal<resultResourceTags.size();objVal++)
 		{
 			tagListGlobal.add("\""+resultResourceTags.get(objVal).getLabel()+"\"");
@@ -1581,6 +1605,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			if(resultResourceTags.get(objVal).getLabel().contains(standardsDefaultText.getText()))
 			{
 				setStandardObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(CENTURYSKILLS))
+			{
+				setCenturyObjectVal(resultResourceTags.get(objVal).getLabel());
 			}
 			if(resultResourceTags.get(objVal).getLabel().contains(mediaLabel.getText()))
 			{
@@ -1653,22 +1681,34 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	/**
 	 * 
-	 * @function setStandardObjectVal 
+	 * @function setCenturyObjectVal 
 	 * 
 	 * @created_date : 06-Dec-2014
 	 * 
 	 * @description
-	 * 
 	 * 
 	 * @parm(s) : @param standardStr
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
+	 */
+	public void setCenturyObjectVal(String standardStr){
+		String[] standardArray=standardStr.split(":");
+		addCentury(standardArray[1], "0");
+	}
+	/**
+	 * @function setStandardObjectVal 
 	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param standardStr
+	 * 
+	 * @return : void
 	 *
-	 *
+	 * @throws : <Mentioned if any exceptions>
 	 */
 	public void setStandardObjectVal(String standardStr)
 	{
@@ -1684,16 +1724,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 * 
 	 * @description
 	 * 
-	 * 
 	 * @parm(s) : @param accessHazardStr
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public void setAccessHazardObjectVal(String accessHazardStr)
 	{
@@ -1714,23 +1749,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 	}
 	/**
-	 * 
 	 * @function setAdsObjectVal 
 	 * 
 	 * @created_date : 06-Dec-2014
 	 * 
 	 * @description
 	 * 
-	 * 
 	 * @parm(s) : @param adsStr
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public void setAdsObjectVal(String adsStr)
 	{
@@ -1748,23 +1777,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 	}
 	/**
-	 * 
 	 * @function setLexileObjectVal 
 	 * 
 	 * @created_date : 06-Dec-2014
 	 * 
 	 * @description
 	 * 
-	 * 
 	 * @parm(s) : @param lexileStr
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public void setLexileObjectVal(String lexileStr)
 	{
@@ -1828,7 +1851,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 	}
 	/**
-	 * 
 	 * @function setEducationalObjectVal 
 	 * 
 	 * @created_date : 06-Dec-2014
@@ -1841,10 +1863,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public void setEducationalObjectVal(String educationalStr)
 	{
@@ -1910,7 +1928,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 	}
 	/**
-	 * 
 	 * @function setAdsString 
 	 * 
 	 * @created_date : 06-Dec-2014
@@ -1923,10 +1940,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public String setAdsString()
 	{
@@ -1948,7 +1961,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		return adsStr;
 	}
 	/**
-	 * 
 	 * @function setAccessHazards 
 	 * 
 	 * @created_date : 06-Dec-2014
@@ -1961,10 +1973,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 * @return : String[]
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public String[] setAccessHazards()
 	{
@@ -1991,23 +1999,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		return accessHazardsArr;
 	}
 	/**
-	 * 
 	 * @function setEducationalUseString 
 	 * 
 	 * @created_date : 06-Dec-2014
 	 * 
 	 * @description
 	 * 
-	 * 
 	 * @parm(s) : @return
 	 * 
 	 * @return : String[]
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public String[] setEducationalUseString()
 	{
@@ -2093,23 +2095,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		return educationalUseArr;
 	}
 	/**
-	 * 
 	 * @function setLexileLevel 
 	 * 
 	 * @created_date : 06-Dec-2014
 	 * 
 	 * @description
 	 * 
-	 * 
 	 * @parm(s) : @return
 	 * 
 	 * @return : String[]
 	 *
 	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public String[] setLexileLevel()
 	{
@@ -2199,8 +2195,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 	}
-	
-	
 	
 	@Override
 	public Widget asWidget() {
