@@ -707,6 +707,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().getTocFolders(key);
+				String libName=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
+				String parentId=AppClientFactory.getPlaceManager().getRequestParameter(PARENT_ID,null);
+				if(libName!=null && parentId!=null){
+					getUiHandlers().getFolderMetaData(key);
+				}
 			}
 		});
 		breadCrumbsPanel.add(routeLbl);
