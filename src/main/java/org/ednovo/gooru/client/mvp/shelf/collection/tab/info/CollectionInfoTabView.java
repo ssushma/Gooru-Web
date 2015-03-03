@@ -1637,14 +1637,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		return new DownToolTipWidgetUc(closeLabel, description);
 	}
 	/**
-	 * new label is created for the standard which needs to be added
+	 * new label is created for the 21 century which needs to be added
 	 * 
 	 * @param standardCode
 	 *            update standard code
 	 * @return instance of {@link DownToolTipWidgetUc}
 	 */
-	public DownToolTipWidgetUc create21CenturyLabel(final String standardCode, final String id, String description) {
-		CloseLabelCentury closeLabel = new CloseLabelCentury(standardCode) {
+	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
