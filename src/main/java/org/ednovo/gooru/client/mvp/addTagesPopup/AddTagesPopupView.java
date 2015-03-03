@@ -537,6 +537,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				centuryPopup.add(centuryPresenterWidget.getWidget());
 				centuryPopup.show();
 				centuryPopup.center();
+				centuryPopup.getElement().getStyle().setZIndex(999999);
 			}
 		});
 		//This will hide the popup when clicked on the cancel button
