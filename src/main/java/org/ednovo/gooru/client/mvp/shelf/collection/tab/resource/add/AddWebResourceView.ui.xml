@@ -10,6 +10,7 @@
 		<ui:with
 		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
 		field="res2" />
+		<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
   <g:ScrollPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="scrollPanel">
 	<g:HTMLPanel styleName="{res.css.urlTopPadding}" ui:field="contentPanel">
 	   
@@ -469,7 +470,7 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox" width="255px" height="19px" styleName="contentBoxStyles"/>
 									<g:HTMLPanel styleName="{res1.css.browseContainer}">
-										<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
+										<g:Button ui:field="browseStandards" styleName="secondary" text="{i18n.GL0902}" title="{i18n.GL0902}"></g:Button>
 									</g:HTMLPanel>
 								 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
@@ -480,7 +481,7 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="centurySgstBox" width="255px" height="19px" styleName="contentBoxStyles"/>
 									<g:HTMLPanel styleName="{res1.css.browseContainer}">
-										<g:Button ui:field="browseCentury" styleName="secondary">Browse</g:Button>
+										<g:Button ui:field="browseCentury" styleName="secondary" text="{i18n.GL0902}" title="{i18n.GL0902}"></g:Button>
 									</g:HTMLPanel>
 								 <g:HTMLPanel ui:field="errorContainerForCentury"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="centuryMaxMsg" />
