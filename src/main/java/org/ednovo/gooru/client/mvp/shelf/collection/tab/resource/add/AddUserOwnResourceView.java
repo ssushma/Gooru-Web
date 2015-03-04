@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
@@ -46,6 +47,7 @@ import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
@@ -103,6 +105,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -172,7 +175,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiField
 	FileUpload chooseResourceBtn;
 	
-	@UiField FlowPanel standardsPanel,standardContainer;
+	@UiField FlowPanel standardsPanel,standardContainer,centuryPanel;
 	
 	@UiField
 	CheckBox rightsChkBox;
@@ -183,9 +186,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,mediaLabelContainer,educatioNalUseDropContainer,momentsOfLearningDropDownContianer;
 	
 	@UiField(provided = true)
-	AppSuggestBox standardSgstBox;
+	AppSuggestBox standardSgstBox,centurySgstBox;
 	 
-	@UiField Button browseStandards,mobileYes,mobileNo;
+	@UiField Button browseStandards,mobileYes,mobileNo,browseCentury;
 	
 	@UiField
 	public Label educationalDropDownLbl,mandatoryEducationalLbl,lblMediaFeatureArrow,lblMediaPlaceHolder;
@@ -195,7 +198,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiField InlineLabel advancedText;
 	
 	public AddSetupAdvancedView addSetupAdvancedView;
-	
+	private AppMultiWordSuggestOracle centurySuggestOracle;
 	
 	/** 
 	 * This method is to get the lblAdding
@@ -262,6 +265,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	
+	PopupPanel centuryPopup=new PopupPanel();
+	
+	Map<Long, String> centurySelectedValues;
+	
+	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	
 	/**
 	 *  Class constructor
 	 *  
@@ -271,6 +280,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	public AddUserOwnResourceView(CollectionDo collectionDo){ 
 		
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
@@ -345,7 +355,19 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		};
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(this);
-		
+		centurySgstBox=new AppSuggestBox(centurySuggestOracle) {
+			
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+			
+			@Override
+			public void keyAction(String text, KeyUpEvent event) {
+			}
+		};
+		centurySgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
+		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		mandatoryCategoryLbl.setVisible(false);
@@ -540,10 +562,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		mobileNo.getElement().setId("btnNo");
 		mobileNo.getElement().setAttribute("alt",i18n.GL1735());
 		mobileNo.getElement().setAttribute("title",i18n.GL1735());
-		
-		
-		
-		
 		
 		
 		fileSizeLimit.getElement().setInnerHTML(" "+i18n.GL0901());
@@ -878,8 +896,64 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		eHearderIconMobileFriendly.addClickHandler(new MinimizePanelsClickHandler());
 		
 		/** Add Advanced Setup Changes End**/
+		//This will hide the popup when clicked on the cancel button
+		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hideCenturyPopup();
+			}
+		});
+						//This will hide the popup when clicked on close button
+		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+					hideCenturyPopup();
+			}
+		});
+		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
+				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+				 for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+						CodeDo codeObj=new CodeDo();
+						codeObj.setCodeId(Integer.parseInt(entry.getKey()+""));
+						codeObj.setCode(entry.getValue());
+						standardsDo.add(codeObj);
+						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+					}
+				}
+		    	hideCenturyPopup();
+			}
+		});
 	}
-	
+	/**
+	 * new label is created for the 21 century which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				for(int i=0;i<standardsDo.size();i++){
+					if(centuryCode.equalsIgnoreCase(standardsDo.get(i).getCode())){
+						standardsDo.remove(i);
+					}
+				}
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	/**
+	 * This method will hide the century popup
+	 */
+	public void hideCenturyPopup(){
+		centuryPopup.hide();
+	}
 	private class MinimizePanelsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -2234,5 +2308,17 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		panelCategoryInputDiv.getElement().getStyle().clearBorderColor();
 		panelCategoryInputDiv.getElement().getStyle().clearBorderStyle();
 		panelCategoryInputDiv.getElement().getStyle().clearBorderWidth();
+	}
+	/**
+	 * This will handle the click event on the browser century
+	 * @param e
+	 */
+	@UiHandler("browseCentury")
+	public void onClickOfBrowseCentury(ClickEvent e){
+		centuryPopup.clear();
+		centuryPopup.add(centuryPresenterWidget.getWidget());
+		centuryPopup.show();
+		centuryPopup.center();
+		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
 }

@@ -180,6 +180,7 @@ button.primary:hover {
 	clear: both;
 	border-bottom: 1px solid #e1dfda;
 	height: 34px;
+	margin-bottom: 10px;
 }
 .tocShareBtn{
 	clear: both;
@@ -193,6 +194,7 @@ button.primary:hover {
 	border: 2px solid #e1dfda !important;
 	padding: 5px 4px;
 	margin-left: -4px;
+	width:140px;
 }
 
 @media ( min-width : 240px) and (max-width: 319px) {

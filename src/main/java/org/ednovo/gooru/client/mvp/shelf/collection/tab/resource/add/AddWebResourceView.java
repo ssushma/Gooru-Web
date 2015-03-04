@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
@@ -47,6 +48,7 @@ import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
@@ -101,6 +103,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -125,7 +128,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public BlueButtonUc addResourceBtnLbl;
 
 	@UiField
-	Label standardMaxMsg, mandatoryUrlLbl, mandatoryTitleLbl,rightsLbl;
+	Label standardMaxMsg,centuryMaxMsg, mandatoryUrlLbl, mandatoryTitleLbl,rightsLbl;
 
 	@UiField
 	Label mandatoryCategoryLbl;
@@ -168,7 +171,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,contentPanel,textsText,audioText,urlContianer;//otherText
 
 	@UiField
-	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer;//other
+	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer,errorContainerForCentury;//other
 
 	@UiField
 	HTMLPanel resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel,educationalContainer;
@@ -191,9 +194,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr,moblieFriendly;
 	
 	@UiField(provided = true)
-	AppSuggestBox standardSgstBox;
+	AppSuggestBox standardSgstBox,centurySgstBox;
 	
-	@UiField FlowPanel standardsPanel,standardContainer;
+	@UiField FlowPanel standardsPanel,standardContainer,centuryPanel;
 	
 	@UiField Button cancelResourcePopupBtnLbl,mobileYes,mobileNo,generateFromUrlBtn,uploadImageLbl;
 	
@@ -205,7 +208,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
-	@UiField Button browseStandards;
+	@UiField Button browseStandards,browseCentury;
 	
 	@UiField InlineLabel advancedText;
 	
@@ -234,6 +237,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	
+	private AppMultiWordSuggestOracle centurySuggestOracle;
+	
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 	
 	private static final String FLT_CODE_ID = "id";
@@ -243,6 +248,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	
 	List<CodeDo> standardsDo=new ArrayList<CodeDo>();
+	
 	
 	String courseCode="";
 	
@@ -281,12 +287,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	boolean processing = false;
 	
-	
-	
 	public AddSetupAdvancedView addSetupAdvancedView;
 	
 	HandlerRegistration videoClickHandler=null,websiteClickHandler=null,interactiveClickHandler=null,imageClickHandler=null,textClickHandler=null,audioClickHandler=null;
 
+	PopupPanel centuryPopup=new PopupPanel();
+	
+	Map<Long, String> centurySelectedValues;
+	
+	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
+	
 	public AddWebResourceView(CollectionDo collectionDo,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) { 
 		this.res2 = AddTagesCBundle.INSTANCE;
 		res2.css().ensureInjected();
@@ -295,6 +305,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		this.isGoogleDriveFile=isGoogleDriveFile;
 		this.googleDriveItemDo=googleDriveItemDo;
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@SuppressWarnings("deprecation")
@@ -372,6 +383,19 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(this);
+		centurySgstBox=new AppSuggestBox(centurySuggestOracle) {
+			
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+			
+			@Override
+			public void keyAction(String text, KeyUpEvent event) {
+			}
+		};
+		centurySgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
+		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		
@@ -933,10 +957,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		});
 		
 		ClickHandler rootHandler= new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				if(!hasClickedOnDropDwn){
 					educationalUsePanel.setVisible(false);
 					educationalDropDownLblOpen = false;
@@ -947,7 +969,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				}else{
 					hasClickedOnDropDwn=false;
 				}
-				
 			}
 		};
 		
@@ -996,9 +1017,65 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		eHearderIconMobileFriendly.addClickHandler(new MinimizePanelsClickHandler());
 	
 		/** Add Advanced Setup Changes End**/
-		
+		//This will hide the popup when clicked on the cancel button
+		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hideCenturyPopup();
+			}
+		});
+				//This will hide the popup when clicked on close button
+		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hideCenturyPopup();
+			}
+		});
+		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
+				centuryPanel.clear();
+				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+						CodeDo codeObj=new CodeDo();
+						codeObj.setCodeId(Integer.parseInt(entry.getKey()+""));
+						codeObj.setCode(entry.getValue());
+						standardsDo.add(codeObj);
+						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+					}
+				}
+				hideCenturyPopup();
+			}
+		});
 	}
-	
+	/**
+	 * new label is created for the 21 century which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				for(int i=0;i<standardsDo.size();i++){
+					if(centuryCode.equalsIgnoreCase(standardsDo.get(i).getCode())){
+						standardsDo.remove(i);
+					}
+				}
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	/**
+	 * This method will hide the century popup
+	 */
+	public void hideCenturyPopup(){
+		centuryPopup.hide();
+	}
 	private void OpenMediaFeatureDropdown() {
 		hasClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
@@ -3284,5 +3361,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		textResourcePanel.removeStyleName("active");
 		videoResourcePanel.removeStyleName("active");
 		imageResourcePanel.removeStyleName("active");
+	}
+	/**
+	 * This will handle the click event on the browser century
+	 * @param e
+	 */
+	@UiHandler("browseCentury")
+	public void onClickOfBrowseCentury(ClickEvent e){
+		centuryPopup.clear();
+		centuryPopup.add(centuryPresenterWidget.getWidget());
+		centuryPopup.show();
+		centuryPopup.center();
+		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
 }
