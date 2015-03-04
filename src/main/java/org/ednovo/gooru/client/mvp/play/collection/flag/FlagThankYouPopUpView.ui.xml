@@ -2,7 +2,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.player.collection.client.ui">
 	<ui:style field="flagPopUpstyle" src="player-flag-popup.css"/>
-<ui:with field='flagBundleCss' type='org.ednovo.gooru.player.collection.client.view.add.tooltip.FlagBundle'/>
 	<g:HTMLPanel>
 		<div class="{flagPopUpstyle.thankyoupopupwrapper}">
 	<div class="{flagPopUpstyle.thankyoupopupinnerwrapper}">
