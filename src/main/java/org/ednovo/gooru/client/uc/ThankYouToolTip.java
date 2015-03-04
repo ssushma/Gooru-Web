@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.uc;
 
 
-import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
+import org.ednovo.gooru.client.mvp.play.collection.flag.FlagBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;

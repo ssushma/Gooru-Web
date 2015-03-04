@@ -8,8 +8,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
-import org.ednovo.gooru.player.collection.client.view.add.AddResourceToCollectionStylesBundle;
-import org.ednovo.gooru.player.collection.client.view.add.tooltip.FlagBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -258,8 +256,8 @@ public class CollectionFlagView extends
 	public void displayView(String collectionTitle,ArrayList<String> resourcesList,ArrayList<String> resourcesListId) {
 		
 		FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().ensureInjected();
-				AddResourceToCollectionStylesBundle.IMAGEBUNDLEINSTANCE
-				.addResourceToCollectionStyles().ensureInjected();
+//				AddResourceToCollectionStylesBundle.IMAGEBUNDLEINSTANCE
+//				.addResourceToCollectionStyles().ensureInjected();
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE
 				.closeFlagPopUpImages());
 		if(collectionTitle!=null){
@@ -568,7 +566,7 @@ public class CollectionFlagView extends
 		appPopUp.hide();
 		clearAll();
 		flagThankYouPopUpView=new FlagThankYouPopUpView();
-		flagThankYouPopUpView.getCloseButton().addClickHandler(new CloseFlagPopupEvent());
+//		flagThankYouPopUpView.getCloseButton().addClickHandler(new CloseFlagPopupEvent());
 		flagThankYouPopUpView.getOkButton().addClickHandler(new CloseFlagPopupEvent());
 		flagThankYouPopUpView.show();
 		flagThankYouPopUpView.center();
