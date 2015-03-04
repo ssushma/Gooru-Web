@@ -13,8 +13,6 @@
 	<inherits name='com.google.gwt.widgetideas.WidgetIdeas' />
 	<inherits name='com.google.gwt.libideas.LibIdeas' />
 	<inherits name="com.google.gwt.http.HTTP" />
-	<inherits name='org.ednovo.gooru.player.resource.ResourcePlayer' />
-	<inherits name='org.ednovo.gooru.player.collection.Collection' />
 	<inherits name='com.google.code.gwt.crop.GWTCropper' />
 	<inherits name='com.nitrous.gwt.earth.GwtEarthAPI' />
 	<inherits name='br.com.freller.tool.PrintIt' />

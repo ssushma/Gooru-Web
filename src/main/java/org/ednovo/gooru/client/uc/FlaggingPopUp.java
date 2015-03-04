@@ -28,9 +28,9 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
-import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.client.mvp.play.collection.flag.FlagBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;

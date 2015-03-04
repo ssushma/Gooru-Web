@@ -28,7 +28,6 @@
 package org.ednovo.gooru.server.deserializer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,7 +54,6 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.user.CreatorDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +61,6 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gwt.dev.jjs.ast.js.JsonObject;
 
 /**
  * @author Search Team

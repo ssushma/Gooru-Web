@@ -35,8 +35,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.client.service.ResourceService;
-import org.ednovo.gooru.player.resource.server.CreateContentReportController;
-import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.server.form.ResourceFormFactory;
@@ -55,6 +53,7 @@ import org.ednovo.gooru.shared.model.content.CollectionProfileItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.shared.model.content.GetFlagContentDO;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.NewResourceDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
@@ -81,7 +80,6 @@ import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -1064,23 +1062,25 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public void createContentReport(String assocGooruOid, String targetValue, String typesvalue1,
 			String typesvalue2, String typesvalue3, String typesvalue4,
 			String otherDescription) {
-		new CreateContentReportController().createCollectionContentreport(getRestEndPoint(), getLoggedInSessionToken(), assocGooruOid, targetValue,typesvalue1,typesvalue2,typesvalue3, typesvalue4,otherDescription);
+//		new CreateContentReportController().createCollectionContentreport(getRestEndPoint(), getLoggedInSessionToken(), assocGooruOid, targetValue,typesvalue1,typesvalue2,typesvalue3, typesvalue4,otherDescription);
 	}
 
 	@Override
 	public String updateReport(String gooruOid, String freeText) {
-		new CreateContentReportController().updateReport(getRestEndPoint(), getLoggedInSessionToken(), gooruOid, freeText);
+//		new CreateContentReportController().updateReport(getRestEndPoint(), getLoggedInSessionToken(), gooruOid, freeText);
 		return freeText;
 	}
 
 	@Override
 	public GetFlagContentDO getContentReport(String assocGooruOid) {
-		return new CreateContentReportController().getContentReport(getRestEndPoint(),getLoggedInSessionToken(),assocGooruOid);
+		return null;
+//		return new CreateContentReportController().getContentReport(getRestEndPoint(),getLoggedInSessionToken(),assocGooruOid);
 	}
 
 	@Override
 	public String deleteContentReport(String gooruOid) {
-		return new CreateContentReportController().deleteContentReport(getRestEndPoint(),getLoggedInSessionToken(),gooruOid);
+		return null;
+//		return new CreateContentReportController().deleteContentReport(getRestEndPoint(),getLoggedInSessionToken(),gooruOid);
 	}
 
 	
