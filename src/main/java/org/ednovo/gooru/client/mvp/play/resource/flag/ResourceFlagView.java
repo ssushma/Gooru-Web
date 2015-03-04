@@ -261,7 +261,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		resourceGooruId=collectionItemDo.getResource().getGooruOid();
 		}
 		collectionItemId=collectionItemDo.getCollectionItemId();
-		if(StringUtil.isEmpty(resourceTitle)){
+		if(!StringUtil.isEmpty(resourceTitle)){
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
 		titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");

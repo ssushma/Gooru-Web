@@ -1,4 +1,4 @@
-@external .alignLeft,.printWidget,.collectionBreakDown_infobox_titles_print,.maincontainer_collectionOverView_print,.collectionBreakDown_infobox_titles_print1,.collectionBreakDown_infobox_print,.collectionBreakDown_infobox_print,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand  ; 
+@external .alignLeft,.printWidget,.collectionBreakDown_infobox_titles_print,.maincontainer_collectionOverView_print,.collectionBreakDown_infobox_titles_print1,.collectionBreakDown_infobox_print,.collectionBreakDown_infobox_print,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1; 
 .reportsTableContainer {
 	padding-top: 15px;
 }
@@ -48,20 +48,6 @@
 .reaction_needhelp1 {
 	background: url(/images/analyticsReactions.png) no-repeat scroll -285px
 		0px transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_redneedhelp {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -81px
-		-45px transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_reddontunderstand {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -1px
-		-45px transparent;
 	height: 35px;
 	width: 35px
 }
@@ -178,7 +164,6 @@
 	top: 7px;
 	width: 32px;
 }
-
 .category_new_type_webpage {
 	background: url(/images/analytics/categoryAnalytics.png) no-repeat 0
 		-222px;
@@ -192,10 +177,6 @@
 	float: left;
 	height: 25px;
 	background-color: rgb(16, 118, 187);
-}
-
-.resourceBreakDownTimeSpent {
-	width: auto;
 }
 
 .filterDropDown {

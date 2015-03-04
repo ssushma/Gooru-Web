@@ -67,7 +67,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresenter> implements IsCommentWidgetView{
+public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresenter> implements IsCommentWidgetView,ClientConstants{
 
 	@UiField HTMLPanel authorBadge, editButton, messageInfo,tooltipDeletetext;
 	
@@ -296,8 +296,8 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	 */
 	public void setOptionsButtons(){
 		loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
-		if(collectionDo.getSettings()!=null && collectionDo.getSettings().getComment()!=null){
-			if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on")){
+		if(collectionDo.getSettings()!=null){
+			if(TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment())){
 				if(!AppClientFactory.isAnonymous() && (commentOwnerUid.equalsIgnoreCase(loggedInOwnerUid))) {
 					editButton.setVisible(true);
 					deleteButton.setVisible(false);
@@ -312,7 +312,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 						|| AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(SUPER_ADMIN_ROLE))){
 					deleteButton.setVisible(false);
 					editButton.setVisible(true);
-				}else if(!AppClientFactory.isAnonymous() && getPermissionsList!=null && getPermissionsList.toString().contains(ClientConstants.EDIT)){
+				}else if(!AppClientFactory.isAnonymous() && (getPermissionsList!=null && getPermissionsList.toString().contains(ClientConstants.EDIT))){
 					deleteButton.setVisible(false);
 					editButton.setVisible(true);
 				}	

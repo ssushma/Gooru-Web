@@ -21,7 +21,6 @@ public class LiecenceTooltip extends PopupPanel {
 		codeLabel.setText(code);
 		descLabel.setText(desc);
 		setPopupPosition(leftPos, rightPos);
-		
 	}
 
 }
