@@ -821,6 +821,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_INFO, getLoggedInSessionToken(), url);
+		getLogger().info("getResourceMetaInfo::"+urlStr);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceMetaInfo(jsonRep);

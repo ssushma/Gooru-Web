@@ -591,6 +591,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
 	}
+	/**
+	 * This method will hide the century popup
+	 */
 	public void hideCenturyPopup(){
 		centuryPopup.hide();
 	}
