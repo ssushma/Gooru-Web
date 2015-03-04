@@ -118,7 +118,6 @@ public abstract class SharePlayerVc extends PopupPanel{
 	 */
 	public SharePlayerVc(String collectionIdVal) {
 		super(false);
-	
 		res = AssignPopUpCBundle.INSTANCE;
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
@@ -170,7 +169,9 @@ public abstract class SharePlayerVc extends PopupPanel{
 			@Override
 			public void onSuccess(Map<String, String> result) {
 				if(result!=null && result.size()>0)
-					embedBitlyLink=result.get("decodeRawUrl");
+					if(result.containsKey("decodeRawUrl")){
+						embedBitlyLink=result.get("decodeRawUrl");
+					}
 			}
 		});
 		Window.enableScrolling(false);
@@ -443,10 +444,16 @@ public abstract class SharePlayerVc extends PopupPanel{
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params,new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
-				decodeRawUrl = result.get("decodeRawUrl");
-				shareLinkTxtBox.setText(decodeRawUrl);
-				bitlyLink = result.get("shortenUrl");
-				rawUrl = result.get("rawUrl");
+				if(result.containsKey("decodeRawUrl")){
+					decodeRawUrl = result.get("decodeRawUrl");
+					shareLinkTxtBox.setText(decodeRawUrl);
+				}
+				if(result.containsKey("shortenUrl")){
+					bitlyLink = result.get("shortenUrl");
+				}
+				if(result.containsKey("rawUrl")){
+					rawUrl = result.get("rawUrl");
+				}
 				if(collectionDoGlobal!=null){
 					addShareWidgetInPlay(decodeRawUrl, rawUrl,collectionDoGlobal.getTitle(),collectionDoGlobal.getDescription(),collectionDoGlobal.getThumbnails().getUrl(), "",collectionDoGlobal.getSharing());
 				}

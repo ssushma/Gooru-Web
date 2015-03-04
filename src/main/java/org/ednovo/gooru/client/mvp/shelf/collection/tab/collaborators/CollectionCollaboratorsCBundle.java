@@ -62,8 +62,6 @@ public interface CollectionCollaboratorsCBundle extends ClientBundle{
 		String collaboratorPanelTitle();
 		String radioButtonContainer();
 		String panelCollaborators();
-		String radioButton();
-		String radioButtonSelected();
 		String usernameCss();
 		String emailIdCss();
 		String radioButtonImg();

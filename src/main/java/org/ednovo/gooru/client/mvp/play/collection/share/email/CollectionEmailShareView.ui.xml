@@ -18,7 +18,7 @@
 				<gg:TextBoxWithPlaceholder styleName="{cpEmailStyle.cpEmailInputControl}" ui:field="toTxt"/>
 				<g:Label styleName="{cpEmailStyle.emailShareErrorLabel}" ui:field="toValidation"></g:Label>
 				<g:HTMLPanel>
-					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br></br>
+					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br/>
 					<g:Anchor ui:field="ancprivacy" styleName="{cpEmailStyle.privacyAlignStyle}"></g:Anchor>
 					<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
 				</g:HTMLPanel>

@@ -241,6 +241,10 @@ public interface ClientConstants {
 	String POPULAR = "Popular";
 	String SAVEBTN = "save";
 	String NONE = "none";
+	String IMAGE_1 ="image/png";
+	String PDF ="pdf";
+	String FORWARD ="forward";
+	String PREVIEW ="preview";
 	
 
 	
@@ -293,7 +297,11 @@ public interface ClientConstants {
 	String CREATE= "create";
 	String FEATCHINGCOMMENT="featchingcomment";
 	String ORANGE_COLOR="orange";
-	
+	String TEXAS_TEACHER="TexasTeacher";
+	String COMPLETETEXT="Example: Complete this collection. When you're finished, you may continue onto the lab station.";
+	String REACTIONWIDGET="reactionWidget";
+	String STAR_RATING_WIDGET="Star_Rating_Widget";
+
 	
 	/***Player share constants***/
 	String SHORTENURL="shortenUrl";
