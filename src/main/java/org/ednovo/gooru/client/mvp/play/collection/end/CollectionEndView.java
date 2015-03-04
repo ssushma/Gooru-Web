@@ -371,7 +371,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		{
 			if(collectionDo.getMeta().getPermissions() != null)
 			{
-			if (collectionDo.getMeta().getPermissions().toString().contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
+
+			if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
 				switchContainer.setVisible(true);
 				if(collectionDo.getSettings() != null)
 				{

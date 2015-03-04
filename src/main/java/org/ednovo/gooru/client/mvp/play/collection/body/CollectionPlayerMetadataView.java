@@ -243,8 +243,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			{
 				if(collectionDo.getMeta().getPermissions() != null)
 				{
-					if (collectionDo.getMeta().getPermissions().toString().contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
-						switchContainer.setVisible(true);
+
+				if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
+					switchContainer.setVisible(true);
 						if(collectionDo.getSettings() != null)
 							{
 								if(collectionDo.getSettings().getComment() != null)

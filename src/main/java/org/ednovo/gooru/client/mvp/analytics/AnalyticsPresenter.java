@@ -195,7 +195,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	 */
 	@Override
 	public void exportOEPathway(String classpageId, String pathwayId,String timeZone) {
-		if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(pathwayId) && !StringUtil.isEmpty(timeZone)){
+		if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(timeZone)){
 			this.analyticService.exportPathwayOE(classpageId, pathwayId,timeZone,new AsyncCallback<String>() {
 				
 				@Override
