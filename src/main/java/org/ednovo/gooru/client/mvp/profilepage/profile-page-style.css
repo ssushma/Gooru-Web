@@ -836,10 +836,6 @@ li.resources {
 	padding: 5px 0px 5px 30px;
 }
 
-.collection-info-list .grade {
-	background: url("images/profilepage/grade-icon.png") no-repeat;
-}
-
 .collection-info-list .likes {
 	background: url("images/profilepage/likes-icon.png") no-repeat;
 }

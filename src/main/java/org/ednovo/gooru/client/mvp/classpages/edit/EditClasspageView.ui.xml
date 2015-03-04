@@ -59,7 +59,6 @@
 			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
 			    </uc:HTMLEventPanel>
 				<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
-				    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
 				    <g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
 				    <g:HTMLPanel styleName="{res.css.path}">
 					    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>

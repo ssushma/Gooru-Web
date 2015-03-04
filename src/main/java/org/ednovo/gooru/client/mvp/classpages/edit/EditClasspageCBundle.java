@@ -131,8 +131,6 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String classpageCodeShare();
 		
 		String classpageCodeShareInput();
-
-		String classpageCodeHelp();
 		
 		String classpageShareCodeInput();
 		
@@ -146,8 +144,6 @@ public interface EditClasspageCBundle extends ClientBundle{
 		
 		String addAssignment();
 				
-		String classpageAddPlusIcon();
-		
 		String assignmentsContainer();
 		
 		String classpageCodeInnerPopup();
@@ -190,7 +186,6 @@ public interface EditClasspageCBundle extends ClientBundle{
         String assignmentPathContainer();
         String line();
         String squre();
-        String progressStart();
         String path();
         String classcodeContainer();
         String containerProgress();

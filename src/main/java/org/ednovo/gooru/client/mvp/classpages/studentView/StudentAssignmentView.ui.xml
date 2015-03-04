@@ -35,7 +35,6 @@
 				<g:Button styleName="secondary {StudentStyle.studentWithdrawStyle}" ui:field="btnWithDraw"></g:Button>
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="memberContainer" styleName="{StudentStyle.classpageCodeShareInputForImage}">
-			    <!--  <g:Image ui:field="userImage" styleName="{StudentStyle.userimageStyle}" url="images/Classpage/student/user.png"></g:Image>-->
 			    <g:Label styleName="{StudentStyle.classMemberStyle}" ui:field="LblMember"></g:Label>
 			    <g:HTMLPanel styleName="{StudentStyle.lineSeaparation}" ui:field="lineSeparation"></g:HTMLPanel>
 			</g:HTMLPanel>
@@ -45,7 +44,6 @@
 		        <g:Label styleName="{style.css.leftArrow}" ui:field="lblPrevious"></g:Label>
 		    </uc:HTMLEventPanel>
 			<g:HTMLPanel styleName="{style.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
-			    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
 			    <g:HTMLPanel styleName="{style.css.assignementOrderHeader}" ui:field="assignmentOrderPanel"></g:HTMLPanel>
 			    <g:Label styleName="{style.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
 			    <g:HTMLPanel styleName="{style.css.path}">

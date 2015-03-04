@@ -572,10 +572,6 @@ float: left;
 	white-space: nowrap;
 }
 
-.threeActions .publicImage {
-	background: url(images/Classpage/Features/public.png) center top no-repeat;
-}
-
 .threeActions .analystic {
 	background: url(images/Classpage/Features/analytics.png) center top no-repeat;
 }

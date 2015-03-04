@@ -78,7 +78,6 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 	}
 	
 	public void updateLikesCount(int likesCount){
-		//getView().setResourceLikesCount(likesCount);
 	}
 
 	@Override

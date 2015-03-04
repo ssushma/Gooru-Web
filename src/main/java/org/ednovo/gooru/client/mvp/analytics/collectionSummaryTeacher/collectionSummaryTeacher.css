@@ -1,4 +1,4 @@
-@external .alignLeft,.tickMarkImg,.tickMarkImgCss,.assignment_quesiton_ans_bar,.wrongSelectStyle,.tickMarkImg,.tableMain,.tableHeader,.tableRowEven,.tableRowOdd,.printWidget,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand;
+@external .alignLeft,.tickMarkImg,.tickMarkImgCss,.assignment_quesiton_ans_bar,.wrongSelectStyle,.tickMarkImg,.tableMain,.tableHeader,.tableRowEven,.tableRowOdd,.printWidget,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground;
 
 .reportsTableContainer {
 	padding-top: 15px;
@@ -15,56 +15,6 @@
 .setMarginAuto {
 	margin: 0 auto;
 }
-
-.reaction_explain1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll 0px 0px
-		transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_understand1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -78px
-		1px transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_mean1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -148px
-		1px transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_dontunderstand1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -217px
-		2px transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_needhelp1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -285px
-		0px transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_redneedhelp {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -81px
-		-45px transparent;
-	height: 35px;
-	width: 35px
-}
-
-.reaction_reddontunderstand {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -1px
-		-45px transparent;
-	height: 35px;
-	width: 35px
-}
-
 .individualScore {
 	clear: both;
 	padding-top: 20px;
@@ -197,10 +147,6 @@
 	height: 25px;
 	background-color: #DDDDDD;
 	padding: 0;
-}
-
-.resourceBreakDownTimeSpent {
-	width: auto;
 }
 
 .filterDropDown {

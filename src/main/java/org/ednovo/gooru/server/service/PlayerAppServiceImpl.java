@@ -136,11 +136,15 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				JSONObject resourceCollectionObject=jsonRep.getJsonObject();
-				JSONArray collectionList=resourceCollectionObject.getJSONArray("searchResults");
-				resourceCollectionDo.setTotalHitCount(resourceCollectionObject.getInt("totalHitCount"));
+				JSONArray collectionList=resourceCollectionObject.isNull("searchResults")?null:resourceCollectionObject.getJSONArray("searchResults");
+				resourceCollectionDo.setTotalHitCount(resourceCollectionObject.isNull("totalHitCount")?null:resourceCollectionObject.getInt("totalHitCount"));
 				List<ResourceSearchResultDo> resourceSearchResultList=new ArrayList<ResourceSearchResultDo>();
-				for(int i=0;i<collectionList.length();i++){
-					resourceSearchResultList.add(ResourceCollectionDeSerializer.deserializeRecord(collectionList.getJSONObject(i)));
+				if(collectionList!=null&collectionList.length()>0){
+					for(int i=0;i<collectionList.length();i++){
+						if(collectionList.getJSONObject(i)!=null){
+							resourceSearchResultList.add(ResourceCollectionDeSerializer.deserializeRecord(collectionList.getJSONObject(i)));
+						}
+					}
 				}
 				resourceCollectionDo.setSearchResults(resourceSearchResultList);
 			} catch (JSONException e) {
@@ -157,6 +161,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken(),"true");
 		url+=getStandardId(rootNodeId);
+		getLogger().info("url player get collection:::::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
