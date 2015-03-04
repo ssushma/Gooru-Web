@@ -464,6 +464,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		htmlMediaFeatureListContainer.getElement().setAttribute("alt","");
 		htmlMediaFeatureListContainer.getElement().setAttribute("title","");
 		
+		centbrowseBtn.getElement().setAttribute("style", "margin-left: 12px;");
+		
 		
 		lblMediaPlaceHolder.addClickHandler(new ClickHandler() {
 			@Override
@@ -648,6 +650,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 						});
 						
 						standardSgstBox.showSuggestionList();
+						standardSgstBox.getElement().setAttribute("style", "z-index: 999999;");
 						}
 					else{
 						standardSgstBox.hideSuggestionList();

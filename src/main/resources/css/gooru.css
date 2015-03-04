@@ -576,7 +576,7 @@ body {
 	top: 0px;
 	visibility: visible;
 	background-color: #FFF !important;
-	z-index: 99999;
+	z-index: 999999;
 	border: 1px solid #CCC;
 	/* width: 199px; */
 	
