@@ -66,6 +66,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Image;
@@ -570,7 +571,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		hideProfileOrLibraryPanel(false);
 		if(!StringUtil.isEmpty(placetoken)){
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
-			bannerTitle.setText(bannerVal.get(placetoken).get(1));
+			bannerTitle.setText(convertHtml(bannerVal.get(placetoken).get(1)));
 			logoImage.setUrl(bannerVal.get(placetoken).get(2));
 			if(bannerVal.get(placetoken).get(2).equals("")){
 				bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
@@ -581,6 +582,17 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		}
 	}
+	/**
+	 * To convert String to HTML.
+	 * @param title {@link String}, banner title
+	 * @return converted html
+	 */
+	private String convertHtml(String title) {
+		HTML html = new HTML();
+		html.setHTML(title);
+		return html.getHTML();
+	}
+
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setCourseBanner(org.ednovo.gooru.shared.model.folder.FolderDo)
 	 */
@@ -655,6 +667,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void hideProfileOrLibraryPanel(boolean isVisible){
 		bannerImagePanel.setVisible(!isVisible);
 		profileBannerPanel.setVisible(isVisible);
+		breadCrumbsPanel.setVisible(true);
+
 
 	}
 
