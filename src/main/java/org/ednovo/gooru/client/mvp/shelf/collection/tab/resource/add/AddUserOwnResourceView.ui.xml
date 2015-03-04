@@ -307,16 +307,25 @@
 						<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
 							<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
 								<g:FlowPanel styleName="{res1.css.standardsCont}">
-									<uc:AppSuggestBox ui:field="standardSgstBox"
-										width="255px" height="19px" styleName="contentBoxStyles"/>
+									<uc:AppSuggestBox ui:field="standardSgstBox" width="255px" height="19px" styleName="contentBoxStyles"/>
 										<g:HTMLPanel styleName="{res1.css.browseContainer}">
 											<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
 										</g:HTMLPanel>
 									 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 									<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
-									<g:FlowPanel ui:field="standardsPanel"
-										styleName="{res1.css.collectionStandardsMargin}" />
+									<g:FlowPanel ui:field="standardsPanel" styleName="{res1.css.collectionStandardsMargin}" />
 								</g:FlowPanel>
+								<!-- 21 century textbox -->
+								<g:FlowPanel styleName="{res1.css.standardsCont}">
+									<uc:AppSuggestBox ui:field="centurySgstBox" width="255px" height="19px" styleName="contentBoxStyles"/>
+										<g:HTMLPanel styleName="{res1.css.browseContainer}">
+											<g:Button ui:field="browseCentury" styleName="secondary">Browse</g:Button>
+										</g:HTMLPanel>
+									 <g:HTMLPanel ui:field="errorContainerForCentury"></g:HTMLPanel>
+									<g:Label styleName="{res1.css.standardMaxHide}" ui:field="centuryMaxMsg" />
+									<g:FlowPanel ui:field="centuryPanel" styleName="{res1.css.collectionStandardsMargin}" />
+								</g:FlowPanel>
+							<!-- 21 century textbox end -->
 							</g:FlowPanel>
 						</g:FlowPanel>
 					</g:FlowPanel>
