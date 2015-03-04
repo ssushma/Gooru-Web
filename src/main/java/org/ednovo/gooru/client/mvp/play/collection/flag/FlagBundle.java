@@ -12,15 +12,15 @@ public interface FlagBundle extends ClientBundle{
 	
 	public static final FlagBundle IMAGEBUNDLEINSTANCE =  GWT.create(FlagBundle.class);
 	
-	@Source("org/ednovo/gooru/player/collection/client/view/collectionoverview/images/flag-header-close-btn.png")
+	@Source("images/flag-header-close-btn.png")
 	@ImageOptions(repeatStyle=RepeatStyle.None)
 	ImageResource closeFlagPopUpImages();
 	
-	@Source("org/ednovo/gooru/player/collection/client/view/collectionoverview/images/dropdownMenuArrow.png")
+	@Source("images/dropdownMenuArrow.png")
 	@ImageOptions(repeatStyle=RepeatStyle.None)
 	ImageResource dropdownMenuArrow();
 	
-	@Source("org/ednovo/gooru/player/collection/client/view/add/tooltip/player-flag-popup.css")
+	@Source("org/ednovo/gooru/client/mvp/play/collection/flag/player-flag-popup.css")
 	FlagStyles flagstyle();
 	
 	public interface FlagStyles extends CssResource{
