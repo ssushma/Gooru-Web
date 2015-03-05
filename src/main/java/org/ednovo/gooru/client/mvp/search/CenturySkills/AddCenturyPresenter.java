@@ -130,4 +130,9 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	public void setEditResourceData(List<StandardFo> codeList) {
 		getView().setEditResourceData(codeList);
 	}
+
+	@Override
+	public void setAddResourceData(Map<Long, String> codeList) {
+		getView().setAddResourceData(codeList);
+	}
 }

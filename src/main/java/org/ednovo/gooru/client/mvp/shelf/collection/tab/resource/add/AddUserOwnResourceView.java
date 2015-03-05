@@ -122,7 +122,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	@UiField HTMLPanel centuryBrowseContainer,loadingImagePanel,rightsContent,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,handoutText,educationalContainer,
 	momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,mobileFriendlyContainer,mediaDropdownArrowConatainer,panelCategoryInputDiv;
 	
@@ -132,13 +132,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	public BlueButtonUc addResourceBtnLbl;
 
 	@UiField
-	Label resourceContentChkLbl, mandatoryTitleLbl,descCharcterLimit,standardsDefaultText,accessHazard,flashingHazard,motionSimulationHazard,soundHazard,mediaLabel,mandatoryCategoryLbl;
+	Label centuryDefaultText,resourceContentChkLbl, mandatoryTitleLbl,descCharcterLimit,standardsDefaultText,accessHazard,flashingHazard,motionSimulationHazard,soundHazard,mediaLabel,mandatoryCategoryLbl;
 	
 	@UiField
 	HTMLEventPanel lblContentRights;
 	
 	@UiField 
-	org.ednovo.gooru.client.uc.HTMLEventPanel preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
+	org.ednovo.gooru.client.uc.HTMLEventPanel eHearderIconCentury,preparingTheLearningPanel,interactingWithTheTextPanel,activityPanel,extendingUnderstandingPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,defaultPanel,defaultPanelMomentsOfLearningPnl;
 
 
@@ -175,7 +175,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiField
 	FileUpload chooseResourceBtn;
 	
-	@UiField FlowPanel standardsPanel,standardContainer,centuryPanel;
+	@UiField FlowPanel centuryContainer,standardsPanel,standardContainer,centuryPanel;
 	
 	@UiField
 	CheckBox rightsChkBox;
@@ -887,8 +887,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.centuryAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		
 		eHearderIconEducationalUse.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconCentury.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconMomentsOfLearning.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconstandards.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconAccessHazard.addClickHandler(new MinimizePanelsClickHandler());
@@ -978,6 +980,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			}else if(event.getSource()==eHearderIconMobileFriendly){
 				mobileFriendlyContainer.setVisible(false);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconCentury){
+				centuryBrowseContainer.setVisible(false);
+				addSetupAdvancedView.centuryAdvancedPnl.setVisible(true);
 			}
 		}
 	}
@@ -1008,6 +1013,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 			}else if(event.getSource()==addSetupAdvancedView.mobileFreindlyAdvancedPnl){
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
+			}else if(event.getSource()==addSetupAdvancedView.centuryAdvancedPnl){
+				centuryContainer.setVisible(true);
+				centuryBrowseContainer.setVisible(true);
+				addSetupAdvancedView.centuryAdvancedPnl.setVisible(false);
 			}
 			
 			if(isAllAdditionalTagsOpen()){
@@ -1032,7 +1041,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
-				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
+				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.centuryAdvancedPnl.isVisible()) {
 			allAdditionalTagInVisisble = true;
 		}
 		return allAdditionalTagInVisisble;

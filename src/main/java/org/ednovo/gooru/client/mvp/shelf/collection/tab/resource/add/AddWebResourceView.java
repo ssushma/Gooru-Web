@@ -122,7 +122,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
-	public Label standardsDefaultText,mandatoryEducationalLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl,mandatorygenerateFromUrlLbl;
+	public Label standardsDefaultText,centuryDefaultText,mandatoryEducationalLbl,mandatorymomentsOfLearninglLbl,driveFileInfoLbl,mandatorygenerateFromUrlLbl;
 	
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
@@ -132,10 +132,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiField
 	Label mandatoryCategoryLbl;
-	
 		
 	@UiField
-	HTMLEventPanel refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
+	HTMLEventPanel eHearderIconCentury,refreshLbl,lblContentRights,videoResourcePanel,websiteResourcePanel,interactiveResourcePanel,imageResourcePanel,textResourcePanel,audioResourcePanel,
 	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
 	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
 	advancedSetupContainer,defaultPanel,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
@@ -174,7 +173,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer,errorContainerForCentury;//other
 
 	@UiField
-	HTMLPanel resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel,educationalContainer;
+	HTMLPanel centuryBrowseContainer,resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel,educationalContainer;
 
 	@UiField
 	Label resoureDropDownLbl, resourceCategoryLabel,resourceEducationalLabel,resourcemomentsOfLearningLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords,educationalDropDownLbl;
@@ -196,7 +195,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox,centurySgstBox;
 	
-	@UiField FlowPanel standardsPanel,standardContainer,centuryPanel;
+	@UiField FlowPanel centuryContainer,standardsPanel,standardContainer,centuryPanel;
 	
 	@UiField Button cancelResourcePopupBtnLbl,mobileYes,mobileNo,generateFromUrlBtn,uploadImageLbl;
 	
@@ -534,6 +533,12 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
+		
+		centuryDefaultText.setText(i18n.GL3121_1());
+		centuryDefaultText.getElement().setId("lblCenturyDefaultText");
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3121_1());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3121_1());
+		
 		resourceDescriptionContainer.getElement().setId("pnlResourceDescriptionContainer");
 		/*slideText.getElement().setInnerHTML(i18n.GL0908);
 		handoutText.getElement().setInnerHTML(i18n.GL0907);
@@ -1000,6 +1005,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		mediaFeatureContainer.setVisible(false);
 		accessHazardContainer.setVisible(false);
 		standardsBrowseContainer.setVisible(false);
+		centuryBrowseContainer.setVisible(false);
 		mobileFriendlyContainer.setVisible(false);
 		
 		addSetupAdvancedView.educationUseAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
@@ -1008,8 +1014,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.centuryAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		
 		eHearderIconEducationalUse.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconCentury.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconMomentsOfLearning.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconstandards.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconAccessHazard.addClickHandler(new MinimizePanelsClickHandler());
@@ -1063,6 +1071,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				for(int i=0;i<standardsDo.size();i++){
 					if(centuryCode.equalsIgnoreCase(standardsDo.get(i).getCode())){
 						standardsDo.remove(i);
+						centurySelectedValues.remove(Long.parseLong(id));
 					}
 				}
 				this.getParent().removeFromParent();
@@ -1930,6 +1939,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}else if(event.getSource()==eHearderIconMobileFriendly){
 				mobileFriendlyContainer.setVisible(false);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconCentury){
+				centuryBrowseContainer.setVisible(false);
+				addSetupAdvancedView.centuryAdvancedPnl.setVisible(true);
 			}
 		}
 	}
@@ -1961,6 +1973,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}else if(event.getSource()==addSetupAdvancedView.mobileFreindlyAdvancedPnl){
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
+			}else if(event.getSource()==addSetupAdvancedView.centuryAdvancedPnl){
+				centuryContainer.setVisible(true);
+				centuryBrowseContainer.setVisible(true);
+				addSetupAdvancedView.centuryAdvancedPnl.setVisible(false);
 			}
 			
 			if(isAllAdditionalTagsOpen()){
@@ -1990,7 +2006,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
-				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
+				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.centuryAdvancedPnl.isVisible()) {
 			allAdditionalTagInVisisble = true;
 		}
 		return allAdditionalTagInVisisble;
@@ -3369,6 +3386,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiHandler("browseCentury")
 	public void onClickOfBrowseCentury(ClickEvent e){
 		centuryPopup.clear();
+		if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+			centuryPresenterWidget.setAddResourceData(centurySelectedValues);
+		}
 		centuryPopup.add(centuryPresenterWidget.getWidget());
 		centuryPopup.show();
 		centuryPopup.center();
