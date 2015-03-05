@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -629,7 +630,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			params.put(O1_LEVEL, O1_LEVEL_VALUE);
 		}
 		
-		AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, urlParams));
+		CollectionDo collDo = new CollectionDo();
+		
+		AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, urlParams,collDo));
 		AppClientFactory.fireEvent(new OpenParentFolderEvent());
 		if(urlParams!=null) { 	
 			if((O3_LEVEL_VALUE!=null&&O3_LEVEL_VALUE.equalsIgnoreCase(urlParams.get(O3_LEVEL))&&urlParams.size()==3) || (O2_LEVEL_VALUE!=null&&O2_LEVEL_VALUE.equalsIgnoreCase(urlParams.get(O2_LEVEL))&&urlParams.size()==2) || (O1_LEVEL_VALUE!=null&&O1_LEVEL_VALUE.equalsIgnoreCase(urlParams.get(O1_LEVEL)))&&urlParams.size()==1) {

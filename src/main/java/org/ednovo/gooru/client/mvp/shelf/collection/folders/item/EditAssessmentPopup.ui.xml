@@ -17,14 +17,15 @@
 	.PopupMainVSmall {
 		width: 550px;
 		color: #515151;
-		margin: 30px auto;
+		margin: 15em auto;
 		position: relative;
 		font-family: arial;
 		font-size: 12px;
-		background: #ffffff;
+		background: #fff;
 		border-radius: 0 0;
 		border: 1px solid #999;
 		padding: 3px 3px;
+		z-index: 999;
 	}
 	.popupInnerGrey {
 		border: 1px solid #ddd;
