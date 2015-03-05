@@ -52,6 +52,7 @@ public class ResourceDo extends ContentDo {
     private LicenseDo license;
     private String grade;
     private String mediaType;
+    private List<StandardFo> skills;
     
     private String encodedUrl;
     
@@ -560,6 +561,10 @@ public class ResourceDo extends ContentDo {
 	public void setResourceTags(ArrayList<ResourceTagsDo> resourceTags) {
 		this.resourceTags = resourceTags;
 	}
-	
-	
+	public List<StandardFo> getSkills() {
+		return skills;
+	}
+	public void setSkills(List<StandardFo> skills) {
+		this.skills = skills;
+	}
 }

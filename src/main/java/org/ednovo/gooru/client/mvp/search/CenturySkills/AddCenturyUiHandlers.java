@@ -24,9 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -63,4 +65,9 @@ public interface AddCenturyUiHandlers extends BaseUiHandlers {
 	 * @return
 	 */
 	Anchor getCloseBtn();
+	/**
+	 * This method will set the data in edit popup
+	 * @param codeList
+	 */
+	void setEditResourceData(List<StandardFo> codeList);
 }
