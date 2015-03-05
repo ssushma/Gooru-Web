@@ -218,7 +218,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),result.getGooruOid(),false,new SimpleAsyncCallback<CollectionDo>() { 
 					@Override
 					public void onSuccess(CollectionDo result1) {
-						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params));
+						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params,result1));
 						fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
 						getView().getButtonVisiblity();
 						successparams.put("o1", result.getGooruOid());

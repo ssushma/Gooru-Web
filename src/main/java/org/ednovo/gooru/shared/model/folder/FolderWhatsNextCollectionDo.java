@@ -37,11 +37,9 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private ThumbnailDo thumbnails;
-	  private String assetURI;
 	    private String title;
-	    private String description;
-	    private String folder;
 	    private String gooruOid;
+	    private String collectionItemId;
 	
 	public FolderWhatsNextCollectionDo(){}
 
@@ -53,14 +51,6 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 		this.thumbnails = thumbnails;
 	}
 
-	public String getAssetURI() {
-		return assetURI;
-	}
-
-	public void setAssetURI(String assetURI) {
-		this.assetURI = assetURI;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -69,28 +59,20 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 		this.title = title;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getFolder() {
-		return folder;
-	}
-
-	public void setFolder(String folder) {
-		this.folder = folder;
-	}
-
 	public String getGooruOid() {
 		return gooruOid;
 	}
 
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
+	}
+
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
 	}
 	
 

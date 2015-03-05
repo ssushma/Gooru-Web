@@ -672,6 +672,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	public void refreshCollectionInShelfList(CollectionDo collectionDo, RefreshType refreshType) {
 		if (collectionDo != null) {
 			FolderDo folderDo = getFolderDo(collectionDo);
+			String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
+			String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
+			String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
+			
+			if(!collectionDo.getCollectionType().equalsIgnoreCase("assessment/url"))
+			{
 			if (refreshType.equals(RefreshType.INSERT)|| refreshType.equals(RefreshType.INSERT_AND_VIEW)) {
 				final ShelfCollection shelfCollection = new ShelfCollection(folderDo,1); 
 				SHELF_COLLECTIONS.add(folderDo);
@@ -749,12 +755,28 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					selectedShelfCollection.setOpen();
 				}
 			}
+		}
+		else
+		{
+			HashMap<String,String> params = new HashMap<String,String>();
+			if(O3_LEVEL_VALUE!=null) {
+				params.put("o3", O3_LEVEL_VALUE);
+			}
+			if(O2_LEVEL_VALUE!=null) {
+				params.put("o2", O2_LEVEL_VALUE);
+			}
+			if(O1_LEVEL_VALUE!=null) {
+				params.put("o1", O1_LEVEL_VALUE);
+			}
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+		}
 		} else if (myShelfVerPanel.getItemCount() > 0) {
 			selectedShelfCollection = (ShelfCollection) myShelfVerPanel.getItem(0).getWidget();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,new String[] {ID,selectedShelfCollection.getCollectionDo().getGooruOid() });
 		} else {
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 		}
+		
 		getUiHandlers().requestShelfCollections();
 		shelfView.setFocusCollectionTitle();
 	}
@@ -762,7 +784,6 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void refreshCollectionItemInShelfList(CollectionItemDo collectionItemDo, RefreshType refreshType) {
 		FolderDo folderDo = getFolderItemDo(collectionItemDo);
-		
 		if (refreshType.equals(RefreshType.INSERT)) {
 			ShelfCollection shelfCollection = getShelfCollection(collectionItemDo.getCollection().getGooruOid());
 			shelfCollection.addCollectionItem(folderDo, true); 
@@ -1209,9 +1230,14 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	
 	@Override
-	public void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+	public void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params,CollectionDo collDo) {
+	
+	String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
+	String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
+	String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
 		
-		
+	if(collDo.getCollectionType()!= null && (!collDo.getCollectionType().equalsIgnoreCase("assessment/url")))
+	{
 		if(params!=null){
 			isFromAddResourcePresenter	=params.containsKey("from");
 		}
@@ -1409,6 +1435,21 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
 			}
 		}
+	}
+	else
+	{
+		HashMap<String,String> parametersForUrl = new HashMap<String,String>();
+		if(O3_LEVEL_VALUE!=null) {
+			parametersForUrl.put("o3", O3_LEVEL_VALUE);
+		}
+		if(O2_LEVEL_VALUE!=null) {
+			parametersForUrl.put("o2", O2_LEVEL_VALUE);
+		}
+		if(O1_LEVEL_VALUE!=null) {
+			parametersForUrl.put("o1", O1_LEVEL_VALUE);
+		}
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametersForUrl);
+	}
 	}
 	
 	

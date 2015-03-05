@@ -1691,6 +1691,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext)
 	{
+		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+		
 		if(folderCollectionWhatsNext.getTitle()!=null)
 		{
 			hideNextCollectionContainer(false);	
@@ -1702,7 +1704,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				public void onClick(ClickEvent event) {
 					Map<String,String> params = new LinkedHashMap<String,String>();
 					params.put("id", folderCollectionWhatsNext.getGooruOid());
-					//need to add folderId and collectionItem of next item
+					if(folderCollectionWhatsNext.getCollectionItemId()!=null)
+					{
+					params.put("folderId", folderId);
+					params.put("folderItemId", folderCollectionWhatsNext.getCollectionItemId());
+					}
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 				}
 			});
