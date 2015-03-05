@@ -126,6 +126,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void setData() {
 		leftNav.clear();
 		loadingPanel(true);
+		folderListPanel.setVisible(false);
 		getPresenter().getPartnerWorkspaceFolders(0);
 	}
 	
@@ -151,6 +152,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			if(firstWidgetCount==0&&folderId==null) {
 				firstWidgetCount++;
 				loadingPanel(true);
+				folderListPanel.setVisible(false);
 				leftMenuItemView.addStyleName(style.open());
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
@@ -176,6 +178,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 						Window.scrollTo(0, 0);
 					}
 					loadingPanel(true);
+					folderListPanel.setVisible(false);
 					final Iterator<Widget> widgetsPanel = leftNav.iterator();
 					while (widgetsPanel.hasNext()) {
 						final Widget widgetTxt = widgetsPanel.next();
@@ -248,7 +251,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void loadingPanel(boolean isVisible) {
 		loadingIconPanel.setVisible(isVisible);
 		contentScroll.setVisible(!isVisible);
-		folderListPanel.setVisible(!isVisible);
+		//folderListPanel.setVisible(!isVisible);
 	}
 
 	@Override

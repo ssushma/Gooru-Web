@@ -445,8 +445,8 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	}
 
 	@Override
-	public void refreshFolderItem(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params) {
-		getView().refreshFolderItemData(folderDo, refreshFolderType, params);
+	public void refreshFolderItem(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params,CollectionDo collDo) {
+		getView().refreshFolderItemData(folderDo, refreshFolderType, params,collDo);
 	}
 
 	@Override

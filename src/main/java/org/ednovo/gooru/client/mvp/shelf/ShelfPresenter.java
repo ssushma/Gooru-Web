@@ -453,7 +453,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 					if(O1_LEVEL_VALUE!=null) {
 						params.put("o1", O1_LEVEL_VALUE);
 					}
-					AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT_AND_VIEW, params)); 
+					AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT_AND_VIEW, params,result)); 
 					getView().getLoadingImageInvisible();
 					getView().editCopyCollectionTitle();
 				}

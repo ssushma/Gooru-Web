@@ -152,6 +152,11 @@
     background-image: url('../images/folders/panel/collection-icon.png');
 }
 
+.folderLevel.assessment {
+    background-image: url('../images/folders/panel/assessment.png');
+    background-size: 30px 24px;
+}
+
 .folderLevel.publicIcon.collection {
     background-image: url('../images/folders/panel/collection-icon-public.png');
 }
@@ -587,6 +592,14 @@
     margin-bottom:8px;
 }
 .contentBlock.collection .info img:hover{
+	opacity: .6;
+}
+
+.contentBlock.assessment .info img {
+    border-left:8px solid #feae29;
+    margin-bottom:8px;
+}
+.contentBlock.assessment .info img:hover{
 	opacity: .6;
 }
 
