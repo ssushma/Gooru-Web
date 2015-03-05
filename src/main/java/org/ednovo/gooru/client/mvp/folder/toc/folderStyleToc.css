@@ -818,7 +818,7 @@
 }
 
 .bannerimageContainer1{
-	background:#dddddd;
+	background:#4c98cc;
 	text-align:center;
 	
 	
@@ -843,7 +843,7 @@
 }
 
 .paginationBlock{
-	width:100%;
+	width:85%;
 	display:inline-block;
 	margin-bottom:15px;
 	font-size:17px;

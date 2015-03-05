@@ -742,7 +742,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		}
 		if(size==result.size()){
 			Label presentTile=new Label();
-			presentTile.getElement().setAttribute("style", "display: inline-block;");
+			presentTile.getElement().setAttribute("style", "display: inline-block; color: #e1dfda;");
 			presentTile.setText(lblFolderTitle.getText());
 			breadCrumbsPanel.add(presentTile);
 		}
