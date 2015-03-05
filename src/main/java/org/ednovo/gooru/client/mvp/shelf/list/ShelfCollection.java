@@ -197,6 +197,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	private static final String O3_LEVEL = "o3";
 	
 	private static final String ID = "id";
+	
+	private static final String ASSESSMENT = "assessment";
 
 	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
 	
@@ -318,9 +320,12 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
-		
 		if(!collectionDo.getType().equals("folder")) {
 			titleFocPanel.addStyleName(folderStyle.collection());
+			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
+		}
+		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+			titleFocPanel.addStyleName(folderStyle.assessment());
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		if(collectionDo.getCollectionItems()!=null) {

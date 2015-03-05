@@ -178,20 +178,20 @@ button.primary:hover {
 
 .tocShareContainer{
 	clear: both;
-	border-bottom: 1px solid #e1dfda;
-	height: 34px;
+	border-bottom: 2px solid #e1dfda;
+	height: 41px;
 	margin-bottom: 10px;
 }
 .tocShareBtn{
 	clear: both;
 	display: inline-block;
 	background-color: #e1dfda;
-	padding: 7px;
+	padding: 9px;
 }
 .tocShareTxb{
 	clear: both;
 	display: inline-block;
-	border: 2px solid #e1dfda !important;
+	border: 4px solid #e1dfda !important;
 	padding: 5px 4px;
 	margin-left: -4px;
 	width:140px;
