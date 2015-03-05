@@ -21,7 +21,11 @@
 						</g:HTMLPanel>
 		
 						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="standardsAdvancedContainer">
-						<g:Anchor ui:field="standardsAdvancedPnl"></g:Anchor>
+							<g:Anchor ui:field="standardsAdvancedPnl"></g:Anchor>
+						</g:HTMLPanel>
+						
+						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="centuryAdvancedContainer">
+							<g:Anchor ui:field="centuryAdvancedPnl"></g:Anchor>
 						</g:HTMLPanel>
 		
 						<g:HTMLPanel styleName="{res.css.setupBoxes}" ui:field="accessHazardAdvancedContainer">

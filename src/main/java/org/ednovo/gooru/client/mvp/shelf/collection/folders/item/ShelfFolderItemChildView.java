@@ -76,6 +76,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	private static final String SCOLLECTION = "scollection";
 	
 	private static final String ASSESSMENTURL = "assessment/url";
+	
+	private static final String ASSESSMENT = "assessment";
 
 	private static final String RESOURCE = "resource";
 	
@@ -161,7 +163,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}else{
 			moveUpBtn.setVisible(true); 
 		}*/
-		
+			
 		if(folderType.equals(FOLDER)) {
 			folderImage.setVisible(true);
 			collectionImage.setVisible(false);
@@ -197,7 +199,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			});
 			collectionImage.setHeight("90px");
 			collectionImage.setWidth("120px");
-			contentBlock.addStyleName(folderStyle.collection());
+			if(folderDo.getCollectionType().equals(ASSESSMENT)){
+				contentBlock.addStyleName(folderStyle.assessment());
+			}else{
+				contentBlock.addStyleName(folderStyle.collection());
+			}
+			
 		}
 		List<FolderItemDo> folderItemDo = folderDo.getCollectionItems();
 		if(!ASSESSMENTURL.equals(folderDo.getCollectionType()) && folderItemDo!=null&&folderItemDo.size()>0) {

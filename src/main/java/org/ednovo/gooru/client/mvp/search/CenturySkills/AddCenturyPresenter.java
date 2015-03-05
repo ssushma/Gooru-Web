@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -31,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.service.ShelfServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -122,5 +124,10 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	@Override
 	public Anchor getCloseBtn() {
 		return getView().getCloseBtn();
+	}
+
+	@Override
+	public void setEditResourceData(List<StandardFo> codeList) {
+		getView().setEditResourceData(codeList);
 	}
 }

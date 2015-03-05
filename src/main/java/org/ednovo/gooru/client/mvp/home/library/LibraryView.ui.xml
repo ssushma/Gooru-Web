@@ -58,7 +58,7 @@
 						<g:Label styleName="{libraryStyle.topicListEllipsis}"
 							ui:field="folderTopicTitleLbl" />
 						<g:Button styleName="secondary" ui:field="listAllBtn"
-							text="{i18n.GL3121}" title="{i18n.GL3121}"></g:Button>
+							text="{i18n.GL1946}" title="{i18n.GL1946}"></g:Button>
 					</g:HTMLPanel>
 					<g:HTMLPanel ui:field="contentScroll" />
 				</g:HTMLPanel>
