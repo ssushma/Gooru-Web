@@ -735,12 +735,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBreadCrumbs(Map<String, String> result) {
 		breadCrumbsPanel.clear();
 		int size=0;
+		boolean haveBreadCrumbs=false;
 		for (Map.Entry<String, String> entry : result.entrySet())
 		{
 		    setBreadCrumbs(entry.getKey(), entry.getValue(), ">");
 		    size++;
+		    haveBreadCrumbs=true;
 		}
-		if(size==result.size()){
+		if(size==result.size() && haveBreadCrumbs){
 			Label presentTile=new Label();
 			presentTile.getElement().setAttribute("style", "display: inline-block; color: #807E7B;");
 			presentTile.setText(lblFolderTitle.getText());
