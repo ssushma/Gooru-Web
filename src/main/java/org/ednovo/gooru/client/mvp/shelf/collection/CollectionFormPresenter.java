@@ -282,18 +282,18 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 								params.put(O1_LEVEL, o1);
 								params.put(O2_LEVEL, o2);
 								params.put(O3_LEVEL, o3);
-								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params)); 
+								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,result)); 
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
 								AppClientFactory.fireEvent(new OpenParentFolderEvent());
 							} else if(o2!=null) {
 								params.put(O1_LEVEL, o1);
 								params.put(O2_LEVEL, o2);
-								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params)); 
+								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,result)); 
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
 								AppClientFactory.fireEvent(new OpenParentFolderEvent());
 							} else if(o1!=null){
 								params.put(O1_LEVEL, o1);
-								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params)); 
+								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,result)); 
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
 								AppClientFactory.fireEvent(new OpenParentFolderEvent());
 							} else {
