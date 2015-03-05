@@ -39,9 +39,9 @@ public  abstract class AddSetupAdvancedView extends Composite{
 
 	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	@UiField
-	public Anchor educationUseAdvancedPnl,momentsOfLearningAdvancedPnl,standardsAdvancedPnl,accessHazardAdvancedPnl,mediaFeatureAdvancedPnl,mobileFreindlyAdvancedPnl;
+	public Anchor centuryAdvancedPnl,educationUseAdvancedPnl,momentsOfLearningAdvancedPnl,standardsAdvancedPnl,accessHazardAdvancedPnl,mediaFeatureAdvancedPnl,mobileFreindlyAdvancedPnl;
 	
-	@UiField public HTMLPanel educationUseAdvancedContainer,momentsOfLearningAdvancedContainer,standardsAdvancedContainer,
+	@UiField public HTMLPanel centuryAdvancedContainer,educationUseAdvancedContainer,momentsOfLearningAdvancedContainer,standardsAdvancedContainer,
 	accessHazardAdvancedContainer,mediaFeatureAdvancedContainer,mobileFreindlyAdvancedContainer,setUpLabel;
 
 	public AddSetupAdvancedView(){
@@ -51,6 +51,7 @@ public  abstract class AddSetupAdvancedView extends Composite{
 		educationUseAdvancedPnl.setText(i18n.GL1664());
 		momentsOfLearningAdvancedPnl.setText(i18n.GL1678());
 		standardsAdvancedPnl.setText(i18n.GL1682());
+		centuryAdvancedPnl.setText(i18n.GL3121_1());
 		accessHazardAdvancedPnl.setText(i18n.GL1705());
 		mediaFeatureAdvancedPnl.setText(i18n.GL3094());
 		mobileFreindlyAdvancedPnl.setText(i18n.GL1811());

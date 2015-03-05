@@ -303,23 +303,23 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			if(foldersTocObj!=null){
 				if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
 					bigIdeasPanel.setVisible(true);
-					lblBigIdeas.setText(foldersTocObj.getIdeas());
+					lblBigIdeas.setText(StringUtil.removeHtml(foldersTocObj.getIdeas()));
 				}else{
 				    bigIdeasPanel.setVisible(false);
 				}
 				if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
 					essentialPanel.setVisible(true);
-					lblEssentalQuestions.setText(foldersTocObj.getQuestions());
+					lblEssentalQuestions.setText(StringUtil.removeHtml(foldersTocObj.getQuestions()));
 				}else{
 					essentialPanel.setVisible(false);
 				}
 				if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
 					performancePanel.setVisible(true);
-					lblPerformanceTasks.setText(foldersTocObj.getPerformanceTasks());
+					lblPerformanceTasks.setText(StringUtil.removeHtml(foldersTocObj.getPerformanceTasks()));
 				}else{
 					performancePanel.setVisible(false);
 				}
-				lblFolderTitle.setText(StringUtil.truncateText(foldersTocObj.getTitle(), 50));
+				lblFolderTitle.setText(StringUtil.truncateText(StringUtil.removeHtml(foldersTocObj.getTitle()), 50));
 				String profId= AppClientFactory.getPlaceManager().getRequestParameter(USER_ID, null);
 				if(profId!=null){
 					getUiHandlers().getProfilePageDetails(profId);
