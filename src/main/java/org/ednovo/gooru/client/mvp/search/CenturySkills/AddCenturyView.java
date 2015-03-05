@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.model.skils.NodeDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -106,7 +107,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	
 	@UiHandler("cancelBtn")
 	public void clickOnCancelBtn(ClickEvent clickEvent){
-		resetPopupHilightedData();
+		/*resetPopupHilightedData();*/
 		appPopUp.hide();
 		selectedValues.clear();
 	}
@@ -149,6 +150,66 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 					final Widget childWidget = childWidgets.next();
 					if(childWidget instanceof HTMLPanel){
 						((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+					}
+				}
+			}
+		}
+	}
+	/**
+	 * This method is used for to reset the style for the title widgets
+	 */
+	private void setPopupHilightedData(List<StandardFo> codeList) {
+		resetPopupHilightedData();
+		Iterator<Widget> widgets=ulCongitiveAndStrategies.iterator();
+		while (widgets.hasNext()){
+			final Widget widget = widgets.next();
+			if (widget instanceof LiPanel){
+				 for (StandardFo standardFo : codeList) {
+						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
+							selectedValues.put(Long.parseLong(standardFo.getCodeId()+""), standardFo.getLabel());
+							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+							while (childWidgets.hasNext()){
+							final Widget childWidget = childWidgets.next();
+							if(childWidget instanceof HTMLPanel){
+							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+							}
+						}
+					}
+				}
+			}
+		}
+		Iterator<Widget> widgets1=ulKeyContentKnowledge.iterator();
+		while (widgets1.hasNext()){
+			final Widget widget = widgets1.next();
+			if (widget instanceof LiPanel){
+				 for (StandardFo standardFo : codeList) {
+						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
+							selectedValues.put(Long.parseLong(standardFo.getCodeId()+""), standardFo.getLabel());
+							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+							while (childWidgets.hasNext()){
+							final Widget childWidget = childWidgets.next();
+							if(childWidget instanceof HTMLPanel){
+							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+							}
+						}
+					}
+				}
+			}
+		}
+		Iterator<Widget> widgets2=ulKeyLearningSkills.iterator();
+		while (widgets2.hasNext()){
+			final Widget widget = widgets2.next();
+			if (widget instanceof LiPanel){
+				 for (StandardFo standardFo : codeList) {
+						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
+							selectedValues.put(Long.parseLong(standardFo.getCodeId()+""), standardFo.getLabel());
+							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+							while (childWidgets.hasNext()){
+							final Widget childWidget = childWidgets.next();
+							if(childWidget instanceof HTMLPanel){
+							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+							}
+						}
 					}
 				}
 			}
@@ -197,6 +258,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		for (final NodeDo nodeObj : nodeList) {
 			liPanel=new LiPanel();
 			if(!StringUtil.isEmpty(nodeObj.getCode())){
+				liPanel.setCodeId(nodeObj.getCodeId());
 				AddCenturyColorPanelWidget addCenturyColorPanelWidget=new AddCenturyColorPanelWidget(nodeObj.getCode());
 				liPanel.add(addCenturyColorPanelWidget);
 			}
@@ -259,5 +321,10 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	@Override
 	public Map<Long, String> getSelectedValues() {
 			return selectedValues;
+	}
+
+	@Override
+	public void setEditResourceData(List<StandardFo> codeList) {
+		setPopupHilightedData(codeList);
 	}
 }

@@ -9,6 +9,8 @@ import com.google.gwt.user.client.ui.ComplexPanel;
 import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.Widget;
 public class LiPanel extends ComplexPanel implements InsertPanel,HasClickHandlers{
+	private long codeId;
+	
 	public LiPanel() {
 		setElement(Document.get().createLIElement());
 	}
@@ -24,7 +26,14 @@ public class LiPanel extends ComplexPanel implements InsertPanel,HasClickHandler
 
 	@Override
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
-		// TODO Auto-generated method stub
 		return addDomHandler(handler, ClickEvent.getType());
+	}
+
+	public long getCodeId() {
+		return codeId;
+	}
+
+	public void setCodeId(long codeId) {
+		this.codeId = codeId;
 	}
 }
