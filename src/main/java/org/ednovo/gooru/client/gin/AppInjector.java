@@ -74,6 +74,8 @@ import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
+import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
+import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
@@ -156,6 +158,10 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<CollectionFormPresenter> getCollectionFormPresenter();
 
+	AsyncProvider<ResourcePlayPresenter> getResourcePlayPresenter();
+
+	AsyncProvider<CollectionPlayPresenter> getCollectionPlayPresenter();
+	
 	AsyncProvider<ImageUploadPresenter> getImageUploadPresenter();
 	
 	AsyncProvider<UserRegistrationPresenter> getUserRegistrationPresenter();
