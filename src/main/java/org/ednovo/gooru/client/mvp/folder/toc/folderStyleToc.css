@@ -852,6 +852,8 @@
 
 .shareButton{
 	text-align:right;
+	margin-left: 8px;
+	padding-right: 0px;
 }
 .breadCrumbsStyle{
 	display: inline-block;

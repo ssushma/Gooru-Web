@@ -22,6 +22,7 @@ public interface FolderStyleBundle extends CssResource {
 	String open();
 	String publicIcon();
 	String collection();
+	String assessment();
 	String active();
 	String arrow();
 	String parent();
