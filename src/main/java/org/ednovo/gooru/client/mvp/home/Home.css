@@ -46,7 +46,6 @@
 }
 
 .searchBarBanner {
-	/* 	background:url("images/landing-page-searchbar-bg-image.png") no-repeat scroll 0 0 transparent; */
 	width: 943px;
 	height: 230px;
 }
@@ -2062,7 +2061,7 @@ a.secondary:hover {
 
 .imageFieldContainer {
 	width: 85%;
-	margin: 15px auto;
+	margin: 0px auto;
 }
 .lblCollectionProgressDetails{
 	text-align: center;
@@ -2152,3 +2151,37 @@ a.secondary:hover {
 	display: inline-block;
 	width: 100%;
 }
+
+/* Home Page CSS Sprite */
+
+.sprite {
+    background-image: url(images/landing-page/fmos.png);
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.spriteFind {
+    width: 90px;
+    height: 90px;
+    background-position: -2px -2px;
+}
+
+.spriteMonitor {
+    width: 90px;
+    height: 89px;
+    background-position: -96px -2px;
+}
+
+.spriteRemix {
+    width: 90px;
+    height: 90px;
+    background-position: -190px -2px;
+}
+
+.spriteShare {
+    width: 90px;
+    height: 90px;
+    background-position: -284px -2px;
+}
+
+

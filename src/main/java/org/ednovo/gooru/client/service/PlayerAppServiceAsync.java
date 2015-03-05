@@ -57,8 +57,6 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize,AsyncCallback<ResoruceCollectionDo> callback);
 	
-	public void getResourceCollectionItem(String apiKey,String resourceId,String tabView,AsyncCallback<CollectionItemDo> callback);
-	
 	public void getResourceInfoDetails(String apiKey,String resourceId,String tabView,AsyncCallback<CollectionItemDo> callback);
 	
 	public void getResourceObj(String resourceId,AsyncCallback<CollectionItemDo> callback);
@@ -90,8 +88,6 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void copyCollectionItem(String collectionItemId,String collectionId,AsyncCallback<String> callback);
 	
 	public void getWorkspaceCollections(String userId,String offset,String limit,AsyncCallback<ArrayList<CollectionItemsList>> callback);
-	
-	public void updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing,AsyncCallback<String> callback);
 	
 	public void getContentReport(String associatedGooruOid,String gooruUid,AsyncCallback<ArrayList<ContentReportDo>> callback);
 	

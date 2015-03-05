@@ -105,18 +105,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
 	
-//	@UiField(provided = true)
 	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
-	
-	/*@UiField SimpleRadioButton rating1;
-	@UiField SimpleRadioButton rating2;
-	@UiField SimpleRadioButton rating3;
-	@UiField SimpleRadioButton rating4;
-	@UiField SimpleRadioButton rating5;*/
-	
-	/*@UiField SimpleCheckBox starFive,starFour,starThree,starTwo,starOne;*/
-	
-	/*@UiField  StarRatingsUc starRatings;*/
 
 	HandlerRegistration forwardButtonHandler=null, backwardButtonHandler=null;
 	
@@ -134,7 +123,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private boolean isNeedHelpSelected=false;
 	private CollectionItemDo collectionItemDo=null;
 	private String gooruReactionId="";
-	private UserStarRatingsWidget userStarRatings = null;
 	
 	private static final String ONE_STAR="oneStar";
 	private static final String TWO_STAR="twoStar";
@@ -160,6 +148,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	ThankYouResourceStarRatingsPoor thankYouResourceStarRatingsPoor;
 	RatingsConfirmationPopup ratingsConfirmationPopup;
 	private boolean isRated=false,isFromThanksPopup=false;
+	private double previousRating=0;
 	String assocGooruOId;
 	Integer score,count;
 	double average;
@@ -182,27 +171,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-//	@UiFactory
-//	public SimpleRadioButton createRadioButton() {
-//	    return new SimpleRadioButton("");
-//	}
 
 	@Inject
 	public ResourcePlayerMetadataView(){
 		
-//		one_star = new SimpleRadioButton("");
-//		two_star = new SimpleRadioButton("");
-//		three_star = new SimpleRadioButton("");
-//		four_star = new SimpleRadioButton("");
-//		five_star = new SimpleRadioButton("");
-		
 		setWidget(uiBinder.createAndBindUi(this));
-		//allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-		////singleEmoticsContainer.setVisible(false);
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
-		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
-		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
 		reactionToolTipOne.setText(i18n.GL0581()); 
 		reactionToolTipOne.getElement().setId("lblReactionToolTipOne");
 		reactionToolTipOne.getElement().setAttribute("alt",i18n.GL0581());
@@ -233,13 +207,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL2081());
 		plusAddTagsButton.getElement().setAttribute("title",i18n.GL2081());
 		
-		/*rating1 = new SimpleRadioButton("rating");
-		rating2 = new SimpleRadioButton("rating");
-		rating3 = new SimpleRadioButton("rating");
-		rating4 = new SimpleRadioButton("rating");
-		rating5 = new SimpleRadioButton("rating");*/
-		
-//		starValue.setVisible(false);
 		starValue.setVisible(true);
 		starValue.setText(i18n.GL1879());
 		starValue.getElement().setId("lblStarValue");
@@ -257,18 +224,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-//			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}else{
 			resourceTitleLbl.setVisible(true);
 			resourcePublisher.setVisible(true);
 		}
-		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
+		 
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
@@ -280,10 +242,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  }
 		  else
 		  {
-			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
-		  
 			one_star.addMouseOverHandler(new OnStarMouseOver(ONE_STAR));
 			two_star.addMouseOverHandler(new OnStarMouseOver(TWO_STAR));
 			three_star.addMouseOverHandler(new OnStarMouseOver(THREE_STAR));
@@ -312,7 +272,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
 		this.collectionItemDo = collectionItemDo;
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+		if(PlaceTokens.RESOURCE_PLAY.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 			collectionContainer.getElement().getStyle().setMarginTop(51, Unit.PX);
 			tagsButtonContainer.setVisible(false);
 			if(isChildAccount()){
@@ -321,10 +281,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
 		}
-		
 			displayPublisher();
-						
-		if(collectionItemDo.getResource().getTitle()!=null){
+		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -333,7 +291,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourceTitleLbl.getElement().setAttribute("alt","");
 			resourceTitleLbl.getElement().setAttribute("title","");
 		}
-		
 		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
@@ -374,10 +331,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(collectionItemDo!=null){
 			collectionContainer.setVisible(true);
 			this.collectionItemDo = collectionItemDo;
-			if(collectionItemDo.getResource().getTitle()!=null){
-				int sequenceNumber=collectionItemDo.getItemSequence();
+			int sequenceNumber = 0;
+			if(collectionItemDo.getItemSequence()!=null){
+				sequenceNumber=collectionItemDo.getItemSequence();
+			}
+			if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getTitle()!=null){
 				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
-			//	resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(titlelbl1));
 				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -402,73 +361,58 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 	
 	private void displayPublisher(){
-		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getResourceFormat()!=null ||collectionItemDo.getResource()!=null && collectionItemDo.getResource().getPublisher()!=null){
+		if(collectionItemDo.getResource()!=null && (collectionItemDo.getResource().getResourceFormat()!=null || collectionItemDo.getResource().getPublisher()!=null)){
 			List<String> publishersList=null;
 			resourcePublisher.clear();
-			if(collectionItemDo.getResource().getPublisher()!=null){
-				if(!collectionItemDo.getResource().getPublisher().isEmpty()){
-					publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
-					if(publishersList!=null&&publishersList.size()>0){
-						//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
-						resourcePublisher.clear();
+			if(collectionItemDo.getResource().getPublisher().size()>0){
+						publishersList=collectionItemDo.getResource().getPublisher();
 						SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
-					}else{
-						resourcePublisher.clear();
-						resourcePublisher.getElement().setInnerHTML("");
-						resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
-					}
-				}
-				else if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-					if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
-						if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-							resourcePublisher.setVisible(true);
-							resourcePublisher.clear();
-							resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
-							resourcePublisher.getElement().getStyle().clearPaddingTop();
-						}else{
-							resourcePublisher.setVisible(false);
-						}
-					}
-				}
-			}
-			else if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+			}else if("question".equalsIgnoreCase(collectionItemDo.getResource().getResourceFormat().getValue())){
 				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 						resourcePublisher.setVisible(true);
-						resourcePublisher.clear();
-						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+collectionItemDo.getResource().getCreator().getUsername());
 						resourcePublisher.getElement().getStyle().clearPaddingTop();
 					}else{
 						resourcePublisher.setVisible(false);
 					}
 				}
+			}else{
+				resourcePublisher.setVisible(false);
 			}
+		}else{
+			resourcePublisher.clear();
+			resourcePublisher.setVisible(false);
 		}
 	}
 
 	public void previewResouceWidget(final CollectionItemDo collectionItemDo){
+		String resourceTypeName ="";
+		String resourceplayUrl = "";
 		resourceWidgetContainer.clear();
 		setResourceWidgetContainerHeight();
-		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
+		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getResourceType()!=null && collectionItemDo.getResource().getResourceType().getName()!=null){
+			resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
+		}
+		if(collectionItemDo.getResource().getUrl()!=null && !collectionItemDo.getResource().getUrl().isEmpty() && !collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
+			resourceplayUrl = collectionItemDo.getResource().getUrl();
+			if(collectionItemDo.getResource().getAssetURI()!=null && collectionItemDo.getResource().getFolder()!=null){
+				resourceplayUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceplayUrl;
+			}
+		}else{
+			resourceplayUrl=collectionItemDo.getResource().getUrl();
+		}
 		wrapperContainerField.getElement().getStyle().clearHeight();
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
-			//wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
-			String utubeId=ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl());
+			String utubeId=ResourceImageUtil.getYoutubeVideoId(resourceplayUrl);
 			getUiHandlers().getYoutubeFeedCallback(utubeId);
 		}else if(resourceTypeName.equalsIgnoreCase("animation/kmz")){
-			resourceWidgetContainer.add(new GwtEarthWidget(collectionItemDo.getResource().getUrl()));
+			resourceWidgetContainer.add(new GwtEarthWidget(resourceplayUrl));
 		}else if(resourceTypeName.equalsIgnoreCase("animation/swf")){
-			String resourceSourceUrl="";
 			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else{
-				if(!collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
-					resourceSourceUrl = collectionItemDo.getResource().getUrl();
-					resourceSourceUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceSourceUrl;
-				}else{
-					resourceSourceUrl=collectionItemDo.getResource().getUrl();
-				}
-				resourceWidgetContainer.add(new WebResourceWidget(resourceSourceUrl));
+				resourceWidgetContainer.add(new WebResourceWidget(resourceplayUrl));
 			}
 		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
@@ -480,55 +424,34 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
-//					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
-//					System.out.println("webResourceWidget"+webResourceWidget);
 					HTMLPanel htmlPanel = new HTMLPanel("");
 					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
 					Image img = new Image();
-					img.setUrl(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
+					img.setUrl(resourceplayUrl);
 					htmlPanel.add(img);
 					resourceWidgetContainer.add(htmlPanel);
 				}
 				else{
-					if(!collectionItemDo.getResource().getUrl().startsWith("http")){
-						collectionItemDo.getResource().setUrl(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
-					}
+					collectionItemDo.getResource().setUrl(resourceplayUrl);
 					if(collectionItemDo.getResource().getUrl().contains("docs.google.com")){
-						getUiHandlers().getGoogleDriveFile(collectionItemDo.getResource().getUrl());
+						getUiHandlers().getGoogleDriveFile(resourceplayUrl);
 					}else{
-						final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getUrl());
+						final WebResourceWidget webResourceWidget=new WebResourceWidget(resourceplayUrl);
 						resourceWidgetContainer.add(webResourceWidget);
 					}
 				}
 			}
 		}else {
-
-			
-			String[] urlFormat = collectionItemDo.getResource().getUrl().split("\\.");
+			String[] urlFormat = resourceplayUrl.split("\\.");
 			String urlExtension = urlFormat[urlFormat.length - 1];
 			if(urlExtension.equalsIgnoreCase("pdf")){
-				String resourceSourceUrl="";
-				if(!collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
-//					resourceSourceUrl = URL.encode(collectionItemDo.getResource().getUrl()).replaceAll("\\+", "%20");
-					resourceSourceUrl = collectionItemDo.getResource().getUrl();
-					resourceSourceUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceSourceUrl;
-				}else{
-					resourceSourceUrl=collectionItemDo.getResource().getUrl();
-				}
-				String signedFlag=resourceSourceUrl.contains("http")||resourceSourceUrl.contains("https")?"0":"1";
+				String signedFlag=resourceplayUrl.contains("http")||resourceplayUrl.contains("https")?"0":"1";
 				String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
-				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceSourceUrl));
+				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
 			}
 			else
 			{
-				String resourceSourceUrl="";
-				if(!collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
-					resourceSourceUrl = collectionItemDo.getResource().getUrl();
-					resourceSourceUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceSourceUrl;
-				}else{
-					resourceSourceUrl=collectionItemDo.getResource().getUrl();
-				}
-				resourceWidgetContainer.add(new WebResourceWidget(resourceSourceUrl));
+				resourceWidgetContainer.add(new WebResourceWidget(resourceplayUrl));
 			}
 		}
 	}
@@ -550,7 +473,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourceFrameBreakerViewnew.setFileDeletedMessage();
 			resourceWidgetContainer.add(resourceFrameBreakerViewnew);
 		}else{
-			final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getUrl());
+			final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getUrl()!=null?collectionItemDo.getResource().getUrl():"");
 			resourceWidgetContainer.add(webResourceWidget);
 		}
 	}
@@ -762,7 +685,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			//allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 			
 			/**
@@ -784,7 +706,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		 */
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			//allEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 			singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
@@ -799,11 +720,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void setReaction(ReactionDo reactionDo,String gooruReactionId) {
 		this.gooruReactionId=gooruReactionId;
-		if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_CAN_EXPLAIN)){
+		if(REACTION_CAN_EXPLAIN.equalsIgnoreCase(reactionDo.getReactionText())){
 			canExplainEmoticButton.setStyleName(playerStyle.spriteType());
 			canExplainEmoticButton.addStyleName(playerStyle.emoticon_vi());
 			isCanExplainSelected=true;
-			
 			/**
 			 * Except "can explain" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
@@ -828,11 +748,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isMehSelected=false;
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
-		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_CAN_UNDERSTAND)){
+		}else if(REACTION_CAN_UNDERSTAND.equalsIgnoreCase(reactionDo.getReactionText())){
 			understandEmoticButton.setStyleName(playerStyle.spriteType());
 			understandEmoticButton.addStyleName(playerStyle.emoticon_vii());
 			isCanUnderstandSelected = true;
-			
 			/**
 			 * Except "can understand" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
@@ -857,11 +776,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isMehSelected=false;
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
-		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_MEH)){
+		}else if(REACTION_MEH.equalsIgnoreCase(reactionDo.getReactionText())){
 			mehEmoticButton.setStyleName(playerStyle.spriteType());
 			mehEmoticButton.addStyleName(playerStyle.emoticon_v());
 			isMehSelected = true;
-			
 			/**
 			 * Except "meh" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
@@ -886,11 +804,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isCanUnderstandSelected=false;
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
-		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_DONOT_UNDERSTAND)){
+		}else if(REACTION_DONOT_UNDERSTAND.equalsIgnoreCase(reactionDo.getReactionText())){
 			doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
 			doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_ix());
 			isDoNotUnderstandSelected = true;
-			
 			/**
 			 * Except "do not understand" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
@@ -915,11 +832,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isCanUnderstandSelected=false;
 			isMehSelected=false;
 			isNeedHelpSelected=false;
-		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_NEED_HELP)){
+		}else if(REACTION_NEED_HELP.equalsIgnoreCase(reactionDo.getReactionText())){
 			needHelpButton.setStyleName(playerStyle.spriteType());
 			needHelpButton.addStyleName(playerStyle.emoticon_x());
 			isNeedHelpSelected = true;
-			
 			/**
 			 * Except "need help" emotic, all other will be changed to normal emotics.
 			 * Note: this changes is made to achieve when user tries to select multiple emotic, previously selected emotic shld be removed.
@@ -948,14 +864,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		
 	}
-	public static void addPadding(){
-		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapper());
-		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapperPadding());
-	}
-	
 	public static void removePadding(){
-		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapperPadding());
-		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapper());
 	}
 
 	/**
@@ -1095,7 +1004,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	@Override
 	public void setDefaultUserStarRatings() {
-//		starValue.setVisible(false);
 	}
 	
 	/**
@@ -1115,7 +1023,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		public UserStarRatingsWidget(StarRatingsDo result, boolean showThankYouToolTip) { 
 			this.ratingsDo=result;
 			this.showThankYouToolTip=showThankYouToolTip;
-//			setRatings(result,showThankYouToolTip);
 		}
 		/**
 		 * Class constructor
@@ -1137,15 +1044,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		@Override
 		public void crateStarRating(String selectedStar) {
 			if(selectedStar.equals("starOne")){
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starTwo")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starThree")){                                          
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starFour")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,null,collectionItemDo.getResource().getGooruOid());
 			}else if(selectedStar.equals("starFive")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,null);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,null,collectionItemDo.getResource().getGooruOid());
 			}
 		}
 		
@@ -1153,18 +1060,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void removeRatingContainer(boolean flag){
 		if(flag){
-	//		ratingsContainer.removeFromParent();
 			ratingsContainer.setVisible(false);
 			emoticsContainer.setVisible(true);
 		}else{
 			if(isChildAccount()){
-	//			ratingsContainer.removeFromParent();
 				ratingsContainer.setVisible(false);
 			}else{
 				ratingsContainer.setVisible(true);
 			}
 			emoticsContainer.setVisible(false);
-			//emoticsContainer.removeFromParent();
 		}
 	}
 	
@@ -1311,13 +1215,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 * default rating will get set
 	 */
 	public void getDefaultRatings(){
-//		one_star.setValue(false);
-//		two_star.setValue(false);
-//		three_star.setValue(false);
-//		four_star.setValue(false);
-//		five_star.setValue(false);
 	}
 	
+	public void setPreviousRating(double previousRating){
+		this.previousRating=previousRating;
+	}
+	
+	public double getPreviousRating(){
+		return previousRating;
+	}
 	
 	/**
 	 * In this create API will be called based the rating selected.
@@ -1325,15 +1231,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void crateStarRating(String selectedStar) {
 		if(selectedStar.equals(ONE_STAR)){
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(TWO_STAR)){                                           
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(THREE_STAR)){                                          
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FOUR_STAR)){                                           
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,"",collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FIVE_STAR)){                                           
-			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,"");
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,"",collectionItemDo.getResource().getGooruOid());
 		}
 	}
 	
@@ -1343,15 +1249,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void updateStarRating(String selectedStar) {
 		if(selectedStar.equals(ONE_STAR)){
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),1,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),1,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(TWO_STAR)){                                           
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),2,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),2,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(THREE_STAR)){                                          
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),3,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),3,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FOUR_STAR)){                                           
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),4,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),4,true,collectionItemDo.getResource().getGooruOid());
 		}else if(selectedStar.equals(FIVE_STAR)){                                           
-			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),5,true);
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),5,true,collectionItemDo.getResource().getGooruOid());
 		}
 	}
 	
@@ -1366,30 +1272,34 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(result!=null){
 			setStyle();
 			currentRating = result.getScore();
-			if(result.getScore()==1){
-				starValue.setVisible(true);
-				starValue.setText(POOR);
-				setStarRatingValue(1); 
-			}else if(result.getScore()==2){
-				starValue.setVisible(true);
-				starValue.setText(FAIR);
-				setStarRatingValue(2); 
-			}else if(result.getScore()==3){
-				starValue.setVisible(true);
-				starValue.setText(GOOD);
-				setStarRatingValue(3);
-			}else if(result.getScore()==4){
-				starValue.setVisible(true);
-				starValue.setText(VERY_GOOD);
-				setStarRatingValue(4);
-				
-			}else if(result.getScore()==5){
-				starValue.setVisible(true);
-				starValue.setText(EXCELLENT);
-				setStarRatingValue(5);
-			}else{
-				setStarRatingValue(0);
-			}
+			 if(result.getScore()!=null){
+					if(result.getScore()==1){
+						starValue.setVisible(true);
+						starValue.setText(POOR);
+						setStarRatingValue(1); 
+					}else if(result.getScore()==2){
+						starValue.setVisible(true);
+						starValue.setText(FAIR);
+						setStarRatingValue(2); 
+					}else if(result.getScore()==3){
+						starValue.setVisible(true);
+						starValue.setText(GOOD);
+						setStarRatingValue(3);
+					}else if(result.getScore()==4){
+						starValue.setVisible(true);
+						starValue.setText(VERY_GOOD);
+						setStarRatingValue(4);
+						
+					}else if(result.getScore()==5){
+						starValue.setVisible(true);
+						starValue.setText(EXCELLENT);
+						setStarRatingValue(5);
+					}else{
+						setStarRatingValue(0);
+					}
+			 }else{
+					setStarRatingValue(0);
+				}
 		}else{
 			starValue.setVisible(true);
 			starValue.setText(i18n.GL1879());
@@ -1410,6 +1320,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		three_star.getElement().removeClassName(FILLED_BLUE);
 		four_star.getElement().removeClassName(FILLED_BLUE);
 		five_star.getElement().removeClassName(FILLED_BLUE);
+		setPreviousRating(0);
 	}
 	
 	
@@ -1420,6 +1331,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private void setStarRatingValue(int starRating) {
 		
 		clearAllStars();
+		setPreviousRating(starRating);
 		if(starRating==1){
 			one_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==2){
@@ -1442,6 +1354,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			five_star.getElement().addClassName(FILLED_BLUE);
 		}else{
 			clearAllStars();
+			setPreviousRating(0);
 		}
 	}
 	
@@ -1577,7 +1490,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
 	/**
@@ -1592,13 +1504,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		if(isUpdate){
-			getUiHandlers().updateReview(starRatingsDo.getDeleteRatingGooruOid(), score,userReview);
+			getUiHandlers().updateReview(starRatingsDo.getDeleteRatingGooruOid(), score,userReview,collectionItemDo.getResource().getGooruOid());
 		}else{
 			if(ratingsConfirmationPopup!=null && ratingsConfirmationPopup.isVisible()){
 				ratingsConfirmationPopup.hide();
 			}
 			isFromThanksPopup=true;
-			getUiHandlers().createStarRatings(assocGooruOId,score,false,userReview);
+			getUiHandlers().createStarRatings(assocGooruOId,score,false,userReview,collectionItemDo.getResource().getGooruOid());
 		}
 		
 	}
@@ -1633,9 +1545,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
+		String userName ="";
+		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getUser()!=null && collectionItemDo.getResource().getUser().getUsername()!=null){
+			userName = collectionItemDo.getResource().getUser().getUsername();
+		}
 		if(score > 1)
 		{
-			thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,userName); 
 			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){  
@@ -1651,7 +1567,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		else
 		{
-			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,userName); 
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
@@ -1768,17 +1684,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList) {
 		tagsContainer.clear();
-		if(resourceTagsList!=null){
+		if(resourceTagsList!=null && resourceTagsList.size()>0){
 			FlowPanel toolTipwidgets = new FlowPanel();
-	
 			for(int i=0;i<resourceTagsList.size();i++){
 				if(i<3)
 				{
-				
 					String tagsdefaultLabel = i18n.GL1664() + " : ";
-					String tagLabel = resourceTagsList.get(i).getLabel();
+					String tagLabel = resourceTagsList.get(i).getLabel()!=null?resourceTagsList.get(i).getLabel():"";
 					HTMLPanel tagPanel = new HTMLPanel("");
-					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
+					if(resourceTagsList.get(i).getLabel()!=null && resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
 						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
 						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
@@ -1786,22 +1700,19 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					tagsContainer.add(tagPanel);
-				
 				}
 				else
 				{
 					HTMLPanel tagPanel = new HTMLPanel("");
 					String tagsdefaultLabel = i18n.GL1664() + " : ";
-					String tagLabel = resourceTagsList.get(i).getLabel();
-					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
+					String tagLabel = resourceTagsList.get(i).getLabel()!=null?resourceTagsList.get(i).getLabel():"";
+					if(resourceTagsList.get(i).getLabel()!=null && resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
 						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
 						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
 					}
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					toolTipwidgets.add(tagPanel);
-					
-		
 				}
 			}
 			if(resourceTagsList.size()>3)
@@ -1857,11 +1768,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	@Override
 	public void checkYoutubeAccessControls(Map<String, String> accessControls) {
-		// TODO Auto-generated method stub
 		String device = BrowserAgent.returnFormFactorView();
 		if(accessControls!=null){
-			if(accessControls.get(EMBED).equals("allowed")){
-				if(accessControls.get(SYNDICATE).equals("allowed") || (device.equalsIgnoreCase("desktop"))){
+			if("allowed".equals(accessControls.get(EMBED))){
+				if("allowed".equals(accessControls.get(SYNDICATE)) || (device.equalsIgnoreCase("desktop"))){
 					resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
 				}else {
 					resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));

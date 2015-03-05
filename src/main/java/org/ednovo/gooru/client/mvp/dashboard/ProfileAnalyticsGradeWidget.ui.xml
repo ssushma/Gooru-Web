@@ -1,0 +1,64 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<ui:style field="style" src="dashboard.css"/>
+	<g:HTMLPanel ui:field="gradeWidget">
+					<div class="{style.whiteBg}">
+        <div class="{style.collectionPublished}">
+          <div class="{style.smallHeader}">Collections Published with Common Core Standards</div>
+          <div class="{style.colleGrade}">
+            <div class="{style.collHead}">Grade 3</div>
+            <div class="{style.collSmallHead}"><g:InlineLabel ui:field="contributedStandardsCount">30/60</g:InlineLabel> <g:InlineLabel ui:field="contributedStandardsText">contributed standards</g:InlineLabel></div>
+          </div>
+          <div class="{style.treeView}">
+            <ul>
+              <li class="oneLevel">
+                <label class="tree-toggler nav-header">Number &amp; Operations in Base Ten <g:InlineLabel>10</g:InlineLabel></label>
+                <ul class="nav nav-list tree">
+                  <li><a>CCSS.Math.Content.3.OA.A.1 <g:InlineLabel>3</g:InlineLabel></a></li>
+                  <li><a>CCSS.Math.Content.3.OA.A.2 <g:InlineLabel>4</g:InlineLabel></a></li>
+                  <li><a>CCSS.Math.Content.3.OA.A.3 <g:InlineLabel>1</g:InlineLabel></a></li>
+                  <li><a>CCSS.Math.Content.3.OA.A.4 <g:InlineLabel>2</g:InlineLabel></a></li>
+                  <li><a>CCSS.Math.Content.3.OA.A.5 <g:InlineLabel>0</g:InlineLabel></a></li>
+                  <li><a>CCSS.Math.Content.3.OA.A.6 <g:InlineLabel>0</g:InlineLabel></a></li>
+                  <li><a>CCSS.Math.Content.3.OA.A.7 <g:InlineLabel>0</g:InlineLabel></a></li>
+                  <li><a>CCSS.Math.Content.3.OA.A.8 <g:InlineLabel>0</g:InlineLabel></a></li>
+                  <li class="twoLevel">
+                    <label class="tree-toggler nav-header">CCSS.Math.Content.3.OA.A.9 <g:InlineLabel>0</g:InlineLabel></label>
+                    <ul class="nav nav-list tree">
+                      <li><a><img src="../images/profileimages/folder.png" /> Dogs</a></li>
+                      <li><a><img src="../images/profileimages/folder.png" /> Volcanic Activity</a></li>
+                      <li><a><img src="../images/profileimages/folder.png" /> Earthquakes</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><a>Number &amp; Operations - Fractions <g:InlineLabel>0</g:InlineLabel></a></li>
+              <li><a>Measurement &amp; Data <g:InlineLabel>0</g:InlineLabel></a></li>
+              <li><a>Geometry <g:InlineLabel>0</g:InlineLabel></a></li>
+            </ul>
+          </div>
+          <div class="{style.colleGrade}">
+            <div class="{style.collHead}">Grade 4</div>
+            <div class="{style.collSmallHead}"><g:InlineLabel ui:field="gradeFourStandardsCount">26/60</g:InlineLabel> <g:InlineLabel ui:field="gradeFourStandardsCountText">contributed standards</g:InlineLabel></div>
+          </div>
+          <div class="{style.treeView}">
+            <ul>
+              <li><a href="#">Operations &amp; Algebraic Thinking <g:InlineLabel>15</g:InlineLabel></a></li>
+              <li><a href="#">Number &amp; Operations in Base Ten <g:InlineLabel>7</g:InlineLabel></a></li>
+              <li><a href="#">Number &amp; Operations - Fractions <g:InlineLabel>3</g:InlineLabel></a></li>
+              <li><a href="#">Measurement &amp; Data <g:InlineLabel>0</g:InlineLabel></a></li>
+              <li><a href="#">Geometry <g:InlineLabel>1</g:InlineLabel></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>	
+	</g:HTMLPanel>
+	
+</ui:UiBinder>

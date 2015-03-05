@@ -32,14 +32,13 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
-import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -47,6 +46,7 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -54,7 +54,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
-public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollectionPlayerMetadataView> implements CollectionPlayerMetadataUiHandlers{
+public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollectionPlayerMetadataView> implements CollectionPlayerMetadataUiHandlers,ClientConstants{
 	
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -76,18 +76,6 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	
 	public static final  Object METADATA_PRESENTER_SLOT = new Object();
 	
-	private static final String PAGE = "course-page";
-	
-	private static final String CREATE = "CREATE";
-	
-	private static final String EDIT = "EDIT";
-	
-	private static final String FEATCHINGCOMMENT = "FEATCHINGCOMMENT";
-	
-	private static final String INITIAL_COMMENT_LIMIT = "10";
-	
-	private static final String INITIAL_OFFSET = "0";
-	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
@@ -99,19 +87,15 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
-		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
-		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
 		getView().setCollectionMetadata(collectionDo);
-		if(AppClientFactory.isAnonymous()) {
-			getView().setPlayerLoginStatus(false);
-		} else {
-			getView().setPlayerLoginStatus(true);
-		}
-		getCollectionCommentsList(collectionDo.getGooruOid(), INITIAL_OFFSET, INITIAL_COMMENT_LIMIT);
+		
+		getView().setPlayerLoginStatus(AppClientFactory.isAnonymous() ? false : true);
+		
+		getCollectionCommentsList(collectionDo.getGooruOid(), ZERO_NUMERIC, INITIAL_COMMENT_LIMIT);
 		setRelatedConcepts(collectionDo);
 	}
 	
@@ -144,7 +128,6 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	}
 	
 	public void updateLikesCount(int likesCount){
-		//getView().setLikesCount(likesCount);
 	}
 	
 	public void setUserProfileName(String gooruUid){
@@ -191,22 +174,24 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 
 	@Override
 	public void createCommentForCollection(String gooruOid, String comment) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(null, PlayerDataLogEvents.COMMENT_CREATE, comment);
 		this.playerAppService.createCommentForCollection(gooruOid, comment, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo commentsDo) {
-				getView().setCommentsWidget(commentsDo, CREATE);
+				getView().setCommentsWidget(commentsDo, CREATE.toUpperCase());
 				getView().displaySuccessMsg(false);
 			}
 		});
 	}
 
-	@Override
+	
 	public void updateCommentChildView(String commentUid, String action) {
 		getView().updateCommentChildView(commentUid, action);
 	}
 
 	@Override
-	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit) {
+	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit,String commentText) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_DELETE,commentText);
 		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void noResult) {
@@ -219,16 +204,17 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		this.playerAppService.getCollectionCommentsList(gooruOid, offset, limit, new SimpleAsyncCallback<CommentsListDo>() {
 			@Override
 			public void onSuccess(CommentsListDo commentDoList) {
-				getView().setCommentsWidget(commentDoList.getSearchResults().get(0), FEATCHINGCOMMENT);
+				getView().setCommentsWidget(commentDoList.getSearchResults().get(0), FEATCHINGCOMMENT.toUpperCase());
 			}
 		});
 	}
-	@Override
+	
 	public void editCommentChildView(String commentUid, String commentText, String action) {
+		collectionPlayerPresenter.triggerCommentDataLogEvent(commentUid, PlayerDataLogEvents.COMMENT_EDIT,commentText);
 		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo result) {
-				getView().updateCommentChildView("", EDIT);
+				getView().updateCommentChildView("", EDIT.toUpperCase());
 			}
 		});
 	}
@@ -245,22 +231,24 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
-				if(result.size()==0){
-					getView().getFlagButton().setText(i18n.GL0556());
-					getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-					getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-				}else{
-					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						getView().getFlagButton().setText(i18n.GL0557());
-						getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-						
+				if(result!=null){
+					if(result.size()==0){
+						getView().getFlagButton().setText(i18n.GL0556());
+						getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+					}else{
+						for(int i =0;i<result.size();i++){
+							if(result.get(i).getDeleteContentGooruOid()!=null){
+								gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+							}
+							getView().getFlagButton().setText(i18n.GL0557());
+							getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+							getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+						}
 					}
-			}
+				}
 			}
 		});
-		
 	}
 
 	public void setRelatedConcepts(CollectionDo collectionDo) {
@@ -273,7 +261,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 				@Override
 				public void onSuccess(ArrayList<ConceptDo> conceptDoList) {
 					getView().isConceptsContainerVisible(true);
-					getView().setRelatedConceptsContent(conceptDoList, PAGE, subject, lessonId, libraryType);
+					getView().setRelatedConceptsContent(conceptDoList, COURSE_PAGE, subject, lessonId, libraryType);
 				}
 			});
 		} else {
@@ -319,6 +307,16 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	}
 	public void hideTeacherInfo() { 
 		getView().hideTeachPanelDetails(false);
+	}
+	@Override
+	public void updateCommentsStatus(String commentsStatus){
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateCommentsStatus(commentsStatus);
+		}
+	}
+	
+	public void changeCommentsButton(CollectionDo collectionDoObj){
+		getView().changeCommentsButton(collectionDoObj);
 	}
 
 }

@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCollaboratorTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionShareTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionStatisticsTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionTabTitleVc;
@@ -69,7 +68,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -196,7 +195,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	private FolderPopupUc folderPopupUc;
 
-	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
+//	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
 
 	private CollectionShareTabVc collectionShareTabVc;
 	
@@ -245,7 +244,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	private static final String WHAT_IS_THIS_COLLECTION_ABOUT = i18n.GL1485()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP();
+	private static String WHAT_IS_THIS_COLLECTION_ABOUT = i18n.GL1485()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP();
 
 	private static final String PRE_SEARCH_LINK = i18n.GL1487();
 	
@@ -390,6 +389,17 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					titleAlertMessageLbl
 							.removeStyleName("titleAlertMessageActive");
 				}
+			}
+			
+			@Override
+			public void showErrorMessage(String message){
+				titleAlertMessageLbl.setText(message);
+				StringUtil.setAttributes(titleAlertMessageLbl.getElement(), "lblTitleAlertMessageLbl", message, message);
+				
+				titleAlertMessageLbl
+						.addStyleName("titleAlertMessageActive");
+				titleAlertMessageLbl
+						.removeStyleName("titleAlertMessageDeActive");
 			}
 		};
 		
@@ -807,7 +817,21 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		setTab(getPersistantTabObjectUsingTabFlag());
 		collectionTitleUc.setText(collection.getTitle());
 		collectionDescriptionUc.setText(collection.getGoals());
-		collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
+		if(collection.getThumbnails()!= null)
+		{
+			if(collection.getThumbnails().getUrl() != null)
+			{
+				collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
+			}
+			else
+			{
+				collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
+			}
+		}
+		else
+		{
+			collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
+		}
 		collectionImageShelfUc.getCollectionImg().setAltText(collection.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());
 		collectionFloPanel.setVisible(true);
@@ -832,10 +856,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 		if(collectionDo.getSharing()!=null){
 			final String share=collectionDo.getSharing();
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 				@Override
-				public void onSuccess(SettingDo result) {
+				public void onSuccess(V2UserDo result) {
 					if(result.getUser().getAccountTypeId()==2){
 						rbPublicPanel.setVisible(false);
 						publishedPanel.setVisible(false);
@@ -971,7 +995,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void reset() {
 		super.reset();
 		this.collectionDo = null;
-		collectionCollaboratorTabVc = null;
+//		collectionCollaboratorTabVc = null;
 		collectionShareTabVc = null;
 		collectionStatisticsTabVc = null;
 		collectionMetaDataSimPanel.clear();
@@ -1067,6 +1091,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		setIpadFriendly();
+		modifyStaticText(collectionDo.getCollectionType());
 //		panelFriendly.setVisible(false);
 		if(tab!=null){
 			if (tab.equals(infoTabVc)) {
@@ -1137,14 +1162,27 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-			lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+/*			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			}else{*/
+				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			/*}*/
 		}else{
 			//imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-			lblFriendly.setText(i18n.GL0453());
+	/*		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+				lblFriendly.setText(i18n.GL3013());
+			}else{*/
+				lblFriendly.setText(i18n.GL0453());
+			/*}*/
 		}
+	}
+	
+	public void modifyStaticText(String collectionType){
+		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL2001().toLowerCase():i18n.GL2001();
+		collectionDescriptionUc.setPlaceholder(StringUtil.generateMessage(WHAT_IS_THIS_COLLECTION_ABOUT, collectionType));
 	}
 
 	/**
@@ -1210,17 +1248,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	}
 
-	/**
-	 * get collection collaborator tab view
-	 * 
-	 * @return collection collaborator view
-	 */
-	public CollectionCollaboratorTabVc getCollectionCollaboratorTabVc() {
-		if (collectionCollaboratorTabVc == null) {
-			collectionCollaboratorTabVc = new CollectionCollaboratorTabVc(collectionDo);
-		}
-		return collectionCollaboratorTabVc;
-	}
 
 	/**
 	 * get collection share tab view
@@ -1323,8 +1350,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
-		delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
-		delete.setDescText(i18n.GL1238());
+/*		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
+			delete.setDescText(i18n.GL1238());
+		}else{*/
+			delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
+			delete.setDescText(i18n.GL1238());
+		/*}*/
 		delete.setDeleteValidate("delete");
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
@@ -1523,6 +1555,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
 		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);
 		Window.enableScrolling(false);
+		folderPopupUc.setCollectionType(collectionDo.getCollectionType());
 		/*folderPopupUc.center();*/
 		folderPopupUc.show();
 	}

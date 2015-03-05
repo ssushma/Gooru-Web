@@ -27,10 +27,13 @@ package org.ednovo.gooru.client.service;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
@@ -56,8 +59,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
     
     void getRegistredUserDetails(String gooruUid, AsyncCallback<UserDo> callback);
     
-    void getUserProfileDetails(String gooruUid, AsyncCallback<SettingDo> callback);
-    
     void getV2UserProfileDetails(String gooruUid, AsyncCallback<V2UserDo> callback);
     
     void updateUserDetails(String gooruUid, String token, Map<String, String> params, AsyncCallback<ProfileDo> callback);
@@ -70,8 +71,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
     
     void updateUserViewFlag(String gooruUid, Integer viewFlag, AsyncCallback<UserDo> callback);
 
-    void updateProfileSettings(String gooruUid, Map<String, String> params, AsyncCallback<SettingDo> callback);
-    
     void updateUserProfileVisibility(String gooruUid,String optionalValue,AsyncCallback<ProfilePageDo> callback);
     
     void  getUserProfilePage(String gooruUid, AsyncCallback<ProfilePageDo> callback);
@@ -89,7 +88,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void updateNewEmailStatus(String emailId, boolean isEmailConfirmed,
 		AsyncCallback<Void> callback);
    
-   void updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biographyString ,String password,String userName, String gender, boolean isSendConfirmEmail, AsyncCallback<V2UserDo> callback);
+   void updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biographyString ,String password,String userName, String gender, boolean isSendConfirmEmail,String userType, AsyncCallback<V2UserDo> callback);
    
    void sendWelcomeMail(String gooruUId, String emailType, AsyncCallback<Object> callback);
    
@@ -114,4 +113,19 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void revokeToken(String gooruUid,AsyncCallback<String> callback);
    
    void isValidResetPasswordLink(String resetToken,AsyncCallback<String> callback);
+   
+   void getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator,AsyncCallback<Map<String, Integer>> callback);
+  
+   void getUsersPublishedCollectionsCount(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+
+   void getFiveStarRatedResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+   
+   void getFiveStarReviewdResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+  
+   void getProfileAnalyticsRatings(AsyncCallback<ProfileRatingsReactionsDO> callback);
+   
+   void getTopViewedCollectionsInfo(String offsetval,String limitval,AsyncCallback<UserDashBoardCommonInfoDO> callback);
+   
+   void setUserProperties(UserDo user, AsyncCallback<FilterSettings> callback);
+
 }

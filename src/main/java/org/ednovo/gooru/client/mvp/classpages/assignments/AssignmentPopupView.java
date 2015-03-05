@@ -216,10 +216,25 @@ public abstract class AssignmentPopupView extends Composite{
 		return isValid;
 	}
 
+	/**
+	 * 
+	 * @fileName : AssignmentPopupView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
-dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateBoxError());
+			dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateBoxError());
 			dateBoxUc.getDateBox().removeStyleName(
 					AddAssignmentContainerCBundle.INSTANCE.css()
 							.gooruDateError());
@@ -229,7 +244,21 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : AssignmentPopupView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -246,6 +275,21 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 		}
 	}
 
+	/**
+	 * 
+	 * @fileName : AssignmentPopupView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -267,6 +311,21 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 		}
 	}
 
+	/**
+	 * 
+	 * @fileName : AssignmentPopupView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class AddClickHandler implements ClickHandler {
 
 		@Override
@@ -368,7 +427,23 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 	// mandatoryDueDateLabel.setVisible(false);
 	// }
 	// }
-
+	
+	
+	/**
+	 * 
+	 * @fileName : AssignmentPopupView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -382,7 +457,22 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 			}
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @fileName : AssignmentPopupView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class DirectionsKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -397,10 +487,25 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 		}
 	}
 
-	/*
-	 * Custom methods
+	/**
+	 * 
+	 * @function clearFields 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
-
 	public void clearFields() {
 		mandatoryDirectionLabel.setVisible(false);
 		mandatoryDueDateLabel.setVisible(false);

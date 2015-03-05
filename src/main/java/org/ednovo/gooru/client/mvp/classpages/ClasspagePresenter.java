@@ -251,7 +251,25 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			refreshClasspage();
 		
 	}
-
+	/**
+	 * 
+	 * @function refreshClasspage 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void refreshClasspage(){
 	  List<CollectionDo> tmpClasspageList = new ArrayList<CollectionDo>();
 		
@@ -295,7 +313,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	@Override
 	public void createClasspage(CollectionDo collectionDo) {
 
-//		getClasspageService().createClasspage(collectionDo, getCollectionAsyncCallback());
 		getClasspageService().v2CreateClasspage(collectionDo, getCollectionAsyncCallback());
 		 getView().getClassPageScrollPanel().scrollToTop();
 		
@@ -303,8 +320,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	
 	@Override
 	public void getAllClasspages(String limit, String offSet) {
-
-		
 		getClasspageService().v2GetAllClasspages(limit, offSet, getGetAllClasspagesAsyncCallback());
 	}
 	

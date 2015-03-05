@@ -31,9 +31,8 @@ public class ResourceNonExitView extends Composite {
 	public ResourceNonExitView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		defaultImage.setUrl("images/resource_error.png");
-		
 		defaultImage.getElement().setId("imgDefaultImage");
-		
+
 		ancLearnMore.setText(i18n.GL0343());
 		ancLearnMore.getElement().setId("lnkAncLearnMore");
 		ancLearnMore.getElement().setAttribute("alt",i18n.GL0343());
@@ -44,11 +43,9 @@ public class ResourceNonExitView extends Composite {
 		lblNoLongerMessage.getElement().setAttribute("alt",i18n.GL1760());
 		lblNoLongerMessage.getElement().setAttribute("title",i18n.GL1760());
 		
-		//lblNextResourceMsg.setText(MessageProperties.i18n.GL1761);
 		lblDesc.getElement().setInnerHTML(i18n.GL1762());
 		lblDesc.getElement().setId("lblDesc");
 		lblDesc.getElement().setAttribute("alt",i18n.GL1762());
 		lblDesc.getElement().setAttribute("title",i18n.GL1762());
-}
-
+	}
 }

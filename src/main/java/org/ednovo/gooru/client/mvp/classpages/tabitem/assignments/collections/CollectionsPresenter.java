@@ -27,13 +27,19 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 /**
  * 
  */
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 
 /*
@@ -77,7 +83,28 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 	public void setClasspageService(ClasspageService classpageService) {
 		this.classpageService = classpageService;
 	}
-	
+	/**
+	 * 
+	 * @function updateClasspageItem 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageItemId
+	 * @parm(s) : @param directionText
+	 * @parm(s) : @param dueDate
+	 * @parm(s) : @param readStatus
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate,final String readStatus){
 		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,readStatus,new SimpleAsyncCallback<String>() {
 			@Override
@@ -92,7 +119,25 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 			}
 		});
 	}
-	
+	/**
+	 * 
+	 * @function deleteClasspageItem 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageItemId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void deleteClasspageItem(String classpageItemId){
 		AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classpageItemId, new SimpleAsyncCallback<String>() {
 			@Override
@@ -104,18 +149,67 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 		});
 	}
 
-
+	/**
+	 * 
+	 * @function getEditClasspagePresenter 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : EditClasspagePresenter
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public EditClasspagePresenter getEditClasspagePresenter() {
 		return editClasspagePresenter;
 	}
 
-
+	/**
+	 * 
+	 * @function setEditClasspagePresenter 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param editClasspagePresenter
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setEditClasspagePresenter(
 			EditClasspagePresenter editClasspagePresenter) {
 		this.editClasspagePresenter = editClasspagePresenter;
 	}
 	
 	
-
-
+	public void checkCollectionStaus(String classpageId,String collectionId){
+		AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", collectionId, new AsyncCallback<CollectionSummaryMetaDataDo>() {
+			@Override
+			public void onSuccess(CollectionSummaryMetaDataDo result) {
+				if(result!=null && result.getViews()!=0){
+					getView().setViewCollectionAnalytics(true);
+				}else{
+					getView().setViewCollectionAnalytics(false);
+				}
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
 }

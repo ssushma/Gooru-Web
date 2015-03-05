@@ -32,10 +32,13 @@ import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
@@ -134,12 +137,6 @@ public interface UserService extends BaseService {
 	 */
 	UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException, ServerDownException;
 
-	/**
-	 * Get User profile details for settings page
-	 * @return serialized {@link SettingDo}
-	 * @throws GwtException
-	 */
-	SettingDo getUserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get User profile details for settings page
@@ -148,15 +145,8 @@ public interface UserService extends BaseService {
 	 */
 	V2UserDo getV2UserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 
-	/**
-	 * Update user profile details
-	 * @param gooruUid of the user
-	 * @param token session token to set for loogedIn user
-	 * @param params has user details
-	 * @return serialized {@link ProfileDo}
-	 * @throws GwtException
-	 */
-	SettingDo updateProfileSettings(String gooruUid, Map<String, String> params) throws GwtException, ServerDownException;
+	
+	
 	/**
 	 * Update user profile visibilty
 	 * @param gooruUid of the user
@@ -208,7 +198,7 @@ public interface UserService extends BaseService {
 	
 	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException, ServerDownException;
 	
-	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail)  throws GwtException, ServerDownException;
+	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail,String userType)  throws GwtException, ServerDownException;
 	
 	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException, ServerDownException;
 	
@@ -235,5 +225,31 @@ public interface UserService extends BaseService {
 	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
 	
 	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
+	
+	/**
+	 * This method is used to get the count of flagged,views,shared and add to collection count in the profile analytics.
+	 * @param fieldVal
+	 * @param StartDate
+	 * @param endDate
+	 * @param operator
+	 * @return
+	 */
+	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator);
+
+    UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
+
+    UserDashBoardCommonInfoDO getFiveStarRatedResources();
+    
+    UserDashBoardCommonInfoDO getFiveStarReviewdResources();
+
+    /**
+     * This method is used to get the review and comments count in the profile analytics.
+     * @return
+     */
+    ProfileRatingsReactionsDO getProfileAnalyticsRatings();
+    
+    UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval);
+    
+    FilterSettings setUserProperties(UserDo user);
 
 }

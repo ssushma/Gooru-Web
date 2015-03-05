@@ -40,6 +40,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -478,10 +479,10 @@ IsSocialShareSmallView{
 	private void onEmailShareEvent() {
 		MixpanelUtil.Click_On_Email();
 		if(!(AppClientFactory.isAnonymous())){
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<SettingDo>() {
+			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<V2UserDo>() {
 
 				@Override
-				public void onSuccess(SettingDo result) {
+				public void onSuccess(V2UserDo result) {
 					socialDo.setEmailId(result.getExternalId());
 					EmailShareUc emailShare=new EmailShareUc(socialDo);
 					emailShare.show();

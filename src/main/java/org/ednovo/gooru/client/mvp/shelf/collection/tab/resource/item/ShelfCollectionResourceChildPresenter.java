@@ -91,9 +91,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	}
 
 	
-	/*public void getUserCollections(){
-		getResourceService().getUserCollection(getUserCollectionsAsyncCallback());
-	}*/
+	
 	public void getUserColletionsList(Integer pageSize,Integer pageNum)
 	{
 		getResourceService().getUserCollectionList(pageSize,pageNum,false,getUserCollectionsAsyncCallback());
@@ -134,10 +132,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	public void createCollectionItem(String collectionId, String collectionItemId) {
 		getResourceService().copyCollectionItem(collectionId, collectionItemId, getCopyCollectionItemAsyncCallback());
 	}
-    /*public void updateResourceQuestion(String collectionItemId,CollectionQuestionItemDo collectionQuestionItemDo){
-    //	getResourceService().updateQuestionResource(collectionItemId, collectionQuestionItemDo, getUpdateQuestionItemResourceAsyncCallback());
-    	
-    }*/
+    
 	/**
 	 * @return instance of {@link CollectionItemDo} after update the collection item
 	 */

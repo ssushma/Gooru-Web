@@ -29,7 +29,21 @@ import org.ednovo.gooru.client.PlaceTokens;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-
+/**
+ * 
+ * @fileName : ContributorsPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class ContributorsPresenter extends PresenterWidget<IsContributorsView> implements ContributorsUiHandlers {
 
 	
@@ -52,7 +66,25 @@ public class ContributorsPresenter extends PresenterWidget<IsContributorsView> i
 	@Override
 	protected void onReset() {
 	}
-
+	/**
+	 * 
+	 * @function getViewToken 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String getViewToken() {
 		return PlaceTokens.HOME;
 	}

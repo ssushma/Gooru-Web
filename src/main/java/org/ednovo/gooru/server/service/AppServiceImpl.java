@@ -65,62 +65,15 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 //			user.setEmailId(getLoggedInEmailId());
 		}
 		if (user == null) {
-//			user = guestSignIn();
 			user = v2GuestSignIn();
 		}
 		setUserFilterProperties(user);
 		return user;
 	}
 
-	@Override
-	public UserDo signin(String username, String password) {
-		UserDo user = null;
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNIN, getApiKey(), getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), AppFormFactory.getSigninForm(username, password));
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		String content = null;
-		try {
-			content = jsonRep.getText();
-			
-			if (content.contains("{")) {
-				user = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
-				// if user created after production switch
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					user.setBeforeProductionSwitch(false);
-				}else{
-					user.setBeforeProductionSwitch(true);
-				}
-				
-				setUserFilterProperties(user);
-				deleteLoggedInInfo();
-				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
-				return user;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new GwtException(e.getMessage());
-		}
-		if (content != null) {
-			String[] parsed = content.split(":");
-			if (parsed.length > 1) {
-				content = parsed[1];
-			}
-		}
-		throw new GwtException(content);
-	}
 
 	@Override
-	public UserDo signout() {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNOUT, getLoggedInSessionToken());
-		ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		deleteLoggedInInfo();
-		UserDo user = guestSignIn();
-		setUserFilterProperties(user);
-		return user;
-	}
+	public UserDo signout() {return null;}
 
 	
 	/// V2 Apis
@@ -130,21 +83,11 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		V2UserDo v2UserDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
-		System.out.println("signin urll==>"+url);
-		System.out.println("signin postData==>"+postData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		String content = null;
 		try {
-			if(jsonResponseRep.getStatusCode()==401){
-				user = new UserDo();
-				user.setStatusCode(jsonResponseRep.getStatusCode());
-				return user;
-			}else if(jsonResponseRep.getStatusCode()==400){
-				user = new UserDo();
-				user.setStatusCode(jsonResponseRep.getStatusCode());
-				return user;
-			}else{
+			if (jsonResponseRep.getStatusCode()==200){
 				content = jsonRep.getText();
 				if (content.contains("{")) {
 					v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
@@ -170,6 +113,11 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 					AppClientFactory.setLoggedInUser(user);
 					return user;
 				}
+			}else {
+				user = new UserDo();
+				user.setStatusCode(jsonResponseRep.getStatusCode());
+				user.setResponseDo(jsonResponseRep.getResponseDo());
+				return user;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

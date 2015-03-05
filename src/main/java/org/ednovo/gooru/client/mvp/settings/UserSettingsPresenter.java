@@ -282,9 +282,10 @@ public class UserSettingsPresenter
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		this.getUserService().getUserProfilePage(
+/*		this.getUserService().getV2UserProfileDetails(
 				AppClientFactory.getPlaceManager().getRequestParameter(
-						GOORU_UID), getUserProfilePageAsyncCallback());
+						GOORU_UID), getUserV2ProfilePageAsyncCallback());*/
+
 		getView().setUserProfileImageUrl("EMPTY");
 	}
 
@@ -389,12 +390,12 @@ public class UserSettingsPresenter
 					getView().getLbUserName().setText(
 							user.getUser().getUsername());
 					getView().hideuserDetailsContainerOnClickOfTab();
+					if(user.getUserType() != null && user.getUserType().length() > 1)
+					{
+						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
+					}
 					if (user.getUser().getLoginType()
 							.equalsIgnoreCase("credential")) {					
-						if(user.getUserType() != null && user.getUserType().length() > 1)
-						{
-						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
-						}
 						if (dob != null) {
 							getView().getLbUName().getElement()
 									.setAttribute("dob", "" + dob);
@@ -428,11 +429,11 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						Refersh_emailId=user.getExternalId();
-						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+					if (user.getUser().getEmailId() != null) {
+						Refersh_emailId=user.getUser().getEmailId();
+						boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 						if(isValidEmail){
-							getView().getLbEmail().setText(user.getExternalId());
+							getView().getLbEmail().setText(user.getUser().getEmailId());
 							//StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
 							
 							
@@ -444,7 +445,7 @@ public class UserSettingsPresenter
 						if(user.getUser().getAccountTypeId() != 2){
 							if(user.getUser().getEmailId()!=null){
 								Refersh_emailId=user.getUser().getEmailId();
-								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+								boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 								if(isValidEmail){
 									//StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
 									
@@ -521,17 +522,24 @@ public class UserSettingsPresenter
 						getView().getAboutUsContainer().setVisible(true);
 						setUserUnder13(false);
 					}
+					getView().setData(user);
+					
+					if(AppClientFactory.getLoggedInUser().getSettings()!=null && AppClientFactory.getLoggedInUser().getSettings()
+							.getProfileImageUrl() != null)
+					{
 					getView().setUserProfileImageUrl(
 							AppClientFactory.getLoggedInUser().getSettings()
 									.getProfileImageUrl()
 									+ user.getUser().getGooruUId()
 									+ "-158x158.png");
+					}
 
-					getView().setData(user);
+				
 				} else {
 					
 				}
 				updateRefershToken();
+				getView().displayAdminPortal();
 				/**
 				 * This RPC is to get the User profile Details(grade value)
 				 */
@@ -727,10 +735,10 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						getView().getLbEmail().setText(user.getExternalId());
+					if (user.getUser().getEmailId() != null) {
+						getView().getLbEmail().setText(user.getUser().getEmailId());
 						//StringUtil.consoleLog("setEmailId 3"+user.getExternalId());
-						Refersh_emailId = user.getExternalId();
+						Refersh_emailId = user.getUser().getEmailId();
 						
 						
 					} else {
@@ -803,13 +811,18 @@ public class UserSettingsPresenter
 						getView().getAboutUsContainer().setVisible(true);
 						setUserUnder13(false);
 					}
+
+					getView().setData(user);
+					if(AppClientFactory.getLoggedInUser().getSettings()!=null && AppClientFactory.getLoggedInUser().getSettings()
+							.getProfileImageUrl() != null)
+					{
 					getView().setUserProfileImageUrl(
 							AppClientFactory.getLoggedInUser().getSettings()
 									.getProfileImageUrl()
 									+ user.getUser().getGooruUId()
 									+ "-158x158.png");
+					}
 
-					getView().setData(user);
 				} else {
 					
 				}
@@ -996,16 +1009,7 @@ public class UserSettingsPresenter
 			updateUserDetails.put("gender", "X");
 			gender = "X";
 		}
-		
-//		updateUserDetails.put("aboutMe", getView().getProfileBiographyEditUC()
-//				.getText());
-//		this.getUserService().updateProfileSettings(
-//				AppClientFactory.getPlaceManager().getRequestParameter(
-//						GOORU_UID), updateUserDetails,
-//				getUserprofileAsyncCallback());
-		
-		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, getUserV2ProfilePageAsyncCallback());
-
+		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, null, getUserV2ProfilePageAsyncCallback());
 	}
 
 	@Override

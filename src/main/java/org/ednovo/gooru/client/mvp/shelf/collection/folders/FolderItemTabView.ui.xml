@@ -25,6 +25,7 @@
 		<g:HTMLPanel ui:field="mainSection" styleName="{folderStyle.mainSection}">
 			<g:HTMLPanel styleName="{folderStyle.addButtons}">
 				<g:Button styleName="primary {folderStyle.collectionButton}" ui:field="newCollectionBtn" />
+				<g:Button styleName="primary {folderStyle.collectionButton}" ui:field="assessmentButton" />
 				<g:Button styleName="primary" ui:field="newFolderBtn" />
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="loadingImage" styleName="loadingImage"/>

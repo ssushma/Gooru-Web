@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.customize.LoginPluginView;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
@@ -157,32 +158,12 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copycollectionTextbox.addKeyPressHandler(new OnkeyPress());
 		copycollectionTextbox.addBlurHandler(new OnBlurr());
 		copycollectionTextbox.addKeyUpHandler(new OnkeyUp());
-		
-		/*copycollectionTextbox.addBlurHandler(new BlurHandler() {
-			
-			@Override
-			public void onBlur(BlurEvent event) {
-				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", copycollectionTextbox.getValue());
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-
-					@Override
-					public void onSuccess(Boolean value) {
-						isHavingBadWords=value;
-						SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
-					}
-				});
-			}
-		});*/
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
-
 			@Override
 			public void onSuccess(CollectionDo result) {
 				collectionDo = result;
 				MixpanelUtil.Preview_Click_Customize_successful();
-
 				copycollectionTextbox.setText(result.getTitle());
-
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
@@ -196,7 +177,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 						@Override
 						public void showSuccessMsgfromChild(String collectionId,String collectionTitle) {
 							showSuccessMsg(collectionId);
-
 						}
 					};
 					loginCustom.add(assignWidget);
@@ -212,16 +192,8 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		});
 
 		MixpanelUtil.mixpanelEvent("CoursePage_customize_collection");
-		
-		
-		
-		
-		
-		
-		
 		setId();
 		this.center();
-
 	}
 	public void setId(){
 		panelAssign.getElement().setId("pnlPanelAssign");
@@ -310,7 +282,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
 		customizeText.getElement().setInnerHTML(i18n.GL0743());
-
 	}
 
 	/**
@@ -399,6 +370,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,new String[] {"id",result.getGooruOid()});
 					AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
 					closePoup();
+					AppClientFactory.fireEvent(new CloseCollectionPlayerEvent(true));
 				}
 			};
 		}

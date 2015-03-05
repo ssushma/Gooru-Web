@@ -9,7 +9,7 @@
 }
 
 .hoverPopupArrow {
-	background: url(images/core/bubble-arrow.png);
+	background: url(images/bubble-arrow.png);
 	display: block;
 	width: 25px;
 	height: 10px;
@@ -20,7 +20,7 @@
 }
 
 .hoverPopupArrowNewResource {
-	background: url(images/core/bubble-arrow.png);
+	background: url(images/bubble-arrow.png);
 	display: block;
 	width: 25px;
 	height: 10px;
@@ -31,7 +31,7 @@
 }
 
 .gooruGuidePopupArrow {
-	background: url(images/core/bubble-arrow.png);
+	background: url(images/bubble-arrow.png);
 	display: block;
 	width: 25px;
 	height: 10px;
@@ -466,7 +466,6 @@
 	width: 204px;
 	float: left;
 }
-
 .inputContainer{
 	padding: 8px;
 }
@@ -502,7 +501,7 @@
 	-moz-border-radius: 4px;
 	position: relative;
 	width: 260px;
-	height: 425px;
+	height: 458px;
 	cursor: pointer;
 	color: #515151;
 }
@@ -562,7 +561,7 @@
     background: url(images/folders/panel/edit-smaller-icon.png) 14px no-repeat;
 }
 
-.collectionToolTipLabel:hover,.folderToolTipLabel:hover, .mycollectionsToolTipLabel:hover {
+.collectionToolTipLabel:hover,.folderToolTipLabel:hover, .mycollectionsToolTipLabel:hover, .dashBoardToolTipLabel:hover {
 	background-color: #cfe3f1;
 }
 .partnerLibraryDivInfo{
@@ -572,4 +571,9 @@
 .districtLibrayCOntainerInfo{
 	/* position: fixed !important; */
 	z-index: 0;
+}
+.dashBoardToolTipLabel{
+	padding: 6px;
+    cursor: pointer;
+    padding-left: 10px;
 }

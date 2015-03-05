@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -207,24 +207,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
 		buttonsPanel.getElement().setId("pnlButtonsPanel");
 		setData(resourceSearchResultDo);
-	/*	MouseOutHandler mouseouthandler = new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				// TODO Auto-generated method stub
-				buttonsPanel.setVisible(false);
-			}
-		};
-		MouseOverHandler mouseoverhandler = new MouseOverHandler() {
-			
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				// TODO Auto-generated method stub
-				buttonsPanel.setVisible(true);
-			}
-		};
-		suggestedWrapperPanel.addDomHandler(mouseoverhandler, MouseOverEvent.getType());
-		suggestedWrapperPanel.addDomHandler(mouseouthandler, MouseOutEvent.getType());*/
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){
@@ -232,13 +214,11 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	}
 	
 	public void updateViews(String count, String contentId, String whatToUpdate){
-		if (resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
+		if (resourceSearchResultDo.getGooruOid()!=null && resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
 			metaDataFloPanel.clear();
-			String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
+			String category = (resourceSearchResultDo.getResourceFormat()!=null && resourceSearchResultDo.getResourceFormat().getValue() != null)? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 			
-			//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
-			//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null, shortenMetaLength ? 15 : 25);
 			if(resourceSearchResultDo.getAggregator()!=null){
 				 String aggregatorData = "";
 				for (String aggregator: resourceSearchResultDo.getAggregator()) {
@@ -253,7 +233,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				if(aggregatorData.endsWith(",")){
 					aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 				}
-				//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 			}
 			
 			if(resourceSearchResultDo.getPublisher()!=null){
@@ -270,7 +249,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 				if(publisherData.endsWith(",")){
 					publisherData=publisherData.substring(0, publisherData.length()-1);
 				}
-			//	SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
 			}
 			renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
 			
@@ -278,7 +256,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			if (category.equalsIgnoreCase(VIDEO)) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 			} else if (category.equalsIgnoreCase(QUESTION)) {
-				//SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
 			}
 			if (resourceSearchResultDo.getNumOfPages() != null && !resourceSearchResultDo.getNumOfPages().equals("0") && !resourceSearchResultDo.getNumOfPages().equalsIgnoreCase(NULL) && resourceSearchResultDo.getNumOfPages().length() > 0) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
@@ -288,11 +265,13 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
-		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
-		ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
-		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
+		if(resourceSearchResultDo.getRatings().getCount()!=0){
+			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
+			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
+			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
+		}
+		
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
-//		ratingWidgetView.setAvgStarRating(2); 
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
         String description = resourceSearchResultDo.getDescription();
         String title = "";
@@ -305,7 +284,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 		
 		
-		//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
 		if(resourceSearchResultDo.getAggregator()!=null){
 			 String aggregatorData = "";
 			for (String aggregator: resourceSearchResultDo.getAggregator()) {
@@ -320,7 +298,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			if(aggregatorData.endsWith(",")){
 				aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 			}
-		//	SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
 		if(resourceSearchResultDo.getPublisher()!=null){
@@ -337,7 +314,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			if(publisherData.endsWith(",")){
 				publisherData=publisherData.substring(0, publisherData.length()-1);
 			}
-			//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
 		renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
@@ -346,7 +322,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 		} else if (category.equalsIgnoreCase(QUESTION)) {
-			//SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
 		}
 		if (resourceSearchResultDo.getNumOfPages() != null && !resourceSearchResultDo.getNumOfPages().equals("0") && !resourceSearchResultDo.getNumOfPages().equalsIgnoreCase(NULL) && resourceSearchResultDo.getNumOfPages().length() > 0) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
@@ -362,9 +337,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
-		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		
-		//imgNotFriendly.setVisible(setVisibility);
 		if(setVisibility)
 		{
 			imgNotFriendly.getElement().setId("imgImgFriendly");
@@ -424,21 +397,22 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
 		@Override
 		public void setResourceRatingCount(String resourceId,double avg,Integer count) { 
-			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
-				ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
-				ratingWidgetView.setAvgStarRating(avg);
-				if(count==1 && isRatingUpdated){
-					isRatingUpdated=false;
-					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-					ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
-
-						@Override
-						public void onClick(ClickEvent event) {
-							AppClientFactory.fireEvent(new UpdateRatingsInSearchEvent(resourceSearchResultDo)); 
+			if(resourceId.equals(resourceSearchResultDo.getGooruOid())){
+				if(count!=null){
+					ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
+					ratingWidgetView.setAvgStarRating(avg);
+						if(count==1 && isRatingUpdated){
+							isRatingUpdated=false;
+							ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+							ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+							ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
+								@Override
+								public void onClick(ClickEvent event) {
+									AppClientFactory.fireEvent(new UpdateRatingsInSearchEvent(resourceSearchResultDo)); 
+								}
+								
+							});
 						}
-						
-					});
 				}
 			}
 		}
@@ -473,7 +447,6 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		public void onClick(ClickEvent event) {
 		addResourceBtnPanel.setVisible(false);
 		
-	//	loadingTextLbl.setVisible(true);
 		AppClientFactory.getInjector().getResourceService().createCollectionItem(collectionId, resourceSearchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
 
 			@Override
@@ -497,18 +470,20 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		if (datas == null) {
 			return;
 		}
-		renderMetaData(flowPanel, datas.size() > 0 ? datas.get(0) : null, null, wrapLength);
+		renderMetaData(flowPanel, (datas!=null&&datas.size() > 0)? datas.get(0) : null, null, wrapLength);
 		FlowPanel toolTipwidgets = new FlowPanel();
 		FlowPanel toolTipwidget1 = new FlowPanel();
-		for (int count = 0; count < datas.size(); count++) {
-			Label label = new Label(datas.get(count));
-			label.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
-			if(count==0){
-				toolTipwidget1.add(label);
-			}else{
-				toolTipwidgets.add(label);
+		if(datas!=null){
+			for (int count = 0; count < datas.size(); count++) {
+				Label label = new Label(datas.get(count));
+				label.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+				if(count==0){
+					toolTipwidget1.add(label);
+				}else{
+					toolTipwidgets.add(label);
+				}
+				
 			}
-			
 		}
 		if (datas != null && datas.size() > 1) {
 			Integer moreCount = datas.size() - 1;

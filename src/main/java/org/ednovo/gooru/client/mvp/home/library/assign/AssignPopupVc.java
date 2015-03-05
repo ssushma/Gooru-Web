@@ -160,7 +160,21 @@ public abstract class AssignPopupVc extends PopupPanel {
 	String assignmentId = null;
 	boolean isMoreThanLimit = false; // Limit = 10
 	private TermsOfUse termsOfUse;
-	private static final int UNAUTHORISED_STATUS_CODE = 401;
+	private static final int HTTP_UNAUTHORISED_STATUS_CODE = 401;
+	private static final String UNAUTHORIZED_MSG ="Please double-check your password and try signing in again.";
+	private static final String USER_ID_WRONG_MSG = "Please double-check your email address and password, and then try logging in again.";
+
+	
+	private static final int HTTP_SUCCESS_STATUS_CODE = 200;
+	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
+	
+	
+	private static final String ERR_GL0078 = "401-GL0078";
+	private static final String ERR_GL0079 = "401-GL0079";
+	private static final String ERR_GL010501 = "401-GL010501";
+	private static final String ERR_GL010502 = "401-GL010502";
+	private static final String ERR_GL010503 = "401-GL010503";
+	private static final String ERR_GL0081="401-GL0081";
 	
 	public HTMLPanel getAssignContainer(){
 		return assignContainer;
@@ -722,7 +736,17 @@ public abstract class AssignPopupVc extends PopupPanel {
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
+										
+										int statusCode = result.getStatusCode();
+										String errorCode = null;
+										String errorMessage = null;
+										if (result.getResponseDo() !=null){
+											 errorCode = result.getResponseDo().getErrorCode();
+											 errorMessage = result.getResponseDo().getErrorMessage();
+										}
+										
+										if(statusCode==HTTP_SUCCESS_STATUS_CODE){
+										
 											MixpanelUtil.Regular_User_Logged_In();
 											AppClientFactory.setLoggedInUser(result);
 											AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
@@ -743,10 +767,25 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 											loadListContainers();
 											MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
-										}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
+										}else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
-											new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+											if (errorCode.equalsIgnoreCase(ERR_GL0078)){
+												new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+											}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
+												// For blocked users
+												new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+											}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
+												new AlertContentUc(i18n.GL1966(), i18n.GL3114());
+											}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
+												new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+											}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
+												new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+											}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
+												new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+											}
+										}else{
+											new AlertContentUc(i18n.GL1966(), errorMessage);
 										}
 									}
 

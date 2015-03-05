@@ -1,0 +1,138 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.tabSection {
+		width: 100%;
+		padding: 20px;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		background: #f2f2f2;
+		}
+		.viewResult {
+		width: 1000px;
+		margin: 0 auto;
+		}
+		.closesmall {
+		display: inline-block;
+		vertical-align: top;
+		height: 80px;
+		line-height: 80px;
+		padding-right: 10px;
+		cursor:pointer;
+		}
+		.closesmall > img {
+		margin-top: 15px;
+		}
+		.resource-cover {
+		display: inline-block;
+		vertical-align: top;
+		padding-right: 10px;
+		}
+		.gooru {
+		font-size: 16px;
+		line-height: 140%;
+		}
+		.ednovo {
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 140%;
+		}
+		.stars {
+		display: inline-block;
+		width: 100px;
+		height: 22px;
+		background: url(../images/ratings.png) center no-repeat;
+		}
+		.normal {
+		font-size: 14px;
+		}
+		.view {
+		color: #1076bb;
+		font-size: 16px;
+		height: 80px;
+		line-height: 80px;
+		margin-right: 15px;
+		padding-left: 80px;
+		padding-right: 20px;
+		border-right: 1px solid #ddd;
+		}
+		.rating{
+		}
+		.imgSection {
+		display: inline-block;
+		vertical-align: top;
+		padding-left: 30px;
+		}
+		.info {
+		color: #515151;
+		font-size: 14px;
+		display: inline-block;
+		vertical-align: top;
+		padding-top: 15px;
+		padding-left: 10px;
+		}
+		.info div:first-child {
+		color: #4E9746;
+		font-size: 14px;
+		line-height: 150%;
+		}
+		.close {
+		position: absolute;
+		right: 40px;
+		margin-top: 30px;
+		cursor: pointer;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.tabSection}" ui:field="androidSectiondiv">
+			<g:HTMLPanel styleName="{style.imgSection}">
+				<g:Image url="images/tablet.png" width="129" height="73" />
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{style.info}" ui:field="msglinkPanel">
+				<g:HTMLPanel ui:field="msgPanel"></g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:Image url="images/close.png" width="20" height="20"
+				ui:field="closeAndriodBtn" styleName="{style.close}" />
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.tabSection}" ui:field="ipadSectiondiv">
+			<g:HTMLPanel styleName="{style.viewResult}">
+				<g:HTMLPanel styleName="{style.closesmall}">
+					<g:Image ui:field="closeIpadBtn" url="images/close-small.png"
+						width="14" height="14" />
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.resource-cover}">
+					<g:Image url="images/gooru-thumbnail.png" width="80"
+						height="79" />
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.resource-cover}">
+					<g:HTMLPanel styleName="{style.rating}">
+						<g:HTMLPanel styleName="{style.gooru}" ui:field="gooruPanel"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{style.ednovo}" ui:field="ednovoPanel"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{style.stars}"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{style.normal}" ui:field="appstorePanel"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:Anchor styleName="{style.resource-cover} {style.view}"
+					target="_blank" href="https://itunes.apple.com/in/app/gooru/id674087861?mt=8"
+					ui:field="viewAnchor"></g:Anchor>
+				<g:HTMLPanel styleName="{style.resource-cover}">
+					<g:Image url="images/result-img.png" width="100" height="75" />
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.resource-cover}">
+					<g:Image url="" width="100" height="74" />
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.resource-cover}">
+					<g:Image url="images/result-img.png" width="100" height="75" />
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.resource-cover}">
+					<g:Image url="images/result-img-type.png" width="100"
+						height="74" />
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.resource-cover}">
+					<g:Image url="images/result-img.png" width="100" height="75" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

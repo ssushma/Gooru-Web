@@ -4,7 +4,7 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
-	<g:HTMLPanel>
+	<g:HTMLPanel styleName="">
 		<!-- <g:HTMLPanel styleName="step fi-address-book size-72"></g:HTMLPanel> -->
 		<g:HTMLPanel ui:field="gooruPanel" />
 		<g:HTMLPanel ui:field="panelLandingPage">
@@ -24,7 +24,7 @@
 						<div class="col-xs-3 searchMAIN">
 							<div class="sInner">
 								<div class="animation text-center">
-									<img src="images/landing-page/find.png" />
+									<span class="{res.css.sprite} {res.css.spriteFind}" />
 								</div>
 								<g:Label styleName="h2 text-center" text="{i18n.GL0524}"/>
 								<div class="clearfix"/>
@@ -41,7 +41,7 @@
 						<div class="col-xs-3">
 							<div class="sInner">
 								<div class="animation text-center">
-									<img src="images/landing-page/remix.png" />
+									<span class="{res.css.sprite} {res.css.spriteRemix}"  />
 								</div>
 								<g:Label styleName="h2 text-center" text="{i18n.GL2037}"></g:Label>
 								<div class="clearfix"></div>
@@ -54,7 +54,7 @@
 						<div class="col-xs-3">
 							<div class="sInner">
 								<div class="animation text-center">
-									<img src="images/landing-page/share.png" />
+									<span class="{res.css.sprite} {res.css.spriteShare}"  />
 								</div>
 								<g:Label styleName="h2 text-center" text="{i18n.GL0526}"></g:Label>
 								<div class="clearfix"></div>
@@ -67,7 +67,7 @@
 						<div class="col-xs-3">
 							<div class="sInner">
 								<div class="animation text-center">
-									<img src="images/landing-page/monitor.png" />
+									<span class="{res.css.sprite} {res.css.spriteMonitor}"  />
 								</div>
 								<g:Label styleName="h2 text-center" text="{i18n.GL2126}"/>
 								<div class="clearfix"></div>
@@ -87,21 +87,6 @@
 			<div class="containerMain communityblock">
 			    <g:Label styleName="h2" text="{i18n.GL2130}"/>
 			    <g:Label styleName="h4" text="{i18n.GL2131}"/>
-			    <!-- Gooru Stories -->
-			    <g:HTMLPanel styleName="gooruStories" ui:field="panelGooruStories">
-					<div class="row">
-						<div class="col-md-3 col-xs-12 col-sm-3 storiesImg">
-							<img class="img-responsive" src="images/gooru-stories.png" />
-						</div>
-						<g:HTMLPanel styleName="col-md-7  col-sm-6 col-xs-12 goorustoriesIntro" ui:field="panelText">
-							
-						</g:HTMLPanel>
-						 <g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-12 browseStoriesBtn">
-							<g:Anchor styleName="gooruStoriesLink btn-block" text="{i18n.GL2188_4}" ui:field="achGooruStories"></g:Anchor>
-						</g:HTMLPanel>
-					</div>
-					<div class="clearfix"></div>
-				</g:HTMLPanel>
 				<p>
 					<g:HTMLPanel ui:field="contributorsContainer" />
 				</p>
@@ -148,7 +133,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=77838">Science 2</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -910,7 +895,7 @@
 					<div class="col-xs-5">
 						<div class="getInnerRight">
 							<g:Label styleName="h3 first" text="{i18n.GL2140}"/>
-							<img src="images/landing-page/monitor-ico.png" />
+							<div class="spriteLandingPage spriteLandingPageMonitorIco"></div>
 
 							<div class="clearfix"></div>
 							<h4>
@@ -988,7 +973,8 @@
 									</div>
 									<div class="col-xs-6 text-right">
 										<p>
-											<img class="img-responsive" src="images/landing-page/gooru-badge.png" />
+											<!-- <img class="img-responsive" src="images/landing-page/gooru-badge.png" /> -->
+											<div class="spriteLandingPage spriteLandingPageGooruBadge img-responsive"></div>
 										</p>
 									</div>
 								</div>
@@ -1040,23 +1026,23 @@
 							<ul class="list-unstyled list-inline">
 								<li>
 									<a href="https://www.facebook.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/facebook-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageFacebookIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://www.twitter.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/twitter-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageTwitterIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://www.youtube.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/youtube-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageYoutubeIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://plus.google.com/105874563188592272186/posts"
 										target="_blank">
-										<img class="" src="images/landing-page/google-plus-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageGooglePlusIco" ></div>
 									</a>
 								</li>
 
@@ -1065,7 +1051,7 @@
 								<img src="images/landing-page/footer-icon.png" />
 							</p> -->
 							<div>
-								<g:Label styleName="copyRight" text="{i18n.GL1246}"></g:Label>
+								<g:Label styleName="copyRight" text="{i18n.GL1246}" ui:field="lblCopyRight"></g:Label>
 							</div>
 						</div>
 						<div class="col-xs-2">
@@ -1108,11 +1094,11 @@
 				</div>
 			</footer>
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-			<script
-				src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+ 			<script
+				src="scripts/jquery-1.11.0.min.js"></script>
 			<!-- Include all compiled plugins (below), or include individual files 
 				as needed -->
-			<script src="js/bootstrap.min.js"></script>
+			<script src="scripts/bootstrap.min.js"></script>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

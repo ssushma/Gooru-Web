@@ -104,6 +104,7 @@
 					      <g:HTMLPanel styleName="dropdown">
 					         <g:Label styleName="option" ui:field="folderLabel"></g:Label>
 					         <g:Label styleName="option" ui:field="collectionLabel"></g:Label>
+					         <g:Label styleName="option" ui:field="assessmentLabel"></g:Label>
 					      </g:HTMLPanel>
 					   </g:HTMLPanel>
 					</g:HTMLPanel>

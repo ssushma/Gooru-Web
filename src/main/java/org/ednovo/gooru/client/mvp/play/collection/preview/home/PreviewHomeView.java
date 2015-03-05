@@ -298,7 +298,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			resourceCurosalContainer.add(resourceThumbnail);
 		}
 		
-//http://127.0.0.1:8888/index.html?gwt.codesvr=127.0.0.1:9997#collection-play&id=f9b1b4ca-c784-46bc-9f49-f7d7c5e1d5c1
 	}
 	
 	/**
@@ -322,7 +321,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Preview_Click_Assign();
 		   String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-		    System.out.println("assign-collectionId:"+collectionId);
 
 				if(!isAssignPopup){
 					isAssignPopup=true;
@@ -607,7 +605,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		shareCollectionBtn.removeFromParent();
 		separationLine.removeFromParent();
 		previewButton.setText(i18n.GL0594());
-		//addHrTag();
 	}
 	
 	public void removeAssignmentImageButtons(){
@@ -627,8 +624,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		customizeCollectionBtn.removeFromParent();
 		shareCollectionBtn.removeFromParent();
 		separationLine.removeFromParent();
-		
-		//addHrTag();
 	}
 	
 	@UiHandler("collectionThumbnail")

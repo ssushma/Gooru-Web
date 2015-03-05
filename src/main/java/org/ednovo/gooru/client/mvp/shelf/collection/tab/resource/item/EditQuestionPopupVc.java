@@ -64,6 +64,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -214,6 +215,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	private List<Widget> answerChoicesList = new ArrayList<Widget>();
 	
 	private boolean isQuestion = false;
+	private boolean isUserResource = false;
 
 	private static EditQuestionPopupVcUiBinder uiBinder = GWT
 			.create(EditQuestionPopupVcUiBinder.class);
@@ -231,7 +233,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
 				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
@@ -437,14 +439,15 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		 browseStandards.addClickHandler(new callBrowseStandards());
 	}
 
-	public abstract void callBrowseStandardsInfo(boolean val);
+	public abstract void callBrowseStandardsInfo(boolean val,boolean userResource);
 	
 	private class callBrowseStandards implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			isQuestion = true;
-			callBrowseStandardsInfo(isQuestion);
+			isUserResource = false;
+			callBrowseStandardsInfo(isQuestion,isUserResource);
 		}
 		
 	}

@@ -399,12 +399,10 @@ input.styled {
 }
 
 .settingWrapper {
-	/* background: url(images/settings/gray_noise_25.png); */
 	font-family: Arial, sans-serif;
 	color: #333;
 	font-size: 12px;
 	width: 1110px;
-	/* height: 1020px; */
 	margin: 0 auto;
 }
 
@@ -1380,6 +1378,7 @@ input.styled {
 	margin-top: 32px;
 	padding: 7px 46px !important;
 	border-radius: 1px !important;
+	width:245px;
 }
 
 .div1, .div2, .div3{

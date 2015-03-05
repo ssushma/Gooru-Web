@@ -15,8 +15,6 @@
 				<div class="{flagPopUpstyle.playerflagcontentcontainer}">
 					<g:HTML styleName="{flagPopUpstyle.playerflagcontentTitle}"
 						ui:field="titleText" />
-					<!-- <div class="{flagPopUpstyle.playerflagcontenttext}">Flag this resource! 
-						</div> -->
 					<div class="{flagPopUpstyle.playerflagradiobutton}">
 						<g:CheckBox ui:field="checkBox3"
 							styleName="{flagPopUpstyle.ckeckBoxPlyerStyle}" />

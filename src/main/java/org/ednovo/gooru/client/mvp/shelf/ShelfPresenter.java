@@ -82,6 +82,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.inject.Inject;
@@ -227,6 +228,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
+		getUserSheldId(); // this API call is to get shelf Id
 	}
 
 	private void callBackMethods(){
@@ -243,7 +245,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		}
 		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
 			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
 			update.setGlassEnabled(true);
 			update.show();
@@ -404,6 +406,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		getView().hideAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
 //		collectionResourceTabPresenter.closePopUp();
+		AppClientFactory.getPlaceManager().setUserShelfId(null);
 		
 	}
 
@@ -677,6 +680,18 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
 		folderItemTabPresenter.setFolderMetaData(folderMetaData);
 		this.folderMetaData = folderMetaData;
+	}
+	
+	public void getUserSheldId(){
+		if(!AppClientFactory.isAnonymous()){
+			String userUid=AppClientFactory.getLoggedInUser().getGooruUId();
+			AppClientFactory.getInjector().getResourceService().getUserShelfDetails(userUid, new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String result) {
+					AppClientFactory.getPlaceManager().setUserShelfId(result);
+				}
+			});
+		}
 	}
 	
 }

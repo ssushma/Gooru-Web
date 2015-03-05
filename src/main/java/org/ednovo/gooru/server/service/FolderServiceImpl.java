@@ -254,7 +254,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset+"", limit+"");
-		System.out.println("--- child folders -- "+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);
@@ -284,8 +283,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			if(addToShelf) {
 				folderObject.put(ADD_TO_SHELF, addToShelf);
 			}
-			System.out.println("--- create folder url -- "+url); 
-			System.out.println("--- payload-- "+folderObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),folderObject.toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRep);
@@ -307,7 +304,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public void deleteCollectionsFolder(String folderId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_FOLDER, folderId, getLoggedInSessionToken());
-		System.out.println("--- delete folder -- "+url); 
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -340,7 +336,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JSONObject FolderDataObject=new JSONObject();
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
 		try {
-			collectionDataObject.put("collectionType", "collection");
+			collectionDataObject.put("collectionType", data.getCollectionType());
 			collectionDataObject.put("title", data.getTitle());
 			collectionDataObject.put("sharing", data.getSharing());
 			collectionDataObject.put("grade", data.getGrade());
@@ -441,7 +437,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_RESOURCE_LIST, parentId, sessionToken);
-		System.out.println("--- get coll res -- "+url);  
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);

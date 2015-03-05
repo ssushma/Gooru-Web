@@ -116,27 +116,16 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 	}
 	
 	public void displayPopUp(int displayScreen){
-/*		appPopUp = new AppPopUp("NoHeader");
-		appPopUp.setContent(uiBinder.createAndBindUi(this));*/
-		
 		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
-		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		
-		
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
-		//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
-		
 		appPopUp.center();
-		
 		setUiAndIds();
 		showPanelById(displayScreen);
-		
 		account = AppClientFactory.getPlaceManager().getRequestParameter("account") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("account")  :  null ;
 		childDob = AppClientFactory.getPlaceManager().getRequestParameter("dob") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("dob")  :  null ;
 		childUserName = AppClientFactory.getPlaceManager().getRequestParameter("userName") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("userName")  :  null ;
-		
 	}
 
 	private void setUiAndIds(){

@@ -25,7 +25,21 @@
 package org.ednovo.gooru.client.mvp.classpages.study;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-
+/**
+ * 
+ * @fileName : IsClassCodeView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface IsClassCodeView extends IsViewWithHandlers<ClassCodeUiHandlers>  {
 
 	

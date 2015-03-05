@@ -48,8 +48,6 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 
 	public void displayCollectionFlagData(CollectionDo collectionDo) {
 		getView().getDisplayData(collectionDo);
-		
-			
 	}
 
 	@Override
@@ -59,7 +57,6 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 			@Override
 			public void onSuccess(ContentReportDo result) {
 				ItemFlagDataLogEvent( associatedGooruOid, freeText,contentReportList, isResourceFlag, collectionItemId);
-				
 				getView().showSuccesmessagePopup();
 				String chkViewPage = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view", null);			
 				if(chkViewPage == null)
@@ -84,45 +81,47 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 
 	@Override
 	public void getContentReport(String associatedGooruOid) {
-		//playerAppService.getContentReport(associatedGooruOid, new AsyncCallback<ContentReportDo>() {
 		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
-
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
-				if(result.size()==0){
-					getView().setDefaultView();
-				}else{
-					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						if(result.size()!=(i+1)){
-							gooruFlagId=gooruFlagId+",";
-							getView().setFlag(result.get(0), gooruFlagId);
+				if(result!=null){
+					if(result.size()==0){
+					}else{
+						for(int i =0;i<result.size();i++){
+							if(result.get(i).getDeleteContentGooruOid()!=null){
+								gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+								if(result.size()!=(i+1)){
+									gooruFlagId=gooruFlagId+",";
+									getView().setFlag(result.get(0), gooruFlagId);
+								}
+							}
 						}
 					}
-			}
+				}
 			}
 		});
 	}
 
 	@Override
-	public String getResourceContentReport(String associatedGooruOid) {
+	public String getResourceContentReport(String associatedGooruOid){
 		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
-		
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
-				
-				if(result.size()==0){
-					//getView().setDefaultView();
-				}else{
-					for(int i =0;i<result.size();i++){
-						resourceFlagId = resourceFlagId+result.get(i).getDeleteContentGooruOid();
-						if(result.size()!=(i+1)){
-							resourceFlagId=resourceFlagId+",";
-							//getView().setFlag(result.get(0), resourceFlagId);
+				if(result!=null){
+					if(result.size()==0){
+					}else{
+						for(int i =0;i<result.size();i++){
+							if(result.get(i).getDeleteContentGooruOid()!=null){
+								resourceFlagId = resourceFlagId+result.get(i).getDeleteContentGooruOid();
+								if(result.size()!=(i+1)){
+									resourceFlagId=resourceFlagId+",";
+								}
+							}
 						}
 					}
-			}
+				}
+				
 			}
 		});
 		return resourceFlagId;

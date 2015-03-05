@@ -14,8 +14,19 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Search Team
-` * 
+ * 
+ * @fileName : CommunityView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class CommunityView extends BaseViewWithHandlers<CommunityUiHandlers> implements IsCommunityView {
 

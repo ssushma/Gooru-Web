@@ -73,8 +73,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 //	void listCollections(Integer pageSize,Integer pageNum,String scollection,AsyncCallback<List<CollectionDo>> callback);
 	
-	void getUserCollection(AsyncCallback<List<CollectionDo>> callback);
-	
 	void createCollectionWithItem(CollectionDo collectionDo, String codeId, String resourceId, AsyncCallback<CollectionDo> callback);
 	
 //	void updateCollectionItem(CollectionItemDo collectionItem, AsyncCallback<CollectionItemDo> callback);
@@ -82,14 +80,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void updateCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType, String action, AsyncCallback<CollectionDo> callback);
 	
 	void updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop, AsyncCallback<CollectionItemDo> callback);
-	
-	void addCollaborator(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
-	
-	void getCollaborators(String gooruOid,AsyncCallback<List<UserDo>> callback);
-	
-	void deleteCollaborators(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
-
-//	void copyCollectionItem(String collectionItemId,AsyncCallback<CollectionItemDo> callback);
 	
 	void getYoutubeDuration(String videoId,AsyncCallback<String> callback);
 	
@@ -104,8 +94,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void addQuestionResource(String collectionId, String mediafileName,
 			CollectionQuestionItemDo collectionQuestionItemDo,
 			AsyncCallback<CollectionItemDo> addQuestionResourceAsyncCallback);
-	
-	void updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl, AsyncCallback<CollectionItemDo> updateQuestionItemResourceAsyncCallback);
 	
 	void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList,AsyncCallback<CollectionItemDo> callback);
 	
@@ -182,4 +170,8 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
     void refreshGoogleAccessToken(String refreshToken, AsyncCallback<GoogleToken> callback);
     
     void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl, AsyncCallback<CollectionItemDo> updateQuestionItemResourceAsyncCallback);
+    
+    void updateCollectionSettingForComments(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType, String action, String comments, AsyncCallback<CollectionDo> callback);
+    
+    void getUserShelfDetails(String userUid,AsyncCallback<String> callback);
 }

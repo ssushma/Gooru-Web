@@ -68,7 +68,6 @@ public class ResourceCurosal {
 	}
 	public void setTotalWidth(){
 		widgetsPanel.setWidth((widgetsCount*WIDGET_WIDTH)+"px");
-		//widgetsPanel.getElement().getStyle().setPosition(Position.STATIC);
 	}
 	public void activateNextButton(boolean isNextButtonActive){
 		this.isNextButtonActive=isNextButtonActive;
@@ -120,9 +119,7 @@ public class ResourceCurosal {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			if(isNextButton&&isNextButtonActive){
-				//nextButton.getElement().setAttribute("style", "border-left: 15px solid #999; cursor: pointer;");
 			}else if(!isNextButton&&isPreviousButtonActive){
-				//previousButton.getElement().setAttribute("style", "border-right: 15px solid #999; cursor: pointer;");
 			}
 		}
 	}

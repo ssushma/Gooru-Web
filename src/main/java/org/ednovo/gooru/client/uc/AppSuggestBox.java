@@ -119,7 +119,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 		int keyCode = event.getNativeKeyCode();
 		String text = this.getText().trim();
 		if (keyCode != (char) KeyCodes.KEY_TAB && keyCode != (char) KeyCodes.KEY_ENTER && keyCode != (char) KeyCodes.KEY_LEFT && (keyCode != (char) KeyCodes.KEY_RIGHT) && (keyCode != (char) KeyCodes.KEY_DOWN) && (keyCode != (char) KeyCodes.KEY_UP)) {
-			keyAction(text);
+			keyAction(text,event);
 		}
 	}
 
@@ -129,7 +129,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 		}
 	}
 
-	public abstract void keyAction(String text);
+	public abstract void keyAction(String text,KeyUpEvent event);
 
 	public final AppMultiWordSuggestOracle getSuggestionOrcl() {
 		return suggestionOrcl;

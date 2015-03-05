@@ -28,14 +28,27 @@
 package org.ednovo.gooru.server.request;
 
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ednovo.gooru.server.AppSessionHolder;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.drive.ErrorDo;
+import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.data.Encoding;
+import org.restlet.data.MediaType;
+import org.restlet.data.Preference;
+import org.restlet.engine.header.Header;
+import org.restlet.engine.header.HeaderConstants;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
+import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +77,8 @@ public abstract class ServiceRequest {
 	private static final String NAME="name";
 	
 	private static final String ERROR = "Error : "; 
+	
+	private static final String UNAUTHORIZED = "Unauthorized";
 
 	protected ServiceRequest() {
 	}
@@ -72,11 +87,9 @@ public abstract class ServiceRequest {
 		try {
 			return run();
 		} catch (ResourceException exception) {
-//			logger.error(ERROR, exception);
-			//throw new RuntimeException(exception.getMessage());
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
 			int statusCode=exception.getStatus().getCode();
-			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
+			jsonResponseRepresentation.setStatusCode(statusCode);
 			if(statusCode==504 || statusCode==502){
 				String serverStatus=getApiServerStatus();
 				if(serverStatus!=null && serverStatus.equalsIgnoreCase(DOWN)){
@@ -85,8 +98,8 @@ public abstract class ServiceRequest {
 					//throw new ServerDownException(statusCode,"");
 				}
 			}else{
-				String message=parseJsonErrorResponse(getClientResource().getResponse().getEntity());
-				jsonResponseRepresentation.setErrorMessage(message);
+				ResponseStatusDo responseDo = parseJsonErrorResponse(getClientResource().getResponse().getEntity());
+				jsonResponseRepresentation.setResponseDo(responseDo);
 				//throw new GwtException(exception.getStatus().getCode(),message);
 			}
 			
@@ -98,21 +111,71 @@ public abstract class ServiceRequest {
 			releaseClientResources();
 		}
 	}
-	
-	public String parseJsonErrorResponse(Representation errorRepresentation){
+	/**
+	 * 
+	 * @function parseJsonErrorResponse 
+	 * 
+	 * @created_date : 22-Jan-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param errorRepresentation
+	 * @parm(s) : @return
+	 * 
+	 * @return : ResponseStatusDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public ResponseStatusDo parseJsonErrorResponse(Representation errorRepresentation){
 		String messageString=null;
+		
+		Integer code;
+		String message;
+		String errorCode;
+		String errorMessage;
+		String status;
+		
+		
+		ResponseStatusDo responseDo = new ResponseStatusDo();
 		try{
-			JsonRepresentation jsonRepresentation=new JsonRepresentation(errorRepresentation.getText());
-			JSONObject errorObject=jsonRepresentation.getJsonObject();
-			if(errorObject!=null){
-				messageString=errorObject.isNull("status")?null:errorObject.getString("status");
+			/**
+			 *  Taking values from response header to check authorized user or not. Implemented to differentiate from blocked user or authentication issue.
+			 */
+			Series<org.restlet.engine.header.Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+			if(responseHeaders!=null){
+				
+				if(responseHeaders.getValues("Unauthorized")!=null){
+					messageString = responseHeaders.getValues("Unauthorized");
+				}else{
+					messageString = errorRepresentation.getText();
+				}
+				JsonRepresentation jsonRepresentation=new JsonRepresentation(messageString);
+				JSONObject errorObject=jsonRepresentation.getJsonObject();
+				if(errorObject!=null){
+					status = errorObject.isNull("status") ? null : errorObject.getString("status");
+					code = errorObject.isNull("code") ? 0 : Integer.valueOf(errorObject.getString("code"));
+					errorCode = errorObject.isNull("errorCode") ? null : errorObject.getString("errorCode");
+					errorMessage = errorObject.isNull("errorMessage") ? null : errorObject.getString("errorMessage");
+					
+					
+					responseDo.setCode(code);
+					responseDo.setStatus(status);
+					responseDo.setErrorCode(errorCode);
+					responseDo.setErrorMessage(errorMessage);
+				}
+				
 			}
-			return messageString;
+			return responseDo;
 		}catch(Exception exception){
 			logger.error(ERROR, exception);
-			return messageString;
+			return responseDo;
 		}
-		
+
 	}
 	
 	protected String getApiServerStatus(){
@@ -183,11 +246,47 @@ public abstract class ServiceRequest {
 	}
 
 	public ClientResource getClientResource() {
-		return clientResource;
+	   return clientResource;
 	}
 
 	public void setClientResource(ClientResource clientResource) {
 		this.clientResource = clientResource;
+		setUserAgent();
+	}
+	
+	public void setUserAgent(){
+		try{
+			String userAgentValue=AppSessionHolder.getInstance()!=null&&AppSessionHolder.getInstance().getRequest()!=null?AppSessionHolder.getInstance().getRequest().getHeader(HeaderConstants.HEADER_USER_AGENT):"";
+			if(clientResource!=null){
+				clientResource.getClientInfo().setAgent(userAgentValue);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void setMediaType(MediaType mediaType){
+		if(clientResource!=null){
+			List<Preference<MediaType>> mediaTypes=new ArrayList<Preference<MediaType>>();
+			Preference<MediaType> contentType=new Preference<MediaType>();
+			contentType.setMetadata(mediaType);
+			mediaTypes.add(contentType);
+			clientResource.getClientInfo().setAcceptedMediaTypes(mediaTypes);
+		}
+	}
+	
+	/**
+	 * Sets the encoding type.
+	 * 
+	 * @param encodingType {@link Encoding}
+	 */
+	public void setEncodings(Encoding encodingType){
+		if(clientResource!=null){
+			List<Preference<Encoding>> acceptedEncodings = new ArrayList<Preference<Encoding>>();
+			acceptedEncodings.add(new Preference<Encoding>(encodingType));
+			clientResource.getClientInfo().setAcceptedEncodings(acceptedEncodings);
+		}
+
 	}
 
 	public Representation getRepresentation() {

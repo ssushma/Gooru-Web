@@ -44,7 +44,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -537,8 +537,12 @@ public class CollectionFormView extends
 		if (radioButtonPrivate.isChecked() == true) {
 			collection.setSharing("private");
 		}
-
-		collection.setCollectionType("collection");
+		String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type", null);
+		if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
+			collection.setCollectionType("quiz");
+		}else{
+			collection.setCollectionType("collection");
+		}
 		if(isCheckedValue){
 			collection.setMediaType("iPad_friendly");
 		}else{
@@ -612,7 +616,26 @@ public class CollectionFormView extends
 			appPopUp.setViewTitle(i18n.GL1421());
 			setPopUpStyle();
 		}else{
-			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
+			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
+		if(collectionType!=null&&collectionType.equals("assessment")){
+			appPopUp.setViewTitle(i18n.GL3008());
+			collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
+			collPopUpMainheading.setText(i18n.GL3009());
+			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL3009());
+			collPopUpMainheading.getElement().setAttribute("title",i18n.GL3009());
+			collPopUpSubheading.setText(i18n.GL1033());
+			collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1033());
+			collPopUpSubheading.getElement().setAttribute("title",i18n.GL1033());
+			collTitleLbl.setText(i18n.GL3009()+i18n.GL_SPL_SEMICOLON()+" ");
+			collTitleLbl.getElement().setAttribute("alt",i18n.GL3009());
+			collTitleLbl.getElement().setAttribute("title",i18n.GL3009());
+			btnOk.setText(i18n.GL0141());
+			btnOk.getElement().setAttribute("alt",i18n.GL0141());
+			btnOk.getElement().setAttribute("title",i18n.GL0141());
+			cancelAnr.setText(i18n.GL0142());
+			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+		}else if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
 				collPopUpMainheading.setText(i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("title",i18n.GL0993());
@@ -817,10 +840,10 @@ public class CollectionFormView extends
 	
 	public void getAccountTypeId()
 	{
-		AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+		AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 
 			@Override
-			public void onSuccess(SettingDo result) {
+			public void onSuccess(V2UserDo result) {
 				if(result.getUser().getAccountTypeId()!=null)
 				{
 					if(result.getUser().getAccountTypeId()==2)
@@ -840,5 +863,10 @@ public class CollectionFormView extends
 			}
 		});
 
+	}
+
+	@Override
+	public void setStaticData(String collectionType) {
+		
 	}
 }
