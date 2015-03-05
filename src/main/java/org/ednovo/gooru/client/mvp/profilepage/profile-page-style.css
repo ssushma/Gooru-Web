@@ -4,7 +4,7 @@
 }
 
 body {
-	background-image: url("images/profilepage/gray_noise_25.png");
+	background-image: url("images/landing-page/gray_noise_25.png");
 	font-family: Arial, sans-serif;
 	color:#515151;
 	font-size:12px;
@@ -713,7 +713,7 @@ li.resources {
 	height: 10px;
 	position: relative;
 	left: 22px;
-	background-image: url("images/profilepage/bubble-arrow.png");
+	background-image: url("images/bubble-arrow.png");
 }
 
 .standards li div.standard-popup {

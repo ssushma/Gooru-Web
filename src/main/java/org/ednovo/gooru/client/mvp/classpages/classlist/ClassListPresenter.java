@@ -19,7 +19,6 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -136,7 +135,29 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 			}
 		});
 	}
-	
+	/**
+	 * 
+	 * @function insertUserAfterDeletionForPending 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param gooruOid
+	 * @parm(s) : @param offSet
+	 * @parm(s) : @param pageSize
+	 * @parm(s) : @param statusType
+	 * @parm(s) : @param pendingFlag
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void insertUserAfterDeletionForPending(final String gooruOid,final int offSet, int pageSize,String statusType, final boolean pendingFlag){
         this.classpageServiceAsync.getAssociatedStudentListByCode(gooruOid, offSet, 1, statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
                 @Override

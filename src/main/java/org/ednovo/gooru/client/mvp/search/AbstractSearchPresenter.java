@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
+import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.PostSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.PreSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
@@ -142,6 +143,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		addRegisteredHandler(SearchPaginationEvent.TYPE, this);
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
+		addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);
 		addRegisteredHandler(SearchEvent.TYPE, this);
 		addRegisteredHandler(StandardsSuggestionEvent.TYPE, this);
 		addRegisteredHandler(StandardsSuggestionInfoEvent.TYPE, this);
@@ -153,6 +155,8 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			addRegisteredHandler(AggregatorSuggestionEvent.TYPE, this);
 		}
 	}
+
+
 
 	@Override
 	protected void revealInParent() {
@@ -283,7 +287,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		
 		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
 			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
 			update.setGlassEnabled(true);
 			update.show();
@@ -457,7 +461,26 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setPageSize(null);
 		getSearchDo().setNotFriendly(null);
 		getSearchDo().setQuery(searchQuery);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		getSearchDo().setFilters(params);
 		onSearchRequest(viewToken);
+	}
+	@Override
+	public void disableSpellCheck(String viewToken,String searchQuery,String disableSpellCheck) {
+		getSearchDo().setPageNum(null);
+		getSearchDo().setPageSize(null);
+		getSearchDo().setNotFriendly(null);
+		getSearchDo().setQuery(searchQuery);
+		Map<String, String> filterMap = new HashMap<String, String>();
+		filterMap.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		if(getSearchDo().getFilters() != null)
+		{
+		filterMap = getSearchDo().getFilters();
+		}
+		filterMap.put("disableSpellCheck", "true");
+		getSearchDo().setFilters(filterMap);
+		onSearchDisableSpellCheck(viewToken);
 	}
 
 	@Override
@@ -482,6 +505,81 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			Map<String, String> params = getView().getSearchFilters();
 			if(!viewToken.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())) {
 				params.clear();
+				String categoryParam = getPlaceManager().getRequestParameter(IsSearchView.CATEGORY_FLT,null);
+				if (categoryParam != null && viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) && !categoryParam.equals("onlyQuestion")) {
+					params.put(IsSearchView.CATEGORY_FLT, categoryParam);
+				}else{
+					params.put(IsSearchView.CATEGORY_FLT, "all");					
+				}
+				String subject = getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
+				if (subject != null) {
+					params.put(IsSearchView.SUBJECT_FLT, subject);
+				}
+				String grade = getPlaceManager().getRequestParameter(IsSearchView.GRADE_FLT);
+				if (grade != null) {
+					params.put(IsSearchView.GRADE_FLT, grade);
+				}
+				String standard = getPlaceManager().getRequestParameter(IsSearchView.STANDARD_FLT);
+				if (standard != null) {
+					params.put(IsSearchView.STANDARD_FLT, standard);
+				}
+				if (viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
+					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
+					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
+					String reviewTag = getPlaceManager().getRequestParameter(IsSearchView.REVIEWS_FLT);
+					String ratingsFilter = getPlaceManager().getRequestParameter(IsSearchView.RATINGS_FLT);
+					if (ratingsFilter != null) {
+						params.put(IsSearchView.RATINGS_FLT, ratingsFilter);	
+					}
+					else
+					{
+					params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+					}
+					if (notFriendly != null) {
+						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
+					}
+					if (oer != null) {
+						params.put(IsSearchView.OER_FLT, oer);
+					}
+					
+					if (accessMode != null) {
+						params.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+					}
+					if(reviewTag != null)
+					{
+						params.put(IsSearchView.REVIEWS_FLT, reviewTag);
+					}
+				}else{
+					params.remove(IsSearchView.MEDIATYPE_FLT);
+					params.remove(IsSearchView.OER_FLT);
+					params.remove(IsSearchView.ACCESS_MODE_FLT);
+					params.remove(IsSearchView.REVIEWS_FLT);
+				}
+				
+				
+				getView().resetFilters();
+			}
+			params.put(QUERY, getSearchDo().getUrlQuery());
+			params.put(PAGE_SIZE, getSearchDo().getPageSize() + "");
+			params.put(PAGE_NUM, getSearchDo().getPageNum() + "");
+			getPlaceManager().revealPlace(viewToken, params, true);
+		}
+	}
+	/**
+	 * Set search view token ,assign search query, page number and page size
+	 * 
+	 * @param viewToken
+	 *            is a page view url
+	 */
+	public void onSearchDisableSpellCheck(String viewToken) {
+		if (viewToken == null) {
+			viewToken = getCurrentPlaceToken();
+		}
+		if (getViewToken().equalsIgnoreCase(viewToken)) {
+			Map<String, String> params = getView().getSearchFilters();
+			if(!viewToken.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())) {
+				params.clear();
 				params.put(IsSearchView.CATEGORY_FLT, "all");
 				String subject = getPlaceManager().getRequestParameter(IsSearchView.SUBJECT_FLT);
 				if (subject != null) {
@@ -499,6 +597,12 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
 					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
 					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
+					String ratingMode = getPlaceManager().getRequestParameter(IsSearchView.RATINGS_FLT);
+					if(ratingMode != null)
+					{
+					params.put(IsSearchView.RATINGS_FLT, ratingMode);
+					}
+					
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 					}
@@ -516,8 +620,11 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				}
 				
 				
+				
+				
 				getView().resetFilters();
 			}
+			params.put("disableSpellCheck", "true");
 			params.put(QUERY, getSearchDo().getUrlQuery());
 			params.put(PAGE_SIZE, getSearchDo().getPageSize() + "");
 			params.put(PAGE_NUM, getSearchDo().getPageNum() + "");

@@ -71,8 +71,6 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@UiField Label excellentScore, verygoodScore, goodScore, fairScore, poorScore,excellentLbl,veryGoodLbl,goodLbl,fairLbl,poorLbl,avgLbl,rateMsg,ratingDistributionLbl;
 
-	/*@UiField InlineLabel oneStar,twoStar,threeStar,fourStar,fiveStar,averageStarRating;*/
-
 	@UiField HTMLPanel panelRatingValues,panelRatingLabels,userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
 	
 	@UiField VerticalPanel reviewsContainer;
@@ -245,12 +243,16 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@Override
 	public void setGraphAndAvgContentRating(ContentStarRatingsDo result) {
+		if(result!=null){
 		setContentGraph(result); 
 		ratingWidgetView.setAvgStarRating(result.getAverage());
 		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
+		if(result.getCount()!=null){
 		ratingWidgetView.getRatingCountLabel().setText(result.getCount().toString());
+		}
 		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetPanel.add(ratingWidgetView);
+		}
 	}
 
 	private void setContentGraph(ContentStarRatingsDo result) {
@@ -306,14 +308,6 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			}
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				rateResourceBtn.setVisible(true);
-//				userRatingContainer.setVisible(true);
-				/*if(isRated){
-					isRated=false;
-					userRatingContainer.setVisible(false);
-					
-				}else{
-					userRatingContainer.setVisible(true);
-				}*/
 			}else{
 				rateResourceBtn.setVisible(false);
 			}

@@ -142,8 +142,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	private int paginationCount = 0;
 	
-	private boolean isHavingBadWords;
-	
 	private boolean isConceptsVisible = false;
 	
 	private String languageObjectiveValue, depthofKnowledgeValue;
@@ -186,43 +184,35 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		seeMoreButton.setVisible(false);
 		setLabelAndIds();
 		
-		
-		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
-		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
-		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
-			 
-		  }
-		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
-		  }
-		  else
-		  {
-			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
-			  
-		  }
+		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
+		  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+		}else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+		  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+		}else{
+		  mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
+		}
 	}
 	
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		teamContainer.clear();
-		//getUiHandlers().getFlagedReport(collectionDo.getGooruOid());
 		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
 			 teamContainer.add(collaboratorsUc);
-			setUserName(collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND());
+			 setUserName(collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND());
 		}else{
-			setUserName(collectionDo.getUser().getUsernameDisplay());
+			 setUserName(collectionDo.getUser().getUsernameDisplay());
 		}
-		setViewCount(collectionDo.getViews());
-		setUserProfileImage(collectionDo.getUser().getGooruUId());
+		if(!StringUtil.isEmpty(collectionDo.getViews())){
+			setViewCount(collectionDo.getViews());
+		}
+		if(collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getGooruUId())){
+			setUserProfileImage(collectionDo.getUser().getGooruUId());
+		}
 		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
 		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges());
@@ -230,30 +220,21 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		renderAudience(collectionDo.getAudience());
 		renderLearningAndInnovationSkill(collectionDo.getLearningSkills());
 		renderLanguageObjective(collectionDo.getLanguageObjective());
-		if(collectionDo.getKeyPoints() != null)
-		{
-			if(collectionDo.getKeyPoints().length()>410)
-			{
+		if(collectionDo.getKeyPoints() != null){
+			if(collectionDo.getKeyPoints().length()>410){
 				authorPanel.getElement().getStyle().setHeight(295, Unit.PX);
-			}
-			else if(collectionDo.getKeyPoints().length()>300)
-			{
+			}else if(collectionDo.getKeyPoints().length()>300){
 				authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
-			}
-			else if(collectionDo.getKeyPoints().length()>100)
-			{
+			}else if(collectionDo.getKeyPoints().length()>100){
 				authorPanel.getElement().getStyle().setHeight(130, Unit.PX);
-			}
-			else
-			{
+			}else{
 				authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
 			}
-				teacherTipLabel.setText(""+collectionDo.getKeyPoints()+"");		
-				teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
-				teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
+			teacherTipLabel.setText(""+collectionDo.getKeyPoints()+"");		
+			teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
+			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
 		}
 	}
-	
 
 	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
@@ -275,15 +256,13 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			}
 		}
 	}
-	
 
 	public void setLabelAndIds() {
 		seeMoreButton.setText(i18n.GL0508());
 		seeMoreButton.getElement().setId("lblSeeMoreButton");
 		seeMoreButton.getElement().setAttribute("alt",i18n.GL0508());
 		seeMoreButton.getElement().setAttribute("title",i18n.GL0508());
-		
-//		loginMessaging.setTitle(i18n.GL0568);
+
 		loginUrl.setText(i18n.GL0187().toLowerCase());
 		loginUrl.getElement().setId("lnkLoginUrl");
 		loginUrl.getElement().setAttribute("alt",i18n.GL0187().toLowerCase());
@@ -417,36 +396,34 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	}
 	
 	public void setUserName(String userName){
-		//userNameLabel.setText(userName);
-		if(collectionDo.getUser().getCustomFields()!=null){
-		if(collectionDo.getUser().getCustomFields().get(0).getOptionalValue()!=null){
-			String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
-			if(getUserProfileStatus.equalsIgnoreCase("true")){
-				usernameAnchor = new Anchor();
-				if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
-					usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		if(collectionDo.getUser()!=null && collectionDo.getUser().getCustomFields()!=null && collectionDo.getUser().getCustomFields().size()>0){
+			if(collectionDo.getUser().getCustomFields().get(0).getOptionalValue()!=null){
+				String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
+				if(getUserProfileStatus.equalsIgnoreCase("true")){
+					usernameAnchor = new Anchor();
+					if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
+						usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+					}else{
+						String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
+						usernameAnchor.setHref(token);
+					}
+					usernameAnchor.setText(userName);
+					usernameAnchor.getElement().setAttribute("alt",userName);
+					usernameAnchor.getElement().setAttribute("title",userName);
+					usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+					usernameAnchor.setTarget("_blank");
+					userNameLabel.setText("");
+					userNameLabel.getElement().setAttribute("alt","");
+					userNameLabel.getElement().setAttribute("title","");
+					userNameLabel.getElement().appendChild(usernameAnchor.getElement());
 				}
 				else{
-					String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
-					usernameAnchor.setHref(token);
+					userNameLabel.setText(userName);
+					userNameLabel.getElement().setAttribute("alt",userName);
+					userNameLabel.getElement().setAttribute("title",userName);
 				}
-				usernameAnchor.setText(userName);
-				usernameAnchor.getElement().setAttribute("alt",userName);
-				usernameAnchor.getElement().setAttribute("title",userName);
-				usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
-				usernameAnchor.setTarget("_blank");
-				userNameLabel.setText("");
-				userNameLabel.getElement().setAttribute("alt","");
-				userNameLabel.getElement().setAttribute("title","");
-				userNameLabel.getElement().appendChild(usernameAnchor.getElement());
-			}
-			else{
-				userNameLabel.setText(userName);
-				userNameLabel.getElement().setAttribute("alt",userName);
-				userNameLabel.getElement().setAttribute("title",userName);
 			}
 		}
-	}
 	}
 	public void setUserProfileImage(String profileUserId){
 		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?v="+Math.random());
@@ -465,7 +442,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		courseTitle.clear();
 		if(courseInfo!=null&&courseInfo.size()>0){
 			courseSection.setVisible(true);
-			//setCourseTitle(courseInfo.get(0));
 			SearchUiUtil.renderMetaData(courseTitle, courseInfo, 0);
 			Label dummyLabel=new Label();
 			dummyLabel.setStyleName(playerStyle.clearBoth());
@@ -475,7 +451,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		}
 	}
 	public void setCourseTitle(String title){
-		//courseTitle.setText(title);
+
 	}
 	public void setLikesCount(int likesCount){
 		
@@ -677,7 +653,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			int size = commentDoList.getSearchResults().size();
 			paginationCount=paginationCount+size;
 			if(size>0) {
-				
 				for(int i=0;i<size;i++) {
 					setCommentsWidget(commentDoList.getSearchResults().get(i),PAGINATION);
 				}
@@ -733,7 +708,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	 */
 	@UiHandler("postCommentBtn")
 	public void clickOnPostCommentBtn(ClickEvent event) {
-		
 		if (commentField.getText().trim().length() > 0){
 			if(postCommentBtn.getStyleName().contains(PRIMARY_STYLE)) {
 				//check for bad words first.
@@ -744,7 +718,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 					@Override
 					public void onSuccess(Boolean value) {
-						isHavingBadWords = value;
 						postCommentBtn.setEnabled(true);
 						if (value){
 							commentField.getElement().getStyle().setBorderColor("orange");
@@ -756,9 +729,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
 							characterLimit.setVisible(false);
-							
 							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), commentField.getText());
-							
 							commentField.setText("");
 							commentField.getElement().setAttribute("alt","");
 							commentField.getElement().setAttribute("title","");
@@ -823,15 +794,12 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	private class OnCommentsFieldBlur implements BlurHandler{
 		@Override
 		public void onBlur(BlurEvent event) {
-		
 			if (commentField.getText().length() > 0){
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", commentField.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-	
 					@Override
 					public void onSuccess(Boolean value) {
-						isHavingBadWords = value;
 						if (value){
 							commentField.getElement().getStyle().setBorderColor("orange");
 							characterLimit.setText(i18n.GL0554());
@@ -865,7 +833,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	private class OnCommentsFieldClicked implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-		
 			commentField.getElement().getStyle().clearBackgroundColor();
 			commentField.getElement().getStyle().setBorderColor("#ccc");
 			if(commentField.getText().trim().length()==0){
@@ -875,8 +842,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					modifyEditControls(true);
 				}
 			}
-			
-			
 		}
 	}
 	
@@ -977,13 +942,13 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	 */	
 	@Override
 	public void updateCommentChildView(String commentUid, String action) {
-		if(!commentUid.isEmpty() && action.equals(DELETE)) {
+		if(!commentUid.isEmpty() && action.equalsIgnoreCase(DELETE)) {
 			deleteComment(commentUid);
 			addComment.setVisible(true);
-		} else if (!commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if (!commentUid.isEmpty() && action.equalsIgnoreCase(EDIT)) {
 			addComment.setVisible(false);
 			editComment(commentUid);
-		} else if(commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if(commentUid.isEmpty() && action.equalsIgnoreCase(EDIT)) {
 			addComment.setVisible(true);
 		}
 	}
@@ -1014,11 +979,9 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 				deletePanel.setStyleName(playerStyle.deleteMsg());
 				commentsContainer.insert(deletePanel, index);
 				new FadeInAndOut(deletePanel.getElement(), 1000);
-				Timer timer = new Timer()
-		        {
+				Timer timer = new Timer(){
 		            @Override
-		            public void run()
-		            {
+		            public void run(){
 						int deleteIndex = commentsContainer.getWidgetIndex(deletePanel);
 						commentsContainer.remove(deleteIndex);
 						getUiHandlers().deleteCommentFromCollection(collectionDo.getGooruOid(),commentUid, commentsContainer.getWidgetCount()+"", 1+"");
@@ -1123,14 +1086,11 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			params.put("tab", "flag");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-		}
-		else
-		{
+		}else{
 			params.put("tab", "flag");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
-		
 	}
 
 	@Override
@@ -1157,19 +1117,24 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			for(int i = 0; i<conceptDoList.size(); i++) {
 				final ConceptDo conceptDo = conceptDoList.get(i);
 				if(!conceptDo.getGooruOid().equals(gooruOid)) {
-					relatedConceptsCoverPage.add(getConceptAnchorLink(conceptDo.getTitle(), conceptDo.getGooruOid(), subject, lessonId));
-					relatedConceptsEndPage.add(getConceptAnchorLink(conceptDo.getTitle(), conceptDo.getGooruOid(), subject, lessonId));
+					if(conceptDo.getTitle()!=null && conceptDo.getGooruOid()!=null){
+						relatedConceptsCoverPage.add(getConceptAnchorLink(conceptDo.getTitle(),conceptDo.getGooruOid(), subject, lessonId));
+						relatedConceptsEndPage.add(getConceptAnchorLink(conceptDo.getTitle(),conceptDo.getGooruOid(), subject, lessonId));
+					}
 				}
 				if (size==1 && conceptDo.getGooruOid().equals(gooruOid)){
-					relatedConceptsEndPage.add(emptyAnchorLink(libraryName));
-					relatedConceptsCoverPage.add(emptyAnchorLink(libraryName));
+					if(!StringUtil.isEmpty(libraryName)){
+						relatedConceptsEndPage.add(emptyAnchorLink(libraryName));
+						relatedConceptsCoverPage.add(emptyAnchorLink(libraryName));
+					}
 				}
 			}
 		} else {
-			relatedConceptsEndPage.add(emptyAnchorLink(libraryName));
-			relatedConceptsCoverPage.add(emptyAnchorLink(libraryName));
+			if(!StringUtil.isEmpty(libraryName)){
+				relatedConceptsEndPage.add(emptyAnchorLink(libraryName));
+				relatedConceptsCoverPage.add(emptyAnchorLink(libraryName));
+			}
 		}
-		
 	}
 	
 	private Anchor emptyAnchorLink(String libraryName) {
@@ -1210,12 +1175,9 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	}
 	public void renderDepthOfKnowledge(List<checkboxSelectedDo> depthofKnowledgeList ) {
 		depthOfKnowledgeContainer.setVisible(false);
-		if(depthofKnowledgeList!=null){
+		if(depthofKnowledgeList!=null && depthofKnowledgeList.size()>0){
 			depthOfKnowledgePanel.clear();
-			
 			boolean depthofKnowledgeValue = false;
-
-			
 			for (checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
 				if(checkboxSelectedDo.isSelected()){
 					depthofKnowledgeValue = true;
@@ -1223,86 +1185,63 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
 					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
-
 				}
 			}
 			if(depthofKnowledgeValue){
 				depthOfKnowledgeContainer.setVisible(true);
 			}else{
 				depthOfKnowledgeContainer.setVisible(false);
-				
 			}
-			
-		}else
-		{
+		}else{
 			depthOfKnowledgeContainer.setVisible(false);
 		}
 	}
 	public void renderInstructionalMethod(List<checkboxSelectedDo> instructionmethodList){
 		InstructionalmethodContainer.setVisible(false);
-		if(instructionmethodList!=null){
-			instructionalmethodPanel.clear();
-			boolean instructionMethod=false;
-			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) 
-			{
-			if(checkboxSelectedDo.isSelected())
-			{
-					instructionMethod = true;
-					Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
-					instructionalmethodPanel.add(lblInstructionMethod);
+		if(instructionmethodList!=null && instructionmethodList.size()>0){
+				instructionalmethodPanel.clear();
+				boolean instructionMethod=false;
+				for(checkboxSelectedDo checkboxSelectedDo : instructionmethodList){
+					if(checkboxSelectedDo.isSelected()){
+						instructionMethod = true;
+						Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
+						instructionalmethodPanel.add(lblInstructionMethod);
+						InstructionalmethodContainer.setVisible(true);
+					}
+				}
+				if(instructionMethod){
 					InstructionalmethodContainer.setVisible(true);
-
-			}
-
-			}
-			
-			if(instructionMethod)
-			{
-			InstructionalmethodContainer.setVisible(true);
-			}else
-			{
+				}else{
+					InstructionalmethodContainer.setVisible(false);
+				}
+		}else{
 			InstructionalmethodContainer.setVisible(false);
-			}
-			
-			}else
-			{
-				InstructionalmethodContainer.setVisible(false);
-			}
+		}
 	}
 	public void renderAudience(List<checkboxSelectedDo> audienceList){
 		audienceContainer.setVisible(false);
-		if(audienceList!=null){
+		if(audienceList!=null && audienceList.size()>0){
 			audiencePanel.clear();
 			boolean audience=false;
-			
 			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
 				if(checkboxSelectedDo.isSelected()){
 					audience = true;
 					Label lblaudience = new Label(checkboxSelectedDo.getValue());
 					audiencePanel.add(lblaudience);
-
+				}
 			}
-		}
-		
 			if(audience){
 				audienceContainer.setVisible(true);
-			}
-			else
-			{
+			}else{
 				audienceContainer.setVisible(false);
-				
 			}
-			
-		}
-		else
-		{
+		}else{
 			audienceContainer.setVisible(false);
 		}
 	}
 	public void renderLearningAndInnovationSkill(List<checkboxSelectedDo> learningSkillsList){
 		learningAndInnovationSkillsContainer.setVisible(false);
-		
-		if(learningSkillsList!=null){
+		if(learningSkillsList!=null && learningSkillsList.size()>0){
 			learningAndInnovationSkillPanel.clear();
 			boolean learningAndInnovationSkill = false;
 			Label lbllearningSkills = null;
@@ -1314,29 +1253,20 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					lbllearningSkills.getElement().setAttribute("style", "display:table");
 					learningAndInnovationSkillPanel.add(lbllearningSkills);
 				}
-				
-				
-		}
-			
+			}
 			if(learningAndInnovationSkill){
 				learningAndInnovationSkillsContainer.setVisible(true);
-			}else
-			{
+			}else{
 				learningAndInnovationSkillsContainer.setVisible(false);
-				
 			}
-			
-		}else
-		{
+		}else{
 			learningAndInnovationSkillsContainer.setVisible(false);
 		}
 	}
 	
-	public void renderLanguageObjective(String languageObjective)
-	{
+	public void renderLanguageObjective(String languageObjective){
 		lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
-	if(languageObjective!=null)
-		{
+		if(!StringUtil.isEmpty(languageObjective)){
 			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
@@ -1348,29 +1278,19 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("title",languageObjective.substring(0,200));
-				
-			}
-			else
-			{
+			}else{
 				seeMoreAnchor.setVisible(false);
 				lbllanguageObjective.setText(languageObjective);
 				lbllanguageObjective.getElement().setAttribute("alt",languageObjective);
 				lbllanguageObjective.getElement().setAttribute("title",languageObjective);
 			}
-			
-		}
-		else
-		{
+		}else{
 			languageObjectiveContainer.setVisible(false);
-			
 		}
 	}
 	
-
-	
 	@UiHandler("seeMoreAnchor")
-	public void clickSeeAll(ClickEvent event)
-	{
+	public void clickSeeAll(ClickEvent event){
 		lbllanguageObjective.setText("");
 		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText(languageObjectiveValue);
@@ -1378,8 +1298,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		lbllanguageObjective.getElement().setAttribute("title",languageObjectiveValue);
 	}
 	
-	public static void onClosingAndriodorIpaddiv()
-	{
+	public static void onClosingAndriodorIpaddiv(){
 		 mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
 	}
 }

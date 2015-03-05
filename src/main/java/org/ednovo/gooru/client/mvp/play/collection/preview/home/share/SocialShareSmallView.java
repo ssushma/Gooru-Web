@@ -1,4 +1,5 @@
-/** 
+/**
+ *  
  *****************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
@@ -43,6 +44,8 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -120,8 +123,6 @@ IsSocialShareSmallView{
 	private static final String DEFULT_AUDIOIMAGE = "images/default-audio.png";
 	
 	private static final String DEFULT_TEXTIMAGE = "images/default-text.png";
-	
-	private  String url="";
 
 	private boolean isProfilePageView = false;
 
@@ -132,36 +133,17 @@ IsSocialShareSmallView{
 	 *            instance of {@link CollectionDo}
 	 */
 	public SocialShareSmallView(SocialShareDo shareDo) {
-
 		this.socialDo=shareDo;
-
 		initWidget(uiBinder.createAndBindUi(this));
-
 		category=socialDo.getCategoryType()!=null?socialDo.getCategoryType():"collection";
 		setId();
-		description=socialDo.getDescription();
-		String title=socialDo.getTitle();
-		if(description==null){
-			description = "";
-		} else {
-			description = description.replaceAll("\\<.*?\\>", "");
-		}
-
-		if(title==null){
-			title="";
-		}
-
+		description=socialDo.getDescription()!=null?socialDo.getDescription().replaceAll("\\<.*?\\>", ""):"";
 		setPresenter(new SocialShareSmallPresenter(this));
-		//		shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-
 		try {
 			if(socialDo.getIsSearchShare()){
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
 			}
-		} catch (Exception e) {
-
-		}
-
+		} catch (Exception e) {	}
 		if (socialDo.isOnlyIcon()) {
 			shareTextPanel.setVisible(false);
 			shareIconPanel.setVisible(true);
@@ -169,21 +151,20 @@ IsSocialShareSmallView{
 			shareIconPanel.setVisible(false);
 			shareTextPanel.setVisible(true);
 		}
-
-
-		if(title.contains("img")){
-			socialDo.setTitle(i18n.GL0308());
-		}else{
-			if (title.length() > 50) {
-				title = title.substring(0,50)+ "...";
-				socialDo.setTitle(title.replaceAll("<p>","").replaceAll("</p>", ""));
+		if(socialDo.getTitle()!=null){
+			String title=socialDo.getTitle();
+			if(title.contains(ClientConstants.IMG)){
+				socialDo.setTitle(i18n.GL0308());
 			}else{
-				socialDo.setTitle(title.replaceAll("<p>","").replaceAll("</p>", ""));
+				if (title.length() > 50) {
+					title = title.substring(0,50)+ "...";
+					socialDo.setTitle(title.replaceAll("<p>","").replaceAll("</p>", ""));
+				}else{
+					socialDo.setTitle(title.replaceAll("<p>","").replaceAll("</p>", ""));
+				}
 			}
 		}
-		//        if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
 		if((socialDo.getShareType().equalsIgnoreCase("private"))){
-
 			panelfbIcon.setStyleName(socialShareSmallStyle.classPageShareButtonsFTEBgDisable());
 			panelTwIcon.setStyleName(socialShareSmallStyle.classPageShareButtonsFTEBgDisable());
 			panelEmailIcon.setStyleName(socialShareSmallStyle.classPageShareButtonsFTEBgDisable());
@@ -191,11 +172,7 @@ IsSocialShareSmallView{
 			fbPanel.setStyleName(socialShareSmallStyle.classPageShareButtonsBgDisable());
 			panelTwitter.setStyleName(socialShareSmallStyle.classPageShareButtonsBgDisable());
 			panelEmail.setStyleName(socialShareSmallStyle.classPageShareButtonsBgDisable());
-
-			//				shareTextPanel.getElement().getStyle().setCursor(Cursor.DEFAULT);
-			//				shareIconPanel.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		}else{
-
 			panelfbIcon.setStyleName(socialShareSmallStyle.fbPageShareIconButtonsBg());
 			panelTwIcon.setStyleName(socialShareSmallStyle.twitterPageShareIconButtonsBg());
 			panelEmailIcon.setStyleName(socialShareSmallStyle.classPageShareButtonsFTEBg());
@@ -203,12 +180,7 @@ IsSocialShareSmallView{
 			fbPanel.setStyleName(socialShareSmallStyle.fbPageShareButtonsBg());
 			panelTwitter.setStyleName(socialShareSmallStyle.twitterPageShareButtonsBg());
 			panelEmail.setStyleName(socialShareSmallStyle.classPageShareButtonsBg());
-
-			//				shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-			//				shareIconPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		}
-		//		}
-
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
 			isProfilePageView = true;
@@ -228,24 +200,23 @@ IsSocialShareSmallView{
 	public void setDafaultImage(ErrorEvent event){
 		if(category==null||category.equals("")){
 			categoryImage.setUrl(DEFULT_IMAGE);
-		}
-		else if (category.equalsIgnoreCase("collection")) {
+		}else if (ClientConstants.COLLECTION.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_IMAGE);
-		} else if (category.equalsIgnoreCase("video")) {
+		} else if (ClientConstants.VIDEO.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_VIMAGE);
-		} else if (category.equalsIgnoreCase("question")) {
+		} else if (ClientConstants.QUESTION.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_QIMAGE);
-		} else if (category.equalsIgnoreCase("interactive")) {
+		} else if (ClientConstants.INTERACTIVE.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_IIMAGE);
-		} else if (category.equalsIgnoreCase("website")||category.equalsIgnoreCase("exam")||category.equalsIgnoreCase("webpage")) {
+		} else if (ClientConstants.WEBSITE.equalsIgnoreCase(category)||ClientConstants.EXAM.equalsIgnoreCase(category)||ClientConstants.WEBPAGE.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_WIMAGE);
-		} else if (category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")) {
+		} else if (ClientConstants.SLIDE.equalsIgnoreCase(category)||ClientConstants.IMAGE.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_ITYPEIMAGE);
-		} else if (category.equalsIgnoreCase("textbook")||category.equalsIgnoreCase("lesson")||category.equalsIgnoreCase("handout")||category.equalsIgnoreCase("text")) {
+		} else if (ClientConstants.TEXTBOOK.equalsIgnoreCase(category)||ClientConstants.LESSON.equalsIgnoreCase(category)||ClientConstants.HANDOUT.equalsIgnoreCase(category)||ClientConstants.TEXT.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_TEXTIMAGE);
-		} else if (category.equalsIgnoreCase("other")) {
+		} else if (ClientConstants.OTHER.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_OIMAGE);
-		}else if (category.equalsIgnoreCase("audio")) {
+		}else if (ClientConstants.AUDIO.equalsIgnoreCase(category)) {
 			categoryImage.setUrl(DEFULT_AUDIOIMAGE);
 		}
 		socialDo.setThumbnailurl(categoryImage.getUrl());
@@ -255,8 +226,10 @@ IsSocialShareSmallView{
 	public void onLoad(){
 		super.onLoad();
 		categoryImage.setUrl(StringUtil.formThumbnailName(socialDo.getThumbnailurl(), "."));	
-		categoryImage.setAltText(socialDo.getTitle());
-		categoryImage.setTitle(socialDo.getTitle());
+		if(!StringUtil.isEmpty(socialDo.getTitle())){
+			categoryImage.setAltText(socialDo.getTitle());
+			categoryImage.setTitle(socialDo.getTitle());
+		}
 	}
 
 	/**
@@ -265,19 +238,18 @@ IsSocialShareSmallView{
 	 */
 	@UiHandler("fbPanel")
 	public void onFbClickEvent(ClickEvent event) {
-		if(!(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(!(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
+			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
-				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
+			else if(PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken()) || PlaceTokens.PREVIEW_PLAY.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
+				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
-				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
+				} else if ( ClientConstants.COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickFacebookFromSummaryPageInCollectionplayer();
 				}
-
 			}
 			onFbShareEvent();
 		}
@@ -288,21 +260,18 @@ IsSocialShareSmallView{
 	 */
 	@UiHandler("fbIconPanel")
 	public void onFbIconClickEvent(ClickEvent event){
-		if(!isProfilePageView || !(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(!isProfilePageView || !(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
+			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
-				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
+				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
-				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
-
+				} else if ( ClientConstants.COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickFacebookFromSummaryPageInCollectionplayer();
 				}
-
 			}
-
 			onFbShareEvent();
 		}
 	}
@@ -313,16 +282,15 @@ IsSocialShareSmallView{
 	 */
 	@UiHandler("emailPanel")
 	public void onEmailClickEvent(ClickEvent event){
-		if(!(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(!(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
+			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromCollection();
-			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
-				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
-				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
+				} else if ( ClientConstants.COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickEmailFromSummaryPageInCollectionplayer();
 				}
 			}
@@ -335,21 +303,18 @@ IsSocialShareSmallView{
 	 */
 	@UiHandler("emailIconPanel")
 	public void onEmailIconClickEvent(ClickEvent event){
-		if(!isProfilePageView || !(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(!isProfilePageView || !(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
+			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Email_FromCollection();
-
-			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
-				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
-				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
+				} else if ( ClientConstants.COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickEmailFromSummaryPageInCollectionplayer();
 				}
 			}
-
 			onEmailShareEvent();
 		}
 	}
@@ -360,16 +325,15 @@ IsSocialShareSmallView{
 	 */
 	@UiHandler("twitterPanel")
 	public void onTwitterClickEvent(ClickEvent event) {
-		if(!(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(!(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
+			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromCollection();
-			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
-				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
-				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
+				} else if ( ClientConstants.COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickTwitterFromSummaryPageInCollectionplayer();
 				}
 			}
@@ -383,20 +347,18 @@ IsSocialShareSmallView{
 	 */
 	@UiHandler("twIconPanel")
 	public void onTwitterIconClickEvent(ClickEvent event) {
-		if(!isProfilePageView || !(socialDo.getShareType().equalsIgnoreCase("private"))){
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(!isProfilePageView || !(ClientConstants.PRIVATE.equalsIgnoreCase(socialDo.getShareType()))){
+			if(PlaceTokens.RESOURCE_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromResource();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			}else if(PlaceTokens.COLLECTION_SEARCH.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 				MixpanelUtil.Click_Twitter_FromCollection();
-
-			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
-				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
+				if(ClientConstants.COLLECTIONSHREVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
-				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
+				} else if ( ClientConstants.COLLECTIONSUMMARYVIEWTEXTLBL.equalsIgnoreCase(socialShareContainer.getElement().getId())) {
 					MixpanelUtil.ClickTwitterFromSummaryPageInCollectionplayer();
 				}
 			}
-
 			onTwisterShareEvent();
 		}
 	}
@@ -406,18 +368,16 @@ IsSocialShareSmallView{
 	 */
 	private void onFbShareEvent() {
 		MixpanelUtil.Click_On_FaceBook();
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
+		if(PlaceTokens.PROFILE_PAGE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 			if(socialDo.getIsSearchShare()){
 				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
-			}
-			else{
+			}else{
 				String title = i18n.GL1085_2();
 				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),description,categoryImage.getUrl());
 			}
-		}
-		else{
+		}else{
 			triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 			SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
 		}
@@ -428,7 +388,7 @@ IsSocialShareSmallView{
 	 */
 	private void onTwisterShareEvent() {
 		MixpanelUtil.Click_On_Twitter();
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
+		if(PlaceTokens.PROFILE_PAGE.equalsIgnoreCase(AppClientFactory.getCurrentPlaceToken())){
 			if(socialDo.getIsSearchShare()){
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
@@ -447,18 +407,19 @@ IsSocialShareSmallView{
 	private void onEmailShareEvent() {
 		MixpanelUtil.Click_On_Email();
 		if(!(AppClientFactory.isAnonymous())){
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<SettingDo>() {
-
+			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<V2UserDo>() {
 				@Override
-				public void onSuccess(SettingDo result) {
-					socialDo.setEmailId(result.getExternalId());
-					EmailShareUc emailShare=new EmailShareUc(socialDo){
-						public void triggerEmailEvent(boolean confirmStaus){
-							triggerShareDataEvent(PlayerDataLogEvents.MAIL,confirmStaus);
-						}
-					};
-					emailShare.show();
-					emailShare.center();
+				public void onSuccess(V2UserDo result) {
+					if(result!=null){
+						socialDo.setEmailId(result.getExternalId());
+						EmailShareUc emailShare=new EmailShareUc(socialDo){
+							public void triggerEmailEvent(boolean confirmStaus){
+								triggerShareDataEvent(PlayerDataLogEvents.MAIL,confirmStaus);
+							}
+						};
+						emailShare.show();
+						emailShare.center();
+					}
 				}
 			});
 		}else{
@@ -481,7 +442,6 @@ IsSocialShareSmallView{
 
 	@Override
 	public void onDragBlur() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -526,19 +486,15 @@ IsSocialShareSmallView{
 	 */
 	UpdateSocialShareMetaDataHandler setHeader = new UpdateSocialShareMetaDataHandler() {
 		@Override
-		public void updateSocialShareMetaData(String title,
-				String description1, String imageUrl) {
+		public void updateSocialShareMetaData(String title,String description1, String imageUrl) {
 			socialDo.setTitle(title);
-
 			socialDo.setDescription(description1);
-
 			description = socialDo.getDescription();
 			if(description==null){
 				description = "";
 			} else {
 				description = description.replaceAll("\\<.*?\\>", "");
 			}
-
 			if (!imageUrl.equalsIgnoreCase("")) {
 				socialDo.setThumbnailurl(imageUrl);
 			}

@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsHandler;
+import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
@@ -44,32 +45,86 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @author Search Team
  * 
  */
-public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler,UpdateRatingsInSearchHandler {
+public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler,DisableSpellSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler,UpdateRatingsInSearchHandler {
 	
 	/**
 	 * Set search page view
 	 */
+	/**
+	 * 
+	 */
 	void initiateSearch();
 	
+	/**
+	 * @param searchResultDo
+	 */
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo);
 	
+	/**
+	 * @return
+	 */
 	public AddResourceContainerPresenter getAddResourceContainerPresenter();
 	
+	/**
+	 * @param addResourceContainerPanel
+	 * @param searchResultDo
+	 * @param Type
+	 */
 	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type);
 	
+	/**
+	 * @param addResourceContainerPanel
+	 * @param collectionsearchResultDo
+	 * @param Type
+	 */
 	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String Type);
 
+	/**
+	 * 
+	 */
 	void getAddStandards();
 
+	/**
+	 * 
+	 */
 	void setUpdatedStandards();
 
+	/**
+	 * 
+	 */
 	void closeStandardsPopup();
 
+	/**
+	 * @param DisclosurePanelClose
+	 */
 	void showAndHideDisclosurePanelOnCLick(DisclosurePanel DisclosurePanelClose);
+	
+	/**
+	 * @param addResourceContainerPanel
+	 * @param searchResultDo
+	 * @param type
+	 */
+	void setAnalyticsTabData(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo, String type);
+
+	/**
+	 * @param addResourceContainerPanel
+	 * @param searchResultDo
+	 * @param type
+	 */
+	void setAnalyticsTabDataForCollections(SimplePanel addResourceContainerPanel,CollectionSearchResultDo searchResultDo, String type);
+
+	/**
+	 * @param simplePanel     
+	 * @param searchResultDo
+	 * @param isTagsPanelOpen 
+	 * @param tagsLbl 
+	 */
+	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl);
 }

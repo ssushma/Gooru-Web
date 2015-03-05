@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -78,7 +79,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  *
  * @Reviewer: Gooru Team
  */
-public class AddResourceContainerPresenter extends PresenterWidget<IsAddResourceContainerView> implements AddResourceContainerUiHandlers{
+public class AddResourceContainerPresenter extends PresenterWidget<IsAddResourceContainerView> implements AddResourceContainerUiHandlers,ClientConstants{
 	
 	ResourceSearchResultDo searchResultDo =null;
 	
@@ -107,12 +108,12 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	
 	@Override
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
-		if(searchType.equalsIgnoreCase("collection")){
-			type= "folder";
-			accessType = "public,anyonewithlink";
+		if(COLLECTION.equalsIgnoreCase(searchType)){
+			type= FOLDER;
+			accessType = ACESSTEXT;
 		}else{
 			type=null;
-			accessType = "public,anyonewithlink";
+			accessType = ACESSTEXT;
 		}
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
@@ -245,7 +246,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		this.collectionItemDo = collectionItemDo;
 		getView().clearShelfData();
 		getWorkspaceData(0,20,true,"resource");
-		
 	}
 
 	@Override

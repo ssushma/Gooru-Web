@@ -78,14 +78,12 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	
 	void removeQuestionImage(String collectionItemId);
 	
-	public void updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl);
-
 	void addUserOwnResource(String jsonString);
 
 	void saveUserResource(String filePath);
 	public void showDriveResoureView(HTMLPanel tabContainer);
 	
-	public void browseStandardsInfo(boolean val);
+	public void browseStandardsInfo(boolean val, boolean isUserResource);
 
 	void addUpdatedBrowseStandards();
 
@@ -93,5 +91,6 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 
 	void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl);
 
+	void getResourceImageInfo(String userUrlStr);
 
 }

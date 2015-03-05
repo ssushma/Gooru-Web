@@ -200,6 +200,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public Label getAddButton(){
 		return wrapperVcr.addLbl;
 	}
+	
+	public Label getAnalyticsButton(){
+				return wrapperVcr.analyticsInfoLbl;
+			}
+	
 	public SimplePanel getAddResourceContainerPanel(){
 		return wrapperVcr.disclosureContentSimPanel;
 	}
@@ -584,4 +589,14 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		}
 		
 	};
+	
+	
+	public Label getAddTagsTab(){
+		return wrapperVcr.getTagsLbl();
+	}
+	
+	public boolean isTagsPanelOpen(){
+		return wrapperVcr.isTagsDisclosurePanelOpen();
+	}
+	
 }

@@ -116,6 +116,14 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 								getView().hide();
 								AppClientFactory.setLoggedInUser(result);
 								AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(false));
+								AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
+									@Override
+									public void onSuccess(UserDo newUser) {
+										UserDo user = AppClientFactory.getLoggedInUser();
+										user.setViewFlag(newUser.getViewFlag());
+										AppClientFactory.setLoggedInUser(user);
+									}
+								});
 								SignUpGradeCourseView gradeCourseView = new SignUpGradeCourseView(result);
 							}
 						});

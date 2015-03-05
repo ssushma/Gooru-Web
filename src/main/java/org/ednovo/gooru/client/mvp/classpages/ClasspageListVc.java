@@ -412,7 +412,21 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 		// inLineLblCreateOne.setText(MessageProperties.GL0120);
 		lblTitle.getElement().setId("lblTitle");
 	}
-
+	/**
+	 * 
+	 * @fileName : ClasspageListVc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class OnEnterClassCodeClick implements ClickHandler {
 
 		@Override
@@ -651,7 +665,6 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 											StudentAssignmentView
 													.setPublicPageActive();
 										} else {
-											System.out.println("iam in classpagelistvc::setPublicPagePending");
 											StudentAssignmentView
 													.setPublicPagePending();
 										}
@@ -794,7 +807,27 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 					title, listClasspage.get(i), false));
 		}
 	}
-	
+	/**
+	 * 
+	 * @function createTitle 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param title
+	 * @parm(s) : @param classpageOwnerId
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private String createTitle(String title, String classpageOwnerId){
 		String tmptitle = "";
 		title = title.length() >= 18 ? title.substring(0, 18) + "..." : title;
@@ -1117,7 +1150,25 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
 		}
 	}
-
+	/**
+	 * 
+	 * @function setButtonStatus 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param status
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setButtonStatus(String status) {
 		if (status.equalsIgnoreCase("active")) {
 			enterLbl.getElement().removeClassName("disabled");

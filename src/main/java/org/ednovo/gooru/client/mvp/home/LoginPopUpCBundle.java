@@ -150,6 +150,8 @@ public interface LoginPopUpCBundle extends ClientBundle{
 		String green();
 		
 		String errorLabel();
+		
+		String loginWithGooru();
 	}
 	@Source("Newlogin-popup.css")
 	LoginPopUpCss css();

@@ -62,6 +62,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -91,12 +92,10 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		addCollectionInsteadLabelContainer,addCollectionContainer,addresourceText,existingCollectionContainer;
 	@UiField InlineLabel dropdownListPlaceHolder;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
-	//@UiField Image resourceImageWidget;
 	@UiField Button addResourceToCollectionButton,workSpaceBtn;
 	@UiField Label addingLabel,addToExistingColl,errorMessage,
 					sizeMessage,successMessageLabelText,addCollectionInsteadLabelText,hideText,resourceAdditionErrorStyle;
 	@UiField FlowPanel resourceAddedSuccessMessageContainer;
-	/*@UiField Anchor workSpaceLink;*/
 	@UiField Label addNewCollectionLabel;
 	
 	@UiField HTMLEventPanel hideButton;
@@ -110,6 +109,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	private int limit=20;
 	private int totalHitCount=0;
 	private int pageNum=1;
+	
+	private String FOLDER = "folder";
+	private String SCOLLECTION = "scollection";
 	
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
 		 @Override
@@ -176,11 +178,13 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 				    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
 				    if(!folderTreeItemWidget.isApiCalled()){
 				    	folderTreeItemWidget.setApiCalled(true);
+				    	if(item!=null&&folderTreeItemWidget.getGooruOid()!=null){
 				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
+				    	}
 				    }
 				    if(parent != null)
 				    	parent.setSelected(false);   // TODO FIX ME
-				    item.setState(!item.getState(), false);
+				    	item.setState(!item.getState(), false);
 			    }else if(folderWidget instanceof CollectionTreeItem){
 			    	if(previousSelectedItem!=null){
 			    		previousSelectedItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
@@ -202,7 +206,6 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
 			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
-			//chooseCollectionErrorLabel.setText("");
 		}
 	}
 	public void closeDropDown(){
@@ -212,7 +215,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		displayWorkspaceData(item,folderListDo);
 	}
 	public void getFolderItems(TreeItem item,String parentId){
+		if(parentId!=null){
 		getUiHandlers().getFolderItems(item,parentId);
+		}
 	}
 	public class FolderTreeItem extends Composite{
 		private FlowPanel folderContainer=null;
@@ -317,33 +322,37 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
 			 setPagination(folderListDo.getCount());
-			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
+			 if(foldersArrayList!=null && foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					 if(floderDo.getType().equals("folder")){
-						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
-						 if(foldersArrayList.get(i).getCollectionItems().size() == 0)
-						 {
-						 if(folderItem.getElement().hasChildNodes())
-						 {
-							 if(folderItem.getElement().getFirstChildElement().hasChildNodes())
-							 {
-								 if(folderItem.getElement().getFirstChildElement().getFirstChildElement().hasChildNodes())
-								 {
-									 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE); 
+						 if(FOLDER.equals(floderDo.getType())){
+							 if(floderDo.getTitle()!=null && floderDo.getGooruOid()!=null){
+									 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
+									 if(foldersArrayList.get(i).getCollectionItems()!=null && foldersArrayList.get(i).getCollectionItems().size() == 0)
+									 {
+										 if(folderItem.getElement().hasChildNodes())
+										 {
+											 if(folderItem.getElement().getFirstChildElement().hasChildNodes())
+											 {
+												 if(folderItem.getElement().getFirstChildElement().getFirstChildElement().hasChildNodes())
+												 {
+													 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE); 
+												 }
+												 
+											 }
+											 
+										 }
+									 }
+									 folderTreePanel.addItem(folderItem);
+									 adjustTreeItemStyle(folderItem);
+								}
+							 }else if(SCOLLECTION.equals(floderDo.getType())){
+								 if(floderDo.getTitle()!=null && floderDo.getGooruOid()!=null && floderDo.getItemCount()!=null){
+									 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+									 folderTreePanel.addItem(folderItem);
+									 adjustTreeItemStyle(folderItem);
 								 }
-								 
-							 }
-							 
 						 }
-						 }
-						 folderTreePanel.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
-						 folderTreePanel.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
-					 }
 				 }
 			 }
 		}
@@ -352,38 +361,42 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
-			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
+			 if(foldersArrayList!=null && foldersArrayList.size()>0){
 				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
-					 if(floderDo.getType().equals("folder")){
-						 String styleName=folderLevel==1?AddAssignmentContainerCBundle.INSTANCE.css().parent():AddAssignmentContainerCBundle.INSTANCE.css().child();
-						 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(styleName,floderDo.getTitle(),floderDo.getGooruOid());
-						 innerFolderTreeItem.setFolerLevel(folderLevel+1);
-						 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
-						 if(foldersArrayList.get(i).getCollectionItems().size() == 0)
-						 {
-						 if(folderItem.getElement().hasChildNodes())
-						 {
-							 if(folderItem.getElement().getFirstChildElement().hasChildNodes())
-							 {
-								 if(folderItem.getElement().getFirstChildElement().getFirstChildElement().hasChildNodes())
+						 if(FOLDER.equals(floderDo.getType())){
+							 String styleName=folderLevel==1?AddAssignmentContainerCBundle.INSTANCE.css().parent():AddAssignmentContainerCBundle.INSTANCE.css().child();
+							 if(floderDo.getTitle()!=null && floderDo.getGooruOid()!=null){
+								 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(styleName,floderDo.getTitle(),floderDo.getGooruOid());
+								 innerFolderTreeItem.setFolerLevel(folderLevel+1);
+								 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
+								 if(foldersArrayList.get(i).getCollectionItems()!=null && foldersArrayList.get(i).getCollectionItems().size() == 0)
 								 {
-									 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE); 
+									 if(folderItem.getElement().hasChildNodes())
+									 {
+										 if(folderItem.getElement().getFirstChildElement().hasChildNodes())
+										 {
+											 if(folderItem.getElement().getFirstChildElement().getFirstChildElement().hasChildNodes())
+											 {
+												 folderItem.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setDisplay(Display.NONE); 
+											 }
+											 
+										 }
+										 
+									 }
 								 }
-								 
+								 item.addItem(folderItem);
+								 adjustTreeItemStyle(folderItem);
 							 }
-							 
+						 }else if(SCOLLECTION.equals(floderDo.getType())){
+							 if(floderDo.getTitle()!=null&&floderDo.getGooruOid()!=null && floderDo.getItemCount()!=null){
+								 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+								 item.addItem(folderItem);
+								 adjustTreeItemStyle(folderItem);
+							 }
 						 }
-						 }
-						 item.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
-						 item.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
-					 }
 				 }
 					item.setState(folderTreeItemWidget.isOpen());
 			 }
@@ -431,45 +444,27 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		return addNewCollectionLabel;
 	}
 	
-	/*@UiHandler("workSpaceLink")
-	public void workspaceLinkClickEvent(ClickEvent event){
-		AppClientFactory.getPlaceManager().setRefreshPlace(true);
-		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(collectionId, new SimpleAsyncCallback<ArrayList<String>>() {
-			@Override
-			public void onSuccess(ArrayList<String> foldersList) {
-				if(foldersList!=null){
-					Map<String,String> parametesMap=new HashMap<String,String>();
-					parametesMap.put("id", collectionId);
-					if(foldersList.size()>0){
-						for(int i=0;i<foldersList.size();i++){
-							parametesMap.put("o"+(i+1), foldersList.get(i));
-						}
-					}
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametesMap);
-				}
-			}
-		});
-	}*/
-	
 	@UiHandler("workSpaceBtn")
 	public void workSpaceBtnClickEvent(ClickEvent event){
 		AppClientFactory.getPlaceManager().setRefreshPlace(true);
-		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(collectionId, new SimpleAsyncCallback<ArrayList<String>>() {
-			@Override
-			public void onSuccess(ArrayList<String> foldersList) {
-				if(foldersList!=null){
-					Map<String,String> parametesMap=new HashMap<String,String>();
-					parametesMap.put("id", collectionId);
-					if(foldersList.size()>0){
-						for(int i=0;i<foldersList.size();i++){
-							parametesMap.put("o"+(i+1), foldersList.get(i));
+		if(collectionId!=null){
+			AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(collectionId, new SimpleAsyncCallback<ArrayList<String>>() {
+				@Override
+				public void onSuccess(ArrayList<String> foldersList) {
+					if(foldersList!=null){
+						Map<String,String> parametesMap=new HashMap<String,String>();
+						parametesMap.put("id", collectionId);
+						if(foldersList.size()>0){
+							for(int i=0;i<foldersList.size();i++){
+								parametesMap.put("o"+(i+1), foldersList.get(i));
+							}
 						}
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametesMap);
+						AppClientFactory.fireEvent(new ActivateCollectionStyleEvent());
 					}
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametesMap);
-					AppClientFactory.fireEvent(new ActivateCollectionStyleEvent());
 				}
-			}
-		});
+			});
+		}
 	}
 
 	public Label getAddingLabel() {
@@ -529,14 +524,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		dropdownListContainer.add(dropDownListItem);
 		dropDownListItem.addClickHandler(new OnDropdownItemClick(collectionName,collectionId,collectionItemsSize));
 	}
-	
-//	public Image getResourceImageWidget() {
-//		return resourceImageWidget;
-//	}
-//
-//	public void setResourceImageWidget(Image resourceImageWidget) {
-//		this.resourceImageWidget = resourceImageWidget;
-//	}
+
 	public Label getErrorMessage() {
 		return errorMessage;
 	}
@@ -630,14 +618,6 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		this.resourceAddedSuccessMessageContainer = resourceAddedSuccessMessageContainer;
 	}
 
-	/*public Anchor getWorkSpaceLink() {
-		return workSpaceLink;
-	}
-
-	public void setWorkSpaceLink(Anchor workSpaceLink) {
-		this.workSpaceLink = workSpaceLink;
-	}*/
-
 	public Label getAddCollectionInsteadLabelText() {
 		return addCollectionInsteadLabelText;
 	}
@@ -664,8 +644,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		workSpaceBtn.setText(i18n.GL1630());
 		workSpaceBtn.getElement().setAttribute("alt",i18n.GL1630());
 		workSpaceBtn.getElement().setAttribute("title",i18n.GL1630());
-//		workSpaceLink.setText(i18n.GL0589);
-		//workSpaceLink.setHref("#organize&id="+collectionId+"&eventType=refresh");
+
 		this.collectionId=collectionId;
 		addCollectionInsteadLabelContainer.clear();
 		Label colletionIsteadButton=getAddCollectionViewButton();
@@ -673,7 +652,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		colletionIsteadButton.getElement().setAttribute("alt",i18n.GL0664());
 		colletionIsteadButton.getElement().setAttribute("title",i18n.GL0664());
 		colletionIsteadButton.getElement().getStyle().setMarginRight(138, Unit.PX);
-		//colletionIsteadButton.getElement().getStyle().setMarginTop(-15, Unit.PX);
+	
 		addCollectionInsteadLabelContainer.add(colletionIsteadButton);
 		
 	}
@@ -702,7 +681,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 
 	@Override
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo) {
+		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getGooruOid()!=null){
 		this.resourceId=collectionItemDo.getResource().getGooruOid();
+		}
 		changeButtonText();
 	}
 	public void resetSelectionData(){
@@ -743,7 +724,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 					addingLabel.getElement().setAttribute("alt",i18n.GL0591());
 					addingLabel.getElement().setAttribute("title",i18n.GL0591());
 					getAddingLabel().getElement().getStyle().setDisplay(Display.BLOCK);
+					if(resourceId!=null&&cureentcollectionTreeItem.getGooruOid()!=null){
 					copyCollectionItem(resourceId, cureentcollectionTreeItem.getGooruOid());
+					}
 				}
 			}
 		}
@@ -757,12 +740,11 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			if (isClearPanel) {
 				getDropdownListContainer().clear();
 			}
-			if (userCollectionsList.size() > 0) {
+			if (userCollectionsList!=null && userCollectionsList.size() > 0) {
 				for (CollectionItemsList userCollection : userCollectionsList) {
 					addDropDownListItem(userCollection.getCollectionTitle(),userCollection.getCollectionId(),userCollection.getCollectionItemsListSize());
 				}
 			} else {
-				//isAllUserShelfCollectionsLoaded = true;
 			}
 	}
 	
@@ -793,9 +775,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("id", collectionId);
 		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-
 		
-		if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.RESOURCE_PLAY))
+	if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.RESOURCE_PLAY))
 	{
 		PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).
 				with("id", collectionId);

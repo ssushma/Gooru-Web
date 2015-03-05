@@ -31,15 +31,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewResourceEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -70,7 +73,7 @@ import com.google.gwt.user.client.ui.Widget;
 * 
 * @Reviewer: Gooru Team.
 */
-public class ThankYouResourceStarRatingsPoor extends PopupPanel{
+public class ThankYouResourceStarRatingsPoor extends PopupPanel implements ClientConstants{
 	
 	private static ThankYouResourceStarRatingsUiBinder uiBinder = GWT.create(ThankYouResourceStarRatingsUiBinder.class);
 
@@ -96,8 +99,6 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	String assocGooruOId,review,createrName;
 	Integer score,count;
 	double average;
-	final String saving="Saving..";
-	final String posting="Posting..";
 	private int totalLength=0;
 	
 	private boolean isFlagged=false;
@@ -151,14 +152,9 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		poorRatingSubHeaderLbl.getElement().setAttribute("title",i18n.GL2035());
 		
 		setUserReview(review);
-//		setAvgRatingWidget();
 		setGlassEnabled(true);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
-		/*ratingText.getElement().setInnerHTML(i18n.GL1991());
-		ratingText.getElement().setId("pnlRatingText");
-		ratingText.getElement().setAttribute("alt",i18n.GL1991());
-		ratingText.getElement().setAttribute("title",i18n.GL1991());*/
 		
 		btnSkip.setText(i18n.GL0142());
 		btnSkip.getElement().setId("btnSkip");
@@ -184,12 +180,13 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	 */
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
+		if(count!=null){
 		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(count.toString());
 		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(average);
+		}
 		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-//		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
 	/**
@@ -214,16 +211,16 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	@UiHandler("btnPost")
 	public void onRatingReviewPostclick(ClickEvent clickEvent){
 		if(totalLength!=500){
-			if(ratingCommentTxtArea.getText().trim().equals("")&& !btnPost.getText().equalsIgnoreCase("Save")){ 
+			if(ratingCommentTxtArea.getText().trim().equals("")&& !i18n.GL0141().equalsIgnoreCase(btnPost.getText())){ 
 				if((resourceCheckBox1.getValue()||resourceCheckBox2.getValue()||resourceCheckBox3.getValue()||resourceCheckBox4.getValue())){
 					setUserPoorReview();
 				}else{
 					btnPost.setEnabled(false);
 					btnPost.getElement().addClassName("disabled");
 				}
-			}else if(!ratingCommentTxtArea.getText().trim().equals("") && !btnPost.getText().equalsIgnoreCase("Save")){
+			}else if(!ratingCommentTxtArea.getText().trim().equals("") && !i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 				setUserPoorReview();
-			}else if(btnPost.getText().equalsIgnoreCase("Save")){
+			}else if(i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 				setUserPoorReview();
 			}
 		}
@@ -244,15 +241,20 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 						saveAndPsotLbl.getElement().setAttribute("title","");
 						saveAndPsotLbl.setVisible(true);
 						buttonsContainer.setVisible(false);
-						if(btnPost.getText().equalsIgnoreCase("Save")){
-							saveAndPsotLbl.setText(saving);
-							saveAndPsotLbl.getElement().setAttribute("alt",saving);
-							saveAndPsotLbl.getElement().setAttribute("title",saving);
-							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
-						}else if(btnPost.getText().equalsIgnoreCase("Submit")){
-							saveAndPsotLbl.setText(posting);
-							saveAndPsotLbl.getElement().setAttribute("alt",posting);
-							saveAndPsotLbl.getElement().setAttribute("title",posting);
+						if(i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
+							saveAndPsotLbl.setText(SAVING);
+							saveAndPsotLbl.getElement().setAttribute("alt",SAVING);
+							saveAndPsotLbl.getElement().setAttribute("title",SAVING);
+						 
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true)); 
+							}else{
+								AppClientFactory.fireEvent(new PostUserReviewResourceEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));
+							}
+						}else if(SUBMIT.equalsIgnoreCase(btnPost.getText())){
+							saveAndPsotLbl.setText(POSTING);
+							saveAndPsotLbl.getElement().setAttribute("alt",POSTING);
+							saveAndPsotLbl.getElement().setAttribute("title",POSTING);
 							if(resourceCheckBox1.isChecked())
 							{
 								isFlagged = true;
@@ -277,9 +279,13 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 							AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
 								@Override
 								public void onSuccess(ContentReportDo result) {
-									//getView().showSuccesmessagePopup();
 									isResourceflagged();
-									AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
+									
+									if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+										AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
+									}else{
+										AppClientFactory.fireEvent(new PostUserReviewResourceEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
+									}
 								}
 							});	
 						}
@@ -318,7 +324,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		}
 		else
 		{
-			if(!btnPost.getText().equalsIgnoreCase("Save")){
+			if(!i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 				isFlagged = false;
 				btnPost.setEnabled(false);
 				btnPost.getElement().addClassName("disabled");
@@ -337,7 +343,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		}
 		else
 		{
-			if(!btnPost.getText().equalsIgnoreCase("Save")){
+			if(!i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 				isFlagged = false;
 				btnPost.setEnabled(false);
 				btnPost.getElement().addClassName("disabled");
@@ -356,7 +362,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		}
 		else
 		{
-			if(!btnPost.getText().equalsIgnoreCase("Save")){
+			if(!i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 				isFlagged = false;
 				btnPost.setEnabled(false);
 				btnPost.getElement().addClassName("disabled");
@@ -375,7 +381,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		}
 		else
 		{
-			if(!btnPost.getText().equalsIgnoreCase("Save")){
+			if(!i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 				isFlagged = false;
 				btnPost.setEnabled(false);
 				btnPost.getElement().addClassName("disabled");
@@ -386,19 +392,21 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	
 	@UiHandler("ratingCommentTxtArea")
 	public void keyRatingTextArea(KeyUpEvent event){
+		if(ratingCommentTxtArea.getText()!=null && !ratingCommentTxtArea.getText().isEmpty()){
 		String review=ratingCommentTxtArea.getText().trim();
-		totalLength=ratingCommentTxtArea.getText().trim().length();
+		totalLength=review.length();
+		}
 		errorLbl.setText("");
 		errorLbl.getElement().setAttribute("alt","");
 		errorLbl.getElement().setAttribute("title","");
-		if(ratingCommentTxtArea.getText().length()>0){
+		if(totalLength>0){
 			btnPost.setEnabled(true);
 			btnPost.getElement().removeClassName("disabled");
 			errorLbl.setText("");
 			errorLbl.getElement().setAttribute("alt","");
 			errorLbl.getElement().setAttribute("title","");
 		}else{
-			if(btnPost.getText().equalsIgnoreCase("Save")){
+			if(i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 				btnPost.setEnabled(true);
 				btnPost.getElement().removeClassName("disabled");
 			}else{
@@ -430,9 +438,9 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 			reviewTextAreaTitle.setText(i18n.GL1858());
 			reviewTextAreaTitle.getElement().setAttribute("alt",i18n.GL1858());
 			reviewTextAreaTitle.getElement().setAttribute("title",i18n.GL1858());
-			btnPost.setText("Save");
-			btnPost.getElement().setAttribute("alt","Save");
-			btnPost.getElement().setAttribute("title","Save");
+			btnPost.setText(i18n.GL0141());
+			btnPost.getElement().setAttribute("alt",i18n.GL0141());
+			btnPost.getElement().setAttribute("title",i18n.GL0141());
 			ratingCommentTxtArea.setText(review.trim());
 			ratingCommentTxtArea.getElement().setAttribute("alt",review.trim());
 			ratingCommentTxtArea.getElement().setAttribute("title",review.trim());
@@ -452,69 +460,16 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	public void hide(boolean autoClose) {
 		super.hide(true);
 		
-		if(autoClose && ratingCommentTxtArea.getText().trim().equals("")&& !btnPost.getText().equalsIgnoreCase("Save")){ 
+		if(autoClose && ratingCommentTxtArea.getText().trim().equals("")&& !i18n.GL0141().equalsIgnoreCase(btnPost.getText())){ 
 			if((resourceCheckBox1.getValue()||resourceCheckBox2.getValue()||resourceCheckBox3.getValue()||resourceCheckBox4.getValue())){
 				setUserPoorReview();
 			}else{
 				btnPost.setEnabled(false);
 				btnPost.getElement().addClassName("disabled");
 			}
-		}else if(autoClose && !ratingCommentTxtArea.getText().trim().equals("") && !btnPost.getText().equalsIgnoreCase("Save")){
+		}else if(autoClose && !ratingCommentTxtArea.getText().trim().equals("") && !i18n.GL0141().equalsIgnoreCase(btnPost.getText())){
 			setUserPoorReview();
 		}
-		
-		/*if(autoClose && !ratingCommentTxtArea.getText().equals("") && !btnPost.getText().equalsIgnoreCase("Save")){
-			Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text", ratingCommentTxtArea.getText());
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-				@Override
-				public void onSuccess(Boolean value) {
-						if(!value){
-							saveAndPsotLbl.setText("");
-							saveAndPsotLbl.setVisible(true);
-							buttonsContainer.setVisible(false);
-							if(btnPost.getText().equalsIgnoreCase("Save")){
-								saveAndPsotLbl.setText(saving);
-								saveAndPsotLbl.getElement().setAttribute("alt",saving);
-								saveAndPsotLbl.getElement().setAttribute("title",saving);
-								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
-							}else if(btnPost.getText().equalsIgnoreCase("Submit")){
-								saveAndPsotLbl.setText(posting);
-								saveAndPsotLbl.getElement().setAttribute("alt",posting);
-								saveAndPsotLbl.getElement().setAttribute("title",posting);
-								if(resourceCheckBox1.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("missing-concept");
-								}
-								if(resourceCheckBox2.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("not-loading");
-								}
-								if(resourceCheckBox3.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("inappropriate");
-								}
-								if(resourceCheckBox4.isChecked())
-								{
-									isFlagged=true;
-									reourceContentReportList.add("other");
-								}
-								
-								AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
-									@Override
-									public void onSuccess(ContentReportDo result) {
-										isResourceflagged();
-										AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
-									}
-								});	  
-							}
-						}
-						SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
-				}
-			});
-		}*/
+	
 	}
 }

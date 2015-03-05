@@ -24,8 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.library.partner;
 
+
+
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -35,12 +40,13 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.player.collection.client.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -55,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHandlers> implements IsPartnerLibraryView{
+public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHandlers> implements IsPartnerLibraryView,ClientConstants{
 
 	@UiField HTMLPanel partnerPanel;
 	
@@ -68,14 +74,24 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	private String unitListId = "";
 	
 	private static final String LIBRARY_PAGE = "partner-page";
+	
+	private static Map<String, LoadBannerActionInterface.setLibraryBanner> libraryVal;
+	
+	private CourseDo courseDo;
 
 	private static PartnerLibraryViewUiBinder uiBinder = GWT.create(PartnerLibraryViewUiBinder.class);
 
 	interface PartnerLibraryViewUiBinder extends UiBinder<Widget, PartnerLibraryView> {
 	}
 	
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
+	
+	static{
+		libraryVal = new HashMap<String,LoadBannerActionInterface.setLibraryBanner>();
+		libraryVal = addAllPartnerLibraries();
+	}
+	
 	/**
 	 * Class constructor
 	 */
@@ -92,9 +108,15 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	}
 	
 
+	/**
+	 * Sets the library unit data. receiving from an API.
+	 */
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
-		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.TICAL)){
+		int listofFoldres = folderList.size();
+		long uiStartTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger(" Ui Start Time --- "+uiStartTime);
+		if(folderList.size()==0 && PlaceTokens.ASPIRE_EPACS.equals(AppClientFactory.getCurrentPlaceToken())){
 			loadingPanel(false);
 			getComingSoonText(true);
 		}else{
@@ -105,8 +127,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.getContentScroll().clear();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
 		int j = 0;
-		for(int i = 0; i<folderList.size(); i++) {
-			if(folderList.get(i).getType().equalsIgnoreCase("folder")) {
+		for(int i = 0; i<listofFoldres; i++) {
+			if(FOLDER.equalsIgnoreCase(folderList.get(i).getType())) {
 				PlayerDataLogEvents.triggerLibraryViewEvent(folderList.get(i).getParentGooruOid());
 				LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(folderList.get(i));
 				libraryView.getLeftNav().add(libraryUnitMenuView);
@@ -116,13 +138,15 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
 					setTopicListData(folderList.get(i).getFolderItems(), unitListId,folderList.get(i).getParentGooruOid());
-					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
 				}
 			}
 		}
 		
 		final Iterator<Widget> widgets = libraryView.getLeftNav().iterator();
 		int widgetCount = 0;
+		/**
+		 * Iterates the unit wdigets and providing click events for each unit widgets.
+		 */
 		while (widgets.hasNext()) {
 			final Widget widget = widgets.next();
 			final LibraryUnitMenuView libraryUnitMenuView = ((LibraryUnitMenuView) widget);
@@ -130,6 +154,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					long unticlickStarttime = System.currentTimeMillis();
+					AppClientFactory.printInfoLogger("---- Lib unit Clicked Start time -- "+AppClientFactory.getCurrentPlaceToken()+" -- "+unticlickStarttime);
 					libraryView.getContentScroll().setVisible(false);
 					loadingPanel(true);
 					final Iterator<Widget> widgetsPanel = libraryView.getLeftNav().iterator();
@@ -147,139 +173,86 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			});
 			widgetCount++;
 		}
+		AppClientFactory.printInfoLogger(" over all  End Time consumed for ui --- "+(System.currentTimeMillis() -uiStartTime));
 	}
 
+	/**
+	 * Creates each units topic widgets.
+	 */
 	@Override
 	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId,String libraryGooruOid) {
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("on unit selected ---- "+startTime);
 		libraryView.getContentScroll().clear();
 		try {
-			int count = 0;
+			int count = 0; 
 			for(int i = 0; i <folderListDo.size(); i++) {
 				count++;
 				libraryView.getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),libraryGooruOid));
 			}
 			libraryView.getContentScroll().setVisible(true);
 			loadingPanel(false);
+			AppClientFactory.printInfoLogger(" ---- on unit selected Ui End time consumed --- "+(System.currentTimeMillis()-startTime));
 		} catch (Exception e) {
 			e.printStackTrace();
 			loadingPanel(false);
 		}
 	}
 	
+	/**
+	 * Calls the method to get the respective library banner image.
+	 */
 	private void setCourseImageData() {
 		libraryView.setCourseData(getPartnerName());
 	}
 	
+	/**
+	 * Sets the respective library banner image.
+	 * @return
+	 */
 	private CourseDo getPartnerName() {
 		String partnerPlace = AppClientFactory.getCurrentPlaceToken();
 		CourseDo courseDo = new CourseDo();
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		LibraryUserDo libraryUserDo = new LibraryUserDo();
-		if(partnerPlace.equals(PlaceTokens.AUTODESK)) {
-			
-			courseDo.setLabel(i18n.GL2027());
-			thumbnailDo.setUrl("../images/library/partners/autodesk.png");
-			libraryUserDo.setPartnerName(i18n.GL1566());
-			libraryUserDo.setPartnerUrl(i18n.GL1567());
-			
-		} else if(partnerPlace.equals(PlaceTokens.ONR)) {
-			
-			courseDo.setLabel(i18n.GL2028());
-			thumbnailDo.setUrl("../images/library/partners/onr.png");
-			libraryUserDo.setPartnerName(i18n.GL1568());
-			libraryUserDo.setPartnerUrl(i18n.GL1569());
-			
-		} else if(partnerPlace.equals(PlaceTokens.FTE)) {
-			courseDo.setLabel(i18n.GL2029());
-			thumbnailDo.setUrl("../images/library/partners/fte.png");
-			libraryUserDo.setPartnerName(i18n.GL1570());
-			libraryUserDo.setPartnerUrl(i18n.GL1571());
-			
-		} else if(partnerPlace.equals(PlaceTokens.NGC)) {
-			
-			courseDo.setLabel(i18n.GL2030());
-			thumbnailDo.setUrl("../images/library/partners/ngc.png");
-			libraryUserDo.setPartnerName(i18n.GL1572());
-			libraryUserDo.setPartnerUrl(i18n.GL1573());
-
-		} else if(partnerPlace.equals(PlaceTokens.WSPWH)) {
-			
-			courseDo.setLabel(i18n.GL2031());
-			thumbnailDo.setUrl("../images/library/partners/wspwh.png");
-			libraryUserDo.setPartnerName(i18n.GL1574());
-			libraryUserDo.setPartnerUrl(i18n.GL1575());
-
-		} else if(partnerPlace.equals(PlaceTokens.LESSONOPOLY)) {
-			
-			courseDo.setLabel(i18n.GL2032());
-			thumbnailDo.setUrl("../images/library/partners/lessonopoly.png");
-			libraryUserDo.setPartnerName(i18n.GL1576());
-			libraryUserDo.setPartnerUrl(i18n.GL1577());
-
-		} else if(partnerPlace.equals(PlaceTokens.FINCAPINC)) {
-			
-			courseDo.setLabel(i18n.GL2033());
-			thumbnailDo.setUrl("../images/library/partners/cfci.png");
-			libraryUserDo.setPartnerName(i18n.GL1765());
-			libraryUserDo.setPartnerUrl(i18n.GL1766());
-
-		} else if(partnerPlace.equals(PlaceTokens.PSDPAL)) {
-			
-			courseDo.setLabel(i18n.GL2034());
-			thumbnailDo.setUrl("../images/library/partners/psd.png");
-			libraryUserDo.setPartnerName(i18n.GL1763());
-			libraryUserDo.setPartnerUrl(i18n.GL1764());
-
-		}else if(partnerPlace.equals(PlaceTokens.YOUTHVOICES)) {
-			
-			courseDo.setLabel(i18n.GL2040());
-			thumbnailDo.setUrl("../images/library/partners/youthvoices.png");
-			libraryUserDo.setPartnerName(i18n.GL2042());
-			libraryUserDo.setPartnerUrl(i18n.GL2043());
-
-		}else if(partnerPlace.equals(PlaceTokens.GEOEDUCATION)) {
-			
-			courseDo.setLabel(i18n.GL2041());
-			thumbnailDo.setUrl("../images/library/partners/natgeo.png");
-			libraryUserDo.setPartnerName(i18n.GL2044());
-			libraryUserDo.setPartnerUrl(i18n.GL2045());
-
-		}else if(partnerPlace.equals(PlaceTokens.LPS)) {
-			
-			courseDo.setLabel(i18n.GL2053());
-			thumbnailDo.setUrl("../images/library/district/landing-image-lps.png");
-			libraryUserDo.setPartnerName(i18n.GL2065());
-			libraryUserDo.setPartnerUrl(i18n.GL2066());
-
-		}else if(partnerPlace.equals(PlaceTokens.CORE_LIBRARY)) {
-			
-			courseDo.setLabel(i18n.GL2108());
-			thumbnailDo.setUrl("../images/library/district/landing-image-rusd_orange.png");
-			libraryUserDo.setPartnerName(i18n.GL2110());
-			libraryUserDo.setPartnerUrl(i18n.GL2111());
-
-		}else if(partnerPlace.equals(PlaceTokens.ESYP)) {
-			courseDo.setLabel(i18n.GL2174());
-			thumbnailDo.setUrl("../images/library/partners/esyp.jpg");
-			libraryUserDo.setPartnerName(i18n.GL2175());
-			libraryUserDo.setPartnerUrl(i18n.GL2176());
-		}else if(partnerPlace.equals(PlaceTokens.CCST_Cal_TAC)) {
-			courseDo.setLabel(i18n.GL2179());
-			thumbnailDo.setUrl("../images/library/partners/ccst.png");
-			libraryUserDo.setPartnerName(i18n.GL2177());
-			libraryUserDo.setPartnerUrl(i18n.GL2178());
-		}else if(partnerPlace.equals(PlaceTokens.TICAL)) {
-			courseDo.setLabel(i18n.GL2186());
-			thumbnailDo.setUrl("../images/library/partners/tical.png");
-			libraryUserDo.setPartnerName(i18n.GL2187());
-			libraryUserDo.setPartnerUrl(i18n.GL2188());
-		}
 		
-		courseDo.setThumbnails(thumbnailDo);
-		courseDo.setCreator(libraryUserDo);
+		LoadBannerActionInterface.setLibraryBanner actionInterface = libraryVal.get(partnerPlace); 
+		actionInterface.loadLibBanner(courseDo, thumbnailDo, libraryUserDo);
+		courseDo = actionInterface.getUpdatedCourseDo();
 		return courseDo;
 	}
+	
+	/**
+	 * Loads all the libraries into a hash map.
+	 * @return {@link Map}
+	 */
+	public static Map<String, LoadBannerActionInterface.setLibraryBanner> addAllPartnerLibraries() {
 
+		Map<String, LoadBannerActionInterface.setLibraryBanner> map = new HashMap<String,LoadBannerActionInterface.setLibraryBanner>();
+		map.put(PlaceTokens.AUTODESK,AutodeskBanner.getAutodeskInstance());
+		map.put(PlaceTokens.ONR,ONRBanner.getOnrInstance());
+		map.put(PlaceTokens.NGC,NgcBanner.getNgcInstance());
+		map.put(PlaceTokens.FTE,FteBanner.getFteInstance());
+		map.put(PlaceTokens.WSPWH,WspwhBanner.getWsphInstance());
+		map.put(PlaceTokens.LESSONOPOLY,LessonopolyBanner.getLessonpolyInstance());
+		map.put(PlaceTokens.FINCAPINC,FincapIncBanner.getfincapInstance());
+		map.put(PlaceTokens.PSDPAL,PsdlBanner.getPsdpalIstance());
+		map.put(PlaceTokens.YOUTHVOICES, YouthVoicesBanner.getYouthVoicesIstance());
+		map.put(PlaceTokens.GEOEDUCATION, GeoEduBanner.getGeoEduIstance());
+		map.put(PlaceTokens.LPS, LpsBanner.getLpsIstance());
+		map.put(PlaceTokens.CORE_LIBRARY, CoreBanner.getcoreIstance());
+		map.put(PlaceTokens.ESYP, EsypBanner.getEsypIstance());
+		map.put(PlaceTokens.CCST_Cal_TAC, CcstBanner.getCcstIstance());
+		map.put(PlaceTokens.TICAL, TicalBanner.getTicalInstance());
+		map.put(PlaceTokens.ASPIRE_EPACS, AspireBanner.getAspireInstance());
+
+		return map;
+
+	}
+	
+	/**
+	 * This method will display the loading image.
+	 */
 	@Override
 	public void loadingPanel(boolean isVisible) {
 		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
@@ -298,6 +271,603 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.getLeftNav().clear();
 	}
 	
+	/**
+	 * Inner class for implementing autodesk library banner.
+	 * 
+	 *
+	 */
+	private static class AutodeskBanner implements LoadBannerActionInterface.setLibraryBanner{
+		
+		private static AutodeskBanner autodeskBannerInstance;
+		private CourseDo libCourseDo;
+		
+	    // Singleton prevents any other class from instantiating
+	    private AutodeskBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static AutodeskBanner getAutodeskInstance() {
+	        if (null == autodeskBannerInstance) { 
+	        	autodeskBannerInstance = new AutodeskBanner();
+	        }
+	        return autodeskBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2027());
+			thumbnailDo.setUrl(Constants.AUTODESK_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1566());
+			libraryUserDo.setPartnerUrl(i18n.GL1567());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
 	
 	
+	/**
+	 * Inner class for implementing library banner.
+	 * 
+	 *
+	 */
+	private static class ONRBanner implements LoadBannerActionInterface.setLibraryBanner{
+		
+		private static ONRBanner ONRBannerInstance;
+		private CourseDo libCourseDo;
+		 
+	    // Singleton prevents any other class from instantiating
+	    private ONRBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static ONRBanner getOnrInstance() {
+	        if (null == ONRBannerInstance) { 
+	        	ONRBannerInstance = new ONRBanner();
+	        }
+	        return ONRBannerInstance;
+	    }
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2028());
+			thumbnailDo.setUrl(Constants.ONR_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1568());
+			libraryUserDo.setPartnerUrl(i18n.GL1569());	
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	
+	/**
+	 * Inner class for implementing NgC library banner.
+	 * 
+	 *
+	 */
+	private static class NgcBanner implements LoadBannerActionInterface.setLibraryBanner{
+		
+		private static NgcBanner ngcBannerInstance;
+		private CourseDo libCourseDo;
+		 
+	    // Singleton prevents any other class from instantiating
+	    private NgcBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static NgcBanner getNgcInstance() {
+	        if (null == ngcBannerInstance) { 
+	        	ngcBannerInstance = new NgcBanner();
+	        }
+	        return ngcBannerInstance;
+	    }
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2030());
+			thumbnailDo.setUrl(Constants.NGC_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1572());
+			libraryUserDo.setPartnerUrl(i18n.GL1573());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing FTE library banner.
+	 * 
+	 *
+	 */
+	private static class FteBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static FteBanner fteBannerInstance;
+		private CourseDo libCourseDo;
+		 
+	    // Singleton prevents any other class from instantiating
+	    private FteBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static FteBanner getFteInstance() {
+	        if (null == fteBannerInstance) { 
+	        	fteBannerInstance = new FteBanner();
+	        }
+	        return fteBannerInstance;
+	    }
+
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2029());
+			thumbnailDo.setUrl(Constants.FTE_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1570());
+			libraryUserDo.setPartnerUrl(i18n.GL1571());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing WSPH library banner.
+	 * 
+	 */
+	private static class WspwhBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static WspwhBanner wsphBannerInstance;
+		private CourseDo libCourseDo;
+		
+		 
+	    // Singleton prevents any other class from instantiating
+	    private WspwhBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static WspwhBanner getWsphInstance() {
+	        if (null == wsphBannerInstance) { 
+	        	wsphBannerInstance = new WspwhBanner();
+	        }
+	        return wsphBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2031());
+			thumbnailDo.setUrl(Constants.WSPH_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1574());
+			libraryUserDo.setPartnerUrl(i18n.GL1575());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing Lessonopoly library banner.
+	 *
+	 */
+	private static class LessonopolyBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static LessonopolyBanner lessonopolyBannerInstance;
+		private CourseDo libCourseDo;
+		
+	    // Singleton prevents any other class from instantiating
+	    private LessonopolyBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static LessonopolyBanner getLessonpolyInstance() {
+	        if (null == lessonopolyBannerInstance) { 
+	        	lessonopolyBannerInstance = new LessonopolyBanner();
+	        }
+	        return lessonopolyBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2032());
+			thumbnailDo.setUrl(Constants.LESSONOPOLY_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1576());
+			libraryUserDo.setPartnerUrl(i18n.GL1577());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing Fincap library banner.
+	 * 
+	 */
+	private static class FincapIncBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+
+		private static FincapIncBanner fincapIncBannerInstance;
+		private CourseDo libCourseDo;
+		
+	    // Singleton prevents any other class from instantiating
+	    private FincapIncBanner() {
+	    }
+	 
+	    // Providing Global point of access
+	    public static FincapIncBanner getfincapInstance() {
+	        if (null == fincapIncBannerInstance) { 
+	        	fincapIncBannerInstance = new FincapIncBanner();
+	        }
+	        return fincapIncBannerInstance;
+	    }
+		
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2033());
+			thumbnailDo.setUrl(Constants.FINCAP_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1765());
+			libraryUserDo.setPartnerUrl(i18n.GL1766());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing PSDL library banner.
+	 * 
+	 */
+	private static class PsdlBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static PsdlBanner psdlBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private PsdlBanner() {
+		}
+
+		// Providing Global point of access
+		public static PsdlBanner getPsdpalIstance() {
+			if (null == psdlBannerInstance) { 
+				psdlBannerInstance = new PsdlBanner();
+			}
+			return psdlBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2034());
+			thumbnailDo.setUrl(Constants.PSDPAL_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL1763());
+			libraryUserDo.setPartnerUrl(i18n.GL1764());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+		
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing Youthvoice library banner.
+	 * 
+	 */
+	private static class YouthVoicesBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static YouthVoicesBanner youthVoiceBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private YouthVoicesBanner() {
+		}
+
+		// Providing Global point of access
+		public static YouthVoicesBanner getYouthVoicesIstance() {
+			if (null == youthVoiceBannerInstance) { 
+				youthVoiceBannerInstance = new YouthVoicesBanner();
+			}
+			return youthVoiceBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2040());
+			thumbnailDo.setUrl(Constants.YOUTH_VOICES_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2042());
+			libraryUserDo.setPartnerUrl(i18n.GL2043());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+
+	/**
+	 * Inner class for implementing GeoEdu library banner.
+	 * 
+	 */
+	private static class GeoEduBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static GeoEduBanner geoEduBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private GeoEduBanner() {
+		}
+
+		// Providing Global point of access
+		public static GeoEduBanner getGeoEduIstance() {
+			if (null == geoEduBannerInstance) { 
+				geoEduBannerInstance = new GeoEduBanner();
+			}
+			return geoEduBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2041());
+			thumbnailDo.setUrl(Constants.GEOEDU_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2044());
+			libraryUserDo.setPartnerUrl(i18n.GL2045());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing LPS library banner.
+	 * 
+	 */
+	private static class LpsBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static LpsBanner lpsBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private LpsBanner() {
+		}
+
+		// Providing Global point of access
+		public static LpsBanner getLpsIstance() {
+			if (null == lpsBannerInstance) { 
+				lpsBannerInstance = new LpsBanner();
+			}
+			return lpsBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2053());
+			thumbnailDo.setUrl(Constants.LPS_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2065());
+			libraryUserDo.setPartnerUrl(i18n.GL2066());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing CORE library banner.
+	 * 
+	 */
+	private static class CoreBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static CoreBanner coreBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private CoreBanner() {
+		}
+
+		// Providing Global point of access
+		public static CoreBanner getcoreIstance() {
+			if (null == coreBannerInstance) { 
+				coreBannerInstance = new CoreBanner();
+			}
+			return coreBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2108());
+			thumbnailDo.setUrl(Constants.CORE_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2110());
+			libraryUserDo.setPartnerUrl(i18n.GL2111());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing ESYP library banner.
+	 * 
+	 */
+	private static class EsypBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static EsypBanner esypBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private EsypBanner() {
+		}
+
+		// Providing Global point of access
+		public static EsypBanner getEsypIstance() {
+			if (null == esypBannerInstance) { 
+				esypBannerInstance = new EsypBanner();
+			}
+			return esypBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2174());
+			thumbnailDo.setUrl(Constants.ESYP_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2175());
+			libraryUserDo.setPartnerUrl(i18n.GL2176());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+
+	/**
+	 * Inner class for implementing CCST library banner.
+	 * 
+	 */
+	private static class CcstBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static CcstBanner ccstBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private CcstBanner() {
+		}
+
+		// Providing Global point of access
+		public static CcstBanner getCcstIstance() {
+			if (null == ccstBannerInstance) { 
+				ccstBannerInstance = new CcstBanner();
+			}
+			return ccstBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2179());
+			thumbnailDo.setUrl(Constants.CCST_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2177());
+			libraryUserDo.setPartnerUrl(i18n.GL2178());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+
+	/**
+	 * Inner class for implementing TICAl library banner.
+	 L
+	 */
+	private static class TicalBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static TicalBanner ticalBannerInstance;
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private TicalBanner() {
+		}
+
+		// Providing Global point of access
+		public static TicalBanner getTicalInstance() {
+			if (null == ticalBannerInstance) { 
+				ticalBannerInstance = new TicalBanner();
+			}
+			return ticalBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL2186());
+			thumbnailDo.setUrl(Constants.TICAL_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL2187());
+			libraryUserDo.setPartnerUrl(i18n.GL2188());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Inner class for implementing Aspire library banner.
+	 * 
+	 */
+	private static class AspireBanner implements LoadBannerActionInterface.setLibraryBanner{
+
+		private static AspireBanner aspireBannerInstance;
+		
+		private CourseDo libCourseDo;
+		
+		// Singleton prevents any other class from instantiating
+		private AspireBanner() {
+		}
+
+		// Providing Global point of access
+		public static AspireBanner getAspireInstance() {
+			if (null == aspireBannerInstance) { 
+				aspireBannerInstance = new AspireBanner();
+			}
+			return aspireBannerInstance;
+		}
+
+		@Override
+		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
+			courseDo.setLabel(i18n.GL3107());  
+			thumbnailDo.setUrl(Constants.ASPIRE_BANNER);
+			libraryUserDo.setPartnerName(i18n.GL3108());
+			libraryUserDo.setPartnerUrl(i18n.GL3109());
+			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
+		}
+		
+		@Override
+		public CourseDo getUpdatedCourseDo() {
+			return libCourseDo;
+		}
+	}
+	
+	/**
+	 * Setting the course Do obj
+	 * @param courseDo {@link CourseDo}
+	 * @param thumbnailDo {@link ThumbnailDo}
+	 * @param libraryUserDo {@link LibraryUserDo}
+	 * @return courseDo {@link CourseDo}
+	 */
+	public static CourseDo setCourseDoObject(CourseDo courseDo,ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo){
+		courseDo.setThumbnails(thumbnailDo);
+		courseDo.setCreator(libraryUserDo);
+		return courseDo;
+	}
 }

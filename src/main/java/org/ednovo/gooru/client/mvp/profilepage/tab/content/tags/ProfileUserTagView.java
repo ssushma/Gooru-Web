@@ -50,13 +50,13 @@ public class ProfileUserTagView extends Composite{
 			.create(ProfileUserTagViewUiBinder.class);
 
 	interface ProfileUserTagViewUiBinder extends
-			UiBinder<Widget, ProfileUserTagView> {
+	UiBinder<Widget, ProfileUserTagView> {
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
-	
+
 	@UiField HTMLPanel userTagsConatiner,tagTextMessage;
 	@UiField InlineLabel TagTextMessage;
 	HTMLPanel followingContainer;
@@ -64,16 +64,16 @@ public class ProfileUserTagView extends Composite{
 	@UiField ScrollPanel userTagScrollPanel;
 	String limit = "10";
 	int totalTagCount = 0;
-	
+
 	int totalHintCount;
-	
+
 	public ProfileUserTagView(List<UserTagsDo> userTagDo,HTMLPanel followingContainer, HTMLPanel tagResourceContainer) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.userTagDo = userTagDo;
 		totalTagCount=0;
 		totalTagCount =userTagDo.size();
 		totalHintCount = userTagDo.get(0).getTotalHitCount();
-		
+
 		this.followingContainer = followingContainer;
 		this.tagResourceContainer = tagResourceContainer;
 		setData();
@@ -81,21 +81,21 @@ public class ProfileUserTagView extends Composite{
 	@UiHandler("userTagScrollPanel")
 	public void dragFollowingScrollPanel(ScrollEvent event) {
 		if (userTagScrollPanel.getVerticalScrollPosition() == userTagScrollPanel.getMaximumVerticalScrollPosition() && totalTagCount<totalHintCount) {
-		AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalTagCount),limit,new SimpleAsyncCallback<List<UserTagsDo>>() {
+			AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalTagCount),limit,new SimpleAsyncCallback<List<UserTagsDo>>() {
 
-			@Override
-			public void onSuccess(List<UserTagsDo> result) {
-				
-				if(result.size()>0){
-					totalTagCount = totalTagCount+result.size();
-					for(int i=0;i<result.size();i++){
-						ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget(result.get(i),followingContainer,tagResourceContainer);
-						userTagsConatiner.add(profileUserTagWidget);
+				@Override
+				public void onSuccess(List<UserTagsDo> result) {
+
+					if(result.size()>0){
+						totalTagCount = totalTagCount+result.size();
+						for(int i=0;i<result.size();i++){
+							ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget(result.get(i),followingContainer,tagResourceContainer);
+							userTagsConatiner.add(profileUserTagWidget);
+						}
+
 					}
-					
 				}
-			}
-		});
+			});
 		}
 	}
 	public void setData(){
@@ -104,21 +104,22 @@ public class ProfileUserTagView extends Composite{
 		TagTextMessage.getElement().setId("lblTagTextMessage");
 		TagTextMessage.getElement().setAttribute("alt",i18n.GL1915());
 		TagTextMessage.getElement().setAttribute("title",i18n.GL1915());
-		
+
 		tagTextMessage.getElement().setInnerHTML(i18n.GL1937());
 		tagTextMessage.getElement().setId("pnltagTextMessage");
 		tagTextMessage.getElement().setAttribute("alt",i18n.GL1937());
 		tagTextMessage.getElement().setAttribute("title",i18n.GL1937());
-		
+
 		userTagScrollPanel.getElement().setId("sbUserTagScrollPanel");
 		userTagsConatiner.getElement().setId("pnlUserTagsConatiner");
-		
+
 		for(int i=0;i<userTagDo.size();i++){
 			ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget(userTagDo.get(i),followingContainer,tagResourceContainer);
 			userTagsConatiner.add(profileUserTagWidget);
 		}
-		}
-	
 	}
+	
+	
+}
 
 

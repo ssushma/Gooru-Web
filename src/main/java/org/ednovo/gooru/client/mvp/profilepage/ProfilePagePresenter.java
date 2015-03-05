@@ -167,7 +167,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				userId = userResetId;
 				createProfileUserData();
 			}
-			getUserWorkSpace();
 			if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
 				//To show SignUp (Registration popup)
 				Window.enableScrolling(false);
@@ -179,7 +178,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			}
 			int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-			if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
 				AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
 				update.setGlassEnabled(true);
 				update.show();
@@ -194,19 +193,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		}
 	}
 	
-	protected void getUserWorkSpace() {
-		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
-		getView().setContentTabVisibility(true);
-		if(folderId!=null&&!isRefresh) {
-			isRefresh = true;
-			getProfilePageService().getUserWorkSpace(userId, getFolderItemsAsyncCallback());
-		}
-		if(folderId!=null) {
-			getProfilePageService().getFolders(folderId, getGetWorkSpaceAsyncCallback());
-		} else {
-			getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
-		}
-	}
 	
 	@Override
 	protected void onUnbind() {

@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.mvp.play.collection.footer;
 
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -42,7 +43,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class StudyPlayerFooterView extends Composite{
+public class StudyPlayerFooterView extends Composite implements ClientConstants{
 	
 	@UiField FlowPanel resourceAnimationContainer;
 	
@@ -215,7 +216,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void makeAddButtonActive(){
 		String button=getAddButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getAddButton().removeStyleName(footerstyle.addButtonActive());
 			getAddButton().addStyleName(footerstyle.addButtonNormal());
 			getAddButton().getElement().removeAttribute("button");
@@ -228,7 +229,7 @@ public class StudyPlayerFooterView extends Composite{
 	
 	public void makeInfoButtonActive(){
 		String button=getInfoButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getInfoButton().removeStyleName(footerstyle.infoButtonActive());
 			getInfoButton().addStyleName(footerstyle.infoButtonNormal());
 			getInfoButton().getElement().removeAttribute("button");
@@ -240,7 +241,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void makeShareButtonActive(){
 		String button=getShareButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getShareButton().removeStyleName(footerstyle.shareButtonActive());
 			getShareButton().addStyleName(footerstyle.shareButtonNormal());
 			getShareButton().getElement().removeAttribute("button");
@@ -252,7 +253,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void makeNarrationButtonActive(){
 		String button=getNarrationButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			getNarrationButton().removeStyleName(footerstyle.narrationButtonActive());
 			getNarrationButton().addStyleName(footerstyle.narrationButtonNormal());
 			getNarrationButton().getElement().removeAttribute("button");
@@ -267,7 +268,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void makeFlagButtonActive(){
 		String button=getFlagButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)){
 			if(getFlagButton().getStyleName().contains(footerstyle.flagButtonOrangeActive())){
 				getFlagButton().removeStyleName(footerstyle.flagButtonOrangeActive());
 				getFlagButton().addStyleName(footerstyle.flagButtonOrange());
@@ -315,7 +316,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void deselectAddButton(){
 		String button=getAddButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")&&isAddButtonEnabled()){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)&&isAddButtonEnabled()){
 			getAddButton().removeStyleName(footerstyle.addButtonActive());
 			getAddButton().addStyleName(footerstyle.addButtonNormal());
 			getAddButton().getElement().removeAttribute("button");
@@ -324,7 +325,7 @@ public class StudyPlayerFooterView extends Composite{
 	
 	public void deselectInfoButton(){
 		String button=getInfoButton().getElement().getAttribute("button");
-		if(button!=null&&button.equalsIgnoreCase("active")&&isInfoButtonEnabled()){
+		if(button!=null&&ACTIVE.equalsIgnoreCase(button)&&isInfoButtonEnabled()){
 			getInfoButton().removeStyleName(footerstyle.infoButtonActive());
 			getInfoButton().addStyleName(footerstyle.infoButtonNormal());
 			getInfoButton().getElement().removeAttribute("button");
@@ -332,7 +333,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void deselectShareButton(){
 		String shareButtonVal=getShareButton().getElement().getAttribute("button");
-		if(shareButtonVal!=null&&shareButtonVal.equalsIgnoreCase("active")&&isShareButtonEnabled()){
+		if(shareButtonVal!=null&&ACTIVE.equalsIgnoreCase(shareButtonVal)&&isShareButtonEnabled()){
 			getShareButton().removeStyleName(footerstyle.shareButtonActive());
 			getShareButton().addStyleName(footerstyle.shareButtonNormal());
 			getShareButton().getElement().removeAttribute("button");
@@ -340,7 +341,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void deselectNarrationButton(){
 		String narrtionButtonVal=getNarrationButton().getElement().getAttribute("button");
-		if(narrtionButtonVal!=null&&narrtionButtonVal.equalsIgnoreCase("active")&&isNarrationButtonEnabled){
+		if(narrtionButtonVal!=null&&ACTIVE.equalsIgnoreCase(narrtionButtonVal)&&isNarrationButtonEnabled){
 			getNarrationButton().removeStyleName(footerstyle.narrationButtonActive());
 			getNarrationButton().addStyleName(footerstyle.narrationButtonNormal());
 			getNarrationButton().getElement().removeAttribute("button");
@@ -351,7 +352,7 @@ public class StudyPlayerFooterView extends Composite{
 	}
 	public void deselectFlagButton(){
 		String flagButtonVal=getFlagButton().getElement().getAttribute("button");
-		if(flagButtonVal!=null&&flagButtonVal.equalsIgnoreCase("active")&&isFlagButtonEnabled()){
+		if(flagButtonVal!=null&&ACTIVE.equalsIgnoreCase(flagButtonVal)&&isFlagButtonEnabled()){
 			if(getFlagButton().getStyleName().contains(footerstyle.flagButtonOrangeActive())||
 				getFlagButton().getStyleName().contains(footerstyle.flagButtonOrange())){
 				getFlagButton().removeStyleName(footerstyle.flagButtonOrangeActive());

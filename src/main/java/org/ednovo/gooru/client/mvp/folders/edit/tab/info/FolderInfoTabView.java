@@ -51,6 +51,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -122,7 +123,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				standardSearchDo.setSearchResults(null);
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {

@@ -23,7 +23,21 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client;
-
+/**
+ * 
+ * @fileName : PlaceTokens.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface PlaceTokens {
 	String HOME = "home";
 	String RESOURCE_SEARCH = "resource-search";
@@ -76,5 +90,7 @@ public interface PlaceTokens {
 	String CCST_Cal_TAC = "CCSTCalTAC";
 	String LUSD = "lusd";	
 	String TICAL = "tical";
+	String DASHBOARD ="dashboard";
+	String ASPIRE_EPACS =  "AspireEPACS"; 
 
 }

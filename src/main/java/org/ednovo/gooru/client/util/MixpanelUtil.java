@@ -1608,5 +1608,8 @@ public class MixpanelUtil {
   		   	$wnd.hewlettTracking("Clicked_AddTab_Search");
   	}-*/;
 	
-	
+	public static native void Click_AnalyticsTab_Search()/*-{
+	//$wnd.mixpanel.track("Click_AnalyticsTab_Search",{},function() { });
+			   	$wnd.hewlettTracking("Click_AnalyticsTab_Search");
+		}-*/;
 }

@@ -45,7 +45,7 @@ public class GoogleDocsResourceView extends Composite {
 	String alternateLink;
 	
 	@UiField
-	public Label mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,mandatorymomentsOfLearninglLbl;
+	public Label mandatoryEducationalLbl, cancelResourcePopupBtnLbl,mandatorymomentsOfLearninglLbl;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
@@ -71,7 +71,7 @@ public class GoogleDocsResourceView extends Composite {
 	// @UiField public ListBox resourceTypeListBox;
 
 	@UiField
-	public Image setThumbnailImage;
+	public Image setThumbnailImage,generateImageLbl;
 	// Drop down for Resource Type//
 	@UiField
 	HTMLPanel descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText;
@@ -189,6 +189,7 @@ public class GoogleDocsResourceView extends Composite {
 		audioText.getElement().setId("pnlAudioText");
 		leftArrowLbl.getElement().setId("lblLeftArrowLbl");
 		rightArrowLbl.getElement().setId("lblRightArrowLbl");
+		generateImageLbl.setUrl("../images/NewResourcePopup/PreviewResourceThumbnail.png");
 		generateImageLbl.getElement().setId("lblGenerateImageLbl");
 		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		orText.getElement().setId("pnlOrText");
@@ -230,7 +231,6 @@ public class GoogleDocsResourceView extends Composite {
 	public  void displayDropDown(ClickEvent event){
 		
 		resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
-		System.out.println("entring the condition  resource panle type");
 	}
 	
 	

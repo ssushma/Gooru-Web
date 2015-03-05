@@ -7,8 +7,19 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
 
 /**
- * @author Search Team
  * 
+ * @fileName : IsCommunityView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface IsCommunityView extends IsViewWithHandlers<CommunityUiHandlers> {
 	/**

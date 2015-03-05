@@ -65,14 +65,6 @@ public class RatingWidgetView extends Composite{
 	public RatingWidgetView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		
-		/*if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			ratingCountCloseBrace.getElement().getStyle().setDisplay(Display.NONE);
-			ratingCountOpenBrace.getElement().getStyle().setDisplay(Display.NONE);
-		}else{
-			ratingCountCloseBrace.getElement().getStyle().setDisplay(Display.BLOCK);
-			ratingCountOpenBrace.getElement().getStyle().setDisplay(Display.BLOCK);
-		}*/
 		star_1.getElement().setId("spnStar_1");
 		star_2.getElement().setId("spnStar_2");
 		star_3.getElement().setId("spnStar_3");
@@ -82,7 +74,6 @@ public class RatingWidgetView extends Composite{
 		avgRatingLabel.getElement().setId("spnAvgRatingLabel");
 		ratingCountOpenBrace.getElement().setId("spnRatingOpenBrace");
 		ratingCountCloseBrace.getElement().setId("spnRatingCloseBrace");
-		
 	}
 
 	public InlineLabel getRatingCountLabel(){
@@ -132,13 +123,5 @@ public class RatingWidgetView extends Composite{
 			star_4.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
 			star_5.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
 		}
-			
-			/*else{
-			star_1.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
-			star_2.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
-			star_3.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
-			star_4.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
-			star_5.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
-		}*/
 	}
 }

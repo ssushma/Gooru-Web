@@ -447,7 +447,21 @@ public class StudentSignUpUc extends PopupPanel{
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}
-	
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -459,6 +473,21 @@ public class StudentSignUpUc extends PopupPanel{
 			}	
 		}
 	}
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOut implements MouseOutHandler{
 
 		@Override
@@ -529,6 +558,21 @@ public class StudentSignUpUc extends PopupPanel{
 		return isValid;
 
 	}
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override

@@ -52,13 +52,20 @@ import com.google.gwt.user.client.ui.TextBox;
  * @author Search Team
  * 
  */
-public class StringUtil {
+public class StringUtil implements ClientConstants {
+
+	public static final int INDEX_NOT_FOUND = -1;
+
+	public static final String EMPTY = "";
+
+	public static boolean IPAD_MESSAGE_Close_Click = false;
 	
-	 public static final int INDEX_NOT_FOUND = -1;
-	 
-	 public static final String EMPTY = "";
-	 
-	 public static boolean IPAD_MESSAGE_Close_Click = false;
+	public static Map<String, String> categoryMap =null;
+
+	static{
+		addAllCategories();
+	}
+
 
 	public static boolean hasValidString(String string) {
 		return string != null && string.length() > 0 && !string.equalsIgnoreCase("null");
@@ -81,16 +88,16 @@ public class StringUtil {
 	}
 
 	public static String truncateText(String text, int maxCharLength, String suffix) {	
-		 if (text != null && text.trim().length() > maxCharLength && !text.equalsIgnoreCase("multiple sources"))
-		 {
+		if (text != null && text.trim().length() > maxCharLength && !text.equalsIgnoreCase("multiple sources"))
+		{
 			text = text.trim().substring(0, maxCharLength) + suffix;
-			}
+		}
 		return text != null ? text : "";
 
 	}
 	public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
-    }
+		return str == null || str.trim().length() == 0;
+	}
 	public static String stringToTime(String data) {
 		if (StringUtil.hasValidString(data) && data.length() > 0 && !data.equalsIgnoreCase("0")) {
 			long totalSecs = Long.valueOf(data);
@@ -102,7 +109,7 @@ public class StringUtil {
 			return null;
 		}
 	}
-	
+
 	public static String getQuestionType(String type){
 		//MULTIPLE_CHOICE("MC", 1), SHORT_ANSWER("SA", 2), TRUE_OR_FALSE("T/F", 3), FILL_IN_BLANKS("FIB", 4);
 		if(type.equalsIgnoreCase("MC")){
@@ -116,7 +123,7 @@ public class StringUtil {
 		}
 		return "";
 	}
-	
+
 	public static String generateMessage(String text, String... params) {
 		if (params != null) {
 			for (int index = 0; index < params.length; index++) {
@@ -125,7 +132,7 @@ public class StringUtil {
 		}
 		return  text;
 	}
-	
+
 	public static String generateMessage(String text, Map<String, String> params) {
 		if (params != null) {
 			for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -134,33 +141,33 @@ public class StringUtil {
 		}
 		return  text;
 	}
-	
+
 	public static String substringBeforeLast(String str, String separator) {
-        if (isEmpty(str) || isEmpty(separator)) {
-            return str;
-        }
-        int pos = str.lastIndexOf(separator);
-        if (pos == INDEX_NOT_FOUND) {
-            return str;
-        }
-        return str.substring(0, pos);
-    }
+		if (isEmpty(str) || isEmpty(separator)) {
+			return str;
+		}
+		int pos = str.lastIndexOf(separator);
+		if (pos == INDEX_NOT_FOUND) {
+			return str;
+		}
+		return str.substring(0, pos);
+	}
 	public static String substringAfterLast(String str, String separator) {
-        if (isEmpty(str)) {
-            return str;
-        }
-        if (isEmpty(separator)) {
-            return EMPTY;
-        }
-        int pos = str.lastIndexOf(separator);
-        if (pos == INDEX_NOT_FOUND || pos == (str.length() - separator.length())) {
-            return EMPTY;
-        }
-        return str.substring(pos + separator.length());
-    }
+		if (isEmpty(str)) {
+			return str;
+		}
+		if (isEmpty(separator)) {
+			return EMPTY;
+		}
+		int pos = str.lastIndexOf(separator);
+		if (pos == INDEX_NOT_FOUND || pos == (str.length() - separator.length())) {
+			return EMPTY;
+		}
+		return str.substring(pos + separator.length());
+	}
 	public static String formThumbnailName(String thumbnailName, String thumbnailSuffix){
 		String  thumbnailFilename = null;
-    	if (thumbnailName != null) {
+		if (thumbnailName != null) {
 			String  fileExtension =  StringUtil.substringAfterLast(thumbnailName, ".");
 			if (fileExtension != null) { 
 				thumbnailFilename = StringUtil.substringBeforeLast(thumbnailName, "." + fileExtension) + thumbnailSuffix + fileExtension;
@@ -189,61 +196,61 @@ public class StringUtil {
 	 *
 	 */
 	public static Map<String, String> splitQuery(String url)  {
-	    Map<String, String> query_pairs = new LinkedHashMap<String, String>();
-	    try {
-		    if(url.contains("#")) {
-		    	String[] query = url.split("#");
-		    	if(query[1].contains("&")) {
-			    	String[] pairs = query[1].split("&");
-				    for (String pair : pairs) {
-				    	if (pair.indexOf("=")>0){
-				    		int idx = pair.indexOf("=");
-				    		query_pairs.put(pair.substring(0, idx), pair.substring(idx + 1));
-				    	}
-				    }
-		    	}
-		    }
-	    } catch (ArrayIndexOutOfBoundsException e) {
-	    	e.printStackTrace();
-	    }
-	    return query_pairs;
+		Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+		try {
+			if(url.contains("#")) {
+				String[] query = url.split("#");
+				if(query[1].contains("&")) {
+					String[] pairs = query[1].split("&");
+					for (String pair : pairs) {
+						if (pair.indexOf("=")>0){
+							int idx = pair.indexOf("=");
+							query_pairs.put(pair.substring(0, idx), pair.substring(idx + 1));
+						}
+					}
+				}
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
+		return query_pairs;
 	}
-	
-//	public static String milliSecondsToDateString(String milliseconds){
-//
-//		long dateMilliseconds = Long.parseLong(milliseconds);
-//
-//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-//		Date resultdate = new Date(dateMilliseconds);
-//		
-//		return sdf.format(resultdate);
-//	}
-	
+
+	//	public static String milliSecondsToDateString(String milliseconds){
+	//
+	//		long dateMilliseconds = Long.parseLong(milliseconds);
+	//
+	//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	//		Date resultdate = new Date(dateMilliseconds);
+	//		
+	//		return sdf.format(resultdate);
+	//	}
+
 	public static String getRefinedQuestionText(String questionTxt) {
 		questionTxt = questionTxt.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return questionTxt;
 	}
-	
+
 	public static List<String> getUserTaxPreferences() {
 		String taxonomyPrefStr = AppClientFactory.getLoggedInUser().getSettings().getTaxonomyPreferences();
-		
+
 		List<String> preferences = new ArrayList<String>();
 		if(AppClientFactory.isAnonymous()) {
 			preferences.add("CC");
 			preferences.add("CA");
 		} else {
-			
+
 		}
 		return preferences;
 	}
-	
+
 	public static boolean isPartnerUser(String userName) {
 		boolean isPartner = false;
-		if(userName.equalsIgnoreCase("Autodesk") || userName.equalsIgnoreCase("Lessonopoly") || userName.equalsIgnoreCase("CommonSenseMedia") 
-				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
-				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) 
-				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) || userName.equalsIgnoreCase(PlaceTokens.LPS) 
-				|| userName.equalsIgnoreCase(PlaceTokens.CORE_LIBRARY) || userName.equalsIgnoreCase(PlaceTokens.ESYP) || userName.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC) || userName.equalsIgnoreCase(PlaceTokens.TICAL)) {
+		if(AUTODESK.equalsIgnoreCase(userName) || LESSONOPOLOGY.equalsIgnoreCase(userName) || COMMONSENCEMEDIA.equalsIgnoreCase(userName) 
+				|| FTE.equalsIgnoreCase(userName) || WSPWH.equalsIgnoreCase(userName) || LISANGC.equalsIgnoreCase(userName) || NGC.equalsIgnoreCase(userName)
+				|| ONR.equalsIgnoreCase(userName) || PlaceTokens.FINCAPINC.equalsIgnoreCase(userName) || PlaceTokens.PSDPAL.equalsIgnoreCase(userName) 
+				|| PlaceTokens.YOUTHVOICES.equalsIgnoreCase(userName) || PlaceTokens.GEOEDUCATION.equalsIgnoreCase(userName) || PlaceTokens.LPS.equalsIgnoreCase(userName) 
+				|| PlaceTokens.CORE_LIBRARY.equalsIgnoreCase(userName) || PlaceTokens.ESYP.equalsIgnoreCase(userName) || PlaceTokens.CCST_Cal_TAC.equalsIgnoreCase(userName) || PlaceTokens.ASPIRE_EPACS.equalsIgnoreCase(userName) || PlaceTokens.TICAL.equalsIgnoreCase(userName)) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -273,7 +280,7 @@ public class StringUtil {
 		}
 		return partnerName;
 	}
-	
+
 	public static Map<String,String> getFolderMetaData(FolderDo folderDo) {
 		Map<String,String> folderMetaData = new HashMap<String,String>();
 		if(folderDo.getIdeas()!=null) {
@@ -287,7 +294,7 @@ public class StringUtil {
 		}
 		return folderMetaData;
 	}
-	
+
 	public static String replaceSpecial(String originalString){
 		String str = "";
 		str = originalString.replaceAll("%", "%25");	
@@ -295,28 +302,28 @@ public class StringUtil {
 		str = str.replaceAll("<", "%3C").replaceAll(">", "%3E");		
 		return str;
 	}
-	
+
 	public static String replaceQuotes(String originalString){
 		String str = "";
-		
+
 		str = originalString.replaceAll("%22", "\"").replaceAll("%27", "'");
-		
+
 		return str;
 	}
 	public static native void consoleLog(String message) /*-{
 		console.log(message );
 	}-*/;
-	
+
 	public static native void clearCookes() /*-{
 		$doc.cookie = "google-access-token=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
 	}-*/;
-	
+
 	public static void clearCookies(String key, String path, String domain){
 		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
 		Cookies.removeCookie(key, "/");
 	}
-	
-	
+
+
 	public static String getPublicLibraryName(String placeToken) {
 		String libraryName = null;
 		if(placeToken.equals(PlaceTokens.RUSD_LIBRARY)) {
@@ -328,7 +335,7 @@ public class StringUtil {
 		}
 		return libraryName;
 	}
-	
+
 	public static void setAttributes(TextBox txtBox, boolean isTrue){
 		txtBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
@@ -353,8 +360,8 @@ public class StringUtil {
 	 * 
 	 *
 	 * 
-	*/
-	
+	 */
+
 	public static void setAttributes(RichTextArea rtatBox, boolean isTrue) {
 		rtatBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
@@ -377,13 +384,13 @@ public class StringUtil {
 	 * 
 	 *
 	 * 
-	*/
-	
+	 */
+
 	public static void setAttributes(AppSuggestBox editSearchTxtBox,
 			boolean isTrue) {
 		editSearchTxtBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
-	
+
 	/**
 	 * 
 	 * @function setAttributes 
@@ -408,10 +415,54 @@ public class StringUtil {
 	 */
 	public static void setAttributes(Element object, String idValue, String altValue, String titleValue){
 		object.setAttribute("id",idValue);
-		object.setAttribute("alt",altValue);
-		object.setAttribute("title",titleValue);
+		if (!isEmpty(altValue) )
+			object.setAttribute("alt",altValue);
+		if (!isEmpty(titleValue) )
+			object.setAttribute("title",titleValue);
+	}
+
+	/**
+	 * Generalised method for converting object to toString (This will avoid NPE)
+	 * @param obj
+	 * @return
+	 */
+	public static String toString(Object obj) {
+		return obj == null ? "" : obj.toString().trim();
+	}
+
+	/**
+	 * A generic method to check for null
+	 * @param e
+	 * @return
+	 */
+	public static <T> boolean checkNull(T e){
+		return e==null;
 	}
 	
+	/**
+	 * Adding all the categories with new category as a value.
+	 * @return
+	 */
+	private static void addAllCategories() {
+		categoryMap = new HashMap<String,String>();
+		categoryMap.put(LESSON, TEXT);
+		categoryMap.put(TEXTBOOK,TEXT); 
+		categoryMap.put(HANDOUT, TEXT); 
+		categoryMap.put(SLIDE, IMAGE);
+		categoryMap.put(EXAM, WEBPAGE);
+		categoryMap.put(WEBSITE,WEBPAGE);
+		categoryMap.put(CHALLENGE, WEBPAGE); 
+	}
+	
+	/**
+	 * Returns the equivalent category.
+	 * @param type
+	 * @return
+	 */
+	public static String getEquivalentCategory(String type){
+		return categoryMap.get(type)==null?type:categoryMap.get(type);
+	}
+
 	public static native String removeHtml(String htmText) /*-{
 		var regex = /(<([^>]+)>)/ig;
 		result = htmText.replace(regex, "");

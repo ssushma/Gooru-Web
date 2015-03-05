@@ -30,8 +30,19 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
- * @author Search Team
  * 
+ * @fileName : IsPlaceManager.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface IsPlaceManager extends PlaceManager {
 	
@@ -85,6 +96,8 @@ public interface IsPlaceManager extends PlaceManager {
 	
 	public String getDataLogClasspageId();
 	
+	public void setDataLogClasspageId(String classpageId);
+	
 	public String getClasspageEventId();
 	
 	public void setClasspageEventId(String classpageEventId);
@@ -110,4 +123,8 @@ public interface IsPlaceManager extends PlaceManager {
 	public void resetLibraryEventData(String libraryName);
 	
 	public void setLibaryEventTriggered(String libraryName);
+	
+	public void setUserShelfId(String userShelfId);
+	
+	public String getShelfParentGooruOid();
 }

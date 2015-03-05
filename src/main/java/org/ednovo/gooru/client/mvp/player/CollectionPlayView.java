@@ -207,7 +207,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 						doc.getElementById("uvTab").getStyle()
 								.setDisplay(Display.BLOCK);
 						if (AppClientFactory.isAnonymous()
-								&& gooruCollectionPlayer.getUserDo() != null) {
+								&& gooruCollectionPlayer.getUserDo() != null) {/*
 							if (AppClientFactory.isAnonymous() && gooruCollectionPlayer.getUserDo().getUsername() != null && gooruCollectionPlayer.getUserDo().getPassword() != null) {
 								AppClientFactory.getInjector().getAppService().signin(gooruCollectionPlayer.getUserDo().getEmailId(),gooruCollectionPlayer.getUserDo().getPassword(),new AsyncCallback<UserDo>() {
 
@@ -226,7 +226,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 													}
 												});
 							}
-						}
+						*/}
 						if (gooruCollectionPlayer.getIsResourceOrCollectionAdded()) {
 							//redirect(reloadUrl);
 							AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());

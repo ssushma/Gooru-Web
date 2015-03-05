@@ -30,12 +30,14 @@ import java.util.List;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -52,7 +54,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -69,7 +70,7 @@ import com.google.inject.Inject;
 
 public class AddResourceContainerView extends
 		BaseViewWithHandlers<AddResourceContainerUiHandlers> implements
-		IsAddResourceContainerView {
+		IsAddResourceContainerView,ClientConstants {
 
 	private static AddResourceContainerViewUiBinder uiBinder = GWT
 			.create(AddResourceContainerViewUiBinder.class);
@@ -162,9 +163,7 @@ public class AddResourceContainerView extends
 		addingText.setVisible(false);
 		topMostTreeItem.addStyleName(AddResourceContainerCBundle.INSTANCE
 				.css().addMyCollectionsStyle());
-		// selectedCollectionGooruOid =null;
 		topMostTreeItem.getElement().setInnerHTML("My Collections");
-		/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
 		addingText.setText(i18n.GL0591());
 		urlparams= new HashMap<String, String>();
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -173,7 +172,6 @@ public class AddResourceContainerView extends
 					displayErrorLabel.setText("");
 					isTopMostSelected =false;
 					if(isTopMostSelected){
-						/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
 						isSelectedFolder=false;
 					}else{
 						topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
@@ -186,7 +184,6 @@ public class AddResourceContainerView extends
 							isTopMostSelected =true;
 							isSelectedFolder=false;
 							removePreviousSelectedItem();
-							/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
 						}
 					};
 					topMostTreeItem.addDomHandler(handler, ClickEvent.getType());
@@ -243,7 +240,6 @@ public class AddResourceContainerView extends
 						if (parent != null)
 							parent.setSelected(false); // TODO FIX ME
 						item.setState(!item.getState(), false);
-						// setSelectedCollectionsCount(item.getChildCount());
 					} else if (folderWidget instanceof CollectionTreeItem) {
 						removePreviousSelectedItem();
 						cureentcollectionTreeItem = (CollectionTreeItem) folderWidget;
@@ -255,8 +251,7 @@ public class AddResourceContainerView extends
 						selectedCollectionGooruOid = cureentcollectionTreeItem.getGooruOid();
 						isSelectedCollection = true;
 						isSelectedFolder = false;
-						// setSelectedCollectionTitle();
-						// closeDropDown();
+						
 					}
 					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 							PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
@@ -278,11 +273,7 @@ public class AddResourceContainerView extends
 		}else{
 			topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
-		/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
-			topMostTreeItem.getElement().setAttribute("style", "display:none");
-		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
-			topMostTreeItem.getElement().setAttribute("style", "display:block");
-		}*/
+	
 		loadingImage.setVisible(false);
 		folderTreePanel.addItem(loadingTreeItem());
 	}
@@ -491,16 +482,15 @@ public class AddResourceContainerView extends
 		if (!dropdownListContainerScrollPanel.isVisible()) {
 			dropdownListContainerScrollPanel.setVisible(true);
 		}
-
 		if (clearShelfPanel) {
 			folderTreePanel.clear();
 		}
-		if (searchType.equalsIgnoreCase("collection")) {
+		if (COLLECTION.equalsIgnoreCase(searchType)) {
 			isCollectionSearch = true;
 			isResourceSearch = false;
-			addResourceText.setText("Add this Collection to one of your existing Folders");
+			addResourceText.setText(i18n.GL3121());
 			addResourceText.setStyleName(AddResourceContainerCBundle.INSTANCE.css().addCollectionTextStyles());
-		} else if (searchType.equalsIgnoreCase("resource")) {
+		} else if (RESOURCE.equalsIgnoreCase(searchType)) {
 			isResourceSearch = true;
 			isCollectionSearch = false;
 			addResourceText.setText(i18n.GL2088());
@@ -520,14 +510,14 @@ public class AddResourceContainerView extends
 				for (int i = 0; i < foldersArrayList.size(); i++) {
 					FolderDo floderDo = foldersArrayList.get(i);
 					if (isResourceSearch) {
-						if (floderDo.getType().equals("folder")) {
+						if (FOLDER.equals(floderDo.getType())) {
 							TreeItem folderItem = new TreeItem(
 									new FolderTreeItem(null,
 											floderDo.getTitle(),
 											floderDo.getGooruOid()));
 							folderTreePanel.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
-						} else if (floderDo.getType().equals("scollection")) {
+						} else if (SCOLLECTION.equals(floderDo.getType())) {
 							TreeItem folderItem = new TreeItem(
 									new CollectionTreeItem(null,
 											floderDo.getTitle(),
@@ -536,7 +526,7 @@ public class AddResourceContainerView extends
 							adjustTreeItemStyle(folderItem);
 						}
 					} else if (isCollectionSearch) {
-						if (floderDo.getType().equals("folder")) {
+						if (FOLDER.equals(floderDo.getType())) {
 							TreeItem folderItem = new TreeItem(
 									new FolderTreeItem(null,
 											floderDo.getTitle(),
@@ -553,14 +543,11 @@ public class AddResourceContainerView extends
 
 	@Override
 	public void clearShelfData() {
-		
-		// TODO Auto-generated method stub
 		addingText.setVisible(false);
 		folderTreePanel.clear();
 		folderTreePanel.addItem(loadingTreeItem());
 		cureentcollectionTreeItem = null;
 		previousSelectedItem = null;
-		// dropdownListPlaceHolder.setText(GL1377);
 		offset = 0;
 		limit = 20;
 		totalHitCount = 0;
@@ -575,7 +562,6 @@ public class AddResourceContainerView extends
 	private void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if (folderListDo != null) {
 			List<FolderDo> foldersArrayList = folderListDo.getSearchResult();
-			// setSelectedCollectionsCount(folderListDo.getCount());
 			if (foldersArrayList != null && foldersArrayList.size() > 0) {
 				FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
 						.getWidget();
@@ -671,12 +657,11 @@ public class AddResourceContainerView extends
 
 	@Override
 	public void displayNoCollectionsMsg() {
-
 		dropdownListContainerScrollPanel.setVisible(false);
 		buttonsContainer.setVisible(false);
 		displayCountLabel.setVisible(true);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
-			displayCountLabel.setText("There are no collections to add this resource.");
+			displayCountLabel.setText(i18n.GL3120());
 			addResourceText.setText(i18n.GL2088());
 			addCollectiorOrReourceText.setText(i18n.GL2089());
 			addResourceText.getElement().setAttribute("style",
@@ -684,14 +669,13 @@ public class AddResourceContainerView extends
 			addCollectiorOrReourceText.getElement().setAttribute("style",
 					"display: inline-block;");
 		}else{
-			currentsearchType="collection";
+			currentsearchType=COLLECTION;
 			isTopMostSelected =true;
 			buttonsContainer.setVisible(true);
 			dropdownListContainerScrollPanel.setVisible(true);
 			addResourceBtnLbl.setText(i18n.GL0590());
 			folderTreePanel.clear();
 			folderTreePanel.addItem(loadingTreeItemForNoFolder());
-			//displayCountLabel.setText("There are no folders to add this collection.");
 		}
 	}
 
@@ -831,13 +815,13 @@ public class AddResourceContainerView extends
 		cancelButton.setText("Continue searching");
 		okButton.setText("View in My Collections");
 		enableSuccessView.setVisible(true);
-		// params.put("id", gooruOid);
 		okButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				isSelectedCollection=false;
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.SHELF, params);
+				AppClientFactory.fireEvent(new CloseCollectionPlayerEvent(true));
 			}
 		});
 
@@ -845,7 +829,6 @@ public class AddResourceContainerView extends
 
 	@Override
 	public void clearSelectedFolderId() {
-		// TODO Auto-generated method stub
 		selectedFolderGooruOid = null;
 		createCollectionbuttonsContainer.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);
@@ -857,36 +840,28 @@ public class AddResourceContainerView extends
 	@Override
 	public void setCollectionSearchResultDo(
 			ResourceSearchResultDo searchResultDo) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void showAndHideMyCollections() {
-		// TODO Auto-generated method stub
 		if (AppClientFactory.getCurrentPlaceToken().equals(
 				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
 						PlaceTokens.COLLECTION_PLAY)) {
-			//topMostTreeItem.getElement().getStyle().setDisplay(Display.NONE);
 			isTopMostSelected =false;
 		}else{
 			topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
 			isTopMostSelected =true;
 			if(isTopMostSelected){
-				/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
 				isSelectedFolder=false;
 			}else{
-			//	topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
 			}
 		}
 	}
 
 	@Override
 	public void hideNoCollectionsMsg() {
-		// TODO Auto-generated method stub
 		displayCountLabel.setText("");
 		buttonsContainer.setVisible(true);
-
 		isSelectedFolder=false;
 		isSelectedCollection =false;
 	}

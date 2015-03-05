@@ -33,6 +33,7 @@ import java.util.Map;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -164,17 +165,16 @@ public class ResourceDeserializer extends DeSerializer {
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @return forgotPassword
 	 */
-	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code,String errorMessage) {
+	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code,String errorMessage, ResponseStatusDo responseDo) {
 		JSONObject jsonObject;
 		Map<String, Object> resetPassword = new HashMap<String, Object>();
 			try {
 				if(code==400){
-					System.out.println("inside if");
 					resetPassword.put("statusCode", 400);
+					resetPassword.put("errorCode", responseDo.getErrorCode());
 					resetPassword.put("statusMessage", errorMessage);
 				}else{
 					if (jsonRep != null ) {
-						System.out.println("inside else");
 						jsonObject = jsonRep.getJsonObject();
 						JSONObject userJsonObject = jsonObject.getJSONObject(USER);
 						resetPassword.put("statusCode", 200);

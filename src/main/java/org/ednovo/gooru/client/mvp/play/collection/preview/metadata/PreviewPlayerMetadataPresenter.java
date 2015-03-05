@@ -81,8 +81,6 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 	
 	private static final String INITIAL_OFFSET = "0";
 	
-	private boolean isCommentsLoaded = false;
-	
 	private static final String PAGE = "course-page";
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -224,23 +222,25 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 		playerAppService.getContentReport(collectionDo.getGooruOid(), AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
-				String gooruFlagId="";
-				if(result.size()==0){
-					getView().getFlagButton().setText(i18n.GL0556());
-					getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-					getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-				}else{
-					for(int i =0;i<result.size();i++){
-						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						getView().getFlagButton().setText(i18n.GL0557());
-						getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-						
+					String gooruFlagId="";
+					if(result!=null && result.size()==0){
+							getView().getFlagButton().setText(i18n.GL0556());
+							getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+							getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+					}else{
+						if(result!=null&&result.size()>0){
+							for(int i=0;i<result.size();i++){
+								if(result.get(i).getDeleteContentGooruOid()!=null){
+									gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+								}
+								getView().getFlagButton().setText(i18n.GL0557());
+								getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+								getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+							}
+						}
 					}
-			}
-			}
-		});
-		
+				}
+			});
 	}
 
 	public void setRelatedConcepts(CollectionDo collectionDo) {
@@ -274,5 +274,4 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 			previewHomePresenter.setPreviewPlayerPresenter(previewPlayerPresenter);
 		}
 	}
-
 }

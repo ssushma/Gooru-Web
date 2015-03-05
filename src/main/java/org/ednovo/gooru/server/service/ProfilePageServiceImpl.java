@@ -87,17 +87,6 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		return new CollectionDo();
 	}
 
-	@Override
-	public List<CollectionItemDo> getUserWorkSpace(String userId) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_PROFILE_WORKSPACE, userId, getLoggedInSessionToken(), pageNum, pageSize);
-		url+="&sharing=public";
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		List<CollectionItemDo> collectionItemDo = deserializeWorkspace(jsonRep);
-		//Collections.sort(collectionItemDo, new ArrayListSorter("itemSequence", true));
-		return collectionItemDo;
-	}
 
 	public List<CollectionItemDo> deserializeWorkspace(JsonRepresentation jsonRep) {
 		try {
@@ -241,6 +230,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
+		getLogger().info("----ppp "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -268,7 +258,6 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	public ProfileLibraryDo getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid, getLoggedInSessionToken(), skipCollectionItems + "");
-		System.out.println("--- library collection -- "+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeConcept(jsonRepresentation);

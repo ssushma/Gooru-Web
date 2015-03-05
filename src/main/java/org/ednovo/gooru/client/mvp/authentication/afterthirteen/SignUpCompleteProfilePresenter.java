@@ -36,6 +36,21 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
+/**
+ * 
+ * @fileName : SignUpCompleteProfilePresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpCompleteProfile> implements SignUpCompleteProfileUiHandler {
 	
 	private ImageUploadPresenter imageUploadPresenter;
@@ -74,7 +89,7 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 	}
 	@Override
 	public void updateProfile(String fname,String lname,String aboutMe,String password) {
-		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, new SimpleAsyncCallback<V2UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, null, new SimpleAsyncCallback<V2UserDo>() {
 
 			@Override
 			public void onSuccess(V2UserDo result) {

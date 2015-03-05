@@ -27,8 +27,19 @@ package org.ednovo.gooru.client.mvp.community.contributors;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 /**
- * @author Search Team
  * 
+ * @fileName : ContributorsUiHandlers.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface ContributorsUiHandlers extends BaseUiHandlers {
 

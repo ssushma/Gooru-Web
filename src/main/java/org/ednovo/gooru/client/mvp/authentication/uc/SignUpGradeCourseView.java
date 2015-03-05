@@ -58,7 +58,21 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : SignUpGradeCourseView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
 public class SignUpGradeCourseView extends PopupPanel{
 
 	@UiField HTMLPanel signupBgPanel, metaDataSelectionPanel, courseContainer,congratsLbl,accountCreatedText;
@@ -258,15 +272,42 @@ public class SignUpGradeCourseView extends PopupPanel{
 //		}
 		
 	}
-	
+	/**
+	 * 
+	 * @function OpenThanksPopup 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void OpenThanksPopup(){
 		this.hide();
+		
 		ThanksPopupUc thanks = new ThanksPopupUc();
 		if (AppClientFactory.getLoggedInUser().getAccountTypeId() == 2){
 			thanks.setAccountType("normal");
 		}
 		thanks.center();
 		thanks.show();
+		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
+			@Override
+			public void onSuccess(UserDo newUser) {
+				UserDo user = AppClientFactory.getLoggedInUser();
+				user.setViewFlag(newUser.getViewFlag());
+				AppClientFactory.setLoggedInUser(user);
+			}
+		});
 	}
 	
 	/**

@@ -105,6 +105,10 @@ public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 		lblTitle.getElement().setAttribute("alt", description);
 		lblTitle.getElement().setAttribute("title", description);
 		panelCode.getElement().getStyle().setWidth(150, Unit.PX);
+		
+		if(AppClientFactory.getPlaceManager().getRequestParameter("view", null)!=null && !AppClientFactory.getPlaceManager().getRequestParameter("view", null).equals("") && AppClientFactory.getPlaceManager().getRequestParameter("view", null).equals("end")){
+			tootltipContent.getElement().getStyle().setWidth(155, Unit.PX);
+		}
 
 		this.addMouseOutHandler(new MouseOutHandler() {
 			
@@ -121,7 +125,32 @@ public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 			}
 		});
 	}
+	public ToolTip(String description,String type){
+		
+		setWidget(toolTipUiBinder.createAndBindUi(this));
+		lblTitle.getElement().setInnerHTML(description);
+		panelCode.getElement().setId("pnlPanelCode");
+		lblTitle.getElement().setId("pnlLblTitle");
+		lblTitle.getElement().setAttribute("alt", description);
+		lblTitle.getElement().setAttribute("title", description);
+		panelCode.getElement().getStyle().setWidth(150, Unit.PX);
+		
 
+		this.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				hide();
+			}
+		});
+		AppClientFactory.getInjector().getHomeService().mosLink(new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				lblLink.setHref(result);
+			}
+		});
+	}
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		return addDomHandler(handler, MouseOutEvent.getType());

@@ -105,8 +105,6 @@ public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePag
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		if(folderId!=null) {
 			getProfilePageService().getFolders(folderId, getGetWorkSpaceAsyncCallback());
-		} else {
-			getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
 		}
 	}
 	
