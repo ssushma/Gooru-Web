@@ -17,6 +17,7 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -54,7 +55,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	
 	@UiField Image courseImage, educatorPhoto;
 	
-	@UiField Button listAllBtn;
+	@UiField Button listViewBtn;
 	
 	private String placeToken;
 	
@@ -183,7 +184,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					if(handlerRegistration!=null){
 						handlerRegistration.removeHandler();
 					}
-					handlerRegistration = listAllBtn.addClickHandler(new ListAllBtnClickHandler(profileLibraryDoList.get(i).getGooruOid(),parentId));
+					handlerRegistration = listViewBtn.addClickHandler(new ListAllBtnClickHandler(profileLibraryDoList.get(i).getGooruOid(),parentId));
 					
 					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(), unitListId, profileLibraryDoList.get(i),libraryGooruOid,parentId);
 				}
@@ -218,7 +219,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						if(handlerRegistration!=null){
 							handlerRegistration.removeHandler();
 						}
-						handlerRegistration=listAllBtn.addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getLibraryGooruOid(), parentId));
+						handlerRegistration=listViewBtn.addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getLibraryGooruOid(), parentId));
 						if(widgetCountTemp==0) {
 							totalCollectionCount=profileLibraryDoList.get(widgetCountTemp).getItemCount();
 							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp),libraryUnitMenuView.getLibraryGooruOid(),parentId);
@@ -341,6 +342,9 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
 		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
 		contributorsContainer.getElement().setId("pnlContributorsContainer");
+		StringUtil.setAttributes(listViewBtn.getElement(), "listViewBtn", listViewBtn.getText(), listViewBtn.getText());
+		StringUtil.setAttributes(folderTopicTitleLbl.getElement(), "folderTopicTitleLbl", "", "");
+		StringUtil.setAttributes(folderListPanel.getElement(), "folderListPanel", "", "");
 		
 		setPlaceToken(placeToken);
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
@@ -369,7 +373,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				setSubjectUnits(unitList,getLibraryGooruOid());
 			}
 		};
-		listAllBtn.getElement().setAttribute("style", "float:right;margin: -25px 3px 0 0;");
+		listViewBtn.addStyleName(districtStyleUc.listViewBtnStyle());
 		courseTabs.add(districtMenuNav);
 		landingBanner.add(new DistrictBannerView(getPlaceToken()));
 		featuredContributorsLink.setText(i18n.GL1005());

@@ -715,9 +715,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBreadCrumbs(final String key, String value, String separator) {
 		Label routeLbl= new Label();
 		routeLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().breadCrumbsStyle());
-		routeLbl.setText(value+" "+separator);
+		routeLbl.setText(value+" "+separator+" ");
 		routeLbl.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().getTocFolders(key);
@@ -744,7 +743,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		}
 		if(size==result.size() && haveBreadCrumbs){
 			Label presentTile=new Label();
-			presentTile.getElement().setAttribute("style", "display: inline-block; color: #807E7B;");
+			presentTile.getElement().setAttribute("style", "display: inline-block; color: #515151;");
 			presentTile.setText(lblFolderTitle.getText());
 			breadCrumbsPanel.add(presentTile);
 		}
