@@ -1921,7 +1921,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl) {
+	public FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl,String description,String sharing,String requireLogin) {
 		FolderDo folderDo=null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION,assessmentId, getLoggedInSessionToken());
@@ -1931,7 +1931,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		try{
 			assessmentJsonObject.put("title",title);
 			assessmentJsonObject.put("url",assessmentUrl);
-			
+			if(description != null){
+				assessmentJsonObject.put("goals", description);
+			}
+			if(sharing!=null){
+				assessmentJsonObject.put("sharing", sharing);
+			}
 			assessmentMainObject.put("collection",assessmentJsonObject);
 			logger.info("data for update API=>"+assessmentMainObject.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),assessmentMainObject.toString());

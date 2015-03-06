@@ -24,6 +24,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -256,7 +257,25 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		} else {
 			if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
 				Button folderItemLbl = new Button(i18n.GL3169());
+				folderItemLbl.getElement().getStyle().setWidth(52, Unit.PCT);
+				folderItemLbl.getElement().getStyle().setMarginTop(18, Unit.PX);
+				Button folderItemEdit = new Button(i18n.GL3173());
+				folderItemEdit.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						getEditAssessmentPoupOrPlayCollection();
+					}
+				});
+				folderItemEdit.getElement().getStyle().setWidth(52, Unit.PCT);
+				folderItemEdit.getElement().getStyle().setMarginTop(18, Unit.PX);
+				Button folderItemDelete = new Button(i18n.GL3173());
+				folderItemDelete.getElement().getStyle().setWidth(52, Unit.PCT);
+				folderItemDelete.getElement().getStyle().setMarginTop(18, Unit.PX);
+				
 				folderItemLbl.addStyleName("secondary");
+				folderItemEdit.addStyleName("secondary");
+				folderItemDelete.addStyleName("secondary");
+				
 				folderItemLbl.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
@@ -265,6 +284,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				});
 				contents.addStyleName(folderStyle.assessmentContainer());
 				contents.add(folderItemLbl);
+				contents.add(folderItemEdit);
+				contents.add(folderItemDelete);
 			}else{
 				contents.addStyleName(folderStyle.empty());
 			}
@@ -281,9 +302,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
 		AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
 	}
-	
-	@UiHandler("collectionImage")
-	public void clickOnCollectionImage(ClickEvent event) {
+	public void getEditAssessmentPoupOrPlayCollection(){
 		if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
@@ -305,6 +324,10 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
 			AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 		}
+	}
+	@UiHandler("collectionImage")
+	public void clickOnCollectionImage(ClickEvent event) {
+		getEditAssessmentPoupOrPlayCollection();
 	}
 	
 	@UiHandler("itemTitle")
