@@ -153,8 +153,7 @@
 }
 
 .folderLevel.assessment {
-    background-image: url('../images/folders/panel/assessment.png');
-    background-size: 30px 24px;
+    background-image: url('../images/folders/panel/assessment-type.png');
 }
 
 .folderLevel.publicIcon.collection {
@@ -662,7 +661,7 @@
 
 
 
-.contentBlock .contents .collection, .contentBlock .contents .folder {
+.contentBlock .contents .collection, .contentBlock .contents .assessment, .contentBlock .contents .folder {
     margin-bottom: 7px;
     height: 20px;
     padding-left:31px;
@@ -681,6 +680,11 @@
 
 .contentBlock .contents .folder {
     background: url(../images/folders/panel/folder-icon-small.png) no-repeat left center;
+}
+
+.contentBlock .contents .assessment {
+    background: url(../images/folders/panel/assessment-smal.png) no-repeat left center;
+    /* background-size: 27px 19px */
 }
 
 .contentBlock .contents .folder:hover {
