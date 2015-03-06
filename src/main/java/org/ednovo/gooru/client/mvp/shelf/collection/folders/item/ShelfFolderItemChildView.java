@@ -38,7 +38,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -65,6 +64,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-collection-image-160x120.png";
+	
+	private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 	
 	private static final String SMALL = "Small";
 	
@@ -202,6 +203,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			collectionImage.setWidth("120px");
 			if(folderDo.getCollectionType().equals(ASSESSMENT)){
 				contentBlock.addStyleName(folderStyle.assessment());
+				collectionImage.setUrl(DEFULT_ASSESSMENT);
 			}else{
 				contentBlock.addStyleName(folderStyle.collection());
 			}
@@ -212,11 +214,15 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			for(int i=0;i<folderItemDo.size();i++) {
 				FolderItemDo folderItem = folderItemDo.get(i);
 				Label folderItemLbl = new Label(folderItem.getTitle());
+
 				if(folderItem.getType().equals(FOLDER)) {
 					folderItemLbl.addStyleName(folderStyle.folder());
 					folderItemLbl.addClickHandler(new OpenChildFolderInContent(FOLDER, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
 					contents.add(folderItemLbl);
 				} else if(folderItem.getType().equals(SCOLLECTION)){
+					if(folderItem.getCollectionType().equals(ASSESSMENT)){
+						folderItemLbl.addStyleName(folderStyle.assessment());
+					}
 					folderItemLbl.addStyleName(folderStyle.collection());
 					folderItemLbl.addClickHandler(new OpenChildFolderInContent(SCOLLECTION, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
 					contents.add(folderItemLbl);
