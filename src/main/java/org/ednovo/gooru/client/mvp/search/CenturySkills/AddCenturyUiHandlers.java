@@ -70,4 +70,9 @@ public interface AddCenturyUiHandlers extends BaseUiHandlers {
 	 * @param codeList
 	 */
 	void setEditResourceData(List<StandardFo> codeList);
+	/**
+	 * This method will reset the data in the add resoruce popups
+	 * @param codeList
+	 */
+	void setAddResourceData(Map<Long,String> codeList);
 }
