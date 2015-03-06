@@ -267,7 +267,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	
 	PopupPanel centuryPopup=new PopupPanel();
 	
-	Map<Long, String> centurySelectedValues;
+	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
 	
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
 	
@@ -915,7 +915,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
+				centurySelectedValues.clear();
+				centurySelectedValues.putAll(centuryPresenterWidget.getSelectedValues());
+				centuryPanel.clear();
 				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
 				 for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
 						CodeDo codeObj=new CodeDo();
@@ -943,6 +945,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 				for(int i=0;i<standardsDo.size();i++){
 					if(centuryCode.equalsIgnoreCase(standardsDo.get(i).getCode())){
 						standardsDo.remove(i);
+						centurySelectedValues.remove(Long.parseLong(id));
 					}
 				}
 				this.getParent().removeFromParent();
@@ -2326,6 +2329,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 	@UiHandler("browseCentury")
 	public void onClickOfBrowseCentury(ClickEvent e){
 		centuryPopup.clear();
+		centuryPresenterWidget.setAddResourceData(centurySelectedValues);
 		centuryPopup.add(centuryPresenterWidget.getWidget());
 		centuryPopup.show();
 		centuryPopup.center();
