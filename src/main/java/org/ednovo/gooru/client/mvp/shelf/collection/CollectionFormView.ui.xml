@@ -40,7 +40,7 @@
 					</div>
 				
 					<div class="{createCollectionStyle.formViewButtonContainer}">
-						<g:Button ui:field="btnCreateAssessment" styleName="primary" text="{i18n.GL3024}"></g:Button>
+						<g:Button ui:field="btnCreateAssessment" styleName="primary" text="{i18n.GL3024}" title="{i18n.GL3024}"></g:Button>
 					    <g:Button ui:field="btnCancelAssessment" styleName="secondary"></g:Button>
 				    </div>
 			</g:HTMLPanel>
