@@ -44,6 +44,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class EditAssessmentPopup extends PopupPanel {
@@ -60,6 +62,9 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	@UiField Button btnSaveAssessment,btnCancelAssessment;
 	@UiField Label lblExistingAssessmentError,lblExistingAssessmentURLError;
 	@UiField TextBoxWithPlaceholder txtExistingAssessmentTitle,txtExistingAssessmentURL;
+	@UiField TextArea txtExistingAssessmentDescription;
+	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate;
+	String privacy="";
 	
 	public FolderDo folderDo=null;
 	
@@ -101,6 +106,15 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		//Code when save or update assessment clicked
 		final String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
 		final String assessmentURL=txtExistingAssessmentURL.getText();
+		if(rdBtnAssessmentPublic.getValue()){
+			privacy="public";
+		}
+		if(rdBtnAssessmentShare.getValue()){
+			privacy="anyonewithlink";
+		}
+		if(rdBtnAssessmentPrivate.getValue()){
+			privacy="private";
+		}
 		if(assessmentExistingTitle.isEmpty()){
 			lblExistingAssessmentError.setVisible(true);
 			lblExistingAssessmentError.setText(i18n.GL1026());
@@ -132,7 +146,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 									lblExistingAssessmentURLError.setVisible(false);
 									lblExistingAssessmentURLError.setText("");
 									//Update code here
-									AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL, new AsyncCallback<FolderDo>() {
+									AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,"", new AsyncCallback<FolderDo>() {
 										
 										@Override
 										public void onSuccess(FolderDo result) {

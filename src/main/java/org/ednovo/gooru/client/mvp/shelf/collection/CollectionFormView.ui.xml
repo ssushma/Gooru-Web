@@ -7,8 +7,7 @@
 		<ui:style>
 		.collectionSelFormView{
 			margin: 0 10% 10px 3%;
-			}
-	
+		}
 		</ui:style>
 		<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 		<g:HTMLPanel  ui:field="shelfItemContent">
@@ -26,15 +25,60 @@
 					</div>
 					<div class="clearfix"></div>
 					<div class="{createCollectionStyle.logInput} less-gutter">
-					<g:HTMLPanel ui:field="pnlNewAssessmentContainer" styleName="col-md-12">
+					<g:HTMLPanel ui:field="pnlNewAssessmentContainer" styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
+					    <g:Label styleName="{createCollectionStyle.assessmentTextBoxText}">Title:</g:Label>
 			 		 	<uc:TextBoxWithPlaceholder ui:field="txtNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
 			 		 	<g:Label ui:field="lblNewAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 		</g:HTMLPanel>
 			 		<g:HTMLPanel ui:field="pnlExistingAssessmentContainer" styleName="col-md-12">
-			 			<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
-			 			<g:Label ui:field="lblExistingAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
-			 			<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentURL" styleName="{createCollectionStyle.form_control}"></uc:TextBoxWithPlaceholder>
-			 			<g:Label ui:field="lblExistingAssessmentURLError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
+				 		<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Title:</g:Label>
+				 			<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{createCollectionStyle.form_edit_control}"></uc:TextBoxWithPlaceholder>
+				 			<g:Label ui:field="lblExistingAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
+				 		</g:HTMLPanel>
+				 		<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Assessment URL:</g:Label>
+			 				<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentURL" styleName="{createCollectionStyle.form_edit_control}"></uc:TextBoxWithPlaceholder>
+			 				<g:Label ui:field="lblExistingAssessmentURLError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
+			 			</g:HTMLPanel>
+			 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Description:</g:Label>
+			 				<g:TextArea ui:field="txtExistingAssessmentDescription" styleName="{createCollectionStyle.form_edit_textares_control}"></g:TextArea>
+			 				<g:Label ui:field="lblExistingAssessmentDescriptionError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
+			 			</g:HTMLPanel>
+			 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Privacy:</g:Label>
+				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
+						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
+						 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
+						 				<g:Label styleName="{createCollectionStyle.publicImage}"></g:Label>
+						 				<g:Label styleName="{createCollectionStyle.publicText}">Public</g:Label>
+						 			</panel:HTMLEventPanel>
+						 			<panel:HTMLEventPanel  styleName="{createCollectionStyle.radioButtoncontainer}">
+						 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
+						 				<g:Label styleName="{createCollectionStyle.linkImage}"></g:Label>
+						 				<g:Label styleName="{createCollectionStyle.publicText}">Sharable</g:Label>
+						 			</panel:HTMLEventPanel>
+						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
+						 				<g:RadioButton name="" ui:field="rdBtnAssessmentPrivate" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
+						 				<g:Label styleName="{createCollectionStyle.privateImage}"></g:Label>
+						 				<g:Label styleName="{createCollectionStyle.publicText}">Private</g:Label>
+						 			</panel:HTMLEventPanel>
+				 			</g:HTMLPanel>
+			 			</g:HTMLPanel>
+			 				<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Requries Log In?:</g:Label>
+				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
+						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
+						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
+						 				<g:Label styleName="{createCollectionStyle.publicText}">Yes</g:Label>
+						 			</panel:HTMLEventPanel>
+						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
+						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
+						 				<g:Label styleName="{createCollectionStyle.publicText}">No</g:Label>
+						 			</panel:HTMLEventPanel>
+				 			</g:HTMLPanel>
+			 			</g:HTMLPanel>
 			 		</g:HTMLPanel>
 					</div>				
 					</div>
@@ -78,10 +122,8 @@
 							<g:Label styleName="{createCollectionStyle.visibilityText}" ui:field="lblAllow"></g:Label>
 						</panel:HTMLEventPanel>
 
-						<g:FlowPanel ui:field="linkShareFloPanel"
-							styleName="{createCollectionStyle.showShareInnerDiv}">
-							<g:HTMLPanel ui:field="shareRadioButtonPanel"
-								styleName="{createCollectionStyle.radioButtonPanel}" />
+						<g:FlowPanel ui:field="linkShareFloPanel" styleName="{createCollectionStyle.showShareInnerDiv}">
+							<g:HTMLPanel ui:field="shareRadioButtonPanel" styleName="{createCollectionStyle.radioButtonPanel}" />
 							<g:Label styleName="{createCollectionStyle.linkImage}"></g:Label>
 							<g:Label ui:field="lblShareable" styleName="{createCollectionStyle.publicText}"></g:Label>
 							<g:Label ui:field="lblShareableDesc" styleName="{createCollectionStyle.visibilityText}"></g:Label>
