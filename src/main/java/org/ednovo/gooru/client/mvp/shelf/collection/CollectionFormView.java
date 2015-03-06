@@ -70,6 +70,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -79,6 +80,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
@@ -147,7 +149,8 @@ public class CollectionFormView extends
 	boolean fromAddResourcePresenter=false;
 	
 	@UiField Label lblNewAssessmentError,lblExistingAssessmentError,lblExistingAssessmentURLError;
-	
+	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate;
+	@UiField TextArea txtExistingAssessmentDescription;
 	
 	RadioButton radioButtonPublic = new RadioButton("", "");
 	RadioButton radioButtonShare = new RadioButton("", "");
@@ -582,6 +585,26 @@ public class CollectionFormView extends
 		resetAssessmentFields();
 	}
 	
+	@UiHandler("rdBtnAssessmentPublic")
+	public void onClickOfPublicRadioButton(ClickEvent e){
+		resetReadioButtons();
+		rdBtnAssessmentPublic.setValue(true);
+	}
+	@UiHandler("rdBtnAssessmentShare")
+	public void onClickOfShareRadioButton(ClickEvent e){
+		resetReadioButtons();
+		rdBtnAssessmentShare.setValue(true);
+	}
+	@UiHandler("rdBtnAssessmentPrivate")
+	public void onClickOfPrivateRadioButton(ClickEvent e){
+		resetReadioButtons();
+		rdBtnAssessmentPrivate.setValue(true);
+	}
+	public void resetReadioButtons(){
+		rdBtnAssessmentPublic.setValue(false);
+		rdBtnAssessmentShare.setValue(false);
+		rdBtnAssessmentPrivate.setValue(false);
+	}
 	public void setTextAndIds(){
 		collectionTitleTxtBox.setPlaceholder(i18n.GL0319());
 		txtNewAssessmentTitle.setPlaceholder(i18n.GL3122());
@@ -720,6 +743,16 @@ public class CollectionFormView extends
 				collection.setTitle(txtExistingAssessmentTitle.getText());
 				collection.setUrl(txtExistingAssessmentURL.getText());
 				collection.setCollectionType("assessment/url");
+				collection.setDescription(txtExistingAssessmentDescription.getText());
+				if(rdBtnAssessmentPublic.getValue()){
+					collection.setSharing("public");
+				}
+				if(rdBtnAssessmentShare.getValue()){
+					collection.setSharing("anyonewithlink");
+				}
+				if(rdBtnAssessmentPrivate.getValue()){
+					collection.setSharing("private");
+				}
 			}else{
 				collection.setCollectionType("assessment");
 				collection.setTitle(txtNewAssessmentTitle.getText());
@@ -825,7 +858,7 @@ public class CollectionFormView extends
 			resetAssessmentFields();
 			appPopUp.setViewTitle(i18n.GL3008());
 			shelfItemContent.getElement().removeAttribute("style");	
-			
+			appPopUp.getElement().getStyle().setTop(0, Unit.PX);
 		   /*collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
 			collPopUpMainheading.setText(i18n.GL3009());
 			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL3009());

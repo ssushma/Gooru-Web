@@ -438,7 +438,7 @@ public interface ResourceService extends BaseService {
 	 * @param assessmentUrl
 	 * @return
 	 */
-	FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl);
+	FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl,String description,String sharing,String requireLogin);
 	/**
 	 * This method is used to add 21 skills data
 	 * @param collectionId

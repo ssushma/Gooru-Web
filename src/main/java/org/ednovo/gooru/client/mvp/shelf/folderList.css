@@ -983,5 +983,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 }
 .assessmentContainer{
 	text-align: center;
-	padding-top:63px !important
+	padding-top: 0px !important; 
 }
