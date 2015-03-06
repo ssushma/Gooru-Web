@@ -2755,6 +2755,15 @@ footer {
 		no-repeat;
 }
 
+.assessmentToolTipLabel {
+	padding: 6px !important;
+	cursor: pointer;
+	padding-left: 40px !important;
+	background: url(images/folders/panel/assessment-smal.png) 10px
+		no-repeat;
+	background-size: 27px 15px;
+}
+
 .folderToolTipLabel {
 	padding: 6px !important;
 	cursor: pointer;

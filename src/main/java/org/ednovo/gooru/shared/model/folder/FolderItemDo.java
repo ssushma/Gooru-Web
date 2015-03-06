@@ -42,6 +42,7 @@ public class FolderItemDo implements Serializable{
 	private String type;
 	private String collectionItemId;
 	private String description;
+	private String collectionType;
 	
 	public FolderItemDo(){}
 
@@ -122,4 +123,19 @@ public class FolderItemDo implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+	
 }
