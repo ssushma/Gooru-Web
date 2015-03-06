@@ -57,7 +57,7 @@
 					<g:HTMLPanel styleName="{libraryStyleUc.topicBlockStyle} {libraryStyleUc.topicTitleStyle}" ui:field="folderListPanel">
 						<g:Label styleName="{libraryStyle.topicListEllipsis}"
 							ui:field="folderTopicTitleLbl" />
-						<g:Button styleName="secondary" ui:field="listAllBtn"
+						<g:Button styleName="secondary" ui:field="listViewBtn"
 							text="{i18n.GL1946}" title="{i18n.GL1946}"></g:Button>
 					</g:HTMLPanel>
 					<g:HTMLPanel ui:field="contentScroll" />

@@ -98,4 +98,6 @@ public interface LibraryStyleBundle extends CssResource {
 	
 	String topicTitleStyle();
 	String topicBlockStyle();
-																																								}
+	
+	String listViewBtnStyle();
+	}

@@ -1110,3 +1110,7 @@ margin-bottom: 15px;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
 	
 }
+.listViewBtnStyle{
+	float:right;
+	margin: -25px -7px 0 0;
+}
