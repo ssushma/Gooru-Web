@@ -42,8 +42,8 @@
 					ui:field="folderListPanel">
 					<g:Label styleName="{districtStyleUc.topicListEllipsis}"
 						ui:field="folderTopicTitleLbl" />
-					<g:Button styleName="secondary" ui:field="listAllBtn"
-						text="{i18n.GL3121}" title="{i18n.GL3121}"></g:Button>
+					<g:Button styleName="secondary" ui:field="listViewBtn"
+						text="{i18n.GL1946}" title="{i18n.GL1946}"></g:Button>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="libraryMetaDataContainer" />
 				<g:HTMLPanel ui:field="loadingIconPanel"

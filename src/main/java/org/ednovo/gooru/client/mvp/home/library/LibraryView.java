@@ -139,7 +139,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	@UiField Image courseImage, educatorPhoto;
 	
-	@UiField Button listAllBtn;
+	@UiField Button listViewBtn;
 	
 	/*@UiField Button viewStandardButton;*/
 	
@@ -259,8 +259,11 @@ public class LibraryView extends Composite implements  ClickHandler {
 		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
 		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
 		contributorsContainer.getElement().setId("pnlContributorsContainer");
-		listAllBtn.getElement().setAttribute("style", "float:right;margin: -25px 3px 0 0;");
+		listViewBtn.addStyleName(libraryStyleUc.listViewBtnStyle());
 		//listAllBtn.addClickHandler(new ListAllBtnHandler());
+		StringUtil.setAttributes(listViewBtn.getElement(), "listViewBtn", listViewBtn.getText(), listViewBtn.getText());
+		StringUtil.setAttributes(folderTopicTitleLbl.getElement(), "folderTopicTitleLbl", "", "");
+		StringUtil.setAttributes(folderListPanel.getElement(), "folderListPanel", "", "");
 		folderListPanel.setVisible(false);
 	}
 	
@@ -1419,7 +1422,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 * @return the listAllBtn
 	 */
 	public Button getListAllBtn() {
-		return listAllBtn;
+		return listViewBtn;
 	}
 
 	public void getPartnerWorkspaceFolders(String partnerName) {
