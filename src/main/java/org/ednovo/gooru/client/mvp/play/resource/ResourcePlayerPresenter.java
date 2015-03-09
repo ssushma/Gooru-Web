@@ -76,6 +76,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -530,7 +531,15 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		}
 	}
 	public void setResourceInfoView(String resourceId){
-		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
+		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, collectionItemDo.getResource().getGooruOid(), null, new AsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				resourceInfoPresenter.setResoruceDetails(result);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 		resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
 		setInSlot(TAB_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
