@@ -143,7 +143,7 @@ public class StudyPlayerHeaderView extends Composite{
 		loginUserName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
-		if(collectionType!=null&&collectionType.equals("quiz")){
+		if(collectionType!=null&&collectionType.equals("assessment")){
 			wishingText.setText(i18n.GL1530());
 			wishingText.getElement().setAttribute("alt",i18n.GL1530());
 			wishingText.getElement().setAttribute("title",i18n.GL1530());

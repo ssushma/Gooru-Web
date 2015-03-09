@@ -148,7 +148,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 	}
 	
 	public void setCollectionType(String collectionType){
-		if(collectionType!=null&&collectionType.equals("quiz")){
+		if(collectionType!=null&&collectionType.equals("assessment")){
 			addAttributesToWidget(inputDescLbl,i18n.GL3036());
 			addAttributesToWidget(popupHeaderTitleLbl,i18n.GL3037());
 		}else{
