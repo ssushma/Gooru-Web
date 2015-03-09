@@ -1444,11 +1444,10 @@ width: 100%;
 	font-size: 12px;
 }
 .deselecteAssessment{
-	background: #d8d8d8 !important;
+	background:#F4F3F2 !important;
 	display: block;
-	border: 1px solid #979797 !important;
-	color: #515151 !important;
+	border: 1px solid #E1DFDA !important;
+	color: #007BCF !important;
 	width: 100%;
 	font-size: 12px;
 }
-

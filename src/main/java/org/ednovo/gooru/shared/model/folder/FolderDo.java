@@ -55,6 +55,7 @@ public class FolderDo implements Serializable{
 	private String collectionItemId;
 	private String description;
 	private String url;
+	private String goals;
 
 	public FolderDo(){}
 	
@@ -251,5 +252,10 @@ public class FolderDo implements Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+	public String getGoals() {
+		return goals;
+	}
+	public void setGoals(String goals) {
+		this.goals = goals;
+	}
 }

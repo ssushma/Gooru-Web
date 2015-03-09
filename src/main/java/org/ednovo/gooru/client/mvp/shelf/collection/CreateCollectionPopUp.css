@@ -283,7 +283,7 @@ button.secondary {
 	margin:20px 0 10px 0;
 }
 .form_control {
-	width: 90%;
+	width: 78%;
 	height: 30px;
 	padding: 6px 12px;
 	font-size: 14px;
@@ -308,6 +308,21 @@ button.secondary {
 	background-color: #fff;
 	background-image: none;
 	border: 1px solid #ccc;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+	display: inline-block;
+}
+.form_drop_control{
+	width:79%;
+	height: 30px;
+	font-size: 14px;
+	line-height: 1.4285715;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border:none;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -359,7 +374,7 @@ button.secondary {
 	padding-bottom: 16px;
 }
 .assessmentTextBoxText{
-	width: 9%;
+	width: 20%;
 	display: inline-block;
 	vertical-align: top;
 }
@@ -370,6 +385,7 @@ button.secondary {
 }
 .radioButtoncontainer{
 	display: inline-block;
+	width: 32%;
 }
 .assessmentPrivacyRightContainer{
 	display: inline-block;
@@ -379,5 +395,5 @@ button.secondary {
 	float:left;
 	vertical-align: middle;
 	margin-top: 7px;
-	width: 11%;
+	width: 8%;
 }
