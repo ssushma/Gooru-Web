@@ -484,45 +484,52 @@ public class CollectionFormView extends
 						lblExistingAssessmentURLError.setVisible(true);
 						lblExistingAssessmentURLError.setText(i18n.GL3166());
 					}else{
-						final Map<String, String> parms = new HashMap<String, String>();
-						parms.put("text", assessmentExistingTitle);
-						AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
-							@Override
-							public void onSuccess(Boolean value) {
-								if(value){
-									//Displaying error message
-									SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentTitle, lblExistingAssessmentError, value);
-								}else{
-									lblExistingAssessmentError.setVisible(false);
-									lblExistingAssessmentError.setText("");
-									parms.put("text", assessmentURL);
-									AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
-										@Override
-										public void onSuccess(Boolean result) {
-											if(result){
-												//Displaying error message
-												SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
-											}else{
-												lblExistingAssessmentURLError.setVisible(false);
-												lblExistingAssessmentURLError.setText("");
-												String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-												final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-												final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-												final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-												getUiHandlers().saveCollection(folderId, o1, o2, o3);
+						if(!StringUtil.urlValidatior(assessmentURL)){
+							lblExistingAssessmentError.setVisible(false);
+							lblExistingAssessmentError.setText("");
+							lblExistingAssessmentURLError.setVisible(true);
+							lblExistingAssessmentURLError.setText(i18n.GL0926());
+						}else{
+							final Map<String, String> parms = new HashMap<String, String>();
+							parms.put("text", assessmentExistingTitle);
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+								@Override
+								public void onSuccess(Boolean value) {
+									if(value){
+										//Displaying error message
+										SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentTitle, lblExistingAssessmentError, value);
+									}else{
+										lblExistingAssessmentError.setVisible(false);
+										lblExistingAssessmentError.setText("");
+										parms.put("text", assessmentURL);
+										AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+											@Override
+											public void onSuccess(Boolean result) {
+												if(result){
+													//Displaying error message
+													SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
+												}else{
+													lblExistingAssessmentURLError.setVisible(false);
+													lblExistingAssessmentURLError.setText("");
+													String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+													final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+													final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+													final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+													getUiHandlers().saveCollection(folderId, o1, o2, o3);
+												}
 											}
-										}
-										@Override
-										public void onFailure(Throwable caught) {
-											
-										}
-									});
+											@Override
+											public void onFailure(Throwable caught) {
+												
+											}
+										});
+									}
 								}
-							}
-							@Override
-							public void onFailure(Throwable caught) {
-							}
-						});
+								@Override
+								public void onFailure(Throwable caught) {
+								}
+							});
+						}
 					}
 				}else{
 					//Creating new assessment
@@ -648,11 +655,7 @@ public class CollectionFormView extends
 		lblShareableDesc.getElement().setId("lblShareableDesc");
 		lblShareableDesc.getElement().setAttribute("alt",i18n.GL0332());
 		lblShareableDesc.getElement().setAttribute("title",i18n.GL0332());
-		
-
-		
-		if(collectionDo!=null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
-		{
+		if(collectionDo!=null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment")){
 			lblPrivate.setText(i18n.GL3175());
 			lblPrivate.getElement().setId("lblPrivate");
 			lblPrivate.getElement().setAttribute("alt",i18n.GL3175());
@@ -662,10 +665,7 @@ public class CollectionFormView extends
 			lblPrivateDesc.getElement().setId("lblPrivateDesc");
 			lblPrivateDesc.getElement().setAttribute("alt",i18n.GL3176());
 			lblPrivateDesc.getElement().setAttribute("title",i18n.GL3176());
-
-		}
-		else
-		{
+		}else{
 			lblPrivate.setText(i18n.GL0333());
 			lblPrivate.getElement().setId("lblPrivate");
 			lblPrivate.getElement().setAttribute("alt",i18n.GL0333());
