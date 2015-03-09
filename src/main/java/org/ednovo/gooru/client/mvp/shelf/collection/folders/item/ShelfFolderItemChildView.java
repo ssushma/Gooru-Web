@@ -312,7 +312,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					folderDo.setTitle(result.getTitle());
 					folderDo.setUrl(result.getUrl());
-					folderDo.setDescription(result.getDescription());
+					folderDo.setGoals(result.getGoals());
 					folderDo.setSharing(result.getSharing());
 					itemTitle.setText(folderDo.getTitle());
 					editAssessmentPopup.hide();
