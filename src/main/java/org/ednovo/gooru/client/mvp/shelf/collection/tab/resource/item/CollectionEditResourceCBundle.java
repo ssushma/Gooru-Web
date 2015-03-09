@@ -374,7 +374,6 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String addResourceImgDesc();
 
 		String addButtonTitle();
-		String assessmentDownnArrow();
 		String assessmentPopup();
 		String assessmentPopupList();
 		String assessmentAddContainer();
