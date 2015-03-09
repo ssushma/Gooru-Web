@@ -258,6 +258,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	private static final int TOOLTIP_DELAY_TIME = 1000;
 	
+	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
+	
+	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
+	
+	private static final String ASSESSMENT = "assessment";
+	
 	private static final String O1_LEVEL = "o1";
 	
 	private static final String O2_LEVEL = "o2";
@@ -819,20 +825,16 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		setTab(getPersistantTabObjectUsingTabFlag());
 		collectionTitleUc.setText(collection.getTitle());
 		collectionDescriptionUc.setText(collection.getGoals());
-		if(collection.getThumbnails()!= null)
+		String collectionType=StringUtil.isEmpty(collection.getCollectionType())?null:collection.getCollectionType();
+		if(collection.getThumbnails()!= null && collection.getThumbnails().getUrl() != null)
 		{
-			if(collection.getThumbnails().getUrl() != null)
-			{
-				collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
-			}
-			else
-			{
-				collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
-			}
+			collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl(),collectionType);
 		}
-		else
+		else if(collection.getCollectionType()!=null && collection.getCollectionType().equals(ASSESSMENT))
 		{
-			collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
+			collectionImageShelfUc.setUrl(DEFULT_ASSESSMENT_IMG,collectionType);
+		}else{
+			collectionImageShelfUc.setUrl(DEFULT_COLLECTION_IMG,collectionType);
 		}
 		collectionImageShelfUc.getCollectionImg().setAltText(collection.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());
@@ -1594,7 +1596,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@Override
 	public void onPostCollectionImageUpload(String url) {
-		collectionImageShelfUc.setUrl(url);
+		collectionImageShelfUc.setUrl(url, collectionDo.getCollectionType());
 		collectionImageShelfUc.getCollectionImg().setAltText(collectionDo.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collectionDo.getTitle());
 		categoryImage.setUrl(url);
