@@ -70,6 +70,8 @@ public interface CollectionCBundle extends ClientBundle{
 		
 		String collectionThumbnails();
 		
+		String assessmentThumbnails();
+		
 		String collectionNotify();
 		
 		String changeImage();
