@@ -77,7 +77,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	private static final String SCOLLECTION = "scollection";
 	
-	private static final String ASSESSMENTURL = "assessment/url";
+	private static final String ASSESSMENT_URL = "assessment/url";
 	
 	private static final String ASSESSMENT = "assessment";
 
@@ -174,43 +174,25 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			folderImage.setVisible(false);
 			collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
 			collectionImage.setVisible(true);
-			if(folderDo.getThumbnails()!=null) 
+			if(folderDo.getThumbnails()!=null && !StringUtil.isEmpty(folderDo.getThumbnails().getUrl())) 
 			{
-				if(folderDo.getThumbnails().getUrl()!=null)
-				{
-					if(!folderDo.getThumbnails().getUrl().isEmpty())
-					{
-				collectionImage.setUrl(folderDo.getThumbnails().getUrl());
-					}
-					else {
-						collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
-					}
-				}
-				else {
-					collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
-				}
+				setDefaultImage(folderDo.getCollectionType(), folderDo.getThumbnails().getUrl());
 			} 
 			else {
-				collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
+				setDefaultImage(folderDo.getCollectionType(), null);
 			}
 			collectionImage.addErrorHandler(new ErrorHandler() {
 				@Override
 				public void onError(ErrorEvent event) {
-					collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
+					setDefaultImage(folderDo.getCollectionType(),null);
 				}
 			});
 			collectionImage.setHeight("90px");
 			collectionImage.setWidth("120px");
-			if(folderDo.getCollectionType().equals(ASSESSMENT)){
-				contentBlock.addStyleName(folderStyle.assessment());
-				collectionImage.setUrl(DEFULT_ASSESSMENT);
-			}else{
-				contentBlock.addStyleName(folderStyle.collection());
-			}
-			
+						
 		}
 		List<FolderItemDo> folderItemDo = folderDo.getCollectionItems();
-		if(!ASSESSMENTURL.equals(folderDo.getCollectionType()) && folderItemDo!=null&&folderItemDo.size()>0) {
+		if(!ASSESSMENT_URL.equals(folderDo.getCollectionType()) && folderItemDo!=null&&folderItemDo.size()>0) {
 			for(int i=0;i<folderItemDo.size();i++) {
 				FolderItemDo folderItem = folderItemDo.get(i);
 				Label folderItemLbl = new Label(folderItem.getTitle());
@@ -261,7 +243,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				contents.add(seeMoreLbl);
 			}
 		} else {
-			if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
+			if(ASSESSMENT_URL.equals(folderDo.getCollectionType())){
 				Button folderItemLbl = new Button(i18n.GL3169());
 				folderItemLbl.getElement().getStyle().setWidth(52, Unit.PCT);
 				folderItemLbl.getElement().getStyle().setMarginTop(18, Unit.PX);
@@ -302,14 +284,28 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
 	}
-	
+	/**
+	 * To set the default image of collection/assessment
+	 * @param collectionType {@link String}
+	 * @param url 
+	 */
+	private void setDefaultImage(String collectionType, String url) {
+		if(collectionType.equals(ASSESSMENT) || collectionType.equals(ASSESSMENT_URL)){
+			contentBlock.addStyleName(folderStyle.assessment());
+			collectionImage.setUrl(url==null?DEFULT_ASSESSMENT:url);
+		}else{
+			contentBlock.addStyleName(folderStyle.collection());
+			collectionImage.setUrl(url==null?DEFULT_IMAGE_PREFIX:url);
+		}
+	}
+
 	@UiHandler("folderImage")
 	public void clickOnFolderImage(ClickEvent event) {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
 		AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
 	}
 	public void getEditAssessmentPoupOrPlayCollection(){
-		if(ASSESSMENTURL.equals(folderDo.getCollectionType())){
+		if(ASSESSMENT_URL.equals(folderDo.getCollectionType())){
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
@@ -338,7 +334,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	@UiHandler("itemTitle")
 	public void clickOnTitle(ClickEvent event) {
-		if(!ASSESSMENTURL.equals(folderDo.getCollectionType())){
+		if(!ASSESSMENT_URL.equals(folderDo.getCollectionType())){
 			 	if(folderDo.getType().equals("folder")){
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
 				}else{
