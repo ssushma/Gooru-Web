@@ -39,6 +39,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -66,14 +67,23 @@ public class FolderCollectionView extends Composite {
 	@UiField FlowPanel pnlResources;
 	@UiField H4Panel lblCollectionTitle;
 	@UiField Label lblCollectionDesc;
+	@UiField HTMLPanel collectionTypePanel;
 	FolderTocCBundle res;
 	
-	final String ASSESSMENTURL="assessment/url";
+	final String ASSESSMENT_URL="assessment/url";
+	
+	final String ASSESSMENT="assessment";
 	
 	public FolderCollectionView(String levelStyleName,final FolderDo folderDo,final String parentId) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		if(folderDo.getCollectionType().equals(ASSESSMENT_URL)|| folderDo.getCollectionType().equals(ASSESSMENT)){
+			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/assessment-smal.png') no-repeat 8px 4px;padding-left: 34px;background-size: 21px 17px;");
+		}else{
+			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/collection-small-icon.png') no-repeat 8px 4px;padding-left: 34px;");
+		}
+		
 		if(folderDo.getTitle()!=null && !folderDo.getTitle().isEmpty()){
 			lblCollectionTitle.setText(folderDo.getTitle());
 		}
@@ -86,7 +96,7 @@ public class FolderCollectionView extends Composite {
 		 lblCollectionTitle.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if(ASSESSMENTURL.equalsIgnoreCase(folderDo.getCollectionType())){
+				if(ASSESSMENT_URL.equalsIgnoreCase(folderDo.getCollectionType())){
 					Window.open(folderDo.getUrl(), "", "");
 				}else{
 					HashMap<String,String> params = new HashMap<String,String>();
