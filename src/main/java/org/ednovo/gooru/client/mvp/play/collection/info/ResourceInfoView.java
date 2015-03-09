@@ -460,8 +460,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():null,collectionItemDo.getResource().getTaxonomySet()!=null?collectionItemDo.getResource().getTaxonomySet():null);
 			setResourceDescription(collectionItemDo.getResource().getDescription()!=null?collectionItemDo.getResource().getDescription():"");
 		}
-		if(!StringUtil.isEmpty(collectionItemDo.getViews())){
-			setResourceViewsCount(collectionItemDo.getViews());
+		if(!StringUtil.isEmpty(collectionItemDo.getResource().getViews())){
+			setResourceViewsCount(collectionItemDo.getResource().getViews());
 		}
 		setResourceLicenceLogo(collectionItemDo.getResource().getAssetURI(), collectionItemDo.getResource().getLicense());
 		renderStandards(standardsInfoConatiner,collectionItemDo.getStandards()!=null?collectionItemDo.getStandards():null);
