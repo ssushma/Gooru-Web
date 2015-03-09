@@ -531,12 +531,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		}
 	}
 	public void setResourceInfoView(String resourceId){
-		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, collectionItemDo.getResource().getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
-			@Override
-			public void onSuccess(CollectionItemDo result) {
-				resourceInfoPresenter.setResoruceDetails(result);
-			}
-		});
+		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
 		resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
 		setInSlot(TAB_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
