@@ -442,4 +442,13 @@ public class StringUtil {
 	public static void SysOut(String message){
 //		System.out.println(message);
 	}
+	/**
+	 * This method will check the url 
+	 * @param urlVal
+	 * @return
+	 */
+	public static boolean urlValidatior(String urlVal){
+		String lRegex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; 
+		return urlVal.matches(lRegex);
+	}
 }
