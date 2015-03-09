@@ -34,6 +34,7 @@ import java.util.List;
 
 import org.ednovo.gooru.server.AppSessionHolder;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.drive.ErrorDo;
 import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.json.JSONException;
 import org.json.JSONObject;

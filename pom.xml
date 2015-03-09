@@ -12,7 +12,11 @@
 		<env>qa</env>
 		<!-- Spring properties -->
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
-		<org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>			
+		<org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>
+		<!-- collection player version -->
+		<player.collection.version>SNAPSHOT-5.11.3</player.collection.version>
+		 <!-- resource player versions -->
+		<player.resource.version>SNAPSHOT-5.11.2</player.resource.version>			
 		<!-- Convenience property to set the GWT version -->
 		<gwtVersion>2.5.0</gwtVersion>
 		<!-- <project.build.directory>/home/rajam/pandoraspace</project.build.directory> 
@@ -69,6 +73,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -254,44 +265,44 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${gwtVersion}</version>
+			<version>2.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 			<type>pom</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.simple</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.json</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.ssl</artifactId>
-			<version>2.1-M6</version>
-		</dependency>
-			<dependency>
+			<version>2.3.1</version>
+		</dependency> -->
+		<!-- <dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.net</artifactId>
-			<version>2.1-M6</version>
-		</dependency>
+			<version>2.3.1</version>
+		</dependency> -->
 			<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.html</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -304,6 +315,11 @@
 			<version>1.5.2</version>
 		</dependency>
 		<dependency>
+			<groupId>org.gooru.resource.player</groupId>
+			<artifactId>gooru.resource.player</artifactId>
+			<version>${player.resource.version}</version>	
+		</dependency>
+		<dependency>
 			<groupId>com.bramosystems.oss.player</groupId>
 			<artifactId>bst-player-api</artifactId>
 			<version>1.3</version>
@@ -314,6 +330,16 @@
 			<version>20090211</version>
 		</dependency>
 		<dependency>
+			<groupId>org.gooru.collection.player</groupId>
+			<artifactId>gooru.collection.player</artifactId>
+			<version>${player.collection.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.2.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 			<version>4.2.2</version>
@@ -322,26 +348,6 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.2</version>
-		</dependency>
-		<dependency>
-		   <groupId>org.apache.httpcomponents</groupId>
-		   <artifactId>httpmime</artifactId>
-		   <version>4.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -402,12 +408,6 @@
 			<groupId>com.github.branflake2267</groupId>
 		   <artifactId>gwt-maps-api</artifactId>
 		   <version>3.10.0-alpha-7</version>
-		   <exclusions>
-		   	<exclusion>
-		   		<artifactId>gwt-dev</artifactId>
-		   		<groupId>com.google.gwt</groupId>
-		   	</exclusion>
-		   </exclusions>
 		</dependency>
 		<dependency>		
 			<groupId>com.samaxes.maven</groupId>		

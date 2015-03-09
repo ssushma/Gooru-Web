@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
 	<context-param>
@@ -25,16 +24,35 @@
 		<url-pattern>/newgooru/gwt-service/*</url-pattern>
 		<url-pattern>/embed/*</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
-		<servlet-name>uploadServlet</servlet-name>
-		<servlet-class>org.ednovo.gooru.server.service.uploadServlet
+		<servlet-name>resourcePlayerPlayServlet</servlet-name>
+		<servlet-class>org.ednovo.gooru.player.resource.server.ResourcePlayerComponentServiceImpl
 		</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
-		<servlet-name>uploadServlet</servlet-name>
-		<url-pattern>/newgooru/upServlet</url-pattern>
+		<servlet-name>resourcePlayerPlayServlet</servlet-name>
+		<url-pattern>/newgooru/resourcePlayerPlayServletAction
+		</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>collection</servlet-name>
+		<servlet-class>org.ednovo.gooru.player.collection.server.CollectionServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>collection</servlet-name>
+		<url-pattern>/newgooru/actionServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>uploadServlet</servlet-name>
+    <servlet-class>org.ednovo.gooru.server.service.uploadServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>uploadServlet</servlet-name>
+    <url-pattern>/newgooru/upServlet</url-pattern>
+  </servlet-mapping>
 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
