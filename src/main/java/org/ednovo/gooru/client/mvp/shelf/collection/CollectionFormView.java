@@ -120,8 +120,6 @@ public class CollectionFormView extends
 	@UiField
 	Button cancelAnr,btnCancelAssessment;
 
-	
-
 	/*@UiField
 	BlueButtonUc btnOk;*/
 	
@@ -770,17 +768,18 @@ public class CollectionFormView extends
 			if (!(gradeDropDownList.getSelectedIndex() == 0)) {
 				collection.setGrade(list[gradeDropDownList.getSelectedIndex()]);
 			}
+
+			if (radioButtonPublic.isChecked() == true) {
+				collection.setSharing("public");
+			}
+			if (radioButtonShare.isChecked() == true) {
+				collection.setSharing("anyonewithlink");
+			}
+			if (radioButtonPrivate.isChecked() == true) {
+				collection.setSharing("private");
+			}
 		}
 	
-		if (radioButtonPublic.isChecked() == true) {
-			collection.setSharing("public");
-		}
-		if (radioButtonShare.isChecked() == true) {
-			collection.setSharing("anyonewithlink");
-		}
-		if (radioButtonPrivate.isChecked() == true) {
-			collection.setSharing("private");
-		}
 		if(isCheckedValue){
 			collection.setMediaType("iPad_friendly");
 		}else{
@@ -866,6 +865,7 @@ public class CollectionFormView extends
 			pnlExistingAssessmentContainer.setVisible(false);
 			resetAssessmentFields();
 			appPopUp.setViewTitle(i18n.GL3008());
+			appPopUp.setStyleName(CollectionCBundle.INSTANCE.css().setPopupStyle());
 			rdBtnAssessmentShare.setValue(true);
 			rdBtnAssessmentPublic.setValue(false);
 			rdBtnAssessmentPrivate.setValue(false);
@@ -1063,8 +1063,7 @@ public class CollectionFormView extends
 	@Override
 	public String getCourseCodeId() {
 		try {
-			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
-			if(collectionType!=null&&collectionType.equals("assessment")){
+			if(pnlNewAssessmentContainer.isVisible()){
 				if (!assessmentCourseLisBox.getValue().equals("-1")) {
 					String selectedValue = assessmentCourseLisBox.getValue(assessmentCourseLisBox.getSelectedIndex());
 					if (!selectedValue.equals("-1")) {
@@ -1149,6 +1148,7 @@ public class CollectionFormView extends
 		txtNewAssessmentTitle.setText("");
 		txtExistingAssessmentTitle.setText("");
 		txtExistingAssessmentURL.setText("");
+		txtExistingAssessmentDescription.setText("");
 		lblNewAssessmentError.setVisible(false);
 		lblExistingAssessmentError.setVisible(false);
 		lblExistingAssessmentURLError.setVisible(false);

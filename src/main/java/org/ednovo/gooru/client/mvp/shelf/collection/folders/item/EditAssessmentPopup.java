@@ -82,8 +82,8 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		txtExistingAssessmentTitle.setText(folderDo.getTitle());
 		if(!StringUtil.isEmpty(folderDo.getUrl()))
 		txtExistingAssessmentURL.setText(folderDo.getUrl());
-		if(!StringUtil.isEmpty(folderDo.getDescription())){
-			txtExistingAssessmentDescription.setText(folderDo.getDescription());
+		if(!StringUtil.isEmpty(folderDo.getGoals())){
+			txtExistingAssessmentDescription.setText(folderDo.getGoals());
 		}
 		if(PUBLIC.equalsIgnoreCase(folderDo.getSharing())){
 			rdBtnAssessmentPublic.setValue(true);

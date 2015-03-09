@@ -354,6 +354,7 @@ public interface CollectionCBundle extends ClientBundle{
 		String dropdownContainerAudience();
 		String deselecteAssessment();
 		String selecteAssessment();
+		String setPopupStyle();
 	}
 	@Source("Collection.css")
 	CollectionCss css();
