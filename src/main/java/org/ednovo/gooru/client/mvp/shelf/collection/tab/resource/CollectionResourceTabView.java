@@ -1006,7 +1006,7 @@ public class CollectionResourceTabView extends
 	}
 	
 	public void showNoCollectionsItemsMessage(String collectionType){
-		if(collectionType!=null&&collectionType.equals("quiz")){
+		if(collectionType!=null&&collectionType.equals("assessment")){
 			setAttributeToWidget(noResourceLineOneLabel,i18n.GL3014());
 			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());
 			setAttributeToWidget(noResourceLineThreeLabel,"");

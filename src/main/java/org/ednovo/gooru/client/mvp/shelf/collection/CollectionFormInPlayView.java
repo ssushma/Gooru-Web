@@ -425,11 +425,25 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		collTitleLbl.setText(i18n.GL0651());
 		lblVisibility.setText(i18n.GL0328());
 		lblPublic.setText(i18n.GL0329());
-		lblAllow.setText(i18n.GL0330());
+		if(collectionDo != null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			lblAllow.setText(i18n.GL3175());
+		}
+		else
+		{
+			lblAllow.setText(i18n.GL0330());
+		}
 		lblShareable.setText(i18n.GL0331());
 		lblShareableDesc.setText(i18n.GL0332());
 		lblPrivate.setText(i18n.GL0333());
-		lblPrivateDesc.setText(i18n.GL0334());
+		if(collectionDo != null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			lblPrivateDesc.setText(i18n.GL3176());
+		}
+		else
+		{
+			lblPrivateDesc.setText(i18n.GL0334());
+		}
 		
 		btnOk.setText(i18n.GL0190());
 		btnOk.getElement().setId("btnOk");

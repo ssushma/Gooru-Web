@@ -641,15 +641,33 @@ public class CollectionFormView extends
 		lblShareableDesc.getElement().setAttribute("alt",i18n.GL0332());
 		lblShareableDesc.getElement().setAttribute("title",i18n.GL0332());
 		
-		lblPrivate.setText(i18n.GL0333());
-		lblPrivate.getElement().setId("lblPrivate");
-		lblPrivate.getElement().setAttribute("alt",i18n.GL0333());
-		lblPrivate.getElement().setAttribute("title",i18n.GL0333());
+
 		
-		lblPrivateDesc.setText(i18n.GL0334());
-		lblPrivateDesc.getElement().setId("lblPrivateDesc");
-		lblPrivateDesc.getElement().setAttribute("alt",i18n.GL0334());
-		lblPrivateDesc.getElement().setAttribute("title",i18n.GL0334());
+		if(collectionDo!=null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			lblPrivate.setText(i18n.GL3175());
+			lblPrivate.getElement().setId("lblPrivate");
+			lblPrivate.getElement().setAttribute("alt",i18n.GL3175());
+			lblPrivate.getElement().setAttribute("title",i18n.GL3175());
+			
+			lblPrivateDesc.setText(i18n.GL3176());
+			lblPrivateDesc.getElement().setId("lblPrivateDesc");
+			lblPrivateDesc.getElement().setAttribute("alt",i18n.GL3176());
+			lblPrivateDesc.getElement().setAttribute("title",i18n.GL3176());
+
+		}
+		else
+		{
+			lblPrivate.setText(i18n.GL0333());
+			lblPrivate.getElement().setId("lblPrivate");
+			lblPrivate.getElement().setAttribute("alt",i18n.GL0333());
+			lblPrivate.getElement().setAttribute("title",i18n.GL0333());
+			
+			lblPrivateDesc.setText(i18n.GL0334());
+			lblPrivateDesc.getElement().setId("lblPrivateDesc");
+			lblPrivateDesc.getElement().setAttribute("alt",i18n.GL0334());
+			lblPrivateDesc.getElement().setAttribute("title",i18n.GL0334());
+		}
 		
 		gradeLbl.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
 		gradeLbl.getElement().setId("lblGradeLbl");

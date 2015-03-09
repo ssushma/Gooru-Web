@@ -1170,7 +1170,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
 			}else{
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
@@ -1180,7 +1180,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(i18n.GL3013());
 			}else{
 				lblFriendly.setText(i18n.GL0453());
@@ -1189,7 +1189,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	}
 	
 	public void modifyStaticText(String collectionType){
-		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3007().toLowerCase():i18n.GL2001();
+		collectionType=(collectionType!=null&&collectionType.equals("assessment"))?i18n.GL3007().toLowerCase():i18n.GL2001();
 		collectionDescriptionUc.setPlaceholder(StringUtil.generateMessage(WHAT_IS_THIS_COLLECTION_ABOUT, collectionType));
 	}
 
@@ -1369,7 +1369,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
-		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 			delete.setNotes(StringUtil.generateMessage(i18n.GL3038(), collectionDo.getTitle()));
 			delete.setDescText(i18n.GL3039());
 		}else{
@@ -1991,7 +1991,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void CollMovedSucessFully(String sourceId,String targetId,String folderName,HashMap<String, String> urlParams) {
 		folderPopupUc.hide();
 		final FolderDo folderDo = getFolderDo(collectionDo); 
-		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName) { 
+		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName,collectionDo) { 
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 //				Window.enableScrolling(true);
