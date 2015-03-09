@@ -71,6 +71,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -867,7 +868,7 @@ public class CollectionFormView extends
 			pnlExistingAssessmentContainer.setVisible(false);
 			resetAssessmentFields();
 			appPopUp.setViewTitle(i18n.GL3008());
-			appPopUp.setStyleName(CollectionCBundle.INSTANCE.css().setPopupStyle());
+			appPopUp.getMainPanel().getElement().getStyle().setBottom(70, Unit.PX);
 			rdBtnAssessmentShare.setValue(true);
 			rdBtnAssessmentPublic.setValue(false);
 			rdBtnAssessmentPrivate.setValue(false);
