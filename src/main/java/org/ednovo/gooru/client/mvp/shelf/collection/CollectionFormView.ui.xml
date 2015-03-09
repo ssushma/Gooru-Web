@@ -25,19 +25,33 @@
 					</div>
 					<div class="clearfix"></div>
 					<div class="{createCollectionStyle.logInput} less-gutter">
-					<g:HTMLPanel ui:field="pnlNewAssessmentContainer" styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
-					    <g:Label styleName="{createCollectionStyle.assessmentTextBoxText}">Title:</g:Label>
-			 		 	<uc:TextBoxWithPlaceholder ui:field="txtNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
-			 		 	<g:Label ui:field="lblNewAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
+					<g:HTMLPanel ui:field="pnlNewAssessmentContainer"  styleName="col-md-12">
+						<g:HTMLPanel styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
+						    <g:Label styleName="{createCollectionStyle.assessmentTextBoxText}">Title:</g:Label>
+				 		 	<uc:TextBoxWithPlaceholder ui:field="txtNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
+				 		 	<g:Label ui:field="lblNewAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
+				 		</g:HTMLPanel>
+				 		
+						<g:HTMLPanel styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
+							<g:Label styleName="{createCollectionStyle.assessmentTextBoxText}" text="{i18n.GL0325} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0325} {i18n.GL_SPL_SEMICOLON}"></g:Label>
+							<g:HTMLPanel ui:field="assessmentGradeTxtBox" styleName="{createCollectionStyle.form_drop_control}"/>
+							<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
+						</g:HTMLPanel>
+						
+						<g:HTMLPanel styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
+							<g:Label text="{i18n.GL0326} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0326} {i18n.GL_SPL_SEMICOLON}" styleName="{createCollectionStyle.assessmentTextBoxText}"></g:Label>
+							<g:HTMLPanel styleName="{createCollectionStyle.form_drop_control}" ui:field="assessmentSimPanel"/>
+							<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
+						</g:HTMLPanel>
 			 		</g:HTMLPanel>
 			 		<g:HTMLPanel ui:field="pnlExistingAssessmentContainer" styleName="col-md-12">
 				 		<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Title:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Title*:</g:Label>
 				 			<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{createCollectionStyle.form_edit_control}"></uc:TextBoxWithPlaceholder>
 				 			<g:Label ui:field="lblExistingAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 				 		</g:HTMLPanel>
 				 		<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Assessment URL:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Assessment URL*:</g:Label>
 			 				<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentURL" styleName="{createCollectionStyle.form_edit_control}"></uc:TextBoxWithPlaceholder>
 			 				<g:Label ui:field="lblExistingAssessmentURLError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 			</g:HTMLPanel>
@@ -47,7 +61,7 @@
 			 				<g:Label ui:field="lblExistingAssessmentDescriptionError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 			</g:HTMLPanel>
 			 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Privacy:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Privacy*:</g:Label>
 				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
@@ -67,14 +81,14 @@
 				 			</g:HTMLPanel>
 			 			</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Requries Log In?:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Requries 3rd-Party Log In?*:</g:Label>
 				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
-						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
+						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginYes"></g:RadioButton>
 						 				<g:Label styleName="{createCollectionStyle.publicText}">Yes</g:Label>
 						 			</panel:HTMLEventPanel>
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
-						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
+						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginNo"></g:RadioButton>
 						 				<g:Label styleName="{createCollectionStyle.publicText}">No</g:Label>
 						 			</panel:HTMLEventPanel>
 				 			</g:HTMLPanel>
@@ -84,8 +98,8 @@
 					</div>
 				
 					<div class="{createCollectionStyle.formViewButtonContainer}">
+						<g:Button ui:field="btnCancelAssessment" styleName="secondary"></g:Button>
 						<g:Button ui:field="btnCreateAssessment" styleName="primary" text="{i18n.GL3024}" title="{i18n.GL3024}"></g:Button>
-					    <g:Button ui:field="btnCancelAssessment" styleName="secondary"></g:Button>
 				    </div>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.collectionSel} {style.collectionSelFormView}" ui:field="bodyContainer">

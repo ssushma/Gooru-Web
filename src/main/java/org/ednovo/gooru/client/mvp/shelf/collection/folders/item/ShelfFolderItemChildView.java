@@ -268,7 +268,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				});
 				folderItemEdit.getElement().getStyle().setWidth(52, Unit.PCT);
 				folderItemEdit.getElement().getStyle().setMarginTop(18, Unit.PX);
-				Button folderItemDelete = new Button(i18n.GL3173());
+				Button folderItemDelete = new Button(i18n.GL3174());
 				folderItemDelete.getElement().getStyle().setWidth(52, Unit.PCT);
 				folderItemDelete.getElement().getStyle().setMarginTop(18, Unit.PX);
 				
@@ -309,6 +309,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					folderDo.setTitle(result.getTitle());
 					folderDo.setUrl(result.getUrl());
+					folderDo.setDescription(result.getDescription());
+					folderDo.setSharing(result.getSharing());
 					itemTitle.setText(folderDo.getTitle());
 					editAssessmentPopup.hide();
 				}

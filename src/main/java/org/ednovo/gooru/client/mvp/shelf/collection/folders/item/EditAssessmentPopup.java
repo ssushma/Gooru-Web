@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -65,6 +66,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	@UiField TextArea txtExistingAssessmentDescription;
 	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate;
 	String privacy="";
+	final String PUBLIC="public",ANYONEWITHLINK="anyonewithlink",PRIVATE="private";
 	
 	public FolderDo folderDo=null;
 	
@@ -76,10 +78,22 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		this.folderDo=folderDo;
 		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3168());
 		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
-		if(folderDo.getTitle()!=null)
+		if(!StringUtil.isEmpty(folderDo.getTitle()))
 		txtExistingAssessmentTitle.setText(folderDo.getTitle());
-		if(folderDo.getUrl()!=null)
+		if(!StringUtil.isEmpty(folderDo.getUrl()))
 		txtExistingAssessmentURL.setText(folderDo.getUrl());
+		if(!StringUtil.isEmpty(folderDo.getDescription())){
+			txtExistingAssessmentDescription.setText(folderDo.getDescription());
+		}
+		if(PUBLIC.equalsIgnoreCase(folderDo.getSharing())){
+			rdBtnAssessmentPublic.setValue(true);
+		}else{
+			if(ANYONEWITHLINK.equalsIgnoreCase(folderDo.getSharing())){
+				rdBtnAssessmentShare.setValue(true);
+			}else{
+				rdBtnAssessmentPrivate.setValue(true);
+			}
+		}
 		// This will handle the focus on existing assessment title.
 		txtExistingAssessmentTitle.addFocusHandler(new FocusHandler() {
 			@Override
@@ -107,13 +121,13 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		final String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
 		final String assessmentURL=txtExistingAssessmentURL.getText();
 		if(rdBtnAssessmentPublic.getValue()){
-			privacy="public";
+			privacy=PUBLIC;
 		}
 		if(rdBtnAssessmentShare.getValue()){
-			privacy="anyonewithlink";
+			privacy=ANYONEWITHLINK;
 		}
 		if(rdBtnAssessmentPrivate.getValue()){
-			privacy="private";
+			privacy=PRIVATE;
 		}
 		if(assessmentExistingTitle.isEmpty()){
 			lblExistingAssessmentError.setVisible(true);
