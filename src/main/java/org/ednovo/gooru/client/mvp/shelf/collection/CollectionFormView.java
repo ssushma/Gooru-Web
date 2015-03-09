@@ -71,6 +71,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -106,7 +107,7 @@ public class CollectionFormView extends
 	@UiField
 	TextBoxWithPlaceholder collectionTitleTxtBox;
 
-	GroupedListBox courseLisBox;
+	GroupedListBox courseLisBox,assessmentCourseLisBox=new GroupedListBox();
 
 	@UiField
 	SimplePanel groupSimPanel, collectionGradeTxtBox;
@@ -119,8 +120,6 @@ public class CollectionFormView extends
 	
 	@UiField
 	Button cancelAnr,btnCancelAssessment;
-
-	
 
 	/*@UiField
 	BlueButtonUc btnOk;*/
@@ -135,7 +134,7 @@ public class CollectionFormView extends
 	FlowPanel  linkShareFloPanel, privateShareFloPanel;
 	
 	@UiField
-	HTMLPanel pnlExistingAssessmentContainer,pnlNewAssessmentContainer,bodyContainer,pnlCreateNewAssessment,publicRadioButtonPanel, shareRadioButtonPanel,
+	HTMLPanel assessmentGradeTxtBox,assessmentSimPanel,pnlExistingAssessmentContainer,pnlNewAssessmentContainer,bodyContainer,pnlCreateNewAssessment,publicRadioButtonPanel, shareRadioButtonPanel,
 			privateRadioButtonPanel,buttonMainContainer,visibilitySection,courseContainer,gradeContainer,shelfItemContent;
 
 	@UiField
@@ -149,7 +148,7 @@ public class CollectionFormView extends
 	boolean fromAddResourcePresenter=false;
 	
 	@UiField Label lblNewAssessmentError,lblExistingAssessmentError,lblExistingAssessmentURLError;
-	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate;
+	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate,requireLoginYes,requireLoginNo;
 	@UiField TextArea txtExistingAssessmentDescription;
 	
 	RadioButton radioButtonPublic = new RadioButton("", "");
@@ -162,7 +161,8 @@ public class CollectionFormView extends
 			"Higher Education" };
 
 	ListBox gradeDropDownList = new ListBox();
-
+	ListBox assessmentGradeDropDownList = new ListBox();
+	
 	private NewCollectionInfoPopup newCollectionInfoPopup;
 
 	private AppPopUp appPopUp;
@@ -694,10 +694,13 @@ public class CollectionFormView extends
 	 */
 	public void getGradeList() {
 		gradeDropDownList.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
+		assessmentGradeDropDownList.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		for (int i = 0; i < list.length; i++) {
 			gradeDropDownList.addItem(list[i]);
+			assessmentGradeDropDownList.addItem(list[i]);
 		}
 		collectionGradeTxtBox.setWidget(gradeDropDownList);
+		assessmentGradeTxtBox.add(assessmentGradeDropDownList);
 		gradeDropDownList.addChangeHandler(new ChangeHandler() {
 
 			@Override
@@ -743,7 +746,7 @@ public class CollectionFormView extends
 				collection.setTitle(txtExistingAssessmentTitle.getText());
 				collection.setUrl(txtExistingAssessmentURL.getText());
 				collection.setCollectionType("assessment/url");
-				collection.setDescription(txtExistingAssessmentDescription.getText());
+				collection.setGoals(txtExistingAssessmentDescription.getText());
 				if(rdBtnAssessmentPublic.getValue()){
 					collection.setSharing("public");
 				}
@@ -756,24 +759,28 @@ public class CollectionFormView extends
 			}else{
 				collection.setCollectionType("assessment");
 				collection.setTitle(txtNewAssessmentTitle.getText());
+				if (!(assessmentGradeDropDownList.getSelectedIndex() == 0)) {
+					collection.setGrade(list[assessmentGradeDropDownList.getSelectedIndex()]);
+				}
 			}
 		}else{
 			collection.setCollectionType("collection");
 			collection.setTitle(collectionTitleTxtBox.getText());
+			if (!(gradeDropDownList.getSelectedIndex() == 0)) {
+				collection.setGrade(list[gradeDropDownList.getSelectedIndex()]);
+			}
+
+			if (radioButtonPublic.isChecked() == true) {
+				collection.setSharing("public");
+			}
+			if (radioButtonShare.isChecked() == true) {
+				collection.setSharing("anyonewithlink");
+			}
+			if (radioButtonPrivate.isChecked() == true) {
+				collection.setSharing("private");
+			}
 		}
 	
-		if (!(gradeDropDownList.getSelectedIndex() == 0)) {
-			collection.setGrade(list[gradeDropDownList.getSelectedIndex()]);
-		}
-		if (radioButtonPublic.isChecked() == true) {
-			collection.setSharing("public");
-		}
-		if (radioButtonShare.isChecked() == true) {
-			collection.setSharing("anyonewithlink");
-		}
-		if (radioButtonPrivate.isChecked() == true) {
-			collection.setSharing("private");
-		}
 		if(isCheckedValue){
 			collection.setMediaType("iPad_friendly");
 		}else{
@@ -794,6 +801,7 @@ public class CollectionFormView extends
 	@Override
 	public void reset() {
 		btnOk.setEnabled(true);
+		appPopUp.getCloseButton().setVisible(false);
 		btnOk.getElement().removeClassName("disabled");
 		collectionTitleTxtBox.getElement().getStyle().setBorderColor("#cccccc");
 		cancelAnr.getElement().getStyle().setMarginRight(10, Unit.PX);
@@ -848,6 +856,9 @@ public class CollectionFormView extends
 			setPopUpStyle();
 		}else{
 			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
+			collPopUpMainheading.setVisible(true);
+			collPopUpSubheading.setVisible(true);
+			appPopUp.getCloseButton().setVisible(false);
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			pnlCreateNewAssessment.setVisible(true);
 			bodyContainer.setVisible(false);
@@ -857,8 +868,20 @@ public class CollectionFormView extends
 			pnlExistingAssessmentContainer.setVisible(false);
 			resetAssessmentFields();
 			appPopUp.setViewTitle(i18n.GL3008());
+			appPopUp.getMainPanel().getElement().getStyle().setBottom(70, Unit.PX);
+			rdBtnAssessmentShare.setValue(true);
+			rdBtnAssessmentPublic.setValue(false);
+			rdBtnAssessmentPrivate.setValue(false);
+			requireLoginYes.setValue(false);
+			requireLoginNo.setValue(true);
+			appPopUp.getCloseButton().setVisible(true);
+			appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					appPopUp.hide();
+				}
+			});
 			shelfItemContent.getElement().removeAttribute("style");	
-			appPopUp.getElement().getStyle().setTop(0, Unit.PX);
 		   /*collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
 			collPopUpMainheading.setText(i18n.GL3009());
 			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL3009());
@@ -918,9 +941,12 @@ public class CollectionFormView extends
 		}
 //		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
-		courseLisBox = new GroupedListBox();
+		courseLisBox=new GroupedListBox();
 		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
+		assessmentCourseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		groupSimPanel.setWidget(courseLisBox);
+		assessmentSimPanel.clear();
+		assessmentSimPanel.add(assessmentCourseLisBox);
 		gradeDropDownList.setSelectedIndex(0);
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
 			radioButtonPublic.setEnabled(false);
@@ -974,12 +1000,11 @@ public class CollectionFormView extends
  * This method is used to set course data
  */
 	private void setCourseData() {
-		if (this.collectionDo != null
-				&& this.collectionDo.getTaxonomySet() != null
-				&& courseLisBox.getItemCount() > 0) {
+		if (this.collectionDo != null && this.collectionDo.getTaxonomySet() != null	&& courseLisBox.getItemCount() > 0) {
 			for (CodeDo code : this.collectionDo.getTaxonomySet()) {
 				if (code.getDepth() == 2) {
 					courseLisBox.setValue(code.getCodeId() + "");
+					assessmentCourseLisBox.setValue(code.getCodeId() + "");
 					break;
 				}
 			}
@@ -992,10 +1017,13 @@ public class CollectionFormView extends
 	@Override
 	public void setLibraryCodes(List<LibraryCodeDo> libraryCode) {
 		courseLisBox.addItem("- Select course -", "-1");
+		assessmentCourseLisBox.addItem("- Select course -", "-1");
 		if (libraryCode != null) {
 			for (LibraryCodeDo libraryCodes : libraryCode) {
 				for (LibraryCodeDo libCode : libraryCodes.getNode()) {
 					courseLisBox.addItem(libraryCodes.getLabel() + "|"
+							+ libCode.getLabel(), libCode.getCodeId() + "");
+					assessmentCourseLisBox.addItem(libraryCodes.getLabel() + "|"
 							+ libCode.getLabel(), libCode.getCodeId() + "");
 				}
 			}
@@ -1045,11 +1073,20 @@ public class CollectionFormView extends
 	@Override
 	public String getCourseCodeId() {
 		try {
-			if (!courseLisBox.getValue().equals("-1")) {
-				String selectedValue = courseLisBox.getValue(courseLisBox
-						.getSelectedIndex());
-				if (!selectedValue.equals("-1")) {
-					return selectedValue;
+			if(pnlNewAssessmentContainer.isVisible()){
+				if (!assessmentCourseLisBox.getValue().equals("-1")) {
+					String selectedValue = assessmentCourseLisBox.getValue(assessmentCourseLisBox.getSelectedIndex());
+					if (!selectedValue.equals("-1")) {
+						return selectedValue;
+					}
+				}
+			}else{
+				if (!courseLisBox.getValue().equals("-1")) {
+					String selectedValue = courseLisBox.getValue(courseLisBox
+							.getSelectedIndex());
+					if (!selectedValue.equals("-1")) {
+						return selectedValue;
+					}
 				}
 			}
 			return null;
@@ -1121,6 +1158,7 @@ public class CollectionFormView extends
 		txtNewAssessmentTitle.setText("");
 		txtExistingAssessmentTitle.setText("");
 		txtExistingAssessmentURL.setText("");
+		txtExistingAssessmentDescription.setText("");
 		lblNewAssessmentError.setVisible(false);
 		lblExistingAssessmentError.setVisible(false);
 		lblExistingAssessmentURLError.setVisible(false);

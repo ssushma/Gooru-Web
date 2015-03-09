@@ -70,5 +70,4 @@ public interface IsCollectionFormView extends PopupView, IsViewWithHandlers<Coll
 //	void updateCollectionFormCheckBox(boolean isChecked);
 	
 	void resetAssessmentFields();
-
 }
