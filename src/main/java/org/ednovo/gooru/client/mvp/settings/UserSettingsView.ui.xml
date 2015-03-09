@@ -109,8 +109,6 @@
 									</g:HTMLPanel>
 								</g:HTMLPanel>
 
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
-									ui:field="accountExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="accountMiniusArrow" visible="false"></g:HTMLPanel>
 
@@ -208,8 +206,6 @@
 										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
-									ui:field="contactExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="contactMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
@@ -263,7 +259,7 @@
 								<g:HTMLPanel styleName="{Settings.settingInfoTitle}"
 									ui:field="securityText"></g:HTMLPanel>
 								<!-- <g:HTMLPanel ui:field="editButtonContaineSecurity"><g:Button 
-									ui:field="editButtonSecurity" text="Edit" styleName="{Settings.settingEditButton}"/></g:HTMLPanel> -->								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" ui:field="securityExpandArrow"></g:HTMLPanel> -->
+									ui:field="editButtonSecurity" text="Edit" styleName="{Settings.settingEditButton}"/></g:HTMLPanel> -->								
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="securityMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
@@ -296,8 +292,6 @@
 										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
-									ui:field="educationalExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="educationalMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
