@@ -743,7 +743,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	}
 
 	public void modifyStaticText(String collectionType){
-		if(collectionType!=null&&collectionType.equals("quiz")){
+		if(collectionType!=null&&collectionType.equals("assessment")){
 			lblAssignCollectionTitle.setText(i18n.GL3032());
 			lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL3032());
 			lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL3032());

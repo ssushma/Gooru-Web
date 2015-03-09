@@ -189,15 +189,32 @@ public class CollectionShareTabVc extends Composite {
 		visibilityTextTeacherTip.getElement().setAttribute("alt",i18n.GL1658());
 		visibilityTextTeacherTip.getElement().setAttribute("title",i18n.GL1658());
 		
-		visibilityOptiontext.setText(i18n.GL0843());
-		visibilityOptiontext.getElement().setId("lblVisibilityOptiontext");
-		visibilityOptiontext.getElement().setAttribute("alt",i18n.GL0843());
-		visibilityOptiontext.getElement().setAttribute("title",i18n.GL0843());
+
 		
+		if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
+		{		
+		visibilityOptiontextTeacherTip.setText(i18n.GL3177());
+		visibilityOptiontextTeacherTip.getElement().setId("lblVisibilityOptiontextTeacherTip");
+		visibilityOptiontextTeacherTip.getElement().setAttribute("alt",i18n.GL3177());
+		visibilityOptiontextTeacherTip.getElement().setAttribute("title",i18n.GL3177());
+		
+		visibilityOptiontext.setText(i18n.GL3179());
+		visibilityOptiontext.getElement().setId("lblVisibilityOptiontext");
+		visibilityOptiontext.getElement().setAttribute("alt",i18n.GL3179());
+		visibilityOptiontext.getElement().setAttribute("title",i18n.GL3179());
+		}
+		else
+		{
 		visibilityOptiontextTeacherTip.setText(i18n.GL1659());
 		visibilityOptiontextTeacherTip.getElement().setId("lblVisibilityOptiontextTeacherTip");
 		visibilityOptiontextTeacherTip.getElement().setAttribute("alt",i18n.GL1659());
 		visibilityOptiontextTeacherTip.getElement().setAttribute("title",i18n.GL1659());
+		
+		visibilityOptiontext.setText(i18n.GL0843());
+		visibilityOptiontext.getElement().setId("lblVisibilityOptiontext");
+		visibilityOptiontext.getElement().setAttribute("alt",i18n.GL0843());
+		visibilityOptiontext.getElement().setAttribute("title",i18n.GL0843());
+		}
 
 		
 		//teacherTipTextarea.addKeyUpHandler(new OnKeyUpHandler());
@@ -249,7 +266,7 @@ public class CollectionShareTabVc extends Composite {
 			@Override
 			public void onFocus(FocusEvent event) {
 				String directionText=teacherTipTextarea.getText().trim();
-				if(directionText.equalsIgnoreCase(i18n.GL1709())){
+				if(directionText.equalsIgnoreCase(i18n.GL1709()) || directionText.equalsIgnoreCase(i18n.GL3178())){
 					teacherTipTextarea.setText("");
 				}
 				teacherTipTextarea.getElement().getStyle().setColor("black");
@@ -270,7 +287,14 @@ public class CollectionShareTabVc extends Composite {
 			public void onBlur(BlurEvent event) {
 				if(teacherTipTextarea.getText().length() == 0)
 				{
+					if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
+					{
+					teacherTipTextarea.setText(i18n.GL3178());
+					}
+					else
+					{
 					teacherTipTextarea.setText(i18n.GL1709());
+					}
 					teacherTipTextarea.getElement().getStyle().setColor("#999");
 				}
 				else
@@ -313,14 +337,22 @@ public class CollectionShareTabVc extends Composite {
 		
 		publicFocPanel = new FlowPanel();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
-		shareViewPublicUc = new ShareViewUc(i18n.GL0329(), i18n.GL0330());
-		shareViewPublicUc.setTitleDescriptionStyle(52, 44);
+		//here
+		if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			shareViewPublicUc = new ShareViewUc(i18n.GL0329(), i18n.GL3175());
+		}
+		else
+		{
+			shareViewPublicUc = new ShareViewUc(i18n.GL0329(), i18n.GL0330());
+		}
+		shareViewPublicUc.setTitleDescriptionStyle(52, 41);
 		publicFocPanel.add(shareViewPublicUc);
 //		publicFocPanel.add(rbPublicPanel);
 		publicShareFloPanel.add(publicFocPanel);
 		linkFocPanel = new FlowPanel();
 		shareViewShareableUc = new ShareViewUc(i18n.GL0331(), i18n.GL0332());
-		shareViewShareableUc.setTitleDescriptionStyle(12, 44);
+		shareViewShareableUc.setTitleDescriptionStyle(12, 41);
 		linkFocPanel.add(shareViewShareableUc);
 		linkFocPanel.add(rbShareablePanel);
 		linkShareFloPanel.add(linkFocPanel);
@@ -348,8 +380,15 @@ public class CollectionShareTabVc extends Composite {
 		charLimitLbl.setText(value);
 
 		privateFocPanel = new FlowPanel();
-		shareViewPrivateUc = new ShareViewUc(i18n.GL0333(), i18n.GL0334()); 
-		shareViewPrivateUc.setTitleDescriptionStyle(40, 44);
+		if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			shareViewPrivateUc = new ShareViewUc(i18n.GL0333(), i18n.GL3176()); 
+		}
+		else
+		{
+			shareViewPrivateUc = new ShareViewUc(i18n.GL0333(), i18n.GL0334()); 
+		}
+		shareViewPrivateUc.setTitleDescriptionStyle(40, 41);
 		privateFocPanel.add(shareViewPrivateUc);
 		privateFocPanel.add(rbPrivatePanel);
 		privateShareFloPanel.add(privateFocPanel);
@@ -820,9 +859,18 @@ public class CollectionShareTabVc extends Composite {
 		}
 		else
 		{
-		userTeacherTipText.setText(i18n.GL1709());
-		userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
-		userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
+			if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
+			{
+				userTeacherTipText.setText(i18n.GL3178());
+				userTeacherTipText.getElement().setAttribute("alt",i18n.GL3178());
+				userTeacherTipText.getElement().setAttribute("title",i18n.GL3178());
+			}
+			else
+			{
+				userTeacherTipText.setText(i18n.GL1709());
+				userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
+				userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
+			}
 		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
 		}
 
@@ -846,9 +894,18 @@ public class CollectionShareTabVc extends Composite {
 		}
 		else
 		{
-		userTeacherTipText.setText(i18n.GL1709());
-		userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
-		userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
+			if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
+			{
+				userTeacherTipText.setText(i18n.GL3178());
+				userTeacherTipText.getElement().setAttribute("alt",i18n.GL3178());
+				userTeacherTipText.getElement().setAttribute("title",i18n.GL3178());
+			}
+			else
+			{
+				userTeacherTipText.setText(i18n.GL1709());
+				userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
+				userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
+			}
 		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
 		}
 	
@@ -1034,9 +1091,18 @@ public class CollectionShareTabVc extends Composite {
 		}
 		else
 		{
+			if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
+			{
+			userTeacherTipText.setText(i18n.GL3178());
+			userTeacherTipText.getElement().setAttribute("alt",i18n.GL3178());
+			userTeacherTipText.getElement().setAttribute("title",i18n.GL3178());
+			}
+			else
+			{
 			userTeacherTipText.setText(i18n.GL1709());
 			userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
 			userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
+			}
 			userTeacherTipText.getElement().setAttribute("style", "color:#999;");
 		}
 		
