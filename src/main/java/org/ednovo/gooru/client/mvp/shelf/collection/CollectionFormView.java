@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.player.resource.shared.StringUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -467,10 +468,10 @@ public class CollectionFormView extends
 					//Code when edit assessment selected
 					String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
 					final String assessmentURL=txtExistingAssessmentURL.getText();
-					if(assessmentExistingTitle.isEmpty()){
+					if(StringUtil.isEmpty(assessmentExistingTitle)){
 						lblExistingAssessmentError.setVisible(true);
 						lblExistingAssessmentError.setText(i18n.GL1026());
-					}else if(assessmentURL.isEmpty()){
+					}else if(StringUtil.isEmpty(assessmentURL)){
 						lblExistingAssessmentError.setVisible(false);
 						lblExistingAssessmentError.setText("");
 						lblExistingAssessmentURLError.setVisible(true);
@@ -519,7 +520,7 @@ public class CollectionFormView extends
 				}else{
 					//Creating new assessment
 					String assessmentTitle=txtNewAssessmentTitle.getText();
-					if(assessmentTitle.isEmpty()){
+					if(StringUtil.isEmpty(assessmentTitle)){
 						lblNewAssessmentError.setVisible(true);
 						lblNewAssessmentError.setText(i18n.GL1026());
 					}else{
