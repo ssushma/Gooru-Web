@@ -993,13 +993,20 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			public void onClick(ClickEvent event) {
 			centurySelectedValues=centuryPresenterWidget.getSelectedValues();
 			centuryPanel.clear();
-				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+			resourceSkils.clear();
+				if(centurySelectedValues!=null && centurySelectedValues.size()>0){				
 					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
 						CodeDo codeObj=new CodeDo();
 						codeObj.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObj.setCode(entry.getValue());
 						standardsDo.add(codeObj);
 						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+						StandardFo centurySkillsObj = new StandardFo();
+						centurySkillsObj.setCode(entry.getValue());
+						centurySkillsObj.setCodeId(Integer.parseInt(entry.getKey()+""));
+						centurySkillsObj.setLabel(entry.getValue());
+						resourceSkils.add(centurySkillsObj);
+					 
 					}
 				}
 			hideCenturyPopup();
@@ -1017,6 +1024,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
+				if(standardsDo!=null && standardsDo.size()>0){
+					for (CodeDo codeObj : standardsDo) {			
+						if(codeObj.getCodeId()==Integer.parseInt(id)){			
+						standardsDo.remove(codeObj);
+						}
+					}
+				}
 				if(resourceSkils!=null && resourceSkils.size()>0){
 					for (StandardFo standardObj : resourceSkils) {
 						if(standardObj.getCodeId()==Integer.parseInt(id)){
@@ -1493,7 +1507,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}
 			updateStandardsAdvancedSetupStyle();
 		}
-		if(collectionItemDo.getResource().getSkills().size()>0){
+		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
 			resourceSkils=collectionItemDo.getResource().getSkills();
 			centuryPanel.clear();
 			for (StandardFo standardObj : resourceSkils) {

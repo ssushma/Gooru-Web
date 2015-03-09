@@ -58,6 +58,7 @@ import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -292,7 +293,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	PopupPanel centuryPopup=new PopupPanel();
 	
-	Map<Long, String> centurySelectedValues;
+	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
 	
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
 	
@@ -1042,7 +1043,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
+				centurySelectedValues.clear();
+				centurySelectedValues.putAll(centuryPresenterWidget.getSelectedValues());
 				centuryPanel.clear();
 				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
 					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
@@ -3386,9 +3388,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiHandler("browseCentury")
 	public void onClickOfBrowseCentury(ClickEvent e){
 		centuryPopup.clear();
-		if(centurySelectedValues!=null && centurySelectedValues.size()>0){
-			centuryPresenterWidget.setAddResourceData(centurySelectedValues);
-		}
+		centuryPresenterWidget.setAddResourceData(centurySelectedValues);
 		centuryPopup.add(centuryPresenterWidget.getWidget());
 		centuryPopup.show();
 		centuryPopup.center();
