@@ -1120,13 +1120,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	public void setResourceInfoView(String resourceId){
 		CollectionItemDo collectionItemDo=getCollectionItemDo(resourceId);
-		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, collectionItemDo.getResource().getGooruOid(), null, new AsyncCallback<CollectionItemDo>() {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, collectionItemDo.getResource().getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				resourceInfoPresenter.setResoruceDetails(result);
-			}
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 		resourceInfoPresenter.setCollectionType(collectionDo.getCollectionType());

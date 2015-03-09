@@ -531,13 +531,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		}
 	}
 	public void setResourceInfoView(String resourceId){
-		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, collectionItemDo.getResource().getGooruOid(), null, new AsyncCallback<CollectionItemDo>() {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, collectionItemDo.getResource().getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				resourceInfoPresenter.setResoruceDetails(result);
-			}
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 		resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
