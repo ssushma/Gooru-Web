@@ -800,6 +800,7 @@ public class CollectionFormView extends
 	@Override
 	public void reset() {
 		btnOk.setEnabled(true);
+		appPopUp.getCloseButton().setVisible(false);
 		btnOk.getElement().removeClassName("disabled");
 		collectionTitleTxtBox.getElement().getStyle().setBorderColor("#cccccc");
 		cancelAnr.getElement().getStyle().setMarginRight(10, Unit.PX);
@@ -856,6 +857,7 @@ public class CollectionFormView extends
 			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
 			collPopUpMainheading.setVisible(true);
 			collPopUpSubheading.setVisible(true);
+			appPopUp.getCloseButton().setVisible(false);
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			pnlCreateNewAssessment.setVisible(true);
 			bodyContainer.setVisible(false);
@@ -871,6 +873,13 @@ public class CollectionFormView extends
 			rdBtnAssessmentPrivate.setValue(false);
 			requireLoginYes.setValue(false);
 			requireLoginNo.setValue(true);
+			appPopUp.getCloseButton().setVisible(true);
+			appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					appPopUp.hide();
+				}
+			});
 			shelfItemContent.getElement().removeAttribute("style");	
 		   /*collectionTitleTxtBox.setPlaceholder(i18n.GL3010());
 			collPopUpMainheading.setText(i18n.GL3009());

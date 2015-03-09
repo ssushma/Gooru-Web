@@ -43,7 +43,7 @@ public class AppPopUp extends PopupPanel {
 	private FlowPanel headerPanel;
 	private FlowPanel content;
 	private Label labletitle;
-
+	Label closeImage;
 	/**
 	 * Class constructor 
 	 */
@@ -65,11 +65,14 @@ public class AppPopUp extends PopupPanel {
 	//	headerPanel.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUpOuterDiv());
 		labletitle = new Label();
 		//labletitle.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemHeaderText());
-		labletitle.addStyleName("col-md-12 col-xs-12");
+		labletitle.addStyleName("col-md-11 col-xs-11");
 		row.add(labletitle);
 		FlowPanel clearfix=new FlowPanel();
 		clearfix.addStyleName("clearfix");
 		row.add(clearfix);
+		closeImage=new Label(); 
+		closeImage.setStyleName(LoginPopUpCBundle.INSTANCE.css().closeButton());
+		row.add(closeImage);
 		headerPanel.add(row);
 		innerPanel.add(headerPanel);
 		mainPanel.add(innerPanel);
@@ -153,6 +156,9 @@ public class AppPopUp extends PopupPanel {
 		labletitle.setText(title);
 		labletitle.getElement().setAttribute("alt",title);
 		labletitle.getElement().setAttribute("title",title);
+	}
+	public Label getCloseButton(){
+		return closeImage;
 	}
 	
 }
