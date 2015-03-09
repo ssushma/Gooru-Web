@@ -115,35 +115,18 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	 * This method is used for to reset the style for the title widgets
 	 */
 	private void resetPopupHilightedData() {
-		Iterator<Widget> widgets=ulCongitiveAndStrategies.iterator();
+		callResetData(ulCongitiveAndStrategies);
+		callResetData(ulKeyContentKnowledge);
+		callResetData(ulKeyLearningSkills);
+	}
+	/**
+	 * This method will reset the highlight data of the passed ULPanel
+	 * @param ulPanel
+	 */
+	public void callResetData(UlPanel ulPanel){
+		Iterator<Widget> widgets=ulPanel.iterator();
 		while (widgets.hasNext()){
 			final Widget widget = widgets.next();
-			if (widget instanceof LiPanel){
-				Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-				while (childWidgets.hasNext()){
-					final Widget childWidget = childWidgets.next();
-					if(childWidget instanceof HTMLPanel){
-						((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-					}
-				}
-			}
-		}
-		Iterator<Widget> widgets1=ulKeyContentKnowledge.iterator();
-		while (widgets1.hasNext()){
-			final Widget widget = widgets1.next();
-			if (widget instanceof LiPanel){
-				Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-				while (childWidgets.hasNext()){
-					final Widget childWidget = childWidgets.next();
-					if(childWidget instanceof HTMLPanel){
-						((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-					}
-				}
-			}
-		}
-		Iterator<Widget> widgets2=ulKeyLearningSkills.iterator();
-		while (widgets2.hasNext()){
-			final Widget widget = widgets2.next();
 			if (widget instanceof LiPanel){
 				Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
 				while (childWidgets.hasNext()){
@@ -163,55 +146,29 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		selectedValues.clear();
 		resetPopupHilightedData();	
 		if(codeList!=null && codeList.size()>0){
-			Iterator<Widget> widgets=ulCongitiveAndStrategies.iterator();
-			while (widgets.hasNext()){
-				final Widget widget = widgets.next();
-				if (widget instanceof LiPanel){
-					for (Map.Entry<Long, String> standardFo : codeList.entrySet()){
-							if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getKey().toString())){
-								selectedValues.put(Long.parseLong(standardFo.getKey()+""), standardFo.getValue());
-								Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-								while (childWidgets.hasNext()){
-								final Widget childWidget = childWidgets.next();
-								if(childWidget instanceof HTMLPanel){
-								 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-								}
-							}
-						}
-					}
-				}
-			}
-			Iterator<Widget> widgets1=ulKeyContentKnowledge.iterator();
-			while (widgets1.hasNext()){
-				final Widget widget = widgets1.next();
-				if (widget instanceof LiPanel){
-					for (Map.Entry<Long, String> standardFo : codeList.entrySet()){
-							if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getKey().toString())){
-								selectedValues.put(Long.parseLong(standardFo.getKey()+""), standardFo.getValue());
-								Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-								while (childWidgets.hasNext()){
-								final Widget childWidget = childWidgets.next();
-								if(childWidget instanceof HTMLPanel){
-								 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-								}
-							}
-						}
-					}
-				}
-			}
-			Iterator<Widget> widgets2=ulKeyLearningSkills.iterator();
-			while (widgets2.hasNext()){
-				final Widget widget = widgets2.next();
-				if (widget instanceof LiPanel){
-					for (Map.Entry<Long, String> standardFo : codeList.entrySet()){
-							if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getKey().toString())){
-								selectedValues.put(Long.parseLong(standardFo.getKey()+""), standardFo.getValue());
-								Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-								while (childWidgets.hasNext()){
-								final Widget childWidget = childWidgets.next();
-								if(childWidget instanceof HTMLPanel){
-								 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-								}
+			setPopupAddHilightData(ulCongitiveAndStrategies,codeList);
+			setPopupAddHilightData(ulKeyContentKnowledge,codeList);
+			setPopupAddHilightData(ulKeyLearningSkills,codeList);
+		}
+	}
+	/**
+	 * This method will set the data for passed ulPanel
+	 * @param ulPanel
+	 * @param codeList
+	 */
+	public void setPopupAddHilightData(UlPanel ulPanel,Map<Long, String> codeList){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()){
+			final Widget widget = widgets.next();
+			if (widget instanceof LiPanel){
+				for (Map.Entry<Long, String> standardFo : codeList.entrySet()){
+						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getKey().toString())){
+							selectedValues.put(Long.parseLong(standardFo.getKey()+""), standardFo.getValue());
+							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+							while (childWidgets.hasNext()){
+							final Widget childWidget = childWidgets.next();
+							if(childWidget instanceof HTMLPanel){
+							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
 							}
 						}
 					}
@@ -225,45 +182,16 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	private void setPopupEditHilightedData(List<StandardFo> codeList) {
 		selectedValues.clear();
 		resetPopupHilightedData();
-		Iterator<Widget> widgets=ulCongitiveAndStrategies.iterator();
+		if(codeList!=null && codeList.size()>0){
+			setPopupEditHilightedDataForWidget(ulCongitiveAndStrategies,codeList);
+			setPopupEditHilightedDataForWidget(ulKeyContentKnowledge,codeList);
+			setPopupEditHilightedDataForWidget(ulKeyLearningSkills,codeList);
+		}
+	}
+	public void setPopupEditHilightedDataForWidget(UlPanel ulPanel,List<StandardFo> codeList){
+		Iterator<Widget> widgets=ulPanel.iterator();
 		while (widgets.hasNext()){
 			final Widget widget = widgets.next();
-			if (widget instanceof LiPanel){
-				 for (StandardFo standardFo : codeList) {
-						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
-							selectedValues.put(Long.parseLong(standardFo.getCodeId()+""), standardFo.getLabel());
-							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-							while (childWidgets.hasNext()){
-							final Widget childWidget = childWidgets.next();
-							if(childWidget instanceof HTMLPanel){
-							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-							}
-						}
-					}
-				}
-			}
-		}
-		Iterator<Widget> widgets1=ulKeyContentKnowledge.iterator();
-		while (widgets1.hasNext()){
-			final Widget widget = widgets1.next();
-			if (widget instanceof LiPanel){
-				 for (StandardFo standardFo : codeList) {
-						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
-							selectedValues.put(Long.parseLong(standardFo.getCodeId()+""), standardFo.getLabel());
-							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-							while (childWidgets.hasNext()){
-							final Widget childWidget = childWidgets.next();
-							if(childWidget instanceof HTMLPanel){
-							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-							}
-						}
-					}
-				}
-			}
-		}
-		Iterator<Widget> widgets2=ulKeyLearningSkills.iterator();
-		while (widgets2.hasNext()){
-			final Widget widget = widgets2.next();
 			if (widget instanceof LiPanel){
 				 for (StandardFo standardFo : codeList) {
 						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
