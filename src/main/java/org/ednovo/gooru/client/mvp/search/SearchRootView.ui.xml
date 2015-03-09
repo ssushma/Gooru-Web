@@ -6,18 +6,15 @@
 			margin: 0 auto;
 			/* width: 960px; */
 		}
-		
 		.searchTotalContainer {
 			/*position: relative;*/
 			height: auto !important;
 			margin-top: 20px;
 		}
-		
 		.contentDiv {
 			margin: 2px auto 0;
 			width: 723px;
 		}
-		
 		.PageNotify {
 			margin: 0px 0 0 4px;
 			width: 596px;
@@ -30,13 +27,6 @@
 			margin: 0 2px;
 			padding-bottom: 2px;
 		}
-		<!-- .notifyLink:HOVER {
-		    border-bottom: 2px solid #A6CAA2;
-		    cursor: pointer;
-		    padding-bottom: 2px;
-		    color: #4E9746;
-		    text-decoration:none;
-		} -->
 		.notifyLinks {
 		    color: #4E9746 !important;
 		    cursor: default;
@@ -45,7 +35,6 @@
 		    font-weight: bold;
 		    margin: -3px 5px 0 6px;
 		}
-
 		.resourceBtnActive {
 			color: #515151;
 			padding: 7px 9px 9px 34px;
@@ -65,9 +54,7 @@
 			background-position:0 0;
 			cursor:pointer;
 			box-shadow:0 1px 3px #d0d0d5 inset;
-
 		}
-
 		.collectionBtnActive {
 			color: #515151;
 			padding: 7px 9px 9px 34px;
@@ -89,9 +76,6 @@
 			cursor:pointer;
 			box-shadow:0 1px 3px #d0d0d5 inset;
 		}
-
-
-		}
 		.resourceSearchButtonImage{
 			margin-left: 5px;
 			padding: 7px 31px !important;
@@ -99,7 +83,6 @@
 			background-position: 2px -24px !important;
 			background-position: 0px -27px !important;
 		}
-
 		.bodyHeight {
 			height: auto !important;
 		}
@@ -113,19 +96,14 @@
 		    clear: both;
 		    height: 34px;
 			margin-left: 205px;
-		   <!--  margin: 20px auto 0; -->
 		    width: 612px;
 		}
-		
 		.searchResult {
 			color: #515151;
-			<!-- float: left; -->
 			margin: 32px 0 0 6px;
 			display: inline-block;
 			padding-bottom: 10px;
-			
 		}
-		
 		.notifyColorLink {
 			color: #222222;
 		}
@@ -137,8 +115,6 @@
          	margin: 0 auto;
          	margin-top: 250px;
 		}
-		
-
 		.secondaryResourceSearchBtn{
 			color: #515151;
 			padding: 7px 9px 9px 34px;
@@ -159,7 +135,6 @@
 			font-family:Arial, Helvetica, sans-serif;
 			cursor:pointer;
 		}
-
 		.secondaryResourceSearchBtn:hover{
 			color: #515151;
 			background: #efefef;
@@ -172,8 +147,6 @@
 			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
 			background-repeat:no-repeat;
 		}
-
-
 		.secondaryCollectionSearchBtn{
 			color: #515151;
 			padding: 7px 9px 9px 34px;
@@ -195,8 +168,6 @@
 			font-family:Arial, Helvetica, sans-serif;
 			cursor:pointer;
 		}
-
-
 		.secondaryCollectionSearchBtn:hover{
 			color: #515151;
 			background: #efefef;
@@ -209,14 +180,11 @@
 			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
 			background-repeat:no-repeat;
 		}
-
 		.secondaryIC img{
 			vertical-align:middle;
 			width:22px;
 			margin-right:5px;
 		}
-
-
 	</ui:style>
 	<g:HTMLPanel styleName="{style.searchTotalContainer}">
 		<!-- <gc:SearchBarVc ui:field="searchBarVc" /> -->

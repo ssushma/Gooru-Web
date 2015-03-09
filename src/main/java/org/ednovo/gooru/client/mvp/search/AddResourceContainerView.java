@@ -163,7 +163,7 @@ public class AddResourceContainerView extends
 		addingText.setVisible(false);
 		topMostTreeItem.addStyleName(AddResourceContainerCBundle.INSTANCE
 				.css().addMyCollectionsStyle());
-		topMostTreeItem.getElement().setInnerHTML("My Collections");
+		topMostTreeItem.getElement().setInnerHTML(i18n.GL0180());
 		addingText.setText(i18n.GL0591());
 		urlparams= new HashMap<String, String>();
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -706,12 +706,12 @@ public class AddResourceContainerView extends
 						selectedCollectionGooruOid, currentsearchType,
 						cureentcollectionTreeItem.getCollectionName());
 			} else if (isSelectedFolder) {
-				displayErrorLabel.setText("Add me into a Collection");
+				displayErrorLabel.setText(i18n.GL3126());
 				getButtonVisiblity();
 			} else {
 			
 				if (!isSelectedCollection && !isSelectedFolder) {
-					restrictionToAddResourcesData("please select a collection");
+					restrictionToAddResourcesData(i18n.GL1134());
 					getButtonVisiblity();
 				}
 			}
@@ -808,12 +808,12 @@ public class AddResourceContainerView extends
 		enableSuccessView.setVisible(true);
 		buttonsContainer.setVisible(false);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
-		headerTitle.setText("This resource has been added to  " + title);
+		headerTitle.setText(i18n.GL3124() + title);
 		}else{
-			headerTitle.setText("This collection has been added to  " + title);
+			headerTitle.setText(i18n.GL3125() + title);
 		}
-		cancelButton.setText("Continue searching");
-		okButton.setText("View in My Collections");
+		cancelButton.setText(i18n.GL3123());
+		okButton.setText(i18n.GL1630());
 		enableSuccessView.setVisible(true);
 		okButton.addClickHandler(new ClickHandler() {
 			@Override
@@ -865,10 +865,4 @@ public class AddResourceContainerView extends
 		isSelectedFolder=false;
 		isSelectedCollection =false;
 	}
-
-	
-
-
-	
-
 }
