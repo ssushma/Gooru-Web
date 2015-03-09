@@ -83,6 +83,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
@@ -127,6 +128,8 @@ public class CollectionFormView extends
 	
 	@UiField
 	Button btnOk,btnExistingAssessment,btnNewAssessment,btnCreateAssessment;
+	
+	@UiField TextBox hiddenTextField;
 	
 	@UiField
 	Label publicLbl,mandatoryErrorLbl, lblVisibility,lblPublic,lblAllow,lblShareable,lblShareableDesc,lblPrivate, lblPrivateDesc;
@@ -244,6 +247,7 @@ public class CollectionFormView extends
 		radioButtonShare.getElement().setId("rdShare");
 		radioButtonPrivate.getElement().setId("rdPrivate");
 		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
+
 		appPopUp.setTitle(i18n.GL0993());
 		
 		buttonFloPanel.setVisible(false);
@@ -370,6 +374,8 @@ public class CollectionFormView extends
 			}
 		});
 		setAutoHideOnNavigationEventEnabled(true);
+		hiddenTextField.setFocus(true);
+		hiddenTextField.setVisible(false);
 		collectionTitleTxtBox.addKeyUpHandler(new TitleKeyUpHandler());
         getGradeList();
         publicRadioButtonPanel.add(radioButtonPublic);
@@ -426,6 +432,7 @@ public class CollectionFormView extends
 			}
 
 		});
+		btnExistingAssessment.setFocus(true);
 		//Handling the click event on existing assessment click
 		btnExistingAssessment.addClickHandler(new ClickHandler() {
 			
@@ -811,6 +818,7 @@ public class CollectionFormView extends
 	@Override
 	public Widget asWidget() {
 		collectionTitleTxtBox.setFocus(true);
+		hiddenTextField.setFocus(true);
 		return appPopUp;
 	}
 /**
