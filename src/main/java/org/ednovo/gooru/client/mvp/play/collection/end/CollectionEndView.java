@@ -151,7 +151,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	/*@UiField Frame insightsFrame;*/
 	private String languageObjectiveValue;
+	
 	private CollectionDo collectionDo=null;
+	
+	private CollectionDo nextCollectionDo = null;
+	
+	FolderWhatsNextCollectionDo folderCollectionWhatsNext = null;
 	
 	public static final String STANDARD_CODE = "code";
 	
@@ -686,7 +691,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
-		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 	}
 	
 	@UiHandler("nextCollectionThumbnail")
@@ -1638,20 +1644,22 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 	}
 	
-	public void displayNextCollectionDetails(final CollectionDo collectionDo,final String subjectId,final String lessonId,final String libraryType){
+	public void displayNextCollectionDetails(final CollectionDo nextCollectionDo,final String subjectId,final String lessonId,final String libraryType){
 
-		if(collectionDo!=null){
+		if(nextCollectionDo!=null){
+			
+			this.nextCollectionDo=nextCollectionDo;
 			hideNextCollectionContainer(true);
-			whatNextCollectionTitle.setText(collectionDo.getTitle().toString().length()>10?collectionDo.getTitle().substring(0,10)+"...":collectionDo.getTitle());
-			whatNextCollectionTitle.setTitle(collectionDo.getTitle());
-			nextCollectionThumbnail.setUrl(collectionDo.getThumbnails().getUrl());
-			if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
+			whatNextCollectionTitle.setText(nextCollectionDo.getTitle().toString().length()>10?nextCollectionDo.getTitle().substring(0,10)+"...":nextCollectionDo.getTitle());
+			whatNextCollectionTitle.setTitle(nextCollectionDo.getTitle());
+			nextCollectionThumbnail.setUrl(nextCollectionDo.getThumbnails().getUrl());
+			if(nextCollectionDo!=null&&nextCollectionDo.getCollectionItems()!=null){
 				hideNextCollectionContainer(false);
 				int questionCount=0;
 				int resourceCount=0;
-				for(int i=0;i<collectionDo.getCollectionItems().size();i++){
-					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
-						if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+				for(int i=0;i<nextCollectionDo.getCollectionItems().size();i++){
+					if(nextCollectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
+						if(nextCollectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
 							questionCount++;
 						}else{
 							resourceCount++;
@@ -1668,7 +1676,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					@Override
 					public void onClick(ClickEvent event) {
 						Map<String,String> params = new LinkedHashMap<String,String>();
-						params.put("id", collectionDo.getGooruOid());
+						params.put("id", nextCollectionDo.getGooruOid());
 						if(subjectId!=null){
 							params.put("subject", subjectId);
 						}

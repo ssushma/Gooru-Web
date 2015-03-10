@@ -964,6 +964,10 @@ font-size: 31px;
 	border-left: 10px solid #1076bb;
 	width: 100%;
 }
+.assessmentImage{
+	border-left: 10px solid #feae29;
+	width: 100%;
+}
 .buttonsContainer{
 	width:100%;
 	display:inline-block;

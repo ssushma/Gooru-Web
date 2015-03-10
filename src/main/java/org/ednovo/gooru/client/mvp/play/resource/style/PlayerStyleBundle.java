@@ -107,6 +107,8 @@ public interface PlayerStyleBundle extends ClientBundle {
 		
 		String collectionImage();
 		
+		String assessmentImage();
+		
 		String buttonsContainer();
 		
 		String collectionbuttons();
