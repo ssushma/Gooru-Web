@@ -102,4 +102,6 @@ public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionIn
 	 * @param centurySearchDo
 	 */
 	void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo);
+	
+	Map<Long, String> getSelectedCenturyValuesThroughAutosuggest();
 }

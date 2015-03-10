@@ -467,7 +467,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 
 	@Override
 	public void getAddCentury() {
-		//addCenturyPresenter.enableStandardsData();
+		if(getView().getSelectedCenturyValuesThroughAutosuggest().size()> 0){
+			addCenturyPresenter.setAddResourceData(getView().getSelectedCenturyValuesThroughAutosuggest());
+		}
 		addToPopupSlot(addCenturyPresenter);
 		getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
 	}
