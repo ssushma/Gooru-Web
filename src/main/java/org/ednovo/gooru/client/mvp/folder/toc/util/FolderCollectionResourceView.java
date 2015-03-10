@@ -103,10 +103,8 @@ public class FolderCollectionResourceView extends Composite {
 				sequenceNumber.setStyleName(res.css().sequenceNumner());
 				liPanel.add(sequenceNumber);
 				// To set the resource title and resource format image
-				String resTitle = folderDo.getCollectionItems().get(i)
-						.getTitle();
-				resTitle = resTitle.length() > 50 ? resTitle.substring(0, 50)
-						+ "..." : resTitle;
+				String resTitle = folderDo.getCollectionItems().get(i).getTitle();
+				resTitle = resTitle.length() > 100 ? resTitle.substring(0, 100)+ "..." : resTitle;
 				final Label text = new Label(removeHtmlTags(resTitle));
 				text.setStyleName(res.css().resourceTitle());
 				liPanel.add(text);
@@ -165,22 +163,9 @@ public class FolderCollectionResourceView extends Composite {
 		public void onClick(ClickEvent event) {
 			String collectionId = folderDo.getGooruOid();
 			String selectedfolderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
-			if(parentId==null)
-			{
+			if(parentId==null){
 				parentId = selectedfolderId;
 			}
-
-			/*
-			 * if(folderItemDo.getNarration()!=null&&!collectionItemDo.getNarration
-			 * ().trim().equals("")){
-			 * resourceLink="#"+PlaceTokens.COLLECTION_PLAY
-			 * +"&id="+collectionId+"&rid="
-			 * +collectionItemDo.getCollectionItemId()+"&tab=narration"; }else{
-			 * resourceLink
-			 * ="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="
-			 * +collectionItemDo.getCollectionItemId(); }
-			 */
-			
 			resourceLink = "#" + PlaceTokens.COLLECTION_PLAY + "&id="
 					+ collectionId + "&rid="
 					+ folderItemDo.getCollectionItemId()+"&folderId"+parentId+"&folderItemId"+folderDo.getCollectionItemId();
@@ -190,8 +175,7 @@ public class FolderCollectionResourceView extends Composite {
 			params.put("folderId", parentId);
 			params.put("folderItemId", folderDo.getCollectionItemId());
 
-			AppClientFactory.getPlaceManager().revealPlace(
-					PlaceTokens.COLLECTION_PLAY, params);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 
 		}
 	}
