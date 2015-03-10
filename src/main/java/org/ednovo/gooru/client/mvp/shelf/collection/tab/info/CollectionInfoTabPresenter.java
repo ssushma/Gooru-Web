@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
@@ -445,8 +446,18 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	}
 
 	@Override
-	public void getAutoSuggestedCenturyList(SearchDo<CodeDo> standardSearchDo) {
-		
+	public void getAutoSuggestedCenturyList(SearchDo<StandardFo> centuryDo){
+		AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centuryDo, new AsyncCallback<SearchDo<StandardFo>>() {
+			@Override
+			public void onSuccess(SearchDo<StandardFo> result) {
+				getView().setCenturySuggestions(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
 	}
 
 	@Override

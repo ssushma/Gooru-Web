@@ -55,6 +55,7 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
@@ -691,9 +692,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	
 	
 	@Override
-	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(
-			SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
-		// TODO Auto-generated method stub
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
@@ -744,6 +743,17 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			centurySkilsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CenturySkilsDo.class);
 		}catch(JSONException ex){}
 		return centurySkilsDo;
+	}
+
+	@Override
+	public SearchDo<StandardFo> getSuggestCenturyByQuery(SearchDo<StandardFo> centuryDo) {
+		JsonRepresentation jsonRep=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_CENTURY_BY_QUERY, getLoggedInSessionToken(), centuryDo.getQuery());
+		getLogger().info("century suggest API:"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		centuryDo.setSearchResults(autoCompleteDeSerializer.deserializeCenturys(jsonRep));
+		return centuryDo;
 	}
 	
 	/*@Override

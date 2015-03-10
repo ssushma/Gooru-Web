@@ -659,7 +659,9 @@ public enum UrlToken {
 
 	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink"),
 	
-	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}");
+	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
+	
+	SUGGEST_CENTURY_BY_QUERY("/search/skills?sessionToken={0}&query={1}");
 	
 
 	private String url;

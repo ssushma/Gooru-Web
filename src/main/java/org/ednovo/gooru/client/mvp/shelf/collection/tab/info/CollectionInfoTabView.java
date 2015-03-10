@@ -148,10 +148,16 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	private CollectionDo collectionDo = null;
 
 	private AppMultiWordSuggestOracle standardSuggestOracle;
+	
+	private AppMultiWordSuggestOracle centurySuggestOracle;
 
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	
+	private SearchDo<StandardFo> centurySearchDo = new SearchDo<StandardFo>();
 
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	
+	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	
 	private GroupedListBox collectionCourseLst;
 
@@ -195,6 +201,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	public CollectionInfoTabView() {
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
+		
 		standardSearchDo.setPageSize(10);
 		final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 		
@@ -259,61 +267,20 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 		standardSgstBox.addSelectionHandler(this);
 		
-		centurySgstBox = new AppCenturyTagSuggestBox(standardSuggestOracle) {
-			
+		centurySgstBox = new AppCenturyTagSuggestBox(centurySuggestOracle) {
 			@Override
 			public void keyAction(String text,KeyUpEvent event) {
+				System.out.println("in::"+text);
 				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
-				standardSearchDo.setSearchResults(null);
-				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
-				if(!courseCode.isEmpty()) {
-					Map<String,String> filters = new HashMap<String, String>();
-					filters.put(FLT_CODE_ID,courseCode);
-					filters.put(FLT_SOURCE_CODE_ID,courseCode);
-					standardSearchDo.setFilters(filters);
-				}
-				standardSearchDo.setQuery(text);
+				centurySearchDo.setSearchResults(null);
 				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
-					standardSuggestOracle.clear();
-					if(standardPreflist!=null){
-						for(int count=0; count<standardPreflist.size();count++) {
-							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CASK5")||text.contains("CAELD")||text.contains("CSC")) {
-							if(text.contains(standardPreflist.get(count))) {
-								standardsPrefDisplayPopup = true;
-								break;
-							} else {
-								standardsPrefDisplayPopup = false;
-							}
-							}else{
-								standardsPrefDisplayPopup = true;
-							}
-						}
-						
-					}
-						
-					if(standardsPrefDisplayPopup){
-						standardsPreferenceOrganizeToolTip.hide();
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-					}
-					else{
-						standardSgstBox.hideSuggestionList();
-						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-						//standardSuggestOracle.add(i18n.GL1613);
-					}
-					
-					}
+						centurySearchDo.setQuery(text);
+						getUiHandlers().getAutoSuggestedCenturyList(centurySearchDo);
+				}
 			}
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
@@ -1418,9 +1385,27 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardSgstBox.getElement().setAttribute("title","");
 		standardSuggestOracle.clear();
 	}
+	@Override
+	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
+		centurySuggestOracle.clear();
+		this.centurySearchDo = centurySearchDo;
+		if (this.centurySearchDo.getSearchResults() != null) {
+			/*if(standardSearchDo.getSearchResults().size()>0){*/
+			List<String> sources = getAddedStandards(centPanel);
+			for (StandardFo code : centurySearchDo.getSearchResults()) {
+				if (!sources.contains(code.getCode())) {
+					centurySuggestOracle.add(code.getCode());
+				}
+				centuryCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		if (centurySuggestOracle.isEmpty()) {
+			centurySuggestOracle.add(NO_MATCH_FOUND);
+		}
+		centurySgstBox.showSuggestionList();		
+	}
 
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
-		
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
 		if (this.standardSearchDo.getSearchResults() != null) {
