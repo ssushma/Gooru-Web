@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 /**
@@ -75,7 +76,7 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 
 	void getAutoSuggestedStandardsList(SearchDo<CodeDo> standardSearchDo);
 	
-	void getAutoSuggestedCenturyList(SearchDo<CodeDo> standardSearchDo);
+	void getAutoSuggestedCenturyList(SearchDo<StandardFo> centurySearchDo);
 
 	void getAddStandards();
 
@@ -91,6 +92,4 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 
 	void updateCentury(String gooruOid, String action,Map<Long, String> selectedValues);
 	
-	
-
 }
