@@ -37,12 +37,14 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -59,6 +61,14 @@ public class StringUtil {
 	 public static final String EMPTY = "";
 	 
 	 public static boolean IPAD_MESSAGE_Close_Click = false;
+	 
+	 private static final String ASSESSMENT_URL = "assessment/url";
+		
+     private static final String ASSESSMENT = "assessment";
+     
+     private static final String DEFULT_COLLECTION = "images/default-collection-image-160x120.png";
+ 	
+ 	 private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 
 	public static boolean hasValidString(String string) {
 		return string != null && string.length() > 0 && !string.equalsIgnoreCase("null");
@@ -450,5 +460,23 @@ public class StringUtil {
 	public static boolean urlValidatior(String urlVal){
 		String lRegex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; 
 		return urlVal.matches(lRegex);
+	}
+	
+	/**
+	 * To set the default image based on collectionType value
+	 * @param collectionType {@link String}
+	 */
+	public static void setDefaultImages(String collectionType, Image imgField, String borderSize) {
+		String borderColor="";
+		if(collectionType!=null){
+			if(collectionType.equals(ASSESSMENT)){
+				borderColor= borderSize.equals("high")?"border-left: 10px solid #feae29;":(borderSize.equals("toc")?"border-left: 5px solid #feae29;":"border-left: 8px solid #feae29;");
+				imgField.setUrl(DEFULT_ASSESSMENT);
+		    }else{
+		    	borderColor= borderSize.equals("high")?"border-left: 10px solid #1076bb;":(borderSize.equals("toc")?"border-left: 5px solid #1076bb;":"border-left: 8px solid #1076bb;");
+		    	imgField.setUrl(DEFULT_COLLECTION);
+		    }
+			imgField.getElement().setAttribute("style", borderColor);
+		}
 	}
 }

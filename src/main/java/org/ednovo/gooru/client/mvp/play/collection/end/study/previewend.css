@@ -10,6 +10,12 @@
     border-left:10px solid #1076bb;
     float:left;
 }
+.assessmentImage {
+	width:220px;
+    height:160px;
+    border-left:10px solid #feae29;
+    float:left;
+}
 .collectionreplay {
 	width: 170px;
 	height: 36px;
