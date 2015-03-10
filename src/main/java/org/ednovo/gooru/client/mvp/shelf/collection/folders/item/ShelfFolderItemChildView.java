@@ -244,21 +244,21 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		} else {
 			if(ASSESSMENT_URL.equals(folderDo.getCollectionType())){
-				Button folderItemLbl = new Button(i18n.GL3169());
-				folderItemLbl.getElement().getStyle().setWidth(52, Unit.PCT);
-				folderItemLbl.getElement().getStyle().setMarginTop(18, Unit.PX);
-				Button folderItemEdit = new Button(i18n.GL3173());
+				Button folderItemLbl = new Button(i18n.GL1428());
+				folderItemLbl.getElement().getStyle().setMarginRight(10, Unit.PCT);
+				folderItemLbl.getElement().getStyle().setMarginTop(72, Unit.PX);
+				Button folderItemEdit = new Button(i18n.GL2285());
 				folderItemEdit.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						getEditAssessmentPoupOrPlayCollection();
 					}
 				});
-				folderItemEdit.getElement().getStyle().setWidth(52, Unit.PCT);
-				folderItemEdit.getElement().getStyle().setMarginTop(18, Unit.PX);
-				Button folderItemDelete = new Button(i18n.GL3174());
-				folderItemDelete.getElement().getStyle().setWidth(52, Unit.PCT);
-				folderItemDelete.getElement().getStyle().setMarginTop(18, Unit.PX);
+				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
+				folderItemEdit.getElement().getStyle().setMarginTop(72, Unit.PX);
+				Button folderItemDelete = new Button(i18n.GL0558());
+				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
+				folderItemDelete.getElement().getStyle().setMarginTop(72, Unit.PX);
 				
 				folderItemLbl.addStyleName("secondary");
 				folderItemEdit.addStyleName("secondary");
