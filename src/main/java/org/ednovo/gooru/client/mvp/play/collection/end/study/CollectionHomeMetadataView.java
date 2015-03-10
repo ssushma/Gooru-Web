@@ -38,7 +38,6 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdatePreviewViewCountE
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopupPlayerVc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlayerVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -63,7 +62,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -74,6 +72,12 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionHomeMetadataUiHandlers> implements IsCollectionHomeMetadataView{
+	
+	private static final String ASSESSMENT = "assessment";
+	
+	private static final String DEFULT_COLLECTION = "images/default-collection-image-160x120.png";
+	
+	private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 	
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
@@ -141,11 +145,15 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	}
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
-		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 	}
 	
 	@Override
 	public void setCollectionMetadata(final CollectionDo collectionDo){
+		this.collectionDo=collectionDo;
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
 		setCollectionGoal(collectionDo.getGoals());
 		showPopupAfterGmailSignin();
@@ -154,7 +162,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		//setReplyLink();
 		collectionTitle = collectionDo.getTitle();
-		this.collectionDo=collectionDo;
+		
 		if(studyButtonClickHandler!=null) {
 			studyButtonClickHandler.removeHandler();
 		}
@@ -203,6 +211,21 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			}
 		});
 	}
+	
+	/**
+	 * To set the default image based on collectionType value
+	 * @param collectionType {@link String}
+	 *//*
+	private void setDefaultImages(String collectionType) {
+		// TODO Auto-generated method stub
+		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+	    	collectionThumbnail.setUrl(DEFULT_ASSESSMENT);
+	    	collectionThumbnail.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().assessmentImage());
+	    }else{
+	    	collectionThumbnail.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().collectionImage());
+	    	collectionThumbnail.setUrl(DEFULT_COLLECTION);
+	    }
+	}*/
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
 		resourceAnchor.setHref(getReplayLink());
@@ -590,8 +613,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			toolTipPopupPanel.hide();
 		}
 
-		
-		
 	}
 		
 }

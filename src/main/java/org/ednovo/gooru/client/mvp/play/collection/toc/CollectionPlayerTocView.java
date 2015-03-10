@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.uc.TocResourceView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -104,6 +105,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
 		if(collectionDo!=null){
 			int resourcesSize=collectionDo.getCollectionItems()!=null?collectionDo.getCollectionItems().size():0;
+			String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
 			if(navgationTocContainer.getWidgetCount()==0){
 				int resourceCount=0;
 				int questionCount=0;
@@ -114,11 +116,15 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				TocCollectionHomeView tocCollectionHomeView=null;
 			if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
 			{
-				tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl(),collectionType);
 			}
 			else
 			{
-				tocCollectionHomeView=new TocCollectionHomeView("images/default-collection-image-160x120.png");
+				if(collectionDo.getCollectionType().equals("assessment")){
+					tocCollectionHomeView=new TocCollectionHomeView("images/default-assessment-image -160x120.png",collectionType);
+				}else{
+					tocCollectionHomeView=new TocCollectionHomeView("images/default-collection-image-160x120.png",collectionType);
+				}
 			}
 				
 				if(!isCollectionHome){
@@ -146,11 +152,15 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				TocCollectionEndView tocCollectionEndView=null;
 				if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
 				{
-					tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl());
+					tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl(), collectionType);
 				}
 				else
 				{
-					tocCollectionEndView=new TocCollectionEndView("images/default-collection-image-160x120.png");
+					if(collectionDo.getCollectionType().equals("assessment")){
+						tocCollectionEndView=new TocCollectionEndView("images/default-assessment-image -160x120.png",collectionType);
+					}else{
+						tocCollectionEndView=new TocCollectionEndView("images/default-collection-image-160x120.png",collectionType);
+					}
 				}
 				tocCollectionEndView.addClickHandler(new EndRequest());
 				if(!isCollectionHome){
