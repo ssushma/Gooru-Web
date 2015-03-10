@@ -91,6 +91,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	}
 	public void clearNavigationPanel(){
 		navgationTocContainer.clear();
+		selectedWidgetIndex = -1;
 	}
 	public void hideResourceCountLabel(boolean hide){
 		resourceCountLabel.setVisible(!hide);
@@ -107,6 +108,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				int resourceCount=0;
 				int questionCount=0;
 				navgationTocContainer.clear();
+				selectedWidgetIndex = -1;
 				nextButton.setVisible(true);
 				previousButton.setVisible(true);
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();

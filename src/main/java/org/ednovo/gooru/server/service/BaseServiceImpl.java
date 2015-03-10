@@ -564,10 +564,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		try {
 			V2UserDo v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 			user = v2UserDo.getUser();
-			setUserFilterProperties(user);
+//			setUserFilterProperties(user);
 			getLogger().info("v2GuestSignInForEmbed::"+v2UserDo.getUser().getToken());
 			getLogger().info("v2GuestSignInForEmbedtoken::"+v2UserDo.getToken());
-			user.setToken(v2UserDo.getUser().getToken());
+			user.setToken(v2UserDo.getUser().getToken() != null ? v2UserDo.getUser().getToken() : v2UserDo.getToken());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
