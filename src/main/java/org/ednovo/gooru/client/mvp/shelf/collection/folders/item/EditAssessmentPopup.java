@@ -129,61 +129,68 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		if(rdBtnAssessmentPrivate.getValue()){
 			privacy=PRIVATE;
 		}
-		if(assessmentExistingTitle.isEmpty()){
+		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblExistingAssessmentError.setVisible(true);
 			lblExistingAssessmentError.setText(i18n.GL1026());
-		}else if(assessmentURL.isEmpty()){
+		}else if(StringUtil.isEmpty(assessmentURL)){
 			lblExistingAssessmentError.setVisible(false);
 			lblExistingAssessmentError.setText("");
 			lblExistingAssessmentURLError.setVisible(true);
 			lblExistingAssessmentURLError.setText(i18n.GL3166());
 		}else{
-			final Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text", assessmentExistingTitle);
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
-				@Override
-				public void onSuccess(Boolean value) {
-					if(value){
-						//Displaying error message
-						SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentTitle, lblExistingAssessmentError, value);
-					}else{
-						lblExistingAssessmentError.setVisible(false);
-						lblExistingAssessmentError.setText("");
-						parms.put("text", assessmentURL);
-						AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
-							@Override
-							public void onSuccess(Boolean result) {
-								if(result){
-									//Displaying error message
-									SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
-								}else{
-									lblExistingAssessmentURLError.setVisible(false);
-									lblExistingAssessmentURLError.setText("");
-									//Update code here
-									AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,"", new AsyncCallback<FolderDo>() {
-										
-										@Override
-										public void onSuccess(FolderDo result) {
-											clickEventOnSaveAssessmentHandler(result);
-										}
-										
-										@Override
-										public void onFailure(Throwable caught) {
-										}
-									});
+			if(!StringUtil.urlValidatior(assessmentURL)){
+				lblExistingAssessmentError.setVisible(false);
+				lblExistingAssessmentError.setText("");
+				lblExistingAssessmentURLError.setVisible(true);
+				lblExistingAssessmentURLError.setText(i18n.GL0926());
+			}else{
+				final Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", assessmentExistingTitle);
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+					@Override
+					public void onSuccess(Boolean value) {
+						if(value){
+							//Displaying error message
+							SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentTitle, lblExistingAssessmentError, value);
+						}else{
+							lblExistingAssessmentError.setVisible(false);
+							lblExistingAssessmentError.setText("");
+							parms.put("text", assessmentURL);
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+								@Override
+								public void onSuccess(Boolean result) {
+									if(result){
+										//Displaying error message
+										SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
+									}else{
+										lblExistingAssessmentURLError.setVisible(false);
+										lblExistingAssessmentURLError.setText("");
+										//Update code here
+										AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,"", new AsyncCallback<FolderDo>() {
+											
+											@Override
+											public void onSuccess(FolderDo result) {
+												clickEventOnSaveAssessmentHandler(result);
+											}
+											
+											@Override
+											public void onFailure(Throwable caught) {
+											}
+										});
+									}
 								}
-							}
-							@Override
-							public void onFailure(Throwable caught) {
-								
-							}
-						});
+								@Override
+								public void onFailure(Throwable caught) {
+									
+								}
+							});
+						}
 					}
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-			});
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+				});
+			}
 		}
 	}
 	@UiHandler("btnCancelAssessment")

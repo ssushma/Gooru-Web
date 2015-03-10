@@ -71,7 +71,7 @@
 						 			</panel:HTMLEventPanel>
 						 			<panel:HTMLEventPanel  styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.linkImage}"></g:Label>
+						 				<g:Label styleName="{createCollectionStyle.linkImageForAssessment}"></g:Label>
 						 				<g:Label styleName="{createCollectionStyle.publicText}">Sharable</g:Label>
 						 			</panel:HTMLEventPanel>
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
@@ -86,11 +86,11 @@
 				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginYes"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.publicText}">Yes</g:Label>
+						 				<g:Label styleName="{createCollectionStyle.requiresText}">Yes</g:Label>
 						 			</panel:HTMLEventPanel>
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginNo"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.publicText}">No</g:Label>
+						 				<g:Label styleName="{createCollectionStyle.requiresText}">No</g:Label>
 						 			</panel:HTMLEventPanel>
 				 			</g:HTMLPanel>
 			 			</g:HTMLPanel>

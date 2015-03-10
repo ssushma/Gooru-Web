@@ -128,7 +128,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	AppSuggestBox standardSgstBox;
 	
 	@UiField(provided = true)	
-	AppCenturyTagSuggestBox centurySgstBox;
+	AppSuggestBox centurySgstBox;
 
 	@UiField(provided = true)
 	CollectionCBundle res;
@@ -148,10 +148,16 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	private CollectionDo collectionDo = null;
 
 	private AppMultiWordSuggestOracle standardSuggestOracle;
+	
+	private AppMultiWordSuggestOracle centurySuggestOracle;
 
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	
+	private SearchDo<StandardFo> centurySearchDo = new SearchDo<StandardFo>();
 
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	
+	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	
 	private GroupedListBox collectionCourseLst;
 
@@ -195,6 +201,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	public CollectionInfoTabView() {
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
+		
 		standardSearchDo.setPageSize(10);
 		final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 		
@@ -259,66 +267,34 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 		standardSgstBox.addSelectionHandler(this);
 		
-		centurySgstBox = new AppCenturyTagSuggestBox(standardSuggestOracle) {
-			
+		centurySgstBox = new AppSuggestBox(centurySuggestOracle) {
 			@Override
 			public void keyAction(String text,KeyUpEvent event) {
 				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
-				standardSearchDo.setSearchResults(null);
-				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
-				if(!courseCode.isEmpty()) {
-					Map<String,String> filters = new HashMap<String, String>();
-					filters.put(FLT_CODE_ID,courseCode);
-					filters.put(FLT_SOURCE_CODE_ID,courseCode);
-					standardSearchDo.setFilters(filters);
-				}
-				standardSearchDo.setQuery(text);
+				centurySearchDo.setSearchResults(null);
 				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
-					standardSuggestOracle.clear();
-					if(standardPreflist!=null){
-						for(int count=0; count<standardPreflist.size();count++) {
-							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CASK5")||text.contains("CAELD")||text.contains("CSC")) {
-							if(text.contains(standardPreflist.get(count))) {
-								standardsPrefDisplayPopup = true;
-								break;
-							} else {
-								standardsPrefDisplayPopup = false;
-							}
-							}else{
-								standardsPrefDisplayPopup = true;
-							}
-						}
-						
-					}
-						
-					if(standardsPrefDisplayPopup){
-						standardsPreferenceOrganizeToolTip.hide();
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-					}
-					else{
-						standardSgstBox.hideSuggestionList();
-						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-						//standardSuggestOracle.add(i18n.GL1613);
-					}
-					
-					}
+						centurySearchDo.setQuery(text);
+						getUiHandlers().getAutoSuggestedCenturyList(centurySearchDo);
+				}
 			}
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
 		
-		centurySgstBox.addSelectionHandler(this);
+		centurySgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				centPanel.add(create21CenturyLabel(centurySgstBox.getValue(),getCodeIdByStandardDo(centurySgstBox.getValue(),centurySearchDo.getSearchResults()),""));
+				reset21CenturyCount();
+				centurySgstBox.setText("");
+				centurySgstBox.getElement().setAttribute("alt","");
+				centurySgstBox.getElement().setAttribute("title","");
+				centurySuggestOracle.clear();
+			}
+		});
 		
 		res = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
@@ -1418,9 +1394,28 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardSgstBox.getElement().setAttribute("title","");
 		standardSuggestOracle.clear();
 	}
+	@Override
+	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
+		centurySuggestOracle.clear();
+		this.centurySearchDo = centurySearchDo;
+		if (this.centurySearchDo.getSearchResults() != null) {
+			if(centurySearchDo.getSearchResults().size()>0){
+				List<String> sources = getAddedcenturys(centPanel);
+				for (StandardFo code : centurySearchDo.getSearchResults()) {
+					if (!sources.contains(code.getLabel())) {
+						centurySuggestOracle.add(code.getLabel());
+					}
+					centuryCodesMap.put(code.getCodeId() + "", code.getLabel());
+				}
+			}
+			if (centurySuggestOracle.isEmpty()) {
+				centurySuggestOracle.add(NO_MATCH_FOUND);
+			}
+			centurySgstBox.showSuggestionList();		
+		}
+	}
 
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
-		
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
 		if (this.standardSearchDo.getSearchResults() != null) {
@@ -1438,7 +1433,23 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		}
 		standardSgstBox.showSuggestionList();		
 	}
-
+	
+	/**
+	 * get the century values are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return century text in list which are added for the collection
+	 */
+	private List<String> getAddedcenturys(FlowPanel flowPanel) {
+		List<String> suggestions = new ArrayList<String>();
+		for (Widget widget : flowPanel) {
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabelCentury) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
 	/**
 	 * get the standards are added for collection
 	 * 
@@ -1593,6 +1604,16 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		}
 		return null;
 	}
+	private static String getCodeIdByStandardDo(String code, List<StandardFo> codes) {
+		if (codes != null) {
+			for (StandardFo codeDo : codes) {
+				if (code.equals(codeDo.getLabel())) {
+					return codeDo.getCodeId() + "";
+				}
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Adding new standard for the collection , will check it has more than
@@ -1650,7 +1671,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				this.getParent().removeFromParent();
 				resetCourseCount();
 				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), id);
-				resetStandardCount();				
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);

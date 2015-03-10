@@ -306,19 +306,22 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	}
 	public void getEditAssessmentPoupOrPlayCollection(){
 		if(ASSESSMENT_URL.equals(folderDo.getCollectionType())){
+			Window.enableScrolling(false);
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					folderDo.setTitle(result.getTitle());
 					folderDo.setUrl(result.getUrl());
-					folderDo.setDescription(result.getDescription());
+					folderDo.setGoals(result.getGoals());
 					folderDo.setSharing(result.getSharing());
 					itemTitle.setText(folderDo.getTitle());
 					editAssessmentPopup.hide();
+					Window.enableScrolling(true);
 				}
 				@Override
 				void clickEventOnCancelAssessmentHandler(ClickEvent event) {
 					editAssessmentPopup.hide();
+					Window.enableScrolling(true);
 				}
 			};
 			editAssessmentPopup.setGlassEnabled(true);
