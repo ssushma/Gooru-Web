@@ -139,7 +139,12 @@ select {
 }
 .publicText {
 	line-height: 10px;
-	padding: 6px 0px 0 55px;
+	padding: 5px 0 0 39px;
+	margin-top: 6px;
+}
+.requiresText {
+	line-height: 10px;
+	padding: 5px 0 0 14px;
 	margin-top: 6px;
 }
 .visibilityText {
@@ -157,6 +162,15 @@ select {
 	height: 21px;
 	width: 38px;
 	margin-top: 9px;
+}
+.linkImageForAssessment {
+	background: url(images/icon-sprite.png) repeat scroll -61px -261px rgba(0, 0, 0, 0);
+	cursor: pointer;
+	display: block;
+	float: left;
+	height: 21px;
+	width: 30px;
+	margin-top: 7px;
 }
 .privateImage {
 	background: url(images/icon-sprite.png) repeat scroll -61px -209px rgba(0, 0, 0, 0);
