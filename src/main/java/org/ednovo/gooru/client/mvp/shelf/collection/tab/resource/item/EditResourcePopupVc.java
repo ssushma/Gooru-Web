@@ -219,6 +219,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+	Set<StandardFo> centuryDo=new HashSet<StandardFo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
@@ -996,10 +997,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			resourceSkils.clear();
 				if(centurySelectedValues!=null && centurySelectedValues.size()>0){				
 					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-						CodeDo codeObj=new CodeDo();
+						StandardFo codeObj=new StandardFo();
 						codeObj.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObj.setCode(entry.getValue());
-						standardsDo.add(codeObj);
+						centuryDo.add(codeObj);
 						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 						StandardFo centurySkillsObj = new StandardFo();
 						centurySkillsObj.setCode(entry.getValue());
@@ -1024,10 +1025,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				if(standardsDo!=null && standardsDo.size()>0){
-					for (CodeDo codeObj : standardsDo) {			
+				if(centuryDo!=null && centuryDo.size()>0){
+					for (StandardFo codeObj : centuryDo) {			
 						if(codeObj.getCodeId()==Integer.parseInt(id)){			
-						standardsDo.remove(codeObj);
+							centuryDo.remove(codeObj);
 						}
 					}
 				}
