@@ -133,6 +133,8 @@ public class ProfileTopicListView extends Composite{
 	
 	private static final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
+	private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
+	
 	private static Integer LESSON_PAGE_INITIAL_LIMIT = 20;
 	
 	private static String PAGE = "page";
@@ -306,9 +308,12 @@ public class ProfileTopicListView extends Composite{
 	
 		setTopicLabel(profileFolderDo.getTitle());
 		searchTitle=profileFolderDo.getTitle();
-		topicTitleLbl.addStyleName(style.collection());
-		
-		
+		if(profileFolderDo.getCollectionType().equals("assessment")){
+			topicTitleLbl.addStyleName(style.assessment());
+		}else{
+			topicTitleLbl.addStyleName(style.collection());
+		}
+				
 		try {
 			setConceptData(profileFolderDo,conceptNumber,null, null,null,libraryGooruOid);
 		} catch(Exception e) {
@@ -435,13 +440,14 @@ public class ProfileTopicListView extends Composite{
 					collectionInfo.setVisible(true);
 					resourcesInside.setVisible(true);
 					noCollectionLbl.setVisible(false);
-					
+					final String collectionType=StringUtil.isEmpty(conceptDo.getCollectionType())?null:conceptDo.getCollectionType();
 					try {
+						StringUtil.setDefaultImages(conceptDo.getCollectionType(), collectionImage, "high");
 						collectionImage.setUrl(StringUtil.formThumbnailName(conceptDo.getThumbnails().getUrl(),"-160x120."));
 						collectionImage.addErrorHandler(new ErrorHandler() {
 							@Override
 							public void onError(ErrorEvent event) {
-								collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
+								StringUtil.setDefaultImages(collectionType, collectionImage, "high");
 							}
 						});
 						if(imageHandler!=null) {
@@ -453,7 +459,7 @@ public class ProfileTopicListView extends Composite{
 						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid));
 						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid));
 					} catch (Exception e) {
-						collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
+						StringUtil.setDefaultImages(collectionType, collectionImage, "high");
 					}
 					
 					try {

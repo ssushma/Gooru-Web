@@ -70,6 +70,10 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	@UiField Button myCollectionsBtn,listAllBtn;
 	
 	private static final String FOLDERID = "folderId";
+
+	private static final String ASSESSMENT = "assessment";
+
+	private static final String COLLECTION = "scollection";
 	
 	private String unitListId = "";
 	
@@ -146,7 +150,9 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			leftNav.add(leftMenuItemView);
 			leftMenuItemView.setWidgetCount(leftNav.getWidgetCount()+1);
 			leftMenuItemView.setType(folderList.get(i).getType());
-			if(folderList.get(i).getType().equals("scollection")) {
+			if(folderList.get(i).getCollectionType().contains(ASSESSMENT)) {
+				leftMenuItemView.addStyleName(style.assessment());
+			}else if(folderList.get(i).getType().equals(COLLECTION)){
 				leftMenuItemView.addStyleName(style.collection());
 			}
 			if(firstWidgetCount==0&&folderId==null) {
@@ -156,7 +162,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				leftMenuItemView.addStyleName(style.open());
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
-				if(folderList.get(i).getType().equals("scollection")) {
+				if(folderList.get(i).getType().equals(COLLECTION)) {
 					setTopicListData(folderList.get(i),  unitListId);
 					listAllBtn.setVisible(false);
 					folderListPanel.setVisible(false);
@@ -188,7 +194,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					leftMenuItemView.addStyleName(style.open());
 					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
-					if(leftMenuItemView.getType().equals("scollection")) {
+					if(leftMenuItemView.getType().equals(COLLECTION)) {
 						getPresenter().getProfileLibraryCollection(unitListId, false);
 						listAllBtn.setVisible(false);
 						folderListPanel.setVisible(false);
@@ -213,7 +219,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
 		contentScroll.clear();
 		try {
-			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), "scollection",null));
+			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), COLLECTION,null));
 			loadingPanel(false);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -229,8 +235,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			if(folderListDo.size()>0) {
 				for(int i = 0; i <folderListDo.size(); i++) {
 					count++;
-					if(folderListDo.get(i).getType().equals("scollection")) {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection",null));
+					if(folderListDo.get(i).getType().equals(COLLECTION)) {
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), COLLECTION,null));
 					} else {
 						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), AppClientFactory.getCurrentPlaceToken(),null,count,""));
 					}
