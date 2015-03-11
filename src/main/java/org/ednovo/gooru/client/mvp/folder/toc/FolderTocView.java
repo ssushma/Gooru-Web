@@ -303,19 +303,19 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			if(foldersTocObj!=null){
 				if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
 					bigIdeasPanel.setVisible(true);
-					lblBigIdeas.setText(StringUtil.removeHtml(foldersTocObj.getIdeas()));
+					lblBigIdeas.getElement().setInnerHTML(foldersTocObj.getIdeas());
 				}else{
 				    bigIdeasPanel.setVisible(false);
 				}
 				if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
 					essentialPanel.setVisible(true);
-					lblEssentalQuestions.setText(StringUtil.removeHtml(foldersTocObj.getQuestions()));
+					lblEssentalQuestions.getElement().setInnerHTML(foldersTocObj.getQuestions());
 				}else{
 					essentialPanel.setVisible(false);
 				}
 				if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
 					performancePanel.setVisible(true);
-					lblPerformanceTasks.setText(StringUtil.removeHtml(foldersTocObj.getPerformanceTasks()));
+					lblPerformanceTasks.getElement().setInnerHTML(foldersTocObj.getPerformanceTasks());
 				}else{
 					performancePanel.setVisible(false);
 				}
@@ -471,18 +471,17 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						FolderDo floderDo = foldersArrayList.get(i);
 						 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
 								String styleName = FolderContainerCBundle.INSTANCE.css().child();
-								FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
-										styleName, floderDo.getTitle(),
-										floderDo.getGooruOid());
+								FolderTreeItem innerFolderTreeItem = new FolderTreeItem(styleName, floderDo.getTitle(),floderDo.getGooruOid());
 								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
-								TreeItem folderItem = new TreeItem(
-										innerFolderTreeItem);
+								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
+								if(folderLevel>=2){
+									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+								}
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
-							 	String styleName = getTreeItemStyleName(folderLevel);
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
-							 	folderItem.addStyleName(styleName);
+							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
 							 	item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }
@@ -491,20 +490,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				}
 		}
 	}
-	/**
-	 * This method is used to set the style for collections based on the folder level.
-	 * @param folderLevel
-	 * @return
-	 */
-	private String getTreeItemStyleName(int folderLevel) {
-		if (folderLevel == 1) {
-			return FolderContainerCBundle.INSTANCE.css().collectionChild1();
-		} else if (folderLevel == 2) {
-			return FolderContainerCBundle.INSTANCE.css().collectionChild2();
-		}
-		return ""; 
-	}
-	
 	/**
 	 * To clear the Tree panels
 	 */

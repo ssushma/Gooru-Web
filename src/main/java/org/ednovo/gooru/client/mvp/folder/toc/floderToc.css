@@ -105,9 +105,7 @@ button.primary:hover {
 	color: #0066cc;
 	font-size:20px;
 	background: url(../images/folders/panel/folder-icon.png) no-repeat 1px 0px;
-	height: 26px;
 	padding-left: 41px;
-	padding-bottom: 25px;
 	float: left;
 	width: 74%;
 }
@@ -179,7 +177,6 @@ button.primary:hover {
 .tocShareContainer{
 	clear: both;
 	border-bottom: 2px solid #e1dfda;
-	height: 41px;
 	margin-bottom: 10px;
 }
 .tocShareBtn{
@@ -314,6 +311,7 @@ button.primary:hover {
 	color: #515151;
 	line-height: 1.42857143;
 	font-family: Arial, Helvetica, sans-serif !important;
+	white-space: pre-line;
 }
 .lblFolderTitles{
 	font-weight: bold;

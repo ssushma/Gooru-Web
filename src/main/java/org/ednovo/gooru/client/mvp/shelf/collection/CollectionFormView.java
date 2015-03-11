@@ -895,7 +895,7 @@ public class CollectionFormView extends
 			pnlExistingAssessmentContainer.setVisible(false);
 			resetAssessmentFields();
 			appPopUp.setViewTitle(i18n.GL3008());
-			appPopUp.getMainPanel().getElement().getStyle().setBottom(70, Unit.PX);
+			appPopUp.getMainPanel().getElement().getStyle().setBottom(135, Unit.PX);
 			rdBtnAssessmentShare.setValue(true);
 			rdBtnAssessmentPublic.setValue(false);
 			rdBtnAssessmentPrivate.setValue(false);
