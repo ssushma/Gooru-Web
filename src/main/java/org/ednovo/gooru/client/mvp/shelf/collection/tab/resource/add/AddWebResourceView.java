@@ -1106,6 +1106,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						codeObj.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObj.setCode(entry.getValue());
 						centuryDo.add(codeObj);
+						CodeDo codeObjStandard=new CodeDo();
+						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
+						codeObjStandard.setCode(entry.getValue());
+						standardsDo.add(codeObjStandard);
 						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 					}
 				}
@@ -1127,6 +1131,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				for(int i=0;i<centuryDo.size();i++){
 					if(centuryCode.equalsIgnoreCase(centuryDo.get(i).getCode())){
 						centuryDo.remove(i);
+						standardsDo.remove(i);
 						centurySelectedValues.remove(Long.parseLong(id));
 					}
 				}
@@ -1363,6 +1368,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				codeObj.setCodeId(Integer.parseInt(codeIdVal));
 				codeObj.setCode(centurySgstBox.getValue());
 				centuryDo.add(codeObj);
+				CodeDo codeObjStandard=new CodeDo();
+				codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
+				codeObjStandard.setCode(centurySgstBox.getValue());
+				standardsDo.add(codeObjStandard);
 				centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
 			}

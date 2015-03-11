@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAdvancedCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
@@ -171,7 +172,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private String questionType="MC";
 	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
 	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
-	List<StandardFo> centuryDo=new ArrayList<StandardFo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	public String getQuestionType() {
@@ -607,10 +607,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						centuryPanel.clear();
 					if(centurySelectedValues!=null && centurySelectedValues.size()>0){
 						for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-							StandardFo codeObj=new StandardFo();
-							codeObj.setCodeId(Integer.parseInt(entry.getKey()+""));
-							codeObj.setCode(entry.getValue());
-							centuryDo.add(codeObj);
+							CodeDo codeObjStandard=new CodeDo();
+							codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
+							codeObjStandard.setCode(entry.getValue());
+							standardsDo.add(codeObjStandard);
 							centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 						 }
 					}
@@ -629,9 +629,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(int i=0;i<centuryDo.size();i++){
-					if(centuryCode.equalsIgnoreCase(centuryDo.get(i).getCode())){
-						centuryDo.remove(i);
+				for(int i=0;i<standardsDo.size();i++){
+					if(centuryCode.equalsIgnoreCase(standardsDo.get(i).getCode())){
+						standardsDo.remove(i);
 						centurySelectedValues.remove(Long.parseLong(id));
 					}
 				}
@@ -911,20 +911,16 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 	}
 	public void addCentury(String centuryTag, String id) {
-		/*if (centuryPanel.getWidgetCount() <5) {*/
 			if (centuryTag != null && !centuryTag.isEmpty()) {
-				StandardFo codeObj=new StandardFo();
-				String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
-				codeObj.setCodeId(Integer.parseInt(codeIdVal));
-				codeObj.setCode(centurySgstBox.getValue());
-				centuryDo.add(codeObj);
+				String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());				
+				CodeDo codeObjStandard=new CodeDo();
+				codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
+				codeObjStandard.setCode(centurySgstBox.getValue());
+				standardsDo.add(codeObjStandard);
+				
 				centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
 				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
 			}
-	/*	} else {
-			standardMaxShow();
-			standardSgstBox.setText("");
-		}*/
 	}
 	/**
 	 * new label is created for the standard which needs to be added
@@ -1941,7 +1937,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
-			 taxonomySet.put("taxonomyCode", standardsDo);
+			taxonomySet.put("taxonomyCode", standardsDo);
 			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
@@ -2583,8 +2579,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				 standardsPanel.add(createStandardLabel(code, codeID,label));
 			}
 		}
+		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
+			centuryPanel.clear();
+			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCodeId(standardObj.getCodeId());
+				 codeObj.setCode(standardObj.getLabel());
+				 standardsDo.add(codeObj);
+				 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
+				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
+			}
+		}
 	}
-	
 	
 	/**
 	 * This method checks the FIB question is balanced or not i.e. balanced with open and closing brackets ([ ]) 
