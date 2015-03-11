@@ -320,7 +320,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		});
 
 		centbrowseBtn.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().getAddCentury();
@@ -1180,6 +1179,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			if (collectionDoVal.getMetaInfo() != null && collectionDoVal.getMetaInfo().getSkills() != null) {
 				centPanel.clear();
 				for (StandardFo standard : collectionDoVal.getMetaInfo().getSkills()) {
+					hilightSelectedValuesFromAutoSuggest.put(Long.parseLong(standard.getCodeId()+""), standard.getLabel());
 					centPanel.add(create21CenturyLabel(standard.getLabel(),standard.getCodeId()+"",standard.getDescription()));
 				}
 			}
@@ -1703,8 +1703,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		return new DownToolTipWidgetUc(closeLabel, description);
 	}
 	
-public void deleteCourse(String collectionId, String courseCode, String action) {
-	  	
+	public void deleteCourse(String collectionId, String courseCode, String action) {
 		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.parseInt(courseCode), new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
@@ -1714,7 +1713,6 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 				standardsDo.remove(codeObj);*/								
 			}
 		});
-
 	}
 
 	@Override
@@ -1893,17 +1891,12 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 			for(Iterator<Map.Entry<Long, String>> it = selectedValues.entrySet().iterator(); it.hasNext(); ) {
 			      Map.Entry<Long, String> entry = it.next();
 			      if(!hilightSelectedValuesFromAutoSuggest.containsKey(entry.getKey())) {
+			    	  hilightSelectedValuesFromAutoSuggest.put(entry.getKey(), entry.getValue());
 			    	  centPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"",""));
 			      }else{
 			    	  it.remove();
 			      }
-			    }
-			
-			/*for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
-				if(!hilightSelectedValuesFromAutoSuggest.containsKey(entry.getKey())){
-					centPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"",""));
-				}
-			}*/
+			}
 		}
 		this.reset21CenturyCount();
 		getUiHandlers().updateCentury(collectionDo.getGooruOid(),"add",selectedValues);
