@@ -445,7 +445,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			});
 	    	
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 	        if(loadingImage!=null)
 	        loadingImage.setVisible(false);
@@ -769,7 +768,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	printScoredData.add(erroeMsg);
 	        }
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 	}
 	/**

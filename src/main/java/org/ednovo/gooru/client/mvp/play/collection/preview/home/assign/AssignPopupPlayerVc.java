@@ -216,7 +216,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();	
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
 			@Override

@@ -249,7 +249,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return value != null ? Integer.parseInt(value) : null;
 		} else {
@@ -519,10 +518,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 					}
 //				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			} 
 			catch (ParseException e) {
-				e.printStackTrace();
 			}
 		}
 		return userDo;
@@ -551,7 +548,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			setLoggedInEmailId("");
 			setLoggedInDateOfBirth("");
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return user;
 	}
@@ -569,7 +565,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			getLogger().info("v2GuestSignInForEmbedtoken::"+v2UserDo.getToken());
 			user.setToken(v2UserDo.getUser().getToken() != null ? v2UserDo.getUser().getToken() : v2UserDo.getToken());
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return user;
 	}	
@@ -597,7 +592,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			setUserFilterProperties(userDo);
 		} catch (Exception e) {
 			getLogger().error(USER_INFO_FAILED_ON_TOKEN + token);
-			e.printStackTrace();
 		}
 		return userDo;
 	}

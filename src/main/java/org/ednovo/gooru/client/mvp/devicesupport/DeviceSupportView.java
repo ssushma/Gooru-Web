@@ -109,7 +109,6 @@ public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView{
 					.setDisplay(Display.NONE);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		widget= binder.createAndBindUi(this);
 //		widget = new HTML(

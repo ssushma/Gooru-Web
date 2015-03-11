@@ -526,7 +526,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 			catch(Exception ex)
 			{
-				ex.printStackTrace();
 			}
 		}
 	}
@@ -604,7 +603,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				}
 				catch(Exception ex)
 				{
-					ex.printStackTrace();
 				}
 				}
 
@@ -654,7 +652,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				}
 					catch(Exception ex)
 					{
-						ex.printStackTrace();
 					}
 				}
 				
@@ -934,7 +931,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {

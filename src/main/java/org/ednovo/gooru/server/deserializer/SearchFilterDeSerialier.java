@@ -91,7 +91,6 @@ public class SearchFilterDeSerialier extends DeSerializer {
 				});
 				filterDo.setGradeLevels(gradeLevels);
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 
 			JSONArray subjectsJsonArray = taxonomyJsonObject.getJSONArray(SUBJECT);
@@ -107,7 +106,6 @@ public class SearchFilterDeSerialier extends DeSerializer {
 			}
 				
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return filterDo;
 	}

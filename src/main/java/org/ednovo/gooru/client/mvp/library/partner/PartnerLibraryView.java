@@ -194,7 +194,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			loadingPanel(false);
 			AppClientFactory.printInfoLogger(" ---- on unit selected Ui End time consumed --- "+(System.currentTimeMillis()-startTime));
 		} catch (Exception e) {
-			e.printStackTrace();
 			loadingPanel(false);
 		}
 	}

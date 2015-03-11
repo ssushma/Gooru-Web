@@ -108,7 +108,6 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 				
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		
 		searchResult.setHasAddedToShelf(stringtoInteger(recordJsonObject, HAS_ADDED_TO_SHELF, 0));
@@ -130,7 +129,6 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return searchResult;
 	}

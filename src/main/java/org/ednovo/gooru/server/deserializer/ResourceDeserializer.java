@@ -117,7 +117,6 @@ public class ResourceDeserializer extends DeSerializer {
 				resultDos.add(deserialize(resourceJsonArray));
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return resultDos;
 	}
@@ -135,7 +134,6 @@ public class ResourceDeserializer extends DeSerializer {
 			videoDuration =getJsonString(resourceJsonObject, DURATION);
 			
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return videoDuration;
 	}
@@ -154,7 +152,6 @@ public class ResourceDeserializer extends DeSerializer {
 				forgotPassword.put(ERROR, (getJsonString(jsonObject, ERROR)));
 				forgotPassword.put(GOORU_UID, (getJsonString(jsonObject, GOORU_UID)));
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return forgotPassword;
@@ -182,7 +179,6 @@ public class ResourceDeserializer extends DeSerializer {
 					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		return resetPassword;
 	}

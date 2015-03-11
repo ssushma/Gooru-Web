@@ -691,7 +691,6 @@ public class ProfileTopicListView extends Composite{
 								resourcePanel.add(resourceCategoryIcon);
 								resourcesInside.add(resourcePanel);
 							} catch (Exception e){
-								e.printStackTrace();
 							}
 						}
 					}

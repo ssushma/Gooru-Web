@@ -92,7 +92,6 @@ public class WebService {
 		try {
 			tmp = new StringEntity(data, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 
 		}
 		httpPost.setEntity(tmp);
@@ -105,7 +104,6 @@ public class WebService {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		return ret;
@@ -136,7 +134,6 @@ public class WebService {
 		try {
 			tmp = new StringEntity(data, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 
 		}
 
@@ -148,7 +145,6 @@ public class WebService {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		return ret;
