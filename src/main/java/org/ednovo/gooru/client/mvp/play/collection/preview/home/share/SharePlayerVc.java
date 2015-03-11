@@ -163,7 +163,6 @@ public abstract class SharePlayerVc extends PopupPanel{
 			});
 		}
 		catch(Exception ex){
-			ex.printStackTrace();	
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
 			@Override

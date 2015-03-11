@@ -178,7 +178,6 @@ public class HeaderUc extends Composite implements
 					doc.getElementById("goToClasicInnerPanel").getStyle()
 							.clearZIndex();
 				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
 			} else {
 				try {
@@ -187,7 +186,6 @@ public class HeaderUc extends Composite implements
 					doc.getElementById("goToClasicInnerPanel").getStyle()
 							.setZIndex(value);
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -793,7 +791,6 @@ public class HeaderUc extends Composite implements
 					Document.get().getElementById("LinkheaderElement" + i)
 							.addClassName(GooruCBundle.INSTANCE.css().menu());
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
 
 			} else {
@@ -1438,7 +1435,6 @@ public class HeaderUc extends Composite implements
 				addedAccounts = true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

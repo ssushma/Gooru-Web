@@ -178,7 +178,6 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 									}
 								});
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 		

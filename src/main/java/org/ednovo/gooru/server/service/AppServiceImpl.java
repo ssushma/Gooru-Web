@@ -120,15 +120,8 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				return user;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new GwtException(e.getMessage());
 		}
-//		if (content != null) {
-//			String[] parsed = content.split(":");
-//			if (parsed.length > 1) {
-//				content = parsed[1];
-//			}
-//		}
 		throw new GwtException(content);
 	}
 	

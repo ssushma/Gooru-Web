@@ -1035,7 +1035,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			    trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
 			    openEndedButton.setStyleName(res.css().buttonDeSelected());
 			}catch(Exception e) {
-				e.printStackTrace();
 			}
 		} else if(clickType.equalsIgnoreCase("QuestionEdit")){
 			try{
@@ -1081,7 +1080,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				}
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}catch(Exception e) {
-				e.printStackTrace();
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);

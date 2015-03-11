@@ -1760,7 +1760,6 @@ public class ShelfCollectionResourceChildView extends
 							getPresenter().updateNarrationItem(
 									collectionItemDo.getCollectionItemId(), narration);
 						}catch(Exception e){
-							e.printStackTrace();
 						}
 						isEdited = false;
 						lblCharLimit.setVisible(false);
