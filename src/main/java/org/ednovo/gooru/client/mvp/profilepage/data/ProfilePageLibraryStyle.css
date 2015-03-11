@@ -277,6 +277,9 @@
 .collection {
     background-image: url('../images/folders/panel/collection-icon.png') !important;
 }
+.assessment {
+    background-image: url('../images/folders/panel/assessment-type.png') !important;
+}
 .collectionSmall {
 	background: url('../images/folders/panel/collection-icon-small.png') 39px 0px no-repeat;
 }
