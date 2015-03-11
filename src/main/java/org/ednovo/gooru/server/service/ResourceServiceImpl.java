@@ -151,9 +151,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			codeDo.add(codeDoObj);
 			collectionDo.setTaxonomySet(codeDo);
 		}
-		CollectionSettingsDo collSetting = new CollectionSettingsDo();
-		collSetting.setComment("turn-on");
-		collectionDo.setSettings(collSetting);
+		if(collectionDo.getSettings()!=null){
+			collectionDo.getSettings().setComment("turn-on");
+		}else{
+			CollectionSettingsDo collSetting = new CollectionSettingsDo();
+			collSetting.setComment("turn-on");
+			collectionDo.setSettings(collSetting);
+		}
 		String form = ResourceFormFactory.generateStringDataForm(collectionDo, COLLECTION);
 		
 		JSONObject jsonObj = new JSONObject();

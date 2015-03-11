@@ -64,7 +64,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	@UiField Label lblExistingAssessmentError,lblExistingAssessmentURLError;
 	@UiField TextBoxWithPlaceholder txtExistingAssessmentTitle,txtExistingAssessmentURL;
 	@UiField TextArea txtExistingAssessmentDescription;
-	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate;
+	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate,requireLoginYes,requireLoginNo;
 	String privacy="";
 	final String PUBLIC="public",ANYONEWITHLINK="anyonewithlink",PRIVATE="private";
 	
@@ -76,6 +76,12 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	public EditAssessmentPopup(FolderDo folderDo) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.folderDo=folderDo;
+		
+		//Set default selection 
+		requireLoginYes.setValue(false);
+		requireLoginNo.setValue(true);
+		
+		
 		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3168());
 		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
 		if(!StringUtil.isEmpty(folderDo.getTitle()))
@@ -88,10 +94,10 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		if(PUBLIC.equalsIgnoreCase(folderDo.getSharing())){
 			rdBtnAssessmentPublic.setValue(true);
 		}else{
-			if(ANYONEWITHLINK.equalsIgnoreCase(folderDo.getSharing())){
-				rdBtnAssessmentShare.setValue(true);
-			}else{
+			if(PRIVATE.equalsIgnoreCase(folderDo.getSharing())){
 				rdBtnAssessmentPrivate.setValue(true);
+			}else{
+				rdBtnAssessmentShare.setValue(true);
 			}
 		}
 		// This will handle the focus on existing assessment title.
@@ -216,6 +222,20 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		rdBtnAssessmentPublic.setValue(false);
 		rdBtnAssessmentShare.setValue(false);
 		rdBtnAssessmentPrivate.setValue(false);
+	}
+	@UiHandler("requireLoginYes")
+	public void onClickOfrequireLoginYesRadioButton(ClickEvent e){
+		resetRequireReadioButtons();
+		requireLoginYes.setValue(true);
+	}
+	@UiHandler("requireLoginNo")
+	public void onClickOfrequireLoginNoRadioButton(ClickEvent e){
+		resetRequireReadioButtons();
+		requireLoginNo.setValue(true);
+	}
+	public void resetRequireReadioButtons(){
+		requireLoginYes.setValue(false);
+		requireLoginNo.setValue(false);
 	}
 	abstract void clickEventOnSaveAssessmentHandler(FolderDo result);
 	abstract void clickEventOnCancelAssessmentHandler(ClickEvent event);

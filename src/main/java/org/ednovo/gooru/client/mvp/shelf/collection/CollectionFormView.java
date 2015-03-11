@@ -42,12 +42,13 @@ import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -72,7 +73,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -620,6 +620,20 @@ public class CollectionFormView extends
 		rdBtnAssessmentShare.setValue(false);
 		rdBtnAssessmentPrivate.setValue(false);
 	}
+	@UiHandler("requireLoginYes")
+	public void onClickOfrequireLoginYesRadioButton(ClickEvent e){
+		resetRequireReadioButtons();
+		requireLoginYes.setValue(true);
+	}
+	@UiHandler("requireLoginNo")
+	public void onClickOfrequireLoginNoRadioButton(ClickEvent e){
+		resetRequireReadioButtons();
+		requireLoginNo.setValue(true);
+	}
+	public void resetRequireReadioButtons(){
+		requireLoginYes.setValue(false);
+		requireLoginNo.setValue(false);
+	}
 	public void setTextAndIds(){
 		collectionTitleTxtBox.setPlaceholder(i18n.GL0319());
 		txtNewAssessmentTitle.setPlaceholder(i18n.GL3122());
@@ -782,6 +796,13 @@ public class CollectionFormView extends
 				if(rdBtnAssessmentPrivate.getValue()){
 					collection.setSharing("private");
 				}
+				CollectionSettingsDo collSetting = new CollectionSettingsDo();
+				if(requireLoginYes.getValue()){
+					collSetting.setIsLoginRequired(requireLoginYes.getValue().toString());
+				}else{
+					collSetting.setIsLoginRequired(requireLoginNo.getValue().toString());
+				}
+				collection.setSettings(collSetting);
 			}else{
 				collection.setCollectionType("assessment");
 				collection.setTitle(txtNewAssessmentTitle.getText());
