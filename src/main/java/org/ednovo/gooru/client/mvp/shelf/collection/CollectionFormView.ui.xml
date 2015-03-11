@@ -28,7 +28,7 @@
 					<div class="{createCollectionStyle.logInput} less-gutter">
 					<g:HTMLPanel ui:field="pnlNewAssessmentContainer"  styleName="col-md-12">
 						<g:HTMLPanel styleName="col-md-12 {createCollectionStyle.assessmentTextBoxContainer}">
-						    <g:Label styleName="{createCollectionStyle.assessmentTextBoxText}">Title:</g:Label>
+						    <g:Label styleName="{createCollectionStyle.assessmentTextBoxText}" text="{i18n.GL3182} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3182}"></g:Label>
 				 		 	<uc:TextBoxWithPlaceholder ui:field="txtNewAssessmentTitle" styleName="{createCollectionStyle.form_control}" ></uc:TextBoxWithPlaceholder>
 				 		 	<g:Label ui:field="lblNewAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 				 		</g:HTMLPanel>
@@ -47,50 +47,50 @@
 			 		</g:HTMLPanel>
 			 		<g:HTMLPanel ui:field="pnlExistingAssessmentContainer" styleName="col-md-12">
 				 		<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Title*:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}" text="{i18n.GL3182} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3182}"/>
 				 			<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{createCollectionStyle.form_edit_control}"></uc:TextBoxWithPlaceholder>
 				 			<g:Label ui:field="lblExistingAssessmentError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 				 		</g:HTMLPanel>
 				 		<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Assessment URL*:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}" text="{i18n.GL3183} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3183}"/>
 			 				<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentURL" styleName="{createCollectionStyle.form_edit_control}"></uc:TextBoxWithPlaceholder>
 			 				<g:Label ui:field="lblExistingAssessmentURLError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 			</g:HTMLPanel>
 			 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Description:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}" text="{i18n.GL0904} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0904}"/>
 			 				<g:TextArea ui:field="txtExistingAssessmentDescription" styleName="{createCollectionStyle.form_edit_textares_control}"></g:TextArea>
 			 				<g:Label ui:field="lblExistingAssessmentDescriptionError" styleName="{createCollectionStyle.mandatoryLabel}" ></g:Label>
 			 			</g:HTMLPanel>
 			 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Privacy*:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}" text="{i18n.GL0873} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0873}"/>
 				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
 						 				<g:Label styleName="{createCollectionStyle.publicImage}"></g:Label>
-						 				<g:Label styleName="{createCollectionStyle.publicText}">Public</g:Label>
+						 				<g:Label styleName="{createCollectionStyle.publicText}" text="{i18n.GL0329}" title="{i18n.GL0329}"/>
 						 			</panel:HTMLEventPanel>
 						 			<panel:HTMLEventPanel  styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
 						 				<g:Label styleName="{createCollectionStyle.linkImageForAssessment}"></g:Label>
-						 				<g:Label styleName="{createCollectionStyle.publicText}">Sharable</g:Label>
+						 				<g:Label styleName="{createCollectionStyle.publicText}" text="{i18n.GL0331}" title="{i18n.GL0331}"/>
 						 			</panel:HTMLEventPanel>
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton name="" ui:field="rdBtnAssessmentPrivate" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
 						 				<g:Label styleName="{createCollectionStyle.privateImage}"></g:Label>
-						 				<g:Label styleName="{createCollectionStyle.publicText}">Private</g:Label>
+						 				<g:Label styleName="{createCollectionStyle.publicText}" text="{i18n.GL0333}" title="{i18n.GL0333}"/>
 						 			</panel:HTMLEventPanel>
 				 			</g:HTMLPanel>
 			 			</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}">Requries 3rd-Party Log In?*:</g:Label>
+				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}" text="{i18n.GL3184} {i18n.GL_SPL_QUESTION} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3184}"/>
 				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginYes"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.requiresText}">Yes</g:Label>
+						 				<g:Label styleName="{createCollectionStyle.requiresText}" text="{i18n.GL_GRR_YES}" title="{i18n.GL_GRR_YES}"/>
 						 			</panel:HTMLEventPanel>
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
 						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginNo"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.requiresText}">No</g:Label>
+						 				<g:Label styleName="{createCollectionStyle.requiresText}" text="{i18n.GL_GRR_NO}" title="{i18n.GL_GRR_NO}"/>
 						 			</panel:HTMLEventPanel>
 				 			</g:HTMLPanel>
 			 			</g:HTMLPanel>

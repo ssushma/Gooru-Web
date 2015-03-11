@@ -197,6 +197,26 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	public void clickEventOnCancelAssessment(ClickEvent event){
 		clickEventOnCancelAssessmentHandler(event);
 	}
+	@UiHandler("rdBtnAssessmentPublic")
+	public void onClickOfPublicRadioButton(ClickEvent e){
+		resetReadioButtons();
+		rdBtnAssessmentPublic.setValue(true);
+	}
+	@UiHandler("rdBtnAssessmentShare")
+	public void onClickOfShareRadioButton(ClickEvent e){
+		resetReadioButtons();
+		rdBtnAssessmentShare.setValue(true);
+	}
+	@UiHandler("rdBtnAssessmentPrivate")
+	public void onClickOfPrivateRadioButton(ClickEvent e){
+		resetReadioButtons();
+		rdBtnAssessmentPrivate.setValue(true);
+	}
+	public void resetReadioButtons(){
+		rdBtnAssessmentPublic.setValue(false);
+		rdBtnAssessmentShare.setValue(false);
+		rdBtnAssessmentPrivate.setValue(false);
+	}
 	abstract void clickEventOnSaveAssessmentHandler(FolderDo result);
 	abstract void clickEventOnCancelAssessmentHandler(ClickEvent event);
 }
