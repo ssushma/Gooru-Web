@@ -128,6 +128,11 @@
 		padding: 6px 0px 0 55px;
 		margin-top: 6px;
 	}
+	.requiresText {
+		line-height: 10px;
+		padding: 5px 0 0 14px;
+		margin-top: 6px;
+	}
 	.linkImage {
 		background: url(images/icon-sprite.png) repeat scroll -61px -261px rgba(0, 0, 0, 0);
 		cursor: pointer;
@@ -176,51 +181,51 @@
 					   	<div class="{style.shareSelection}">
 					 		<div class="{style.logInput}">
 					 			<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-					 				<g:Label styleName="{style.assessmentEditTextBoxText}">Title:</g:Label>
+					 				<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3182} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3182}"></g:Label>
 									<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{style.form_edit_control}"></uc:TextBoxWithPlaceholder>
 				 					<g:Label ui:field="lblExistingAssessmentError" styleName="{style.mandatoryLabel}" ></g:Label>
 				 				</g:HTMLPanel>
 				 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-				 					<g:Label styleName="{style.assessmentEditTextBoxText}">Assessment URL:</g:Label>
+				 					<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3183} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3183}"/>
 				 					<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentURL" styleName="{style.form_edit_control}"></uc:TextBoxWithPlaceholder>
 				 					<g:Label ui:field="lblExistingAssessmentURLError" styleName="{style.mandatoryLabel}" ></g:Label>
 			 					</g:HTMLPanel>
 			 				</div>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-				 				<g:Label styleName="{style.assessmentEditTextBoxText}">Description:</g:Label>
+				 				<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL0904} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0904}"/>
 			 					<g:TextArea ui:field="txtExistingAssessmentDescription" styleName="{style.form_edit_textares_control}"></g:TextArea>
 			 					<g:Label ui:field="lblExistingAssessmentDescriptionError" styleName="{style.mandatoryLabel}" ></g:Label>
 			 				</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-					 			<g:Label styleName="{style.assessmentEditTextBoxText}">Privacy:</g:Label>
+					 			<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL0873} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0873}"/>
 					 			<g:HTMLPanel styleName="{style.assessmentPrivacyRightContainer}">
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{style.radioBox}"></g:RadioButton>
 							 				<g:Label styleName="{style.publicImage}"></g:Label>
-							 				<g:Label styleName="{style.publicText}">Public</g:Label>
+							 				<g:Label styleName="{style.publicText}" text="{i18n.GL0329}" title="{i18n.GL0329}"/>
 							 			</panel:HTMLEventPanel>
 							 			<panel:HTMLEventPanel  styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{style.radioBox}"></g:RadioButton>
 							 				<g:Label styleName="{style.linkImage}"></g:Label>
-							 				<g:Label styleName="{style.publicText}">Sharable</g:Label>
+							 				<g:Label styleName="{style.publicText}" text="{i18n.GL0331}" title="{i18n.GL0331}"/>
 							 			</panel:HTMLEventPanel>
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton name="" ui:field="rdBtnAssessmentPrivate" styleName="{style.radioBox}"></g:RadioButton>
 							 				<g:Label styleName="{style.privateImage}"></g:Label>
-							 				<g:Label styleName="{style.publicText}">Private</g:Label>
+							 				<g:Label styleName="{style.publicText}" text="{i18n.GL0333}" title="{i18n.GL0333}"/>
 							 			</panel:HTMLEventPanel>
 					 			</g:HTMLPanel>
 			 				</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{style.assessmentEditTextBoxText}">Requries Log In?:</g:Label>
+				 			<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3184} {i18n.GL_SPL_QUESTION} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3184}"/>
 					 			<g:HTMLPanel styleName="{style.assessmentPrivacyRightContainer}">
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton name="" styleName="{style.radioBox}"></g:RadioButton>
-							 				<g:Label styleName="{style.publicText}">Yes</g:Label>
+							 				<g:Label styleName="{style.requiresText}" text="{i18n.GL_GRR_YES}" title="{i18n.GL_GRR_YES}"/>
 							 			</panel:HTMLEventPanel>
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton name="" styleName="{style.radioBox}"></g:RadioButton>
-							 				<g:Label styleName="{style.publicText}">No</g:Label>
+							 				<g:Label styleName="{style.requiresText}" text="{i18n.GL_GRR_NO}" title="{i18n.GL_GRR_NO}"/>
 							 			</panel:HTMLEventPanel>
 					 			</g:HTMLPanel>
 			 				</g:HTMLPanel>
