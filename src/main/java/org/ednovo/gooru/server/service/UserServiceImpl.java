@@ -140,7 +140,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return userDo;
 	}
@@ -155,7 +154,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} 
 	}
 
@@ -169,7 +167,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return userDo;
 	}
@@ -185,7 +182,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			settingeDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} 
 		return settingeDo;
 	}
@@ -207,7 +203,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				setLoggedInUserUid(profileDo.getUser().getGooruUId());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new GwtException(text != null ? text : e.getMessage());
 		}
 		return profileDo;
@@ -256,7 +251,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return userDo;
 	}
@@ -270,7 +264,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				
 				return profilePageDo;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ProfilePageDo();
@@ -307,7 +300,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} 
 		return profilePageDo;
 	}
@@ -325,9 +317,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		} 
 		return profilePageDo;
 	}
@@ -364,7 +354,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			profileDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} 
 		return profileDo;
 	}
@@ -379,7 +368,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} 
 		return userDo;
 	}
@@ -700,14 +688,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 						userTagsResourceDO.setPublisher(JsonDeserializer.deserialize(resultObj.getJSONArray("publisher").toString(), new TypeReference<List<String>>() {
 						}));
 					} catch (JSONException e2) {
-						e2.printStackTrace();
 					}
 
 					try {
 						userTagsResourceDO.setAggregator(JsonDeserializer.deserialize(resultObj.getJSONArray("aggregator").toString(), new TypeReference<List<String>>() {
 						}));
 					} catch (JSONException e2) {
-						e2.printStackTrace();
 					}
 					
 					userTagsResourceDO.setTotalHintCount(totatHintCount);	
@@ -727,7 +713,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return value != null ? value : null;
 		} else {
@@ -812,7 +797,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			try {
 				userDashBoardCommonInfoDoObj=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return userDashBoardCommonInfoDoObj;
@@ -890,7 +874,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			jsonDataObject.put("aggregations", agreegationsArray);
 			jsonDataObject.put("pagination", paginationObject);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return jsonDataObject.toString();
 	}
@@ -909,7 +892,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			try{
 				userDashBoardCommonInfoDOObject	= JsonDeserializer.deserialize(jsonrep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
 			}catch(Exception e){
-				e.printStackTrace();
 			}
 		}
 		return userDashBoardCommonInfoDOObject;
@@ -1011,7 +993,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		jsondataobject.put(PAGINATION, paginationobject);
 		}
 		catch (JSONException e) {
-			e.printStackTrace();
 
 		}
 		
@@ -1100,7 +1081,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		jsonDataObject.put("pagination", paginationsObject);
 		
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		return jsonDataObject.toString();
 	}
@@ -1194,7 +1174,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			jsonMainDataObject.put("pagination",paginationObj);
 			
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return jsonMainDataObject.toString();
 	}
@@ -1250,7 +1229,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					profileRatingsReactionsDO=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").get(0).toString(), ProfileRatingsReactionsDO.class);
 					}
 				} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		return profileRatingsReactionsDO;
 	}
@@ -1296,7 +1274,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			jsonMainDataObject.put("pagination",paginationObj);
 			
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return jsonMainDataObject.toString();
 	}

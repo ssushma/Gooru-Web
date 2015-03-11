@@ -390,7 +390,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 			contentScroll.setVisible(true);
 			loadingIconPanel.setVisible(false);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -639,7 +638,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 				try {
 					params = StringUtil.splitQuery(Window.Location.getHref());
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
 				
 				if(stockStore!=null&&stockStore.getItem(libraryToken+"courseMapDataSerializedStr")!=null&&params.size()==0){
@@ -1485,7 +1483,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			getContentScroll().setVisible(true);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

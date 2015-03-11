@@ -66,7 +66,6 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 				}
 				@Override
 				public void onFailure(Throwable caught) {
-					caught.printStackTrace();
 				}
 			});
 //		}else if(caught instanceof GwtException){

@@ -217,7 +217,6 @@ public class StringUtil implements ClientConstants {
 				}
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
-			e.printStackTrace();
 		}
 		return query_pairs;
 	}

@@ -1673,7 +1673,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 							}
 						});
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}

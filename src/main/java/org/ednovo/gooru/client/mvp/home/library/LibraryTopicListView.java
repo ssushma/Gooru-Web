@@ -1036,7 +1036,6 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 							resourcePanel.add(resourceCategoryIcon);
 							resourcesInside.add(resourcePanel);
 						} catch (Exception e){
-							e.printStackTrace();
 						}
 					}
 				}

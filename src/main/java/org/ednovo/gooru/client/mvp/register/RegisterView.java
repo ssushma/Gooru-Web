@@ -289,7 +289,6 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 									}
 								});
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}
