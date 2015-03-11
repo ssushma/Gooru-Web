@@ -103,9 +103,9 @@ public class FolderCollectionResourceView extends Composite {
 				sequenceNumber.setStyleName(res.css().sequenceNumner());
 				liPanel.add(sequenceNumber);
 				// To set the resource title and resource format image
-				String resTitle = folderDo.getCollectionItems().get(i).getTitle();
+				String resTitle = stripHtmlRegex(folderDo.getCollectionItems().get(i).getTitle());
 				resTitle = resTitle.length() > 100 ? resTitle.substring(0, 100)+ "..." : resTitle;
-				final Label text = new Label(removeHtmlTags(resTitle));
+				final Label text = new Label(resTitle);
 				text.setStyleName(res.css().resourceTitle());
 				liPanel.add(text);
 				if (folderDo.getCollectionItems().get(i).getResourceFormat() != null && folderDo.getCollectionItems().get(i).getResourceFormat().getValue() != null) {
@@ -114,7 +114,7 @@ public class FolderCollectionResourceView extends Composite {
 				}
 				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);
-				final String description=removeHtmlTags(folderDo.getCollectionItems().get(i).getDescription()!=null?folderDo.getCollectionItems().get(i).getDescription():"");
+				final String description=stripHtmlRegex(folderDo.getCollectionItems().get(i).getDescription()!=null?folderDo.getCollectionItems().get(i).getDescription():"");
 				//Mouse over handler on resource title
 				MouseOverHandler mouseOverHandler=new MouseOverHandler() {
 					@Override
@@ -187,12 +187,8 @@ public class FolderCollectionResourceView extends Composite {
 	 * @return text without tags
 	 */
 
-	private String removeHtmlTags(String html) {
-		// html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
-		html = html.replaceAll("</p>", " ").replaceAll("<p>", "")
-				.replaceAll("<br data-mce-bogus=\"1\">", "")
-				.replaceAll("<br>", "").replaceAll("</br>", "")
-				.replaceAll("<p class=\"p1\">", "");
-		return html;
-	}
+	public String stripHtmlRegex(String source) {
+	// Replace all tag characters with an empty string.
+	return source.replaceAll("<.*?>", "");
+    }
 }
