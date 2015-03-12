@@ -20,4 +20,9 @@ public interface IsFolderItemTabView extends IsViewWithHandlers<FolderItemTabUiH
 	public void setPageDetails(Integer pageNumber, String parentId, String parentName);
 	public void setFolderMetaData(Map<String, String> folderMetaData);
 	public void onReorderChangeWidgetPosition(ShelfFolderItemChildView shelfFolderItemChildView, int itemToBeMovedPosSeqNumb,int itemPosSeqNumb, String downArrow);
+	/**
+	 * This method is used to reset the widget positions after deleting the assessement
+	 * @param folderDo
+	 */
+	void resetCollectionsAfterDeletingAssessment(FolderDo folderDo);
 }
