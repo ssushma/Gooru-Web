@@ -21,6 +21,7 @@ public interface FolderStyleBundle extends CssResource {
 	String dropbox();
 	String open();
 	String publicIcon();
+	String assesstpublicIcon();
 	String collection();
 	String assessment();
 	String active();

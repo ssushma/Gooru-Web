@@ -21,6 +21,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfL
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderDeleteView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
 import org.ednovo.gooru.client.uc.EditableLabelUc;
@@ -63,7 +64,6 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -133,6 +133,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	private static FolderItemTabViewUiBinder uiBinder = GWT.create(FolderItemTabViewUiBinder.class);
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	DeletePopupViewVc deletePopup=null;
 	
 	interface FolderItemTabViewUiBinder extends UiBinder<Widget, FolderItemTabView> {
 	}
@@ -406,10 +407,10 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					shelfFolderItemChildView.getMoveBottomBtn().addClickHandler(new OnClickReorderBottomButton(folderList.get(i).getGooruOid()));
 					shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 					shelfFolderItemChildView.getReorderTxtBox().addKeyUpHandler(new ReorderText(folderList.get(i).getGooruOid())); 
+					shelfFolderItemChildView.getDeleteBtn().addClickHandler(new DeleteAssessment(folderList.get(i)));
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
-					
 					folderContentBlock.add(shelfFolderItemChildView);
 				}
 				setFolderCollectionItemSequence();
@@ -978,7 +979,46 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			
 		}
 	}
-	
+	/**
+	 * This inner class will handle the delete assessment(create from existing url)
+	 * @author Gooru Team
+	 */
+	class DeleteAssessment implements ClickHandler{
+		DeleteAssessment(){}
+		String collectionId=null;
+		String collectionTitle="";
+		FolderDo folderDo;
+		public DeleteAssessment(final FolderDo folderDo) {
+			collectionId=folderDo.getGooruOid();
+			this.folderDo=folderDo;
+			collectionTitle=folderDo.getTitle();
+		}
+		@Override
+		public void onClick(ClickEvent event) {	
+			deletePopup=new DeletePopupViewVc() {
+				@Override
+				public void onClickPositiveButton(ClickEvent event) {
+					getUiHandlers().deletAssessment(collectionId,folderDo);
+				}
+				
+				@Override
+				public void onClickNegitiveButton(ClickEvent event) {
+					if(deletePopup!=null){
+						deletePopup.hide();
+					}
+				}
+			};
+			deletePopup.setPopupTitle(i18n.GL0748());
+			deletePopup.setNotes(StringUtil.generateMessage(i18n.GL3038(),collectionTitle));
+			deletePopup.setDescText(i18n.GL3039());
+			deletePopup.setDeleteValidate("delete");
+			deletePopup.setPositiveButtonText(i18n.GL0190());
+			deletePopup.setNegitiveButtonText(i18n.GL0142());
+			deletePopup.setPleaseWaitText(i18n.GL0339());
+			deletePopup.show();
+			deletePopup.center();
+		}
+	}
 	/**
 	 * 
 	 * Inner class for reorder down button, which implements click handler {@link ClickHandler}
@@ -1147,16 +1187,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	@Override
 	public void onReorderChangeWidgetPosition(ShelfFolderItemChildView shelfFolderItemChildView,int itemToBeMovedPosSeqNumb,int itemPosSeqNumb, String direction) {
-		
-		
-		
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
 		String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
 		HashMap<String,String> params = new HashMap<String,String>();
-		
-		
 		if(o3!=null&&id==null) {
 			params.put("o3",o3);
 			params.put("o2",o2);
@@ -1167,13 +1202,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		} else if(o1!=null&&id==null) {
 			params.put("o1",o1);
 		}
-		
 		if(direction.equalsIgnoreCase(DOWN_ARROW)){
 			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW,params);
 		}else{
 			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW,params);
 		}
-		
 	}
 	
 
@@ -1241,4 +1274,21 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		this.totalCount = totalCount;
 	}
 
+	@Override
+	public void resetCollectionsAfterDeletingAssessment(FolderDo folderDo) {
+		deletePopup.hide();
+		resetWidgetsAfterAssessmentDelete(folderDo);
+	}
+	public void resetWidgetsAfterAssessmentDelete(FolderDo folderDo){
+		Iterator<Widget> widgets = folderContentBlock.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfFolderItemChildView) {
+				if(((ShelfFolderItemChildView) widget).getItemGooruOId().equalsIgnoreCase(folderDo.getGooruOid())){
+					folderContentBlock.remove(widget);
+				}
+			}
+		}
+		setFolderCollectionItemSequence();
+	}
 }

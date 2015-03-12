@@ -97,7 +97,7 @@ public class ProfileTopicListView extends Composite{
 	@UiField Label topicTitleLbl, noCollectionLbl, libraryTopicLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
-	@UiField Button assignCollectionBtn, customizeCollectionBtn,viewAllBtn;
+	@UiField Button assignCollectionBtn, customizeCollectionBtn,viewAllBtn,go2Assessment;
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	@UiField FlowPanel standardsFloPanel;
 	@UiField ProfilePageLibraryStyleBundle style;
@@ -168,6 +168,12 @@ public class ProfileTopicListView extends Composite{
 	private static final String STANDARD_ID = "standardId";
 	
 	private static final String COLLECTION_TITLE = "collectionTitle";
+	
+	private static final String  ASSESSMENT = "assessment";
+	
+	private static final String  ASSESSMENT_URL = "assessment/url";
+	
+	private static final String  COLLECTION = "collection";
 	
 	private String libraryGooruOid=null;
 
@@ -262,6 +268,7 @@ public class ProfileTopicListView extends Composite{
 		viewAllBtn.getElement().setId("btnViewAll");
 		viewAllBtn.setVisible(true);
 		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid(),parentId));
+		go2Assessment.setVisible(false);
 
 	}
 	public void setId(){
@@ -308,8 +315,11 @@ public class ProfileTopicListView extends Composite{
 	
 		setTopicLabel(profileFolderDo.getTitle());
 		searchTitle=profileFolderDo.getTitle();
-		if(profileFolderDo.getCollectionType().equals("assessment")){
+		if(profileFolderDo.getCollectionType().contains(ASSESSMENT)){
 			topicTitleLbl.addStyleName(style.assessment());
+			if(profileFolderDo.getCollectionType().equals(ASSESSMENT_URL)){
+				showAssessmentButton(true);
+			}
 		}else{
 			topicTitleLbl.addStyleName(style.collection());
 		}
@@ -356,7 +366,16 @@ public class ProfileTopicListView extends Composite{
 		viewAllBtn.setVisible(false);
 
 	}
-	
+	/**
+	 * To show go2Assessment button when collectionType is assessment/url
+	 * @param isVisible {@link Boolean}
+	 */
+	private void showAssessmentButton(boolean isVisible) {
+		go2Assessment.setVisible(isVisible);
+		assignCollectionBtn.setVisible(!isVisible);
+		customizeCollectionBtn.setVisible(!isVisible);
+	}
+
 	private void setOnlyConceptData(ArrayList<ProfileLibraryDo> profileFolderDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount,String libraryGooruOid) {
 		boolean isLessonHighlighted = true;
 		int pageCount = 0;
@@ -495,7 +514,28 @@ public class ProfileTopicListView extends Composite{
 							
 						}
 						int resources=resourceCount<=4?resourceCount:4;
-						final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
+						String resourceText="";
+						if(collectionType!=null){
+							if(collectionType.equals(ASSESSMENT)){
+								resourceText=resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094_1().toLowerCase();
+								go2Assessment.setVisible(false);
+							}else if(!collectionType.equals(ASSESSMENT_URL)){
+								resourceText=resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase();
+								go2Assessment.setVisible(false);
+							}else{
+								go2Assessment.getElement().setAttribute("style", "margin-left: 77px;margin-top: 38px;");
+								go2Assessment.addClickHandler(new ClickHandler() {
+									
+									@Override
+									public void onClick(ClickEvent event) {
+										Window.open(conceptDo.getUrl(), "", "");
+									}
+								});
+								showAssessmentButton(true);
+							}
+						}
+						final Label resourceCountLbl = new Label(resourceText);
+						
 						resourcesInside.add(resourceCountLbl);
 						for(int i=0;i<resources;i++) {
 							try {
@@ -735,6 +775,7 @@ public class ProfileTopicListView extends Composite{
 	}
 
 	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList, final String gooruOid,final String libraryGooruOid) {
+		
 		boolean isLessonHighlighted = true;
 		final int count = profileLibraryDoList.size();
 		if(profileLibraryDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
