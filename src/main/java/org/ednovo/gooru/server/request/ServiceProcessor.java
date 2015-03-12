@@ -41,7 +41,7 @@ public class ServiceProcessor {
 		
 	static Context context = null;
 	
-	protected static void setContext(){
+	protected static ClientResource setContext(String url, String username, String password){
 		
 		if (context == null){
 			 context = new Context();
@@ -49,6 +49,14 @@ public class ServiceProcessor {
 			 context.getParameters().set("maxTotalConnections","100");			 
 		 }
 		
+		ClientResource clientRes = new ClientResource(context, url);
+		
+        
+        if (username != null && username.length() > 0 && password != null && password.length() > 0) {
+        	clientRes.setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
+        }
+        
+		return clientRes;
 	}
 	
    /**
@@ -62,16 +70,10 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
+
+        	   setClientResource(setContext(url, username, password));
         	   
-        	   ClientResource clientRes = new ClientResource(context, url);
-        	   
-        	   setClientResource(clientRes);
-               
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
-               setMediaType(type);
+        	   setMediaType(type);
                setEncodings(Encoding.GZIP);
                Representation decodedRep = new DecodeRepresentation(getClientResource().get()); 
                // Get the representation as an JsonRepresentation
@@ -91,10 +93,9 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context, url);
         	   
-        	   setClientResource(clientRes);
+        	   setClientResource(setContext(url, null, null));
+        	   
                setMediaType(type);
                setEncodings(Encoding.GZIP);
                // Get the representation as an JsonRepresentation
@@ -136,15 +137,9 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context,url);
         	   
-        	   setClientResource(clientRes);
+        	   setClientResource(setContext(url, username, password));
                
-               
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
                setEncodings(Encoding.GZIP);
                Representation decodedRep = new DecodeRepresentation(getClientResource().post(form));
                // Get the representation as an JsonRepresentation
@@ -167,14 +162,8 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context, url);
+        	   setClientResource(setContext(url, username, password));
         	   
-        	   setClientResource(clientRes);
-        	   
-        	   if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-        		   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-        	   }
         	   setEncodings(Encoding.GZIP);
         	   Representation resp = null;
         	   resp = getClientResource().post(new JsonRepresentation(formData));
@@ -201,14 +190,8 @@ public class ServiceProcessor {
            }
            @Override
            public StringRepresentation runString() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context,url);
+        	   setClientResource(setContext(url, username, password));
         	   
-        	   setClientResource(clientRes);
-               
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
                setEncodings(Encoding.GZIP);
                Representation decodedRep = new DecodeRepresentation(getClientResource().post(new JsonRepresentation(formData)));
                return new StringRepresentation(decodedRep.getText());
@@ -288,14 +271,7 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context,url);
-        	   
-        	   setClientResource(clientRes);
-               
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
+        	   setClientResource(setContext(url, username, password));
                setMediaType(type);
                setEncodings(Encoding.GZIP);
                Representation decodedRep = new DecodeRepresentation(getClientResource().delete());
@@ -320,14 +296,7 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context, url);
-        	   
-        	   setClientResource(clientRes);
-               
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
+        	   setClientResource(setContext(url, username, password));
                setEncodings(Encoding.GZIP);
                Representation decodedRep = new DecodeRepresentation(getClientResource().put(form.getWebRepresentation()));
                // Get the representation as an JsonRepresentation
@@ -351,14 +320,7 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context, url);
-        	   
-        	   setClientResource(clientRes);
-               
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
+        	   setClientResource(setContext(url, username, password));
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():""));
@@ -378,14 +340,7 @@ public class ServiceProcessor {
        return new ServiceRequest() {
            @Override
            public JsonResponseRepresentation run() throws Exception {
-        	   setContext();
-        	   ClientResource clientRes = new ClientResource(context, url);
-        	   
-        	   setClientResource(clientRes);
-               
-               if (username != null && username.length() > 0 && password != null && password.length() > 0) {
-                   getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
-               }
+        	   setClientResource(setContext(url, username, password));
                setEncodings(Encoding.GZIP);
                Representation decodedRep = new DecodeRepresentation(getClientResource().put(formData));
                // Get the representation as an JsonRepresentation
