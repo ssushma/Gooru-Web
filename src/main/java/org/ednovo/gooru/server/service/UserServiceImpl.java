@@ -104,6 +104,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	private static final String PWD="password";
 	private static final String MAIL_CONFORMATION="mailConfirmationUrl";
 	
+	private static final String DATE_OF_BIRTH = "dateOfBirth";
+
+	private static final String FIRST_NAME = "firstName";
+
+	private static final String USER_NAME = "username";
+
+	private static final String PASSWORD = "password";
+
+	private static final String EMAIL_ID = "emailId";
+
+	private static final String ORGANIZATION_CODE = "organizationCode";
+
+	private static final String LAST_NAME = "lastName";
+
+	private static final String GOORU = "gooru";
+	
 	
 	
 	public static final String FIELDS="fields";
@@ -377,11 +393,52 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDo createUser(String postData) throws GwtException {
+	public UserDo createUser(Map<String, String> registrationDetailsParams,String regType) throws GwtException {
 		UserDo userDo = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_USER, getLoggedInSessionToken());
+		JSONObject userCreate = new JSONObject();                                   
+		JSONObject user = new JSONObject(); 
 		JsonRepresentation jsonRep = null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),postData);
+		
+		try {
+			if("notChildReg".equalsIgnoreCase(regType)){
+				user.put(FIRST_NAME,registrationDetailsParams.get(FIRST_NAME) );                            
+				user.put(LAST_NAME, registrationDetailsParams.get(LAST_NAME));                              
+				user.put(USER_NAME, registrationDetailsParams.get(USER_NAME));                              
+				user.put(EMAIL_ID, registrationDetailsParams.get(EMAIL_ID));
+				
+				JSONObject organization = new JSONObject(); 
+				organization.put(ORGANIZATION_CODE, registrationDetailsParams.get(ORGANIZATION_CODE));                 
+				user.put("organization", organization); 
+				
+				userCreate.put(PASSWORD, StringUtil.getDecryptedData(registrationDetailsParams.get(PASSWORD)));                          
+				userCreate.put("gooruBaseUrl", registrationDetailsParams.get("gooruBaseUrl"));  
+				userCreate.put("role", registrationDetailsParams.get("role"));                       
+				userCreate.put("dateOfBirth", registrationDetailsParams.get("dateOfBirth")); 
+				userCreate.put("user", user);
+			}else{
+				user.put(USER_NAME, registrationDetailsParams.get(USER_NAME));
+				user.put(EMAIL_ID, registrationDetailsParams.get(EMAIL_ID));
+				
+				JSONObject organization = new JSONObject();
+				organization.put(ORGANIZATION_CODE, registrationDetailsParams.get(ORGANIZATION_CODE));
+				user.put("organization", organization);
+				
+				user.put(FIRST_NAME, registrationDetailsParams.get(FIRST_NAME));
+				user.put(LAST_NAME, registrationDetailsParams.get(LAST_NAME));
+				userCreate.put(PASSWORD,StringUtil.getDecryptedData(registrationDetailsParams.get(PASSWORD)));
+				userCreate.put("gooruBaseUrl", registrationDetailsParams.get("gooruBaseUrl"));
+				userCreate.put("role", registrationDetailsParams.get("role"));
+				userCreate.put("dateOfBirth",registrationDetailsParams.get("dateOfBirth"));
+				userCreate.put("accountType", registrationDetailsParams.get("accountType"));
+				userCreate.put("userParentId",registrationDetailsParams.get("userParentId") );
+				userCreate.put("user", user); 
+			}
+		} catch (Exception e) {
+		}
+		
+		
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_USER, getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),userCreate.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);

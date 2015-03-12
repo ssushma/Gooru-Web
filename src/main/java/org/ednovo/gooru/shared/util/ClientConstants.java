@@ -316,4 +316,6 @@ public interface ClientConstants {
 	
 	String CRYPTO_KEY = "ErGwDuu9YEwqMpF7AxnGzjJx"; // Don't modify this key
 	
+	String CHILD_REG = "childReg";
+	
 }

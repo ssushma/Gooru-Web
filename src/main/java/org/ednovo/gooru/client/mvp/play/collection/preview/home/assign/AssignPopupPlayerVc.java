@@ -640,7 +640,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 	public void onLoginClicked(ClickEvent clickEvent) {
 		if (isCookieEnabled()) {
 			String username = loginTxtBox.getText().trim();
-			String password = passwordTxtBox.getText().trim();
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim()); 
 			
 			if(username.length() > 1 && password.length() > 1){
 				loginButton.setVisible(false);

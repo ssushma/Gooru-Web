@@ -288,7 +288,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 			
 
 			String username = loginTxtBox.getText().trim();
-			String password = passwordTxtBox.getText().trim();
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim()); 
 
 			if (username.length() > 1 && password.length() > 1) {
 

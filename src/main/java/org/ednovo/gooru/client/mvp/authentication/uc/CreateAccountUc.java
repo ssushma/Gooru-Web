@@ -318,7 +318,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 	public abstract void OpenPrivacy();
 
-	public abstract void CreateUser(String data, String username,String password); 
+	public abstract void CreateUser(Map<String, String> registrationDetailsParams, String username,String password); 
 
 	/**
 	 * 
@@ -432,41 +432,28 @@ public abstract class CreateAccountUc extends PopupPanel{
 											String firstName = txtFirstName.getText().trim();
 											String lastName = txtLastName.getText().trim();
 											String emilId = txtChooseEmail.getText().trim();
-											String password = txtChoosePassword.getText().trim();
+											String password = StringUtil.getCryptoData(txtChoosePassword.getText().trim()); 
 											String confirmPassword = txtConfirmPassword.getText().trim();
 											String dob = dateBoxUc.getDateBox().getValue().trim();
 											String parentEmailId = txtParentEmailId.getText().trim();
+											
+											Map<String, String> registrationDetailsParams = new HashMap<String, String>();
+											registrationDetailsParams.put(FIRST_NAME, firstName);
+											registrationDetailsParams.put(LAST_NAME, lastName);
+											registrationDetailsParams.put(USER_NAME, userName);
+											registrationDetailsParams.put(EMAIL_ID, emilId);
+											registrationDetailsParams.put(ORGANIZATION_CODE, GOORU);
+											registrationDetailsParams.put(PASSWORD, password);
+											registrationDetailsParams.put("gooruBaseUrl", homeEndPoint +"#discover");
+											registrationDetailsParams.put("role", selectedRole);
+											registrationDetailsParams.put("dateOfBirth", dob);
 											
 											if (validateUserInput()) {
 												lblPleaseWait.setVisible(true);
 												btnSignUp.setVisible(false);
 												if (!underThirtheen) {
 													MixpanelUtil.sign_up_over_Thrteen();
-													JSONObject userCreate = new JSONObject();
-													JSONObject user = new JSONObject();
-
-													user.put(FIRST_NAME, new JSONString(firstName));
-													user.put(LAST_NAME, new JSONString(lastName));
-													user.put(USER_NAME, new JSONString(userName));
-													user.put(EMAIL_ID, new JSONString(emilId));
-
-													JSONObject organization = new JSONObject();
-													organization.put(ORGANIZATION_CODE, new JSONString(GOORU));
-													user.put("organization", organization);
-
-													// userCreate.put("gender", new JSONString("Male"));
-													userCreate.put(PASSWORD, new JSONString(password));
-													userCreate.put("gooruBaseUrl", new JSONString(homeEndPoint +"#discover"));
-													userCreate.put("role", new JSONString(selectedRole));
-													userCreate.put("dateOfBirth", new JSONString(dob));
-
-													userCreate.put("user", user);
-
-													JSONObject login = new JSONObject();
-													login.put("username", new JSONString(userName));
-													login.put("password", new JSONString(password));
-
-													CreateUser(userCreate.toString(), userName,password);
+													CreateUser(registrationDetailsParams, userName,password);
 												} else {
 													MixpanelUtil.continue_Child_registration();
 													closePoup();

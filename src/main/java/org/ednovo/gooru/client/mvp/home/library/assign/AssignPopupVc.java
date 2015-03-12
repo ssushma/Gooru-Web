@@ -722,7 +722,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		if (isCookieEnabled()) {
 
 			String username = loginTxtBox.getText().trim();
-			String password = passwordTxtBox.getText().trim();
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim());
 
 			if (username.length() > 1 && password.length() > 1) {
 

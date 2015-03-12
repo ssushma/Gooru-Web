@@ -458,8 +458,8 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 			}
 			//Send data to create user.
 			@Override
-			public void CreateUser(String data, String username,String password) {
-				getUiHandlers().CreateUser(data, username, password);
+			public void CreateUser(Map<String, String> registrationDetailsParams, String username,String password) {
+				getUiHandlers().CreateUser(registrationDetailsParams, username, password);
 			}
 
 			@Override
