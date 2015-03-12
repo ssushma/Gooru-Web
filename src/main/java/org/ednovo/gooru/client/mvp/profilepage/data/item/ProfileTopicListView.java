@@ -524,6 +524,13 @@ public class ProfileTopicListView extends Composite{
 								go2Assessment.setVisible(false);
 							}else{
 								go2Assessment.getElement().setAttribute("style", "margin-left: 77px;margin-top: 38px;");
+								go2Assessment.addClickHandler(new ClickHandler() {
+									
+									@Override
+									public void onClick(ClickEvent event) {
+										Window.open(conceptDo.getUrl(), "", "");
+									}
+								});
 								showAssessmentButton(true);
 							}
 						}
