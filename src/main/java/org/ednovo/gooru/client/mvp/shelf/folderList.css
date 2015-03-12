@@ -160,6 +160,10 @@
     background-image: url('../images/folders/panel/collection-icon-public.png');
 }
 
+.folderLevel.assesstpublicIcon.assessment {
+    background-image: url('../images/folders/panel/assessment-icon-public.png');
+}
+
 .contents > .collection{
 	
 	white-space: nowrap;	
