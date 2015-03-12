@@ -641,13 +641,11 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		if (isCookieEnabled()) {
 			String username = loginTxtBox.getText().trim();
 			String password = passwordTxtBox.getText().trim();
-			JSONObject login = new JSONObject();
-			login.put("username", new JSONString(username));
-			login.put("password", new JSONString(password));
+			
 			if(username.length() > 1 && password.length() > 1){
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
-				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(),new SimpleAsyncCallback<UserDo>(){
+				AppClientFactory.getInjector().getAppService().v2Signin(username,password,new SimpleAsyncCallback<UserDo>(){
 					@Override
 					public void onSuccess(UserDo result) {
 						if(result.getActive()==1){

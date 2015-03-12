@@ -619,9 +619,9 @@ public class StudentSignUpUc extends PopupPanel{
 		MixpanelUtil.sign_up_Child_registration();
 		String userRole = "student";
 
-		String userName = txtChooseUsername.getText();
+		final String userName = txtChooseUsername.getText();
 		String emilId = lblParentEmailId.getText();
-		String password = txtChoosePassword.getText().trim();
+		final String password = txtChoosePassword.getText().trim();
 		String confirmPassword = txtConfirmPassword.getText().trim();
 		
 		final JSONObject userCreate = new JSONObject();
@@ -646,16 +646,11 @@ public class StudentSignUpUc extends PopupPanel{
 		
 		userCreate.put("user", user);
 		
-		final JSONObject login = new JSONObject();
-		login.put("username", new JSONString(userName));
-		login.put("password", new JSONString(password));
-		
-		
 		AppClientFactory.getInjector().getUserService().createUser(userCreate.toString(),new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo result) {
 					if (result.getGooruUId() != null && !result.getGooruUId().equalsIgnoreCase("")) {
-						AppClientFactory.getInjector().getAppService().v2Signin(login.toString(),new SimpleAsyncCallback<UserDo>() {
+						AppClientFactory.getInjector().getAppService().v2Signin(userName,password,new SimpleAsyncCallback<UserDo>() {
 							@Override
 							public void onSuccess(UserDo result) {
 								hide();

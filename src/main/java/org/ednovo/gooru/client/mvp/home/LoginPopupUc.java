@@ -263,6 +263,7 @@ public class LoginPopupUc extends PopupPanel{
 	 *
 	 */
 	public void setTextAndIds(){
+		
 		lblLoginHeading.setText(i18n.GL0187());
 		StringUtil.setAttributes(lblLoginHeading.getElement(), "lblLoginHeading", i18n.GL0187(), i18n.GL0187());
 		
@@ -346,17 +347,13 @@ public class LoginPopupUc extends PopupPanel{
 		if (isCookieEnabled()) {
 			
 			final String username = loginTxtBox.getText().trim();
-			String password = passwordTxtBox.getText().trim();
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim());
 			
 			if (username.length() > 1 && password.length() > 1) {
 				
-				JSONObject login = new JSONObject();
-				login.put("username", new JSONString(username));
-				login.put("password", new JSONString(password));
-				
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
-				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
+				AppClientFactory.getInjector().getAppService().v2Signin(username,password, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
 						
