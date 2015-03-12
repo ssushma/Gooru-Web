@@ -797,11 +797,7 @@ public class CollectionFormView extends
 					collection.setSharing("private");
 				}
 				CollectionSettingsDo collSetting = new CollectionSettingsDo();
-				if(requireLoginYes.getValue()){
-					collSetting.setIsLoginRequired(requireLoginYes.getValue().toString());
-				}else{
-					collSetting.setIsLoginRequired(requireLoginNo.getValue().toString());
-				}
+				collSetting.setIsLoginRequired(requireLoginYes.getValue().toString());
 				collection.setSettings(collSetting);
 			}else{
 				collection.setCollectionType("assessment");

@@ -1933,6 +1933,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		logger.info("assessment update API=>"+url);
 		JSONObject assessmentMainObject=new JSONObject();
 		JSONObject assessmentJsonObject=new JSONObject();
+		JSONObject assessmentSettingsObject=new JSONObject();
 		try{
 			assessmentJsonObject.put("title",title);
 			assessmentJsonObject.put("url",assessmentUrl);
@@ -1942,6 +1943,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			if(sharing!=null){
 				assessmentJsonObject.put("sharing", sharing);
 			}
+			assessmentSettingsObject.put("isLoginRequired",requireLogin);
+			
+			assessmentJsonObject.put("settings",assessmentSettingsObject);
+			
 			assessmentMainObject.put("collection",assessmentJsonObject);
 			logger.info("data for update API=>"+assessmentMainObject.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),assessmentMainObject.toString());
