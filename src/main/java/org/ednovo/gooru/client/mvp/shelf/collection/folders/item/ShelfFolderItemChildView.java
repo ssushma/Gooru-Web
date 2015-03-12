@@ -202,10 +202,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 					folderItemLbl.addClickHandler(new OpenChildFolderInContent(FOLDER, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
 					contents.add(folderItemLbl);
 				} else if(folderItem.getType().equals(SCOLLECTION)){
-					if(folderItem.getCollectionType().equals(ASSESSMENT)){
+					if(folderItem.getCollectionType().contains(ASSESSMENT)){
 						folderItemLbl.addStyleName(folderStyle.assessment());
+					}else{
+						folderItemLbl.addStyleName(folderStyle.collection());
 					}
-					folderItemLbl.addStyleName(folderStyle.collection());
 					folderItemLbl.addClickHandler(new OpenChildFolderInContent(SCOLLECTION, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
 					contents.add(folderItemLbl);
 				} else {

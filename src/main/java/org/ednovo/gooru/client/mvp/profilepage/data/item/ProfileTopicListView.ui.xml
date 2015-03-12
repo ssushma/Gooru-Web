@@ -29,6 +29,8 @@
 	            </g:HTMLPanel>
 	            <g:HTMLPanel styleName="{style.resourcesInside}" ui:field="resourcesInside"/>
 	            <g:Label ui:field="noCollectionLbl" styleName="{style.noCollectionLbl}"></g:Label>
+	            <g:Button styleName="secondary" ui:field="go2Assessment" text="{i18n.GL3169}"
+				title="{i18n.GL3169}"></g:Button>
 	         </g:HTMLPanel>
 	      </g:HTMLPanel>
 </ui:UiBinder> 
