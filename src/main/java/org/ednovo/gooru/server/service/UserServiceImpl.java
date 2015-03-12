@@ -242,6 +242,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = null;
 		JSONObject formData = new JSONObject();
+		String message="";
 		try {
 			
 			String decryptedPwd = StringUtil.getDecryptedData(password);
@@ -252,10 +253,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
 			jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
-			String message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";
+			message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";
 		} catch (Exception e) {
 		}
-		return resourceDeserializer.resetPassword(jsonRep,jsonResponseRep.getStatusCode(),jsonResponseRep.getResponseDo().getErrorMessage(), jsonResponseRep.getResponseDo() !=null ? jsonResponseRep.getResponseDo() : null); 
+		return resourceDeserializer.resetPassword(jsonRep,jsonResponseRep.getStatusCode(),message, jsonResponseRep.getResponseDo() !=null ? jsonResponseRep.getResponseDo() : null); 
 	}
 
 	@Override
