@@ -63,10 +63,8 @@ public class StringUtil implements ClientConstants {
 	
 	public static Map<String, String> categoryMap =null;
 	
-	private final static byte[] key = new byte[]{
-        (byte)4,(byte)8,(byte)3,(byte)80,(byte)12,(byte)-9,(byte)-5,(byte)101, 
-        (byte)15,(byte)-8,(byte)3,(byte)0,(byte)90,(byte)-9,(byte)55,(byte)-41, 
-        (byte)-9,(byte)90,(byte)3,(byte)100,(byte)-40,(byte)79,(byte)5,(byte)102};
+	private final static byte[] key = CRYPTO_KEY.getBytes();
+	
 
 	static{
 		addAllCategories();
@@ -479,16 +477,32 @@ public class StringUtil implements ClientConstants {
 		try {
 			TripleDesCipher cipher = new TripleDesCipher();
 			cipher.setKey(key);
-			
-			 encrypted = cipher.encrypt(data);
-	         /*String decrypted = cipher.decrypt(encrypted);
-	         AppClientFactory.printInfoLogger("-- dec -- "+decrypted);*/
+			encrypted = cipher.encrypt(data);
 		} catch (Exception e) {
 			AppClientFactory.printSevereLogger("Exception in crypto"+e.getMessage());
 		}
 		return encrypted;
 	}
 	
+	
+	/**
+	 * Decrypts the crypto data and returns the plain text.
+	 * 
+	 * @param cryptoData {@link String}
+	 * 
+	 * @return plainText {@link String}
+	 */
+	public static String getDecryptedData(String cryptoData){
+		String plainText=null;
+		try {
+			TripleDesCipher cipher = new TripleDesCipher();
+			cipher.setKey(key);
+			plainText = cipher.decrypt(cryptoData);
+		} catch (Exception e) {
+			AppClientFactory.printSevereLogger("Exception in crypto decrypt"+e.getMessage());
+		}
+		return plainText;
+	}
 	
 
 	public static native String removeHtml(String htmText) /*-{

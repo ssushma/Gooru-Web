@@ -27,8 +27,6 @@
  */
 package org.ednovo.gooru.client.service;
 
-import java.util.Map;
-
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -57,7 +55,7 @@ public interface AppService extends BaseService {
 	 */
 	UserDo signout() throws GwtException, ServerDownException;
 	
-	UserDo v2Signin(String postData) throws GwtException, ServerDownException;
+	UserDo v2Signin(String userName, String password) throws GwtException, ServerDownException;
 
 	UserDo v2Signout() throws GwtException, ServerDownException;
 

@@ -36,6 +36,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONObject;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -100,7 +101,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 	}
 
 	@Override
-	public void CreateUser(String postData, final String loginData) {
+	public void CreateUser(String postData, final String username, final String password) { 
 		AppClientFactory.getInjector().getUserService().createUser(postData, new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo result) {
@@ -109,7 +110,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 						new AlertContentUc(i18n.GL0061(), result.getStatus());
 						getView().toggleButtons();
 					}else if (!StringUtil.isEmpty(result.getGooruUId())){
-						AppClientFactory.getInjector().getAppService().v2Signin(loginData, new SimpleAsyncCallback<UserDo>() {
+						AppClientFactory.getInjector().getAppService().v2Signin(username,password, new SimpleAsyncCallback<UserDo>() {
 							@Override
 							public void onSuccess(UserDo result) {
 								getView().hide();

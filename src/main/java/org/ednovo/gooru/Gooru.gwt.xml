@@ -48,6 +48,9 @@
 	<inherits name='com.google.gwt.visualization.Visualization'/>
 
 	<inherits name='com.google.gwt.maps.Maps' />
+	
+	<!-- GWT Crypto for password encryption -->
+	<inherits name="com.googlecode.gwt.crypto.Crypto"/> 
 
 	<!-- Specify the app entry point class. -->
 	<entry-point class='org.ednovo.gooru.client.GooruEntry' />
