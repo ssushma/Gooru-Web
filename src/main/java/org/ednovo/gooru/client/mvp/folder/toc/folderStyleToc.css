@@ -422,6 +422,9 @@
 .folderStucture {
     /* width:395px; */
     margin-left: 12px;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .folderStucture table {
    /*  width:395px; */
@@ -603,7 +606,7 @@
  }
  .dropdownListContainerScrollPanel{
     list-style-type: none;
-    width: 91%;
+    width: 100%;
     color:#999;
  }
  .assignmentsystemMessage{
@@ -791,7 +794,7 @@
 /* Banner Image  css here*/
 .bannerImageContainer {
 	position: relative;
-	height: 191px;
+	height: 177px;
 }
 
 .bannerImageCaption {
