@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.uc.SignUpGradeCourseView;
@@ -101,8 +103,8 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 	}
 
 	@Override
-	public void CreateUser(String postData, final String username, final String password) { 
-		AppClientFactory.getInjector().getUserService().createUser(postData, new SimpleAsyncCallback<UserDo>() {
+	public void CreateUser(Map<String, String> registrationDetailsParams, final String username, final String password) { 
+		AppClientFactory.getInjector().getUserService().createUser(registrationDetailsParams,"notChildReg", new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo result) {
 				if (result!=null){

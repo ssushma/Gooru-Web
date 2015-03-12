@@ -194,7 +194,7 @@ public interface UserService extends BaseService {
 	 *
 	 *
 	 */
-	UserDo createUser(String postData) throws GwtException, ServerDownException;
+	UserDo createUser(Map<String, String> registrationDetailsParams,String regType) throws GwtException, ServerDownException;
 	
 	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException, ServerDownException;
 	
