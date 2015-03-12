@@ -425,7 +425,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {

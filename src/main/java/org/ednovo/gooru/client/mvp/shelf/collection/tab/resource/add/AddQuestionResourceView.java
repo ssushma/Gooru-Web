@@ -933,7 +933,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 //				}
 //			}
 //		}catch(Exception e){
-//			e.printStackTrace();
 //		}
 	}
 	public void removeStyleToBody(AddQuestionAnswerChoice addQuestionAnswerChoice){
@@ -944,7 +943,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 //				}
 //			}
 //		}catch(Exception e){
-//			e.printStackTrace();
 //		}
 	}
 	@Override
@@ -2245,7 +2243,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			
 		}
 		catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		TreeSet<QuestionHintsDo> hintsList = collectionItemDo.getResource().getHints() != null ? collectionItemDo.getResource().getHints() : collectionItemDo.getQuestionInfo().getHints();
@@ -2918,7 +2915,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
  					}
  				}
  			}
- 		}catch(Exception ex){ex.printStackTrace();}
+ 		}catch(Exception ex){}
  	}
  	
  	private boolean eventTargetsPopup(NativeEvent event) {

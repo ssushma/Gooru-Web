@@ -49,7 +49,6 @@ public class AutoSearchKeyWordDeSerializer extends DeSerializer{
 			autoKeywordsList.add(autoSuggestKeywordSearchDo);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return autoKeywordsList;
 	}

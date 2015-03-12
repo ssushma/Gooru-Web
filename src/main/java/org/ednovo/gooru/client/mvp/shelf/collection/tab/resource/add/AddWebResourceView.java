@@ -2415,18 +2415,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		urlTextBox.setText("");
 		titleTextBox.setText("");
 
-		// if(tinyMce!=null){
-		// tinyMce.setEmptyContent("");
-		// }
-		// try {
-		// tinyMce.setEmptyContent("");
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
-
 		descriptionTxtAera.setText("");
-		// resourceTypeListBox.setSelectedIndex(0);
 		generateImageLbl.setVisible(true);
 		setThumbnailImage.setUrl("");
 		if (thumbnailImages != null) {
@@ -2822,7 +2811,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	

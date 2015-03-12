@@ -246,7 +246,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<LibraryUserDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<LibraryUserDo>();
@@ -277,7 +276,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep1, new TypeReference<ArrayList<CourseDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<CourseDo>();
@@ -319,7 +317,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 					lessonDoList.add(lessonDo);
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return lessonDoList;
@@ -353,7 +350,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return subjectList;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new HashMap<String,SubjectDo>();
@@ -438,7 +434,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}*/
 				return JsonDeserializer.deserialize(jsonRepStr, new TypeReference<HashMap<String, StandardsDo>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new HashMap<String,StandardsDo>();
@@ -469,7 +464,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ConceptDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ConceptDo();
@@ -545,7 +539,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}*/
 			} 
 			catch (JSONException e) {
-				e.printStackTrace();
 			} 
 		}
 		return topicDoList;
@@ -712,7 +705,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			}
 			return searchResults;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return new PartnerFolderListDo();
 	}
@@ -779,7 +771,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return secondLevelFolders;
 	}
@@ -813,7 +804,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				conceptDo.setCollectionItems(collectionItems);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return conceptDo;
 	}
@@ -839,7 +829,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			}
 			return searchResults;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return new PartnerFolderListDo();
 	}
@@ -920,7 +909,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return standardCourseList;
 	}
@@ -975,7 +963,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return subjectMap;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new HashMap<String,SubjectDo>();
@@ -1017,7 +1004,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return courseDoList;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<CourseDo>();
@@ -1043,7 +1029,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 					courseDoList.remove(i);
 				}
 			}
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {}
 		courseDoList.add(0, courseDo);
 		return courseDoList;
 	}
@@ -1065,7 +1051,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<UnitDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<UnitDo>();

@@ -503,7 +503,6 @@ public class LoginPopupUc extends PopupPanel{
 							
 							@Override
 							public void onFailure(Throwable caught) {
-								caught.printStackTrace();
 							}
 						});
 					}
@@ -511,7 +510,6 @@ public class LoginPopupUc extends PopupPanel{
 
 					@Override
 					public void onFailure(Throwable caught) {
-						caught.printStackTrace(); 
 						handleInProgress();
 					}
 				});

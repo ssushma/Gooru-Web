@@ -200,7 +200,6 @@ public abstract class ServiceRequest {
 					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return serverStatus;
@@ -261,7 +260,6 @@ public abstract class ServiceRequest {
 				clientResource.getClientInfo().setAgent(userAgentValue);
 			}
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 	}
 	
