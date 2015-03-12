@@ -168,4 +168,20 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		
 //		getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 	}
+
+
+	@Override
+	public void deletAssessment(String assessmentId,final FolderDo folderDo) {
+		AppClientFactory.getInjector().getResourceService().deleteCollection(assessmentId, new com.google.gwt.user.client.rpc.AsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				getView().resetCollectionsAfterDeletingAssessment(folderDo);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
 }

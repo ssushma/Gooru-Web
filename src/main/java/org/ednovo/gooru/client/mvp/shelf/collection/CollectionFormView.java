@@ -908,6 +908,7 @@ public class CollectionFormView extends
 			collPopUpSubheading.setVisible(true);
 			appPopUp.getCloseButton().setVisible(false);
 		if(collectionType!=null&&collectionType.equals("assessment")){
+			appPopUp.setTitle("");
 			pnlCreateNewAssessment.setVisible(true);
 			bodyContainer.setVisible(false);
 			collPopUpMainheading.setVisible(false);

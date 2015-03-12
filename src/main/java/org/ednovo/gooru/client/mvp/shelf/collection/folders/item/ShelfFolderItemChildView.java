@@ -13,6 +13,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPa
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -119,6 +120,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	EditAssessmentPopup editAssessmentPopup=null;
 	
+	Button folderItemDelete=new Button();
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
@@ -257,7 +259,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				});
 				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
 				folderItemEdit.getElement().getStyle().setMarginTop(72, Unit.PX);
-				Button folderItemDelete = new Button(i18n.GL0558());
+				folderItemDelete.setText(i18n.GL0558());
 				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
 				folderItemDelete.getElement().getStyle().setMarginTop(72, Unit.PX);
 				
@@ -285,6 +287,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
 	}
+	
+	
 	/**
 	 * To set the default image of collection/assessment
 	 * @param collectionType {@link String}
@@ -721,6 +725,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		return moveBottomBtn;
 	}
 
+	/**
+	 * @return the delete button
+	 */
+	public Button getDeleteBtn() {
+		return folderItemDelete;
+	}
 	/**
 	 * @param moveBottomBtn the moveBottomBtn to set
 	 */
