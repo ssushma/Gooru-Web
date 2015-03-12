@@ -1338,7 +1338,8 @@ public interface MessageProperties extends Constants {
 	//ppp collection more info
 	String GL1092(); 
 	String GL1093(); 
-	String GL1094(); 
+	String GL1094();
+    String GL1094_1();
 	String GL1095(); 
 	String GL1096(); 
 	String GL1097(); 
