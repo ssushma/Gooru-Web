@@ -469,7 +469,7 @@ public class StringUtil {
 	public static void setDefaultImages(String collectionType, Image imgField, String borderSize) {
 		String borderColor="";
 		if(collectionType!=null){
-			if(collectionType.equals(ASSESSMENT)){
+			if(collectionType.contains(ASSESSMENT)){
 				borderColor= borderSize.equals("high")?"border-left: 10px solid #feae29;":(borderSize.equals("toc")?"border-left: 5px solid #feae29;":"border-left: 8px solid #feae29;");
 				imgField.setUrl(DEFULT_ASSESSMENT);
 		    }else{
