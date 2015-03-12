@@ -128,13 +128,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		while (widgets.hasNext()){
 			final Widget widget = widgets.next();
 			if (widget instanceof LiPanel){
-				Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-				while (childWidgets.hasNext()){
-					final Widget childWidget = childWidgets.next();
-					if(childWidget instanceof HTMLPanel){
-						((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-					}
-				}
+				setHilightData(widget,true);
 			}
 		}
 	}
@@ -162,15 +156,9 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 			final Widget widget = widgets.next();
 			if (widget instanceof LiPanel){
 				for (Map.Entry<Long, String> standardFo : codeList.entrySet()){
-						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getKey().toString())){
-							selectedValues.put(Long.parseLong(standardFo.getKey()+""), standardFo.getValue());
-							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-							while (childWidgets.hasNext()){
-							final Widget childWidget = childWidgets.next();
-							if(childWidget instanceof HTMLPanel){
-							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-							}
-						}
+					if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getKey().toString())){
+						selectedValues.put(Long.parseLong(standardFo.getKey()+""), standardFo.getValue());
+						setHilightData(widget,false);
 					}
 				}
 			}
@@ -194,19 +182,27 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 			final Widget widget = widgets.next();
 			if (widget instanceof LiPanel){
 				 for (StandardFo standardFo : codeList) {
-						if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
-							selectedValues.put(Long.parseLong(standardFo.getCodeId()+""), standardFo.getLabel());
-							Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
-							while (childWidgets.hasNext()){
-							final Widget childWidget = childWidgets.next();
-							if(childWidget instanceof HTMLPanel){
-							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-							}
-						}
+					if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getCodeId().toString())){
+						selectedValues.put(Long.parseLong(standardFo.getCodeId()+""), standardFo.getLabel());
+						setHilightData(widget,false);
 					}
 				}
 			}
 		}
+	}
+	
+	public void setHilightData(Widget widget,boolean isReset){
+		Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+		while (childWidgets.hasNext()){
+		final Widget childWidget = childWidgets.next();
+		if(childWidget instanceof HTMLPanel){
+			if(isReset){
+				((HTMLPanel) childWidget).getWidget(0).removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+			}else{
+				((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+			}
+		}
+	  }
 	}
 
 	@UiHandler("addCenturyBtn")

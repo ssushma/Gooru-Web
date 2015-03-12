@@ -1,9 +1,11 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders.item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -17,6 +19,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -263,6 +266,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				folderItemLbl.addStyleName("secondary");
 				folderItemEdit.addStyleName("secondary");
 				folderItemDelete.addStyleName("secondary");
+				folderItemDelete.addClickHandler(new DeleteAssessment(folderDo));
 				
 				folderItemLbl.addClickHandler(new ClickHandler() {
 					@Override
@@ -284,6 +288,44 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
 	}
+	/**
+	 * This inner class will handle the delete assessment(create from existing url)
+	 * @author Gooru Team
+	 */
+	class DeleteAssessment implements ClickHandler{
+		boolean isOwnerUsedInOwnCollection=false,isCollabUsedThisCollection = false;;
+		DeleteAssessment(){}
+		public DeleteAssessment(final FolderDo folderDo) {
+			AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(folderDo.getGooruOid(), "", new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
+				@Override
+				public void onSuccess(ArrayList<ClassPageCollectionDo> result) {
+					if (result.size() > 0){
+						isOwnerUsedInOwnCollection = true;
+					}
+					AppClientFactory.getInjector().getClasspageService().getCollectionUsedCount(folderDo.getGooruOid(), new SimpleAsyncCallback<Integer>() {
+						@Override
+						public void onSuccess(Integer result) {
+							if (result>0){
+								isCollabUsedThisCollection = true;
+							}
+							/*if (isOwnerUsedInOwnCollection && isCollabUsedThisCollection){
+								showCollectionIsByBoth(count);
+							}else if (isOwnerUsedInOwnCollection){
+								showCollectionIsUsedByOwner();
+							}else if (isCollabUsedThisCollection){
+								showCollectionIsByBoth(count);
+							}else{
+								showDeletePopup();
+							}*/
+						}
+					});
+				}
+			});
+		}
+		@Override
+		public void onClick(ClickEvent event) {	}
+	}
+	
 	/**
 	 * To set the default image of collection/assessment
 	 * @param collectionType {@link String}
