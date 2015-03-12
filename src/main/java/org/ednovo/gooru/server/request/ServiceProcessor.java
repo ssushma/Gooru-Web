@@ -45,8 +45,8 @@ public class ServiceProcessor {
 		
 		if (context == null){
 			 context = new Context();
-			 context.getParameters().set("maxConnectionsPerHost","10");
-			 context.getParameters().set("maxTotalConnections","100");			 
+			 context.getParameters().set("maxConnectionsPerHost","15");
+			 context.getParameters().set("maxTotalConnections","15");			 
 		 }
 		
 		ClientResource clientRes = new ClientResource(context, url);

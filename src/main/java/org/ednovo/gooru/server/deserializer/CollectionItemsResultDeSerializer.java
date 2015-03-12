@@ -78,19 +78,22 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 	@Override
 	public CollectionItemSearchResultDo deserializeRecord(JSONObject collectionItemJsonObject) {
 		CollectionItemSearchResultDo collectionItemSearchResultDo=new CollectionItemSearchResultDo();
-	
 		try{
 			JSONObject recordJsonObject=collectionItemJsonObject.getJSONObject(RESOURCE);
 			collectionItemSearchResultDo.setCollectionItemId(getJsonString(collectionItemJsonObject, COLLECTION_ITEM_ID));
 			collectionItemSearchResultDo.setItemSequence(stringtoInteger(collectionItemJsonObject, ITEM_SEQUENCE));
 			try {
 				
-				JSONObject ratingsObj = recordJsonObject.getJSONObject(RATINGS);
-				collectionItemSearchResultDo.setRatings(JsonDeserializer.deserialize(ratingsObj.toString(), SearchRatingsDo.class));
+				if(!recordJsonObject.isNull(RATINGS)){
+					JSONObject ratingsObj = recordJsonObject.getJSONObject(RATINGS);
+					collectionItemSearchResultDo.setRatings(JsonDeserializer.deserialize(ratingsObj.toString(), SearchRatingsDo.class));
+				}
 				
-				JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
-				collectionItemSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
-				collectionItemSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
+				if(!recordJsonObject.isNull(RESOURCE_TYPE)){
+					JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
+					collectionItemSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
+					collectionItemSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
+				}
 				
 				//JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 				if(getJsonString(recordJsonObject, RESOURCE_SOURCE) != null){
