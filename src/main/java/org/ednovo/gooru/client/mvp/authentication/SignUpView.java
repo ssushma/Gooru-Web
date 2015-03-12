@@ -45,6 +45,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -457,8 +458,8 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 			}
 			//Send data to create user.
 			@Override
-			public void CreateUser(String data, String loginData) {
-				getUiHandlers().CreateUser(data, loginData);
+			public void CreateUser(String data, String username,String password) {
+				getUiHandlers().CreateUser(data, username, password);
 			}
 
 			@Override

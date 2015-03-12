@@ -318,7 +318,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 	public abstract void OpenPrivacy();
 
-	public abstract void CreateUser(String data, String loginData);
+	public abstract void CreateUser(String data, String username,String password); 
 
 	/**
 	 * 
@@ -466,7 +466,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 													login.put("username", new JSONString(userName));
 													login.put("password", new JSONString(password));
 
-													CreateUser(userCreate.toString(), login.toString());
+													CreateUser(userCreate.toString(), userName,password);
 												} else {
 													MixpanelUtil.continue_Child_registration();
 													closePoup();

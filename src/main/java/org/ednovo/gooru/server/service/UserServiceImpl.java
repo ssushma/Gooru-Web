@@ -62,6 +62,7 @@ import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,6 +99,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	private static final String PROFILE = "profile";
 	
 	private static final String USER_META_ACTIVE_FLAG = "&userMetaActiveFlag=1";
+	
+	private static final String TOKEN="token";
+	private static final String PWD="password";
+	private static final String MAIL_CONFORMATION="mailConfirmationUrl";
+	
 	
 	
 	public static final String FIELDS="fields";
@@ -232,12 +238,23 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> resetCredential(String formData) {
+	public Map<String, Object> resetCredential(String token, String password, String mailConfirmationUrl) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		String message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";
+		JsonResponseRepresentation jsonResponseRep = null;
+		JSONObject formData = new JSONObject();
+		try {
+			
+			String decryptedPwd = StringUtil.getDecryptedData(password);
+			
+			formData.put(TOKEN, token);
+			formData.put(PWD, decryptedPwd);
+			formData.put(MAIL_CONFORMATION, mailConfirmationUrl);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
+			jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			String message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";
+		} catch (Exception e) {
+		}
 		return resourceDeserializer.resetPassword(jsonRep,jsonResponseRep.getStatusCode(),jsonResponseRep.getResponseDo().getErrorMessage(), jsonResponseRep.getResponseDo() !=null ? jsonResponseRep.getResponseDo() : null); 
 	}
 

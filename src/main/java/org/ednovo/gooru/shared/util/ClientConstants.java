@@ -314,4 +314,6 @@ public interface ClientConstants {
 	String IMG="img";
 	/***Player share constants end***/
 	
+	String CRYPTO_KEY = "ErGwDuu9YEwqMpF7AxnGzjJx"; // Don't modify this key
+	
 }
