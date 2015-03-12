@@ -319,6 +319,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 					folderDo.setUrl(result.getUrl());
 					folderDo.setGoals(result.getGoals());
 					folderDo.setSharing(result.getSharing());
+					folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
 					itemTitle.setText(folderDo.getTitle());
 					editAssessmentPopup.hide();
 					Window.enableScrolling(true);

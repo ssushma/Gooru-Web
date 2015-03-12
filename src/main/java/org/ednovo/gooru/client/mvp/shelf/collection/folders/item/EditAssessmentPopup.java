@@ -77,11 +77,6 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.folderDo=folderDo;
 		
-		//Set default selection 
-		requireLoginYes.setValue(false);
-		requireLoginNo.setValue(true);
-		
-		
 		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3168());
 		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
 		if(!StringUtil.isEmpty(folderDo.getTitle()))
@@ -99,6 +94,11 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 			}else{
 				rdBtnAssessmentShare.setValue(true);
 			}
+		}
+		if(folderDo.getSettings()!=null && folderDo.getSettings().getIsLoginRequired()!=null && folderDo.getSettings().getIsLoginRequired().equalsIgnoreCase("true")){
+			requireLoginYes.setValue(true);
+		}else{
+			requireLoginNo.setValue(true);
 		}
 		// This will handle the focus on existing assessment title.
 		txtExistingAssessmentTitle.addFocusHandler(new FocusHandler() {
@@ -135,6 +135,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		if(rdBtnAssessmentPrivate.getValue()){
 			privacy=PRIVATE;
 		}
+		
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblExistingAssessmentError.setVisible(true);
 			lblExistingAssessmentError.setText(i18n.GL1026());
@@ -172,7 +173,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 										lblExistingAssessmentURLError.setVisible(false);
 										lblExistingAssessmentURLError.setText("");
 										//Update code here
-										AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,"", new AsyncCallback<FolderDo>() {
+										AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,requireLoginYes.getValue().toString(), new AsyncCallback<FolderDo>() {
 											
 											@Override
 											public void onSuccess(FolderDo result) {

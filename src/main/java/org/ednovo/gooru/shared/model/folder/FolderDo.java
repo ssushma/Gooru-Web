@@ -27,6 +27,7 @@ package org.ednovo.gooru.shared.model.folder;
 import java.io.Serializable;
 import java.util.List;
 
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
@@ -56,6 +57,7 @@ public class FolderDo implements Serializable{
 	private String description;
 	private String url;
 	private String goals;
+	private CollectionSettingsDo settings;
 
 	public FolderDo(){}
 	
@@ -257,5 +259,12 @@ public class FolderDo implements Serializable{
 	}
 	public void setGoals(String goals) {
 		this.goals = goals;
+	}
+
+	public CollectionSettingsDo getSettings() {
+		return settings;
+	}
+	public void setSettings(CollectionSettingsDo settings) {
+		this.settings = settings;
 	}
 }
