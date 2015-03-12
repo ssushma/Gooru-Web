@@ -1,11 +1,9 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders.item;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -15,11 +13,11 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPa
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -122,6 +120,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	EditAssessmentPopup editAssessmentPopup=null;
 	
+	Button folderItemDelete=new Button();
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
@@ -259,14 +258,13 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				});
 				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
 				folderItemEdit.getElement().getStyle().setMarginTop(72, Unit.PX);
-				Button folderItemDelete = new Button(i18n.GL0558());
+				folderItemDelete.setText(i18n.GL0558());
 				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
 				folderItemDelete.getElement().getStyle().setMarginTop(72, Unit.PX);
 				
 				folderItemLbl.addStyleName("secondary");
 				folderItemEdit.addStyleName("secondary");
 				folderItemDelete.addStyleName("secondary");
-				folderItemDelete.addClickHandler(new DeleteAssessment(folderDo));
 				
 				folderItemLbl.addClickHandler(new ClickHandler() {
 					@Override
@@ -288,43 +286,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
 	}
-	/**
-	 * This inner class will handle the delete assessment(create from existing url)
-	 * @author Gooru Team
-	 */
-	class DeleteAssessment implements ClickHandler{
-		boolean isOwnerUsedInOwnCollection=false,isCollabUsedThisCollection = false;;
-		DeleteAssessment(){}
-		public DeleteAssessment(final FolderDo folderDo) {
-			AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(folderDo.getGooruOid(), "", new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
-				@Override
-				public void onSuccess(ArrayList<ClassPageCollectionDo> result) {
-					if (result.size() > 0){
-						isOwnerUsedInOwnCollection = true;
-					}
-					AppClientFactory.getInjector().getClasspageService().getCollectionUsedCount(folderDo.getGooruOid(), new SimpleAsyncCallback<Integer>() {
-						@Override
-						public void onSuccess(Integer result) {
-							if (result>0){
-								isCollabUsedThisCollection = true;
-							}
-							/*if (isOwnerUsedInOwnCollection && isCollabUsedThisCollection){
-								showCollectionIsByBoth(count);
-							}else if (isOwnerUsedInOwnCollection){
-								showCollectionIsUsedByOwner();
-							}else if (isCollabUsedThisCollection){
-								showCollectionIsByBoth(count);
-							}else{
-								showDeletePopup();
-							}*/
-						}
-					});
-				}
-			});
-		}
-		@Override
-		public void onClick(ClickEvent event) {	}
-	}
+	
 	
 	/**
 	 * To set the default image of collection/assessment
@@ -762,6 +724,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		return moveBottomBtn;
 	}
 
+	/**
+	 * @return the delete button
+	 */
+	public Button getDeleteBtn() {
+		return folderItemDelete;
+	}
 	/**
 	 * @param moveBottomBtn the moveBottomBtn to set
 	 */
