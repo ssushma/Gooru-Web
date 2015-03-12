@@ -221,7 +221,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
-	Set<StandardFo> centuryDo=new HashSet<StandardFo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
@@ -253,7 +252,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	PopupPanel centuryPopup=new PopupPanel();
 	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
 	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
-	List<StandardFo> resourceSkils=null;
+
 	
 	public EditResourcePopupVc(CollectionItemDo collectionItemDo) {
 		super();
@@ -1038,31 +1037,19 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-			centurySelectedValues=centuryPresenterWidget.getSelectedValues();
-			centuryPanel.clear();
-			resourceSkils.clear();
-				if(centurySelectedValues!=null && centurySelectedValues.size()>0){				
+				centurySelectedValues.clear();
+				centurySelectedValues.putAll(centuryPresenterWidget.getSelectedValues());
+				centuryPanel.clear();
+				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
 					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
-						StandardFo codeObj=new StandardFo();
-						codeObj.setCodeId(Integer.parseInt(entry.getKey()+""));
-						codeObj.setCode(entry.getValue());
-						centuryDo.add(codeObj);
-						
 						CodeDo codeObjStandard=new CodeDo();
 						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
 						codeObjStandard.setCode(entry.getValue());
 						standardsDo.add(codeObjStandard);
-						
 						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
-						StandardFo centurySkillsObj = new StandardFo();
-						centurySkillsObj.setCode(entry.getValue());
-						centurySkillsObj.setCodeId(Integer.parseInt(entry.getKey()+""));
-						centurySkillsObj.setLabel(entry.getValue());
-						resourceSkils.add(centurySkillsObj);
-					 
 					}
 				}
-			hideCenturyPopup();
+				hideCenturyPopup();
 			}
 		});
 	}
@@ -1077,18 +1064,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				if(centuryDo!=null && centuryDo.size()>0){
-					for (StandardFo codeObj : centuryDo) {			
+				if(standardsDo!=null && standardsDo.size()>0){
+					for (CodeDo codeObj : standardsDo) {			
 						if(codeObj.getCodeId()==Integer.parseInt(id)){			
-							centuryDo.remove(codeObj);
 							standardsDo.remove(codeObj);
-						}
-					}
-				}
-				if(resourceSkils!=null && resourceSkils.size()>0){
-					for (StandardFo standardObj : resourceSkils) {
-						if(standardObj.getCodeId()==Integer.parseInt(id)){
-							resourceSkils.remove(standardObj);
+							centurySelectedValues.remove(Long.parseLong(id));
 							this.getParent().removeFromParent();
 							return;
 						}
@@ -1593,16 +1573,17 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			updateStandardsAdvancedSetupStyle();
 		}
 		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
-			resourceSkils=collectionItemDo.getResource().getSkills();
 			centuryPanel.clear();
-			for (StandardFo standardObj : resourceSkils) {
+			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
 				 CodeDo codeObj=new CodeDo();
 				 codeObj.setCodeId(standardObj.getCodeId());
-				 codeObj.setLabel(standardObj.getLabel());
+				 codeObj.setCode(standardObj.getLabel());
 				 standardsDo.add(codeObj);
+				 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
 				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
 			}
-			updateCenturyAdvancedSetupStyle();
+            updateCenturyAdvancedSetupStyle();
+
 		}
 	}
 
@@ -2498,31 +2479,16 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 	}
 	public void addCentury(String centuryTag, String id) {
-		/*if (centuryPanel.getWidgetCount() <5) {*/
-			if (centuryTag != null && !centuryTag.isEmpty()) {
-				StandardFo codeObj=new StandardFo();
-				String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
-				codeObj.setCodeId(Integer.parseInt(codeIdVal));
-				codeObj.setCode(centurySgstBox.getValue());
-				centuryDo.add(codeObj);
-				centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
-				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
-				
-				CodeDo codeObjStandard=new CodeDo();
-				codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
-				codeObjStandard.setCode(centurySgstBox.getValue());
-				standardsDo.add(codeObjStandard);
-				
-				StandardFo centurySkillsObj = new StandardFo();
-				centurySkillsObj.setCode(centurySgstBox.getValue());
-				centurySkillsObj.setCodeId(Integer.parseInt(Long.parseLong(codeIdVal)+""));
-				centurySkillsObj.setLabel(centurySgstBox.getValue());
-				resourceSkils.add(centurySkillsObj);
-			}
-	/*	} else {
-			standardMaxShow();
-			standardSgstBox.setText("");
-		}*/
+		if (centuryTag != null && !centuryTag.isEmpty()) {
+			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());				
+			CodeDo codeObjStandard=new CodeDo();
+			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
+			codeObjStandard.setCode(centurySgstBox.getValue());
+			standardsDo.add(codeObjStandard);
+			
+			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
+			centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
+		}
 	}
 	public void standardMaxShow() {
 		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
@@ -3002,7 +2968,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("browseCentury")
 	public void onClickOfBrowseCentury(ClickEvent e){
 		centuryPopup.clear();
-		centuryPresenterWidget.setEditResourceData(resourceSkils);
+		centuryPresenterWidget.setAddResourceData(centurySelectedValues);
 		centuryPopup.add(centuryPresenterWidget.getWidget());
 		centuryPopup.show();
 		centuryPopup.center();

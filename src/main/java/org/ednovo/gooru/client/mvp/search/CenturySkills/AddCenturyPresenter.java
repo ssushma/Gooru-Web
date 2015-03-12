@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -134,5 +135,10 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	@Override
 	public void setAddResourceData(Map<Long, String> codeList) {
 		getView().setAddResourceData(codeList);
+	}
+	
+	@Override
+	public void setAddResourceDataAddTags(ArrayList<String> centuryDo) {
+		getView().setAddResourceDataForTags(centuryDo);
 	}
 }

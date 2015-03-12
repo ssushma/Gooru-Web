@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -78,4 +79,7 @@ public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCentu
 	 * @param codeList
 	 */
 	void setAddResourceData(Map<Long,String> codeList);
+
+	void setAddResourceDataForTags(ArrayList<String> centuryDo);
+
 }

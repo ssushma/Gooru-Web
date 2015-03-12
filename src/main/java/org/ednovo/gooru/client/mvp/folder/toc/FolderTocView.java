@@ -99,7 +99,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel;
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
@@ -158,6 +158,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTocTree);
 		folderTocTree.addItem(getLoadingImage());
+		int windowHeight=Window.getClientHeight()-(177+52); 
+		whiteBgContainer.getElement().setAttribute("style", "min-height:"+windowHeight+"px");
 		folderTocTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
@@ -540,6 +542,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public class ResizeLogicEvent implements ResizeHandler{
 		@Override
 		public void onResize(ResizeEvent event) {
+			int windowHeight=Window.getClientHeight()-(177+52); 
+			whiteBgContainer.getElement().setAttribute("style", "min-height:"+windowHeight+"px");
 			marginDiv.getElement().getStyle().setMarginTop(0, Unit.PX);
 			marginDiv.getElement().getStyle().setMarginBottom(0,  Unit.PX);
 			marginDiv.getElement().getStyle().setMarginLeft(getTotalViewableWidth(),  Unit.PX);
@@ -555,6 +559,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImage.setVisible(false);
 		hideProfileOrLibraryPanel(false);
 		if(!StringUtil.isEmpty(placetoken)){
+			if(placetoken.equalsIgnoreCase("rusd"))
+			{
+				bannerLogoImageContainer.getElement().getStyle().setBottom(6, Unit.EM);
+			}
+			else
+			{
+				bannerLogoImageContainer.getElement().getStyle().setBottom(17, Unit.PX);
+			}
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(convertHtml(bannerVal.get(placetoken).get(1)));
 			logoImage.setUrl(bannerVal.get(placetoken).get(2));
@@ -565,6 +577,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				bannerTitle.removeStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 			}
 			setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
+			
 		}
 	}
 	/**
