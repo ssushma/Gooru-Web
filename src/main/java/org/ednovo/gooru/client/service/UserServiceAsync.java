@@ -83,7 +83,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
 	void getUserPublicProfilePage(String gooruUid,
 			AsyncCallback<ProfilePageDo> callback);
     
-   void createUser(String postData, AsyncCallback<UserDo> callback);
+   void createUser(Map<String, String> registrationDetailsParams,String regType, AsyncCallback<UserDo> callback);
 
    void updateNewEmailStatus(String emailId, boolean isEmailConfirmed,
 		AsyncCallback<Void> callback);
