@@ -72,9 +72,9 @@ public class FolderCollectionView extends Composite {
 	}
 	@UiField FlowPanel pnlResources;
 	@UiField H4Panel lblCollectionTitle;
-	@UiField Label lblCollectionDesc;
+	@UiField Label lblCollectionDesc,imgLock;
 	@UiField HTMLPanel collectionTypePanel;
-	@UiField Image imgLock;
+
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	FolderTocCBundle res;
@@ -93,7 +93,6 @@ public class FolderCollectionView extends Composite {
 		}else{
 			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/collection-small-icon.png') no-repeat 8px 4px;padding-left: 34px;");
 		}
-		imgLock.setUrl("../images/folders/lock-icon.png");
 		imgLock.setVisible(false);
 		if(folderDo.getSettings()!=null && folderDo.getSettings().getIsLoginRequired()!=null){
 			imgLock.setVisible(Boolean.parseBoolean(folderDo.getSettings().getIsLoginRequired()));
