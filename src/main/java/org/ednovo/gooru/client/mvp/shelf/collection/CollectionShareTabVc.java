@@ -179,10 +179,9 @@ public class CollectionShareTabVc extends Composite {
 		this.collection = collection;
 		initWidget(uiBinder.createAndBindUi(this));
 		shareViaText = new HTMLPanel("");
-		visibilityText.setText(i18n.GL0842());
+
 		visibilityText.getElement().setId("lblVisibilityText");
-		visibilityText.getElement().setAttribute("alt",i18n.GL0842());
-		visibilityText.getElement().setAttribute("title",i18n.GL0842());
+
 		
 		visibilityTextTeacherTip.setText(i18n.GL1658());
 		visibilityTextTeacherTip.getElement().setId("lblVisibilityTextTeacherTip");
@@ -193,6 +192,9 @@ public class CollectionShareTabVc extends Composite {
 		
 		if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
 		{		
+			visibilityText.setText(i18n.GL3186());
+			visibilityText.getElement().setAttribute("alt",i18n.GL3186());
+			visibilityText.getElement().setAttribute("title",i18n.GL3186());
 		visibilityOptiontextTeacherTip.setText(i18n.GL3177());
 		visibilityOptiontextTeacherTip.getElement().setId("lblVisibilityOptiontextTeacherTip");
 		visibilityOptiontextTeacherTip.getElement().setAttribute("alt",i18n.GL3177());
@@ -205,6 +207,9 @@ public class CollectionShareTabVc extends Composite {
 		}
 		else
 		{
+			visibilityText.setText(i18n.GL0842());
+			visibilityText.getElement().setAttribute("alt",i18n.GL0842());
+			visibilityText.getElement().setAttribute("title",i18n.GL0842());
 		visibilityOptiontextTeacherTip.setText(i18n.GL1659());
 		visibilityOptiontextTeacherTip.getElement().setId("lblVisibilityOptiontextTeacherTip");
 		visibilityOptiontextTeacherTip.getElement().setAttribute("alt",i18n.GL1659());
