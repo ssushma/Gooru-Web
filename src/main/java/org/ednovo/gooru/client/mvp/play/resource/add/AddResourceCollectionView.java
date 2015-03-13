@@ -80,6 +80,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceCollectionUiHandlers> implements IsAddResourceCollectionView{
 
 
+	private static final String ASSESSMENT = "assessment";
+
 	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
 
 	interface ResourceShareViewUiBinder extends UiBinder<Widget, AddResourceCollectionView> {
@@ -285,8 +287,12 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			this();
 			folderContainer.addStyleName(levelStyleName);
 		}
-		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,int itemsCount){
+		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,int itemsCount,String collectionType){
 			this();
+			System.out.println("collectiontreeitem+"+collectionType);
+			if(ASSESSMENT.equals(collectionType)){
+				folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().folderAssessment());
+			}
 			if(levelStyleName!=null){
 				folderContainer.addStyleName(levelStyleName);
 			}
@@ -344,8 +350,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 						 }
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+					 }else{
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount(),collectionType));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -384,8 +391,9 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 						 }
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+					 }else{
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount(),collectionType));
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
