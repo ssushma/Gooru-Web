@@ -16,7 +16,7 @@
 							<g:Image  styleName="img-responsive" ui:field="bannerImage"/>
 							<g:HTMLPanel styleName="{tocStyle1.bannerImageCaption}">
 								<tbp:H2Panel ui:field="bannerTitle"></tbp:H2Panel>
-								<g:HTMLPanel styleName="{tocStyle1.sublogoContainer}">
+								<g:HTMLPanel ui:field="bannerLogoImageContainer" styleName="{tocStyle1.sublogoContainer}">
 									<g:Image  ui:field="logoImage"/>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
@@ -29,7 +29,7 @@
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<!--  Profile banner image end here -->
-					<g:HTMLPanel styleName="{tocStyle.whitebg}">
+					<g:HTMLPanel ui:field="whiteBgContainer" styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
 						    <g:HTMLPanel styleName="{tocStyle1.paginationBlock}">
 							   <g:HTMLPanel ui:field="breadCrumbsPanel">
