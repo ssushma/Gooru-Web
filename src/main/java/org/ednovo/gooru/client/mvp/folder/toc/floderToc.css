@@ -119,10 +119,13 @@ button.primary:hover {
 }
 
 .marginDiv h4 {
-	color: #0066cc;
+	color: #06c;
 	font-weight: bold;
+	min-width: 10%;
 	line-height: 25px;
-	/* margin: 30px 0 10px 0; */
+	width: auto;
+	display: inline-block;
+	margin-top: 0;
 }
 
 .categoryFilterContainer .filterCheckBox label {

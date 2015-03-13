@@ -46,5 +46,6 @@ public interface FolderTocCBundle extends ClientBundle{
 		String audio();
 		String sequenceNumner();
 		String resourceTitle();
+		String lockImage();
 	}
 }
