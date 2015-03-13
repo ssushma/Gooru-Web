@@ -24,16 +24,19 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search.CenturySkills;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.ednovo.gooru.client.uc.AppPopUpCentury;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.model.skils.NodeDo;
@@ -77,6 +80,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
 	Map<Long,String> selectedValues=new HashMap<Long,String>();
+	Map<Long,String> initialSelectedValues=new HashMap<Long,String>();
 
 	@UiTemplate("AddCenturyView.ui.xml")
 	interface AddCenturyViewUiBinder extends UiBinder<Widget, AddCenturyView> {
@@ -146,6 +150,19 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		}
 	}
 	/**
+	 * This method will set the data when add popup clicked and removing the 21 century skills values
+	 * @param codeList
+	 */
+	private void setPopupAddHilightDataForAddTags(ArrayList<String> centuryDo) {
+		selectedValues.clear();
+		resetPopupHilightedData();	
+		if(centuryDo!=null && centuryDo.size()>0){
+			setPopupAddHilightDataForAddTags(ulCongitiveAndStrategies,centuryDo);
+			setPopupAddHilightDataForAddTags(ulKeyContentKnowledge,centuryDo);
+			setPopupAddHilightDataForAddTags(ulKeyLearningSkills,centuryDo);
+		}
+	}
+	/**
 	 * This method will set the data for passed ulPanel
 	 * @param ulPanel
 	 * @param codeList
@@ -159,6 +176,34 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 					if(Long.toString(((LiPanel) widget).getCodeId()).equalsIgnoreCase(standardFo.getKey().toString())){
 						selectedValues.put(Long.parseLong(standardFo.getKey()+""), standardFo.getValue());
 						setHilightData(widget,false);
+					}
+				}
+			}
+		}
+	}
+	/**
+	 * This method will set the data for passed ulPanel
+	 * @param ulPanel
+	 * @param codeList
+	 */
+	public void setPopupAddHilightDataForAddTags(UlPanel ulPanel,ArrayList<String> centuryDo){
+		Iterator<Widget> widgets=ulPanel.iterator();
+		while (widgets.hasNext()){
+			final Widget widget = widgets.next();
+			if (widget instanceof LiPanel){
+				
+				for(int i=0;i<centuryDo.size();i++){
+					if((((LiPanel) widget).getTitle()).equalsIgnoreCase(centuryDo.get(i).toString())){
+						Random rand= new Random();
+						selectedValues.put(Long.parseLong((rand.nextInt(900) + 100)+""), centuryDo.get(i).toString());
+						centuryDo.remove(centuryDo.get(i).toString());
+						Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
+						while (childWidgets.hasNext()){
+						final Widget childWidget = childWidgets.next();
+						if(childWidget instanceof HTMLPanel){
+						 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+						}
+						}
 					}
 				}
 			}
@@ -248,6 +293,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 			liPanel=new LiPanel();
 			if(!StringUtil.isEmpty(nodeObj.getCode())){
 				liPanel.setCodeId(nodeObj.getCodeId());
+				liPanel.setTitle(nodeObj.getLabel().trim());
 				AddCenturyColorPanelWidget addCenturyColorPanelWidget=new AddCenturyColorPanelWidget(nodeObj.getCode());
 				liPanel.add(addCenturyColorPanelWidget);
 			}
@@ -258,10 +304,12 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				@Override
 				public void onClick(ClickEvent event) {
 					if(titleText.getElement().getClassName().contains(AddCenturyBundle.INSTANCE.css().hilighTitleText())){
-						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-						if(selectedValues.containsKey(nodeObj.getCodeId())){
-							selectedValues.remove(nodeObj.getCodeId());
-						}
+						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());			
+						for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
+							if(selectedValues.containsValue(entry.getValue().trim())){
+								selectedValues.remove(entry.getKey());
+							}
+						}						
 					}else{
 						selectedValues.put(nodeObj.getCodeId(), nodeObj.getLabel());
 						titleText.addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
@@ -320,5 +368,9 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	@Override
 	public void setAddResourceData(Map<Long, String> codeList) {
 		setPopupAddHilightData(codeList);
+	}
+	@Override
+	public void setAddResourceDataForTags(ArrayList<String> centuryDo) {
+		setPopupAddHilightDataForAddTags(centuryDo);
 	}
 }

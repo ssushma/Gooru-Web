@@ -320,5 +320,6 @@ button.primary:hover {
 	font-weight: bold;
 }
 .btnBackToPrevious{
+	float:right;
 	margin-bottom: 15px;
 }

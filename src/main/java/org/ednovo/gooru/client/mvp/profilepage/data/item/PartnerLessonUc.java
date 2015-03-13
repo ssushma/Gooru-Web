@@ -53,6 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PartnerLessonUc extends Composite{
 
+	private static final String ASSESSMENT = "assessment";
 	@UiField HTMLPanel lessonList;
 	@UiField ProfilePageLibraryStyleBundle style;
 	private Integer topicId;
@@ -186,8 +187,13 @@ public class PartnerLessonUc extends Composite{
 			lessonId = lessonNumber;
 			conceptId = profileLibraryDo.getGooruOid();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
+				if(profileLibraryDo.getCollectionType().contains(ASSESSMENT)){
+					lessonTitle.addStyleName(style.assessment());
+				}else{
+					lessonTitle.addStyleName(style.collection());
+				}
 				lessonTitle.addStyleName(style.lessonTitle());
-				lessonTitle.addStyleName(style.collection());
+				
 			} else {
 				//lessonTitle.addStyleName(style.libraryTitle());
 				lessonTitle.addStyleName(style.libraryConceptTitle());

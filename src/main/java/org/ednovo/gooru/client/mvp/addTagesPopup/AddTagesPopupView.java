@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -68,6 +69,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -144,22 +146,28 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	AppSuggestBox standardSgstBox;
 	
 	@UiField(provided = true)	
-	AppCenturyTagSuggestBox centuarySgstBox;
+	AppSuggestBox centurySgstBox;
 
 	PopupPanel centuryPopup=new PopupPanel();
 	
-	Map<Long, String> centurySelectedValues;
+	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
+
 	
-	@UiField FlowPanel standardContainer,standardsPanel,centuaryContainer,centuaryPanel;
+	@UiField FlowPanel standardContainer,standardsPanel,centuaryContainer,centuryPanel;
 	private AppMultiWordSuggestOracle standardSuggestOracle;
+	private AppMultiWordSuggestOracle centurySuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	private SearchDo<StandardFo> centurySearchDo = new SearchDo<StandardFo>();
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	String courseCode="";
 	boolean isEditResource=true;
 	ArrayList<String> standardsDo=new ArrayList<String>();
 	ArrayList<String> centuryDo=new ArrayList<String>();
+	ArrayList<String> centuryTempDo=new ArrayList<String>();
+	
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
@@ -536,6 +544,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 					@Override
 			public void onClick(ClickEvent event) {
 				centuryPopup.clear();
+				centuryPresenterWidget.setAddResourceDataAddTags(centuryDo);
 				centuryPopup.add(centuryPresenterWidget.getWidget());
 				centuryPopup.show();
 				centuryPopup.center();
@@ -546,6 +555,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					centuryDo.add(entry.getValue());
+				}
+				
 						hideCenturyPopup();
 			}
 		});
@@ -553,21 +566,27 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					centuryDo.add(entry.getValue());
+				}
 						hideCenturyPopup();
 			}
 		});
 		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event) {		
+				centuryPanel.clear();
+				centuryDo.clear();
 				centurySelectedValues=centuryPresenterWidget.getSelectedValues();
 				if(centurySelectedValues!=null && centurySelectedValues.size()>0){
 					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
 						centuryDo.add(entry.getValue());
-						centuaryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
 					}
 				}
 				hideCenturyPopup();
 			}
+			
 		});
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
 		ScrollPopupUtil.ScrollPopupUtilWidget(addTagesContent,true);
@@ -585,6 +604,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			public void onCloseLabelClick(ClickEvent event) {
 				for(int i=0;i<centuryDo.size();i++){
 					if(centuryDo.get(i).toString().equalsIgnoreCase(centuryCode)){
+						centurySelectedValues.remove(i);
 						centuryDo.remove(centuryDo.get(i).toString());
 					}
 				}
@@ -616,6 +636,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 */
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle= new AppMultiWordSuggestOracle(true); 
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
@@ -677,56 +698,30 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		
 		standardSgstBox.addSelectionHandler(this);
 		
-		centuarySgstBox = new AppCenturyTagSuggestBox(standardSuggestOracle) {
+		centurySgstBox = new AppSuggestBox(centurySuggestOracle) {
 			
 			@Override
-			public void keyAction(String text,KeyUpEvent event) {
+			public void keyAction(String text, KeyUpEvent event) {
 				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
-				standardSearchDo.setSearchResults(null);
-				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
-				if(!courseCode.isEmpty()) {
-					Map<String,String> filters = new HashMap<String, String>();
-					filters.put(FLT_CODE_ID,courseCode);
-					filters.put(FLT_SOURCE_CODE_ID,courseCode);
-					standardSearchDo.setFilters(filters);
-				}
-				standardSearchDo.setQuery(text);
+				//standardsPreferenceOrganizeToolTip.hide();
+				centurySearchDo.setSearchResults(null);
+				centurySearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
-					standardSuggestOracle.clear();
-					if(standardPreflist!=null){
-						for(int count=0; count<standardPreflist.size();count++) {
-							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CASK5")||text.contains("CAELD")||text.contains("CSC")) {
-							if(text.contains(standardPreflist.get(count))) {
-								standardsPrefDisplayPopup = true;
-								break;
-							} else {
-								standardsPrefDisplayPopup = false;
+						AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new AsyncCallback<SearchDo<StandardFo>>() {
+							
+							@Override
+							public void onSuccess(SearchDo<StandardFo> result) {
+								setCenturySuggestions(result);
+								
 							}
-							}else{
-								standardsPrefDisplayPopup = true;
-							}
+
+							@Override
+							public void onFailure(Throwable caught) {
+								
+							}							
+						});
+						centurySgstBox.showSuggestionList();
 						}
-						
-					}
-						
-					if(standardsPrefDisplayPopup){
-						standardsPreferenceOrganizeToolTip.hide();
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-					}
-					else{
-						standardSgstBox.hideSuggestionList();
-						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-						//standardSuggestOracle.add(i18n.GL1613);
-					}
-					
-					}
 			}
 
 			@Override
@@ -736,17 +731,31 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		};
 		
-		centuarySgstBox.addSelectionHandler(this);
-		BlurHandler blurHandler=new BlurHandler() {
+		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
+		
+		BlurHandler blurHandlerCentury=new BlurHandler() {
 			
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
-				standardsPreferenceOrganizeToolTip.hide();
+				//standardsPreferenceOrganizeToolTip.hide();
+					//errorContainer.setVisible(false);
 				}
 			}
 		};
-		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
+		
+		centurySgstBox.addDomHandler(blurHandlerCentury, BlurEvent.getType());
+		centurySgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+			
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				addCentury(centurySgstBox.getValue(), getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults()));
+				centurySgstBox.setText("");
+				centurySuggestOracle.clear();
+				//updateCenturyAdvancedSetupStyle();
+				
+			}
+		});
 	}
 	/**
 	 * 
@@ -781,6 +790,31 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		standardSgstBox.showSuggestionList();
 	}
+	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
+		centurySuggestOracle.clear();
+		this.centurySearchDo = centurySearchDo;
+		if (this.centurySearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedCentury(centuryPanel);
+			for (StandardFo code : centurySearchDo.getSearchResults()) {
+				if (!sources.contains(code.getLabel())) {
+					centurySuggestOracle.add(code.getLabel());
+				}
+				centuryCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		centurySgstBox.showSuggestionList();
+	}
+	private static String getCodeIdByCodeCentury(String code, List<StandardFo> codes) {
+		if (codes != null) {
+			for (StandardFo codeDo : codes) {
+				if (code.equals(codeDo.getLabel())) {
+					return codeDo.getCodeId() + "";
+				}
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * get the standards are added for collection
 	 * 
@@ -793,6 +827,22 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		for (Widget widget : flowPanel) {
 			if (widget instanceof DownToolTipWidgetUc) {
 				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedCentury(FlowPanel flowPanel) {
+		List<String> suggestions = new ArrayList<String>();
+		for (Widget widget : flowPanel) {
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabelCentury) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
 			}
 		}
 		return suggestions;
@@ -821,21 +871,14 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			standardSgstBox.setText("");
 		}
 	}
-	/**
-	 * This method is used to add century skils while loading
-	 * @param centuryVal
-	 * @param id
-	 */
-	public void addCentury(String centuryVal, String id) {
-		if (centuaryPanel.getWidgetCount() <5) {
-			if (!StringUtil.isEmpty(centuryVal)) {
-				centuryDo.add(centuryVal);
-				centuaryPanel.add(create21CenturyLabel(centuryVal, id, ""));
+	public void addCentury(String centuryTag, String id) {
+			if (centuryTag != null && !centuryTag.isEmpty()) {
+				centuryTag = centuryTag.trim();
+				centurySelectedValues.put(Long.parseLong(id), centuryTag);
+				//String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());
+				centuryDo.add(centuryTag);
+				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(centuryTag)));
 			}
-		} else {
-			//standardMaxShow();
-			centuarySgstBox.setText("");
-		}
 	}
 	public void standardMaxShow() {
 		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
@@ -1589,7 +1632,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		tagListGlobal.clear();
 		standardsDo.clear();
 		centuryDo.clear();
-		centuaryPanel.clear();
+		centuryPanel.clear();
 		for(int objVal=0;objVal<resultResourceTags.size();objVal++)
 		{
 			tagListGlobal.add("\""+resultResourceTags.get(objVal).getLabel()+"\"");
@@ -1615,7 +1658,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 			if(resultResourceTags.get(objVal).getLabel().contains(CENTURYSKILLS))
 			{
-				setCenturyObjectVal(resultResourceTags.get(objVal).getLabel());
+				setCenturyObjectVal(resultResourceTags.get(objVal).getLabel(),objVal);
 			}
 			if(resultResourceTags.get(objVal).getLabel().contains(mediaLabel.getText()))
 			{
@@ -1700,9 +1743,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void setCenturyObjectVal(String standardStr){
+	public void setCenturyObjectVal(String standardStr,int keyVal){
 		String[] standardArray=standardStr.split(":");
-		addCentury(standardArray[1], "0");
+		addCentury(standardArray[1], String.valueOf(keyVal));
 	}
 	/**
 	 * @function setStandardObjectVal 
