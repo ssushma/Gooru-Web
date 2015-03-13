@@ -204,6 +204,10 @@ public class CollectionShareTabVc extends Composite {
 		visibilityOptiontext.getElement().setId("lblVisibilityOptiontext");
 		visibilityOptiontext.getElement().setAttribute("alt",i18n.GL3179());
 		visibilityOptiontext.getElement().setAttribute("title",i18n.GL3179());
+		
+		shareCollectiontext.setText(i18n.GL3187());
+		shareCollectiontext.getElement().setAttribute("alt",i18n.GL3187());
+		shareCollectiontext.getElement().setAttribute("title",i18n.GL3187());
 		}
 		else
 		{
@@ -219,6 +223,10 @@ public class CollectionShareTabVc extends Composite {
 		visibilityOptiontext.getElement().setId("lblVisibilityOptiontext");
 		visibilityOptiontext.getElement().setAttribute("alt",i18n.GL0843());
 		visibilityOptiontext.getElement().setAttribute("title",i18n.GL0843());
+		
+		shareCollectiontext.setText(i18n.GL0545());
+		shareCollectiontext.getElement().setAttribute("alt",i18n.GL0545());
+		shareCollectiontext.getElement().setAttribute("title",i18n.GL0545());
 		}
 
 		
@@ -233,10 +241,9 @@ public class CollectionShareTabVc extends Composite {
 		finalTeacherTipLabelContainer
 		.addMouseOutHandler(new OnCollectionDescriptionOut());
 		
-		shareCollectiontext.setText(i18n.GL0545());
+	
 		shareCollectiontext.getElement().setId("lblShareCollectiontext");
-		shareCollectiontext.getElement().setAttribute("alt",i18n.GL0545());
-		shareCollectiontext.getElement().setAttribute("title",i18n.GL0545());
+
 		
 		shareViaText.getElement().setInnerHTML(i18n.GL0638());
 		shareViaText.getElement().setId("pnlShareViaText");
