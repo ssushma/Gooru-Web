@@ -35,16 +35,13 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -165,18 +162,14 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
      */
 	@Override
 	public void getShortenUrl(String folderId, Map<String, String> params) {
-		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new AsyncCallback<Map<String,String>>() {
+		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(folderId, params, new SimpleAsyncCallback<Map<String,String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
 				if(result!=null){
 					getView().setBitlyLink(result);
 				}
 			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});		
+		});
 	}
     /**
      * To get the User profile details 
@@ -219,7 +212,6 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	    String parentId=AppClientFactory.getPlaceManager().getRequestParameter(PARENT_ID,null);
 		String libName=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
 		String userId=AppClientFactory.getPlaceManager().getRequestParameter(USER_ID,null);
-		
 		params.put(TYPE, PlaceTokens.FOLDER_TOC);
 		if(folderId!=null){
 			params.put(ID, folderId);
@@ -240,14 +232,11 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	 * @param folderId {@link String}
 	 */
 	private void getFolderRouteNodes(String folderId) {
-		
 		AppClientFactory.getInjector().getfolderService().getFolderRouteNodes(folderId, new SimpleAsyncCallback<Map<String,String>>() {
-
 			@Override
 			public void onSuccess(Map<String,String> result) {
 				getView().setBreadCrumbs(result);
 			}
 		});
 	}
-	
 }
