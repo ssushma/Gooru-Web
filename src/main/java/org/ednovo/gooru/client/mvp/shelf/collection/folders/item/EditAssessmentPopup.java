@@ -38,6 +38,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -67,6 +68,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate,requireLoginYes,requireLoginNo;
 	String privacy="";
 	final String PUBLIC="public",ANYONEWITHLINK="anyonewithlink",PRIVATE="private";
+	String assessmentURL;
 	
 	public FolderDo folderDo=null;
 	
@@ -140,7 +142,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	public void clickEventOnSaveAssessment(final ClickEvent event){
 		//Code when save or update assessment clicked
 		final String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
-		final String assessmentURL=txtExistingAssessmentURL.getText();
+		assessmentURL=txtExistingAssessmentURL.getText();
 		if(rdBtnAssessmentPublic.getValue()){
 			privacy=PUBLIC;
 		}
@@ -150,7 +152,6 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		if(rdBtnAssessmentPrivate.getValue()){
 			privacy=PRIVATE;
 		}
-		
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblExistingAssessmentError.setVisible(true);
 			lblExistingAssessmentError.setText(i18n.GL1026());
@@ -160,7 +161,23 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 			lblExistingAssessmentURLError.setVisible(true);
 			lblExistingAssessmentURLError.setText(i18n.GL3166());
 		}else{
-			if(!StringUtil.urlValidatior(assessmentURL)){
+			assessmentURL = URL.encode(assessmentURL);
+			if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
+				lblExistingAssessmentError.setVisible(false);
+				lblExistingAssessmentError.setText("");
+				lblExistingAssessmentURLError.setVisible(true);
+				lblExistingAssessmentURLError.setText(i18n.GL0924());
+				return;
+			}else{
+				boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
+				if (!isStartWithHttp) {
+					assessmentURL = "http://" + assessmentURL;
+					txtExistingAssessmentURL.setText(assessmentURL);
+					txtExistingAssessmentURL.getElement().setAttribute("alt",assessmentURL);
+					txtExistingAssessmentURL.getElement().setAttribute("title", assessmentURL);
+				}
+			}
+			if(!StringUtil.isValidUrl(assessmentURL,true)){
 				lblExistingAssessmentError.setVisible(false);
 				lblExistingAssessmentError.setText("");
 				lblExistingAssessmentURLError.setVisible(true);

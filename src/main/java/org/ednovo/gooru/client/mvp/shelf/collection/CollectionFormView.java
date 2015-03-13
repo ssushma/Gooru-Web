@@ -70,6 +70,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -204,6 +205,7 @@ public class CollectionFormView extends
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
 	boolean isAssessmentEditClicked=false;
+	String assessmentURL;
 
 	private static CollectionFormViewUiBinder uiBinder = GWT
 			.create(CollectionFormViewUiBinder.class);
@@ -474,7 +476,7 @@ public class CollectionFormView extends
 				if(isAssessmentEditClicked){
 					//Code when edit assessment selected
 					String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
-					final String assessmentURL=txtExistingAssessmentURL.getText();
+					assessmentURL=txtExistingAssessmentURL.getText();
 					if(StringUtil.isEmpty(assessmentExistingTitle)){
 						lblExistingAssessmentError.setVisible(true);
 						lblExistingAssessmentError.setText(i18n.GL1026());
@@ -484,7 +486,23 @@ public class CollectionFormView extends
 						lblExistingAssessmentURLError.setVisible(true);
 						lblExistingAssessmentURLError.setText(i18n.GL3166());
 					}else{
-						if(!StringUtil.urlValidatior(assessmentURL)){
+						assessmentURL = URL.encode(assessmentURL);
+						if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
+							lblExistingAssessmentError.setVisible(false);
+							lblExistingAssessmentError.setText("");
+							lblExistingAssessmentURLError.setVisible(true);
+							lblExistingAssessmentURLError.setText(i18n.GL0924());
+							return;
+						}else{
+							boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
+							if (!isStartWithHttp) {
+								assessmentURL = "http://" + assessmentURL;
+								txtExistingAssessmentURL.setText(assessmentURL);
+								txtExistingAssessmentURL.getElement().setAttribute("alt",assessmentURL);
+								txtExistingAssessmentURL.getElement().setAttribute("title", assessmentURL);
+							}
+						}
+						if(!StringUtil.isValidUrl(assessmentURL, true)){
 							lblExistingAssessmentError.setVisible(false);
 							lblExistingAssessmentError.setText("");
 							lblExistingAssessmentURLError.setVisible(true);
@@ -805,6 +823,19 @@ public class CollectionFormView extends
 				if (!(assessmentGradeDropDownList.getSelectedIndex() == 0)) {
 					collection.setGrade(list[assessmentGradeDropDownList.getSelectedIndex()]);
 				}
+				collection.setGoals(txtExistingAssessmentDescription.getText());
+				if(rdBtnAssessmentPublic.getValue()){
+					collection.setSharing("public");
+				}
+				if(rdBtnAssessmentShare.getValue()){
+					collection.setSharing("anyonewithlink");
+				}
+				if(rdBtnAssessmentPrivate.getValue()){
+					collection.setSharing("private");
+				}
+				CollectionSettingsDo collSetting = new CollectionSettingsDo();
+				collSetting.setIsLoginRequired(requireLoginYes.getValue().toString());
+				collection.setSettings(collSetting);
 			}
 		}else{
 			collection.setCollectionType("collection");

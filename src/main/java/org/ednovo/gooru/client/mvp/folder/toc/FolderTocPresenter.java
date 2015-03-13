@@ -65,8 +65,6 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  */
 public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFolderTocProxy> implements FolderTocUiHandlers {
 
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
 	public static final String ID = "id";
 	public static final String PARENT_ID = "parentId";
 	public static final String LIBRARY_NAME = "libName";
