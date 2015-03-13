@@ -192,9 +192,9 @@ public class CollectionShareTabVc extends Composite {
 		
 		if(collection != null && collection.getCollectionType()!=null && collection.getCollectionType().equalsIgnoreCase("assessment"))
 		{		
-			visibilityText.setText(i18n.GL3185());
-			visibilityText.getElement().setAttribute("alt",i18n.GL3185());
-			visibilityText.getElement().setAttribute("title",i18n.GL3185());
+			visibilityText.setText(i18n.GL3186());
+			visibilityText.getElement().setAttribute("alt",i18n.GL3186());
+			visibilityText.getElement().setAttribute("title",i18n.GL3186());
 		visibilityOptiontextTeacherTip.setText(i18n.GL3177());
 		visibilityOptiontextTeacherTip.getElement().setId("lblVisibilityOptiontextTeacherTip");
 		visibilityOptiontextTeacherTip.getElement().setAttribute("alt",i18n.GL3177());

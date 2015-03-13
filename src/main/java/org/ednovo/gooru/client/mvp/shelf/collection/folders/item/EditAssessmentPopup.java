@@ -38,6 +38,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -67,6 +68,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate,requireLoginYes,requireLoginNo;
 	String privacy="";
 	final String PUBLIC="public",ANYONEWITHLINK="anyonewithlink",PRIVATE="private";
+	String assessmentURL;
 	
 	public FolderDo folderDo=null;
 	
@@ -76,6 +78,21 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	public EditAssessmentPopup(FolderDo folderDo) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.folderDo=folderDo;
+		
+		rdBtnAssessmentPublic.setText(i18n.GL0329());
+		StringUtil.setAttributes(rdBtnAssessmentPublic.getElement(), "rdBtnAssessmentPublic", i18n.GL0329(), i18n.GL0329());
+		
+		rdBtnAssessmentShare.setText(i18n.GL0331());
+		StringUtil.setAttributes(rdBtnAssessmentShare.getElement(), "rdBtnAssessmentPublic", i18n.GL0331(), i18n.GL0331());
+		
+		rdBtnAssessmentPrivate.setText(i18n.GL0333());
+		StringUtil.setAttributes(rdBtnAssessmentPrivate.getElement(), "rdBtnAssessmentPublic", i18n.GL0333(), i18n.GL0333());
+		
+		requireLoginYes.setText(i18n.GL_GRR_YES());
+		StringUtil.setAttributes(requireLoginYes.getElement(), "rdBtnAssessmentPublic", i18n.GL_GRR_YES(), i18n.GL_GRR_YES());
+		
+		requireLoginNo.setText(i18n.GL_GRR_NO());
+		StringUtil.setAttributes(requireLoginNo.getElement(), "rdBtnAssessmentPublic", i18n.GL_GRR_NO(), i18n.GL_GRR_NO());
 		
 		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3168());
 		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
@@ -125,7 +142,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	public void clickEventOnSaveAssessment(final ClickEvent event){
 		//Code when save or update assessment clicked
 		final String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
-		final String assessmentURL=txtExistingAssessmentURL.getText();
+		assessmentURL=txtExistingAssessmentURL.getText();
 		if(rdBtnAssessmentPublic.getValue()){
 			privacy=PUBLIC;
 		}
@@ -135,7 +152,6 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		if(rdBtnAssessmentPrivate.getValue()){
 			privacy=PRIVATE;
 		}
-		
 		if(StringUtil.isEmpty(assessmentExistingTitle)){
 			lblExistingAssessmentError.setVisible(true);
 			lblExistingAssessmentError.setText(i18n.GL1026());
@@ -145,7 +161,23 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 			lblExistingAssessmentURLError.setVisible(true);
 			lblExistingAssessmentURLError.setText(i18n.GL3166());
 		}else{
-			if(!StringUtil.urlValidatior(assessmentURL)){
+			assessmentURL = URL.encode(assessmentURL);
+			if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
+				lblExistingAssessmentError.setVisible(false);
+				lblExistingAssessmentError.setText("");
+				lblExistingAssessmentURLError.setVisible(true);
+				lblExistingAssessmentURLError.setText(i18n.GL0924());
+				return;
+			}else{
+				boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
+				if (!isStartWithHttp) {
+					assessmentURL = "http://" + assessmentURL;
+					txtExistingAssessmentURL.setText(assessmentURL);
+					txtExistingAssessmentURL.getElement().setAttribute("alt",assessmentURL);
+					txtExistingAssessmentURL.getElement().setAttribute("title", assessmentURL);
+				}
+			}
+			if(!StringUtil.isValidUrl(assessmentURL,true)){
 				lblExistingAssessmentError.setVisible(false);
 				lblExistingAssessmentError.setText("");
 				lblExistingAssessmentURLError.setVisible(true);

@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
@@ -453,16 +454,6 @@ public class StringUtil {
 //		System.out.println(message);
 	}
 	/**
-	 * This method will check the url 
-	 * @param urlVal
-	 * @return
-	 */
-	public static boolean urlValidatior(String urlVal){
-		String lRegex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; 
-		return urlVal.matches(lRegex);
-	}
-	
-	/**
 	 * To set the default image based on collectionType value
 	 * @param collectionType {@link String}
 	 */
@@ -478,5 +469,84 @@ public class StringUtil {
 		    }
 			imgField.getElement().setAttribute("style", borderColor);
 		}
+	}
+	
+	private static RegExp urlValidator;
+	private static RegExp urlPlusTldValidator;
+	/**
+	 * @function isValidUrl 
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param url
+	 * @parm(s) : @param topLevelDomainRequired
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 */
+	public static boolean isValidUrl(String url, boolean topLevelDomainRequired) {
+		int count = returnCount(url);
+		 if(count > 2)
+	         return false;
+		if (urlValidator == null || urlPlusTldValidator == null) {
+			urlValidator = RegExp
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+			
+			urlPlusTldValidator = RegExp
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+
+					}
+		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
+				.exec(url) != null;
+	}
+	/**
+	 * @function returnCount 
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param url
+	 * @parm(s) : @return
+	 * 
+	 * @return : Integer
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 */
+	public static Integer returnCount(String url) {
+		String string = url;
+		String substring1 = "http:";
+		String substring2 = "https:";
+		String substring3 = "ftp:";
+		String substring4 = "www";
+		Integer count = 0;
+		Integer idx = 0;
+		while ((idx = string.indexOf(substring1, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring2, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring3, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring4, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		return count;
+	}
+	public static boolean checkUrlContainesGooruUrl(String url){
+		if (url.contains("goorulearning.org")|| url.contains("support.goorulearning.org")|| url.contains("about.goorulearning.org")) {
+			return true;
+		} else {
+			return false;
+		 }
 	}
 }
