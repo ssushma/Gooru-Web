@@ -29,6 +29,7 @@ import java.util.HashMap;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
@@ -74,6 +75,7 @@ public class FolderCollectionView extends Composite {
 	@UiField Label lblCollectionDesc;
 	@UiField HTMLPanel collectionTypePanel;
 	@UiField Image imgLock;
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	FolderTocCBundle res;
 	
@@ -130,7 +132,7 @@ public class FolderCollectionView extends Composite {
 	}
 	@UiHandler("imgLock")
 	public void onHoverOfLockImage(MouseOverEvent event){
-		resourceTooltip.setResourceDesc("requires Login");
+		resourceTooltip.setResourceDesc(i18n.GL3185());
 		resourceTooltip.show();
 		resourceTooltip.setPopupPosition(imgLock.getElement().getAbsoluteLeft()-43,imgLock.getElement().getAbsoluteTop()+20);
 		resourceTooltip.pnlToolTipContainer.getElement().getStyle().setWidth(100, Unit.PCT);
