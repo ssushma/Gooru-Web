@@ -283,6 +283,11 @@
 .collectionSmall {
 	background: url('../images/folders/panel/collection-icon-small.png') 39px 0px no-repeat;
 }
+
+.assessmentSmall {
+	 background: url('../images/folders/panel/assessment-type.png') 39px 0px no-repeat;
+     background-size: 27px 19px;
+}
 .loadingIcon {
 	float: right;
 	margin-right: 108px;
