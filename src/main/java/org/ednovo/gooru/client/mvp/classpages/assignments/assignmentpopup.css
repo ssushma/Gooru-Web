@@ -446,6 +446,15 @@
     cursor:default;
 }
 
+.folderLevel,.folderAssessment {
+    height: 25px;
+    line-height: 25px;
+    padding-right:15px;
+    position:relative;
+    text-align:left;
+    cursor:default;
+}
+
 .folderLevel .title {
     display: inline-block;
     vertical-align: middle;
@@ -453,6 +462,11 @@
 }
 
 .folderLevel,.foldercollection { /* grandparent level - default */
+    box-sizing:border-box;
+    padding-left:65px;
+}
+
+.folderLevel,.folderAssessment { /* grandparent level - default */
     box-sizing:border-box;
     padding-left:65px;
 }
@@ -474,11 +488,23 @@
     padding-left:149px;
 }
 
+.folderLevel.innerchild,.folderAssessment.innerchild {
+    padding-left:149px;
+}
+
 .foldercollection.parent {
     padding-left:93px;
 }
 
 .foldercollection.child {
+    padding-left:121px;
+}
+
+.folderAssessment.parent {
+    padding-left:93px;
+}
+
+.folderAssessment.child {
     padding-left:121px;
 }
 
@@ -514,6 +540,25 @@
 }
 .foldercollection.innerchild {
     background: url('../images/folders/panel/collection-small-icon.png') no-repeat 117px 4px;
+}
+
+.folderAssessment { /* grandparent level - default */
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 33px 4px;
+    background-size: 22px 18px;
+}
+
+.folderAssessment.parent {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 61px 4px;
+    background-size: 22px 18px;
+}
+
+.folderAssessment.child {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 89px 4px;
+    background-size: 22px 18px;
+}
+.folderAssessment.innerchild {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 117px 4px;
+    background-size: 22px 18px;
 }
 
 /*////////////////////// other ../images ///////////////////*/
@@ -569,7 +614,15 @@
     background-color:#f0f0f0;
 }
 
+.folderLevel:hover,.folderAssessment:hover {
+    background-color:#f0f0f0;
+}
+
 .foldercollection.selected {
+    background-color:#CFE3F1;
+}
+
+.folderAssessment.selected {
     background-color:#CFE3F1;
 }
 .folderLevel.selected {

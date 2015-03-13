@@ -150,6 +150,8 @@ public interface AddAssignmentContainerCBundle extends ClientBundle {
 		String loadingText();
 		String assignButton();
 		
+		String folderAssessment();
+		
 		String assignmentTitleLabelForOe();
 		String primaryButton();
 		String noCollectionMsgContainer();
