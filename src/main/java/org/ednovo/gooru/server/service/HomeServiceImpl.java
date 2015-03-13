@@ -80,23 +80,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		form.add("userrole", userRoleValue);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-//		try {
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
-/*
-	@Override
-	public List<CollectionDo> getCollectionList(List<String> collectionIds) throws GwtException {
-		List<CollectionDo> featuredList = new ArrayList<CollectionDo>();
-		Iterator<String> iterator = collectionIds.iterator();
-		while (iterator.hasNext()) {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLECTION, iterator.next(), getLoggedInSessionToken(), true + "");
-			featuredList.add(deserializeCollection(ServiceProcessor.get(url, getRestUsername(), getRestPassword())));
-		}
-		return featuredList;
-	}*/
 	
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -104,7 +88,6 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				GWT.log("jsonResp:>>"+jsonRep.toString());
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionDo();

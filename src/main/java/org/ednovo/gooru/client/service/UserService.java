@@ -126,7 +126,7 @@ public interface UserService extends BaseService {
 	 * @return user  credential
 	 * @throws GwtException
 	 */
-	Map<String, Object> resetCredential(String formData) throws GwtException, ServerDownException;
+	Map<String, Object> resetCredential(String token, String password, String mailConfirmationUrl) throws GwtException, ServerDownException;
 	
 	/**
 	 * Update user view flag when user logIn in first time
@@ -194,7 +194,7 @@ public interface UserService extends BaseService {
 	 *
 	 *
 	 */
-	UserDo createUser(String postData) throws GwtException, ServerDownException;
+	UserDo createUser(Map<String, String> registrationDetailsParams,String regType) throws GwtException, ServerDownException;
 	
 	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException, ServerDownException;
 	

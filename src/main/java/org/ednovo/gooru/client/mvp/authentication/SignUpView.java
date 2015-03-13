@@ -45,6 +45,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -406,12 +407,9 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				appPopUp.hide();
 				termsAndPolicyVc = new TermsAndPolicyVc(false) {
-					
 					@Override
 					public void openParentPopup() {
 						Window.enableScrolling(false);
-						//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 						appPopUp.show();
 					}
 				};
@@ -427,12 +425,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				appPopUp.hide();
 				copyRightPolicy = new CopyRightPolicyVc() {
-					
 					@Override
 					public void openParentPopup() {
 						Window.enableScrolling(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 						appPopUp.show();
 					}
 				};
@@ -447,12 +443,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				appPopUp.hide();
 				termsOfUse=new TermsOfUse(){
-
 					@Override
 					public void openParentPopup() {
 						Window.enableScrolling(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 						appPopUp.show();
 					}
 					
@@ -461,12 +455,11 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
-			
 			}
 			//Send data to create user.
 			@Override
-			public void CreateUser(String data, String loginData) {
-				getUiHandlers().CreateUser(data, loginData);
+			public void CreateUser(Map<String, String> registrationDetailsParams, String username,String password) {
+				getUiHandlers().CreateUser(registrationDetailsParams, username, password);
 			}
 
 			@Override

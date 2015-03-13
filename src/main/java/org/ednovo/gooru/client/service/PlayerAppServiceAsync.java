@@ -25,13 +25,8 @@
 package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
-
 import java.util.Map;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;

@@ -30,7 +30,6 @@ import java.util.Date;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AppService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
-import org.ednovo.gooru.server.form.AppFormFactory;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
@@ -38,8 +37,11 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Service;
+
 
 /**
  * @author Search Team
@@ -53,6 +55,10 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	 * 
 	 */
 	private static final long serialVersionUID = -6736852011457993775L;
+	
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+	
 
 	@Override
 	public UserDo getLoggedInUser() {
@@ -78,15 +84,24 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	
 	/// V2 Apis
 	@Override
-	public UserDo v2Signin(String postData) {
+	public UserDo v2Signin(String userName, String password) {
+		JSONObject postData = new JSONObject();
 		UserDo user = null;
 		V2UserDo v2UserDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData);
-		jsonRep =jsonResponseRep.getJsonRepresentation();
+		
+		String decryptedPwd = StringUtil.getDecryptedData(password);
 		String content = null;
 		try {
+			
+			postData.put(USERNAME, userName);
+			postData.put(PASSWORD, decryptedPwd);
+			 
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			
+			
 			if (jsonResponseRep.getStatusCode()==200){
 				content = jsonRep.getText();
 				if (content.contains("{")) {
@@ -120,15 +135,8 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				return user;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new GwtException(e.getMessage());
 		}
-//		if (content != null) {
-//			String[] parsed = content.split(":");
-//			if (parsed.length > 1) {
-//				content = parsed[1];
-//			}
-//		}
 		throw new GwtException(content);
 	}
 	

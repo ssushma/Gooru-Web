@@ -161,7 +161,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		jsonObj = new JSONObject(form);	
 		jsonObj.put(ADD_TO_SHELF, TRUE);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		getLogger().info("payload data create collection API:::"+jsonObj.toString());
 
@@ -276,8 +275,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 
         } catch (UnsupportedEncodingException e) {  
-            // TODO Auto-generated catch block  
-            e.printStackTrace();  
         }
 		
 		return collectionDoObj;
@@ -289,7 +286,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceMetaInfoDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ResourceMetaInfoDo();
@@ -300,7 +296,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionDo();
@@ -311,7 +306,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionItemDo();
@@ -322,7 +316,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionQuestionItemDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionQuestionItemDo();
@@ -332,7 +325,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try{
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), MetaDO.class);
 			}catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new MetaDO();
@@ -344,7 +336,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<CollectionDo>();
 	}
@@ -357,7 +348,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemsListDo>>() {});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<CollectionItemsListDo>();
 	}
@@ -368,7 +358,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<CollectionItemDo>();
@@ -380,7 +369,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<UserDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<UserDo>();
@@ -413,7 +401,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			jsonObj.put(RESOURCE_ID,resourceId);
 		}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObj.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -679,7 +666,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resource").toString(), ExistsResourceDo.class);
 				} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ExistsResourceDo();
@@ -690,7 +676,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return null;
@@ -851,7 +836,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionItemDo.setItemSequence(map.get("itemSequence") != null ? Integer.parseInt(map.get("itemSequence").toString()) : 1 );
 				collectionItemDo.setResource(resourceDo);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return collectionItemDo;
@@ -933,7 +917,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				isShortenUrl=jsonRep.getJsonObject().getBoolean("shortenedUrlStatus");
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return isShortenUrl ? "true" : "false";
 	}
@@ -964,7 +947,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 
         } catch (UnsupportedEncodingException e) {  
-            e.printStackTrace();  
         }	
 		
 		return collectionDoObj;
@@ -996,7 +978,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 
         } catch (UnsupportedEncodingException e) {  
-            e.printStackTrace();  
         }	
 		
 		return collectionDoObj;
@@ -1101,7 +1082,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				profanityDo =  JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfanityDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		if (profanityDo!=null){
@@ -1138,7 +1118,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				profanityDo =  JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfanityDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		if (profanityDo!=null){
@@ -1172,7 +1151,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderListDo>() {});
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return new FolderListDo();
 	}
@@ -1190,8 +1168,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					teacherTips = URLEncoder.encode(teacherTips, "UTF-8");  
 
 	            } catch (UnsupportedEncodingException e) {  
-	                // TODO Auto-generated catch block  
-	                e.printStackTrace();  
 	            }
 			}
 			
@@ -1215,7 +1191,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
         } catch (UnsupportedEncodingException e) {  
             // TODO Auto-generated catch block  
-            e.printStackTrace();  
         }	
 		return collectionDoObj;
 
@@ -1234,8 +1209,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					languageObjective = URLEncoder.encode(languageObjective, "UTF-8");  
 
 	            } catch (UnsupportedEncodingException e) {  
-	                // TODO Auto-generated catch block  
-	                e.printStackTrace();  
 	            }
 			}
 
@@ -1257,8 +1230,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		
 		  } catch (UnsupportedEncodingException e) {  
-              // TODO Auto-generated catch block  
-              e.printStackTrace();  
           }
 		return collectionObjectDo;
 
@@ -1289,8 +1260,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		
 		  } catch (UnsupportedEncodingException e) {  
-              // TODO Auto-generated catch block  
-              e.printStackTrace();  
           }
 		return collectionObjectDo;
 
@@ -1321,8 +1290,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		
 		  } catch (UnsupportedEncodingException e) {  
-              // TODO Auto-generated catch block  
-              e.printStackTrace();  
           }
 		return collectionObjectDo;
 
@@ -1353,8 +1320,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		
 		  } catch (UnsupportedEncodingException e) {  
-              // TODO Auto-generated catch block  
-              e.printStackTrace();  
           }
 		return collectionObjectDo;
 
@@ -1385,8 +1350,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		
 		  } catch (UnsupportedEncodingException e) {  
-              // TODO Auto-generated catch block  
-              e.printStackTrace();  
           }
 		return collectionObjectDo;
 
@@ -1417,8 +1380,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 		
 		  } catch (UnsupportedEncodingException e) {  
-              // TODO Auto-generated catch block  
-              e.printStackTrace();  
           }
 		
 		return collectionObjectDo;
@@ -1516,7 +1477,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				});
 				
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new  ArrayList<ResourceTagsDo>();
@@ -1546,7 +1506,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				enocodedString=enocodedString+"&pageToken="+nextPageToken;
 			}
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		}
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
@@ -1571,7 +1530,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			premissonJsonObject.put("type", "anyone");
 			premissonJsonObject.put("withLink", true);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.UPDATE_FILE_PERMISSION, driveFileId);
 		String response=new WebService(url,false).postWebservice("POST",premissonJsonObject.toString(),contentType,access_token);
@@ -1665,7 +1623,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
 			}
 		} catch (JSONException eJson) {
-			eJson.printStackTrace(); 
 		}
 		return token;
 	}

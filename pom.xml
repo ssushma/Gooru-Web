@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<name>New Gooru (GWT Version)</name>
 	<groupId>org.ednovo.gooru</groupId>
@@ -15,8 +15,8 @@
 		<org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>
 		<!-- collection player version -->
 		<player.collection.version>SNAPSHOT-5.11.3</player.collection.version>
-		 <!-- resource player versions -->
-		<player.resource.version>SNAPSHOT-5.11.2</player.resource.version>			
+		<!-- resource player versions -->
+		<player.resource.version>SNAPSHOT-5.11.2</player.resource.version>
 		<!-- Convenience property to set the GWT version -->
 		<gwtVersion>2.5.0</gwtVersion>
 		<!-- <project.build.directory>/home/rajam/pandoraspace</project.build.directory> 
@@ -32,36 +32,56 @@
 		<!-- This is the webapp container to which the WARs are deployed to -->
 		<webapp.container.home>${env.CATALINA_HOME}</webapp.container.home>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-		
+
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<buildNumber>${maven.build.timestamp}</buildNumber>
-		
+
 	</properties>
-	  <repositories>
-	    <repository>
-	      <id>sonatype-snapshots</id>
-	      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-	      <snapshots><enabled>true</enabled></snapshots>
-	      <releases><enabled>false</enabled></releases>
-	    </repository>
-	    <!-- Repository for gquery plugins -->
-    <repository>
-      <id>gwtquery-plugins</id>
-      <url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo</url>
-    </repository>
-	  </repositories>
+	<repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+
+		<!-- Repository for GWT crypto -->
+		<repository>
+			<id>gwt-crypto repo</id>
+			<url>http://gwt-crypto.googlecode.com/svn/trunk/repo/</url>
+		</repository>
+
+
+		<!-- Repository for gquery plugins -->
+		<repository>
+			<id>gwtquery-plugins</id>
+			<url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo</url>
+		</repository>
+	</repositories>
 	<dependencies>
- 		<dependency>
-	            <groupId>highcharts.com</groupId>
-	            <artifactId>gwt-highcharts</artifactId>
-	            <version>1.0</version>
-	    </dependency>
-	   <dependency>
-				<groupId>com.google.gwt.google-apis</groupId>
-				<artifactId>gwt-visualization</artifactId>
-				<version>1.0.2</version>
-	   </dependency>
+		<dependency>
+			<groupId>highcharts.com</groupId>
+			<artifactId>gwt-highcharts</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt.google-apis</groupId>
+			<artifactId>gwt-visualization</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		
+		<!-- Dependency to support GWT crypto -->
+		<dependency>
+			<groupId>com.googlecode.gwt-crypto</groupId>
+			<artifactId>gwt-crypto</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		
 		<!-- Spring dependencies -->
 
 		<dependency>
@@ -131,12 +151,10 @@
 			<scope>compile</scope>
 		</dependency>
 		<!--Restlet Form Problem -->
-		<!-- <dependency>
-			<groupId>org.restlet.jee</groupId>
-			<artifactId>org.restlet</artifactId>
-			<version>2.1.1</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.restlet.jee</groupId> <artifactId>org.restlet</artifactId> 
+			<version>2.1.1</version> </dependency> -->
 		<!--Restlet Form problem rectified -->
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -270,39 +288,33 @@
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 			<type>pom</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.simple</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.json</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
+		<!-- <dependency> <groupId>org.restlet.jse</groupId> <artifactId>org.restlet.ext.ssl</artifactId> 
+			<version>2.3.1</version> </dependency> -->
+		<!-- <dependency> <groupId>org.restlet.jse</groupId> <artifactId>org.restlet.ext.net</artifactId> 
+			<version>2.3.1</version> </dependency> -->
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet.ext.ssl</artifactId>
-			<version>2.1-M6</version>
-		</dependency>
-			<dependency>
-			<groupId>org.restlet.jse</groupId>
-			<artifactId>org.restlet.ext.net</artifactId>
-			<version>2.1-M6</version>
-		</dependency>
-			<dependency>
-			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.html</artifactId>
-			<version>2.1-M6</version>
+			<version>3.0-M1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -317,7 +329,7 @@
 		<dependency>
 			<groupId>org.gooru.resource.player</groupId>
 			<artifactId>gooru.resource.player</artifactId>
-			<version>${player.resource.version}</version>	
+			<version>${player.resource.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.bramosystems.oss.player</groupId>
@@ -365,10 +377,10 @@
 			<version>0.4.5</version>
 		</dependency>
 		<dependency>
-            <groupId>com.google.code</groupId>
-            <artifactId>GwtEarth3</artifactId>
-            <version>1.0</version>
-        </dependency>
+			<groupId>com.google.code</groupId>
+			<artifactId>GwtEarth3</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>itextpdf</artifactId>
@@ -385,10 +397,10 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-	        <groupId>com.googlecode.gwtupload</groupId>
-	        <artifactId>gwtupload</artifactId>
-	        <version>0.6.6</version>
-    	</dependency>
+			<groupId>com.googlecode.gwtupload</groupId>
+			<artifactId>gwtupload</artifactId>
+			<version>0.6.6</version>
+		</dependency>
 		<dependency>
 			<groupId>code.google.com</groupId>
 			<artifactId>gwt-serialization</artifactId>
@@ -403,21 +415,21 @@
 			<!-- <classifier>2.1.0</classifier> -->
 			<!-- <classifier>2.0.1</classifier> -->
 			<scope>provided</scope>
-	   	</dependency>
+		</dependency>
 		<dependency>
 			<groupId>com.github.branflake2267</groupId>
-		   <artifactId>gwt-maps-api</artifactId>
-		   <version>3.10.0-alpha-7</version>
+			<artifactId>gwt-maps-api</artifactId>
+			<version>3.10.0-alpha-7</version>
 		</dependency>
-		<dependency>		
-			<groupId>com.samaxes.maven</groupId>		
-			<artifactId>minify-maven-plugin</artifactId>		
-			<version>1.7</version>		
-		</dependency>		
-		<dependency>		
-			<groupId>com.google.code.maven-replacer-plugin</groupId>		
-			<artifactId>replacer</artifactId>		
-			<version>1.5.3</version>		
+		<dependency>
+			<groupId>com.samaxes.maven</groupId>
+			<artifactId>minify-maven-plugin</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.maven-replacer-plugin</groupId>
+			<artifactId>replacer</artifactId>
+			<version>1.5.3</version>
 		</dependency>
 	</dependencies>
 	<profiles>
@@ -457,9 +469,9 @@
 				<env>qagenx</env>
 			</properties>
 		</profile>
-	 	<profile>
+		<profile>
 			<id>qa</id>
-            <properties>
+			<properties>
 				<env>qa</env>
 			</properties>
 		</profile>
@@ -469,10 +481,10 @@
 				<env>elbprod</env>
 			</properties>
 		</profile>
-  		<profile>
-        	<id>www2</id>
-            <properties>
-            	<env>www2</env>
+		<profile>
+			<id>www2</id>
+			<properties>
+				<env>www2</env>
 			</properties>
 		</profile>
 	</profiles>
@@ -560,46 +572,47 @@
 				</dependencies>
 			</plugin>
 			<plugin>
-                <groupId>com.samaxes.maven</groupId>
-                <artifactId>minify-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>minify-css</id>
-                        <goals>
-                            <goal>minify</goal>
-                        </goals>
-                        <configuration>
-                            <charset>utf-8</charset>
-                            <jsEngine>closure</jsEngine>
-                            <cssSourceDir>css</cssSourceDir>
-                            <cssSourceIncludes>
-                                <cssSourceInclude>*.css</cssSourceInclude>
-                            </cssSourceIncludes>
-                            <cssSourceExcludes>
-                                <cssSourceExclude>*.min.css</cssSourceExclude>
-                                <cssSourceExclude>embed.css</cssSourceExclude>
-                            </cssSourceExcludes>
-                            <cssFinalFile>main-styles.css</cssFinalFile>
-                            <!-- JS Minify -->
-                            <jsSourceDir>scripts</jsSourceDir>
-                            <jsSourceIncludes>
-                                <jsSourceInclude>basicscripts.js</jsSourceInclude>
-                                <jsSourceInclude>errorImageFunction.js</jsSourceInclude>
-                                <!-- <jsSourceInclude>highcharts.js</jsSourceInclude> -->
-                                <jsSourceInclude>heatmap.js</jsSourceInclude>
-                            </jsSourceIncludes>
-                            <jsSourceExcludes>
-                                <jsSourceExclude>*.min.js</jsSourceExclude>
-                            </jsSourceExcludes>
-                            <jsFinalFile>main-script.js</jsFinalFile>
-                            <warSourceIncludes>*.min.js</warSourceIncludes>
-                            <warSourceIncludes>*.min.css</warSourceIncludes>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-			 
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>minify-css</id>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+						<configuration>
+							<charset>utf-8</charset>
+							<jsEngine>closure</jsEngine>
+							<cssSourceDir>css</cssSourceDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>*.css</cssSourceInclude>
+							</cssSourceIncludes>
+							<cssSourceExcludes>
+								<cssSourceExclude>*.min.css</cssSourceExclude>
+								<cssSourceExclude>embed.css</cssSourceExclude>
+								<cssSourceExclude>font-awesome.css</cssSourceExclude>
+							</cssSourceExcludes>
+							<cssFinalFile>main-styles.css</cssFinalFile>
+							<!-- JS Minify -->
+							<jsSourceDir>scripts</jsSourceDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>basicscripts.js</jsSourceInclude>
+								<jsSourceInclude>errorImageFunction.js</jsSourceInclude>
+								<!-- <jsSourceInclude>highcharts.js</jsSourceInclude> -->
+								<jsSourceInclude>heatmap.js</jsSourceInclude>
+							</jsSourceIncludes>
+							<jsSourceExcludes>
+								<jsSourceExclude>*.min.js</jsSourceExclude>
+							</jsSourceExcludes>
+							<jsFinalFile>main-script.js</jsFinalFile>
+							<warSourceIncludes>*.min.js</warSourceIncludes>
+							<warSourceIncludes>*.min.css</warSourceIncludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- Copy static web files before executing gwt:run -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -641,21 +654,9 @@
 		</resources>
 	</build>
 
-	<!-- <reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.5.0</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>compile-report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting> -->
-	
+	<!-- <reporting> <plugins> <plugin> <groupId>org.codehaus.mojo</groupId> 
+		<artifactId>gwt-maven-plugin</artifactId> <version>2.5.0</version> <reportSets> 
+		<reportSet> <reports> <report>compile-report</report> </reports> </reportSet> 
+		</reportSets> </plugin> </plugins> </reporting> -->
+
 </project>

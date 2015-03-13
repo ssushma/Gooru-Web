@@ -288,11 +288,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 			
 
 			String username = loginTxtBox.getText().trim();
-			String password = passwordTxtBox.getText().trim();
-
-			JSONObject login = new JSONObject();
-			login.put("username", new JSONString(username));
-			login.put("password", new JSONString(password));
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim()); 
 
 			if (username.length() > 1 && password.length() > 1) {
 
@@ -302,7 +298,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 				AppClientFactory
 						.getInjector()
 						.getAppService()
-						.v2Signin(login.toString(),
+						.v2Signin(username,password,
 								new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {

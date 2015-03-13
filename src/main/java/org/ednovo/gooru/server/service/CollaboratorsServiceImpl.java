@@ -79,7 +79,6 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<String>();
 	}
@@ -150,7 +149,6 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<CollaboratorsDo>();
 	}
@@ -183,7 +181,6 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new HashMap<String, ArrayList<CollaboratorsDo>>();
 	}

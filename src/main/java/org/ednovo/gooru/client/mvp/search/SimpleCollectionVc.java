@@ -221,7 +221,6 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 						} 
 						catch (Exception e) 
 						{
-							e.printStackTrace();
 						}
 					}
 				}

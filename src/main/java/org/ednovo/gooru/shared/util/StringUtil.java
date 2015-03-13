@@ -46,6 +46,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.googlecode.gwt.crypto.client.TripleDesCipher;
 
 
 /**
@@ -61,6 +62,9 @@ public class StringUtil implements ClientConstants {
 	public static boolean IPAD_MESSAGE_Close_Click = false;
 	
 	public static Map<String, String> categoryMap =null;
+	
+	private final static byte[] key = CRYPTO_KEY.getBytes();
+	
 
 	static{
 		addAllCategories();
@@ -211,7 +215,6 @@ public class StringUtil implements ClientConstants {
 				}
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
-			e.printStackTrace();
 		}
 		return query_pairs;
 	}
@@ -462,6 +465,45 @@ public class StringUtil implements ClientConstants {
 	public static String getEquivalentCategory(String type){
 		return categoryMap.get(type)==null?type:categoryMap.get(type);
 	}
+	
+	/**
+	 * Encrypts the given string by using GWT crypto method.
+	 * @param data {@link String}
+	 * 
+	 * @return encrypted {@link String}
+	 */
+	public static String getCryptoData(String data) {
+		 String encrypted = null;
+		try {
+			TripleDesCipher cipher = new TripleDesCipher();
+			cipher.setKey(key);
+			encrypted = cipher.encrypt(data);
+		} catch (Exception e) {
+			AppClientFactory.printSevereLogger("Exception in crypto"+e.getMessage());
+		}
+		return encrypted;
+	}
+	
+	
+	/**
+	 * Decrypts the crypto data and returns the plain text.
+	 * 
+	 * @param cryptoData {@link String}
+	 * 
+	 * @return plainText {@link String}
+	 */
+	public static String getDecryptedData(String cryptoData){
+		String plainText=null;
+		try {
+			TripleDesCipher cipher = new TripleDesCipher();
+			cipher.setKey(key);
+			plainText = cipher.decrypt(cryptoData);
+		} catch (Exception e) {
+			AppClientFactory.printSevereLogger("Exception in crypto decrypt"+e.getMessage());
+		}
+		return plainText;
+	}
+	
 
 	public static native String removeHtml(String htmText) /*-{
 		var regex = /(<([^>]+)>)/ig;

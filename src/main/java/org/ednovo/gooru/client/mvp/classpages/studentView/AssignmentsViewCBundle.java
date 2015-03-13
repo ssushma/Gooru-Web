@@ -124,7 +124,6 @@ public interface AssignmentsViewCBundle extends ClientBundle {
 
 		String collectionHover();
 
-		String playIcon();
 	}
 
 	@Source("assignments.css")

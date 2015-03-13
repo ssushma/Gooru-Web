@@ -135,7 +135,6 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	public void deserializeSuggestedResources(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
@@ -152,7 +151,6 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	public void deserializeCollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
@@ -171,7 +169,6 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch(Exception e){
-			e.printStackTrace();
 		}
 		
 	}

@@ -45,7 +45,6 @@ public class StudentScoredAboveBelowUlPanel extends Composite {
 			scorelbl.setText("Score");
 			timelbl.setText("Time");
 		}else{
-			/*userImage.setUrl("../images/analytics/score-img.png");*/
 			namelbl.setText(userData.getUserName());
 			if(userData.getGradeInPercentage()!=null){
 				scorelbl.setText(userData.getGradeInPercentage()+"");

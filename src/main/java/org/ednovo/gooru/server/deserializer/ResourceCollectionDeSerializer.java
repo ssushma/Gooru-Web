@@ -191,36 +191,13 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
-//		try {
-//			JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
-//			resourceSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
-//			resourceSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
-//			
-//			JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
-//			ResourceSourceDo resourceSourceDo=JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);;
-//			resourceSearchResultDo.setResourceSource(resourceSourceDo);
-//		} catch (JSONException e1) {
-//			e1.printStackTrace();
-//		}
 		try {
-//			if (resourceSearchResultDo.getResourceTypeString() != null && resourceSearchResultDo.getResourceTypeString().equalsIgnoreCase(VIDEO_YOUTUBE)) {
-//				resourceSearchResultDo.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(getJsonString(recordJsonObject, URL))));
-//			} else { 			
 				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
-//			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setFolder((getJsonString(recordJsonObject, FOLDER)));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
-//		if(resourceSearchResultDo.getResourceType().getName().equals(ASSESSMENT_QUESTION)){
-//			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, TIME_TO_COMPLETE_IN_SEC));
-//			resourceSearchResultDo.setQuestionType(getJsonString(recordJsonObject, QUESTION_TYPE_NAME));
-//			
-//		}else{
-//			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, DURATION_IN_SEC));
-//		}
 		
 		resourceSearchResultDo.setVotesUp(stringtoInteger(recordJsonObject, VOTES_UP, 0));
 		resourceSearchResultDo.setVotesDown(stringtoInteger(recordJsonObject, VOTES_DOWN, 0));
@@ -240,32 +217,49 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		ownerDo.setUsername(getJsonString(recordJsonObject, OWNER_NAME_DISPLAY));
 		
 		resourceSearchResultDo.setOwner(ownerDo);
-
-		try {
-			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {
+		JSONArray standardCodes = null; 
+		JSONArray standardDescriptions = null;
+		try{
+			if(getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {
 				JSONObject taxonomyDataSet = new JSONObject(getJsonString(recordJsonObject, TAXONOMY_DATA_SET));
-				JSONObject curriculum = taxonomyDataSet.getJSONObject(CURRICULUM);
-				JSONArray standardCodes = (JSONArray) curriculum.get(CURRICULUM_CODE);
-				JSONArray standardDescriptions = (JSONArray) curriculum.get(CURRICULUM_DESCRIPTION);
+				JSONObject curriculum =taxonomyDataSet.isNull(CURRICULUM)?null:taxonomyDataSet.getJSONObject(CURRICULUM);
+				if(!curriculum.isNull(CURRICULUM_CODE)){
+					standardCodes = (JSONArray) (curriculum.get(CURRICULUM_CODE));
+				}
+				if(!curriculum.isNull(CURRICULUM_DESCRIPTION)){
+					standardDescriptions = (JSONArray) (curriculum.get(CURRICULUM_DESCRIPTION));
+				}
 				List<Map<String, String>> standards = new ArrayList<Map<String, String>>();
-				for (int i = 0; i < standardCodes.length(); i++) {
-					Map<String, String> standard = new HashMap<String, String>();
-					standard.put(STANDARD_CODE, (String) standardCodes.get(i));
-					if (standardDescriptions.get(i) != null) {
-						standard.put(STANDARD_DESCRIPTION, (String) standardDescriptions.get(i));
+				if(standardCodes!=null&&standardCodes.length()>0){
+					for (int i = 0; i < standardCodes.length(); i++) {
+						Map<String, String> standard = new HashMap<String, String>();
+						if(standardCodes.get(i)!=null){
+							standard.put(STANDARD_CODE, (String)standardCodes.get(i));
+						}
+						if(standardDescriptions.get(i) != null) {
+							standard.put(STANDARD_DESCRIPTION, (String)standardDescriptions.get(i));
+						}
+						standards.add(standard);
 					}
-					standards.add(standard);
 				}
 				resourceSearchResultDo.setStandards(standards);
-
-				resourceSearchResultDo.setSubjectNames(convertJSONArrayToList(((JSONArray) taxonomyDataSet.get(TAXONOMY_SUBJECT))));
-				resourceSearchResultDo.setCourseNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_COURSE)));
-				resourceSearchResultDo.setUnitNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_UNIT)));
-				resourceSearchResultDo.setTopicNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_TOPIC)));
-				resourceSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
+				if(!taxonomyDataSet.isNull(TAXONOMY_SUBJECT)){
+					resourceSearchResultDo.setSubjectNames(convertJSONArrayToList(((JSONArray) taxonomyDataSet.get(TAXONOMY_SUBJECT))));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_COURSE)){
+					resourceSearchResultDo.setCourseNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_COURSE)));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_UNIT)){
+					resourceSearchResultDo.setUnitNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_UNIT)));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_TOPIC)){
+					resourceSearchResultDo.setTopicNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_TOPIC)));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_LESSON)){
+					resourceSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
+				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		resourceSearchResultDo.setAverageTime(getJsonString(recordJsonObject, AVERAGE_TIME));
 		resourceSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
@@ -314,7 +308,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			
 			collectionItemDo.setStandards(recordJsonObject.getStandards());
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		collectionItemDo.setResource(resourceDo);
 		return collectionItemDo;
@@ -332,7 +325,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			resourceDo.setResourceSource(resourceSourceDo);
 			
 		} catch (JSONException e1) {
-			e1.printStackTrace();
 		}
 		
 		try {
@@ -340,7 +332,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			resourceDo.setThumbnails(JsonDeserializer.deserialize(thumbnailJson.toString(), ThumbnailDo.class));
 			
 		} catch (JSONException e1) {
-			e1.printStackTrace();
 		}
 		
 		resourceDo.setTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
@@ -377,7 +368,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				resourceDo.setTaxonomySet(taxonomySet);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		resourceDo.setUrl(getJsonString(recordJsonObject, URL));
 		resourceDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
@@ -392,7 +382,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			resourceDo.setPublisher(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(PUBLISHER).toString(), new TypeReference<List<String>>() {
 			}));
 		} catch (JSONException e2) {
-			e2.printStackTrace();
 		}
 
 		try {
@@ -402,14 +391,12 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			}
 			
 		} catch (JSONException e2) {
-			e2.printStackTrace();
 		}
 		
 		try {
 			resourceDo.setAggregator(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(AGGREGATOR).toString(), new TypeReference<List<String>>() {
 			}));
 		} catch (JSONException e2) {
-			e2.printStackTrace();
 		}
 		
 		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
@@ -420,7 +407,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				resourceDo.setCreator(ownerDo);
 				resourceDo.setUser(ownerDo);
 			} catch (JSONException e1) {
-					e1.printStackTrace();
 			}
 		try{
 			resourceDo.setCustomFieldValues(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(CUSTOM_FIELDS).toString(), customFieldValuesDO.class));
@@ -443,13 +429,11 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		try{
 			resourceDo.setHasFrameBreaker(recordJsonObject.isNull(HAS_FRAME_BREAKER)?null:recordJsonObject.getBoolean(HAS_FRAME_BREAKER));
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		try{
 			resourceDo.setLicense(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(LICENSE).toString(), LicenseDo.class));
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		try{
@@ -459,7 +443,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				resourceDo.setUserRating(ratingObject.isNull(CONTENT_USER_RATING)?0:ratingObject.getInt(CONTENT_USER_RATING));
 			collectionItemDo.setRating(ratindDo);
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		try{
@@ -511,7 +494,6 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			
 			
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		

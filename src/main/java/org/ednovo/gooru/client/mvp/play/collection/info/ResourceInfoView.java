@@ -409,7 +409,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setUpdateReviewCount(reviewCount);
 			ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
-			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
+			if(collectionItemDoGlobal.getResource()!=null&&collectionItemDoGlobal.getResource().getRatings()!=null){
+				ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
+			}
 		}
 		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
 		ratingWidgetPanel.add(ratingWidgetView);
@@ -455,14 +457,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName());
 		}
 		if(collectionItemDo.getResource()!=null){
-			setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():null,collectionItemDo.getResource().getTaxonomySet());
+			setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():null,collectionItemDo.getResource().getTaxonomySet()!=null?collectionItemDo.getResource().getTaxonomySet():null);
 			setResourceDescription(collectionItemDo.getResource().getDescription()!=null?collectionItemDo.getResource().getDescription():"");
 		}
-		if(!StringUtil.isEmpty(collectionItemDo.getViews())){
-			setResourceViewsCount(collectionItemDo.getViews());
+		if(!StringUtil.isEmpty(collectionItemDo.getResource().getViews())){
+			setResourceViewsCount(collectionItemDo.getResource().getViews());
 		}
 		setResourceLicenceLogo(collectionItemDo.getResource().getAssetURI(), collectionItemDo.getResource().getLicense());
-		renderStandards(standardsInfoConatiner,collectionItemDo.getStandards());
+		renderStandards(standardsInfoConatiner,collectionItemDo.getStandards()!=null?collectionItemDo.getStandards():null);
 		
 		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getGrade()!=null){
 			List<String> gradesdetails = new ArrayList<String>();
@@ -487,35 +489,27 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		if(collectionItemDo.getResource() != null)
 		{
-		if(collectionItemDo.getResource().getResourceType() != null)
-		{
-		if(collectionItemDo.getResource().getResourceType().getName() != null)
-		{
-		if (VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()) || RESOURCE_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()))
-		{
-		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
-							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
-		}
-		else
-		{
-			originalUrlTitle.setVisible(false);
-			originalUrlText.setVisible(false);
-		}
-		}
-		else
-		{
-			originalUrlTitle.setVisible(false);
-			originalUrlText.setVisible(false);
-		}
-		}
-		else
-		{
-			originalUrlTitle.setVisible(false);
-			originalUrlText.setVisible(false);
-		}
-		}
-		else
-		{
+			if(collectionItemDo.getResource().getResourceType() != null)
+			{
+				if(collectionItemDo.getResource().getResourceType().getName() != null)
+				{
+					if (VIDEO_YOUTUBE.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()) || RESOURCE_URL.equalsIgnoreCase(collectionItemDo.getResource().getResourceType().getName()))
+					{
+						setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
+										collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
+					}else{
+						originalUrlTitle.setVisible(false);
+						originalUrlText.setVisible(false);
+					}
+				}else{
+					originalUrlTitle.setVisible(false);
+					originalUrlText.setVisible(false);
+				}
+			}else{
+				originalUrlTitle.setVisible(false);
+				originalUrlText.setVisible(false);
+			}
+		}else{
 			originalUrlTitle.setVisible(false);
 			originalUrlText.setVisible(false);
 		}
@@ -608,8 +602,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel()!=null){
 					List<String> readingLeveldetails = new ArrayList<String>();
 					String[] readinglevellist=collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel().split(",");
-					for(int rlevel=0;rlevel<readinglevellist.length;rlevel++){
-						readingLeveldetails.add(readinglevellist[rlevel]);
+					if(readinglevellist!=null&&readinglevellist.length>0){
+						for(int rlevel=0;rlevel<readinglevellist.length;rlevel++){
+							readingLeveldetails.add(readinglevellist[rlevel]);
+						}
 					}
 					showreadingLevelDetails(readingLeveldetails);
 				}
@@ -617,17 +613,21 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfKeywords()!=null){
 				List<String> keyworddetails = new ArrayList<String>();
 				String[] keywordslist=collectionItemDo.getResource().getCustomFieldValues().getCfKeywords().split(",");										
-				for(int klevel=0;klevel<keywordslist.length;klevel++){
-					keyworddetails.add(keywordslist[klevel]);
+				if(keywordslist!=null && keywordslist.length>0){
+					for(int klevel=0;klevel<keywordslist.length;klevel++){
+						keyworddetails.add(keywordslist[klevel]);
+					}
 				}
 				setkeywordsDetails(keyworddetails);
 				}
 				
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfAds()!=null){
 				List<String> addsdetails = new ArrayList<String>();
-				String[] addslist=collectionItemDo.getResource().getCustomFieldValues().getCfAds().split(",");										
-				for(int alevel=0;alevel<addslist.length;alevel++){
-					addsdetails.add(addslist[alevel]);
+				String[] addslist=collectionItemDo.getResource().getCustomFieldValues().getCfAds().split(",");	
+				if(addslist!=null && addslist.length>0){
+					for(int alevel=0;alevel<addslist.length;alevel++){
+						addsdetails.add(addslist[alevel]);
+					}
 				}
 				setaddsDetails(addsdetails);
 				}
@@ -635,8 +635,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode()!=null){
 				List<String> acessmodedetails = new ArrayList<String>();
 				String[] accesslist=collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().split(",");	
-				for(int accesslevel=0;accesslevel<accesslist.length;accesslevel++){
-					acessmodedetails.add(accesslist[accesslevel]);
+				if(accesslist!=null&& accesslist.length>0){
+					for(int accesslevel=0;accesslevel<accesslist.length;accesslevel++){
+						acessmodedetails.add(accesslist[accesslevel]);
+					}
 				}
 				setacessmodeDetails(acessmodedetails);
 				}
@@ -644,8 +646,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()!=null){
 				List<String> mediafeaturesdetails = new ArrayList<String>();
 				String[] mediafeaturelist=collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().split(",");	
-				for(int mflevel=0;mflevel<mediafeaturelist.length;mflevel++){
-					mediafeaturesdetails.add(mediafeaturelist[mflevel]);
+				if(mediafeaturelist!=null&&mediafeaturelist.length>0){
+					for(int mflevel=0;mflevel<mediafeaturelist.length;mflevel++){
+						mediafeaturesdetails.add(mediafeaturelist[mflevel]);
+					}
 				}
 				setmediafeaturesDetails(mediafeaturesdetails);
 				}
@@ -709,7 +713,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			dKnowledgePanel.setVisible(false);
 		}
 	
-		setmobilefriendlynessdetails(collectionItemDo.getResource().getMediaType());
+		setmobilefriendlynessdetails((collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getMediaType()!=null)?collectionItemDo.getResource().getMediaType():"");
 		
 		resourceTypeImage.getElement().setAttribute("style", "position: relative;margin-top:10px;margin-bottom: 10px;");
 
@@ -726,16 +730,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				&& collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()==null
 				&& collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()==null){
 		}else{
-			if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().equalsIgnoreCase("null")){
+			if(!StringUtil.isEmpty(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode())&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().equalsIgnoreCase("null")){
 				isAccessibilityInfo=true;
 			}
-			if(collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().equalsIgnoreCase("null")){
+			if(!StringUtil.isEmpty(collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature())&&!collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().equalsIgnoreCase("null")){
 				isAccessibilityInfo=true;
 			}
-			if(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility().equalsIgnoreCase("null")){
+			if(!StringUtil.isEmpty(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility())&&!collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility().equalsIgnoreCase("null")){
 				isAccessibilityInfo=true;
 			}
-			if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard().equalsIgnoreCase("null")){
+			if(!StringUtil.isEmpty(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard())&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard().equalsIgnoreCase("null")){
 				isAccessibilityInfo=true;
 			}
 		}
@@ -961,107 +965,90 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	private void setGrades(List<String> gradesdetails) {
 		gradesText.clear();
-		if(gradesdetails == null || gradesdetails.size() == 0 || gradesdetails.contains(null) || gradesdetails.contains("") ){
-		}else{
-		if(gradesdetails.size()>0){
-			if(gradesdetails.size()==1){
-				final Label gradesLabel=new Label(" "+gradesdetails.get(0));
-				gradesLabel.getElement().setAttribute("style", "float: left;");
-				gradesText.add(gradesLabel);
-				isGrades =true;
-			} if(gradesdetails.size()==2){
-				final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
-				gradesLabel.getElement().setAttribute("style", "float: left;");
-				gradesText.add(gradesLabel);
-				isGrades =true;
+		if(gradesdetails!=null && gradesdetails.size()>0){
+				if(gradesdetails.size()==1){
+					final Label gradesLabel=new Label(" "+gradesdetails.get(0));
+					gradesLabel.getElement().setAttribute("style", "float: left;");
+					gradesText.add(gradesLabel);
+					isGrades =true;
+				}else if(gradesdetails.size()==2){
+					final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
+					gradesLabel.getElement().setAttribute("style", "float: left;");
+					gradesText.add(gradesLabel);
+					isGrades =true;
+				}else if(gradesdetails.size()>2){
+					final Label gradesLabelCountLabel=new Label("+"+(gradesdetails.size()-2)); 
+					gradesLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
+					gradesLabel.getElement().setAttribute("style", "float:left;");
+					gradesText.add(gradesLabel);
+					gradesText.add(gradesLabelCountLabel);
+					Widget gradeswidget = getCommonwidget(gradesdetails);
+					gradesLabelCountLabel.addMouseOverHandler(new MouseOverShowToolTip(gradeswidget));
+					gradesLabelCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					isGrades =true;
 			}
-		}
-		if(gradesdetails.size()>2){
-			final Label gradesLabelCountLabel=new Label("+"+(gradesdetails.size()-2)); 
-			gradesLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
-			gradesLabel.getElement().setAttribute("style", "float:left;");
-			gradesText.add(gradesLabel);
-			gradesText.add(gradesLabelCountLabel);
-			Widget gradeswidget = getCommonwidget(gradesdetails);
-			gradesLabelCountLabel.addMouseOverHandler(new MouseOverShowToolTip(gradeswidget));
-			gradesLabelCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			isGrades =true;
-		}
-		}
+		}else{}
 	}
 
 	private void setPublisherDetails(List<String> publisher) {
-	
 		lblPublisher.clear();
-		if(publisher == null || publisher.size() == 0 || publisher.contains(null) || publisher.contains("") ){
-		}else{
-		if(publisher.size()>0){
-			if(publisher.size()==1){
-				final Label publisherLabel=new Label(" "+publisher.get(0));
-				
-				publisherLabel.getElement().setAttribute("style", "float: left;");
-				lblPublisher.add(publisherLabel);
-				isPublisher =true;
-			} if(publisher.size()==2){
-				
-				final Label publisherLabel=new Label(" "+publisher.get(0)+","+publisher.get(1));
-				publisherLabel.getElement().setAttribute("style", "float: left;");
-				lblPublisher.add(publisherLabel);
-				isPublisher =true;
+		if(publisher!=null&&publisher.size()>0){
+				if(publisher.size()==1){
+					final Label publisherLabel=new Label(" "+publisher.get(0));
+					publisherLabel.getElement().setAttribute("style", "float: left;");
+					lblPublisher.add(publisherLabel);
+					isPublisher =true;
+				}else if(publisher.size()==2){
+					final Label publisherLabel=new Label(" "+publisher.get(0)+","+publisher.get(1));
+					publisherLabel.getElement().setAttribute("style", "float: left;");
+					lblPublisher.add(publisherLabel);
+					isPublisher =true;
+				}else if(publisher.size()>2){
+					final Label publisherLabelCountLabel=new Label("+"+(publisher.size()-2)); 
+					publisherLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label publisherLabel=new Label(" "+publisher.get(0)+","+publisher.get(1));
+					publisherLabel.getElement().setAttribute("style", "float:left;");
+					lblPublisher.add(publisherLabel);
+					lblPublisher.add(publisherLabelCountLabel);
+					Widget publisherwidget = getCommonwidget(publisher);
+					publisherLabelCountLabel.addMouseOverHandler(new MouseOverShowToolTip(publisherwidget));
+					publisherLabelCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					isPublisher =true;
 			}
-		}
-		if(publisher.size()>2){
-			final Label publisherLabelCountLabel=new Label("+"+(publisher.size()-2)); 
-			publisherLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label publisherLabel=new Label(" "+publisher.get(0)+","+publisher.get(1));
-			publisherLabel.getElement().setAttribute("style", "float:left;");
-			lblPublisher.add(publisherLabel);
-			lblPublisher.add(publisherLabelCountLabel);
-			Widget publisherwidget = getCommonwidget(publisher);
-			publisherLabelCountLabel.addMouseOverHandler(new MouseOverShowToolTip(publisherwidget));
-			publisherLabelCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			isPublisher =true;
-		}
-		}
-	
+			
+		}else{}
 	}
 
-	private void setAggregatorvalues(List<String> aggregatorlist) {
-	
+	private void setAggregatorvalues(List<String> aggregatorlist){
 		aggregatorVal.clear();
-		if(aggregatorlist == null || aggregatorlist.size() == 0 || aggregatorlist.contains(null) || aggregatorlist.contains("") ){
-		}else{
-		if(aggregatorlist.size()>0){
-			if(aggregatorlist.size()==1){
-				final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0));
-				aggregatorLabel.getElement().setAttribute("style", "float: left;");
-				aggregatorVal.add(aggregatorLabel);
-				isAggregator =true;
-			} if(aggregatorlist.size()==2){
-				final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0)+","+aggregatorlist.get(1));
-				aggregatorLabel.getElement().setAttribute("style", "float: left;");
-				aggregatorVal.add(aggregatorLabel);
-				isAggregator =true;
-			}
-		}
-		if(aggregatorlist.size()>2){
-			final Label aggregatorCountLabel=new Label("+"+(aggregatorlist.size()-2)); 
-			aggregatorCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0)+","+aggregatorlist.get(1));
-			aggregatorLabel.getElement().setAttribute("style", "float:left;");
-			aggregatorVal.add(aggregatorLabel);
-			aggregatorVal.add(aggregatorCountLabel);
-			Widget aggregatorwidget = getCommonwidget(aggregatorlist);
-			aggregatorCountLabel.addMouseOverHandler(new MouseOverShowToolTip(aggregatorwidget));
-			aggregatorCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			isAggregator =true;
-		}
-		}
+		if(aggregatorlist!=null && aggregatorlist.size()>0){
+				if(aggregatorlist.size()==1){
+					final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0));
+					aggregatorLabel.getElement().setAttribute("style", "float: left;");
+					aggregatorVal.add(aggregatorLabel);
+					isAggregator =true;
+				}else if(aggregatorlist.size()==2){
+					final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0)+","+aggregatorlist.get(1));
+					aggregatorLabel.getElement().setAttribute("style", "float: left;");
+					aggregatorVal.add(aggregatorLabel);
+					isAggregator =true;
+				}else if(aggregatorlist.size()>2){
+					final Label aggregatorCountLabel=new Label("+"+(aggregatorlist.size()-2)); 
+					aggregatorCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0)+","+aggregatorlist.get(1));
+					aggregatorLabel.getElement().setAttribute("style", "float:left;");
+					aggregatorVal.add(aggregatorLabel);
+					aggregatorVal.add(aggregatorCountLabel);
+					Widget aggregatorwidget = getCommonwidget(aggregatorlist);
+					aggregatorCountLabel.addMouseOverHandler(new MouseOverShowToolTip(aggregatorwidget));
+					aggregatorCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					isAggregator =true;
+				}
+		}else{}
 	}
 
 	private void setTimeDurationDetails(String cfDuration) {
-	
 		if(cfDuration.contains(" ")){
 			String[] spiltTimeBySpace	= cfDuration.split(" ");
 		if(spiltTimeBySpace.length>0){
@@ -1083,48 +1070,40 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 	
 	private void setaddsDetails(List<String> addsdetails) {
-	
 		addsInfo.clear();
-		if(addsdetails == null || addsdetails.size() == 0 || addsdetails.contains(null) || addsdetails.contains("") ){
-			addsPanel.setVisible(false);
-		}else{
-			addsTitle.setText(i18n.GL1878().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			addsTitle.getElement().setAttribute("alt",i18n.GL1878());
-			addsTitle.getElement().setAttribute("title",i18n.GL1878());
-		if(addsdetails.size()>0){
-			if(addsdetails.size()==1){
-				final Label addsLabel=new Label(" "+addsdetails.get(0));
-				addsLabel.getElement().setAttribute("style", "float: left;");
-				addsInfo.add(addsLabel);
-				addsPanel.setVisible(true);
-			} if(addsdetails.size()==2){
-				final Label addsLabel=new Label(" "+addsdetails.get(0)+","+addsdetails.get(1));
-				addsLabel.getElement().setAttribute("style", "float: left;");
-				addsInfo.add(addsLabel);
-				addsPanel.setVisible(true);
+		if(addsdetails!=null && addsdetails.size()>0){
+				addsTitle.setText(i18n.GL1878().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				addsTitle.getElement().setAttribute("alt",i18n.GL1878());
+				addsTitle.getElement().setAttribute("title",i18n.GL1878());
+				if(addsdetails.size()==1){
+					final Label addsLabel=new Label(" "+addsdetails.get(0));
+					addsLabel.getElement().setAttribute("style", "float: left;");
+					addsInfo.add(addsLabel);
+					addsPanel.setVisible(true);
+				}else if(addsdetails.size()==2){
+					final Label addsLabel=new Label(" "+addsdetails.get(0)+","+addsdetails.get(1));
+					addsLabel.getElement().setAttribute("style", "float: left;");
+					addsInfo.add(addsLabel);
+					addsPanel.setVisible(true);
+				}else if(addsdetails.size()>2){
+					final Label addscountLabel=new Label("+"+(addsdetails.size()-2)); 
+					addscountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label addsLabelNew=new Label(" "+addsdetails.get(0)+","+addsdetails.get(1));
+					addsLabelNew.getElement().setAttribute("style", "float:left;");
+					addsInfo.add(addsLabelNew);
+					addsInfo.add(addscountLabel);
+					Widget addswidget = getCommonwidget(addsdetails);
+					addscountLabel.addMouseOverHandler(new MouseOverShowToolTip(addswidget));
+					addscountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					addsPanel.setVisible(true);
 			}
-			
+		}else{
+			addsPanel.setVisible(false);
 		}
-		if(addsdetails.size()>2){
-			final Label addscountLabel=new Label("+"+(addsdetails.size()-2)); 
-			addscountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label addsLabelNew=new Label(" "+addsdetails.get(0)+","+addsdetails.get(1));
-			addsLabelNew.getElement().setAttribute("style", "float:left;");
-			addsInfo.add(addsLabelNew);
-			addsInfo.add(addscountLabel);
-			Widget addswidget = getCommonwidget(addsdetails);
-			addscountLabel.addMouseOverHandler(new MouseOverShowToolTip(addswidget));
-			addscountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			addsPanel.setVisible(true);
-		}
-		}
-		
-	
 	}
 
 	private void setSchoolLevelDetails(String cfSchoolLevel) {
-	
-		if(cfSchoolLevel!=null&&!cfSchoolLevel.equalsIgnoreCase("")&&!cfSchoolLevel.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(cfSchoolLevel)&&!cfSchoolLevel.equalsIgnoreCase("null")){
 			schoolLevelPanel.setVisible(true);
 			schoolLevelLbl.setText(i18n.GL1868().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 			schoolLevelLbl.getElement().setAttribute("alt",i18n.GL1868());
@@ -1138,7 +1117,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void clearALlPanels() {
-	
 		hostPanel.setVisible(false);
 		oerPanel.setVisible(false);
 		eduAllignPanel.setVisible(false);
@@ -1161,7 +1139,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setOerDetails(String oerdetails) {
-	
 		if(!StringUtil.isEmpty(oerdetails)&&!oerdetails.equalsIgnoreCase("null")){
 			oerPanel.setVisible(true);
 			oerLbl.setText(i18n.GL1834().trim()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -1177,114 +1154,109 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setmonentoflearningDetails(List<String> momentoflearningdetails) {
 		momentsoflearningType.clear();
-		if(momentoflearningdetails == null || momentoflearningdetails.size() == 0 || momentoflearningdetails.contains(null) || momentoflearningdetails.contains("") ){
-			momentsoflearningPanel.setVisible(false);
+		if(momentoflearningdetails!=null && momentoflearningdetails.size()>0){
+		        momentsoflearningLbl.setText(i18n.GL1678().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				momentsoflearningLbl.getElement().setAttribute("alt",i18n.GL1678());
+				momentsoflearningLbl.getElement().setAttribute("title",i18n.GL1678());
+			if(momentoflearningdetails.size()==1){
+				final Label momentsofLabel=new Label(" "+momentoflearningdetails.get(0));
+				momentsofLabel.getElement().setAttribute("style", "float: left;");
+				momentsoflearningType.add(momentsofLabel);
+				momentsoflearningPanel.setVisible(true);
+			}else if(momentoflearningdetails.size()==2){
+				final Label momentsofLabel=new Label(" "+momentoflearningdetails.get(0)+","+momentoflearningdetails.get(1));
+				momentsofLabel.getElement().setAttribute("style", "float: left;");
+				momentsoflearningType.add(momentsofLabel);
+				momentsoflearningPanel.setVisible(true);
+			}else if(momentoflearningdetails.size()>2){
+				final Label momentsofLabel=new Label("+"+(momentoflearningdetails.size()-2)); 
+				momentsofLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+				momentsoflearningType.add(momentsofLabel);
+				Widget momentswidget = getCommonwidget(momentoflearningdetails);
+				momentsofLabel.addMouseOverHandler(new MouseOverShowToolTip(momentswidget));
+				momentsofLabel.addMouseOutHandler(new MouseOutHideToolTip());
+				momentsoflearningPanel.setVisible(true);
+			}
 		}else{
-	        momentsoflearningLbl.setText(i18n.GL1678().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			momentsoflearningLbl.getElement().setAttribute("alt",i18n.GL1678());
-			momentsoflearningLbl.getElement().setAttribute("title",i18n.GL1678());
-		if(momentoflearningdetails.size()>0){
-			final Label momentsofLabel=new Label(" "+momentoflearningdetails.get(0));
-			momentsofLabel.getElement().setAttribute("style", "float: left;");
-			momentsoflearningType.add(momentsofLabel);
-			momentsoflearningPanel.setVisible(true);
+			momentsoflearningPanel.setVisible(false);
 		}
-		if(momentoflearningdetails.size()>2){
-			final Label momentsofLabel=new Label("+"+(momentoflearningdetails.size()-2)); 
-			momentsofLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			momentsoflearningType.add(momentsofLabel);
-			Widget momentswidget = getCommonwidget(momentoflearningdetails);
-			momentsofLabel.addMouseOverHandler(new MouseOverShowToolTip(momentswidget));
-			momentsofLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			momentsoflearningPanel.setVisible(true);
-		}
-		}
-		
 	}
 
 	private void setDepthofknowledgeDetails(List<String> depthOfKnowledgedetails) {
-	
 		dKnowledgeType.clear();
-		if(depthOfKnowledgedetails == null || depthOfKnowledgedetails.size() == 0 || depthOfKnowledgedetails.contains(null) || depthOfKnowledgedetails.contains("") ){
-			dKnowledgePanel.setVisible(false);
-		}else{
-			dKnowledgeLbl.setText(i18n.GL1693().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			dKnowledgeLbl.getElement().setAttribute("alt",i18n.GL1693());
-			dKnowledgeLbl.getElement().setAttribute("title",i18n.GL1693());
-		if(depthOfKnowledgedetails.size()>0){
-			if(depthOfKnowledgedetails.size()==1){
-				final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0));
-				deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
-				dKnowledgeType.add(deapthknowledgeLabel);
-				dKnowledgePanel.setVisible(true);
-			} if(depthOfKnowledgedetails.size()==2){
-				final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
-				deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
-				dKnowledgeType.add(deapthknowledgeLabel);
-				dKnowledgePanel.setVisible(true);
+		if(depthOfKnowledgedetails!=null && depthOfKnowledgedetails.size()>0){
+				dKnowledgeLbl.setText(i18n.GL1693().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				dKnowledgeLbl.getElement().setAttribute("alt",i18n.GL1693());
+				dKnowledgeLbl.getElement().setAttribute("title",i18n.GL1693());
+				if(depthOfKnowledgedetails.size()==1){
+					final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0));
+					deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
+					dKnowledgeType.add(deapthknowledgeLabel);
+					dKnowledgePanel.setVisible(true);
+				}else if(depthOfKnowledgedetails.size()==2){
+					final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+					deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
+					dKnowledgeType.add(deapthknowledgeLabel);
+					dKnowledgePanel.setVisible(true);
+				}else if(depthOfKnowledgedetails.size()>2){
+					final Label deapthknowledgeLabel=new Label("+"+(depthOfKnowledgedetails.size()-2)); 
+					deapthknowledgeLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label deapthknowledgeLabelNew=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+					deapthknowledgeLabelNew.getElement().setAttribute("style", "float:left;");
+					dKnowledgeType.add(deapthknowledgeLabelNew);
+					dKnowledgeType.add(deapthknowledgeLabel);
+					Widget depthofwidget = getCommonwidget(depthOfKnowledgedetails);
+					deapthknowledgeLabel.addMouseOverHandler(new MouseOverShowToolTip(depthofwidget));
+					deapthknowledgeLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					dKnowledgePanel.setVisible(true);
 			}
-			
+		}else{
+			dKnowledgePanel.setVisible(false);
 		}
-		if(depthOfKnowledgedetails.size()>2){
-			final Label deapthknowledgeLabel=new Label("+"+(depthOfKnowledgedetails.size()-2)); 
-			deapthknowledgeLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label deapthknowledgeLabelNew=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
-			deapthknowledgeLabelNew.getElement().setAttribute("style", "float:left;");
-			dKnowledgeType.add(deapthknowledgeLabelNew);
-			dKnowledgeType.add(deapthknowledgeLabel);
-			Widget depthofwidget = getCommonwidget(depthOfKnowledgedetails);
-			deapthknowledgeLabel.addMouseOverHandler(new MouseOverShowToolTip(depthofwidget));
-			deapthknowledgeLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			dKnowledgePanel.setVisible(true);
-		}
-		}
-		
 	}
 
 	private void seteducationaluseDetails(List<String> eduUsedetails) {
-	
 		eduUseType.clear();
-		if(eduUsedetails == null || eduUsedetails.size() == 0 || eduUsedetails.contains(null) || eduUsedetails.contains("") ){
-			eduUsePanel.setVisible(false);
+		if(eduUsedetails!=null){
+			educationallLbl.setText(i18n.GL1720());
+			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+					if(eduUsedetails.size()>0){
+						final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
+						eduUseLabel.getElement().setAttribute("style", "float: left;");
+						eduUseType.add(eduUseLabel);
+						eduUsePanel.setVisible(true);
+						educationallLbl.setText(i18n.GL1720());
+						educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+						educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+						eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+						eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
+						eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
+						educationallLbl.setVisible(true);
+					}else if(eduUsedetails.size()>2){
+						final Label eduUseLabel=new Label("+"+(eduUsedetails.size()-2)); 
+						eduUseLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+						eduUseType.add(eduUseLabel);
+						Widget eduusewidget = getCommonwidget(eduUsedetails);
+						eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
+						eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
+						eduUsePanel.setVisible(true);
+						educationallLbl.setText(i18n.GL1720());
+						educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+						educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+						eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+						eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
+						eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
+						educationallLbl.setVisible(true);
+					}
+		
 		}else{
-			educationallLbl.setText(i18n.GL1720());
-			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
-			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
-		if(eduUsedetails.size()>0){
-			final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
-			eduUseLabel.getElement().setAttribute("style", "float: left;");
-			eduUseType.add(eduUseLabel);
-			eduUsePanel.setVisible(true);
-			educationallLbl.setText(i18n.GL1720());
-			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
-			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
-			eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
-			eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
-			educationallLbl.setVisible(true);
-		}
-		if(eduUsedetails.size()>2){
-			final Label eduUseLabel=new Label("+"+(eduUsedetails.size()-2)); 
-			eduUseLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			eduUseType.add(eduUseLabel);
-			Widget eduusewidget = getCommonwidget(eduUsedetails);
-			eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
-			eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			eduUsePanel.setVisible(true);
-			educationallLbl.setText(i18n.GL1720());
-			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
-			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
-			eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
-			eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
-			educationallLbl.setVisible(true);
-		}
+			eduUsePanel.setVisible(false);
 		}
 	}
 
 	private void setAcessHazardDetails(String accesshazard) {
-	
-		if(accesshazard!=null&&!accesshazard.equalsIgnoreCase("")&&!accesshazard.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(accesshazard)&&!accesshazard.equalsIgnoreCase("null")){
 			accessHazardPanel.setVisible(true);
 			acessHazardType.setText(" "+accesshazard);
 			acessHazardType.getElement().setAttribute("alt"," "+accesshazard);
@@ -1298,8 +1270,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setcontrolflexibilityDetails(String controlflexibility) {
-	
-		if(controlflexibility!=null&&!controlflexibility.equalsIgnoreCase("")&&!controlflexibility.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(controlflexibility)&&!controlflexibility.equalsIgnoreCase("null")){
 			controlPanel.setVisible(true);
 			controlType.setText(" "+controlflexibility);
 			controlType.getElement().setAttribute("alt"," "+controlflexibility);
@@ -1313,85 +1284,73 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setmediafeaturesDetails(List<String> mediaFeatures) {
-	
 		mediaFeatureType.clear();
-		if(mediaFeatures == null || mediaFeatures.size() == 0 || mediaFeatures.contains(null) || mediaFeatures.contains("") ){
-			mediaFeaturePanel.setVisible(false);
-		}else{
+		if(mediaFeatures!=null && mediaFeatures.size()>0){
             mediaFeatureLbl.setText(i18n.GL1706().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 			mediaFeatureLbl.getElement().setAttribute("alt",i18n.GL1706());
 			mediaFeatureLbl.getElement().setAttribute("title",i18n.GL1706());
-		if(mediaFeatures.size()>0){
-			
 			if(mediaFeatures.size()==1){
 				final Label mediafeatureLabel=new Label(" "+mediaFeatures.get(0));
 				mediafeatureLabel.getElement().setAttribute("style", "float: left;");
 				mediaFeatureType.add(mediafeatureLabel);
 				mediaFeaturePanel.setVisible(true);
-			} if(mediaFeatures.size()==2){
+			}else if(mediaFeatures.size()==2){
 				final Label mediafeatureLabel=new Label(" "+mediaFeatures.get(0)+","+mediaFeatures.get(1));
 				mediafeatureLabel.getElement().setAttribute("style", "float: left;");
 				mediaFeatureType.add(mediafeatureLabel);
 				mediaFeaturePanel.setVisible(true);
+			}else if(mediaFeatures.size()>2){
+				final Label mediafetureCountLabel=new Label("+"+(mediaFeatures.size()-2)); 
+				mediafetureCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+				final Label mediafeatureLabelNew=new Label(" "+mediaFeatures.get(0)+","+mediaFeatures.get(1));
+				mediafeatureLabelNew.getElement().setAttribute("style", "float:left;");
+				mediaFeatureType.add(mediafeatureLabelNew);
+				mediaFeatureType.add(mediafetureCountLabel);
+				Widget mfwidget = getCommonwidget(mediaFeatures);
+				mediafetureCountLabel.addMouseOverHandler(new MouseOverShowToolTip(mfwidget));
+				mediafetureCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+				mediaFeaturePanel.setVisible(true);
 			}
-		}
-		if(mediaFeatures.size()>2){
-			
-			final Label mediafetureCountLabel=new Label("+"+(mediaFeatures.size()-2)); 
-			mediafetureCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label mediafeatureLabelNew=new Label(" "+mediaFeatures.get(0)+","+mediaFeatures.get(1));
-			mediafeatureLabelNew.getElement().setAttribute("style", "float:left;");
-			mediaFeatureType.add(mediafeatureLabelNew);
-			mediaFeatureType.add(mediafetureCountLabel);
-			Widget mfwidget = getCommonwidget(mediaFeatures);
-			mediafetureCountLabel.addMouseOverHandler(new MouseOverShowToolTip(mfwidget));
-			mediafetureCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			mediaFeaturePanel.setVisible(true);
-		}
+		}else{
+			mediaFeaturePanel.setVisible(false);
 		}
 	}
 
 	private void setacessmodeDetails(List<String> acessmode) {
 		accessModeType.clear();
-		if(acessmode == null || acessmode.size() == 0 || acessmode.contains(null) || acessmode.contains("") ){
-			accessModePanel.setVisible(false);
+		if(acessmode!=null && acessmode.size()>0){
+				accessModelLbl.setText(i18n.GL1707().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				accessModelLbl.getElement().setAttribute("alt",i18n.GL1707());
+				accessModelLbl.getElement().setAttribute("title",i18n.GL1707());
+				if(acessmode.size()==1){
+					final Label accessmodeLabel=new Label(" "+acessmode.get(0));
+					accessmodeLabel.getElement().setAttribute("style", "float: left;");
+					accessModeType.add(accessmodeLabel);
+					accessModePanel.setVisible(true);
+				}else if(acessmode.size()==2){
+					final Label accessmodeLabel=new Label(" "+acessmode.get(0)+","+acessmode.get(1));
+					accessmodeLabel.getElement().setAttribute("style", "float: left;");
+					accessModeType.add(accessmodeLabel);
+					accessModePanel.setVisible(true);
+				}else if(acessmode.size()>2){
+					final Label acessmodeCountLabel=new Label("+"+(acessmode.size()-2)); 
+					acessmodeCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label accessmodeLabelNew=new Label(" "+acessmode.get(0)+","+acessmode.get(1));
+					accessmodeLabelNew.getElement().setAttribute("style", "float:left;");
+					accessModeType.add(accessmodeLabelNew);
+					accessModeType.add(acessmodeCountLabel);
+					Widget accesswidget = getCommonwidget(acessmode);
+					acessmodeCountLabel.addMouseOverHandler(new MouseOverShowToolTip(accesswidget));
+					acessmodeCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					accessModePanel.setVisible(true);
+				}
 		}else{
-			accessModelLbl.setText(i18n.GL1707().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			accessModelLbl.getElement().setAttribute("alt",i18n.GL1707());
-			accessModelLbl.getElement().setAttribute("title",i18n.GL1707());
-		if(acessmode.size()>0){
-			
-			if(acessmode.size()==1){
-				final Label accessmodeLabel=new Label(" "+acessmode.get(0));
-				accessmodeLabel.getElement().setAttribute("style", "float: left;");
-				accessModeType.add(accessmodeLabel);
-				accessModePanel.setVisible(true);
-			} if(acessmode.size()==2){
-				final Label accessmodeLabel=new Label(" "+acessmode.get(0)+","+acessmode.get(1));
-				accessmodeLabel.getElement().setAttribute("style", "float: left;");
-				accessModeType.add(accessmodeLabel);
-				accessModePanel.setVisible(true);
-			}
-		}
-		if(acessmode.size()>2){
-			
-			final Label acessmodeCountLabel=new Label("+"+(acessmode.size()-2)); 
-			acessmodeCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label accessmodeLabelNew=new Label(" "+acessmode.get(0)+","+acessmode.get(1));
-			accessmodeLabelNew.getElement().setAttribute("style", "float:left;");
-			accessModeType.add(accessmodeLabelNew);
-			accessModeType.add(acessmodeCountLabel);
-			Widget accesswidget = getCommonwidget(acessmode);
-			acessmodeCountLabel.addMouseOverHandler(new MouseOverShowToolTip(accesswidget));
-			acessmodeCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			accessModePanel.setVisible(true);
-		}
+			accessModePanel.setVisible(false);
 		}
 	}
 
 	private void setmobilefriendlynessdetails(String mediaType) {
-	
-		if(mediaType!=null&&!mediaType.equalsIgnoreCase("")&&!mediaType.equalsIgnoreCase("null")){
+		if(!StringUtil.isEmpty(mediaType)&&!mediaType.equalsIgnoreCase("null")){
 			if(mediaType.equals(NOT_FRIENDY_TAG)){
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(i18n.GL1687().trim()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -1417,94 +1376,84 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void showreadingLevelDetails(List<String> readinglevel) {
-	
 		readingLevelType.clear();
-		if(readinglevel == null || readinglevel.size() == 0 || readinglevel.contains(null) || readinglevel.contains("") ){
-			readingLevelPanel.setVisible(false);
-		}else{
-		if(readinglevel.size()>0){
-			if(readinglevel.size()==1){
-				readingLevelLbl.setText(i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-				readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
-				readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
-				final Label readingLabel=new Label(" "+readinglevel.get(0));
-				readingLabel.getElement().setAttribute("style", "float: left;");
-				readingLevelType.add(readingLabel);
-				readingLevelPanel.setVisible(true);
-			} if(readinglevel.size()==2){
-				readingLevelLbl.setText(i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-				readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
-				readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
-				final Label readingLabel=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
-				readingLabel.getElement().setAttribute("style", "float: left;");
-				readingLevelType.add(readingLabel);
-				readingLevelPanel.setVisible(true);
+		if(readinglevel!=null && readinglevel.size()>0){
+				if(readinglevel.size()==1){
+					readingLevelLbl.setText(i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
+					readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
+					final Label readingLabel=new Label(" "+readinglevel.get(0));
+					readingLabel.getElement().setAttribute("style", "float: left;");
+					readingLevelType.add(readingLabel);
+					readingLevelPanel.setVisible(true);
+				}else if(readinglevel.size()==2){
+					readingLevelLbl.setText(i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
+					readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
+					final Label readingLabel=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
+					readingLabel.getElement().setAttribute("style", "float: left;");
+					readingLevelType.add(readingLabel);
+					readingLevelPanel.setVisible(true);
+				}else if(readinglevel.size()>2){
+					readingLevelLbl.setText(i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
+					readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
+					final Label readingCountLabel=new Label("+"+(readinglevel.size()-2)); 
+					readingCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label readingLabelNew=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
+					readingLabelNew.getElement().setAttribute("style", "float:left;");
+					readingLevelType.add(readingLabelNew);
+					readingLevelType.add(readingCountLabel);
+					Widget readingwidget = getCommonwidget(readinglevel);
+					readingCountLabel.addMouseOverHandler(new MouseOverShowToolTip(readingwidget));
+					readingCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					readingLevelPanel.setVisible(true);
 			}
-		}
-		if(readinglevel.size()>2){
-			
-			readingLevelLbl.setText(i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
-			readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
-			final Label readingCountLabel=new Label("+"+(readinglevel.size()-2)); 
-			readingCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label readingLabelNew=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
-			readingLabelNew.getElement().setAttribute("style", "float:left;");
-			readingLevelType.add(readingLabelNew);
-			readingLevelType.add(readingCountLabel);
-			Widget readingwidget = getCommonwidget(readinglevel);
-			readingCountLabel.addMouseOverHandler(new MouseOverShowToolTip(readingwidget));
-			readingCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			readingLevelPanel.setVisible(true);
-		}
+		}else{
+			readingLevelPanel.setVisible(false);
 		}
 	}
 
 	private void setkeywordsDetails(List<String> keywords) {
-	
 		keywordsInfo.clear();
-		if(keywords == null || keywords.size() == 0 || keywords.contains(null) || keywords.contains("") ){
-			keyWordsPanel.setVisible(false);
-		}else{
-		if(keywords.size()>0){
-			if(keywords.size()==1){
-				keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
-				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
-				final Label keywordLabel=new Label(" "+keywords.get(0));
-				keywordLabel.getElement().setAttribute("style", "float: left;");
-				keywordsInfo.add(keywordLabel);
-				keyWordsPanel.setVisible(true);
-			} if(keywords.size()==2){
-				keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
-				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
-				final Label keywordLabel=new Label(" "+keywords.get(0)+","+keywords.get(1));
-				keywordLabel.getElement().setAttribute("style", "float: left;");
-				keywordsInfo.add(keywordLabel);
-				keyWordsPanel.setVisible(true);
+		if(keywords!=null && keywords.size()>0){
+				if(keywords.size()==1){
+					keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+					keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+					final Label keywordLabel=new Label(" "+keywords.get(0));
+					keywordLabel.getElement().setAttribute("style", "float: left;");
+					keywordsInfo.add(keywordLabel);
+					keyWordsPanel.setVisible(true);
+				}else if(keywords.size()==2){
+					keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+					keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+					final Label keywordLabel=new Label(" "+keywords.get(0)+","+keywords.get(1));
+					keywordLabel.getElement().setAttribute("style", "float: left;");
+					keywordsInfo.add(keywordLabel);
+					keyWordsPanel.setVisible(true);
+				}else if(keywords.size()>2){
+					keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+					keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+					keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+					final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
+					keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+					final Label keywordsLabelNew=new Label(" "+keywords.get(0)+","+keywords.get(1));
+					keywordsLabelNew.getElement().setAttribute("style", "float:left;");
+					keywordsInfo.add(keywordsLabelNew);
+					keywordsInfo.add(keywordCountLabel);
+					Widget keywordwidget = getCommonwidget(keywords);
+					keywordCountLabel.addMouseOverHandler(new MouseOverShowToolTip(keywordwidget));
+					keywordCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+					keyWordsPanel.setVisible(true);
 			}
-		}
-		if(keywords.size()>2){
-			keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
-			keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
-			keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
-			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
-			keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label keywordsLabelNew=new Label(" "+keywords.get(0)+","+keywords.get(1));
-			keywordsLabelNew.getElement().setAttribute("style", "float:left;");
-			keywordsInfo.add(keywordsLabelNew);
-			keywordsInfo.add(keywordCountLabel);
-			Widget keywordwidget = getCommonwidget(keywords);
-			keywordCountLabel.addMouseOverHandler(new MouseOverShowToolTip(keywordwidget));
-			keywordCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			keyWordsPanel.setVisible(true);
-		}
+		}else{
+			keyWordsPanel.setVisible(false);
 		}
 	}
 
 	private void setCopyRightHolderDetails(String copyRightHolder) {
-	
 		if(!StringUtil.isEmpty(copyRightHolder)&&!copyRightHolder.equalsIgnoreCase("null")){
 			copyRightPanel.setVisible(true);
 			copyRightType.setText(" "+copyRightHolder);
@@ -1519,7 +1468,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setAuthorDetails(String author) {
-	
 		if(!StringUtil.isEmpty(author)&&!author.equalsIgnoreCase("null")){
 			authorPanel.setVisible(true);
 			authorLbl.setText(i18n.GL0573().trim()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -1534,7 +1482,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setdataTypeDetails(String dataType) {
-	
 		if(!StringUtil.isEmpty(dataType)&&!dataType.equalsIgnoreCase("null")){
 			DataTypePanel.setVisible(true);
 			dataTypeFormat.setText(" "+dataType);
@@ -1549,7 +1496,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setlanguageDetails(String language) {
-	
 		if(!StringUtil.isEmpty(language)&&!language.equalsIgnoreCase("null")){
 			languagePanel.setVisible(true);
 			languageType.setText(" "+language);
@@ -1564,7 +1510,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setCountryCodeDetails(String countryCode) {
-	
 		if(!StringUtil.isEmpty(countryCode)&&!countryCode.equalsIgnoreCase("null")){
 			countryCodePanel.setVisible(true);
 			countryCodeType.setText(" "+countryCode);
@@ -1579,7 +1524,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setageRangeDetails(String ageRange) {
-	
 		if(!StringUtil.isEmpty(ageRange)&&!ageRange.equalsIgnoreCase("null")){
 			ageRangePanel.setVisible(true);
 			ageRangeType.setText(" "+ageRange);
@@ -1594,7 +1538,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setinteractivityTypeDetails(String interactivityType) {
-	
 		if(!StringUtil.isEmpty(interactivityType)&&!interactivityType.equalsIgnoreCase("null")){
 			interactivityTypePanel.setVisible(true);
 			interactiveType.setText(" "+interactivityType);
@@ -1624,7 +1567,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 
-
 	private void setedAlignDetails(String educationalAlignment) {
 		if(!StringUtil.isEmpty(educationalAlignment)&&!educationalAlignment.equalsIgnoreCase("null")){
 			eduAllignPanel.setVisible(true);
@@ -1639,14 +1581,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 
-	
 	private void setHostDetails(List<String> host) {
-		if(host == null || host.size() == 0 || host.contains(null) || host.contains("") ){
-		}else{
-			if(host.size()>0){
-				
-				if(host.size()==1){
-					
+		if(host!=null &&host.size()>0){
 					hostPanel.setVisible(true);
 					hostLbl.setText(i18n.GL1700().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 					hostLbl.getElement().setAttribute("alt",i18n.GL1700());
@@ -1654,10 +1590,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					hostType.setText(" "+host.get(0).toString());
 					hostType.getElement().setAttribute("alt",host.get(0).toString());
 					hostType.getElement().setAttribute("title",host.get(0).toString());
-				} 
-			}else{
-				hostPanel.setVisible(false);
-			}
+		}else{
+			hostPanel.setVisible(false);
 		}
 	}
 
@@ -1673,7 +1607,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public void setResourceDescription(String resourceDescription){
 		this.resourceDescription.clear();
 		this.resourceDescriptionTitle.clear();
-		if(resourceDescription!=null && !resourceDescription.equalsIgnoreCase("null") && !resourceDescription.equalsIgnoreCase("")){
+		if(!StringUtil.isEmpty(resourceDescription) && !resourceDescription.equalsIgnoreCase("null")){
 			this.resourceDescription.setVisible(true);
 			this.resourceDescriptionTitle.setVisible(true);
 			this.learningobjectiveText.setVisible(true);
@@ -1692,11 +1626,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					this.resourceDescription.add(setText(resourceDescription));
 					this.resourceDescriptionTitle.add(setText(i18n.GL1242().trim()+i18n.GL_SPL_SEMICOLON()+" "));
 				}
-				
 			}
-		}
-		else
-		{
+		}else{
 			this.resourceDescription.setVisible(false);
 			this.resourceDescriptionTitle.setVisible(false);
 			this.learningobjectiveText.setVisible(false);
@@ -1704,9 +1635,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 	
 	public void setResourceAttribution(String attribution,Set<CodeDo> taxonomoyList){
-		
 		List<String> coursesList=new ArrayList<String>();
-		if(taxonomoyList!=null){
+		if(taxonomoyList!=null && taxonomoyList.size()>0){
 			Iterator<CodeDo> taxonomyIterator=taxonomoyList.iterator();
 			while (taxonomyIterator.hasNext()) {
 				CodeDo codeDo=taxonomyIterator.next();
@@ -1714,45 +1644,48 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					coursesList.add(codeDo.getLabel());
 				}
 			}
-			
 		}
 		courseInfo.clear();
-		if(coursesList.size()>0){
-			final Label courseInfoLabel=new Label(" "+coursesList.get(0));
-			courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
-			courseInfo.add(courseInfoLabel);
-			coursePanel.setVisible(true);
-		}
-		if(coursesList.size()>1){
-			final Label courseCountLabel=new Label("+"+(coursesList.size()-1)); 
-			courseCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			courseInfo.add(courseCountLabel);
-			Widget Coursewidget = getToolTipwidgets(coursesList);
-			courseCountLabel.addMouseOverHandler(new MouseOverShowToolTip(Coursewidget));
-			courseCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
-			 coursePanel.setVisible(true);
-			
-		}
-		if(coursesList.size()==0){
+		if(coursesList!=null && coursesList.size()>0){
+			if(coursesList.size()==1){
+				final Label courseInfoLabel=new Label(" "+coursesList.get(0));
+				courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
+				courseInfo.add(courseInfoLabel);
+				coursePanel.setVisible(true);
+			}else if(coursesList.size()>1){
+				final Label courseInfoLabel=new Label(" "+coursesList.get(0));
+				courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
+				final Label courseCountLabel=new Label("+"+(coursesList.size()-1)); 
+				courseCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+				courseInfo.add(courseInfoLabel);
+				courseInfo.add(courseCountLabel);
+				Widget Coursewidget = getToolTipwidgets(coursesList);
+				courseCountLabel.addMouseOverHandler(new MouseOverShowToolTip(Coursewidget));
+				courseCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+				 coursePanel.setVisible(true);
+			}
+		}else{
 			 coursePanel.setVisible(false);
 		}
 		
 	}
 	private Widget getCommonwidget(List<String> commonList) {
-		
 		FlowPanel toolTipwidgets = new FlowPanel();
-		for(int i=2;i<commonList.size();i++){
-			Label commonLabel = new Label(commonList.get(i));
-			toolTipwidgets.add(commonLabel);
+		if(commonList!=null && commonList.size()>0){
+			for(int i=2;i<commonList.size();i++){
+				Label commonLabel = new Label(commonList.get(i));
+				toolTipwidgets.add(commonLabel);
+			}
 		}
 		return toolTipwidgets;
 	}
 	private Widget getToolTipwidgets(List<String> coursesList) {
-		
 		FlowPanel toolTipwidgets = new FlowPanel();
-		for(int i=1;i<coursesList.size();i++){
-			Label courseLabel = new Label(coursesList.get(i));
-			toolTipwidgets.add(courseLabel);
+		if(coursesList!=null && coursesList.size()>0){
+			for(int i=1;i<coursesList.size();i++){
+				Label courseLabel = new Label(coursesList.get(i));
+				toolTipwidgets.add(courseLabel);
+			}
 		}
 		return toolTipwidgets;
 	}
@@ -1762,24 +1695,20 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		resourceView.getElement().setAttribute("alt",viewCountLabel);
 		resourceView.getElement().setAttribute("title",viewCountLabel);
 	}
-	
-	
 	public void setCourseInfo(){
-		
 	}
-	
 	public void setOriginalUrl(String assetUri,String folder,String originalUrl,String resourceTypeName){
 		this.originalUrlText.clear();
-		if(originalUrl!=null&&!originalUrl.equalsIgnoreCase("")&&!originalUrl.equalsIgnoreCase("null")){
-			if(resourceTypeName.equalsIgnoreCase("image/png")){
-				if(!originalUrl.substring(0, 4).equalsIgnoreCase("http")){
+		if(!StringUtil.isEmpty(originalUrl)&&!originalUrl.equalsIgnoreCase("null")){
+			if(IMAGE_1.equalsIgnoreCase(resourceTypeName)){
+				if(!HTTP.equalsIgnoreCase(originalUrl.substring(0, 4))){
 					originalUrl=assetUri+folder+originalUrl;
 				}
 			}
 			String[] urlFormat = originalUrl.split("\\.");
 			String urlExtension = urlFormat[urlFormat.length - 1];
-			if(urlExtension.equalsIgnoreCase("pdf")){
-				if(!originalUrl.substring(0, 4).equalsIgnoreCase("http")){
+			if(PDF.equalsIgnoreCase(urlExtension)){
+				if(!HTTP.equalsIgnoreCase(originalUrl.substring(0, 4))){
 					originalUrl=assetUri+folder+originalUrl;
 				}
 			}
@@ -1796,43 +1725,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 	
-	private String generateGradeIfHypen(String grade) {
-		String gradeList[];
-	 
-		StringBuilder gradeStr = new StringBuilder();
-		gradeList = grade.split("-");
-		if (gradeList.length >= 2) {
-			int start = Integer.parseInt(gradeList[0].trim());
-			int end = Integer.parseInt(gradeList[1].trim());
-			if (start < end) {
-				for (int i = start; i <= end; i++) {
-					if (i == end) {
-						gradeStr.append(i);
-					} else {
-						gradeStr.append(i).append(",");
+	public List<Integer> sortList(List<Integer> list) {
+		if(list!=null && list.size()>0){
+			int listSize = list.size();
+			for (int i = 0; i < listSize; i++) {
+				for (int j = 1; j < listSize - i; j++) {
+					if (list.get(j - 1) > list.get(j)) {
+						int temp = list.get(j - 1);
+						list.set(j - 1, list.get(j));
+						list.set(j, temp);
 					}
 				}
 			}
-		} else {
-			gradeStr.append(Math.round(Double.parseDouble(gradeList[0].trim())));
 		}
-		return gradeStr.toString();
-	}	
-	public List<Integer> sortList(List<Integer> list) {
-
-		int listSize = list.size();
-
-		for (int i = 0; i < listSize; i++) {
-
-			for (int j = 1; j < listSize - i; j++) {
-				if (list.get(j - 1) > list.get(j)) {
-					int temp = list.get(j - 1);
-					list.set(j - 1, list.get(j));
-					list.set(j, temp);
-				}
-			}
-		}
-
 		return list;
 	}
 
@@ -1854,8 +1759,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
 				rightsLogoContainer.add(image);
-			}
-			else{
+			}else{
 				licenceContainer.setVisible(false);
 				rightsLogoContainer.clear();
 			}
@@ -1867,8 +1771,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	public static void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
 		standardsContainer.clear();
-		
-		if (standardsList != null) {
+		String stdCode = null; 
+		String stdDec = null;
+		if (standardsList != null && standardsList.size()>0) {
 			standaInfo.setVisible(false);
 			standardsContentContainer.setVisible(true);
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
@@ -1876,14 +1781,18 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
 				Map<String, String> standard = iterator.next();
-				String stdCode = standard.get(STANDARD_CODE);
-				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				if(standard.containsKey(STANDARD_CODE)){
+					stdCode = standard.get(STANDARD_CODE);
+				}
+				if(standard.containsKey(STANDARD_DESCRIPTION)){
+					stdDec = standard.get(STANDARD_DESCRIPTION);
+				}
 				if (count > 2) {
 					if (count < 18){
 						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
 						toolTipwidgets.add(standardItem);
 					}
-				} else {
+				}else{
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
 					standardsContainer.add(toolTipUc);
@@ -1921,41 +1830,40 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		collectionsCount.setText("");
 		gooruResourceOId = resourceGooruOid;
 		getUiHandlers().getCollectionList(resourceGooruOid, currentPageSize.toString(), PAGE_SIZES); 
-		
 	}
 	
 	public String getResourceTypeImage(String resourceType){
-		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
+		if(VIDEO.equalsIgnoreCase(resourceType)||VIDEOS.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfo();
-		}else if(resourceType.equalsIgnoreCase("Interactive")){
+		}else if(INTERACTIVE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceTypeInfo();
 		}
-		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")){
+		else if(WEBSITE.equalsIgnoreCase(resourceType)||WEBPAGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();		
 		}
-		else if(resourceType.equalsIgnoreCase("Slide")){
+		else if(SLIDE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
 		}
-		else if(resourceType.equalsIgnoreCase("Textbook")){
+		else if(TEXTBOOK.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
 		}
-		else if(resourceType.equalsIgnoreCase("Question")){
+		else if(QUESTION.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceTypeInfo();
 		}
-		else if(resourceType.equalsIgnoreCase("lesson")){
+		else if(LESSON.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().lessonResourceTypeInfo();
 			
-		}else if(resourceType.equalsIgnoreCase("Handout")){
+		}else if(HANDOUT.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
-		} else if(resourceType.equalsIgnoreCase("text")){
+		} else if(TEXT.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
 		}
-		else if(resourceType.equalsIgnoreCase("image")){
+		else if(IMAGE.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
 		}
-		else if(resourceType.equalsIgnoreCase("audio")){
+		else if(AUDIO.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceTypeInfo();
-		}else if(resourceType.equalsIgnoreCase("exam")){
+		}else if(EXAM.equalsIgnoreCase(resourceType)){
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();
 		}
 		else {
@@ -1965,15 +1873,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public void setResourceTypeImage(String resourceType){
 		if(resourceType!=null){
 			resourceType=resourceType.toLowerCase();
-			if(resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("textbook")||resourceType.equalsIgnoreCase("handout"))
+			if(LESSON.equalsIgnoreCase(resourceType)||TEXTBOOK.equalsIgnoreCase(resourceType)||HANDOUT.equalsIgnoreCase(resourceType))
 			{
 				resourceType=resourceType.replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
 			}
-			if(resourceType.equalsIgnoreCase("slide"))
+			if(SLIDE.equalsIgnoreCase(resourceType))
 			{
 				resourceType=resourceType.replaceAll("slide","Image");
 			}
-			if(resourceType.equalsIgnoreCase("exam")||resourceType.equalsIgnoreCase("challenge")||resourceType.equalsIgnoreCase("website"))
+			if(EXAM.equalsIgnoreCase(resourceType)||CHALLENGE.equalsIgnoreCase(resourceType)||WEBSITE.equalsIgnoreCase(resourceType))
 			{
 				resourceType=resourceType.replaceAll("exam","Webpage").replaceAll("challenge", "Webpage").replaceAll("website", "Webpage");
 			}
@@ -1996,19 +1904,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			collectionsCount.setText("("+resoruceCollectionDo.getTotalHitCount()+")");
 		}
-		
 		collectionsCount.getElement().setAttribute("alt","("+resoruceCollectionDo.getTotalHitCount()+")");
 		collectionsCount.getElement().setAttribute("title","("+resoruceCollectionDo.getTotalHitCount()+")");
 		totalItemSize = resoruceCollectionDo.getTotalHitCount();
 		collectionItemSizeData=currentPageSize*Integer.parseInt(PAGE_SIZES);
-		for(int i=0;i<resourceSearchResultList.size();i++){
-			reosourceReleatedCollections.add(new ResourceCollectionView(resourceSearchResultList.get(i)));
+		if(resourceSearchResultList!=null&&resourceSearchResultList.size()>0){
+			for(int i=0;i<resourceSearchResultList.size();i++){
+				reosourceReleatedCollections.add(new ResourceCollectionView(resourceSearchResultList.get(i)));
+			}
 		}
 	}
 	
 	@UiHandler("scrollPanel")
 	public void onScrollReosourceReleatedCollections(ScrollEvent scrollEvent ){
-		
 		if(scrollPanel.getVerticalScrollPosition() == scrollPanel.getMaximumVerticalScrollPosition() && collectionItemSizeData<totalItemSize){
 			currentPageSize=currentPageSize+1;
 			getUiHandlers().getCollectionList(gooruResourceOId, currentPageSize.toString(), PAGE_SIZES);
@@ -2020,15 +1928,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	{
 		String desc=null;
 		String desc2=null;
-		
 		public MouseOverShowStandardToolTip(String description,String desc2) {
 			this.desc = description;
 			this.desc2=desc2;
 		}
-		
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			
 			liecenceTooltip = new LiecenceTooltip(desc,desc2, (event.getRelativeElement().getAbsoluteLeft()-109),(event.getRelativeElement().getAbsoluteTop()+22));
 			liecenceTooltip.setStyleName("");
 			liecenceTooltip.show();
@@ -2039,18 +1944,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public class MouseOverShowToolTip implements MouseOverHandler
 	{
 		Widget widget;
-		
 		public MouseOverShowToolTip(Widget coursewidget) {
 			this.widget = coursewidget;
 		}
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTip = new ToolTipPopUp(widget,(event.getRelativeElement().getAbsoluteLeft()-55),(event.getRelativeElement().getAbsoluteTop()+5)); 
 			toolTip.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().courseTooltip());
 			toolTip.show();
 		}
-		
 	}
 	
 	public class MouseOutHideToolTip implements MouseOutHandler
@@ -2065,7 +1967,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				toolTip.hide();
 			}
 		}
-		
 	}
 
 	public HTMLEventPanel getHideButton()
@@ -2165,7 +2066,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
-			
 			popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
 				public void getAddedResourceTags(){
 					getUiHandlers().getAddedResourceTags(collectionItemDoGlobal.getResource().getGooruOid());
@@ -2175,7 +2075,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			        this.hide();
 			        if(!isCancelclicked){
 			        	 SuccessPopupViewVc success = new SuccessPopupViewVc() {
-
 								@Override
 								public void onClickPositiveButton(ClickEvent event) {
 									this.hide();
@@ -2200,7 +2099,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 	
 	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	
-		
 		@Override
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
 			if(collectionItemDoGlobal.getResource()!=null && collectionItemDoGlobal.getResource().getGooruOid()!=null){
@@ -2237,7 +2135,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	UpdateResourceReviewCountEventHandler setReviewCount =new UpdateResourceReviewCountEventHandler(){
 		@Override
 		public void setReviewCount(String resourceId,Integer count) {
-
 			if(collectionItemDoGlobal.getResource() != null)
 			{
 				if(resourceId.equals(collectionItemDoGlobal.getResource().getGooruOid())){
@@ -2272,15 +2169,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: #4e9746;");
 		}
 	}
-	
 	public void insertHideButtonAtLast(){
 		resouceInfoContainer.add(hideButton);
 		hideImageLabel.getElement().setAttribute("style", "transform: rotate(0deg);-ms-transform: rotate(0deg);-webkit-transform: rotate(0deg);padding-top:10px;");
 	}
-
 	@Override
 	public void setCollectionType(String collectionType) {
-		String message=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3043():i18n.GL0620();
+		String message=(collectionType!=null&&QUIZ.equals(collectionType))?i18n.GL3043():i18n.GL0620();
 		collectionsText.getElement().setInnerHTML(message);
 		collectionsText.getElement().setAttribute("alt",message);
 		collectionsText.getElement().setAttribute("title",message);

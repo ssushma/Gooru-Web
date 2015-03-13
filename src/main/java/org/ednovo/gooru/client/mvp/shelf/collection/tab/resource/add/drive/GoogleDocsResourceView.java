@@ -270,7 +270,6 @@ public class GoogleDocsResourceView extends Composite {
 		// try {
 		// tinyMce.setEmptyContent("");
 		// } catch (Exception e) {
-		// e.printStackTrace();
 		// }
 		// }
 

@@ -52,15 +52,6 @@
 	width: 700px;
 }
 
-.settingInfoExpanderArrow {
-	background: url(images/settings/setting-info-expander.png);
-	float: right;
-	width: 10px;
-	height: 16px;
-	cursor: pointer;
-	margin: 20px 0px 0px 0px;
-}
-
 .settingInfoMimiusArrow {
 	background: url(images/settings/setting-info-minimus.png);
 	width: 16px;

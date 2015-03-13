@@ -25,6 +25,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication.uc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
@@ -40,6 +43,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -83,7 +87,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class StudentSignUpUc extends PopupPanel{
+public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 
 	private static StudentSignUpUcUiBinder uiBinder = GWT
 			.create(StudentSignUpUcUiBinder.class);
@@ -619,43 +623,30 @@ public class StudentSignUpUc extends PopupPanel{
 		MixpanelUtil.sign_up_Child_registration();
 		String userRole = "student";
 
-		String userName = txtChooseUsername.getText();
+		final String userName = txtChooseUsername.getText();
 		String emilId = lblParentEmailId.getText();
-		String password = txtChoosePassword.getText().trim();
+		final String password = StringUtil.getCryptoData(txtChoosePassword.getText().trim()); 
 		String confirmPassword = txtConfirmPassword.getText().trim();
+		Map<String, String> registrationDetailsParams = new HashMap<String, String>();
+		registrationDetailsParams.put(USER_NAME, userName);
+		registrationDetailsParams.put(EMAIL_ID, emilId);
+		registrationDetailsParams.put(ORGANIZATION_CODE, GOORU);
+		registrationDetailsParams.put(FIRST_NAME, "Child");
+		registrationDetailsParams.put(LAST_NAME, "User");
 		
-		final JSONObject userCreate = new JSONObject();
-		JSONObject user = new JSONObject();
-
-		user.put(USER_NAME, new JSONString(userName));
-		user.put(EMAIL_ID, new JSONString(emilId));
+		registrationDetailsParams.put(PASSWORD, password); 
+		registrationDetailsParams.put("gooruBaseUrl", homeEndPoint + "#discover");
+		registrationDetailsParams.put("role", userRole);
+		registrationDetailsParams.put("dateOfBirth", dateBoxUc.getDateBox().getText());
 		
-		JSONObject organization = new JSONObject();
-		organization.put(ORGANIZATION_CODE, new JSONString(GOORU));
-		user.put("organization", organization);
+		registrationDetailsParams.put("accountType", "Child");
+		registrationDetailsParams.put("userParentId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
 		
-		user.put(FIRST_NAME, new JSONString("Child"));
-		user.put(LAST_NAME, new JSONString("User"));
-//			userCreate.put("gender", new JSONString("Male"));
-		userCreate.put(PASSWORD, new JSONString(password));
-		userCreate.put("gooruBaseUrl", new JSONString(homeEndPoint + "#discover"));
-		userCreate.put("role", new JSONString(userRole));
-		userCreate.put("dateOfBirth", new JSONString(dateBoxUc.getDateBox().getText()));
-		userCreate.put("accountType", new JSONString("Child"));
-		userCreate.put("userParentId", new JSONString(AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId()));
-		
-		userCreate.put("user", user);
-		
-		final JSONObject login = new JSONObject();
-		login.put("username", new JSONString(userName));
-		login.put("password", new JSONString(password));
-		
-		
-		AppClientFactory.getInjector().getUserService().createUser(userCreate.toString(),new SimpleAsyncCallback<UserDo>() {
+		AppClientFactory.getInjector().getUserService().createUser(registrationDetailsParams,CHILD_REG,new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo result) {
 					if (result.getGooruUId() != null && !result.getGooruUId().equalsIgnoreCase("")) {
-						AppClientFactory.getInjector().getAppService().v2Signin(login.toString(),new SimpleAsyncCallback<UserDo>() {
+						AppClientFactory.getInjector().getAppService().v2Signin(userName,password,new SimpleAsyncCallback<UserDo>() {
 							@Override
 							public void onSuccess(UserDo result) {
 								hide();
