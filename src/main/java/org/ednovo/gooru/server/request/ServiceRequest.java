@@ -39,9 +39,9 @@ import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Encoding;
+import org.restlet.data.Header;
 import org.restlet.data.MediaType;
 import org.restlet.data.Preference;
-import org.restlet.engine.header.Header;
 import org.restlet.engine.header.HeaderConstants;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -146,7 +146,7 @@ public abstract class ServiceRequest {
 			/**
 			 *  Taking values from response header to check authorized user or not. Implemented to differentiate from blocked user or authentication issue.
 			 */
-			Series<org.restlet.engine.header.Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+			Series<Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
 			if(responseHeaders!=null){
 				
 				if(responseHeaders.getValues("Unauthorized")!=null){
@@ -200,7 +200,6 @@ public abstract class ServiceRequest {
 					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return serverStatus;
@@ -261,7 +260,6 @@ public abstract class ServiceRequest {
 				clientResource.getClientInfo().setAgent(userAgentValue);
 			}
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 	}
 	

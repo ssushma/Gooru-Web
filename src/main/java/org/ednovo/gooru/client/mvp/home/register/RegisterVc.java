@@ -315,7 +315,6 @@ public class RegisterVc extends PopupPanel {
 									}
 								});
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}

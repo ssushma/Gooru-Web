@@ -237,7 +237,6 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), "scollection",libraryGooruOid));
 			loadingPanel(false);
 		} catch (Exception e) {
-			e.printStackTrace();
 			loadingPanel(false);
 		}
 	}
@@ -263,7 +262,6 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			}
 			loadingPanel(false);
 		} catch (Exception e) {
-			e.printStackTrace();
 			loadingPanel(false);
 		}
 	}
@@ -435,7 +433,6 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						}
 						loadingPanel(false);
 					} catch (Exception e) {
-						e.printStackTrace();
 						loadingPanel(false);
 					}
 				}

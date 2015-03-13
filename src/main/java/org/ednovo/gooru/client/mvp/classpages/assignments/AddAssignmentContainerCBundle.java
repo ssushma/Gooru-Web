@@ -141,7 +141,6 @@ public interface AddAssignmentContainerCBundle extends ClientBundle {
 		String dropdownPlaceHolder();
 		String dropdownListContainerScrollPanel();
 		String assignmentsystemMessage();
-		String successImage();
 		String successText();
 		String successPopupContainer();
 		String assignmentErrorMessage();

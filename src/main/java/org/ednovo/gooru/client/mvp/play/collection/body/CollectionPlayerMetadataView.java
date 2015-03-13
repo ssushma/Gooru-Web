@@ -243,12 +243,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			{
 				if(collectionDo.getMeta().getPermissions() != null)
 				{
+
 				if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
 					switchContainer.setVisible(true);
 						if(collectionDo.getSettings() != null)
 							{
 								if(collectionDo.getSettings().getComment() != null)
 								{
+									
 										if(TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment()))
 										{
 											commentField.setEnabled(true);
@@ -266,6 +268,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 											changeAssignmentStatusButton.setValue(false);
 										}
 								}else{
+									commentssection.setVisible(true);
 									commentField.setEnabled(true);
 									postCommentBtn.removeStyleName(SECONDARY_STYLE);
 									postCommentBtn.removeStyleName(DISABLED_STYLE);
@@ -281,8 +284,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				}else{				
 					if(collectionDo.getSettings() != null)
 					{
-							if(collectionDo.getSettings().getComment() != null)
-							{
 								if(TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
 								{
 									commentssection.setVisible(false);
@@ -290,10 +291,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 									commentssection.setVisible(true);
 								}
 								
-							}
 					}else{
 						commentssection.setVisible(true);
-					}			
+					}	
 					switchContainer.setVisible(false);	
 				}
 				}else{

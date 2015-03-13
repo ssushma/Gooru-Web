@@ -95,7 +95,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
 	@UiField
-	static FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
+	static FlowPanel wrapperContainerField,tagsContainer;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
@@ -216,7 +216,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
 			resourceTitleLbl.setVisible(false);
-			resourcePublisher.setVisible(false);
 			ratingsContainer.getElement().getStyle().setFloat(Float.RIGHT);
 			ratingsContainer.getElement().getStyle().setMarginRight(430,Unit.PX);
 			if(isChildAccount()){
@@ -226,7 +225,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else{
 			resourceTitleLbl.setVisible(true);
-			resourcePublisher.setVisible(true);
 		}
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
@@ -281,7 +279,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
 		}
-			displayPublisher();
 		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -345,7 +342,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				resourceTitleLbl.getElement().setAttribute("alt","");
 				resourceTitleLbl.getElement().setAttribute("title","");
 			}
-			displayPublisher();
 			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
@@ -358,32 +354,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			backwardButtonHandler=backwardButton.addClickHandler(new ShowResourceView(previousResourceRequest));
 		}
 
-	}
-	
-	private void displayPublisher(){
-		if(collectionItemDo.getResource()!=null && (collectionItemDo.getResource().getResourceFormat()!=null || collectionItemDo.getResource().getPublisher()!=null)){
-			List<String> publishersList=null;
-			resourcePublisher.clear();
-			if(collectionItemDo.getResource().getPublisher().size()>0){
-						publishersList=collectionItemDo.getResource().getPublisher();
-						SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
-			}else if("question".equalsIgnoreCase(collectionItemDo.getResource().getResourceFormat().getValue())){
-				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
-					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-						resourcePublisher.setVisible(true);
-						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+collectionItemDo.getResource().getCreator().getUsername());
-						resourcePublisher.getElement().getStyle().clearPaddingTop();
-					}else{
-						resourcePublisher.setVisible(false);
-					}
-				}
-			}else{
-				resourcePublisher.setVisible(false);
-			}
-		}else{
-			resourcePublisher.clear();
-			resourcePublisher.setVisible(false);
-		}
 	}
 
 	public void previewResouceWidget(final CollectionItemDo collectionItemDo){
@@ -1677,7 +1647,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		forwardButton.getElement().setId("btnForwardButton");
 		backwardButton.getElement().setId("btnBackwardButton");
 		resourceTitleLbl.getElement().setId("htmlResourceTitleLbl");
-		resourcePublisher.getElement().setId("lblResourcePublisher");
 		resourceWidgetContainer.getElement().setId("fpnlResourceWidgetContainer");
 	}
 

@@ -69,7 +69,7 @@ public enum UrlToken {
 
 	GET_COLLECTION_ITEMS("/scollection/{0}/item?sessionToken={1}&pageSize={2}&pageNo={3}"),
 
-	V2_GET_COLLECTION("/v2/collection/{0}?sessionToken={1}&skipCollectionItem={2}&includeMetaInfo=true&merge=permissions"),
+	V2_GET_COLLECTION("/v2/collection/{0}?sessionToken={1}&skipCollectionItem={2}&includeMetaInfo=true&merge=permissions&includeContentProvider=false&includeCustomFields=false"),
 					
 	V2_GET_COLLECTIONForStandards("/v2/collection/{0}?sessionToken={1}&rootNodeId={2}&skipCollectionItem={3}&includeMetaInfo=true&merge=permissions"),
 					

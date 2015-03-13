@@ -586,7 +586,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}
 		} catch (Exception e) {
 			
-			e.printStackTrace();
 		}
 		return standardLevelArry;
 	}
@@ -612,7 +611,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}
 		} catch (Exception e) {
 			
-			e.printStackTrace();
 		}
 		return standardLevelArry;
 	}
@@ -638,7 +636,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}
 		} catch (Exception e) {
 			
-			e.printStackTrace();
 		}
 		return standardLevelArry;
 	}
@@ -663,7 +660,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}
 		} catch (Exception e) {
 			
-			e.printStackTrace();
 		}
 		return standardLevelArry;
 	}

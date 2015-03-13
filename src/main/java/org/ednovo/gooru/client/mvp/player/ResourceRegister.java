@@ -305,7 +305,6 @@ public class ResourceRegister extends PopupPanel{
 									}
 								});
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}

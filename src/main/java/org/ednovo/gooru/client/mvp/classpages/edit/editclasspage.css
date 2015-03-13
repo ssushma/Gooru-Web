@@ -541,16 +541,6 @@
 }
 
 
-.classpageCodeHelp {
-	position: relative;
-	float: left;
-	width: 20px;
-	height: 20px;
-	cursor: pointer;
-	margin: 5px 10px 0px 3px;
-	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
-	background-position: 0px -46px;
-}
 .classpageCodeHelp:hover {
 	cursor: pointer;
 }
@@ -600,15 +590,6 @@
 .addAssignment:hover{
 	background: url("images/Classpage/plus_blue.png") 11px 11px no-repeat, #eee;
 	cursor: pointer;
-}
-
-.classpageAddPlusIcon {
-	position: relative;
-	top: -31px;
-	left: 10px;
-	width: 21px;
-	height: 22px;
-	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
 }
 
 .assignmentsContainer{
@@ -925,13 +906,6 @@ margin-bottom: -10px;
 	vertical-align: top;
 	float: left;
 	border: 1px black solid;
-}
-
-.progressStart{
-	background: url(images/Classpage/userIcon.png) no-repeat;
-	width: 29px;
-	height: 34px;
-	float: left;
 }
 
 .path{

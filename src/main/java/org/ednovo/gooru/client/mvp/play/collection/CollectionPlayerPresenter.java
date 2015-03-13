@@ -99,6 +99,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -1119,7 +1120,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	public void setResourceInfoView(String resourceId){
 		CollectionItemDo collectionItemDo=getCollectionItemDo(resourceId);
-		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
+		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, collectionItemDo.getResource().getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				resourceInfoPresenter.setResoruceDetails(result);
+			}
+		});
 		resourceInfoPresenter.setCollectionType(collectionDo.getCollectionType());
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);

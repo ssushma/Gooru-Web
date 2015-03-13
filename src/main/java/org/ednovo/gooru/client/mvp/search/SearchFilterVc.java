@@ -2256,7 +2256,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
