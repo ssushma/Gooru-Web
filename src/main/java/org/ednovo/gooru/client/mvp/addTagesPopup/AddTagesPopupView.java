@@ -555,6 +555,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					centuryDo.add(entry.getValue());
+				}
+				
 						hideCenturyPopup();
 			}
 		});
@@ -562,6 +566,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+					centuryDo.add(entry.getValue());
+				}
 						hideCenturyPopup();
 			}
 		});

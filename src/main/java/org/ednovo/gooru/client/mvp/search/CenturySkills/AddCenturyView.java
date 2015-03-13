@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.model.skils.NodeDo;
@@ -79,6 +80,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
 	Map<Long,String> selectedValues=new HashMap<Long,String>();
+	Map<Long,String> initialSelectedValues=new HashMap<Long,String>();
 
 	@UiTemplate("AddCenturyView.ui.xml")
 	interface AddCenturyViewUiBinder extends UiBinder<Widget, AddCenturyView> {
@@ -192,7 +194,8 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				
 				for(int i=0;i<centuryDo.size();i++){
 					if((((LiPanel) widget).getTitle()).equalsIgnoreCase(centuryDo.get(i).toString())){
-						selectedValues.put(Long.parseLong(i+""), centuryDo.get(i).toString());
+						Random rand= new Random();
+						selectedValues.put(Long.parseLong((rand.nextInt(900) + 100)+""), centuryDo.get(i).toString());
 						centuryDo.remove(centuryDo.get(i).toString());
 						Iterator<Widget> childWidgets=((LiPanel) widget).iterator();
 						while (childWidgets.hasNext()){
@@ -301,10 +304,12 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				@Override
 				public void onClick(ClickEvent event) {
 					if(titleText.getElement().getClassName().contains(AddCenturyBundle.INSTANCE.css().hilighTitleText())){
-						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-						if(selectedValues.containsKey(nodeObj.getCodeId())){
-							selectedValues.remove(nodeObj.getCodeId());
-						}
+						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());			
+						for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
+							if(selectedValues.containsValue(entry.getValue().trim())){
+								selectedValues.remove(entry.getKey());
+							}
+						}						
 					}else{
 						selectedValues.put(nodeObj.getCodeId(), nodeObj.getLabel());
 						titleText.addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
