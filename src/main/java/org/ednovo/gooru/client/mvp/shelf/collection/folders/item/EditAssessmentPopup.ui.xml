@@ -99,10 +99,15 @@
 	.assessmentEditTextBoxText{
 		width: 25%;
 		display: inline-block;
-		vertical-align: top;
+		vertical-align: middle;
+	}
+
+	.descriptionAlign{
+		vertical-align: top !important;
 	}
 	.radioButtoncontainer{
 		display: inline-block;
+		font-weight: normal;
 	}
 	.assessmentPrivacyRightContainer{
 		display: inline-block;
@@ -111,18 +116,53 @@
 	.radioBox{
 		float:left;
 		vertical-align: middle;
-		margin-top: 7px;
-		width: 11%;
-	}
-	.publicImage {
-		background: url(images/icon-sprite.png) repeat scroll -63px -390px rgba(0, 0, 0, 0);
+		width: 100px;
 		cursor: pointer;
-		display: block;
-		float: left;
+		font-weight: normal;
+	}
+	.publicImg{
+
+	}
+	.sharebleImg{
+		width: 120px !important;
+	}
+	.privateImg{
+		
+	}
+
+	.publicImg label{
+		background: url(images/icon-sprite.png) repeat scroll -68px -390px rgba(0, 0, 0, 0);
 		height: 21px;
 		width: 27px;
-		margin-top: 5px;
+		padding-left: 25px;
+		margin-bottom: 0px;
+		line-height: 21px;
+		cursor: pointer;
+		font-weight: normal;
 	}
+
+	.privateImg label{
+		background: url(images/icon-sprite.png) repeat scroll -68px -215px rgba(0, 0, 0, 0);
+		padding-left: 21px;
+		margin-bottom: 0px;
+		line-height: 21px;
+		height: 24px;
+		width: 27px;
+		cursor: pointer;
+		font-weight: normal;
+	}
+
+	.sharebleImg label{
+		background: url(images/icon-sprite.png) repeat scroll -67px -261px rgba(0, 0, 0, 0);
+		cursor: pointer;
+		height: 21px;
+		width: 38px;
+		padding-left: 22px;
+		margin-bottom: 0px;
+		line-height: 21px;
+		font-weight: normal;
+	}
+
 	.publicText {
 		line-height: 10px;
 		padding: 6px 0px 0 55px;
@@ -133,23 +173,7 @@
 		padding: 5px 0 0 14px;
 		margin-top: 6px;
 	}
-	.linkImage {
-		background: url(images/icon-sprite.png) repeat scroll -61px -261px rgba(0, 0, 0, 0);
-		cursor: pointer;
-		display: block;
-		float: left;
-		height: 21px;
-		width: 38px;
-		margin-top: 9px;
-	}
-	.privateImage {
-		background: url(images/icon-sprite.png) repeat scroll -61px -209px rgba(0, 0, 0, 0);
-		cursor: pointer;
-		display: block;
-		float: left;
-		height: 24px;
-		width: 27px;
-	}
+
 	.form_edit_textares_control {
 		width: 74%;
 		height: 30px;
@@ -167,7 +191,12 @@
 		display: inline-block;
 		resize: none;
 		height: 85px;
-	}																										
+	}				
+	.privacy{
+		vertical-align: top !important;
+		margin-top: 8px;
+	}
+																						
 	</ui:style>
 	<g:HTMLPanel styleName="{style.popupWrapper}">
 		<div class="{style.PopupMainVSmall}">
@@ -192,27 +221,21 @@
 			 					</g:HTMLPanel>
 			 				</div>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-				 				<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL0904} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0904}"/>
+				 				<g:Label styleName="{style.assessmentEditTextBoxText} {style.descriptionAlign}" text="{i18n.GL0904} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0904}"/>
 			 					<g:TextArea ui:field="txtExistingAssessmentDescription" styleName="{style.form_edit_textares_control}"></g:TextArea>
 			 					<g:Label ui:field="lblExistingAssessmentDescriptionError" styleName="{style.mandatoryLabel}" ></g:Label>
 			 				</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-					 			<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL0873} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0873}"/>
+					 			<g:Label styleName="{style.assessmentEditTextBoxText} {style.privacy}" text="{i18n.GL0873} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0873}"/>
 					 			<g:HTMLPanel styleName="{style.assessmentPrivacyRightContainer}">
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
-							 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{style.radioBox}"></g:RadioButton>
-							 				<g:Label styleName="{style.publicImage}"></g:Label>
-							 				<g:Label styleName="{style.publicText}" text="{i18n.GL0329}" title="{i18n.GL0329}"/>
+							 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{style.radioBox} {style.publicImg}" title="{i18n.GL0329}"></g:RadioButton>
 							 			</panel:HTMLEventPanel>
 							 			<panel:HTMLEventPanel  styleName="{style.radioButtoncontainer}">
-							 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{style.radioBox}"></g:RadioButton>
-							 				<g:Label styleName="{style.linkImage}"></g:Label>
-							 				<g:Label styleName="{style.publicText}" text="{i18n.GL0331}" title="{i18n.GL0331}"/>
+							 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{style.radioBox} {style.sharebleImg}" title="{i18n.GL0331}"></g:RadioButton>
 							 			</panel:HTMLEventPanel>
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
-							 				<g:RadioButton name="" ui:field="rdBtnAssessmentPrivate" styleName="{style.radioBox}"></g:RadioButton>
-							 				<g:Label styleName="{style.privateImage}"></g:Label>
-							 				<g:Label styleName="{style.publicText}" text="{i18n.GL0333}" title="{i18n.GL0333}"/>
+							 				<g:RadioButton name="" ui:field="rdBtnAssessmentPrivate" styleName="{style.radioBox} {style.privateImg}" title="{i18n.GL0333}"></g:RadioButton>
 							 			</panel:HTMLEventPanel>
 					 			</g:HTMLPanel>
 			 				</g:HTMLPanel>
@@ -221,11 +244,9 @@
 					 			<g:HTMLPanel styleName="{style.assessmentPrivacyRightContainer}">
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton name="" styleName="{style.radioBox}" ui:field="requireLoginYes"></g:RadioButton>
-							 				<g:Label styleName="{style.requiresText}" text="{i18n.GL_GRR_YES}" title="{i18n.GL_GRR_YES}"/>
 							 			</panel:HTMLEventPanel>
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton name="" styleName="{style.radioBox}"  ui:field="requireLoginNo"></g:RadioButton>
-							 				<g:Label styleName="{style.requiresText}" text="{i18n.GL_GRR_NO}" title="{i18n.GL_GRR_NO}"/>
 							 			</panel:HTMLEventPanel>
 					 			</g:HTMLPanel>
 			 				</g:HTMLPanel>
