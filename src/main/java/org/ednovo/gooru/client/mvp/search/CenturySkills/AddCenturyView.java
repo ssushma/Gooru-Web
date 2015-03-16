@@ -66,6 +66,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	private static AddCenturyViewUiBinder uiBinder = GWT.create(AddCenturyViewUiBinder.class);
 	
 	@UiField UlPanel ulCongitiveAndStrategies,ulKeyContentKnowledge,ulKeyLearningSkills;
+	@UiField HTMLPanel contentsDiv;
 	@UiField InlineLabel spnHewlettDeeperLearningModel,spnConley4Keys,spnP21Framework,spnNationalResearchCenter,spnKeyCongitiveAndStrategiesTitle,spnKeyContentKnowledgeTitle,spnKeyLearningSkillsTitle;
 	@UiField Button addCenturyBtn,cancelBtn;
 	
@@ -100,12 +101,18 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				selectedValues.clear();
 			}
 		});
+		
+	
 	
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(AddCenturyBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		AddCenturyBundle.INSTANCE.css().ensureInjected();
 		appPopUp.setViewTitle(i18n.GL3121_1());
+		if(contentsDiv!= null)
+		{
+		contentsDiv.getElement().setAttribute("style", "overflow-y:auto;max-height:440px;");
+		}
 	}
 	
 	@UiHandler("cancelBtn")
