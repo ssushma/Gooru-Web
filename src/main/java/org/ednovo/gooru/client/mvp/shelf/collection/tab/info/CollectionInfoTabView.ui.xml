@@ -98,7 +98,7 @@
 						<g:FlowPanel styleName="{res.css.shelfNameCourse}">
 							<g:FlowPanel styleName="{res.css.standardsCont}">
 							<g:Button ui:field="centbrowseBtn" styleName="secondary">Browse</g:Button>
-									<uc:AppSuggestBox ui:field="centurySgstBox"	width="221px" height="31px" />
+									<uc:AppSuggestBox ui:field="centurySgstBox"	width="176px" height="31px" />
 									<g:Label styleName="{res.css.standardMaxHide}" ui:field="centMaxMsg" />
 									<g:FlowPanel ui:field="centPanel" styleName="{res.css.collectionStandardsMargin}" />
 							</g:FlowPanel>
