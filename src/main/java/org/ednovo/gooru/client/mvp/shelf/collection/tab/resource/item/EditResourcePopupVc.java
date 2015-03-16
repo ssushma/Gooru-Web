@@ -2953,8 +2953,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						setInteractiveCategory();
 					}else if(event.getSource() == imageResourcePanel){
 						setImageCategory();
-					}
-					else if(event.getSource() == textResourcePanel){
+					}else if(event.getSource() == textResourcePanel){
 						setTextCategory();
 					}else if(event.getSource() == audioResourcePanel){
 						setAudioCategory();
