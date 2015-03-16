@@ -25,6 +25,7 @@ public class ClasspageItemDo implements Serializable{
 	private String classpageId;
 	private String status;
 	private Integer sequenceNumber;
+	private String collectionType;
 	
 	
 	public String getUserNameDispaly() {
@@ -161,6 +162,18 @@ public class ClasspageItemDo implements Serializable{
 	}
 	public void setSequenceNumber(Integer sequenceNumber) {
 		this.sequenceNumber = sequenceNumber;
+	}
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
 	}
 	
 
