@@ -211,6 +211,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}
 		});
 		shareTxtBox.addClickHandler(new OnTextBoxClick());
+		shareTxtBox.setReadOnly(true);
 	}
 	
 	/* (non-Javadoc)
