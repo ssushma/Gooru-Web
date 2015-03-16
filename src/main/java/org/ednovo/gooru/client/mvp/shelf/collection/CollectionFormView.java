@@ -152,7 +152,7 @@ public class CollectionFormView extends
 	
 	boolean fromAddResourcePresenter=false;
 	
-	@UiField Label lblNewAssessmentError,lblExistingAssessmentError,lblExistingAssessmentURLError;
+	@UiField Label lblNewAssessmentError,lblExistingAssessmentError,lblExistingAssessmentURLError,lblExistingAssessmentDescriptionError;
 	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate,requireLoginYes,requireLoginNo;
 	@UiField TextArea txtExistingAssessmentDescription;
 	
@@ -305,7 +305,6 @@ public class CollectionFormView extends
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", collectionTitleTxtBox.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -507,10 +506,17 @@ public class CollectionFormView extends
 							lblExistingAssessmentError.setText("");
 							lblExistingAssessmentURLError.setVisible(true);
 							lblExistingAssessmentURLError.setText(i18n.GL0926());
+						}else if(StringUtil.isEmpty(txtExistingAssessmentDescription.getText())){
+							lblExistingAssessmentError.setVisible(false);
+							lblExistingAssessmentError.setText("");
+							lblExistingAssessmentURLError.setVisible(false);
+							lblExistingAssessmentURLError.setText("");
+							lblExistingAssessmentDescriptionError.setVisible(true);
+							lblExistingAssessmentDescriptionError.setText(i18n.GL3188());
 						}else{
 							final Map<String, String> parms = new HashMap<String, String>();
 							parms.put("text", assessmentExistingTitle);
-							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 								@Override
 								public void onSuccess(Boolean value) {
 									if(value){
@@ -520,31 +526,36 @@ public class CollectionFormView extends
 										lblExistingAssessmentError.setVisible(false);
 										lblExistingAssessmentError.setText("");
 										parms.put("text", assessmentURL);
-										AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+										AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 											@Override
 											public void onSuccess(Boolean result) {
 												if(result){
 													//Displaying error message
 													SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
 												}else{
-													lblExistingAssessmentURLError.setVisible(false);
-													lblExistingAssessmentURLError.setText("");
-													String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-													final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-													final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-													final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-													getUiHandlers().saveCollection(folderId, o1, o2, o3);
+													parms.put("text", txtExistingAssessmentDescription.getText());
+													lblExistingAssessmentDescriptionError.setVisible(false);
+													lblExistingAssessmentDescriptionError.setText("");
+													AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>(){
+														@Override
+														public void onSuccess(Boolean result) {
+															if(result){
+																SetStyleForProfanity.SetStyleForProfanityForTextArea(txtExistingAssessmentDescription, lblExistingAssessmentDescriptionError, result);
+															}else{
+																lblExistingAssessmentDescriptionError.setVisible(false);
+																lblExistingAssessmentDescriptionError.setText("");
+																String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+																final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+																final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+																final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+																getUiHandlers().saveCollection(folderId, o1, o2, o3);
+														 }
+														}
+													});
 												}
-											}
-											@Override
-											public void onFailure(Throwable caught) {
-												
 											}
 										});
 									}
-								}
-								@Override
-								public void onFailure(Throwable caught) {
 								}
 							});
 						}
@@ -558,7 +569,7 @@ public class CollectionFormView extends
 					}else{
 						Map<String, String> parms = new HashMap<String, String>();
 						parms.put("text", assessmentTitle);
-						AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+						AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 							@Override
 							public void onSuccess(Boolean value) {
 								if(value){
@@ -573,9 +584,6 @@ public class CollectionFormView extends
 									final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 									getUiHandlers().saveCollection(folderId, o1, o2, o3);
 								}
-							}
-							@Override
-							public void onFailure(Throwable caught) {
 							}
 						});
 					}
@@ -609,6 +617,16 @@ public class CollectionFormView extends
 				if(lblExistingAssessmentURLError.isVisible()){
 					lblExistingAssessmentURLError.setVisible(false);
 					txtExistingAssessmentURL.getElement().removeAttribute("style");
+				}
+			}
+		});
+		//This will handle the focus on the description
+		txtExistingAssessmentDescription.addFocusHandler(new FocusHandler() {
+			@Override
+			public void onFocus(FocusEvent event) {
+				if(lblExistingAssessmentDescriptionError.isVisible()){
+					lblExistingAssessmentDescriptionError.setVisible(false);
+					lblExistingAssessmentDescriptionError.getElement().removeAttribute("style");
 				}
 			}
 		});
