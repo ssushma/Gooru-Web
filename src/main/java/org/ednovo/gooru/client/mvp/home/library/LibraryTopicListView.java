@@ -277,6 +277,9 @@ public class LibraryTopicListView extends Composite{
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			searchLink.getElement().getStyle().setDisplay(Display.NONE);
 			viewAllBtn.setVisible(true);
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+				viewAllBtn.setVisible(false);
+			}
 		}
 		else
 		{
