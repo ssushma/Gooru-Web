@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -111,6 +112,7 @@ public class ProfileUserTagView extends Composite{
 		tagTextMessage.getElement().setAttribute("title",i18n.GL1937());
 
 		userTagScrollPanel.getElement().setId("sbUserTagScrollPanel");
+		userTagScrollPanel.getElement().getStyle().setHeight(190, Unit.PX);
 		userTagsConatiner.getElement().setId("pnlUserTagsConatiner");
 
 		for(int i=0;i<userTagDo.size();i++){
