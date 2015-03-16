@@ -675,9 +675,13 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 			String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
 			String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-			
-			if(!collectionDo.getCollectionType().equalsIgnoreCase("assessment/url"))
-			{
+			boolean isAssessment=true;
+			if(collectionDo.getCollectionType()!= null && !collectionDo.getCollectionType().equalsIgnoreCase("assessment/url")){
+				isAssessment=true;
+			}else{
+				isAssessment=false;
+			}
+			if(!isAssessment){
 			if (refreshType.equals(RefreshType.INSERT)|| refreshType.equals(RefreshType.INSERT_AND_VIEW)) {
 				final ShelfCollection shelfCollection = new ShelfCollection(folderDo,1); 
 				SHELF_COLLECTIONS.add(folderDo);
@@ -1236,13 +1240,16 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 	String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
 	String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-		
-	if(collDo.getCollectionType()!= null && (!collDo.getCollectionType().equalsIgnoreCase("assessment/url")))
-	{
+	boolean isAssessment=false;
+	if(collDo.getCollectionType()!= null && !collDo.getCollectionType().equalsIgnoreCase("assessment/url")){
+		isAssessment=true;
+	}else{
+		isAssessment=false;
+	}
+	if(!isAssessment){
 		if(params!=null){
 			isFromAddResourcePresenter	=params.containsKey("from");
 		}
-		
 		if(refreshFolderType.equals(RefreshFolderType.INSERT) || refreshFolderType.equals(RefreshFolderType.INSERT_AND_VIEW) ) {
 			if(params!=null) {
 				if(params.get(O3_LEVEL)!=null) {
