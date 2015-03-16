@@ -269,9 +269,10 @@
     
 }
 .folderTitleStyle{
-	width: 630px;
+	width: 700px;
 	float: right;
 	margin-bottom: 20px;
+	box-sizing: border-box;
 }
 
 .collection {
