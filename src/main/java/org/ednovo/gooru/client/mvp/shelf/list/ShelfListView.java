@@ -675,101 +675,103 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 			String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
 			String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-			
-			if(!collectionDo.getCollectionType().equalsIgnoreCase("assessment/url"))
-			{
-			if (refreshType.equals(RefreshType.INSERT)|| refreshType.equals(RefreshType.INSERT_AND_VIEW)) {
-				final ShelfCollection shelfCollection = new ShelfCollection(folderDo,1); 
-				SHELF_COLLECTIONS.add(folderDo);
-				myShelfVerPanel.insertItem(0, new TreeItem(shelfCollection.asWidget()));
-				if(refreshType.equals(RefreshType.INSERT)){
+			boolean isAssessment=true;
+			if(collectionDo.getCollectionType()!= null && !collectionDo.getCollectionType().equalsIgnoreCase("assessment/url")){
+				isAssessment=true;
+			}else{
+				isAssessment=false;
+			}
+			if(!isAssessment){
+				if (refreshType.equals(RefreshType.INSERT)|| refreshType.equals(RefreshType.INSERT_AND_VIEW)) {
+					final ShelfCollection shelfCollection = new ShelfCollection(folderDo,1); 
+					SHELF_COLLECTIONS.add(folderDo);
+					myShelfVerPanel.insertItem(0, new TreeItem(shelfCollection.asWidget()));
+					if(refreshType.equals(RefreshType.INSERT)){
+						
+						/** Changed to new API call for fetching resources in a order **/
+			    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
+							@Override
+							public void onSuccess(FolderListDo result) {
+								shelfCollection.setAllResources(result.getSearchResult()); 
+								shelfCollection.setOpen();
+								shelfCollection.glowTitle();
+								shelfCollection.setCollectionOpenedStatus(true);
+								
+							}
+			    		});
+					}
+					shelfCollection.setOpen();
+					shelfCollection.glowTitle();
+					totWidgets = setUserShelfMsg();
+					setDiplayShelfMsg(totWidgets);				
+					if (refreshType.equals(RefreshType.INSERT_AND_VIEW)) {
+						if(AppClientFactory.getPlaceManager().getRequestParameter("id")==null){
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+						}else{
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,new String[] { ID, folderDo.getGooruOid() });
+							changeShelfPanelActiveStyle(folderDo.getGooruOid());
+						}
+					}
+					setNewCollectionPanelCss(false, NEW_COLLECTION_DRAG_MSG);
+					resetDragImage();
 					
-					/** Changed to new API call for fetching resources in a order **/
-		    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
-						@Override
-						public void onSuccess(FolderListDo result) {
-							shelfCollection.setAllResources(result.getSearchResult()); 
-							shelfCollection.setOpen();
-							shelfCollection.glowTitle();
-							shelfCollection.setCollectionOpenedStatus(true);
-							
-						}
-		    		});
-				}
-				shelfCollection.setOpen();
-				shelfCollection.glowTitle();
-				totWidgets = setUserShelfMsg();
-				setDiplayShelfMsg(totWidgets);				
-				if (refreshType.equals(RefreshType.INSERT_AND_VIEW)) {
-					if(AppClientFactory.getPlaceManager().getRequestParameter("id")==null){
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
-					}else{
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,new String[] { ID, folderDo.getGooruOid() });
-						changeShelfPanelActiveStyle(folderDo.getGooruOid());
-					}
-				}
-				setNewCollectionPanelCss(false, NEW_COLLECTION_DRAG_MSG);
-				resetDragImage();
-				
-			} else if (refreshType.equals(RefreshType.UPDATE)) {
-				ShelfCollection shelfCollection = getShelfCollection(folderDo.getGooruOid());
-				shelfCollection.updateData(folderDo);
-			} else if (refreshType.equals(RefreshType.DELETE)) {
-				
-				ShelfCollection shelfCollection = getShelfCollection(folderDo.getGooruOid());
-				String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
-				
-				if(id!=null) {
-					int index = widgetPosition;
-					selectedShelfCollection = null;
-					if (myShelfVerPanel.getItemCount() > 1) {
-						if (index == 0) {
-							selectedShelfCollection = (ShelfCollection) myShelfVerPanel.getItem(1).getWidget();
+				} else if (refreshType.equals(RefreshType.UPDATE)) {
+					ShelfCollection shelfCollection = getShelfCollection(folderDo.getGooruOid());
+					shelfCollection.updateData(folderDo);
+				} else if (refreshType.equals(RefreshType.DELETE)) {
+					
+					ShelfCollection shelfCollection = getShelfCollection(folderDo.getGooruOid());
+					String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
+					
+					if(id!=null) {
+						int index = widgetPosition;
+						selectedShelfCollection = null;
+						if (myShelfVerPanel.getItemCount() > 1) {
+							if (index == 0) {
+								selectedShelfCollection = (ShelfCollection) myShelfVerPanel.getItem(1).getWidget();
+							} else {
+								selectedShelfCollection = (ShelfCollection) myShelfVerPanel.getItem(index - 1).getWidget();
+							}
+							selectedShelfCollection.setOpen();
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] {ID, selectedShelfCollection.getCollectionDo().getGooruOid()});
+							AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
 						} else {
-							selectedShelfCollection = (ShelfCollection) myShelfVerPanel.getItem(index - 1).getWidget();
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+							AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
 						}
-						selectedShelfCollection.setOpen();
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] {ID, selectedShelfCollection.getCollectionDo().getGooruOid()});
-						AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
-					} else {
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
-						AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
 					}
-				}
-				
-				shelfCollection.removeFromParent();
-				if(myShelfVerPanel.getItemCount()==0){
-					noCollectionMsgLbl.setText(NO_COLLECTION_MESSAGE);
-					noCollectionMsgLbl.getElement().setAttribute("alt", NO_COLLECTION_MESSAGE);
-					noCollectionMsgLbl.getElement().setAttribute("title", NO_COLLECTION_MESSAGE);
+					
+					shelfCollection.removeFromParent();
+					if(myShelfVerPanel.getItemCount()==0){
+						noCollectionMsgLbl.setText(NO_COLLECTION_MESSAGE);
+						noCollectionMsgLbl.getElement().setAttribute("alt", NO_COLLECTION_MESSAGE);
+						noCollectionMsgLbl.getElement().setAttribute("title", NO_COLLECTION_MESSAGE);
+					}else{
+						noCollectionMsgLbl.setText(LOADING_COLLECTION_MESSAGE);
+						noCollectionMsgLbl.getElement().setAttribute("alt", LOADING_COLLECTION_MESSAGE);
+						noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
+					}
+					// resetDragImage();
+	
+				} else if (refreshType.equals(RefreshType.OPEN)) {
+					selectedShelfCollection = getShelfCollection(folderDo.getGooruOid());
+					if (selectedShelfCollection != null) {
+						selectedShelfCollection.setOpen();
+					}
 				}else{
-					noCollectionMsgLbl.setText(LOADING_COLLECTION_MESSAGE);
-					noCollectionMsgLbl.getElement().setAttribute("alt", LOADING_COLLECTION_MESSAGE);
-					noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
+					HashMap<String,String> params = new HashMap<String,String>();
+					if(O3_LEVEL_VALUE!=null) {
+						params.put("o3", O3_LEVEL_VALUE);
+					}
+					if(O2_LEVEL_VALUE!=null) {
+						params.put("o2", O2_LEVEL_VALUE);
+					}
+					if(O1_LEVEL_VALUE!=null) {
+						params.put("o1", O1_LEVEL_VALUE);
+					}
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 				}
-				// resetDragImage();
-
-			} else if (refreshType.equals(RefreshType.OPEN)) {
-				selectedShelfCollection = getShelfCollection(folderDo.getGooruOid());
-				if (selectedShelfCollection != null) {
-					selectedShelfCollection.setOpen();
-				}
-			}
-		}
-		else
-		{
-			HashMap<String,String> params = new HashMap<String,String>();
-			if(O3_LEVEL_VALUE!=null) {
-				params.put("o3", O3_LEVEL_VALUE);
-			}
-			if(O2_LEVEL_VALUE!=null) {
-				params.put("o2", O2_LEVEL_VALUE);
-			}
-			if(O1_LEVEL_VALUE!=null) {
-				params.put("o1", O1_LEVEL_VALUE);
-			}
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
-		}
+		   }
 		} else if (myShelfVerPanel.getItemCount() > 0) {
 			selectedShelfCollection = (ShelfCollection) myShelfVerPanel.getItem(0).getWidget();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,new String[] {ID,selectedShelfCollection.getCollectionDo().getGooruOid() });
@@ -1236,13 +1238,16 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 	String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
 	String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-		
-	if(collDo.getCollectionType()!= null && (!collDo.getCollectionType().equalsIgnoreCase("assessment/url")))
-	{
+	boolean isAssessment=false;
+	if(collDo.getCollectionType()!= null && !collDo.getCollectionType().equalsIgnoreCase("assessment/url")){
+		isAssessment=true;
+	}else{
+		isAssessment=false;
+	}
+	if(!isAssessment){
 		if(params!=null){
 			isFromAddResourcePresenter	=params.containsKey("from");
 		}
-		
 		if(refreshFolderType.equals(RefreshFolderType.INSERT) || refreshFolderType.equals(RefreshFolderType.INSERT_AND_VIEW) ) {
 			if(params!=null) {
 				if(params.get(O3_LEVEL)!=null) {
@@ -1436,21 +1441,21 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
 			}
 		}
-	}
-	else
-	{
-		HashMap<String,String> parametersForUrl = new HashMap<String,String>();
-		if(O3_LEVEL_VALUE!=null) {
-			parametersForUrl.put("o3", O3_LEVEL_VALUE);
+		else
+		{
+			HashMap<String,String> parametersForUrl = new HashMap<String,String>();
+			if(O3_LEVEL_VALUE!=null) {
+				parametersForUrl.put("o3", O3_LEVEL_VALUE);
+			}
+			if(O2_LEVEL_VALUE!=null) {
+				parametersForUrl.put("o2", O2_LEVEL_VALUE);
+			}
+			if(O1_LEVEL_VALUE!=null) {
+				parametersForUrl.put("o1", O1_LEVEL_VALUE);
+			}
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametersForUrl);
 		}
-		if(O2_LEVEL_VALUE!=null) {
-			parametersForUrl.put("o2", O2_LEVEL_VALUE);
-		}
-		if(O1_LEVEL_VALUE!=null) {
-			parametersForUrl.put("o1", O1_LEVEL_VALUE);
-		}
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametersForUrl);
-	}
+	 }
 	}
 	
 	
