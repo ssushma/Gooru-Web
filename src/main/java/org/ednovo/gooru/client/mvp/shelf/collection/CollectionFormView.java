@@ -506,13 +506,6 @@ public class CollectionFormView extends
 							lblExistingAssessmentError.setText("");
 							lblExistingAssessmentURLError.setVisible(true);
 							lblExistingAssessmentURLError.setText(i18n.GL0926());
-						}else if(StringUtil.isEmpty(txtExistingAssessmentDescription.getText())){
-							lblExistingAssessmentError.setVisible(false);
-							lblExistingAssessmentError.setText("");
-							lblExistingAssessmentURLError.setVisible(false);
-							lblExistingAssessmentURLError.setText("");
-							lblExistingAssessmentDescriptionError.setVisible(true);
-							lblExistingAssessmentDescriptionError.setText(i18n.GL3188());
 						}else{
 							final Map<String, String> parms = new HashMap<String, String>();
 							parms.put("text", assessmentExistingTitle);
