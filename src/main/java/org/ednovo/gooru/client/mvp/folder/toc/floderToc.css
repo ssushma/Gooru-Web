@@ -179,6 +179,7 @@ button.primary:hover {
 	clear: both;
 	border-bottom: 2px solid #e1dfda;
 	margin-bottom: 10px;
+	padding-bottom: 2px;
 }
 .tocShareBtn{
 	clear: both;
