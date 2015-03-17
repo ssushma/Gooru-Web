@@ -122,6 +122,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private static final String PARENT_ID = "parentId";
 	private static final String LIBRARY_NAME = "libName";
 	private static final String TYPE = "type";
+
+	private static final String FEATURED = "Featured";
 	
 	private Map<String, List<String>> bannerVal;
 	PlaceRequest placeRequest =null;
@@ -714,7 +716,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setBreadCrumbs(final String key, String value, String separator) {
 		Label routeLbl= new Label();
 		routeLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().breadCrumbsStyle());
-		routeLbl.setText(value+" "+separator+" ");
+		routeLbl.setText(" "+value+" "+separator);
 		routeLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -736,7 +738,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		boolean haveBreadCrumbs=false;
 		for (Map.Entry<String, String> entry : result.entrySet())
 		{
-		    setBreadCrumbs(entry.getKey(), entry.getValue(), "> ");
+			if(!entry.getValue().equals(FEATURED)){
+				 setBreadCrumbs(entry.getKey(), entry.getValue(), "> ");
+			}
 		    size++;
 		    haveBreadCrumbs=true;
 		}
