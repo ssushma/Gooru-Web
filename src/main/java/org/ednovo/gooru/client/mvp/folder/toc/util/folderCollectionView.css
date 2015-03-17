@@ -43,7 +43,7 @@
     padding: 3px 31px;
 	list-style:none;
 	cursor: pointer;
-	margin-left:14px;
+	margin-left:15px;
 }
 .foldercollection { 
     background: url('../images/folders/panel/collection-small-icon.png') no-repeat 8px 4px;
@@ -55,7 +55,7 @@
 .sequenceNumner{
 	position: absolute;
 	margin-left: -56px;
-	padding-right:6px;
+	padding-right:10px;
 	text-align: right;
 	color: #06c;
 	width: 3%;
@@ -69,7 +69,7 @@
 	min-width: 50px;
 	width: 10%;
 	color:#1076bb;
-	font-size:12pt;
+	font-size:12px;
 	padding-left:12px;
 }
 .lockImage{

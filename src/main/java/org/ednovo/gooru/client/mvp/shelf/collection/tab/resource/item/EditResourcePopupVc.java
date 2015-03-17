@@ -405,6 +405,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		this.collectionOriginalItemDo = collectionItemDo;
 		
 		setContent(i18n.GL0949(), uiBinder.createAndBindUi(this));
+		getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+		});
 		defaultText.getElement().setInnerHTML(i18n.GL3093());
 		defaultMomentsOfLearningText.getElement().setInnerHTML(i18n.GL3093());
 		advancedText.setText(i18n.GL3096());
