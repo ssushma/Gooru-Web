@@ -730,6 +730,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		return resourceLink;
 	}
 	public void setCollectionImage(String thumbnailUrl){
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 		collectionThumbnail.setUrl(thumbnailUrl);
 	}
 	/**
