@@ -32,7 +32,7 @@ import com.google.gwt.resources.client.CssResource;
 public interface FolderContainerCBundle extends ClientBundle {
 	static final FolderContainerCBundle INSTANCE = GWT.create(FolderContainerCBundle.class);
 	
-	public interface  NewAddresourcePopupCss extends CssResource{
+	public interface  FolderTocCss extends CssResource{
 		
 		String assignmentContentContainer();
 		
@@ -169,7 +169,9 @@ public interface FolderContainerCBundle extends ClientBundle {
 		String shareButton();
 		String breadCrumbsStyle();
 		String bannerImageTitle();
+		String displayNoneStyle();
+		String displayInlineStyle();
 	}
 	@Source("folderStyleToc.css")
-	NewAddresourcePopupCss css();
+	FolderTocCss css();
 }

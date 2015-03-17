@@ -556,7 +556,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 */
 	@Override
 	public void setBannerImages(){
-		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
 		bannerImage.setVisible(false);
 		hideProfileOrLibraryPanel(false);
 		if(!StringUtil.isEmpty(placetoken)){
@@ -589,7 +589,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	private String convertHtml(String title) {
 		HTML html = new HTML();
 		html.setHTML(title);
-		return html.getHTML();
+		return html.getText();
 	}
 
 	/* (non-Javadoc)
@@ -599,12 +599,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void setCourseBanner(FolderDo folderDo) {
 		hideProfileOrLibraryPanel(false);
 		bannerImagePanel.setVisible(true);
-		bannerImage.getElement().setAttribute("style", "height: 204px;margin-top: -34px;width: 100%; display:none;");
-		bannerTitle.setText(folderDo.getTitle());
+		bannerImage.setStyleName(FolderContainerCBundle.INSTANCE.css().displayNoneStyle());
+		bannerTitle.setText(convertHtml(folderDo.getTitle()));
 		bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
-		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter("libName",null);
+		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
 		logoImage.setUrl(bannerVal.get(placetoken).get(2));
-		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;");
+		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;height: 198px;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
 		setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		bannerImage.addErrorHandler(new ErrorHandler() {
@@ -736,13 +736,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		boolean haveBreadCrumbs=false;
 		for (Map.Entry<String, String> entry : result.entrySet())
 		{
-		    setBreadCrumbs(entry.getKey(), entry.getValue(), ">");
+		    setBreadCrumbs(entry.getKey(), entry.getValue(), "> ");
 		    size++;
 		    haveBreadCrumbs=true;
 		}
 		if(size==result.size() && haveBreadCrumbs){
 			Label presentTile=new Label();
-			presentTile.getElement().setAttribute("style", "display: inline-block; color: #515151;");
+			presentTile.setStyleName(FolderContainerCBundle.INSTANCE.css().displayInlineStyle());
 			presentTile.setText(lblFolderTitle.getText());
 			breadCrumbsPanel.add(presentTile);
 		}
