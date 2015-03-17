@@ -794,7 +794,7 @@
 /* Banner Image  css here*/
 .bannerImageContainer {
 	position: relative;
-	height: 177px;
+	height: 245px;
 }
 
 .bannerImageCaption {
@@ -863,5 +863,12 @@
 }
 .bannerImageTitle{
 	background-color: rgba(16, 118, 187, 0.5);
+}
+.displayNoneStyle{
+	display: none;
+}
+.displayInlineStyle{
+	display: inline-block; 
+	color: #515151;
 }
 
