@@ -35,23 +35,25 @@ public enum UrlToken {
 
 	GET_USER("/v2/user/{0}?sessionToken={1}"),
 
-	RESOURCE_SEARCH("/search/resource?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&queryType={4}&allowDuplicates={5}&fetchHitsInMulti={6}&allowScripting={7}"),
-
-	SIMPLE_COLLECTION_SEARCH("/search/scollection?sessionToken={0}&query={1}&pageNum={2}&pageSize={3}&accessType={4}"),
-
-	RESOURCE_COLLECTION_LIST("/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
-
+	V2_RESOURCE_SEARCH("/gooru-search/rest/v2/search/resource?sessionToken={0}&q={1}&start={2}&length={3}&queryType={4}&allowDuplicates={5}&fetchHitsInMulti={6}&allowScripting={7}"),
+	
+	V2_SIMPLE_COLLECTION_SEARCH("/gooru-search/rest/v2/search/scollection?sessionToken={0}&q={1}&start={2}&length={3}&accessType={4}"),
+	
+	V2_RESOURCE_COLLECTION_LIST("/gooru-search/rest/v2/search/scollection?sessionToken={0}&q={1}&start={2}&length={3}&accessType=my&category=all&flt.resourceGooruOIds={4}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
+	
 	COLLECTION_ITEMS_LIST("/scollection/{0}?sessionToken={1}"),
+	
+	V2_COLLECTION_ITEMS_LIST("/v2/collection/{0}/item?sessionToken={1}"),
 
 	SEARCH_FILTER("/search/index/filters?sessionToken={0}&type={1}"),
 
-	SEARCH_SUGGEST_STANDARD("/search/{0}?sessionToken={1}&query={2}&pageSize={3}&pageNum={4}"),
+	V2_SEARCH_SUGGEST_STANDARD("/gooru-search/rest/v2/search/{0}?sessionToken={1}&q={2}&length={3}&start={4}"),
 	
 	SUGGEST_STANDARD_BY_FILTER("/v2/collection/standards?sessionToken={0}&query={1}"),
 	
-	SEARCH_AUTO_SUGGEST_KEYWORD("/search/searchquery?sessionToken={0}&query={1}&pageSize={2}&queryType={3}&pageNum={4}"),
+	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?sessionToken={0}&q={1}&length={2}&queryType={3}&start={4}"),
 
-	SEARCH_SUGGEST_SOURCE("/search/publisher?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
+	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?sessionToken={0}&q={1}&length={2}&start={3}"),
 
 	UPDATE_V2_COLLLECTION("/v2/collection/{0}?sessionToken={1}"),
 
@@ -98,6 +100,8 @@ public enum UrlToken {
 	UPDATE_USER_GRADE_COURSE("/v2/user/{0}?sessionToken={1}"),
 
 	UPDATE_COLLLECTION_ITEM_METADATA("/scollection/item/{0}/metadata?sessionToken={1}"),
+	
+	V2_UPDATE_COLLLECTION_ITEM_METADATA("/v2/collection/item/{0}?sessionToken={1}"),
 			
 	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
 
@@ -109,7 +113,7 @@ public enum UrlToken {
 
 	V2_COPY_COLLLECTION_ITEM("/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
 	
-	FORGOT_PASSWORD("/user/password/reset.json?sessionToken={0}&emailId={1}"),
+	V2_FORGOT_PASSWORD("/v2/user/reset-password/request?sessionToken={0}"),
 
 	V2_RESET_CREDENTIAL("/v2/user/reset-password?sessionToken={0}"),
 
@@ -124,6 +128,8 @@ public enum UrlToken {
 	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?sessionToken={1}&title={2}&url={3}&category={4}&description={5}&thumbnailImgSrc={6}&stop={7}"),
 
 	GET_RESOURCE_INFO("/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
+	
+	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
 
 	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&sessionToken={1}"),
 
@@ -401,7 +407,7 @@ public enum UrlToken {
 	
 	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
 	
-	SEARCH_SUGGEST_AGGREGATOR("/search/aggregator?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
+	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?sessionToken={0}&q={1}&length={2}&start={3}"),
 			
 	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
 	
@@ -453,7 +459,7 @@ public enum UrlToken {
 	
 	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?sessionToken={2}&direction={3}&planedEndDate={4}"),
 	
-	SUGGEST_STANDARD_BY_FILTER_Source_CodeId("/search/standard?sessionToken={0}&query={1}"),
+	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?sessionToken={0}&q={1}"),
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
@@ -473,7 +479,7 @@ public enum UrlToken {
 	
 	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
 	
-V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
+	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	
 	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?sessionToken={1}&data={2}"),
 	
