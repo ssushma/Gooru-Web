@@ -371,32 +371,6 @@ div.learnMoreIconsDiv,div.learnMoreIconsDiv {
 	padding: 4px;
 }
 
-.gooruGuideImg {
-	background: url("images/help_icon_v2.png") no-repeat scroll 0 0
-		transparent;
-	cursor: pointer;
-	/* float: right; */
-	height: 40px;
-	left: 110px;
-	position: relative;
-	right: 157px;
-	top: 6px;
-	width: 26px;
-}
-
-.loggedInGooruGuideImg {
-	background: url("images/help_icon_v2.png") no-repeat scroll 0 0
-		transparent;
-	cursor: pointer;
- 
-	height: 40px;
-	left: 7px;
-	position: relative;
-	 
-	top: 6px;
-	width: 28px;
-}
-
 .imageUrlError {
 	background-color: #FFFFCC;
 	border: 1px solid #CC0000;
