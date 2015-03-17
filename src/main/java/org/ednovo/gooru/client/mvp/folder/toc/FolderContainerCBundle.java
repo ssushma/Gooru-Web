@@ -169,6 +169,7 @@ public interface FolderContainerCBundle extends ClientBundle {
 		String shareButton();
 		String breadCrumbsStyle();
 		String bannerImageTitle();
+		String lastBreadCometitle();
 	}
 	@Source("folderStyleToc.css")
 	NewAddresourcePopupCss css();

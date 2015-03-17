@@ -43,6 +43,7 @@
     padding: 3px 31px;
 	list-style:none;
 	cursor: pointer;
+	margin-left:14px;
 }
 .foldercollection { 
     background: url('../images/folders/panel/collection-small-icon.png') no-repeat 8px 4px;
@@ -54,19 +55,22 @@
 .sequenceNumner{
 	position: absolute;
 	margin-left: -56px;
+	padding-right:6px;
 	text-align: right;
 	color: #06c;
 	width: 3%;
 }
 .collectionDesc{
 	white-space: normal;
-	font-weight: bold;
 	color:#252525;
 	cursor: auto;
 }
 .resourceTitle{
 	min-width: 50px;
 	width: 10%;
+	color:#1076bb;
+	font-size:12pt;
+	padding-left:12px;
 }
 .lockImage{
 	background: url(../images/folders/lock-icon.png) no-repeat;

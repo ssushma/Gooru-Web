@@ -708,8 +708,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 						if(AppClientFactory.getPlaceManager().getRequestParameter("id")==null){
 							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 						}else{
-							  AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,new String[] { ID, folderDo.getGooruOid() });
-							  changeShelfPanelActiveStyle(folderDo.getGooruOid());
+						    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,new String[] { ID, folderDo.getGooruOid() });
+						 	changeShelfPanelActiveStyle(folderDo.getGooruOid());
 						}
 					 }
 					setNewCollectionPanelCss(false, NEW_COLLECTION_DRAG_MSG);

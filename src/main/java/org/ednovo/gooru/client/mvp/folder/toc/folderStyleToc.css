@@ -864,4 +864,8 @@
 .bannerImageTitle{
 	background-color: rgba(16, 118, 187, 0.5);
 }
-
+.lastBreadCometitle{
+	display: inline-block;
+	color: #515151;
+	padding-left:5px;
+}
