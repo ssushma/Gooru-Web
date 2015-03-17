@@ -154,6 +154,7 @@
 		<!-- <dependency> <groupId>org.restlet.jee</groupId> <artifactId>org.restlet</artifactId> 
 			<version>2.1.1</version> </dependency> -->
 		<!--Restlet Form problem rectified -->
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -590,6 +591,7 @@
 							<cssSourceExcludes>
 								<cssSourceExclude>*.min.css</cssSourceExclude>
 								<cssSourceExclude>embed.css</cssSourceExclude>
+								<cssSourceExclude>font-awesome.css</cssSourceExclude>
 							</cssSourceExcludes>
 							<cssFinalFile>main-styles.css</cssFinalFile>
 							<!-- JS Minify -->

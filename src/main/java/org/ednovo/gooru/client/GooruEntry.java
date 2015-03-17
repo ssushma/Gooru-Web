@@ -86,14 +86,14 @@ public class GooruEntry implements EntryPoint {
 		/**
 		 * Capturing all uncaught exception on client side.
 		 */
-		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+		/*GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			
 			@Override
 			public void onUncaughtException(Throwable e) {
 				Throwable unwrapped = getExceptionToDisplay(e);
 				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
 			}
-		});	
+		});*/	
 		
 		DelayedBindRegistry.bind(appInjector);
 		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
