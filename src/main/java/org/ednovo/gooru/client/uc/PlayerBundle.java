@@ -283,7 +283,10 @@ public interface PlayerBundle extends ClientBundle {
 		public String getstandardMoreLink();
 		
 		@ClassName("info-style-Standard")
-		public String getstandardMoreInfo();
+		public String getstandardMoreInfo();		
+		
+		@ClassName("info-style-Century")
+		public String getcenturyMoreInfo();
 		
 		@ClassName("courseTooltip")
 		public String courseTooltip();

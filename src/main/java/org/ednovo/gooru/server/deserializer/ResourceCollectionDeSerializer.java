@@ -51,6 +51,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
@@ -281,6 +282,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		ResourceDo resourceDo=new ResourceDo();
 		List<Map<String, String>> standards = new ArrayList<Map<String, String>>();
 		Set<CodeDo> taxonomySet = new HashSet<CodeDo>();
+		List<StandardFo> centurySkills = new ArrayList<StandardFo>();
 		int size = 0;
 		StringTokenizer courses = null;
 		try{
@@ -310,8 +312,9 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				taxonomySet.add(codeDo);
 				
 			}
-			
+	
 			resourceDo.setTaxonomySet(taxonomySet);
+			resourceDo.setSkills(recordJsonObject.getSkills());
 			
 			collectionItemDo.setStandards(recordJsonObject.getStandards());
 		}catch(Exception e){
