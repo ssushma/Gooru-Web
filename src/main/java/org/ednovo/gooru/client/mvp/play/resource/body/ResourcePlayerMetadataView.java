@@ -533,8 +533,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}
 		}else {
-
-			
+			if(collectionItemDo.getResource().getUrl() != null)
+			{
 			String[] urlFormat = collectionItemDo.getResource().getUrl().split("\\.");
 			String urlExtension = urlFormat[urlFormat.length - 1];
 			if(urlExtension.equalsIgnoreCase("pdf")){
@@ -561,6 +561,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					resourceSourceUrl=collectionItemDo.getResource().getUrl();
 				}
 				resourceWidgetContainer.add(new WebResourceWidget(resourceSourceUrl));
+			}
 			}
 		}
 	}
