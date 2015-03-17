@@ -66,6 +66,8 @@ public enum UrlToken {
 			"/search/resource?sessionToken={0}&pageNum={1}&pageSize={2}&flt.collectionGooruOIds={3}"),
 
 	COLLECTION_ITEMS_LIST("/scollection/{0}?sessionToken={1}"),
+	
+	V2_COLLECTION_ITEMS_LIST("/v2/collection/{0}/item?sessionToken={1}"),
 
 	SEARCH_FILTER("/search/index/filters?sessionToken={0}&type={1}"),
 
