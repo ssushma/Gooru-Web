@@ -801,14 +801,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget instanceof ShelfFolderItemChildView) {
-				
 				if(getTotalCount()==1){
 					isReorderButtonEnabled(false,(ShelfFolderItemChildView) widget);
-					
 				}else{
 					isReorderButtonEnabled(true,(ShelfFolderItemChildView) widget);
 				}
-				
 				/**
 				 * For a first folder/collection hiding the up and top most arrow.
 				 */
@@ -828,7 +825,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 						((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 
 					}
 				}
-				
 				((ShelfFolderItemChildView) widget).getItemNumber().setText(seqNum+"");
 				((ShelfFolderItemChildView) widget).getReorderTxtBox().setText(seqNum+"");
 			}
@@ -1290,5 +1286,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			}
 		}
 		setFolderCollectionItemSequence();
+		//This will hide the move buttons if we have only one widget
+		int widgetsCount = folderContentBlock.getWidgetCount();
+		if(widgetsCount==1){
+			Widget widget =folderContentBlock.iterator().next();
+			if (widget instanceof ShelfFolderItemChildView) {
+				((ShelfFolderItemChildView) widget).getReorderPanel().setVisible(false);
+			}
+		}
 	}
 }
