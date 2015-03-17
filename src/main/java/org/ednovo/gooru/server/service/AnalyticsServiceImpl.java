@@ -100,7 +100,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId,String pathwayId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionProgressDataDo> collectionProgressDataList=new ArrayList<CollectionProgressDataDo>();
-		String dataPassing="%7B%22fields%22:%22timeSpent,avgTimeSpent,resourceGooruOId,OE,questionType,category,gooruUId,userName,userData,metaData,reaction,gooruOId,title,description,options,skip%22,%22filters%22:%7B%22session%22:%22FS%22,%22classId%22:%22"+classPageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22%7D%7D";
+		String dataPassing="{%22fields%22:%22timeSpent,avgTimeSpent,resourceGooruOId,OE,questionType,category,gooruUId,userName,userData,metaData,reaction,gooruOId,title,description,options,skip%22,%22filters%22:{%22session%22:%22FS%22,%22classId%22:%22"+classPageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_COLLECTIONPROGRESSDATA, collectionId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -119,7 +119,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData(String classpageId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryUsersDataDo> collectionSummaryUsersDataDoList=new ArrayList<CollectionSummaryUsersDataDo>();
-		String dataPassing="%7B%22fields%22:%22userGroupUId,userName,gooruUId%22%7D";
+		String dataPassing="{%22fields%22:%22userGroupUId,userName,gooruUId%22}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETUSERSFORPATHWAY, classpageId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -138,7 +138,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<UserDataDo> getCollectionResourceData(String collectionId,String classpageId,String pathwayId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<UserDataDo> collectionResourcesList=new ArrayList<UserDataDo>();
-		String dataPassing="%7B%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:%7B%22session%22:%22AS%22,%22classId%22:%22"+classpageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22DESC%22%7D%7D";
+		String dataPassing="{%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22session%22:%22AS%22,%22classId%22:%22"+classpageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22DESC%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONRESOURCEDATA, collectionId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -158,7 +158,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			String collectionId, String classId, String userId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryUsersDataDo> sessionDataList=new ArrayList<CollectionSummaryUsersDataDo>();
-		String dataPassing ="%7B%22fields%22:%22%22,%22filters%22:%7B%22userUId%22:\""+userId+"\",%22classId%22:%22"+classId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22%7D%7D";
+		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}";
 		
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, collectionId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
@@ -182,7 +182,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId, String userId,String sessionId,String pathwayId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<UserDataDo> collectionResourcesList=new ArrayList<UserDataDo>();
-		String dataPassing ="%7B%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:%7B%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22classId%22:%22"+classId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22%7D%7D&timestamp=1410757700537";
+		String dataPassing ="{%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410757700537";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONDATABYUSERSESSION, collectionId,getLoggedInSessionToken(),dataPassing);
 	
 		//String url="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/resources.json?sessionToken=04fb9f7e-47c3-11e4-8d6c-123141016e2a&data={%22fields%22:%22feedbackText,feedbackStatus,feedbackTimestamp,feedbackProviderUId,answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,reaction,attempts,text,itemSequence%22,%22filters%22:{%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22userUId%22:%22240fb01d-5383-4bb1-ae61-df045bf5f611%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1411986439903";
@@ -204,7 +204,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			String collectionId, String classId, String userId, String sessionId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryMetaDataDo> collectionSummaryMetaDataDoList=new ArrayList<CollectionSummaryMetaDataDo>();
-		String dataPassing="%7B%22fields%22:%22thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:%7B%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22classId%22:%22"+classId+"%22%7D%7D";
+		String dataPassing="{%22fields%22:%22thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22classId%22:%22"+classId+"%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken(),dataPassing);
 		//String url="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d.json?sessionToken=04fb9f7e-47c3-11e4-8d6c-123141016e2a&data={%22fields%22:%22thumbnail,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22session%22:%22CS%22,%22sessionId%22:%22FAFFA60D-46FA-45C1-BBB0-0BD40A800C6B%22,%22userUId%22:%22240fb01d-5383-4bb1-ae61-df045bf5f611%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22}}&timestamp=1411986439399";
 		LOGGER.info("url:+"+url);
@@ -250,7 +250,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<GradeJsonData> collectionResourcesList=new ArrayList<GradeJsonData>();
-		String dataPassing ="%7B%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:%7B%22session%22:%22AS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22%22,%22pathwayId%22:%22"+pathwayId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22%7D%7D";
+		String dataPassing ="{%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22AS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classpageId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -279,7 +279,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public String exportPathwayOE(String classpageId, String pathwayId,String timeZone) {
-		String dataPassing ="%7B%22fields%22:%22%22,%22filters%22:%7B%22session%22:%22FS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22%22,%22collectionGooruOId%22:%22%22,%22pathwayId%22:%22"+pathwayId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22%22,%22sortOrder%22:%22%22%7D%7D";
+		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22session%22:%22FS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22%22,%22collectionGooruOId%22:%22%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22%22,%22sortOrder%22:%22%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTOEPATHWAY, classpageId,getLoggedInSessionToken(),dataPassing,timeZone);
 		LOGGER.info("url:+"+url);
 		return url;
@@ -290,7 +290,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			String pathwayId,String sortOrder) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<GradeJsonData> collectionResourcesList=new ArrayList<GradeJsonData>();
-		String dataPassing ="%7B%22fields%22:%22timeSpent,firstName,lastName,emailId,profileUrl,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:%7B%22session%22:%22FS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22itemSequence,gradeInPercentage%22,%22sortOrder%22:%22"+sortOrder+"%22,%22totalRecords%22:3%7D%7D";
+		String dataPassing ="{%22fields%22:%22timeSpent,firstName,lastName,emailId,profileUrl,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence,gradeInPercentage%22,%22sortOrder%22:%22"+sortOrder+"%22,%22totalRecords%22:3}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -487,7 +487,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<OetextDataDO> getOETextData(String resourceId,String collectionId, String classpageId, String pathwayId,String session, String sessionId, String userUId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<OetextDataDO> collectionResourcesList=new ArrayList<OetextDataDO>();
-		String dataPassing ="%7B%22fields%22:%22feedbackStatus,userName,OEText,gooru_uid,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject%22,%22filters%22:%7B%22resourceGooruOId%22:%22"+resourceId+"%22,%22classId%22:%22"+classpageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22session%22:%22"+session+"%22,%22sessionId%22:%22"+sessionId+"%22,%22userUId%22:%22"+userUId+"%22%7D%7D";
+		String dataPassing ="{%22fields%22:%22feedbackStatus,userName,OEText,gooru_uid,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject%22,%22filters%22:{%22resourceGooruOId%22:%22"+resourceId+"%22,%22classId%22:%22"+classpageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22session%22:%22"+session+"%22,%22sessionId%22:%22"+sessionId+"%22,%22userUId%22:%22"+userUId+"%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_OETEXTJSON, collectionId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -531,7 +531,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public String exportTeacherSummary(String collectionGooruOId,String pathwayId, String classId,String timeZone) {
-		String dataPassing ="%7B%22fields%22:%22%22,%22filters%22:%7B%22session%22:%22AS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22"+classId+"%22,%22collectionGooruOId%22:%22"+collectionGooruOId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22%22,%22sortOrder%22:%22%22%7D%7D";
+		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22session%22:%22AS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22"+classId+"%22,%22collectionGooruOId%22:%22"+collectionGooruOId+"%22},%22paginate%22:{%22sortBy%22:%22%22,%22sortOrder%22:%22%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTSUMMARYATHWAY, classId,getLoggedInSessionToken(),dataPassing,timeZone);
 		LOGGER.info("url:+"+url);
 		return url;
@@ -539,7 +539,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public String exportProgress(String collectionId, String classpageId,String timeZone) {
-		String dataPassing ="%7B%22fields%22:%22%22,%22filters%22:%7B%22session%22:%22FS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22%7D,%22paginate%22:%7B%22sortBy%22:%22%22,%22sortOrder%22:%22%22%7D%7D";
+		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22session%22:%22FS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22},%22paginate%22:{%22sortBy%22:%22%22,%22sortOrder%22:%22%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTPROGRESS, classpageId,getLoggedInSessionToken(),dataPassing,timeZone);
 		LOGGER.info("url:+"+url);
 		return url;
