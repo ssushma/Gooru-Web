@@ -669,8 +669,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImagePanel.setVisible(!isVisible);
 		profileBannerPanel.setVisible(isVisible);
 		breadCrumbsPanel.setVisible(true);
-
-
 	}
 
 	/* (non-Javadoc)

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 
 public class ResourceInfoObjectDo implements Serializable {
 
@@ -37,6 +38,7 @@ public class ResourceInfoObjectDo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Map<String, String>> standards;
+	private List<StandardFo> skills;
 	private List<String> course;
 	private ResourceDo resource;
 
@@ -85,6 +87,14 @@ public class ResourceInfoObjectDo implements Serializable {
 	 */
 	public void setResource(ResourceDo resource) {
 		this.resource = resource;
+	}
+
+	public List<StandardFo> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<StandardFo> skills) {
+		this.skills = skills;
 	}
 
 

@@ -102,8 +102,8 @@ button.primary:hover {
 
 .pageHeader {
 	margin: 0 0 8px 0;
-	color: #0066cc;
-	font-size:20px;
+	color:#515151;
+	font-size:20pt;
 	background: url(../images/folders/panel/folder-icon.png) no-repeat 1px 0px;
 	padding-left: 41px;
 	float: left;
@@ -119,8 +119,9 @@ button.primary:hover {
 }
 
 .marginDiv h4 {
-	color: #06c;
+	color: #1076bb;
 	font-weight: bold;
+	font-size:16px;
 	line-height: 25px;
 	display: inline-block;
 	margin-top: 0;
