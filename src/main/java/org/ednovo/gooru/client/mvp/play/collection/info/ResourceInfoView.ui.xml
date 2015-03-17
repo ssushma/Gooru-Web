@@ -57,7 +57,13 @@
 	        <g:HTMLPanel styleName="{playerStyle.resource-info-title-grades}" ui:field="courseInfo"></g:HTMLPanel>
 	    	  </g:HTMLPanel>
 	    	  
-	    	<g:HTMLPanel styleName="{playerStyle.resource-info-stand-content}" ui:field="standardsContentContainer">
+	    	<g:HTMLPanel styleName="{playerStyle.resource-info-stand-content}" ui:field="centuryContentContainer">
+	           <g:Label styleName="{playerStyle.resource-info-stand-text}" ui:field="centuryText"></g:Label>
+	           <g:Label styleName="{playerStyle.resource-info-stand-title}" ui:field="centuryInfo"/>
+	        </g:HTMLPanel>
+	 		<g:FlowPanel ui:field="centuryInfoConatiner" styleName="{playerStyle.resource-info-century-wrapper}"/>
+	 		
+	 		<g:HTMLPanel styleName="{playerStyle.resource-info-stand-content}" ui:field="standardsContentContainer">
 	           <g:Label styleName="{playerStyle.resource-info-stand-text}" ui:field="standardsText"></g:Label>
 	           <g:Label styleName="{playerStyle.resource-info-stand-title}" ui:field="standaInfo"/>
 	        </g:HTMLPanel>

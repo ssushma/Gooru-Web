@@ -51,6 +51,7 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
@@ -92,7 +93,7 @@ public class SearchInfoWidget extends Composite {
 	UiBinder<Widget, SearchInfoWidget> {
 	}
 
-	@UiField Label publisherText,courseText,legalText,
+	@UiField Label centuryInfo,centuryText,publisherText,courseText,legalText,
 	standardsText,gradeTitle,originalUrlTitle,adsTitle,mbFriendlyLbl,
 	mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 	eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
@@ -103,7 +104,7 @@ public class SearchInfoWidget extends Composite {
 	authorLbl,authorName,adsName,schLevelLbl,schLevelInfo,keywordsTitle,
 	momentsoflearningLbl,resourceTypeImage,lblAggregation;
 
-	@UiField HTMLPanel rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,publisherType,coursePanel,gradesPanel,
+	@UiField HTMLPanel centuryContentContainer,rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,publisherType,coursePanel,gradesPanel,
 	adsPanel,mobileFriendlyPanel,dataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,
@@ -113,7 +114,7 @@ public class SearchInfoWidget extends Composite {
 	@UiField
 	HTMLPanel aggregationPanel,aggregationType;
 
-	@UiField FlowPanel licenceContainer,standardsInfoConatiner;
+	@UiField FlowPanel licenceContainer,standardsInfoConatiner,centuryInfoConatiner;
 
 	@UiField HTMLPanel standardsContentContainer,loadingImagePanel;
 	@UiField Label standaInfo,noInfoAvailable;
@@ -180,6 +181,9 @@ public class SearchInfoWidget extends Composite {
 		
 		standardsText.setText(i18n.GL0619()+" ");
 		setIdForLabel(standardsText,"standardsText",i18n.GL0619()+" ");
+		
+		centuryText.setText(i18n.GL3188()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(centuryText,"centuryText",i18n.GL3188()+" ");
 		
 		//		resourceInfoText.setText(i18n.GL0621);
 		gradeTitle.setText(i18n.GL0325().trim()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -479,6 +483,7 @@ public class SearchInfoWidget extends Composite {
 				null,CollectiongenealInfo.getResource().getTaxonomySet());
 			
 			renderStandards(standardsInfoConatiner,CollectiongenealInfo.getStandards());
+			renderCentury(centuryInfoConatiner,CollectiongenealInfo.getResource().getSkills());
 			
 			setOriginalUrl(CollectiongenealInfo.getResource().getAssetURI(),CollectiongenealInfo.getResource().getFolder(),
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
@@ -728,6 +733,52 @@ public class SearchInfoWidget extends Composite {
 		}
 		else{
 			standardsContentContainer.setVisible(false);
+		}
+	}
+	public void renderCentury(FlowPanel centuryContainer, List<StandardFo> centuryList) {
+		centuryContainer.clear();
+		
+		if (centuryList != null) {
+			centuryInfo.setVisible(false);
+			centuryContentContainer.setVisible(true);
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			for(int centuryCount=0; centuryCount<centuryList.size();centuryCount++) {
+				String stdCode = centuryList.get(centuryCount).getCodeId()+"";
+				String stdDec = centuryList.get(centuryCount).getLabel();
+				if (count > 2) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec));
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getcenturyMoreInfo());
+					centuryContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (centuryList.size()>18){
+				final Label left = new Label("+"+(centuryList.size() - 18));
+				toolTipwidgets.add(left);
+				centuryContentContainer.setVisible(true);
+			}
+			if (centuryList.size() > 2) {
+				Integer moreStandardsCount = centuryList.size() - 3;
+				if (moreStandardsCount >0){
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets);
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
+					centuryContainer.add(toolTipUc);
+					centuryContentContainer.setVisible(true);
+				}
+			}
+			if(centuryList.size()==0)
+			{
+				centuryContentContainer.setVisible(false);
+			}
+		}
+		else{
+			centuryContentContainer.setVisible(false);
 		}
 	}
 	/**

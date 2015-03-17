@@ -58,6 +58,7 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.core.client.GWT;
@@ -92,7 +93,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private String title;
 	private boolean isRatingUpdated=true;
 	
-	@UiField HTMLPanel resourceDescription,resourceDescriptionTitle,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel,
+	@UiField HTMLPanel resourceDescription,centuryContentContainer,resourceDescriptionTitle,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel,
 	mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
 	readingLevelPanel,languagePanel,countryCodePanel,copyRightPanel,hostPanel,
 	accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,dateCreatedPanel,
@@ -105,7 +106,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 
 	
-	@UiField Label resourceTypeImage,resourceView,collectionsCount,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
+	@UiField Label resourceTypeImage,resourceView,centuryText,centuryInfo,collectionsCount,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
 					standardsText,hideText,resourceInfoText,gradeTitle,originalUrlTitle,timeRequiredLabel,mbFriendlyLbl,
 					mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 					eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
@@ -118,7 +119,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	@UiField static Label standaInfo;
 	
-	@UiField FlowPanel standardsInfoConatiner,licenceContainer,ratingWidgetPanel,resourceInfoContainerPanel;
+	@UiField FlowPanel standardsInfoConatiner,centuryInfoConatiner, licenceContainer,ratingWidgetPanel,resourceInfoContainerPanel;
 	
 	@UiField HTML resourceInfoSeparator,resourcetypeSeparator,lblcollectionName;
 	@UiField
@@ -191,6 +192,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public ResourceInfoView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
+		centuryInfoConatiner.clear();
 		publisherText.setText(i18n.GL1835().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		publisherText.getElement().setId("lblPublisherText");
 		publisherText.getElement().setAttribute("alt",i18n.GL1835());
@@ -210,6 +212,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		standardsText.getElement().setId("lblStandardsText");
 		standardsText.getElement().setAttribute("alt",i18n.GL1877());
 		standardsText.getElement().setAttribute("title",i18n.GL1877());
+		
+		centuryText.setText(i18n.GL3188().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		centuryText.getElement().setId("lblStandardsText");
+		centuryText.getElement().setAttribute("alt",i18n.GL3188());
+		centuryText.getElement().setAttribute("title",i18n.GL3188());
 
 		collectionsText.getElement().setId("pnlCollectionsText");
 		collectionsText.getElement().setInnerHTML(i18n.GL0620());
@@ -291,6 +298,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		standardsContentContainer.getElement().setId("pnlStandardsContentContainer");
 		standaInfo.getElement().setId("lblStandaInfo");
 		standardsInfoConatiner.getElement().setId("fpnlStandardsInfoConatiner");
+		centuryContentContainer.getElement().setId("pnlCenturyContentContainer");
+		centuryInfo.getElement().setId("lblCenturyInfo");
+		centuryInfoConatiner.getElement().setId("fpnlCenturyInfoConatiner");
 		originalUrlText.getElement().setId("pnlOriginalUrlText");
 		thumbnailPanel.getElement().setId("pnlThumbnailPanel");
 		thumbnailurlValue.getElement().setId("pnlThumbnailurlValue");
@@ -464,6 +474,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		setResourceViewsCount(collectionItemDo.getViews());
 		setResourceLicenceLogo(collectionItemDo.getResource().getAssetURI(), collectionItemDo.getResource().getLicense());
 		renderStandards(standardsInfoConatiner,collectionItemDo.getStandards());
+		renderCentury(centuryInfoConatiner,collectionItemDo.getResource().getSkills());
 		
 		if(collectionItemDo.getResource().getGrade()!=null){
 			List<String> gradesdetails = new ArrayList<String>();
@@ -863,6 +874,20 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				  				isGeneralInfo=true;	
 				  			}
 				 			} 
+				 		 if(collectionItemDo.getResource().getSkills()!=null && collectionItemDo.getResource().getSkills().size()>0){
+				 			List<StandardFo> centuryList1	=collectionItemDo.getResource().getSkills();
+
+					  			int count = 0;
+					  			for (int centuryCount=0;centuryCount<centuryList1.size();centuryCount++) {
+					  				
+					  				String stdCode = centuryList1.get(centuryCount).getCodeId()+"";
+					  				String stdDec = centuryList1.get(centuryCount).getLabel();
+					  				count++;
+					  			}
+					  			if(count>0){
+					  				isGeneralInfo=true;	
+					  			}
+					 			}
 				  		 if(collectionItemDo.getResource().getLicense()!=null && collectionItemDo.getResource().getLicense().getIcon()!=null &&!collectionItemDo.getResource().getLicense().getIcon().trim().equals("") ){
 				 				isGeneralInfo=true;	
 				 			}
@@ -1968,6 +1993,53 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		else{
 			standardsContentContainer.setVisible(false);
+		}
+	}
+	
+	public void renderCentury(FlowPanel centuryContainer, List<StandardFo> centuryList) {
+		centuryContainer.clear();
+		
+		if (centuryList != null) {
+			centuryInfo.setVisible(false);
+			centuryContentContainer.setVisible(true);
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			for(int centuryCount=0; centuryCount<centuryList.size();centuryCount++) {
+				String stdCode = centuryList.get(centuryCount).getCodeId()+"";
+				String stdDec = centuryList.get(centuryCount).getLabel();
+				if (count > 2) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec));
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getcenturyMoreInfo());
+					centuryContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (centuryList.size()>18){
+				final Label left = new Label("+"+(centuryList.size() - 18));
+				toolTipwidgets.add(left);
+				centuryContentContainer.setVisible(true);
+			}
+			if (centuryList.size() > 2) {
+				Integer moreStandardsCount = centuryList.size() - 3;
+				if (moreStandardsCount >0){
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets);
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
+					centuryContainer.add(toolTipUc);
+					centuryContentContainer.setVisible(true);
+				}
+			}
+			if(centuryList.size()==0)
+			{
+				centuryContentContainer.setVisible(false);
+			}
+		}
+		else{
+			centuryContentContainer.setVisible(false);
 		}
 	}
 	
