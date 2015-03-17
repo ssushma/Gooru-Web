@@ -15,9 +15,8 @@
 			/> <g:Label styleName="{style.libraryTopicTitle}" /> <g:Button styleName="secondary" 
 			ui:field="viewAllBtn" text="{i18n.GL1946}" title="{i18n.GL1946}"></g:Button> -->
 		<g:HTMLPanel styleName="{style.leftNav}" ui:field="leftNav" />
-		<g:HTMLPanel ui:field="folderListPanel">
-			<g:Label styleName="{style.topicTitle} {style.folderTitleStyle} {style.folderLevel} {style.open}"
-				ui:field="folderTopicTitleLbl" />
+		<g:HTMLPanel styleName="{style.topicTitle} {style.folderTitleStyle} {style.folderLevel} {style.open}" ui:field="folderListPanel">
+			<g:Label ui:field="folderTopicTitleLbl" />
 			<g:Button styleName="secondary" ui:field="listAllBtn" text="{i18n.GL1946}"
 				title="{i18n.GL1946}"></g:Button>
 		</g:HTMLPanel>
