@@ -83,6 +83,18 @@
 						ui:field="courseInfo"></g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
+					ui:field="centuryContentContainer">
+					<g:Label styleName="{playerStyle.resource-info-stand-text}"
+						ui:field="centuryText"></g:Label>
+					<g:Label styleName="{playerStyle.resource-info-stand-title}"
+						ui:field="centuryInfo" />
+					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:FlowPanel ui:field="centuryInfoConatiner"
+					styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}" />
+				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 
 				<g:HTMLPanel styleName="col-md-12 col-xs-12 {playerStyle.clearPadding}"
 					ui:field="standardsContentContainer">
