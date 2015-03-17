@@ -206,10 +206,16 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 					String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(nameToken.equals(PlaceTokens.SHELF)) {
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
-						Map<String,String> params1 = new HashMap<String,String>();
-						params1.put("id", result.getGooruOid());
-						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
-						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+						if(result.getCollectionType().equalsIgnoreCase("assessment/url")){
+							Map<String,String> params1 = new HashMap<String,String>();
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
+							AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+						}else{
+							Map<String,String> params1 = new HashMap<String,String>();
+							params1.put("id", result.getGooruOid());
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
+							AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+						}
 					} else {
 						if(IS_FROM_ADDRESOURCE.equalsIgnoreCase("resourceidfromAddResourcePresenter")){
 							Map<String,String> params1 = new HashMap<String,String>();
