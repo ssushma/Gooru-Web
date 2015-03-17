@@ -121,6 +121,8 @@ public class ResourceDo extends ContentDo {
 	
 	private UserDo user;
 	
+	private String url;
+	
 	public List<String> getPublisher() {
 		return publisher;
 	}
@@ -300,8 +302,6 @@ public class ResourceDo extends ContentDo {
     public void setResourceType(ResourceTypeDo resourceType) {
         this.resourceType = resourceType;
     }
-
-    private String url;
 
     public String getAssetURI() {
         return assetURI;
