@@ -767,7 +767,7 @@
 .folderTitleStyle {
 	color: #0066cc;
 	font-weight: bold;
-	font-size: 18px
+	font-size: 18px;
 }
 .loadingImageMainDiv {
 	width: 100%;
@@ -870,5 +870,6 @@
 .displayInlineStyle{
 	display: inline-block; 
 	color: #515151;
+	padding-left:5px;
 }
 

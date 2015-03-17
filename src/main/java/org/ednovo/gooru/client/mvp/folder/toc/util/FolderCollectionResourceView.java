@@ -188,7 +188,7 @@ public class FolderCollectionResourceView extends Composite {
 	 */
 
 	public String stripHtmlRegex(String source) {
-	// Replace all tag characters with an empty string.
-	return source.replaceAll("<.*?>", "");
+	 // Replace all tag characters with an empty string.
+	 return source.replaceAll("<.*?>", "");
     }
 }

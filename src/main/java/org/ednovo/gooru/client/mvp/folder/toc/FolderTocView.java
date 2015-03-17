@@ -667,8 +667,6 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImagePanel.setVisible(!isVisible);
 		profileBannerPanel.setVisible(isVisible);
 		breadCrumbsPanel.setVisible(true);
-
-
 	}
 
 	/* (non-Javadoc)
@@ -734,8 +732,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		breadCrumbsPanel.clear();
 		int size=0;
 		boolean haveBreadCrumbs=false;
-		for (Map.Entry<String, String> entry : result.entrySet())
-		{
+		for (Map.Entry<String, String> entry : result.entrySet()){
 		    setBreadCrumbs(entry.getKey(), entry.getValue(), "> ");
 		    size++;
 		    haveBreadCrumbs=true;
