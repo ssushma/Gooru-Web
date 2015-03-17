@@ -51,6 +51,10 @@
               <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblStandards" />
              <g:FlowPanel ui:field="standardsContainer" styleName="{playerStyle.standard_section}"></g:FlowPanel>
           </html5:AsideTag>
+            <html5:AsideTag styleName="{playerStyle.infoSection}" ui:field="centurySection">
+              <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblcentury" />
+             <g:FlowPanel ui:field="centuryContainer" styleName="{playerStyle.standard_section}"></g:FlowPanel>
+          </html5:AsideTag>
           <html5:AsideTag styleName="{playerStyle.infoSection}" ui:field="viewSection">
               <g:Label ui:field="viewsCountLabel" styleName="{playerStyle.views}"/>
           </html5:AsideTag>
