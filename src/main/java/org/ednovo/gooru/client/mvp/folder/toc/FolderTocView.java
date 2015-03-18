@@ -99,7 +99,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer;
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
@@ -108,7 +108,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	//@UiField Anchor mainTitle,firstTitle;
 	@UiField TextBox shareTxtBox;
 	
-	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel;
+	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel,mainContainer,pageNotFoundPanel;
 	
 	@UiField Hidden myHiddenField;
 	
@@ -148,6 +148,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerImage.setVisible(false);
 		bannerImagePanel.setVisible(false);
 		profileBannerPanel.setVisible(false);
+		pageNotFoundPanel.setVisible(false);
 		//This will handle the window resize
 		Window.addResizeHandler(new ResizeLogicEvent());
 		setBannerStaticImages();
@@ -252,6 +253,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void setFolderItems(FolderTocDo  foldersTocObj) {
 		folderTocTree.clear();
+		showPageNotFound(false);
 		setFolderMetaData(foldersTocObj);
 		if(foldersTocObj!=null){
 			List<FolderDo> foldersArrayList=foldersTocObj.getCollectionItems();
@@ -749,6 +751,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			breadCrumbsPanel.add(presentTile);
 		}
 
+	}
+   /**
+    * To show the Page doesn't exist
+    */
+	@Override
+	public void showPageNotFound(boolean isVisible){
+		mainContainer.setVisible(!isVisible);
+		pageNotFoundPanel.setVisible(isVisible);
 	}
 	
 }
