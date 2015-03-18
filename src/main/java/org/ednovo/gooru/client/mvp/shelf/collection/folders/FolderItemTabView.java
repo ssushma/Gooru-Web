@@ -1228,7 +1228,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL,null);
 		String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL,null);
 		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL,null);
-		
 		Map<String, String> params = new HashMap<String, String>();
 		if(o3!=null) {
 			params.put("id",o3);
@@ -1286,9 +1285,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			}
 		}
 		setFolderCollectionItemSequence();
-		//This will hide the move buttons if we have only one widget
+		
 		int widgetsCount = folderContentBlock.getWidgetCount();
-		if(widgetsCount==1){
+		if(widgetsCount==0){
+			//This will display the message 
+			AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
+		}else if(widgetsCount==1){
+			//This will hide the move buttons if we have only one widget
 			Widget widget =folderContentBlock.iterator().next();
 			if (widget instanceof ShelfFolderItemChildView) {
 				((ShelfFolderItemChildView) widget).getReorderPanel().setVisible(false);
