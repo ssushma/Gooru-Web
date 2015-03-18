@@ -273,10 +273,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			 }else{
 				 Label emptyLbl= new Label();
 				 emptyLbl.setText(EMPTY_FOLDER);
-				 emptyLbl.getElement().setAttribute("style", "font-size:17px; margin-top: 50px; margin-bottom: 50px; text-align: center; color:#e1dfda;");
+				 emptyLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().emptyFolderStyle());
 				 floderTreeContainer.clear();
 				 floderTreeContainer.add(emptyLbl);	
-				 }
+			 }
 		}
 		
 	}
