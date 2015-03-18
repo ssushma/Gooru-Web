@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -99,9 +98,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -119,10 +118,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 /**
  * @author ibc
@@ -142,7 +141,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	@UiField
 	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent,
 	mediaLabelContainer,educationalContainer,momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,
-	mobileFriendlyContainer,mediaDropdownArrowConatainer;
+	mobileFriendlyContainer,mediaDropdownArrowConatainer,centuryBrowseContainer;
 	
 
 	@UiField
@@ -189,7 +188,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
 	
-	@UiField FlowPanel standardContainer,standardsPanel;
+	@UiField FlowPanel standardContainer,standardsPanel,centuryPanel,centuryContainer;
 	
 	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
 	
@@ -955,6 +954,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.centuryAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		
 		eHearderIconEducationalUse.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconMomentsOfLearning.addClickHandler(new MinimizePanelsClickHandler());
@@ -1020,6 +1020,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else if(event.getSource()==addSetupAdvancedView.mobileFreindlyAdvancedPnl){
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
+			}else if(event.getSource()==addSetupAdvancedView.centuryAdvancedPnl){
+				centuryContainer.setVisible(true);
+				centuryBrowseContainer.setVisible(true);
+				addSetupAdvancedView.centuryAdvancedPnl.setVisible(false);
 			}
 			
 			if(isAllAdditionalTagsOpen()){
@@ -1042,6 +1046,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.centuryAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
 			allAdditionalTagInVisisble = true;
 		}
