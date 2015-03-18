@@ -494,7 +494,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 }
 					}
 					item.setState(folderTreeItemWidget.isOpen());
-				}
+			}else{
+				Label emptyLbl= new Label();
+				emptyLbl.setText(EMPTY_FOLDER);
+				emptyLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().emptyFolderStyle());
+				item.addItem(emptyLbl);
+			}
 		}
 	}
 	/**

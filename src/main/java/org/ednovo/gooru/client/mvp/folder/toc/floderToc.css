@@ -122,9 +122,8 @@ button.primary:hover {
 	color: #1076bb;
 	font-weight: bold;
 	font-size:16px;
-	line-height: 25px;
+	line-height: 5px;
 	display: inline-block;
-	margin-top: 0;
 }
 
 .categoryFilterContainer .filterCheckBox label {

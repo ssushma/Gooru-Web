@@ -65,6 +65,7 @@ public interface FolderTocUiHandlers extends BaseUiHandlers{
 	/**
 	 * To get the Folder Toc
 	 * @param folderId {@link String}
+	 * @param fromPPP {@link boolean}
 	 */
 	void getTocFolders(String folderId);
 	/**
