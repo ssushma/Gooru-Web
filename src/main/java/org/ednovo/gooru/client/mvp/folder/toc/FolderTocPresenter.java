@@ -115,12 +115,11 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			getTocFolders(folderId);
 			setFolderBanner();
 		}
-		
 	}
 	
 	@Override
 	public void getTocFolders(final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID), new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().clearTocData();
@@ -140,7 +139,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 
 	@Override
 	public void getFolderItems(final TreeItem item,final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID),new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().setFolderItems(item,folderListDo,folderId);
