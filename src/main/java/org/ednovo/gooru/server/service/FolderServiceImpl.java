@@ -482,12 +482,15 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public FolderTocDo getTocFolders(String folderId) throws GwtException,ServerDownException {
 		JsonRepresentation jsonRep = null;
+		FolderTocDo folderTocDo = new FolderTocDo();
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
 		getLogger().info("-- Folder toc API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeFolderTocList(jsonRep);
+		folderTocDo =deserializeFolderTocList(jsonRep);
+		folderTocDo.setStatusCode(jsonResponseRep.getStatusCode());
+		return folderTocDo;
 	}
 	public FolderTocDo deserializeFolderTocList(JsonRepresentation jsonRep) {
 		try {
