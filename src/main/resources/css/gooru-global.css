@@ -905,3 +905,6 @@ button.backArrowButton:hover {
 	margin-top: 9px;
 	right: 3%;
 }
+textarea {
+	resize:none !important;
+}
