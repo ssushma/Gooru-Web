@@ -129,13 +129,6 @@ select {
 	float: left;
 }
 .publicImage {
-	background: url(images/icon-sprite.png) repeat scroll -63px -390px rgba(0, 0, 0, 0);
-	cursor: pointer;
-	display: block;
-	float: left;
-	height: 21px;
-	width: 27px;
-	margin-top: 5px;
 }
 .publicText {
 	line-height: 10px;
@@ -164,21 +157,8 @@ select {
 	margin-top: 9px;
 }
 .linkImageForAssessment {
-	background: url(images/icon-sprite.png) repeat scroll -61px -261px rgba(0, 0, 0, 0);
-	cursor: pointer;
-	display: block;
-	float: left;
-	height: 21px;
-	width: 30px;
-	margin-top: 7px;
 }
 .privateImage {
-	background: url(images/icon-sprite.png) repeat scroll -61px -209px rgba(0, 0, 0, 0);
-	cursor: pointer;
-	display: block;
-	float: left;
-	height: 24px;
-	width: 27px;
 }
 .clearStyle {
 	clear: both;
@@ -398,8 +378,8 @@ button.secondary {
 	vertical-align: top;
 }
 .radioButtoncontainer{
-	display: inline-block;
-	width: 32%;
+		display: inline-block;
+		font-weight: normal;
 }
 .assessmentPrivacyRightContainer{
 	display: inline-block;
@@ -408,6 +388,39 @@ button.secondary {
 .radioBox{
 	float:left;
 	vertical-align: middle;
-	margin-top: 7px;
-	width: 8%;
+	width: 100px;
+	cursor: pointer;
+	font-weight: normal;
+}
+
+.publicImage label{
+	background: url(images/icon-sprite.png) repeat scroll -68px -390px rgba(0, 0, 0, 0);
+	height: 21px;
+	width: 27px;
+	padding-left: 25px;
+	margin-bottom: 0px;
+	line-height: 21px;
+	cursor: pointer;
+	font-weight: normal;
+}
+
+.privateImage label{
+	background: url(images/icon-sprite.png) repeat scroll -68px -215px rgba(0, 0, 0, 0);
+	padding-left: 21px;
+	margin-bottom: 0px;
+	line-height: 21px;
+	width: 27px;
+	cursor: pointer;
+	font-weight: normal;
+}
+
+.linkImageForAssessment label{
+	background: url(images/icon-sprite.png) repeat scroll -67px -261px rgba(0, 0, 0, 0);
+	cursor: pointer;
+	height: 21px;
+	width: 38px;
+	padding-left: 22px;
+	margin-bottom: 0px;
+	line-height: 21px;
+	font-weight: normal;
 }
