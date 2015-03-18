@@ -417,7 +417,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(urlExtension.equalsIgnoreCase("pdf")){
 				String signedFlag=resourceplayUrl.contains("http")||resourceplayUrl.contains("https")?"0":"1";
 				String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
-				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
+				String endPage=collectionItemDo.getStop()!=null?collectionItemDo.getStop():"";
+				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage="+endPage+"&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
 			}
 			else
 			{
