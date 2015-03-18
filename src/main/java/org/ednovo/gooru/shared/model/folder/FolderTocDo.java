@@ -40,6 +40,7 @@ public class FolderTocDo implements Serializable{
 	private List<FolderDo> collectionItems;
 	String performanceTasks;
 	String questions;
+	private Integer statusCode;
 	
 	public FolderTocDo(){}
 
@@ -90,4 +91,19 @@ public class FolderTocDo implements Serializable{
 	public void setQuestions(String questions) {
 		this.questions = questions;
 	}
+
+	/**
+	 * @return the statusCode
+	 */
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+	/**
+	 * @param statusCode the statusCode to set
+	 */
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
+	
 }

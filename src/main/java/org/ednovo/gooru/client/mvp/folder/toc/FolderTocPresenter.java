@@ -124,9 +124,14 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().clearTocData();
-				getView().setFolderItems(folderListDo);
-				getFolderRouteNodes(folderId);
-				getView().setBackButtonText(params);
+				if(folderListDo!=null && 200==folderListDo.getStatusCode()){
+					getView().setFolderItems(folderListDo);
+					getFolderRouteNodes(folderId);
+					getView().setBackButtonText(params);
+				}else{
+					getView().showPageNotFound(true);
+				}
+				
 			}
 		});
 		getShortenUrl(folderId, params);
