@@ -627,6 +627,21 @@ public class CollectionFormView extends
 				}
 			}
 		});
+		rdBtnAssessmentPublic.setText(i18n.GL0329());
+		StringUtil.setAttributes(rdBtnAssessmentPublic.getElement(), "rdBtnAssessmentPublic", i18n.GL0329(), i18n.GL0329());
+		
+		rdBtnAssessmentShare.setText(i18n.GL0331());
+		StringUtil.setAttributes(rdBtnAssessmentShare.getElement(), "rdBtnAssessmentPublic", i18n.GL0331(), i18n.GL0331());
+		
+		rdBtnAssessmentPrivate.setText(i18n.GL0333());
+		StringUtil.setAttributes(rdBtnAssessmentPrivate.getElement(), "rdBtnAssessmentPublic", i18n.GL0333(), i18n.GL0333());
+		
+		requireLoginYes.setText(i18n.GL_GRR_YES());
+		StringUtil.setAttributes(requireLoginYes.getElement(), "rdBtnAssessmentPublic", i18n.GL_GRR_YES(), i18n.GL_GRR_YES());
+		
+		requireLoginNo.setText(i18n.GL_GRR_NO());
+		StringUtil.setAttributes(requireLoginNo.getElement(), "rdBtnAssessmentPublic", i18n.GL_GRR_NO(), i18n.GL_GRR_NO());
+		
 		setTextAndIds();
 		pnlNewAssessmentContainer.setVisible(false);
 		pnlExistingAssessmentContainer.setVisible(false);
