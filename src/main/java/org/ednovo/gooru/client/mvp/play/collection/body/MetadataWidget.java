@@ -259,12 +259,7 @@ public class MetadataWidget extends Composite {
 			if (standardsList.size() > 2) {
 				Integer moreStandardsCount = standardsList.size() - 3;
 				if (moreStandardsCount > 0){
-					DownToolTipWidgetUc toolTipUc;
-					if(isStandards){
-						toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList,isStandards);
-					}else{
-						toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList,isStandards);
-					}
+					DownToolTipWidgetUc	toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList,isStandards);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
 					standardsContainer.add(toolTipUc);
 				}
