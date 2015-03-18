@@ -65,33 +65,25 @@
 				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}" text="{i18n.GL0873} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0873}"/>
 				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
-						 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.publicImage}"></g:Label>
-						 				<g:Label styleName="{createCollectionStyle.publicText}" text="{i18n.GL0329}" title="{i18n.GL0329}"/>
-						 			</panel:HTMLEventPanel>
-						 			<panel:HTMLEventPanel  styleName="{createCollectionStyle.radioButtoncontainer}">
-						 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.linkImageForAssessment}"></g:Label>
-						 				<g:Label styleName="{createCollectionStyle.publicText}" text="{i18n.GL0331}" title="{i18n.GL0331}"/>
-						 			</panel:HTMLEventPanel>
-						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
-						 				<g:RadioButton name="" ui:field="rdBtnAssessmentPrivate" styleName="{createCollectionStyle.radioBox}"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.privateImage}"></g:Label>
-						 				<g:Label styleName="{createCollectionStyle.publicText}" text="{i18n.GL0333}" title="{i18n.GL0333}"/>
-						 			</panel:HTMLEventPanel>
+							 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{createCollectionStyle.radioBox} {createCollectionStyle.publicImage}" title="{i18n.GL0329}"></g:RadioButton>
+							 		</panel:HTMLEventPanel>
+							 		<panel:HTMLEventPanel  styleName="{createCollectionStyle.radioButtoncontainer}">
+							 				<g:RadioButton ui:field="rdBtnAssessmentShare" name="" styleName="{createCollectionStyle.radioBox} {createCollectionStyle.linkImageForAssessment}" title="{i18n.GL0331}"></g:RadioButton>
+							 		</panel:HTMLEventPanel>
+							 		<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
+							 				<g:RadioButton name="" ui:field="rdBtnAssessmentPrivate" styleName="{createCollectionStyle.radioBox} {createCollectionStyle.privateImage}" title="{i18n.GL0333}"></g:RadioButton>
+							 		</panel:HTMLEventPanel>
 				 			</g:HTMLPanel>
 			 			</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{createCollectionStyle.assessmentTextBoxEditContainer}">
 				 			<g:Label styleName="{createCollectionStyle.assessmentEditTextBoxText}" text="{i18n.GL3184} {i18n.GL_SPL_QUESTION} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3184}"/>
 				 			<g:HTMLPanel styleName="{createCollectionStyle.assessmentPrivacyRightContainer}">
 						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
-						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginYes"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.requiresText}" text="{i18n.GL_GRR_YES}" title="{i18n.GL_GRR_YES}"/>
-						 			</panel:HTMLEventPanel>
-						 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
-						 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginNo"></g:RadioButton>
-						 				<g:Label styleName="{createCollectionStyle.requiresText}" text="{i18n.GL_GRR_NO}" title="{i18n.GL_GRR_NO}"/>
-						 			</panel:HTMLEventPanel>
+							 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}" ui:field="requireLoginYes"></g:RadioButton>
+							 			</panel:HTMLEventPanel>
+							 			<panel:HTMLEventPanel styleName="{createCollectionStyle.radioButtoncontainer}">
+							 				<g:RadioButton name="" styleName="{createCollectionStyle.radioBox}"  ui:field="requireLoginNo"></g:RadioButton>
+							 			</panel:HTMLEventPanel>
 				 			</g:HTMLPanel>
 			 			</g:HTMLPanel>
 			 		</g:HTMLPanel>

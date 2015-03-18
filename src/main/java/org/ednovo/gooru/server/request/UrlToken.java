@@ -519,7 +519,7 @@ public enum UrlToken {
 	
 	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&topLevelCollectionType=folder"),
 	
-	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}"),
+	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&orderBy=sequence"),
 	
 	GET_CLASSPARTY_CUSTOMFIELD("/v2/party/{0}/custom-field/classpage_welcome_popup_is_autoopen?sessionToken={1}"),
 	
@@ -659,7 +659,7 @@ public enum UrlToken {
 	
 	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
 
-	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink&orderBy=sequence"),
+	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public&orderBy=sequence"),
 	
 	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
 	

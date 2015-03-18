@@ -9,6 +9,7 @@
 
 .filtersButton {
 	margin: 21px 0 0 0;
+	z-index:99999;
 }
 
 .rateThis {
