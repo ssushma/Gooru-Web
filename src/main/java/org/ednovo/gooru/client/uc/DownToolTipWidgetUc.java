@@ -51,6 +51,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	private Widget toolTipWidget;
 	private boolean isIe= false;
 	private boolean isFireFox=false;
+	private boolean isStandards=true;
 	String newMsg;
 	int Count;
 	
@@ -95,18 +96,31 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		return Count;
 	}
 	/**
-	 * Class constructor with two parameter
+	 * Class constructor with three parameter
 	 * @param widget instance of {@link Widget}
 	 * @param toolTipWidget instance of {@link Widget}
+	 * @param standards
 	 */
 	public DownToolTipWidgetUc(Widget widget, Widget toolTipWidget, List<Map<String, String>> standards) {
 		this();
 		setWidget(widget);
 		setToolTipWidget(toolTipWidget);
 		this.standards = standards;
-
 	}
-
+	/**
+	 * Class constructor with four parameter
+	 * @param widget instance of {@link Widget}
+	 * @param toolTipWidget instance of {@link Widget}
+	 * @param standards
+	 * @param isStandards
+	 */
+	public DownToolTipWidgetUc(Widget widget, Widget toolTipWidget, List<Map<String, String>> standards,boolean isStandards) {
+		this();
+		setWidget(widget);
+		setToolTipWidget(toolTipWidget);
+		this.standards = standards;
+		this.isStandards=isStandards;
+	}
 	@UiChild(tagname = "widget")
 	public void setWidget(Widget widget) {
 		super.setWidget(widget);
@@ -132,8 +146,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 			if (tooltipPopUpUc != null) {
 				tooltipPopUpUc.hide();
 			}
-			
-			StandardsPopupVc standardsPopupVc = new StandardsPopupVc(standards);
+			StandardsPopupVc standardsPopupVc = new StandardsPopupVc(standards,isStandards);
 			standardsPopupVc.center();
 			standardsPopupVc.show();
 		}
