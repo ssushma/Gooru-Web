@@ -49,7 +49,7 @@
     	<g:HTMLPanel styleName="{res.css.inputBlockOuter}">
        	<gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true"/>
        	<g:HTMLPanel styleName="{res.css.privacyContainer}">
-			<g:InlineLabel styleName="{res.css.popupDesc}" ui:field="lblPii"></g:InlineLabel><br></br>
+			<g:InlineLabel styleName="{res.css.popupDesc}" ui:field="lblPii"></g:InlineLabel><br/>
 			<g:Anchor ui:field="ancprivacy" styleName="{res.css.privacyAlignStyle} {res.css.popupDesc}"></g:Anchor>
 			<g:InlineLabel styleName="{res.css.popupDesc}" ui:field="toUsText"></g:InlineLabel>
 		</g:HTMLPanel>
