@@ -97,7 +97,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 
 	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
 	}
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
@@ -116,7 +116,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	final String SCOLLECTION = "scollection";
 	private static final String USER_ID = "userId";
 	private static final String BACK2TOC = "backToToc";
-	private static final String EMPTY_FOLDER = "Folder doesn't have any folders and collections";
+	private static final String EMPTY_FOLDER = i18n.GL3190();
 	private static final String SHORTEN_URL = "shortenUrl";
 	private static final String ID = "id";
 	private static final String PARENT_ID = "parentId";
