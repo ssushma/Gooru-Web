@@ -40,6 +40,9 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 	    private String title;
 	    private String gooruOid;
 	    private String collectionItemId;
+	    private Integer resourceCount;
+	    private Integer questionCount;
+	    
 	
 	public FolderWhatsNextCollectionDo(){}
 
@@ -73,6 +76,22 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 
 	public void setCollectionItemId(String collectionItemId) {
 		this.collectionItemId = collectionItemId;
+	}
+
+	public Integer getResourceCount() {
+		return resourceCount;
+	}
+
+	public void setResourceCount(Integer resourceCount) {
+		this.resourceCount = resourceCount;
+	}
+
+	public Integer getQuestionCount() {
+		return questionCount;
+	}
+
+	public void setQuestionCount(Integer questionCount) {
+		this.questionCount = questionCount;
 	}
 	
 
