@@ -172,6 +172,7 @@ public interface FolderContainerCBundle extends ClientBundle {
 		String displayNoneStyle();
 		String displayInlineStyle();
 		String emptyFolderStyle();
+		String emptySubFolderStyle();
 	}
 	@Source("folderStyleToc.css")
 	FolderTocCss css();

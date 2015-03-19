@@ -497,7 +497,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}else{
 				Label emptyLbl= new Label();
 				emptyLbl.setText(EMPTY_FOLDER);
-				emptyLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().emptyFolderStyle());
+				emptyLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().emptySubFolderStyle());
 				item.addItem(emptyLbl);
 			}
 		}

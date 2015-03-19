@@ -879,3 +879,11 @@
      text-align: center; 
 	color:#e1dfda;
 }
+.emptySubFolderStyle{
+	font-size:17px; 
+	margin-top: 50px; 
+	margin-bottom: 50px;
+    text-align: left;
+    padding-left: 51px;
+	color:#e1dfda;
+}
