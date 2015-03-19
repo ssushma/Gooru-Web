@@ -34,7 +34,9 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -46,6 +48,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 /**
  * @fileName : FolderTocPresenter.java
@@ -67,6 +70,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	public static final String LIBRARY_NAME = "libName";
 	public static final String USER_ID = "userId";
 	public static final String TYPE = "type";
+	SignUpPresenter signUpViewPresenter = null;
 	
 	Map<String, String> params;
 	
@@ -76,9 +80,10 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	}
 
 	@Inject
-	public FolderTocPresenter(EventBus eventBus, IsFolderTocView view, IsFolderTocProxy proxy) {
+	public FolderTocPresenter(EventBus eventBus, IsFolderTocView view, IsFolderTocProxy proxy,SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.signUpViewPresenter = signUpViewPresenter;
 	}
 
 	@Override
@@ -92,7 +97,28 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		getfolderTocList(folderId);
 	}
-
+	@Override
+	public void prepareFromRequest(PlaceRequest request) {
+		super.prepareFromRequest(request);
+		showSignupPopup();
+		
+	}
+	/**
+	 * This method is used to display signup popup
+	 */
+	protected void showSignupPopup() {
+		if (AppClientFactory.getPlaceManager().getRequestParameter("callback") != null && AppClientFactory.getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = AppClientFactory.getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =AppClientFactory.getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
+			}
+		}
+	}
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -115,12 +141,11 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			getTocFolders(folderId);
 			setFolderBanner();
 		}
-		
 	}
 	
 	@Override
 	public void getTocFolders(final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID), new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().clearTocData();
@@ -140,7 +165,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 
 	@Override
 	public void getFolderItems(final TreeItem item,final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID),new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().setFolderItems(item,folderListDo,folderId);

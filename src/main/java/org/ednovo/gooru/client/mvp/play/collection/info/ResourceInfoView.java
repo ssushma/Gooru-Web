@@ -2005,11 +2005,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			int count = 0;
 			FlowPanel toolTipwidgets = new FlowPanel();
 			for(int centuryCount=0; centuryCount<centuryList.size();centuryCount++) {
-				String stdCode = centuryList.get(centuryCount).getCodeId()+"";
 				String stdDec = centuryList.get(centuryCount).getLabel();
 				if (count > 2) {
 					if (count < 18){
-						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdDec, stdDec);
 						toolTipwidgets.add(standardItem);
 					}
 				} else {

@@ -109,7 +109,7 @@ public class CollectionFormView extends
 	@UiField
 	TextBoxWithPlaceholder collectionTitleTxtBox;
 
-	GroupedListBox courseLisBox,assessmentCourseLisBox=new GroupedListBox();
+	GroupedListBox courseLisBox,assessmentCourseLisBox;
 
 	@UiField
 	SimplePanel groupSimPanel, collectionGradeTxtBox;
@@ -822,7 +822,6 @@ public class CollectionFormView extends
 		collectionGradeTxtBox.setWidget(gradeDropDownList);
 		assessmentGradeTxtBox.add(assessmentGradeDropDownList);
 		gradeDropDownList.addChangeHandler(new ChangeHandler() {
-
 			@Override
 			public void onChange(ChangeEvent event) {
 
@@ -1078,6 +1077,7 @@ public class CollectionFormView extends
 		mandatoryErrorLbl.setVisible(false);
 		courseLisBox=new GroupedListBox();
 		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
+		assessmentCourseLisBox=new GroupedListBox();
 		assessmentCourseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		groupSimPanel.setWidget(courseLisBox);
 		assessmentSimPanel.clear();
@@ -1297,5 +1297,6 @@ public class CollectionFormView extends
 		lblNewAssessmentError.setVisible(false);
 		lblExistingAssessmentError.setVisible(false);
 		lblExistingAssessmentURLError.setVisible(false);
+		assessmentGradeDropDownList.setSelectedIndex(0);
 	}
 }
