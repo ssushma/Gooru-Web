@@ -304,6 +304,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		this.collectionOriginalItemDo = collectionItemDo;
 		getMainPanel().setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle =new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
@@ -402,6 +403,28 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				}
 			}
 		};
+	BlurHandler blurHandlerCentury=new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip.isShowing()){
+				//standardsPreferenceOrganizeToolTip.hide();
+					errorContainer.setVisible(false);
+				}
+			}
+		};
+		centurySgstBox.addDomHandler(blurHandlerCentury, BlurEvent.getType());
+		centurySgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+			
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				addCentury(centurySgstBox.getValue(), getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults()));
+				centurySgstBox.setText("");
+				centurySuggestOracle.clear();
+				updateCenturyAdvancedSetupStyle();
+				
+			}
+		});
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(this);
 
