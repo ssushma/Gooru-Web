@@ -113,7 +113,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				String type = AppClientFactory.getPlaceManager().getRequestParameter("type") ;
-				int displayScreen =AppClientFactory.getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				int displayScreen= (type!=null)? Integer.parseInt(type) : 1;
 				signUpViewPresenter.displayPopup(displayScreen);
 				addToPopupSlot(signUpViewPresenter);
 			}
