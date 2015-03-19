@@ -70,7 +70,6 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 
 	public CollectionShareAlertPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
-//		gooruPublicShare.setUrl("images/gooru-public-share-popup.png");
 		privateResourceLbl.setText(i18n.GL0840());
 		privateResourceLbl.getElement().setId("lblPrivateResourceLbl");
 		privateResourceLbl.getElement().setAttribute("alt",i18n.GL0840());

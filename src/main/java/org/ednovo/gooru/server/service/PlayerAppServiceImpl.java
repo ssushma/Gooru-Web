@@ -189,8 +189,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 
 	public ResoruceCollectionDo getResourceCollectionsList(String gooruOid,String pageNum,String pageSize) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESOURCE_COLLECTION_LIST, getLoggedInSessionToken(),pageNum, pageSize, gooruOid);
-		getLogger().info("urlresourceinfotab::"+url);
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_COLLECTION_LIST, getLoggedInSessionToken(),gooruOid, pageNum+"",  pageSize+"",gooruOid);
+		getLogger().info("urlresourceinfotab getResourceCollectionsList playerAPP::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceCollection(jsonRep);
@@ -293,6 +293,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		String shortenUrl=shareDeSerializer.deserializeShortenUrlFromJson(jsonRep);
 		shareUrls.put("embedbitlyurl", shortenUrl);
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL_PLAY, contentGooruOid, getLoggedInSessionToken(),collectionShareUrl);
+		getLogger().info("SHARE_SHORTEN_URL_PLAY url:::::"+url);
 	    jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 	    jsonRep = jsonResponseRep.getJsonRepresentation();
 		shortenUrl=shareDeSerializer.deserializeShortenUrlFromJson(jsonRep);
@@ -308,9 +309,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	@Override
 	public String updateViewCount(String gooruid, String viewCount,String resourceType) {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_VIEW_COUNT,gooruid, getLoggedInSessionToken());
+		getLogger().info("UPDATE_VIEW_COUNT post url::::"+url);
 		Form form=new Form();
 		form.add("resourceViews", viewCount);
 		form.add("sessionToken", getLoggedInSessionToken());
+		getLogger().info("UPDATE_VIEW_COUNT form url::::"+form);
 		ServiceProcessor.post(url, getRestUsername(), getRestPassword(),form);
 		return resourceType;
 	}
@@ -518,6 +521,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			collectionTitle = collectionTitle.trim();
 			collectionTitle=URLEncoder.encode(collectionTitle);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_RENAME_COLLECTION, collectionId,getLoggedInSessionToken(),"true",collectionTitle);
+			getLogger().info("COPY_RENAME_COLLECTION put url:::::"+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			if(jsonRep!=null && jsonRep.getSize()!=-1){
@@ -537,13 +541,13 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			JsonRepresentation jsonRep =null;
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_RESOURCCE,getLoggedInSessionToken());
-			getLogger().info("copyCollectionItem API Cal :::"+url);
+			getLogger().info("COPY_RESOURCCE API Cal :::"+url);
 			Form form=new Form();
 			form.add("sessionToken", getLoggedInSessionToken());
 			form.add("resourceId",collectionItemId);
 			form.add("collectionId",collectionId);
 			form.add("data","{\"collectionItem\":{\"itemType\":\"subscribed\"}}");
-			getLogger().info("copyCollectionItem form data post method payload::::::"+form);
+			getLogger().info("COPY_RESOURCCE form data post method payload::::::"+form);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),form);
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			if(jsonRep!=null && jsonRep.getSize()!=-1){

@@ -78,7 +78,6 @@ public class ForgotPasswordVc extends PopupPanel {
 
 	@UiField InlineLabel pleaseContactLbl;
 
-	//private AppPopUp appPopUp;
 
 	interface ForgotPasswordVcUiBinder extends
 			UiBinder<Widget, ForgotPasswordVc> {
@@ -154,7 +153,6 @@ public class ForgotPasswordVc extends PopupPanel {
         if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY) ||
 				AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
 		}else{
-			//appPopUp.hide();
 			Window.enableScrolling(true);
 	        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}
@@ -189,30 +187,30 @@ public class ForgotPasswordVc extends PopupPanel {
 	@UiHandler("sendMailBtnUc")
 	public void forgotPassword(ClickEvent clickEvent){
 		if (forgotEmailIdTxtBox.getText().trim().length() > 0) {
+			
 			AppClientFactory.getInjector().getUserService().forgotPassword(this.getforgotEmailId(), new SimpleAsyncCallback<Map<String, Object>>() {
 
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-					String error=(String) result.get("error");
-                    if (result != null && result.containsKey("error") && result.get("error").toString().length() > 0) {
-						if(error.equalsIgnoreCase("Looks like this email is tied with Google!")){
-							 errorMessage.setVisible(true);
-							 hide();
-							 AlertForgetContentUc alertForgetContentUc = new AlertForgetContentUc();	
-							 alertForgetContentUc.show();
-							 alertForgetContentUc.center();
-							 alertForgetContentUc.getElement().getStyle().setZIndex(999999);
-						}else{
-							errorMessage.setText(i18n.GL0438());
-							errorMessage.getElement().setAttribute("alt",i18n.GL0438());
-							errorMessage.getElement().setAttribute("title",i18n.GL0438());
-							errorMessage.setVisible(true);
-							//new AlertContentUc("Oops!", (String) result.get("error"));
-						}
-						return;
+                    if (result != null && result.containsKey("error")) {
+                    	if(result.get("error")!=null){
+                    		String	error=(String) result.get("error");
+                    		if("Looks like this email is tied with Google!".equalsIgnoreCase(error)){
+   							 errorMessage.setVisible(true);
+   							 hide();
+   							 AlertForgetContentUc alertForgetContentUc = new AlertForgetContentUc();	
+   							 alertForgetContentUc.show();
+   							 alertForgetContentUc.center();
+   							 alertForgetContentUc.getElement().getStyle().setZIndex(999999);
+   						}else{
+   							errorMessage.setText(i18n.GL0438());
+   							errorMessage.getElement().setAttribute("alt",i18n.GL0438());
+   							errorMessage.getElement().setAttribute("title",i18n.GL0438());
+   							errorMessage.setVisible(true);
+   						}
+                    	}
 					}
-					if (result != null && result.containsKey("gooruUid") && result.get("gooruUid").toString().length() > 0) {
-						//appPopUp.hide();
+                    if (result != null && result.containsKey("gooruUId") && result.get("gooruUId").toString().length() > 0) {
 						hide();
 						ForgotPwdSuccessVc forgotPwdSuccessVc=new ForgotPwdSuccessVc();
 						forgotPwdSuccessVc.setGlassEnabled(true);
@@ -225,12 +223,10 @@ public class ForgotPasswordVc extends PopupPanel {
 			});
 		}else
 		{
-			
 			errorMessage.setVisible(true);
 			errorMessage.setText(i18n.GL0439());
 			errorMessage.getElement().setAttribute("alt",i18n.GL0439());
 			errorMessage.getElement().setAttribute("title",i18n.GL0439());
-		//new AlertContentUc(i18n.GL0064, PROVIDE_EMAIL_OR_USERNAME);
 		}
 		}
 	

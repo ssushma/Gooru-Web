@@ -40,6 +40,7 @@ public class AppPopUp extends PopupPanel {
 	private FlowPanel headerPanel;
 	private FlowPanel content;
 	private Label labletitle;
+	private HTMLEventPanel closeBtn;
 
 	/**
 	 * Class constructor 
@@ -49,12 +50,18 @@ public class AppPopUp extends PopupPanel {
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
 		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemShortenUrlPopUp());
+		this.setAutoHideEnabled(true);
 		headerPanel = new FlowPanel();
 		content = new FlowPanel();
+		closeBtn = new HTMLEventPanel("");
 		headerPanel.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUpOuterDiv());
 		labletitle = new Label();
 		labletitle.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemHeaderText());
+		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignCloseMarker());
+		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignSprite());
+		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignCloseMark());
 		headerPanel.add(labletitle);
+		headerPanel.add(closeBtn);
 		content.add(headerPanel);
 		this.setWidget(content);
 		setGlassEnabled(true);
@@ -129,5 +136,10 @@ public class AppPopUp extends PopupPanel {
 		labletitle.getElement().setAttribute("alt",title);
 		labletitle.getElement().setAttribute("title",title);
 	}
-	
+	public HTMLEventPanel getCloseBtn() {
+		return closeBtn;
+	}
+	public void setCloseBtn(HTMLEventPanel closeBtn) {
+		this.closeBtn = closeBtn;
+	}
 }

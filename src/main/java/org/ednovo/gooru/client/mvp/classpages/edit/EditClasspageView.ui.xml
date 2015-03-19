@@ -137,15 +137,6 @@
 							      
 							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/Classpage/assignments/date_directions.png" width="626" height="212"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
-<!-- 							    <g:HTMLPanel styleName="{res.css.collectionView}">
-							      <g:HTMLPanel styleName="{res.css.circleBlock}">
-							        <g:HTMLPanel styleName="{res.css.circleBg}">
-							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblThree"></g:Label>
-							        </g:HTMLPanel>
-							      </g:HTMLPanel>
-							      <g:Label styleName="{res.css.desc}" ui:field="lblGetStarted"></g:Label>
-							      <g:Image url="images/add-button.png" width="204" height="52" styleName="{res.css.btn}"></g:Image>
-							    </g:HTMLPanel> -->
 							  </g:HTMLPanel>
 					</g:HTMLPanel>
 					
