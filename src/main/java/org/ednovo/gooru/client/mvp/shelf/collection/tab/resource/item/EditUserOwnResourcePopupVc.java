@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,6 +40,7 @@ import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
@@ -60,6 +61,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -99,9 +101,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -116,13 +118,14 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 /**
  * @author ibc
@@ -134,7 +137,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	CollectionItemDo collectionOriginalItemDo;
 
 	@UiField
-	public Button addResourceBtn,changeFileBtn,browseResourceBtn,cancelResourcePopupBtnLbl;
+	public Button addResourceBtn,changeFileBtn,browseResourceBtn,cancelResourcePopupBtnLbl,browseCentury;
 	
 	@UiField
 	FormPanel fileuploadForm;
@@ -142,7 +145,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	@UiField
 	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent,
 	mediaLabelContainer,educationalContainer,momentsOfLearningContainer,mediaFeatureContainer,accessHazardContainer,standardsBrowseContainer,
-	mobileFriendlyContainer,mediaDropdownArrowConatainer;
+	mobileFriendlyContainer,mediaDropdownArrowConatainer,centuryBrowseContainer;
 	
 
 	@UiField
@@ -187,9 +190,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,errorContainer;
 	
 	@UiField(provided = true)
-	AppSuggestBox standardSgstBox;
+	AppSuggestBox standardSgstBox,centurySgstBox;
 	
-	@UiField FlowPanel standardContainer,standardsPanel;
+	@UiField FlowPanel standardContainer,standardsPanel,centuryPanel,centuryContainer;
 	
 	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
 	
@@ -208,14 +211,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	referenceMaterialPanel,quizPanel,curriculumPlanPanel,lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,
 	textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel,
 	AdvancedSetupContainer,eHearderIconEducationalUse,eHearderIconMomentsOfLearning,eHearderIconstandards,
-	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,defaultPanel,defaultPanelMomentsOfLearningPnl;
+	eHearderIconAccessHazard,eHearderIconMediafeature,eHearderIconMobileFriendly,eHearderIconCentury,defaultPanel,defaultPanelMomentsOfLearningPnl;
 
 	@UiField(provided = true)
 	AddTagesCBundle res2;
-	
-	
-	
-	
 	
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -252,10 +251,13 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	private boolean isUserResource = false;
 	String courseCode="";
 	private AppMultiWordSuggestOracle standardSuggestOracle;
+	private AppMultiWordSuggestOracle centurySuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	private SearchDo<StandardFo> centurySearchDo = new SearchDo<StandardFo>();
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
@@ -280,15 +282,15 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	private boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	
 	public AddSetupAdvancedView addSetupAdvancedView;
-	
+	//Added for centruy popup
+	PopupPanel centuryPopup=new PopupPanel();
+	Map<Long, String> centurySelectedValues=new HashMap<Long, String>();
+	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
 	
 	private static EditUserOwnResourcePopupVcUiBinder uiBinder = GWT.create(EditUserOwnResourcePopupVcUiBinder.class);
 	
 	interface EditUserOwnResourcePopupVcUiBinder extends UiBinder<Widget, EditUserOwnResourcePopupVc> {
 	}
-	
-
-
 	public EditUserOwnResourcePopupVc(CollectionItemDo collectionItemDo) {
 		
 		super();
@@ -366,6 +368,29 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}
 		};
 		standardSgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
+		centurySgstBox=new AppSuggestBox(centurySuggestOracle) {
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+			@Override
+			public void keyAction(String text, KeyUpEvent event) {
+				text=text.toUpperCase();
+				centurySearchDo.setSearchResults(null);
+				centurySearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new SimpleAsyncCallback<SearchDo<StandardFo>>() {
+					@Override
+					public void onSuccess(SearchDo<StandardFo> result) {
+							setCenturySuggestions(result);
+						}
+					});
+					centurySgstBox.showSuggestionList();
+				}
+			}
+		};
+		centurySgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
+		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
 		BlurHandler blurHandler=new BlurHandler() {
 			
 			@Override
@@ -944,6 +969,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		momentsOfLearningContainer.setVisible(false);
 		momentsOfLearningPanel.setVisible(false);
 		standardContainer.setVisible(false);
+		centuryContainer.setVisible(false);
 		mediaFeatureContainer.setVisible(false);
 		accessHazardContainer.setVisible(false);
 		standardsBrowseContainer.setVisible(false);
@@ -955,15 +981,80 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		addSetupAdvancedView.accessHazardAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mediaFeatureAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		addSetupAdvancedView.mobileFreindlyAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
+		addSetupAdvancedView.centuryAdvancedPnl.addClickHandler(new AddSetupAdvancedClickHandlers());
 		
 		eHearderIconEducationalUse.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconMomentsOfLearning.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconstandards.addClickHandler(new MinimizePanelsClickHandler());
+		eHearderIconCentury.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconAccessHazard.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconMediafeature.addClickHandler(new MinimizePanelsClickHandler());
 		eHearderIconMobileFriendly.addClickHandler(new MinimizePanelsClickHandler());
 		
 		/** Add Advanced Setup Changes End**/
+		//This will hide the popup when clicked on the cancel button
+		centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hideCenturyPopup();
+			}
+		});
+		//This will hide the popup when clicked on close button
+		centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hideCenturyPopup();
+			}
+		});
+		centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+			 centurySelectedValues.clear();
+			 centurySelectedValues.putAll(centuryPresenterWidget.getSelectedValues());
+			 centuryPanel.clear();
+			if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+					for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+						CodeDo codeObjStandard=new CodeDo();
+						codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
+						codeObjStandard.setCode(entry.getValue());
+						standardsDo.add(codeObjStandard);
+						centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+					}
+				}
+			 hideCenturyPopup();
+			}
+		});
+	}
+	/**
+	 * new label is created for the 21 century which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				if(standardsDo!=null && standardsDo.size()>0){
+					for (CodeDo codeObj : standardsDo) {			
+						if(codeObj.getCodeId()==Integer.parseInt(id)){			
+							standardsDo.remove(codeObj);
+							centurySelectedValues.remove(Long.parseLong(id));
+							this.getParent().removeFromParent();
+							return;
+						}
+					}
+				}
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	/**
+	 * This method will hide the century popup
+	 */
+	public void hideCenturyPopup(){
+		centuryPopup.hide();
 	}
 	
 	private class MinimizePanelsClickHandler implements ClickHandler{
@@ -990,6 +1081,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else if(event.getSource()==eHearderIconMobileFriendly){
 				mobileFriendlyContainer.setVisible(false);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(true);
+			}else if(event.getSource()==eHearderIconCentury){
+				centuryBrowseContainer.setVisible(false);
+				addSetupAdvancedView.centuryAdvancedPnl.setVisible(true);
 			}
 		}
 	}
@@ -1020,6 +1114,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}else if(event.getSource()==addSetupAdvancedView.mobileFreindlyAdvancedPnl){
 				mobileFriendlyContainer.setVisible(true);
 				addSetupAdvancedView.mobileFreindlyAdvancedPnl.setVisible(false);
+			}else if(event.getSource()==addSetupAdvancedView.centuryAdvancedPnl){
+				centuryContainer.setVisible(true);
+				centuryBrowseContainer.setVisible(true);
+				addSetupAdvancedView.centuryAdvancedPnl.setVisible(false);
 			}
 			
 			if(isAllAdditionalTagsOpen()){
@@ -1042,6 +1140,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				&& !addSetupAdvancedView.standardsAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.accessHazardAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mediaFeatureAdvancedPnl.isVisible()
+				&& !addSetupAdvancedView.centuryAdvancedPnl.isVisible()
 				&& !addSetupAdvancedView.mobileFreindlyAdvancedPnl.isVisible()) {
 			allAdditionalTagInVisisble = true;
 		}
@@ -1281,10 +1380,42 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 				 updateStandardsAdvancedSetupStyle();
 			}
 		}
-		
+		//This will set the 21 centry skill values if the user as added already
+		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
+			centuryPanel.clear();
+			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCodeId(standardObj.getCodeId());
+				 codeObj.setCode(standardObj.getLabel());
+				 standardsDo.add(codeObj);
+				 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
+				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
+			}
+            updateCenturyAdvancedSetupStyle();
+		}
 		
 	}
-
+	/**
+	 * @function updateCenturyAdvancedSetupStyle 
+	 * @created_date : 18-Mar-2015
+	 * 
+	 * @description This method is used to set styles for 21 skills based on the number of skills.
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	public void updateCenturyAdvancedSetupStyle() {
+		if(centuryPanel.getWidgetCount()==0){
+			addSetupAdvancedView.centuryAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+		}else{
+			addSetupAdvancedView.centuryAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
+			addSetupAdvancedView.centuryAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());
+		}
+	}
 	public void setImage(String url, final String category){
 		
 //		if(category.contains("lesson")||category.contains("textbook")||category.contains("handout"))
@@ -1887,6 +2018,24 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		standardSgstBox.showSuggestionList();
 	}
 	/**
+	 * set the century suggestions
+	 * @param centurySearchDo
+	 */
+	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
+		centurySuggestOracle.clear();
+		this.centurySearchDo = centurySearchDo;
+		if (this.centurySearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedCentury(centuryPanel);
+			for (StandardFo code : centurySearchDo.getSearchResults()) {
+				if (!sources.contains(code.getLabel())) {
+					centurySuggestOracle.add(code.getLabel());
+				}
+				centuryCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		centurySgstBox.showSuggestionList();
+	}
+	/**
 	 * get the standards are added for collection
 	 * 
 	 * @param flowPanel
@@ -1898,6 +2047,22 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		for (Widget widget : flowPanel) {
 			if (widget instanceof DownToolTipWidgetUc) {
 				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedCentury(FlowPanel flowPanel) {
+		List<String> suggestions = new ArrayList<String>();
+		for (Widget widget : flowPanel) {
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabelCentury) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
 			}
 		}
 		return suggestions;
@@ -2142,7 +2307,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 	 */
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
-		
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
 		standardSuggestOracle.clear();
@@ -2169,7 +2333,40 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			standardSgstBox.setText("");
 		}
 	}
-	
+	/**
+	 *  Adding new skills for the resource collection , will check it has more than
+	 * fifteen standards
+	 * @param centuryTag
+	 * @param id
+	 */
+	public void addCentury(String centuryTag, String id) {
+		if (centuryTag != null && !centuryTag.isEmpty()) {
+			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());				
+			CodeDo codeObjStandard=new CodeDo();
+			codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
+			codeObjStandard.setCode(centurySgstBox.getValue());
+			standardsDo.add(codeObjStandard);
+			
+			centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
+			centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
+		}
+	}
+	/**
+	 * This will return the code id based on the code
+	 * @param code
+	 * @param codes
+	 * @return
+	 */
+	private static String getCodeIdByCodeCentury(String code, List<StandardFo> codes) {
+		if (codes != null) {
+			for (StandardFo codeDo : codes) {
+				if (code.equals(codeDo.getLabel())) {
+					return codeDo.getCodeId() + "";
+				}
+			}
+		}
+		return null;
+	}
 	/**
 	 * If standards added reached to max number this method will be invoked.
 	 */
@@ -2615,5 +2812,18 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		{
 			addSetupAdvancedView.mobileFreindlyAdvancedContainer.setStyleName(AddSetupAdvancedCBundle.INSTANCE.css().setupBoxes());
 /*			addSetupAdvancedView.mobileFreindlyAdvancedContainer.addStyleName(AddSetupAdvancedCBundle.INSTANCE.css().active());*/		}	
+	}
+	/**
+	 * This will handle the click event on the browser century
+	 * @param e
+	 */
+	@UiHandler("browseCentury")
+	public void onClickOfBrowseCentury(ClickEvent e){
+		centuryPopup.clear();
+		centuryPresenterWidget.setAddResourceData(centurySelectedValues);
+		centuryPopup.add(centuryPresenterWidget.getWidget());
+		centuryPopup.show();
+		centuryPopup.center();
+		centuryPopup.getElement().getStyle().setZIndex(999999);
 	}
 }

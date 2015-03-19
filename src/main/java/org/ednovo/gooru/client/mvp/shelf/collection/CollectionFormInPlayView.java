@@ -134,7 +134,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	
 	@UiField
 	Label courseMoreInfoLbl;*/
-	@UiField HTMLPanel publicRadioButtonPanel,shareRadioButtonPanel,privateRadioButtonPanel,buttonMainContainer;
+	@UiField HTMLPanel  pnlExistingAssessmentContainer,pnlNewAssessmentContainer,pnlCreateNewAssessment,bodyContainer,shelfItemContent,publicRadioButtonPanel,shareRadioButtonPanel,privateRadioButtonPanel,buttonMainContainer;
 	
 	RadioButton radioButtonPublic=new RadioButton("","");
 	RadioButton radioButtonShare=new RadioButton("","");
@@ -194,6 +194,11 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		}
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(CollectionCBundle.INSTANCE.css().gwtGlassPanel());
+		
+
+		pnlCreateNewAssessment.setVisible(false);
+		bodyContainer.setVisible(true);
+		
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 //		buttonFloPanel.add(validationErrorFloPanel);
@@ -420,11 +425,25 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		collTitleLbl.setText(i18n.GL0651());
 		lblVisibility.setText(i18n.GL0328());
 		lblPublic.setText(i18n.GL0329());
-		lblAllow.setText(i18n.GL0330());
+		if(collectionDo != null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			lblAllow.setText(i18n.GL3175());
+		}
+		else
+		{
+			lblAllow.setText(i18n.GL0330());
+		}
 		lblShareable.setText(i18n.GL0331());
 		lblShareableDesc.setText(i18n.GL0332());
 		lblPrivate.setText(i18n.GL0333());
-		lblPrivateDesc.setText(i18n.GL0334());
+		if(collectionDo != null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			lblPrivateDesc.setText(i18n.GL3176());
+		}
+		else
+		{
+			lblPrivateDesc.setText(i18n.GL0334());
+		}
 		
 		btnOk.setText(i18n.GL0190());
 		btnOk.getElement().setId("btnOk");
@@ -567,7 +586,6 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		btnOk.getElement().removeClassName("disabled");
 		collectionDo = null;
 		buttonMainContainer.setVisible(true);
-		
 		loadingTextLbl.setVisible(false);
 		collectionTitleTxtBox.setText("");
 //		validationErrorLbl.setVisible(false);

@@ -130,6 +130,9 @@ public class AddResourceContainerView extends
 	private static final String O2_LEVEL = "o2";
 
 	private static final String O3_LEVEL = "o3";
+	
+	private static final String ASSESSMENT = "assessment";
+	
 	boolean isPlayer = false;
 	boolean isTopMostSelected =true;
 	HTMLPanel topMostTreeItem=new HTMLPanel("");
@@ -458,8 +461,11 @@ public class AddResourceContainerView extends
 		}
 
 		public CollectionTreeItem(String levelStyleName, String folderTitle,
-				String gooruOid) {
+				String gooruOid, String collectionType) {
 			this();
+			if(ASSESSMENT.equals(collectionType)){
+				folderContainer.setStyleName(AddResourceContainerCBundle.INSTANCE.css().folderAssessment());
+			}
 			if (levelStyleName != null) {
 				folderContainer.addStyleName(levelStyleName);
 			}
@@ -529,11 +535,12 @@ public class AddResourceContainerView extends
 											floderDo.getGooruOid()));
 							folderTreePanel.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
-						} else if (floderDo.getType().equals("scollection")) {
+						} else{
+							String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 							TreeItem folderItem = new TreeItem(
 									new CollectionTreeItem(null,
 											floderDo.getTitle(),
-											floderDo.getGooruOid()));
+											floderDo.getGooruOid(),collectionType));
 							folderTreePanel.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
 						}
@@ -605,12 +612,13 @@ public class AddResourceContainerView extends
 									innerFolderTreeItem);
 							item.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
-						} else if (floderDo.getType().equals("scollection")) {
+						} else {
+							String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 							TreeItem folderItem = new TreeItem(
 									new CollectionTreeItem(
 											getTreeItemStyleName(folderLevel),
 											floderDo.getTitle(),
-											floderDo.getGooruOid()));
+											floderDo.getGooruOid(),collectionType));
 							item.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
 						}

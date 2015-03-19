@@ -689,38 +689,42 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	 */
 	 
 	public final native String getFileNameSize() /*-{
- 
-var fileSize;
-      if ($wnd.$.browser.msie) 
-         {
-   
-     	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");
-        var sPath =   $wnd.$("#fileUpload")[0].value;
-        var objFile = objFSO.getFile(sPath);
-         var iSize = objFile.size;
-        fileSize = iSize/ 1048576;
-    
-        }
-    
-     
-     
-        else 
-        {
-  
-       fileSize =  $wnd.$("#fileUpload")[0].files[0].size ;//size in kb
-       
-        fileSize = fileSize / 1048576; //size in mb 
- 
-         }
- 
-        
-     
-        
-           return fileSize.toString();
-   
-                 
-    
-  }-*/;
+	 
+	var fileSize;
+	      if ($wnd.$.browser.msie) 
+	         {
+	   
+	     	 var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+	        var sPath =   $wnd.$("#fileUpload")[0].value;
+	        var objFile = objFSO.getFile(sPath);
+	         var iSize = objFile.size;
+	        fileSize = iSize/ 1048576;
+	    
+	        }
+	    
+	     
+	     
+	        else 
+	        {
+	  
+	       fileSize =  $wnd.$("#fileUpload")[0].files[0].size ;//size in kb
+	       
+	        fileSize = fileSize / 1048576; //size in mb 
+	 
+	         }
+	 
+	        
+	     
+	        
+	           return fileSize.toString();
+	   
+	                 
+	    
+	  }-*/;
+	
+	public static native String getUserAgent() /*-{
+	return navigator.userAgent.toLowerCase();
+	}-*/;
 	
 	public void setAspectRatio(float aspectRatio){
 		this.aspectRatio=aspectRatio;

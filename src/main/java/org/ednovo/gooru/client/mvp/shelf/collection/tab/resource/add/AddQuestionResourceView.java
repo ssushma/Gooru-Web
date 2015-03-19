@@ -41,12 +41,15 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.AddSetupAdvancedCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
@@ -63,6 +66,7 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -73,7 +77,6 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
@@ -97,6 +100,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -107,6 +111,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
@@ -123,7 +128,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	private CollectionItemDo collectionItemDo=null;
 	 boolean isAnsweEmpty = false;
-	@UiField Label depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg; 
+	@UiField Label centuryDefaultText,depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg; 
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights;
 	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
@@ -143,10 +148,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField BlueButtonUc addbutton;
 	/*@UiField TextArea explainationTextArea;*/
 	@UiField TinyMCE questionNameTextArea,explainationTextArea;
-	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer;
+	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer,centuryPanel;
 	
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
-	@UiField Button cancelButton,browseStandards;
+	@UiField Button cancelButton,browseStandards,browseCentury;
 	@UiField
 	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
 	
@@ -179,8 +184,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 	}
 	@UiField AddResourceBundle addWebResourceStyle;
-	
-	
 		
 	RemoveToolTipUc removeToolTip=null;   
 	boolean validationValue=false, isAnswerChoiceSelected=false;
@@ -209,14 +212,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private List<Widget> answerChoicesList=new ArrayList<Widget>();
 	
 	@UiField(provided = true)
-	AppSuggestBox standardSgstBox;
+	AppSuggestBox standardSgstBox,centurySgstBox;
 	
 	@UiField FlowPanel standardsPanel;
 	private AppMultiWordSuggestOracle standardSuggestOracle;
+	private AppMultiWordSuggestOracle centurySuggestOracle;
+	
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	private SearchDo<StandardFo> centurySearchDo = new SearchDo<StandardFo>();
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	private Map<String, String> centuryCodesMap = new HashMap<String, String>();
 	String courseCode="";
 	boolean isEditResource=false;
 	
@@ -228,6 +235,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private boolean isBrowseStandardsToolTip = false;
 	
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
+	PopupPanel centuryPopup=new PopupPanel();
+	Map<Long, String> centurySelectedValues = new HashMap<Long, String>();
+	AddCenturyPresenter centuryPresenterWidget=AppClientFactory.getInjector().getAddCenturyPresenterWidget();
 	
 	public AddQuestionResourceView(){
 		initializeAutoSuggestedBox();
@@ -358,6 +369,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
 		standardSgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:271px;height:19px");
+		centurySgstBox.getElement().setAttribute("style", "box-sizing:content-box;width:271px;height:19px");
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
 		standardsPanel.getElement().setId("fpnlStandardsPanel");
 		lblContentRights.getElement().setId("epnlLblContentRights");
@@ -454,6 +466,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		setTrueOrFalseFields();
 		//questionNameTextAreaToolBarButton.addClickHandler(new ShowTinyMceToolBar(questionNameTextArea));
+		setCenturyData();
 	}
 	public AddQuestionResourceView(CollectionItemDo collectionItemDo){
 		initializeAutoSuggestedBox();
@@ -569,9 +582,73 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
+		setCenturyData();
+	}
+	public void setCenturyData(){
+		//This will hide the popup when clicked on the cancel button
+				centuryPresenterWidget.getCancelBtn().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+				    	hideCenturyPopup();
+					}
+				});
+				//This will hide the popup when clicked on close button
+				centuryPresenterWidget.getCloseBtn().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						hideCenturyPopup();
+					}
+				});
+				centuryPresenterWidget.getAddButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						centurySelectedValues.clear();
+						centurySelectedValues.putAll(centuryPresenterWidget.getSelectedValues());
+						centuryPanel.clear();
+					if(centurySelectedValues!=null && centurySelectedValues.size()>0){
+						for (Map.Entry<Long, String> entry : centurySelectedValues.entrySet()){
+							CodeDo codeObjStandard=new CodeDo();
+							codeObjStandard.setCodeId(Integer.parseInt(entry.getKey()+""));
+							codeObjStandard.setCode(entry.getValue());
+							standardsDo.add(codeObjStandard);
+							centuryPanel.add(create21CenturyLabel(entry.getValue(),entry.getKey()+"",""));
+						 }
+					}
+					hideCenturyPopup();
+				}
+			 });
+	}
+	/**
+	 * new label is created for the 21 century which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				for(int i=0;i<standardsDo.size();i++){
+					if(centuryCode.equalsIgnoreCase(standardsDo.get(i).getCode())){
+						standardsDo.remove(i);
+						centurySelectedValues.remove(Long.parseLong(id));
+					}
+				}
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	/**
+	 * This method will hide the century popup
+	 */
+	public void hideCenturyPopup(){
+		centuryPopup.hide();
 	}
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle= new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			@Override
@@ -642,6 +719,63 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		};
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
+		centurySgstBox=new AppSuggestBox(centurySuggestOracle) {
+			
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+			
+			@Override
+			public void keyAction(String text, KeyUpEvent event) {
+				text=text.toUpperCase();
+				//standardsPreferenceOrganizeToolTip.hide();
+				centurySearchDo.setSearchResults(null);
+				centurySearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+						AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centurySearchDo, new AsyncCallback<SearchDo<StandardFo>>() {
+							
+							@Override
+							public void onSuccess(SearchDo<StandardFo> result) {
+								setCenturySuggestions(result);
+								
+							}
+
+							@Override
+							public void onFailure(Throwable caught) {
+								
+							}							
+						});
+						centurySgstBox.showSuggestionList();
+						}
+			}
+		};
+		centurySgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
+		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
+		
+		BlurHandler blurHandlerCentury=new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip.isShowing()){
+				//standardsPreferenceOrganizeToolTip.hide();
+					errorContainer.setVisible(false);
+				}
+			}
+		};
+		
+		centurySgstBox.addDomHandler(blurHandlerCentury, BlurEvent.getType());
+		centurySgstBox.addSelectionHandler(new SelectionHandler<SuggestOracle.Suggestion>() {
+			
+			@Override
+			public void onSelection(SelectionEvent<Suggestion> event) {
+				addCentury(centurySgstBox.getValue(), getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults()));
+				centurySgstBox.setText("");
+				centurySuggestOracle.clear();
+				//updateCenturyAdvancedSetupStyle();
+				
+			}
+		});
 	}
 	public void setTextForTheFields(){
 		/*educationalTitle.getElement().setInnerHTML(i18n.GL1664);
@@ -665,6 +799,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardsDefaultText.setText(i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
+		
+		centuryDefaultText.setText(i18n.GL3121_1());
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3121_1());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3121_1());
+		
 		depthOfKnowledgeHeader.setText(i18n.GL1693());
 		depthOfKnowledgeHeader.getElement().setAttribute("alt", i18n.GL1693());
 		depthOfKnowledgeHeader.getElement().setAttribute("title", i18n.GL1693());
@@ -740,6 +879,16 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		return null;
 	}
+	private static String getCodeIdByCodeCentury(String code, List<StandardFo> codes) {
+		if (codes != null) {
+			for (StandardFo codeDo : codes) {
+				if (code.equals(codeDo.getLabel())) {
+					return codeDo.getCodeId() + "";
+				}
+			}
+		}
+		return null;
+	}
 	/**
 	 * Adding new standard for the collection , will check it has more than
 	 * fifteen standards
@@ -760,6 +909,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			standardMaxShow();
 			standardSgstBox.setText("");
 		}
+	}
+	public void addCentury(String centuryTag, String id) {
+			if (centuryTag != null && !centuryTag.isEmpty()) {
+				String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());				
+				CodeDo codeObjStandard=new CodeDo();
+				codeObjStandard.setCodeId(Integer.parseInt(codeIdVal));
+				codeObjStandard.setCode(centurySgstBox.getValue());
+				standardsDo.add(codeObjStandard);
+				
+				centurySelectedValues.put(Long.parseLong(codeIdVal),centurySgstBox.getValue());
+				centuryPanel.add(create21CenturyLabel(centuryTag, id, centuryCodesMap.get(id)));
+			}
 	}
 	/**
 	 * new label is created for the standard which needs to be added
@@ -819,6 +980,20 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		standardSgstBox.showSuggestionList();
 	}
+	public void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo) {
+		centurySuggestOracle.clear();
+		this.centurySearchDo = centurySearchDo;
+		if (this.centurySearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedCentury(centuryPanel);
+			for (StandardFo code : centurySearchDo.getSearchResults()) {
+				if (!sources.contains(code.getLabel())) {
+					centurySuggestOracle.add(code.getLabel());
+				}
+				centuryCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		centurySgstBox.showSuggestionList();
+	}
 	/**
 	 * get the standards are added for collection
 	 * 
@@ -831,6 +1006,22 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		for (Widget widget : flowPanel) {
 			if (widget instanceof DownToolTipWidgetUc) {
 				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedCentury(FlowPanel flowPanel) {
+		List<String> suggestions = new ArrayList<String>();
+		for (Widget widget : flowPanel) {
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabelCentury) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
 			}
 		}
 		return suggestions;
@@ -1746,7 +1937,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
-			 taxonomySet.put("taxonomyCode", standardsDo);
+			taxonomySet.put("taxonomyCode", standardsDo);
 			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
@@ -2388,8 +2579,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				 standardsPanel.add(createStandardLabel(code, codeID,label));
 			}
 		}
+		if(collectionItemDo.getResource().getSkills()!= null && collectionItemDo.getResource().getSkills().size()>0){
+			centuryPanel.clear();
+			for (StandardFo standardObj : collectionItemDo.getResource().getSkills()) {
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCodeId(standardObj.getCodeId());
+				 codeObj.setCode(standardObj.getLabel());
+				 standardsDo.add(codeObj);
+				 centurySelectedValues.put(Long.parseLong(standardObj.getCodeId()+""), standardObj.getLabel());
+				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
+			}
+		}
 	}
-	
 	
 	/**
 	 * This method checks the FIB question is balanced or not i.e. balanced with open and closing brackets ([ ]) 
@@ -2936,4 +3137,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
  		browseStandards.getElement().getStyle().clearColor();
  		browseStandards.getElement().removeClassName("disabled");
  	}
+ 	/**
+	 * This will handle the click event on the browser century
+	 * @param e
+	 */
+	@UiHandler("browseCentury")
+	public void onClickOfBrowseCentury(ClickEvent e){
+		centuryPopup.clear();
+		centuryPresenterWidget.setAddResourceData(centurySelectedValues);
+		centuryPopup.add(centuryPresenterWidget.getWidget());
+		centuryPopup.show();
+		centuryPopup.center();
+		centuryPopup.getElement().getStyle().setZIndex(999999);
+	}
 }

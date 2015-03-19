@@ -29,15 +29,24 @@ import java.util.HashMap;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
@@ -63,25 +72,72 @@ public class FolderCollectionView extends Composite {
 	}
 	@UiField FlowPanel pnlResources;
 	@UiField H4Panel lblCollectionTitle;
+	@UiField Label lblCollectionDesc,imgLock;
+	@UiField HTMLPanel collectionTypePanel;
+
+	MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	FolderTocCBundle res;
 	
-	public FolderCollectionView(String levelStyleName,final FolderDo folderDo) {
+	final String ASSESSMENT_URL="assessment/url";
+	
+	final String ASSESSMENT="assessment";
+	ResourceTooltip resourceTooltip=new ResourceTooltip();
+	
+	public FolderCollectionView(String levelStyleName,final FolderDo folderDo,final String parentId) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		lblCollectionTitle.setText(folderDo.getTitle());
+		if(folderDo.getCollectionType().equals(ASSESSMENT_URL)|| folderDo.getCollectionType().equals(ASSESSMENT)){
+			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/assessment-smal.png') no-repeat 8px 4px;padding-left: 34px;background-size: 21px 17px;");
+		}else{
+			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/collection-small-icon.png') no-repeat 8px 4px;padding-left: 34px;");
+		}
+		imgLock.setVisible(false);
+		if(folderDo.getSettings()!=null && folderDo.getSettings().getIsLoginRequired()!=null){
+			imgLock.setVisible(Boolean.parseBoolean(folderDo.getSettings().getIsLoginRequired()));
+		}
+		
+		if(folderDo.getTitle()!=null && !folderDo.getTitle().isEmpty()){
+			lblCollectionTitle.setText(folderDo.getTitle());
+		}
+		if(folderDo.getDescription()!=null && !folderDo.getDescription().isEmpty()){
+			lblCollectionDesc.setText(folderDo.getDescription());
+		}
 		 if(folderDo.getCollectionItems().size()>0){
-			 pnlResources.add(new FolderCollectionResourceView(folderDo));
+			 pnlResources.add(new FolderCollectionResourceView(folderDo,parentId));
 		 }
 		 lblCollectionTitle.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				HashMap<String,String> params = new HashMap<String,String>();
-				params.put("id", folderDo.getGooruOid());
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				if(ASSESSMENT_URL.equalsIgnoreCase(folderDo.getCollectionType())){
+					Window.open(folderDo.getUrl(), "", "");
+				}else{
+					HashMap<String,String> params = new HashMap<String,String>();
+					String selectedfolderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
+					params.put("id", folderDo.getGooruOid());
+					if(parentId!=null){
+						params.put("folderId", parentId);
+					}else{
+						params.put("folderId", selectedfolderId);
+					}
+					
+					params.put("folderItemId", folderDo.getCollectionItemId());
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+				}
 			}
 		});
+	}
+	@UiHandler("imgLock")
+	public void onHoverOfLockImage(MouseOverEvent event){
+		resourceTooltip.setResourceDesc(i18n.GL3185());
+		resourceTooltip.show();
+		resourceTooltip.setPopupPosition(imgLock.getElement().getAbsoluteLeft()-43,imgLock.getElement().getAbsoluteTop()+20);
+		resourceTooltip.pnlToolTipContainer.getElement().getStyle().setWidth(100, Unit.PCT);
+	}
+	@UiHandler("imgLock")
+	public void onOutOfLockImage(MouseOutEvent event){
+		resourceTooltip.hide();
 	}
 }

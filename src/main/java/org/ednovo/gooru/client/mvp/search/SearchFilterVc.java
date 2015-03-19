@@ -153,10 +153,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel categoryPanelUc,subjectPanelUc,gradePanelUc,gradePanelUcNext,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
+	@UiField HTMLPanel pnl21Century,categoryPanelUc,subjectPanelUc,gradePanelUc,gradePanelUcNext,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
-	HTMLPanel aggregatorPanel;
+	HTMLPanel aggregatorPanel,centuryPanelUc;
 
 	@UiField(provided = true)
 	AppSuggestBox sourceSgstBox;
@@ -168,6 +168,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	AppSuggestBox standardSgstBox;
 	
 	@UiField(provided = true)
+	AppSuggestBox centurySgstBox;
+	
+	@UiField(provided = true)
 	AppSuggestBox aggregatorSgstBox;
 	
 	@UiField
@@ -177,7 +180,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	FlowPanel sourceContainerFloPanel,aggregatorContainerFloPanel;
 
 	@UiField
-	FlowPanel standardContainerFloPanel;
+	FlowPanel standardContainerFloPanel,centuryContainerFloPanel;
 
 	@UiField
 	Label sourcesNotFoundLbl,/*notifyText,*/aggregatorNotFoundLbl;
@@ -187,21 +190,21 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	H4Panel filtersText;
 	@UiField
-	Label standardsNotFoundLbl;
+	Label standardsNotFoundLbl,centuryHelpicon,centuryNotFoundLbl;
 	
 	@UiField
-	Label publisherTooltip, standardHelpicon,aggregatorTooltip,aggregatorLbl,authorLbl;
+	Label publisherTooltip, standardHelpicon,aggregatorTooltip,aggregatorLbl,authorLbl,arrowLblCentury;
 	
 	@UiField Label arrowLblCategory,arrowLblSubject,arrowLblGrade,arrowLblstandard,arrowLblratings,arrowLblsource,arrowLblaggregator,arrowLblaccess,arrowLblauthor;
 
 	@UiField
-	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
+	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip,centuryToolTip;
 	
 	@UiField
 	Anchor clearAll;
 	
 	@UiField
-	H5Panel accessModeLbl,sourceLbl,ratingsLbl,standardLbl,gradeLbl,resourceFormatLbl,subjectLbl;
+	H5Panel accessModeLbl,sourceLbl,ratingsLbl,standardLbl,gradeLbl,resourceFormatLbl,subjectLbl,centuryLbl;
 	
 	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
@@ -216,7 +219,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	CheckBox chkRating4 = null;
 	CheckBox chkRating5 = null;
 	
-	@UiField Button browseStandards;
+	@UiField Button browseStandards,browse21Century;
 	
 	@UiField
 	Style style;
@@ -230,6 +233,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	
 	private AppMultiWordSuggestOracle aggregatorSuggestOracle;
+	
+	private AppMultiWordSuggestOracle centurySuggestOracle;
 
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 
@@ -349,11 +354,21 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
-		
+		centurySgstBox=new AppSuggestBox(centurySuggestOracle){
+
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+
+			@Override
+			public void keyAction(String text, KeyUpEvent event) {
+				
+			}
+		};
 		sourceSuggestOracle = new AppMultiWordSuggestOracle(true);
 		sourceSearchDo.setPageSize(10);		
 		
@@ -371,7 +386,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
@@ -381,7 +395,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 			
@@ -443,7 +456,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		filtersText.getElement().setAttribute("alt",i18n.GL0719());
 		filtersText.getElement().setAttribute("title",i18n.GL0719());
 		
-
+		pnl21Century.setVisible(false);
 		
 		/*resourceLinkLbl.setText(i18n.GL0174());
 		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
@@ -2342,7 +2355,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	public void addStandardFilter(String code) {		
 		standardContainerFloPanel.add(new DownToolTipWidgetUc(new FilterLabelVc(code), standardCodesMap.get(code)));
 	}
-
+	public void addCenturyFilter(Map<Long, String> centuryValues) {		
+		if(centuryValues.size()>0){
+			for (Map.Entry<Long, String> entry : centuryValues.entrySet()){
+				centuryContainerFloPanel.add(new DownToolTipWidgetUc(new FilterLabelVc(entry.getValue()),entry.getKey()+""));
+			}
+		}
+	}
 	/**
 	 * Set suggestion standards
 	 * @param standardSearchDo instance of {@link SearchDo} type of CodeDo 

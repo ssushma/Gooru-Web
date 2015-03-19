@@ -103,6 +103,8 @@ button.green {
 	border: 1px solid rgb(78, 151, 70);
 	font-family: Arial, sans-serif;
 	display:inline-block;
+	width: 81px;
+	font-size: 14px;
 	
 	/* Old browsers */ 
 	background:rgb(78, 151, 70);
@@ -902,4 +904,7 @@ button.backArrowButton:hover {
 	position: absolute;
 	margin-top: 9px;
 	right: 3%;
+}
+textarea {
+	resize:none !important;
 }

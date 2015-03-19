@@ -126,6 +126,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLECTION_ITEMS, collectionId, getLoggedInSessionToken(), pageNum, pageSize);
 		url+="&sharing=public";
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		getLogger().info("getFolders:"+url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		List<CollectionItemDo> collectionItemDo = deserializeCollectionItems(jsonRep);
 		//Collections.sort(collectionItemDo, new ArrayListSorter("itemSequence", true));
@@ -243,6 +244,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
+		getLogger().info("getProfileLibraryWorkspace:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -260,6 +262,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"","0");
+		getLogger().info("getProfilePaginationWorkspace:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -271,6 +274,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid, getLoggedInSessionToken(), skipCollectionItems + "");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		getLogger().info("getProfileLibraryCollection:"+url);
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeConcept(jsonRepresentation);
 	}

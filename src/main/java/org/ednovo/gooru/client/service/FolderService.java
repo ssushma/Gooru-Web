@@ -24,7 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
@@ -32,6 +34,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -96,7 +99,7 @@ public interface FolderService extends BaseService {
 	 * @return serialized created {@link List<CollectionDo>}
 	 * @throws GwtException
 	 */
-	public FolderListDo getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType) throws GwtException, ServerDownException;
+	public FolderListDo getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException, ServerDownException;
 	
 	/**
 	 * Create Folder - generic method for first, second and third levels.
@@ -139,10 +142,28 @@ public interface FolderService extends BaseService {
 	
 	/**
 	 * This method is used to get the sub folders and collections based on the folder id
-	 * @param folderId
-	 * @return
+	 * @param folderId {@link String}
+	 * @return FolderTocDo {@link FolderTocDo}
 	 * @throws GwtException
 	 * @throws ServerDownException
 	 */
-	public List<FolderDo> getTocFolders(String folderId) throws GwtException, ServerDownException;
+	public FolderTocDo getTocFolders(String folderId,boolean fromPPP) throws GwtException, ServerDownException;
+
+	/**
+	 * This method is used to get Folder meta data based on the folder id
+	 * @param folderId {@link String}
+	 * @return FolderDo {@link FolderDo}
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	FolderDo getFolderMetaData(String folderId) throws GwtException,ServerDownException;
+	
+	/**
+	 * This method is used to get Folder route nodes based on the folder id
+	 * @param folderId {@link String}
+	 * @return FolderDo {@link FolderDo}
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 */
+	Map<String,String> getFolderRouteNodes(String folderId) throws GwtException,ServerDownException;
 }

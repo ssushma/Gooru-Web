@@ -30,32 +30,21 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class CollectionSettingsDo implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 	String comment;
-
-	
-	public CollectionSettingsDo(){
-		
-	}
-
-
+	//added this for 1.3 toc requirement to check assessment is logged in or not
+	String isLoginRequired;
+	public CollectionSettingsDo(){}
 	public String getComment() {
 		return comment;
 	}
-
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-
-	
-	
-	
-	
+	public String getIsLoginRequired() {
+		return isLoginRequired;
+	}
+	public void setIsLoginRequired(String isLoginRequired) {
+		this.isLoginRequired = isLoginRequired;
+	}
 }

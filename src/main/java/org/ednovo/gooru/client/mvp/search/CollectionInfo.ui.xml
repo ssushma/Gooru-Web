@@ -76,6 +76,12 @@
 			Grade: <g:HTMLPanel styleName="{style.standard}">CCSS.ELA-Literacy.L.6.2</g:HTMLPanel> 
 			<g:HTMLPanel styleName="{style.standard}">CCSS.ELA-Literacy.L.6.2</g:HTMLPanel> 
 			</g:HTMLPanel> </g:HTMLPanel> -->
+		<g:HTMLPanel styleName="{style.standardDiv}" ui:field="panelCentury">
+			<g:Label styleName="{style.title}" ui:field="lblCentury" />
+			<g:Label styleName="{style.normal}" ui:field="lblCenturyText"></g:Label>
+			<g:FlowPanel ui:field="centuryInfoConatiner"
+				styleName="{style.resource-info-stand-wrapper}" />
+		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.standardDiv}" ui:field="panelStandrads">
 			<g:Label styleName="{style.title}" ui:field="lblStandrads" />
 			<g:Label styleName="{style.normal}" ui:field="lblStandardsText"></g:Label>

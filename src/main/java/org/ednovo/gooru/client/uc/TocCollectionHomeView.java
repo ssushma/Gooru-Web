@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,7 +56,7 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	@UiField Image resourceThumbnail;
 	@UiField HTMLPanel resourceTitle;
 	@UiField FlowPanel homeImageContainer,homeContainer,resourceThumbnailContainer;
-	private String thumbnailUrl;
+	private String thumbnailUrl, collectionType;
 	private static TocResourceViewUiBinder uiBinder = GWT.create(TocResourceViewUiBinder.class);
 
 	interface TocResourceViewUiBinder extends UiBinder<Widget, TocCollectionHomeView> {
@@ -75,9 +76,10 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	}
 	
 	@UiConstructor
-	public TocCollectionHomeView(String thumbnailUrl){
+	public TocCollectionHomeView(String thumbnailUrl, String collectionType){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
+		this.collectionType=collectionType;
 		resourceTitle.getElement().setInnerHTML(i18n.GL1052());
 		homeContainer.getElement().setId("fpnlHomeContainer");
 		homeImageContainer.getElement().setId("fpnlHomeImageContainer");
@@ -90,13 +92,15 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	}
 	
 	public void onLoad(){
+		StringUtil.setDefaultImages(collectionType, resourceThumbnail, "toc");
 		resourceThumbnail.setUrl(thumbnailUrl);
 		setPaddingTopForPlayerBody();
 	}
 	
 	@UiHandler("resourceThumbnail")
 	public void onErrorImageLoad(ErrorEvent event){
-		resourceThumbnail.setUrl("images/default-collection-image-160x120.png");
+		StringUtil.setDefaultImages(collectionType, resourceThumbnail, "toc");
+		//resourceThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
 	public void setResourcePlayLink(){
 		Anchor resourceAnchor=new Anchor();

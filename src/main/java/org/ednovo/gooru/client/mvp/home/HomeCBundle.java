@@ -611,6 +611,7 @@ public interface HomeCBundle extends ClientBundle{
 		String rightArrow();
 		String resourceRightsPopupContainer();
 		String collectionToolTipLabel();
+		String assessmentToolTipLabel();
 		String folderToolTipLabel();
 		String tooltipContainer();
 		String menuActive();

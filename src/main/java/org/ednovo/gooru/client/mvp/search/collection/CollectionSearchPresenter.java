@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -70,6 +71,8 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	private	AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
+
+	AddCenturyPresenter addCenturyPresenter;
 	
 	private boolean isLeftFolderClicked=false;
 	
@@ -88,11 +91,12 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
+	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter,AddCenturyPresenter addCenturyPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter);
 		this.addResourceContainerPresenter = addResourceContainerPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.analyticsInfoContainerPresenter=analyticsInfoContainerPresenter;
+		this.addCenturyPresenter=addCenturyPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshDisclosurePanelForFoldersEvent.TYPE, this);
 	}

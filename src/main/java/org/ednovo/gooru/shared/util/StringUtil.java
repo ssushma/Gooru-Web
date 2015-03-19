@@ -37,12 +37,15 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -59,6 +62,14 @@ public class StringUtil {
 	 public static final String EMPTY = "";
 	 
 	 public static boolean IPAD_MESSAGE_Close_Click = false;
+	 
+	 private static final String ASSESSMENT_URL = "assessment/url";
+		
+     private static final String ASSESSMENT = "assessment";
+     
+     private static final String DEFULT_COLLECTION = "images/default-collection-image-160x120.png";
+ 	
+ 	 private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
 
 	public static boolean hasValidString(String string) {
 		return string != null && string.length() > 0 && !string.equalsIgnoreCase("null");
@@ -89,7 +100,7 @@ public class StringUtil {
 
 	}
 	public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
+        return str == null || str.trim().length() == 0;
     }
 	public static String stringToTime(String data) {
 		if (StringUtil.hasValidString(data) && data.length() > 0 && !data.equalsIgnoreCase("0")) {
@@ -441,5 +452,101 @@ public class StringUtil {
 	 */
 	public static void SysOut(String message){
 //		System.out.println(message);
+	}
+	/**
+	 * To set the default image based on collectionType value
+	 * @param collectionType {@link String}
+	 */
+	public static void setDefaultImages(String collectionType, Image imgField, String borderSize) {
+		String borderColor="";
+		if(collectionType!=null){
+			if(collectionType.contains(ASSESSMENT)){
+				borderColor= borderSize.equals("high")?"border-left: 10px solid #feae29;":(borderSize.equals("toc")?"border-left: 5px solid #feae29;":"border-left: 8px solid #feae29;");
+				imgField.setUrl(DEFULT_ASSESSMENT);
+		    }else{
+		    	borderColor= borderSize.equals("high")?"border-left: 10px solid #1076bb;":(borderSize.equals("toc")?"border-left: 5px solid #1076bb;":"border-left: 8px solid #1076bb;");
+		    	imgField.setUrl(DEFULT_COLLECTION);
+		    }
+			imgField.getElement().setAttribute("style", borderColor);
+		}
+	}
+	
+	private static RegExp urlValidator;
+	private static RegExp urlPlusTldValidator;
+	/**
+	 * @function isValidUrl 
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param url
+	 * @parm(s) : @param topLevelDomainRequired
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 */
+	public static boolean isValidUrl(String url, boolean topLevelDomainRequired) {
+		int count = returnCount(url);
+		 if(count > 2)
+	         return false;
+		if (urlValidator == null || urlPlusTldValidator == null) {
+			urlValidator = RegExp
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+			
+			urlPlusTldValidator = RegExp
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+
+					}
+		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
+				.exec(url) != null;
+	}
+	/**
+	 * @function returnCount 
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param url
+	 * @parm(s) : @return
+	 * 
+	 * @return : Integer
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 */
+	public static Integer returnCount(String url) {
+		String string = url;
+		String substring1 = "http:";
+		String substring2 = "https:";
+		String substring3 = "ftp:";
+		String substring4 = "www";
+		Integer count = 0;
+		Integer idx = 0;
+		while ((idx = string.indexOf(substring1, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring2, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring3, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring4, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		return count;
+	}
+	public static boolean checkUrlContainesGooruUrl(String url){
+		if (url.contains("goorulearning.org")|| url.contains("support.goorulearning.org")|| url.contains("about.goorulearning.org")) {
+			return true;
+		} else {
+			return false;
+		 }
 	}
 }

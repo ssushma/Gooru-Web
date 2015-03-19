@@ -87,10 +87,10 @@
 	float: right;
 	font-size: 12px;
 	font-style: italic;
-	position: absolute;
+	position: relative;
 	/* top: 3px;
 	right: 120px; DO-3502*/
-	right: 79px;
+	right: 83px;
 }
 
 .descriptionAlertMessage {

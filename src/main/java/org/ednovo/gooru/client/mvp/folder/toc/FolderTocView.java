@@ -25,32 +25,58 @@
  
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folder.toc.util.FolderCollectionView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.client.uc.H2Panel;
+import org.ednovo.gooru.client.uc.H3Panel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.Constants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Hidden;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * @fileName : FolderTocView.java
  *
@@ -73,10 +99,35 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel floderTreeContainer; 
-	final String FOLDER="folder";
-	final String SCOLLECTION="scollection";
+	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel;
+	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
+	@UiField H3Panel lblFolderTitle;
+	@UiField Button btnBackToPrevious;
+	@UiField H2Panel bannerTitle,userTitle;
+	@UiField Image logoImage,bannerImage,profImage;
+	//@UiField Anchor mainTitle,firstTitle;
+	@UiField TextBox shareTxtBox;
 	
+	@UiField HTMLPanel bigIdeasPanel,essentialPanel,performancePanel,breadCrumbsPanel,mainContainer,pageNotFoundPanel;
+	
+	@UiField Hidden myHiddenField;
+	
+	final String FOLDER = "folder";
+	final String SCOLLECTION = "scollection";
+	private static final String USER_ID = "userId";
+	private static final String BACK2TOC = "backToToc";
+	private static final String EMPTY_FOLDER = "Folder doesn't have any folders and collections";
+	private static final String SHORTEN_URL = "shortenUrl";
+	private static final String ID = "id";
+	private static final String PARENT_ID = "parentId";
+	private static final String LIBRARY_NAME = "libName";
+	private static final String TYPE = "type";
+
+	private static final String FEATURED = "Featured";
+	
+	private Map<String, List<String>> bannerVal;
+	PlaceRequest placeRequest =null;
+		
 	private Tree folderTocTree = new Tree(new TreeMenuImages()) {
 		@Override
 		public void onBrowserEvent(Event event) {
@@ -93,16 +144,25 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public FolderTocView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
-		floderTreeContainer.clear();
-		floderTreeContainer.add(folderTocTree);
-		folderTocTree.addItem(loadingTreeItem());
-		//setData();
+		setData();
+		bannerImage.setVisible(false);
+		bannerImagePanel.setVisible(false);
+		profileBannerPanel.setVisible(false);
+		pageNotFoundPanel.setVisible(false);
+		//This will handle the window resize
+		Window.addResizeHandler(new ResizeLogicEvent());
+		setBannerStaticImages();
 	}
+
 	/**
 	 * This method is used to set folder TOC Data.
 	 */
-	@Override
 	public void setData() {
+		floderTreeContainer.clear();
+		floderTreeContainer.add(folderTocTree);
+		folderTocTree.addItem(getLoadingImage());
+		int windowHeight=Window.getClientHeight()-(177+52); 
+		whiteBgContainer.getElement().setAttribute("style", "min-height:"+windowHeight+"px");
 		folderTocTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
@@ -139,11 +199,65 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				} 
 			}
 		});
+		btnBackToPrevious.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				String lastAccessedUrl=Cookies.getCookie(BACK2TOC)!=null?Cookies.getCookie(BACK2TOC):"";
+				String[] placeToken=lastAccessedUrl.split("#");
+				Map<String, String> params = new HashMap<String, String>();
+				if(placeToken.length>1){
+						AppClientFactory.getPlaceManager().revealPlace(placeToken[0], StringUtil.splitQuery(lastAccessedUrl));
+				}else{
+					//If we are viewing TOC from library 
+					AppClientFactory.getPlaceManager().revealPlace(placeToken[0], params);
+			  }
+			}
+		});
+		shareTxtBox.addClickHandler(new OnTextBoxClick());
+		shareTxtBox.setReadOnly(true);
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBannerStaticImages()
+	 */
 	@Override
-	public void setFolderItems(List<FolderDo>  foldersArrayList) {
-		if(foldersArrayList!=null){
-			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
+	public void setBannerStaticImages() {
+		bannerVal= new HashMap<String, List<String>>();
+		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px;",i18n.GL0532(),Constants.RUSD_LOGO));
+		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png);",i18n.GL2108(),Constants.CORE_LOGO));
+		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-rusd_purple.png);",i18n.GL2053(), Constants.LPS_LOGO));
+		bannerVal.put(PlaceTokens.LUSD, Arrays.asList("background: url(../images/library/district/landing-image-lusd.png) -7px -47px;",i18n.GL2181(), Constants.LUSD_LOGO));
+		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -47px;",i18n.GL2061(), Constants.VALVERDE_LOGO));
+		bannerVal.put(PlaceTokens.SUSD, Arrays.asList("background: url(../images/library/district/landing-image-susd.png) -7px -47px;",i18n.GL2058(), Constants.SUSD_LOGO));
+		bannerVal.put(PlaceTokens.SAUSD_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-sausd.png) -7px -47px;",i18n.GL1902(), Constants.SAUSD_LOGO));
+		
+		bannerVal.put(PlaceTokens.AUTODESK, Arrays.asList("background: url("+Constants.AUTODESK_BANNER +") center; height: 245px;",i18n.GL2027(),""));
+		bannerVal.put(PlaceTokens.CCST_Cal_TAC, Arrays.asList("background: url("+Constants.CCST_BANNER +") center; height: 245px;",i18n.GL2179(),""));
+		bannerVal.put(PlaceTokens.NGC, Arrays.asList("background: url("+Constants.NGC_BANNER +") center -45px; height: 245px;",i18n.GL2030(),""));
+		bannerVal.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList("background: url("+Constants.ASPIRE_BANNER +") center; height: 245px;",i18n.GL3107(),""));
+		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center;height: 245px;",i18n.GL2174(),""));
+		bannerVal.put(PlaceTokens.FTE, Arrays.asList("background: url("+Constants.FTE_BANNER +") center;height: 245px;",i18n.GL2029(),""));
+		bannerVal.put(PlaceTokens.LESSONOPOLY, Arrays.asList("background: url("+Constants.LESSONOPOLY_BANNER +") center -37px;height: 245px;",i18n.GL2032(),""));
+		bannerVal.put(PlaceTokens.LIFEBOARD, Arrays.asList("background: url("+Constants.LIFEBOARD_BANNER +") center;height: 245px;","",""));
+		bannerVal.put(PlaceTokens.FINCAPINC, Arrays.asList("background: url("+Constants.FINCAP_BANNER +") center -47px; height: 232px;",i18n.GL2033(),""));
+		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center -48px; height: 228px;",i18n.GL2041(),""));
+		bannerVal.put(PlaceTokens.ONR, Arrays.asList("background: url("+Constants.ONR_BANNER +") center;height: 245px;",i18n.GL2028(),""));
+		bannerVal.put(PlaceTokens.PSDPAL, Arrays.asList("background: url("+Constants.PSDPAL_BANNER +") center;height: 245px;",i18n.GL2034(),""));
+		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center -48px; height: 232px;",i18n.GL2186(),""));
+		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center -48px;height: 245px;",i18n.GL2031(),""));
+		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center;height: 245px;",i18n.GL2040(),""));
+	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setFolderItems(org.ednovo.gooru.shared.model.folder.FolderTocDo)
+	 */
+	@Override
+	public void setFolderItems(FolderTocDo  foldersTocObj) {
+		folderTocTree.clear();
+		showPageNotFound(false);
+		setFolderMetaData(foldersTocObj);
+		if(foldersTocObj!=null){
+			List<FolderDo> foldersArrayList=foldersTocObj.getCollectionItems();
+			 if(foldersArrayList.size()>0){
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
 					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
@@ -151,15 +265,76 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
-						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo));
+						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
 				 }
+				 floderTreeContainer.clear();
+				 floderTreeContainer.add(folderTocTree);
+			 }else{
+				 Label emptyLbl= new Label();
+				 emptyLbl.setText(EMPTY_FOLDER);
+				 emptyLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().emptyFolderStyle());
+				 floderTreeContainer.clear();
+				 floderTreeContainer.add(emptyLbl);	
 			 }
 		}
+		
 	}
+	/**
+	 * This method will set the folder meta data on the toc page.
+	 * @param foldersTocObj
+	 */
+	void setFolderMetaData(FolderTocDo  foldersTocObj){
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getPreviousRequest();
 
+			//This is used for handling folder toc back button code
+			if(placeRequest!=null && !PlaceTokens.COLLECTION_PLAY.equalsIgnoreCase(placeRequest.getNameToken()) && !PlaceTokens.FOLDER_TOC.equalsIgnoreCase(placeRequest.getNameToken())){
+				String paramerersString="";
+				Set<String> parameters=placeRequest.getParameterNames();
+				if(parameters.size()>0){
+					for (String paramString : parameters) {
+						paramerersString=paramerersString+paramString+"="+placeRequest.getParameter(paramString, null)+"&";
+					}
+				}
+				Cookies.removeCookie(BACK2TOC);
+				if(StringUtil.isEmpty(paramerersString)){
+					//If we click the view all or list all button form the library
+					Cookies.setCookie(BACK2TOC,placeRequest.getNameToken());
+				}else{ 
+					//If we click the view all or list all button form the my collection or profile 
+					Cookies.setCookie(BACK2TOC,placeRequest.getNameToken()+"#"+paramerersString);
+				}
+			}
+			if(foldersTocObj!=null){
+				if(!StringUtil.isEmpty(foldersTocObj.getIdeas())){
+					bigIdeasPanel.setVisible(true);
+					lblBigIdeas.getElement().setInnerHTML(foldersTocObj.getIdeas());
+				}else{
+				    bigIdeasPanel.setVisible(false);
+				}
+				if(!StringUtil.isEmpty(foldersTocObj.getQuestions())){
+					essentialPanel.setVisible(true);
+					lblEssentalQuestions.getElement().setInnerHTML(foldersTocObj.getQuestions());
+				}else{
+					essentialPanel.setVisible(false);
+				}
+				if(!StringUtil.isEmpty(foldersTocObj.getPerformanceTasks())){
+					performancePanel.setVisible(true);
+					lblPerformanceTasks.getElement().setInnerHTML(foldersTocObj.getPerformanceTasks());
+				}else{
+					performancePanel.setVisible(false);
+				}
+				lblFolderTitle.setText(StringUtil.truncateText(StringUtil.removeHtml(foldersTocObj.getTitle()), 50));
+				String profId= AppClientFactory.getPlaceManager().getRequestParameter(USER_ID, null);
+				if(profId!=null){
+					getUiHandlers().getProfilePageDetails(profId);
+				}
+				setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
+			}
+			
+		}
 	/**
 	 * @function adjustTreeItemStyle 
 	 * 
@@ -275,70 +450,64 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		getUiHandlers().getFolderItems(item, parentId);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setFolderItems(com.google.gwt.user.client.ui.TreeItem, org.ednovo.gooru.shared.model.folder.FolderTocDo, java.lang.String)
+	 */
 	@Override
-	public void setFolderItems(TreeItem item, List<FolderDo> folderListDo) {
-		displayWorkspaceData(item, folderListDo);
+	public void setFolderItems(TreeItem item,FolderTocDo foldersTocObj,String parentId) {
+		displayWorkspaceData(item, foldersTocObj,parentId);
 	}
 	/**
 	 * This method is used to set folders and collections for selected tree item.
 	 * @param item
 	 * @param folderListDo
 	 */
-	private void displayWorkspaceData(TreeItem item, List<FolderDo> foldersArrayList) {
+	private void displayWorkspaceData(TreeItem item,FolderTocDo foldersTocObj,String parentId) {
 		//This will remove the loading text for the child items.
 		if(item.getChildCount() > 0){
 			item.getChild(0).remove();
 		}
 		//This will set the data to the selected tree item.
-		if (foldersArrayList != null) {
+		if(foldersTocObj!=null){
+			List<FolderDo> foldersArrayList=foldersTocObj.getCollectionItems();
 			if (foldersArrayList != null && foldersArrayList.size() > 0) {
-				FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
-						.getWidget();
-				int folderLevel = folderTreeItemWidget.getFolerLevel();
-				for (int i = 0; i < foldersArrayList.size(); i++) {
-					FolderDo floderDo = foldersArrayList.get(i);
-					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
-							String styleName = FolderContainerCBundle.INSTANCE.css().child();
-							FolderTreeItem innerFolderTreeItem = new FolderTreeItem(
-									styleName, floderDo.getTitle(),
-									floderDo.getGooruOid());
-							innerFolderTreeItem.setFolerLevel(folderLevel + 1);
-							TreeItem folderItem = new TreeItem(
-									innerFolderTreeItem);
-							item.addItem(folderItem);
-							adjustTreeItemStyle(folderItem);
-					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
-						 	String styleName = getTreeItemStyleName(folderLevel);
-						 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo));
-						 	folderItem.addStyleName(styleName);
-						 	item.addItem(folderItem);
-							adjustTreeItemStyle(folderItem);
-					 }
-				}
-				item.setState(folderTreeItemWidget.isOpen());
+					FolderTreeItem folderTreeItemWidget = (FolderTreeItem) item
+							.getWidget();
+					int folderLevel = folderTreeItemWidget.getFolerLevel();
+					for (int i = 0; i < foldersArrayList.size(); i++) {
+						FolderDo floderDo = foldersArrayList.get(i);
+						 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
+								String styleName = FolderContainerCBundle.INSTANCE.css().child();
+								FolderTreeItem innerFolderTreeItem = new FolderTreeItem(styleName, floderDo.getTitle(),floderDo.getGooruOid());
+								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
+								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
+								if(folderLevel>=2){
+									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+								}
+								item.addItem(folderItem);
+								adjustTreeItemStyle(folderItem);
+						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
+							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
+							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+							 	item.addItem(folderItem);
+								adjustTreeItemStyle(folderItem);
+						 }
+					}
+					item.setState(folderTreeItemWidget.isOpen());
+			}else{
+				Label emptyLbl= new Label();
+				emptyLbl.setText(EMPTY_FOLDER);
+				emptyLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().emptySubFolderStyle());
+				item.addItem(emptyLbl);
 			}
 		}
 	}
-	/**
-	 * This method is used to set the style for collections based on the folder level.
-	 * @param folderLevel
-	 * @return
-	 */
-	private String getTreeItemStyleName(int folderLevel) {
-		if (folderLevel == 1) {
-			return FolderContainerCBundle.INSTANCE.css().collectionChild1();
-		} else if (folderLevel == 2) {
-			return FolderContainerCBundle.INSTANCE.css().collectionChild2();
-		}
-		return ""; 
-	}
-	
 	/**
 	 * To clear the Tree panels
 	 */
 	@Override
 	public void clearTocData() {
-		folderTocTree.clear();
+		floderTreeContainer.clear();
 		currentFolderSelectedTreeItem=null;
 		previousSelectedItem=null;
 	}
@@ -351,4 +520,250 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		loadingText.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
 	}
+	/**
+	 * This method is used to display loading text to the user.
+	 * @return
+	 */
+	public TreeItem getLoadingImage() {
+		HTMLPanel loadingImg= new HTMLPanel(i18n.GL3120());
+		loadingImg.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingImageMainDiv());
+		Label loadingText = new Label("");
+		loadingText.setStyleName(FolderContainerCBundle.INSTANCE.css().loadingImageForSelfEdit());
+		loadingImg.add(loadingText);
+		return new TreeItem(loadingImg);
+	}
+	/**
+	 * This method will give the margin value based on the window width and it will set to the main div (For Responsive UI)
+	 * @return
+	 */
+	public int getTotalViewableWidth(){
+		int totalClientWidth=Window.getClientWidth();
+		int getMargin=0;
+		if(totalClientWidth>767){
+			getMargin=35;
+		}else{
+			getMargin=10;
+		}
+		return getMargin;
+	}
+	/**
+	 * This inner class is used to handle the resize logic
+	 */
+	public class ResizeLogicEvent implements ResizeHandler{
+		@Override
+		public void onResize(ResizeEvent event) {
+			int windowHeight=Window.getClientHeight()-(177+52); 
+			whiteBgContainer.getElement().setAttribute("style", "min-height:"+windowHeight+"px");
+			marginDiv.getElement().getStyle().setMarginTop(0, Unit.PX);
+			marginDiv.getElement().getStyle().setMarginBottom(0,  Unit.PX);
+			marginDiv.getElement().getStyle().setMarginLeft(getTotalViewableWidth(),  Unit.PX);
+			marginDiv.getElement().getStyle().setMarginRight(getTotalViewableWidth(),  Unit.PX);
+		}
+	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBannerImages()
+	 */
+	@Override
+	public void setBannerImages(){
+		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
+		bannerImage.setVisible(false);
+		hideProfileOrLibraryPanel(false);
+		if(!StringUtil.isEmpty(placetoken)){
+			if(placetoken.equalsIgnoreCase("rusd"))
+			{
+				bannerLogoImageContainer.getElement().getStyle().setBottom(6, Unit.EM);
+			}
+			else
+			{
+				bannerLogoImageContainer.getElement().getStyle().setBottom(17, Unit.PX);
+			}
+			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
+			bannerTitle.setText(convertHtml(bannerVal.get(placetoken).get(1)));
+			logoImage.setUrl(bannerVal.get(placetoken).get(2));
+			if(bannerVal.get(placetoken).get(2).equals("")){
+				bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
+			}else{
+				bannerTitle.getElement().getStyle().clearBackgroundColor();
+				bannerTitle.removeStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
+			}
+			setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
+			
+		}
+	}
+	/**
+	 * To convert String to HTML.
+	 * @param title {@link String}, banner title
+	 * @return converted html
+	 */
+	private String convertHtml(String title) {
+		HTML html = new HTML();
+		html.setHTML(title);
+		return html.getText();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setCourseBanner(org.ednovo.gooru.shared.model.folder.FolderDo)
+	 */
+	@Override
+	public void setCourseBanner(FolderDo folderDo) {
+		hideProfileOrLibraryPanel(false);
+		bannerImagePanel.setVisible(true);
+		bannerImage.setStyleName(FolderContainerCBundle.INSTANCE.css().displayNoneStyle());
+		bannerTitle.setText(convertHtml(folderDo.getTitle()));
+		bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
+		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
+		logoImage.setUrl(bannerVal.get(placetoken).get(2));
+		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;height: 198px;");
+		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
+		setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
+		bannerImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				setBannerImages();
+			}
+		});
+
+		
+	}
+	/**
+	 * To hide the panels based on Placetokens
+	 */
+	@Override
+	public void hidePanels() {
+		bannerImagePanel.setVisible(false);
+		profileBannerPanel.setVisible(false);
+		breadCrumbsPanel.setVisible(false);
+	}
+	/**
+	 * To set the User profile details
+	 * @param profileDo {@link ProfileDo}
+	 */
+	@Override
+	public void setProfileBannerDetails(ProfileDo profileDo) {
+		hideProfileOrLibraryPanel(true);
+		String userName=profileDo.getUser()==null?"":(profileDo.getUser().getUsernameDisplay()==null?"":profileDo.getUser().getUsernameDisplay());
+		String profileImage=profileDo.getUser()==null?"":(profileDo.getUser().getProfileImageUrl()==null?"":profileDo.getUser().getProfileImageUrl());
+		userTitle.setText(userName);
+		profImage.setUrl(profileImage);
+		profImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				profImage.setUrl("images/profilepage/user-profile-pic.png");
+			}
+		});
+		setBreadCrumbsText(userTitle.getText(),lblFolderTitle.getText());
+	}
+	/**
+	 * To set the text of folder BreadCrumbs
+	 */
+	private void setBreadCrumbsText(String mTitle,String fTitle) {
+		/*mainTitle.setText(mTitle);
+		firstTitle.setText(fTitle);*/
+	}
+	/**
+	 * To show profile page details in Toc
+	 */
+	@Override
+	public void showProfileBanner() {
+		hideProfileOrLibraryPanel(true);
+		//setProfileBannerDetails();
+	}
+	/**
+	 * To hide the bannerImage panels 
+	 * @param isVisible {@link Boolean}
+	 */
+	public void hideProfileOrLibraryPanel(boolean isVisible){
+		bannerImagePanel.setVisible(!isVisible);
+		profileBannerPanel.setVisible(isVisible);
+		breadCrumbsPanel.setVisible(true);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setBackButtonText(java.lang.String)
+	 */
+	@Override
+	public void setBackButtonText(Map<String, String> backTxtParams) {
+		String backBtnTxt="";
+		if(backTxtParams.containsKey(LIBRARY_NAME)){
+			backBtnTxt=i18n.GL3170();
+		}else if(backTxtParams.containsKey(USER_ID)){
+			backBtnTxt=i18n.GL3171();
+		}else{
+			backBtnTxt=i18n.GL3172();
+		}
+		btnBackToPrevious.setText(i18n.GL3165()+" "+backBtnTxt);
+	}
+
+	@Override
+	public Tree getTreePanel() {
+		folderTocTree.clear();
+		folderTocTree.addItem(getLoadingImage());
+		return folderTocTree;
+	}
+
+	@Override
+	public void setBitlyLink(Map<String, String> shareResult) {
+		shareTxtBox.setText(shareResult.get(SHORTEN_URL));
+	}
+	
+	/**
+	 * Selected shareLink textBox data.
+	 */
+	public class OnTextBoxClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			shareTxtBox.selectAll();
+			shareTxtBox.setFocus(true);
+		}
+	}
+	@Override
+	public void setBreadCrumbs(final String key, String value, String separator) {
+		Label routeLbl= new Label();
+		routeLbl.setStyleName(FolderContainerCBundle.INSTANCE.css().breadCrumbsStyle());
+		routeLbl.setText(" "+value+" "+separator);
+		routeLbl.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getTocFolders(key);
+				String libName=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
+				String parentId=AppClientFactory.getPlaceManager().getRequestParameter(PARENT_ID,null);
+				if(libName!=null && parentId!=null){
+					getUiHandlers().getFolderMetaData(key);
+				}
+			}
+		});
+		breadCrumbsPanel.add(routeLbl);
+	}
+
+	@Override
+	public void setBreadCrumbs(Map<String, String> result) {
+		breadCrumbsPanel.clear();
+		int size=0;
+		boolean haveBreadCrumbs=false;
+		for (Map.Entry<String, String> entry : result.entrySet())
+		{
+			if(!entry.getValue().equals(FEATURED)){
+				 setBreadCrumbs(entry.getKey(), entry.getValue(), "> ");
+			}
+		    size++;
+		    haveBreadCrumbs=true;
+		}
+		if(size==result.size() && haveBreadCrumbs){
+			Label presentTile=new Label();
+			presentTile.setStyleName(FolderContainerCBundle.INSTANCE.css().displayInlineStyle());
+			presentTile.setText(lblFolderTitle.getText());
+			breadCrumbsPanel.add(presentTile);
+		}
+
+	}
+   /**
+    * To show the Page doesn't exist
+    */
+	@Override
+	public void showPageNotFound(boolean isVisible){
+		mainContainer.setVisible(!isVisible);
+		pageNotFoundPanel.setVisible(isVisible);
+	}
+	
 }

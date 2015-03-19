@@ -59,6 +59,7 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
@@ -150,7 +151,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	/*@UiField Frame insightsFrame;*/
 	private String languageObjectiveValue;
+	
 	private CollectionDo collectionDo=null;
+	
+	private CollectionDo nextCollectionDo = null;
+	
+	FolderWhatsNextCollectionDo folderCollectionWhatsNext = null;
 	
 	public static final String STANDARD_CODE = "code";
 	
@@ -382,7 +388,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		this.collectionDo = collectionDo;
 		//showPopupAfterGmailSignin();
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
-		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz"))?i18n.GL3044():i18n.GL2083();
+		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();
 		headingText.setText(message);
 //		setCollectionGoal(collectionDo.getGoals());
 //		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
@@ -685,7 +691,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
-		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 	}
 	
 	@UiHandler("nextCollectionThumbnail")
@@ -723,6 +730,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		return resourceLink;
 	}
 	public void setCollectionImage(String thumbnailUrl){
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 		collectionThumbnail.setUrl(thumbnailUrl);
 	}
 	/**
@@ -784,6 +793,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
 					params.put("customize", "yes");
 					
+
+				}
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null){
+					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+				
+
+				}
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null){
+					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
+				
 
 				}
 		/*		params.put("view", "end");
@@ -1627,19 +1646,22 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 	}
 	
-	public void displayNextCollectionDetails(final CollectionDo collectionDo,final String subjectId,final String lessonId,final String libraryType){
-		if(collectionDo!=null){
+	public void displayNextCollectionDetails(final CollectionDo nextCollectionDo,final String subjectId,final String lessonId,final String libraryType){
+
+		if(nextCollectionDo!=null){
+			
+			this.nextCollectionDo=nextCollectionDo;
 			hideNextCollectionContainer(true);
-			whatNextCollectionTitle.setText(collectionDo.getTitle().toString().length()>10?collectionDo.getTitle().substring(0,10)+"...":collectionDo.getTitle());
-			whatNextCollectionTitle.setTitle(collectionDo.getTitle());
-			nextCollectionThumbnail.setUrl(collectionDo.getThumbnails().getUrl());
-			if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
+			whatNextCollectionTitle.setText(nextCollectionDo.getTitle().toString().length()>10?nextCollectionDo.getTitle().substring(0,10)+"...":nextCollectionDo.getTitle());
+			whatNextCollectionTitle.setTitle(nextCollectionDo.getTitle());
+			nextCollectionThumbnail.setUrl(nextCollectionDo.getThumbnails().getUrl());
+			if(nextCollectionDo!=null&&nextCollectionDo.getCollectionItems()!=null){
 				hideNextCollectionContainer(false);
 				int questionCount=0;
 				int resourceCount=0;
-				for(int i=0;i<collectionDo.getCollectionItems().size();i++){
-					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
-						if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+				for(int i=0;i<nextCollectionDo.getCollectionItems().size();i++){
+					if(nextCollectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
+						if(nextCollectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
 							questionCount++;
 						}else{
 							resourceCount++;
@@ -1656,7 +1678,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					@Override
 					public void onClick(ClickEvent event) {
 						Map<String,String> params = new LinkedHashMap<String,String>();
-						params.put("id", collectionDo.getGooruOid());
+						params.put("id", nextCollectionDo.getGooruOid());
 						if(subjectId!=null){
 							params.put("subject", subjectId);
 						}
@@ -1672,6 +1694,46 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			}
 		}else{
 			hideNextCollectionContainer(true);
+		}
+		
+
+	}
+	
+	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext)
+	{
+		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+		
+		if(folderCollectionWhatsNext.getTitle()!=null)
+		{
+			hideNextCollectionContainer(false);	
+			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>10?folderCollectionWhatsNext.getTitle().substring(0,10)+"...":folderCollectionWhatsNext.getTitle());
+			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
+			nextCollectionThumbnail.setUrl(folderCollectionWhatsNext.getThumbnails().getUrl());	
+			int resourcesCounter = folderCollectionWhatsNext.getResourceCount();
+			int questionsCounter = folderCollectionWhatsNext.getQuestionCount();
+			if(resourcesCounter>0){
+				this.resourceCount.setText(resourcesCounter==1?resourcesCounter+" Resource":resourcesCounter+" Resources");
+			}
+			if(questionsCounter>0){
+				this.questionCount.setText(questionsCounter==1?questionsCounter+" Question":questionsCounter+" Questions");
+			}
+			nextCollectionThumbnail.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					Map<String,String> params = new LinkedHashMap<String,String>();
+					params.put("id", folderCollectionWhatsNext.getGooruOid());
+					if(folderCollectionWhatsNext.getCollectionItemId()!=null)
+					{
+					params.put("folderId", folderId);
+					params.put("folderItemId", folderCollectionWhatsNext.getCollectionItemId());
+					}
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+				}
+			});
+		}
+		else
+		{
+		hideNextCollectionContainer(true);	
 		}
 	}
 	

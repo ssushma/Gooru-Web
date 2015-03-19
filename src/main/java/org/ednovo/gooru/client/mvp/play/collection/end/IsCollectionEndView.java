@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
@@ -112,4 +113,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void resetData();
 	
 	public void showMessageWhenDataNotFound();
+
+	public void displayWhatsNextContent(FolderWhatsNextCollectionDo result);
 }

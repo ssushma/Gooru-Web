@@ -83,6 +83,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -245,6 +246,8 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
 	
+	AsyncProvider<AddCenturyPresenter> getAddCenturyPresenter();
+	
 	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
@@ -276,5 +279,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
 	
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
+	
+	AddCenturyPresenter getAddCenturyPresenterWidget();
 
 }

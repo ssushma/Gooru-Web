@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.library.partner;
 
 
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,15 +40,12 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.player.collection.client.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.util.Constants;
-import org.ednovo.gooru.shared.util.StringUtil;
-
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -79,6 +75,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	private static final String LIBRARY_PAGE = "partner-page";
 	
 	private CourseDo courseDo;
+	
+	private String placeToken;
 
 	private static PartnerLibraryViewUiBinder uiBinder = GWT.create(PartnerLibraryViewUiBinder.class);
 
@@ -95,6 +93,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView = new LibraryView(PlaceTokens.DISCOVER);
 		partnerPanel.add(libraryView);
 		partnerPanel.getElement().setId("pnlPartnerPanel");
+		setPlaceToken(AppClientFactory.getCurrentPlaceToken());
 	}
 
 	@Override
@@ -126,6 +125,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					loadingPanel(true);
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
+					libraryView.getFolderTopicTitleLbl().setText(folderList.get(i).getTitle());
+					libraryView.getListAllBtn().addClickHandler(new ListAllBtnClickHandler(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getFolderItems(), unitListId,folderList.get(i).getParentGooruOid());
 					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
 				}
@@ -149,6 +150,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					}
 					widget.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = libraryUnitMenuView.getUnitId();
+					libraryView.getFolderTopicTitleLbl().setText(libraryUnitMenuView.getTitle());
+					libraryView.getListAllBtn().addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getUnitId()));
 					if(finalWidgetCount==0) {
 						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId,libraryUnitMenuView.getLibraryGooruOid());
 					} else {
@@ -223,6 +226,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
 		libraryView.getCourseTabs().setVisible(false);
 		libraryView.getLoadingIconPanel().setVisible(isVisible);
+		libraryView.getFolderListPanel().setVisible(!isVisible);
 	}
 	
 	@Override
@@ -528,6 +532,22 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
+	
+
+	/**
+	 * @return the placeToken
+	 */
+	public String getPlaceToken() {
+		return placeToken;
+	}
+
+	/**
+	 * @param placeToken the placeToken to set
+	 */
+	public void setPlaceToken(String placeToken) {
+		this.placeToken = placeToken;
+	}
+
 
 	private static class GeoEduBanner implements LoadBannerActionInterface{
 
@@ -758,5 +778,23 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		courseDo.setThumbnails(thumbnailDo);
 		courseDo.setCreator(libraryUserDo);
 		return courseDo;
+	}
+	
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
+	 */
+	public class ListAllBtnClickHandler implements ClickHandler{
+		String folderId="";
+		public ListAllBtnClickHandler(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			params.put("libName", getPlaceToken());
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
 	}
 }

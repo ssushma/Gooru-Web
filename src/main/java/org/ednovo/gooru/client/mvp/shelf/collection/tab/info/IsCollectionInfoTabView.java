@@ -25,11 +25,13 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.user.client.ui.Button;
@@ -85,5 +87,21 @@ public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionIn
 /*	void displayErrorMsgTeacherTip();
 
 	void setExistingTeacherTip(CollectionDo collectionDo);*/
+	/**
+	 * This method is used add 21 century skills add button
+	 * @param addBtn
+	 */
+	void OnCenturyClickEvent(Button addBtn);
+	/**
+	 * This method is used to display selected 21 skills values in the FE and for updating
+	 * @param selectedValues
+	 */
+	void setUpdatedCentury(Map<Long, String> selectedValues);
+	/**
+	 * This method is used to set century auto suggest data.
+	 * @param centurySearchDo
+	 */
+	void setCenturySuggestions(SearchDo<StandardFo> centurySearchDo);
 	
+	Map<Long, String> getSelectedCenturyValuesThroughAutosuggest();
 }

@@ -84,7 +84,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		this.folderParentName = folderParentName;
 		getView().setPageDetails(pageNumber+1, parentId, folderParentName);
 		if(parentId==null) {
-			getResourceService().getFolderWorkspace((pageNumber-1)*20, 20,null,null,getUserCollectionAsyncCallback(true));
+			getResourceService().getFolderWorkspace((pageNumber-1)*20, 20,null,null,false,getUserCollectionAsyncCallback(true));
 		} else {
 			getChildFolderItems(parentId, pageNumber);
 		}
@@ -110,7 +110,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 	}
 
 	public void getChildFolderItems(final String folderId, final int pageNumber) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders((pageNumber-1)*20, 20,folderId,null, null,new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders((pageNumber-1)*20, 20,folderId,null, null,false,new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
 				getView().setFolderData(result.getSearchResult(), folderParentName, folderId,result.getCount());
@@ -167,5 +167,16 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		});
 		
 //		getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
+	}
+
+
+	@Override
+	public void deletAssessment(String assessmentId,final FolderDo folderDo) {
+		AppClientFactory.getInjector().getResourceService().deleteCollection(assessmentId, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				getView().resetCollectionsAfterDeletingAssessment(folderDo);
+			}
+		});
 	}
 }

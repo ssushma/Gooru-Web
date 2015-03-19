@@ -101,12 +101,17 @@ button.primary:hover {
 }
 
 .pageHeader {
-	margin: 0 0 10px 0;
-	color: #0066cc;
+	margin: 0 0 8px 0;
+	color:#515151;
+	font-size:20pt;
+	background: url(../images/folders/panel/folder-icon.png) no-repeat 1px 0px;
+	padding-left: 41px;
+	float: left;
+	width: 74%;
 }
 
 .marginDiv {
-	margin: 0 100px;
+	margin: 0 35px;
 }
 
 .perTaskContainer {
@@ -114,10 +119,11 @@ button.primary:hover {
 }
 
 .marginDiv h4 {
-	color: #0066cc;
+	color: #1076bb;
 	font-weight: bold;
-	line-height: 25px;
-	/* margin: 30px 0 10px 0; */
+	font-size:16px;
+	line-height: 5px;
+	display: inline-block;
 }
 
 .categoryFilterContainer .filterCheckBox label {
@@ -165,6 +171,29 @@ button.primary:hover {
 		0 transparent;
 	padding: 3px 31px;
 	list-style: none;
+}
+
+/*Share css */
+
+.tocShareContainer{
+	clear: both;
+	border-bottom: 2px solid #e1dfda;
+	margin-bottom: 10px;
+	padding-bottom: 2px;
+}
+.tocShareBtn{
+	clear: both;
+	display: inline-block;
+	background-color: #e1dfda;
+	padding: 9px;
+}
+.tocShareTxb{
+	clear: both;
+	display: inline-block;
+	border: 4px solid #e1dfda !important;
+	padding: 5px 4px;
+	margin-left: -4px;
+	width:140px;
 }
 
 @media ( min-width : 240px) and (max-width: 319px) {
@@ -278,4 +307,18 @@ button.primary:hover {
 	.searchboxFolder .formControl {
 		width: 85%;
 	}
+}
+.lblFolderMetadata{
+	font-size: 12px;
+	color: #515151;
+	line-height: 1.42857143;
+	font-family: Arial, Helvetica, sans-serif !important;
+	white-space: pre-line;
+}
+.lblFolderTitles{
+	font-weight: bold;
+}
+.btnBackToPrevious{
+	float:right;
+	margin-bottom: 15px;
 }

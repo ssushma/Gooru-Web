@@ -25,9 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.collection.end;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHandler;
-import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
 public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler {

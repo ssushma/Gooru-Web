@@ -70,6 +70,8 @@ public interface CollectionCBundle extends ClientBundle{
 		
 		String collectionThumbnails();
 		
+		String assessmentThumbnails();
+		
 		String collectionNotify();
 		
 		String changeImage();
@@ -347,6 +349,13 @@ public interface CollectionCBundle extends ClientBundle{
 		String browseContainer();
 		String charLimit();
 		String learningObjErrStyle();
+		String centuryContainer();
+		String rightCourseContainer();
+		String languageTextAreaCont();
+		String scrollPanelContainerAudience();
+		String dropdownContainerAudience();
+		String deselecteAssessment();
+		String selecteAssessment();
 	}
 	@Source("Collection.css")
 	CollectionCss css();

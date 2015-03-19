@@ -725,3 +725,6 @@
 .google-visualization-table-loadtest {
 	padding-left: 6px
 }
+.google-visualization-table{
+    width:auto !important;
+}

@@ -70,7 +70,7 @@
 .collection-home-type{
 	width: 5px;
 	height: 60px;
-	background: #1076BB;
+	/* background: #1076BB; */
 	position: absolute;
 	z-index:1;
 }

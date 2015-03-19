@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
@@ -120,6 +121,8 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	SignUpPresenter signUpViewPresenter = null;
 
 	AddStandardsPresenter addStandardsPresenter = null;
+	
+	AddCenturyPresenter addCenturyPresenter=null;
 
 	private boolean setFilter = true;
 
@@ -141,10 +144,11 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	 */
 	public AbstractSearchPresenter(V view, P proxy,
 			SignUpPresenter signUpViewPresenter,
-			AddStandardsPresenter addStandardsPresenterObj) {
+			AddStandardsPresenter addStandardsPresenterObj,AddCenturyPresenter addCenturyPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.addStandardsPresenter = addStandardsPresenterObj;
+		this.addCenturyPresenter=addCenturyPresenter;
 		addRegisteredHandler(SearchPaginationEvent.TYPE, this);
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
@@ -731,12 +735,17 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			getView().setShelfCollections(shelfCollections);
 		}
 	}
-
+	@Override
+    public void getAddCentury(){
+		System.out.println("in1");
+		addToPopupSlot(addCenturyPresenter);
+		getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
+    }
 	@Override
 	public void getAddStandards() {
 		
 		if(!AppClientFactory.isAnonymous()){
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
 				new SimpleAsyncCallback<ProfileDo>() {
 					@Override
@@ -795,12 +804,19 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	public void setUpdatedStandards() {
 		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal());
 	}
+	@Override
+	public void setUpdatedCentury(){
+		getView().setUpdatedCentury(addCenturyPresenter.getSelectedValues());
+	}
 
 	@Override
 	public void closeStandardsPopup() {
 		addStandardsPresenter.hidePopup();
 	}
-
+	@Override
+	public void closeCenturyPoup() {
+		addCenturyPresenter.hidePopup();
+	}
 	/**
 	 * @return the standardSuggestionInfoAsyncCallback
 	 */

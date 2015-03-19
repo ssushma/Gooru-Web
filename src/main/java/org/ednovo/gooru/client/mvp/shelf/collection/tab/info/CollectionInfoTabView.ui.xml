@@ -38,7 +38,7 @@
 					<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}"
 						ui:field="higherEducation" />
 				</g:FlowPanel>
-				<g:FlowPanel styleName="{res.css.gradeInfoContainer}">
+				<g:FlowPanel styleName="{res.css.gradeInfoContainer} {res.css.rightCourseContainer}">
 					<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
 						<g:Label ui:field="courseLabel" styleName="{res.css.shelfGradeInfoTitle}" />
 					</g:FlowPanel>
@@ -60,9 +60,12 @@
 					<g:Button styleName="primary {res.css.shelfTeacherTipButtons}" text="Save" 
 					ui:field="addTeacherTip" /> <g:Button styleName="secondary {res.css.shelfTeacherTipButtonsCancel}" 
 					text="Cancel" ui:field="cancelTeacherTip" /> </g:HTMLPanel> -->
+			<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.centuryContainer}">			
 				<g:FlowPanel ui:field="standardContainer">
-					<g:Label styleName="{res.css.shelfVocabularyStandard}"
-						ui:field="standardLabel" />
+					<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
+						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
+							ui:field="standardLabel" />
+					</g:FlowPanel>	
 
 					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
 						ui:field="standardsDefaultText"></g:Label>
@@ -71,7 +74,7 @@
 							<g:FlowPanel styleName="{res.css.standardsCont}">
 							<g:Button ui:field="browseBtn" styleName="secondary">Browse</g:Button>
 								<uc:AppSuggestBox ui:field="standardSgstBox"
-									width="224px" height="31px" />
+									width="176px" height="31px" />
 								<g:Button styleName="{res.css.infoAddButton}" ui:field="addStandardBtn" />
 								<g:Label styleName="{res.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"
@@ -80,6 +83,31 @@
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
+				</g:FlowPanel>
+				
+				<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.centuryContainer} {res.css.rightCourseContainer}">
+					<g:FlowPanel ui:field="centContainer">
+				<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
+						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
+							ui:field="centLabel" />
+					</g:FlowPanel>	
+
+					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
+						ui:field="centDefaultText"></g:Label>
+					<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
+						<g:FlowPanel styleName="{res.css.shelfNameCourse}">
+							<g:FlowPanel styleName="{res.css.standardsCont}">
+							<g:Button ui:field="centbrowseBtn" styleName="secondary">Browse</g:Button>
+									<uc:AppSuggestBox ui:field="centurySgstBox"	width="176px" height="31px" />
+									<g:Label styleName="{res.css.standardMaxHide}" ui:field="centMaxMsg" />
+									<g:FlowPanel ui:field="centPanel" styleName="{res.css.collectionStandardsMargin}" />
+							</g:FlowPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+				</g:FlowPanel>
+				</g:FlowPanel>
+				
+				
 				<!-- <g:HTMLPanel styleName="{res.css.shelfInfoMobileSupportedMain}"> 
 					<g:Label styleName="{res.css.shelfInfoMobileSupported}" text="MOBILE OPTIMIZED 
 					SETTING" /> <g:HTMLPanel styleName="{res.css.mobileSupportImagePanel}" /> 
@@ -113,7 +141,7 @@
 						ui:field="languageObjectiveTitle" />
 					<g:Label styleName="{res.css.charLimit}"
 						ui:field="lblCharLimit" />
-					<g:FlowPanel styleName="{res.css.languageObjectiveInfoContainer}">
+					<g:FlowPanel styleName="{res.css.languageObjectiveInfoContainer} {res.css.languageTextAreaCont}">
 						<g:TextArea ui:field="textAreaVal"
 							styleName="{res.css.languageObjectiveTextArea}"></g:TextArea>
 							<g:Label ui:field="languageObjectiveerrLabel" styleName="{res.css.errorLabelColor}"></g:Label>
@@ -221,7 +249,7 @@
 					<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}" />
 				</g:FlowPanel>
 
-				<g:FlowPanel styleName="{res.css.secondaryInfoContainer}">
+				<g:FlowPanel styleName="{res.css.secondaryInfoContainer} {res.css.rightCourseContainer}">
 					<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
 						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
 							ui:field="audienceLabel" />
@@ -229,11 +257,11 @@
 					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
 						ui:field="audienceTitle" />
 					<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}">
-						<g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}">
+						<g:HTMLPanel styleName="{res.css.dropdownContainerAudience}">
 							<g:Label ui:field="lblAudiencePlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
 							<g:Label ui:field="lblAudienceArrow" styleName="{res.css.arrowInstructional}"></g:Label>
 							<g:ScrollPanel ui:field="spanelAudiencePanel"
-								styleName="{res.css.scrollPanelContainerInstructional}">
+								styleName="{res.css.scrollPanelContainerAudience}">
 								<g:HTMLPanel ui:field="htmlAudienceListContainer"
 									styleName=""></g:HTMLPanel>
 							</g:ScrollPanel>

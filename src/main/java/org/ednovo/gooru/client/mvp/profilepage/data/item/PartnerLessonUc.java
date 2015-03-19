@@ -53,6 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PartnerLessonUc extends Composite{
 
+	private static final String ASSESSMENT = "assessment";
 	@UiField HTMLPanel lessonList;
 	@UiField ProfilePageLibraryStyleBundle style;
 	private Integer topicId;
@@ -64,10 +65,10 @@ public class PartnerLessonUc extends Composite{
 	HTMLPanel conceptList = new HTMLPanel("");
 	HTML lessonTitle = new HTML();
 	
-	private static LibraryLessonUcUiBinder uiBinder = GWT
-			.create(LibraryLessonUcUiBinder.class);
+	private static PartnerLessonUcUiBinder uiBinder = GWT
+			.create(PartnerLessonUcUiBinder.class);
 
-	interface LibraryLessonUcUiBinder extends UiBinder<Widget, PartnerLessonUc> {
+	interface PartnerLessonUcUiBinder extends UiBinder<Widget, PartnerLessonUc> {
 	}
 
 	public PartnerLessonUc(ArrayList<ProfileLibraryDo> profileLibraryDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated,String libraryGooruOid) {
@@ -144,7 +145,12 @@ public class PartnerLessonUc extends Composite{
 			Label conceptTitleLbl = new Label(conceptTitle);
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 				conceptTitleLbl.addStyleName(style.conceptTitle());
-				conceptTitleLbl.addStyleName(style.collectionSmall());
+				if(profileLibraryTemp.getCollectionType().contains(ASSESSMENT)){
+					conceptTitleLbl.addStyleName(style.assessmentSmall());
+				}else{
+					conceptTitleLbl.addStyleName(style.collectionSmall());
+				}
+				
 			} else {
 				conceptTitleLbl.addStyleName(style.libraryConceptTitle());
 			}
@@ -186,8 +192,13 @@ public class PartnerLessonUc extends Composite{
 			lessonId = lessonNumber;
 			conceptId = profileLibraryDo.getGooruOid();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
+				if(profileLibraryDo.getCollectionType().contains(ASSESSMENT)){
+					lessonTitle.addStyleName(style.assessment());
+				}else{
+					lessonTitle.addStyleName(style.collection());
+				}
 				lessonTitle.addStyleName(style.lessonTitle());
-				lessonTitle.addStyleName(style.collection());
+				
 			} else {
 				//lessonTitle.addStyleName(style.libraryTitle());
 				lessonTitle.addStyleName(style.libraryConceptTitle());

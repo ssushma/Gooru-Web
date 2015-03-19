@@ -24,12 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.folder.toc;
 
-import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 
+import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 /**
  * @fileName : IsFolderTocView.java
@@ -45,10 +47,78 @@ import com.google.gwt.user.client.ui.TreeItem;
  * @Reviewer: 
  */
 public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>{
-
-	void setFolderItems(List<FolderDo>  foldersArrayList);
-	public void setFolderItems(TreeItem item, List<FolderDo> folderListDo);
-	void setData();
+	/**
+	 * This method is used to set folder data in the TOC page
+	 * @param foldersArrayList
+	 */
+	void setFolderItems(FolderTocDo  foldersArrayList);
+	/**
+	 * This method is used to set folder data for child folders
+	 * @param item
+	 * @param folderListDo
+	 * @param parentId
+	 */
+	public void setFolderItems(TreeItem item,FolderTocDo folderListDo,String parentId);
+	/**
+	 * This method is used to clear TOC data.
+	 */
 	void clearTocData();
-	
+	/**
+	 * This method is used to set banner image
+	 */
+	void setBannerImages();
+	/**
+	 * To set the bannner images, titles and logo based on the library name.
+	 */
+	void setBannerStaticImages();
+	/**
+	 * This method is used to set banner image based on selected course
+	 * @param folderDo
+	 */
+	void setCourseBanner(FolderDo folderDo);
+	/**
+	 * This method is used to hide panels
+	 */
+	void hidePanels();
+	/**
+	 * To show profile page banner
+	 */
+	void showProfileBanner();
+	/**
+	 * This method is used to set back button text based on the previous click
+	 * @param params {@link Map}
+	 */
+	void setBackButtonText(Map<String, String> params);
+	/**
+	 * This is used to get tree panel
+	 * @return
+	 */
+	Tree getTreePanel();
+	/**
+	 * This method used to set the user profile details.
+	 * @param profileDo {@link ProfileDo}
+	 */
+	void setProfileBannerDetails(ProfileDo profileDo);
+	/**
+	 * To set the share link (bitly url)
+	 * @param shareResult {@link Map}
+	 */
+	void setBitlyLink(Map<String, String> shareResult);
+	/**
+	 * To set the folder route nodes
+	 * @param key {@link String}
+	 * @param value {@link String}
+	 * @param separator {@link String}
+	 */
+	void setBreadCrumbs(String key, String value,String separator);
+	/**
+	 * To set the folder route nodes
+	 * @param routeNodes {@link Map}
+	 */
+	void setBreadCrumbs(Map<String, String> routeNodes);
+	/**
+	 * To show the Page doesn't exist
+	 * @param isVisible {@link Boolean}
+	 */
+	void showPageNotFound(boolean isVisible);
 }

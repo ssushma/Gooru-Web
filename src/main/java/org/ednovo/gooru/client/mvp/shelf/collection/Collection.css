@@ -113,6 +113,11 @@
 	border-left:10px solid #1076BB;
 }
 
+.assessmentThumbnails {
+	width: 160px;
+	height: 120px;
+	border-left:10px solid #feae29;
+}
 .collectionNotify {
 	background: none repeat scroll 0 0 #1076BB;
 	height: 121px;
@@ -172,10 +177,9 @@
 }
 
 .gradeInfoContainer {
-	float: left;
-	margin-right: 45px;
-	margin-bottom: 50px;
-	width: 42%;
+	display:inline-block;
+	margin-right: 10px;
+	width: 47%;
 }
 
 .gradeInfoTitleContainer {
@@ -185,7 +189,7 @@
 .shelfGradeInfoBottom {
 	color: rgb(112, 109, 109);
 	margin: 10px 0px 10px 0px;
-	width: 100%;
+	width: 104%;
 }
 .addQuestionStandard {
 	color: rgb(112, 109, 109);
@@ -248,7 +252,7 @@
 	float: left;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	width: 300px;
+	width: 280px;
 	opacity: 0.6;
 }
 
@@ -1152,10 +1156,10 @@ float: left;
 	margin-top:20px;
 }
 .primaryLabelContainer{
-	width: 24%;
+	width: 26%;
 }
 .secondaryLabelContainer{
-	width: 28%;
+	width: 30%;
 }
 .primaryToggleArrowBottom {
 	background: url("images/toggle_arrow_down.png") no-repeat transparent;
@@ -1191,9 +1195,9 @@ transition: .5s;
 }
 .secondaryInfoContainer {
 	float: left;
-	margin-right: 45px;
+	margin-right: 10px;
 	margin-bottom: 50px;
-	width: 42%;
+	width: 47%;
 	margin-top:-8px;
 }
 .languageObjectiveContainer{
@@ -1221,7 +1225,7 @@ height: 73px;
 	float: left;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	width: 98%;
+	width: 96%;
 	opacity: 0.6;
 }
 .questionDepthOfKnoweldgeContainer{
@@ -1322,14 +1326,14 @@ height: 73px;
 
 
 .learningInnovationSkills{
-	width: 50%;
+	width: 100%;
 }
 
 .deptOfKnowledge{
-	width: 35%;
+	width: 100%;
 }
 .languageObjectives{
-	width: 35%;
+	width: 100%;
 }
 .teacherTipLabel {
 	color: black;
@@ -1387,4 +1391,63 @@ position: relative;
 }
 .checkBoxlevels label{
 	font-weight: normal;
+}
+.centuryContainer{
+margin-top: 15px;
+margin-bottom: 0px;
+}
+.rightCourseContainer{
+	margin-right: 0px;
+width: 49.5%;
+}
+.languageTextAreaCont{
+width: 100%;
+}
+.scrollPanelContainerAudience{
+	background-color:rgb(255,255,255);
+	width:292px;
+	height:80px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 7px;
+	left: -1px;
+	z-index: 9;
+	overflow-x:hidden !important;
+}
+.dropdownContainerAudience{
+	background-color:rgb(255,255,255);
+	width:291px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+}
+.selecteAssessment{
+	background: #87badd !important;
+	display: block;
+	border: 1px solid #4c98cc !important;
+	color: #ffffff !important;
+	width: 100%;
+	font-size: 12px;
+}
+.deselecteAssessment{
+	background:#F4F3F2 !important;
+	display: block;
+	border: 1px solid #E1DFDA !important;
+	color: #007BCF !important;
+	width: 100%;
+	font-size: 12px;
 }

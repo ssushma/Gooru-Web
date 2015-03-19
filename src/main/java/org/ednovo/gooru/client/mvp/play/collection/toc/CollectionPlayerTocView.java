@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.uc.TocResourceView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -104,6 +105,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
 		if(collectionDo!=null){
 			int resourcesSize=collectionDo.getCollectionItems()!=null?collectionDo.getCollectionItems().size():0;
+			String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
 			if(navgationTocContainer.getWidgetCount()==0){
 				int resourceCount=0;
 				int questionCount=0;
@@ -114,11 +116,15 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				TocCollectionHomeView tocCollectionHomeView=null;
 			if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
 			{
-				tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl(),collectionType);
 			}
 			else
 			{
-				tocCollectionHomeView=new TocCollectionHomeView("images/default-collection-image-160x120.png");
+				if(collectionDo.getCollectionType().equals("assessment")){
+					tocCollectionHomeView=new TocCollectionHomeView("images/default-assessment-image -160x120.png",collectionType);
+				}else{
+					tocCollectionHomeView=new TocCollectionHomeView("images/default-collection-image-160x120.png",collectionType);
+				}
 			}
 				
 				if(!isCollectionHome){
@@ -146,11 +152,15 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				TocCollectionEndView tocCollectionEndView=null;
 				if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
 				{
-					tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl());
+					tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl(), collectionType);
 				}
 				else
 				{
-					tocCollectionEndView=new TocCollectionEndView("images/default-collection-image-160x120.png");
+					if(collectionDo.getCollectionType().equals("assessment")){
+						tocCollectionEndView=new TocCollectionEndView("images/default-assessment-image -160x120.png",collectionType);
+					}else{
+						tocCollectionEndView=new TocCollectionEndView("images/default-collection-image-160x120.png",collectionType);
+					}
 				}
 				tocCollectionEndView.addClickHandler(new EndRequest());
 				if(!isCollectionHome){
@@ -179,7 +189,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 				String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
 				String finalMessage = "";
-				String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz"))?i18n.GL3042():i18n.GL0578();
+				String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3042():i18n.GL0578();
 				if (resourceCount >0 && questionCount > 0){
 					finalMessage = resourceString + " " + i18n.GL_GRR_AND() + " " + questionString + " " + message + i18n.GL_SPL_SEMICOLON()+" ";
 				}else if (resourceCount >0){

@@ -37,6 +37,10 @@ import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -69,13 +73,17 @@ public class FolderCollectionResourceView extends Composite {
 	FolderDo folderDo;
 
 	FolderTocCBundle res;
+	
+	String parentId=null;
 
 	LiPanel liPanel;
+	ResourceTooltip resourceTooltip=new ResourceTooltip();
 
-	public FolderCollectionResourceView(FolderDo folderDo) {
+	public FolderCollectionResourceView(FolderDo folderDo,String parentId) {
 		this.res = FolderTocCBundle.INSTANCE;
 		res.css().ensureInjected();
 		this.folderDo = folderDo;
+		this.parentId=parentId;
 		initWidget(uiBinder.createAndBindUi(this));
 		if (folderDo != null) {
 			setListData();
@@ -95,21 +103,40 @@ public class FolderCollectionResourceView extends Composite {
 				sequenceNumber.setStyleName(res.css().sequenceNumner());
 				liPanel.add(sequenceNumber);
 				// To set the resource title and resource format image
-				String resTitle = folderDo.getCollectionItems().get(i)
-						.getTitle();
-				resTitle = resTitle.length() > 50 ? resTitle.substring(0, 50)
-						+ "..." : resTitle;
-				Label text = new Label(removeHtmlTags(resTitle));
+				String resTitle = stripHtmlRegex(folderDo.getCollectionItems().get(i).getTitle());
+				resTitle = resTitle.length() > 100 ? resTitle.substring(0, 100)+ "..." : resTitle;
+				final Label text = new Label(resTitle);
+				text.setStyleName(res.css().resourceTitle());
 				liPanel.add(text);
-				if (folderDo.getCollectionItems().get(i).getResourceFormat() != null
-						&& folderDo.getCollectionItems().get(i)
-						.getResourceFormat().getValue() != null) {
-					resourceType = folderDo.getCollectionItems().get(i)
-							.getResourceFormat().getValue();
+				if (folderDo.getCollectionItems().get(i).getResourceFormat() != null && folderDo.getCollectionItems().get(i).getResourceFormat().getValue() != null) {
+					resourceType = folderDo.getCollectionItems().get(i).getResourceFormat().getValue();
+					liPanel.addStyleName(ResourceCategoryClass.getInstance().getCategoryStyle(resourceType));
 				}
-				liPanel.addStyleName(ResourceCategoryClass.getInstance().getCategoryStyle(resourceType));
 				liPanel.addClickHandler(new clickOnResource(folderDo.getCollectionItems().get(i)));
 				ulCollectionResources.add(liPanel);
+				final String description=stripHtmlRegex(folderDo.getCollectionItems().get(i).getDescription()!=null?folderDo.getCollectionItems().get(i).getDescription():"");
+				//Mouse over handler on resource title
+				MouseOverHandler mouseOverHandler=new MouseOverHandler() {
+					@Override
+					public void onMouseOver(MouseOverEvent event) {
+						if(!description.trim().isEmpty()){
+							resourceTooltip.setResourceDesc(description);
+							resourceTooltip.show();
+							resourceTooltip.setPopupPosition(text.getElement().getAbsoluteLeft(),text.getElement().getAbsoluteTop()+20);
+						}
+					}
+				};
+				text.addDomHandler(mouseOverHandler, MouseOverEvent.getType());
+				//Mouse out handler on resource title
+				MouseOutHandler mouseOutHandler=new MouseOutHandler() {
+					@Override
+					public void onMouseOut(MouseOutEvent event) {
+						if(resourceTooltip!=null){
+							resourceTooltip.hide();
+						}
+					}
+				};
+				text.addDomHandler(mouseOutHandler, MouseOutEvent.getType());
 			}
 		}
 	}
@@ -135,29 +162,22 @@ public class FolderCollectionResourceView extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			String collectionId = folderDo.getGooruOid();
-			/*
-			 * if(folderItemDo.getNarration()!=null&&!collectionItemDo.getNarration
-			 * ().trim().equals("")){
-			 * resourceLink="#"+PlaceTokens.COLLECTION_PLAY
-			 * +"&id="+collectionId+"&rid="
-			 * +collectionItemDo.getCollectionItemId()+"&tab=narration"; }else{
-			 * resourceLink
-			 * ="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="
-			 * +collectionItemDo.getCollectionItemId(); }
-			 */
+			String selectedfolderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
+			if(parentId==null){
+				parentId = selectedfolderId;
+			}
 			resourceLink = "#" + PlaceTokens.COLLECTION_PLAY + "&id="
 					+ collectionId + "&rid="
-					+ folderItemDo.getCollectionItemId();
-			System.out.println("resourceLink::" + resourceLink);
+					+ folderItemDo.getCollectionItemId()+"&folderId"+parentId+"&folderItemId"+folderDo.getCollectionItemId();
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", collectionId);
 			params.put("rid", folderItemDo.getCollectionItemId());
+			params.put("folderId", parentId);
+			params.put("folderItemId", folderDo.getCollectionItemId());
 
-			AppClientFactory.getPlaceManager().revealPlace(
-					PlaceTokens.COLLECTION_PLAY, params);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 
 		}
-
 	}
 
 	/**
@@ -167,12 +187,8 @@ public class FolderCollectionResourceView extends Composite {
 	 * @return text without tags
 	 */
 
-	private String removeHtmlTags(String html) {
-		// html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
-		html = html.replaceAll("</p>", " ").replaceAll("<p>", "")
-				.replaceAll("<br data-mce-bogus=\"1\">", "")
-				.replaceAll("<br>", "").replaceAll("</br>", "")
-				.replaceAll("<p class=\"p1\">", "");
-		return html;
-	}
+	public String stripHtmlRegex(String source) {
+	 // Replace all tag characters with an empty string.
+	 return source.replaceAll("<.*?>", "");
+    }
 }

@@ -848,6 +848,30 @@ color: #1076BB;
 	padding: 3px;
 	cursor: default !important;
 }
+.info-style-Century {
+	background: -moz-linear-gradient(center top, #7ab075, #7ab075) repeat
+		scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7ab075),
+		to(#7ab075));
+	background: -webkit-linear-gradient(top, #7ab075, #7ab075);
+	background-image: -ms-linear-gradient(top, #7ab075, #7ab075);
+	background: -o-linear-gradient(top, #7ab075, #7ab075);
+	background-color: #7ab075;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	padding: 3px;
+	cursor: default !important;
+}
 .courseTooltip
 {
 	z-index: 99999;

@@ -910,6 +910,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
      */
 	@UiHandler("lblSeeMore") 
 	public void clickOnSeeMoreBtn(ClickEvent event){
+
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			if(!isSeeMoreClicked){
 				String narrationText=removeHtmlTags(collectionItemDo.getNarration());
@@ -920,6 +921,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				setNarrationInFullScreenMode(collectionItemDo,collectionDo);
 				isSeeMoreClicked=false;
 			}
+		}
+		else
+		{
+			lblNarrationText.setText("");
 		}
 	}
 	private void setUserProfileImage(String profileUserId) {
@@ -935,6 +940,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void setNarrationInFullScreenMode(CollectionItemDo collectionItemDo,CollectionDo collectionDo) {
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
+			authorImage.setVisible(true);
+			lblNarrationText.setVisible(true);
 			setUserProfileImage(collectionDo.getUser().getGooruUId());
 			String narrationText=removeHtmlTags(collectionItemDo.getNarration());
 			this.collectionItemDo=collectionItemDo;
@@ -947,6 +954,12 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				lblNarrationText.setText(narrationText);
 				lblSeeMore.setVisible(false);
 			}
+		}
+		else
+		{
+			authorImage.setVisible(false);
+			lblNarrationText.setVisible(false);
+			lblNarrationText.setText("");
 		}
 	}
 	private String removeHtmlTags(String html){

@@ -55,6 +55,7 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
@@ -63,6 +64,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
+import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,6 +120,13 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String HTTPS = "https";
 	
 	private static final String HTTP = "http";
+	
+	private static final String PARENT_ID = "parentId";
+	
+	private static final String LIBRARY_NAME = "libName";
+	
+	private static final String USER_ID = "userId";
+
 	
 	@Autowired
 	private CollectionSearchResultDeSerializer collectionSearchResultDeSerializer;
@@ -268,10 +277,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<CollectionItemSearchResultDo> getCollectionItems(String collectionId) throws GwtException {
 		JsonRepresentation jsonRep=null;
 		SearchDo<CollectionItemSearchResultDo> searchDo=new SearchDo<CollectionItemSearchResultDo>();
-		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.COLLECTION_ITEMS_LIST, collectionId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_COLLECTION_ITEMS_LIST, collectionId,getLoggedInSessionToken());
+		getLogger().info("getCollectionItems::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
-		collectionItemsResultDeSerializer.deserializeCollectionItems(jsonRep, searchDo);
+		collectionItemsResultDeSerializer.deserializeV2CollectionItems(jsonRep, searchDo);
 		return searchDo;
 	}
 	
@@ -335,25 +345,36 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public Map<String, String> getShortenShareUrl(String contentGooruOid, Map<String, String> params) {
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
-			if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
-				}else{
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
-				}
-			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) 
-				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
-			else {
-				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
-					//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
-					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
-				
-				}else{
+		        //This is used for to generate folder toc shorten url
+				if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.FOLDER_TOC)) {	
+					if(params.containsKey(LIBRARY_NAME)){
+						if(params.containsKey(PARENT_ID)){
+							params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PARENT.getUrl(), contentGooruOid,params.get(LIBRARY_NAME),params.get(PARENT_ID)));
+						}
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_LIBRARY.getUrl(), contentGooruOid,params.get(LIBRARY_NAME)));
+					}else if(params.containsKey(USER_ID)){
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PROFILE.getUrl(), contentGooruOid, params.get(USER_ID)));
+					}else{
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL.getUrl(), contentGooruOid));
+					}
+				}else if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
+					if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid, RESOURCE));
+					}else{
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.RESOURCE_PLAY_URL.getUrl()+"%26share=true", contentGooruOid, RESOURCE));
+					}
+				}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) {
+					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+				}else {
+					if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
+						//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
+						params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid));
+					}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid));
 					}
-			}
+				}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid, getLoggedInSessionToken());
-		
+		getLogger().info("getShortenShareUrl::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
@@ -672,9 +693,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	
 	
 	@Override
-	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(
-			SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
-		// TODO Auto-generated method stub
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
@@ -708,6 +727,34 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			
 		}
 		return searchResourcesTagsDo;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.SearchService#getCenturySkilsRestuls()
+	 */
+	@Override
+	public CenturySkilsDo getCenturySkilsRestuls() {
+		JsonRepresentation jsonRep = null;
+		CenturySkilsDo centurySkilsDo=new CenturySkilsDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_21CENTURYSKILLS,getLoggedInSessionToken());
+		getLogger().info("-- getCenturySkilsRestuls -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
+		try{
+			centurySkilsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CenturySkilsDo.class);
+		}catch(JSONException ex){}
+		return centurySkilsDo;
+	}
+
+	@Override
+	public SearchDo<StandardFo> getSuggestCenturyByQuery(SearchDo<StandardFo> centuryDo) {
+		JsonRepresentation jsonRep=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_CENTURY_BY_QUERY, getLoggedInSessionToken(), centuryDo.getQuery());
+		getLogger().info("century suggest API:"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		centuryDo.setSearchResults(autoCompleteDeSerializer.deserializeCenturys(jsonRep));
+		return centuryDo;
 	}
 	
 	/*@Override

@@ -56,6 +56,7 @@
 	/* min-width: 490px; */
 	border: 1px solid #dddddd;
 	padding: 5px;
+	resize: none;
 }
 
 .infoSection{
@@ -622,6 +623,12 @@
 	width: 220px;
 	height: 160px;
 	border-left: 10px solid #1076bb;
+	float: left;
+}
+.assessmentImage {
+	width: 220px;
+	height: 160px;
+	border-left: 10px solid #feae29;
 	float: left;
 }
 .collectionreplay {

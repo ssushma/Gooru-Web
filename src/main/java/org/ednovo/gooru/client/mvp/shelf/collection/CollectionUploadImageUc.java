@@ -59,6 +59,14 @@ public class CollectionUploadImageUc extends Composite {
 	Label changeImgLbl;
 	
 	@UiField HTMLEventPanel collectionEditImageContainer;
+	
+	private String collectionType;
+	
+	private static final String ASSESSMENT = "assessment";
+	
+	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
+	
+	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
 
 	private static CollectionUploadImageUcUiBinder uiBinder = GWT.create(CollectionUploadImageUcUiBinder.class);
 	
@@ -81,9 +89,7 @@ public class CollectionUploadImageUc extends Composite {
 
 			@Override
 			public void onError(ErrorEvent event) {
-				collectionImg.setUrl("images/default-collection-image-160x120.png");
-				changeImgLbl.setText(i18n.GL1087());
-				StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL1087(), i18n.GL1087());
+				setDefaultImage();
 			}
 		});
 		
@@ -95,12 +101,12 @@ public class CollectionUploadImageUc extends Composite {
 
 	/**
 	 * @param url of image
+	 * @param collectionType 
 	 */
-	public void setUrl(String url) {
+	public void setUrl(String url, String collectionType) {
+		this.collectionType=collectionType;
 		if(url!=null&&url.trim().isEmpty()) {
-			collectionImg.setUrl("images/default-collection-image-160x120.png");
-			changeImgLbl.setText(i18n.GL1087());
-			StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL1087(), i18n.GL1087());
+			setDefaultImage();
 		} else {
 			if(url.equalsIgnoreCase("images/defaultRes.png")){
 				changeImgLbl.setText(i18n.GL1087());
@@ -108,6 +114,11 @@ public class CollectionUploadImageUc extends Composite {
 			}else{
 				changeImgLbl.setText(i18n.GL0800());
 				StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL0800(), i18n.GL0800());
+			}
+			if(collectionType!=null && collectionType.equals(ASSESSMENT)){
+				collectionImg.setStyleName(CollectionCBundle.INSTANCE.css().assessmentThumbnails());
+			}else{
+				collectionImg.setStyleName(CollectionCBundle.INSTANCE.css().collectionThumbnails());
 			}
 			collectionImg.setUrl(url);
 		}
@@ -149,6 +160,20 @@ public class CollectionUploadImageUc extends Composite {
 			changeImgLbl.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		
+	}
+	/**
+	 * To set the default image
+	 */
+	protected void setDefaultImage() {
+		if(collectionType!=null && collectionType.equals(ASSESSMENT)){
+			collectionImg.setStyleName(CollectionCBundle.INSTANCE.css().assessmentThumbnails());
+			collectionImg.setUrl(DEFULT_ASSESSMENT_IMG);
+		}else{
+			collectionImg.setStyleName(CollectionCBundle.INSTANCE.css().collectionThumbnails());
+			collectionImg.setUrl(DEFULT_COLLECTION_IMG);
+		}
+		changeImgLbl.setText(i18n.GL1087());
+		StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL1087(), i18n.GL1087());
 	}
 
 }

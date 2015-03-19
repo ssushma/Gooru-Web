@@ -152,8 +152,16 @@
     background-image: url('../images/folders/panel/collection-icon.png');
 }
 
+.folderLevel.assessment {
+    background-image: url('../images/folders/panel/assessment-type.png');
+}
+
 .folderLevel.publicIcon.collection {
     background-image: url('../images/folders/panel/collection-icon-public.png');
+}
+
+.folderLevel.assesstpublicIcon.assessment {
+    background-image: url('../images/folders/panel/assessment-icon-public.png');
 }
 
 .contents > .collection{
@@ -511,13 +519,13 @@
 }
 
 .editPanelContent .titleSection .folder.title {
-    padding-left:60px;
+    padding-left:51px;
     background: url('../images/folders/panel/folder-icon-organize-title.png') no-repeat left center;
 }
 
 .editPanelContent .titleSection .dropdownButtonContainer {
     float:left;
-    width:76px;
+    width:26px;/*width:76px;*/
 }
 
 .editPanelContent .mainSection {
@@ -590,6 +598,14 @@
 	opacity: .6;
 }
 
+.contentBlock.assessment .info img {
+    border-left:8px solid #feae29;
+    margin-bottom:8px;
+}
+.contentBlock.assessment .info img:hover{
+	opacity: .6;
+}
+
 .contentBlock.folder .info .image {
     width:146px;
     height:90px;
@@ -649,7 +665,7 @@
 
 
 
-.contentBlock .contents .collection, .contentBlock .contents .folder {
+.contentBlock .contents .collection, .contentBlock .contents .assessment, .contentBlock .contents .folder {
     margin-bottom: 7px;
     height: 20px;
     padding-left:31px;
@@ -668,6 +684,11 @@
 
 .contentBlock .contents .folder {
     background: url(../images/folders/panel/folder-icon-small.png) no-repeat left center;
+}
+
+.contentBlock .contents .assessment {
+    background: url(../images/folders/panel/assessment-smal.png) no-repeat left center;
+    /* background-size: 27px 19px */
 }
 
 .contentBlock .contents .folder:hover {
@@ -697,7 +718,7 @@
 
 
 .editPanelContent .titleSection .saveCancelContainer {
-    width:213px;
+    width:195px;
     float:right;
     text-align:right;
 }
@@ -963,4 +984,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 	float: left;
 	margin-top: 18px;
 	font-size: 20px;
+}
+.assessmentContainer{
+	text-align: center;
+	padding-top: 0px !important; 
 }

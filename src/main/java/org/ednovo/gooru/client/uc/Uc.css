@@ -9,6 +9,13 @@
 	cursor: pointer;
 	padding: 1px 5px 0px 0px;
 }
+.closeLabelRemoveInCentury {
+	display: block;
+	float: right;
+	width: 16px;
+	cursor: pointer;
+	padding: 2px 0px 0px 5px;
+}
 .closeLabelRemoveInSetting {
 	display: block;
 	float: left;
@@ -51,6 +58,32 @@
 	height: auto;
 }
 
+.closeLabelCentury {
+	background: -moz-linear-gradient(center top,#7AB075, #7AB075) repeat
+		scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7AB075),
+		to(#7AB075));
+	background: -webkit-linear-gradient(top, #7AB075, #7AB075);
+	background-image: -ms-linear-gradient(top, #7AB075, #7AB075);
+	background: -o-linear-gradient(top,#7AB075, #7AB075);
+	background-color: #7AB075;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-top: 5px;
+	padding: 3px 1px;
+	cursor: default !important;
+	min-height: 12px;
+	height: auto;
+}
 .closeLabelSearch {
 	background: -moz-linear-gradient(center top, #88bbe1, #88bbe1) repeat
 		scroll 0 0 transparent;
@@ -904,7 +937,7 @@ float: left;
 		scroll -7px -472px transparent;
 	cursor: pointer;
 	display: block;
-	float: left;
+	float: right;
 	height: 21px;
 	margin-left: 4px;
 	width: 30px;

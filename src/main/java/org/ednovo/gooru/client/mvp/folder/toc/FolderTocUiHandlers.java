@@ -25,6 +25,8 @@
 
 package org.ednovo.gooru.client.mvp.folder.toc;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.user.client.ui.TreeItem;
@@ -49,4 +51,31 @@ public interface FolderTocUiHandlers extends BaseUiHandlers{
 	 * @param parentId
 	 */
 	void getFolderItems(TreeItem item, String parentId);
+	/**
+	 * This method is used to get the shorten url for the TOC view
+	 * @param folderId
+	 * @param params
+	 */
+	void getShortenUrl(String folderId,Map<String, String> params);
+	/**
+	 * To get the User profile details 
+	 * @param profId {@link String}
+	 */
+	void getProfilePageDetails(String profId);
+	/**
+	 * To get the Folder Toc
+	 * @param folderId {@link String}
+	 * @param fromPPP {@link boolean}
+	 */
+	void getTocFolders(String folderId);
+	/**
+	 * This method used to update the folder toc page.
+	 * @param folderId {@link String}
+	 */
+	void getfolderTocList(String folderId);
+	/**
+	 * This method used to get the Banner images of folder
+	 * @param parentId {@link String}
+	 */
+	void getFolderMetaData(String parentId);
 }

@@ -17,7 +17,7 @@
 		       <g:Anchor styleName="{res.css.collectionToolTipLabel}" ui:field="lblCreateCollection" />		        
 		    </uc:LiPanel>
 		    <uc:LiPanel>
-		    	<g:Anchor styleName="{res.css.collectionToolTipLabel}" ui:field="lblCreateAsseement" />
+		    	<g:Anchor styleName="{res.css.assessmentToolTipLabel}" ui:field="lblCreateAsseement" />
 		    </uc:LiPanel>
 		    <uc:LiPanel>
 				<g:Anchor styleName="{res.css.folderToolTipLabel} " ui:field="lblCreateFolder" />

@@ -258,6 +258,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	private static final int TOOLTIP_DELAY_TIME = 1000;
 	
+	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
+	
+	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
+	
+	private static final String ASSESSMENT = "assessment";
+	
 	private static final String O1_LEVEL = "o1";
 	
 	private static final String O2_LEVEL = "o2";
@@ -819,20 +825,16 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		setTab(getPersistantTabObjectUsingTabFlag());
 		collectionTitleUc.setText(collection.getTitle());
 		collectionDescriptionUc.setText(collection.getGoals());
-		if(collection.getThumbnails()!= null)
+		String collectionType=StringUtil.isEmpty(collection.getCollectionType())?null:collection.getCollectionType();
+		if(collection.getThumbnails()!= null && collection.getThumbnails().getUrl() != null)
 		{
-			if(collection.getThumbnails().getUrl() != null)
-			{
-				collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
-			}
-			else
-			{
-				collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
-			}
+			collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl(),collectionType);
 		}
-		else
+		else if(collection.getCollectionType()!=null && collection.getCollectionType().equals(ASSESSMENT))
 		{
-			collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
+			collectionImageShelfUc.setUrl(DEFULT_ASSESSMENT_IMG,collectionType);
+		}else{
+			collectionImageShelfUc.setUrl(DEFULT_COLLECTION_IMG,collectionType);
 		}
 		collectionImageShelfUc.getCollectionImg().setAltText(collection.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());
@@ -1170,7 +1172,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
 			}else{
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
@@ -1180,7 +1182,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(i18n.GL3013());
 			}else{
 				lblFriendly.setText(i18n.GL0453());
@@ -1189,7 +1191,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	}
 	
 	public void modifyStaticText(String collectionType){
-		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3007().toLowerCase():i18n.GL2001();
+		collectionType=(collectionType!=null&&collectionType.equals("assessment"))?i18n.GL3007().toLowerCase():i18n.GL2001();
 		collectionDescriptionUc.setPlaceholder(StringUtil.generateMessage(WHAT_IS_THIS_COLLECTION_ABOUT, collectionType));
 	}
 
@@ -1369,7 +1371,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
-		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 			delete.setNotes(StringUtil.generateMessage(i18n.GL3038(), collectionDo.getTitle()));
 			delete.setDescText(i18n.GL3039());
 		}else{
@@ -1594,7 +1596,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@Override
 	public void onPostCollectionImageUpload(String url) {
-		collectionImageShelfUc.setUrl(url);
+		collectionImageShelfUc.setUrl(url, collectionDo.getCollectionType());
 		collectionImageShelfUc.getCollectionImg().setAltText(collectionDo.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collectionDo.getTitle());
 		categoryImage.setUrl(url);
@@ -1991,7 +1993,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void CollMovedSucessFully(String sourceId,String targetId,String folderName,HashMap<String, String> urlParams) {
 		folderPopupUc.hide();
 		final FolderDo folderDo = getFolderDo(collectionDo); 
-		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName) { 
+		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName,collectionDo) { 
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 //				Window.enableScrolling(true);
@@ -2025,6 +2027,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		folderDo.setTitle(collectionDo.getTitle());
 		folderDo.setType(collectionDo.getCollectionType());
 		folderDo.setSharing(collectionDo.getSharing());
+		folderDo.setCollectionType(collectionDo.getCollectionType());
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
 		folderDo.setThumbnails(thumbnailDo);

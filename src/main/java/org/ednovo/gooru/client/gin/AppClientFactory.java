@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.gin;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserRoleDo.UserRoleType;
 

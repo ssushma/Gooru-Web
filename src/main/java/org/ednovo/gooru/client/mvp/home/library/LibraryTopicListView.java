@@ -124,7 +124,7 @@ public class LibraryTopicListView extends Composite{
 	@UiField Label topicTitleLbl, noCollectionLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
-	@UiField Button assignCollectionBtn, customizeCollectionBtn;
+	@UiField Button assignCollectionBtn, customizeCollectionBtn,viewAllBtn;
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	
 	@UiField LibraryStyleBundle libraryStyle;
@@ -273,16 +273,20 @@ public class LibraryTopicListView extends Composite{
 			setDefaultCollectionLbl();
 		}
 		addCollectionQuizTitleData("lesson");
-		
-		
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			searchLink.getElement().getStyle().setDisplay(Display.NONE);
+			viewAllBtn.setVisible(true);
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+				viewAllBtn.setVisible(false);
+			}
 		}
 		else
 		{
 			searchLink.getElement().getStyle().setDisplay(Display.BLOCK);
+			viewAllBtn.setVisible(false);
 		}
+		//viewAllBtn.addClickHandler(new ViewAllBtnClickEvent());
 		
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		loadingImage.setVisible(false);
@@ -369,10 +373,22 @@ public class LibraryTopicListView extends Composite{
 			
 		}
 	}
+	/**
+	 * To handle the Events of All fields here
+	 */
+	public void renderEvents(){
+		
+		//viewAllBtn.addClickHandler(new ViewAllBtnClickEvent(lessonCode));
+	}
+	
+	/**
+	 * To set the Id's for all fields
+	 */
 	public void setIds(){
 		topicBlock.getElement().setId("pnlTopicBlock");
 		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
 		searchLink.getElement().setId("epnlSearchLink");
+		viewAllBtn.getElement().setId("btnViewAll");
 		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
 		lessonScrollPanel.getElement().setId("sbLessonScrollPanel");
 		conceptList.getElement().setId("pnlConceptList");
@@ -390,6 +406,7 @@ public class LibraryTopicListView extends Composite{
 		noCollectionLbl.getElement().setId("lnlNoCollectionLbl");
 		collectionTitle.getElement().setId("collectionTitle");
 		quizTitle.getElement().setId("quizTitle");
+		viewAllBtn.getElement().setAttribute("style", "float: right;margin: -25px -7px 0 0;");
 	}
 	
 	private void setAssets() {
@@ -471,6 +488,7 @@ public class LibraryTopicListView extends Composite{
 		this.libraryGooruOid=libraryGooruOid;
 		setPlaceToken(placeToken);
 		searchLink.getElement().getStyle().setDisplay(Display.NONE);
+		viewAllBtn.setVisible(true);
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
@@ -512,6 +530,7 @@ public class LibraryTopicListView extends Composite{
 		
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		loadingImage.setVisible(false);
+		viewAllBtn.addClickHandler(new ViewAllBtnClickEvent(partnerFolderDo.getGooruOid()));
 		
 		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
@@ -754,7 +773,7 @@ public class LibraryTopicListView extends Composite{
 	
 	/**
 	 * 
-	 * @fileName : LibraryTopicListView.java
+	 * @fileName : OnSearchLinkClick.java
 	 *
 	 * @description : 
 	 *
@@ -1733,6 +1752,26 @@ public class LibraryTopicListView extends Composite{
 			toolTipPopupPanelNew.clear();
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
+			
+		}
+		
+	}
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ViewAll button.
+	 */
+	public class ViewAllBtnClickEvent implements ClickHandler{
+		String folderId="";
+		public ViewAllBtnClickEvent(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			if(getPlaceToken()!=PlaceTokens.PROFILE_PAGE){
+				params.put("libName", getPlaceToken());
+			}
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
 			
 		}
 		

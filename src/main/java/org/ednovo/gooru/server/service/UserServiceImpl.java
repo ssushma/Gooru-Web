@@ -48,6 +48,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.CustomFieldDo;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.GenderDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -432,6 +433,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail, String userType) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_PROFILE, getLoggedInUserUid(), getLoggedInSessionToken());
+		//getLogger().info("updateV2ProfileDo:"+url);
 		V2UserDo userv2Do = new V2UserDo();
 		ProfileV2Do profileV2Do = new ProfileV2Do();
 		UserDo user = new UserDo();
@@ -453,7 +455,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		profileV2Do.setUser(user);
 		
-		if (userType != null || !userType.equalsIgnoreCase("")){
+		if (userType != null && !userType.equalsIgnoreCase("")){
 			profileV2Do.setUserType(userType);
 		}
 		
@@ -481,14 +483,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	
 		String formData = ResourceFormFactory.generateStringDataForm(userv2Do,null);
+		//getLogger().info("formData:"+formData.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+	
 		try{
 			userv2Do = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 		}
 		catch(JSONException ex){
 			
 		}
+		userv2Do.getUser().setToken(getLoggedInSessionToken());
+		userv2Do.setToken(userv2Do.getUser().getToken());
+		setUserFilterProperties(userv2Do.getUser());
+
+		
 		return userv2Do;
 		
 	}
@@ -1342,5 +1352,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			}
 		}catch(Exception e){	}
 		return objVal;
+	}
+	@Override
+	public FilterSettings setUserProperties(UserDo user) {
+	return getFilterProperties();
 	}
 }

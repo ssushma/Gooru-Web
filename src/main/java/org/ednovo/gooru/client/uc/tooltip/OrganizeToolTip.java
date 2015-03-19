@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolder
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
@@ -212,8 +213,9 @@ public class OrganizeToolTip extends Composite implements HasMouseOutHandlers{
 			@Override
 			public void onSuccess(FolderDo folderDo) {
 				folderDo.setType("folder");
+				CollectionDo collDo = new CollectionDo();
 //				AppClientFactory.fireEvent(new UpdateFolderItemEvent(folderDo, parentId, params));
-				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params));
+				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params,collDo));
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
 			}
 		});

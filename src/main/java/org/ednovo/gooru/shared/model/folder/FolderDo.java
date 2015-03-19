@@ -27,6 +27,7 @@ package org.ednovo.gooru.shared.model.folder;
 import java.io.Serializable;
 import java.util.List;
 
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
@@ -39,6 +40,7 @@ public class FolderDo implements Serializable{
 
 	private static final long serialVersionUID = -3298220423508874309L;
 
+	private String collectionType;
 	private String gooruOid;
 	private String title;
 	private String sharing;
@@ -52,9 +54,26 @@ public class FolderDo implements Serializable{
 	private String performanceTasks;
 	private String questions;
 	private String collectionItemId;
-	
+	private String description;
+	private String url;
+	private String goals;
+	private CollectionSettingsDo settings;
 
 	public FolderDo(){}
+	
+	
+
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+
+
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
+
 
 	/** 
 	 * This method is to get the gooruOid
@@ -219,5 +238,33 @@ public class FolderDo implements Serializable{
 	public void setCollectionItemId(String collectionItemId) {
 		this.collectionItemId = collectionItemId;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getGoals() {
+		return goals;
+	}
+	public void setGoals(String goals) {
+		this.goals = goals;
+	}
+
+	public CollectionSettingsDo getSettings() {
+		return settings;
+	}
+	public void setSettings(CollectionSettingsDo settings) {
+		this.settings = settings;
+	}
 }

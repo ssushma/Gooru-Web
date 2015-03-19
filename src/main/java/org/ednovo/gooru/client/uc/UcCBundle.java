@@ -461,6 +461,8 @@ public interface UcCBundle extends ClientBundle {
 		String privacyAlignStyle();
 		
 		String paddingClear();
+		String closeLabelCentury();
+		String closeLabelRemoveInCentury();
 	}
 
 	@Source("Uc.css")

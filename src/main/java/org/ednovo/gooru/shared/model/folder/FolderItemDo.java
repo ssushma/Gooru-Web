@@ -41,6 +41,8 @@ public class FolderItemDo implements Serializable{
 	private ResourceFormatDo resourceFormat;
 	private String type;
 	private String collectionItemId;
+	private String description;
+	private String collectionType;
 	
 	public FolderItemDo(){}
 
@@ -112,6 +114,28 @@ public class FolderItemDo implements Serializable{
 	 */
 	public void setCollectionItemId(String collectionItemId) {
 		this.collectionItemId = collectionItemId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
 	}
 	
 }

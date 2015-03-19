@@ -134,7 +134,7 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 
 	void insertDraggedCollectionInShelfList(CollectionDo result, String parentId);   
 	
-	void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String,String> params);
+	void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String,String> params, CollectionDo collDo);
 	
 	void changeShelfPanelActiveStyle();
 	

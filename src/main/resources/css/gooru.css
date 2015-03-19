@@ -496,6 +496,16 @@ body {
 	padding-left: 8px;
 }
 
+
+.no-gutter > [class*='col-']{
+	padding-left:0;
+	padding-right:0;
+}
+.less-gutter > [class*='col-']{
+	padding-left:5px;
+	padding-right:5px;
+}
+
 /* end */
 
 .arrowActive {
@@ -566,7 +576,7 @@ body {
 	top: 0px;
 	visibility: visible;
 	background-color: #FFF !important;
-	z-index: 99999;
+	z-index: 999999;
 	border: 1px solid #CCC;
 	/* width: 199px; */
 	
@@ -3260,4 +3270,7 @@ span.review input[type="checkbox"]{
 
 div#spnlDisclosureContentSimPanel>div:first-child {
 	/* padding: 15px; */
+}
+.google-visualization-table{
+    width:auto !important;
 }

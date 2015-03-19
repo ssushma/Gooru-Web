@@ -66,6 +66,8 @@ public enum UrlToken {
 			"/search/resource?sessionToken={0}&pageNum={1}&pageSize={2}&flt.collectionGooruOIds={3}"),
 
 	COLLECTION_ITEMS_LIST("/scollection/{0}?sessionToken={1}"),
+	
+	V2_COLLECTION_ITEMS_LIST("/v2/collection/{0}/item?sessionToken={1}"),
 
 	SEARCH_FILTER("/search/index/filters?sessionToken={0}&type={1}"),
 
@@ -517,7 +519,7 @@ public enum UrlToken {
 	
 	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&topLevelCollectionType=folder"),
 	
-	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}"),
+	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&orderBy=sequence"),
 	
 	GET_CLASSPARTY_CUSTOMFIELD("/v2/party/{0}/custom-field/classpage_welcome_popup_is_autoopen?sessionToken={1}"),
 	
@@ -623,7 +625,7 @@ public enum UrlToken {
 	
 	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
 	
-V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
+	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	
 	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?sessionToken={1}&data={2}"),
 	
@@ -651,7 +653,17 @@ V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	
 	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}&data={2}&&timeZone={3}"),
 	
-	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}");
+	V2_FOLDER_META_DATA("/v2/folder/{0}?sessionToken={1}"),
+	
+	V2_FOLDER_ROUTE_NODES("/v2/folder/{0}/node?sessionToken={1}"),
+	
+	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
+
+	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&orderBy=sequence"),
+	
+	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
+	
+	SUGGEST_CENTURY_BY_QUERY("/search/skills?sessionToken={0}&query={1}");
 	
 
 	private String url;

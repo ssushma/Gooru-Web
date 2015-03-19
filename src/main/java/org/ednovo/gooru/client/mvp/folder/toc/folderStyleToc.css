@@ -422,6 +422,9 @@
 .folderStucture {
     /* width:395px; */
     margin-left: 12px;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .folderStucture table {
    /*  width:395px; */
@@ -603,7 +606,7 @@
  }
  .dropdownListContainerScrollPanel{
     list-style-type: none;
-    width: 91%;
+    width: 100%;
     color:#999;
  }
  .assignmentsystemMessage{
@@ -762,7 +765,125 @@
 }
 
 .folderTitleStyle {
-	color: #0066cc;
+	color: #515151;
 	font-weight: bold;
-	font-size: 18px
+	font-size: 18px;
+}
+.loadingImageMainDiv {
+	width: 100%;
+    height: 300px;
+	position: relative;
+	/* background-color: #FFF; */
+	/* opacity: 0.4; */
+	top: 0px;
+    left: 0px;
+    z-index:1;
+}
+
+.loadingImageForSelfEdit {
+	background: url("images/core/B-Dot.gif");
+	width: 166px;
+	height: 170px;
+	margin: 0 auto;
+	margin-top: 65px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
+}
+
+/* Banner Image  css here*/
+.bannerImageContainer {
+	position: relative;
+	height: 177px;
+}
+
+.bannerImageCaption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.bannerImageCaption h2 {
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 33px;
+	/* background-color: rgba(16, 118, 187, 0.5); */
+	padding: 10px 0px;
+	margin:0 0;
+	text-align: center;
+}
+
+.sublogoContainer {
+	position: absolute;
+	bottom: 17px;
+	right: 29px;
+}
+
+.bannerimageContainer1{
+	background:#4c98cc;
+	text-align:center;
+	
+	
+}
+.bannerimageCaption1{
+	text-align:center;
+	padding:25px 0;
+}
+.bannerimageCaption1 .imgResponsive{
+	border:5px solid #87badd;
+	width:135px;
+	display:inline-block;
+	
+}
+.bannerimageCaption1 h2{
+	display:inline-block;
+	vertical-align:middle;
+	color:#ffffff;
+	font-weight:bold;
+	font-size:35px;
+	margin-left:12px;
+}
+
+.paginationBlock{
+	width:80%;
+	display:inline-block;
+	margin-bottom:15px;
+	font-size:17px;
+	color:#0066cc;
+}
+
+.shareButton{
+	text-align:right;
+	padding-right: 0px;
+}
+.breadCrumbsStyle{
+	display: inline-block;
+	cursor: pointer;
+}
+.bannerImageTitle{
+	background-color: rgba(16, 118, 187, 0.5);
+}
+.displayNoneStyle{
+	display: none;
+}
+.displayInlineStyle{
+	display: inline-block; 
+	color: #515151;
+	padding-left:5px;
+}
+.emptyFolderStyle{
+	font-size:17px; 
+	margin-top: 50px; 
+	margin-bottom: 50px;
+     text-align: center; 
+	color:#e1dfda;
+}
+.emptySubFolderStyle{
+	font-size:17px; 
+	margin-top: 50px; 
+	margin-bottom: 50px;
+    text-align: left;
+    padding-left: 51px;
+	color:#e1dfda;
 }

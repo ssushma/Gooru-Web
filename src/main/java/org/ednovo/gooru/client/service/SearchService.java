@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -44,8 +45,8 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
+import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 /**
@@ -442,5 +443,16 @@ public interface SearchService extends BaseService {
 	
 	
 	public SearchResourcesTagsDo getResourceTags(String resourceId, String offSet, String limit) throws GwtException, ServerDownException; 
+	/**
+	 * This method is used to get 21 century skils details
+	 * @return
+	 */
+	public CenturySkilsDo getCenturySkilsRestuls();
+	/**
+	 * This method is used to get sugesstions for add cenury
+	 * @param query
+	 * @return
+	 */
+	public SearchDo<StandardFo> getSuggestCenturyByQuery(SearchDo<StandardFo> centuryDo);
 
 }
