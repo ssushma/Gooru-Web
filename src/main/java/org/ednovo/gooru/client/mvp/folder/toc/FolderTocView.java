@@ -59,6 +59,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -104,7 +105,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
 	@UiField H2Panel bannerTitle,userTitle;
-	@UiField Image logoImage,bannerImage,profImage;
+	@UiField Image logoImage,bannerImage,profImage,errorPageImg;
 	//@UiField Anchor mainTitle,firstTitle;
 	@UiField TextBox shareTxtBox;
 	
@@ -768,6 +769,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void showPageNotFound(boolean isVisible){
 		mainContainer.setVisible(!isVisible);
 		pageNotFoundPanel.setVisible(isVisible);
+	}
+	
+	@UiHandler("errorPageImg")
+	public void clickOnErrorImg(ClickEvent clickEvent){
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 	}
 	
 }

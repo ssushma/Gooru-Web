@@ -136,6 +136,8 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
 		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}else if(params.containsKey(USER_ID) && !params.get(USER_ID).equals(AppClientFactory.getLoggedInUser().getGooruUId())){
+				getUserProfileVisibility();
 		}else{
 			Window.enableScrolling(true);
 			getTocFolders(folderId);
@@ -266,6 +268,24 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			@Override
 			public void onSuccess(Map<String,String> result) {
 				getView().setBreadCrumbs(result);
+			}
+		});
+	}
+	/**
+	 * To get profile visibility status
+	 */
+	private void getUserProfileVisibility(){
+		AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(params.get(USER_ID), new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean result) {
+				if(result){
+					Window.enableScrolling(true);
+					getTocFolders(params.get(ID));
+					setFolderBanner();
+					
+				}else{
+					getView().showPageNotFound(true);
+				}
 			}
 		});
 	}
