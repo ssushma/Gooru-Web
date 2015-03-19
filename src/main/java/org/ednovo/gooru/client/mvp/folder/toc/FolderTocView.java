@@ -235,15 +235,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerVal.put(PlaceTokens.CCST_Cal_TAC, Arrays.asList("background: url("+Constants.CCST_BANNER +") center; height: 245px;",i18n.GL2179(),""));
 		bannerVal.put(PlaceTokens.NGC, Arrays.asList("background: url("+Constants.NGC_BANNER +") center -45px; height: 245px;",i18n.GL2030(),""));
 		bannerVal.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList("background: url("+Constants.ASPIRE_BANNER +") center; height: 245px;",i18n.GL3107(),""));
-		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center;height: 245px;",i18n.GL2174(),""));
+		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center -50px;height: 230px;",i18n.GL2174(),""));
 		bannerVal.put(PlaceTokens.FTE, Arrays.asList("background: url("+Constants.FTE_BANNER +") center;height: 245px;",i18n.GL2029(),""));
 		bannerVal.put(PlaceTokens.LESSONOPOLY, Arrays.asList("background: url("+Constants.LESSONOPOLY_BANNER +") center -37px;height: 245px;",i18n.GL2032(),""));
 		bannerVal.put(PlaceTokens.LIFEBOARD, Arrays.asList("background: url("+Constants.LIFEBOARD_BANNER +") center;height: 245px;","",""));
-		bannerVal.put(PlaceTokens.FINCAPINC, Arrays.asList("background: url("+Constants.FINCAP_BANNER +") center -47px; height: 232px;",i18n.GL2033(),""));
-		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center -48px; height: 228px;",i18n.GL2041(),""));
+		bannerVal.put(PlaceTokens.FINCAPINC, Arrays.asList("background: url("+Constants.FINCAP_BANNER +") center -50px; height: 232px;",i18n.GL2033(),""));
+		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center -50px; height: 228px;",i18n.GL2041(),""));
 		bannerVal.put(PlaceTokens.ONR, Arrays.asList("background: url("+Constants.ONR_BANNER +") center;height: 245px;",i18n.GL2028(),""));
 		bannerVal.put(PlaceTokens.PSDPAL, Arrays.asList("background: url("+Constants.PSDPAL_BANNER +") center;height: 245px;",i18n.GL2034(),""));
-		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center -48px; height: 232px;",i18n.GL2186(),""));
+		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center -50px; height: 230px;",i18n.GL2186(),""));
 		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center -48px;height: 245px;",i18n.GL2031(),""));
 		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center;height: 245px;",i18n.GL2040(),""));
 	}
@@ -579,7 +579,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(convertHtml(bannerVal.get(placetoken).get(1)));
-			logoImage.setUrl(bannerVal.get(placetoken).get(2));
+			if(!bannerVal.get(placetoken).get(2).equals("")){
+				logoImage.setUrl(bannerVal.get(placetoken).get(2));
+			}
 			if(bannerVal.get(placetoken).get(2).equals("")){
 				bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 			}else{
@@ -612,7 +614,9 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerTitle.setText(convertHtml(folderDo.getTitle()));
 		bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
-		logoImage.setUrl(bannerVal.get(placetoken).get(2));
+		if(!bannerVal.get(placetoken).get(2).equals("")){
+			logoImage.setUrl(bannerVal.get(placetoken).get(2));
+		}
 		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;height: 198px;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
 		setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
