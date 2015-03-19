@@ -1709,6 +1709,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>10?folderCollectionWhatsNext.getTitle().substring(0,10)+"...":folderCollectionWhatsNext.getTitle());
 			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
 			nextCollectionThumbnail.setUrl(folderCollectionWhatsNext.getThumbnails().getUrl());	
+			int resourcesCounter = folderCollectionWhatsNext.getResourceCount();
+			int questionsCounter = folderCollectionWhatsNext.getQuestionCount();
+			if(resourcesCounter>0){
+				this.resourceCount.setText(resourcesCounter==1?resourcesCounter+" Resource":resourcesCounter+" Resources");
+			}
+			if(questionsCounter>0){
+				this.questionCount.setText(questionsCounter==1?questionsCounter+" Question":questionsCounter+" Questions");
+			}
 			nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
