@@ -26,6 +26,8 @@ package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
 
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -52,7 +54,7 @@ public class ThumbnailDo implements Serializable{
 		return url;
 	}
 	public void setUrl(String url) {
-		if(url!=null&&url.isEmpty()) {
+		if(StringUtil.isEmpty(url)) {
 			url = "images/defaultRes.png";
 		}
 		this.url = url;
