@@ -304,6 +304,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 		this.collectionOriginalItemDo = collectionItemDo;
 		getMainPanel().setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		centurySuggestOracle =new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			
