@@ -176,7 +176,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		deckPanel.showWidget(1);
 		textArea.setFocus(true);
 		textArea.addStyleName("shelfEditDesc");
-		textArea.getElement().setAttribute("maxlength", "500");
+		textArea.getElement().setAttribute("maxlength", "1000");
 	}
 
 	/**

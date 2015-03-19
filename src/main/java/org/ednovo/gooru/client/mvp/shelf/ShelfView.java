@@ -319,7 +319,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		 */
 			@Override
 			public void checkCharacterLimit(String text) {
-				if (text.length() >= 500) {
+				if (text.length() >= 1000) {
 					descriptionAlertMessageLbl
 							.addStyleName("titleAlertMessageActive");
 					descriptionAlertMessageLbl
@@ -451,7 +451,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionDescriptionTitle.getElement().setAttribute("alt",i18n.GL0618());
 		collectionDescriptionTitle.getElement().setAttribute("title",i18n.GL0618());
 		
-		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		String value = StringUtil.generateMessage(i18n.GL2103(), "1000");
 		
 		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
 		lblCharLimit.setText(value);
