@@ -82,7 +82,7 @@
 				</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="pageNotFoundPanel">
-				    <g:Image url="images/404_message.png"/>
+				    <g:Image styleName="{tocStyle1.pageNotFoundStyle}" url="images/404_message.png" ui:field="errorPageImg"/>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
