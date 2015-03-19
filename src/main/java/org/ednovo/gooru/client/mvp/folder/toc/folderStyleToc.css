@@ -765,7 +765,7 @@
 }
 
 .folderTitleStyle {
-	color: #0066cc;
+	color: #515151;
 	font-weight: bold;
 	font-size: 18px;
 }
@@ -877,5 +877,13 @@
 	margin-top: 50px; 
 	margin-bottom: 50px;
      text-align: center; 
+	color:#e1dfda;
+}
+.emptySubFolderStyle{
+	font-size:17px; 
+	margin-top: 50px; 
+	margin-bottom: 50px;
+    text-align: left;
+    padding-left: 51px;
 	color:#e1dfda;
 }
