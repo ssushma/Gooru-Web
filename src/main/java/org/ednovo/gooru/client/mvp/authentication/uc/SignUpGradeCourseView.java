@@ -307,7 +307,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 		});
 		
 		ThanksPopupUc thanks = new ThanksPopupUc();
-		if (AppClientFactory.getLoggedInUser().getAccountTypeId() != null && AppClientFactory.getLoggedInUser().getAccountTypeId() == 2){
+		if (AppClientFactory.getLoggedInUser().getAccountTypeId() == null || AppClientFactory.getLoggedInUser().getAccountTypeId() == 2){
 			thanks.setAccountType("normal");
 		}
 		thanks.center();
