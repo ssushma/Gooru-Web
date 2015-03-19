@@ -126,10 +126,10 @@ public class CollectionInfo extends Composite {
 		lblStandrads.getElement().setAttribute("alt",i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblStandrads.getElement().setAttribute("title",i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		lblCentury.setText(i18n.GL3188()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblCentury.setText(i18n.GL3191()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblCentury.getElement().setId("lblCentury");
-		lblCentury.getElement().setAttribute("alt",i18n.GL3188()+i18n.GL_SPL_SEMICOLON()+" ");
-		lblCentury.getElement().setAttribute("title",i18n.GL3188()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblCentury.getElement().setAttribute("alt",i18n.GL3191()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblCentury.getElement().setAttribute("title",i18n.GL3191()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblLanguage.getElement().setId("lblLanguage");

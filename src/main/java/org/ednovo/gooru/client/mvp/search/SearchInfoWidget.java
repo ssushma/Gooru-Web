@@ -182,8 +182,8 @@ public class SearchInfoWidget extends Composite {
 		standardsText.setText(i18n.GL0619()+" ");
 		setIdForLabel(standardsText,"standardsText",i18n.GL0619()+" ");
 		
-		centuryText.setText(i18n.GL3188()+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(centuryText,"centuryText",i18n.GL3188()+" ");
+		centuryText.setText(i18n.GL3191()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(centuryText,"centuryText",i18n.GL3191()+" ");
 		
 		//		resourceInfoText.setText(i18n.GL0621);
 		gradeTitle.setText(i18n.GL0325().trim()+i18n.GL_SPL_SEMICOLON()+" ");
