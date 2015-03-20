@@ -158,19 +158,7 @@ public interface SignUpCBundle extends ClientBundle {
 
 		String supportMessage();
 
-		String tileContainer();;
-
 		String DOTSbuttons();
-
-		String discover();
-
-		String organize();
-
-		String teach();
-
-		String study(); 
-		
-		String tile();
 
 		String h6();
 

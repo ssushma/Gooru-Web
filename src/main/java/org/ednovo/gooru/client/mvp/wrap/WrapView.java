@@ -39,6 +39,8 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
+import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.client.uc.DeviceUc;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -80,15 +82,8 @@ public class WrapView extends BaseView implements IsWrapView {
 
 	@UiField
 	HeaderUc headerUc;
-	
-	@UiField
-	HTMLPanel resorceSearchFilters,collectionSearchFilters,webcontainer,searchPush,menuRight;
-	
-	@UiField HTMLPanel panelWrapper,ipadSectiondiv,androidSectiondiv;
-	
-	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
-	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
-	@UiField Anchor viewAnchor;
+
+	@UiField HTMLPanel panelWrapper, panelDevice,searchPush,menuRight, resorceSearchFilters, collectionSearchFilters;
 	
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 	
@@ -110,68 +105,33 @@ public class WrapView extends BaseView implements IsWrapView {
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		panelWrapper.getElement().setId("wrapper");	
-		androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");	
-		msglinkPanel.getElement().setId("pnlMsglinkPanel");
-		msgPanel.getElement().setId("pnlMsgPanel");
-		closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
-		ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
-		closeIpadBtn.getElement().setId("imgCloseIpadBtn");
-		gooruPanel.getElement().setId("pnlGooruPanel");
-		ednovoPanel.getElement().setId("pnlEdnovoPanel");
-		appstorePanel.getElement().setId("pnlAppstorePanel");
-		viewAnchor.getElement().setId("lnkViewAnchor");
 		headerUc.getElement().setId("homeHeaderUc");
 		wrapperPanel.getElement().setId("spnlWrapperPanel");
 		searchPush.getElement().setId("searchPush");
 		menuRight.getElement().setId("menuRight");
 		
-		isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
-		isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		
-		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  ipadSectiondiv.setVisible(true);
-			  androidSectiondiv.setVisible(false);
-			  ipadSectiondiv.getElement().setAttribute("style", "margin-top:-20px;");
-			  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
-			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:relative;");
+
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  if (BrowserAgent.isDevice()){
+			  panelDevice.add(new DeviceUc(wrapperPanel, headerUc));
+			  panelDevice.setVisible(true);
+			  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+			  {
+				  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+				  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
+			  }
+			  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
+			  {
+				  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+				  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
+			  }
+		  }else{
+			  panelDevice.clear();
+			  panelDevice.setVisible(false);
+			  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 		  }
-		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  ipadSectiondiv.setVisible(false);
-			  androidSectiondiv.setVisible(true);
-			  androidSectiondiv.getElement().setAttribute("style", "margin-top:-20px;");
-			  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
-			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-		  }
-		  else
-		  {
-			  ipadSectiondiv.setVisible(false);
-			  androidSectiondiv.setVisible(false);
-		//	  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-		  }
-			ipadSectiondiv.setVisible(false);
-			androidSectiondiv.setVisible(false);
-			webcontainer.getElement().setId("main");
-			headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-			String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-			if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!place.equals(PlaceTokens.FOLDER_TOC)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
-				if(isIpad){
-					  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
-				}else if(isAndriod){
-					  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
-				}else{
-					  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-				}
-			}
-		  setUiText();
 		  
 		  ClickHandler rootClick = new ClickHandler(){
 				@Override
@@ -239,31 +199,6 @@ public class WrapView extends BaseView implements IsWrapView {
 		headerUc.setClassicButtonEnabled(activate);
 	}
 	
-	@UiHandler("closeIpadBtn")
-	public void onIpadCloseClick(ClickEvent clickEvent){
-		  ipadSectiondiv.setVisible(false);
-		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		  androidSectiondiv.setVisible(false);
-		  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-		  LibraryView.onClosingAndriodorIpaddiv();
-		  ShelfListView.onClosingAndriodorIpaddiv();
-		  ShelfView.onClosingAndriodorIpaddiv();
-		  DiscoverToolTip.onclickOfAndriodorIpadcloseDiv();
-	}
-	@UiHandler("closeAndriodBtn")
-	public void onAndriodCloseClick(ClickEvent clickEvent){
-		  ipadSectiondiv.setVisible(false);
-		  StringUtil.IPAD_MESSAGE_Close_Click = true;
-		  androidSectiondiv.setVisible(false);
-		  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-		  LibraryView.onClosingAndriodorIpaddiv();
-		  ShelfListView.onClosingAndriodorIpaddiv();
-		  ShelfView.onClosingAndriodorIpaddiv();
-		  DiscoverToolTip.onclickOfAndriodorIpadcloseDiv();
-	}
-
 	@Override
 	public void invokeLogin() {
 		headerUc.onLinkPopupClicked(null);
@@ -307,28 +242,6 @@ public class WrapView extends BaseView implements IsWrapView {
 	@Override
 	public void setDiscoverLinkFromLibrary(String discoverLink) {
 		headerUc.setDiscoverLinkFromLibrary(discoverLink);
-	}
-	public void setUiText()
-	{
-		  msgPanel.getElement().setInnerHTML(i18n.GL1983());
-		  msgPanel.getElement().setAttribute("alt", i18n.GL1983());
-		  msgPanel.getElement().setAttribute("title", i18n.GL1983());
-		  msglinkPanel.getElement().setInnerHTML(i18n.GL1984());
-		  msglinkPanel.getElement().setAttribute("alt", i18n.GL1984());
-		  msglinkPanel.getElement().setAttribute("title",i18n.GL1984());
-		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
-		  gooruPanel.getElement().setAttribute("alt", i18n.GL0733());
-		  gooruPanel.getElement().setAttribute("title", i18n.GL0733());
-		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
-		  ednovoPanel.getElement().setAttribute("alt", i18n.GL1985());
-		  ednovoPanel.getElement().setAttribute("title", i18n.GL1985());
-		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
-		  appstorePanel.getElement().setAttribute("alt", i18n.GL1986());
-		  appstorePanel.getElement().setAttribute("title", i18n.GL1986());
-		  viewAnchor.setText(i18n.GL1428());
-		  viewAnchor.getElement().setAttribute("alt", i18n.GL1428());
-		  viewAnchor.getElement().setAttribute("title", i18n.GL1428());
-		  
 	}
 
 	

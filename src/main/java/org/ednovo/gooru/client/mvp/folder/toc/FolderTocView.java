@@ -117,7 +117,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	final String SCOLLECTION = "scollection";
 	private static final String USER_ID = "userId";
 	private static final String BACK2TOC = "backToToc";
-	private static final String EMPTY_FOLDER = i18n.GL3190();
+	private static final String EMPTY_FOLDER = i18n.GL3198();
 	private static final String SHORTEN_URL = "shortenUrl";
 	private static final String ID = "id";
 	private static final String PARENT_ID = "parentId";
@@ -483,13 +483,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
 								if(folderLevel>=2){
-									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
 								}
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
-							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
 							 	item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }

@@ -52,15 +52,6 @@
 	width: 700px;
 }
 
-.settingInfoExpanderArrow {
-	background: url(images/settings/setting-info-expander.png);
-	float: right;
-	width: 10px;
-	height: 16px;
-	cursor: pointer;
-	margin: 20px 0px 0px 0px;
-}
-
 .settingInfoMimiusArrow {
 	background: url(images/settings/setting-info-minimus.png);
 	width: 16px;
@@ -399,12 +390,10 @@ input.styled {
 }
 
 .settingWrapper {
-	/* background: url(images/settings/gray_noise_25.png); */
 	font-family: Arial, sans-serif;
 	color: #333;
 	font-size: 12px;
 	width: 1110px;
-	/* height: 1020px; */
 	margin: 0 auto;
 }
 
@@ -484,7 +473,6 @@ input.styled {
 	border: 0;
 	float: right;
 	width: 322px;
-	height: 30px;
 	padding: 15px 0px 0px 0px;
 	vertical-align: middle;
 	line-height: 30px;

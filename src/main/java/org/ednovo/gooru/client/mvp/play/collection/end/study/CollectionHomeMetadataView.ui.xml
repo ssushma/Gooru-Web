@@ -17,7 +17,6 @@
             </g:HTMLPanel>
             <hr/>
             <g:HTML ui:field="collectionGoal" styleName="{playerStyle.goal}"></g:HTML>
-     		<!-- <g:Button styleName="secondary" ui:field="assignCollectionBtn"></g:Button> -->
         </g:HTMLPanel>
         <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	</html5:SectionTag>

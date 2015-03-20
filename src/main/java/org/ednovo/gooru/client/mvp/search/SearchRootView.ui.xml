@@ -33,19 +33,13 @@
 
 		}
 		.notifyLink {
-		color: #4E9746;
-		cursor: pointer;
-		float: left;
-		margin: 0 2px;
-		padding-bottom: 2px;
+			color: #4E9746;
+			cursor: pointer;
+			float: left;
+			margin: 0 2px;
+			padding-bottom: 2px;
 		}
-		/*.notifyLink:HOVER {
-		border-bottom: 2px solid #A6CAA2;
-		cursor: pointer;
-		padding-bottom: 2px;
-		color: #4E9746;
-		text-decoration:none;
-		} */
+
 		.notifyLinks {
 		color: #4E9746 !important;
 		cursor: default;
@@ -54,36 +48,27 @@
 		font-weight: bold;
 		margin: -3px 5px 0 6px;
 		}
-
 		.resourceBtnActive {
-		color: #515151;
-		padding: 7px 9px 9px 34px;
-		border-radius: 4px;
-		background: #efefef;
-		background-image: url(images/resourcesIco.png); /* fallback */
-		background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left
-		bottom, from(#EFEFEF), to(#FAFAFA)); /* Saf4+, Chrome */
-		background-image: url(images/resourcesIco.png),
-		-webkit-linear-gradient(top, #EFEFEF, #FAFAFA); /* Chrome 10+, Saf5.1+
-		*/
-		background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #EFEFEF,
-		#FAFAFA); /* FF3.6+ */
-		background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #EFEFEF,
-		#FAFAFA); /* IE10 */
-		background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #EFEFEF,
-		#FAFAFA); /* Opera 11.10+ */
-		background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #EFEFEF,
-		#FAFAFA); /* W3C */
-		background-repeat:no-repeat;
-		border: 1px solid #b0b0ba;
-		font-size:12px;
-		font-weight: bold;
-		background-position:0 0;
-		cursor:pointer;
-		box-shadow:0 1px 3px #d0d0d5 inset;
+			color: #515151;
+			padding: 7px 9px 9px 34px;
+			border-radius: 4px;
+			background: #efefef;
+			background-image: url(images/resourcesIco.png); /* fallback */
+			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#EFEFEF), to(#FAFAFA)); /* Saf4+, Chrome */
+			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #EFEFEF, #FAFAFA); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #EFEFEF, #FAFAFA); /* FF3.6+ */
+			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #EFEFEF, #FAFAFA); /* IE10 */
+			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #EFEFEF, #FAFAFA); /* Opera 11.10+ */
+			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #EFEFEF, #FAFAFA); /* W3C */
+			background-repeat:no-repeat;
+			border: 1px solid #b0b0ba;
+			font-size:12px;
+			font-weight: bold;
+			background-position:0 0;
+			cursor:pointer;
+			box-shadow:0 1px 3px #d0d0d5 inset;
 
 		}
-
 		.collectionBtnActive {
 		color: #515151;
 		padding: 7px 9px 9px 34px;
@@ -112,9 +97,6 @@
 		cursor:pointer;
 		box-shadow:0 1px 3px #d0d0d5 inset;
 		}
-
-
-		}
 		.resourceSearchButtonImage{
 		margin-left: 5px;
 		padding: 7px 31px !important;
@@ -123,7 +105,6 @@
 		background-position: 2px -24px !important;
 		background-position: 0px -27px !important;
 		}
-
 		.bodyHeight {
 		height: auto !important;
 		}
@@ -138,7 +119,6 @@
 		    clear: both;
 		    height: 34px;
 			margin-left: 205px;
-		   <!--  margin: 20px auto 0; -->
 		    width: 612px;
 
 		}
@@ -164,7 +144,6 @@
 			left: 52%;
 			top: 5%;
 		}
-
 
 		.secondaryResourceSearchBtn{
 		color: #515151;
@@ -193,7 +172,6 @@
 		font-family:Arial, Helvetica, sans-serif;
 		cursor:pointer;
 		}
-
 		.secondaryResourceSearchBtn:hover{
 		color: #515151;
 		background: #efefef;
@@ -213,8 +191,6 @@
 		#ffffff); /* W3C */
 		background-repeat:no-repeat;
 		}
-
-
 		.secondaryCollectionSearchBtn{
 		color: #515151;
 		padding: 7px 9px 9px 34px;
@@ -243,8 +219,6 @@
 		font-family:Arial, Helvetica, sans-serif;
 		cursor:pointer;
 		}
-
-
 		.secondaryCollectionSearchBtn:hover{
 		color: #515151;
 		background: #efefef;
@@ -264,14 +238,11 @@
 		#ffffff); /* W3C */
 		background-repeat:no-repeat;
 		}
-
 		.secondaryIC img{
 		vertical-align:middle;
 		width:22px;
 		margin-right:5px;
 		}
-
-
 	</ui:style>
 	<g:HTMLPanel styleName="{res.css.bodyWrapper}">
 		<!-- <gc:SearchBarVc ui:field="searchBarVc" /> -->

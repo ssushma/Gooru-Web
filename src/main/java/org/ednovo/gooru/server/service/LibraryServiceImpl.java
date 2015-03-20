@@ -127,6 +127,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPIC_OFFSET, subjectName, topicId, getLoggedInSessionToken(), ""+offset, ""+limit);
 		url+=getLibraryName(libraryName);
+		getLogger().info("community - getLessonsOnPagination- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLessons(jsonRepresentation);
@@ -245,7 +246,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<LibraryUserDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<LibraryUserDo>();
@@ -276,7 +276,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep1, new TypeReference<ArrayList<CourseDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<CourseDo>();
@@ -318,7 +317,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 					lessonDoList.add(lessonDo);
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return lessonDoList;
@@ -352,7 +350,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return subjectList;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new HashMap<String,SubjectDo>();
@@ -437,7 +434,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}*/
 				return JsonDeserializer.deserialize(jsonRepStr, new TypeReference<HashMap<String, StandardsDo>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new HashMap<String,StandardsDo>();
@@ -468,7 +464,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ConceptDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ConceptDo();
@@ -544,7 +539,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}*/
 			} 
 			catch (JSONException e) {
-				e.printStackTrace();
 			} 
 		}
 		return topicDoList;
@@ -637,9 +631,9 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"","0","20");
-		getLogger().info("--- partner Lib workspace API -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("----Partners WS API - Time stamp to get data from API on server side --"+System.currentTimeMillis());
 		if(placeToken.equals(PlaceTokens.PROFILE_PAGE)) {
 			//partnerFolderListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
 		} else {
@@ -678,6 +672,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"","0");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		getLogger().info("----UNITS API - Time stamp to get data from API on server side --"+System.currentTimeMillis());
 		return deserializePaginatedWorkspaceFolders(jsonRep);
 	}
 	
@@ -709,7 +704,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			}
 			return searchResults;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return new PartnerFolderListDo();
 	}
@@ -776,7 +770,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return secondLevelFolders;
 	}
@@ -810,7 +803,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				conceptDo.setCollectionItems(collectionItems);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return conceptDo;
 	}
@@ -836,7 +828,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			}
 			return searchResults;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return new PartnerFolderListDo();
 	}
@@ -845,7 +836,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<LibraryUserDo> getPartners() throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_PARTNERS, getLoggedInSessionToken());
-		getLogger().info("Partners API --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeCollaborators(jsonRepresentation);
@@ -861,7 +851,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, sessionToken, limit+"",offset+"","14");
-		getLogger().info("getLibraryWorkspace---:::"+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -878,7 +868,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"",offset+"");
-		getLogger().info("getLibraryPaginationWorkspace---:::"+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -896,7 +886,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				//sessionToken=sessionToken+"&sharing="+sharingType;
 			}
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST_PUBLIC, parentId, sessionToken, offset, "20");
-			getLogger().info("getLibraryCoursesList---:::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -922,7 +911,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return standardCourseList;
 	}
@@ -948,7 +936,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public HashMap<String, SubjectDo> getLibrarySubjects(String subjectName, String courseId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_SUBJECTS_OPTIMIZED, getLoggedInSessionToken(), libraryName);
-		getLogger().info("getLibrarySubjects---:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		HashMap<String,SubjectDo> subjectList = new HashMap<String,SubjectDo>();
@@ -978,7 +965,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return subjectMap;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new HashMap<String,SubjectDo>();
@@ -1002,7 +988,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<CourseDo> getLibraryCourses(String subjectName, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES_OPTIMIZED, subjectName, getLoggedInSessionToken(), libraryName);
-		getLogger().info("--- lib courses -- "+url);
+		getLogger().info("-- community lib - getLibraryCourses - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLibraryCourses(jsonRepresentation, subjectName, libraryName);
@@ -1020,7 +1006,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return courseDoList;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<CourseDo>();
@@ -1046,7 +1031,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 					courseDoList.remove(i);
 				}
 			}
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {}
 		courseDoList.add(0, courseDo);
 		return courseDoList;
 	}
@@ -1056,7 +1041,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId, getLoggedInSessionToken());
 		url=url+getLibraryName(libraryName);
-		getLogger().info("getLibraryUnits---:::"+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLibraryUnits(jsonRepresentation, subjectName);
@@ -1068,7 +1053,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<UnitDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<UnitDo>();

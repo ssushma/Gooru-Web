@@ -77,7 +77,6 @@ public final class FilterSetting implements Cloneable {
 		try {
 			return (FilterSetting) super.clone();
 		} catch (CloneNotSupportedException exception) {
-			exception.printStackTrace();
 			return null;
 		}
 	}

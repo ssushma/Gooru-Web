@@ -313,7 +313,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	@Override
 	public void createClasspage(CollectionDo collectionDo) {
 
-//		getClasspageService().createClasspage(collectionDo, getCollectionAsyncCallback());
 		getClasspageService().v2CreateClasspage(collectionDo, getCollectionAsyncCallback());
 		 getView().getClassPageScrollPanel().scrollToTop();
 		
@@ -321,8 +320,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	
 	@Override
 	public void getAllClasspages(String limit, String offSet) {
-
-		
 		getClasspageService().v2GetAllClasspages(limit, offSet, getGetAllClasspagesAsyncCallback());
 	}
 	

@@ -63,7 +63,6 @@ public class TaxonomyDeSerializer extends DeSerializer {
 			JSONObject rootNode = taxonomyJsonObject.getJSONObject(NODE);
 			codeDo = convertNodeToDo(rootNode, depthLimit);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return codeDo;
 
@@ -100,7 +99,6 @@ public class TaxonomyDeSerializer extends DeSerializer {
 				libraryCodeDo.setNode(codeDos);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return libraryCodeDo;
 	}
@@ -117,7 +115,6 @@ public class TaxonomyDeSerializer extends DeSerializer {
 				libraryCodeDo = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<LibraryCodeDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}	
 		}
 		return libraryCodeDo; 	

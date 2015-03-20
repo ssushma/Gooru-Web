@@ -42,7 +42,6 @@ public class QuestionAnswerOptionView extends Composite{
 	@UiField public Label answerChoiceResult,radioButton;
 	@UiField HTML answerOptionText;
 	@UiField public RadioButton answerOptionRadioButton;
-	//@UiField public CheckBox answerOptionCheckBoxButton;
 	private int answerId;
 	private boolean isAnswerCorrect;
 	private String answerText="";
@@ -51,25 +50,16 @@ public class QuestionAnswerOptionView extends Composite{
 	public QuestionAnswerOptionView(String questionText,String questionSerialNum){ 
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
 		this.answerText=questionText;
-		//optionAlpahabeticSerialNo.setText(questionSerialNum);
-		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
-		
+		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText!=null?questionText:""));
 		answerChoiceResult.getElement().setId("lblAnswerChoiceResult");
 		radioButton.getElement().setId("lblRadioButton");
 		answerOptionText.getElement().setId("htmlAnswerOptionText");
 		answerOptionRadioButton.getElement().setId("rdAnswerOptionRadioButton");
 	}
-	private HTML getHTML(String html){
-		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		HTML contentHtml=new HTML(html);
-		contentHtml.setStyleName("");
-		return contentHtml;
-	}
 	private String removeHtmlTags(String text){
 		/**
 		 * Commented the following line to fix issue with displaying math symbols. 
 		 */
-//		text = text.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
 		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return text;
 	}

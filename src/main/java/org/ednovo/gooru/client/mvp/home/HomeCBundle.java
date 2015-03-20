@@ -632,5 +632,16 @@ public interface HomeCBundle extends ClientBundle{
 		String last();
 		String arrowLable();
 		String displayRight();
-	}	
+
+		
+		String sprite();
+
+		String spriteFind();
+
+		String spriteMonitor();
+
+		String spriteRemix();
+
+		String spriteShare();
+	}
 }

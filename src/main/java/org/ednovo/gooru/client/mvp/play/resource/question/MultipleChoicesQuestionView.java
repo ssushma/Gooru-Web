@@ -62,7 +62,6 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 	
 	private boolean isChekcAnswerButtonClicked=false;
 	
-//	private static final String i18n.GL1457+i18n.GL_SPL_FULLSTOP=i18n.GL1457+i18n.GL_SPL_FULLSTOP;
 	private CollectionItemDo collectionItemDo;
 	
 	private AttemptedAnswersDo attemptedAnswerDo=null;
@@ -105,20 +104,21 @@ public abstract class  MultipleChoicesQuestionView extends Composite {
 	}
 	
 	private void renderQuestionAnswerOptions(){
-		TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
-		Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
-		int i=0;
-		while (answersList.hasNext()) {
-			QuestionAnswerDo questionAnswerDo=answersList.next();
-			final QuestionAnswerOptionView questionAnswerOptionView=new QuestionAnswerOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
-			questionAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
-			questionAnswerOptionView.radioButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalRadioIcon());
-			questionAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());
-			questionAnswerOptionView.radioButton.addClickHandler(new RadioButtonSelectEvent(questionAnswerOptionView,questionAnswerDo,i+1));
-			// TODO need to implement logic
-			optionsContainer.add(questionAnswerOptionView);
-			showPreviousAttemptResult(questionAnswerDo.getAnswerId(),questionAnswerOptionView);
-			i++;
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getAnswers()!=null){
+			TreeSet<QuestionAnswerDo> answersSet=collectionItemDo.getResource().getAnswers();
+			Iterator<QuestionAnswerDo> answersList=answersSet.iterator();
+			int i=0;
+			while (answersList.hasNext()) {
+				QuestionAnswerDo questionAnswerDo=answersList.next();
+				final QuestionAnswerOptionView questionAnswerOptionView=new QuestionAnswerOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
+				questionAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
+				questionAnswerOptionView.radioButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalRadioIcon());
+				questionAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());
+				questionAnswerOptionView.radioButton.addClickHandler(new RadioButtonSelectEvent(questionAnswerOptionView,questionAnswerDo,i+1));
+				optionsContainer.add(questionAnswerOptionView);
+				showPreviousAttemptResult(questionAnswerDo.getAnswerId(),questionAnswerOptionView);
+				i++;
+			}
 		}
 	}
 	

@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
@@ -108,7 +109,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText, panelGooruStories;
+	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 
 	@UiField H2Panel lblHeading;
@@ -116,7 +117,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
-	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright, achGooruStories;//achDataPolicy
+	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright;//achDataPolicy
 	@UiField TextBox txtEmbedLink;
 	@UiField HTML htmlDescription;
 	
@@ -242,36 +243,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				//	StringUtil.consoleLog("Header UC onFailure...");				
 				}
 			});
-		}
-
-		
-		
-		panelGooruStories.setVisible(false);
-		
-		AppClientFactory.getInjector().getSearchService().showGooruStoriesSection( new SimpleAsyncCallback<String>() {
-			
-			@Override
-			public void onSuccess(String result) {
-				if (result.equalsIgnoreCase("true")){
-					
-					PeListPanel p = new PeListPanel();
-					p.setTitle(i18n.GL2188_3());
-					p.getElement().setInnerHTML(i18n.GL2188_3());
-					panelText.add(p);
-					
-					AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
-						
-						@Override
-						public void onSuccess(String result) {
-							achGooruStories.setHref(result);
-							achGooruStories.setTarget("_blank");
-						}
-					});
-					panelGooruStories.setVisible(true);
-				}
-			}
-		});
-		
+		}		
 
 		/*ClickHandler rootClick = new ClickHandler(){
 

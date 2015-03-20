@@ -13,6 +13,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -38,7 +39,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSummaryUiHandlers> implements IsCollectionSummaryView {
+public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSummaryUiHandlers> implements IsCollectionSummaryView,ClientConstants {
 
 	private static CollectionSummaryViewUiBinder uiBinder = GWT
 			.create(CollectionSummaryViewUiBinder.class);
@@ -103,8 +104,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 
-		sessionsTooltip.addMouseOverHandler(new QuestionMouseToolTip("1", sessionsTooltip));
-		imgQuestionMark.addMouseOverHandler(new QuestionMouseToolTip("2", imgQuestionMark));
+		sessionsTooltip.addMouseOverHandler(new QuestionMouseToolTip(ONE, sessionsTooltip));
+		imgQuestionMark.addMouseOverHandler(new QuestionMouseToolTip(TWO, imgQuestionMark));
 		
 		sessionsTooltip.addMouseOutHandler(new QuestionMouseOutToolTip());
 		imgQuestionMark.addMouseOutHandler(new QuestionMouseOutToolTip());
@@ -122,9 +123,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String setText="";
-			if(fromString.equalsIgnoreCase("1")){
+			if(ONE.equalsIgnoreCase(fromString)){
 				setText=i18n.GL3091();
-			}else if(fromString.equalsIgnoreCase("2")){
+			}else if(TWO.equalsIgnoreCase(fromString)){
 				setText=i18n.GL3088();
 			}
 			toolTip = new ToolTip(setText,"");
@@ -186,13 +187,15 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
 		errorMessage.setVisible(false);
 		studentsListDropDown.clear();
-		studentsListDropDown.addItem("All Students");
+		studentsListDropDown.addItem(ALL_STUDENTS);
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
-			studentsListDropDown.addItem(collectionSummaryUsersDataDo.getUserName(),collectionSummaryUsersDataDo.getGooruUId());
+			if(!StringUtil.isEmpty(collectionSummaryUsersDataDo.getUserName()) && !StringUtil.isEmpty(collectionSummaryUsersDataDo.getGooruUId())){
+				studentsListDropDown.addItem(collectionSummaryUsersDataDo.getUserName(),collectionSummaryUsersDataDo.getGooruUId());
+			}
 		}
 		sessionspnl.setVisible(false);
 		String tabReports=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
-		if(tabReports!=null && tabReports.equalsIgnoreCase("reports")){
+		if(REPORTS.equalsIgnoreCase(tabReports)){ 
 			exportImage.setVisible(true);
 			subText.setVisible(true);
 		}else{
@@ -210,7 +213,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			CollectionSummaryMetaDataDo result,String pathwayId,String classpageId) {
 		this.classpageId=classpageId;
 		this.pathwayId=pathwayId;
-		if(result!=null){
+		if(!StringUtil.checkNull(result)){
 			collectionId=result.getGooruOId();
 			collectionSummaryWidget.setData(result);
 			collectionSummaryDetails.add(collectionSummaryWidget);

@@ -1456,13 +1456,6 @@ float: left;
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 }
 
-.profilePopupArrow {
-	background: url(/images/profilepage/user-profile-popup-arrow-pic.png);
-	width: 24px;
-	height: 10px;
-	margin-left: 122px;
-}
-
 .profilePopupContainer {
 	position: absolute;
 	margin-top: 22px;
@@ -1848,7 +1841,6 @@ button.emailSecondary:hover {
     margin-right: 4px;
 	
 }
-
 .privacyAlignStyle{
 	margin-right: 2px;
 }

@@ -51,7 +51,7 @@ public  abstract class AddSetupAdvancedView extends Composite{
 		educationUseAdvancedPnl.setText(i18n.GL1664());
 		momentsOfLearningAdvancedPnl.setText(i18n.GL1678());
 		standardsAdvancedPnl.setText(i18n.GL1682());
-		centuryAdvancedPnl.setText(i18n.GL3121_1());
+		centuryAdvancedPnl.setText(i18n.GL3199());
 		accessHazardAdvancedPnl.setText(i18n.GL1705());
 		mediaFeatureAdvancedPnl.setText(i18n.GL3094());
 		mobileFreindlyAdvancedPnl.setText(i18n.GL1811());

@@ -52,7 +52,6 @@ public abstract class NavigationConfirmPopup extends PopupPanel{
 	
 	@UiField Button continueButton,backToResponseButton;
 	@UiField Label popupHeader,popupText;
-	
 
 	private static NavigationConfirmPopupUiBinder uiBinder = GWT.create(NavigationConfirmPopupUiBinder.class);
 
@@ -113,7 +112,6 @@ public abstract class NavigationConfirmPopup extends PopupPanel{
 		hide();
 	}
 
-
 	@UiHandler("continueButton")
 	public void onClickCopyBtn(ClickEvent clickEvent){
 		navigateToNextResource();
@@ -121,10 +119,8 @@ public abstract class NavigationConfirmPopup extends PopupPanel{
 	
 	public void hide(){
 		super.hide();
-		//Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	
 	public abstract void navigateToNextResource();
-
 }

@@ -23,6 +23,7 @@ import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -52,7 +53,7 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
 //newly added 
-public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<CollectionSummaryTeacherUiHandlers> implements IsCollectionSummaryTeacherView  {
+public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<CollectionSummaryTeacherUiHandlers> implements IsCollectionSummaryTeacherView,ClientConstants  {
 
 	private static CollectionSummaryTeacherViewUiBinder uiBinder = GWT
 			.create(CollectionSummaryTeacherViewUiBinder.class);
@@ -129,16 +130,16 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		teacherTabContainer=new AnalyticsTabContainer() {
 			@Override
 			public void onTabClick(String tabClicked) {
-				if(tabClicked.equalsIgnoreCase(SCORED)){
+				if(SCORED.equalsIgnoreCase(tabClicked)){
 					hideAllPanels();
 					teacherScoredDatapnl.setVisible(true);
-				}else if(tabClicked.equalsIgnoreCase(OPENENDED)){
+				}else if(OPENENDED.equalsIgnoreCase(tabClicked)){
 					hideAllPanels();
 					teacherOpenendedData.setVisible(true);
-				}else if(tabClicked.equalsIgnoreCase(BREAKDOWN)){
+				}else if(BREAKDOWN.equalsIgnoreCase(tabClicked)){
 					hideAllPanels();
 					teacherResourceBreakdownDatapnl.setVisible(true);
-				}else if(tabClicked.equalsIgnoreCase(PRINT)){
+				}else if(PRINT.equalsIgnoreCase(tabClicked)){
 					Element printElement=collectionSummaryText.getElement();
 					printElement.appendChild(collectionSummaryWidget.getElement());
 					printElement.appendChild(scoredQuestionHeading.getElement());
@@ -214,8 +215,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        //This is used for segrate data based on the category
 	        for (UserDataDo userDataDo : resourcesData) {
 	        	if(userDataDo.getStatus()==0){
-					if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
-						if(userDataDo.getType().equalsIgnoreCase("OE")){
+					if(QUESTION.equalsIgnoreCase( userDataDo.getCategory())){
+						if(OE.equalsIgnoreCase(userDataDo.getType())){
 							openendedData.add(userDataDo);
 						}else{
 							questionsData.add(userDataDo);
@@ -621,15 +622,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            data.setValue(rowVal, 3, timeSpentpnl.toString());
 	           
 	            //set Views label
-	            // HorizontalPanel viewpnl=new HorizontalPanel();
 	            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
 	            viewlbl.setStyleName(res.css().alignCenterAndBackground());
-	       /*     viewpnl.add(viewlbl);
-	            Label viewProgressBar=new Label();
-	            viewProgressBar.setStyleName(res.css().setProgressBar());
-	            viewpnl.add(viewProgressBar);
-	            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
-	            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);*/
+	  
 	            data.setValue(rowVal, 4, viewlbl.toString());
 	            
 	            //Set reactions
@@ -773,7 +768,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
             	  String getQuestionType=scoredQuestionsData.get(i-1).getType();
-                  if(getQuestionType.equalsIgnoreCase("MC") || getQuestionType.equalsIgnoreCase("TF")){
+                  if(MC.equalsIgnoreCase(getQuestionType) || TF.equalsIgnoreCase(getQuestionType)){
                  		if((scoredQuestionsData.get(i-1).getMetaData() !=null) && (scoredQuestionsData.get(i-1).getMetaData().size() != 0)) {
                  			int metaDataSize=scoredQuestionsData.get(i-1).getMetaData().size();
                  			int totalcount=scoredQuestionsData.get(i-1).getAttempts();
@@ -813,7 +808,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
                  	            	 answerBreakDownpnl.add(datagrap);
                  		}
                   } 
-             }else if((getQuestionType.equalsIgnoreCase("OE")|| getQuestionType.equalsIgnoreCase("fib") ||getQuestionType.equalsIgnoreCase("MA")) && !isPrint){
+             }else if((OE.equalsIgnoreCase(getQuestionType)|| FIB.equalsIgnoreCase(getQuestionType) ||MA.equalsIgnoreCase(getQuestionType)) && !isPrint){
             	 Label viewResponselbl=new Label("View Response");
             	 viewResponselbl.getElement().setAttribute("resourceGooruId", scoredQuestionsData.get(i-1).getResourceGooruOId());
 	   	         viewResponselbl.getElement().setAttribute("questionType", scoredQuestionsData.get(i-1).getType());

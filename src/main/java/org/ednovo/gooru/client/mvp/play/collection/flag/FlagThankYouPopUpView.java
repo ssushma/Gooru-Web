@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.play.collection.flag;
 
-import org.ednovo.gooru.player.collection.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
