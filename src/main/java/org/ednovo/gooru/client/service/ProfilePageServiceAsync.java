@@ -37,8 +37,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ProfilePageServiceAsync extends BaseServiceAsync {
 
-	void getUserWorkSpace(String userId, AsyncCallback<List<CollectionItemDo>> callback);
-	
 	void getFolders(String collectionId, AsyncCallback<List<CollectionItemDo>> callback);
 
 //	void getFolderInformation(String folderId, AsyncCallback<CollectionDo> callback);

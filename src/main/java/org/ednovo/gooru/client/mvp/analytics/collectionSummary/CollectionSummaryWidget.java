@@ -4,6 +4,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -17,7 +18,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CollectionSummaryWidget extends Composite {
+public class CollectionSummaryWidget extends Composite implements ClientConstants {
 
 	private static CollectionSummaryWidgetUiBinder uiBinder = GWT
 			.create(CollectionSummaryWidgetUiBinder.class);
@@ -61,9 +62,11 @@ public class CollectionSummaryWidget extends Composite {
 		collectionImage.setVisible(true);
 		sessionsPnl.setVisible(false);
 		collectionLastAccessedlbl.setText(i18n.GL2271());
-		collectionTitle.setText(result.getTitle());
+		if(!StringUtil.isEmpty(result.getTitle())){
+			collectionTitle.setText(result.getTitle());
+		}
 		collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastAccessed())));
-		if(result.getThumbnail()!=null && !result.getThumbnail().equalsIgnoreCase("")){
+		if(!StringUtil.isEmpty(result.getThumbnail())){ 
 			collectionImage.setUrl(result.getThumbnail());
 		}else{
 			collectionImage.setUrl("../images/analytics/default-collection-image.png");
@@ -84,10 +87,10 @@ public class CollectionSummaryWidget extends Composite {
 	 */
 	public void setDataAnalyticsData(CollectionSummaryMetaDataDo result,PrintUserDataDO printUserDataDO){
 		collectionImage.setVisible(false);
-		if(printUserDataDO!=null && printUserDataDO.getUserName()!=null){
+		if(printUserDataDO!=null && !StringUtil.isEmpty(printUserDataDO.getUserName())){
 			sessionsPnl.setVisible(true);
 			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
-			collectionLastAccessedlbl.setText("Sort BY:");
+			collectionLastAccessedlbl.setText(SORT_BY);
 			collectionLastAccessed.setText(printUserDataDO.getUserName());
 			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
 			sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
@@ -105,7 +108,7 @@ public class CollectionSummaryWidget extends Composite {
 		}else{
 			sessionsPnl.setVisible(false);
 			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
-			collectionLastAccessedlbl.setText("Sort BY:");
+			collectionLastAccessedlbl.setText(SORT_BY);
 			collectionLastAccessed.setText(i18n.GL2289());
 			collectionResourcesCount.setText("Resource in this Collection :"+result.getResourceCount()+" Resources | "+result.getNonResourceCount()+" Questions");
 		}

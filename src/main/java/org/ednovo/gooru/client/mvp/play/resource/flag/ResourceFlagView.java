@@ -157,7 +157,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	@UiHandler("checkBox1")
 	public void onClickOfcheckBox1(ClickEvent event)
 	{
-	if(checkBox1.isChecked()||checkBox2.isChecked()||checkBox3.isChecked()||checkBox4.isChecked())
+	if(checkBox1.getValue()||checkBox2.getValue()||checkBox3.getValue()||checkBox4.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -172,7 +172,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	@UiHandler("checkBox2")
 	public void onClickOfcheckBox2(ClickEvent event)
 	{
-		if(checkBox2.isChecked()||checkBox3.isChecked()||checkBox4.isChecked()||checkBox1.isChecked()){
+		if(checkBox2.getValue()||checkBox3.getValue()||checkBox4.getValue()||checkBox1.getValue()){
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
 		}
@@ -185,7 +185,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	@UiHandler("checkBox3")
 	public void onClickOfcheckBox3(ClickEvent event)
 	{
-		if(checkBox3.isChecked()||checkBox4.isChecked()||checkBox2.isChecked()||checkBox1.isChecked()){
+		if(checkBox3.getValue()||checkBox4.getValue()||checkBox2.getValue()||checkBox1.getValue()){
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
 		}
@@ -199,7 +199,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	@UiHandler("checkBox4")
 	public void onClickOfcheckBox4(ClickEvent event)
 	{
-		if(checkBox4.isChecked()||checkBox3.isChecked()||checkBox2.isChecked()||checkBox1.isChecked()){
+		if(checkBox4.getValue()||checkBox3.getValue()||checkBox2.getValue()||checkBox1.getValue()){
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
 		}
@@ -212,26 +212,23 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	
 	@UiHandler("submitButton")
 	public void onClicksubmitButton(ClickEvent event){
-		if(checkBox1.isChecked())
+		if(checkBox1.getValue())
 		{
 			contentReportList.add("missing-concept");
 		}
-		if(checkBox2.isChecked())
+		if(checkBox2.getValue())
 		{
 			contentReportList.add("not-loading");
 		}
-		if(checkBox3.isChecked())
+		if(checkBox3.getValue())
 		{
 			contentReportList.add("inappropriate");
 		}
-		if(checkBox4.isChecked())
+		if(checkBox4.getValue())
 		{
-		
 			contentReportList.add("other");
 		}
 		getUiHandlers().createReport(resourceGooruId, descriptionTextArea.getText(), contentReportList, deleteContentReportGooruOids,collectionItemId);
-		//getThankYouPopUp();
-		//resetFlagData();
 	}
 	
 	@Override
@@ -263,37 +260,37 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 
 	@Override
 	public void setFlagView(CollectionItemDo collectionItemDo) {
+		if(collectionItemDo!=null){
 		resourceTitle=collectionItemDo.getResourceTitle();
+		if(collectionItemDo.getResource()!=null){
 		resourceGooruId=collectionItemDo.getResource().getGooruOid();
+		}
 		collectionItemId=collectionItemDo.getCollectionItemId();
+		if(!StringUtil.isEmpty(resourceTitle)){
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
 		titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
 		titleText.getElement().setAttribute("title",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		}
+		}
 	}
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stubdd
-		
 	}
 
 	@Override
 	public void onLoad() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onUnload() {
-		// TODO Auto-generated method stub
-		
 	}
 	public void resetFlagData(){
-		checkBox1.setChecked(false);
-		checkBox2.setChecked(false);
-		checkBox3.setChecked(false);
-		checkBox4.setChecked(false);
+		checkBox1.setValue(false);
+		checkBox2.setValue(false);
+		checkBox3.setValue(false);
+		checkBox4.setValue(false);
 		descriptionTextArea.setText("");
 		descriptionTextArea.getElement().setAttribute("alt","");
 		descriptionTextArea.getElement().setAttribute("title","");

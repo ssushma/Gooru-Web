@@ -55,6 +55,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -88,7 +89,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author BLR Team
  * 
  */
-public abstract class AssignPopupPlayerVc extends PopupPanel{
+public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientConstants{
 
 	@UiField
 	HTMLPanel loadingImageLabel,popupContentAssign,assignPopupContent;
@@ -124,15 +125,9 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	@UiField Anchor ancprivacy;
 	
 	private boolean isPrivate = false;
-//	private static final String SWITCH_FULL_URL = i18n.GL0643;
-//	private static final String SWITCH_EMBED_CODE = i18n.GL0640;
-//	private static final String SWITCH_BITLY = i18n.GL0639;
 	private static final String SWITCH_URL_LABEL = "swithUrlLbl";
 	private static final String SWITCH_TO_EMBED_LABEL = "swithToEmbedLbl";
 	private String bitlyLink, decodeRawUrl, embedBitlyLink, rawUrl;
-//	private static final String OOPS = i18n.GL0061;
-//	private static final String LOGIN_ERROR = i18n.GL0347;
-//	private static final String LOGIN_COOKIE_DISABLE_MESSAGE =i18n.GL0348;
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 	private ClasspageServiceAsync classpageService;
 	private SimpleAsyncCallback<ClasspageListDo> getClasspageList;
@@ -170,21 +165,14 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	interface Binder extends UiBinder<Widget, AssignPopupPlayerVc> {
 
 	}
-	
-
 	private static final Binder binder = GWT.create(Binder.class);
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
-
-
 	/**
 	 * 
 	 */
 	public AssignPopupPlayerVc(String collectionIdVal) {
 		super(false);
-
-
 		res = AssignPopUpCBundle.INSTANCE;
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
@@ -197,7 +185,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		swithToEmbedLbl.setText(i18n.GL0640());
 		ancSignUp.getElement().setAttribute("style", "float: left;margin-left: 2%;");
 
-
 		setLabelsAndIds();
 		setHandlers();
 
@@ -208,20 +195,14 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 
 		loadingImageLabel.setVisible(true);
 		popupContentAssign.setVisible(false);
-
-		try
-		{
-
+		try{
 			AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new SimpleAsyncCallback<CollectionDo>(){
-
 				@Override
 				public void onSuccess(CollectionDo result) {
 					MixpanelUtil.Preview_Click_Assign_successful();
 					String collectionId = "";
-					if (result.getGooruOid() != null) {
+					if(result.getGooruOid() != null){
 						collectionId = result.getGooruOid();
-					} else {
-						collectionId = "4b4bb39d-2892-4dd6-bd7f-5fd1227751de";
 					}
 					toAssignStr = collectionId;
 					if (collectionId != null) {
@@ -235,20 +216,18 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 					}
 					loadingImageLabel.setVisible(false);
 					popupContentAssign.setVisible(true);
-
-
 				}
 			});
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();	
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
-			
 			@Override
 			public void onSuccess(Map<String, String> result) {
-				embedBitlyLink=result.get("decodeRawUrl");
+				if(result.containsKey("decodeRawUrl")){
+					embedBitlyLink=result.get("decodeRawUrl");
+				}
 			}
 		});
 		Window.enableScrolling(false);
@@ -263,25 +242,18 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	public void hideContainers() {
 		htmlEvenPanelContainer.setVisible(false);
 		htmlLoginPanel.setVisible(true);
-
 	}
 
 	public void loadListContainers() {
-
-		AssignCollectionView assignWidget = new AssignCollectionView(
-				collectionDoGlobal) {
-
+		AssignCollectionView assignWidget = new AssignCollectionView(collectionDoGlobal) {
 			@Override
 			public void closePoupfromChild() {
 				closePoup();
-
 			}
 		};
 		htmlEvenPanelContainer.add(assignWidget);
 		htmlEvenPanelContainer.setVisible(true);
 		htmlLoginPanel.setVisible(false);
-
-
 	}
 
 	public abstract void closePoup();
@@ -317,7 +289,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	 * 
 	 */
 	public void setLabelsAndIds() {
-		
 		lblPii.setText(i18n.GL1892());
 		lblPii.getElement().setId("spnLblPii");
 		lblPii.getElement().setAttribute("alt",i18n.GL1892());
@@ -340,8 +311,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		forgotPwd.getElement().setAttribute("title",i18n.GL0205());
 		
 		loginTxtBox.setPlaceholder(i18n.GL0202());
-		loginTxtBox.getElement().setAttribute("placeholder",
-				i18n.GL0202());
+		loginTxtBox.getElement().setAttribute("placeholder",i18n.GL0202());
 		loginTxtBox.setFocus(true);
 		loginTxtBox.getElement().setId("tbLoginUsername");
 		
@@ -373,7 +343,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		shareLinkTxtBox.addClickHandler(new OnClickShareHandler());
 		shareLinkTxtBox.getElement().setId("tatShareLinkTxtBox");
 		StringUtil.setAttributes(shareLinkTxtBox, true);
-		
 		
 		assignDes.setText(i18n.GL0513());
 		assignDes.getElement().setId("lblAssignDes");
@@ -443,7 +412,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	private void changeShareUrlEvents(String buttonType) {
 		if (swithToEmbedLbl.getText().equalsIgnoreCase(i18n.GL0639())
 				&& swithUrlLbl.getText().equalsIgnoreCase(i18n.GL0640())) {
-			if (buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
+			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("alt",bitlyLink);
 				shareLinkTxtBox.getElement().setAttribute("title",bitlyLink);
@@ -453,7 +422,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 				swithToEmbedLbl.setText(i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0643());
 				swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0643());
-			} else {
+			}else{
 				shareLinkTxtBox.setText(getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("alt",getIframeText());
 				shareLinkTxtBox.getElement().setAttribute("title",getIframeText());
@@ -494,7 +463,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(i18n.GL0640());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0640());
 				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());
@@ -529,7 +497,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
@@ -553,7 +520,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(i18n.GL0640());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0640());
 				swithUrlLbl.getElement().setAttribute("title",i18n.GL0640());
@@ -567,7 +533,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 				shareLinkTxtBox.setText(decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
 				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 				swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
@@ -588,15 +553,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		}
 	}
 
-	private void fullUrlMixPanelEvent() {
-		/*
-		 * if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.
-		 * COLLECTION_SEARCH)){ MixpanelUtil.Share_direct_search(); } else
-		 * if(AppClientFactory
-		 * .getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
-		 * MixpanelUtil.Share_direct_collection_edit(); }
-		 */
-	}
 
 	private String getIframeText() {
 		String iframeText = null;
@@ -632,37 +588,32 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	}
 
 	public void generateShareLink(String classpageId) {
-
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("type", "");
 		params.put("shareType", "");
-
-		AppClientFactory
-		.getInjector()
-		.getSearchService()
-		.getShortenShareUrlforAssign(classpageId, params,null,
-				new SimpleAsyncCallback<Map<String, String>>() {
-
+		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,null,new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
 			public void onSuccess(Map<String, String> result) {
-				decodeRawUrl = result.get("decodeRawUrl");
-				shareLinkTxtBox.setText(decodeRawUrl);
-				bitlyLink = result.get("shortenUrl");
-				rawUrl = result.get("rawUrl");
+				if(result.containsKey("decodeRawUrl")){
+					decodeRawUrl = result.get("decodeRawUrl");
+					shareLinkTxtBox.setText(decodeRawUrl);
+				}
+				if(result.containsKey("shortenUrl")){
+					bitlyLink = result.get("shortenUrl");
+				}
+				if(result.containsKey("rawUrl")){
+					rawUrl = result.get("rawUrl");
+				}
 				addShareWidgetInPlay(decodeRawUrl, rawUrl,
 						collectionDoGlobal.getTitle(),
 						collectionDoGlobal.getDescription(),
 						bitlyLink, "",
 						collectionDoGlobal.getSharing());
-				// addShareWidgetInPlay(decodeRawUrl,rawUrl,
-				// "","",bitlyLink,"","");
-
 			}
 
 		});
 		params.put("shareType", "embed");
 		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
-
 	}
 
 	public void addShareWidgetInPlay(String link, String rawUrl, String title,
@@ -693,68 +644,33 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 
 	@UiHandler("loginButton")
 	public void onLoginClicked(ClickEvent clickEvent) {
-
 		if (isCookieEnabled()) {
-
 			String username = loginTxtBox.getText().trim();
-			String password = passwordTxtBox.getText().trim();
-
-			JSONObject login = new JSONObject();
-			login.put("username", new JSONString(username));
-			login.put("password", new JSONString(password));
-
-			if (username.length() > 1 && password.length() > 1) {
-
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim()); 
+			
+			if(username.length() > 1 && password.length() > 1){
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
-
-				AppClientFactory
-				.getInjector()
-				.getAppService()
-				.v2Signin(login.toString(),
-						new SimpleAsyncCallback<UserDo>() {
+				AppClientFactory.getInjector().getAppService().v2Signin(username,password,new SimpleAsyncCallback<UserDo>(){
 					@Override
 					public void onSuccess(UserDo result) {
 						if(result.getActive()==1){
 							MixpanelUtil.Regular_User_Logged_In();
-							AppClientFactory
-							.setLoggedInUser(result);
-							AppClientFactory
-							.fireEvent(new SetUserDetailsInPlayEvent(
-									result.getToken()));
-							AppClientFactory
-							.fireEvent(new SetUserDetailsInCollectionPlayEvent(
-									result.getToken(),
-									result.getGooruUId()));
-
-							AppClientFactory
-							.fireEvent(new SetHeaderEvent(
-									result));
-
-							if (result.getUsername()
-									.equalsIgnoreCase(
-											"TexasTeacher")) {
-								AppClientFactory
-								.fireEvent(new SetTexasAccountEvent(
-										"failure"));
-								AppClientFactory
-								.fireEvent(new SetTexasPlaceHolderEvent(
-										true));
-							} else {
-								AppClientFactory
-								.fireEvent(new SetTexasAccountEvent(
-										"success"));
-								AppClientFactory
-								.fireEvent(new SetTexasPlaceHolderEvent(
-										false));
+							AppClientFactory.setLoggedInUser(result);
+							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
+							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
+							AppClientFactory.fireEvent(new SetHeaderEvent(result));
+							if(TEXAS_TEACHER.equalsIgnoreCase(result.getUsername())) {
+								AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));
+								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
+							}else{
+								AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
+								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
 							}
-
 							AppClientFactory.setUserflag(true);
 							AppClientFactory.resetPlace();
-
 							loadListContainers();
-							MixpanelUtil
-							.mixpanelEvent("Login_FromAssign_Pop-up");
+							MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
 							// heeere add widget
 						}else if(result.getActive()==0){
 							loginButton.setVisible(true);
@@ -762,12 +678,10 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 						}
 					}
-
 					@Override
 					public void onFailure(Throwable caught) {
 						loginButton.setVisible(true);
 						lblPleaseWait.setVisible(false);
-//						new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 					}
 				});
 			} else {
@@ -780,7 +694,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 			lblPleaseWait.setVisible(false);
 			new AlertMessageUc(i18n.GL0738(), new HTML(i18n.GL0348()));
 		}
-
 	}
 
 	/**
@@ -788,27 +701,22 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	 * 
 	 */
 	public class LoginKeyupHandler implements KeyUpHandler {
-
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				onLoginClicked(null);
 			}
 		}
-
 	}
 
 	private void setHandlers() {
-
 		this.setSize("515px", "547px");
-
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
 
 	@UiHandler("forgotPwd")
 	public void onForgotPwdClicked(ClickEvent clickEvent) {
-
 		ForgotPasswordVc forgotPasswordVc = new ForgotPasswordVc();
 		forgotPasswordVc.setGlassEnabled(true);
 		forgotPasswordVc.show();
@@ -848,49 +756,39 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
-	
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
-		
 			@Override
 			public void onSuccess(String result) {
-//				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				MixpanelUtil.mixpanelEvent("Assign_player_signin_google");
 				Window.Location.replace(result);
-			
 			}
 		});
 	}
-
 	public class OnClickShareHandler implements ClickHandler {
-
 		@Override
 		public void onClick(ClickEvent event) {
 			shareLinkTxtBox.selectAll();
 			shareLinkTxtBox.setFocus(true);
 		}
-
 	}
-	
 
 	@UiHandler("ancprivacy")
 	public void onClickPrivacyAnchor(ClickEvent clickEvent){
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		termsOfUse=new TermsOfUse(){
-
 			@Override
 			public void openParentPopup() {
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				Window.enableScrolling(false);
 			}
-			
 		};
 		termsOfUse.show();
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}
 
-	private static native boolean isCookieEnabled() /*-{
-													return navigator.cookieEnabled;
-													}-*/;
+	private static native boolean isCookieEnabled()/*-{
+		return navigator.cookieEnabled;
+	}-*/;
 }

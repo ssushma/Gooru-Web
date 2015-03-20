@@ -27,33 +27,42 @@ package org.ednovo.gooru.client.mvp.play.collection.body;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.DataInsightsUrlTokens;
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
-import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.client.uc.CollaboratorsUc;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-//import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -62,8 +71,6 @@ import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -75,6 +82,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -86,39 +94,40 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView{
+public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView,ClientConstants{
 
 	@UiField
 	static FlowPanel studyMainContianer;
-
 	@UiField
-	FlowPanel leftPanelContainer;
-
+	FlowPanel metadataContainer;
+	@UiField
+	FlowPanel standardsContainer,leftPanelContainer,rightPanelContainer;
+	@UiField
+	FlowPanel teamContainer;
+	@UiField
+	FlowPanel courseTitle;
 	@UiField VerticalPanel commentsContainer;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
-
-	@UiField MetadataWidget rightPanelMetadata;
-
-	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit;
-	@UiField Label /*insightsHeaderText,insightsContentText,*/successPostMsg;
-	@UiField Image userPhoto;
-	@UiField HTMLPanel addComment,loginMessaging,
-						switchContainer;
-	@UiField Anchor loginUrl, signupUrl;
-
-	@UiField SectionTag commentssection;
-	
+	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc,commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit;
+	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,/*insightsHeaderText,insightsContentText,*/lbllanguageObjectiveText,lbllanguageObjective,successPostMsg,
+				lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
+	@UiField Image profileThumbnailImage,userPhoto;
+	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging,
+						depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
+						InstructionalmethodContainer,audienceContainer,learningAndInnovationSkillsContainer,depthOfKnowledgeContainer,switchContainer,commentssection;
+	@UiField Anchor previewFlagButton,seeMoreAnchor,loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
-
+	@UiField HTML teacherTipLabel;
 	@UiField Label lblCharLimitComments;
 	@UiField SimpleCheckBox changeAssignmentStatusButton;
 	@UiField InlineLabel requiredLabel,optionalLabel;
-	//@UiField Frame insightsFrame;
-//	@UiField Button collectionSummaryPrintBtn;
 	private String languageObjectiveValue;
 	private CollectionDo collectionDo=null;
 	
+	public static final String STANDARD_CODE = "code";
+	
+	public static final String STANDARD_DESCRIPTION = "description";
 	
 	private static final String COLLECTION_COMMENTS="COLLECTION_COMMENTS";
 	
@@ -131,8 +140,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private static final String EDIT = "EDIT";
 	
 	private static final String PAGINATION = "page";
-	
-//	private static final String COMMENTS_LBL = " "+i18n.GL1432;
 	
 	private static final String PRIMARY_STYLE = "primary";
 	
@@ -155,11 +162,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	private boolean isHavingBadWords;
 	
-	private MetadataWidget menuMetadataWidget=null;
-
 	@Inject
 	private ResourceServiceAsync resourceService;
-
 	
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
@@ -172,8 +176,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public CollectionPlayerMetadataView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
-		rightPanelMetadata.teacherContainer.setVisible(false);
-		//messageContainer.setVisible(false);
+		teacherContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		loginMessagingText.setText(i18n.GL0568());
@@ -196,7 +199,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		toCommentText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		loginUrl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		signupUrl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
-		userPhoto.getElement().setId("imgUserPhoto");
+		
 		commentField.addClickHandler(new OnCommentsFieldClicked());
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
@@ -206,130 +209,140 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
 		
 		seeMoreButton.setVisible(false);
+		depthOfKnowledgeContainer.getElement().setId("pnlDepthOfKnowledgeContainer");
+		depthOfKnowledgePanel.getElement().setId("pnlDepthOfKnowledgePanel");
+		learningAndInnovationSkillsContainer.getElement().setId("pnlLearningAndInnovationSkillsContainer");
+		learningAndInnovationSkillPanel.getElement().setId("pnlLearningAndInnovationSkillPanel");
+		audienceContainer.getElement().setId("pnlAudienceContainer");
+		audiencePanel.getElement().setId("pnlAudiencePanel");
+		InstructionalmethodContainer.getElement().setId("pnlInstructionalmethodContainer");
+		instructionalmethodPanel.getElement().setId("pnlInstructionalmethodPanel");
 		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) {
 		  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
 		}else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
 		  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-		} else{
-		  //studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
-		}
-		Window.addResizeHandler(new ResizeLogicEvent());
+		} 
 	}
 	
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
-
-		rightPanelMetadata.setCollectionMetadata(collectionDo);
-		menuMetadataWidget=new MetadataWidget();
-		menuMetadataWidget.setStyleName("col-md-12 col-sm-12");
-		menuMetadataWidget.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().rightPanel());
-		menuMetadataWidget.setCollectionMetadata(collectionDo);
-		getUiHandlers().getMenuContainer().clear();
-		getUiHandlers().getMenuContainer().add(menuMetadataWidget);
-		getUiHandlers().getMenuContainer().getParent().setStyleName("player");
-
-
-		
-		if (collectionDo.getMeta() !=null)
+		if(this.collectionDo!=null)
 		{
-			if(collectionDo.getMeta().getPermissions() != null)
-			{
-			if (collectionDo.getMeta().getPermissions().toString().contains("edit") || collectionDo.getMeta().isIsCollaborator()){
-				switchContainer.setVisible(true);
-				if(collectionDo.getSettings() != null)
-				{
-					if(collectionDo.getSettings().getComment() != null)
-					{
-						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on"))
-						{
-							commentField.setEnabled(true);
-							commentssection.getElement().getStyle().setOpacity(1);
-							changeAssignmentStatusButton.setChecked(true);
-							postCommentBtn.setEnabled(true);
-							postCommentBtn.setStyleName(PRIMARY_STYLE);
-						}
-						else
-						{
-							commentField.setEnabled(false);
-							postCommentBtn.setEnabled(false);
-							postCommentBtn.removeStyleName(PRIMARY_STYLE);
-							postCommentBtn.addStyleName(SECONDARY_STYLE);
-							postCommentBtn.addStyleName(DISABLED_STYLE);
-							commentssection.getElement().getStyle().setOpacity(0.5);
-							changeAssignmentStatusButton.setChecked(false);
-						}
-					}
-					else
-					{
-						commentField.setEnabled(true);
-						postCommentBtn.removeStyleName(SECONDARY_STYLE);
-						postCommentBtn.removeStyleName(DISABLED_STYLE);
-						postCommentBtn.addStyleName(PRIMARY_STYLE);
-						commentssection.getElement().getStyle().setOpacity(1);
-						changeAssignmentStatusButton.setChecked(true);
-					}
-				}
-				else
-				{
-					commentField.setEnabled(true);
-					commentssection.getElement().getStyle().setOpacity(1);
-					changeAssignmentStatusButton.setChecked(true);
-				}
-				
-				
-				
+			teamContainer.clear();
+			if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
+				 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
+				 teamContainer.add(collaboratorsUc);
+				setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?(collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND()):"");
+			}else{
+				setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?(collectionDo.getUser().getUsernameDisplay()):"");
 			}
-			else
-			{				
-				if(collectionDo.getSettings() != null)
+			if (collectionDo.getMeta() !=null)
+			{
+				if(collectionDo.getMeta().getPermissions() != null)
 				{
-					if(collectionDo.getSettings().getComment() != null)
+
+				if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
+					switchContainer.setVisible(true);
+						if(collectionDo.getSettings() != null)
+							{
+								if(collectionDo.getSettings().getComment() != null)
+								{
+									
+										if(TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment()))
+										{
+											commentField.setEnabled(true);
+											commentssection.getElement().getStyle().setOpacity(1);
+											changeAssignmentStatusButton.setValue(true);
+											postCommentBtn.setEnabled(true);
+											postCommentBtn.setStyleName(PRIMARY_STYLE);
+										}else{
+											commentField.setEnabled(false);
+											postCommentBtn.setEnabled(false);
+											postCommentBtn.removeStyleName(PRIMARY_STYLE);
+											postCommentBtn.addStyleName(SECONDARY_STYLE);
+											postCommentBtn.addStyleName(DISABLED_STYLE);
+											commentssection.getElement().getStyle().setOpacity(0.5);
+											changeAssignmentStatusButton.setValue(false);
+										}
+								}else{
+									commentssection.setVisible(true);
+									commentField.setEnabled(true);
+									postCommentBtn.removeStyleName(SECONDARY_STYLE);
+									postCommentBtn.removeStyleName(DISABLED_STYLE);
+									postCommentBtn.addStyleName(PRIMARY_STYLE);
+									commentssection.getElement().getStyle().setOpacity(1);
+									changeAssignmentStatusButton.setValue(true);
+								}
+						 }else{
+								commentField.setEnabled(true);
+								commentssection.getElement().getStyle().setOpacity(1);
+								changeAssignmentStatusButton.setValue(true);
+							}
+				}else{				
+					if(collectionDo.getSettings() != null)
 					{
-						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-off"))
-						{
-							commentssection.setVisible(false);
-						}
-						else
-						{
-							commentssection.setVisible(true);
-						}
-						
-					}
-					
+								if(TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
+								{
+									commentssection.setVisible(false);
+								}else{
+									commentssection.setVisible(true);
+								}
+								
+					}else{
+						commentssection.setVisible(true);
+					}	
+					switchContainer.setVisible(false);	
 				}
-				else
-				{
-					commentssection.setVisible(true);
-				}			
-				
+				}else{
+					switchContainer.setVisible(false);	
+				}
+			}else{
 				switchContainer.setVisible(false);	
 			}
+			if(!StringUtil.isEmpty(collectionDo.getViews())){
+				setViewCount(collectionDo.getViews());
 			}
-			else
-			{
-				switchContainer.setVisible(false);	
+			setUserProfileImage(collectionDo.getUser().getGooruUId());
+			if(collectionDo.getMetaInfo()!=null&&collectionDo.getMetaInfo().getCourse()!=null){
+				renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 			}
+			renderStandards(standardsContainer,getStandardsMap((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getStandards()!=null)?this.collectionDo.getMetaInfo().getStandards():null));
+			renderLanguageObjective(collectionDo.getLanguageObjective()!=null?collectionDo.getLanguageObjective():"");
+			renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges()!=null?collectionDo.getDepthOfKnowledges():null);
+			renderInstructionalMethod(collectionDo.getInstructionalMethod()!=null?collectionDo.getInstructionalMethod():null);
+			renderAudience(collectionDo.getAudience()!=null?collectionDo.getAudience():null);
+			renderLearningAndInnovationSkill(collectionDo.getLearningSkills()!=null?collectionDo.getLearningSkills():null);
+			if(collectionDo.getKeyPoints() != null){
+				if(collectionDo.getKeyPoints().length()>410){
+					authorPanel.getElement().getStyle().setHeight(295, Unit.PX);
+				}
+				else if(collectionDo.getKeyPoints().length()>300){
+					authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
+				}
+				else if(collectionDo.getKeyPoints().length()>100){
+					authorPanel.getElement().getStyle().setHeight(180, Unit.PX);
+				}
+				else{
+					authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
+				}
+				teacherTipLabel.setHTML(""+collectionDo.getKeyPoints()+"");		
+				teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
+				teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
+			}else{
+				teacherTipLabel.setHTML("");
+				authorPanel.getElement().getStyle().clearHeight();
+			}
+			setLeftPanelHeight();
 		}
-		else
-		{
-			switchContainer.setVisible(false);	
-		}
-		
-		
-		setViewCount(collectionDo.getViews());
-
-		setLeftPanelHeight();
 	}
 	private void setLeftPanelHeight(){
 		 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
 			@Override
 			public void execute() {
-				int height=rightPanelMetadata.getElement().getOffsetHeight();
+				int height=rightPanelContainer.getElement().getOffsetHeight();
 				if(height>650){
 					leftPanelContainer.getElement().setAttribute("style", "min-height:"+height+"px;");
 				} 
@@ -337,42 +350,88 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	      });
 	}
 
+	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds){
+		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
+		if(standareds!=null && standareds.size()>0){
+			for(int i=0;i<standareds.size();i++){
+				Map<String, String> standardMap=new HashMap<String, String>();
+				standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
+				standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
+				standardsList.add(standardMap);
+			}
+		}
+		return standardsList;
+	}
 	
 	@Override
     public void setInSlot(Object slot, Widget content) {
-		if(slot==CollectionPlayerMetadataPresenter.METADATA_PRESENTER_SLOT){
-			//metadataContainer.clear();
+		if(slot!=null && slot==CollectionPlayerMetadataPresenter.METADATA_PRESENTER_SLOT){
+			metadataContainer.clear();
 			if(content!=null){
-				if(leftPanelContainer.getWidgetCount()>1){
-					leftPanelContainer.remove(0);
-				}
-				leftPanelContainer.insert(content,0);
+				metadataContainer.add(content);
 			}
 		}
 	}
 	
 
 	public void setLabelAndIds() {
-//		collectionSummaryLbl.setVisible(false);
+		lblAuthor.setText(i18n.GL0573());
+		lblAuthor.getElement().setId("lblAuthor");
+		lblAuthor.getElement().setAttribute("alt",i18n.GL0573());
+		lblAuthor.getElement().setAttribute("title",i18n.GL0573());
+		  
+		lblCourse.setText(i18n.GL0574());
+		lblCourse.getElement().setId("lblCourse");
+		lblCourse.getElement().setAttribute("alt",i18n.GL0574());
+		lblCourse.getElement().setAttribute("title",i18n.GL0574());
 		
+		lblStandards.setText(i18n.GL0575());
+		lblStandards.getElement().setId("lblStandards");
+		lblStandards.getElement().setAttribute("alt",i18n.GL0575());
+		lblStandards.getElement().setAttribute("title",i18n.GL0575());
 		
-//		collectionSummaryLbl.setText(i18n.GL1544);
-//		emptyMsgDescOne.setText(i18n.GL1545);
-//		emptyMsgDescTwo.setText(i18n.GL1546);
-//		insightsHeaderText.setText(i18n.GL1626());
-//		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
-//		insightsHeaderText.getElement().setAttribute("alt",i18n.GL1626());
-//		insightsHeaderText.getElement().setAttribute("title",i18n.GL1626());
-//		
-//		insightsContentText.setText(i18n.GL1627());
-//		insightsContentText.getElement().setId("lblInsightsContentText");
-//		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
-//		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
+		previewFlagButton.setText(i18n.GL0556());
+		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
+		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
+		previewFlagButton.getElement().setAttribute("title",i18n.GL0556());
 		
-		studyMainContianer.getElement().getStyle().setPosition(Position.RELATIVE);
+		previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+		lbllanguageObjectiveText.setText(i18n.GL1721());
+		lbllanguageObjectiveText.getElement().setId("lblLanguageObjectiveText");
+		lbllanguageObjectiveText.getElement().setAttribute("alt",i18n.GL1721());
+		lbllanguageObjectiveText.getElement().setAttribute("title",i18n.GL1721());
 		
 		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
-		//metadataContainer.getElement().setId("fpnlMetadataContainer");
+		metadataContainer.getElement().setId("fpnlMetadataContainer");
+		teacherContainer.getElement().setId("pnlTeacherContainer");
+		classInfoPanel.getElement().setId("pnlClassInfoPanel");
+		lblClassInfo.getElement().setId("lblClassInfo");
+		lblclassTitle.getElement().setId("lblClassTitle");
+		classTitleValue.getElement().setId("lblClassTitleValue");
+		teacherPanel.getElement().setId("pnlTeacherPanel");
+		lblTeacher.getElement().setId("lblTeacher");
+		teacherProfileContainer.getElement().setId("pnlTeacherProfileContainer");
+		teacherNameLabel.getElement().setId("lblTeacherNameLabel");
+		dueDateSection.getElement().setId("pnlDueDateSection");
+		lbldueDate.getElement().setId("lbldueDate");
+		dueDate.getElement().setId("lbldueDateLabel");
+		directionSection.getElement().setId("pnlDirectionSection");
+		lblDirections.getElement().setId("lblDirections");
+		lblDirectionsDesc.getElement().setId("lblDirectionsDesc");
+		authorPanel.getElement().setId("pnlAuthorPanel");
+		profileThumbnailImage.getElement().setId("imgProfileThumbnailImage");
+		userNameLabel.getElement().setId("lblUserNameLabel");
+		teamContainer.getElement().setId("fpnlTeamContainer");
+		courseSection.getElement().setId("pnlCourseSection");
+		courseTitle.getElement().setId("fpnlCourseTitle");
+		standardSection.getElement().setId("pnlStandardSection");
+		standardsContainer.getElement().setId("fpnlStandardsContainer");
+		viewSection.getElement().setId("pnlViewSection");
+		viewsCountLabel.getElement().setId("lblViewsCountLabel");
+		languageObjectiveContainer.getElement().setId("pnlLanguageObjectiveContainer");
+		lbllanguageObjective.getElement().setId("lbllanguageObjective");
+		seeMoreAnchor.getElement().setId("lnkSeeMoreAnchor");
 		commentCount.getElement().setId("lblCommentCount");
 		commentsContainer.getElement().setId("vpnlCommentsContainer");
 		seeMoreButton.setText(i18n.GL0508());
@@ -412,74 +471,199 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		characterLimit.getElement().setAttribute("alt",i18n.GL0143());
 		characterLimit.getElement().setAttribute("title",i18n.GL0143());
 		postCommentBtn.setEnabled(false);
+		userPhoto.getElement().setId("imgUserPhoto");
 		commentField.getElement().setId("tatCommentField");
 		StringUtil.setAttributes(commentField, true);
 		
+		lbldepthOfKnowledgeText.setText(i18n.GL1693());
+		lbldepthOfKnowledgeText.getElement().setId("lbldepthOfKnowledgeText");
+		lbldepthOfKnowledgeText.getElement().setAttribute("alt",i18n.GL1693());
+		lbldepthOfKnowledgeText.getElement().setAttribute("title",i18n.GL1693());
 		
+		lbllearningAndInnovationText.setText(i18n.GL1722());
+		lbllearningAndInnovationText.getElement().setId("lbllearningAndInnovationText");
+		lbllearningAndInnovationText.getElement().setAttribute("alt",i18n.GL1722());
+		lbllearningAndInnovationText.getElement().setAttribute("title",i18n.GL1722());
 		
-//		dataInsightsPanel.getElement().setId("pnlDataInsightsPanel");
-//		frameContainer.getElement().setId("fpnlFrameContainer");
-//		messageContainer.getElement().setId("fpnlMessageContainer");
+		lblAudienceText.setText(i18n.GL1723());
+		lblAudienceText.getElement().setId("lblAudienceText");
+		lblAudienceText.getElement().setAttribute("alt",i18n.GL1723());
+		lblAudienceText.getElement().setAttribute("title",i18n.GL1723());
+		
+		lblInstructionalmethodText.setText(i18n.GL1724());
+		lblInstructionalmethodText.getElement().setId("lblInstructionalmethodText");
+		lblInstructionalmethodText.getElement().setAttribute("alt",i18n.GL1724());
+		lblInstructionalmethodText.getElement().setAttribute("title",i18n.GL1724());
 	}
-	
-	/*public void setUserName(String userName){
-		userNameLabel.setText(userName);
-		usernameAnchor = new Anchor();
-		//userNameLabel.setText(userName);
-		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
-			usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+	public void setUserName(String userName){
+		if(collectionDo.getUser()!=null && collectionDo.getUser().getCustomFields()!=null){
+			if(collectionDo.getUser().getCustomFields().get(0).getOptionalValue()!=null){
+				String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
+				if(TRUE.equalsIgnoreCase(getUserProfileStatus)){
+					usernameAnchor = new Anchor();
+					if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
+						usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+					}
+				else{
+					String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
+					usernameAnchor.setHref(token);
+				}
+					usernameAnchor.setText(userName);
+					usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+					usernameAnchor.setTarget("_blank");
+					userNameLabel.setText("");
+					userNameLabel.getElement().appendChild(usernameAnchor.getElement());
+				}
+				else{
+					userNameLabel.setText(userName);
+					userNameLabel.getElement().setAttribute("alt",userName);
+					userNameLabel.getElement().setAttribute("title",userName);
+				}
+			}
+			
 		}
-	else{
-		String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
-		usernameAnchor.setHref(token);
+		
 	}
-		usernameAnchor.setText(userName);
-		usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
-		usernameAnchor.setTarget("_blank");
-		userNameLabel.setText("");
-		userNameLabel.getElement().appendChild(usernameAnchor.getElement());
-	}*/
-	
-	
-	
-	
+	public void setUserProfileImage(String profileUserId){
+		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?p="+Math.random());
+	}
+	@UiHandler("profileThumbnailImage")
+	public void setDefaultProfileImage(ErrorEvent event){
+		profileThumbnailImage.setUrl("images/settings/setting-user-image.png");
+	}
+	public void setViewCount(String viewCount){
+		if(!StringUtil.isEmpty(viewCount)){
+			String viewsText=Integer.parseInt(viewCount)==1?viewCount+" "+i18n.GL1428():viewCount+" "+i18n.GL0934();
+			viewsCountLabel.setText(viewsText);
+			viewsCountLabel.getElement().setAttribute("alt",viewsText);
+			viewsCountLabel.getElement().setAttribute("title",viewsText);
+		}
+	}
+	public void renderCourseInfo(List<String> courseInfo){
+		courseTitle.clear();
+		if(courseInfo!=null&&courseInfo.size()>0){
+			courseSection.setVisible(true);
+			SearchUiUtil.renderMetaData(courseTitle, courseInfo, 0);
+			Label dummyLabel=new Label();
+			dummyLabel.setStyleName(playerStyle.clearBoth());
+			courseTitle.add(dummyLabel);
+		}else{
+			courseSection.setVisible(false);
+		}
+	}
 	public void setCourseTitle(String title){
-		//courseTitle.setText(title);
 	}
 	public void setLikesCount(int likesCount){
 		
 	}
 	public void resetMetadataFields(){
-		rightPanelMetadata.resetMetadataFields();
-		if(menuMetadataWidget!=null){
-			menuMetadataWidget.resetMetadataFields();
-		}
+		userNameLabel.setText("");
+		userNameLabel.getElement().setAttribute("alt","");
+		userNameLabel.getElement().setAttribute("title","");
+		viewsCountLabel.setText("");
+		viewsCountLabel.getElement().setAttribute("alt","");
+		viewsCountLabel.getElement().setAttribute("title","");
 		commentField.setText("");
 		commentField.getElement().setAttribute("alt","");
 		commentField.getElement().setAttribute("title","");
 		commentField.setVisible(false);
 		loginMessaging.setVisible(true);
 		modifyEditControls(false);
+		getFlagButton().setText(i18n.GL0556());
+		getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
+		getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 		this.collectionDo=null;
 	}
 
 	@Override
 	public void setUserProfileName(String gooruUid) {
-		rightPanelMetadata.setUserProfileName(gooruUid);
-		if(menuMetadataWidget!=null){
-			menuMetadataWidget.setUserProfileName(gooruUid);
+		Anchor anchor = new Anchor();
+		String userName = userNameLabel.getText();
+		if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
+			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		}else{
+				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+((collectionDo.getUser()!=null && collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
+				anchor.setHref(token);
+		}
+		anchor.setText(userName);
+		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+		anchor.setTarget("_blank");
+		userNameLabel.setText("");
+		userNameLabel.getElement().appendChild(anchor.getElement());
+	}
+	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
+		standardsContainer.clear();
+		String stdCode ="";
+		String stdDec ="";
+		if (standardsList != null&&standardsList.size()>0) {
+			standardSection.setVisible(true);
+			Iterator<Map<String, String>> iterator = standardsList.iterator();
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			while (iterator.hasNext()) {
+				Map<String, String> standard = iterator.next();
+				if(standard.containsKey(STANDARD_CODE)){
+					stdCode = standard.get(STANDARD_CODE);
+				}
+				if(standard.containsKey(STANDARD_DESCRIPTION)){
+					stdDec = standard.get(STANDARD_DESCRIPTION);
+				}
+				if (count > 2) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				}else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
+					standardsContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (standardsList.size()>18){
+				final Label left = new Label("+"+(standardsList.size() - 18));
+				toolTipwidgets.add(left);
+			}
+			if (standardsList.size() > 2) {
+				Integer moreStandardsCount = standardsList.size() - 3;
+				if (moreStandardsCount > 0){
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList);
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
+					standardsContainer.add(toolTipUc);
+				}
+			}
+		}else{
+			standardSection.setVisible(false);
 		}
 	}
 	
 	public void displayAuthorDetails(boolean isDisplayDetails) {
-		rightPanelMetadata.displayAuthorDetails(isDisplayDetails);
-		if(menuMetadataWidget!=null){
-			menuMetadataWidget.displayAuthorDetails(isDisplayDetails);
-		}
+		authorPanel.setVisible(isDisplayDetails);
+		teacherContainer.setVisible(!isDisplayDetails);
 	}
 	
+	@UiHandler("previewFlagButton")
+	public void clickOnpreviewFlagButton(ClickEvent event) {
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+		Map<String,String> params = new LinkedHashMap<String,String>();
+		params.put("id", collectionDo.getGooruOid());
+		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+		if(view!=null&&END.equalsIgnoreCase(view)){
+			params.put("view", "end");
+			params.put("tab", "flag");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}else{
+			params.put("tab", "flag");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
+		
+	}
 
-	
+	public Anchor getFlagButton() {
+		return previewFlagButton;
+	}
 
 	@Override
 	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList,
@@ -493,42 +677,96 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		
 	}
 
+	@Override
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
+		displayAuthorDetails(false);
+		teacherContainer.setVisible(true);
+		classTitleValue.setText(classpageItemDo.getTitle()!=null?classpageItemDo.getTitle():"");
+		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
+		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle());
+		
+		lblclassTitle.setText(i18n.GL1578());
+		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
+		lblclassTitle.getElement().setAttribute("title",i18n.GL1578());
+		
+		lblClassInfo.setText(i18n.GL1579());
+		lblClassInfo.getElement().setAttribute("alt",i18n.GL1579());
+		lblClassInfo.getElement().setAttribute("title",i18n.GL1579());
+		
+		lblTeacher.setText(i18n.GL1580());
+		lblTeacher.getElement().setAttribute("alt",i18n.GL1580());
+		lblTeacher.getElement().setAttribute("title",i18n.GL1580());
+		
+		lbldueDate.setText(i18n.GL1581());
+		lbldueDate.getElement().setAttribute("alt",i18n.GL1581());
+		lbldueDate.getElement().setAttribute("title",i18n.GL1581());
+		
+		lblDirections.setText(i18n.GL1582());
+		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
+		lblDirections.getElement().setAttribute("title",i18n.GL1582());
+		
+		setDueDateText(classpageItemDo.getPlannedEndDate());
+		setDirectionText(classpageItemDo.getDirection());
+		teacherNameLabel.setText(classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("alt",classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
+		
+		teacherProfileContainer.clear();
+		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
+	}
+	
+	public void setDueDateText(String text){
+		if(!StringUtil.isEmpty(text)){
+			dueDate.setText(text);
+			dueDate.getElement().setAttribute("alt",text);
+			dueDate.getElement().setAttribute("title",text);
+			dueDateSection.setVisible(true);
+		}else{
+			dueDateSection.setVisible(false);
+		}
+	}
+	public void setDirectionText(String text){
+		if(!StringUtil.isEmpty(text)){
+			lblDirectionsDesc.setText(text);
+			lblDirectionsDesc.getElement().setAttribute("alt",text);
+			lblDirectionsDesc.getElement().setAttribute("title",text);
+			directionSection.setVisible(true);
+		}else{
+			directionSection.setVisible(false);
+		}
+	}
+	public void hideCollectionDetails(boolean hide){
+		authorPanel.setVisible(!hide);
+		courseSection.setVisible(!hide);
+		standardSection.setVisible(!hide);
+		viewSection.setVisible(!hide);
+	}
+	
 
-//	@Override
-//
-//	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
-//		rightPanelMetadata.setTeacherInfo(assignmentParentDo);
-//		if(menuMetadataWidget!=null){
-//			menuMetadataWidget.setTeacherInfo(assignmentParentDo);
-//		}
-//	
-//	}
-//	@UiHandler("teacherProfileThumbnailImage")
-//	public void setDefaultTeacherProfileImage(ErrorEvent event){
-//		teacherProfileThumbnailImage.setUrl("images/settings/setting-user-image.png");
-//	}
-	
-//	@UiHandler("insightsFrame")
-//	public void ifrmaeContentLoaded(LoadEvent laodEvent){
-//		loginPopupTimer.schedule(500);
-//	}
-	
+	public class TeacherImage extends Composite{
+		private Image image=null;
+		private String teacherImageUrl="";
+		public TeacherImage(String imageUrl){
+			initWidget(image=new Image());
+			this.teacherImageUrl=imageUrl;
+			image.setStyleName(playerStyle.userImage());
+			image.addErrorHandler(new TeacherErrorEvent());
+		}
+		public void onLoad(){
+			image.setUrl(teacherImageUrl);
+		}
+		public class TeacherErrorEvent implements ErrorHandler{
+			@Override
+			public void onError(ErrorEvent event) {
+				image.setUrl("images/settings/setting-user-image.png");
+			}
+		}
+	}
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(true);
-		}else if(page!=null&&page.equals("teach")){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(false);
+		}else if(page!=null&&TEACH.equals(page)){
 		}else{
-//			frameContainer.clear();
-//			frameContainer.setVisible(true);
-//			messageContainer.setVisible(false);
-//			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-//					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));
 		}
 	}
 	
@@ -537,41 +775,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			sessionId = "";
 		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-//		if(AppClientFactory.isAnonymous()){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(true);
-//		}else if(page!=null&&page.equals("teach")){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(false);
-//		}else{
-//			frameContainer.clear();
-//			frameContainer.setVisible(true);
-//			messageContainer.setVisible(false);
-//			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
-//					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
-//		}
 	}
 	
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-//		if(AppClientFactory.isAnonymous()){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(true);
-//		}else if(page!=null&&page.equals("teach")){
-//			frameContainer.clear();
-//			frameContainer.setVisible(false);
-//			messageContainer.setVisible(false);
-//		}else{
-//			frameContainer.clear();
-//			frameContainer.setVisible(true);
-//			messageContainer.setVisible(false);
-//			sessionId=sessionId!=null?sessionId:"";
-//			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-//					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
-//		}
 	}
 	
 	public class DataInsightsIframe extends Composite{
@@ -589,9 +796,131 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	}
 	
 	public void clearDashBoardIframe(){
-		//insightsFrame.setUrl("");
 	}
 	
+	public void renderLanguageObjective(String languageObjective){	
+		lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
+		if(!StringUtil.isEmpty(languageObjective)){
+			languageObjectiveValue=languageObjective;
+			languageObjectiveContainer.setVisible(true);
+			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
+			if(languageObjective.length()>=200){
+				seeMoreAnchor.setText(i18n.GL1728());	
+				seeMoreAnchor.getElement().setAttribute("alt",i18n.GL1728());
+				seeMoreAnchor.getElement().setAttribute("title",i18n.GL1728());
+				seeMoreAnchor.setVisible(true);
+				lbllanguageObjective.setText(languageObjective.substring(0,200));
+				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
+				lbllanguageObjective.getElement().setAttribute("title",languageObjective.substring(0,200));
+			}else{
+				seeMoreAnchor.setVisible(false);
+				lbllanguageObjective.setText(languageObjective);
+				lbllanguageObjective.getElement().setAttribute("alt",languageObjective);
+				lbllanguageObjective.getElement().setAttribute("title",languageObjective);
+			}
+		}else{
+				languageObjectiveContainer.setVisible(false);
+		}
+	}
+	public void renderDepthOfKnowledge(List<checkboxSelectedDo> depthofKnowledgeList ) {
+		depthOfKnowledgeContainer.setVisible(false);
+		if(depthofKnowledgeList!=null&&depthofKnowledgeList.size()>0){
+			depthOfKnowledgePanel.clear();
+			boolean depthofKnowledgeValue = false;
+			for(checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
+				if(checkboxSelectedDo.isSelected()){
+					depthofKnowledgeValue = true;
+					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
+					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
+					depthofKnowledge.getElement().setAttribute("style", "display:table");
+					depthOfKnowledgePanel.add(depthofKnowledge);
+				}
+			}
+			if(depthofKnowledgeValue){
+				depthOfKnowledgeContainer.setVisible(true);
+			}else{
+				depthOfKnowledgeContainer.setVisible(false);
+			}
+		}else{
+			depthOfKnowledgeContainer.setVisible(false);
+		}
+	}
+	public void renderInstructionalMethod(List<checkboxSelectedDo> instructionmethodList){
+		InstructionalmethodContainer.setVisible(false);
+		if(instructionmethodList!=null&&instructionmethodList.size()>0){
+			instructionalmethodPanel.clear();
+			boolean instructionMethod=false;
+			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) {
+				if(checkboxSelectedDo.isSelected()){
+					instructionMethod = true;
+					Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
+					instructionalmethodPanel.add(lblInstructionMethod);
+					InstructionalmethodContainer.setVisible(true);
+				}
+			}
+			if(instructionMethod){
+				InstructionalmethodContainer.setVisible(true);
+			}else{
+				InstructionalmethodContainer.setVisible(false);
+			}
+		}else{
+				InstructionalmethodContainer.setVisible(false);
+		}
+	}
+	public void renderAudience(List<checkboxSelectedDo> audienceList){
+		audienceContainer.setVisible(false);
+		if(audienceList!=null&&audienceList.size()>0){
+			audiencePanel.clear();
+			boolean audience=false;
+			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
+				if(checkboxSelectedDo.isSelected()){
+					audience = true;
+					Label lblaudience = new Label(checkboxSelectedDo.getValue());
+					audiencePanel.add(lblaudience);
+				}
+			}
+			if(audience){
+				audienceContainer.setVisible(true);
+			}
+			else{
+				audienceContainer.setVisible(false);
+			}
+		}
+		else{
+			audienceContainer.setVisible(false);
+		}
+	}
+	public void renderLearningAndInnovationSkill(List<checkboxSelectedDo> learningSkillsList){
+		learningAndInnovationSkillsContainer.setVisible(false);
+		if(learningSkillsList!=null&&learningSkillsList.size()>0){
+			learningAndInnovationSkillPanel.clear();
+			boolean learningAndInnovationSkill = false;
+			Label lbllearningSkills = null;
+			for (checkboxSelectedDo checkboxSelectedDo : learningSkillsList) {
+				if(checkboxSelectedDo.isSelected()){
+					learningAndInnovationSkill = true;
+					lbllearningSkills = new Label(checkboxSelectedDo.getValue());
+					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
+					lbllearningSkills.getElement().setAttribute("style", "display:table");
+					learningAndInnovationSkillPanel.add(lbllearningSkills);
+				}
+			}
+			if(learningAndInnovationSkill){
+				learningAndInnovationSkillsContainer.setVisible(true);
+			}else{
+				learningAndInnovationSkillsContainer.setVisible(false);
+			}
+		}else{
+			learningAndInnovationSkillsContainer.setVisible(false);
+		}
+	}
+	@UiHandler("seeMoreAnchor")
+	public void clickSeeAll(ClickEvent event)
+	{
+		seeMoreAnchor.setVisible(false);
+		lbllanguageObjective.setText("");
+		lbllanguageObjective.setText(languageObjectiveValue);
+	}
 	
 	/**
 	 * @function setCommentsText 
@@ -629,7 +958,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	*/
 	@Override
 	public void setCommentsWidget(CommentsDo commentsDo, String action) {
-		if(action.equalsIgnoreCase(CREATE)){
+		if(CREATE.equalsIgnoreCase(action)){
 			setCommentsText(INCREMENT_BY_ONE);
 		}
 		commentsContainer.add(new CommentWidgetChildView(commentsDo,collectionDo));
@@ -806,7 +1135,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			int size = commentDoList.getSearchResults().size();
 			paginationCount=paginationCount+size;
 			if(size>0) {
-				
 				for(int i=0;i<size;i++) {
 					setCommentsWidget(commentDoList.getSearchResults().get(i),PAGINATION);
 				}
@@ -839,14 +1167,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	 */	
 	@Override
 	public void updateCommentChildView(String commentUid, String action) {
-		if(!commentUid.isEmpty() && action.equals(DELETE)) {
+		if(!commentUid.isEmpty() && DELETE.equalsIgnoreCase(action)) {
 			deleteComment(commentUid);
 			addComment.setVisible(true);
-		} else if (!commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if (!commentUid.isEmpty() && EDIT.equalsIgnoreCase(action)) {
 			addComment.setVisible(false);
 			lblCharLimitComments.setVisible(false);
 			editComment(commentUid);
-		} else if(commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if(!commentUid.isEmpty() && EDIT.equalsIgnoreCase(action)) {
 			lblCharLimitComments.setVisible(true);
 			addComment.setVisible(true);
 		}
@@ -927,7 +1255,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			loginMessaging.setVisible(false);
 			String commentorImage = AppClientFactory.loggedInUser.getUserUid();
 			userPhoto.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+commentorImage+".png");
-//			userPhoto.setUrl(AppClientFactory.loggedInUser.getSettings() != null ? AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+commentorImage+".png" : "");
 			userPhoto.addErrorHandler(new ErrorHandler() {
 				@Override
 				public void onError(ErrorEvent event) {
@@ -974,7 +1301,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 						isHavingBadWords = value;
 						postCommentBtn.setEnabled(true);
 						if (value){
-							commentField.getElement().getStyle().setBorderColor("orange");
+							commentField.getElement().getStyle().setBorderColor(ORANGE_COLOR);
 							characterLimit.setText(i18n.GL0554());
 							characterLimit.getElement().setAttribute("alt",i18n.GL0554());
 							characterLimit.getElement().setAttribute("title",i18n.GL0554());
@@ -983,9 +1310,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
 							characterLimit.setVisible(false);
-							
 							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), removeHtmlTags(commentField.getText()));
-							
 							commentField.setText("");
 							commentField.getElement().setAttribute("alt","");
 							commentField.getElement().setAttribute("title","");
@@ -1007,7 +1332,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	@UiHandler("changeAssignmentStatusButton")
 	public void clickOnStatusChangeBtn(ClickEvent event) {
-		if (changeAssignmentStatusButton.isChecked()){
+		if (changeAssignmentStatusButton.getValue()){
 		getUiHandlers().updateCommentsStatus("turn-on");
 		}
 		else{
@@ -1016,14 +1341,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	}
 	
 	public void changeCommentsButton(CollectionDo result) {
-
-					
 					if(result.getSettings()!=null)
 					{
 						if(result.getSettings().getComment()!=null)
 						{
-					
-							if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
+							if(TURNON.equalsIgnoreCase(result.getSettings().getComment()))
 							{
 								hideorShowEditButtonForAllCommentWidgets(true);
 								requiredLabel.removeStyleName(playerStyle.mutedText());
@@ -1032,10 +1354,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 								postCommentBtn.setEnabled(true);
 								postCommentBtn.setStyleName(PRIMARY_STYLE);
 								commentssection.getElement().getStyle().setOpacity(1);
-								changeAssignmentStatusButton.setChecked(true);
-							}
-							else
-							{
+								changeAssignmentStatusButton.setValue(true);
+							}else{
 								hideorShowEditButtonForAllCommentWidgets(false);
 								requiredLabel.setStyleName(playerStyle.mutedText());
 								optionalLabel.setStyleName(playerStyle.mutedText());								
@@ -1045,18 +1365,15 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 								postCommentBtn.addStyleName(SECONDARY_STYLE);
 								postCommentBtn.addStyleName(DISABLED_STYLE);
 								commentssection.getElement().getStyle().setOpacity(0.5);
-								changeAssignmentStatusButton.setChecked(false);
+								changeAssignmentStatusButton.setValue(false);
 							}
 							
-						}
-						else
-						{
+						}else{
 							hideorShowEditButtonForAllCommentWidgets(true);
 							requiredLabel.setStyleName(playerStyle.mutedText());
 							optionalLabel.setStyleName(playerStyle.mutedText());
 						}
-					}
-					else
+					}else
 					{
 						hideorShowEditButtonForAllCommentWidgets(true);
 						requiredLabel.setStyleName(playerStyle.mutedText());
@@ -1113,7 +1430,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private class OnCommentsFieldBlur implements BlurHandler{
 		@Override
 		public void onBlur(BlurEvent event) {
-		
 			if (commentField.getText().length() > 0){
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", commentField.getText());
@@ -1123,7 +1439,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
 						if (value){
-							commentField.getElement().getStyle().setBorderColor("orange");
+							commentField.getElement().getStyle().setBorderColor(ORANGE_COLOR);
 							characterLimit.setText(i18n.GL0554());
 							characterLimit.getElement().setAttribute("alt",i18n.GL0554());
 							characterLimit.getElement().setAttribute("title",i18n.GL0554());
@@ -1155,7 +1471,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private class OnCommentsFieldClicked implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-		
 			commentField.getElement().getStyle().clearBackgroundColor();
 			commentField.getElement().getStyle().setBorderColor("#ccc");
 			if(commentField.getText().trim().length()==0){
@@ -1186,7 +1501,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private class ValidateConfirmText implements KeyUpHandler {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			if(commentField.getText().length()>500) {
+			if(commentField.getText()!=null&&commentField.getText().length()>500) {
 				commentField.setText(commentField.getText().substring(0,500));
 				commentField.getElement().setAttribute("alt",commentField.getText().substring(0,500));
 				commentField.getElement().setAttribute("title",commentField.getText().substring(0,500));
@@ -1194,7 +1509,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				characterLimit.getElement().setAttribute("alt",i18n.GL0143());
 				characterLimit.getElement().setAttribute("title",i18n.GL0143());
 				characterLimit.setVisible(true);
-			} else {
+			}else {
 				if(commentField.getText().trim().length()==0){
 					modifyEditControls(false);
 				}else{
@@ -1251,13 +1566,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		successPostMsg.setVisible(isVisible);
 	}
 	
-	
-	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
 	}
-
 	/**
 	 * @function removeHtmlTags 
 	 * 
@@ -1278,40 +1589,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
         return html;
 	}
 
-	public class ResizeLogicEvent implements ResizeHandler{
-		@Override
-		public void onResize(ResizeEvent event) {
-			placeCollectionMetadataContainer();
-		}
-	}
-	public void placeCollectionMetadataContainer(){
-		int clientWidth=Window.getClientWidth();
-		if(clientWidth>991){
-			FlowPanel menuContainer=getUiHandlers().getMenuContainer();
-			menuContainer.getParent().setStyleName("player");
-		}
-	}
-
-	@Override
-	public void setViewCount(String viewCount) {
-		rightPanelMetadata.setViewCount(viewCount);
-		if(menuMetadataWidget!=null){
-			menuMetadataWidget.setViewCount(viewCount);
-		}
-	}
-
-	@Override
-	public Anchor getFlagButton() {
-		return rightPanelMetadata.getFlagButton();
-	}
-
-	@Override
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
-		rightPanelMetadata.setTeacherInfo(classpageItemDo);
-		if(menuMetadataWidget!=null){
-			menuMetadataWidget.setTeacherInfo(classpageItemDo);
-		}
-	}
+	
 
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;

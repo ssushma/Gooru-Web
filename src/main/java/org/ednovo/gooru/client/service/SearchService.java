@@ -443,6 +443,7 @@ public interface SearchService extends BaseService {
 	
 	
 	public SearchResourcesTagsDo getResourceTags(String resourceId, String offSet, String limit) throws GwtException, ServerDownException; 
+
 	/**
 	 * This method is used to get 21 century skils details
 	 * @return
@@ -454,5 +455,8 @@ public interface SearchService extends BaseService {
 	 * @return
 	 */
 	public SearchDo<StandardFo> getSuggestCenturyByQuery(SearchDo<StandardFo> centuryDo);
+	
+	public String isClientSideLoggersEnabled() throws GwtException, ServerDownException;
 
-}
+
+} 

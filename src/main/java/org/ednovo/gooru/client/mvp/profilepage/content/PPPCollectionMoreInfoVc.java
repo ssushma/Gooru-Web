@@ -336,7 +336,6 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 
 					} catch (Exception e) {
 						gradeListInt.add(0);
-						e.printStackTrace();
 					}
 				}
 			}

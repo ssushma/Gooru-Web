@@ -109,7 +109,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				collectionProgressDataList= (ArrayList<CollectionProgressDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionProgressDataDo>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -129,7 +128,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				collectionSummaryUsersDataDoList= (ArrayList<CollectionSummaryUsersDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryUsersDataDo>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -149,7 +147,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<UserDataDo>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -161,7 +158,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			String collectionId, String classId, String userId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryUsersDataDo> sessionDataList=new ArrayList<CollectionSummaryUsersDataDo>();
-		//String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/sessions.json?sessionToken=04fb9f7e-47c3-11e4-8d6c-123141016e2a&data={%22fields%22:%22%22,%22filters%22:{%22userUId%22:%22240fb01d-5383-4bb1-ae61-df045bf5f611%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}&timestamp=1411986438542";
 		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, collectionId,getLoggedInSessionToken(),dataPassing);
 		LOGGER.info("url:+"+url);
@@ -169,9 +165,12 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
-				sessionDataList= (ArrayList<CollectionSummaryUsersDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryUsersDataDo>>() {});
+				if(jsonRep!=null&& jsonRep.getSize()!=-1){
+					if(!jsonRep.getJsonObject().isNull("content")){
+						sessionDataList= (ArrayList<CollectionSummaryUsersDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryUsersDataDo>>() {});
+					}
+					}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -193,7 +192,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<UserDataDo>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -215,7 +213,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				collectionSummaryMetaDataDoList= (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -273,7 +270,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				}
 				
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -302,7 +298,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -331,7 +326,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 					LOGGER.info("JSON_RESPONSE==>"+jsonArray.getJSONObject(0).toString());
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return collectionSummaryMetaDataDo;
@@ -357,7 +351,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			jsonDataObject.put(PAGINATE, paginateJsonObject);
 			
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return jsonDataObject.toString();
 	}
@@ -404,7 +397,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 					
 					oetextlistObj.add(oetextDataDOObj);
 				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -450,7 +442,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			}else{
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return feedBackResponseDataDO;
 	}
@@ -487,7 +478,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 					feedBackResponseDataDO.setUserGooruId(jsonObject.getJSONObject("user").getString("gooruUId"));
 					
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		return feedBackResponseDataDO;
 	}
@@ -505,7 +495,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			try {
 				collectionResourcesList=deserializeOETextResponse(jsonRep.getJsonObject().getJSONArray("content"));
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}else{
 		}
@@ -536,7 +525,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			LOGGER.info("mainObj.toString()::"+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 	}
 

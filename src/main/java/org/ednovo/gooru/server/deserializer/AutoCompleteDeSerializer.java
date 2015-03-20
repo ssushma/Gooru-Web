@@ -50,23 +50,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 	private static final String CODE_ID = "codeId";
 	private static final String AGGREGATOR = "values";
 
-	/**
-	 * Deserialize json object into search query as List
-	 * @param jsonRep instance of {@link JsonRepresentation}
-	 * @return resultQuery
-	 */
-	/*public List<String> deserializeSearchQuery(JsonRepresentation jsonRep) {
-		List<String> resultQuery = new ArrayList<String>();
-		try {
-			JSONArray searchQueryJsonArray = jsonRep.getJsonArray();
-			for (int query = 0; query < searchQueryJsonArray.length(); query++) {
-				resultQuery.add((String) searchQueryJsonArray.get(query));
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return resultQuery;
-	}*/
+
 	/**
 	 * Deserialize json object to List of Standards
 	 * @param jsonRep instance of {@link JsonRepresentation}
@@ -89,6 +73,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 		}
 		return centurysList;
 	}
+
 	/**
 	 * Deserialize json object to List of Standards
 	 * @param jsonRep instance of {@link JsonRepresentation}
@@ -108,7 +93,6 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				standards.add(codeDo);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return standards;
 	}
@@ -133,7 +117,6 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return sources;
 	}
@@ -162,7 +145,6 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 			}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return aggregator;
 	}

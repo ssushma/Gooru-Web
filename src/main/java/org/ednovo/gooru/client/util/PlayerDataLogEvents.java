@@ -331,7 +331,6 @@ public class PlayerDataLogEvents {
 	public static  JSONString getDataLogPayLoadObject(String reactionType){
 		JSONObject payLoadMap=new JSONObject();
 		try{
-			//payLoadMap.put(REACTIONTYPE, new JSONString(reactionType));
 		}catch(Exception e){
 		
 		}
@@ -422,7 +421,6 @@ public class PlayerDataLogEvents {
 			eventJsonObject.put("timeSpentInMs", new JSONNumber(timeSpentInMs));
 			eventJsonObject.put("gooruUId", new JSONString(gooruUId));
 			eventJsonObject.put("sessionToken", new JSONString(sessionToken));
-			//triggerDataLogCall(eventJsonObject);
  	}
 	
 	public static void resourcePlayStartStopEvent(String eventId,String eventName,String parentEventId,
@@ -446,7 +444,6 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("answerId", createJsniIntArray(answerId));
 		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
-		//triggerDataLogCall(eventJsonObject);
 	}
 	
 	public static  void explanationButtonDataLogEvent(String eventId,String eventName,String parentEventId,String contentGooruId,String parentGooruId,String type,Long startTime,
@@ -471,7 +468,6 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
 		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		eventJsonObject.put("hintId", new JSONNumber(hintId));
-		//triggerDataLogCall(eventJsonObject);
  	}
 	
 	public static  void hintsButtonDataLogEvent(String eventId,String eventName,String parentEventId,
@@ -490,7 +486,6 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("timeSpentInMs", new JSONNumber(timeSpentInMs));
 		eventJsonObject.put("sessionToken", new JSONString(sessionToken));
 		eventJsonObject.put("gooruUId", new JSONString(gooruUId));
-		//eventJsonObject.put("attemptTrySequence", new JSONNumber(attemptTrySequence));
 		eventJsonObject.put("isExplanationUsed", JSONBoolean.getInstance(isExplanationUsed));
 		eventJsonObject.put("hintId", new JSONNumber(hintId));
 		eventJsonObject.put("attemptTrySequence", createJsniIntArray(answerAttemptTrySequence));
@@ -498,7 +493,6 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("answerId", createJsniIntArray(answerId));
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
 		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
-		//triggerDataLogCall(eventJsonObject);
  	}
 	
  	public static void submitOeAnswerDataLogEvent(String eventId,String eventName,String parentEventId,
@@ -515,13 +509,9 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("timeSpentInMs", new JSONNumber(timeSpentInMs));
 		eventJsonObject.put("sessionToken", new JSONString(sessionToken));
 		eventJsonObject.put("gooruUId", new JSONString(gooruUId));
-/*		eventJsonObject.put("attemptTrySequence", createJsniIntArray(attemptTrySequence));
-		eventJsonObject.put("attemptStatus", createJsniIntArray(attemptStatus));
-		eventJsonObject.put("answerId", createJsniIntArray(answerId));*/
 		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
 		eventJsonObject.put("parentGooruId", new JSONString(parentGooruOid));
-		//triggerDataLogCall(eventJsonObject);
 	}
  	public static String getQuestionType(int questionType){
 		switch (questionType) {

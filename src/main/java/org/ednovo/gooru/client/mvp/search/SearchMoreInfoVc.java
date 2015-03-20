@@ -373,7 +373,6 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 					} catch (Exception e) {
 						//gradeListInt.add(0);
-						e.printStackTrace();
 					}
 				}
 			}
@@ -593,17 +592,6 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		return gradeStr.toString();
 	}
 
-	/*
-	 * private String generateGradeIfHypen(String grade){ String gradeList[];
-	 * StringBuilder gradeStr = new StringBuilder(); gradeList =
-	 * grade.split("-"); if (gradeList.length>=2){ int start =1; try{ start =
-	 * Integer.parseInt(gradeList[0]); }catch(Exception e){ e.printStackTrace();
-	 * } int end = Integer.parseInt(gradeList[1]); if ( start < end){ for (int i
-	 * = start; i<=end; i++){ if (i==end){ gradeStr.append(i); }else{
-	 * gradeStr.append(i).append(","); } } } }else{
-	 * gradeStr.append(Integer.parseInt(gradeList[0])); } return
-	 * gradeStr.toString(); }
-	 */
 	public List<Integer> sortList(List<Integer> list) {
 
 		int listSize = list.size();

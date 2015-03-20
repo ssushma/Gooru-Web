@@ -184,12 +184,12 @@ public class ResetPasswordVc extends Composite{
 	public void onCancelClick(ClickEvent clickEvent) {
 		if (validatePassword()) {
 			tokenExpireErrorLabel.setText("");
-			JSONObject obj = new JSONObject();
+			/*JSONObject obj = new JSONObject();
 			obj.put("token", new JSONString(resetToken));
 			obj.put("password", new JSONString(this.getresetConfirmPwd()));
-			obj.put("mailConfirmationUrl", new JSONString(homeEndPoint));
-			
-			AppClientFactory.getInjector().getUserService().resetCredential(obj.toString(),new SimpleAsyncCallback<Map<String, Object>>() {
+			obj.put("mailConfirmationUrl", new JSONString(homeEndPoint));*/
+			String cryptoData = StringUtil.getCryptoData(this.getresetConfirmPwd());
+			AppClientFactory.getInjector().getUserService().resetCredential(resetToken,cryptoData,homeEndPoint,new SimpleAsyncCallback<Map<String, Object>>() {
 
 				@Override
 				public void onSuccess(Map<String, Object> result) {
