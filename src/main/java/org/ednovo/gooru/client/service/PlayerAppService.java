@@ -58,8 +58,6 @@ public interface PlayerAppService extends BaseService {
 	
 	public ResoruceCollectionDo getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize) throws GwtException, ServerDownException;
 	
-	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId,String tabView) throws GwtException, ServerDownException;
-	
 	public CollectionItemDo getResourceInfoDetails(String apiKey,String resourceId,String tabView) throws GwtException, ServerDownException;
 	
 	public CollectionItemDo getResourceObj(String resourceId) throws GwtException, ServerDownException;
@@ -101,8 +99,6 @@ public interface PlayerAppService extends BaseService {
 	public String copyCollectionItem(String collectionItemId,String collectionId) throws GwtException, ServerDownException;
 	
 	public ArrayList<CollectionItemsList> getWorkspaceCollections(String userId,String offset,String limit)  throws GwtException, ServerDownException;
-	
-	public String updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing) throws GwtException, ServerDownException;
 	
 	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid) throws GwtException, ServerDownException;
 	

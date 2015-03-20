@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -49,11 +50,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class StudyPlayerHeaderView extends Composite{
+public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 	
 	@UiField HTML resourceTitle;
 	
-	@UiField Label closeButtonForCollection,loginMessageText/*,thumbsDownButton,thumbsUpButton*/;
+	@UiField Label closeButtonForCollection,loginMessageText;
 	
 	@UiField HTMLEventPanel authorContainer;
 	
@@ -62,7 +63,6 @@ public class StudyPlayerHeaderView extends Composite{
 	@UiField StudyPlayerStyle headerStyle;
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
-	
 	
 	private static CollectionPlayerHeaderViewUiBinder uiBinder = GWT.create(CollectionPlayerHeaderViewUiBinder.class);
 
@@ -78,19 +78,7 @@ public class StudyPlayerHeaderView extends Composite{
 	
 	public StudyPlayerHeaderView(){
 		initWidget(uiBinder.createAndBindUi(this));
-		//navigationButton.getElement().setId("navigationButton");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-//		studentViewButton.setText(i18n.GL0139());
-//		studentViewButton.getElement().setId("lnkStudentViewButton");
-//		studentViewButton.getElement().setAttribute("alt",i18n.GL0139());
-//		studentViewButton.getElement().setAttribute("title",i18n.GL0139());
-//		
-//		studentViewButton.addMouseOverHandler(new OnStudentViewButtonMouseOver());
-//		studentViewButton.addMouseOutHandler(new OnStudentViewButtonMouseOut());
-		//shareButton.addMouseOverHandler(new ShareButtonMouseOver());
-		//shareButton.addMouseOutHandler(new ShareButtonMouseOut());
-		
-		//navigationButton.getElement().setId("btnNavigationButton");
 		closeButtonForCollection.getElement().setId("lblCloseButtonForCollection");
 		resourceTitle.getElement().setId("htmlResourceTitle");
 		authorContainer.getElement().setId("epnlAuthorContainer");
@@ -105,7 +93,6 @@ public class StudyPlayerHeaderView extends Composite{
 	public void setResourceTitle(String title){
 		resourceTitle.setHTML(title);
 	}
-
 	
 	public HTMLEventPanel getAuthorContainer() {
 		return authorContainer;
@@ -140,9 +127,10 @@ public class StudyPlayerHeaderView extends Composite{
 		wishLabel.setText(i18n.GL1529());
 		wishLabel.getElement().setAttribute("alt",i18n.GL1529());
 		wishLabel.getElement().setAttribute("title",i18n.GL1529());
-		loginUserName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
+		loginUserName.setText(!StringUtil.isEmpty(AppClientFactory.getLoggedInUser().getUsernameDisplay())?AppClientFactory.getLoggedInUser().getUsernameDisplay():"");
 		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
+
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			wishingText.setText(i18n.GL1530());
 			wishingText.getElement().setAttribute("alt",i18n.GL1530());
@@ -153,66 +141,40 @@ public class StudyPlayerHeaderView extends Composite{
 			wishingText.getElement().setAttribute("title",i18n.GL3041());
 		}
 	}
-	
-
-
 
 	public Label getCloseButton(){
 		return closeButtonForCollection;
 	}
-
 	
 	public class OnStudentViewButtonMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
 			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0668(),true));
 			toolTipPopupPanel.setStyleName("");
-			//toolTipPopupPanel.setPopupPosition(studentViewButton.getElement().getAbsoluteLeft()-35, studentViewButton.getElement().getAbsoluteTop()+4);
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 			toolTipPopupPanel.getElement().getStyle().setMarginLeft(57, Unit.PX);
 		}
-		
 	}
 	
 	public class OnStudentViewButtonMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
+	
 	public class ShareButtonMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-//			if(!isShareButtonEnabled){
-//			toolTipPopupPanel.clear();
-//			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0679()));
-//			toolTipPopupPanel.setStyleName("");
-//			//toolTipPopupPanel.setPopupPosition(shareButton.getElement().getAbsoluteLeft()+7, shareButton.getElement().getAbsoluteTop()+21);
-//			toolTipPopupPanel.getElement().getStyle().clearMarginLeft();
-//			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
-//			toolTipPopupPanel.show();
-//			}
 		}
-		
 	}
 	
 	public class ShareButtonMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
-	
 }

@@ -125,8 +125,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
 		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
-		//addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
-		//addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo,String classpageId){
@@ -166,10 +164,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		setInSlot(METADATA_PRESENTER_SLOT, collectionHomeMetadataPresenter,false);
 	}
 	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
-		/*String classpageIdVal=classpageId;
-		if(classpageId==null){
-			classpageId="";
-		}*/
 		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId!=null?classpageId:"",AppClientFactory.getLoggedInUser().getGooruUId());
 	}
 	
@@ -381,7 +375,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
 		this.classpageItemDo=classpageItemDo;
-		//getView().setTeacherInfo(classpageItemDo);
 	}
 
 	public void setDataInsightsSummaryUrl(String sessionId){
@@ -422,24 +415,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void getAvgReaction() {
-//		if(collectionPlayerPresenter!=null){
-//			Map<String, Integer> reactionTree=collectionPlayerPresenter.getReactionTreeMap();
-//			Integer maxValue=0;
-//			String reactiontype=null;
-//			if(reactionTree.size()>0){
-//				for(Map.Entry<String,Integer> entry : reactionTree.entrySet()){
-//					Integer reactionValue=entry.getValue();
-//					if(reactionValue>maxValue){
-//						maxValue=reactionValue;
-//						reactiontype=entry.getKey();
-//					}
-//				}
-//			}
-//			getView().showAvgReaction(reactiontype);
-//		}else{
-//			getView().showAvgReaction(null);
-//		}
-		
 	}
 	
 	public void showAvgReaction(Integer averageReaction){

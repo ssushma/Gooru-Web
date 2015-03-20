@@ -1865,7 +1865,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {

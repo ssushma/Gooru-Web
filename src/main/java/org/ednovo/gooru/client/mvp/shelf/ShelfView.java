@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
-import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCollaboratorTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionShareTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionStatisticsTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionTabTitleVc;
@@ -69,7 +68,6 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -197,7 +195,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	private FolderPopupUc folderPopupUc;
 
-	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
+//	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
 
 	private CollectionShareTabVc collectionShareTabVc;
 	
@@ -1005,7 +1003,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void reset() {
 		super.reset();
 		this.collectionDo = null;
-		collectionCollaboratorTabVc = null;
+//		collectionCollaboratorTabVc = null;
 		collectionShareTabVc = null;
 		collectionStatisticsTabVc = null;
 		collectionMetaDataSimPanel.clear();
@@ -1172,6 +1170,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
+
 			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
 			}else{
@@ -1182,6 +1181,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
+
 			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(i18n.GL3013());
 			}else{
@@ -1258,17 +1258,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	}
 
-	/**
-	 * get collection collaborator tab view
-	 * 
-	 * @return collection collaborator view
-	 */
-	public CollectionCollaboratorTabVc getCollectionCollaboratorTabVc() {
-		if (collectionCollaboratorTabVc == null) {
-			collectionCollaboratorTabVc = new CollectionCollaboratorTabVc(collectionDo);
-		}
-		return collectionCollaboratorTabVc;
-	}
 
 	/**
 	 * get collection share tab view
@@ -1371,6 +1360,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
+
 		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 			delete.setNotes(StringUtil.generateMessage(i18n.GL3038(), collectionDo.getTitle()));
 			delete.setDescText(i18n.GL3039());

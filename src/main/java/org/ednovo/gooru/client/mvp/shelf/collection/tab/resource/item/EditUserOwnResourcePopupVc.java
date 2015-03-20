@@ -2368,7 +2368,6 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 			}
 		}
 		catch(Exception ex)	{
-			ex.printStackTrace();
 		}
 	}
 	
@@ -2464,7 +2463,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Sel
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	/**

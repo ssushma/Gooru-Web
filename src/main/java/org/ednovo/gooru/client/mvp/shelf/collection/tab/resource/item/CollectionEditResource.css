@@ -2035,15 +2035,6 @@ input[type="text"] {
 		endColorstr=#ff1076bb, GradientType=0);
 }
 
-.assessmentDownnArrow {
-	background: url(images/NewResourcePopup/downarr.fw.png) no-repeat;
-	float: left;
-	width: 29px;
-	height: 29px;
-	margin-left: 3px;
-	position: Relative;
-}
-
 .assessmentPopup {
 	/* width: 170px;
     border: 1px solid #ddd;

@@ -90,7 +90,7 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 body {
-	background-image: url("../images/core/background-image.png") !important;
+	background-image: url("${cdn.endpoint}/images/core/background-image.png") !important;
 	color: #515151 !important;
 	font-family: Arial, sans-serif !important;
 	font-size: 12px !important;
@@ -509,7 +509,7 @@ body {
 /* end */
 
 .arrowActive {
-	background: url("../images/Collection-Search/dropdown-arrow-active.png")
+	background: url("${cdn.endpoint}/images/Collection-Search/dropdown-arrow-active.png")
 		no-repeat scroll 0px 0px transparent;
 	left: 20px;
 	margin-bottom: 0px;
@@ -837,6 +837,10 @@ body {
 	margin: 3px 0.5ex !important;
 }
 
+.categoryFilterContainer .filterCheckBox label {
+	padding: 3px 31px;
+	background: url(${cdn.endpoint}/images/resource-type-icons.png) no-repeat transparent;
+}
 
 
 .filterCheckBox {
@@ -892,6 +896,11 @@ body {
 .other label {
 	background-position: 0px -307px !important;
 }
+
+.categoryFilterContainer .texts label {
+	background-position: 0px -55px !important;
+}
+
 .rightsToolTip {
 	float: left;
 }
@@ -902,75 +911,75 @@ body {
 
 /*********/
 .videoSmall {
-	background:url("../images/Video_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
 }
 
 .interactiveSmall{
-	background:url("../images/Interactive_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Interactive_1.png") no-repeat
 		transparent;
 }
 
 .websiteSmall {
-	background:url("../images/Website_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Website_1.png") no-repeat
 		transparent;
 }
 .webpageSmall {
-	background:url("../images/Website_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Website_1.png") no-repeat
 		transparent;
 }
 .examSmall {
 	/* background-position: 0px -84px !important; */
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 }
 
 .textbookSmall {
 	/* background-position: 0px -196px !important; */
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 }
 
 .handoutSmall {
 	/* background-position: 0px -56px !important; */
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 }
 
 .lessonSmall {
 	/* background-position: 0px -112px !important; */
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 }
 
 .slideSmall {
-	background:url("../images/Image_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Image_1.png") no-repeat
 		transparent;
 	/* background-position: 0px -168px !important; */
 }
 
 .questionSmall {
-	background:url("../images/Question_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Question_1.png") no-repeat
 		transparent;
 }
 .challengeSmall {
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;	
 }
 .textSmall {
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 }
 .imageSmall {
-	background:url("../images/Image_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Image_1.png") no-repeat
 		transparent;
 }
 .audioSmall{
-	background:url("../images/Audio_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Audio_1.png") no-repeat
 		transparent;
 }
 .otherSmall{
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 }
 
@@ -1262,7 +1271,7 @@ td.datePickerMonth{
 
 /********/
 .resourceExistsResourceTypeSpriteVideo {
-	background:url("../images/Video_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
 	
 	width:80px;
@@ -1272,7 +1281,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteInteractive {
-	background:url("../images/Interactive_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Interactive_1.png") no-repeat
 		transparent;
 	
 	width:80px;
@@ -1282,7 +1291,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteWebsite {
-	background:url("../images/Website_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Website_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1292,7 +1301,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteSlide {
-	background:url("../images/Video_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1302,7 +1311,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteHandout {
-	background:url("../images/Video_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1312,7 +1321,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteTextbook {
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 	
 	width:80px;
@@ -1322,7 +1331,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteLesson {
-	background:url("../images/Video_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1332,7 +1341,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteQuestion {
-	background:url("../images/Question_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Question_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1342,7 +1351,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteExam {
-	background:url("../images/Video_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1352,7 +1361,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteAudio {
-	background:url("../images/Audio_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Audio_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1362,7 +1371,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteImage {
-	background:url("../images/Image_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Image_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1372,7 +1381,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteOther {
-	background:url("../images/Video_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Video_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1382,7 +1391,7 @@ td.datePickerMonth{
 	top: -38px;
 }
 .resourceExistsResourceTypeSpriteText {
-	background:url("../images/Text_1.png") no-repeat
+	background:url("${cdn.endpoint}/images/Text_1.png") no-repeat
 		transparent;
 		
 	width:80px;
@@ -1689,7 +1698,7 @@ iframe#taMessage body{
 	padding: 5px;
 }
 .gooruLogo {
-	background: url("../images/DeviceSupport/gooru-logo-small.png") no-repeat;
+	background: url("${cdn.endpoint}/images/DeviceSupport/gooru-logo-small.png") no-repeat;
 	width:99px;
 	height:30px;
 	margin: auto;
@@ -1720,10 +1729,9 @@ color:#999;
 }
 
 .mobilefriendlyContainer .filterCheckBox label {
-	/* background: url(../images/mos/ipadFriendly.png) no-repeat transparent; */
-	background: url(../images/mos/MobileFriendly.png) no-repeat transparent;
- 	padding-left: 22px;
-	padding-bottom: 2px;
+	background: url(${cdn.endpoint}/images/mos/MobileFriendly.png) no-repeat transparent;
+ 	padding-left: 30px;
+	padding-bottom: 6px;
 	background-size: 20px 15px;
 }
 .oerContainer  input[type="checkbox"] {
@@ -1743,7 +1751,7 @@ color:#999;
 }
 
 .oerContainer .filterCheckBox label {
-	background: url(../images/oer_icon.png) 0px 0px no-repeat transparent;
+	background: url(${cdn.endpoint}/images/oer_icon.png) 0px 0px no-repeat transparent;
  	padding-left: 23px;
 	height: 20px;
 	position: relative;
@@ -1758,14 +1766,14 @@ color:#999;
 }
 
 .loadingpanelImage{
-	background: url(../images/core/B-Dot.gif) no-repeat;
+	background: url(${cdn.endpoint}/images/core/B-Dot.gif) no-repeat;
 	height:170px;
 	width: 233px;
 	margin: 0 auto;
 }
 
 .loadingpanelImageSmall{
-	background: url(../images/core/loading-sm.gif) no-repeat;
+	background: url(${cdn.endpoint}/images/core/loading-sm.gif) no-repeat;
 	height:50px;
 	width: 50px;
 	margin: 0 auto;
@@ -1773,7 +1781,7 @@ color:#999;
 
 /* Raido button select and deselect */
 .radio-normal-icon,.radio-selected-icon{
-	background: url("../images/radio_checkbox_icons.png") -0px -0px no-repeat;
+	background: url("${cdn.endpoint}/images/radio_checkbox_icons.png") -0px -0px no-repeat;
 	cursor: pointer;
 }
 .radio-normal-icon{
@@ -1950,7 +1958,7 @@ li.token-input-input-token-gooru {
 }
 .errorMessageContentBg {
 	height: 470px;
-	background: url(../images/message-bg.png) 0px 15px no-repeat;
+	background: url(${cdn.endpoint}/images/message-bg.png) 0px 15px no-repeat;
 }
 .errorMessageHeading {
 	font-size: 38px;
@@ -1976,13 +1984,13 @@ li.token-input-input-token-gooru {
 	padding: 7px 14px;
 	border-radius: 4px;
 	background: #1076BB;
-	background: url(../images/preview-arrow.png) 210px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC), to(#1076BB));
-	background: url(../images/preview-arrow.png) 210px center no-repeat, -moz-linear-gradient(top, #4c98cc, #1076bb);
-	background: url(../images/preview-arrow.png) 210px center no-repeat, -ms-linear-gradient(top, #4c98cc, #1076bb);
-	background: url(../images/preview-arrow.png) 210px center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(${cdn.endpoint}/images/preview-arrow.png) 210px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC), to(#1076BB));
+	background: url(${cdn.endpoint}/images/preview-arrow.png) 210px center no-repeat, -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(${cdn.endpoint}/images/preview-arrow.png) 210px center no-repeat, -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(${cdn.endpoint}/images/preview-arrow.png) 210px center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
 }
 .detective:hover {
-	background: url(../images/preview-arrow.png) 210px center no-repeat, #1076BB;
+	background: url(${cdn.endpoint}/images/preview-arrow.png) 210px center no-repeat, #1076BB;
 	cursor: pointer;
 }
 .studyNowToolTipLbl {
@@ -2358,7 +2366,7 @@ overflow: visible;
   transition: left 0.15s ease-out;
  	width:25px;
 	height:25px;
-	background:#babcc9 url(../images/liners.png) repeat;
+	background:#babcc9 url(${cdn.endpoint}/images/liners.png) repeat;
 	border-radius:15px 15px;
 	box-shadow:none;
 	line-height:25px;
@@ -2374,7 +2382,7 @@ overflow: visible;
   background: #f9f9f9;
   border-radius: 6px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
-    background:#eeeeee url(../images/liners.png) repeat;
+    background:#eeeeee url(${cdn.endpoint}/images/liners.png) repeat;
 /*  background-image: -webkit-linear-gradient(top, #eeeeee, white);
   background-image: -moz-linear-gradient(top, #eeeeee, white);
   background-image: -o-linear-gradient(top, #eeeeee, white);
@@ -3224,11 +3232,7 @@ overflow: visible;
   background: #f9f9f9;
   border-radius: 6px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
-    background:#eeeeee url(../images/liners.png) repeat;
-/*  background-image: -webkit-linear-gradient(top, #eeeeee, white);
-  background-image: -moz-linear-gradient(top, #eeeeee, white);
-  background-image: -o-linear-gradient(top, #eeeeee, white);
-  background-image: linear-gradient(to bottom, #eeeeee, white);*/
+    background:#eeeeee url(${cdn.endpoint}/images/liners.png) repeat;
 }
 .switchInput1:checked ~ .switchHandle1 {
   left: 0px;
@@ -3238,11 +3242,11 @@ overflow: visible;
 .errorBorderMessage{
 	border: 1px solid orange !important;
 }
-
-
-
 .contentBoxStyles{
 	box-sizing: content-box;
+}
+.google-visualization-table{
+   width:auto !important;
 }
 
 
@@ -3270,7 +3274,4 @@ span.review input[type="checkbox"]{
 
 div#spnlDisclosureContentSimPanel>div:first-child {
 	/* padding: 15px; */
-}
-.google-visualization-table{
-    width:auto !important;
 }

@@ -545,7 +545,6 @@ public class LibraryMenuNav extends Composite{
 */			}
 /*			}
 		} catch (Exception e) {
-		      e.printStackTrace(); 
 		}
 */	}
 
@@ -875,7 +874,6 @@ public class LibraryMenuNav extends Composite{
 				try {
 					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			} else {
 				getStandardPrefCode(null);

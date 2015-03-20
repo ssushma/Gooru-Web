@@ -538,7 +538,6 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	 */
 	public void addCollectionToAssign(){
 		
-		
 		if(cureentcollectionTreeItem!=null){
 			addResourceBtnLbl.setVisible(false);
 			cancelResourcePopupBtnLbl.setVisible(false);
@@ -554,37 +553,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}else{
 			
 		}
-		
-//		if(cureentcollectionTreeItem!=null){
-//			final String directions=assignmentDirectionsTxtArea.getText().trim().equals(GL1389)?null:assignmentDirectionsTxtArea.getText().trim();
-//			final String dueDate=dateBoxUc.getDateBox().getValue()==null||dateBoxUc.getDateBox().getValue().equals("")?null:dateBoxUc.getDateBox().getValue();
-//			Map<String, String> parms = new HashMap<String, String>();
-//			parms.put("text", assignmentDirectionsTxtArea.getText());
-//			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-//				@Override
-//				public void onSuccess(Boolean isFound) {
-//					if(isFound){
-//						directionErrorLabel.setText(GL0554);
-//						addResourceBtnLbl.setVisible(true);
-//						cancelResourcePopupBtnLbl.setVisible(true);
-//						addingText.setVisible(false);
-//						addResourceBtnLbl.setEnabled(true);
-//					}else{
-//						directionErrorLabel.setText("");
-//						addResourceBtnLbl.setVisible(false);
-//						cancelResourcePopupBtnLbl.setVisible(false);
-//						addingText.setVisible(true);
-//						getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid(), directions, dueDate);
-//						addResourceBtnLbl.setEnabled(true);
-//					}
-//				}		
-//			});
-//		}else{
-//			chooseCollectionErrorLabel.setText(GL1475);
-////			chooseCollectionErrorLabel.getElement().getStyle().setMarginTop(0, Unit.PX);
-//			addResourceBtnLbl.setEnabled(true);
-//		}
-		
+
 	}
 	
 	/**

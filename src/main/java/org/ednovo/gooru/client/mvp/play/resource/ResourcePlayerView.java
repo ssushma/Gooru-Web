@@ -71,7 +71,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
 	
 	@UiField ResourcePlayerHeaderView headerView;
-	//ResourceInfoView resourceInfoView=new ResourceInfoView();
 
 	@UiField Anchor viewAnchor;
 	
@@ -111,10 +110,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
 		headerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
 		
-		
-		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
-		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());*/
-		//resourceInfoView.getHideButton().addClickHandler(new ShowTabWidgetView("info"));
+
 		setAutoHideOnNavigationEventEnabled(true);
 		
 		
@@ -137,7 +133,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
 		  else
 		  {
@@ -242,7 +237,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	
 	public void resetPlayer(){
 		hide();
-		resetThumbsButtons();
 		resetResourcePlayer();
 	}
 	
@@ -264,16 +258,20 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		
 	@Override
     public void setInSlot(Object slot, Widget content) {
-		if(slot==ResourcePlayerPresenter.TAB_PRESENTER_SLOT){
-			getNavigationContainer().clear();
-			getNavigationContainer().setVisible(false);
-			if(content!=null){
-				getNavigationContainer().add(content);
-			}
-		}else if(slot==ResourcePlayerPresenter.METADATA_PRESENTER_SLOT){
-			getPlayerBodyContainer().clear();
-			getPlayerBodyContainer().add(content);
-		}  
+		if(slot!=null){
+			if(slot==ResourcePlayerPresenter.TAB_PRESENTER_SLOT){
+				getNavigationContainer().clear();
+				getNavigationContainer().setVisible(false);
+				if(content!=null){
+					getNavigationContainer().add(content);
+				}
+			}else if(slot==ResourcePlayerPresenter.METADATA_PRESENTER_SLOT){
+				getPlayerBodyContainer().clear();
+				if(content!=null){
+				getPlayerBodyContainer().add(content);
+				}
+			}  
+		}
 	}
 
 	@Override
@@ -294,7 +292,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectFlagButton) {
 		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion,deselectFlagButton);		
 		setActiveButton(false,false,false,false);
-		
 	}
 	
 	public void setActiveButton(boolean makeAddButtonActive,boolean makeInfoButtionActive,
@@ -318,55 +315,9 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void resetResourcePlayer(){
 		getUiHandlers().resetResourcePlayer();
 	}
-	/*private class UpdateThumbsDownEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(AppClientFactory.isAnonymous()){
-				getUiHandlers().showLoginPopupWidget(RESOURCE_THUMBS_WIDGET_MODE);
-			}else{
-				int thumbsStaus=userRating==0||userRating==1?-1:0;
-				getUiHandlers().updateResourceThumbsRating(thumbsStaus);
-			}
-		}
-	}
 	
-	private class UpdateThumbsUpEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(AppClientFactory.isAnonymous()){
-				getUiHandlers().showLoginPopupWidget(RESOURCE_THUMBS_WIDGET_MODE);
-			}else{
-				int thumbsStaus=userRating==0||userRating==-1?1:0;
-				getUiHandlers().updateResourceThumbsRating(thumbsStaus);
-			}
-		}
-	}*/
 	@Override
-	public void updateThumbsRatingView(int userThumbRating) {
-		/*userRating=userThumbRating;
-		if(userThumbRating==0){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
-		}else if(userThumbRating==-1){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownActive());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
-		}else if(userThumbRating==1){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpActive());
-		}*/
-		
-/*		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
-		if(resourcePlayerFirstTimeUser==null){
-			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0681, i18n.GL0543);
-			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
-			globalTooltipWithButton.setStyleName("");
-			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
-			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
-			globalTooltipWithButton.show();
-		}*/
-		
-	}
+	public void updateThumbsRatingView(int userThumbRating) {}
 
 	public int getUserRating() {
 		return userRating;
@@ -376,11 +327,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		this.userRating = userRating;
 	}
 	
-	public void resetThumbsButtons(){
-		/*userRating=0;
-		headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-		headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());*/
-	}
+
 	@UiHandler("closeIpadBtn")
 	public void onIpadCloseClick(ClickEvent clickEvent){
 		 ipadSectiondiv.setVisible(false);

@@ -69,16 +69,15 @@
 
 .editButton,
 .deleteButton {
-    position: absolute;
-	right: -18px;
-	top: 0px;
-	display:none;
+    position:absolute;
+    top:30px;
+    right:0px;
 }
 
-.comment:hover .editButton,
+/* .comment:hover .editButton,
 .comment:hover .deleteButton {
     display:block;
-}
+} */
 
 .editButton .icon {
     background:url('../images/player/edit-button.png') right top no-repeat;

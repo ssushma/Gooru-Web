@@ -222,7 +222,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), COLLECTION,null));
 			loadingPanel(false);
 		} catch (Exception e) {
-			e.printStackTrace();
 			loadingPanel(false);
 		}
 	}
@@ -248,7 +247,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			}
 			loadingPanel(false);
 		} catch (Exception e) {
-			e.printStackTrace();
 			loadingPanel(false);
 		}
 	}

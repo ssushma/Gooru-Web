@@ -142,10 +142,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 
 		popupcontentCustomize.setVisible(false);
 		loadingImageLabel.setVisible(true);
-
 		editCollection.getElement().setAttribute("collectionId", collectionId);
-		
-
 		assignDes.setText(i18n.GL0744());
 		assignDes.getElement().setAttribute("alt",i18n.GL0744());
 		assignDes.getElement().setAttribute("title",i18n.GL0744());
@@ -162,45 +159,23 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copycollectionTextbox.addKeyPressHandler(new OnkeyPress());
 		copycollectionTextbox.addBlurHandler(new OnBlurr());
 		copycollectionTextbox.addKeyUpHandler(new OnkeyUp());
-		
-		/*copycollectionTextbox.addBlurHandler(new BlurHandler() {
-			
-			@Override
-			public void onBlur(BlurEvent event) {
-				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", copycollectionTextbox.getValue());
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-
-					@Override
-					public void onSuccess(Boolean value) {
-						isHavingBadWords=value;
-						SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
-					}
-				});
-			}
-		});*/
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
-
 			@Override
 			public void onSuccess(CollectionDo result) {
 				collectionDo = result;
 				MixpanelUtil.Preview_Click_Customize_successful();
-
 				copycollectionTextbox.setText(result.getTitle());
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
 					LoginPluginView assignWidget = new LoginPluginView(result,collectionTitle) {
-
 						@Override
 						public void closePoupfromChild() {
 							closePoup();
 						}
-
 						@Override
 						public void showSuccessMsgfromChild(String collectionId,String collectionTitle) {
 							showSuccessMsg(collectionId);
-
 						}
 					};
 					loginCustom.add(assignWidget);
@@ -214,11 +189,9 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 				loadingImageLabel.setVisible(false);
 			}
 		});
-
 		MixpanelUtil.mixpanelEvent("CoursePage_customize_collection");
 		setId();
 		this.center();
-
 	}
 	public void setId(){
 		panelAssign.getElement().setId("pnlPanelAssign");
@@ -266,9 +239,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copycollectionTextbox.addKeyPressHandler(new OnkeyPress());
 		copycollectionTextbox.addBlurHandler(new OnBlurr());
 		copycollectionTextbox.setMaxLength(50);
-		/*this.getElement().setAttribute("style", "z-index:99999;");
-		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; leftge:0px; top:0px;");
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));*/
 		popupcontentCustomize.setVisible(false);
 		loadingImageLabel.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", dragId);
@@ -307,6 +277,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
 		customizeText.getElement().setInnerHTML(i18n.GL0743());
+
 		panelAssign.getElement().getStyle().setHeight(367, Unit.PX);
 	}
 
@@ -328,8 +299,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 
 	@UiHandler("editCollection")
 	public void onEditcollectionbuttonClicked(ClickEvent clickEvent) {
-		//String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
 		final String collectionTitle = copycollectionTextbox.getText();
 		if(isDraggedFromSearch){
 			if(collectionTitle.isEmpty() || collectionTitle.trim().isEmpty()){
@@ -346,7 +315,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 							SetStyleForProfanity.SetStyleForProfanityForSearchRenameCollTextBox(copycollectionTextbox, errorLabel, isHavingBadWords);
 						}else{
 							collectionDo.setTitle(collectionTitle);
-//							AppClientFactory.fireEvent(new CopyCollectionEvent(collectionDo)); 
 							closePoup();
 						}
 					}
@@ -362,13 +330,11 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 							if(value){
 								SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
 							}else{
-								
 								if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
 								{
 									closePoup();
 								if(!isCustomizePopup){
 									isCustomizePopup=true;
-								
 								collectionDo.setTitle(collectionTitle);
 								AppClientFactory.getInjector().getResourceService().copyCollection(collectionDo, "true", null,getSaveCollectionAsyncCallback());
 							}
@@ -408,29 +374,30 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
 			String collTitle=copycollectionTextbox.getText().trim();
-			if(collTitle.length()>=50){
-				errorLabel.setText(i18n.GL0143());
-				errorLabel.setVisible(true);
-			}else{
-				errorLabel.setText("");
-				errorLabel.setVisible(false);
+			if(!StringUtil.isEmpty(collTitle)){
+				if(collTitle.length()>=50){
+					errorLabel.setText(i18n.GL0143());
+					errorLabel.setVisible(true);
+				}else{
+					errorLabel.setText("");
+					errorLabel.setVisible(false);
+				}
 			}
-			
 		}
 	}
 	public class OnkeyUp implements KeyUpHandler{
-		
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			String collTitle=copycollectionTextbox.getText().trim();
-			if(collTitle.length()>=50){
-				errorLabel.setText(i18n.GL0143());
-				errorLabel.setVisible(true);
-			}else{
-				errorLabel.setText("");
-				errorLabel.setVisible(false);
+			if(!StringUtil.isEmpty(collTitle)){
+				if(collTitle.length()>=50){
+					errorLabel.setText(i18n.GL0143());
+					errorLabel.setVisible(true);
+				}else{
+					errorLabel.setText("");
+					errorLabel.setVisible(false);
+				}
 			}
-			
 		}
 	}
 	public class OnBlurr implements BlurHandler
@@ -440,9 +407,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 			Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", copycollectionTextbox.getValue());
 			checkForProfanity(parms,isDraggedFromSearch);
-			
 		}
-		
 	}
 
 	public void checkForProfanity(Map<String, String> parms,final boolean isDraggedFromSearch ) { 
@@ -455,7 +420,6 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 				}else{
 					SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
 				}
-				
 			}
 		});
 	}

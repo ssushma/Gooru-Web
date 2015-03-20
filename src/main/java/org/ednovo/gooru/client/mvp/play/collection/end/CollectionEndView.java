@@ -63,6 +63,7 @@ import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -106,7 +107,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandlers> implements IsCollectionEndView{
+public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandlers> implements IsCollectionEndView,ClientConstants{
 	@UiField
 	static FlowPanel studyMainContianer;
 	@UiField
@@ -174,7 +175,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	private static final String PAGINATION = "page";
 	
-//	private static final String COMMENTS_LBL = " "+i18n.GL1432;
 	
 	private static final String PRIMARY_STYLE = "primary";
 	
@@ -216,6 +216,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
 		pnlCollectionLastAccessed.setVisible(false);
+
 		//teacherContainer.setVisible(false);
 		collectionImage.setSize("59px", "44px");
 		messageContainer.setVisible(false);
@@ -269,10 +270,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		shareCollectionBtn.addMouseOutHandler(new OnshareCollectionBtnMouseOut());
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
@@ -281,11 +278,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-		  }
-		  else
-		  {
-			  //studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
-			  
 		  }
 			sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 	}
@@ -386,40 +378,30 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public void setCollectionMetadata(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
-		//showPopupAfterGmailSignin();
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
+
 		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3044():i18n.GL2083();
+
 		headingText.setText(message);
-//		setCollectionGoal(collectionDo.getGoals());
-//		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		setReplyLink();
-		//teamContainer.clear();
-		//getUiHandlers().getFlagedReport(collectionDo.getGooruOid());
-//		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
-//			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
-//			 //teamContainer.add(collaboratorsUc);
-//			setUserName(collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND());
-//		}else{
-//			setUserName(collectionDo.getUser().getUsernameDisplay());
-//		}
-		
 		if (collectionDo.getMeta() !=null)
 		{
 			if(collectionDo.getMeta().getPermissions() != null)
 			{
-			if (collectionDo.getMeta().getPermissions().toString().contains("edit") || collectionDo.getMeta().isIsCollaborator()){
+
+			if (StringUtil.toString(collectionDo.getMeta().getPermissions()).contains(ClientConstants.EDIT) || collectionDo.getMeta().isIsCollaborator()){
 				switchContainer.setVisible(true);
 				if(collectionDo.getSettings() != null)
 				{
 					if(collectionDo.getSettings().getComment() != null)
 					{
-						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on"))
+						if(TURNON.equalsIgnoreCase(collectionDo.getSettings().getComment()))
 						{
 							commentField.setEnabled(true);
 							commentssection.getElement().getStyle().setOpacity(1);
-							changeAssignmentStatusButton.setChecked(true);
+							changeAssignmentStatusButton.setValue(true);
 							postCommentBtn.setEnabled(true);
 							postCommentBtn.setStyleName(PRIMARY_STYLE);
 						}
@@ -431,7 +413,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							postCommentBtn.addStyleName(SECONDARY_STYLE);
 							postCommentBtn.addStyleName(DISABLED_STYLE);
 							commentssection.getElement().getStyle().setOpacity(0.5);
-							changeAssignmentStatusButton.setChecked(false);
+							changeAssignmentStatusButton.setValue(false);
 						}
 					}
 					else
@@ -441,14 +423,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						postCommentBtn.removeStyleName(DISABLED_STYLE);
 						postCommentBtn.addStyleName(PRIMARY_STYLE);
 						commentssection.getElement().getStyle().setOpacity(1);
-						changeAssignmentStatusButton.setChecked(true);
+						changeAssignmentStatusButton.setValue(true);
 					}
 				}
 				else
 				{
 					commentField.setEnabled(true);
 					commentssection.getElement().getStyle().setOpacity(1);
-					changeAssignmentStatusButton.setChecked(true);
+					changeAssignmentStatusButton.setValue(true);
 				}
 				
 				
@@ -458,9 +440,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			{				
 				if(collectionDo.getSettings() != null)
 				{
-					if(collectionDo.getSettings().getComment() != null)
-					{
-						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-off"))
+						if(TURNOFF.equalsIgnoreCase(collectionDo.getSettings().getComment()))
 						{
 							commentssection.setVisible(false);
 						}
@@ -468,9 +448,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						{
 							commentssection.setVisible(true);
 						}
-						
-					}
-					
 				}
 				else
 				{
@@ -493,8 +470,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 		setViewCount(collectionDo.getViews());
 		getAverageReaction();
-		//renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
-		//renderLanguageObjective(collectionDo.getLanguageObjective());
 		
 	}
 	
@@ -767,7 +742,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 					@Override
 					public void closePoup() {
-//						Window.enableScrolling(true);
 						this.hide();	
 						isCustomizePopup = false;
 					}
@@ -922,16 +896,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer.setVisible(false);
 
 			loadingImageLabel.setVisible(false);
-
-//		}else if(page!=null&&page.equals("teach")){
-//			frameContainer1.clear();
-//			frameContainer1.setVisible(false);
-//			messageContainer.setVisible(false);
 		}else{
 			messageContainer.setVisible(false);
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			/*frameContainer1.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
-					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
@@ -942,16 +909,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
 			loadingImageLabel.setVisible(false);
-//		}else if(page!=null&&page.equals("teach")){
-//			frameContainer1.clear();
-//			frameContainer1.setVisible(false);
-//			messageContainer.setVisible(false);
 		}else{
 			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			/*frameContainer1.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
@@ -970,7 +931,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	public void clearDashBoardIframe(){
-		//insightsFrame.setUrl("");
 	}
 	
 
@@ -1188,13 +1148,13 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	 */	
 	@Override
 	public void updateCommentChildView(String commentUid, String action) {
-		if(!commentUid.isEmpty() && action.equals(DELETE)) {
+		if(!commentUid.isEmpty() && action.equalsIgnoreCase(DELETE)) {
 			deleteComment(commentUid);
 			addComment.setVisible(true);
-		} else if (!commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if (!commentUid.isEmpty() && action.equalsIgnoreCase(EDIT)) {
 			addComment.setVisible(false);
 			editComment(commentUid);
-		} else if(commentUid.isEmpty() && action.equals(EDIT)) {
+		} else if(commentUid.isEmpty() && action.equalsIgnoreCase(EDIT)) {
 			addComment.setVisible(true);
 		}
 	}

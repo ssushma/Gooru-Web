@@ -10,6 +10,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -39,10 +40,9 @@ import com.google.gwt.user.client.ui.Widget;
  * @author ibc
  *
  */
-public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> implements IsAnalyticsView {
+public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> implements IsAnalyticsView, ClientConstants {
 
-	private static AnalyticsViewUiBinder uiBinder = GWT
-			.create(AnalyticsViewUiBinder.class);
+	private static AnalyticsViewUiBinder uiBinder = GWT.create(AnalyticsViewUiBinder.class);
 
 	interface AnalyticsViewUiBinder extends UiBinder<Widget, AnalyticsView> {
 	}
@@ -66,8 +66,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	boolean isSummayClicked=false,isProgressClicked=false,isPersonalizedBtnClicked=false;
 	
 	Map<String,GradeJsonData> loadcollectionsmap=new HashMap<String, GradeJsonData>();
-	
-	final String CLEARSUMMARY="ClearSummary",CLEARPROGRESS="ClearProgress",SUMMARY="Summary",PROGRESS="Progress",BELOWSCORE="BelowScore",ABOVESCORE="AboveScore";
 	
 	String unitCollectionId;
 	int selectedUnitNumber;
@@ -97,12 +95,15 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		public void onChange(ChangeEvent event) {
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
-			getUiHandlers().checkCollectionStaus(classpageId, selectedCollectionId);
+			if(!StringUtil.isEmpty(classpageId)&& !StringUtil.isEmpty(selectedCollectionId)){
+				getUiHandlers().checkCollectionStaus(classpageId, selectedCollectionId);
+				btnCollectionProgress.setText(i18n.GL2296());
+				btnCollectionSummary.setText(i18n.GL2296());
+			}
 			//when changing the collections drop down reset all the changes.
 			/*getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,"","");
 			getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,"","");*/
-			btnCollectionProgress.setText(i18n.GL2296());
-			btnCollectionSummary.setText(i18n.GL2296());
+			
 		}
 	}
 	@Override
@@ -111,9 +112,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		setNoDataText.setVisible(false);
 		loadcollectionsmap.clear();
 		loadCollections.clear();
-		if(gradeData!=null){
+		if(gradeData!=null && !gradeData.isEmpty() ){
 			for (GradeJsonData gradeJsonData : gradeData) {
-				if(gradeJsonData.getTitle()!=null){
+				if(!StringUtil.isEmpty(gradeJsonData.getTitle())){ 
 					loadcollectionsmap.put(gradeJsonData.getResourceGooruOId(), gradeJsonData);
 					loadCollections.addItem(gradeJsonData.getTitle(), gradeJsonData.getResourceGooruOId());
 				}
@@ -132,9 +133,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		collectionSummaryQuestionimg.setUrl("images/question.png");
 		collectionExportQuestionimg.setUrl("images/question.png");
 	
-		collectionProgressQuestionimg.addMouseOverHandler(new QuestionMouseToolTip("1",collectionProgressQuestionimg));
-		collectionSummaryQuestionimg.addMouseOverHandler(new QuestionMouseToolTip("2",collectionSummaryQuestionimg));
-		collectionExportQuestionimg.addMouseOverHandler(new QuestionMouseToolTip("3",collectionExportQuestionimg));
+		collectionProgressQuestionimg.addMouseOverHandler(new QuestionMouseToolTip(ONE,collectionProgressQuestionimg));
+		collectionSummaryQuestionimg.addMouseOverHandler(new QuestionMouseToolTip(TWO,collectionSummaryQuestionimg));
+		collectionExportQuestionimg.addMouseOverHandler(new QuestionMouseToolTip(THREE,collectionExportQuestionimg));
 		
 		collectionProgressQuestionimg.addMouseOutHandler(new QuestionMouseOutToolTip());
 		collectionSummaryQuestionimg.addMouseOutHandler(new QuestionMouseOutToolTip());
@@ -172,10 +173,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String setText="";
-			if(fromString.equalsIgnoreCase("1")){
+			if(ONE.equalsIgnoreCase(fromString)){ 
 				setText=i18n.GL3089();
-			}else if(fromString.equalsIgnoreCase("2")){
-				setText=i18n.GL3088();
+			}else if(TWO.equalsIgnoreCase(fromString)){
+				setText=i18n.GL3088(); 
 			}else{
 				setText=i18n.GL3090();
 			}
@@ -196,39 +197,44 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		public void onClick(ClickEvent event) {
 			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
 			String selectedCollectionTitle=loadCollections.getItemText(loadCollections.getSelectedIndex());
-			if(clicked.equalsIgnoreCase(PROGRESS)){
-				//Clearing the summary
-				getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
-				isSummayClicked=false;
-				btnCollectionSummary.setText(i18n.GL2296());
-				
-				if(isProgressClicked){
-					isProgressClicked=false;
-					btnCollectionProgress.setText(i18n.GL2296());
-					getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
-				}else{
-					isProgressClicked=true;
-					btnCollectionProgress.setText(i18n.GL2297());
-					getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId,selectedCollectionTitle);
-				}
-			}else if(clicked.equalsIgnoreCase(SUMMARY)){
-				//Clearing the progress
-				getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
-				isProgressClicked=false;
-				btnCollectionProgress.setText(i18n.GL2296());
-				
-				if(isSummayClicked){
+			try {
+				if(PROGRESS.equalsIgnoreCase(clicked )){ 
+					//Clearing the summary
+					getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
 					isSummayClicked=false;
 					btnCollectionSummary.setText(i18n.GL2296());
-					getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
+					
+					if(isProgressClicked){
+						isProgressClicked=false;
+						btnCollectionProgress.setText(i18n.GL2296());
+						getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
+					}else{
+						isProgressClicked=true;
+						btnCollectionProgress.setText(i18n.GL2297());
+						getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId,selectedCollectionTitle);
+					}
+				}else if(clicked.equalsIgnoreCase(SUMMARY)){
+					//Clearing the progress
+					getUiHandlers().setClickedTabPresenter(CLEARPROGRESS,selectedCollectionId,selectedCollectionTitle);
+					isProgressClicked=false;
+					btnCollectionProgress.setText(i18n.GL2296());
+					
+					if(isSummayClicked){
+						isSummayClicked=false;
+						btnCollectionSummary.setText(i18n.GL2296());
+						getUiHandlers().setClickedTabPresenter(CLEARSUMMARY,selectedCollectionId,selectedCollectionTitle);
+					}else{
+						isSummayClicked=true;
+						btnCollectionSummary.setText(i18n.GL2297());
+						getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId,selectedCollectionTitle);
+					}
 				}else{
-					isSummayClicked=true;
-					btnCollectionSummary.setText(i18n.GL2297());
-					getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId,selectedCollectionTitle);
+					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+					getUiHandlers().exportOEPathway(classpageId, "",AnalyticsUtil.getTimeZone());
 				}
-			}else{
-				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				getUiHandlers().exportOEPathway(classpageId, "",AnalyticsUtil.getTimeZone());
+
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}
@@ -238,7 +244,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	@Override
 	public void resetData(){
-		//loadCollections.clear();
 		btnCollectionSummary.setText(i18n.GL2296());
 		btnCollectionProgress.setText(i18n.GL2296());
 		isSummayClicked=false;
@@ -250,14 +255,18 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 */
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		if(content!=null){
-			if(slot==AnalyticsPresenter.COLLECTION_PROGRESS_SLOT){
-				collectionProgressSlot.clear();
-				collectionProgressSlot.add(content);
-			}else if(slot==AnalyticsPresenter.COLLECTION_SUMMARY_SLOT){
-				collectionSummarySlot.clear();
-				collectionSummarySlot.add(content);
+		try {
+			if(content!=null){
+				if(slot==AnalyticsPresenter.COLLECTION_PROGRESS_SLOT){
+					collectionProgressSlot.clear();
+					collectionProgressSlot.add(content);
+				}else if(slot==AnalyticsPresenter.COLLECTION_SUMMARY_SLOT){
+					collectionSummarySlot.clear();
+					collectionSummarySlot.add(content);
+				}
 			}
+		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 

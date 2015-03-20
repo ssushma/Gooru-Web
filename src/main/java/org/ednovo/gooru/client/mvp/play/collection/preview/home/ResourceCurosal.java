@@ -25,6 +25,9 @@
 package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
 
+import org.ednovo.gooru.shared.util.ClientConstants;
+
+
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -41,7 +44,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ResourceCurosal {
+public class ResourceCurosal implements ClientConstants {
 	
 	private int widgetsCount=0;
 	private Label nextButton;
@@ -75,7 +78,6 @@ public class ResourceCurosal {
 	}
 	public void setTotalWidth(){
 		widgetsPanel.setWidth((widgetsCount*WIDGET_WIDTH)+"px");
-		//widgetsPanel.getElement().getStyle().setPosition(Position.STATIC);
 	}
 	
 	public void adjustNextbuttonVisibility(double currentMarginLeft){
@@ -155,9 +157,7 @@ public class ResourceCurosal {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			if(isNextButton&&isNextButtonActive){
-				//nextButton.getElement().setAttribute("style", "border-left: 15px solid #999; cursor: pointer;");
 			}else if(!isNextButton&&isPreviousButtonActive){
-				//previousButton.getElement().setAttribute("style", "border-right: 15px solid #999; cursor: pointer;");
 			}
 		}
 	}
@@ -194,7 +194,7 @@ public class ResourceCurosal {
 		}
 		private void setAnimationPosition(){	
 			startingMarginLeft=currentMarginLeft;
-			if(slideDirection.equalsIgnoreCase("forward")){
+			if(FORWARD.equalsIgnoreCase(slideDirection)){
 				desiredMarginLeft=startingMarginLeft+WIDGET_WIDTH;
 			}
 			else{
@@ -217,7 +217,7 @@ public class ResourceCurosal {
 			    return (1 + Math.cos(Math.PI + progress * Math.PI)) / 2;
 		 }
 		protected void onComplete() {
-			if(slideDirection.equalsIgnoreCase("forward")){
+			if(FORWARD.equalsIgnoreCase(slideDirection)){
 				desiredMarginLeft=startingMarginLeft+WIDGET_WIDTH;
 			}
 			else{

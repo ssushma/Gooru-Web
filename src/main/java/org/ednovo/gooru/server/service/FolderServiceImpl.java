@@ -166,7 +166,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
 						.toString(), CollectionDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionDo();
@@ -191,7 +190,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<CollectionItemDo>();
 	}
@@ -227,7 +225,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<CollectionDo>();
 	}
@@ -247,7 +244,6 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ArrayList<CollectionItemDo>();

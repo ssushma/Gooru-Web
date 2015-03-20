@@ -73,13 +73,9 @@ public class RatingsConfirmationPopup extends PopupPanel{
 			ratingWidgetView.getRatingCountLabel().setText(count.toString());
 			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		}
-		
 		ratingWidgetView.setAvgStarRating(average);
 		if(count>0)
 		{
-		/*ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-		ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());*/
 		}
 		ratingWidgetPanel.add(ratingWidgetView);
 	}

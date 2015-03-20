@@ -2667,7 +2667,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
 			
 		}
 	}
@@ -2761,7 +2760,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {

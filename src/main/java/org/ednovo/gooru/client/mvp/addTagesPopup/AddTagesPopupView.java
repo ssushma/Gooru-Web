@@ -1484,9 +1484,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		
 		String hazardArr[] = setAccessHazards();
-		for(int i=0;i<hazardArr.length;i++){
-			
-		}
 		if(hazardArr != null)
 		{
 			for(int i=0;i<hazardArr.length;i++)
