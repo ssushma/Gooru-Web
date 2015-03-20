@@ -4,7 +4,7 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
-	<g:HTMLPanel styleName="">
+	<g:HTMLPanel>
 		<!-- <g:HTMLPanel styleName="step fi-address-book size-72"></g:HTMLPanel> -->
 		<g:HTMLPanel ui:field="gooruPanel"/>
 		<g:HTMLPanel ui:field="panelLandingPage">
@@ -42,11 +42,12 @@
  -->			<section class="{res.css.searchContainer}">
 				<div class="container">
 					<div class="row">
-
 						<div class="col-md-3 col-xs-12 col-sm-6 searchMAIN">
 							<div class="{res.css.sInner}">
-								<div class="animation text-center">
-									<span class="{res.css.sprite} {res.css.spriteFind}" />
+								<div class="finMainwrapper">
+								    <div class="animation text-center">
+										<span class="{res.css.sprite} {res.css.spriteFind}" />
+									</div>
 								</div>
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL0524}"/>
 								<div class="clearfix"/>
@@ -62,11 +63,11 @@
 							
 								 </div>
 						</div>
-
-						<div class="col-xs-3 col-xs-12 col-sm-6">
+						<div class="col-md-3 col-xs-12 col-sm-6">
 							<div class="{res.css.sInner}">
-								<div class="animation text-center">
-									<span class="{res.css.sprite} {res.css.spriteRemix}"  />
+							    <div class="finMainwrapper">
+							     <div class="animation text-center">
+										<span class="{res.css.sprite} {res.css.spriteRemix}"  />
 								</div>
 								</div>
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL2037}"></tbp:H2Panel>
@@ -79,10 +80,12 @@
 						</div>
 						<div class="col-md-3 col-xs-12 col-sm-6">
 							<div class="{res.css.sInner}">
-								<div class="animation text-center">
-									<span class="{res.css.sprite} {res.css.spriteShare}"  />
-								</div>
-								<g:Label styleName="h2 text-center" text="{i18n.GL0526}"></g:Label>
+							    <div class="finMainwrapper">
+							    	<div class="animation text-center">
+										<span class="{res.css.sprite} {res.css.spriteShare}"  />
+									</div>
+								</div>	
+								<tbp:H2Panel styleName="text-center" text="{i18n.GL0526}"></tbp:H2Panel>
 								<div class="clearfix"></div>
 								<tbp:PPanel text="{i18n.GL2124}"/>
 								<tbp:PPanel>
@@ -94,7 +97,7 @@
 							<div class="{res.css.sInner}">
 								<div class="finMainwrapper">
 								<div class="animation text-center">
-									<span class="{res.css.sprite} {res.css.spriteMonitor}"  />
+								<span class="{res.css.sprite} {res.css.spriteMonitor}"  />
 								</div>
 								</div>
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL2126}"/>
@@ -106,6 +109,7 @@
 								</div>
 							</div>
 					</div>
+				</div>
 			</section>
 			<div class="clearfix"></div>
 			<div class="container">
@@ -114,7 +118,6 @@
 				</div>
 			</div>
 			<div class="clearfix"></div>
-
 			<div class="container {res.css.communityblock}">
 			    <tbp:H2Panel  text="{i18n.GL2130}"/>
 			    <tbp:H4Panel  text="{i18n.GL2131}"/>
@@ -926,10 +929,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-5">
+					<div class="col-md-5">
 						<div class="{res.css.getInnerRight}">
-							<g:Label styleName="h3 first" text="{i18n.GL2140}"/>
-							<div class="spriteLandingPage spriteLandingPageMonitorIco"></div>
+							<tbp:H3Panel styleName="first" text="{i18n.GL2140}"/>
+								<div class="spriteLandingPage spriteLandingPageMonitorIco"></div>
 							<div class="clearfix"></div>
 							<h4>
 							     <g:Anchor href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg" target="_blank" text="{i18n.GL2141}"></g:Anchor>
@@ -1007,7 +1010,7 @@
 									</div>
 									<div class="col-md-6 text-center">
 										<p>
-											<div class="spriteLandingPage spriteLandingPageGooruBadge img-responsive"></div>
+										<div class="spriteLandingPage spriteLandingPageGooruBadge img-responsive"></div>
 										</p>
 									</div>
 								</div>
@@ -1075,7 +1078,7 @@
 								<li>
 									<a href="https://plus.google.com/105874563188592272186/posts"
 										target="_blank">
-										<div class="spriteLandingPage spriteLandingPageGooglePlusIco" ></div>
+									<div class="spriteLandingPage spriteLandingPageGooglePlusIco" ></div>
 									</a>
 								</li>
 
@@ -1153,11 +1156,15 @@
 				</div>
 			</footer>
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- 			<script
-				src="scripts/jquery-1.11.0.min.js"></script>
+			<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 			<!-- Include all compiled plugins (below), or include individual files 
 				as needed -->
-			<script src="scripts/bootstrap.min.js"></script>
-		</g:HTMLPanel>
-	</g:HTMLPanel>
+ 			<script src="js/bootstrap.min.js"></script>
+ 		</g:HTMLPanel>
+ 		</g:HTMLPanel>
+ 	
 </ui:UiBinder>
+
+
+
+
