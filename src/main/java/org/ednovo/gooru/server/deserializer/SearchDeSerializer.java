@@ -172,26 +172,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 		}
 		
 	}
-	public void deserializeV2CollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
-        searchDo.setSearchResults(new ArrayList<T>());
-        try{
-            if(jsonRep!=null){
-                JSONArray searchResultJsonArray = jsonRep.getJsonArray();
-                List<T> collectionSearchResults = searchDo.getSearchResults();
-                int collectionItemsCount=searchResultJsonArray.length();
-                searchDo.setCollectionItemsCount(collectionItemsCount);
-                for (int pointer = 0; pointer < collectionItemsCount; pointer++) {
-                    T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
-                    if (record != null) {
-                        collectionSearchResults.add(record);
-                    }
-                }
-            }
-        } catch(Exception e){
-        }
-        
-    }
-
+	
 	public void deserializeV2CollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
 		searchDo.setSearchResults(new ArrayList<T>());
 		try{
