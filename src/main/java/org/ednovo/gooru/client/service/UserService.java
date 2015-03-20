@@ -126,7 +126,7 @@ public interface UserService extends BaseService {
 	 * @return user  credential
 	 * @throws GwtException
 	 */
-	Map<String, Object> resetCredential(String formData) throws GwtException, ServerDownException;
+	Map<String, Object> resetCredential(String token, String password, String mailConfirmationUrl) throws GwtException, ServerDownException;
 	
 	/**
 	 * Update user view flag when user logIn in first time
@@ -137,12 +137,6 @@ public interface UserService extends BaseService {
 	 */
 	UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException, ServerDownException;
 
-	/**
-	 * Get User profile details for settings page
-	 * @return serialized {@link SettingDo}
-	 * @throws GwtException
-	 */
-	SettingDo getUserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get User profile details for settings page
@@ -151,15 +145,8 @@ public interface UserService extends BaseService {
 	 */
 	V2UserDo getV2UserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 
-	/**
-	 * Update user profile details
-	 * @param gooruUid of the user
-	 * @param token session token to set for loogedIn user
-	 * @param params has user details
-	 * @return serialized {@link ProfileDo}
-	 * @throws GwtException
-	 */
-	SettingDo updateProfileSettings(String gooruUid, Map<String, String> params) throws GwtException, ServerDownException;
+	
+	
 	/**
 	 * Update user profile visibilty
 	 * @param gooruUid of the user
@@ -207,7 +194,7 @@ public interface UserService extends BaseService {
 	 *
 	 *
 	 */
-	UserDo createUser(String postData) throws GwtException, ServerDownException;
+	UserDo createUser(Map<String, String> registrationDetailsParams,String regType) throws GwtException, ServerDownException;
 	
 	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException, ServerDownException;
 	

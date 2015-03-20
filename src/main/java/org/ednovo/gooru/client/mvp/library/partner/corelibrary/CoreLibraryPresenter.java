@@ -101,11 +101,14 @@ public class CoreLibraryPresenter extends BasePlacePresenter<IsCoreLibraryView, 
 	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Entered into Core lib start time -- "+startTime);
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
+			AppClientFactory.printInfoLogger("Core lib end time -- "+startTime);
 			
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {

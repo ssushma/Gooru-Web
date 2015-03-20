@@ -4,7 +4,7 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
-	<g:HTMLPanel>
+	<g:HTMLPanel styleName="">
 		<!-- <g:HTMLPanel styleName="step fi-address-book size-72"></g:HTMLPanel> -->
 		<g:HTMLPanel ui:field="gooruPanel"/>
 		<g:HTMLPanel ui:field="panelLandingPage">
@@ -42,12 +42,11 @@
  -->			<section class="{res.css.searchContainer}">
 				<div class="container">
 					<div class="row">
+
 						<div class="col-md-3 col-xs-12 col-sm-6 searchMAIN">
 							<div class="{res.css.sInner}">
-								<div class="finMainwrapper">
-								    <div class="animation text-center">
-										<img src="images/landing-page/find.png" />
-									</div>
+								<div class="animation text-center">
+									<span class="{res.css.sprite} {res.css.spriteFind}" />
 								</div>
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL0524}"/>
 								<div class="clearfix"/>
@@ -63,11 +62,11 @@
 							
 								 </div>
 						</div>
-						<div class="col-md-3 col-xs-12 col-sm-6">
+
+						<div class="col-xs-3 col-xs-12 col-sm-6">
 							<div class="{res.css.sInner}">
-							    <div class="finMainwrapper">
-							     <div class="animation text-center">
-									<img src="images/landing-page/remix.png"/>
+								<div class="animation text-center">
+									<span class="{res.css.sprite} {res.css.spriteRemix}"  />
 								</div>
 								</div>
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL2037}"></tbp:H2Panel>
@@ -80,12 +79,10 @@
 						</div>
 						<div class="col-md-3 col-xs-12 col-sm-6">
 							<div class="{res.css.sInner}">
-							    <div class="finMainwrapper">
-							    	<div class="animation text-center">
-										<img src="images/landing-page/share.png" />
-									</div>
-								</div>	
-								<tbp:H2Panel styleName="text-center" text="{i18n.GL0526}"></tbp:H2Panel>
+								<div class="animation text-center">
+									<span class="{res.css.sprite} {res.css.spriteShare}"  />
+								</div>
+								<g:Label styleName="h2 text-center" text="{i18n.GL0526}"></g:Label>
 								<div class="clearfix"></div>
 								<tbp:PPanel text="{i18n.GL2124}"/>
 								<tbp:PPanel>
@@ -97,7 +94,7 @@
 							<div class="{res.css.sInner}">
 								<div class="finMainwrapper">
 								<div class="animation text-center">
-									<img src="images/landing-page/monitor.png" />
+									<span class="{res.css.sprite} {res.css.spriteMonitor}"  />
 								</div>
 								</div>
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL2126}"/>
@@ -109,7 +106,6 @@
 								</div>
 							</div>
 					</div>
-				</div>
 			</section>
 			<div class="clearfix"></div>
 			<div class="container">
@@ -118,24 +114,10 @@
 				</div>
 			</div>
 			<div class="clearfix"></div>
+
 			<div class="container {res.css.communityblock}">
 			    <tbp:H2Panel  text="{i18n.GL2130}"/>
 			    <tbp:H4Panel  text="{i18n.GL2131}"/>
-				<!-- Gooru Stories -->
-			    <g:HTMLPanel styleName="gooruStories" ui:field="panelGooruStories">
-					<div class="row">
-						<div class="col-md-3 col-xs-12 col-sm-3 storiesImg">
-							<img class="img-responsive" src="images/gooru-stories.png" />
-						</div>
-						<g:HTMLPanel styleName="col-md-7  col-sm-6 col-xs-12 goorustoriesIntro" ui:field="panelText">
-							
-						</g:HTMLPanel>
-						 <g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-12 browseStoriesBtn">
-							<g:Anchor styleName="gooruStoriesLink btn-block" text="{i18n.GL2188_4}" ui:field="achGooruStories"></g:Anchor>
-						</g:HTMLPanel>
-					</div>
-					<div class="clearfix"></div>
-				</g:HTMLPanel>
 				<p>
 					<g:HTMLPanel ui:field="contributorsContainer" />
 				</p>
@@ -944,10 +926,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-5">
+					<div class="col-xs-5">
 						<div class="{res.css.getInnerRight}">
-							<tbp:H3Panel styleName="first" text="{i18n.GL2140}"/>
-							<img src="images/landing-page/monitor-ico.png" />
+							<g:Label styleName="h3 first" text="{i18n.GL2140}"/>
+							<div class="spriteLandingPage spriteLandingPageMonitorIco"></div>
 							<div class="clearfix"></div>
 							<h4>
 							     <g:Anchor href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg" target="_blank" text="{i18n.GL2141}"></g:Anchor>
@@ -1025,7 +1007,7 @@
 									</div>
 									<div class="col-md-6 text-center">
 										<p>
-											<img class="img-responsive" src="images/landing-page/gooru-badge.png" />
+											<div class="spriteLandingPage spriteLandingPageGooruBadge img-responsive"></div>
 										</p>
 									</div>
 								</div>
@@ -1077,23 +1059,23 @@
 							<ul class="list-unstyled list-inline">
 								<li>
 									<a href="https://www.facebook.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/facebook-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageFacebookIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://www.twitter.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/twitter-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageTwitterIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://www.youtube.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/youtube-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageYoutubeIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://plus.google.com/105874563188592272186/posts"
 										target="_blank">
-										<img class="" src="images/landing-page/google-plus-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageGooglePlusIco" ></div>
 									</a>
 								</li>
 
@@ -1171,16 +1153,11 @@
 				</div>
 			</footer>
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-			<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+ 			<script
+				src="scripts/jquery-1.11.0.min.js"></script>
 			<!-- Include all compiled plugins (below), or include individual files 
 				as needed -->
- 			<script src="js/bootstrap.min.js"></script>
- 		</g:HTMLPanel>
- 		</g:HTMLPanel>
- 	
+			<script src="scripts/bootstrap.min.js"></script>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder>
-
-
-
-
-

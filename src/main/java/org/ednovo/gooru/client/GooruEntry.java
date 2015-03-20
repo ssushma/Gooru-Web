@@ -50,6 +50,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.LoadApi.LoadLibrary;
 import com.google.gwt.user.client.Cookies;
@@ -82,8 +83,24 @@ public class GooruEntry implements EntryPoint {
 	
 	private static final String GOORU_USER_INACTIVE = "in-active";
 	
+	static{
+		
+	}
+	
 	public void onModuleLoad() {
-
+		
+		/**
+		 * Capturing all uncaught exception on client side.
+		 */
+		/*GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+			
+			@Override
+			public void onUncaughtException(Throwable e) {
+				Throwable unwrapped = getExceptionToDisplay(e);
+				AppClientFactory.printSevereLogger("Exception Caught !! "+unwrapped.getMessage());
+			}
+		});*/	
+		
 		DelayedBindRegistry.bind(appInjector);
 		AppClientFactory.setAppGinjector(appInjector);
 		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
@@ -94,23 +111,15 @@ public class GooruEntry implements EntryPoint {
 		    loadLibraries.add(LoadLibrary.PLACES);
 		    loadLibraries.add(LoadLibrary.WEATHER);
 		    loadLibraries.add(LoadLibrary.VISUALIZATION);
-		    
+		     
 		    
 		String device = BrowserAgent.returnFormFactorWithSizeView();
 		String size[] = device.split("-");
 
-//		if (size[0].equalsIgnoreCase("mobile") || size[0].equalsIgnoreCase("iphone")){
-//			Map<String, String> params = new HashMap<String, String>();
-//			params.put("device", size[0]);
-//			params.put("size", size[1]);
-//			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
-////			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
-//		}else{
 			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
 					AppClientFactory.setLoggedInUser(loggedInUser);
-//					loadCssJsFiles();
 					UcCBundle.INSTANCE.css().ensureInjected();
 					HomeCBundle.INSTANCE.css().ensureInjected();
 					AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
@@ -120,7 +129,8 @@ public class GooruEntry implements EntryPoint {
 				}
 			});
 			AppClientFactory.setAppGinjector(appInjector);
-		
+
+		getloggersStatus();
 
 		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
@@ -180,14 +190,23 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 		
 		CollectionPlaySummaryCBundle.INSTANCE.css().ensureInjected();
-	
 	}
 	
-	/* 
-	 * Registering the native events.
-	 * 
-	 * */
 	
+	/**
+	 * Checks the status of loggers from property file whether it is enabled or not.
+	 */
+	private void getloggersStatus() { 
+		AppClientFactory.getInjector().getSearchService().isClientSideLoggersEnabled(new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				AppClientFactory.setClientLoggersEnabled(result);
+			}
+			
+		});
+	}
+
 	private void registerWindowEvents(){
 		nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
 			
@@ -238,11 +257,6 @@ public class GooruEntry implements EntryPoint {
 				HomeCBundle.INSTANCE.css().ensureInjected();
 				AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 			}
-
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-//			}
 		});
 	}
 	
@@ -271,47 +285,27 @@ public class GooruEntry implements EntryPoint {
 					params.put("loginEvent", "true");
 					appInjector.getPlaceManager().revealPlace(PlaceTokens.HOME, params);
 				}
-                //	appInjector.getPlaceManager().redirectPlace(PlaceTokens.HOME); 
-//				loginPopupTimer.schedule(LOGIN_POPUP_DELAY_TIME);
 			}
-
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-//			}
 		});
 	}
-	
-	Timer loginPopupTimer = new Timer() {
-		@Override
-		public void run() {
-			
-//			Window.Location.reload();
-		}
-	};
 	
 	public String getHttpOrHttpsProtocol() {
 		return Window.Location.getProtocol();
 	}
 	
-	private void loadCssJsFiles() {
-		String cdnEndPoint = AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint();
-		BrowserAgent.loadCssFile(cdnEndPoint+"/css/gooru.css?r=59","css");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/css/gooru-global.css?r=59","css");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js","js");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js","js");
-		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/errorImageFunction.js","js");
-	}
-	/*Timer t = new Timer() {
-		@Override
-		public void run() {
-			if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) && flag){
-				flag= false;
-				redirectToLandingPage();
-				
-			}
-		}
-	};*/
-	
-
+	/**
+	 *  Method used to unwrap GWT umbrella exception.
+	 *  
+	 * @param e {@link Throwable}
+	 * @return {@link Throwable}
+	 */
+	public Throwable getExceptionToDisplay(Throwable e) {
+	    if(e instanceof UmbrellaException) {
+	      UmbrellaException ue = (UmbrellaException) e;
+	      if(ue.getCauses().size() == 1) {
+	        return getExceptionToDisplay(ue.getCauses().iterator().next());
+	      }
+	    }
+	    return e;
+	  }
 }

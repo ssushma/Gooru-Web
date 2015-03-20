@@ -103,11 +103,13 @@ public class LpsLibraryPresenter extends BasePlacePresenter<IsLpsLibraryView, Lp
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Entered into LPS start time -- "+startTime);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
-			
+			AppClientFactory.printInfoLogger("LPS End time -- "+(System.currentTimeMillis() - startTime));
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 		    //To show SignUp (Registration popup)

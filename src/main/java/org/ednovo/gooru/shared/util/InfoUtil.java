@@ -87,8 +87,6 @@ public class InfoUtil {
 						}
 
 					} catch (Exception e) {
-						//gradeListInt.add(0);
-						e.printStackTrace();
 					}
 				}
 			}

@@ -96,24 +96,6 @@ public class AssignmentsPresenter extends ChildPresenter<AssignmentsPresenter, I
 		return AppClientFactory.getInjector().getResourceService();
 	}
 	
-	/*public SimpleAsyncCallback<List<CollectionDo>> getUserCollectionsAsyncCallback() {
-		if (getMyUserCollectionsAsyncCallback == null) {
-			getMyUserCollectionsAsyncCallback = new SimpleAsyncCallback<List<CollectionDo>>() {
-
-				@Override
-				public void onSuccess(List<CollectionDo> result) {
-					getView().onPostUserCollections(result);
-					if (result.size()>0){
-						getView().showPanel(true);
-					}
-					if (result.size()>=10){
-						getView().disableAddNewCollection();
-					}
-				}
-			};
-		}
-		return getMyUserCollectionsAsyncCallback;
-	}*/
 	 /**
 	  * 
 	  * @function getAssignmentCollections 

@@ -4,8 +4,6 @@
 	<ui:style field="playerStyle" src="resourceplayermetadata.css"
 		type="org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataBundle" />
 	<ui:style field="flagPopUpstyle" src="poor-ratingflag-popup.css" />
-	<ui:with field='flagBundleCss'
-		type='org.ednovo.gooru.player.collection.client.view.add.tooltip.FlagBundle' />
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="{playerStyle.ratingPoorConfirmationContainer}">
 			<g:HTMLPanel styleName="{playerStyle.arrowBorder} hidden-xs"></g:HTMLPanel>

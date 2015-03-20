@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.uc.SignUpGradeCourseView;
@@ -32,9 +34,11 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONObject;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -99,18 +103,16 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 	}
 
 	@Override
-	public void CreateUser(String postData, final String loginData) {
-		AppClientFactory.getInjector().getUserService().createUser(postData, new SimpleAsyncCallback<UserDo>() {
-
+	public void CreateUser(Map<String, String> registrationDetailsParams, final String username, final String password) { 
+		AppClientFactory.getInjector().getUserService().createUser(registrationDetailsParams,"notChildReg", new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo result) {
 				if (result!=null){
 					if (result.getCode() !=null &&  result.getCode() >399){
 						new AlertContentUc(i18n.GL0061(), result.getStatus());
 						getView().toggleButtons();
-					}else if (result.getGooruUId() !=null && !result.getGooruUId().equalsIgnoreCase("")){
-						AppClientFactory.getInjector().getAppService().v2Signin(loginData, new SimpleAsyncCallback<UserDo>() {
-
+					}else if (!StringUtil.isEmpty(result.getGooruUId())){
+						AppClientFactory.getInjector().getAppService().v2Signin(username,password, new SimpleAsyncCallback<UserDo>() {
 							@Override
 							public void onSuccess(UserDo result) {
 								getView().hide();
@@ -124,7 +126,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 										AppClientFactory.setLoggedInUser(user);
 									}
 								});
-								SignUpGradeCourseView gradeCourseView = new SignUpGradeCourseView(result);
+								new SignUpGradeCourseView(result);
 							}
 						});
 						

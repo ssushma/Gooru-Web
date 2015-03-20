@@ -37,6 +37,4 @@ public interface PreviewPlayerMetadataUiHandlers extends BaseUiHandlers,SetPlaye
 	
 	public void getPaginationResults(String gooruOid, String offset, String limit);
 	
-	//public void getFlagedReport(String gooruOid);
-	
 }

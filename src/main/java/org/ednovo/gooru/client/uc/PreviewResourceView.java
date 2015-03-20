@@ -105,14 +105,11 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		
 		@Override
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
-			if(collectionItemDo.getResource().getGooruOid().equals(gooruOid)){
+			if(collectionItemDo!=null && collectionItemDo.getResource()!=null && collectionItemDo.getResource().getGooruOid()!=null && collectionItemDo.getResource().getGooruOid().equals(gooruOid)){
 				collectionItemDo.getResource().getRatings().setCount(count);
                 collectionItemDo.getResource().getRatings().setAverage(average);
 				setAvgRatingWidget();
-				
-				
 			}
-			
 		}
 	};
 	
@@ -121,14 +118,17 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 	 */
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
-		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
-		ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount().toString());
-		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
-		ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
-		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		if(collectionItemDo.getResource().getRatings()!=null){
+			if(collectionItemDo.getResource().getRatings().getCount()!=null && collectionItemDo.getResource().getRatings().getCount()!= 0){
+				ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
+				ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount().toString());
+				ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
+				ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
+				ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+			}
+		}
 		ratingWidgetPanel.clear();
 		ratingWidgetPanel.add(ratingWidgetView);
-		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
 	
 	/**

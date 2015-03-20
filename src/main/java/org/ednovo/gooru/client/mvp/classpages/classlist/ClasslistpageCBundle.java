@@ -58,20 +58,13 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		
 		String teachTitle();
 		
-		String toggle();
-		
-		String publicPrivate();
-		
 		String teachDesc();
 		
 		String teachItalic();
 		String teachBold();
 		String assignDiv();
-		String assignTitle();
 		String subTitle();
 		String titleBold();
-		String assignTextArea();
-		String btn1();
 		String teachContentView();
 		String title();
 		String twoActions();
@@ -81,6 +74,7 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String progressStudents();
 		String manageDes();
 		String manageProgressStudents();
+		String classList();
 		
 		String assignSec();
 		String assignSecTitle();
@@ -88,17 +82,6 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String inputWidth();
 		
 		String shareTextboxLink();
-		String classTypeCheckbox();
-		
-		String ToggleButton();
-		String ToggleButtonuphovering();
-		String ToggleButtondown();
-		String ToggleButtondownhovering();
-		String toggleMainSpan();
-		String toggleSubContainer();
-		
-		String spanContainer();
-		String classlistCheckbox();
 		
 		//Invite Students css
 		String buttonContainer();
@@ -125,9 +108,6 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String emailIdCss();
 		String btnRemove();
 		
-		String emailButton();
-		String emailStyle();
-		
 		//New Features Class css
 		String teachPopupDisplay();
 		String existPopup();
@@ -137,12 +117,9 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String existPopupContent();
 		String threeActions();
 		String heading();
-		String publicImage();
 		String analystic();
-		String classList();
 		String buttonBlock();
 		String extra();
-		String checkboxContainer();
 		String seeMoreActive();
 		String seeMorePending();
 		
@@ -151,7 +128,6 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		
 		String privacyAlignStyle();
 		String visibilityDivContainer();
-		String radioBtnVisiblity();
 		String radioBtnVisiblitySecondContainer();
 		String subBodyInviteContainer();
 		String leftInviteContainer();

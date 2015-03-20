@@ -144,10 +144,12 @@ public class ResourceContentReportView extends PopupPanel{
 		this.session=session;
 		this.assocGooruOid=assocGooruOid;
 		this.resourceflagButton=resourceflagButton;
-		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
-		titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
-		titleText.getElement().setAttribute("title",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		if(!StringUtil.isEmpty(resourceTitle)){
+			resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+			titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+			titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+			titleText.getElement().setAttribute("title",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		}
 		
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
@@ -168,13 +170,10 @@ public class ResourceContentReportView extends PopupPanel{
 					gooruOidList.addAll(result.getGetAsscociatedId());
 					for(int i=0;i<gooruOidList.size();i++)
 					{
-						
 						gooruOid+=gooruOidList.get(i)+",";
-						
 					}
 					}
 					formateSize=formateType.size();
-				
 			}
 			}
 		});
@@ -198,17 +197,17 @@ public class ResourceContentReportView extends PopupPanel{
 	@UiHandler("cancelButton")
 	public void onClickOfCancelButton(ClickEvent event)
 	{
-	checkBox1.setChecked(false);
-	checkBox2.setChecked(false);
-	checkBox3.setChecked(false);
-	checkBox4.setChecked(false);
+	checkBox1.setValue(false);
+	checkBox2.setValue(false);
+	checkBox3.setValue(false);
+	checkBox4.setValue(false);
 	descriptionTextArea.setText("");
 	
 	}
 	@UiHandler("checkBox1")
 	public void onClickOfcheckBox1(ClickEvent event)
 	{
-	if(checkBox1.isChecked()||checkBox2.isChecked()||checkBox3.isChecked()||checkBox4.isChecked())
+	if(checkBox1.getValue()||checkBox2.getValue()||checkBox3.getValue()||checkBox4.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -223,7 +222,7 @@ public class ResourceContentReportView extends PopupPanel{
 	@UiHandler("checkBox2")
 	public void onClickOfcheckBox2(ClickEvent event)
 	{
-		if(checkBox2.isChecked()||checkBox3.isChecked()||checkBox4.isChecked()||checkBox1.isChecked())
+		if(checkBox2.getValue()||checkBox3.getValue()||checkBox4.getValue()||checkBox1.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -238,7 +237,7 @@ public class ResourceContentReportView extends PopupPanel{
 	@UiHandler("checkBox3")
 	public void onClickOfcheckBox3(ClickEvent event)
 	{
-		if(checkBox3.isChecked()||checkBox4.isChecked()||checkBox2.isChecked()||checkBox1.isChecked())
+		if(checkBox3.getValue()||checkBox4.getValue()||checkBox2.getValue()||checkBox1.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -254,7 +253,7 @@ public class ResourceContentReportView extends PopupPanel{
 	@UiHandler("checkBox4")
 	public void onClickOfcheckBox4(ClickEvent event)
 	{
-		if(checkBox4.isChecked()||checkBox3.isChecked()||checkBox2.isChecked()||checkBox1.isChecked())
+		if(checkBox4.getValue()||checkBox3.getValue()||checkBox2.getValue()||checkBox1.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -270,19 +269,19 @@ public class ResourceContentReportView extends PopupPanel{
 	public void onClicksubmitButton(ClickEvent event)
 	{
 		
-		if(checkBox1.isChecked())
+		if(checkBox1.getValue())
 		{
 			formatting1="missing-concept";
 		}
-		if(checkBox2.isChecked())
+		if(checkBox2.getValue())
 		{
 			formatting2="not-loading";
 		}
-		if(checkBox3.isChecked())
+		if(checkBox3.getValue())
 		{
 			formatting3="inappropriate";
 		}
-		if(checkBox4.isChecked())
+		if(checkBox4.getValue())
 		{
 		
 			formatting4="other";
@@ -314,9 +313,6 @@ public class ResourceContentReportView extends PopupPanel{
 	public void getThankYouPopUp()
 	{
 	this.hide();
-	//ThankYouToolTip thankYouToolTip=new ThankYouToolTip();
-	//thankYouToolTip.setPopupPosition((Window.getClientWidth()-400)/2,(Window.getClientHeight()-165)/2+Window.getScrollTop());
-	//thankYouToolTip.show();
 	resourceflagButton.removeStyleName(QuestionResourceImageBundle.IMAGEBUNDLEINSTANCE.questionResourcesStyleImages().flagImageResource());
 	resourceflagButton.setStyleName(QuestionResourceImageBundle.IMAGEBUNDLEINSTANCE.questionResourcesStyleImages().flagImageOrange());
 	submitButtonGray.setVisible(true);

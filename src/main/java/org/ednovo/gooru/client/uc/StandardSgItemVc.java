@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.uc;
 
 
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -58,17 +60,19 @@ public class StandardSgItemVc extends Composite {
 	 * @param desc standard description
 	 */
 	public StandardSgItemVc(String title, String desc) {
-		this.res = UcCBundle.INSTANCE;
-		res.css().ensureInjected();
-		initWidget(uiBinder.createAndBindUi(this));
-		standardsTitle.setHTML(title);
-		standardsTitle.getElement().setId("htmlStandardsTitle");
-		standardsTitle.getElement().setAttribute("alt", title);
-		standardsTitle.getElement().setAttribute("title", title);
-		standardsDesc.getElement().setId("htmlStandardsDesc");
-		// As per story : DO-1446
-//		standardsDesc.setHTML(StringUtil.truncateText(desc,60));
-		standardsDesc.setVisible(false);
+		if(!StringUtil.isEmpty(title) && !StringUtil.isEmpty(desc)){
+			this.res = UcCBundle.INSTANCE;
+			res.css().ensureInjected();
+			initWidget(uiBinder.createAndBindUi(this));
+			standardsTitle.setHTML(title);
+			standardsTitle.getElement().setId("htmlStandardsTitle");
+			standardsTitle.getElement().setAttribute("alt", title);
+			standardsTitle.getElement().setAttribute("title", title);
+			standardsDesc.getElement().setId("htmlStandardsDesc");
+			// As per story : DO-1446
+			// standardsDesc.setHTML(StringUtil.truncateText(desc,60));
+			standardsDesc.setVisible(false);
+		}
 	}
 
 }

@@ -94,26 +94,6 @@
 	/* margin-top: -36px;
 	margin-left: -10px; */
 }
-
-.radioButton {
-	width: 19px;
-	height: 17px;
-	display: inline-block;
-	vertical-align: top;
-	margin-top: 15px;
-	background-position: 0 -16px;
-	cursor: pointer;
-	background: url(images/collaborators/radio.png) no-repeat;
-}
-.radioButtonSelected {
-	background: url(images/collaborators/radio.png) no-repeat;
-	width: 19px;
-	height: 17px;
-	display: inline-block;
-	margin-top: 15px;
-	background-position: 0 -51px;
-	cursor: pointer;
-}
 .usernameCss {
 	display: inline-block;
 	width: 30%;

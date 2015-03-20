@@ -16,13 +16,6 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        String reaction_mean1();
 	        String reaction_dontunderstand1();
 	        String reaction_needhelp1();
-	        String reaction_redneedhelp();
-	        String reaction_reddontunderstand();
-	        String correct_legend_one();
-	        String correct_legend_other();
-	        String incorrect_legend();
-	        String floatLeft();
-	        String resource_monitor_header_title();
 	        
 	        String category_new_type_audio();
 	        String category_new_type_image();
@@ -34,7 +27,6 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        String category_new_type_webpage();
 	        
 	        String setProgressBar();
-	        String resourceBreakDownTimeSpent();
 	        String viewResponseTextOpended();
 	        String displayMessageTextForScoredQuestions();
 	        String displayMessageTextForOEQuestions();

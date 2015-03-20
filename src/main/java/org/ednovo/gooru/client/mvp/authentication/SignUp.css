@@ -275,10 +275,6 @@ margin-top: -43px;
 	float:left;
 }
 
-#jackWestQuotation {
-	background: url("images/signup/quotation-jack-west.png") no-repeat;
-}
-
 .rightContainer {
 	width:330px;
 	float:right;
@@ -501,38 +497,7 @@ margin-top: -43px;
 	margin:20px 0px;
 }
 
-.DOTSbuttons .tileContainer {
-	display:inline-block;
-	margin: 0px 10px;
-	line-height:1.8em;
-}
 
-.DOTSbuttons .tile {
-	background: url("images/signup/dots.png");
-	width:54px;
-	height:54px;
-}
-
-.DOTSbuttons .tile:hover {
-	cursor:pointer;
-	opacity:.6;
-}
-
-.discover .tile {
-	background-position:0px 0px;
-}
-
-.organize .tile {
-	background-position:0px -54px;
-}
-
-.teach .tile {
-	background-position:0px -108px;
-}
-
-.study .tile {
-	background-position:0px -162px;
-}
 
 .h6 {
 	font-weight:bold;
