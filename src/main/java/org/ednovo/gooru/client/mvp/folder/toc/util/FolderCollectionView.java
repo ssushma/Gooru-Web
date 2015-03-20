@@ -89,9 +89,9 @@ public class FolderCollectionView extends Composite {
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		if(folderDo.getCollectionType().equals(ASSESSMENT_URL)|| folderDo.getCollectionType().equals(ASSESSMENT)){
-			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/assessment-smal.png') no-repeat 2px 4px;padding-left: 34px;background-size: 21px 17px;");
+			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/assessment-smal.png') no-repeat 8px 4px;padding-left: 34px;background-size: 21px 17px;");
 		}else{
-			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/collection-small-icon.png') no-repeat 2px 4px;padding-left: 34px;");
+			collectionTypePanel.getElement().setAttribute("style", "background: url('../images/folders/panel/collection-small-icon.png') no-repeat 8px 4px;padding-left: 34px;");
 		}
 		imgLock.setVisible(false);
 		if(folderDo.getSettings()!=null && folderDo.getSettings().getIsLoginRequired()!=null){
