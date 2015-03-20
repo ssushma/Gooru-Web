@@ -188,7 +188,7 @@
 				<g:FlowPanel styleName="{style.pnlFullScreenNarrationContainer}" ui:field="pnlFullScreenNarration">
 					<panel:HTMLEventPanel ui:field="pnlBackToCollection" styleName="{style.pnlExitContainer}">
 						<g:Image styleName="{style.pnlExitImage}" url="images/player/backtoCollection.png"></g:Image>
-						<g:Label styleName="{style.pnlExitText}" text="{i18n.GL3189}"></g:Label>
+						<g:Label styleName="{style.pnlExitText}" text="{i18n.GL3197}"></g:Label>
 					</panel:HTMLEventPanel>
 					<g:HTMLPanel>
 						<g:HTMLPanel styleName="{style.pnlAuthorImage}" >
