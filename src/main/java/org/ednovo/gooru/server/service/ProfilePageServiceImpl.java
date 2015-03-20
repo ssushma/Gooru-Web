@@ -121,18 +121,6 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		return new ArrayList<CollectionItemDo>();
 	}
 
-	@Override
-	public void profileVisitEvent(String visitorUid) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.PROFILE_PAGE_EVENT, getUUID(),getLoggedInSessionToken());
-		Form form=new Form();
-		form.add("eventName", "profile-visit");
-		form.add("sessionToken", getLoggedInSessionToken());
-		form.add("visitorUid", visitorUid);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),form);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-	}
-	
 	 public String getUUID(){
 	        return String.valueOf(UUID.randomUUID());
 	 }

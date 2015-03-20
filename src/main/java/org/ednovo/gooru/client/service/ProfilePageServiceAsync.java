@@ -41,8 +41,6 @@ public interface ProfilePageServiceAsync extends BaseServiceAsync {
 
 //	void getFolderInformation(String folderId, AsyncCallback<CollectionDo> callback);
 	
-	void profileVisitEvent(String visitorUid,AsyncCallback<Void> callback);
-
 	void addGradeUserProfile(String grade, String userLevel,
 			AsyncCallback<Void> callback);
 
