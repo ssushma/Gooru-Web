@@ -118,7 +118,7 @@ public interface IsFolderTocView extends IsViewWithHandlers<FolderTocUiHandlers>
 	void setBreadCrumbs(Map<String, String> routeNodes);
 	/**
 	 * To show the Page doesn't exist
-	 * @param isVisible {@link Boolean}
+	 * @param isVisible
 	 */
 	void showPageNotFound(boolean isVisible);
 }

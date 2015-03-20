@@ -59,6 +59,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -97,14 +98,14 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 
 	interface FolderTocViewUiBinder extends UiBinder<Widget, FolderTocView> {
 	}
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel floderTreeContainer,marginDiv,bannerImagePanel,profileBannerPanel,bannerLogoImageContainer,whiteBgContainer,sharePanel;
 	@UiField Label lblBigIdeas,lblEssentalQuestions,lblPerformanceTasks,shareLbl;
 	@UiField H3Panel lblFolderTitle;
 	@UiField Button btnBackToPrevious;
 	@UiField H2Panel bannerTitle,userTitle;
-	@UiField Image logoImage,bannerImage,profImage;
+	@UiField Image logoImage,bannerImage,profImage,errorPageImg;
 	//@UiField Anchor mainTitle,firstTitle;
 	@UiField TextBox shareTxtBox;
 	
@@ -116,7 +117,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	final String SCOLLECTION = "scollection";
 	private static final String USER_ID = "userId";
 	private static final String BACK2TOC = "backToToc";
-	private static final String EMPTY_FOLDER = "Folder doesn't have any folders and collections";
+	private static final String EMPTY_FOLDER = i18n.GL3190();
 	private static final String SHORTEN_URL = "shortenUrl";
 	private static final String ID = "id";
 	private static final String PARENT_ID = "parentId";
@@ -482,13 +483,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
 								if(folderLevel>=2){
-									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
 								}
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
-							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
 							 	item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }
@@ -768,6 +769,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	public void showPageNotFound(boolean isVisible){
 		mainContainer.setVisible(!isVisible);
 		pageNotFoundPanel.setVisible(isVisible);
+	}
+	
+	@UiHandler("errorPageImg")
+	public void clickOnErrorImg(ClickEvent clickEvent){
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 	}
 	
 }

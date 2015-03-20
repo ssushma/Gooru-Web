@@ -26,7 +26,7 @@
 				<gg:TextBoxWithPlaceholder styleName="form-control {res1.css.form_control}" ui:field="toTxt"/>
 				<g:Label styleName="{res.css.emailShareErrorLabel}" ui:field="toValidation"></g:Label>
 				<g:HTMLPanel>
-					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br></br>
+					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br/>
 					<g:Anchor ui:field="ancprivacy"></g:Anchor>
 					<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
 				</g:HTMLPanel>

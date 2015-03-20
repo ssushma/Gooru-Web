@@ -42,7 +42,7 @@
 							</g:HTMLPanel>
 							<g:Button ui:field="btnBackToPrevious" styleName="{tocStyle.btnBackToPrevious} backArrowButton" />
 							<g:HTMLPanel styleName="{tocStyle.tocShareContainer}">
-							<g:HTMLPanel styleName="col-md-8 col-xs-6 col-sm-8">
+							<g:HTMLPanel styleName="col-md-8 col-xs-6 col-sm-8 {tocStyle.folderTitleContainer}">
 								<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"/></g:HTMLPanel>
 								<g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {tocStyle1.shareButton}" ui:field="sharePanel">
 									<g:Label styleName="{tocStyle.tocShareBtn}" ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
@@ -82,7 +82,7 @@
 				</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="pageNotFoundPanel">
-				    <g:Image url="images/404_message.png"/>
+				    <g:Image styleName="{tocStyle1.pageNotFoundStyle}" url="images/404_message.png" ui:field="errorPageImg"/>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

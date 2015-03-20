@@ -420,11 +420,9 @@
 }
 
 .folderStucture {
-    /* width:395px; */
-    margin-left: 12px;
     white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .folderStucture table {
    /*  width:395px; */
@@ -466,7 +464,7 @@
 }
 
 .folderLevel.child {
-    padding-left:75px;
+    padding-left:60px;
 }
 .folderLevel.innerchild,.foldercollection.innerchild {
     padding-left:149px;
@@ -485,7 +483,7 @@
 
 
 .folderLevel { /* grandparent level - default */
-    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 6px 4px;
+    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 0px 4px;
     cursor:pointer;
 }
 
@@ -495,7 +493,7 @@
 }
 
 .folderLevel.child {
-    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 47px 4px;
+    background: url('../images/folders/panel/folder-small-icon.png') no-repeat 35px 4px;
 	cursor:pointer;
 }
 .folderLevel.innerchild{
@@ -886,4 +884,7 @@
     text-align: left;
     padding-left: 51px;
 	color:#e1dfda;
+}
+.pageNotFoundStyle{
+	width: 1000px;
 }
