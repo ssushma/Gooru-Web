@@ -143,6 +143,7 @@ public interface IsWrapView extends IsView {
 	 *
 	 */
 	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
+
 	/**
 	 * 
 	 * @function openPreFilter 
@@ -163,4 +164,7 @@ public interface IsWrapView extends IsView {
 	 *
 	 */
 	void openPreFilter(); 	
+
+	void updateUserHeaderProfileImage(String imageUrl); 
+	
 }
