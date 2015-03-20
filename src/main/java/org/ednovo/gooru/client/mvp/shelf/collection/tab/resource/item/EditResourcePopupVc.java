@@ -672,10 +672,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
 		
-		centuryDefaultText.setText(i18n.GL3121_1());
+		centuryDefaultText.setText(i18n.GL3199());
 		centuryDefaultText.getElement().setId("lblCenturyDefaultText");
-		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3121_1());
-		centuryDefaultText.getElement().setAttribute("title", i18n.GL3121_1());
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3199());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3199());
 		
 		
 		momentsOfLearningTitle.getElement().setInnerHTML(i18n.GL1678());

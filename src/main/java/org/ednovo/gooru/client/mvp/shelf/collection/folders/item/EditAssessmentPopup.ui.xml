@@ -210,7 +210,7 @@
 					   	<div class="{style.shareSelection}">
 					 		<div class="{style.logInput}">
 					 			<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-					 				<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3182}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3182}"></g:Label>
+					 				<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3182}{i18n.GL_SPL_STAR}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3182}"></g:Label>
 									<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{style.form_edit_control}"></uc:TextBoxWithPlaceholder>
 				 					<g:Label ui:field="lblExistingAssessmentError" styleName="{style.mandatoryLabel}" ></g:Label>
 				 				</g:HTMLPanel>

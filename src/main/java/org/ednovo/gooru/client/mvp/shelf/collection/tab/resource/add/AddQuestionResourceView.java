@@ -800,9 +800,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
 		
-		centuryDefaultText.setText(i18n.GL3121_1());
-		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3121_1());
-		centuryDefaultText.getElement().setAttribute("title", i18n.GL3121_1());
+		centuryDefaultText.setText(i18n.GL3199());
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3199());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3199());
 		
 		depthOfKnowledgeHeader.setText(i18n.GL1693());
 		depthOfKnowledgeHeader.getElement().setAttribute("alt", i18n.GL1693());
