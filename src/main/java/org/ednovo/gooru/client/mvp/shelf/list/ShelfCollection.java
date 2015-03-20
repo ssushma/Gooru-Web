@@ -356,19 +356,19 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 2) {
 			titleLbl.setWidth("142px");
-			titleFocPanel.setWidth("143px");
+			//titleFocPanel.setWidth("143px");
 			titleFocPanel.addStyleName(folderStyle.parent());
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 3) {
 			titleLbl.setWidth("114px");
-			titleFocPanel.setWidth("115px");
+			//titleFocPanel.setWidth("115px");
 			titleFocPanel.addStyleName(folderStyle.child());
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
 		} else if(nextLevel == 4) {
 			titleLbl.setWidth("100px");
-			titleFocPanel.setWidth("89px");
+			//titleFocPanel.setWidth("89px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
 			titleFocPanel.addStyleName(folderStyle.collectionChild());

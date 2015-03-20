@@ -1070,7 +1070,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				if(standardsDo!=null && standardsDo.size()>0){
+				/*if(standardsDo!=null && standardsDo.size()>0){
 					for (CodeDo codeObj : standardsDo) {			
 						if(codeObj.getCodeId()==Integer.parseInt(id)){			
 							standardsDo.remove(codeObj);
@@ -1078,6 +1078,25 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 							this.getParent().removeFromParent();
 							return;
 						}
+					}
+				}*/
+				for(final CodeDo codeObj:standardsDo){
+					if(codeObj.getCodeId()==Integer.parseInt(id)){
+						//standardsDo.remove(codeObj);
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								CodeDo deletedObj=new CodeDo();
+								deletedObj.setCodeId(codeObj.getCodeId());
+								deletedStandardsDo.add(deletedObj);
+								standardsDo.remove(codeObj);	
+								centurySelectedValues.remove(Long.parseLong(id));
+							
+							}
+						});
+						this.getParent().removeFromParent();
+						return;
+						
 					}
 				}
 			}
@@ -1615,6 +1634,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 		@Override
 		public void onClick(ClickEvent event) {
+			//here
+			
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
