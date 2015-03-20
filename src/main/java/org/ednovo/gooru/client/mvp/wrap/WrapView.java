@@ -180,13 +180,13 @@ public class WrapView extends BaseView implements IsWrapView {
 							|| place.equalsIgnoreCase(PlaceTokens.STUDENT)) {
 						wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 					}else{
-						if(isIpad){
+						/*if(isIpad){
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 						}else if(isAndriod){
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 						}else{
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-						}
+						}*/
 					}
 				}
 				wrapperPanel.setWidget(content);
