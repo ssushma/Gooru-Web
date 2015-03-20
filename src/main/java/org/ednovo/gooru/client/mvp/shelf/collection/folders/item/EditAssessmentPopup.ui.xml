@@ -210,23 +210,23 @@
 					   	<div class="{style.shareSelection}">
 					 		<div class="{style.logInput}">
 					 			<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-					 				<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3182} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3182}"></g:Label>
+					 				<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3182}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3182}"></g:Label>
 									<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentTitle" styleName="{style.form_edit_control}"></uc:TextBoxWithPlaceholder>
 				 					<g:Label ui:field="lblExistingAssessmentError" styleName="{style.mandatoryLabel}" ></g:Label>
 				 				</g:HTMLPanel>
 				 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-				 					<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3183} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3183}"/>
+				 					<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3183}{i18n.GL_SPL_STAR}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3183}"/>
 				 					<uc:TextBoxWithPlaceholder ui:field="txtExistingAssessmentURL" styleName="{style.form_edit_control}"></uc:TextBoxWithPlaceholder>
 				 					<g:Label ui:field="lblExistingAssessmentURLError" styleName="{style.mandatoryLabel}" ></g:Label>
 			 					</g:HTMLPanel>
 			 				</div>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-				 				<g:Label styleName="{style.assessmentEditTextBoxText} {style.descriptionAlign}" text="{i18n.GL0904} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0904}"/>
+				 				<g:Label styleName="{style.assessmentEditTextBoxText} {style.descriptionAlign}" text="{i18n.GL0904}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0904}"/>
 			 					<g:TextArea ui:field="txtExistingAssessmentDescription" styleName="{style.form_edit_textares_control}"></g:TextArea>
 			 					<g:Label ui:field="lblExistingAssessmentDescriptionError" styleName="{style.mandatoryLabel}" ></g:Label>
 			 				</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-					 			<g:Label styleName="{style.assessmentEditTextBoxText} {style.privacy}" text="{i18n.GL0873} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0873}"/>
+					 			<g:Label styleName="{style.assessmentEditTextBoxText} {style.privacy}" text="{i18n.GL0873}{i18n.GL_SPL_STAR}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0873}"/>
 					 			<g:HTMLPanel styleName="{style.assessmentPrivacyRightContainer}">
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton ui:field="rdBtnAssessmentPublic" name="" styleName="{style.radioBox} {style.publicImg}" title="{i18n.GL0329}"></g:RadioButton>
@@ -240,7 +240,7 @@
 					 			</g:HTMLPanel>
 			 				</g:HTMLPanel>
 			 				<g:HTMLPanel styleName="{style.assessmentTextBoxEditContainer}">
-				 			<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3184} {i18n.GL_SPL_QUESTION} {i18n.GL_SPL_STAR} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3184}"/>
+				 			<g:Label styleName="{style.assessmentEditTextBoxText}" text="{i18n.GL3184}{i18n.GL_SPL_QUESTION}{i18n.GL_SPL_STAR}{i18n.GL_SPL_SEMICOLON}" title="{i18n.GL3184}"/>
 					 			<g:HTMLPanel styleName="{style.assessmentPrivacyRightContainer}">
 							 			<panel:HTMLEventPanel styleName="{style.radioButtoncontainer}">
 							 				<g:RadioButton name="" styleName="{style.radioBox}" ui:field="requireLoginYes"></g:RadioButton>

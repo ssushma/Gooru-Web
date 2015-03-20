@@ -507,6 +507,56 @@
     background: url('../images/folders/panel/collection-small-icon.png') no-repeat 117px 4px;
 }
 
+.folderAssessment { /* grandparent level - default */
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 33px 4px;
+    background-size: 22px 18px;
+}
+
+.folderAssessment.parent {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 61px 4px;
+    background-size: 22px 18px;
+}
+
+.folderAssessment.child {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 89px 4px;
+    background-size: 22px 18px;
+}
+.folderAssessment.innerchild {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 117px 4px;
+    background-size: 22px 18px;
+}
+
+.folderLevel:hover,.folderAssessment:hover {
+    background-color:#f0f0f0;
+}
+
+.folderAssessment.selected {
+    background-color:#CFE3F1;
+}
+.folderLevel,.folderAssessment {
+    height: 25px;
+    line-height: 25px;
+    padding-right:15px;
+    position:relative;
+    text-align:left;
+    cursor:default;
+}
+.folderLevel,.folderAssessment { /* grandparent level - default */
+    box-sizing:border-box;
+    padding-left:65px;
+}
+.folderLevel.innerchild,.folderAssessment.innerchild {
+    padding-left:149px;
+}
+.folderAssessment.parent {
+    padding-left:93px;
+}
+
+.folderAssessment.child {
+    padding-left:121px;
+}
+
+
 /*////////////////////// other ../images ///////////////////*/
 
 

@@ -74,7 +74,6 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -110,7 +109,7 @@ public class CollectionFormView extends
 	@UiField
 	TextBoxWithPlaceholder collectionTitleTxtBox;
 
-	GroupedListBox courseLisBox,assessmentCourseLisBox=new GroupedListBox();
+	GroupedListBox courseLisBox,assessmentCourseLisBox;
 
 	@UiField
 	SimplePanel groupSimPanel, collectionGradeTxtBox;
@@ -152,7 +151,7 @@ public class CollectionFormView extends
 	
 	boolean fromAddResourcePresenter=false;
 	
-	@UiField Label lblNewAssessmentError,lblExistingAssessmentError,lblExistingAssessmentURLError;
+	@UiField Label lblNewAssessmentError,lblExistingAssessmentError,lblExistingAssessmentURLError,lblExistingAssessmentDescriptionError;
 	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate,requireLoginYes,requireLoginNo;
 	@UiField TextArea txtExistingAssessmentDescription;
 	
@@ -251,7 +250,12 @@ public class CollectionFormView extends
 		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
 
 		appPopUp.setTitle(i18n.GL0993());
-		
+		appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				appPopUp.hide();
+			}
+		});
 		buttonFloPanel.setVisible(false);
 		
 		collectionTitleTxtBox.addBlurHandler(new BlurHandler() {
@@ -305,7 +309,6 @@ public class CollectionFormView extends
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", collectionTitleTxtBox.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					
 					@Override
 					public void onSuccess(Boolean value) {
 						isHavingBadWords = value;
@@ -510,7 +513,7 @@ public class CollectionFormView extends
 						}else{
 							final Map<String, String> parms = new HashMap<String, String>();
 							parms.put("text", assessmentExistingTitle);
-							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 								@Override
 								public void onSuccess(Boolean value) {
 									if(value){
@@ -520,31 +523,36 @@ public class CollectionFormView extends
 										lblExistingAssessmentError.setVisible(false);
 										lblExistingAssessmentError.setText("");
 										parms.put("text", assessmentURL);
-										AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+										AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 											@Override
 											public void onSuccess(Boolean result) {
 												if(result){
 													//Displaying error message
 													SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
 												}else{
-													lblExistingAssessmentURLError.setVisible(false);
-													lblExistingAssessmentURLError.setText("");
-													String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-													final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-													final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-													final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-													getUiHandlers().saveCollection(folderId, o1, o2, o3);
+													parms.put("text", txtExistingAssessmentDescription.getText());
+													lblExistingAssessmentDescriptionError.setVisible(false);
+													lblExistingAssessmentDescriptionError.setText("");
+													AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>(){
+														@Override
+														public void onSuccess(Boolean result) {
+															if(result){
+																SetStyleForProfanity.SetStyleForProfanityForTextArea(txtExistingAssessmentDescription, lblExistingAssessmentDescriptionError, result);
+															}else{
+																lblExistingAssessmentDescriptionError.setVisible(false);
+																lblExistingAssessmentDescriptionError.setText("");
+																String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+																final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+																final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+																final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+																getUiHandlers().saveCollection(folderId, o1, o2, o3);
+  														    }
+														}
+													});
 												}
-											}
-											@Override
-											public void onFailure(Throwable caught) {
-												
 											}
 										});
 									}
-								}
-								@Override
-								public void onFailure(Throwable caught) {
 								}
 							});
 						}
@@ -558,7 +566,7 @@ public class CollectionFormView extends
 					}else{
 						Map<String, String> parms = new HashMap<String, String>();
 						parms.put("text", assessmentTitle);
-						AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+						AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 							@Override
 							public void onSuccess(Boolean value) {
 								if(value){
@@ -573,9 +581,6 @@ public class CollectionFormView extends
 									final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 									getUiHandlers().saveCollection(folderId, o1, o2, o3);
 								}
-							}
-							@Override
-							public void onFailure(Throwable caught) {
 							}
 						});
 					}
@@ -612,12 +617,69 @@ public class CollectionFormView extends
 				}
 			}
 		});
+		//This will handle the focus on the description
+		txtExistingAssessmentDescription.addFocusHandler(new FocusHandler() {
+			@Override
+			public void onFocus(FocusEvent event) {
+				if(lblExistingAssessmentDescriptionError.isVisible()){
+					lblExistingAssessmentDescriptionError.setVisible(false);
+					txtExistingAssessmentDescription.getElement().removeAttribute("style");
+				}
+			}
+		});
+		rdBtnAssessmentPublic.setText(i18n.GL0329());
+		StringUtil.setAttributes(rdBtnAssessmentPublic.getElement(), "rdBtnAssessmentPublic", i18n.GL0329(), i18n.GL0329());
+		
+		rdBtnAssessmentShare.setText(i18n.GL0331());
+		StringUtil.setAttributes(rdBtnAssessmentShare.getElement(), "rdBtnAssessmentPublic", i18n.GL0331(), i18n.GL0331());
+		
+		rdBtnAssessmentPrivate.setText(i18n.GL0333());
+		StringUtil.setAttributes(rdBtnAssessmentPrivate.getElement(), "rdBtnAssessmentPublic", i18n.GL0333(), i18n.GL0333());
+		
+		requireLoginYes.setText(i18n.GL_GRR_YES());
+		StringUtil.setAttributes(requireLoginYes.getElement(), "rdBtnAssessmentPublic", i18n.GL_GRR_YES(), i18n.GL_GRR_YES());
+		
+		requireLoginNo.setText(i18n.GL_GRR_NO());
+		StringUtil.setAttributes(requireLoginNo.getElement(), "rdBtnAssessmentPublic", i18n.GL_GRR_NO(), i18n.GL_GRR_NO());
+		
 		setTextAndIds();
 		pnlNewAssessmentContainer.setVisible(false);
 		pnlExistingAssessmentContainer.setVisible(false);
 		resetAssessmentFields();
+		txtExistingAssessmentTitle.getElement().setAttribute("maxlength", "50");
+		txtExistingAssessmentDescription.getElement().setAttribute("maxlength", "300");
+		txtExistingAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(1));
+		txtExistingAssessmentDescription.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(2));
 	}
-	
+	/**
+	 * This inner class is used for handling key up events on title and description.
+	 */
+	private class TitleAndDescriptionKeyUpHandler implements KeyUpHandler {
+			int value;
+			TitleAndDescriptionKeyUpHandler(int value){
+				this.value=value;
+			}
+			public void onKeyUp(KeyUpEvent event) {
+				if(value==1){
+					if(txtExistingAssessmentTitle.getText().length()>=50){
+						txtExistingAssessmentTitle.setText(txtExistingAssessmentTitle.getText().toString().substring(0,50));
+						lblExistingAssessmentError.setVisible(true);
+						lblExistingAssessmentError.setText(i18n.GL0143());
+						lblExistingAssessmentError.getElement().setAttribute("alt",i18n.GL0143());
+						lblExistingAssessmentError.getElement().setAttribute("title",i18n.GL0143());
+					}
+				}
+				if(value==2){
+					if(txtExistingAssessmentDescription.getText().length()>=300){
+						txtExistingAssessmentDescription.setText(txtExistingAssessmentDescription.getText().toString().substring(0,300));
+						lblExistingAssessmentDescriptionError.setVisible(true);
+						lblExistingAssessmentDescriptionError.setText(i18n.GL0143());
+						lblExistingAssessmentDescriptionError.getElement().setAttribute("alt",i18n.GL0143());
+						lblExistingAssessmentDescriptionError.getElement().setAttribute("title",i18n.GL0143());
+					}
+				}
+			}
+	}
 	@UiHandler("rdBtnAssessmentPublic")
 	public void onClickOfPublicRadioButton(ClickEvent e){
 		resetReadioButtons();
@@ -760,7 +822,6 @@ public class CollectionFormView extends
 		collectionGradeTxtBox.setWidget(gradeDropDownList);
 		assessmentGradeTxtBox.add(assessmentGradeDropDownList);
 		gradeDropDownList.addChangeHandler(new ChangeHandler() {
-
 			@Override
 			public void onChange(ChangeEvent event) {
 
@@ -876,7 +937,6 @@ public class CollectionFormView extends
 	@Override
 	public void reset() {
 		btnOk.setEnabled(true);
-		appPopUp.getCloseButton().setVisible(false);
 		btnOk.getElement().removeClassName("disabled");
 		collectionTitleTxtBox.getElement().getStyle().setBorderColor("#cccccc");
 		cancelAnr.getElement().getStyle().setMarginRight(10, Unit.PX);
@@ -933,7 +993,6 @@ public class CollectionFormView extends
 			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
 			collPopUpMainheading.setVisible(true);
 			collPopUpSubheading.setVisible(true);
-			appPopUp.getCloseButton().setVisible(false);
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			appPopUp.setTitle("");
 			pnlCreateNewAssessment.setVisible(true);
@@ -950,7 +1009,6 @@ public class CollectionFormView extends
 			rdBtnAssessmentPrivate.setValue(false);
 			requireLoginYes.setValue(false);
 			requireLoginNo.setValue(true);
-			appPopUp.getCloseButton().setVisible(true);
 			appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -1019,6 +1077,7 @@ public class CollectionFormView extends
 		mandatoryErrorLbl.setVisible(false);
 		courseLisBox=new GroupedListBox();
 		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
+		assessmentCourseLisBox=new GroupedListBox();
 		assessmentCourseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		groupSimPanel.setWidget(courseLisBox);
 		assessmentSimPanel.clear();
@@ -1238,5 +1297,6 @@ public class CollectionFormView extends
 		lblNewAssessmentError.setVisible(false);
 		lblExistingAssessmentError.setVisible(false);
 		lblExistingAssessmentURLError.setVisible(false);
+		assessmentGradeDropDownList.setSelectedIndex(0);
 	}
 }

@@ -70,6 +70,7 @@ public class AlertForImageUpload extends Composite {
 	public AlertForImageUpload(String messageHeader, String messageContent) {
 		alertBoxUc = new AlertBoxUc();
 		alertBoxUc.setContent(uiBinder.createAndBindUi(this));
+		alertBoxUc.getElement().setAttribute("style", "position: absolute;z-index: 99999");
 		alertMessageField.setText(messageContent);
 		alertMessageField.getElement().setId("lblAlertMessageField");
 		alertMessageField.getElement().setAttribute("alt",messageContent);

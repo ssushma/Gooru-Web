@@ -10,7 +10,7 @@
 	 	<g:Hidden ui:field="myHiddenField"/>
 		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
 			<g:HTMLPanel styleName="container">
-				<g:HTMLPanel styleName="row">
+				<g:HTMLPanel styleName="row" ui:field="mainContainer">
 				     <!-- Library banner image start here -->
 				    <g:HTMLPanel styleName="{tocStyle1.bannerImageContainer}" ui:field="bannerImagePanel">
 							<g:Image  styleName="img-responsive" ui:field="bannerImage"/>
@@ -44,7 +44,7 @@
 							<g:HTMLPanel styleName="{tocStyle.tocShareContainer}">
 							<g:HTMLPanel styleName="col-md-8 col-xs-6 col-sm-8">
 								<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"/></g:HTMLPanel>
-								<g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {tocStyle1.shareButton}">
+								<g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {tocStyle1.shareButton}" ui:field="sharePanel">
 									<g:Label styleName="{tocStyle.tocShareBtn}" ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
 									<g:TextBox styleName="{tocStyle.tocShareTxb}" ui:field="shareTxtBox"></g:TextBox>
 								</g:HTMLPanel>
@@ -80,6 +80,9 @@
 						</g:ScrollPanel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel ui:field="pageNotFoundPanel">
+				    <g:Image styleName="{tocStyle1.pageNotFoundStyle}" url="images/404_message.png" ui:field="errorPageImg"/>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

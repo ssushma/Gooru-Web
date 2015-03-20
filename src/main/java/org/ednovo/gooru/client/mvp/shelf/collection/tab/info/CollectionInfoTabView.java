@@ -364,10 +364,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardLabel.getElement().setAttribute("alt",i18n.GL0575());
 		standardLabel.getElement().setAttribute("title",i18n.GL0575());
 		
-		centLabel.setText(i18n.GL3121_1());
+		centLabel.setText(i18n.GL3191());
 		centLabel.getElement().setId("lblCentLabel");
-		centLabel.getElement().setAttribute("alt",i18n.GL3121_1());
-		centLabel.getElement().setAttribute("title",i18n.GL3121_1());
+		centLabel.getElement().setAttribute("alt",i18n.GL3191());
+		centLabel.getElement().setAttribute("title",i18n.GL3191());
 		
 		addStandardBtn.setText(i18n.GL0590());
 		addStandardBtn.getElement().setId("btnAddStandardBtn");
@@ -1496,13 +1496,13 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	private void reset21CenturyCount() {
 		if (centPanel.getWidgetCount() > 0) {
-			centLabel.setText(i18n.GL3121_1() + " (" + centPanel.getWidgetCount() + ")");
-			centLabel.getElement().setAttribute("alt",i18n.GL3121_1() + " (" + centPanel.getWidgetCount() + ")");
-			centLabel.getElement().setAttribute("title",i18n.GL3121_1() + " (" + centPanel.getWidgetCount() + ")");
+			centLabel.setText(i18n.GL3191() + " (" + centPanel.getWidgetCount() + ")");
+			centLabel.getElement().setAttribute("alt",i18n.GL3191() + " (" + centPanel.getWidgetCount() + ")");
+			centLabel.getElement().setAttribute("title",i18n.GL3191() + " (" + centPanel.getWidgetCount() + ")");
 		} else {
-			centLabel.setText(i18n.GL3121_1());
-			centLabel.getElement().setAttribute("alt",i18n.GL3121_1());
-			centLabel.getElement().setAttribute("title",i18n.GL3121_1());
+			centLabel.setText(i18n.GL3191());
+			centLabel.getElement().setAttribute("alt",i18n.GL3191());
+			centLabel.getElement().setAttribute("title",i18n.GL3191());
 		}
 	}
 	/**

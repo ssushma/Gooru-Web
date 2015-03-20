@@ -30,7 +30,6 @@ import java.util.List;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -456,7 +455,7 @@ public class AddResourceContainerView extends
 				String gooruOid, String collectionType) {
 			this();
 			if(ASSESSMENT.equals(collectionType)){
-				folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().folderAssessment());
+				folderContainer.setStyleName(AddResourceContainerCBundle.INSTANCE.css().folderAssessment());
 			}
 			if (levelStyleName != null) {
 				folderContainer.addStyleName(levelStyleName);

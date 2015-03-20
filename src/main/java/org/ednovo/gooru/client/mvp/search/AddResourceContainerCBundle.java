@@ -122,6 +122,7 @@ public interface AddResourceContainerCBundle extends ClientBundle {
 		String empty();
 		String selected();
 		String foldercollection();
+		String folderAssessment();
 		String innerchild();
 		String dropdowncontainer();
 		String dropdownPlaceHolder();

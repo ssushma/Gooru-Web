@@ -765,9 +765,9 @@
 }
 
 .folderTitleStyle {
-	color: #0066cc;
+	color: #515151;
 	font-weight: bold;
-	font-size: 18px
+	font-size: 18px;
 }
 .loadingImageMainDiv {
 	width: 100%;
@@ -807,7 +807,7 @@
 .bannerImageCaption h2 {
 	font-weight: bold;
 	color: #ffffff;
-	font-size: 35px;
+	font-size: 33px;
 	/* background-color: rgba(16, 118, 187, 0.5); */
 	padding: 10px 0px;
 	margin:0 0;
@@ -864,4 +864,29 @@
 .bannerImageTitle{
 	background-color: rgba(16, 118, 187, 0.5);
 }
-
+.displayNoneStyle{
+	display: none;
+}
+.displayInlineStyle{
+	display: inline-block; 
+	color: #515151;
+	padding-left:5px;
+}
+.emptyFolderStyle{
+	font-size:17px; 
+	margin-top: 50px; 
+	margin-bottom: 50px;
+    text-align: center; 
+	color:#e1dfda;
+}
+.emptySubFolderStyle{
+	font-size:17px; 
+	margin-top: 50px; 
+	margin-bottom: 50px;
+    text-align: left;
+    padding-left: 51px;
+	color:#e1dfda;
+}
+.pageNotFoundStyle{
+	width: 1000px;
+}

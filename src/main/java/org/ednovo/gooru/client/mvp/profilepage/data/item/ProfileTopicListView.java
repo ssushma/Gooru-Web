@@ -451,8 +451,6 @@ public class ProfileTopicListView extends Composite{
 				String id = null;
 				if(conceptDo.getGooruOid()!=null){
 					id=conceptDo.getGooruOid();
-					
-					
 				}
 				if(id!=null) {
 					collectionViewer.setVisible(true);
@@ -475,9 +473,9 @@ public class ProfileTopicListView extends Composite{
 						if(titleHandler!=null) {
 							titleHandler.removeHandler();
 						}
-						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid));
-						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid));
-					} catch (Exception e) {
+						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo));
+						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid,conceptDo));
+					  } catch (Exception e) {
 						StringUtil.setDefaultImages(collectionType, collectionImage, "high");
 					}
 					
@@ -642,10 +640,10 @@ public class ProfileTopicListView extends Composite{
 										String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr,Window.Location.getProtocol());
 										resourceImage.setUrl(thumbnailUrl);
 									} else {
-										if(profileLibraryItem.getThumbnails()!=null&&profileLibraryItem.getThumbnails().getUrl()!=null&&profileLibraryItem.getThumbnails().getUrl().isEmpty()) {
-											resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
-										} else {
+										if(profileLibraryItem.getThumbnails()!=null&&profileLibraryItem.getThumbnails().getUrl()!=null&&!profileLibraryItem.getThumbnails().getUrl().isEmpty()) {
 											resourceImage.setUrl(profileLibraryItem.getThumbnails().getUrl());
+										} else {
+											resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
 										}
 									}
 									resourceImage.addErrorHandler(new ErrorHandler() {
@@ -1095,49 +1093,55 @@ public class ProfileTopicListView extends Composite{
 		private String lessonId;
 		private String oId;
 		private String libraryGooruOid;
-		
-		public CollectionOpenClickHandler(String lessonId, String oId,String libraryGooruOid) {
+		private ProfileLibraryDo conceptDo;
+		public CollectionOpenClickHandler(String lessonId, String oId,String libraryGooruOid,ProfileLibraryDo conceptDo) {
 			this.lessonId = lessonId;
 			this.oId = oId;
 			this.libraryGooruOid=libraryGooruOid;
+			this.conceptDo=conceptDo;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			String collectionIdVal = "";
-			try{
-				collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
+			final String collectionType=StringUtil.isEmpty(conceptDo.getCollectionType())?null:conceptDo.getCollectionType();
+			if(collectionType.equals(ASSESSMENT_URL)){
+				Window.open(conceptDo.getUrl(), "", "");
+			}else{
+				String collectionIdVal = "";
+				try{
+					collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
+				}
+				catch(Exception ex){
+					collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
+				}
+				String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
+				if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
+					MixpanelUtil.mixpanelEvent("standardlibrary_play_collection");	
+				}
+				if(page.equals(COURSE_PAGE)) {
+					MixpanelUtil.mixpanelEvent("CoursePage_Plays_Collection");
+				} else {
+					MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
+				}
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("id", collectionIdVal);
+				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+				params.put("lessonId", lessonId);
+				if(libraryGooruOid!=null){
+					params.put("lid", libraryGooruOid);
+				}
+				String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+				if(libraryEventId!=null){
+					params.put("eventid", libraryEventId);
+				}
+				if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+					params.put("library", getPlaceToken());
+				}
+				String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+				if(standardId!=null){
+					params.put("rootNodeId", standardId);
+				}
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 			}
-			catch(Exception ex){
-				collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
-			}
-			String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
-			if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
-				MixpanelUtil.mixpanelEvent("standardlibrary_play_collection");	
-			}
-			if(page.equals(COURSE_PAGE)) {
-				MixpanelUtil.mixpanelEvent("CoursePage_Plays_Collection");
-			} else {
-				MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
-			}
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", collectionIdVal);
-			params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-			params.put("lessonId", lessonId);
-			if(libraryGooruOid!=null){
-				params.put("lid", libraryGooruOid);
-			}
-			String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-			if(libraryEventId!=null){
-				params.put("eventid", libraryEventId);
-			}
-			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-				params.put("library", getPlaceToken());
-			}
-			String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-			if(standardId!=null){
-				params.put("rootNodeId", standardId);
-			}
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 		}
 	}
 

@@ -96,16 +96,22 @@ public class StandardsPopupVc extends PopupPanel  {
 	 * 
 	 * @param standards
 	 */
-	public StandardsPopupVc(List<Map<String, String>> standards) {
+	public StandardsPopupVc(List<Map<String, String>> standards,boolean isStandards) {
 		super(false);
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		standardsText.getElement().setInnerHTML(i18n.GL0575());
 		standardsText.getElement().setId("pnlStandardsText");
-		standardsText.getElement().setAttribute("alt", i18n.GL0575());
-		standardsText.getElement().setAttribute("title", i18n.GL0575());
+		if(isStandards){
+			standardsText.getElement().setInnerHTML(i18n.GL0575());
+			standardsText.getElement().setAttribute("alt", i18n.GL0575());
+			standardsText.getElement().setAttribute("title", i18n.GL0575());
+		}else{
+			standardsText.getElement().setInnerHTML(i18n.GL3191());
+			standardsText.getElement().setAttribute("alt", i18n.GL3191());
+			standardsText.getElement().setAttribute("title", i18n.GL3191());
+		}
 		cancelButton.getElement().setId("lblCancelButton");
 		spanelStandardsPanel.getElement().setId("sbSpanelStandardsPanel");
 		mainHtmlPanel.getElement().setId("pnlMainHtmlPanel");

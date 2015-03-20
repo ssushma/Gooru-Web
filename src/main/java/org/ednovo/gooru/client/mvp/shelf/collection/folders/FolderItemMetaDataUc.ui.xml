@@ -2,38 +2,68 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="folderMetaStyle" src="FolderItemMetaDataUc.css" type="org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemMetaDataUcStyleBundle" />
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
+	field="res" />
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
+	field="res1" />
 	<g:HTMLPanel styleName="{folderMetaStyle.mainSection} {folderMetaStyle.contentBlock}">
+	<g:HTMLPanel styleName="{folderMetaStyle.MaintabDiv}" ui:field="tabDiv">
 	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}" ui:field="bigIdeasPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.idea}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="ideasStaticLbl"/>
 	      </g:HTMLPanel>
-	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="bigIdeasLbl"/>
-	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="bigIdeasHTML"/>
-	      <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForBigIdeas"></g:Label>
-	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelbigIdeasHTML"></g:Label>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}" ui:field="essentialQuestionsPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.question}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="questionsStaticLbl"/>
-	      </g:HTMLPanel>
-	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="essentialQuestionsLbl"/>
-	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="essentialQuestionsHTML"/>
-	       <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForEssential"></g:Label>
-	       <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelessentialQuestionsHTML"></g:Label>
+	      </g:HTMLPanel>	      
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockLast}" ui:field="performanceTaskPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.task}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="tasksStaticLbl"/>
-	      </g:HTMLPanel>
-	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="performanceTaskLbl"/>
+	      </g:HTMLPanel>	     
+	   </g:HTMLPanel>	
+	   </g:HTMLPanel>   
+	   <g:HTMLPanel ui:field="bigIdeasDiv">
+	   	      <g:Label styleName="{folderMetaStyle.padding10}" ui:field="bigIdeasLbl"/>
+	   	      	<g:HTMLPanel styleName="{res1.css.teacherTipPencilHolder} {folderMetaStyle.pencilHolderDiv}">
+					<g:Label ui:field="simplePencilPanelbigIdeas" styleName="{res.css.collectionEditImageTeacherTip}" />
+				</g:HTMLPanel>
+	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="bigIdeasHTML"/>
+	      <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForBigIdeas"></g:Label>
+	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelbigIdeasHTML"></g:Label>
+	     <g:HTMLPanel styleName="{folderMetaStyle.formButtons}" ui:field="formButtons">
+          <g:Button styleName="primary" ui:field="saveBtnbigIdeas"></g:Button>
+      	  <g:Button styleName="secondary" ui:field="cancelBtnbigIdeas"></g:Button>
+      </g:HTMLPanel>
+	
+	   </g:HTMLPanel>
+	      <g:HTMLPanel ui:field="questionDiv">
+			<g:Label styleName="{folderMetaStyle.padding10}" ui:field="essentialQuestionsLbl"/>
+	   	      	<g:HTMLPanel styleName="{res1.css.teacherTipPencilHolder} {folderMetaStyle.pencilHolderDiv}">
+					<g:Label ui:field="simplePencilPanelquestion" styleName="{res.css.collectionEditImageTeacherTip}" />
+				</g:HTMLPanel>
+	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="essentialQuestionsHTML"/>
+	       <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForEssential"></g:Label>
+	       <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelessentialQuestionsHTML"></g:Label>
+	       <g:HTMLPanel styleName="{folderMetaStyle.formButtons}" ui:field="formButtonsQuestions">
+          <g:Button styleName="primary" ui:field="saveBtnQuestions"></g:Button>
+      	  <g:Button styleName="secondary" ui:field="cancelBtnQuestions"></g:Button>
+      </g:HTMLPanel>
+	   </g:HTMLPanel>
+	      <g:HTMLPanel ui:field="taskDiv">
+	   	   <g:Label styleName="{folderMetaStyle.padding10}" ui:field="performanceTaskLbl"/>
+	   	    <g:HTMLPanel styleName="{res1.css.teacherTipPencilHolder} {folderMetaStyle.pencilHolderDiv}">
+					<g:Label ui:field="simplePencilPanelTask" styleName="{res.css.collectionEditImageTeacherTip}" />
+				</g:HTMLPanel>
 	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="performanceTaskHTML"/>
 	       <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForPerformance"></g:Label>
 	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelperformanceTaskHTML"></g:Label>
-	   </g:HTMLPanel>
-	  <g:Button styleName="{folderMetaStyle.closeItem}" ui:field="closeItem"/>
-	  <g:HTMLPanel styleName="{folderMetaStyle.formButtons}" ui:field="formButtons">
-          <g:Button styleName="primary" ui:field="saveBtn"></g:Button>
-      	  <g:Button styleName="secondary" ui:field="cancelBtn"></g:Button>
+	      <g:HTMLPanel styleName="{folderMetaStyle.formButtons}" ui:field="formButtonsTasks">
+          <g:Button styleName="primary" ui:field="saveBtnTasks"></g:Button>
+      	  <g:Button styleName="secondary" ui:field="cancelBtnTasks"></g:Button>
       </g:HTMLPanel>
+	   </g:HTMLPanel>
+
 	</g:HTMLPanel>
 </ui:UiBinder>

@@ -42,6 +42,8 @@ public enum UrlToken {
 	RESOURCE_COLLECTION_LIST("/search/scollection?sessionToken={0}&pageNum={1}&pageSize={2}&flt.resourceGooruOIds={3}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
 
 	COLLECTION_ITEMS_LIST("/scollection/{0}?sessionToken={1}"),
+	
+	V2_COLLECTION_ITEMS_LIST("/v2/collection/{0}/item?sessionToken={1}"),
 
 	SEARCH_FILTER("/search/index/filters?sessionToken={0}&type={1}"),
 
@@ -507,7 +509,7 @@ public enum UrlToken {
 	
 	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
 
-	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&sharing=public,anyonewithlink"),
+	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&orderBy=sequence"),
 	
 	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
 	

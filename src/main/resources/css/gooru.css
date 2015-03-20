@@ -1689,6 +1689,9 @@ iframe#taMessage body{
 	font-size:12px;
 	color:#000000;
 }
+iframe#taMessage{
+	padding:0;
+}
 
 /* These css are for Device not supported*/
 

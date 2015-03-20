@@ -15,7 +15,7 @@
     </g:HTMLPanel>
     <g:HTMLPanel styleName="{addCenturyStyle.skillsCategoryList}">
     
-    <g:HTMLPanel styleName="less-gutter">
+    <g:HTMLPanel styleName="less-gutter" ui:field="contentsDiv">
       <g:HTMLPanel styleName="col-md-4 col-sm-4 col-xs-4 {addCenturyStyle.devider}">
      	 	<g:HTMLPanel styleName="{addCenturyStyle.dividerHeader}"><g:InlineLabel ui:field="spnKeyCongitiveAndStrategiesTitle"/></g:HTMLPanel>
 	        <uc:UlPanel ui:field="ulCongitiveAndStrategies"/>        

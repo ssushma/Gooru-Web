@@ -122,7 +122,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		leftNav.getElement().setId("pnlLeftNav");
 		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
-		listAllBtn.getElement().setAttribute("style", "float:right;margin: -60px 9px 0 0;");
+		listAllBtn.getElement().setAttribute("style", "float:right;margin: -22px -6px -6px 0px;");
 		folderListPanel.setVisible(false);
 		listAllBtn.setVisible(false);
 	}

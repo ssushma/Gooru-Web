@@ -374,7 +374,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		centurySgstBox.getElement().getStyle().setFontSize(12, Unit.PX);
 		centurySgstBox.getTextBox().getElement().setAttribute("placeholder", i18n.GL3122_1());
 		
-	BlurHandler blurHandlerCentury=new BlurHandler() {
+		BlurHandler blurHandlerCentury=new BlurHandler() {
 			
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -405,6 +405,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		this.collectionOriginalItemDo = collectionItemDo;
 		
 		setContent(i18n.GL0949(), uiBinder.createAndBindUi(this));
+		getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+		});
 		defaultText.getElement().setInnerHTML(i18n.GL3093());
 		defaultMomentsOfLearningText.getElement().setInnerHTML(i18n.GL3093());
 		advancedText.setText(i18n.GL3096());
@@ -1583,7 +1589,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				 centuryPanel.add(create21CenturyLabel(standardObj.getLabel(),standardObj.getCodeId()+"",""));
 			}
             updateCenturyAdvancedSetupStyle();
-
 		}
 	}
 
@@ -2458,7 +2463,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		updateStandardsAdvancedSetupStyle();
 	}
 	/**
-	 * Adding new standard for the collection , will check it has more than
+	 * Adding new standard for the resouce collection , will check it has more than
 	 * fifteen standards
 	 * 
 	 * @param standard
@@ -2478,6 +2483,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			standardSgstBox.setText("");
 		}
 	}
+	/**
+	 *  Adding new skills for the resource collection , will check it has more than
+	 * fifteen standards
+	 * @param centuryTag
+	 * @param id
+	 */
 	public void addCentury(String centuryTag, String id) {
 		if (centuryTag != null && !centuryTag.isEmpty()) {
 			String codeIdVal = getCodeIdByCodeCentury(centurySgstBox.getValue(), centurySearchDo.getSearchResults());				
@@ -2862,13 +2873,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 	}
 	/**
-	 * 
 	 * @function updateCenturyAdvancedSetupStyle 
-	 * 
 	 * @created_date : 15-Dec-2014
 	 * 
-	 * @description This method is used to set styles for standards based on the number of standards.
-	 * 
+	 * @description This method is used to set styles for 21 skills based on the number of skills.
 	 * 
 	 * @parm(s) : 
 	 * 
@@ -2952,8 +2960,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						setInteractiveCategory();
 					}else if(event.getSource() == imageResourcePanel){
 						setImageCategory();
-					}
-					else if(event.getSource() == textResourcePanel){
+					}else if(event.getSource() == textResourcePanel){
 						setTextCategory();
 					}else if(event.getSource() == audioResourcePanel){
 						setAudioCategory();

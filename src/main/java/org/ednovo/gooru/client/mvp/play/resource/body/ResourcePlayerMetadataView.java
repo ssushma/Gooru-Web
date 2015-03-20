@@ -456,16 +456,20 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}
 		}else {
-			String[] urlFormat = resourceplayUrl.split("\\.");
-			String urlExtension = urlFormat[urlFormat.length - 1];
-			if(urlExtension.equalsIgnoreCase("pdf")){
-				String signedFlag=resourceplayUrl.contains("http")||resourceplayUrl.contains("https")?"0":"1";
-				String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
-				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
-			}
-			else
+
+			if(collectionItemDo.getResource().getUrl() != null)
 			{
-				resourceWidgetContainer.add(new WebResourceWidget(resourceplayUrl));
+				String[] urlFormat = collectionItemDo.getResource().getUrl().split("\\.");
+				String urlExtension = urlFormat[urlFormat.length - 1];
+				if(urlExtension.equalsIgnoreCase("pdf")){
+					String signedFlag=resourceplayUrl.contains("http")||resourceplayUrl.contains("https")?"0":"1";
+					String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
+					resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
+				}
+				else
+				{
+					resourceWidgetContainer.add(new WebResourceWidget(resourceplayUrl));
+				}
 			}
 		}
 	}

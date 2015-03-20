@@ -36,7 +36,6 @@ import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 import org.ednovo.gooru.shared.model.skils.NodeDo;
@@ -67,6 +66,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	private static AddCenturyViewUiBinder uiBinder = GWT.create(AddCenturyViewUiBinder.class);
 	
 	@UiField UlPanel ulCongitiveAndStrategies,ulKeyContentKnowledge,ulKeyLearningSkills;
+	@UiField HTMLPanel contentsDiv;
 	@UiField InlineLabel spnHewlettDeeperLearningModel,spnConley4Keys,spnP21Framework,spnNationalResearchCenter,spnKeyCongitiveAndStrategiesTitle,spnKeyContentKnowledgeTitle,spnKeyLearningSkillsTitle;
 	@UiField Button addCenturyBtn,cancelBtn;
 	
@@ -101,12 +101,18 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				selectedValues.clear();
 			}
 		});
+		
+	
 	
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(AddCenturyBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		AddCenturyBundle.INSTANCE.css().ensureInjected();
 		appPopUp.setViewTitle(i18n.GL3121_1());
+		if(contentsDiv!= null)
+		{
+		contentsDiv.getElement().setAttribute("style", "overflow-y:auto;max-height:440px;");
+		}
 	}
 	
 	@UiHandler("cancelBtn")
@@ -150,19 +156,6 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		}
 	}
 	/**
-	 * This method will set the data when add popup clicked and removing the 21 century skills values
-	 * @param codeList
-	 */
-	private void setPopupAddHilightDataForAddTags(ArrayList<String> centuryDo) {
-		selectedValues.clear();
-		resetPopupHilightedData();	
-		if(centuryDo!=null && centuryDo.size()>0){
-			setPopupAddHilightDataForAddTags(ulCongitiveAndStrategies,centuryDo);
-			setPopupAddHilightDataForAddTags(ulKeyContentKnowledge,centuryDo);
-			setPopupAddHilightDataForAddTags(ulKeyLearningSkills,centuryDo);
-		}
-	}
-	/**
 	 * This method will set the data for passed ulPanel
 	 * @param ulPanel
 	 * @param codeList
@@ -182,6 +175,20 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		}
 	}
 	/**
+	 * This method will set the data when add popup clicked and removing the 21 century skills values
+	 * @param codeList
+	 */
+	private void setPopupAddHilightDataForAddTags(ArrayList<String> centuryDo) {
+		selectedValues.clear();
+		resetPopupHilightedData();	
+		if(centuryDo!=null && centuryDo.size()>0){
+			setPopupAddHilightDataForAddTags(ulCongitiveAndStrategies,centuryDo);
+			setPopupAddHilightDataForAddTags(ulKeyContentKnowledge,centuryDo);
+			setPopupAddHilightDataForAddTags(ulKeyLearningSkills,centuryDo);
+		}
+	}
+	
+	/**
 	 * This method will set the data for passed ulPanel
 	 * @param ulPanel
 	 * @param codeList
@@ -191,7 +198,6 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 		while (widgets.hasNext()){
 			final Widget widget = widgets.next();
 			if (widget instanceof LiPanel){
-				
 				for(int i=0;i<centuryDo.size();i++){
 					if((((LiPanel) widget).getTitle()).equalsIgnoreCase(centuryDo.get(i).toString())){
 						Random rand= new Random();
@@ -201,8 +207,8 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 						while (childWidgets.hasNext()){
 						final Widget childWidget = childWidgets.next();
 						if(childWidget instanceof HTMLPanel){
-						 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
-						}
+							 ((HTMLPanel) childWidget).getWidget(0).addStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());
+							}
 						}
 					}
 				}
@@ -308,6 +314,7 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 						for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
 							if(selectedValues.containsValue(entry.getValue().trim())){
 								selectedValues.remove(entry.getKey());
+								return;
 							}
 						}						
 					}else{

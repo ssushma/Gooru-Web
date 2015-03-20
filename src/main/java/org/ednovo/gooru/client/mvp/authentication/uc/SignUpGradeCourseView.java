@@ -297,12 +297,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 	private void OpenThanksPopup(){
 		this.hide();
 		
-		ThanksPopupUc thanks = new ThanksPopupUc();
-		if (AppClientFactory.getLoggedInUser().getAccountTypeId() == 2){
-			thanks.setAccountType("normal");
-		}
-		thanks.center();
-		thanks.show();
 		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo newUser) {
@@ -311,6 +305,14 @@ public class SignUpGradeCourseView extends PopupPanel{
 				AppClientFactory.setLoggedInUser(user);
 			}
 		});
+
+		
+		ThanksPopupUc thanks = new ThanksPopupUc();
+		if (AppClientFactory.getLoggedInUser().getAccountTypeId() == null || AppClientFactory.getLoggedInUser().getAccountTypeId() == 2){
+			thanks.setAccountType("normal");
+		}
+		thanks.center();
+		thanks.show();
 	}
 	
 	/**

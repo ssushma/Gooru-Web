@@ -277,10 +277,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<CollectionItemSearchResultDo> getCollectionItems(String collectionId) throws GwtException {
 		JsonRepresentation jsonRep=null;
 		SearchDo<CollectionItemSearchResultDo> searchDo=new SearchDo<CollectionItemSearchResultDo>();
-		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.COLLECTION_ITEMS_LIST, collectionId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_COLLECTION_ITEMS_LIST, collectionId,getLoggedInSessionToken());
+		getLogger().info("getCollectionItems::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
-		collectionItemsResultDeSerializer.deserializeCollectionItems(jsonRep, searchDo);
+		collectionItemsResultDeSerializer.deserializeV2CollectionItems(jsonRep, searchDo);
 		return searchDo;
 	}
 	

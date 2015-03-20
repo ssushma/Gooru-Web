@@ -424,7 +424,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 		cancelBtn.getElement().setAttribute("title",i18n.GL0142());
 		
-		addTagsBtn.setText(i18n.GL1795());
+		addTagsBtn.setText(i18n.GL3188());
 		addTagsBtn.getElement().setId("btnAddTags");
 		addTagsBtn.getElement().setAttribute("alt",i18n.GL1795());
 		addTagsBtn.getElement().setAttribute("title",i18n.GL1795());
@@ -451,8 +451,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		standardsDefaultText.getElement().setAttribute("alt",i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title",i18n.GL1682());
 		
-		centuaryDefaultText.setText(i18n.GL3121_1());
-		StringUtil.setAttributes(centuaryDefaultText.getElement(), i18n.GL3121_1(), i18n.GL3121_1(), i18n.GL3121_1());
+		centuaryDefaultText.setText(i18n.GL3191());
+		StringUtil.setAttributes(centuaryDefaultText.getElement(), i18n.GL3191(), i18n.GL3191(), i18n.GL3191());
 		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		

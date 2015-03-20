@@ -147,7 +147,7 @@ public interface FolderService extends BaseService {
 	 * @throws GwtException
 	 * @throws ServerDownException
 	 */
-	public FolderTocDo getTocFolders(String folderId) throws GwtException, ServerDownException;
+	public FolderTocDo getTocFolders(String folderId,boolean fromPPP) throws GwtException, ServerDownException;
 
 	/**
 	 * This method is used to get Folder meta data based on the folder id

@@ -50,7 +50,7 @@ public class CollectionInfo extends Composite {
 	Label lblGradeTitle, gradesText;
 
 	@UiField
-    Label lblStandrads;
+    Label lblStandrads,lblCentury,lblCenturyText;
 
 	@UiField
     Label lblStandardsText;
@@ -65,7 +65,7 @@ public class CollectionInfo extends Composite {
 	Label lblDepthKnowledge,lblOer,lblOerValue,lblInstructionalValue,lblInstructional;
 
 	@UiField
-	HTMLPanel panelStandrads,panelDesc,loadingImagePanel,panelOer;
+	HTMLPanel panelStandrads,panelDesc,loadingImagePanel,panelOer,panelCentury;
 
 	@UiField
 	HTMLPanel gradesPanel,panelAudience,panelInstructional;
@@ -77,7 +77,7 @@ public class CollectionInfo extends Composite {
 	HTMLPanel dKnowledgeType,learningSkillsPanel;
 
 	@UiField
-	FlowPanel standardsInfoConatiner;
+	FlowPanel standardsInfoConatiner,centuryInfoConatiner;
 
 	CollectionSearchResultDo collectionSearchResultDo;
 
@@ -126,6 +126,11 @@ public class CollectionInfo extends Composite {
 		lblStandrads.getElement().setAttribute("alt",i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblStandrads.getElement().setAttribute("title",i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
 		
+		lblCentury.setText(i18n.GL3191()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblCentury.getElement().setId("lblCentury");
+		lblCentury.getElement().setAttribute("alt",i18n.GL3191()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblCentury.getElement().setAttribute("title",i18n.GL3191()+i18n.GL_SPL_SEMICOLON()+" ");
+		
 		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblLanguage.getElement().setId("lblLanguage");
 		lblLanguage.getElement().setAttribute("alt",i18n.GL1721()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -162,6 +167,9 @@ public class CollectionInfo extends Composite {
     	panelStandrads.getElement().setId("pnlPanelStandrads");
     	lblStandardsText.getElement().setId("lblStandardsText");
     	standardsInfoConatiner.getElement().setId("fpnlStandardsInfoConatiner");
+    	panelCentury.getElement().setId("pnlPanelCentury");
+    	lblCenturyText.getElement().setId("lblCenturyText");
+    	centuryInfoConatiner.getElement().setId("fpnlCenturyInfoConatiner");
     	panelDesc.getElement().setId("pnlPanelDesc");
     	lblLanguageText.getElement().setId("lblLanguageText");
     	dKnowledgePanel.getElement().setId("pnlDKnowledgePanel");
@@ -189,6 +197,9 @@ public class CollectionInfo extends Composite {
 				if(collectionDo.getMetaInfo()!=null && collectionDo.getMetaInfo().getStandards()!=null){
 					renderStandards(standardsInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getStandards()));
 				}
+				if(collectionDo.getSkills()!=null && collectionDo.getSkills()!=null){
+					renderCentury(centuryInfoConatiner,collectionDo.getMetaInfo().getStandards());
+				}
 				setDepthOfKnlze();
 				setLearningSkills();
 				setAudienceInfo();
@@ -210,6 +221,52 @@ public class CollectionInfo extends Composite {
 
 		});
 
+	}
+	public void renderCentury(FlowPanel centuryContainer, List<StandardFo> centuryList) {
+		centuryContainer.clear();
+		
+		if (centuryList != null) {
+			lblCentury.setVisible(false);
+			panelCentury.setVisible(true);
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			for(int centuryCount=0; centuryCount<centuryList.size();centuryCount++) {
+				String stdCode = centuryList.get(centuryCount).getCodeId()+"";
+				String stdDec = centuryList.get(centuryCount).getLabel();
+				if (count > 2) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec));
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getcenturyMoreInfo());
+					centuryContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (centuryList.size()>18){
+				final Label left = new Label("+"+(centuryList.size() - 18));
+				toolTipwidgets.add(left);
+				panelCentury.setVisible(true);
+			}
+			if (centuryList.size() > 2) {
+				Integer moreStandardsCount = centuryList.size() - 3;
+				if (moreStandardsCount >0){
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets);
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
+					centuryContainer.add(toolTipUc);
+					panelCentury.setVisible(true);
+				}
+			}
+			if(centuryList.size()==0)
+			{
+				panelCentury.setVisible(false);
+			}
+		}
+		else{
+			panelCentury.setVisible(false);
+		}
 	}
 
 	protected void setLanguageObjectiveText() {

@@ -34,7 +34,9 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter.IsFolderTocProxy;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -46,6 +48,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 /**
  * @fileName : FolderTocPresenter.java
@@ -67,6 +70,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	public static final String LIBRARY_NAME = "libName";
 	public static final String USER_ID = "userId";
 	public static final String TYPE = "type";
+	SignUpPresenter signUpViewPresenter = null;
 	
 	Map<String, String> params;
 	
@@ -76,9 +80,10 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	}
 
 	@Inject
-	public FolderTocPresenter(EventBus eventBus, IsFolderTocView view, IsFolderTocProxy proxy) {
+	public FolderTocPresenter(EventBus eventBus, IsFolderTocView view, IsFolderTocProxy proxy,SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.signUpViewPresenter = signUpViewPresenter;
 	}
 
 	@Override
@@ -92,7 +97,28 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		String folderId=AppClientFactory.getPlaceManager().getRequestParameter(ID);
 		getfolderTocList(folderId);
 	}
-
+	@Override
+	public void prepareFromRequest(PlaceRequest request) {
+		super.prepareFromRequest(request);
+		showSignupPopup();
+		
+	}
+	/**
+	 * This method is used to display signup popup
+	 */
+	protected void showSignupPopup() {
+		if (AppClientFactory.getPlaceManager().getRequestParameter("callback") != null && AppClientFactory.getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = AppClientFactory.getPlaceManager().getRequestParameter("type") ;
+				int displayScreen= (type!=null)? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
+			}
+		}
+	}
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -110,23 +136,29 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 		//Check the user is logged in or not, and enabling the TOC if we are viewing from library
 		if(AppClientFactory.isAnonymous() && StringUtil.isEmpty(folderId)){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}else if(params.containsKey(USER_ID) && !params.get(USER_ID).equals(AppClientFactory.getLoggedInUser().getGooruUId())){
+				getUserProfileVisibility();
 		}else{
 			Window.enableScrolling(true);
 			getTocFolders(folderId);
 			setFolderBanner();
 		}
-		
 	}
 	
 	@Override
 	public void getTocFolders(final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId, new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID), new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().clearTocData();
-				getView().setFolderItems(folderListDo);
-				getFolderRouteNodes(folderId);
-				getView().setBackButtonText(params);
+				if(folderListDo!=null && 200==folderListDo.getStatusCode()){
+					getView().setFolderItems(folderListDo);
+					getFolderRouteNodes(folderId);
+					getView().setBackButtonText(params);
+				}else{
+					getView().showPageNotFound(true);
+				}
+				
 			}
 		});
 		getShortenUrl(folderId, params);
@@ -135,7 +167,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 
 	@Override
 	public void getFolderItems(final TreeItem item,final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID),new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().setFolderItems(item,folderListDo,folderId);
@@ -236,6 +268,24 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 			@Override
 			public void onSuccess(Map<String,String> result) {
 				getView().setBreadCrumbs(result);
+			}
+		});
+	}
+	/**
+	 * To get profile visibility status
+	 */
+	private void getUserProfileVisibility(){
+		AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(params.get(USER_ID), new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean result) {
+				if(result){
+					Window.enableScrolling(true);
+					getTocFolders(params.get(ID));
+					setFolderBanner();
+					
+				}else{
+					getView().showPageNotFound(true);
+				}
 			}
 		});
 	}

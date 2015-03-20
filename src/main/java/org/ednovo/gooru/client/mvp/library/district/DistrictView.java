@@ -219,7 +219,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						if(handlerRegistration!=null){
 							handlerRegistration.removeHandler();
 						}
-						handlerRegistration=listViewBtn.addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getLibraryGooruOid(), parentId));
+						handlerRegistration=listViewBtn.addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getUnitId(), parentId));
 						if(widgetCountTemp==0) {
 							totalCollectionCount=profileLibraryDoList.get(widgetCountTemp).getItemCount();
 							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp),libraryUnitMenuView.getLibraryGooruOid(),parentId);

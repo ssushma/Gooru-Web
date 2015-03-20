@@ -198,6 +198,7 @@
 	/* min-width: 480px; */
 	border: 1px solid #dddddd;
 	padding: 5px;
+	resize: none;
 }
 
 .marginTop10 {

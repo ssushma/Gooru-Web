@@ -357,6 +357,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			collectionDataObject.put("sharing", data.getSharing());
 			collectionDataObject.put("grade", data.getGrade());
 			collectionDataObject.put("mediaType", data.getMediaType());
+			collectionDataObject.put("url", data.getUrl());
 			if (courseCodeId != null) {
 				courseIdObj.put("codeId", courseCodeId);
 				ArrayList<JSONObject> taxonomyArray= new ArrayList<JSONObject>();
@@ -475,14 +476,20 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public FolderTocDo getTocFolders(String folderId) throws GwtException,ServerDownException {
+	public FolderTocDo getTocFolders(String folderId,boolean fromPPP) throws GwtException,ServerDownException {
 		JsonRepresentation jsonRep = null;
+		FolderTocDo folderTocDo = new FolderTocDo();
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
+		if(fromPPP){
+			url=url+"&sharing=public";
+		}
 		getLogger().info("-- Folder toc API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeFolderTocList(jsonRep);
+		folderTocDo =deserializeFolderTocList(jsonRep);
+		folderTocDo.setStatusCode(jsonResponseRep.getStatusCode());
+		return folderTocDo;
 	}
 	public FolderTocDo deserializeFolderTocList(JsonRepresentation jsonRep) {
 		try {

@@ -97,6 +97,7 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	}
 	
 	public void onLoad(){
+		StringUtil.setDefaultImages(collectionType, resourceThumbnail, "toc");
 		resourceThumbnail.setUrl(thumbnailUrl);
 	}
 	

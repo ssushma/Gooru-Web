@@ -36,7 +36,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.htmltags.AsideTag;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.CollaboratorsUc;
@@ -45,7 +44,6 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-//import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
@@ -69,18 +67,19 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+//import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 
 public class MetadataWidget extends Composite {
 	
-	@UiField FlowPanel rightPanelContainer,teamContainer,courseTitle,standardsContainer;
+	@UiField FlowPanel centuryContainer,rightPanelContainer,teamContainer,courseTitle,standardsContainer;
 	@UiField HTMLPanel teacherContainer,classInfoPanel,teacherProfileContainer,depthOfKnowledgePanel,learningAndInnovationSkillPanel,
 	                    audiencePanel,instructionalmethodPanel;
 	@UiField Anchor  seeMoreAnchor,previewFlagButton;
 	@UiField Image profileThumbnailImage;
 	@UiField HTML teacherTipLabel;
-	@UiField AsideTag teacherPanel,dueDateSection,directionSection,authorPanel,courseSection,standardSection,viewSection,languageObjectiveContainer,
+	@UiField AsideTag centurySection,teacherPanel,dueDateSection,directionSection,authorPanel,courseSection,standardSection,viewSection,languageObjectiveContainer,
 	                  depthOfKnowledgeContainer,learningAndInnovationSkillsContainer,audienceContainer,InstructionalmethodContainer;
-	@UiField Label lblClassInfo,lblclassTitle,classTitleValue,lblunitTitle,unitTitleValue,lblTeacher,teacherNameLabel,lbldueDate,dueDate,
+	@UiField Label lblcentury,lblClassInfo,lblclassTitle,classTitleValue,lblunitTitle,unitTitleValue,lblTeacher,teacherNameLabel,lbldueDate,dueDate,
 	               lblDirectionsDesc,lblDirections,lblAuthor,userNameLabel,lblCourse,lblStandards,viewsCountLabel,lbllanguageObjectiveText,
 	               lbllanguageObjective,lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
 	@UiField CollectionPlayerStyleBundle playerStyle;
@@ -121,7 +120,8 @@ public class MetadataWidget extends Composite {
 		setViewCount(collectionDo.getViews());
 		setUserProfileImage(collectionDo.getUser().getGooruUId());
 		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
-		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
+		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards(),true),true);
+		renderStandards(centuryContainer,getStandardsMap(this.collectionDo.getMetaInfo().getSkills(),false),false);
 		renderLanguageObjective(collectionDo.getLanguageObjective());
 		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges());
 		renderInstructionalMethod(collectionDo.getInstructionalMethod());
@@ -205,21 +205,29 @@ public class MetadataWidget extends Composite {
 		}
 	}
 	
-	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds){
+	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds,boolean isStandards){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
 		for(int i=0;i<standareds.size();i++){
 			Map<String, String> standardMap=new HashMap<String, String>();
-			standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
-			standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
+			if(isStandards){
+				standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
+				standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
+			}else{
+				standardMap.put(STANDARD_CODE, standareds.get(i).getLabel());
+				standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription()!=null?standareds.get(i).getDescription():"");
+			}
 			standardsList.add(standardMap);
 		}
 		return standardsList;
 	}
-	
-	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
+	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList,boolean isStandards) {
 		standardsContainer.clear();
 		if (standardsList != null&&standardsList.size()>0) {
-			standardSection.setVisible(true);
+			if(isStandards){
+				standardSection.setVisible(true);
+			}else{
+				centurySection.setVisible(true);
+			}
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
 			int count = 0;
 			FlowPanel toolTipwidgets = new FlowPanel();
@@ -233,7 +241,12 @@ public class MetadataWidget extends Composite {
 						toolTipwidgets.add(standardItem);
 					}
 				} else {
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+					DownToolTipWidgetUc toolTipUc;
+					if(isStandards){
+						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+					}else{
+						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), null, standardsList);
+					}
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
 					standardsContainer.add(toolTipUc);
 				}
@@ -246,13 +259,18 @@ public class MetadataWidget extends Composite {
 			if (standardsList.size() > 2) {
 				Integer moreStandardsCount = standardsList.size() - 3;
 				if (moreStandardsCount > 0){
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList);
+					DownToolTipWidgetUc	toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList);
+					toolTipUc.setStandards(isStandards);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
 					standardsContainer.add(toolTipUc);
 				}
 			}
 		}else{
-			standardSection.setVisible(false);
+			if(isStandards){
+			    standardSection.setVisible(false);
+			}else{
+				centurySection.setVisible(false);
+			}
 		}
 	}
 	
@@ -455,6 +473,12 @@ public class MetadataWidget extends Composite {
 		lblStandards.getElement().setAttribute("alt",i18n.GL0575());
 		lblStandards.getElement().setAttribute("title",i18n.GL0575());
 		
+		
+		lblcentury.setText(i18n.GL3191());
+		lblcentury.getElement().setId("lblCenturys");
+		lblcentury.getElement().setAttribute("alt",i18n.GL3191());
+		lblcentury.getElement().setAttribute("title",i18n.GL3191());
+		
 		previewFlagButton.setText(i18n.GL0556());
 		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
 		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
@@ -621,6 +645,7 @@ public class MetadataWidget extends Composite {
 		courseSection.setVisible(!hide);
 		standardSection.setVisible(!hide);
 		viewSection.setVisible(!hide);
+		centurySection.setVisible(!hide);
 	}
 	
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {

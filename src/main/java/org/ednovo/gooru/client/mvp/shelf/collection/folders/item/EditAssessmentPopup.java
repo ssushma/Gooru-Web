@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.folders.item;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -38,11 +39,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -62,7 +64,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField Button btnSaveAssessment,btnCancelAssessment;
-	@UiField Label lblExistingAssessmentError,lblExistingAssessmentURLError;
+	@UiField Label lblExistingAssessmentError,lblExistingAssessmentURLError,lblExistingAssessmentDescriptionError;
 	@UiField TextBoxWithPlaceholder txtExistingAssessmentTitle,txtExistingAssessmentURL;
 	@UiField TextArea txtExistingAssessmentDescription;
 	@UiField RadioButton rdBtnAssessmentPublic,rdBtnAssessmentShare,rdBtnAssessmentPrivate,requireLoginYes,requireLoginNo;
@@ -137,6 +139,49 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 				}
 			}
 		});
+		//This will handle the focus on the description
+		txtExistingAssessmentDescription.addFocusHandler(new FocusHandler() {
+			@Override
+			public void onFocus(FocusEvent event) {
+				if(lblExistingAssessmentDescriptionError.isVisible()){
+					lblExistingAssessmentDescriptionError.setVisible(false);
+					txtExistingAssessmentDescription.getElement().removeAttribute("style");
+				}
+			}
+		});
+		txtExistingAssessmentTitle.getElement().setAttribute("maxlength", "50");
+		txtExistingAssessmentDescription.getElement().setAttribute("maxlength", "300");
+		txtExistingAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(1));
+		txtExistingAssessmentDescription.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(2));
+	}
+	/**
+	 * This inner class is used for handling key up events on title and description.
+	 */
+	private class TitleAndDescriptionKeyUpHandler implements KeyUpHandler {
+			int value;
+			TitleAndDescriptionKeyUpHandler(int value){
+				this.value=value;
+			}
+			public void onKeyUp(KeyUpEvent event) {
+				if(value==1){
+					if(txtExistingAssessmentTitle.getText().length()>=50){
+						txtExistingAssessmentTitle.setText(txtExistingAssessmentTitle.getText().toString().substring(0,50));
+						lblExistingAssessmentError.setVisible(true);
+						lblExistingAssessmentError.setText(i18n.GL0143());
+						lblExistingAssessmentError.getElement().setAttribute("alt",i18n.GL0143());
+						lblExistingAssessmentError.getElement().setAttribute("title",i18n.GL0143());
+					}
+				}
+				if(value==2){
+					if(txtExistingAssessmentDescription.getText().length()>=300){
+						txtExistingAssessmentDescription.setText(txtExistingAssessmentDescription.getText().toString().substring(0,300));
+						lblExistingAssessmentDescriptionError.setVisible(true);
+						lblExistingAssessmentDescriptionError.setText(i18n.GL0143());
+						lblExistingAssessmentDescriptionError.getElement().setAttribute("alt",i18n.GL0143());
+						lblExistingAssessmentDescriptionError.getElement().setAttribute("title",i18n.GL0143());
+					}
+				}
+			}
 	}
 	@UiHandler("btnSaveAssessment")
 	public void clickEventOnSaveAssessment(final ClickEvent event){
@@ -185,7 +230,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 			}else{
 				final Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", assessmentExistingTitle);
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 					@Override
 					public void onSuccess(Boolean value) {
 						if(value){
@@ -195,38 +240,36 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 							lblExistingAssessmentError.setVisible(false);
 							lblExistingAssessmentError.setText("");
 							parms.put("text", assessmentURL);
-							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new AsyncCallback<Boolean>() {
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 								@Override
 								public void onSuccess(Boolean result) {
 									if(result){
 										//Displaying error message
 										SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
 									}else{
-										lblExistingAssessmentURLError.setVisible(false);
-										lblExistingAssessmentURLError.setText("");
-										//Update code here
-										AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,requireLoginYes.getValue().toString(), new AsyncCallback<FolderDo>() {
-											
-											@Override
-											public void onSuccess(FolderDo result) {
-												clickEventOnSaveAssessmentHandler(result);
-											}
-											
-											@Override
-											public void onFailure(Throwable caught) {
+										parms.put("text", txtExistingAssessmentDescription.getText());
+										lblExistingAssessmentDescriptionError.setVisible(false);
+										lblExistingAssessmentDescriptionError.setText("");
+										AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>(){
+										@Override
+											public void onSuccess(Boolean result) {
+											if(result){
+												SetStyleForProfanity.SetStyleForProfanityForTextArea(txtExistingAssessmentDescription, lblExistingAssessmentDescriptionError, result);
+											}else{
+												//Update code here
+												AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,requireLoginYes.getValue().toString(), new SimpleAsyncCallback<FolderDo>() {
+												@Override
+												public void onSuccess(FolderDo result) {
+													clickEventOnSaveAssessmentHandler(result);
+													}
+												 });
+											 }
 											}
 										});
 									}
 								}
-								@Override
-								public void onFailure(Throwable caught) {
-									
-								}
 							});
 						}
-					}
-					@Override
-					public void onFailure(Throwable caught) {
 					}
 				});
 			}

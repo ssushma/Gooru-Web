@@ -102,12 +102,12 @@ button.primary:hover {
 
 .pageHeader {
 	margin: 0 0 8px 0;
-	color: #0066cc;
-	font-size:20px;
+	color:#515151;
+	font-size:20pt;
 	background: url(../images/folders/panel/folder-icon.png) no-repeat 1px 0px;
 	padding-left: 41px;
 	float: left;
-	width: 74%;
+
 }
 
 .marginDiv {
@@ -119,11 +119,11 @@ button.primary:hover {
 }
 
 .marginDiv h4 {
-	color: #06c;
+	color: #1076bb;
 	font-weight: bold;
-	line-height: 25px;
+	font-size:16px;
+	line-height: 5px;
 	display: inline-block;
-	margin-top: 0;
 }
 
 .categoryFilterContainer .filterCheckBox label {
@@ -179,6 +179,7 @@ button.primary:hover {
 	clear: both;
 	border-bottom: 2px solid #e1dfda;
 	margin-bottom: 10px;
+	padding-bottom: 2px;
 }
 .tocShareBtn{
 	clear: both;
