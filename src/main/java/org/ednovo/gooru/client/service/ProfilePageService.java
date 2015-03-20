@@ -54,13 +54,7 @@ public interface ProfilePageService extends BaseService {
 	 * @throws GwtException
 	 */
 	public List<CollectionItemDo> getFolders(String collectionId) throws GwtException, ServerDownException;
-	/**
-	 * 
-	 * @throws GwtException
-	 */
 	
-	public void profileVisitEvent(String visitorUid) throws GwtException, ServerDownException;
-
 	/**
 	 * Adds the user grades
 	 * @return serialized created {@link String}

@@ -575,7 +575,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								@Override
 								public void onSuccess(V2UserDo result) {
 									String emailId="";
-									if(result.getUser().getAccountTypeId()==2){
+									if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 										emailId=AppClientFactory.getLoggedInUser().getUsername();
 									}else{
 										emailId=AppClientFactory.getLoggedInUser().getEmailId();
@@ -703,7 +703,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										@Override
 										public void onSuccess(V2UserDo result) {
 											String emailId="";
-											if(result.getUser().getAccountTypeId()==2){
+											if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 												emailId=AppClientFactory.getLoggedInUser().getUsername();
 											}else{
 												emailId=AppClientFactory.getLoggedInUser().getEmailId();
@@ -1200,7 +1200,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							@Override
 							public void onSuccess(V2UserDo result) {
 								String emailId="";
-								if(result.getUser().getAccountTypeId()==2){
+								if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 									emailId=AppClientFactory.getLoggedInUser().getUsername();
 								}else{
 									emailId=AppClientFactory.getLoggedInUser().getEmailId();
@@ -1427,7 +1427,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 						@Override
 						public void onSuccess(V2UserDo result) {
 							String emailId="";
-							if(result.getUser().getAccountTypeId()==2){
+							if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 								emailId=AppClientFactory.getLoggedInUser().getUsername();
 							}else{
 								emailId=AppClientFactory.getLoggedInUser().getEmailId();
@@ -1604,7 +1604,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								@Override
 								public void onSuccess(V2UserDo result) {
 									String emailId="";
-									if(result.getUser().getAccountTypeId()==2){
+									if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 										emailId=AppClientFactory.getLoggedInUser().getUsername();
 									}else{
 										emailId=AppClientFactory.getLoggedInUser().getEmailId();
@@ -1813,7 +1813,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										@Override
 										public void onSuccess(V2UserDo result) {
 											String emailId="";
-											if(result.getUser().getAccountTypeId()==2){
+											if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 												emailId=AppClientFactory.getLoggedInUser().getUsername();
 											}else{
 												emailId=AppClientFactory.getLoggedInUser().getEmailId();
@@ -1939,7 +1939,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onSuccess(V2UserDo result) {
 													String emailId="";
-													if(result.getUser().getAccountTypeId()==2){
+													if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 														emailId=AppClientFactory.getLoggedInUser().getUsername();
 													}else{
 														emailId=AppClientFactory.getLoggedInUser().getEmailId();

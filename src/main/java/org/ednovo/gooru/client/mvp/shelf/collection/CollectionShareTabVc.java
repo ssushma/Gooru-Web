@@ -417,55 +417,43 @@ public class CollectionShareTabVc extends Composite {
 		
 		AppClientFactory.getEventBus().addHandler(CollectionEditShareEvent.TYPE, handler);
 
-		if (collection.getSharing().equals("public")) {
+		if (collection.getSharing()!=null && collection.getSharing().equals("public")) {
 			publicShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-			if(collection.getPublishStatus()!=null){
-				if(collection.getPublishStatus().getValue().equalsIgnoreCase("reviewed")){
-					rbPublic.setVisible(false);
-					lblPublishPending.setVisible(false);
-					publishedPanel.setVisible(true);
-					selectPrivateResource("public");
+				if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("reviewed")){
+						rbPublic.setVisible(false);
+						lblPublishPending.setVisible(false);
+						publishedPanel.setVisible(true);
+						selectPrivateResource("public");
 				}
-			}
-		} else if (collection.getSharing().equals("private")) {
+		}else if(collection.getSharing()!=null && collection.getSharing().equals("private")) {
 			privateShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = false;
-			if(collection.getPublishStatus()!=null){
-				if(collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
-					selectPrivateResource("pending");
-					rbPublic.setVisible(false);
-					lblPublishPending.setVisible(true);
-					publishedPanel.setVisible(false);
+				if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+						selectPrivateResource("pending");
+						rbPublic.setVisible(false);
+						lblPublishPending.setVisible(true);
+						publishedPanel.setVisible(false);
 				}else{
 					selectPrivateResource("private");
 				}
-			}else{
-				selectPrivateResource("private");
-			}
-			
-		} else {
+		}else {
 			linkShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-			if(collection.getPublishStatus()!=null){
-				if(collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+			if(collection.getPublishStatus()!=null && collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
 					selectPrivateResource("pending");
 					rbPublic.setVisible(false);
 					lblPublishPending.setVisible(true);
 					publishedPanel.setVisible(false);
-				}else{
-					selectPrivateResource("shareable");
-				}
 			}else{
 				selectPrivateResource("shareable");
 			}
-			
 		}
 
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String, String>>() {

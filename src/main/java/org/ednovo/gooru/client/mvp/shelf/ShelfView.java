@@ -558,6 +558,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		rbPublicPanel.getElement().setId("pnlRbPublicPanel");
 		rbPublic.getElement().setId("btnRbPublic");
 		publishedPanel.getElement().setId("pnlPublishedPanel");
+		publishedPanel.setVisible(false);
 		collectionMetaDataSimPanel.getElement().setId("spnlCollectionMetaDataSimPanel");
 		panelFoooter.getElement().setId("footerOrganizePanelFoooter");
 		
@@ -862,7 +863,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 				@Override
 				public void onSuccess(V2UserDo result) {
-					if(result.getUser().getAccountTypeId()==2){
+					if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 						rbPublicPanel.setVisible(false);
 						publishedPanel.setVisible(false);
 					}else{
@@ -2076,7 +2077,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	@Override
 	public void setPusblishStatus(String publishStatus, CollectionDo colleDo) {
-		
 		if(publishStatus!=null){
 			collectionDo.setPublishStatus(colleDo.getPublishStatus());
 			if(publishStatus.equalsIgnoreCase("pending")){
