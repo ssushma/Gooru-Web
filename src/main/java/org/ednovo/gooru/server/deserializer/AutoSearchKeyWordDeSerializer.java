@@ -39,17 +39,20 @@ public class AutoSearchKeyWordDeSerializer extends DeSerializer{
 	private static final String KEYWORD = "keyword";
 	public List<AutoSuggestKeywordSearchDo> deserializeAutoKeyword(JsonRepresentation jsonRep) {
 			List<AutoSuggestKeywordSearchDo> autoKeywordsList = new ArrayList<AutoSuggestKeywordSearchDo>();
-		try {
-			JSONArray autokeywordJsonArray=jsonRep.getJsonArray();
-			for (int i = 0; i < autokeywordJsonArray.length(); i++) {
-			JSONObject keywordJsonObject = autokeywordJsonArray.getJSONObject(i);
-			String autokeyword=keywordJsonObject.getString(KEYWORD);
-			AutoSuggestKeywordSearchDo autoSuggestKeywordSearchDo = new AutoSuggestKeywordSearchDo();
-			autoSuggestKeywordSearchDo.setKeyword(autokeyword);
-			autoKeywordsList.add(autoSuggestKeywordSearchDo);
+	try {
+			if(jsonRep!=null && jsonRep.getSize()!=-1){
+			  if(jsonRep.getJsonArray()!=null){
+					JSONArray autokeywordJsonArray=jsonRep.getJsonArray();
+					for (int i = 0; i < autokeywordJsonArray.length(); i++) {
+						JSONObject keywordJsonObject = autokeywordJsonArray.getJSONObject(i);
+						String autokeyword=keywordJsonObject.getString(KEYWORD);
+						AutoSuggestKeywordSearchDo autoSuggestKeywordSearchDo = new AutoSuggestKeywordSearchDo();
+						autoSuggestKeywordSearchDo.setKeyword(autokeyword);
+						autoKeywordsList.add(autoSuggestKeywordSearchDo);
+					}
+				}
 			}
-		} catch (JSONException e) {
-		}
+		} catch (JSONException e) {}
 		return autoKeywordsList;
 	}
 }

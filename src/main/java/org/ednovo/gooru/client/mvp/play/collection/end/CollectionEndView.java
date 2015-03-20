@@ -535,30 +535,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 
 	public void setLabelAndIds() {
-//		collectionSummaryLbl.setVisible(false);
-		/*lblAuthor.setText(i18n.GL0573());
-		lblAuthor.getElement().setId("lblAuthor");
-		lblAuthor.getElement().setAttribute("alt",i18n.GL0573());
-		lblAuthor.getElement().setAttribute("title",i18n.GL0573());
-		  
-		lblCourse.setText(i18n.GL0574());
-		lblCourse.getElement().setId("lblCourse");
-		lblCourse.getElement().setAttribute("alt",i18n.GL0574());
-		lblCourse.getElement().setAttribute("title",i18n.GL0574());
-		
-		lblStandards.setText(i18n.GL0575());
-		lblStandards.getElement().setId("lblStandards");
-		lblStandards.getElement().setAttribute("alt",i18n.GL0575());
-		lblStandards.getElement().setAttribute("title",i18n.GL0575());
-		
-		previewFlagButton.setText(i18n.GL0556());
-		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
-		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
-		previewFlagButton.getElement().setAttribute("title",i18n.GL0556());*/
-		
-//		collectionSummaryLbl.setText(i18n.GL1544);
-//		emptyMsgDescOne.setText(i18n.GL1545);
-//		emptyMsgDescTwo.setText(i18n.GL1546);
+
 		insightsHeaderText.setText(i18n.GL1626());
 		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
 		insightsHeaderText.getElement().setAttribute("alt",i18n.GL1626());
@@ -569,43 +546,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
 		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
 		
-		/*previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
-		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-		lbllanguageObjectiveText.setText(i18n.GL1721());
-		lbllanguageObjectiveText.getElement().setId("lblLanguageObjectiveText");
-		lbllanguageObjectiveText.getElement().setAttribute("alt",i18n.GL1721());
-		lbllanguageObjectiveText.getElement().setAttribute("title",i18n.GL1721());*/
-		
 		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
 		metadataContainer.getElement().setId("fpnlMetadataContainer");
-		/*teacherContainer.getElement().setId("pnlTeacherContainer");
-		classInfoPanel.getElement().setId("pnlClassInfoPanel");
-		lblClassInfo.getElement().setId("lblClassInfo");
-		lblclassTitle.getElement().setId("lblClassTitle");
-		classTitleValue.getElement().setId("lblClassTitleValue");
-		teacherPanel.getElement().setId("pnlTeacherPanel");
-		lblTeacher.getElement().setId("lblTeacher");
-		teacherProfileContainer.getElement().setId("pnlTeacherProfileContainer");
-		teacherNameLabel.getElement().setId("lblTeacherNameLabel");
-		dueDateSection.getElement().setId("pnlDueDateSection");
-		lbldueDate.getElement().setId("lbldueDate");
-		dueDate.getElement().setId("lbldueDateLabel");
-		directionSection.getElement().setId("pnlDirectionSection");
-		lblDirections.getElement().setId("lblDirections");
-		lblDirectionsDesc.getElement().setId("lblDirectionsDesc");
-		authorPanel.getElement().setId("pnlAuthorPanel");
-		profileThumbnailImage.getElement().setId("imgProfileThumbnailImage");
-		userNameLabel.getElement().setId("lblUserNameLabel");
-		teamContainer.getElement().setId("fpnlTeamContainer");
-		courseSection.getElement().setId("pnlCourseSection");
-		courseTitle.getElement().setId("fpnlCourseTitle");
-		standardSection.getElement().setId("pnlStandardSection");
-		standardsContainer.getElement().setId("fpnlStandardsContainer");
-		viewSection.getElement().setId("pnlViewSection");
-		viewsCountLabel.getElement().setId("lblViewsCountLabel");
-		languageObjectiveContainer.getElement().setId("pnlLanguageObjectiveContainer");
-		lbllanguageObjective.getElement().setId("lbllanguageObjective");
-		seeMoreAnchor.getElement().setId("lnkSeeMoreAnchor");*/
+
 		commentCount.getElement().setId("lblCommentCount");
 		commentsContainer.getElement().setId("vpnlCommentsContainer");
 		seeMoreButton.setText(i18n.GL0508());
@@ -779,9 +722,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				
 
 				}
-		/*		params.put("view", "end");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
 				
 			}
 		
@@ -813,9 +753,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				public void closePoup() {
 					Window.enableScrolling(true);
 			        this.hide();
-/*			    	params.remove("assign");
-			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 				}
 			};
 		int clientHeight=Window.getClientHeight();
@@ -836,10 +773,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 	    //till here 
 	    params.put("assign", "yes");
-
-	/*	params.put("assign", "yes");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 	}
 	
 	public void resetMetadataFields(){
@@ -875,14 +808,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			messageContainer.setVisible(true);
 			frameContainer.setVisible(false);
 			loadingImageLabel.setVisible(false);
-//		}else if(page!=null&&page.equals("teach")){
-//			frameContainer1.clear();
-//			frameContainer1.setVisible(false);
-//			messageContainer.setVisible(false);
 		}else{
 			messageContainer.setVisible(false);
-/*			frameContainer1.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));*/
 			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 		}
 	}

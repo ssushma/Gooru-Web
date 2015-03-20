@@ -561,11 +561,11 @@
 								<span  class="{res.css.contactUs}">
 									<a class="privacyLinkText" href="mailto:info@goorulearning.org" target="_blank">info@goorulearning.org</a>
 								</span>
+
 								<span class="{res.css.contactUs}">1032 Elwell Court, Suite 210 </span>
 								<span class="{res.css.contactUs}">Palo Alto, CA, 94304 </span>
 								<span class="{res.css.contactUs}">(650) 331-0219</span>
 								<br />
-
 							</div>
 							<br></br>
 						<!-- <span class="{res.css.policyTextLine}">Effective [January 21, 2013]</span> -->

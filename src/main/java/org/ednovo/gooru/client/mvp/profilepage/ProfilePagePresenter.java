@@ -255,14 +255,11 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 						getView().getChilNoShareOption().setVisible(false);
 					}
 				}
+				
 			}
+			
 		});
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		getProfilePageService().profileVisitEvent(userId, new SimpleAsyncCallback<Void>(){
-			@Override
-			public void onSuccess(Void result) {
-			}
-		});
 	}
 	
 	private boolean isChildUser(ProfileDo profileDo) {
