@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -18,17 +19,22 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -68,8 +74,9 @@ public class CollectionFlagView extends
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
-	HTMLEventPanel closeButton,flagCollections, flagResources, collectionCancelButton,
-			collectionSubmitButton, submitButtonGray;
+	HTMLEventPanel closeButton,flagCollections, flagResources;
+			
+	@UiField Button collectionCancelButton,collectionSubmitButton,submitButtonGray;
 	
 	@UiField
 	HTMLPanel resourceFlagContainer, collectionFlagContainer,
@@ -88,9 +95,10 @@ public class CollectionFlagView extends
 	HTML dropdownListPlaceHolder;
 	@UiField
 	ScrollPanel dropdownListContainerScrollPanel;
-	@UiField Label headerflagtext,incorporateText,notAppropriateText,inaccurateText,otherReasonText,provideMoreDetails,chooseResourceText,becauseText,
-	incorporateresourceText,unavailableresourceText,inaccurateTextresource,otherReason,provideMore;
-	@UiField HTMLPanel flagCollectionText,flagResourceText;
+	@UiField
+	InlineLabel otherReasonText,inaccurateText,notAppropriateText,incorporateText,incorporateresourceText,unavailableresourceText,inaccurateTextresource,otherReason;
+	@UiField Label headerflagtext,provideMoreDetails,chooseResourceText,becauseText,provideMore;
+	@UiField Anchor flagCollectionText,flagResourceText;
 	HTMLEventPanel flagButtonOnCover = new HTMLEventPanel("");
 	HTMLEventPanel flagButtonOnSummary = new HTMLEventPanel("");
 	
@@ -116,6 +124,9 @@ public class CollectionFlagView extends
 		headerflagtext.getElement().setId("lblHeaderflagtext");
 		headerflagtext.getElement().setAttribute("alt",i18n.GL0600());
 		headerflagtext.getElement().setAttribute("title",i18n.GL0600());
+		closeButton.getElement().getStyle().setCursor(Cursor.POINTER);
+		provideMoreDetails.getElement().getStyle().setMarginTop(25, Unit.PX);
+		provideMore.getElement().getStyle().setMarginTop(25, Unit.PX);
 		
 		flagCollectionText.getElement().setInnerHTML(i18n.GL0601());
 		flagCollectionText.getElement().setId("pnlFlagCollectionText");
@@ -167,6 +178,7 @@ public class CollectionFlagView extends
 		submitButtonGray.getElement().setId("epnlSubmitButtonGray");
 		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
 		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
+		submitButtonGray.getElement().getStyle().setColor("#999");
 		
 		chooseResourceText.setText(i18n.GL0609());
 		chooseResourceText.getElement().setId("lblChooseResourceText");
@@ -262,6 +274,7 @@ public class CollectionFlagView extends
 				.addResourceToCollectionStyles().ensureInjected();
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE
 				.closeFlagPopUpImages());
+
 		if(collectionTitle!=null){
 			collectionTitle = collectionTitle.replaceAll("</p>", " ")
 					.replaceAll("<p>", "")
@@ -271,10 +284,7 @@ public class CollectionFlagView extends
 			collectionTitleField.getElement().setAttribute("alt",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
 			collectionTitleField.getElement().setAttribute("title",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
 		}
-		flagCollections.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
-				.flagButtonselected());
-		flagResources.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
-				.flagbuttonDeSelected());
+		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
 		// To get content report
 		getUiHandlers().getContentReport(collectionGooruOid);
 	}
@@ -449,28 +459,18 @@ public class CollectionFlagView extends
 	
 	@UiHandler("flagCollections")
 	public void onClickOfflagCollections(ClickEvent event) {
-		flagCollections.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
-				.flagButtonselected());
-		flagCollections.removeStyleName(FlagBundle.IMAGEBUNDLEINSTANCE
-				.flagstyle().flagbuttonDeSelected());
-		flagResources.removeStyleName(FlagBundle.IMAGEBUNDLEINSTANCE
-				.flagstyle().flagButtonselected());
-		flagResources.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
-				.flagbuttonDeSelected());
+		flagResources.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		flagCollections.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
 		collectionFlagContainer.setVisible(true);
 		resourceFlagContainer.setVisible(false);
 	}
 
 	@UiHandler("flagResources")
 	public void onClickOfflagResources(ClickEvent event) {
-		flagResources.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
-				.flagButtonselected());
-		flagResources.removeStyleName(FlagBundle.IMAGEBUNDLEINSTANCE
-				.flagstyle().flagbuttonDeSelected());
-		flagCollections.removeStyleName(FlagBundle.IMAGEBUNDLEINSTANCE
-				.flagstyle().flagButtonselected());
-		flagCollections.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
-				.flagbuttonDeSelected());
+		flagResources.addStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		
+		flagCollections.removeStyleName(LoginPopUpCBundle.INSTANCE.css().flagbuttonDeSelected());
+		
 		collectionFlagContainer.setVisible(false);
 		resourceFlagContainer.setVisible(true);
 	}
@@ -607,7 +607,7 @@ public class CollectionFlagView extends
 	}
 
 	@Override
-	public HTMLEventPanel getSubmitButton() {
+	public Button getSubmitButton() {
 		return collectionSubmitButton;
 	}
 	
@@ -641,7 +641,7 @@ public class CollectionFlagView extends
 		public FlagPopupPanel(boolean isAutoHide){
 			super(isAutoHide);
 			this.setGlassEnabled(true);
-			this.setStyleName("");
+		/*	this.setStyleName("");*/
 			this.getGlassElement().getStyle().setZIndex(99999);
 			this.getElement().getStyle().setZIndex(99999);
 		}

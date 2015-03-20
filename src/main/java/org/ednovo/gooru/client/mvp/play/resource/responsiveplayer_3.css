@@ -1,0 +1,51 @@
+
+	.resourcePlayer header{
+		height:auto;
+	}
+	.rPlayerMenu{
+		background:#222;
+		text-align:center;
+	}
+	
+	.bodyresourcePlayer{
+		padding-top:0 !important;
+	}
+	.resourcePlayerInfoBlock{
+		padding:40px 0;
+	}
+	.ResourceLeftBlock{
+		margin-bottom:25px;
+	}
+	
+	.mainRightDisc{
+		text-align:center;
+	}
+	.ratingValue{
+		text-align:center;
+	}
+	
+	.resourcePlayer .iframeBlock iframe {
+    height: auto !important;
+    width: 100% !important;
+}
+.fixedDivMain{
+	
+}
+.playerResourceTitle{
+	
+}
+.add-button-normal{
+	
+}
+.info-button-normal{
+	
+}
+.flagButtonOrange{
+	
+}
+.close-button{}
+.flagButtonNormal{}
+.resourcePlayer{}
+.tabs{}
+
+	

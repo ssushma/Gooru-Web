@@ -83,7 +83,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	@UiField
 	HeaderUc headerUc;
 
-	@UiField HTMLPanel panelWrapper, panelDevice;
+	@UiField HTMLPanel panelWrapper, panelDevice,searchPush,menuRight, resorceSearchFilters, collectionSearchFilters;
 	
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 	
@@ -97,7 +97,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	private boolean isArrowIcon = false;
 	
 	PreFilterPopup preFilter =	null;
-	
+	Boolean isIpad,isAndriod,isWinDskp;
 	/**
 	 * Class constructor 
 	 */
@@ -107,7 +107,10 @@ public class WrapView extends BaseView implements IsWrapView {
 		panelWrapper.getElement().setId("wrapper");	
 		headerUc.getElement().setId("homeHeaderUc");
 		wrapperPanel.getElement().setId("spnlWrapperPanel");
+		searchPush.getElement().setId("searchPush");
+		menuRight.getElement().setId("menuRight");
 		
+
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
@@ -128,9 +131,8 @@ public class WrapView extends BaseView implements IsWrapView {
 			  panelDevice.clear();
 			  panelDevice.setVisible(false);
 			  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
-		 		  
+		  
 		  ClickHandler rootClick = new ClickHandler(){
 				@Override
 				public void onClick(ClickEvent event) {
@@ -166,6 +168,27 @@ public class WrapView extends BaseView implements IsWrapView {
 		activateClassicButton(false);
 		if (slot == WrapPresenter.TYPE_VIEW) {
 			if (content != null) {
+				String place=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				if(place!=null&&((!place.equals(PlaceTokens.HOME)||!(place.equals(PlaceTokens.COLLECTION_SEARCH)||!place.equals(PlaceTokens.FOLDER_TOC)||!(place.equals(PlaceTokens.RESOURCE_SEARCH)))))){
+					if (place.equals(PlaceTokens.SHELF)
+							|| place.equalsIgnoreCase(PlaceTokens.COMMUNITY)
+							|| place.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)
+							|| place.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)
+							|| place.equalsIgnoreCase(PlaceTokens.VALVERDE)
+							|| place.equalsIgnoreCase(PlaceTokens.LIFEBOARD)
+							|| place.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)
+							|| place.equalsIgnoreCase(PlaceTokens.STUDENT)) {
+						wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
+					}else{
+						if(isIpad){
+							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+						}else if(isAndriod){
+							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+						}else{
+							  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
+						}
+					}
+				}
 				wrapperPanel.setWidget(content);
 			}
 		}
@@ -219,6 +242,18 @@ public class WrapView extends BaseView implements IsWrapView {
 	@Override
 	public void setDiscoverLinkFromLibrary(String discoverLink) {
 		headerUc.setDiscoverLinkFromLibrary(discoverLink);
+	}
+
+	
+	@Override
+	public HTMLPanel getSearchFiltersPanel(){
+		return resorceSearchFilters;
+	}
+	
+	@Override
+	public HTMLPanel getCollectionSearchFiltersPanel(){
+		
+		return collectionSearchFilters;
 	}
 
 	@Override
@@ -275,15 +310,16 @@ public class WrapView extends BaseView implements IsWrapView {
 						getAddStandards();
 						preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 						
-						addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+					//	addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
 						addStandardsPresenter.getAddBtn().setVisible(false);
 						
 					}
 				});
 			//}
 			headerUc.setPrefilterObj(preFilter);
-			preFilter.setStyleName(GooruCBundle.INSTANCE.css().positionStyle());
-			preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+30);
+			//preFilter.setStyleName(GooruCBundle.INSTANCE.css().positionStyle());
+			//preFilter.setPopupPosition(headerUc.getEditSearchTxtBox().getElement().getAbsoluteLeft(), headerUc.getEditSearchTxtBox().getElement().getAbsoluteTop()+40);
+
 			preFilter.setFilter();
 			preFilter.show();
 			preFilter.hidePlanels();
@@ -354,8 +390,8 @@ public class WrapView extends BaseView implements IsWrapView {
 			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 				addStandardsPresenter.callDefaultStandardsLoad();
-			
 			}
 		}
+
 	}
 }

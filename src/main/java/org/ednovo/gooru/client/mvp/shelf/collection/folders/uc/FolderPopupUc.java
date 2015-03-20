@@ -46,7 +46,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class FolderPopupUc extends PopupPanel {
 	
-	@UiField HTMLPanel folderStructureTree, buttonsContainer;
+	@UiField HTMLPanel folderStructureTree, buttonsContainer,mainContainer;
 	@UiField Button cancelBtn, okBtn;
 	@UiField FolderPopupStyleBundle folderPopupStyle;
 	@UiField TextBox folderTitle;
@@ -107,7 +107,9 @@ public abstract class FolderPopupUc extends PopupPanel {
 		});
 		
 		if(isFolderType || moveType.equalsIgnoreCase(COLLECTION_MOVE)) {
+			
 			loadingImageLabel.setVisible(true);
+		
 		} else {
 			loadingImageLabel.setVisible(false);
 		}
@@ -134,10 +136,19 @@ public abstract class FolderPopupUc extends PopupPanel {
 			}
 		});
 		folderTitle.addBlurHandler(new CheckProfanityForFolders());
+		if (isFolderType){
+			mainContainer.getElement().setAttribute("style", "min-height:450px");
+		}else{
+			mainContainer.getElement().removeAttribute("style");
+		}
+		this.setGlassEnabled(true);
+		this.show();
+		this.center();
+		
 	}
 	
 	public void setCollectionType(String collectionType){
-		if(collectionType!=null&&collectionType.equals("quiz")){
+		if(collectionType!=null&&collectionType.equals("assessment")){
 			addAttributesToWidget(inputDescLbl,i18n.GL3036());
 			addAttributesToWidget(popupHeaderTitleLbl,i18n.GL3037());
 		}else{
@@ -375,7 +386,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 	}
 
 	private void getFolderData(final String moveType) {
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace((getPageNumber()-1)*20, 20,null, FOLDER, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace((getPageNumber()-1)*20, 20,null, FOLDER,false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
 				setData(result.getSearchResult(), moveType);
@@ -443,7 +454,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 		if(collectionOpenedStatus) {
 			setChildFolderItems(null, 0, false);
 		} else {
-			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, collectionOid,null, FOLDER, new SimpleAsyncCallback<FolderListDo>() {
+			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, collectionOid,null, FOLDER,false, new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					setChildFolderItems(result.getSearchResult(), folderNavigation, isRefresh);

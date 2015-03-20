@@ -131,6 +131,9 @@ public class AddResourceContainerView extends
 	private static final String O2_LEVEL = "o2";
 
 	private static final String O3_LEVEL = "o3";
+	
+	private static final String ASSESSMENT = "assessment";
+	
 	boolean isPlayer = false;
 	boolean isTopMostSelected =true;
 	HTMLPanel topMostTreeItem=new HTMLPanel("");
@@ -379,8 +382,10 @@ public class AddResourceContainerView extends
 					.arrow());
 			folderContainer.add(arrowLabel);
 			floderName = new Label();
+			
 			floderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
+			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
 			folderContainer.add(floderName);
 		}
 
@@ -437,6 +442,7 @@ public class AddResourceContainerView extends
 			folderName = new Label();
 			folderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
+			folderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
 			folderContainer.add(folderName);
 		}
 
@@ -446,8 +452,11 @@ public class AddResourceContainerView extends
 		}
 
 		public CollectionTreeItem(String levelStyleName, String folderTitle,
-				String gooruOid) {
+				String gooruOid, String collectionType) {
 			this();
+			if(ASSESSMENT.equals(collectionType)){
+				folderContainer.setStyleName(AddResourceContainerCBundle.INSTANCE.css().folderAssessment());
+			}
 			if (levelStyleName != null) {
 				folderContainer.addStyleName(levelStyleName);
 			}
@@ -488,7 +497,7 @@ public class AddResourceContainerView extends
 		if (COLLECTION.equalsIgnoreCase(searchType)) {
 			isCollectionSearch = true;
 			isResourceSearch = false;
-			addResourceText.setText(i18n.GL3121());
+			addResourceText.setText(i18n.GL3189());
 			addResourceText.setStyleName(AddResourceContainerCBundle.INSTANCE.css().addCollectionTextStyles());
 		} else if (RESOURCE.equalsIgnoreCase(searchType)) {
 			isResourceSearch = true;
@@ -500,8 +509,7 @@ public class AddResourceContainerView extends
 					"display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style",
 					"display: inline-block;");
-			createCollectionbuttonsContainer.getElement().setAttribute("style",
-					"margin-left: 36px;margin-top: 10px;");
+			createCollectionbuttonsContainer.getElement().setAttribute("style",	"text-align:center;margin-top: 10px;");
 		}
 		if (folderListDo != null) {
 			List<FolderDo> foldersArrayList = folderListDo.getSearchResult();
@@ -518,10 +526,11 @@ public class AddResourceContainerView extends
 							folderTreePanel.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
 						} else if (SCOLLECTION.equals(floderDo.getType())) {
+							String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 							TreeItem folderItem = new TreeItem(
 									new CollectionTreeItem(null,
 											floderDo.getTitle(),
-											floderDo.getGooruOid()));
+											floderDo.getGooruOid(),collectionType));
 							folderTreePanel.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
 						}
@@ -589,12 +598,13 @@ public class AddResourceContainerView extends
 									innerFolderTreeItem);
 							item.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
-						} else if (floderDo.getType().equals("scollection")) {
+						} else {
+							String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
 							TreeItem folderItem = new TreeItem(
 									new CollectionTreeItem(
 											getTreeItemStyleName(folderLevel),
 											floderDo.getTitle(),
-											floderDo.getGooruOid()));
+											floderDo.getGooruOid(),collectionType));
 							item.addItem(folderItem);
 							adjustTreeItemStyle(folderItem);
 						}
@@ -661,7 +671,7 @@ public class AddResourceContainerView extends
 		buttonsContainer.setVisible(false);
 		displayCountLabel.setVisible(true);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
-			displayCountLabel.setText(i18n.GL3120());
+			displayCountLabel.setText(i18n.GL3188());
 			addResourceText.setText(i18n.GL2088());
 			addCollectiorOrReourceText.setText(i18n.GL2089());
 			addResourceText.getElement().setAttribute("style",
@@ -706,7 +716,7 @@ public class AddResourceContainerView extends
 						selectedCollectionGooruOid, currentsearchType,
 						cureentcollectionTreeItem.getCollectionName());
 			} else if (isSelectedFolder) {
-				displayErrorLabel.setText(i18n.GL3126());
+				displayErrorLabel.setText(i18n.GL3193());
 				getButtonVisiblity();
 			} else {
 			
@@ -761,10 +771,10 @@ public class AddResourceContainerView extends
 		this.isPlayer = isPlayer;
 		addContent.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.addPlayerStyle());
+		addContent.addStyleName("addResourceContainer");
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
 				"height: 135px !important;margin-left: 46px;overflow: auto;");
-		floderTreeContainer.getElement().setAttribute("style",
-				"height: 135px !important");
+		floderTreeContainer.getElement().setAttribute("style","height: 135px !important");
 		cancelButton.setVisible(false);
 		enableSuccessView.setVisible(false);
 		buttonsContainer.setVisible(true);
@@ -776,7 +786,7 @@ public class AddResourceContainerView extends
 		addContent.removeStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
-				"height: 275px !important;border: 1px solid #ddd;margin-left: 44px;overflow: auto;");
+				"height: 275px !important;border: 1px solid #ddd;margin-left: 2%;margin-top:2%;overflow: auto; width:95%");
 		floderTreeContainer.getElement().setAttribute("style",
 				"height: 275px !important");
 		cancelButton.setVisible(true);
@@ -804,15 +814,15 @@ public class AddResourceContainerView extends
 			final HashMap<String, String> params) {
 		dropdownListContainerScrollPanel.setVisible(false);
 		createCollectionbuttonsContainer.setVisible(false);
-		enableSuccessView.getElement().setAttribute("style", "width: 559px;");
-		enableSuccessView.setVisible(true);
+/*		enableSuccessView.getElement().setAttribute("style", "width: 559px;");
+*/		enableSuccessView.setVisible(true);
 		buttonsContainer.setVisible(false);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
-		headerTitle.setText(i18n.GL3124() + title);
+		headerTitle.setText(i18n.GL3192() + title);
 		}else{
-			headerTitle.setText(i18n.GL3125() + title);
+			headerTitle.setText(i18n.GL3193() + title);
 		}
-		cancelButton.setText(i18n.GL3123());
+		cancelButton.setText(i18n.GL3191());
 		okButton.setText(i18n.GL1630());
 		enableSuccessView.setVisible(true);
 		okButton.addClickHandler(new ClickHandler() {

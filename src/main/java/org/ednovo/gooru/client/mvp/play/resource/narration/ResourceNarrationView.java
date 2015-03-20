@@ -30,13 +30,13 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -80,6 +80,8 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		super(eventsBus);
 		appPopUp=new NarrationPopupPanel(true);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
+		appPopUp.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().narrationPopupContainer());
 		narrationCloseButton.addClickHandler(new CloseNarrationPopupEvent());
 		okButton.addClickHandler(new CloseNarrationPopupEvent());
 		authorName.setText(i18n.GL0423());
@@ -97,9 +99,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		authorImage.getElement().setId("imgAuthorImage");
 		narrationText.getElement().setId("htmlNarrationText");
 	}
+
+	public boolean isShowingPopup(){
+		return appPopUp.isShowing();
+	}
+
 	/**
 	 * This method is used to set metadata to Narration Popup.
 	 */
+
 	@Override
 	public void setNarrationMetadata(CollectionItemDo collectionItemDo,String userName,String gooruUid){
 		if (collectionItemDo!=null){
@@ -242,5 +250,9 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 				hideNarrationPopup();
 			}
 		}
+	}
+	@Override
+	public void showAddToolTip() {
+		throw new RuntimeException("Not implemented");
 	}
 }

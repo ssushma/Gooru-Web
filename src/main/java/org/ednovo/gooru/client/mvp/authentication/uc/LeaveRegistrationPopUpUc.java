@@ -78,7 +78,9 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
-	Label lblCancel, lblTitle, lblHeading, lblSubHeading,quriesText;
+	Label lblTitle, lblHeading, lblSubHeading,quriesText;
+	@UiField
+    Anchor	lblCancel;
 	@UiField
 	Button btnLeave, btnContinue;
 	@UiField InlineLabel pleaseContactText;
@@ -100,7 +102,6 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		childDob = dob;
 		this.setGlassEnabled(true);
 		this.center();
-		this.setSize("502px", "352px");
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		//this.getElement().setAttribute("style", "width:502px;height:352px;z-index:98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");

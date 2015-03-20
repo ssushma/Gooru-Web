@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
 
 public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
@@ -49,8 +50,25 @@ public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 	void isLoadingImageVisible(boolean isVisible);
 
 	/**
-	 * @param resourceId
+	 * 
+	 * @function setResourceTagsData 
+	 * 
+	 * @created_date : 18-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param resourceGooruOid
+	 * @parm(s) : @param tagsLbl
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
-	void setResourceTagsData(String resourceId, Label tagsLbl);   
+	void setResourceTagsData(String resourceGooruOid, Anchor tagsLbl);   
 
 }

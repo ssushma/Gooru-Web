@@ -47,11 +47,13 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -64,6 +66,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -94,7 +98,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class AssignPopupVc extends PopupPanel {
 
 	@UiField
-	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer;
+	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer,assignPopupContent;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -122,10 +126,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 	@UiField Label lblOr,lblLoginwithGooru;
 
 	@UiField
-	Label cancelButton,lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC;
+	Label cancelButton,lblPleaseWait,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle;
 	
-	@UiField InlineLabel lblPii,toUsText;
-	@UiField Anchor ancprivacy;
+	@UiField InlineLabel lblPii,toUsText,donothaveAC;
+	@UiField Anchor ancprivacy ,swithUrlLbl, swithToEmbedLbl;
 
 	private boolean isPrivate = false;
 //	private static final String SWITCH_FULL_URL = i18n.GL0643;
@@ -167,7 +171,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 	
 	private static final int HTTP_SUCCESS_STATUS_CODE = 200;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
-	
 	
 	private static final String ERR_GL0078 = "401-GL0078";
 	private static final String ERR_GL0079 = "401-GL0079";
@@ -223,6 +226,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		swithToEmbedLbl.setText(i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
+		assignContainer.getElement().setAttribute("style","min-height:500px");
 		AppClientFactory.getEventBus().addHandler(SetLoginStatusEvent.TYPE, setLoginStatusHandler);
 
 		setLabelsAndIds();
@@ -270,6 +274,13 @@ public abstract class AssignPopupVc extends PopupPanel {
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();	
 		Window.enableScrolling(false);
+		 boolean device = BrowserAgent.isDevice();
+		if(device){
+			ScrollPopupUtil.ScrollPopupUtilWidget(assignPopupContent,false);
+		}else{
+			assignPopupContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
+			assignPopupContent.getElement().getStyle().setHeight(550, Unit.PX);
+		}
 	}
 
 	public void hideContainers() {
@@ -427,8 +438,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
 		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
 		
-		signUpStyles.getElement().setAttribute("style", "display: inline-block;");
-		ancSignUp.getElement().setAttribute("style", "float: left;");
+/*		signUpStyles.getElement().setAttribute("style", "display: inline-block;");
+*/		ancSignUp.getElement().setAttribute("style", "float: left;");
 		donothaveAC.getElement().setAttribute("style", "float: left;padding:0;");
 
 		cancelButton.getElement().setId("btnCancelButton");
@@ -822,8 +833,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 	private void setHandlers() {
 
-		this.setSize("515px", "547px");
-
+	/*	this.setSize("515px", "547px");
+*/
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
@@ -924,7 +935,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}

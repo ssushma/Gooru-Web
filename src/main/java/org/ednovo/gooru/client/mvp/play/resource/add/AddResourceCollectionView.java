@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
@@ -79,6 +80,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceCollectionUiHandlers> implements IsAddResourceCollectionView{
 
+
+	private static final String ASSESSMENT = "assessment";
 
 	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
 
@@ -235,6 +238,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			folderContainer.add(arrowLabel);
 			floderName=new Label();
 			floderName.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().title());
+			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+
 			folderContainer.add(floderName);
 		}
 		public FolderTreeItem(String levelStyleName,String folderTitle,String gooruOid){
@@ -279,14 +284,20 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().foldercollection());
 			folderName=new Label();
 			folderName.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().title());
+			folderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+
 			folderContainer.add(folderName);
 		}
 		public CollectionTreeItem(String levelStyleName){
 			this();
 			folderContainer.addStyleName(levelStyleName);
 		}
-		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,int itemsCount){
+		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,int itemsCount,String collectionType){
 			this();
+			System.out.println("collectiontreeitem+"+collectionType);
+			if(ASSESSMENT.equals(collectionType)){
+				folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().folderAssessment());
+			}
 			if(levelStyleName!=null){
 				folderContainer.addStyleName(levelStyleName);
 			}
@@ -348,7 +359,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 								}
 							 }else if(SCOLLECTION.equals(floderDo.getType())){
 								 if(floderDo.getTitle()!=null && floderDo.getGooruOid()!=null && floderDo.getItemCount()!=null){
-									 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+									 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+									 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount(), collectionType));
 									 folderTreePanel.addItem(folderItem);
 									 adjustTreeItemStyle(folderItem);
 								 }
@@ -392,13 +404,14 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 							 }
 						 }else if(SCOLLECTION.equals(floderDo.getType())){
 							 if(floderDo.getTitle()!=null&&floderDo.getGooruOid()!=null && floderDo.getItemCount()!=null){
-								 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+								 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+								 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount(), collectionType));
 								 item.addItem(folderItem);
 								 adjustTreeItemStyle(folderItem);
 							 }
 						 }
 				 }
-					item.setState(folderTreeItemWidget.isOpen());
+				item.setState(folderTreeItemWidget.isOpen());
 			 }
 		}
 	}

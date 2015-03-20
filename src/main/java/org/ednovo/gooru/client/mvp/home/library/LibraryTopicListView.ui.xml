@@ -2,6 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="libraryStyle" src="library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	    <g:HTMLPanel styleName="{libraryStyle.topicBlock}" ui:field="topicBlock">
 	         <g:HTMLPanel styleName="{libraryStyle.topicTitle}">
 	            <g:Label ui:field="topicTitleLbl" styleName="{libraryStyle.topicListEllipsis}"></g:Label>
@@ -9,6 +10,7 @@
 	               <g:HTMLPanel styleName="{libraryStyle.hoverText}" ui:field="moreOnTopicText"></g:HTMLPanel>
 	               <g:HTMLPanel styleName="{libraryStyle.searchMagnify}"/>
 	            </panel:HTMLEventPanel>
+	           <g:Button styleName="secondary" ui:field="viewAllBtn" text="{i18n.GL1946}" title="{i18n.GL1946}"></g:Button>
 	         </g:HTMLPanel>
 	         <g:ScrollPanel styleName="{libraryStyle.conceptList}" ui:field="lessonScrollPanel">
 	             <g:HTMLPanel ui:field="conceptList"/>

@@ -87,10 +87,10 @@
 	float: right;
 	font-size: 12px;
 	font-style: italic;
-	position: absolute;
+	position: relative;
 	/* top: 3px;
 	right: 120px; DO-3502*/
-	right: 79px;
+	right: 83px;
 }
 
 .descriptionAlertMessage {
@@ -300,6 +300,7 @@
 	height: 45px; 
 	margin-top: -35px;
 	margin-left: -107px;
+	box-sizing:content-box;
 }
 
 .resourceDrag {
@@ -325,6 +326,7 @@
 	padding: 4px;
 	height: 20px;
 	border: 1px solid #DDDDDD;
+	box-sizing: content-box;
 }
 
 .resourceDragWithImg {
@@ -344,6 +346,7 @@
 	padding: 4px;
 	height: 20px;
 	border: 1px solid #DDDDDD;
+	box-sizing:content-box;
 }
 
 .resourceDragTitle {
@@ -358,6 +361,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	margin-top: 3px;
 }
 
 .resourceDragImage {
@@ -575,6 +579,7 @@
 	float: left;
 	/* padding-left: 10px;
 	margin-right: 25px; */
+	box-sizing:content-box;
 }
 
 .shareLink2 {
@@ -603,7 +608,7 @@
 	font-size: 12px;
 	height: 46px;
 	resize: none;
-	width: 96%;
+	width: 100%;
 	padding: 5px;
 }
 
@@ -885,6 +890,7 @@
 	width: 100px;
 	font-size: 20px;
 	margin: 0 auto;
+	box-sizing:content-box;
 }
 
 .simplePencil {
@@ -1116,7 +1122,7 @@
 .collectionDescriptionTitleContainer {
 	width: 390px;
 	height: 20px;
-	padding-top: 15px;
+	/* padding-top: 15px; */
 	float: left;
 }
 

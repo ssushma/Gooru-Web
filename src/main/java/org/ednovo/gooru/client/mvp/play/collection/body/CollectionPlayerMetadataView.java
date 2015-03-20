@@ -1589,11 +1589,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
         return html;
 	}
 
-	@Override
-	public void hideTeachPanelDetails(boolean isDisplayDetails) {
-		teacherContainer.setVisible(isDisplayDetails);
-		hideCollectionDetails(false);
-	}
+	
 
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;

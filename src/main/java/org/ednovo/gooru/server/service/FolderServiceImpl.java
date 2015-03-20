@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,11 +51,14 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,6 +91,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
+	
+	private static final Logger logger = LoggerFactory.getLogger(FolderServiceImpl.class);
+	
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
 
@@ -114,6 +121,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), form);
+		logger.info("CreteFolder Url : "+url);
+		logger.info("form : "+form);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 
@@ -145,6 +154,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), form);
+		logger.info("createFolderToParentFolder : "+url);
+		logger.info("form : "+form);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 	}
@@ -239,7 +250,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public FolderListDo getChildFolders(int offset, int limit, String parentId,String sharingType, String collectionType) throws GwtException {
+	public FolderListDo getChildFolders(int offset, int limit, String parentId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		String sessionToken=getLoggedInSessionToken();
@@ -250,6 +261,10 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset+"", limit+"");
+		if(isExcludeAssessment){
+			url=url+"&excludeType=assessment/url";
+		}
+		logger.info("getChildFolders folder service : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);
@@ -280,6 +295,10 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				folderObject.put(ADD_TO_SHELF, addToShelf);
 			}
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),folderObject.toString());
+			
+			logger.info("createFolderToParentFolder : "+url);
+			logger.info("folderObject : "+folderObject.toString());
+			
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRep);
 		} catch (JSONException e) {
@@ -315,7 +334,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				folderObject.put(TARGET_ID, targetId);
 			}
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
-			
+			logger.info("moveCollectionIntoFolder : "+url);
+			logger.info("folderObject 1 :" +folderObject.toString() );
 		} catch (Exception e) {
 			
 		}
@@ -337,6 +357,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			collectionDataObject.put("sharing", data.getSharing());
 			collectionDataObject.put("grade", data.getGrade());
 			collectionDataObject.put("mediaType", data.getMediaType());
+			collectionDataObject.put("url", data.getUrl());
 			if (courseCodeId != null) {
 				courseIdObj.put("codeId", courseCodeId);
 				ArrayList<JSONObject> taxonomyArray= new ArrayList<JSONObject>();
@@ -346,9 +367,12 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			FolderDataObject.put("collection", collectionDataObject);
 			FolderDataObject.put("parentId", folderId);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),FolderDataObject.toString());
+			logger.info("FolderDataObject.toString() : "+FolderDataObject.toString());
+			logger.info("createCollectionInParent : "+url);
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			collectionDo = deserializeCreatedCollInFolder(jsonRep);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return collectionDo;
 	}
@@ -449,5 +473,66 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
 		}catch (Exception e) {
 		}
+	}
+
+	@Override
+	public FolderTocDo getTocFolders(String folderId,boolean fromPPP) throws GwtException,ServerDownException {
+		JsonRepresentation jsonRep = null;
+		FolderTocDo folderTocDo = new FolderTocDo();
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
+		if(fromPPP){
+			url=url+"&sharing=public";
+		}
+		getLogger().info("-- Folder toc API - - - - "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		folderTocDo =deserializeFolderTocList(jsonRep);
+		folderTocDo.setStatusCode(jsonResponseRep.getStatusCode());
+		return folderTocDo;
+	}
+	public FolderTocDo deserializeFolderTocList(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderTocDo>() {});
+			}
+		} catch (Exception e) {}
+		return new FolderTocDo();
+	}
+	
+	@Override
+	public FolderDo getFolderMetaData(String folderId) throws GwtException,ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FOLDER_META_DATA, folderId, getLoggedInSessionToken());
+		getLogger().info("-- getFolderMetaData - - - - "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCreatedFolder(jsonRep);
+	}
+
+	@Override
+	public Map<String,String> getFolderRouteNodes(String folderId)
+			throws GwtException, ServerDownException {
+		Map<String,String> folderList=new LinkedHashMap<String, String>();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_FOLDER_ROUTE_NODES, folderId,getLoggedInSessionToken());
+		getLogger().info("getFolderRouteNodes:"+url);
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			JsonRepresentation jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			try{
+				JSONArray foldersArray=jsonRepresentation.getJsonArray();
+				if(foldersArray!=null&&foldersArray.length()>0){
+					for(int i=0;i<foldersArray.length();i++){
+						JSONObject jsonObj=foldersArray.getJSONObject(i);
+						folderList.put(jsonObj.getString("gooruOid"), jsonObj.getString("title"));
+					}
+				}
+				return folderList;
+			}catch(Exception e){
+
+			}
+		}
+		return folderList;
 	}
 }

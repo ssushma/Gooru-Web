@@ -3,39 +3,73 @@
 
 <ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle" 
     field="res" />
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
 
-	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}" ui:field="signupBgPanel">
-		<g:HTMLPanel styleName="{res.css.popupInner}">
-			<g:Label styleName="{res.css.popupHeader}" ui:field="lblTitle" />
-			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Label>
-			<g:HTMLPanel styleName="{res.css.popupContent} {res.css.metadataSelection}" ui:field="metaDataSelectionPanel">
-			   <g:HTMLPanel styleName="{res.css.congratsTop}">
-			      <g:HTMLPanel styleName="{res.css.header}" ui:field="congratsLbl"></g:HTMLPanel>
-			      <g:HTMLPanel styleName="{res.css.subheader}" ui:field="accountCreatedText"></g:HTMLPanel>
-			   </g:HTMLPanel>
-			   <g:HTMLPanel styleName="{res.css.userInfoContainer}">
-			      <g:HTMLPanel styleName="{res.css.selectGrades}">
-			         <g:FlowPanel ui:field="registerGradeList"></g:FlowPanel>
-			      </g:HTMLPanel>
-			      <g:HTMLPanel styleName="{res.css.selectCourses}">
-			         <g:HTMLPanel styleName="{res.css.subjectTabs}">
-			            <eventPanel:HTMLEventPanel styleName="{res.css.subjectOption} {res.css.active}" ui:field="scienceCourseLbl"></eventPanel:HTMLEventPanel>
-			            <eventPanel:HTMLEventPanel styleName="{res.css.subjectOptionMath}" ui:field="mathCourseLbl"></eventPanel:HTMLEventPanel>
-			            <eventPanel:HTMLEventPanel styleName="{res.css.subjectOptionSS}" ui:field="socialCourseLbl"></eventPanel:HTMLEventPanel>
-			            <eventPanel:HTMLEventPanel styleName="{res.css.subjectOptionELA}" ui:field="elaCourseLbl"></eventPanel:HTMLEventPanel>
+	<g:HTMLPanel styleName="{res1.css.PopupMainSmall}" ui:field="signupBgPanel">
+		<g:HTMLPanel styleName="{res1.css.PopupInner}">
+		    <g:HTMLPanel styleName="{res1.css.popupgreenHeader}">
+		        <g:HTMLPanel styleName="row">
+		        	<g:HTMLPanel styleName="col-md-8 col-xs-8">
+		        		<g:Label ui:field="lblTitle" />    
+		        	</g:HTMLPanel>
+		        	<g:HTMLPanel styleName="col-md-4 col-xs-4 {res1.css.closeContainer}">
+		        		<g:Label styleName="{res1.css.closeButton}" ui:field="lblCancel"></g:Label>    
+		        	</g:HTMLPanel>
+		        </g:HTMLPanel>
+		        <g:HTMLPanel styleName="clearfix"/>
+		    </g:HTMLPanel>
+			<g:HTMLPanel styleName="{res1.css.PopupContent}" ui:field="metaDataSelectionPanel">
+			     <g:HTMLPanel styleName="col-md-4 col-xs-12 {res1.css.GreenHeader}" ui:field="congratsLbl"></g:HTMLPanel>
+			     <g:HTMLPanel styleName="col-md-8 col-xs-12">  
+			     <eventPanel:PPanel>
+			     	 <g:HTMLPanel  ui:field="accountCreatedText"></g:HTMLPanel>    
+			     </eventPanel:PPanel> 
+			  
+		   </g:HTMLPanel>   
+		   <g:HTMLPanel styleName="clearfix"/>   
+		   <g:HTMLPanel styleName="{res1.css.greyBGContainer}">
+			      <g:FlowPanel styleName="{res1.css.selectGrades}"  ui:field="registerGradeList">
+			      </g:FlowPanel>
+			      <g:HTMLPanel styleName="{res1.css.selectCourses}">
+			         <g:HTMLPanel styleName="row">
+			         <g:HTMLPanel styleName="col-md-3 col-sm-3 subjects">
+			           <g:HTMLPanel styleName="nav-wrap">
+			            <g:Label styleName="{res1.css.menu_icon}" ui:field="menuIcon">Choose Sublect...</g:Label> 
+			            <eventPanel:UlPanel styleName="{res1.css.subj}" ui:field="subject">
+			           		<eventPanel:LiPanel styleName="{res1.css.subjectOptionScience}">
+			           			<g:Anchor styleName="{res1.css.sceinceActive}" ui:field="scienceCourseLbl"/>    
+			           		</eventPanel:LiPanel>
+			                <eventPanel:LiPanel styleName="{res1.css.subjectOptionMath}">
+			            		<g:Anchor  ui:field="mathCourseLbl"/>        
+			                </eventPanel:LiPanel>
+			                <eventPanel:LiPanel styleName="{res1.css.subjectOptionSS}">
+			            		<g:Anchor  ui:field="socialCourseLbl"/>        
+			                </eventPanel:LiPanel>
+			            	<eventPanel:LiPanel styleName="{res1.css.subjectOptionELA}">
+			            		<g:Anchor  ui:field="elaCourseLbl"/>     
+			            	</eventPanel:LiPanel>	
+			             </eventPanel:UlPanel>
+			           
 			            <!-- <eventPanel:HTMLEventPanel styleName="{res.css.subjectOption}" ui:field="artsAndHumanitiesLbl"></eventPanel:HTMLEventPanel>
 			            <eventPanel:HTMLEventPanel styleName="{res.css.subjectOption}" ui:field="technologyAndEngineeringLbl"></eventPanel:HTMLEventPanel> -->
 			         </g:HTMLPanel>
-			         <g:HTMLPanel styleName="{res.css.courseContainer}" ui:field="courseContainer">
+			      	 </g:HTMLPanel>    
+			         <g:HTMLPanel styleName="col-md-9 col-sm-9">
+			        	 <g:HTMLPanel styleName="{res1.css.courseContainer}" ui:field="courseContainer">
 			             <g:Image ui:field="imgLoading" styleName="{res.css.loadingImage}"></g:Image>
 			         </g:HTMLPanel>
+			         <g:HTMLPanel styleName="clearfix"/>     
+			         </g:HTMLPanel>
+			      </g:HTMLPanel>
 			      </g:HTMLPanel>
 			   </g:HTMLPanel>
 			   <g:HTMLPanel styleName="{res.css.errorContainer}">
 			       <g:Label styleName="{res.css.error}" ui:field="lblErrorMessage" />
 			   </g:HTMLPanel>
-			   <g:HTMLPanel styleName="{res.css.skipSubmit}">
-			      <g:Button styleName="primary" ui:field="skipBtn"></g:Button><g:Button styleName="primary" ui:field="submitBtn"></g:Button>
+			   <g:HTMLPanel styleName="{res1.css.popupFooter} text-center">
+			      <g:Button styleName="primary" ui:field="skipBtn"></g:Button>
+			      <g:Button styleName="primary" ui:field="submitBtn"></g:Button>
 			   </g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

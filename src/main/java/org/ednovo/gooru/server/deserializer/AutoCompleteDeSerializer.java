@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,10 +46,34 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 	private static final String SEARCH_RESULTS = "searchResults";
 	private static final String CODE = "code";
 	private static final String LABEL = "label";
+	private static final String NAME = "name";
 	private static final String CODE_ID = "codeId";
 	private static final String AGGREGATOR = "values";
 
-	
+
+	/**
+	 * Deserialize json object to List of Standards
+	 * @param jsonRep instance of {@link JsonRepresentation}
+	 * @return list of standards
+	 */
+	public List<StandardFo> deserializeCenturys(JsonRepresentation jsonRep) {
+		List<StandardFo> centurysList = new ArrayList<StandardFo>();
+		try {
+			JSONObject standardJsonObject = jsonRep.getJsonObject();
+			JSONArray searchResults = standardJsonObject.getJSONArray(SEARCH_RESULTS);
+			for (int i = 0; i < searchResults.length(); i++) {
+				JSONObject code = searchResults.getJSONObject(i);
+				StandardFo codeDo = new StandardFo();
+				codeDo.setCodeId(code.getInt(CODE_ID));
+				codeDo.setLabel(code.getString(NAME));
+				centurysList.add(codeDo);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return centurysList;
+	}
+
 	/**
 	 * Deserialize json object to List of Standards
 	 * @param jsonRep instance of {@link JsonRepresentation}

@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.json.client.JSONObject;
@@ -86,13 +87,13 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 
 	@UiField Label lblTitle,lblJoinGooruCommunity,lblDescription,lblWhyWithGoogle,lblQuestionMark,lblPopupWhyWithGoogle,lblParentInfo;
 	
-	@UiField Label lblPopupWhyWithGoogleDesc,lblOr,lblDontHaveGoogleAccount,lblAlreadyHaveAccount,lblCancel;
+	@UiField Label lblPopupWhyWithGoogleDesc,lblOr,lblDontHaveGoogleAccount,lblAlreadyHaveAccount;
 	
 	@UiField Button btnSignUpWithGoogle;
 	
-	@UiField Anchor  achSignUpWithEmail,achClickToLogin;
+	@UiField Anchor  achSignUpWithEmail,achClickToLogin,lblCancel;
 	
-	@UiField HTMLPanel panelSignUp, panelUserInfo;
+	@UiField HTMLPanel panelSignUp, panelUserInfo, panelCreateAccount,panelLoginPopupContent;
 	
 	CreateAccountUc createAccount = null;
 	
@@ -121,6 +122,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+
 		appPopUp.center();
 		setUiAndIds();
 		showPanelById(displayScreen);
@@ -276,11 +278,8 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 			map.remove("callback");
 			map.remove("type");
 			map.remove("rp");
-			
-			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)||
-					AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
-				
-			} else {
+			if (!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) &&
+					!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.FOLDER_TOC)&&!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
 				map.remove("id");
 			}
 			
@@ -414,7 +413,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 					}
 				};
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("902px", "300px");
+			
 				termsAndPolicyVc.center();
 				termsAndPolicyVc.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			}
@@ -433,7 +432,6 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 					}
 				};
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();	
 				copyRightPolicy.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			}
@@ -452,7 +450,6 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 					
 				};
 				termsOfUse.show();
-				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			}

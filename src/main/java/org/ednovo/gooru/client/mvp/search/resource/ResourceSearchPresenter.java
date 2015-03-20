@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -56,8 +57,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -82,6 +83,8 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	
 	private	AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter;
 	
+	AddCenturyPresenter addCenturyPresenter;
+	
 	private TagsTabPresenter tagsTabPresenter;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
@@ -100,14 +103,15 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 */
 	@Inject
 	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,
-			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter, TagsTabPresenter tagsTabPresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
+			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter, TagsTabPresenter tagsTabPresenter,AddCenturyPresenter addCenturyPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		this.collectionFormInPlayPresenter= collectionFormInPlayPresenter;
 		this.analyticsInfoContainerPresenter = analyticsInfoContainerPresenter;
 		this.tagsTabPresenter = tagsTabPresenter;
+		this.addCenturyPresenter=addCenturyPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(UpdateRatingsInSearchEvent.TYPE,this);
 		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
@@ -278,7 +282,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
 	 */
 	@Override
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl) { 
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Anchor tagsLbl) { 
 		simplePanel.clear();
 		if(!isTagsPanelOpen){
 			tagsTabPresenter.setData(searchResultDo.getGooruOid(), tagsLbl);   

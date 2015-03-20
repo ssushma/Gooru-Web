@@ -89,7 +89,7 @@ public class ImprovedGooruPopUpView extends PopupPanel{
 			   lblTitleFive,lblTitleSix,lblTitleSeven,lblnavigation;//lblTitleEight
 
 	@UiField
-	HTML questiontxt;
+	InlineLabel questiontxt;
 	// @UiField InlineLabel /*,contenttextlbl1*/;
 	// @UiField Image mIcon;
 
@@ -101,7 +101,7 @@ public class ImprovedGooruPopUpView extends PopupPanel{
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
 		// this.setSize("704px", " ");
-		this.setStyleName(HomeCBundle.INSTANCE.css().setMarketingPopUpCenter());
+		/*this.setStyleName(HomeCBundle.INSTANCE.css().setMarketingPopUpCenter());*/
 		this.setGlassEnabled(true);
 		this.show();
 		this.center();
@@ -192,7 +192,7 @@ public class ImprovedGooruPopUpView extends PopupPanel{
 		descLinkSeven.setVisible(true);
 		
 		
-		questiontxt.setHTML(i18n.GL0298());
+		questiontxt.setText(i18n.GL0298());
 		questiontxt.getElement().setId("htmlQuestionTxt");
 		questiontxt.getElement().setAttribute("alt",i18n.GL0298());
 		questiontxt.getElement().setAttribute("title",i18n.GL0298());

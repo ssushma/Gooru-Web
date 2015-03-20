@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.classpages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -65,8 +64,6 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.ScrollEvent;
-import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -74,12 +71,8 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -97,28 +90,28 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
+public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	@UiField
-	Label lblLoading, lblNoClasspageYet,lblTitle;
-	@UiField
-	HTMLPanel htmlPanelContentContainer, htmlPanelNoClasspageContainer;
-	@UiField
-	VerticalPanel htmlPanelClasspageList;
+	Label lblTitle;
+//	@UiField
+//	HTMLPanel  htmlPanelNoClasspageContainer;
+//	@UiField
+//	VerticalPanel htmlPanelClasspageList;
 	@UiField
 	Anchor ancNewClasspage;
 
 	@UiField
 	Button enterLbl;
 
-	@UiField
-	InlineLabel inLineLblCheckOut;// , inLineLblGooruGuide, inLineLblCreateOne;
+	/*@UiField
+	InlineLabel inLineLblCheckOut;*/// , inLineLblGooruGuide, inLineLblCreateOne;
 
 	@UiField
 	TextBoxWithPlaceholder classCodeTxtBox;
 
-	@UiField
-	ScrollPanel spanelCollectionList;
+/*	@UiField
+	ScrollPanel spanelCollectionList;*/
 
 	ClasspageListDo classpageListDo = null;
 
@@ -157,7 +150,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 */
 	public ClasspageListVc(boolean isClasspageRefreshed,
 			String deletedClasspageId) {
-		super(true);
+	
 		this.res = ClasspageListPopupViewCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
@@ -196,7 +189,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 		AppClientFactory.getEventBus().addHandler(
 				UpdateClasspageTitleEvent.TYPE, updateTitleHandler);
 
-		spanelCollectionList.addScrollHandler(new ScrollHandler() {
+	/*	spanelCollectionList.addScrollHandler(new ScrollHandler() {
 
 			@Override
 			public void onScroll(ScrollEvent event) {
@@ -212,7 +205,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 //					getAllClasspages(String.valueOf(offSet), false, null);
 				}
 			}
-		});
+		});*/
 		setLabels();
 //		showLoading();
 		toClear = true;
@@ -242,13 +235,13 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 */
 
 	private void updateTitle(String classpageId, String classpageTitle) {
-		Iterator<Widget> widgets = htmlPanelClasspageList.iterator();
+	/*	Iterator<Widget> widgets = htmlPanelClasspageList.iterator();
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget.getElement().getId().equalsIgnoreCase(classpageId)) {
 				widget.getElement().setInnerHTML(createTitle(classpageTitle, null));
 			}
-		}
+		}*/
 
 		// Update the ClasspageObject inside classpageList object.
 
@@ -277,9 +270,9 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void showLoading() {
-		lblLoading.setVisible(true);
-		htmlPanelNoClasspageContainer.setVisible(false);
-		spanelCollectionList.setVisible(false);
+	//	lblLoading.setVisible(true);
+	//	htmlPanelNoClasspageContainer.setVisible(false);
+	//	spanelCollectionList.setVisible(false);
 	}
 
 	/**
@@ -302,9 +295,9 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void showClasspageList() {
-		lblLoading.setVisible(false);
-		htmlPanelNoClasspageContainer.setVisible(false);
-		spanelCollectionList.setVisible(true);
+	//	lblLoading.setVisible(false);
+	//	htmlPanelNoClasspageContainer.setVisible(false);
+	//	spanelCollectionList.setVisible(true);
 	}
 
 	/**
@@ -327,10 +320,10 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void showNoClasspages() {
-		lblLoading.setVisible(false);
+	/*//	lblLoading.setVisible(false);
 		htmlPanelNoClasspageContainer.setVisible(true);
-		spanelCollectionList.setVisible(false);
-	}
+//		spanelCollectionList.setVisible(false);
+*/	}
 
 	/**
 	 * 
@@ -350,28 +343,28 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void setLabels() {
-		lblLoading.setText(i18n.GL0110()+ i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
+	/*	lblLoading.setText(i18n.GL0110()+ i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
 				+ i18n.GL_SPL_FULLSTOP());
 		lblLoading.getElement().setId("lblLoading");
 		lblLoading.getElement().setAttribute("alt",i18n.GL0110() + i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
 				+ i18n.GL_SPL_FULLSTOP());
 		lblLoading.getElement().setAttribute("title",i18n.GL0110() + i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
-				+ i18n.GL_SPL_FULLSTOP());
+				+ i18n.GL_SPL_FULLSTOP());*/
 		
 		ancNewClasspage.setText(i18n.GL0115());
 		ancNewClasspage.getElement().setId("lnkNewClassPage");
 		ancNewClasspage.getElement().setAttribute("alt",i18n.GL0115());
 		ancNewClasspage.getElement().setAttribute("title",i18n.GL0115());
 		
-		lblNoClasspageYet.setText(i18n.GL0117());
+/*		lblNoClasspageYet.setText(i18n.GL0117());
 		lblNoClasspageYet.getElement().setId("lblNoClasspageYet");
 		lblNoClasspageYet.getElement().setAttribute("alt",i18n.GL0117());
-		lblNoClasspageYet.getElement().setAttribute("title",i18n.GL0117());
+		lblNoClasspageYet.getElement().setAttribute("title",i18n.GL0117());*/
 		
-		inLineLblCheckOut.setText(i18n.GL0118());
+	/*	inLineLblCheckOut.setText(i18n.GL0118());
 		inLineLblCheckOut.getElement().setId("spnCheckOut");
 		inLineLblCheckOut.getElement().setAttribute("alt",i18n.GL0118());
-		inLineLblCheckOut.getElement().setAttribute("title",i18n.GL0118());
+		inLineLblCheckOut.getElement().setAttribute("title",i18n.GL0118());*/
 
 		enterLbl.addClickHandler(new OnEnterClassCodeClick());
 		enterLbl.setText(i18n.GL1065());
@@ -400,7 +393,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 		classCodeTxtBox.setPlaceholder(i18n.GL1762_1());
 
 		setButtonStatus("active");
-		
+	/*	
 		spanelCollectionList.setVisible(false);
 		spanelCollectionList.getElement().setId("sbCollectionList");
 		htmlPanelClasspageList.getElement().setId("vpnlClassPageList");
@@ -409,7 +402,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 		htmlPanelContentContainer.getElement().setId("pnlHtmlContentContainer");
 		htmlPanelNoClasspageContainer.getElement().setId("pnlNoClassPageContentContainer");
 		// inLineLblGooruGuide.setText(MessageProperties.GL0119);
-		// inLineLblCreateOne.setText(MessageProperties.GL0120);
+*/		// inLineLblCreateOne.setText(MessageProperties.GL0120);
 		lblTitle.getElement().setId("lblTitle");
 	}
 	/**
@@ -733,7 +726,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 */
 	private void listClasspages(ClasspageListDo result,
 			boolean isClasspageRefershed, String deletedClasspageId) {
-		lblLoading.setVisible(false);
+//		lblLoading.setVisible(false);
 		isApiCalling = false;
 		if (classpageListDo != null) {
 			resultSize = classpageListDo.getSearchResults() != null ? classpageListDo
@@ -742,11 +735,11 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 			resultSize = 0;
 		}
 		if (resultSize > 0) {
-			htmlPanelNoClasspageContainer.setVisible(false);
-			htmlPanelClasspageList.setVisible(true);
-			spanelCollectionList.setVisible(true);
+			//htmlPanelNoClasspageContainer.setVisible(false);
+			//htmlPanelClasspageList.setVisible(true);
+		//	spanelCollectionList.setVisible(true);
 			if (toClear) {
-				htmlPanelClasspageList.clear();
+			//	htmlPanelClasspageList.clear();
 				toClear = false;
 				classpageList.clear();
 			}
@@ -762,7 +755,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 		} else {
 			// Set no classpage info, if there are not classpages.
 			if (toClear) {
-				htmlPanelNoClasspageContainer.setVisible(true);
+				//htmlPanelNoClasspageContainer.setVisible(true);
 			}
 			offSet = tmpOffSet;
 			Element element = Document.get().getElementById("lblLoading");
@@ -799,13 +792,13 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 * 
 	 */
 	public void generateClasspageList() {
-		htmlPanelClasspageList.clear();
+	/*	htmlPanelClasspageList.clear();
 		for (int i = 0; i < listClasspage.size(); i++) {
 			String title = classpageList.get(listClasspage.get(i)).getTitle();
 			title = createTitle(title, classpageList.get(listClasspage.get(i)).getUser().getGooruUId());
 			htmlPanelClasspageList.add(createClasspageTitleLabel(
 					title, listClasspage.get(i), false));
-		}
+		}*/
 	}
 	/**
 	 * 
@@ -970,8 +963,8 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 																	AssignmentDo result) {
 																// Assig to
 																// classpage.
-																htmlPanelClasspageList
-																		.clear();
+																/*htmlPanelClasspageList
+																		.clear();*/
 																generateClasspageList();
 																showClasspageList();
 																OpenClasspageEdit(classpageId);
@@ -1088,7 +1081,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void setClasspageSetSelected(String classpageId) {
-		Iterator<Widget> widgets = htmlPanelClasspageList.iterator();
+		/*Iterator<Widget> widgets = htmlPanelClasspageList.iterator();
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget.getElement().getId().equalsIgnoreCase(classpageId)) {
@@ -1098,7 +1091,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 				widget.getElement().setClassName(
 						res.css().classpageTitleHeader());
 			}
-		}
+		}*/
 	}
 
 	/**
@@ -1141,7 +1134,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 				nextClasspageId = listClasspage.get(0);
 			}
 		}
-		htmlPanelClasspageList.clear();
+	//	htmlPanelClasspageList.clear();
 		generateClasspageList();
 		if (nextClasspageId != null) {
 			OpenClasspageEdit(nextClasspageId);

@@ -1,14 +1,20 @@
 package org.ednovo.gooru.client.mvp.home;
 
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -26,7 +32,9 @@ public class SampleReportView extends PopupPanel {
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	@UiField
-	HTMLPanel imageContainer;
+	HTMLPanel imageContainer,panelMain;
+	@UiField
+	FlowPanel bodyContainer;
 	@UiField
 	Label lblsummaryText, lblCollectionProgress, lblCollectionProgressDetails,
 			lblHeading;
@@ -38,14 +46,21 @@ public class SampleReportView extends PopupPanel {
 	public SampleReportView() {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
-
-		this.setStyleName("reportPopup");
 		this.setGlassEnabled(true);
+		if (!BrowserAgent.isDevice()){
+			this.setHeight("642px");
+			int clientHeight = Window.getClientHeight();
+			int marginTop = (clientHeight - 642) / 2;
+			
+			panelMain.getElement().getStyle().setMarginTop(marginTop <0 ? 0 : marginTop, Unit.PX);
+		}
 		this.show();
-		this.center();
 		Window.enableScrolling(false);
 		setUiField();
 		this.getElement().getStyle().setZIndex(99999);
+		this.center();
+
+
 	}
 
 	private void setUiField() {

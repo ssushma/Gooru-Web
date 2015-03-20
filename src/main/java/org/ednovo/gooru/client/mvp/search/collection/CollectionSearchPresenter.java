@@ -40,19 +40,17 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -73,6 +71,8 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	private	AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
+
+	AddCenturyPresenter addCenturyPresenter;
 	
 	private boolean isLeftFolderClicked=false;
 	
@@ -91,11 +91,12 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
+	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter,AddCenturyPresenter addCenturyPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter);
 		this.addResourceContainerPresenter = addResourceContainerPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.analyticsInfoContainerPresenter=analyticsInfoContainerPresenter;
+		this.addCenturyPresenter=addCenturyPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshDisclosurePanelForFoldersEvent.TYPE, this);
 	}
@@ -254,7 +255,7 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	}
 
 	@Override
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl) {
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Anchor tagsLbl) {
 		
 	}
 

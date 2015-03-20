@@ -14,6 +14,7 @@
 	overflow: hidden;
 	margin: 10px auto;
 	width: 91%;
+	position: relative;
 }
 
 .contentBlock:hover {
@@ -24,15 +25,15 @@
 }
 
 .ideasBlock {
-	color: #999;
-	display: inline-block;
-	vertical-align: top;
-	width: 178px;
-	height: 170px;
-	padding: 10px;
-	padding-right: 10px;
-	margin: 5px 0px;
-	border-right: 2px solid #f4f4f4;
+	 border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    line-height: 1.42857;
+    margin-right: 2px;
+   	display:inline-block;
+    padding: 10px 15px;
+    position: relative;
+    margin-top: -2px;
+  margin-bottom: -1px;
 }
 
 .ideasBlockLast {
@@ -101,17 +102,18 @@
 	margin-top: 23px;
 }
 
-.padding10 {
-	padding: 5px 10px;
+.padding10{
+	padding: 14px 20px;
 	overflow: auto;
-	height: 73px;
+	height:73px;
+	white-space: pre-line;
 }
 
 .textAreaStyle {
 	font-size:10px;
 	color: #515151;
-	width: 180px !important;
-	margin-top: 5px;
+	width: 95%;
+	margin-top: 10px;
 	border: 1px solid #ddd;
 	direction: ltr;
 	height: 152px;
@@ -122,6 +124,7 @@
 	overflow: visible;
 	-moz-box-shadow: inset 0px 0px 3px;
 	-webkit-box-shadow: inset 0px 0px 3px;
+	  margin-left: 14px;
 }
 
 .closedPanelHeight {
@@ -140,23 +143,55 @@
 	margin-right: 0;
 }
 .sausdContent {
-	width: 322px;
+	width: 313px;
 	background: white;
 	margin-right: 6px;
 	margin-top: 0px;
 	height: 100px;
 	border: 1px solid #ddd;
 	float: left;
+	box-sizing: content-box;
 }
 .sausdContentLast {
-	width: 325px;
+	width: 318px;
 	margin-top: 0px;
 	background: white;
 	height: 100px;
 	border: 1px solid #ddd;
+	box-sizing: content-box;
 }
 .sausdContentBlock {
 	width: 680px;
 	background: white;
 	height: 65px;
+}
+.MaintabDiv{
+color: #515151;
+border-bottom: 1px solid #ddd;
+border-top: 1px solid #eee !important;
+background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#ededed));
+background: -moz-linear-gradient(center top, #fdfdfd, #ededed) repeat scroll 0 0 transparent;
+background-color: #ededed;
+padding: 0 0;
+width:100%;
+display:inline-block;
+
+}
+.highlightContent{
+		-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #fff;
+    border-color: #ddd #ddd transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    color: #555;
+    cursor: default;
+}
+.pencilHolderDiv{
+	  position: absolute;
+  right: -30px;
+  bottom: 12px;
 }

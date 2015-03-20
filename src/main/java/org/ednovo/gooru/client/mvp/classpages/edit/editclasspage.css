@@ -243,7 +243,7 @@
 }
 
 .paginationContainer {
-	width: 100%;
+	float:right;
 	margin-top:7px;
 	text-align:right;
 }
@@ -382,8 +382,9 @@
 	width: 550px !important;
 	font-size: 12px !important;
 	padding: 1px;
-	overflow: hidden;
+	overflow: auto;
 	word-wrap: break-word;
+	white-space: pre-line;
 }
 .classPagebuttonContainer {
 	float: right;
@@ -971,7 +972,7 @@ margin-bottom: -10px;
 	width: 130px;
 	float: left;
 	margin-right: 10px;
-	margin-left: 32px;
+	margin-left: 42px;
 	margin-bottom: 15px;
 }
 .dropdowncontainerStudent {
@@ -983,7 +984,7 @@ margin-bottom: -10px;
 	margin: 0 auto;
 	margin-bottom: 20px;
 	margin-top: 24px;
-	top: 24px;
+	/* top: 24px; */
 	left: 36px;
 	position: relative;
 }

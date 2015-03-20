@@ -31,22 +31,21 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
  * 
  */
-public class LogoutPanelVc extends PopupPanel{
+public class LogoutPanelVc extends Composite{
 
 	@UiField
 	Anchor logoutAnr, anrSettings;
@@ -80,7 +79,7 @@ public class LogoutPanelVc extends PopupPanel{
 	 * Class constructor
 	 */
 	public LogoutPanelVc() {
-		super(true);
+	
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		anrSettings.setText(i18n.GL0192());
@@ -132,23 +131,30 @@ public class LogoutPanelVc extends PopupPanel{
 	}
 	*/
 	
+	@UiHandler("anrSettings")
+	public void onClickSetting(ClickEvent event){
+		hide();
+	}
 	@UiHandler("logoutAnr")
 	public void logoutPopupClicked(ClickEvent clickEvent) {
-		hide();
+		logPanel.setVisible(false);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
         logoutPopupVc = new LogoutPopupVc();
+        hide();
 	}
 	
 	@UiHandler("supportAnr")
 	public void supportLinkClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_Support();
+		hide();
 	}
 	
 	@UiHandler("classicGooruAnr")
 	public void classicGooruClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_ClassicGooru();
 		Window.Location.replace(AppClientFactory.getLoggedInUser().getSettings().getClassicEndPoint());
+		hide();
 	}
 
 	public void displayClassicGooruLink(boolean isVisible) {
@@ -160,9 +166,19 @@ public class LogoutPanelVc extends PopupPanel{
 //			classicGooruAnr.setVisible(false);
 //		}
 		classicGooruAnr.setVisible(false);
-		logPanel.getElement().getStyle().setHeight(100, Unit.PX);
+		//logPanel.getElement().getStyle().setHeight(100, Unit.PX);
 	}
 	
+	public void show(){
+		logPanel.setVisible(true);
+	}
+	public void hide(){
+		logPanel.setVisible(false);
+
+	}
+	public boolean isShowing(){
+		return logPanel.isVisible();
+	}
 	/**
 	 * Initialise user voice feedback popup
 	 * 
@@ -173,7 +189,7 @@ public class LogoutPanelVc extends PopupPanel{
 	public void feedbackPopupClick(ClickEvent clickEvent) {
 		MixpanelUtil.Click_On_FeedBack();
 		triggerUserVoiceFeedback();
-
+		hide();
 	}
 
 	protected final native void triggerUserVoice() /*-{ 

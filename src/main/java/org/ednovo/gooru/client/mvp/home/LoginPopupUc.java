@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.home;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -53,11 +52,9 @@ import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
@@ -106,7 +103,7 @@ public class LoginPopupUc extends PopupPanel{
 
 //	@UiField CheckBox lblKeepMeLogedIn;
 	
-	@UiField HTMLEventPanel cancelButton;
+	@UiField Anchor cancelButton;
 	
 	@UiField Button  loginButton,gmailButton;
 
@@ -181,7 +178,6 @@ public class LoginPopupUc extends PopupPanel{
         
 		lblPleaseWait.setVisible(false);
 		setHandlers();
-        
 		this.center();
 	}
 	
@@ -236,8 +232,8 @@ public class LoginPopupUc extends PopupPanel{
 	 */
 	private void setHandlers(){
 
-		this.setSize("515px", "547px");
-		
+	/*	this.setSize("515px", "547px");
+	*/	
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
@@ -351,8 +347,13 @@ public class LoginPopupUc extends PopupPanel{
 			
 			if (username.length() > 1 && password.length() > 1) {
 				
+				JSONObject login = new JSONObject();
+				login.put("username", new JSONString(username));
+				login.put("password", new JSONString(password));
+				
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
+
 				AppClientFactory.getInjector().getAppService().v2Signin(username,password, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
@@ -469,20 +470,21 @@ public class LoginPopupUc extends PopupPanel{
 						}
 						else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
 							handleInProgress();
-							
-							if (errorCode.equalsIgnoreCase(ERR_GL0078)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
-								// For blocked users
-								new AlertContentUc(i18n.GL1966(), i18n.GL1938());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL3114());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-							}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
-								new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+							if (errorCode != null){
+								if (errorCode.equalsIgnoreCase(ERR_GL0078)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
+									// For blocked users
+									new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL3114());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+								}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
+									new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+								}
 							}
 						}else{
 							new AlertContentUc(i18n.GL1966(), errorMessage);
@@ -500,6 +502,7 @@ public class LoginPopupUc extends PopupPanel{
 							
 							@Override
 							public void onFailure(Throwable caught) {
+
 							}
 						});
 					}
@@ -665,7 +668,7 @@ public class LoginPopupUc extends PopupPanel{
 				
 				//new TryItOutVc();
 				
-				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
+				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo newUser) {
 						UserDo user = AppClientFactory.getLoggedInUser();
@@ -673,8 +676,6 @@ public class LoginPopupUc extends PopupPanel{
 						AppClientFactory.setLoggedInUser(user);
 					}
 				});
-			} else if((flag == 2||flag == 6||flag==1) && !AppClientFactory.isAnonymous()){
-//				new ImprovedGooruPopUpView();				
 			}
 		}
 	}

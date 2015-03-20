@@ -80,4 +80,6 @@ public interface AppService extends BaseService {
 	*/
 	
 	String getAnalyticsURL(String type, String id) throws GwtException, ServerDownException;
+	
+	public UserDo getUserFilterProperties() throws GwtException, ServerDownException;
 }

@@ -183,7 +183,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		getView().resetDragImage();
 		if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
 			getView().reset();
-			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,getUserCollectionAsyncCallback(true));
+			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,true,getUserCollectionAsyncCallback(true));
 			version = AppClientFactory.getLoggedInUser().getToken();
 		}
 		getView().setNewCollectionPanel();
@@ -359,12 +359,12 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void refreshUserShelfCollections() {
 		ShelfListView.setPageNumber(1);
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,true,getUserCollectionAsyncCallback(true));
 	}
 
 	@Override
 	public void getSelfCollectionListItems(int pageSize, Integer pageNumber,boolean clearShelfPanel) {
-			getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,getUserCollectionAsyncCallback(clearShelfPanel));
+			getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,true,getUserCollectionAsyncCallback(clearShelfPanel));
 	}
 	
 	public void disableFolderCollectionPanel() {
@@ -390,7 +390,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		if(isDataCalled) {
 			getView().getChildFolderItems(null);
 		} else {
-			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,new SimpleAsyncCallback<FolderListDo>() {
+			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,true,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					searchResult.addAll(result.getSearchResult());
@@ -445,8 +445,8 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	}
 
 	@Override
-	public void refreshFolderItem(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params) {
-		getView().refreshFolderItemData(folderDo, refreshFolderType, params);
+	public void refreshFolderItem(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params,CollectionDo collDo) {
+		getView().refreshFolderItemData(folderDo, refreshFolderType, params,collDo);
 	}
 
 	@Override

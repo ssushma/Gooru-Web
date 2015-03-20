@@ -25,7 +25,9 @@
 package org.ednovo.gooru.client.mvp.profilepage.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
@@ -41,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -58,15 +61,19 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView {
 
-	@UiField HTMLPanel leftNav, contentScroll, emptyContainer, loadingIconPanel;
+	@UiField HTMLPanel leftNav, contentScroll, emptyContainer, loadingIconPanel,folderListPanel;
 	
 	@UiField ProfilePageLibraryStyleBundle style;
 	
-	@UiField Label noCollectionsMsg, collectionsRedirectionMsg;
+	@UiField Label noCollectionsMsg, collectionsRedirectionMsg,folderTopicTitleLbl;
 	
-	@UiField Button myCollectionsBtn;
+	@UiField Button myCollectionsBtn,listAllBtn;
 	
 	private static final String FOLDERID = "folderId";
+
+	private static final String ASSESSMENT = "assessment";
+
+	private static final String COLLECTION = "scollection";
 	
 	private String unitListId = "";
 	
@@ -75,6 +82,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	private int totalLeftPanelCount = 0;
 	
 	private boolean isApiProgress  = true;
+	
+	HandlerRegistration handlerRegistration = null;
 	
 	private static ProfilePageLibraryViewUiBinder uiBinder = GWT.create(ProfilePageLibraryViewUiBinder.class);
 
@@ -108,15 +117,20 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		collectionsRedirectionMsg.getElement().setAttribute("title",i18n.GL1788());
 		
 		emptyContainer.getElement().setId("pnlEmptyContainer");
+		listAllBtn.getElement().setId("btnViewAll");
 		noCollectionsMsg.getElement().setId("lblNoCollectionsMsg");
 		leftNav.getElement().setId("pnlLeftNav");
 		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
+		listAllBtn.getElement().setAttribute("style", "float:right;margin: -22px -6px -6px 0px;");
+		folderListPanel.setVisible(false);
+		listAllBtn.setVisible(false);
 	}
 	
 	public void setData() {
 		leftNav.clear();
 		loadingPanel(true);
+		folderListPanel.setVisible(false);
 		getPresenter().getPartnerWorkspaceFolders(0);
 	}
 	
@@ -136,18 +150,30 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			leftNav.add(leftMenuItemView);
 			leftMenuItemView.setWidgetCount(leftNav.getWidgetCount()+1);
 			leftMenuItemView.setType(folderList.get(i).getType());
-			if(folderList.get(i).getType().equals("scollection")) {
+			if(folderList.get(i).getCollectionType().contains(ASSESSMENT)) {
+				leftMenuItemView.addStyleName(style.assessment());
+			}else if(folderList.get(i).getType().equals(COLLECTION)){
 				leftMenuItemView.addStyleName(style.collection());
 			}
 			if(firstWidgetCount==0&&folderId==null) {
 				firstWidgetCount++;
 				loadingPanel(true);
+				folderListPanel.setVisible(false);
 				leftMenuItemView.addStyleName(style.open());
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
-				if(folderList.get(i).getType().equals("scollection")) {
+				if(folderList.get(i).getType().equals(COLLECTION)) {
 					setTopicListData(folderList.get(i),  unitListId);
+					listAllBtn.setVisible(false);
+					folderListPanel.setVisible(false);
 				} else {
+					listAllBtn.setVisible(true);
+					folderListPanel.setVisible(true);
+					folderTopicTitleLbl.setText(folderList.get(i).getTitle());
+					if(handlerRegistration!=null){
+						handlerRegistration.removeHandler();
+					}
+					handlerRegistration=listAllBtn.addClickHandler(new ClickOnListAll(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
@@ -158,6 +184,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 						Window.scrollTo(0, 0);
 					}
 					loadingPanel(true);
+					folderListPanel.setVisible(false);
 					final Iterator<Widget> widgetsPanel = leftNav.iterator();
 					while (widgetsPanel.hasNext()) {
 						final Widget widgetTxt = widgetsPanel.next();
@@ -167,9 +194,19 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					leftMenuItemView.addStyleName(style.open());
 					leftMenuItemView.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
-					if(leftMenuItemView.getType().equals("scollection")) {
+					if(leftMenuItemView.getType().equals(COLLECTION)) {
 						getPresenter().getProfileLibraryCollection(unitListId, false);
+						listAllBtn.setVisible(false);
+						folderListPanel.setVisible(false);
 					} else {
+						folderListPanel.setVisible(true);
+						listAllBtn.setVisible(true);
+						folderTopicTitleLbl.setText(leftMenuItemView.getTitle());
+						if(handlerRegistration!=null){
+							handlerRegistration.removeHandler();
+						}
+						handlerRegistration=listAllBtn.addClickHandler(new ClickOnListAll(unitListId));
+						
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
@@ -182,7 +219,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
 		contentScroll.clear();
 		try {
-			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), "scollection",null));
+			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), COLLECTION,null));
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
@@ -197,10 +234,10 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			if(folderListDo.size()>0) {
 				for(int i = 0; i <folderListDo.size(); i++) {
 					count++;
-					if(folderListDo.get(i).getType().equals("scollection")) {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection",null));
+					if(folderListDo.get(i).getType().equals(COLLECTION)) {
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), COLLECTION,null));
 					} else {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),null));
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), AppClientFactory.getCurrentPlaceToken(),null,count,""));
 					}
 				}
 			} else {
@@ -218,6 +255,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void loadingPanel(boolean isVisible) {
 		loadingIconPanel.setVisible(isVisible);
 		contentScroll.setVisible(!isVisible);
+		//folderListPanel.setVisible(!isVisible);
 	}
 
 	@Override
@@ -276,5 +314,24 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				getPresenter().getPartnerWorkspaceFoldersOnScroll(leftNav.getWidgetCount());
 			}
 		}
+	}
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
+	 * @author janamitra
+	 *
+	 */
+	public class ClickOnListAll implements ClickHandler{
+		String folderId="";
+		public ClickOnListAll(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			params.put("userId", AppClientFactory.getPlaceManager().getRequestParameter("id"));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
 	}
 }

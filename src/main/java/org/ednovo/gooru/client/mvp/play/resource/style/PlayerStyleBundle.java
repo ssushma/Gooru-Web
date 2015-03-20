@@ -76,6 +76,8 @@ public interface PlayerStyleBundle extends ClientBundle {
 		@ClassName("studyplayer-container")
 		String studyplayerContainer();
 		
+		String scrollStudyContainer();
+		
 		String rightPanel();
 		
 		String leftPanel();
@@ -87,5 +89,68 @@ public interface PlayerStyleBundle extends ClientBundle {
 		String collectionPlayerContainer();
 		
 		String blocksmall();
+		
+		String loginStatus();
+		
+		@ClassName("player-resource-title")
+		String playerResourceTitle();
+		
+		String resourceCountStyle();
+		
+		String fixedContainer();
+		
+		String bodyContent();
+		
+		String greybackground();
+		
+		String collectionImageContainer();
+		
+		String collectionImage();
+		
+		String assessmentImage();
+		
+		String buttonsContainer();
+		
+		String collectionbuttons();
+		
+		String logStatus();
+		
+		String closeButton();
+		
+		String bodysection();
+		
+		String narrationPopup();
+		
+		String narrationPopupContainer();
+		
+		@ClassName("resource-info-metadata-wrapper")
+		public String infoMetadataWrapper();
+		@ClassName("resource-info-metadata-innerwrapper")
+		public String infoMetadataInnerWrapper();
+		@ClassName("resource-info-collections-wrapper")
+		public String infoCollectionsWrapper();
+		
+		public String playerResourcesRightSection();
+		
+		@ClassName("collection-thumbnail")
+		public String infoCollectionThumbnail();
+		
+		public String timespend();
+		
+		public String collectionEndImageContainer();
+		
+		public String playRight();
+		
+		public String playBlockTop();
+	
+		public String endButtonsContainer();
+		
+		public String whatsnext();
+		public String smallTxt();
+		public String bigTxt(); 
+		public String smallerTxt();
+		public String endPageIframe();
+		public String metatDataContainer();
+		
 	}
 }

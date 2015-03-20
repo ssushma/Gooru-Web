@@ -41,7 +41,6 @@ import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 
 import com.google.gwt.inject.client.Ginjector;
-
 /**
  * 
  * @fileName : ServiceInjector.java

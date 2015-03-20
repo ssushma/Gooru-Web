@@ -115,7 +115,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			type=null;
 			accessType = ACESSTEXT;
 		}
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo!=null && folderListDo.getCount()!=null){
@@ -134,7 +134,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
@@ -219,7 +219,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),result.getGooruOid(),false,new SimpleAsyncCallback<CollectionDo>() { 
 					@Override
 					public void onSuccess(CollectionDo result1) {
-						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params));
+						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params,result1));
 						fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
 						getView().getButtonVisiblity();
 						successparams.put("o1", result.getGooruOid());
@@ -360,6 +360,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		folderDo.setTitle(collectionDo.getTitle());
 		folderDo.setType(collectionDo.getCollectionType());
 		folderDo.setSharing(collectionDo.getSharing());
+		folderDo.setCollectionType(collectionDo.getCollectionType());
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
 		folderDo.setThumbnails(thumbnailDo);

@@ -256,6 +256,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	private static final int TOOLTIP_DELAY_TIME = 1000;
 	
+	private static final String DEFULT_ASSESSMENT_IMG = "images/default-assessment-image -160x120.png";
+	
+	private static final String DEFULT_COLLECTION_IMG = "images/default-collection-image-160x120.png";
+	
+	private static final String ASSESSMENT = "assessment";
+	
 	private static final String O1_LEVEL = "o1";
 	
 	private static final String O2_LEVEL = "o2";
@@ -311,7 +317,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		 */
 			@Override
 			public void checkCharacterLimit(String text) {
-				if (text.length() >= 500) {
+				if (text.length() >= 1000) {
 					descriptionAlertMessageLbl
 							.addStyleName("titleAlertMessageActive");
 					descriptionAlertMessageLbl
@@ -443,7 +449,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionDescriptionTitle.getElement().setAttribute("alt",i18n.GL0618());
 		collectionDescriptionTitle.getElement().setAttribute("title",i18n.GL0618());
 		
-		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		String value = StringUtil.generateMessage(i18n.GL2103(), "1000");
 		
 		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
 		lblCharLimit.setText(value);
@@ -540,7 +546,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editCollectionTitle.getElement().setId("epnlEditCollectionTitle");
 		collectionEditImageLbl.getElement().setId("lblCollectionEditImageLbl");
 		panelActionItems.getElement().setId("pnlPanelActionItems");
-		panelActionItems.getElement().getStyle().setMarginTop(8, Unit.PX);
+//		panelActionItems.getElement().getStyle().setMarginTop(8, Unit.PX);
 		collectionDescriptionTitleContainer.getElement().setId("epnlCollectionDescriptionTitleContainer");
 		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
 		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
@@ -552,6 +558,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		rbPublicPanel.getElement().setId("pnlRbPublicPanel");
 		rbPublic.getElement().setId("btnRbPublic");
 		publishedPanel.getElement().setId("pnlPublishedPanel");
+		publishedPanel.setVisible(false);
 		collectionMetaDataSimPanel.getElement().setId("spnlCollectionMetaDataSimPanel");
 		panelFoooter.getElement().setId("footerOrganizePanelFoooter");
 		
@@ -817,20 +824,16 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		setTab(getPersistantTabObjectUsingTabFlag());
 		collectionTitleUc.setText(collection.getTitle());
 		collectionDescriptionUc.setText(collection.getGoals());
-		if(collection.getThumbnails()!= null)
+		String collectionType=StringUtil.isEmpty(collection.getCollectionType())?null:collection.getCollectionType();
+		if(collection.getThumbnails()!= null && collection.getThumbnails().getUrl() != null)
 		{
-			if(collection.getThumbnails().getUrl() != null)
-			{
-				collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
-			}
-			else
-			{
-				collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
-			}
+			collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl(),collectionType);
 		}
-		else
+		else if(collection.getCollectionType()!=null && collection.getCollectionType().equals(ASSESSMENT))
 		{
-			collectionImageShelfUc.setUrl("images/default-collection-image-160x120.png");
+			collectionImageShelfUc.setUrl(DEFULT_ASSESSMENT_IMG,collectionType);
+		}else{
+			collectionImageShelfUc.setUrl(DEFULT_COLLECTION_IMG,collectionType);
 		}
 		collectionImageShelfUc.getCollectionImg().setAltText(collection.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());
@@ -860,12 +863,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 				@Override
 				public void onSuccess(V2UserDo result) {
-					if(result.getUser().getAccountTypeId()==2){
+					if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
 						rbPublicPanel.setVisible(false);
 						publishedPanel.setVisible(false);
 					}else{
 						rbPublicPanel.setVisible(true);
 						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+							if(collectionDo!=null){
 							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
 								rbPublic.setVisible(false);
 								lblPublishPending.setVisible(true);
@@ -880,6 +884,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 							lblPublishPending.setVisible(false);
 							publishedPanel.setVisible(true);
 						}
+					}else{
+						rbPublic.setVisible(false);
+						lblPublishPending.setVisible(false);
+						publishedPanel.setVisible(true);
+					}
 					}
 				}
 			});
@@ -1162,26 +1171,28 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-/*			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
-			}else{*/
+			}else{
 				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
-			/*}*/
+			}
 		}else{
 			//imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-	/*		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
 				lblFriendly.setText(i18n.GL3013());
-			}else{*/
+			}else{
 				lblFriendly.setText(i18n.GL0453());
-			/*}*/
+			}
 		}
 	}
 	
 	public void modifyStaticText(String collectionType){
-		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL2001().toLowerCase():i18n.GL2001();
+		collectionType=(collectionType!=null&&collectionType.equals("assessment"))?i18n.GL3007().toLowerCase():i18n.GL2001();
 		collectionDescriptionUc.setPlaceholder(StringUtil.generateMessage(WHAT_IS_THIS_COLLECTION_ABOUT, collectionType));
 	}
 
@@ -1350,19 +1361,21 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
-/*		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+
+		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment")){
+			delete.setNotes(StringUtil.generateMessage(i18n.GL3038(), collectionDo.getTitle()));
+			delete.setDescText(i18n.GL3039());
+		}else{
 			delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
 			delete.setDescText(i18n.GL1238());
-		}else{*/
-			delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
-			delete.setDescText(i18n.GL1238());
-		/*}*/
+		}
 		delete.setDeleteValidate("delete");
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
+		delete.center();
+
 	}
 	
 	public void showCollectionIsByBoth(int collabCount){
@@ -1399,9 +1412,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
-	
+		delete.center();
+
 	}
 	
 	public void showCollectionIsUserByCollab(){
@@ -1431,9 +1444,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		delete.center();
 		delete.show();
-	
+		delete.center();
 	}
 	
 	public void showCollectionIsUsedByOwner(){
@@ -1488,10 +1500,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setPleaseWaitText(i18n.GL0339());
-		
-		delete.center();
 		delete.show();
-	
+		delete.center();
 	}
 	
 	
@@ -1552,12 +1562,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		folderPopupUc.setGlassEnabled(true);
-		folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);
+		/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);*/
 		Window.enableScrolling(false);
 		folderPopupUc.setCollectionType(collectionDo.getCollectionType());
 		/*folderPopupUc.center();*/
 		folderPopupUc.show();
+		folderListPanel.clear();
 	}
 
 	/**
@@ -1576,7 +1587,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@Override
 	public void onPostCollectionImageUpload(String url) {
-		collectionImageShelfUc.setUrl(url);
+		collectionImageShelfUc.setUrl(url, collectionDo.getCollectionType());
 		collectionImageShelfUc.getCollectionImg().setAltText(collectionDo.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collectionDo.getTitle());
 		categoryImage.setUrl(url);
@@ -1973,7 +1984,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void CollMovedSucessFully(String sourceId,String targetId,String folderName,HashMap<String, String> urlParams) {
 		folderPopupUc.hide();
 		final FolderDo folderDo = getFolderDo(collectionDo); 
-		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName) { 
+		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName,collectionDo) { 
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
 //				Window.enableScrolling(true);
@@ -2007,6 +2018,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		folderDo.setTitle(collectionDo.getTitle());
 		folderDo.setType(collectionDo.getCollectionType());
 		folderDo.setSharing(collectionDo.getSharing());
+		folderDo.setCollectionType(collectionDo.getCollectionType());
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
 		folderDo.setThumbnails(thumbnailDo);
@@ -2065,7 +2077,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	@Override
 	public void setPusblishStatus(String publishStatus, CollectionDo colleDo) {
-		
 		if(publishStatus!=null){
 			collectionDo.setPublishStatus(colleDo.getPublishStatus());
 			if(publishStatus.equalsIgnoreCase("pending")){

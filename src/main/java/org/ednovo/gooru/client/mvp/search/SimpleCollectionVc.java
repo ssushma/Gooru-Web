@@ -48,12 +48,14 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.query.client.css.ClearProperty.Clear;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -92,7 +94,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 	FlowPanel metaDataFloPanel,internalPanel1, standardsDataPanel,collectionTitlePanel,collectionGradePanel;
 	
 	@UiField
-	HTMLPanel containerPanel;
+	HTMLPanel containerPanel,mainContainer;
 	
 	
 	//@UiField SearchMoreInfoVcCBundle res;
@@ -119,10 +121,12 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 	public SimpleCollectionVc(CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(collectionSearchResultDo);
+		
 		SearchMoreInfoVcCBundle.INSTANCE.css().ensureInjected();
+		mainContainer.getElement().getStyle().setPaddingBottom(10, Unit.PX);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			internalPanel1.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().resourceCollectionThumbnailPanel());
-			collectionTitlePanel.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().resourceCollectionTitlePanel());
+		//	collectionTitlePanel.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().resourceCollectionTitlePanel());
 			collectionTitleLbl.getElement().getStyle().setColor("#1076BB");
 			/*internalPanel1.getElement().getStyle().setPaddingTop(10, Unit.PX); 
 			internalPanel1.getElement().getStyle().setPaddingBottom(10, Unit.PX);
@@ -137,6 +141,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		containerPanel.getElement().setId("pnlContainerPanel");
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
 		standardsDataPanel.getElement().setId("fpnlStandardsDataPanel");
+		standardsDataPanel.getElement().getStyle().setClear(com.google.gwt.dom.client.Style.Clear.BOTH);
 		resourceCountLbl.getElement().setId("lblResourceCountLbl");
 		questionCountLbl.getElement().setId("lblQuestionCountLbl");
 		collectionGradePanel.getElement().setId("fpnlCollectionGradePanel");

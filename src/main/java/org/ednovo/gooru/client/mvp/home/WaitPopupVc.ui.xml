@@ -3,7 +3,7 @@
 <ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
 	<g:HTMLPanel>
-		<g:FlowPanel styleName="{res.css.waitPopupContainer}">
+		<g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.confirmMessageContainer}">
 				<g:Label styleName="{res.css.confirmMessageDelete}" text="" ui:field="messageTextLabel"/>
 			</g:FlowPanel>

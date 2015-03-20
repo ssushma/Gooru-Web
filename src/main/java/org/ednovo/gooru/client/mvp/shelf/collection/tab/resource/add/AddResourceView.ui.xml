@@ -1,12 +1,13 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:with
-		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
 		field="res"></ui:with>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:FlowPanel>
-		<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupOuterdiv}">
+		<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupContainer}">
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionPopup}">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
@@ -37,9 +38,6 @@
 							ui:field="searchTabButton">
 							<g:Anchor ui:field="fromwsearch" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
-						
-						
-						
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="questionTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="multipleChoiceRadioButton"
@@ -123,6 +121,8 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
+			<g:HTMLPanel styleName="clearfix"/>
+			
 		</g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder>

@@ -30,6 +30,7 @@ import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -54,6 +55,7 @@ public class ViewResponsesPopup extends PopupPanel {
 	 * @param questionCount
 	 * @param questionText
 	 * @param questionAnswers
+	 * @param questionType
 	 */
 	public ViewResponsesPopup(String questionCount,String questionText,String questionAnswers,String questionType) {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -80,11 +82,13 @@ public class ViewResponsesPopup extends PopupPanel {
 	 * @param questionCount
 	 * @param questionText
 	 * @param questionAnswers
+	 * @param questionType
 	 */
-	void setCollectionProgressData(String questionCount,String questionText,String questionAnswers,String questionType){
+	void setCollectionProgressData(String questionCount,String questionText,String questionAnswers, String questionType){
 		viewResponsepnl.clear();
 		totalResponselbl.setVisible(false);
-		ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(questionCount, questionText, questionAnswers,questionType);
+		ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(questionCount, questionText, questionAnswers, questionType);
+		viewResponsepnl.getElement().getStyle().clearHeight();
 		viewResponsepnl.add(responseUserWidget);
 	}
 	/**
@@ -101,6 +105,8 @@ public class ViewResponsesPopup extends PopupPanel {
 		viewResponsepnl.clear();
 		totalResponselbl.setVisible(true);
 		totalResponselbl.setText(result.size()+" Responses");
+		
+		viewResponsepnl.getElement().getStyle().setHeight(250, Unit.PX);
 		for (OetextDataDO oetextDataDO : result) {
 			ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session,classpageItemDo);
 			viewResponsepnl.add(responseUserWidget);

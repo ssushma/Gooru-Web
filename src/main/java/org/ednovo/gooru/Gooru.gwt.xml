@@ -78,6 +78,10 @@
 			<when-property-is name="formfactor" value="mobile" />
 		</any>
 	</replace-with>
+	<!-- <generate-with 
+   			class="org.ednovo.gooru.client.GooruServiceInterfaceProxyGenerator">
+    			<when-type-assignable class="com.google.gwt.user.client.rpc.RemoteService"/>
+		</generate-with> -->
 
 	<define-configuration-property name='gin.ginjector'
 		is-multi-valued='false' />

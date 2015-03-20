@@ -2,20 +2,28 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="flagPopUpstyle" src="player-flag-popup.css"/>
-	<g:HTMLPanel>
-		<div class="{flagPopUpstyle.thankyoupopupwrapper}">
-	<div class="{flagPopUpstyle.thankyoupopupinnerwrapper}">
-    	<div class="{flagPopUpstyle.playerflagpopupheader}">
-        	<g:Label styleName="{flagPopUpstyle.playerflagpopupheadertitle}" ui:field="flagHeaderText"></g:Label>
-            <panel:HTMLEventPanel ui:field="closeButton" styleName="{flagPopUpstyle.playerflagpopupheaderCloseBtn}">
-        	    <g:Image ui:field="popUpCloseButton"/>
-        	</panel:HTMLEventPanel> 
-        </div>
-        <div class="{flagPopUpstyle.playerflagcontentcontainerThankYou}">
-        	<g:Label styleName="{flagPopUpstyle.playerflagcontentthankyou}" ui:field="thanksSubmitText"></g:Label>
-             <g:Button ui:field="okButton" styleName="{flagPopUpstyle.playerflagbuttonOk}"/> 
-            </div>
-</div>
-</div>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.PopupMainVVSmall}">
+		<div class="{res.css.popupInnerGrey}">
+		   	<div class="{res.css.popupgreyHeader}">
+		   	    <g:HTMLPanel styleName="row">
+		   			<g:Label styleName="col-md-8 col-xs-8" ui:field="flagHeaderText"></g:Label>
+		   			
+	           		<panel:HTMLEventPanel ui:field="closeButton" styleName="col-md-4 col-xs-4 {res.css.closeContainer}">
+	        	    	<g:Anchor ui:field="popUpCloseButton" styleName="{res.css.closeButton}"/>
+	        		</panel:HTMLEventPanel> 
+		   	    </g:HTMLPanel>
+		   	    <g:HTMLPanel styleName="clearfix"/>
+	       	</div>
+	
+	        <div class="{flagPopUpstyle.playerflagcontentcontainerThankYou}">
+	        	<g:Label styleName="{flagPopUpstyle.playerflagcontentthankyou}" ui:field="thanksSubmitText"></g:Label>
+	             <g:HTMLPanel styleName="{res.css.formViewButtonContainer}">
+	             	<g:Button ui:field="okButton" styleName="primary"/>    
+	             </g:HTMLPanel>
+	              
+	        </div>
+		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

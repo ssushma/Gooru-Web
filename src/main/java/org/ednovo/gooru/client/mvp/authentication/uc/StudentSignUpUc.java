@@ -48,6 +48,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.WhiteSpace;
+import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -262,7 +264,8 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		
 		txtConfirmPassword.setPlaceholder(i18n.GL0427());
 		txtConfirmPassword.getElement().setId("pswConfirmPassword");
-		
+		passwordValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
+		passwordValidUc.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		lblQuestionMark.setText(i18n.GL_SPL_QUESTION());
 		lblQuestionMark.getElement().setId("lblQuestionMark");
 		lblQuestionMark.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
@@ -399,7 +402,6 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		};
 		
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);
 	
@@ -423,7 +425,6 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		};
 		
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 	
@@ -447,7 +448,6 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		};
 		
 		copyRightPolicy.show();
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}

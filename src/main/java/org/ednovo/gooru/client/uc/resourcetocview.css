@@ -7,6 +7,7 @@
 	/* margin-bottom: 10px; */
 	list-style-type: none;
 	cursor: pointer;
+	box-sizing: content-box;
 }
 .resource-container-tooltip{
 	list-style-type: none;
@@ -52,6 +53,7 @@
 	list-style-type: none;
 	cursor: pointer;
 	position: relative;
+	box-sizing: content-box;
 }
 .collection-home-thumbnail{
 	/* float: left; */
@@ -68,7 +70,7 @@
 .collection-home-type{
 	width: 5px;
 	height: 60px;
-	background: #1076BB;
+	/* background: #1076BB; */
 	position: absolute;
 	z-index:1;
 }
@@ -172,7 +174,7 @@ z-index: 100;
 .ratingsDiv{
 	display: inline-block;
 	border-left: 1px solid #ddd;
-	margin-left: 36px;
+	margin-left: 10px;
 	padding-left: 10px;
 	width: 245px;
 }

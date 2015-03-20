@@ -173,11 +173,10 @@ margin-top: -43px;
 }
 
 .horizontalTooltipContainer {
-	width: 230px;
 	position: absolute;
-	left: -195px;
+	left: -182px;
 	z-index: 9999;
-	top: -3px;
+	
 	/* display:none; */
 }
 
@@ -349,7 +348,6 @@ margin-top: -43px;
 	text-align:center;
 	background: rgba(100,100,100,.1);
 	padding:10px;
-	width:478px;
 	/* position:absolute; */
 	bottom:0px;
 	border-top:1px solid #ddd;
@@ -440,7 +438,7 @@ margin-top: -43px;
 .congratsHeader {
 	text-align: center;
 	font-size: 20px;
-	margin: 0px 0px 20px 0px;
+	margin: 10px 0px 20px 0px;
 	color: #4e9746;
 }
 
@@ -787,6 +785,7 @@ input.halfSize {
 .popupBackground{
 	background: none !important;
 	z-index: 99999 !important;
+	left:0px !important;
 }
 
 .whyGoogle{
@@ -804,11 +803,11 @@ input.halfSize {
 
 #btnSignUp{
 	margin-top: 15px;
-	margin-bottom: 15px;	
+	/* margin-bottom: 15px; */	
 }
 
 #tbBirthday{
-	width: 130px;
+	width: 83%;
 }
 
 .userCreateContainer{
@@ -935,7 +934,7 @@ input.halfSize {
 	background:url("images/signup/right-mark.png");
 	float: right;
 	position: relative;
-	top: -25px;
+	top: -20px;
 	right: 20px;
 }
 .orBoder{
@@ -1000,8 +999,7 @@ input.halfSize {
 
 
 #btnStartUsingGooru{
-	width: 200px;
-	height: 40px;	
+	padding:12px 36px 12px 36px;
 }
 .leaveRegistrationBottomContainer {
 	background-color: rgba(240,240,240,0.3);
@@ -1231,4 +1229,10 @@ input.halfSize {
 	z-index: 99999;
 	background-color: black;
 	opacity: 0.3;
+}
+.iconPosition{
+	margin-left:-30px;
+}
+.paddingClear{
+	padding:0;
 }

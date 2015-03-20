@@ -18,10 +18,9 @@
 }
 
 .collectionPlayerAddResourcesIconContainer {
-	width: 320px;
 	margin: 0 auto;
 	height: 30px;
-	
+	text-align:center;
 }
 
 .collectionPlayerAddResourcesIconHolder {
@@ -49,7 +48,7 @@
 	font-size: 16px;
 	color: #FFFFFF;
 	margin-left: 10px;
-	float: left;
+	/* float: left; */
 }
 
 .collectionPlayerAddResourcesCollectionInstead {
@@ -66,7 +65,7 @@
 }
 
 .collectionPlayerExistingCollectionContainer {
-	width: 960px;
+/* 	width: 960px; */
 /* 	height: 85px;
 	background-color: #FFF;
  */	margin: 0 auto;
@@ -81,11 +80,14 @@
 }
 
 .collectionPlayerExistingCollectionContent {
-	width: 960px;
-	margin-left: 266px;
+	/* width: 960px;
+	margin-left: 266px; */
 	min-height: 36px;
 	height: auto;
 	padding: 3px 0px 0 0px;
+	text-align:center;
+	width:315px;
+	margin:0 auto;
 }
 
 .collectionPlayerExistingCollectionText {
@@ -146,18 +148,19 @@
 	font-size: 12px;
 	padding: 8px 9px;
 	display: inline-block;
-	margin-left: 343px;
+	margin-left: 255px;
 	margin-top: -1px;
 }
 
 .collectionPlayerNewColletionText {
-	width: 150px;
+	/* width: 150px; */
 	height: 15px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #1076BB;
-	margin-left: 270px;
+	margin-right: 148px;
 	cursor: pointer;
+	text-align:center;
 }
 
 /* info css */
@@ -953,7 +956,7 @@ body {
 	border: 1px solid #DDD;
 	cursor: pointer;
 	display: block;
-	width: 280px;	
+	width: 240px;	
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
 }
@@ -972,7 +975,7 @@ body {
 	z-index:9999;
 	max-height:86px;
 	background-color: #f9f9f9;
-	min-width: 312px;
+	width: 242px;
 }
 
 .dropdownListItemContainer{
@@ -1022,7 +1025,7 @@ body {
 	z-index:99;
 }
 .errorLabelText{
-	margin-left: 609px;
+	margin-left: 782px;
 	float: left;
 	margin-top: -12px;
 	font-style: italic;
@@ -1033,7 +1036,7 @@ body {
 
 .successMessageContainer{
 	margin: 0 auto;
-	width: 960px;
+/* 	width: 960px; */
 }
 .successMessageLabelText{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1091,7 +1094,7 @@ body {
 	color: #4C98CC;
 }
 .addCollectionContainer{
-	width:960px;
+/* 	width:960px; */
 	margin:0 auto;
 }
 
@@ -1112,13 +1115,14 @@ body {
 	background:url("images/dropdownMenuArrow.png") no-repeat;
 	background-color: white;
 	background-position: right center;
+	text-align:left;
 	color: #999;
 	padding: 5px 25px 5px 5px;
 	border-bottom: 1px solid #DDD;
 	border: 1px solid #DDD;
 	cursor: pointer;
 	display: block;
-	width: 280px;
+	width: 240px;
 	height: auto;	
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;

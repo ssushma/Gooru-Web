@@ -264,7 +264,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				curosalPanel.add(previewResourceView);
 			}
 			if(resourcesSize>4){
-				new ResourceCurosal(nextButton, previousButton, curosalPanel, resourcesSize, 145);
+				new ResourceCurosal(nextButton, previousButton, curosalPanel, resourcesSize, 145,null);
 			}
 			String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 			String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
@@ -342,6 +342,10 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
+					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
+					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -379,11 +383,10 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+		//	successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
-			
+
 			Map<String,String> params = new HashMap<String,String>();
 			if(AppClientFactory.getPlaceManager().getRequestParameter("id")!=null)
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -391,6 +394,10 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 			if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 				params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+			if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
+				params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+			if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
+				params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
 			params.put("customize", "yes");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -459,8 +466,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+			//successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}
@@ -565,7 +571,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			viewCollectionSummaryBtn.setVisible(true);
 		}
 		endText.getElement().setInnerHTML(i18n.GL0596());
-		viewCollectionSummaryBtn.setText(i18n.GL3122());
+		viewCollectionSummaryBtn.setText(i18n.GL3190());
 		collectionImageContainer.setVisible(false);
 		previewButton.setVisible(false);
 		assignCollectionBtn.removeFromParent();

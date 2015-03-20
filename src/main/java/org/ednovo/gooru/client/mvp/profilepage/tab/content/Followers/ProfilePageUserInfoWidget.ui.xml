@@ -4,8 +4,8 @@
 	<ui:style field="ProfilePageStyle" src="profile-page-Following-style.css"></ui:style>
 	
 	      <g:HTMLPanel ui:field="authorPanel" styleName="{ProfilePageStyle.infoSectionAuthor}">
-                      <g:HTMLPanel styleName="{ProfilePageStyle.userImageContainer}">
-                    	<g:Image styleName="{ProfilePageStyle.userImage}" ui:field="profileThumbnailImage"></g:Image>
+                      <g:HTMLPanel styleName="{ProfilePageStyle.followerUserImageContainer}">
+                    	<g:Image styleName="{ProfilePageStyle.followerUserImage}" ui:field="profileThumbnailImage"></g:Image>
                     	<g:HTMLPanel styleName="{ProfilePageStyle.teacherTipOuterContainer}">
                     	</g:HTMLPanel>                  	
                     </g:HTMLPanel>

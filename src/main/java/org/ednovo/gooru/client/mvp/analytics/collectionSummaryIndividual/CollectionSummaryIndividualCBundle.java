@@ -9,6 +9,7 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	static final CollectionSummaryIndividualCBundle INSTANCE = GWT.create(CollectionSummaryIndividualCBundle.class);
 	public interface CollectionSummaryIndividualCss extends CssResource{
 		    String alignCenterAndBackground();
+		    String alignLeft();
 		    String setMarginAuto();
 	        String reaction_explain1();
 	        String reaction_understand1();
@@ -34,10 +35,28 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        String setGlassStyleName();
 	        String setEmailGlassStyleName();
 	        String setEmailPopupCenter();
-	        String alignLeft();
-	        
+	        @ClassName("no-gutter")
+	        String no_gutter();
+	        String individualScore();
+	        String collectionOverViewpnl();
+	        String collectionOverviewText();
+	        String collectionTimeSpentDetails();
+	        String collectionBreakDown_infobox();
+	        String collectionBreakDown_infobox_titles();
+	        String filterDropDown();
+	        String printWidget();
+	        String showEmptyMessage();
+	        String correct_incorrect_text();
 	}
 	@NotStrict
 	@Source("collectionSummaryIndividual.css")
 	CollectionSummaryIndividualCss css();
+	
+	@NotStrict
+	@Source("res_collectionSummaryIndividual.css")
+	CollectionSummaryIndividualCss getResponsiveStyle();
+	
+	@NotStrict
+	@Source("res_collectionSummaryIndividual1.css")
+	CollectionSummaryIndividualCss getResponsive1Style();
 }

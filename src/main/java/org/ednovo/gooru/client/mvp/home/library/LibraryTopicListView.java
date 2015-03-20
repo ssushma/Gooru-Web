@@ -125,7 +125,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	@UiField Label topicTitleLbl, noCollectionLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
-	@UiField Button assignCollectionBtn, customizeCollectionBtn;
+	@UiField Button assignCollectionBtn, customizeCollectionBtn,viewAllBtn;
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	
 	@UiField LibraryStyleBundle libraryStyle;
@@ -237,17 +237,23 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		} catch(Exception e) {
 			setDefaultCollectionLbl();
 		}
+
 		addCollectionQuizTitleData(LESSON);
-		
 		
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			searchLink.getElement().getStyle().setDisplay(Display.NONE);
+			viewAllBtn.setVisible(true);
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+				viewAllBtn.setVisible(false);
+			}
 		}
 		else
 		{
 			searchLink.getElement().getStyle().setDisplay(Display.BLOCK);
+			viewAllBtn.setVisible(false);
 		}
+		//viewAllBtn.addClickHandler(new ViewAllBtnClickEvent());
 		
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		loadingImage.setVisible(false);
@@ -265,8 +271,10 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		AppClientFactory.getEventBus().addHandler(SetConceptQuizDataEvent.TYPE,setConceptQuizDataHandler);
+
 		getPopupAfterGMLogin();
 		
+
 	}
 	
 	private boolean setQuizTabVisiblity(ArrayList<ConceptDo> conceptDoList) {
@@ -323,10 +331,22 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 			
 		}
 	}
+	/**
+	 * To handle the Events of All fields here
+	 */
+	public void renderEvents(){
+		
+		//viewAllBtn.addClickHandler(new ViewAllBtnClickEvent(lessonCode));
+	}
+	
+	/**
+	 * To set the Id's for all fields
+	 */
 	public void setIds(){
 		topicBlock.getElement().setId("pnlTopicBlock");
 		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
 		searchLink.getElement().setId("epnlSearchLink");
+		viewAllBtn.getElement().setId("btnViewAll");
 		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
 		lessonScrollPanel.getElement().setId("sbLessonScrollPanel");
 		conceptList.getElement().setId("pnlConceptList");
@@ -344,6 +364,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		noCollectionLbl.getElement().setId("lnlNoCollectionLbl");
 		collectionTitle.getElement().setId("collectionTitle");
 		quizTitle.getElement().setId("quizTitle");
+		viewAllBtn.getElement().setAttribute("style", "float: right;margin: -25px -7px 0 0;");
 	}
 	
 	private void setAssets() {
@@ -425,8 +446,19 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		this.libraryGooruOid=libraryGooruOid;
 		setPlaceToken(placeToken);
 		searchLink.getElement().getStyle().setDisplay(Display.NONE);
-		
-		
+
+		viewAllBtn.setVisible(true);
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
+		noCollectionLbl.setText(i18n.GL1170());
+
 		toolTipPopupPanelCustomize.clear();
 		toolTipPopupPanelNew.clear();
 		toolTipPopupPanelCustomize.hide();
@@ -457,6 +489,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		loadingImage.setVisible(false);
+		viewAllBtn.addClickHandler(new ViewAllBtnClickEvent(partnerFolderDo.getGooruOid()));
 		
 		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
@@ -472,6 +505,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		
 		getPopupAfterGMLogin();
+
 	}
 
 	/**
@@ -663,7 +697,7 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 	
 	/**
 	 * 
-	 * @fileName : LibraryTopicListView.java
+	 * @fileName : OnSearchLinkClick.java
 	 *
 	 * @description : 
 	 *
@@ -1252,7 +1286,6 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		
 				if(!isAssignPopup){
 					isAssignPopup=true;
-				//	Window.enableScrolling(false);
 				//final Map<String,String> params = new HashMap<String,String>();
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 					
@@ -1268,8 +1301,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("658px");
+				/*successPopupVc.setWidth("500px");*/
+				//successPopupVc.setHeight("658px");
 				if(!successPopupVc.isVisible()){
 					successPopupVc.show();
 					successPopupVc.center();
@@ -1277,11 +1310,11 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				Window.enableScrolling(false);
 				   
 				if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 				}
 				else
 				{
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.center();
 				}
 				
 				params.put(ASSIGN, "yes");
@@ -1349,8 +1382,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("471px");
+			/*	successPopupVc.setWidth("500px");*/
+			//successPopupVc.setHeight("471px");
 			successPopupVc.show();
 			successPopupVc.center();
 			
@@ -1404,8 +1437,8 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("471px");
+				/*successPopupVc.setWidth("500px");*/
+				//successPopupVc.setHeight("471px");
 				successPopupVc.show();
 				successPopupVc.center();
 			}
@@ -1427,18 +1460,19 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("658px");
+			//	successPopupVc.setWidth("500px");
+				//successPopupVc.setHeight("658px");
 				if(!successPopupVc.isVisible()){
 					successPopupVc.show();
 					successPopupVc.center();
 				}
 				if (AppClientFactory.isAnonymous()){
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 				}
 				else
 				{
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					successPopupVc.center();
+
 				}
 			}
 			
@@ -1680,5 +1714,25 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 		noCollectionLbl.setText(i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
+	}
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ViewAll button.
+	 */
+	public class ViewAllBtnClickEvent implements ClickHandler{
+		String folderId="";
+		public ViewAllBtnClickEvent(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			if(getPlaceToken()!=PlaceTokens.PROFILE_PAGE){
+				params.put("libName", getPlaceToken());
+			}
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+			
+		}
+		
 	}
 }

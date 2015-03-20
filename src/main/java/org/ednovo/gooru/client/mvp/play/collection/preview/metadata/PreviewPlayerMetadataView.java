@@ -187,13 +187,23 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  
-		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
-		  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
-		}else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
-		  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
-		}else{
-		  mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
-		}
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			//  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+			 
+		  }
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			//  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+		  }
+		  else
+		  {
+			 // mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
+			  
+		  }
+
 	}
 	
 	@Override
@@ -1298,7 +1308,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		lbllanguageObjective.getElement().setAttribute("title",languageObjectiveValue);
 	}
 	
-	public static void onClosingAndriodorIpaddiv(){
-		 mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
+	public static void onClosingAndriodorIpaddiv()
+	{
+		// mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
 	}
 }

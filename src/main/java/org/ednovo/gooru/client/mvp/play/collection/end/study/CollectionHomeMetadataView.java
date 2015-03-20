@@ -74,6 +74,12 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionHomeMetadataUiHandlers> implements IsCollectionHomeMetadataView,ClientConstants{
 	
+	private static final String ASSESSMENT = "assessment";
+	
+	private static final String DEFULT_COLLECTION = "images/default-collection-image-160x120.png";
+	
+	private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
+	
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn,studyButton;
@@ -126,18 +132,25 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	}
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
-		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
 	}
 	
 	@Override
 	public void setCollectionMetadata(final CollectionDo collectionDo){
+
+		this.collectionDo=collectionDo;
+		String collectionType=StringUtil.isEmpty(collectionDo.getCollectionType())?null:collectionDo.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, collectionThumbnail, "high");
+		
 		setCollectionImage((collectionDo.getThumbnails()!=null&&collectionDo.getThumbnails().getUrl()!=null)?collectionDo.getThumbnails().getUrl():"");
 		setCollectionGoal(collectionDo.getGoals()!=null?collectionDo.getGoals():"");
+
 		showPopupAfterGmailSignin();
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		collectionTitle = collectionDo.getTitle();
-		this.collectionDo=collectionDo;
+		
 		if(studyButtonClickHandler!=null) {
 			studyButtonClickHandler.removeHandler();
 		}
@@ -153,7 +166,14 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 					AppClientFactory.fireEvent(new UpdateCollectionViewCountEvent());
 				}else{
+					try
+					{
 					AppClientFactory.fireEvent(new UpdatePreviewViewCountEvent());
+					}
+					catch(Exception ex)
+					{
+						
+					}
 				}
 				if(collectionItems!=null&&collectionItems.size()>0){
 					CollectionItemDo collectionItemDo=collectionItems.get(0);
@@ -179,6 +199,21 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			}
 		});
 	}
+	
+	/**
+	 * To set the default image based on collectionType value
+	 * @param collectionType {@link String}
+	 *//*
+	private void setDefaultImages(String collectionType) {
+		// TODO Auto-generated method stub
+		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+	    	collectionThumbnail.setUrl(DEFULT_ASSESSMENT);
+	    	collectionThumbnail.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().assessmentImage());
+	    }else{
+	    	collectionThumbnail.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().collectionImage());
+	    	collectionThumbnail.setUrl(DEFULT_COLLECTION);
+	    }
+	}*/
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
 		resourceAnchor.setHref(getReplayLink());
@@ -253,8 +288,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("471px");
+			//	successPopupVc.setWidth("500px");
 				successPopupVc.show();
 				successPopupVc.center();
 				Map<String,String> params = new HashMap<String,String>();
@@ -292,10 +326,28 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				        this.hide();
 					}
 				};
+
+				Window.scrollTo(0, 0);
+				int clientHeight=Window.getClientHeight();
+				//successPopupVc.setWidth("500px");
+				//successPopupVc.setHeight("658px");
+				if(clientHeight>625){
+					clientHeight=625;
+					//successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;overflow-x:hidden;overflow-y:scroll");
+				}/*else{
+					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;overflow-x:hidden;overflow-y:scroll");
+				}*/
 				successPopupVc.show();
 				int left = (Window.getClientWidth() - 500) >> 1;
-			    successPopupVc.setHeight("658px");
-			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
+			    int top = (Window.getClientHeight() - clientHeight) >> 1;
+			  //  successPopupVc.setHeight("658px");
+			   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
+
+				successPopupVc.center();
+				if(AppClientFactory.isAnonymous()){
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
+
+				}
 	}
 	
 	/**
@@ -319,10 +371,11 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("471px");
+			//successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
+			
+			
 		}
 		if(assign!=null && YES.equals(assign) && emailId!=null){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
@@ -382,5 +435,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
+
 	}
 }

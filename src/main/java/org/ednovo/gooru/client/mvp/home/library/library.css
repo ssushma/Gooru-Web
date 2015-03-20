@@ -38,6 +38,7 @@
 	border-left:1px solid #ddd;
 	cursor:default;
 	width: 9.1%;
+	box-sizing:content-box;
 }
 
 #courseTabs .tabsLi.math {
@@ -192,6 +193,7 @@
 	margin-top:-1px;
 	cursor:pointer;
 	transition: background-color 0.5s ease;
+	box-sizing:content-box;
 }
 
 .unitLiActive {
@@ -206,6 +208,7 @@
 	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-sizing:content-box;
 }
 
 .unitLi:hover {
@@ -346,6 +349,7 @@
 	float:left;
 	padding:20px;
 	width: 53%;
+	box-sizing:content-box;
 }
 
 #contentScroll .topicBlock .collectionInfo .collectionImage {
@@ -603,6 +607,7 @@
 	margin-left: 0px;
 	height: 113px;
 	vertical-align: top;
+	box-sizing:content-box;
 }
 
 #featuredCourseTabs .courseTitle {
@@ -1171,7 +1176,7 @@ height: 55px;
 float: right;
 margin-left: auto;
 margin-right: auto;
-margin-top: 7px;
+margin-top: 23px;
 }
 .districtLibraryHeaderTextCore{
 	color: white;
@@ -1179,14 +1184,14 @@ font-size: 38px;
 font-weight: bold;
 text-align: center;
 padding-top: 100px;
-height: 45px;
+/* height: 45px; */
 }
 .districtLibrarySubHeaderTextCore{
 	color: white;
 font-size: 16px;
 text-align: center;
 margin-top: 10px;
-height: 19px;
+/* height: 19px; */
 }
 .districtSpecificPartnersMainlps{
 	width: 100%;
@@ -1214,7 +1219,7 @@ font-size: 38px;
 font-weight: bold;
 text-align: center;
 padding-top: 100px;
-height: 45px;
+/* height: 45px; */
 margin-left: 96px;
 }
 .districtLibrarySubHeaderTextlps{
@@ -1222,6 +1227,52 @@ color: white;
 font-size: 16px;
 text-align: center;
 margin-top: 10px;
-height: 19px;
+/* height: 19px; */
 margin-left: 82px;
+}
+.topicBlockStyle{
+	background-color:white;
+	border:1px solid #ddd;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	border-radius:4px;
+	float:left;
+	margin-bottom:25px;
+	width: 700px;
+	
+}
+.topicTitleStyle{
+	font-size:14px;
+	padding:15px;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+	border-bottom:1px solid #ddd;
+	margin-left: 38px;
+
+	/* Old browsers */
+	background: rgb(239,239,239);
+
+	/* Safari 4-5, Chrome 1-9 */
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#EDEDED));
+
+	/* Safari 5.1, Chrome 10+ */
+	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED);
+
+	/* Firefox 3.6+ */
+	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+
+	/* IE 10 */
+	background: -ms-linear-gradient(top, #FDFDFD, #EDEDED);
+
+	/* Opera 11.10+ */
+	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
+
+	/* IE 6-9 */	
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
+	
+}
+.listViewBtnStyle{
+	float:right;
+	margin: -25px -7px 0 0;
 }

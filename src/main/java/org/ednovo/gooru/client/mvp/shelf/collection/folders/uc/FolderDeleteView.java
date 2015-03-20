@@ -11,6 +11,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolder
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -212,7 +213,8 @@ public class FolderDeleteView extends AppPopUp {
 				deleteText.setVisible(false);
 				FolderDo folderDo = new FolderDo();
 				folderDo.setGooruOid(parentId);
-				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.DELETE, null));
+				CollectionDo collDo = new CollectionDo();
+				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.DELETE, null,collDo));
 				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView() {
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {

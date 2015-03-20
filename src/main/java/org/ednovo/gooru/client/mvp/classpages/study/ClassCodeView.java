@@ -125,6 +125,8 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		};
 		AppClientFactory.getEventBus().addHandler(
 				SetButtonEvent.TYPE, setButtonVisibility);
+		
+		Window.enableScrolling(true);
 	}
 	/**
 	 * 
@@ -171,9 +173,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	*/
 	
 	private void setText() {
-		
 		setCreateClassVisibility();
-		
 		btnCreateClass.setText(i18n.GL1771());
 		btnCreateClass.getElement().setId("btnCreateClass");
 		btnCreateClass.getElement().setAttribute("alt",i18n.GL1771());
@@ -309,6 +309,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		});
 		btnEnter.addClickHandler(new OnEnterClassCodeClick());
 		btnCreateClass.addClickHandler(new OnClickCreateClass());
+		Window.enableScrolling(true);
 	}
 	
 	@UiHandler("panelClassOne")

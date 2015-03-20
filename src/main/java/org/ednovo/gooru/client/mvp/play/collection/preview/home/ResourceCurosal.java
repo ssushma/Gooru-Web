@@ -24,10 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
+
 import org.ednovo.gooru.shared.util.ClientConstants;
 
+
 import com.google.gwt.animation.client.Animation;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,6 +37,9 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -46,18 +50,20 @@ public class ResourceCurosal implements ClientConstants {
 	private Label nextButton;
 	private Label previousButton;
 	private FlowPanel widgetsPanel=null;
+	private FlowPanel carosualContainer=null;
 	private boolean isNextButtonActive=false;
 	private boolean isPreviousButtonActive=false;
 	private static int WIDGET_WIDTH=90;
 	private static final int ANIMATION_DURATION=300;
 	private double currentMarginLeft=0.0;
 	
-	public ResourceCurosal(Label nextButton,Label previousButton,FlowPanel widgetsPanel,int widgetsCount, int widgetWidth){
+	public ResourceCurosal(Label nextButton,Label previousButton,FlowPanel widgetsPanel,int widgetsCount, int widgetWidth,FlowPanel carosualContainer){
 		WIDGET_WIDTH = widgetWidth;
 		this.nextButton=nextButton;
 		this.previousButton=previousButton;
 		this.widgetsPanel=widgetsPanel;
 		this.widgetsCount=widgetsCount;
+		this.carosualContainer=carosualContainer;
 		setTotalWidth();
 		nextButton.addClickHandler(new ShowNextWidgetEvent());
 		previousButton.addClickHandler(new ShowPreviousWidgetEvent());
@@ -65,12 +71,46 @@ public class ResourceCurosal implements ClientConstants {
 		nextButton.addMouseOutHandler(new ButtonMouseOutEvent(true));
 		previousButton.addMouseOverHandler(new ButtonMouseOverEvent(false));
 		previousButton.addMouseOutHandler(new ButtonMouseOutEvent(false));
-		activateNextButton(true);
-		activatePreviousButton(false);
+		adjustNextbuttonVisibility(currentMarginLeft);
+		adjustPreviousButtonVisibility();
+		addWidthCarouselContainer();
+		Window.addResizeHandler(new ResizeLogicEvent());
 	}
 	public void setTotalWidth(){
 		widgetsPanel.setWidth((widgetsCount*WIDGET_WIDTH)+"px");
 	}
+	
+	public void adjustNextbuttonVisibility(double currentMarginLeft){
+		int totalWidgetsWidth=widgetsCount*WIDGET_WIDTH;
+		if((totalWidgetsWidth-getTotalViewableWidth())<=(currentMarginLeft)){
+			activateNextButton(false);
+		}else{
+			activateNextButton(true);
+		}
+	}
+	
+	public void adjustPreviousButtonVisibility(){
+		if((currentMarginLeft-WIDGET_WIDTH)<=0){
+			activatePreviousButton(false);
+		}else{
+			activatePreviousButton(true);
+		}
+	}
+	
+	public void adjustMarginLeft(){
+//		int totalWidgetsWidth=widgetsCount*WIDGET_WIDTH;
+//		if((totalWidgetsWidth-getTotalViewableWidth())<=(currentMarginLeft)){
+//				int totalNavigableWidth=totalWidgetsWidth-getTotalViewableWidth();
+//				if(currentMarginLeft>totalNavigableWidth){
+//					currentMarginLeft=totalNavigableWidth;
+//					widgetsPanel.getElement().getStyle().setMarginLeft(-(currentMarginLeft), Unit.PX);
+//				}else{
+//					
+//				}
+//		}
+		
+	}
+	
 	public void activateNextButton(boolean isNextButtonActive){
 		this.isNextButtonActive=isNextButtonActive;
 		if(isNextButtonActive){
@@ -92,9 +132,7 @@ public class ResourceCurosal implements ClientConstants {
 		@Override
 		public void onClick(ClickEvent event) {
 			if(isNextButtonActive){
-				if((currentMarginLeft+WIDGET_WIDTH)==((widgetsCount-9)*WIDGET_WIDTH)){
-					activateNextButton(false);
-				}
+				adjustNextbuttonVisibility(currentMarginLeft+WIDGET_WIDTH);
 				new WidgetSlideAnimation(widgetsPanel, "forward").run(ANIMATION_DURATION);
 				activatePreviousButton(true);
 			}
@@ -104,9 +142,7 @@ public class ResourceCurosal implements ClientConstants {
 		@Override
 		public void onClick(ClickEvent event) {
 			if(isPreviousButtonActive){
-				if((currentMarginLeft-WIDGET_WIDTH)==0){
-					activatePreviousButton(false);
-				}
+				adjustPreviousButtonVisibility();
 				new WidgetSlideAnimation(widgetsPanel, "backward").run(ANIMATION_DURATION);
 				activateNextButton(true);
 			}
@@ -190,6 +226,39 @@ public class ResourceCurosal implements ClientConstants {
 			currentMarginLeft=desiredMarginLeft;
 			slideWidget.getElement().getStyle().setMarginLeft(-(desiredMarginLeft), Unit.PX);
 		}
+	}
+	
+	public class ResizeLogicEvent implements ResizeHandler{
+		@Override
+		public void onResize(ResizeEvent event) {
+			addWidthCarouselContainer();
+			adjustNextbuttonVisibility(currentMarginLeft);
+			adjustMarginLeft();
+			adjustPreviousButtonVisibility();
+		}
+	}
+	
+	public void addWidthCarouselContainer(){
+		if(carosualContainer!=null){
+			carosualContainer.setWidth((getTotalViewableWidth())+"px");
+		}
+	}
+	
+	public int getTotalViewableWidth(){
+		int totalClientWidth=Window.getClientWidth();
+		int totalViewableWidth=0;
+		if(totalClientWidth>1000){
+			 totalViewableWidth=900;
+		}else{
+			 totalViewableWidth=totalClientWidth-100;
+		}
+		return totalViewableWidth;
+	}
+	public FlowPanel getCarosualContainer() {
+		return carosualContainer;
+	}
+	public void setCarosualContainer(FlowPanel carosualContainer) {
+		this.carosualContainer = carosualContainer;
 	}
 
 }

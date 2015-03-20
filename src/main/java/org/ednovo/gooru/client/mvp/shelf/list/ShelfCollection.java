@@ -197,6 +197,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	private static final String O3_LEVEL = "o3";
 	
 	private static final String ID = "id";
+	
+	private static final String ASSESSMENT = "assessment";
 
 	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
 	
@@ -318,9 +320,12 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
-		
 		if(!collectionDo.getType().equals("folder")) {
 			titleFocPanel.addStyleName(folderStyle.collection());
+			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
+		}
+		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+			titleFocPanel.addStyleName(folderStyle.assessment());
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		if(collectionDo.getCollectionItems()!=null) {
@@ -331,10 +336,12 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		} else {
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
 		if(collectionDo.getSharing()!=null && !collectionDo.getSharing().equalsIgnoreCase("") && collectionDo.getSharing().equals("public")) {
-			if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection") ){
+			if(collectionDo.getCollectionType().equals("collection") ){
 				titleFocPanel.addStyleName(folderStyle.publicIcon());
+				panelToolTip.getElement().getStyle().clearDisplay();
+			}else if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+				titleFocPanel.addStyleName(folderStyle.assesstpublicIcon());
 				panelToolTip.getElement().getStyle().clearDisplay();
 			}else{
 				panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
@@ -349,19 +356,19 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 2) {
 			titleLbl.setWidth("142px");
-			titleFocPanel.setWidth("143px");
+			//titleFocPanel.setWidth("143px");
 			titleFocPanel.addStyleName(folderStyle.parent());
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 3) {
 			titleLbl.setWidth("114px");
-			titleFocPanel.setWidth("115px");
+			//titleFocPanel.setWidth("115px");
 			titleFocPanel.addStyleName(folderStyle.child());
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
 		} else if(nextLevel == 4) {
 			titleLbl.setWidth("100px");
-			titleFocPanel.setWidth("89px");
+			//titleFocPanel.setWidth("89px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
 			titleFocPanel.addStyleName(folderStyle.collectionChild());
@@ -375,16 +382,23 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 
 		@Override
 		public void updateShareType(String shareType,String publishStatus,boolean isPublish,CollectionDo collec) {
-			
            if(!isPublish){
-        	   if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection")){
+        	   if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection") || collectionDo.getType().equals(ASSESSMENT)){
    				if(titleFocPanel.getStyleName().contains(folderStyle.open())) {
    					if(shareType.equalsIgnoreCase("public")){
-   						titleFocPanel.addStyleName(folderStyle.publicIcon());
+   						if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+   							titleFocPanel.addStyleName(folderStyle.assesstpublicIcon());
+   						}else{
+   							titleFocPanel.addStyleName(folderStyle.publicIcon());
+   						}
    						panelToolTip.getElement().getStyle().clearDisplay();
    					}else{
    						if(titleFocPanel.getStyleName().contains("public")){
-   							titleFocPanel.removeStyleName(folderStyle.publicIcon());
+   							if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+   								titleFocPanel.removeStyleName(folderStyle.assesstpublicIcon());
+   							}else{
+   								titleFocPanel.removeStyleName(folderStyle.publicIcon());
+   							}
    							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
    						}
    					}
@@ -596,7 +610,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     	        		});
     	        		
     	        		/** Previously used API Call **/
-    	        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+    	        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
 		    				@Override
 		    				public void onSuccess(FolderListDo result) { 
 		    					setAllResources(result.getSearchResult());
@@ -695,7 +709,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
         		
         		
         		/** Previously used API call **/
-        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(collectionDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(collectionDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
     				@Override
     				public void onSuccess(FolderListDo result) { 
     	                if (result.getCount()<25){
@@ -787,7 +801,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     		});
 			
 			/**Previously used API call **/
-			/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+			/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					if(result.getSearchResult().size()==0){

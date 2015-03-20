@@ -3,9 +3,15 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle" field="res"></ui:with>
-		<g:FlowPanel styleName="{res.css.popupContent}">
-			<g:HTMLPanel styleName="{res.css.popupHeader}">
-				<g:Label styleName="{res.css.popupHeaderText}" ui:field="popupHeader"></g:Label>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />	
+		<g:FlowPanel styleName="{res1.css.PopupMainVSmall}">
+		    <g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
+			<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
+			    <g:HTMLPanel styleName="row">
+			        <g:Label styleName="col-md-12 col-xs-12" ui:field="popupHeader"></g:Label>
+			     </g:HTMLPanel>
+			     <g:HTMLPanel styleName="clearfix"/>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.assignmentMainContainer}">
 				<g:HTMLPanel styleName="{res.css.assignmentContentContainer}">
@@ -13,10 +19,12 @@
 						<g:Label styleName="{res.css.assignmentTitleLabelForOe}" ui:field="popupText"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.navigateButtonsContainer}">
+				<g:HTMLPanel styleName="{res.css.navigateButtonContainer}">
 					<g:Button styleName="secondary"  ui:field="continueButton" />
 					<g:Button styleName="primary {res.css.primaryButton}"  ui:field="backToResponseButton" />
 				</g:HTMLPanel>
 		</g:HTMLPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="clearfix"/>
 	</g:FlowPanel>
 </ui:UiBinder> 

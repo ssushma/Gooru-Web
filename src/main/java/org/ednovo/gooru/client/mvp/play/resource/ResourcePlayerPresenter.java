@@ -53,6 +53,7 @@ import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -461,14 +462,17 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
 			if(tabView.equalsIgnoreCase("add")){
+
 				getView().clearActiveButton(false,true, true,true);
 				getView().makeButtonActive(true,false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("info")){
+
 				getView().clearActiveButton(true,false, true,true);
 				getView().makeButtonActive(false,true, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("share")){
+
 				getView().clearActiveButton(true,true, false,true);
 				getView().makeButtonActive(false,false, true,false);
 			}else if(tabView.equalsIgnoreCase("flag")){
@@ -524,6 +528,11 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
 			}
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+			/*if(BrowserAgent.isDevice()){
+				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
+			}else{
+				addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+			}*/
 			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
@@ -532,12 +541,21 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void setResourceInfoView(String resourceId){
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
-		resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+		System.out.println("BrowserAgent.isDevice() resource info view:::::"+BrowserAgent.isDevice());
+		if(BrowserAgent.isDevice()){
+			resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
+		}else{
+			resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+		}
+		
 		setInSlot(TAB_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
 	}
 	public void setResourceShareView(String resourceId){
 		resourceSharePresenter.setResourceShareData(collectionItemDo);
+		if(BrowserAgent.isDevice()){
+			resourceSharePresenter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
+		}
 		setInSlot(TAB_PRESENTER_SLOT, resourceSharePresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
 	}
@@ -593,7 +611,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		}
 	}
 	
-
 	public void createSession(String collectionGooruOid){
 		this.playerAppService.createSessionTracker(collectionGooruOid,null, new SimpleAsyncCallback<String>() {
 			@Override
@@ -992,11 +1009,15 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
 		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemFlagDataLogPayLoadObject(itemType,flagText,contentReportList));
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
+		if(getPlaceManager().getRequestParameter("id")!=null){
+			path=itemGooruOid;
+		}
 		
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemGooruOid, "", classpageId, "", PlayerDataLogEvents.STUDY, path, null, PlayerDataLogEvents.COLLECTION_FLAG_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);

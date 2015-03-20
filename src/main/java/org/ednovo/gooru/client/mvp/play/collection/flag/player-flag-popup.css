@@ -34,7 +34,6 @@
 .playerflagpopupheaderCloseBtn
 {
 	float:right;
-	/* background:url(images/flag-header-close-btn.png); */
 	width:15px;
 	height:15px;
 	margin:10px 10px 0px 0px;
@@ -62,8 +61,8 @@
 .playerflagcontentcontainerThankYou
 {
 	margin: 0 auto;
-	width:382px;
-	margin-top: 52px;
+/* 	width:382px;
+	margin-top: 52px; */
 	
 }
 .playerflagcontenttext
@@ -126,7 +125,7 @@
 	color:#515151;
 	margin-top:11px;
 	margin-left: 0px;
-	width: 345px;
+/* 	width: 345px; */
 }
 .playerflagradiobutton, radio
 {
@@ -550,6 +549,8 @@ color: #515151;
 	font-size:12px;
 	color:#515151;
 	text-align: left;
+	margin-top:10px;
+	margin-left:10px;
 }
 .thankyouflagbuttonsubmit
 {
@@ -584,7 +585,7 @@ float: left;
 margin-top: 10px;
 }
 .collectionPlayerExistingCollectionInputContainer{
-	width: 324px;
+	width: 324px; 
 	float: left;
 	margin-right: 10px;
 	margin-left: 1px;
@@ -600,7 +601,7 @@ margin-top: 10px;
 	border: 1px solid #DDD;
 	cursor: pointer;
 	display: block;
-	width: 280px;
+	width:100%;
 	height: auto;	
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
@@ -612,8 +613,9 @@ margin-top: 10px;
 	margin:0;
 	z-index:9999;
 	max-height:86px;
-	width: 310px;
+	/* width: 310px; */
 	position:absolute !important;
+	overflow-x: hidden !important;
 }
 /*Scroll bar style for default scrolls*/
 .dropdownListContainerScrollPanel::-webkit-scrollbar {
@@ -642,6 +644,7 @@ margin-top: 10px;
 	padding:0;
 	margin:0;
 	z-index:9999;
+	width: 324px;
 }
 .dropdownListItemContainer{
 	padding: 5px;
@@ -667,4 +670,8 @@ margin-top: 10px;
 	text-align: center;
 	margin-top: 5px;
 	font-size: 12px
+}
+.label{
+	position:relative;
+	top:4px;
 }

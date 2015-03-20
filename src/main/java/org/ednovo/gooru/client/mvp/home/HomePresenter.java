@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,9 +60,11 @@ import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -71,11 +75,13 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -207,6 +213,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 		MixpanelUtil.Arrive_Landing_Page();
 		setRegisterdUserAsyncCallback(new SimpleAsyncCallback<UserDo>() {
 			@Override
@@ -219,6 +227,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_ANONYMOUS);
 		} else {
@@ -331,6 +341,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 		}
 		
+
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
@@ -341,10 +352,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			update.setGlassEnabled(true);
 			update.show();
 			update.center();
+			Document doc=Document.get();
+			Element bodyelement = doc.getBody();
+			Window.scrollTo(0, 0);
+			bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 		}
 		else if(flag>0 && flag<=11 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
 		}
+
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
 	}
 	
@@ -366,6 +382,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onReset() {
 		super.onReset();
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
 		if (AppClientFactory.isAnonymous()){
 			getView().getBtnSignUp().setVisible(true);
 		}else{
@@ -564,7 +582,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		getStandardSuggestionAsyncCallback().execute(searchDo);
 	}
 	public void showMarketingPopup(UserDo userDo){
-		new ImprovedGooruPopUpView();
+//		new ImprovedGooruPopUpView();
 //		 AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 7, new SimpleAsyncCallback<UserDo>() {
 //				@Override
 //				public void onSuccess(UserDo newUser) {
@@ -609,5 +627,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
 			getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
 	}
-
+	@Override
+	public void generatePartnerLibraries() {
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+			@Override
+			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
+				if (partnersList != null){
+					getView().displayPartnerLibraries(partnersList);
+				}
+			}
+		});
+	}
 }

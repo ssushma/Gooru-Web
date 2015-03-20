@@ -3,12 +3,13 @@
 /*real style*/
 
 .openEndedQuestionTotalContainer {
-	width: 1000px;
+	width: 100%;
 	height: auto;
-	float: left;
+	/* float: left;
 	background-color: #FFFFFF;
-	border-top: 1px solid #ddd;
+	border-top: 1px solid #ddd; */
 	overflow-y: scroll;
+	padding: 25px 25px;
 }
 .openEndedQuestionContainer {
 	float: left;
@@ -81,7 +82,7 @@
 	background: -ms-linear-gradient(top, #FDFDFD, #DDD);
 	background: -o-linear-gradient(top, #FDFDFD, #DDD);
 	border: 1px solid #DDD;
-	float:left;
+	/* float:left; */
 	margin-right: 10px;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -247,7 +248,6 @@
 }
 .adjustCheckAnswerButton{
 	margin-top:20%;
-	margin-left:20%;
 }
 .systemMessageStyle{
 	margin-bottom: 20px;
@@ -255,6 +255,7 @@
 	font-size: 12px;
 	font-style: italic;
 	color: #999;
+	float:left;
 }
 
 .charLimit{
@@ -343,4 +344,14 @@
 .noText{
 	color:#515151;
 	font-wight:bold;
+}
+.questionButtons{
+	display: block;
+	width: 100%;
+	float: left;
+}
+.questionSubmitButton{
+	width: 100%;
+text-align: center;
+display: inline-block;
 }

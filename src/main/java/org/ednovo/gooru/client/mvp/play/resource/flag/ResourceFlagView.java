@@ -38,6 +38,7 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -47,6 +48,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -71,7 +73,8 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	@UiField TextArea descriptionTextArea;
 	@UiField CheckBox checkBox1,checkBox2,checkBox3,checkBox4;
 	@UiField HTML titleText;
-	@UiField Label flagText,inappropriateText,unavailableText,inaccurateText,otherReasonText,provideMoreText;
+	@UiField Label flagText,provideMoreText;
+	@UiField InlineLabel  inappropriateText,unavailableText,inaccurateText,otherReasonText;
 	private FlagThankYouPopUpView thankYouToolTip=null;
 	int formateSize=0;
 	
@@ -102,7 +105,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		submitButtonGray.getElement().setId("btnSubmitButtonGray");
 		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
 		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
-		
+		submitButtonGray.getElement().getStyle().setColor("#999");
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
 		flagText.setText(i18n.GL0600());
@@ -114,6 +117,8 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		inappropriateText.getElement().setId("lblInappropriateText");
 		inappropriateText.getElement().setAttribute("alt",i18n.GL0612());
 		inappropriateText.getElement().setAttribute("title",i18n.GL0612());
+		
+		provideMoreText.getElement().getStyle().setMarginTop(25, Unit.PX);
 		
 		inaccurateText.setText(i18n.GL0614());
 		inaccurateText.getElement().setId("lblInaccurateText");
@@ -334,7 +339,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		public FlagPopupPanel(boolean isAutoHide){
 			super(isAutoHide);
 			this.setGlassEnabled(true);
-			this.setStyleName("");
+			/*this.setStyleName("");*/
 			this.getGlassElement().getStyle().setZIndex(99999);
 			this.getElement().getStyle().setZIndex(99999);
 		}

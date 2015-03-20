@@ -166,14 +166,14 @@
 	margin-top: 10px;
 }
 .content-innerTag{
-	width: 933px;
+	width: 100%;
 	background-color: #fff;
-	height: 253px;
+	height: auto;
 	margin-top: 15px;
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	min-height: 100px;
-	padding: 35px;
+	padding: 20px;
 	border: 1px solid #ddd;
 	margin-top: 15px;
 }

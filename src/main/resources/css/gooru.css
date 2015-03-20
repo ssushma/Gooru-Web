@@ -57,6 +57,9 @@ caption,th,td {
 a img {
 	border: 0;
 }
+
+
+
 .shelfFolderItemTitle{
 	padding-top: 3px;
 	white-space: nowrap !important;
@@ -98,9 +101,7 @@ body {
 /*CSS RESET ENDS*/
 
 /* 960 grid css */
-body {
-	min-width: 960px;
-}
+
 
 /* Container
 ----------------------------------------------------------------------------------------------------*/
@@ -475,8 +476,11 @@ body {
 .clearfix:after,.container_16:after {
 	clear: both;
 }
-
+.paddingClear{
+	padding:0;
+}
 /*
+
   The following zoom:1 rule is specifically for IE6 + IE7.
   Move to separate stylesheet if invalid CSS is a problem.
 */
@@ -490,6 +494,16 @@ body {
 	border: 1px solid #ccc;
 	color: #999999;
 	padding-left: 8px;
+}
+
+
+.no-gutter > [class*='col-']{
+	padding-left:0;
+	padding-right:0;
+}
+.less-gutter > [class*='col-']{
+	padding-left:5px;
+	padding-right:5px;
 }
 
 /* end */
@@ -562,7 +576,7 @@ body {
 	top: 0px;
 	visibility: visible;
 	background-color: #FFF !important;
-	z-index: 99999;
+	z-index: 999999;
 	border: 1px solid #CCC;
 	/* width: 199px; */
 	
@@ -827,6 +841,7 @@ body {
 	padding: 3px 31px;
 	background: url(${cdn.endpoint}/images/resource-type-icons.png) no-repeat transparent;
 }
+
 
 .filterCheckBox {
 	float: left;
@@ -1189,7 +1204,7 @@ button::-moz-focus-inner {
     position: relative;
 }
 .dialogMiddleCenterInner{
-	min-width: 395px;
+/* 	min-width: 395px; */
 	}
 .dateBoxPopup {
 	z-index: 9999 !important;
@@ -1668,21 +1683,18 @@ p{
 }
 #resourcePlayerContainer{
 		-webkit-overflow-scrolling: touch;
-	  overflow: scroll;
 }
 iframe#taMessage body{
 	font-family: Arial, sans-serif;
 	font-size:12px;
 	color:#000000;
 }
+iframe#taMessage{
+	padding:0;
+}
 
 /* These css are for Device not supported*/
-.container {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -650px;
-}
+
 .deviceHeader {
 	background-color: #515151;
 	border-bottom:5px solid #4e9746;
@@ -1720,7 +1732,6 @@ color:#999;
 }
 
 .mobilefriendlyContainer .filterCheckBox label {
-	/* background: url(${cdn.endpoint}/images/mos/ipadFriendly.png) no-repeat transparent; */
 	background: url(${cdn.endpoint}/images/mos/MobileFriendly.png) no-repeat transparent;
  	padding-left: 30px;
 	padding-bottom: 6px;
@@ -1730,14 +1741,27 @@ color:#999;
 	margin: 5px 0.5ex !important;
 }
 
+.categorySubjectContainer .filterCheckBox input[type="checkbox"] {
+	margin: 1px 0.5ex !important;
+}
+
+.modeContainer .filterCheckBox input[type="checkbox"] {
+	margin: 1px 0.5ex !important;
+}
+
+.filterGradeContainer .filterCheckBox input[type="checkbox"] {
+	margin: 1px 0.5ex !important;
+}
+
 .oerContainer .filterCheckBox label {
 	background: url(${cdn.endpoint}/images/oer_icon.png) 0px 0px no-repeat transparent;
- 	padding-left: 29px;
+ 	padding-left: 23px;
 	height: 20px;
 	position: relative;
 	vertical-align: top;
 	display: inline-block;
 	padding-top: 4px;
+
 }
 .navigationText span.AM img{
 	max-height:23px;
@@ -1875,7 +1899,6 @@ ul.token-input-list-gooru li input {
 
 li.token-input-token-gooru {
     overflow: hidden;
-    height: 16px !important;
     height: 1%;
 	margin: 4px;
 	padding: 3px 3px;
@@ -2157,9 +2180,68 @@ fieldset {
 	
 }
 
+.reviewPopup{
+	left: 63% !important;
+ }
+  .narrationRightContainerFullScreen{
+ width:59% !important;
+ }
+ .preFilterPopup{
+	left:26.4% !important;
+	top:48px !important;
+	z-index: 99999;
+visibility: visible;
+position: absolute;
+overflow: visible;
+ }
+ 
+ .addResourceContainer{
+	width:500px;
+ }
+ .reviewPopupPoor{
+	left: 63% !important;
+ }
+
+ .borderLeft{
+ 	border-right:1px solid #999;
+ }
+ 
+ .borderRight{
+ 	
+ }
+ .loginFailureAlert{
+ 	left:35% !important;
+ }
+ .tableDivStyles{
+ width:60%;
+ }
+ .positionFixed{
+ 	position:fixed !important;
+ }
+
+  
+ .dropdownListContainerScrollPanel{
+ 	margin-left:46px;
+ }
+
 @media screen and (min-width: 0px) and (max-width: 1000px) {
 	.searchResults > .mediaCssToHide{
 		display: none;
+	}
+	  	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
 	}
 }
 
@@ -2314,17 +2396,748 @@ fieldset {
   background: #babcc9;
 }
 
-
+.analyticsPrintSave{
+	
+}
 .panelHeight{
 	overflow-y: auto;
 	overflow-x: hidden;
 	width: 63.75%;
 	padding: 0px 0px 0px 12%;
+	box-sizing:content-box;
 }
+
+.studyplay {
+	width: 90px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 4px;
+	padding: 7px 29px 8px 7px;
+	background: #1076bb;
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, #1076bb;
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc), to(#1076bb));
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, -webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
+	float: right;
+	
+}
+.studyplay:hover{
+	cursor: pointer;
+	color:white;
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, #1076bb;
+}
+
+
+.searchPushDisplay{
+	display:block;
+}
+.searchPushHide{
+	display:none;
+}
+.menu-icon{
+	clear:both
+}
+/*ipad player menu style */
+#page {
+	position: relative; /* Set the position property so z-index will apply */
+	z-index: 20; /* Make sure this is higher than #menu */
+
+	height: 100%;
+}
+
+#page h1 {
+	margin: 0;
+}
+
+#toggle-menu {
+	position: absolute;
+	top: 10px;
+	/* right: 10px; */
+	right: 4.5%;
+	padding: 5px 5px;
+/*	border: 1px solid #eee;*/
+	z-index:999999;
+	outline:none;
+}
+#toggle-menu:hover{
+	opacity:0.7;
+}
+
+#menu {
+	display: none;
+	position:absolute;
+	top: 0;
+	right: 0;
+/*	background:none repeat scroll 0 0 #f0f0f0;*/
+	width: 240px;
+	padding: 15px 25px;
+	margin: 0;
+	height:100%;
+	list-style: none;
+
+	z-index: 10; /* Make sure the z-index is lower than the #page */
+}
+#page, #menu {
+	-webkit-backface-visibility: hidden;
+	/* -webkit-perspective: 1000; */
+}
+.animating #menu, .menu-visible #menu {
+	display: block;
+}
+.animating #page {
+	transition: transform .25s ease-in-out;
+	-webkit-transition: -webkit-transform .25s ease-in-out;
+}
+.animating.left #page {
+	transform: translate3d( -240px, 0, 0 );
+	-webkit-transform: translate3d( -240px, 0, 0 );
+}
+/* .animating.right #page {
+	transform: translate3d( 240px, 0, 0 );
+	-webkit-transform: translate3d( 240px, 0, 0 );
+} */
+/* .menu-visible #page {
+	right: 240px;
+} */
+
 @media screen and (min-width: 0px) and (max-width: 1275px) {
 	.panelHeight{
 		width:100%;
 		min-width:100%
+	}
+	.preFilterPopup{
+		left:20% !important;
+		top:48px !important;
+  	}
+  	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+}
+@media (min-width: 480px) and (max-width: 767px) {
+	#uvTabLabel{
+		display:none !important;
+	}
+ 	.positionFixed{
+ 		position:relative !important;
+ 	}
+ 	.preFilterPopup{
+		left:4% !important;
+		top:48px !important;
+  	}
+  	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+		.analyticsPrintSave{
+			clear:both;
+			width:auto !important; 
+		}
+		.containerMain {
+  	 		 width: auto !important;
+		}
+		.container {
+			width: auto !important;
+		}
+		.positionFixed{
+ 			position:relative !important;
+ 		}
+ 		.preFilterPopup{
+			left:16.5% !important;
+			top:48px !important;
+  		}
+	  	span.fivestar input[type="checkbox"], 
+		span.fourstar input[type="checkbox"],
+		span.threestar input[type="checkbox"],
+		span.twostar input[type="checkbox"],
+		span.onestar input[type="checkbox"],
+		span.zerostar input[type="checkbox"],
+		span.review input[type="checkbox"]{
+			margin: 0px 4px 4px 4px !important;
+		}
+		
+		.mobilefriendlyContainer, .oerContainer{
+			position: relative;
+			margin-bottom: 0px;
+			height: 30px;
+		}
+}
+
+#searchPush{
+	display:none;
+}
+
+#main {
+	position: relative; /* Set the position property so z-index will apply */
+	/*  z-index: 20;  *//* Make sure this is higher than #menu */
+ background: url("../images/background-image.png") repeat scroll 0 0 #efeded !important;
+	height: 100%;
+}
+
+#main h1 {
+	margin: 0;
+}
+
+#toggle-menu1 {
+/*	position: absolute;*/
+	top: 10px;
+	left: 10px;
+	padding: 5px 5px;
+/*	border: 1px solid #eee;*/
+	z-index:999999;
+	outline:none;
+}
+#toggle-menu1:hover{
+	opacity:0.7;
+}
+
+#menuRight {
+	display: none;
+	position:absolute;
+	top:0;
+	left: 0;
+	right:0;
+	bottom:0;
+/*	background:none repeat scroll 0 0 #f0f0f0;*/
+	width: 180px;
+	padding:0 0;
+	margin: 0;
+	height:100%;
+	list-style: none;
+	background:#ffffff;
+
+
+	z-index: 10; /* Make sure the z-index is lower than the #page */
+}
+
+#menuRight .searchFilters{
+	margin-top:0;
+}
+
+/*#menu a {
+	display: block;
+	color: #fff;
+	padding: 15px 0;
+	border-bottom: 1px solid rgba( 255, 255, 255, 0.05 );
+}
+*/
+/* Animations */
+
+
+
+/* Hide the menu unless it's animating or visible */
+.animating #menuRight, .menu-visible1 #menuRight {
+	display: block;
+}
+
+/***
+* If the animating class is present then apply
+* the CSS transition to #page over 250ms.
+*/
+.animating #main {
+	transition: transform .25s ease-in-out;
+	-webkit-transition: -webkit-transform .25s ease-in-out;
+}
+
+/***
+* If the left class is present then transform
+* the #page element 240px to the left.
+*/	
+.animating.left #main {
+	transform: translate3d( 180px, 0, 0 );
+	-webkit-transform: translate3d( 180px, 0, 0 );
+}
+
+/***
+* If the right class is present then transform
+* the #page element 240px to the right.
+*/
+.animating.right #main {
+	transform: translate3d( -180px, 0, 0 );
+	-webkit-transform: translate3d( -180px, 0, 0 );
+}
+
+/***
+* If the menu-visible class is present then
+* shift the #page 240px from the right edge
+* via position: absolute to keep it in the 
+* open position. When .animating, .left and
+* .right classes are not present the CSS
+* transform does not apply to #page.
+*/
+.menu-visible1 {
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+/* .menu-visible1 #main {
+	left:180px;
+} */
+
+.menu-visible1 #searchPush{
+	display:block;
+}
+.gwt-PopupPanel{
+	width:100% !important;
+	background: none !important;
+}
+
+.addResourcePopup{
+		margin-top:50px ;	
+	}
+.studyMainContainer{
+	width:1000px;
+}	
+
+/* @media (min-width: 240px) and (max-width: 319px){
+	.gwt-PopupPanel{
+		width:100%;
+		left:0 !important;
+	}
+}
+@media (min-width: 320px) and (max-width: 479px){
+	
+	.gwt-PopupPanel{
+		width:100%;
+		left:0 !important;
+	}
+	
+}
+@media (min-width: 768px) and (max-width: 991px){
+	.gwt-PopupPanel{
+		left:21% !important;
+	}
+} */
+
+@media (min-width: 1200px) {
+	#uvTabLabel{
+		display:block;
+	}
+	
+	
+	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+	
+	.reviewPopup{
+		left:63% !important;
+		width:100%;	
+	}
+	 .narrationRightContainerFullScreen{
+ width:86% !important;
+ }
+	
+	 .borderLeft{
+ 		border-right:1px solid #999;
+ 	}
+ 	.borderRight{
+ 		border-left: 1px solid #cacaca;
+ 	}
+	.reviewPopupPoor{
+		left:63% !important;
+		width:300px;
+	}
+	.addResourceContainer{
+		width:500px;
+   }
+   .loginFailureAlert{
+ 		left:35% !important;
+ 	}
+ 
+   
+	#main, #menuRight {
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective:0;
+	}
+	.animating #menu, .menu-visible #menu {
+		display: none;
+	}
+	.animating #page {
+	transition: transform .25s ease-in-out;
+	-webkit-transition:hidden;
+	}
+	.animating.left #page {
+	transform: translate3d( 0p, 0, 0 );
+	-webkit-transform: translate3d( 0, 0, 0 );
+	}	
+}
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	
+	#main, #menuRight {
+		-webkit-backface-visibility: hidden;
+		-webkit-perspective:0;
+	
+	}
+		
+	.loginFailureAlert{
+	 	left:32% !important;
+	 }
+	   	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+	
+}
+
+@media (min-width: 992px) {
+
+	.studyMainContainer{
+		width:990px !important;
+	}
+}
+
+@media(max-width:767px){
+	
+	html{
+ 		overflow-x: hidden;
+		overflow-y: auto;
+ 	}
+ 	 .addResourcePopup{
+		margin-top:0px !important;	
+	}
+	#uvTabLabel{
+		display:none !important;
+	}
+
+	#__printingFrame{
+		display: none;
+	}
+	.borderLeft{
+		border:0px !important;
+	}
+	
+	.reviewPopup{
+		left:44% !important;
+		width: 100%;
+	}
+	
+	.preFilterPopup{
+		left:18% !important;
+		top:48px !important;
+		
+ 	}
+	
+	.reviewPopupPoor{
+		top:120px !important;
+		left:24% !important;
+		width:300px;
+	}
+	.addResourceContainer{
+		width:500px;
+	 }
+ 
+	 .loginFailureAlert{
+	 	left:22% !important;
+	 }
+ 
+	 .tableDivStyles{
+	 	width:60% !important;
+	 }
+ 	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+	
+}
+@media (min-width: 320px) and (max-width: 479px){
+	 .addResourcePopup{
+		margin-top:0px !important;	
+	}
+	 .borderLeft{
+ 		border-right:0px !important;
+ 	}
+ 	
+ 		.borderRight{
+ 			border-left: 0px !important;
+ 		}
+		.reviewPopup{
+			left:20% !important;
+			width: 100%;
+			top:120px !important;
+		}
+		 .narrationRightContainerFullScreen{
+ width:59% !important;
+ }
+		.preFilterPopup{
+			left:0% !important;
+			top:48px !important;
+ 		}
+		.reviewPopupPoor{
+			left:20% !important;
+			width:250px;
+		}
+	.addResourceContainer{
+		width:100%;
+	 	}
+	.dropdownListContainerScrollPanel{
+   	 
+   	  margin:0px !important;
+   	 
+   }
+	 .loginFailureAlert{
+	 	left:0% !important;
+	 	width:100% !important;
+	 }
+ 
+   html{
+ 		overflow-x: hidden;
+		overflow-y: auto ;
+ 	}
+	.positionFixed{
+ 		position:relative !important;
+ 	}
+ 	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+	
+	#uvTabLabel{
+		display:none !important;
+	}
+}
+@media (min-width: 240px) and (max-width: 319px){
+		.addResourcePopup{
+		margin-top:0px !important;	
+	}
+	
+	#uvTabLabel{
+		display:none !important;
+	}
+		 .borderLeft{
+ 			border-right:0px !important;
+ 		}
+ 		.borderRight{
+ 			border-left: 0px !important;
+ 		}
+		.reviewPopup{
+		left:10% !important;
+		width: 100%;
+		top:100px !important;
+		}
+		 .narrationRightContainerFullScreen{
+ width:59% !important;
+ }
+		.preFilterPopup{
+			left:0% !important;
+			top:48px !important;
+ 		}
+		.reviewPopupPoor{
+			left:10% !important;
+			width:200px;
+		}
+	
+	.addResourceContainer{
+		width:100%;
+	
+ 	}
+ 	
+ 	.dropdownListContainerScrollPanel{
+   	 
+   	  margin:0px !important;
+   	 
+   }
+ 
+ .loginFailureAlert{
+ 	left:0% !important;
+ 	width:100% !important;
+ }
+  html{
+ 		overflow-x: hidden;
+		overflow-y: auto;
+ 	}
+ 	 .positionFixed{
+ 	position:relative !important;
+ }
+ 	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+
+}
+@media (max-width: 991px) and (min-width: 768px){
+	.borderLeft{
+ 		border-right:0px !important;
+ 	}
+ 	.borderRight{
+ 		border-left: 0px !important;
+ 	}
+ 	
+ 	.loginFailureAlert{
+ 		left:29% !important;
+ 		
+ 	}
+ 	html{
+ 		overflow-x: hidden;
+		overflow-y: auto;
+ 	}
+	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
+	}
+ 
+}
+
+@media(min-width:768px){
+ 
+ 	html{
+ 		overflow-x: hidden;
+		overflow-y: auto ;
+ 	}
+	
+	.reviewPopup{
+		left:69% !important;
+		width: 100%;	
+	}
+	
+	 .narrationRightContainerFullScreen{
+
+ }
+	
+	.reviewPopupPoor{
+		left:63% !important;
+		width:300px;
+	}
+	.addResourceContainer{
+		width:500px;
+    }
+    
+	#menuRight {
+		-webkit-backface-visibility: hidden;
+		-webkit-perspective:0;
+		transform: translate3d( 180px, 0, 0 );
+	-webkit-transform:initial !important;
+	}
+	.menu-visible1 #main {
+	 left: 0px; 
+	}
+
+	.animating #menu, .menu-visible #menu {
+		
+	}
+	.animating #page {
+	transition: transform .25s ease-in-out;
+	-webkit-transition:hidden;
+	}
+	.animating.left #page {@media (min-width: 240px) and (max-width: 319px){
+	transform: translate3d( 0p, 0, 0 );
+	-webkit-transform: translate3d( 0, 0, 0 );
+	}	
+
+	#searchPush{
+		display:none !important;
+	}
+	span.fivestar input[type="checkbox"], 
+	span.fourstar input[type="checkbox"],
+	span.threestar input[type="checkbox"],
+	span.twostar input[type="checkbox"],
+	span.onestar input[type="checkbox"],
+	span.zerostar input[type="checkbox"],
+	span.review input[type="checkbox"]{
+		margin: 0px 4px 4px 4px !important;
+	}
+	
+	.mobilefriendlyContainer, .oerContainer{
+		position: relative;
+		margin-bottom: 0px;
+		height: 30px;
 	}
 }
 
@@ -2354,7 +3167,7 @@ fieldset {
 	transition-property: opacity background;
 	height: 27px;
 	text-align: center;
-	width:108px;
+	width:106px;
 	line-height: 21px;
 	color: #1076BB;
 	font-size: small;
@@ -2402,8 +3215,8 @@ fieldset {
 	-moz-transition: left 0.15s ease-out;
 	-o-transition: left 0.15s ease-out;
 	transition: left 0.15s ease-out;
-	width: 103px;
-	height: 22px;
+	width: 106px;
+	height: 27px;
 	background: #1076BB;
 	border-radius: 2px;
 	padding: 3px;
@@ -2432,9 +3245,13 @@ fieldset {
 .errorBorderMessage{
 	border: 1px solid orange !important;
 }
+.contentBoxStyles{
+	box-sizing: content-box;
+}
 .google-visualization-table{
    width:auto !important;
 }
+
 
 span.fivestar input[type="checkbox"], 
 span.fourstar input[type="checkbox"],
@@ -2460,7 +3277,4 @@ span.review input[type="checkbox"]{
 
 div#spnlDisclosureContentSimPanel>div:first-child {
 	/* padding: 15px; */
-}
-.google-visualization-table{
-    width:auto !important;
 }

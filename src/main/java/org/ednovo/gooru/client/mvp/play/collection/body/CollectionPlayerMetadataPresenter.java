@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetad
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -49,8 +50,11 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -305,8 +309,18 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		getView().setClasspageInsightsUrl(classpageId, sessionId);
 	}
+
 	public void hideTeacherInfo() { 
-		getView().hideTeachPanelDetails(false);
+//		getView().hideTeachPanelDetails(false);
+
+	}
+	@Override
+	public FlowPanel getMenuContainer() {
+		if(collectionPlayerPresenter!=null){
+			return collectionPlayerPresenter.getMenuContainer();
+		}else{
+			return null;
+		}
 	}
 	@Override
 	public void updateCommentsStatus(String commentsStatus){

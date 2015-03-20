@@ -123,6 +123,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		this.analyticService.setHTMLtoPDF(htmlString,fileName,isClickedOnEmail, new AsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
+
 				if(!StringUtil.checkNull(result)){
 					if(isClickedOnEmail){
 						getView().setPdfForEmail(result);

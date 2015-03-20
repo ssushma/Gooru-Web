@@ -1,45 +1,49 @@
 .collection-narration-container{
 	width: 100%;
-	margin-top:23px;
-	padding:10px;
-	background-color: rgb(77,77,77);
+	margin-top: 23px;
+	padding: 10px;
+	background-color: #4d4d4d;
+	float: left;
 }
 
 .collection-narration-wrapper{
 	min-height: 126px;
 	padding:10px;
 	background-color: #rgb(77,77,77);
-	width:940px;
+	/*width:940px;*/
 	position: relative;
 	margin:0 auto;
 }
 
 .collection-share-maintitle{
-	float: left;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
 	color: white;
-	font-weight: bold;
-	width: 100%;
-	text-align: center;
-	padding-top: 20px;
+margin: 0 0 15px 0;
+font-family: Arial,Helvetica,sans-serif;
+font-size: 16px;
+font-weight: bold;
+padding-top: 20px;
+text-align: center;
+width: 100%;
 }
 
 .collection-share-buttonscontainer{
-	margin-top:30px;
-	clear: both;
-	padding-left: 76px;
+	width: 100%;
+	margin-top: 10px;
+/*	padding: 10px;*/
+	background-color: #4d4d4d;
+	float: left;
 }
 
 .collection-share-button1{
 	color: #1076BB;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
+	margin-top: 5px;
 }
 .collection-share-button2{
 	color: #1076BB;
-	margin-left: 30px;
 	font-size: 12px;
+	margin-top: 5px;
 }
 .collection-share-button1:hover, .collection-share-button2:hover{
 	color: #87BADD;
@@ -53,7 +57,6 @@
 	margin-right: auto;
 }
 .collection-share-titleContainer{
-	float:left;
 	padding-bottom: 5px;
 }
 .collection-share-title{
@@ -68,7 +71,7 @@
 	font-size: 12px;
 	height: 41px;
 	resize: none;
-	width: 366px;
+	width: 100%;
 	padding: 5px;
 	float: left;
 }
@@ -89,18 +92,21 @@
 
 .contentCollectionEdit {
 	float: left;
-	width: 97%;
-	margin-left: 23px;
+	width: 100%;
 }
 
 .collection-socialshare-title{
+/*
 	float: left;
+*/
 	font-size: 13px;
 	color: #515151;
 	margin-bottom: 10px;
+/*
 	margin-left: 23px;
+*/
 	color: white;
-	margin-top: 7px;
+	/* margin-top: 7px; */
 }
 
 .facebookButton {
@@ -108,7 +114,7 @@
 	background-color: #3b5996;
 	font-size:12px;
 	border-radius: 4px;
-	padding: 7px 21px 7px 35px;
+	padding: 7px 10px 7px 35px;
 	border: 1px solid #3b5996;
 	font-family: Arial, sans-serif;
 	display:inline-block;
@@ -131,6 +137,7 @@
 
 	/* Opera 11.10+ */
 	background: url("images/FTE.png") -26px -19px no-repeat, -o-linear-gradient(top, #3b5996, #3b5996);
+	margin-top:5px;
 }
 
 .twitterButton {
@@ -138,7 +145,7 @@
 	background-color: #00acf0;
 	font-size:12px;
 	border-radius: 4px;
-	padding: 7px 28px 7px 37px;
+	padding: 7px 20px 7px 37px;
 	border: 1px solid #00acf0;
 	font-family: Arial, sans-serif;
 	display:inline-block;
@@ -161,6 +168,7 @@
 
 	/* Opera 11.10+ */
 	background: url("images/FTE.png") -26px -43px no-repeat, -o-linear-gradient(top, #00acf0, #1076BB);
+	margin-top:5px;
 }
 
 .emailButton {
@@ -168,7 +176,7 @@
 	background-color: #1076bb;
 	font-size:12px;
 	border-radius: 4px;
-	padding: 7px 28px 7px 37px;
+	padding: 7px 20px 7px 37px;
 	border: 1px solid #1076BB;
 	font-family: Arial, sans-serif;
 	display:inline-block;
@@ -191,6 +199,7 @@
 
 	/* Opera 11.10+ */
 	background: url("images/FTE.png") -24px -69px no-repeat, -o-linear-gradient(top, #1076BB, #1076BB);
+	margin-top: 5px;
 }
 .resource-info-bottomImageContainer{
 	text-align: center;

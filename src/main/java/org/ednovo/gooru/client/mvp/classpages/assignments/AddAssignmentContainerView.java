@@ -104,6 +104,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	private int limit=20;
 	private int totalHitCount=0;
 	private int pageNum=1;
+	
+	private static final String ASSESSMENT = "assessment";
 
 	protected PopupPanel appPopUp;
 	private DateBoxUcCustomizedForAssign dateBoxUc;
@@ -551,37 +553,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		}else{
 			
 		}
-		
-//		if(cureentcollectionTreeItem!=null){
-//			final String directions=assignmentDirectionsTxtArea.getText().trim().equals(GL1389)?null:assignmentDirectionsTxtArea.getText().trim();
-//			final String dueDate=dateBoxUc.getDateBox().getValue()==null||dateBoxUc.getDateBox().getValue().equals("")?null:dateBoxUc.getDateBox().getValue();
-//			Map<String, String> parms = new HashMap<String, String>();
-//			parms.put("text", assignmentDirectionsTxtArea.getText());
-//			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-//				@Override
-//				public void onSuccess(Boolean isFound) {
-//					if(isFound){
-//						directionErrorLabel.setText(GL0554);
-//						addResourceBtnLbl.setVisible(true);
-//						cancelResourcePopupBtnLbl.setVisible(true);
-//						addingText.setVisible(false);
-//						addResourceBtnLbl.setEnabled(true);
-//					}else{
-//						directionErrorLabel.setText("");
-//						addResourceBtnLbl.setVisible(false);
-//						cancelResourcePopupBtnLbl.setVisible(false);
-//						addingText.setVisible(true);
-//						getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid(), directions, dueDate);
-//						addResourceBtnLbl.setEnabled(true);
-//					}
-//				}		
-//			});
-//		}else{
-//			chooseCollectionErrorLabel.setText(GL1475);
-////			chooseCollectionErrorLabel.getElement().getStyle().setMarginTop(0, Unit.PX);
-//			addResourceBtnLbl.setEnabled(true);
-//		}
-		
+
 	}
 	
 	/**
@@ -680,8 +652,11 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			this();
 			folderContainer.addStyleName(levelStyleName);
 		}
-		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid){
+		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid, String collectionType){
 			this();
+			if(ASSESSMENT.equals(collectionType)){
+				folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().folderAssessment());
+			}
 			if(levelStyleName!=null){
 				folderContainer.addStyleName(levelStyleName);
 			}
@@ -723,8 +698,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
+					 }else {
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -768,9 +744,10 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 						 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
+					 }else{
 						 collectionCount++;
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid()));
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),collectionType));
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -1003,8 +980,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		hide();
 		clearShelfData();
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		new SuccessMessagePopupView(collectionTitle);
 		Window.enableScrolling(false);
+		new SuccessMessagePopupView(collectionTitle);
 	}
 	
 	public TreeItem loadingTreeItem(){

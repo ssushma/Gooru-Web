@@ -473,7 +473,6 @@ input.styled {
 	border: 0;
 	float: right;
 	width: 322px;
-	height: 30px;
 	padding: 15px 0px 0px 0px;
 	vertical-align: middle;
 	line-height: 30px;
@@ -1022,6 +1021,7 @@ input.styled {
 }
 
 .uploadProfileImageButton {
+	box-sizing:content-box;
 	display: none;
 	position: relative;
 	text-align: center;
@@ -1054,6 +1054,7 @@ input.styled {
 	float: left;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC',
 		endColorstr='#1076BB');
+	
 }
 
 .uploadProfileImageButton:hover {
@@ -1358,6 +1359,10 @@ input.styled {
 	width: 350px;
 	margin: 2px 14px;
 }
+.standardsCheckBox label, .substandardsCheckBox label{
+	font-weight: normal;
+}
+
 .substandardsCheckBox
 {
 	float: left;

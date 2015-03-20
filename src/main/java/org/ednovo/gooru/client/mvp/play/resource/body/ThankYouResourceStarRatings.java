@@ -81,6 +81,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements ClientCon
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField HTMLPanel buttonsContainer;
 	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl,thankYouRatingLbl;
+	@UiField ResourcePlayerMetadataBundle playerStyle;
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review,createrName;
@@ -105,6 +106,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements ClientCon
 		setWidget(uiBinder.createAndBindUi(this));
 		setUserReview(review);
 		setAvgRatingWidget();
+		this.setStyleName("reviewPopup");
 		setGlassEnabled(true);
 		thankYouRatingLbl.setText(i18n.GL1854());
 		thankYouRatingLbl.getElement().setId("lblThankYouRatingLbl");

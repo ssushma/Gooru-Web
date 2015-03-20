@@ -155,7 +155,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	@Override
 	protected void onReset() {
-	
 		if(AppClientFactory.getPlaceManager().refreshPlace()) {
 			String userResetId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 			String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
@@ -167,15 +166,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				userId = userResetId;
 				createProfileUserData();
 			}
-			if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
-				//To show SignUp (Registration popup)
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-				String type = getPlaceManager().getRequestParameter("type") ;
-				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
-				signUpViewPresenter.displayPopup(displayScreen);
-				addToPopupSlot(signUpViewPresenter);
-			}
 			int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 			if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
@@ -184,6 +174,16 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				update.show();
 				update.center();
 			}
+		}
+		if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			System.out.println("callbcalk-profile");
+			Window.enableScrolling(false);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+			String type = getPlaceManager().getRequestParameter("type") ;
+			int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+			signUpViewPresenter.displayPopup(displayScreen);
+			addToPopupSlot(signUpViewPresenter);
 		}
 		String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		
@@ -255,14 +255,11 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 						getView().getChilNoShareOption().setVisible(false);
 					}
 				}
+				
 			}
+			
 		});
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		getProfilePageService().profileVisitEvent(userId, new SimpleAsyncCallback<Void>(){
-			@Override
-			public void onSuccess(Void result) {
-			}
-		});
 	}
 	
 	private boolean isChildUser(ProfileDo profileDo) {

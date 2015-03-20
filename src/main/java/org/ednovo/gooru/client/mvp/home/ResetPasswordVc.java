@@ -30,7 +30,6 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
@@ -38,6 +37,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
@@ -87,6 +87,8 @@ public class ResetPasswordVc extends Composite{
 	
 	@UiField
 	Label newPasswordText,newPwdLbl,confirmPwdLbl,tokenExpireErrorLabel;
+	
+	
 
 	private String resetToken;
 
@@ -123,6 +125,7 @@ public class ResetPasswordVc extends Composite{
 			//appPopUp.addStyleName(HomeCBundle.INSTANCE.css().resetPasswordPopup());
 			appPopUp.show();
 			appPopUp.center();
+			appPopUp.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
 			newPasswordText.setText(i18n.GL1254());
 			newPasswordText.getElement().setId("lblNewPasswordText");
 			newPasswordText.getElement().setAttribute("alt",i18n.GL1254());
@@ -152,6 +155,8 @@ public class ResetPasswordVc extends Composite{
 			resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
 			resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
 			resetNewPwdTxtBox.getElement().setId("txtNewPwd");
+			resetNewPwdTxtBox.getElement().getStyle().setWidth(60, Unit.PCT);
+			resetConfirmPwdTxtBox.getElement().getStyle().setWidth(60, Unit.PCT);
 			newPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
 					.passwordErrorLabel());
 			newPwdValidationUc.setVisible(false);
@@ -165,6 +170,7 @@ public class ResetPasswordVc extends Composite{
 			//resetConfirmPwd.addBlurHandler(new OnPasswordBlur());
 			resetNewPwdTxtBox.addFocusHandler(new OnNewPasswordFocus());
 			resetConfirmPwdTxtBox.addFocusHandler(new OnConfirmPasswordFocus());
+			
 			Window.enableScrolling(false);
 			AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
 		}

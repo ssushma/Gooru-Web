@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc"  xmlns:meta="urn:import:org.ednovo.gooru.client.mvp.shelf.collection.folders">
 	<ui:style field="folderStyle" src="../../folderList.css"
 		type="org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 			
 		<g:FlowPanel ui:field="folderContentPanel" styleName="{folderStyle.editPanelContent}">
 		<g:HTMLPanel styleName="{folderStyle.titleSection}" ui:field="panelTitleSection">
@@ -17,7 +18,9 @@
 			</gg:HTMLEventPanel>
 			<g:HTMLPanel styleName="{folderStyle.saveCancelContainer}">
 				<g:Button ui:field="editFolderSaveBtn" styleName="primary"></g:Button>
-				<g:Button ui:field="editFolderCancelBtn" styleName="secondary {folderStyle.buttonMargins}"></g:Button>
+				<g:Button ui:field="editFolderCancelBtn" styleName="secondary"></g:Button>
+				<!-- <g:Button ui:field="editFolderCancelBtn" styleName="secondary {folderStyle.buttonMargins}"></g:Button> -->
+				<g:Button ui:field="folderViewBtn" styleName="primary" text="{i18n.GL1946}" title="{i18n.GL1946}"/>		
 			</g:HTMLPanel>
 			<g:Label styleName="errorMessage" ui:field="folderTitleErrorLbl"></g:Label>
 		</g:HTMLPanel>

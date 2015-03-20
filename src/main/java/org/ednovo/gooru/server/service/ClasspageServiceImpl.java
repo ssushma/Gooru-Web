@@ -116,6 +116,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	private static final String SEARCHRESULTS="searchResults";
 	private static final String GOALS="goals";
+	private static final String COLLECTION_TYPE="collectionType";
 	private static final String THUMBNAIL="thumbnails";
 	private static final String THUMBNAILURL="url";
 	private static final String TOTALHITCOUNT="totalHitCount";
@@ -1162,6 +1163,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				classpageItemDo.setGoal(resourceJsonObject.isNull(GOALS)?null:resourceJsonObject.getString(GOALS));
 				classpageItemDo.setCollectionId(resourceJsonObject.getString(GOORUOID));
 				classpageItemDo.setThumbnailUrl(resourceJsonObject.getJSONObject(THUMBNAIL)!=null?resourceJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
+				classpageItemDo.setCollectionType(resourceJsonObject.isNull(COLLECTION_TYPE)?null:resourceJsonObject.getString(COLLECTION_TYPE));
 			}
 		}catch (JSONException e) {
 		}

@@ -257,6 +257,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
 		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -339,6 +340,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	@Override
 	protected void onReset() {
 		super.onReset();
+		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		if(!AppClientFactory.isAnonymous()) {
 			String id = getPlaceManager().getRequestParameter("id");
@@ -453,7 +455,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 					if(O1_LEVEL_VALUE!=null) {
 						params.put("o1", O1_LEVEL_VALUE);
 					}
-					AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT_AND_VIEW, params)); 
+					AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT_AND_VIEW, params,result)); 
 					getView().getLoadingImageInvisible();
 					getView().editCopyCollectionTitle();
 				}

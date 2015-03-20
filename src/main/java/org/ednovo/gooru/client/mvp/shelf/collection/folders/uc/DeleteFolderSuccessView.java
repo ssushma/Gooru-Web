@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.folders.uc;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -40,7 +41,6 @@ public abstract class DeleteFolderSuccessView extends Composite {
 //		setWidget(uiBinder.createAndBindUi(this));
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.getElement().getStyle().setWidth(456, Unit.PX);
 		appPopUp.getElement().getStyle().setHeight(245, Unit.PX);
 		appPopUp.getHeaderPanel().getElement().getStyle().setMarginBottom(-2, Unit.PX);
@@ -68,14 +68,21 @@ public abstract class DeleteFolderSuccessView extends Composite {
 		setId();
 	}
 	
-	public DeleteFolderSuccessView(String movedFolderName) {
+	public DeleteFolderSuccessView(String movedFolderName, CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
+		/*appPopUp.setStyleName("removeResourcePopup");*/
 		appPopUp.getElement().getStyle().setWidth(456, Unit.PX);
 		appPopUp.getElement().getStyle().setHeight(245, Unit.PX);
 		appPopUp.getHeaderPanel().getElement().getStyle().setMarginBottom(-2, Unit.PX);
+		if(collectionDo != null && collectionDo.getCollectionType() != null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+		appPopUp.setContent(i18n.GL3180(), uiBinder.createAndBindUi(this));
+		}
+		else
+		{
 		appPopUp.setContent(i18n.GL1367(), uiBinder.createAndBindUi(this));
+		}
 		appPopUp.show();
 		appPopUp.center();
 		cancelButton.setText(i18n.GL0142());
@@ -87,9 +94,21 @@ public abstract class DeleteFolderSuccessView extends Composite {
 		okButton.getElement().setAttribute("alt",i18n.GL0190());
 		okButton.getElement().setAttribute("title",i18n.GL0190());
 		
-		headerTitle.setText(i18n.GL1366()+"\""+movedFolderName+"\"");
-		headerTitle.getElement().setAttribute("alt",i18n.GL1366()+"\""+movedFolderName+"\"");
-		headerTitle.getElement().setAttribute("title",i18n.GL1366()+"\""+movedFolderName+"\"");
+		if(collectionDo != null && collectionDo.getCollectionType() != null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			
+			headerTitle.setText(i18n.GL3181()+"\""+movedFolderName+"\"");
+			headerTitle.getElement().setAttribute("alt",i18n.GL3181()+"\""+movedFolderName+"\"");
+			headerTitle.getElement().setAttribute("title",i18n.GL3181()+"\""+movedFolderName+"\"");
+		}
+		else
+		{
+			
+			headerTitle.setText(i18n.GL1366()+"\""+movedFolderName+"\"");
+			headerTitle.getElement().setAttribute("alt",i18n.GL1366()+"\""+movedFolderName+"\"");
+			headerTitle.getElement().setAttribute("title",i18n.GL1366()+"\""+movedFolderName+"\"");
+		}
+
 		
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");

@@ -92,8 +92,8 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	@Override
 	public void onBind() {
 		super.onBind();
-
-		
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 	/**
 	 * 
@@ -141,6 +141,8 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
@@ -157,7 +159,8 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	@Override
 	protected void onReset() {
 		super.onReset();
-
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

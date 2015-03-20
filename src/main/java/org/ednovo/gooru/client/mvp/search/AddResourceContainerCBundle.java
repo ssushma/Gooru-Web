@@ -122,6 +122,7 @@ public interface AddResourceContainerCBundle extends ClientBundle {
 		String empty();
 		String selected();
 		String foldercollection();
+		String folderAssessment();
 		String innerchild();
 		String dropdowncontainer();
 		String dropdownPlaceHolder();
@@ -149,6 +150,8 @@ public interface AddResourceContainerCBundle extends ClientBundle {
 		String addMyCollectionsStyle();
 		String addResourceTextStyles();
 		String addCollectionTextStyles();
+		String collectionChild1();
+		String collectionChild2();
 	}
 	@Source("addresourcepopup.css")
 	NewAddresourcePopupCss css();

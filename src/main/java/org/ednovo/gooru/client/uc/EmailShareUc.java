@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.client.util.ScrollPopupShareUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -58,6 +59,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -100,6 +102,8 @@ public class EmailShareUc extends PopupPanel{
 	
 	@UiField
 	TextBox subTxt;
+	
+	@UiField HTMLPanel mainShareContainer;
 
 	@UiField
 	RichTextArea msgTxa;
@@ -129,6 +133,9 @@ public class EmailShareUc extends PopupPanel{
 	private int count=0;
 	
 	private TermsOfUse termsOfUse;
+	
+	Boolean isIpad,isAndriod,isWinDskp;
+
 
 	private static final String AT_SYMBOL = "@";
 
@@ -205,8 +212,8 @@ public class EmailShareUc extends PopupPanel{
 		toUsText.getElement().setId("inlineLblToUsText");
 		toUsText.getElement().setAttribute("alt", i18n.GL1894());
 		toUsText.getElement().setAttribute("title", i18n.GL1894());
-		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
-		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
+		
+		//ancprivacy.getElement().getStyle().setMarginLeft(10, Unit.PX);
 		mandatoryErrorLbl.getElement().setId("lblMandatoryErrorLbl");
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.getElement().setId("lblMandatoryErrorRichTextArea");
@@ -320,9 +327,8 @@ public class EmailShareUc extends PopupPanel{
 				body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
-
+		ScrollPopupShareUtil.ScrollPopupUtilWidget(mainShareContainer);
 	}
-
 	/**
 	 * Hide {@link EmailShareUc} popup
 	 * @param clickEvent instOLance of {@link ClickEvent}
@@ -596,7 +602,6 @@ public class EmailShareUc extends PopupPanel{
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}

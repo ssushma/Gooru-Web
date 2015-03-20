@@ -1297,8 +1297,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			}
 			
 		};
-		success.setHeight("253px");
-		success.setWidth("450px");
+	/*	success.setHeight("253px");
+		success.setWidth("450px");*/
 		success.setPopupTitle(i18n.GL1556());
 		if (listSize>1){
 			success.setDescText(i18n.GL1557());
@@ -1347,7 +1347,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
 	}

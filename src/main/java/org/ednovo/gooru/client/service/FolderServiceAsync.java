@@ -24,13 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -53,7 +55,7 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 //	void updateFolderMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String action, AsyncCallback<CollectionDo> callback);
 
 	//New APIs for 6.0
-	void getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
+	void getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType,boolean isExcludeAssessment, AsyncCallback<FolderListDo> callback);
 	
 	void deleteCollectionsFolder(String folderId, AsyncCallback<Void> callback);
 
@@ -70,4 +72,11 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void getCollectionResources(String parentId,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
 	
 	void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId, AsyncCallback<Void> simpleAsyncCallback);
+	
+	void getTocFolders(String folderId,boolean fromPPP, AsyncCallback<FolderTocDo> callback);
+	
+	void getFolderMetaData(String folderId, AsyncCallback<FolderDo> callback);
+	
+	void getFolderRouteNodes(String folderId, AsyncCallback<Map<String,String>> callback);
+	
 }

@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -59,7 +60,7 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	
 	@UiField FlowPanel endImageContainer,endContainer,resourceThumbnailContainer;
 	
-	private String thumbnailUrl;
+	private String thumbnailUrl,collectionType;
 	
 	private static TocCollectionEndViewUiBinder uiBinder = GWT.create(TocCollectionEndViewUiBinder.class);
 
@@ -80,9 +81,10 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	}
 	
 	@UiConstructor
-	public TocCollectionEndView(String thumbnailUrl){
+	public TocCollectionEndView(String thumbnailUrl, String collectionType){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
+		this.collectionType=collectionType;
 		resourceTitle.getElement().setInnerHTML(i18n.GL1051());
 		endContainer.getElement().setId("fpnlEndContainer");
 		endImageContainer.getElement().setId("fpnlEndImageContainer");
@@ -95,12 +97,13 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	}
 	
 	public void onLoad(){
+		StringUtil.setDefaultImages(collectionType, resourceThumbnail, "toc");
 		resourceThumbnail.setUrl(thumbnailUrl);
 	}
 	
 	@UiHandler("resourceThumbnail")
 	public void onErrorImageLoad(ErrorEvent event){
-		resourceThumbnail.setUrl("images/default-collection-image-160x120.png");
+		StringUtil.setDefaultImages(collectionType, resourceThumbnail, "toc");
 	}
 	public void setResourcePlayLink(){
 		Anchor resourceAnchor=new Anchor();

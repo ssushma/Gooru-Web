@@ -80,7 +80,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 	
 	@UiField Label panelLoading;
 	
-	@UiField HTMLPanel panelControls,titlePanel,headerPanel;
+	@UiField HTMLPanel panelControls,titlePanel,headerPanel,bodyConatiner, panelPleaseWait;
 		
 	interface NewClasspagePopupViewUiBinder extends
 		UiBinder<Widget, NewClasspagePopupView> {
@@ -93,13 +93,15 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		this.res = NewClasspagePopupCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		this.getElement().getStyle().setWidth(450,Unit.PX);
+		//this.getElement().getStyle().setWidth(450,Unit.PX);
 		btnCancel.addClickHandler(new CloseExistsClickHandler());
 		btnAdd.addClickHandler(new AddExistsClickHandler());
 		classpageTitleTxt.getElement().setAttribute("placeholder", i18n.GL1124());
 		classpageTitleTxt.getElement().setAttribute("maxlength", "50");
 		classpageTitleTxt.getElement().setId("txtClassPageTitle");
 		StringUtil.setAttributes(classpageTitleTxt, true);
+		bodyConatiner.getElement().getStyle().setPadding(15, Unit.PX);
+		titlePanel.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		
 		btnAdd.getElement().setId("btnAdd");
 		btnAdd.setText(i18n.GL0745());
@@ -157,7 +159,8 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		mandatoryClasspageTitleLbl.setVisible(false);
-		panelLoading.setVisible(false);
+//		panelLoading.setVisible(false);
+		panelPleaseWait.setVisible(false);
 		panelLoading.setText(i18n.GL0122());
 		panelControls.setVisible(true);
 		show();
@@ -255,7 +258,8 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 						}else{
 							createNewClasspage(title);
 							panelControls.setVisible(false);
-							panelLoading.setVisible(true);
+//							panelLoading.setVisible(true);
+							panelPleaseWait.setVisible(true);
 							classpageTitleTxt.getElement().getStyle().clearBackgroundColor();
 							classpageTitleTxt.getElement().getStyle().setBorderColor("#ccc");
 						}
@@ -317,7 +321,8 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 	public void ClosePopup(){
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		panelLoading.setVisible(false);
+//		panelLoading.setVisible(false);
+        panelPleaseWait.setVisible(false);
 		hide();
 	}
 	

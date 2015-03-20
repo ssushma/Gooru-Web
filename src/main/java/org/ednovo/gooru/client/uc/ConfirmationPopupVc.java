@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -62,11 +63,11 @@ public abstract class ConfirmationPopupVc extends Composite {
 	@UiField
 	FlowPanel buttonContainer;
 	
-	private static RemoveResourcePopupVcUiBinder uiBinder = GWT.create(RemoveResourcePopupVcUiBinder.class);
+	private static ConfirmationPopupVcUiBinder uiBinder = GWT.create(ConfirmationPopupVcUiBinder.class);
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface RemoveResourcePopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
+	interface ConfirmationPopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
 	}
 
 	/**
@@ -77,7 +78,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 	public ConfirmationPopupVc(String messageHeader, String  messageContent) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
+//		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(messageHeader, uiBinder.createAndBindUi(this));
 		contentText.setText(messageContent);
 		contentText.getElement().setId("lblContentText");
@@ -102,6 +103,14 @@ public abstract class ConfirmationPopupVc extends Composite {
 		buttonContainer.getElement().setId("fpnlButtonContainer");
         buttonContainer.setVisible(true);
 		cancelButton.getElement().getStyle().setMarginRight(10, Unit.PX);
+		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				appPopUp.hide();
+				
+			}
+		});
 	}
 
 	@UiHandler("cancelButton")

@@ -89,8 +89,10 @@ public class SignUpCompleteProfileView extends
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
-	Label lblCancel, lblTitle, lblHeading, lblSubHeading, lblchangePassword,
+	Label lblTitle, lblHeading, lblSubHeading, lblchangePassword,
 			userName,lblUpdating,quriesText,pleaseContactText;
+	@UiField
+	Anchor  lblCancel; 
 	@UiField
 	Image profileImage;
 	@UiField Anchor supportLink;

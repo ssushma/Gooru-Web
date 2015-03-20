@@ -25,11 +25,13 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
@@ -37,6 +39,7 @@ import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
@@ -47,7 +50,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -77,6 +79,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	private boolean isCAAvailable =false;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
+	AddCenturyPresenter addCenturyPresenter = null;
 	BrowseStandardsTooltip browseStandardsTooltip;
 	private boolean isBrowseStandardsToolTip = false;
 	private boolean isBrowseTooltip =false;
@@ -88,9 +91,10 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	 * @param view {@link View}
 	 */
 	@Inject
-	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view,AddStandardsPresenter addStandardsPresenter) {
+	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter) {
 		super(eventBus, view);
 		this.addStandardsPresenter = addStandardsPresenter;
+		this.addCenturyPresenter=addCenturyPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -321,13 +325,11 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 			
 			@Override
 			public void onSuccess(SearchDo<CodeDo> result) {
-				// TODO Auto-generated method stub
 				getView().setStandardSuggestions(result);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -443,4 +445,47 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		getView().getBrowseBtn().getElement().removeClassName("disabled");
 	}
 
+	@Override
+	public void getAutoSuggestedCenturyList(SearchDo<StandardFo> centuryDo){
+		AppClientFactory.getInjector().getSearchService().getSuggestCenturyByQuery(centuryDo, new AsyncCallback<SearchDo<StandardFo>>() {
+			@Override
+			public void onSuccess(SearchDo<StandardFo> result) {
+				getView().setCenturySuggestions(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
+
+	@Override
+	public void setUpdatedCentury() {
+		getView().setUpdatedCentury(addCenturyPresenter.getSelectedValues());
+	}
+
+	@Override
+	public void getAddCentury() {
+		if(getView().getSelectedCenturyValuesThroughAutosuggest().size()> 0){
+			addCenturyPresenter.setAddResourceData(getView().getSelectedCenturyValuesThroughAutosuggest());
+		}
+		addToPopupSlot(addCenturyPresenter);
+		getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
+	}
+
+	@Override
+	public void closeCenturyPopup() {
+		addCenturyPresenter.hidePopup();
+	}
+
+	@Override
+	public void updateCentury(String gooruOid, String action,Map<Long, String> selectedValues) {
+		AppClientFactory.getInjector().getResourceService().update21CenturySkills(gooruOid, action, selectedValues,new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				getView().onPostStandardUpdate(result);
+			}
+		});
+	}
 }

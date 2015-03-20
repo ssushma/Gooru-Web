@@ -631,7 +631,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"","0","20");
-		getLogger().info("--- partner WS API -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		getLogger().info("----Partners WS API - Time stamp to get data from API on server side --"+System.currentTimeMillis());
@@ -852,6 +851,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, sessionToken, limit+"",offset+"","14");
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -868,6 +868,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"",offset+"");
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -897,6 +898,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRep = null;
 		String url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STANDARD_LIBRARY_MENUS, subjectCode,getLoggedInSessionToken());
 		url=url+getLibraryName(libraryName);
+		getLogger().info("getStandardLibraryMenuList---:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
@@ -1039,7 +1041,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId, getLoggedInSessionToken());
 		url=url+getLibraryName(libraryName);
-		getLogger().info("Community -- getLibraryUnits - "+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLibraryUnits(jsonRepresentation, subjectName);
@@ -1061,6 +1063,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPICS_OPTIMIZED, subjectName, unitId, getLoggedInSessionToken(), offset+"", TOTAL_LIMIT);
 		url=url+getLibraryName(libraryName);
+		getLogger().info("getLibraryTopics---:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeTopicList(jsonRepresentation);
@@ -1071,6 +1074,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_LESSONS_OPTIMIZED, subjectName, topicId, getLoggedInSessionToken(), ""+offset, ""+limit);
 		url=url+getLibraryName(libraryName);
+		getLogger().info("getLibraryLessons---:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLessons(jsonRepresentation);

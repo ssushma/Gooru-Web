@@ -13,6 +13,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPa
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -37,6 +38,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -64,6 +66,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-collection-image-160x120.png";
 	
+	private static final String DEFULT_ASSESSMENT = "images/default-assessment-image -160x120.png";
+	
 	private static final String SMALL = "Small";
 	
 	private static final String SMALL_NEW = "SmallNew";
@@ -73,6 +77,10 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	private static final String COLLECTION = "collection";
 
 	private static final String SCOLLECTION = "scollection";
+	
+	private static final String ASSESSMENT_URL = "assessment/url";
+	
+	private static final String ASSESSMENT = "assessment";
 
 	private static final String RESOURCE = "resource";
 	
@@ -110,6 +118,9 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 
+	EditAssessmentPopup editAssessmentPopup=null;
+	
+	Button folderItemDelete=new Button();
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
@@ -156,7 +167,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}else{
 			moveUpBtn.setVisible(true); 
 		}*/
-		
+			
 		if(folderType.equals(FOLDER)) {
 			folderImage.setVisible(true);
 			collectionImage.setVisible(false);
@@ -165,47 +176,39 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			folderImage.setVisible(false);
 			collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
 			collectionImage.setVisible(true);
-			if(folderDo.getThumbnails()!=null) 
+			if(folderDo.getThumbnails()!=null && !StringUtil.isEmpty(folderDo.getThumbnails().getUrl())) 
 			{
-				if(folderDo.getThumbnails().getUrl()!=null)
-				{
-					if(!folderDo.getThumbnails().getUrl().isEmpty())
-					{
-				collectionImage.setUrl(folderDo.getThumbnails().getUrl());
-					}
-					else {
-						collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
-					}
-				}
-				else {
-					collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
-				}
+				setDefaultImage(folderDo.getCollectionType(), folderDo.getThumbnails().getUrl());
 			} 
 			else {
-				collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
+				setDefaultImage(folderDo.getCollectionType(), null);
 			}
 			collectionImage.addErrorHandler(new ErrorHandler() {
 				@Override
 				public void onError(ErrorEvent event) {
-					collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
+					setDefaultImage(folderDo.getCollectionType(),null);
 				}
 			});
 			collectionImage.setHeight("90px");
 			collectionImage.setWidth("120px");
-			contentBlock.addStyleName(folderStyle.collection());
+						
 		}
-		
 		List<FolderItemDo> folderItemDo = folderDo.getCollectionItems();
-		if(folderItemDo!=null&&folderItemDo.size()>0) {
+		if(!ASSESSMENT_URL.equals(folderDo.getCollectionType()) && folderItemDo!=null&&folderItemDo.size()>0) {
 			for(int i=0;i<folderItemDo.size();i++) {
 				FolderItemDo folderItem = folderItemDo.get(i);
 				Label folderItemLbl = new Label(folderItem.getTitle());
+
 				if(folderItem.getType().equals(FOLDER)) {
 					folderItemLbl.addStyleName(folderStyle.folder());
 					folderItemLbl.addClickHandler(new OpenChildFolderInContent(FOLDER, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
 					contents.add(folderItemLbl);
 				} else if(folderItem.getType().equals(SCOLLECTION)){
-					folderItemLbl.addStyleName(folderStyle.collection());
+					if(folderItem.getCollectionType().contains(ASSESSMENT)){
+						folderItemLbl.addStyleName(folderStyle.assessment());
+					}else{
+						folderItemLbl.addStyleName(folderStyle.collection());
+					}
 					folderItemLbl.addClickHandler(new OpenChildFolderInContent(SCOLLECTION, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
 					contents.add(folderItemLbl);
 				} else {
@@ -243,7 +246,40 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				contents.add(seeMoreLbl);
 			}
 		} else {
-			contents.addStyleName(folderStyle.empty());
+			if(ASSESSMENT_URL.equals(folderDo.getCollectionType())){
+				Button folderItemLbl = new Button(i18n.GL1428());
+				folderItemLbl.getElement().getStyle().setMarginRight(10, Unit.PCT);
+				folderItemLbl.getElement().getStyle().setMarginTop(72, Unit.PX);
+				Button folderItemEdit = new Button(i18n.GL2285());
+				folderItemEdit.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						getEditAssessmentPoupOrPlayCollection();
+					}
+				});
+				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
+				folderItemEdit.getElement().getStyle().setMarginTop(72, Unit.PX);
+				folderItemDelete.setText(i18n.GL0558());
+				folderItemEdit.getElement().getStyle().setMarginRight(10, Unit.PCT);
+				folderItemDelete.getElement().getStyle().setMarginTop(72, Unit.PX);
+				
+				folderItemLbl.addStyleName("secondary");
+				folderItemEdit.addStyleName("secondary");
+				folderItemDelete.addStyleName("secondary");
+				
+				folderItemLbl.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						Window.open(folderDo.getUrl(), "", "");
+					}
+				});
+				contents.addStyleName(folderStyle.assessmentContainer());
+				contents.add(folderItemLbl);
+				contents.add(folderItemEdit);
+				contents.add(folderItemDelete);
+			}else{
+				contents.addStyleName(folderStyle.empty());
+			}
 		}
 		/*reorderTxtBox.setText(getItemNo()+""); 
 		itemNumber.setText(getItemNo()+"");*/ 
@@ -252,26 +288,71 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
 	}
 	
+	
+	/**
+	 * To set the default image of collection/assessment
+	 * @param collectionType {@link String}
+	 * @param url 
+	 */
+	private void setDefaultImage(String collectionType, String url) {
+		if(collectionType.equals(ASSESSMENT) || collectionType.equals(ASSESSMENT_URL)){
+			contentBlock.addStyleName(folderStyle.assessment());
+			collectionImage.setUrl(url==null?DEFULT_ASSESSMENT:url);
+		}else{
+			contentBlock.addStyleName(folderStyle.collection());
+			collectionImage.setUrl(url==null?DEFULT_IMAGE_PREFIX:url);
+		}
+	}
+
 	@UiHandler("folderImage")
 	public void clickOnFolderImage(ClickEvent event) {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
 		AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
 	}
-	
+	public void getEditAssessmentPoupOrPlayCollection(){
+		if(ASSESSMENT_URL.equals(folderDo.getCollectionType())){
+			Window.enableScrolling(false);
+			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
+				@Override
+				void clickEventOnSaveAssessmentHandler(FolderDo result) {
+					folderDo.setTitle(result.getTitle());
+					folderDo.setUrl(result.getUrl());
+					folderDo.setGoals(result.getGoals());
+					folderDo.setSharing(result.getSharing());
+					folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+					itemTitle.setText(folderDo.getTitle());
+					editAssessmentPopup.hide();
+					Window.enableScrolling(true);
+				}
+				@Override
+				void clickEventOnCancelAssessmentHandler(ClickEvent event) {
+					editAssessmentPopup.hide();
+					Window.enableScrolling(true);
+				}
+			};
+			editAssessmentPopup.setGlassEnabled(true);
+			editAssessmentPopup.show();
+			editAssessmentPopup.center();
+		}else{
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
+			AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
+		}
+	}
 	@UiHandler("collectionImage")
 	public void clickOnCollectionImage(ClickEvent event) {
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
-		AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
+		getEditAssessmentPoupOrPlayCollection();
 	}
 	
 	@UiHandler("itemTitle")
 	public void clickOnTitle(ClickEvent event) {
-		if(folderDo.getType().equals("folder")){
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
-		}else{
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
+		if(!ASSESSMENT_URL.equals(folderDo.getCollectionType())){
+			 	if(folderDo.getType().equals("folder")){
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(FOLDER, folderDo.getGooruOid()));
+				}else{
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, urlParams(COLLECTION, folderDo.getGooruOid())); 
+				}
+				AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 		}
-		AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 	}
 	
 	@Override
@@ -645,6 +726,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		return moveBottomBtn;
 	}
 
+	/**
+	 * @return the delete button
+	 */
+	public Button getDeleteBtn() {
+		return folderItemDelete;
+	}
 	/**
 	 * @param moveBottomBtn the moveBottomBtn to set
 	 */

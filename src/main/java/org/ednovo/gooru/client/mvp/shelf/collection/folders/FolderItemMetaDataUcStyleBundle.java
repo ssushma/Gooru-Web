@@ -8,4 +8,6 @@ public interface FolderItemMetaDataUcStyleBundle  extends CssResource{
 	String openItem();
 	String closeItem();
 	String errorLabel();
+	String highlightContent();
+	String pencilHolderDiv();
 }

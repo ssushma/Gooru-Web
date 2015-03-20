@@ -56,6 +56,8 @@ public class ProfileLibraryDo implements Serializable{
 	private String collectionItemId;
 	private Integer itemSequence;
 	private ResourceSourceDo resourceSource;
+	
+	private String collectionType;
 
 	//mandatory variables to convert PartnerFolderDo to ConceptDo
 	private String goals;
@@ -405,6 +407,20 @@ public class ProfileLibraryDo implements Serializable{
 
 	public void setParentGooruOid(String parentGooruOid) {
 		this.parentGooruOid = parentGooruOid;
+	}
+
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
 	}
 	
 	

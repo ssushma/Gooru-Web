@@ -28,6 +28,7 @@ import java.util.Date;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -81,6 +82,7 @@ public class DateBoxUc extends FlowPanel{
 		
 		dateBox = new TextBox();
 		dateBox.getElement().setId("tbBirthday");
+		dateBox.getElement().getStyle().setWidth(100, Unit.PCT);
 		dateBox.setReadOnly(true);
 		if (!isRegistration){
 				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());
@@ -90,7 +92,7 @@ public class DateBoxUc extends FlowPanel{
 			if (!isSmall){
 				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBox());
 			}else{
-				calendarIcon.addStyleName(UcCBundle.INSTANCE.css().iconPosition());
+				calendarIcon.addStyleName(SignUpCBundle.INSTANCE.css().iconPosition());
 			}
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){

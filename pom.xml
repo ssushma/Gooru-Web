@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<properties>
-		<env>qa</env>
+		<env>elbprod</env>
 		<!-- Spring properties -->
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
 		<org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>
@@ -65,16 +65,25 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>highcharts.com</groupId>
-			<artifactId>gwt-highcharts</artifactId>
-			<version>1.0</version>
+	            <groupId>highcharts.com</groupId>
+	            <artifactId>gwt-highcharts</artifactId>
+	            <version>1.0</version>
+	    </dependency>
+	   <dependency>
+				<groupId>com.google.gwt.google-apis</groupId>
+				<artifactId>gwt-visualization</artifactId>
+				<version>1.0.2</version>
+	   </dependency>
+	   <dependency>
+			<groupId>com.bramosystems.oss.player</groupId>
+			<artifactId>bst-player-api</artifactId>
+			<version>1.3</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.gwt.google-apis</groupId>
-			<artifactId>gwt-visualization</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.7.0</version>
+		</dependency>		
 		<!-- Dependency to support GWT crypto -->
 		<dependency>
 			<groupId>com.googlecode.gwt-crypto</groupId>
@@ -190,11 +199,6 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.7.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -240,11 +244,6 @@
 			<version>3.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.code.gwt-dnd</groupId>
-			<artifactId>gwt-dnd</artifactId>
-			<version>2.5.6</version>
-		</dependency>
-		<dependency>
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-mvp-client</artifactId>
 			<version>0.7</version>
@@ -288,33 +287,33 @@
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>3.0-M1</version>
+			<version>2.1-M6</version>
 			<type>pom</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>3.0-M1</version>
+			<version>2.1-M6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.simple</artifactId>
-			<version>3.0-M1</version>
+			<version>2.1-M6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.json</artifactId>
-			<version>3.0-M1</version>
+			<version>2.1-M6</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.restlet.jse</groupId> <artifactId>org.restlet.ext.ssl</artifactId> 
-			<version>2.3.1</version> </dependency> -->
-		<!-- <dependency> <groupId>org.restlet.jse</groupId> <artifactId>org.restlet.ext.net</artifactId> 
-			<version>2.3.1</version> </dependency> -->
+		<dependency> <groupId>org.restlet.jse</groupId> <artifactId>org.restlet.ext.ssl</artifactId> 
+			<version>2.1-M6</version> </dependency>
+		<dependency> <groupId>org.restlet.jse</groupId> <artifactId>org.restlet.ext.net</artifactId> 
+			<version>2.1-M6</version> </dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
 			<artifactId>org.restlet.ext.html</artifactId>
-			<version>3.0-M1</version>
+			<version>2.1-M6</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -332,11 +331,6 @@
 			<version>${player.resource.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.bramosystems.oss.player</groupId>
-			<artifactId>bst-player-api</artifactId>
-			<version>1.3</version>
-		</dependency>
-		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20090211</version>
@@ -345,11 +339,6 @@
 			<groupId>org.gooru.collection.player</groupId>
 			<artifactId>gooru.collection.player</artifactId>
 			<version>${player.collection.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
-			<version>4.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -380,11 +369,6 @@
 			<groupId>com.google.code</groupId>
 			<artifactId>GwtEarth3</artifactId>
 			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itextpdf</artifactId>
-			<version>5.4.3</version>
 		</dependency>
 		<dependency>
 			<groupId>code.google.com</groupId>

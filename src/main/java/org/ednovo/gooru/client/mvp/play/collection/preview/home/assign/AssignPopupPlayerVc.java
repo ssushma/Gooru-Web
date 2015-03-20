@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.client.util.ScrollPopupUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -91,7 +92,7 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientConstants{
 
 	@UiField
-	HTMLPanel loadingImageLabel,popupContentAssign;
+	HTMLPanel loadingImageLabel,popupContentAssign,assignPopupContent;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -114,9 +115,13 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 	Anchor forgotPwd,ancSignUp;
 
 	@UiField
-	Label cancelButton,lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
+	Label cancelButton,lblPleaseWait,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
 
+	@UiField
+	Anchor  swithUrlLbl, swithToEmbedLbl;
+	
 	@UiField InlineLabel lblPii,toUsText;
+	
 	@UiField Anchor ancprivacy;
 	
 	private boolean isPrivate = false;
@@ -230,7 +235,8 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
-		this.center();	
+		this.center();
+		ScrollPopupUtil.ScrollPopupUtilWidget(assignPopupContent,false);
 	}
 
 	public void hideContainers() {
@@ -778,7 +784,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 			}
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}

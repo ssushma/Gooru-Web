@@ -445,5 +445,24 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
 		}
 	}
-	
+	@Override
+	public void createSessionAttemptTryWhenNavigation(int questionType) {
+		if(questionType==1){
+			if(multipleChoicesQuestionWidget!=null){
+				//multipleChoicesQuestionWidget.createSessionItemAttemptWhenNavigation();
+			}
+		}else if(questionType==4){
+			if(fillInTheBlankQuestionWidget!=null){
+				//fillInTheBlankQuestionWidget.createSesstionItemAttemptOeWhenNavigation();
+			}
+		}else if(questionType==6){
+			if(opendEndedQuestionWidget!=null){
+				//opendEndedQuestionWidget.createSesstionItemAttemptOeWhenNavigation();
+			}
+		}
+	}
+	@Override
+	public FlowPanel getQuestionContainer(){
+		return questionContainer;
+	}
 }

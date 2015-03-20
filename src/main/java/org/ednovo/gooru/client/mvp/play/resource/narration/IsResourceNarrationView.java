@@ -31,4 +31,7 @@ import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsResourceNarrationView extends PopupView, IsViewWithHandlers<ResourceNarrationUiHandlers>{
 	public void setNarrationMetadata(CollectionItemDo collectionItemDo,String userName,String gooruUid);
+
+	public void showAddToolTip();
+	public boolean isShowingPopup();
 }

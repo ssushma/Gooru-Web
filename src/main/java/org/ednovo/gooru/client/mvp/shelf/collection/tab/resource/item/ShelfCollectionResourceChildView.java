@@ -1365,8 +1365,8 @@ public class ShelfCollectionResourceChildView extends
 						}
 						
 					};
-					success.setHeight("253px");
-					success.setWidth("450px");
+				/*	success.setHeight("253px");
+					success.setWidth("450px");*/
 					success.setPopupTitle(i18n.GL1795());
 					success.setDescText(i18n.GL1796());
 					success.enableTaggingImage();
@@ -2308,7 +2308,7 @@ public class ShelfCollectionResourceChildView extends
 		copyConfirmPopupVc.setFolderItems(item,folderListDo);
 	}
 	private String removeHtmlTags(String html){
-		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+//		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
         return html;
 	}

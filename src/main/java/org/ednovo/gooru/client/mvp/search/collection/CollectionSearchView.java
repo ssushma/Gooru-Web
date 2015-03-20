@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.mvp.search.collection;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
@@ -35,7 +36,6 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchResultVc;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 

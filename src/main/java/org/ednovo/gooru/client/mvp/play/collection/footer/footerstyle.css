@@ -1,10 +1,13 @@
 .footerContainer{
 	background:#333333;
 	padding:10px 0 5px 0;
+	position:fixed;
 	width:100%;
 	float:left;
-	position:fixed;
 	bottom:0;
+	z-index: 999;
+	bottom:0 !important;
+	overflow: hidden;
 }
 .footerContainer .infoButtonNormal{
 	display:inline-block;
@@ -35,6 +38,35 @@ display:inline-block;
 	/* transition:all 0.5s ease-in-out 0s; */
 	width:31px;
 	height:30px;
+}
+
+ .fullscreenButtonNormal{
+	display:inline-block;
+	background:url(images/Player_FullScreen.png) no-repeat;
+	/* transition:all 0.5s ease-in-out 0s; */
+	width:45px;
+	height:43px;
+}
+
+ .fullscreenButtonNormal:hover{
+	background:url(images/Player_FullScreen.png) no-repeat;
+	opacity:.6;
+	cursor: pointer;
+}
+.fullscreenButtonActive{
+	display:inline-block;
+	background:url(images/Player_FullScreen.png) no-repeat;
+	opacity:1;
+	width:45px;
+	height:43px;
+	cursor: pointer;
+}
+.fullscreenButtonDisabled{
+	display:inline-block;
+	background:url(images/Player_FullScreen.png) no-repeat;
+	opacity:.6;
+	width:45px;
+	height:43px;
 }
 
  .narrationButtonNormal{
@@ -172,7 +204,8 @@ display:inline-block;
 }
 .text-right{
 	text-align:right;
-	width: 100%;
-	position: relative;
-	float: left;
+}
+.endPageIframe iframe{
+	width: 100% !important;
+	height: 422px !important;
 }

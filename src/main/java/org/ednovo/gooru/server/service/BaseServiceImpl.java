@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.server.service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -540,6 +541,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		JsonRepresentation jsonRep = null;
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		try {
+			System.out.println("jsonRep.getText() : "+jsonRep.getText());
 			setLoggedInSessionToken(jsonRep.getJsonObject().getString(TOKEN));
 			V2UserDo v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 			user = v2UserDo.getUser();
@@ -548,6 +550,9 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			setLoggedInEmailId("");
 			setLoggedInDateOfBirth("");
 		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return user;
 	}
@@ -560,10 +565,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		try {
 			V2UserDo v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 			user = v2UserDo.getUser();
-//			setUserFilterProperties(user);
 			getLogger().info("v2GuestSignInForEmbed::"+v2UserDo.getUser().getToken());
 			getLogger().info("v2GuestSignInForEmbedtoken::"+v2UserDo.getToken());
 			user.setToken(v2UserDo.getUser().getToken() != null ? v2UserDo.getUser().getToken() : v2UserDo.getToken());
+
 		} catch (JSONException e) {
 		}
 		return user;

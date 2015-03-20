@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.deserializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +64,7 @@ public class ResourceDeserializer extends DeSerializer {
 	private static final String DATA = "data";
 	private static final String DURATION = "duration";
 	private static final String ERROR = "error";
-	private static final String GOORU_UID = "gooruUid";
+	private static final String GOORU_UID = "gooruUId";
 	private static final String TOKEN_EXPIRED = "tokenExpired";
 	private static final String USER = "user";
 	private static final String USER_NAME = "username";

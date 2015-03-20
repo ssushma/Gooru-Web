@@ -107,11 +107,10 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 	public final void onKeyDown(KeyDownEvent event) {
 		int keyCode = event.getNativeKeyCode();
 		String text = this.getText().trim();
-		if (validation) {
 			if ((keyCode == (char) KeyCodes.KEY_TAB) || (keyCode == (char) KeyCodes.KEY_LEFT) || (keyCode == (char) KeyCodes.KEY_RIGHT) && (keyCode != (char) KeyCodes.KEY_DOWN) && (keyCode != (char) KeyCodes.KEY_UP)) {
 				keyDownAction(text);
 			}
-		}
+		
 	}
 
 	@Override

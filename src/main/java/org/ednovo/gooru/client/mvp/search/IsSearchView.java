@@ -149,6 +149,15 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 
 	void OnStandardsClickEvent(Button addBtn);
 
+
+	Map<String, String> getSearchFilters1();
+
+	SearchFilterVc getSearchFilterVc();
+
 	String getSearchText();
+
+	void OnCenturyClickEvent(Button addButton);
+
+	void setUpdatedCentury(Map<Long, String> map);
 
 }

@@ -443,21 +443,42 @@
 					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
 						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
 							<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
-								<uc:AppSuggestBox ui:field="standardSgstBox"
-									width="255px" height="19px" />
+								<uc:AppSuggestBox ui:field="standardSgstBox" width="255px" height="19px" styleName="contentBoxStyles"/>
 									<g:HTMLPanel styleName="{res1.css.browseContainer}">
 										<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
 									</g:HTMLPanel>
 								 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
-								<g:FlowPanel ui:field="standardsPanel"
-									styleName="{res1.css.collectionStandardsMargin}" />
+								<g:FlowPanel ui:field="standardsPanel" styleName="{res1.css.collectionStandardsMargin}" />
 							</g:FlowPanel>
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
 				</g:HTMLPanel>
         <!-- Standards End -->
+        
+        <!-- 21 century Start -->
+		<g:HTMLPanel ui:field="centuryBrowseContainer">
+		 <g:FlowPanel ui:field="centuryContainer">
+		 <uc:HTMLEventPanel styleName="{res.css.eHeader}" ui:field="eHearderIconCentury"></uc:HTMLEventPanel>
+					<g:Label styleName="{res.css.shelfGradeInfoBottomWeb}"	ui:field="centuryDefaultText"></g:Label>
+					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
+						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
+							<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
+								<uc:AppSuggestBox ui:field="centurySgstBox" width="255px" height="19px" styleName="contentBoxStyles"/>
+									<g:HTMLPanel styleName="{res1.css.browseContainer}">
+										<g:Button ui:field="browseCentury" styleName="secondary">Browse</g:Button>
+									</g:HTMLPanel>
+								 <g:HTMLPanel ui:field="errorContainerForCentury"></g:HTMLPanel>
+								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="centuryMaxMsg" />
+								<g:FlowPanel ui:field="centuryPanel" styleName="{res1.css.collectionStandardsMargin}" />
+							</g:FlowPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+				</g:FlowPanel>
+				</g:HTMLPanel>
+        <!-- 21 century End -->
+        
 		<!--accessHazard -->
       	<g:Label styleName="{res.css.clearfix}"></g:Label>
       	<g:HTMLPanel ui:field="accessHazardContainer">

@@ -102,7 +102,6 @@ public class BrowserAgent {
 		}
 		$doc.getElementsByTagName('head')[0].appendChild( style );
 	}-*/;
-	
 	/**
 	 * 
 	 * @function isDevice 
@@ -122,6 +121,7 @@ public class BrowserAgent {
 	 *
 	 *
 	 */
+
 	public static native boolean isDevice() /*-{
 	  	var ua = navigator.userAgent.toLowerCase();
 	  	var returnValue=false;

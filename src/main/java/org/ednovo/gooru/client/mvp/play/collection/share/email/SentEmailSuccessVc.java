@@ -34,6 +34,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -50,7 +51,12 @@ public class SentEmailSuccessVc extends PopupPanel{
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField Label okLbl,toEmailLbl;
+	@UiField
+	Label toEmailLbl;
+	
+	@UiField
+	Button okLbl;
+	
 	@UiField HTMLPanel emailToFriendText,thanksEmailText;
 
 	/**

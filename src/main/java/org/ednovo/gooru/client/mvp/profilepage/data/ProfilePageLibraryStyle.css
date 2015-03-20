@@ -188,7 +188,7 @@
 .collectionViewer {
 	float:left;
 	padding:20px;
-	width: 53%;
+	width: 60%;
 }
 
 .collectionImage {
@@ -259,6 +259,7 @@
 
 .folderLevel {
 	background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 10px 13px;
+	box-sizing: content-box;
 }
 
 .open {
@@ -267,12 +268,26 @@
     background-position: 14px 10px;
     
 }
+.folderTitleStyle{
+	width: 700px;
+	float: right;
+	margin-bottom: 20px;
+	box-sizing: border-box;
+}
 
 .collection {
     background-image: url('../images/folders/panel/collection-icon.png') !important;
 }
+.assessment {
+    background-image: url('../images/folders/panel/assessment-type.png') !important;
+}
 .collectionSmall {
 	background: url('../images/folders/panel/collection-icon-small.png') 39px 0px no-repeat;
+}
+
+.assessmentSmall {
+	 background: url('../images/folders/panel/assessment-type.png') 39px 0px no-repeat;
+     background-size: 27px 19px;
 }
 .loadingIcon {
 	float: right;
@@ -298,7 +313,7 @@
 	margin-left: 150px;
 }
 .collectionViewerSubStyle {
-	width: 94% !important;
+	width: 100% !important;
 	margin-top: 25px !important;
 }
 .collectionInfoSubStyle {
@@ -419,4 +434,8 @@
 	opacity: 0.3;
 	display: inline;
 	float: right;
+}
+.loadingImageStyle{
+	margin-top: 30px;
+	margin-left: 508px;
 }

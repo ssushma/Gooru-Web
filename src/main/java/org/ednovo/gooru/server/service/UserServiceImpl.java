@@ -171,6 +171,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.REGISTER_USER, params, getLoggedInSessionToken());
+		getLogger().info("registerUser api call post::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
@@ -184,6 +185,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		UserDo userDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_REGISTERED_USER_DETAILS, gooruUid, getLoggedInSessionToken());
 		JsonRepresentation jsonRep = null;
+		getLogger().info("getRegistredUserDetails api call post::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
@@ -214,6 +216,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_REGISTER_USER, gooruUid, getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
+		getLogger().info("UPDATE_REGISTER_USER url::::"+url);
+		getLogger().info("form data update user details::::"+generateFormFromParamters(params));
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		String text = null;
 		try {
@@ -234,6 +238,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public void resendConfirmationMail(Map<String, String> params) {
 		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SEND_CONFIRMATION_MAIL, params, getLoggedInSessionToken());
+		getLogger().info("resendConfirmationMail url:::::"+url);
 		ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 	}
 
@@ -246,9 +251,18 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public Map<String, Object> forgotPassword(String emailId) {
 		JsonRepresentation jsonRep = null;
 		Map<String, String> params = new HashMap<String, String>();
-		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.FORGOT_PASSWORD, params, getLoggedInSessionToken(), emailId);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FORGOT_PASSWORD, params, getLoggedInSessionToken());
+		JSONObject forgotPasswordObject = new JSONObject();
+		try {
+			forgotPasswordObject.put("emailId", emailId);
+			forgotPasswordObject.put(GOORU_BASE_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
+			forgotPasswordObject.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		getLogger().info("forgot password url post::::"+url);
+		getLogger().info("forgot password url request data::::"+forgotPasswordObject.toString());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),forgotPasswordObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return resourceDeserializer.forgotPassword(jsonRep);
 	}
@@ -256,6 +270,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public Map<String, Object> resetCredential(String token, String password, String mailConfirmationUrl) {
 		JsonRepresentation jsonRep = null;
+
 		JsonResponseRepresentation jsonResponseRep = null;
 		JSONObject formData = new JSONObject();
 		String message="";
@@ -281,6 +296,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_VIEW, gooruUid,getLoggedInSessionToken(), String.valueOf(viewFlag));
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		getLogger().info("UPDATE_USER_VIEW updateUserViewFlag get url:::::"+url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
@@ -460,6 +476,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail, String userType) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_PROFILE, getLoggedInUserUid(), getLoggedInSessionToken());
+		//getLogger().info("updateV2ProfileDo:"+url);
 		V2UserDo userv2Do = new V2UserDo();
 		ProfileV2Do profileV2Do = new ProfileV2Do();
 		UserDo user = new UserDo();
@@ -482,6 +499,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		profileV2Do.setUser(user);
 		
 		if (userType != null && !"".equalsIgnoreCase(userType)){
+
 			profileV2Do.setUserType(userType);
 		}
 		
@@ -509,6 +527,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	
 		String formData = ResourceFormFactory.generateStringDataForm(userv2Do,null);
+		//getLogger().info("formData:"+formData.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		

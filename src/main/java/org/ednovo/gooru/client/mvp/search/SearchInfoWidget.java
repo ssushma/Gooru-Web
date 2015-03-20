@@ -37,6 +37,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOutHideToolTip;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOverShowToolTip;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
@@ -49,12 +51,14 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -89,7 +93,7 @@ public class SearchInfoWidget extends Composite {
 	UiBinder<Widget, SearchInfoWidget> {
 	}
 
-	@UiField Label publisherText,courseText,legalText,
+	@UiField Label centuryInfo,centuryText,publisherText,courseText,legalText,
 	standardsText,gradeTitle,originalUrlTitle,adsTitle,mbFriendlyLbl,
 	mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 	eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
@@ -100,17 +104,17 @@ public class SearchInfoWidget extends Composite {
 	authorLbl,authorName,adsName,schLevelLbl,schLevelInfo,keywordsTitle,
 	momentsoflearningLbl,resourceTypeImage,lblAggregation;
 
-	@UiField HTMLPanel rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,publisherType,coursePanel,gradesPanel,
+	@UiField HTMLPanel centuryContentContainer,rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,publisherType,coursePanel,gradesPanel,
 	adsPanel,mobileFriendlyPanel,dataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,
 	authorPanel,schLevelPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel,gradesText;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel,gradesText,totalContainer, panelContent;
 	
 	@UiField
 	HTMLPanel aggregationPanel,aggregationType;
 
-	@UiField FlowPanel licenceContainer,standardsInfoConatiner;
+	@UiField FlowPanel licenceContainer,standardsInfoConatiner,centuryInfoConatiner;
 
 	@UiField HTMLPanel standardsContentContainer,loadingImagePanel;
 	@UiField Label standaInfo,noInfoAvailable;
@@ -157,11 +161,13 @@ public class SearchInfoWidget extends Composite {
 		isResourceInfo=false;
 		isAccessibilityInfo=false;
 		isGrades =false;
+		totalContainer.getElement().getStyle().setMargin(15, Unit.PX);
+		panelContent.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		setResourceInfoData();
 	}
 
 	private void setResourceInfoData() {
-		publisherText.setText(i18n.GL0566()+" ");
+		publisherText.setText(i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(publisherText,"PublisherText",i18n.GL0566()+" ");
 		
 		lblAggregation.setText(i18n.GL1628().trim()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -175,6 +181,9 @@ public class SearchInfoWidget extends Composite {
 		
 		standardsText.setText(i18n.GL0619()+" ");
 		setIdForLabel(standardsText,"standardsText",i18n.GL0619()+" ");
+		
+		centuryText.setText(i18n.GL3199()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(centuryText,"centuryText",i18n.GL3199()+" ");
 		
 		//		resourceInfoText.setText(i18n.GL0621);
 		gradeTitle.setText(i18n.GL0325().trim()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -284,6 +293,7 @@ public class SearchInfoWidget extends Composite {
 		}
 		if(searchResultsDo.getResourceTitle()!=null){
 			lblcollectionName.setHTML(removeHtmlTags(searchResultsDo.getResourceTitle()));
+			
 
 		}
 		/**
@@ -425,7 +435,7 @@ public class SearchInfoWidget extends Composite {
 			}*/
 	        
 	        if(grade!=null && !grade.equals("")){
-			
+				
 				List<String> gradesSorted = new ArrayList<String>();
 				
 				List<Integer> listI = new ArrayList<Integer>();
@@ -473,6 +483,7 @@ public class SearchInfoWidget extends Composite {
 				null,CollectiongenealInfo.getResource().getTaxonomySet());
 			
 			renderStandards(standardsInfoConatiner,CollectiongenealInfo.getStandards());
+			renderCentury(centuryInfoConatiner,CollectiongenealInfo.getResource().getSkills());
 			
 			setOriginalUrl(CollectiongenealInfo.getResource().getAssetURI(),CollectiongenealInfo.getResource().getFolder(),
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
@@ -724,6 +735,52 @@ public class SearchInfoWidget extends Composite {
 			standardsContentContainer.setVisible(false);
 		}
 	}
+	public void renderCentury(FlowPanel centuryContainer, List<StandardFo> centuryList) {
+		centuryContainer.clear();
+		
+		if (centuryList != null) {
+			centuryInfo.setVisible(false);
+			centuryContentContainer.setVisible(true);
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			for(int centuryCount=0; centuryCount<centuryList.size();centuryCount++) {
+				String stdCode = centuryList.get(centuryCount).getCodeId()+"";
+				String stdDec = centuryList.get(centuryCount).getLabel();
+				if (count > 2) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec));
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getcenturyMoreInfo());
+					centuryContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (centuryList.size()>18){
+				final Label left = new Label("+"+(centuryList.size() - 18));
+				toolTipwidgets.add(left);
+				centuryContentContainer.setVisible(true);
+			}
+			if (centuryList.size() > 2) {
+				Integer moreStandardsCount = centuryList.size() - 3;
+				if (moreStandardsCount >0){
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets);
+					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
+					centuryContainer.add(toolTipUc);
+					centuryContentContainer.setVisible(true);
+				}
+			}
+			if(centuryList.size()==0)
+			{
+				centuryContentContainer.setVisible(false);
+			}
+		}
+		else{
+			centuryContentContainer.setVisible(false);
+		}
+	}
 	/**
 	 * To set the Resource Original Url
 	 * @param assetUri
@@ -750,6 +807,7 @@ public class SearchInfoWidget extends Composite {
 			originalUrlAnchor.setHref(originalUrl);
 			originalUrlAnchor.setStyleName("");
 			originalUrlAnchor.setTarget("_blank");
+			originalUrlAnchor.getElement().setAttribute("style"," word-break: break-all;");
 			this.originalUrlText.add(originalUrlAnchor);
 			this.originalUrlTitle.setVisible(true);
 			this.originalUrlText.setVisible(true);
@@ -1144,7 +1202,7 @@ public class SearchInfoWidget extends Composite {
 			}else{
 				authorPanel.setVisible(false);
 			}
-			if(keywords!=null && !keywords.equals("")){
+			/*if(keywords!=null && !keywords.equals("")){
 				isResourceInfo=true;
 				keywordsInfo.getElement().setInnerText(" "+keywords);
 				keywordsInfo.getElement().setAttribute("alt"," "+keywords);
@@ -1152,7 +1210,18 @@ public class SearchInfoWidget extends Composite {
 				keyWordsPanel.setVisible(true);
 			}else{
 				keyWordsPanel.setVisible(false);
-			}
+			}*/
+			if(customField.getCfKeywords()!=null && !customField.getCfKeywords().equals("")){
+				isResourceInfo=true;
+				List<String> keyworddetails = new ArrayList<String>();
+				String[] keywordslist=customField.getCfKeywords().split(",");										
+				for(int klevel=0;klevel<keywordslist.length;klevel++){
+					keyworddetails.add(keywordslist[klevel]);
+				}
+				setkeywordsDetails(keyworddetails);
+				}else{
+					keyWordsPanel.setVisible(false);
+				}
 			if(ads!=null && !ads.equals("")){
 				isResourceInfo=true;
 				adsName.setText(" "+ads);
@@ -1185,6 +1254,49 @@ public class SearchInfoWidget extends Composite {
 		}
 	}
 	
+	private void setkeywordsDetails(List<String> keywords) {
+		keywordsInfo.clear();
+		if(keywords == null || keywords.size() == 0 || keywords.contains(null) || keywords.contains("") ){
+			keyWordsPanel.setVisible(false);
+		}else{
+		if(keywords.size()>0){
+			if(keywords.size()==1){
+				keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+				final Label keywordLabel=new Label(" "+keywords.get(0));
+				keywordLabel.getElement().setAttribute("style", "float: left;");
+				keywordsInfo.add(keywordLabel);
+				keyWordsPanel.setVisible(true);
+			} if(keywords.size()==2){
+				keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+				final Label keywordLabel=new Label(" "+keywords.get(0)+","+keywords.get(1));
+				keywordLabel.getElement().setAttribute("style", "float: left;");
+				keywordsInfo.add(keywordLabel);
+				keyWordsPanel.setVisible(true);
+			}
+		}
+		if(keywords.size()>2){
+			keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+			keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+			keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
+			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
+			keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label keywordsLabelNew=new Label(" "+keywords.get(0)+","+keywords.get(1));
+			keywordsLabelNew.getElement().setAttribute("style", "float:left;");
+			keywordsInfo.add(keywordsLabelNew);
+			keywordsInfo.add(keywordCountLabel);
+			Widget keywordwidget = getCommonwidget(keywords);
+			keywordCountLabel.addMouseOverHandler(new MouseOverShowToolTip(keywordwidget));
+			keywordCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+			keyWordsPanel.setVisible(true);
+		}
+		}
+	
+	}
+
 	/**
 	 * To set the Resource Accessibility details 
 	 * @param collectionItem instance of {@link CollectionItemDo} 
@@ -1303,7 +1415,6 @@ public class SearchInfoWidget extends Composite {
 		} else {
 			Window.enableScrolling(false);
 			popup=new AddTagesPopupView(searchResultDo.getGooruOid()) {
-
 				@Override
 				public void closePoup(boolean isCancelclicked) {
 					 this.hide();
@@ -1322,8 +1433,8 @@ public class SearchInfoWidget extends Composite {
 							}
 							
 						};
-						success.setHeight("253px");
-						success.setWidth("450px");
+					/*	success.setHeight("253px");
+						success.setWidth("450px");*/
 						success.setPopupTitle(i18n.GL1795());
 						success.setDescText(i18n.GL1796());
 						success.enableTaggingImage();

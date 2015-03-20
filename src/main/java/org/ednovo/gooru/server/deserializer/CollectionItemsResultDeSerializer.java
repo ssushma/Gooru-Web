@@ -85,6 +85,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 			try {
 				
 				if(!recordJsonObject.isNull(RATINGS)){
+
 					JSONObject ratingsObj = recordJsonObject.getJSONObject(RATINGS);
 					collectionItemSearchResultDo.setRatings(JsonDeserializer.deserialize(ratingsObj.toString(), SearchRatingsDo.class));
 				}
@@ -94,6 +95,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
 					collectionItemSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
 				}
+
 				
 				//JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 				if(getJsonString(recordJsonObject, RESOURCE_SOURCE) != null){

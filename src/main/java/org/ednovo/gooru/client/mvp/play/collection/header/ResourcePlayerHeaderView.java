@@ -30,11 +30,10 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ResourcePlayerHeaderView extends Composite implements ClientConstants{
@@ -43,7 +42,9 @@ public class ResourcePlayerHeaderView extends Composite implements ClientConstan
 	
 	@UiField Button infoButton,shareButton,addButton,flagButton;
 	
-	@UiField Label closeButton;
+
+	@UiField Anchor closeButton;
+
 	
 	private boolean isInfoButtonEnabled=false;
 	private boolean isShareButtonEnabled=false;
@@ -77,7 +78,7 @@ public class ResourcePlayerHeaderView extends Composite implements ClientConstan
 		return shareButton;
 	}
 	
-	public Label getCloseButton(){
+	public Anchor getCloseButton(){
 		return closeButton;
 	}
 	

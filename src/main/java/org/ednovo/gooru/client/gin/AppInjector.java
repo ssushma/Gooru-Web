@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
+import org.ednovo.gooru.client.mvp.folder.toc.FolderTocPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
@@ -74,8 +75,6 @@ import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
-import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
-import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
@@ -84,6 +83,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -157,10 +157,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<ShelfListPresenter> getShelfTabPresenter();
 
 	AsyncProvider<CollectionFormPresenter> getCollectionFormPresenter();
-
-	AsyncProvider<ResourcePlayPresenter> getResourcePlayPresenter();
-
-	AsyncProvider<CollectionPlayPresenter> getCollectionPlayPresenter();
 	
 	AsyncProvider<ImageUploadPresenter> getImageUploadPresenter();
 	
@@ -197,6 +193,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<SignUpPresenter> getSignUpPresenter();
 	
 	AsyncProvider<CollectionPlayerPresenter> getCollectionPlayerPresenter();
+	
+	AsyncProvider<FolderTocPresenter> getFolderTocPresenter();
 	
 	AsyncProvider<ResourcePlayerPresenter> getResourcePlayerPresenter();
 	
@@ -248,6 +246,8 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
 	
+	AsyncProvider<AddCenturyPresenter> getAddCenturyPresenter();
+	
 	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
@@ -279,5 +279,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<PopupForAnalyticsPresenter> getPopupForAnalyticsPresenter();
 	
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
+	
+	AddCenturyPresenter getAddCenturyPresenterWidget();
 
 }

@@ -9,6 +9,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
+		<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:FlowPanel styleName="{addWebResourceStyle.addResourceFormRightOuterDiv}">
     <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormRightInnerMainDiv}">
       <g:Label ui:field="questionTypeHeader" styleName="{addWebResourceStyle.questionTypeHeaderStyle}"></g:Label>
@@ -207,26 +208,40 @@
 		        
 		<!-- Standards Start -->
 		 <g:FlowPanel ui:field="standardContainer">
-					<g:Label styleName="{res1.css.addQuestionStandard}"
-						ui:field="standardsDefaultText"></g:Label>
+					<g:Label styleName="{res1.css.addQuestionStandard}"	ui:field="standardsDefaultText"></g:Label>
 					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
 						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBoxForQuestion}">
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
-								<uc:AppSuggestBox ui:field="standardSgstBox"
-									width="271px" height="19px" />
-									<g:HTMLPanel styleName="{res1.css.browseContainer}">
-										<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
+								<uc:AppSuggestBox ui:field="standardSgstBox" width="271px" height="19px" />
+									<g:HTMLPanel styleName="{res1.css.browseContainer}" ui:field="browseStantardContainer">
+										<g:Button ui:field="browseStandards" styleName="secondary" text="{i18n.GL0902}" title="{i18n.GL0902}"></g:Button>
 									</g:HTMLPanel>
 								<g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
-								<g:FlowPanel ui:field="standardsPanel"
-									styleName="{res1.css.collectionStandardsMargin}" />
+								<g:FlowPanel ui:field="standardsPanel" styleName="{res1.css.collectionStandardsMargin}" />
 							</g:FlowPanel>
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
         <!-- Standards End -->
-    
+	    <!-- 21 century Start -->
+			 <g:FlowPanel ui:field="centuryContainer">
+						<g:Label styleName="{res1.css.addQuestionStandard}"	ui:field="centuryDefaultText"></g:Label>
+						<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
+							<g:FlowPanel styleName="{res1.css.addResourceSuggestedBoxForQuestion}">
+								<g:FlowPanel styleName="{res1.css.standardsCont}">
+									<uc:AppSuggestBox ui:field="centurySgstBox" width="271px" height="19px" />
+										<g:HTMLPanel styleName="{res1.css.browseContainer}" ui:field="browseCenturyContainer">
+											<g:Button ui:field="browseCentury" styleName="secondary" text="{i18n.GL0902}" title="{i18n.GL0902}"></g:Button>
+										</g:HTMLPanel>
+									<g:HTMLPanel ui:field="errorCenturyContainer"></g:HTMLPanel>
+									<g:Label styleName="{res1.css.standardMaxHide}" ui:field="centuryMaxMsg" />
+									<g:FlowPanel ui:field="centuryPanel" styleName="{res1.css.collectionStandardsMargin}" />
+								</g:FlowPanel>
+							</g:FlowPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+	        <!-- 21 century End -->
          
         </g:HTMLPanel>
       <g:HTMLPanel styleName="{addWebResourceStyle.resourceRightsContainer}">

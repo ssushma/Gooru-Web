@@ -9,6 +9,13 @@
 	cursor: pointer;
 	padding: 1px 5px 0px 0px;
 }
+.closeLabelRemoveInCentury {
+	display: block;
+	float: right;
+	width: 16px;
+	cursor: pointer;
+	padding: 2px 0px 0px 5px;
+}
 .closeLabelRemoveInSetting {
 	display: block;
 	float: left;
@@ -51,6 +58,32 @@
 	height: auto;
 }
 
+.closeLabelCentury {
+	background: -moz-linear-gradient(center top,#7AB075, #7AB075) repeat
+		scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7AB075),
+		to(#7AB075));
+	background: -webkit-linear-gradient(top, #7AB075, #7AB075);
+	background-image: -ms-linear-gradient(top, #7AB075, #7AB075);
+	background: -o-linear-gradient(top,#7AB075, #7AB075);
+	background-color: #7AB075;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-top: 5px;
+	padding: 3px 1px;
+	cursor: default !important;
+	min-height: 12px;
+	height: auto;
+}
 .closeLabelSearch {
 	background: -moz-linear-gradient(center top, #88bbe1, #88bbe1) repeat
 		scroll 0 0 transparent;
@@ -91,6 +124,11 @@
 	
 }
 
+.collectionThumbnail1{
+		height: 91px;
+		width: 127px;
+}
+
 .collectionPPPThumbnail {
 	float: left;
 	height: 91px;
@@ -101,8 +139,8 @@
 }
 
 .collectionThumbnails {
-	width: 120px;
-	height: 90px;
+	width: 120px !important;
+	height: 90px !important;
 	border-left:7px solid #1076BB;
 }
 
@@ -571,13 +609,14 @@
 }
 
 .paginationUc {
-	background-color: white;
-	border: 1px solid #DDDDDD;
-	border-radius: 4px 4px 4px 4px;
-	padding: 7px 10px;
-	cursor: pointer;
-	margin: 0 5px 0 0;
-	color: #1076bb;
+background-color: white;
+border: 1px solid #ddd;
+border-radius: 4px 4px 4px 4px;
+padding: 7px 10px;
+cursor: pointer;
+margin: 0 5px 5px 0;
+color: #1076bb;
+float: left;
 }
 
 .separator {
@@ -792,6 +831,7 @@
 	width: 235px;
 	padding: 5px;
 	text-align: left;
+	box-sizing:content-box;
 }
 
 .textBoxWithPlaceholderText {
@@ -834,6 +874,7 @@
 	border-radius: 6px 6px 0px 0px;
 	height: 21px;
 	padding: 4px;
+	box-sizing:content-box;
 }
 
 .yearListStyle {
@@ -863,6 +904,7 @@
 	border-radius: 0px 0px 6px 6px;
 	height: 21px;
 	padding: 4px;
+	box-sizing: content-box;
 }
 
 .gooruDateBox {
@@ -878,7 +920,9 @@
 	float: left;
 	/* margin-bottom: 22px; */
 	padding: 2px;
-	width: 308px;
+/* 	width: 308px; */
+	width: 100%;
+	margin-bottom: 10px;
 }
 
 .gooruDateText {
@@ -893,7 +937,7 @@
 		scroll -7px -472px transparent;
 	cursor: pointer;
 	display: block;
-	float: left;
+	float: right;
 	height: 21px;
 	margin-left: 4px;
 	width: 30px;
@@ -1799,4 +1843,8 @@ button.emailSecondary:hover {
 }
 .privacyAlignStyle{
 	margin-right: 2px;
+}
+
+.paddingClear{
+	padding:0;
 }

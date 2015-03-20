@@ -13,23 +13,27 @@
 				ui:field="hideText"></g:Label>
 		</uc:HTMLEventPanel>
 		<g:FlowPanel styleName="{playerStyle.collection-narration-wrapper}">
-			<g:HTMLPanel styleName="{playerStyle.collection-share-maintitle}"
-				ui:field="shareMainTitle"></g:HTMLPanel>
-
+			<g:HTMLPanel styleName="{playerStyle.collection-share-maintitle}"	ui:field="shareMainTitle"></g:HTMLPanel>
 			<g:FlowPanel styleName="{playerStyle.collection-share-wrapper}">
-				<g:FlowPanel styleName="{playerStyle.collection-share-titleContainer}">
-					<g:Label styleName="{playerStyle.collection-share-title}"
-						ui:field="resourceTitleText"></g:Label>
-					<g:TextArea styleName="{playerStyle.collection-share-textbox}"
-						ui:field="resourceShareTextArea"></g:TextArea>
+				<g:FlowPanel styleName="col-md-6 col-xs-12  {playerStyle.collection-share-titleContainer} borderLeft">
+					<g:Label styleName="{playerStyle.collection-share-title}"	ui:field="resourceTitleText"></g:Label>
+					<g:TextArea styleName="{playerStyle.collection-share-textbox}"	ui:field="resourceShareTextArea"></g:TextArea>
+					<uc:PPanel styleName="{playerStyle.collection-share-buttonscontainer}">
+						<g:InlineLabel styleName="col-md-6 col-sm-6 col-xs-6 {playerStyle.collection-share-button1}"
+								ui:field="bitlyLink"></g:InlineLabel>
+						<g:InlineLabel styleName="col-md-6  col-sm-6 col-xs-6 {playerStyle.collection-share-button2}"
+							ui:field="embedLink"></g:InlineLabel>
+					</uc:PPanel>
+					<g:HTMLPanel styleName="clearfix"/>
+					
 				</g:FlowPanel>
-				<g:FlowPanel styleName="{playerStyle.collection-share-separator}"></g:FlowPanel>
-				<g:FlowPanel ui:field="socialSharePanel">
+				<g:FlowPanel ui:field="socialSharePanel" styleName="col-md-6 col-xs-12">
 					<g:Label styleName="{playerStyle.collection-socialshare-title}"
 						ui:field="shareText"></g:Label>
 					<g:HTMLPanel styleName="{playerStyle.collection-share-titleContainer}"
 						ui:field="sharePanel"></g:HTMLPanel>
 				</g:FlowPanel>
+				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				<g:FlowPanel styleName="{playerStyle.collection-share-titleContainer}"
 					ui:field="collectionShareContainer">
 					<g:Label styleName="{playerStyle.collection-share-title}"
@@ -38,12 +42,7 @@
 						ui:field="collectionShareTextArea"></g:TextArea>
 				</g:FlowPanel>
 			</g:FlowPanel>
-			<g:HTMLPanel styleName="{playerStyle.collection-share-buttonscontainer}">
-				<g:InlineLabel styleName="{playerStyle.collection-share-button1}"
-					ui:field="bitlyLink"></g:InlineLabel>
-				<g:InlineLabel styleName="{playerStyle.collection-share-button2}"
-					ui:field="embedLink"></g:InlineLabel>
-			</g:HTMLPanel>
+			
 		</g:FlowPanel>
 		
 	</g:FlowPanel>

@@ -178,6 +178,8 @@ public abstract class SharePlayerVc extends PopupPanel{
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
+		this.setHeight("500px");
+		this.show();
 		this.center();	
 	}
 

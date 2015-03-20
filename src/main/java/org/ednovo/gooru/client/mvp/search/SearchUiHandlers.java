@@ -44,8 +44,8 @@ import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropHandler;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
@@ -90,12 +90,15 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 * 
 	 */
 	void getAddStandards();
+	
+	void getAddCentury();
 
 	/**
 	 * 
 	 */
 	void setUpdatedStandards();
 
+	void setUpdatedCentury();
 	/**
 	 * 
 	 */
@@ -126,5 +129,9 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 * @param isTagsPanelOpen 
 	 * @param tagsLbl 
 	 */
-	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl);
+	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Anchor tagsLbl);
+	/**
+	 * This method is used to hide the popup
+	 */
+	void closeCenturyPoup();
 }

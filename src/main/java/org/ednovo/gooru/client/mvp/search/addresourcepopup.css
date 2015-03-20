@@ -22,7 +22,9 @@
 
 .assignmentButtonsContainer {
 	float: left;
-	margin: 18px 0 15px 241px;
+	margin: 18px 0 15px 0px;
+	text-align: center;
+	width: 100%;
 }
 .navigateButtonsContainer{
 	float: left;
@@ -505,6 +507,56 @@
     background: url('../images/folders/panel/collection-small-icon.png') no-repeat 117px 4px;
 }
 
+.folderAssessment { /* grandparent level - default */
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 33px 4px;
+    background-size: 22px 18px;
+}
+
+.folderAssessment.parent {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 61px 4px;
+    background-size: 22px 18px;
+}
+
+.folderAssessment.child {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 89px 4px;
+    background-size: 22px 18px;
+}
+.folderAssessment.innerchild {
+    background: url('../images/folders/panel/assessment-smal.png') no-repeat 117px 4px;
+    background-size: 22px 18px;
+}
+
+.folderLevel:hover,.folderAssessment:hover {
+    background-color:#f0f0f0;
+}
+
+.folderAssessment.selected {
+    background-color:#CFE3F1;
+}
+.folderLevel,.folderAssessment {
+    height: 25px;
+    line-height: 25px;
+    padding-right:15px;
+    position:relative;
+    text-align:left;
+    cursor:default;
+}
+.folderLevel,.folderAssessment { /* grandparent level - default */
+    box-sizing:border-box;
+    padding-left:65px;
+}
+.folderLevel.innerchild,.folderAssessment.innerchild {
+    padding-left:149px;
+}
+.folderAssessment.parent {
+    padding-left:93px;
+}
+
+.folderAssessment.child {
+    padding-left:121px;
+}
+
+
 /*////////////////////// other ../images ///////////////////*/
 
 
@@ -597,6 +649,7 @@
     list-style-type: none;
     margin: 20px auto auto 44px;
     width: 91%;
+    color:#999;
  }
  .assignmentsystemMessage{
  	font-family: Arial, Helvetica, sans-serif;
@@ -690,6 +743,7 @@
 	margin-top:5px;
 	font-weight: bold;
 	height:10px;
+	margin-bottom: 15px;
 }
 .selectionErrorLabel{
 	width: 89%;
@@ -714,7 +768,7 @@
 .addPlayerStyle{
 	display: inline-block;
 	float: center;
-	margin-left: 275px;
+/*	margin-left: 275px;*/
 	/* height: 258px; */
 	background-color: #fff;
 }
@@ -731,7 +785,15 @@
 	 }
  .addCollectionTextStyles{
 	/* float: left; */
-	left: 43px;
+	left: 12px;
 	position: relative;
 	top:10px;
+	margin-bottom:22px;
+	color:#999;
 	 }
+.collectionChild1{
+	padding-left:87px !important;
+}
+.collectionChild2{
+	padding-left:177px !important;
+}

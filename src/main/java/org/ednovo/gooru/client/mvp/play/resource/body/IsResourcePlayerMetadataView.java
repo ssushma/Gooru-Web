@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
@@ -42,8 +43,8 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void showResourceWidget(CollectionItemDo collectionItemDo,PlaceRequest nextResoruceRequest,PlaceRequest previousResourceRequest);
 	public void showResourceWidget(CollectionItemDo collectionItemDo);
 	public void showResourceWidget(PlaceRequest previousResourceRequest);
-	public FlowPanel getResourceWidgetContainer();
-	public HTMLPanel getCollectionContainer();
+	public SectionTag getResourceWidgetContainer();
+	public SectionTag getCollectionContainer();
 	public void setReaction(ReactionDo reactionDo, String gooruReactionId); 
 	
 	public void setDefaultReaction();
@@ -62,8 +63,10 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList);
 	public void checkYoutubeAccessControls(Map<String, String> result);
 	public Button getNarrationButton();
+	public Button getFullScreenButton();
 	public void clearMarginTop();
 	public void setMarginTop();
 	public void setPreviousRating(double previousRating);
 	public double getPreviousRating();
+	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
 }

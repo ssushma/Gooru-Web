@@ -52,6 +52,7 @@ public class ResourceDo extends ContentDo {
     private LicenseDo license;
     private String grade;
     private String mediaType;
+    private List<StandardFo> skills;
     
     private String encodedUrl;
     
@@ -119,6 +120,8 @@ public class ResourceDo extends ContentDo {
 	private customFieldValuesDO customFieldValues;
 	
 	private UserDo user;
+	
+	private String url;
 	
 	public List<String> getPublisher() {
 		return publisher;
@@ -299,8 +302,6 @@ public class ResourceDo extends ContentDo {
     public void setResourceType(ResourceTypeDo resourceType) {
         this.resourceType = resourceType;
     }
-
-    private String url;
 
     public String getAssetURI() {
         return assetURI;
@@ -560,6 +561,10 @@ public class ResourceDo extends ContentDo {
 	public void setResourceTags(ArrayList<ResourceTagsDo> resourceTags) {
 		this.resourceTags = resourceTags;
 	}
-	
-	
+	public List<StandardFo> getSkills() {
+		return skills;
+	}
+	public void setSkills(List<StandardFo> skills) {
+		this.skills = skills;
+	}
 }

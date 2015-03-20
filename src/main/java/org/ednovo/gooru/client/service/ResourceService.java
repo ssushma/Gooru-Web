@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +41,7 @@ import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
@@ -325,7 +325,7 @@ public interface ResourceService extends BaseService {
   	
 	public List<ProfanityCheckDo> checkProfanityForList(List<ProfanityCheckDo> parms)  throws GwtException, ServerDownException;
 	
-	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType) throws GwtException, ServerDownException;
+	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException, ServerDownException;
 
 	public CollectionDo updateCollectionInfo(CollectionDo collectionDo,
 			String teacherTips) throws GwtException, ServerDownException;
@@ -398,5 +398,20 @@ public interface ResourceService extends BaseService {
 			String comments);
 	
 	public String getUserShelfDetails(String userUid) throws GwtException, ServerDownException;
-		 
+	/**
+	 * This method is used to update assessment details.
+	 * @param assessmentId
+	 * @param title
+	 * @param assessmentUrl
+	 * @return
+	 */
+	FolderDo updateAssessmentDetails(String assessmentId,String title,String assessmentUrl,String description,String sharing,String requireLogin);
+	/**
+	 * This method is used to add 21 skills data
+	 * @param collectionId
+	 * @param action
+	 * @param skillsData
+	 * @return
+	 */
+	public CollectionDo update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData);
 }

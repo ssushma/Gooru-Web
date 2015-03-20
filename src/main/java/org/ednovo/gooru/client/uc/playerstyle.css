@@ -329,6 +329,10 @@
 	float:left;
 }
 
+.resource-type-info-interactive{
+	margin-left: 0px;
+}
+
 .resource-type-info-video{
 	background-position: 0px 1px !important;
 }
@@ -731,7 +735,7 @@ color: #1076BB;
 .player-container{
 	visibility: visible;
 	width: 100%;
-	min-width: 1020px;
+	/* min-width: 1020px; */
 	top: 0 !important;
 	right: 0 !important;
 	bottom: 0 !important;
@@ -747,7 +751,7 @@ color: #1076BB;
 .studyplayer-container{
 	visibility: visible;
 	width: 100%;
-	min-width: 1020px;
+	/* min-width: 1020px; */
 	top: 0 !important;
 	right: 0 !important;
 	bottom: 0 !important;
@@ -829,6 +833,30 @@ color: #1076BB;
 	background-image: -ms-linear-gradient(top, #666, #515151);
 	background: -o-linear-gradient(top, #666, #515151);
 	background-color: #515151;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	padding: 3px;
+	cursor: default !important;
+}
+.info-style-Century {
+	background: -moz-linear-gradient(center top, #7ab075, #7ab075) repeat
+		scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7ab075),
+		to(#7ab075));
+	background: -webkit-linear-gradient(top, #7ab075, #7ab075);
+	background-image: -ms-linear-gradient(top, #7ab075, #7ab075);
+	background: -o-linear-gradient(top, #7ab075, #7ab075);
+	background-color: #7ab075;
 	border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 	-moz-border-radius: 3px 3px 3px 3px;
@@ -945,7 +973,7 @@ float: left;
 	opacity:0.6;	
 }
 .toCommentTextPreviewPlayer{
-	float:left;margin-left:1%;
+	display:inline-block;
 }
 .collectionreplay {
 	width: 170px;
@@ -960,7 +988,7 @@ float: left;
 	cursor: pointer;
 }
 .collectionreplayContainer{
-	width: 230px;
+	width: 220px;
 	height: 160px;
 	box-sizing: border-box;
 	text-indent: -228px;

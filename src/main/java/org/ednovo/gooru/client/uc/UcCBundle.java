@@ -91,6 +91,8 @@ public interface UcCBundle extends ClientBundle {
 		
 		String collectionThumbnail();
 		
+		String collectionThumbnail1();
+		
 		String collectionNotify();
 		
 		String collectionThumbnails();
@@ -456,6 +458,9 @@ public interface UcCBundle extends ClientBundle {
 		
 		String privacyAlignStyle();
 		
+		String paddingClear();
+		String closeLabelCentury();
+		String closeLabelRemoveInCentury();
 	}
 
 	@Source("Uc.css")

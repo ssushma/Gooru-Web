@@ -131,19 +131,16 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(true);
 			  androidSectiondiv.setVisible(false);
 		  }
 		  else if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
-			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(true);
 		  }
 		  else
 		  {
-			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
 		  }
@@ -195,7 +192,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	
 	@UiHandler("closeIpadBtn")
 	public void onIpadCloseClick(ClickEvent clickEvent){
-		  headerView.getElement().setAttribute("style", "position:fixed;");
+		  
 		  ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
@@ -205,7 +202,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 
 	@UiHandler("closeAndriodBtn")
 	public void onAndriodCloseClick(ClickEvent clickEvent){
-		headerView.getElement().setAttribute("style", "position:fixed;");
+		
 		  ipadSectiondiv.setVisible(false);
 		  androidSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
@@ -257,7 +254,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 					params.put("tab", tabView);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-					ResourcePlayerMetadataView.removePadding();
+					
 				}
 			}
 			else if(view!=null&&END.equalsIgnoreCase(view)){
@@ -318,10 +315,10 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		setActiveButton(makeAddButtionActive,makeInfoButtionActive, makeShareButtonActive, makeNarrationButtonActive, makeNavigationButtonActive,makeFlagButtonActive);
 		if(makeNavigationButtonActive || makeInfoButtionActive || makeShareButtonActive)
 		{
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 		if(!AppClientFactory.isAnonymous() && makeAddButtionActive){
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 	}
 
@@ -329,6 +326,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton) {
 		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion, deselectNarrationButton, deselectNavigationButton,deselectFlagButton);	
 		setActiveButton(false,false,false,false,false,false);
+
 	}
 	public void setActiveButton(boolean makeAddButtionActive,boolean makeInfoButtionActive,
 			boolean makeShareButtonActive,boolean makeNarrationButtonActive,boolean makeNavigationButtonActive,boolean makeFlagButtonActive){

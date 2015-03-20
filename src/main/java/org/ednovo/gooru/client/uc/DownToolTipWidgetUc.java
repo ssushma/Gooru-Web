@@ -27,6 +27,8 @@ package org.ednovo.gooru.client.uc;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -49,6 +51,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	private Widget toolTipWidget;
 	private boolean isIe= false;
 	private boolean isFireFox=false;
+	private boolean isStandards;
 	String newMsg;
 	int Count;
 	
@@ -69,7 +72,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	 * @param html text for html widget
 	 */
 	public DownToolTipWidgetUc(Widget widget, String html) {
-		this(widget, html != null ? new HTML(html) : null);
+		this(widget, !StringUtil.isEmpty(html)? new HTML(html) : null);
 	}
 
 	/**
@@ -92,9 +95,10 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		return Count;
 	}
 	/**
-	 * Class constructor with two parameter
+	 * Class constructor with three parameter
 	 * @param widget instance of {@link Widget}
 	 * @param toolTipWidget instance of {@link Widget}
+	 * @param standards
 	 */
 	public DownToolTipWidgetUc(Widget widget, Widget toolTipWidget, List<Map<String, String>> standards) {
 		this();
@@ -102,7 +106,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		setToolTipWidget(toolTipWidget);
 		this.standards = standards;
 	}
-
+	
 	@UiChild(tagname = "widget")
 	public void setWidget(Widget widget) {
 		super.setWidget(widget);
@@ -128,7 +132,9 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 			if (tooltipPopUpUc != null) {
 				tooltipPopUpUc.hide();
 			}
-			StandardsPopupVc standardsPopupVc = new StandardsPopupVc(standards);
+
+			StandardsPopupVc standardsPopupVc = new StandardsPopupVc(standards,isStandards());
+
 			standardsPopupVc.center();
 			standardsPopupVc.show();
 		}
@@ -205,5 +211,13 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	*/
 	public static boolean isFirefoxBrowser() {
 	    return getBrowserName().toLowerCase().contains("firefox");
+	}
+
+	public boolean isStandards() {
+		return isStandards;
+	}
+
+	public void setStandards(boolean isStandards) {
+		this.isStandards = isStandards;
 	}
 }

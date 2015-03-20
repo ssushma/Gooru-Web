@@ -1051,6 +1051,7 @@ public class EditClasspageView extends
 			if (!isEditing){
 				isEditing = true;
 				btnCollectionEditImage.setVisible(false);
+				collectionTitleUc.getElement().getStyle().setColor("black");;
 				collectionTitleUc.switchToEdit();
 				panelUpdateActionContols.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
@@ -2091,6 +2092,7 @@ public class EditClasspageView extends
 	@Override
 	public void onPostClassPageUpdate() {
 		collectionTitleUc.cancel();
+		collectionTitleUc.getElement().getStyle().clearColor();
 		panelUpdateActionContols.getElement().getStyle().setDisplay(Display.NONE);
 		titleAlertMessageLbl.setText(i18n.GL0143());
 		titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
@@ -2257,7 +2259,7 @@ public class EditClasspageView extends
 		titleAlertMessageLbl.removeStyleName("titleAlertMessageActive");
 //		panelUpdateActionContols.setVisible(false);
 		panelUpdateActionContols.getElement().getStyle().setDisplay(Display.NONE);
-
+		collectionTitleUc.getElement().getStyle().clearColor();
 		collectionTitleUc.cancel();
 
 	}

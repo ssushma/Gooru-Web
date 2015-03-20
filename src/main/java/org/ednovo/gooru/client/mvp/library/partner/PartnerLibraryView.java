@@ -45,7 +45,9 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+
 import org.ednovo.gooru.shared.util.ClientConstants;
+
 import org.ednovo.gooru.shared.util.Constants;
 
 import com.google.gwt.core.client.GWT;
@@ -75,10 +77,12 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	
 	private static final String LIBRARY_PAGE = "partner-page";
 	
+	private CourseDo courseDo;
+	
+	private String placeToken;
+
 	private static Map<String, LoadBannerActionInterface.setLibraryBanner> libraryVal;
 	
-	private CourseDo courseDo;
-
 	private static PartnerLibraryViewUiBinder uiBinder = GWT.create(PartnerLibraryViewUiBinder.class);
 
 	interface PartnerLibraryViewUiBinder extends UiBinder<Widget, PartnerLibraryView> {
@@ -100,6 +104,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView = new LibraryView(PlaceTokens.DISCOVER);
 		partnerPanel.add(libraryView);
 		partnerPanel.getElement().setId("pnlPartnerPanel");
+		setPlaceToken(AppClientFactory.getCurrentPlaceToken());
 	}
 
 	@Override
@@ -137,6 +142,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					loadingPanel(true);
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
+					libraryView.getFolderTopicTitleLbl().setText(folderList.get(i).getTitle());
+					libraryView.getListAllBtn().addClickHandler(new ListAllBtnClickHandler(folderList.get(i).getGooruOid()));
 					setTopicListData(folderList.get(i).getFolderItems(), unitListId,folderList.get(i).getParentGooruOid());
 				}
 			}
@@ -164,6 +171,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					}
 					widget.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = libraryUnitMenuView.getUnitId();
+					libraryView.getFolderTopicTitleLbl().setText(libraryUnitMenuView.getTitle());
+					libraryView.getListAllBtn().addClickHandler(new ListAllBtnClickHandler(libraryUnitMenuView.getUnitId()));
 					if(finalWidgetCount==0) {
 						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId,libraryUnitMenuView.getLibraryGooruOid());
 					} else {
@@ -214,8 +223,12 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		CourseDo courseDo = new CourseDo();
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		LibraryUserDo libraryUserDo = new LibraryUserDo();
+
+		Map<String, LoadBannerActionInterface.setLibraryBanner> libraryVal = new HashMap<String,LoadBannerActionInterface.setLibraryBanner>();
+		libraryVal = addAllPartnerLibraries();
 		
 		LoadBannerActionInterface.setLibraryBanner actionInterface = libraryVal.get(partnerPlace); 
+
 		actionInterface.loadLibBanner(courseDo, thumbnailDo, libraryUserDo);
 		courseDo = actionInterface.getUpdatedCourseDo();
 		return courseDo;
@@ -228,6 +241,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	public static Map<String, LoadBannerActionInterface.setLibraryBanner> addAllPartnerLibraries() {
 
 		Map<String, LoadBannerActionInterface.setLibraryBanner> map = new HashMap<String,LoadBannerActionInterface.setLibraryBanner>();
+
 		map.put(PlaceTokens.AUTODESK,AutodeskBanner.getAutodeskInstance());
 		map.put(PlaceTokens.ONR,ONRBanner.getOnrInstance());
 		map.put(PlaceTokens.NGC,NgcBanner.getNgcInstance());
@@ -248,15 +262,18 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		return map;
 
 	}
+
 	
 	/**
 	 * This method will display the loading image.
 	 */
+
 	@Override
 	public void loadingPanel(boolean isVisible) {
 		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
 		libraryView.getCourseTabs().setVisible(false);
 		libraryView.getLoadingIconPanel().setVisible(isVisible);
+		libraryView.getFolderListPanel().setVisible(!isVisible);
 	}
 	
 	@Override
@@ -307,13 +324,14 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
-	
+
 	/**
 	 * Inner class for implementing library banner.
 	 * 
 	 *
 	 */
 	private static class ONRBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 		
 		private static ONRBanner ONRBannerInstance;
 		private CourseDo libCourseDo;
@@ -345,6 +363,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+
 	
 	/**
 	 * Inner class for implementing NgC library banner.
@@ -352,6 +371,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 *
 	 */
 	private static class NgcBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 		
 		private static NgcBanner ngcBannerInstance;
 		private CourseDo libCourseDo;
@@ -405,6 +425,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	        return fteBannerInstance;
 	    }
 
+
 		
 		@Override
 		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
@@ -421,11 +442,13 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+
 	/**
 	 * Inner class for implementing WSPH library banner.
 	 * 
 	 */
 	private static class WspwhBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 
 		private static WspwhBanner wsphBannerInstance;
 		private CourseDo libCourseDo;
@@ -457,6 +480,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
+	
+	
 	
 	/**
 	 * Inner class for implementing Lessonopoly library banner.
@@ -494,12 +519,12 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+
 	/**
 	 * Inner class for implementing Fincap library banner.
 	 * 
 	 */
 	private static class FincapIncBanner implements LoadBannerActionInterface.setLibraryBanner{
-
 
 		private static FincapIncBanner fincapIncBannerInstance;
 		private CourseDo libCourseDo;
@@ -531,11 +556,13 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+
 	/**
 	 * Inner class for implementing PSDL library banner.
 	 * 
 	 */
 	private static class PsdlBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 
 		private static PsdlBanner psdlBannerInstance;
 		private CourseDo libCourseDo;
@@ -589,6 +616,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return youthVoiceBannerInstance;
 		}
 
+
 		@Override
 		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
 			courseDo.setLabel(i18n.GL2040());
@@ -604,11 +632,29 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 
+	
+
+	/**
+	 * @return the placeToken
+	 */
+	public String getPlaceToken() {
+		return placeToken;
+	}
+
+	/**
+	 * @param placeToken the placeToken to set
+	 */
+	public void setPlaceToken(String placeToken) {
+		this.placeToken = placeToken;
+	}
+
+
 	/**
 	 * Inner class for implementing GeoEdu library banner.
 	 * 
 	 */
 	private static class GeoEduBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 
 		private static GeoEduBanner geoEduBannerInstance;
 		private CourseDo libCourseDo;
@@ -640,11 +686,13 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+
 	/**
 	 * Inner class for implementing LPS library banner.
 	 * 
 	 */
 	private static class LpsBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 
 		private static LpsBanner lpsBannerInstance;
 		private CourseDo libCourseDo;
@@ -712,6 +760,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
+
 	/**
 	 * Inner class for implementing ESYP library banner.
 	 * 
@@ -733,6 +782,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return esypBannerInstance;
 		}
 
+
 		@Override
 		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
 			courseDo.setLabel(i18n.GL2174());
@@ -753,6 +803,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	 * 
 	 */
 	private static class CcstBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 
 		private static CcstBanner ccstBannerInstance;
 		private CourseDo libCourseDo;
@@ -783,6 +834,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
+
 
 	/**
 	 * Inner class for implementing TICAl library banner.
@@ -819,12 +871,14 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			return libCourseDo;
 		}
 	}
+
 	
 	/**
 	 * Inner class for implementing Aspire library banner.
 	 * 
 	 */
 	private static class AspireBanner implements LoadBannerActionInterface.setLibraryBanner{
+
 
 		private static AspireBanner aspireBannerInstance;
 		
@@ -868,5 +922,23 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		courseDo.setThumbnails(thumbnailDo);
 		courseDo.setCreator(libraryUserDo);
 		return courseDo;
+	}
+	
+	/**
+	 * This Inner class used to navigate to Folder TOC page when click on ListAll button.
+	 */
+	public class ListAllBtnClickHandler implements ClickHandler{
+		String folderId="";
+		public ListAllBtnClickHandler(String folderId){
+			this.folderId=folderId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", folderId);
+			params.put("libName", getPlaceToken());
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDER_TOC,params);
+		}
+		
 	}
 }

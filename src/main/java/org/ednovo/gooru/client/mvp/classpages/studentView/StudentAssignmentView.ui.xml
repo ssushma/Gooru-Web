@@ -65,9 +65,10 @@
 					<g:FlowPanel styleName="{style.css.dropdownListContainerScrollPanelStudent}" ui:field="dropDownListContainer">
 					</g:FlowPanel>
 		</g:FlowPanel>
-
+	    <g:FlowPanel styleName="{StudentStyle.paginationContainer}">
 				<g:FlowPanel styleName="{StudentStyle.searchResultContainer}"
 					ui:field="paginationFocPanel"></g:FlowPanel>
+		</g:FlowPanel>
 
 		<g:HTMLPanel styleName="{StudentStyle.classPageContainerforAssignment}">
 

@@ -36,12 +36,18 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -71,20 +77,16 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		String secondaryCollectionSearchBtn();
 	}
 
-	/*@UiField
-	SearchBarVc searchBarVc;*/
 	@UiField
 	FlowPanel flowpanel;
 	@UiField
 	HTMLPanel contentpanel;
 	@UiField
 	SimplePanel searchWrapperSimPanel, shelfTabSimPanel;
+
+	@UiField Anchor searchFilterMenu;
+
 	@UiField ScrollPanel panelSearchPage;
-
-	/*@UiField
-	Anchor resourceLinkLbl, collectionLinkLbl;*/
-	
-
 	
 	@UiField
     Label lodingImage;
@@ -92,9 +94,10 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	@UiField
 	Style style;
 
-
-
+	@UiField
+	SearchCBundle res;
 	
+	Boolean isIpad,isAndriod,isWinDskp;
 
 	/**
 	 * Class constructor
@@ -102,16 +105,30 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public SearchRootView() {
 		setWidget(uiBinder.createAndBindUi(this));
 
+		res.css().ensureInjected();
 		
 		searchWrapperSimPanel.getElement().setId("spnlSearchWrapperSimPanel");
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		lodingImage.getElement().setId("lblLodingImage");
-
+		searchFilterMenu.getElement().setId("toggle-menu1");
+		searchFilterMenu.setHTML("<img src=\"images/toggleIcon.png\"/> "+i18n.GL3104_1());
 		int windowHeight=Window.getClientHeight();
-		panelSearchPage.setStyleName("panelHeight");
+
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
 		panelSearchPage.getElement().getStyle().setOverflowY(Overflow.AUTO);
 		panelSearchPage.getElement().getStyle().setOverflowX(Overflow.HIDDEN);
+		
+		isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		
+		if(isIpad){
+			lodingImage.getElement().getStyle().clearMarginTop();
+		}else if(isAndriod){
+			lodingImage.getElement().getStyle().clearMarginTop();  
+		}else{
+			lodingImage.getElement().getStyle().setMarginTop(100, Unit.PX);
+		}
 		
 		panelSearchPage.addScrollHandler(new ScrollHandler() {
 			
@@ -121,6 +138,16 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 				
 			}
 		});
+		Window.addResizeHandler(new ResizeHandler() {
+			
+			@Override
+			public void onResize(ResizeEvent event) {
+				int windowHeight=Window.getClientHeight();
+				panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
+				
+			}
+		});
+
 	}
 
 	@Override
@@ -137,7 +164,6 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 	@Override
 	public String getSearchText() {
-//		return searchBarVc.getSearchText();
 		return AppClientFactory.getPlaceManager().getRequestParameter("query");
 	}
 
@@ -152,22 +178,15 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	@Override
 	public void preSearch(SearchDo<?> searchDo) {
 		lodingImage.setVisible(true);
-//		searchBarVc.setSearchText(searchDo.getUrlQuery());
-		
-//				searchBarVc.setInitialSearchQuery();
-		
-
 	}
 
 	@Override
 	public void postSearch(SearchDo<?> searchDo) {
-		// String searchText = searchBarVc.getSearchText();
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 				PlaceTokens.RESOURCE_SEARCH)
 				|| AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 						PlaceTokens.COLLECTION_SEARCH)) {
 			Document doc = Document.get();
-			doc.getBody().setClassName(style.bodyHeight());
 		}
 		Window.enableScrolling(false);
 		int countValue = searchDo.getSearchResults().size();
@@ -230,14 +249,13 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		}
 	}
 
-	/*@Override
-	public void clearPanel() {
-		contentpanel.clear();
-	}*/
+	@UiHandler("searchFilterMenu")
+	public void searchFilterMenuClickEvent(ClickEvent event){
+		invokeShowHideMenuContainer();
+			
+	}
 	
-
-
-
-
-
+	public static native void invokeShowHideMenuContainer() /*-{
+		$wnd.showSearchFilters();
+	}-*/;
 }

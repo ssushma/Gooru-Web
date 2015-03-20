@@ -54,6 +54,7 @@
 	min-width: 490px;
 	border: 1px solid #dddddd;
 	padding: 5px;
+	resize: none;
 }
 
 .infoSection{

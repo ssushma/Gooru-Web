@@ -318,4 +318,6 @@ public interface ClientConstants {
 	
 	String CHILD_REG = "childReg";
 	
+	String FULLSCREEN = "fullscreen";
+	
 }

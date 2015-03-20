@@ -6,7 +6,7 @@
 		/* Add CSS here. See the GWT docs on UI Binder for more
 		details */
 		.standardDiv {
-		padding: 10px 0px 0px 18px;
+		
 		}
 		.title {
 		display:
@@ -63,7 +63,7 @@
 		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
 			widget names. The ui:field attribute binds an element to a field in the owner 
 			class. See the GWT docs on UI Binder for more details. -->
-		<g:HTMLPanel styleName="{playerStyle.loadingImageMainDivShare}"
+		<g:HTMLPanel styleName="{playerStyle.loadingImageMainDivShare} hidden-xs"
 			ui:field="loadingImagePanel">
 			<g:Label styleName="{playerStyle.loadingImageForShare}" />
 		</g:HTMLPanel>
@@ -76,6 +76,12 @@
 			Grade: <g:HTMLPanel styleName="{style.standard}">CCSS.ELA-Literacy.L.6.2</g:HTMLPanel> 
 			<g:HTMLPanel styleName="{style.standard}">CCSS.ELA-Literacy.L.6.2</g:HTMLPanel> 
 			</g:HTMLPanel> </g:HTMLPanel> -->
+		<g:HTMLPanel styleName="{style.standardDiv}" ui:field="panelCentury">
+			<g:Label styleName="{style.title}" ui:field="lblCentury" />
+			<g:Label styleName="{style.normal}" ui:field="lblCenturyText"></g:Label>
+			<g:FlowPanel ui:field="centuryInfoConatiner"
+				styleName="{style.resource-info-stand-wrapper}" />
+		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.standardDiv}" ui:field="panelStandrads">
 			<g:Label styleName="{style.title}" ui:field="lblStandrads" />
 			<g:Label styleName="{style.normal}" ui:field="lblStandardsText"></g:Label>

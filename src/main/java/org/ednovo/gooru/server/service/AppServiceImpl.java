@@ -93,14 +93,12 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		String decryptedPwd = StringUtil.getDecryptedData(password);
 		String content = null;
 		try {
-			
 			postData.put(USERNAME, userName);
 			postData.put(PASSWORD, decryptedPwd);
 			 
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
-			
 			
 			if (jsonResponseRep.getStatusCode()==200){
 				content = jsonRep.getText();
@@ -157,6 +155,13 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		
 		String analyticsUrl = getAnalyticsEndPoint() +"dashboard/#/" + type +"/"+id+"?session_token="+getLoggedInSessionToken();		
 		return analyticsUrl;
+	}
+	
+	@Override
+	public UserDo getUserFilterProperties(){
+		UserDo userDo=new UserDo();
+		userDo.setSettings(getFilterProperties());
+		return userDo;
 	}
 	
 }

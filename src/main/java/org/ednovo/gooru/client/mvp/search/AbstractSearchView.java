@@ -35,14 +35,16 @@ import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
-import org.ednovo.gooru.client.mvp.search.SearchRootView.Style;
 import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchEvent;
+import org.ednovo.gooru.client.mvp.search.event.FilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -55,7 +57,6 @@ import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -90,6 +91,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 
 	@UiField(provided = true)
 	SearchFilterVc searchFilterVc;
+	
+	SearchFilterVc searchFilterVc1;
 
 	@UiField(provided = true)
 	AppMirageDragContainer searchResultPanel;
@@ -135,7 +138,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	String rootWebUrl = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 	
 	private HandlerRegistration handlerRegistration=null;
-	
+	private HandlerRegistration handlerForCentury=null;
 	public interface Style extends CssResource {
 
 		String resourceBtnActive();
@@ -154,6 +157,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		dragController = new ResourceDragController(RootPanel.get());
 		searchResultPanel = new AppMirageDragContainer(dragController);
 		searchFilterVc = new SearchFilterVc(resourceSearch);
+		searchFilterVc1 = new SearchFilterVc(resourceSearch);
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
@@ -166,6 +170,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		
 		searchFilterPanel.getElement().setId("searchFilterPanelDiv");
 		searchFilterVc.getElement().setId("searchFilterVcsearchFilterVc");
+		
 		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
 		searchResultPanel.getElement().setId("appMirageDragContainer");
 		
@@ -193,6 +198,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			standardsConatiner.setVisible(true);
 		}
 		
+		AppClientFactory.fireEvent(new SearchFilterUiEvent(searchFilterVc1,resourceSearch));
+		
 		getBrowseBtn().addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -201,18 +208,41 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 				
 			}
 		});
+		//This is for handling click on browse 21 century
+		getCentruyBrowseBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+			}
+		});
 		
-
+		searchFilterVc1.browseStandards.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddStandards();
+	
+			}
+		});
+		//This is for handling click on browse 21 century
+		searchFilterVc1.browse21Century.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+			}
+		});
 	}
 
 	@Override
 	public void preSearch(SearchDo<T> searchDo) {
 		reset();
 		searchFilterVc.setFilter(searchDo.getFilters());
+		searchFilterVc1.setFilter(searchDo.getFilters());
 		if(!AppClientFactory.isAnonymous()) {
 			searchFilterVc.getUserStandardPrefCodeId();
+			searchFilterVc1.getUserStandardPrefCodeId();
 		}else{
 			searchFilterVc.getStandardVisiblity();
+			searchFilterVc1.getStandardVisiblity();
 		}
 		
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
@@ -320,7 +350,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		}
 		
 		standardsConatiner.clear();
-		
+
 		showCategoryFilter();
 		showSubjectsFilter();
 		showGradesFilter();
@@ -341,11 +371,15 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		
 		searchResultPanel.setClonnable(true);
 		
-		
+		boolean device = BrowserAgent.isDevice();
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
-				searchResultPanel.addDraggable(renderSearchResult(searchResult));
+				if (device){
+					searchResultPanel.add(renderSearchResult(searchResult));
+				}else{
+					searchResultPanel.addDraggable(renderSearchResult(searchResult));
+				}
 			}
 			if (searchDo.getTotalPages() > 1) {
 				if (searchDo.getPageNum() > 1) {
@@ -409,6 +443,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void setSearchFilter(SearchFilterDo searchFilterDo) {
 		getSearchFilterVc().renderFilter(searchFilterDo);
+		searchFilterVc1.renderFilter(searchFilterDo);
+		AppClientFactory.getEventBus().fireEvent(new FilterEvent(searchFilterDo));
 		getUiHandlers().initiateSearch();
 	}
 
@@ -438,16 +474,19 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void setSourceSuggestions(SearchDo<String> sourceSuggestions) {
 		searchFilterVc.setSourceSuggestions(sourceSuggestions);
+		searchFilterVc1.setSourceSuggestions(sourceSuggestions);
 	}
 
 	@Override
 	public void setAggregatorSuggestions(SearchDo<String> aggregatorSuggestions) {
 		searchFilterVc.setAggregatorSuggestions(aggregatorSuggestions);
+		searchFilterVc1.setAggregatorSuggestions(aggregatorSuggestions);
 	}
 	
 	@Override
 	public void setStandardsSuggestions(SearchDo<CodeDo> standardsSuggestions) {
 		searchFilterVc.setStandardSuggestions(standardsSuggestions);
+		searchFilterVc1.setStandardSuggestions(standardsSuggestions);
 	}
 
 	@Override
@@ -489,11 +528,14 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void resetFilters(){
 		searchFilterVc.clearAllFields();
+		searchFilterVc1.clearAllFields();
 	}
 	
-	public Button getBrowseBtn()
-	{
+	public Button getBrowseBtn(){
 		return searchFilterVc.browseStandards;
+	}
+	public Button getCentruyBrowseBtn(){
+		return searchFilterVc.browse21Century;
 	}
 	
 	public void OnStandardsClickEvent(Button standardsButtonClicked)
@@ -506,8 +548,18 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().setUpdatedStandards();
-		
-				
+			}
+		});
+	}
+	public void OnCenturyClickEvent(Button centuryButtonClicked)
+	{
+		if(handlerForCentury!=null){
+			handlerForCentury.removeHandler();
+		}
+		handlerForCentury=centuryButtonClicked.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedCentury();
 			}
 		});
 	}
@@ -516,12 +568,21 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	{
 		if(!standardsCode.isEmpty())
 		{
-		searchFilterVc.addStandardFilter(standardsCode);
-		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+			searchFilterVc.addStandardFilter(standardsCode);
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 		}
 		getUiHandlers().closeStandardsPopup();
 	}
-	
+
+	public void setUpdatedCentury(Map<Long, String> centuryValues)
+	{
+		if(centuryValues.size()>0)
+		{
+			searchFilterVc.addCenturyFilter(centuryValues);
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+		}
+		getUiHandlers().closeCenturyPoup();
+	}
 	@Override
 	public String getSearchText() {
 //		return searchBarVc.getSearchText();
@@ -797,5 +858,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	
 	public abstract void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
-
+	
+	@Override
+	public Map<String, String> getSearchFilters1() {
+		return searchFilterVc1.getFilter();
+	}
 }

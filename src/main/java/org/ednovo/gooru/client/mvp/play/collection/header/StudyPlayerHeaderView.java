@@ -36,7 +36,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -44,9 +43,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -134,7 +130,8 @@ public class StudyPlayerHeaderView extends Composite implements ClientConstants{
 		loginUserName.setText(!StringUtil.isEmpty(AppClientFactory.getLoggedInUser().getUsernameDisplay())?AppClientFactory.getLoggedInUser().getUsernameDisplay():"");
 		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
-		if(collectionType!=null&&QUIZ.equals(collectionType)){
+
+		if(collectionType!=null&&collectionType.equals("assessment")){
 			wishingText.setText(i18n.GL1530());
 			wishingText.getElement().setAttribute("alt",i18n.GL1530());
 			wishingText.getElement().setAttribute("title",i18n.GL1530());

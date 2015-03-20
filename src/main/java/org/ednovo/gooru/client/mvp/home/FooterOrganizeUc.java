@@ -138,7 +138,7 @@ public class FooterOrganizeUc extends Composite {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("902px", "300px");
+				
 				termsAndPolicyVc.center();
 			}
 		});
@@ -148,7 +148,6 @@ public class FooterOrganizeUc extends Composite {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				termsOfUse.show();
-				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 			}
 		});
@@ -163,7 +162,6 @@ public class FooterOrganizeUc extends Composite {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();				
 			}
 		});

@@ -87,7 +87,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -99,7 +98,11 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+
+import com.google.gwt.user.client.ui.FlowPanel;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -418,6 +421,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionEndPresenter=collectionEndPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
+
+		getView().setFullScreenButton(resoruceMetadataPresenter.getFullScreenButton());
+
 		getView().setNarrationButton(resoruceMetadataPresenter.getNarrationButton());
 		resourceFlagPresenter.setCollectionPlayerPresenter(this);
 		collectionFlagPresenter.setCollectionPlayerPresenter(this);
@@ -462,6 +468,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		super.onReveal();
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
+		Window.scrollTo(0, 0);
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 	}
 	@Override
@@ -469,6 +476,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		super.onReset();
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
+		Window.scrollTo(0, 0);
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 	}
 
@@ -509,6 +517,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		});
 	}
 	public void getCollectionDetails(){
+		System.out.println("in the presenter");
 		final String collectionId=getPlaceManager().getRequestParameter("id", null);
 		final String resourceId=getPlaceManager().getRequestParameter("rid", null);
 		final String tabView=getPlaceManager().getRequestParameter("tab", null);
@@ -517,17 +526,19 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		final String rootNodeId=getPlaceManager().getRequestParameter("rootNodeId", null);
 		
 		if(this.collectionDo!=null&&this.collectionDo.getGooruOid().equals(collectionId)){
+			getView().restFullScreenChanges();
+
 			if(!StringUtil.isEmpty(resourceId)){
-				showResourceView(resourceId,tabView);
-				showTabWidget(tabView,collectionId,resourceId,false,false);
+				showResourceView(resourceId,tabView,view);
+				showTabWidget(tabView,collectionId,resourceId,false,false, view);
 			}
 			else if(!StringUtil.isEmpty(collectionId)){
 				if(view!=null&&END.equalsIgnoreCase(view)){
 					showCollectionEndView(collectionId, tabView);
-					showTabWidget(tabView,collectionId,resourceId,false,true);
+					showTabWidget(tabView,collectionId,resourceId,false,true,view);
 				}else{
 					showCollectionMetadataView(tabView);
-					showTabWidget(tabView,collectionId,resourceId,true,false);
+					showTabWidget(tabView,collectionId,resourceId,true,false,view);
 				}
 			}
 		}else{
@@ -552,7 +563,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							showCollectionErrorMessage();
 						}else{
 							setPageTitle(collectionDo);
-							showCollectionView(collectionDo,collectionId,resourceId,tabView);
+							showCollectionView(collectionDo,collectionId,resourceId,tabView,view);
 							setCollectionDetails(collectionDo);
 						}
 					}
@@ -575,24 +586,25 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.COLLECTION_PLAYER_TITLE+collectionDo.getTitle());
 	}
 	
-	public void showCollectionView(CollectionDo collectionDo,String collectionId,String resourceId, String tabView){
+	public void showCollectionView(CollectionDo collectionDo,String collectionId,String resourceId, String tabView,String viewFrom){
 		this.collectionDo=collectionDo;
+		String view=getPlaceManager().getRequestParameter("view", null);
 		if(collectionId==null || collectionId.equalsIgnoreCase("")){
 			return;
 		}
 		else{
 			if(resourceId==null || resourceId.equalsIgnoreCase("")){
-				String view=getPlaceManager().getRequestParameter("view", null);
 				if(view!=null&&END.equalsIgnoreCase(view)){
 					showCollectionEndView(collectionId, tabView);
-					showTabWidget(tabView,collectionId,resourceId,false,true);
+					showTabWidget(tabView,collectionId,resourceId,false,true,view);
 				}else{
 					showCollectionMetadataView(tabView);
-					showTabWidget(tabView,collectionId,resourceId,true,false);
+					showTabWidget(tabView,collectionId,resourceId,true,false,view);
 				}
 			}else{
-				showResourceView(resourceId,tabView);
-				showTabWidget(tabView,collectionId,resourceId,false,false);
+				System.out.println("in the second");
+				showResourceView(resourceId,tabView,viewFrom);
+				showTabWidget(tabView,collectionId,resourceId,false,false,view);
 			}
 		}
 	}
@@ -660,7 +672,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		addFixedPostionForNavigation();
 	}
 	
-	public void showResourceView(String collectionItemId,String tabView) {
+	public void showResourceView(String collectionItemId,String tabView,String viewFrom) {
 		CollectionItemDo collectionItemDo=getCollectionItemDo(collectionItemId);
 		if(collectionItemDo!=null){
 			this.collectionMetadataId=null;
@@ -669,6 +681,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			
 			getView().hidePlayerButtons(false, collectionDo.getGooruOid());
 			showSignupPopup();
+			getView().setNarrationInFullScreenMode(collectionItemDo!=null?collectionItemDo:null,collectionDo);
 			if(this.collectionItemDo!=null){
 				if(this.collectionItemDo.getCollectionItemId().equalsIgnoreCase(collectionItemDo.getCollectionItemId())){
 					makeButtonActive(tabView);
@@ -685,11 +698,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			if(PRIVATE.equalsIgnoreCase(collectionDo.getSharing())){
 				isSharable=false;
 			}
+
 			if(tabView!=null&&NARRATION.equals(tabView)){
-				enablePlayerButton(true,true, isSharable, true, true,true);
+				enablePlayerButton(true,true, isSharable, true, true,true,true);
 				makeButtonActive(tabView);
-			}else{
-				enablePlayerButton(true,true, isSharable, false, true,true);
+			}else if(tabView!=null&&tabView.equals("fullscreen")){
+				enablePlayerButton(true,true, isSharable, true, true,true,true);
+				makeButtonActive(tabView);
+			}
+			else{
+				enablePlayerButton(true,true, isSharable, false, true,true,true);
 				makeButtonActive(tabView);
 			}
 			collectionPlayerTocPresenter.hideResourceCountLabel(true);
@@ -726,9 +744,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 			adjustCollectionMetadaBody(false);
 			addFixedPostionForNavigation();
+			System.out.println("end");
+			/*if(viewFrom!=null && viewFrom.equals("fullScreen")){
+				getView().setFullScreenMode();
+			}*/
 		}
 		else{
-			enablePlayerButton(false, false, false, false, false, false);
+			enablePlayerButton(false, false, false, false, false, false,false);
 			getView().getPlayerBodyContainer().clear();
 			getView().getPlayerBodyContainer().add(new ResourceNonExitView());
 			getView().getResourceAnimationContainer().getElement().getStyle().setProperty("display", "block");
@@ -824,29 +846,42 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
+			//getView().clearActiveButtion();
 			if(ADD.equalsIgnoreCase(tabView)){
-				getView().clearActiveButton(false,true, true, true, true,false);
-				getView().makeButtonActive(true, false,false, false, false,false);	
-			}
-			else if(INFO.equalsIgnoreCase(tabView)){
-				getView().clearActiveButton(true,false, true, true, true,false);
-				getView().makeButtonActive(false,true, false, false, false,false);	
+				
+				//CollectionPlayerMetadataView.addPadding();
+				getView().clearActiveButton(false,true, true, true, true,false,true);
+				getView().makeButtonActive(true, false,false, false, false,false,false);	
 			}
 			else if(SHARE.equalsIgnoreCase(tabView)){
-				getView().clearActiveButton(true,true, false, true, true,false);
-				getView().makeButtonActive(false,false, true, false, false,false);
+				
+				//CollectionPlayerMetadataView.addPadding();
+				getView().clearActiveButton(true,false, true, true, true,false,true);
+				getView().makeButtonActive(false,true, false, false, false,false,false);	
+			}
+			else if(SHARE.equalsIgnoreCase(tabView)){
+				
+				//CollectionPlayerMetadataView.addPadding();
+				getView().clearActiveButton(true,true, false, true, true,false,true);
+				getView().makeButtonActive(false,false, true, false, false,false,false);
 			}
 			else if(NARRATION.equalsIgnoreCase(tabView)){
-				getView().clearActiveButton(true,true, true, false, true,false);
-				getView().makeButtonActive(false,false, false, true, false,false);
+				getView().clearActiveButton(true,true, true, false, true,false,true);
+				getView().makeButtonActive(false,false, false, true, false,false,false);
+			}
+			else if(FULLSCREEN.equalsIgnoreCase(tabView)){
+				getView().clearActiveButton(true,true, true, true, true,true,false);
+				getView().makeButtonActive(false,false, false, false, false,false,true);
 			}
 			else if(NAVIGATION.equalsIgnoreCase(tabView)){
-				getView().clearActiveButton(true,true, true, true, false,false);
-				getView().makeButtonActive(false,false, false, false, true,false);
+				
+				//CollectionPlayerMetadataView.addPadding();
+				getView().clearActiveButton(true,true, true, true, false,false,true);
+				getView().makeButtonActive(false,false, false, false, true,false,false);
 				
 			}else if(FLAG.equalsIgnoreCase(tabView)){
-				getView().clearActiveButton(true,true, true, true, true,false);
-				getView().makeButtonActive(false,false, false, false, false,true);
+				getView().clearActiveButton(true,true, true, true, true,false,true);
+				getView().makeButtonActive(false,false, false, false, false,true,false);
 			}
 		}
 	}
@@ -855,9 +890,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().scrollStudyPage();
 	}
 
-	public void showTabWidget(String tabView,String collectionId,String resourceId,boolean isCollectionHome,boolean isCollectionEnd){
+	public void showTabWidget(String tabView,String collectionId,String resourceId,boolean isCollectionHome,boolean isCollectionEnd,String viewFrom){
 		if(tabView==null||tabView.equals("")){
-			getView().clearActiveButton(true,true, true, true, true,true);
+			getView().clearActiveButton(true,true, true, true, true,true,true);
 			new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 		}
 		else if(ADD.equals(tabView)){
@@ -910,11 +945,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 	 	}else if(INFO.equals(tabView)){
 			setResourceInfoView(resourceId);
-		}
-		else{
+		}else{
 			getView().getResourceAnimationContainer().clear();
 		}
-
+		if(viewFrom!=null && viewFrom.equals("fullScreen")){
+			getView().setFullScreenMode();
+		}
 	}
 	protected void showSignupPopup() {
 		if (AppClientFactory.getPlaceManager().getRequestParameter("callback") != null && AppClientFactory.getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
@@ -1159,8 +1195,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		clearSlot(COLLECTION_PLAYER_NAVIGATION_SLOT);
 	}
 
-	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable,boolean isFlagButtonEnable){
-		getView().enablePlayerButton(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonEnable);
+	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable,boolean isFlagButtonEnable,boolean isFullScreenButtonEnable){
+		getView().enablePlayerButton(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonEnable,isFullScreenButtonEnable);
 	}
 
 
@@ -1274,6 +1310,30 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void updateResourceViewCount(String gooruId,String viewsCount,String resourceType,final String collectionItemId){
 				updateViewCount(collectionItemId);
+//			}
+//		});
+	}
+
+	public void startPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
+			String context,String userAgent){
+	/*	this.playerAppService.startActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
+			@Override
+			public void onSuccess(String activityEventId) {
+
+			}
+		});*/
+	}
+	public void stopPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
+			String context,String userAgent){
+//		this.playerAppService.stopActivityPlayerLog(activityEventId, activityParentEventId, eventName, gooruOid, 
+//				resourceGooruOid, context, userAgent, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String activityEventId) {
+//
+//			}
+//		});
+
 	}
 
 	public void createSession(String collectionGooruOid){
@@ -1634,7 +1694,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	protected void showCollectionErrorMessage(){
 		clearSlot(METADATA_PRESENTER_SLOT);
-		enablePlayerButton(false, false, false, false, false, false);
+		enablePlayerButton(false, false, false, false, false, false,false);
 		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
 		getView().getPlayerBodyContainer().add(new CollectionNonExistView());
@@ -1691,7 +1751,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			isExplanationUsed=false;
 			getView().hideFlagButton(false);
 			getView().setResourceTitle("");
-			enablePlayerButton(false, false, false, false, false,false);
+			enablePlayerButton(false, false, false, false, false,false,false);
 			getView().resetThumbsButtons();
 			clearTabSlot();
 			clearSlot(METADATA_PRESENTER_SLOT);
@@ -1817,6 +1877,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		triggerSaveOeAnswerTextDataEvent(oeDataLogEventId,resourceActivityResourceId,oeStartTime,oeStartTime,0);
 	}
 	public void triggerCollectionNewDataLogStartStopEvent(Long collectionStartTime,Long collectionEndTime,String eventType,Integer score){
+		try
+		{
 		JSONObject collectionDataLog=new JSONObject(); 
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(collectionNewDataLogEventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_PLAY));
@@ -1861,8 +1923,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 			updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
 		}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("logging this issue:::"+"Event start stop issue");
+		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
+		try
+		{
 		JSONObject collectionDataLog=new JSONObject(); 
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(resourceNewDataLogEventId));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.COLLECTION_RESOURCE_PLAY));
@@ -1888,6 +1957,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
 			updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemDo.getCollectionItemId());
+		}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("logging this issue for item wise:::"+"Event start stop issue");
 		}
 		
 	}
@@ -2194,20 +2268,35 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	
 	public void addFixedPostionForNavigation(){
-		collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
+		//collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
 	}
 	public void adjustCollectionMetadaBody(boolean isHome){
 		if(isHome){
-			metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX);
+			  /*Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+			  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+			  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+			  if(isIpad)
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX); 
+			  }
+			  else if(isAndriod)
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(0, Unit.PX); 
+			  }
+			  else
+			  {
+				  metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX); 
+			  }*/
+			
 		}else{
-			addFixedPositionNavArrows();
+			//addFixedPositionNavArrows();
 		}
 	}
 	public void addFixedPositionNavArrows(){
 		resoruceMetadataPresenter.getWidget().getElement().getStyle().setPaddingTop(38+50, Unit.PX);
-		resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);
-		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
-		resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
+		/*resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);*/
+		//int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
+		//resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
 	}
 
 	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {
@@ -2347,5 +2436,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			resoruceMetadataPresenter.postReview(assocGooruOId, userReview, score, isUpdate);
 		}
 		
+	}
+	public FlowPanel getMenuContainer(){
+		return getView().menuContent();
+		}
+	@Override
+	public void setFullScreenMode(boolean isFullScreen,FlowPanel pnlFullScreenNarration) {
+		resoruceMetadataPresenter.setFullScreen(isFullScreen,pnlFullScreenNarration);
 	}
 }

@@ -33,6 +33,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
@@ -113,6 +114,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 
 	@Override
 	public void showQuestionView(CollectionItemDo collectionItemDo) {
+		System.out.println("full screen question");
 		questionResourcePresenter.setCollectionPlayer(isCollectionPlayer);
 		questionResourcePresenter.setResourcePlayer(isResourcePlayer);
 		questionResourcePresenter.setPreviewPlayer(isPreviewPlayer);
@@ -126,9 +128,15 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		}else{
 			questionResourcePresenter.getWidget().setHeight((windowHeight-202)+"px");
 		}
+		
 		getView().getResourceWidgetContainer().add(questionResourcePresenter.getWidget());
+		questionResourcePresenter.getWidget().getParent().getElement().getStyle().clearPaddingTop();
 	}
 	
+	@Override
+	public FlowPanel getQuestioncontainer(){
+		return questionResourcePresenter.getQuestioncontainer();
+	}
 	public void setCollectionPlayerPresnter(CollectionPlayerPresenter collectionPlayerPresenter,boolean isCollectionPlayer){
 		this.collectionPlayerPresenter=collectionPlayerPresenter;
 		this.isCollectionPlayer=true;
@@ -456,16 +464,19 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		});
 		
 	}
-	public HTMLPanel getCollectionContainer(){
+	public SectionTag getCollectionContainer(){
 		return getView().getCollectionContainer();
 	}
 	
-	public FlowPanel getResourceWidgetContainer(){
+	public SectionTag getResourceWidgetContainer(){
 		return getView().getResourceWidgetContainer();
 	}
 	
 	public Button getNarrationButton(){
 		return getView().getNarrationButton();
+	}
+	public Button getFullScreenButton(){
+		return getView().getFullScreenButton();
 	}
 	
 	public void clearMarginTop(){
@@ -522,4 +533,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		}
 	}
 
+	@Override
+	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration) {
+		getView().setFullScreen(isFullScreen,pnlFullScreenNarration);
+	}
 }

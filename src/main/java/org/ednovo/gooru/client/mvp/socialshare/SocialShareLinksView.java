@@ -28,20 +28,22 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 /**
@@ -63,9 +65,11 @@ public class SocialShareLinksView extends Composite {
 	TextArea shareLinkTxtBox;
 	
 	@UiField
-	FlowPanel shareLinkFlwPl,shareLinkContainer;
+	FlowPanel shareLinkFlwPl;
 
-	@UiField Label swithUrlLbl, swithToEmbedLbl, shareLbl;
+	@UiField Anchor swithUrlLbl, swithToEmbedLbl;
+	
+	@UiField PPanel  shareLbl,shareLinkContainer;
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -97,6 +101,9 @@ public class SocialShareLinksView extends Composite {
 		shareLinkContainer.getElement().setId("fpnlShareLinkContainer");
 		shareLinkTxtBox.addClickHandler(new OnTextBoxClick());
 		shareLinkTxtBox.getElement().setId("tatShareLink");
+		String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(placeToken!=null&&placeToken.equalsIgnoreCase(PlaceTokens.SHELF))
+		shareLinkTxtBox.getElement().getStyle().setWidth(62, Unit.PCT);
 		StringUtil.setAttributes(shareLinkTxtBox, true);
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt", i18n.GL0639());
@@ -106,6 +113,7 @@ public class SocialShareLinksView extends Composite {
 		swithToEmbedLbl.getElement().setAttribute("title", i18n.GL0640());
 		swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
+		/*swithUrlLbl.getElement().getStyle().setMarginRight(35, Unit.PX);*/
 		shareLbl.setText(i18n.GL0512());
 		shareLbl.getElement().setId("lblShareLbl");
 		shareLbl.getElement().setAttribute("alt", i18n.GL0512());
@@ -143,7 +151,7 @@ public class SocialShareLinksView extends Composite {
 		return shareLinkTxtBox;
 	}
 
-	public Label getShareLbl() {
+	public PPanel getShareLbl() {
 		return shareLbl;
 	}
 
@@ -151,8 +159,16 @@ public class SocialShareLinksView extends Composite {
 		return shareLinkFlwPl;
 	}
 	
-	public FlowPanel getShareLinkContainer() {
+	public PPanel getShareLinkContainer() {
 		return shareLinkContainer;
+	}
+	
+	public Anchor getSwithToEmbedLbl() {
+		return swithToEmbedLbl;
+	}
+
+	public Anchor getSwithUrlLbl() {
+		return swithUrlLbl;
 	}
 
 	/**

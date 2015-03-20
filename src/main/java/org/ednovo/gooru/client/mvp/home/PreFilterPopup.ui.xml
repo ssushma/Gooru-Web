@@ -68,13 +68,10 @@
 		box-sizing: border-box;
 		box-sizing: border-box;
 		float: left;
-		width: 50%;
 		padding-top: 12px;
 	}
 	
 	.searchPopSubject {
-		width: 50%;
-		border-left: 1px solid #cacaca;
 		padding-left: 4%;
 		height: 155px;
 		box-sizing: border-box;
@@ -152,29 +149,32 @@
 		letter-spacing: -0.02em;
 		text-decoration: none;
 		padding: 10px 15px;
-		color: #515151;
-		font-family: Arial, Helvetica, sans-serif;
-		cursor: pointer;
-	}
+		color:#515151;
+		font-family:Arial, Helvetica, sans-serif;
+		cursor:pointer;
+
+		}
+		.clearMargin{
+			margin:0px;
+		}
 	</ui:style>
-	<g:HTMLPanel>
-		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
-			widget names. The ui:field attribute binds an element to a field in the owner 
-			class. -->
-		<g:HTMLPanel styleName="{style.searchPop}" ui:field="filterPanel">
-			<g:HTMLPanel styleName="{style.searchPopMenu}">
+<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+		
+	<g:HTMLPanel styleName="{res.css.PopupMainVSmall} {style.clearMargin} positionFixed" ui:field="filterPanel">
+		    <g:HTMLPanel styleName="{res.css.popupInnerGrey}">
+		    <g:HTMLPanel styleName="{style.searchPopMenu}">
 				<g:HTMLPanel styleName="{style.filterHeaderPanel}">
 					<g:HTMLPanel styleName="{style.filterGradePanel}">
-						<g:Label styleName="{style.filterLable}" ui:field="lblGradesSubj" />
+						<g:Label styleName="{style.filterLable}" ui:field="lblGradesSubj"/>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{style.filterGradePanel}">
 						<g:Label styleName="{style.filterLable}" ui:field="lblStandards" />
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.searchPopContent}"
-				ui:field="gradesPanel">
-				<g:HTMLPanel styleName="{style.searchPopGrade}">
+			<g:HTMLPanel styleName="{style.searchPopContent}" ui:field="gradesPanel">
+				<g:HTMLPanel styleName="col-md-6 {style.searchPopGrade}">
 					<g:Label styleName="{style.searchPopSmallHead}" text="{i18n.GL0325}" />
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
 						<g:HTMLPanel styleName="{style.col1}">
@@ -189,7 +189,7 @@
 						<g:HTMLPanel styleName="{style.clearfix}"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.searchPopSubject}">
+				<g:HTMLPanel styleName="col-md-6 borderRight {style.searchPopSubject}">
 					<g:Label styleName="{style.searchPopSmallHead}" text="{i18n.GL0226}" />
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
 						<g:HTMLPanel ui:field="subjectPanelUc" />
@@ -200,5 +200,5 @@
 			<!-- Standards tab content -->
 			<g:HTMLPanel ui:field="standardsPanel"></g:HTMLPanel>
 		</g:HTMLPanel>
-	</g:HTMLPanel>
+		</g:HTMLPanel>
 </ui:UiBinder> 

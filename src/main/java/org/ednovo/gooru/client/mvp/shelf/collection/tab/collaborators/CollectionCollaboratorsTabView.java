@@ -602,7 +602,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		
 	}
 	public void modifyStaticText(String collectionType){
-		if(collectionType!=null&&collectionType.equals("quiz")){
+		if(collectionType!=null&&collectionType.equals("assessment")){
 			lblCollaboratorsDesc.setText(i18n.GL3035());
 			lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL3035());
 			lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL3035());

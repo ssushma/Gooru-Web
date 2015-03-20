@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayHandler;
 
+import com.google.gwt.user.client.ui.FlowPanel;
+
 public interface CollectionPlayerUiHandlers extends BaseUiHandlers,UpdateCollectionViewCountEventHandler,
 					ShowCollectionTabWidgetEventHandler,RefreshCollectionInShelfListInPlayHandler,UpdateFlagIconColorEventHandler,EditCommentChildViewHandler,UpdateCommentChildViewHandler,CloseCollectionPlayerHandler,PostUserReviewEventHandler{
 	public void updateResourceThumbsRating(int userThumbsRataing);
@@ -43,4 +45,5 @@ public interface CollectionPlayerUiHandlers extends BaseUiHandlers,UpdateCollect
 	public void revealTeachOrStudypage(String page);
 	public boolean isOpenEndedAnswerSubmited();
 	public void navigateToNext(String direction);
+	public void setFullScreenMode(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
 	}

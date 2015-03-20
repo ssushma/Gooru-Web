@@ -249,6 +249,10 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderId")!=null)
+					params.put("folderId", AppClientFactory.getPlaceManager().getRequestParameter("folderId"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("folderItemId")!=null)
+					params.put("folderItemId", AppClientFactory.getPlaceManager().getRequestParameter("folderItemId"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("view")!=null)
 					params.put("view", AppClientFactory.getPlaceManager().getRequestParameter("view"));
 				params.put("assign", "yes");
@@ -287,10 +291,10 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("440px");
-				successPopupVc.show();
+			//	successPopupVc.setWidth("500px");
 				successPopupVc.center();
+				successPopupVc.show();
+				
 			}
 				
 				Map<String,String> params = new HashMap<String,String>();
@@ -367,10 +371,10 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+		//	successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
+
 		}
 		if(assign!=null && YES.equals(assign)){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {

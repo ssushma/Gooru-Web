@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -42,6 +43,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
+import org.ednovo.gooru.shared.model.skils.CenturySkilsDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -109,7 +111,12 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	 
 	 void showGooruStoriesSection(AsyncCallback<String> callback);
 
-	void getResourceTags(String resourceId, String offSet, String limit,AsyncCallback<SearchResourcesTagsDo> callback);
+	void getResourceTags(String resourceId, String offSet, String limit,AsyncCallback<SearchResourcesTagsDo> callback); 
+	
+	void getCenturySkilsRestuls(AsyncCallback<CenturySkilsDo> callback);
+	
+	void getSuggestCenturyByQuery(SearchDo<StandardFo> centuryDo,AsyncCallback<SearchDo<StandardFo>> callback);
 
 	void isClientSideLoggersEnabled(AsyncCallback<String> callback); 
+
 }

@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.util;
 
-import org.ednovo.gooru.client.uc.BrowserAgent;
 
 
 public class MixpanelUtil {
@@ -1612,4 +1611,7 @@ public class MixpanelUtil {
 	//$wnd.mixpanel.track("Click_AnalyticsTab_Search",{},function() { });
 			   	$wnd.hewlettTracking("Click_AnalyticsTab_Search");
 		}-*/;
+	
+	
+	
 }
