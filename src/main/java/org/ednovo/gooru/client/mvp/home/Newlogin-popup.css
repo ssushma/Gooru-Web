@@ -920,11 +920,9 @@ width: 100%;
 
 .dontWorrkText {
     color: #515151;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
-    line-height: 21px;
-    padding-bottom: 20px;
-    padding-top: 20px;
+    line-height: 15px;
     text-align: center;
     word-wrap: break-word;
 }
@@ -932,7 +930,7 @@ width: 100%;
     color: #515151;
     font-size: 12px;
     line-height: 120%;
-    padding: 20px;
+    padding: 8px;
     text-align: center;
 }
 .assignContainer .dontWorrkText{

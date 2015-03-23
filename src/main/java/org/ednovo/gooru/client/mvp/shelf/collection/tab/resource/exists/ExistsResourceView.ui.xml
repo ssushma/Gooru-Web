@@ -1,9 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"	field="res1" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle" field="res" />
 	<g:PopupPanel glassEnabled="true" autoHideEnabled="true">
-		<g:HTMLPanel styleName="{res.css.resourceExistsPopupPopupOuterContainer}">
+		<g:HTMLPanel styleName="{res.css.resourceExistsPopupPopupOuterContainer} {res1.css.PopupMainVVSmall}">
 			<g:HTMLPanel styleName="{res.css.resourceExistsPopupContainer}">
 				<g:HTMLPanel styleName="{res.css.resourceExistsPopup}">
 					<g:HTMLPanel styleName="{res.css.resourceExistsPopupBlackBg}">
