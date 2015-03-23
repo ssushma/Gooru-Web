@@ -162,6 +162,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		url+=getStandardId(rootNodeId);
 
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		getLogger().info("getSimpleCollectionDetils:"+url);
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDo = deserializeCollection(jsonRepresentation);

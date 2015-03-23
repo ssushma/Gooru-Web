@@ -150,7 +150,7 @@ z-index: 100;
     border-left: 1px solid #ddd;
     margin-left:10px;
     padding-left:10px;
-    width:245px;
+    width:240px;
 }
 
  .toolTip .resourceInfo .title {
@@ -174,7 +174,7 @@ z-index: 100;
 .ratingsDiv{
 	display: inline-block;
 	border-left: 1px solid #ddd;
-	margin-left: 10px;
+	margin-left: 36px;
 	padding-left: 10px;
-	width: 245px;
+	width: 240px;
 }
