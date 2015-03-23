@@ -194,11 +194,9 @@ public class CollectionInfo extends Composite {
 				collectionDo=result;
 				loadingImagePanel.setVisible(false);
 				setGradeText(collectionDo.getGrade());
-				if(collectionDo.getMetaInfo()!=null && collectionDo.getMetaInfo().getStandards()!=null){
-					renderStandards(standardsInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getStandards()));
-				}
-				if(collectionDo.getSkills()!=null && collectionDo.getSkills()!=null){
-					renderCentury(centuryInfoConatiner,collectionDo.getMetaInfo().getStandards());
+				if(collectionDo.getMetaInfo()!=null){
+					renderStandards(standardsInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getStandards()!=null?collectionDo.getMetaInfo().getStandards():null),true);
+					renderStandards(centuryInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getSkills()!=null?collectionDo.getMetaInfo().getSkills():null),false);
 				}
 				setDepthOfKnlze();
 				setLearningSkills();
@@ -221,52 +219,6 @@ public class CollectionInfo extends Composite {
 
 		});
 
-	}
-	public void renderCentury(FlowPanel centuryContainer, List<StandardFo> centuryList) {
-		centuryContainer.clear();
-		
-		if (centuryList != null) {
-			lblCentury.setVisible(false);
-			panelCentury.setVisible(true);
-			int count = 0;
-			FlowPanel toolTipwidgets = new FlowPanel();
-			for(int centuryCount=0; centuryCount<centuryList.size();centuryCount++) {
-				String stdCode = centuryList.get(centuryCount).getCodeId()+"";
-				String stdDec = centuryList.get(centuryCount).getLabel();
-				if (count > 2) {
-					if (count < 18){
-						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
-						toolTipwidgets.add(standardItem);
-					}
-				} else {
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec));
-					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getcenturyMoreInfo());
-					centuryContainer.add(toolTipUc);
-				}
-				count++;
-			}
-			if (centuryList.size()>18){
-				final Label left = new Label("+"+(centuryList.size() - 18));
-				toolTipwidgets.add(left);
-				panelCentury.setVisible(true);
-			}
-			if (centuryList.size() > 2) {
-				Integer moreStandardsCount = centuryList.size() - 3;
-				if (moreStandardsCount >0){
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets);
-					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
-					centuryContainer.add(toolTipUc);
-					panelCentury.setVisible(true);
-				}
-			}
-			if(centuryList.size()==0)
-			{
-				panelCentury.setVisible(false);
-			}
-		}
-		else{
-			panelCentury.setVisible(false);
-		}
 	}
 
 	protected void setLanguageObjectiveText() {
@@ -338,15 +290,16 @@ public class CollectionInfo extends Composite {
 		return standardsList;
 	}
 
-	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
+	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList,boolean isStandard) {
 		standardsContainer.clear();
-
-		if (standardsList != null) {
-			lblStandrads.setVisible(true);
-//			lblStandardsText.setVisible(false);
-			panelStandrads.setVisible(true);
+		if (standardsList != null && !standardsList.isEmpty()) {
+			if(isStandard){
+				lblStandrads.setVisible(true);
+				panelStandrads.setVisible(true);
+			}else{
+				panelCentury.setVisible(true);
+			}
 			isStandardsInfo = true;
-			//List<Map<String, String>> standards = searchResultDo.getStandards();
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
 			int count = 0;
 			FlowPanel toolTipwidgets = new FlowPanel();
@@ -359,41 +312,38 @@ public class CollectionInfo extends Composite {
 						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
 						toolTipwidgets.add(standardItem);
 					}
-					isStandardsInfo = true;
 				} else {
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+					DownToolTipWidgetUc toolTipUc;
+					if(isStandard){
+						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
+					}else{
+						 toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), null, standardsList);
+					}
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
 					standardsContainer.add(toolTipUc);
-					isStandardsInfo = true;
 				}
 				count++;
 			}
 			if (standardsList.size()>18){
 				final Label left = new Label("+"+(standardsList.size() - 18));
 				toolTipwidgets.add(left);
-				panelStandrads.setVisible(true);
-				isStandardsInfo = true;
 			}
 			if (standardsList.size() > 2) {
 				Integer moreStandardsCount = standardsList.size() - 3;
 				if (moreStandardsCount >0){
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList);
+					toolTipUc.setStandards(isStandard);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
 					standardsContainer.add(toolTipUc);
-					panelStandrads.setVisible(true);
-					isStandardsInfo = true;
 				}
 			}
-			if(standardsList.isEmpty())
-			{
+		}else{
+			if(isStandard){
 				panelStandrads.getElement().getStyle().setDisplay(Display.NONE);
 				lblStandrads.setVisible(false);
-				isStandardsInfo = false;
+			}else{
+				panelCentury.setVisible(false);
 			}
-		}
-		else{
-			panelStandrads.getElement().getStyle().setDisplay(Display.NONE);
-			lblStandrads.setVisible(false);
 			isStandardsInfo = false;
 		}
 	}
