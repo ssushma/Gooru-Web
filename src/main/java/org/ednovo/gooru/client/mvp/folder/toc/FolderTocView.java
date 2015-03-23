@@ -483,13 +483,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
 								if(folderLevel>=2){
-									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
+									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
 								}
 								item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
-							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
+							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
 							 	item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }

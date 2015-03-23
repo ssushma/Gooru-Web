@@ -107,9 +107,9 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	 * This method is used to display signup popup
 	 */
 	protected void showSignupPopup() {
-		if (AppClientFactory.getPlaceManager().getRequestParameter("callback") != null && AppClientFactory.getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
+		if (AppClientFactory.isAnonymous()){
 			//To show SignUp (Registration popup)
-			if (AppClientFactory.isAnonymous()){
+			if (AppClientFactory.getPlaceManager().getRequestParameter("callback") != null && AppClientFactory.getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				String type = AppClientFactory.getPlaceManager().getRequestParameter("type") ;

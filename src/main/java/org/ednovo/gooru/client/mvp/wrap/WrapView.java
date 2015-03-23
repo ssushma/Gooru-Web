@@ -394,4 +394,9 @@ public class WrapView extends BaseView implements IsWrapView {
 		}
 
 	}
+
+	@Override
+	public void updateUserHeaderProfileImage(String imageUrl) {
+		headerUc.updateHeaderProfileImage(imageUrl);
+	}
 }

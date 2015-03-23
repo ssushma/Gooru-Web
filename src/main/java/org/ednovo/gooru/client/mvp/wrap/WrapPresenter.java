@@ -48,6 +48,8 @@ import org.ednovo.gooru.client.mvp.search.event.FilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.FilterHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiHandler;
+import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
+import org.ednovo.gooru.client.mvp.profilepage.event.UserHeaderImageEventHandler;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter.IsWrapProxy;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -66,13 +68,13 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * @author Search Team
  * 
  */
-public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,SearchFilterUiHandler,FilterHandler, PreFilterEventHandler {
-	
-	private String  RESOURCE_SEARCH="resource-search";
-	private String COLLECTION_SEARCH="collection-search";
+
+public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler{
 	
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
+	private String  RESOURCE_SEARCH="resource-search";
+	private String COLLECTION_SEARCH="collection-search";
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_VIEW = new Type<RevealContentHandler<?>>();
@@ -93,6 +95,7 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 		addRegisteredHandler(SearchFilterUiEvent.TYPE, this);
 		addRegisteredHandler(FilterEvent.TYPE, this);
 		addRegisteredHandler(PreFilterEvent.TYPE, this);
+		addRegisteredHandler(UpdateProfileHeaderImageEvent.TYPE, this);
 		
 		showPrefilterPopup();
 	}
@@ -224,5 +227,10 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	@Override
 	public void openPreFilterPopup() {
 		getView().openPreFilter();
+	}
+
+	@Override
+	public void setUserHeaderProfileImage(String imageUrl) {
+		getView().updateUserHeaderProfileImage(imageUrl);
 	}
 }

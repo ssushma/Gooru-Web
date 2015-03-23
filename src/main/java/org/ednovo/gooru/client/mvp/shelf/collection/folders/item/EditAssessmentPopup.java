@@ -153,6 +153,8 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		txtExistingAssessmentDescription.getElement().setAttribute("maxlength", "300");
 		txtExistingAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(1));
 		txtExistingAssessmentDescription.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(2));
+		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3123());
+		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
 	}
 	/**
 	 * This inner class is used for handling key up events on title and description.
