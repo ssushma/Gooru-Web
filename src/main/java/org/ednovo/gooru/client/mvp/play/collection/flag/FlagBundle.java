@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.play.collection.flag;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.resources.client.ImageResource.RepeatStyle;
@@ -20,6 +21,7 @@ public interface FlagBundle extends ClientBundle{
 	@ImageOptions(repeatStyle=RepeatStyle.None)
 	ImageResource dropdownMenuArrow();
 	
+	@NotStrict
 	@Source("org/ednovo/gooru/client/mvp/play/collection/flag/player-flag-popup.css")
 	FlagStyles flagstyle();
 	
