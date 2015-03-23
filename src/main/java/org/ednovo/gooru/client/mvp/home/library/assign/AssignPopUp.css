@@ -725,7 +725,7 @@ button.LoginText {
 	font-size: 20px;
 	font-weight: bold;
 	color: #515151;
-	padding: 15px;
+	padding: 5px;
 }
 .popupTitleLogin {
 	text-align: center;
@@ -976,7 +976,6 @@ button.LoginText {
 	font-size: 14px;
 	font-weight: normal;
 	padding-top: 20px;
-	margin-bottom: 20px;
 }
 
 .directionsChrLimit{
