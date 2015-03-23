@@ -116,4 +116,7 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	void getCenturySkilsRestuls(AsyncCallback<CenturySkilsDo> callback);
 	
 	void getSuggestCenturyByQuery(SearchDo<StandardFo> centuryDo,AsyncCallback<SearchDo<StandardFo>> callback);
+
+	void isClientSideLoggersEnabled(AsyncCallback<String> callback); 
+
 }

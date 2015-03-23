@@ -44,7 +44,11 @@ import org.ednovo.gooru.client.uc.TocResourceView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 import org.ednovo.gooru.shared.util.StringUtil;
+
+import org.ednovo.gooru.shared.util.ClientConstants;
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -59,7 +63,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView{
+public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView,ClientConstants{
 
 	@UiField FlowPanel navgationTocContainer,carouselContainer;
 	@UiField Label previousButton,nextButton,hideText,resourceCountLabel;
@@ -93,6 +97,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	}
 	public void clearNavigationPanel(){
 		navgationTocContainer.clear();
+		selectedWidgetIndex = -1;
 	}
 	public void hideResourceCountLabel(boolean hide){
 		resourceCountLabel.setVisible(!hide);
@@ -110,6 +115,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				int resourceCount=0;
 				int questionCount=0;
 				navgationTocContainer.clear();
+				selectedWidgetIndex = -1;
 				nextButton.setVisible(true);
 				previousButton.setVisible(true);
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
@@ -132,23 +138,26 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				}
 				tocCollectionHomeView.addClickHandler(new HomeRequest());
 				navgationTocContainer.add(tocCollectionHomeView);
-				for(int i=0;i<collectionItems.size();i++){
-					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
-						if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
-							questionCount++;
-						}else{
-							resourceCount++;
+				if(collectionDo.getCollectionItems()!=null && collectionDo.getCollectionItems().size()>0){
+					for(int i=0;i<collectionItems.size();i++){
+						if(collectionDo.getCollectionItems().get(i).getResource()!=null&&collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
+							if(QUESTION.equalsIgnoreCase(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName())){
+								questionCount++;
+							}else{
+								resourceCount++;
+							}
 						}
+						CollectionItemDo collectionItemDo=collectionItems.get(i);
+						TocResourceView tocResoruceView=new TocResourceView(collectionItemDo,i+1,true,false);
+						tocResoruceView.addClickHandler(new ResourceRequest(collectionItemDo));
+						tocResoruceView.setCollectionItemId(collectionItemDo.getCollectionItemId());
+						if(!isCollectionHome){
+							tocResoruceView.hideResourceThumbnailContainer(true);
+						}
+						navgationTocContainer.add(tocResoruceView);
 					}
-					CollectionItemDo collectionItemDo=collectionItems.get(i);
-					TocResourceView tocResoruceView=new TocResourceView(collectionItemDo,i+1,true,false);
-					tocResoruceView.addClickHandler(new ResourceRequest(collectionItemDo));
-					tocResoruceView.setCollectionItemId(collectionItemDo.getCollectionItemId());
-					if(!isCollectionHome){
-						tocResoruceView.hideResourceThumbnailContainer(true);
-					}
-					navgationTocContainer.add(tocResoruceView);
-				}
+				
+			}
 				TocCollectionEndView tocCollectionEndView=null;
 				if(collectionDo.getThumbnails() != null && collectionDo.getThumbnails().getUrl()!=null)
 				{
@@ -189,7 +198,9 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 				String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
 				String finalMessage = "";
+
 				String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("assessment"))?i18n.GL3042():i18n.GL0578();
+
 				if (resourceCount >0 && questionCount > 0){
 					finalMessage = resourceString + " " + i18n.GL_GRR_AND() + " " + questionString + " " + message + i18n.GL_SPL_SEMICOLON()+" ";
 				}else if (resourceCount >0){

@@ -580,13 +580,11 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		try {
 			resourceQuestion.setText(collectionItemDo.getResource().getTitle());
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		try {
 			explainationTextArea.setText(collectionItemDo.getResource()
 					.getExplanation());
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		//Hide this not used any more.

@@ -514,7 +514,6 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			}
 			catch(Exception ex)
 			{
-				ex.printStackTrace();
 			}
 		}
 	}
@@ -599,7 +598,6 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				}
 				catch(Exception ex)
 				{
-					ex.printStackTrace();
 				}
 				}
 
@@ -653,7 +651,6 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				}
 					catch(Exception ex)
 					{
-						ex.printStackTrace();
 					}
 				}
 				
@@ -1045,7 +1042,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	/**

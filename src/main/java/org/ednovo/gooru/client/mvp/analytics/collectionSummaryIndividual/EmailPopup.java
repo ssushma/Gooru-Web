@@ -106,11 +106,13 @@ public class EmailPopup extends PopupPanel {
 	public void setEmailData(String pdfName,String path){
 		successMesageContainer.setVisible(false);
 		mainBodycontainer.setVisible(true);
-		pdfName=pdfName.replaceAll(" ", "_");
-		pdfName = pdfName + "_Collection_Summary.pdf";
-		displayPdfPathlbl.setText(pdfName);
-		fileName=pdfName;
-		filePath=path;
+		if(!StringUtil.isEmpty(pdfName) && !StringUtil.isEmpty(path)){
+			pdfName=pdfName.replaceAll(" ", "_");
+			pdfName = pdfName + "_Collection_Summary.pdf";
+			displayPdfPathlbl.setText(pdfName);
+			fileName=pdfName;
+			filePath=path;
+		}
 		sendBtn.setEnabled(true);
 		headerTitlelbl.setText(i18n.GL1449());
 	}

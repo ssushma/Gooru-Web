@@ -33,11 +33,12 @@ import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareView> implements CollectionShareUiHandlers{
+public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareView> implements CollectionShareUiHandlers,ClientConstants{
 
 	private String collectionId=null, resourceId=null;
 	private boolean isResourceView;
@@ -90,20 +91,19 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 		}else{
 		 collectionId=collectionDo.getGooruOid();
 		 final Map<String, String> params = new HashMap<String, String>();
-			params.put("type", AppClientFactory.getPlaceManager()
-					.getCurrentPlaceRequest().getNameToken());
-			params.put("shareType", "share");
+			params.put(ClientConstants.TYPE, AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
+			params.put(ClientConstants.SHARETYPE, ClientConstants.SHARE);
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collectionId,params, new SimpleAsyncCallback<Map<String,String>>() {
 				@Override
 				public void onSuccess(final Map<String, String> collectionShareMap) {
-					String shareUrl=collectionShareMap.get("decodeRawUrl");
+					String shareUrl=collectionShareMap.get(ClientConstants.DECODERAWURL);
 					getView().setData(collectionDo);
 					getView().setEmbedurl(shareUrl);
-					params.put("shareType", "embed");
+					params.put(ClientConstants.SHARETYPE, ClientConstants.EMBED);
 					AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collectionDo.getGooruOid(),params, new SimpleAsyncCallback<Map<String,String>>() {
 						@Override
 						public void onSuccess(Map<String, String> result) {
-							collectionShareMap.put("embedUrlRawUrl", result.get("decodeRawUrl"));
+							collectionShareMap.put(ClientConstants.EMBEDURLRAWURL, result.get(ClientConstants.DECODERAWURL));
 							getView().setCollectionShareData(collectionShareMap);
 						}
 					});
@@ -120,8 +120,8 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 				this.resourceId=resourceId;
 				this.collectionId=null;
 				 Map<String, String> params = new HashMap<String, String>();
-					params.put("type", PlaceTokens.RESOURCE_SEARCH);
-					params.put("shareType", "share");
+					params.put(ClientConstants.TYPE, PlaceTokens.RESOURCE_SEARCH);
+					params.put(ClientConstants.SHARETYPE, ClientConstants.SHARE);
 				AppClientFactory.getInjector().getSearchService().getShortenShareUrl(resourceId,params, new SimpleAsyncCallback<Map<String,String>>() {
 						@Override
 						public void onSuccess(Map<String, String> result) {
@@ -144,15 +144,13 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 	}
 	
 	@Override
-	public void sendEmail(String fromEmail, final String toEmail, String copyEmail,
-			String subject, String message) {
+	public void sendEmail(String fromEmail, final String toEmail, String copyEmail,	String subject, String message) {
 		AppClientFactory.getInjector().getPlayerAppService().sendEmail(fromEmail, toEmail, copyEmail, subject, message, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
 				getView().hideSendEmailPopup(toEmail);
 			}
 		});
-		
 	}
 
 	@Override
@@ -162,8 +160,5 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 		}else if(isPreviewPlayer){
 			previewPlayerPresenter.triggerShareDatalogEvent(resourceGooruOid, collectionItemId,  itemType, shareType,  confirmStatus);
 		}
-		
 	}
-
-	
 }

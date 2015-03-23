@@ -38,7 +38,6 @@ public class CollaboratorsUc extends Composite {
 	}
 	
 	@UiField FlowPanel teamContainer;
-	
 
 	/**
 	 * Because this class has a default constructor, it can
@@ -54,32 +53,28 @@ public class CollaboratorsUc extends Composite {
 	public CollaboratorsUc(CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		teamContainer.getElement().setId("fpnlTeamContainer");
-		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
-			
-			@Override
-			public void onSuccess(Map<String, ArrayList<CollaboratorsDo>> result) {
-		     	renderTeamNames(teamContainer, getTeamMembersNames(result.get("active")));
-			}
-			
-		});
-		
+		if(collectionDo!=null && collectionDo.getGooruOid()!=null){
+			AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
+				@Override
+				public void onSuccess(Map<String, ArrayList<CollaboratorsDo>> result) {
+			     	renderTeamNames(teamContainer, getTeamMembersNames(result.get("active")));
+				}
+			});
+		}
 	}
-	
-	
 	
 	public CollaboratorsUc(CollectionSearchResultDo collectionResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		teamContainer.getElement().setId("fpnlTeamContainer");
-		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionResultDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
-			
-			@Override
-			public void onSuccess(Map<String, ArrayList<CollaboratorsDo>> result) {
-		     	renderTeamNames(teamContainer, getTeamMembersNames(result.get("active")));
-			}
-		});
+		if(collectionResultDo!=null && collectionResultDo.getGooruOid()!=null){
+			AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionResultDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
+				@Override
+				public void onSuccess(Map<String, ArrayList<CollaboratorsDo>> result) {
+			     	renderTeamNames(teamContainer, getTeamMembersNames(result.get("active")));
+				}
+			});
+		}
 	}
-
-
 
 	protected List<String> getTeamMembersNames(ArrayList<CollaboratorsDo> arrayList) {
 		List<String> teamNames= new ArrayList<String>();
@@ -89,25 +84,21 @@ public class CollaboratorsUc extends Composite {
 		return teamNames;
 	}
 	
-	protected void renderTeamNames(FlowPanel teamContainer2,
-			List<String> teamMembersNames) {
+	protected void renderTeamNames(FlowPanel teamContainer2,List<String> teamMembersNames) {
 		teamContainer2.clear();
 		FlowPanel toolTipwidgets = new FlowPanel();
-		for (int count = 0; count < teamMembersNames.size(); count++) {
-			Label label = new Label(teamMembersNames.get(count));
-			label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
-			toolTipwidgets.add(label);
+		if(teamMembersNames!=null && teamMembersNames.size()>0){
+			for (int count = 0; count < teamMembersNames.size(); count++) {
+				Label label = new Label(teamMembersNames.get(count));
+				label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+				toolTipwidgets.add(label);
+			}
 		}
 		if (teamMembersNames != null && teamMembersNames.size() > 0) {
-//			Integer moreCount = teamMembersNames.size() - 1;
 			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(" "+i18n.GL1117()), toolTipwidgets);
 			toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().teamHyperLink());
 			teamContainer2.add(toolTipUc);
 			toolTipUc.getTooltipPopUpUc(i18n.GL1117());
 		}
-		
 	}
-
-	
-
 }

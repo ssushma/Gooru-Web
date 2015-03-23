@@ -172,7 +172,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 	private static final int HTTP_SUCCESS_STATUS_CODE = 200;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
 	
-	
 	private static final String ERR_GL0078 = "401-GL0078";
 	private static final String ERR_GL0079 = "401-GL0079";
 	private static final String ERR_GL010501 = "401-GL010501";
@@ -734,18 +733,14 @@ public abstract class AssignPopupVc extends PopupPanel {
 		if (isCookieEnabled()) {
 
 			String username = loginTxtBox.getText().trim();
-			String password = passwordTxtBox.getText().trim();
-
-			JSONObject login = new JSONObject();
-			login.put("username", new JSONString(username));
-			login.put("password", new JSONString(password));
+			String password = StringUtil.getCryptoData(passwordTxtBox.getText().trim());
 
 			if (username.length() > 1 && password.length() > 1) {
 
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
 
-				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
+				AppClientFactory.getInjector().getAppService().v2Signin(username,password, new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
 										

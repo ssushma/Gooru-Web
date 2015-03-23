@@ -85,10 +85,6 @@ public interface ClasspageCBundle extends ClientBundle{
 
 		String myClassPageClickingTitle();
 
-		String myClassPageClickingArrowImage();
-
-		String myClassPageCloseBtn();
-
 		String myClassPageCreateClasspageContainer();
 
 		String myClassPageCreatePlusIcon();

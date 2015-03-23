@@ -46,6 +46,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -355,6 +356,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 	@Override
 	public void cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) {
+		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
 		//if(isCollectionImage||isQuestionImage){
 

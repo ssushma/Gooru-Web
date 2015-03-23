@@ -94,24 +94,6 @@ public abstract class AddSearchResourceView extends Composite {
 	
 	HTMLPanel addResourceThumbnailContent;
 	
-    /*private static final String DEFULT_VIMAGE = "images/default-video.png";
-
-	private static final String DEFULT_QIMAGE = "images/default-question.png";
-
-	private static final String DEFULT_IIMAGE = "images/default-interactive.png";
-
-	private static final String DEFULT_WIMAGE = "images/default-website.png";
-
-	private static final String DEFULT_TIMAGE = "images/default-textbook.png";
-
-	private static final String DEFULT_EIMAGE = "images/default-exam.png";
-
-	private static final String DEFULT_SIMAGE = "images/default-slide.png";
-
-	private static final String DEFULT_HIMAGE = "images/default-handout.png";
-
-	private static final String DEFULT_LIMAGE = "images/default-lesson.png";
-	*/
 	private String collectionTitle = "";
 	
 	HTMLPanel addResourceSprite;

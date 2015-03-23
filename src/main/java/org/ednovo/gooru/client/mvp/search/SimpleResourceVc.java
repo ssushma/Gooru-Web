@@ -140,7 +140,6 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		
 		this.resourceSearchResultDo = resourceSearchResultDo;
 		this.collectionItemSearchResultDo = resourceSearchResultDo;
-		/*resourceTitleLbl.setText(StringUtil.truncateText(resourceSearchResultDo.getResourceTitle(), 30));*/
 		resourceTitleLbl.setHTML(resourceSearchResultDo.getResourceTitle());
 		resourceTitleLbl.getElement().setAttribute("alt",resourceSearchResultDo.getResourceTitle());
 		resourceTitleLbl.getElement().setAttribute("title",resourceSearchResultDo.getResourceTitle());
@@ -162,13 +161,11 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		
 		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), 30);
 		viewCountLabel=SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + "", " " + VIEWS_PREFIX_NAME);  
-//		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), PLAYER_NAME,resourceSearchResultDo.getResourceTitle(), false,collectionId);
 		
 		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), resourceSearchResultDo.getResourceTitle(), false, resourceSearchResultDo.getNarration(),collectionItemSearchResultDo.getCollectionId());
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
-		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		resourceTitleLbl.getElement().getStyle().setFloat(Float.LEFT);
 		resourceTitleContainer.getElement().getStyle().setFloat(Float.LEFT);
 		if (resourceTitleLbl.getText().length() > 30){
@@ -205,7 +202,6 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 				  }
 			}
 		});
-		//imgNotFriendly.setVisible(setVisibility);
 		if(setVisibility)
 		{
 			imgNotFriendly.getElement().setId("imgImgFriendly");
@@ -223,14 +219,6 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		boolean oerVisibility = resourceSearchResultDo.getLicense() !=null &&  resourceSearchResultDo.getLicense().getCode() !=null ? resourceSearchResultDo.getLicense().getCode().contains("CC") ? true : false : false;
 
 		imgOER.setVisible(oerVisibility);
-		
-//		if (setVisibility || oerVisibility){
-//			resourceTitleContainer.getElement().getStyle().setFloat(Float.LEFT);
-//		}else{
-//			resourceTitleContainer.getElement().getStyle().clearFloat();
-//		}
-
-		
 		setAvgRatingWidget(resourceSearchResultDo);
 	}
 	private void setAvgRatingWidget(CollectionItemSearchResultDo resourceSearchResultDo) {
@@ -243,7 +231,6 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 				ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 			}
 		}
-		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.clear();
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
@@ -252,13 +239,11 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 
 		@Override
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
-			if(collectionItemSearchResultDo.getGooruOid().equals(gooruOid)){
+			if(collectionItemSearchResultDo.getGooruOid()!=null && collectionItemSearchResultDo.getGooruOid().equals(gooruOid)){
 				collectionItemSearchResultDo.getRatings().setCount(count);
 				collectionItemSearchResultDo.getRatings().setAverage(average);
 				setAvgRatingWidget(collectionItemSearchResultDo);
 			}
-			/*ratingWidgetView.getRatingCountLabel().setText(collectionItemSearchResultDo.getRatings().getCount()!=null?collectionItemSearchResultDo.getRatings().getCount().toString():"0");
-			ratingWidgetView.setAvgStarRating(collectionItemSearchResultDo.getRatings().getAverage());*/
 		}
 	};
 	

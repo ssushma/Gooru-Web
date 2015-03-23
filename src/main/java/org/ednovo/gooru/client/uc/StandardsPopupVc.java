@@ -108,9 +108,9 @@ public class StandardsPopupVc extends PopupPanel  {
 			standardsText.getElement().setAttribute("alt", i18n.GL0575());
 			standardsText.getElement().setAttribute("title", i18n.GL0575());
 		}else{
-			standardsText.getElement().setInnerHTML(i18n.GL3191());
-			standardsText.getElement().setAttribute("alt", i18n.GL3191());
-			standardsText.getElement().setAttribute("title", i18n.GL3191());
+			standardsText.getElement().setInnerHTML(i18n.GL3199());
+			standardsText.getElement().setAttribute("alt", i18n.GL3199());
+			standardsText.getElement().setAttribute("title", i18n.GL3199());
 		}
 		cancelButton.getElement().setId("lblCancelButton");
 		spanelStandardsPanel.getElement().setId("sbSpanelStandardsPanel");

@@ -102,11 +102,26 @@ public class BrowserAgent {
 		}
 		$doc.getElementsByTagName('head')[0].appendChild( style );
 	}-*/;
-	
-//	public static native void consoleLog(String message) /*-{
-//		console.log(message );
-//	}-*/;
-	
+	/**
+	 * 
+	 * @function isDevice 
+	 * 
+	 * @created_date : 26-Feb-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+
 	public static native boolean isDevice() /*-{
 	  	var ua = navigator.userAgent.toLowerCase();
 	  	var returnValue=false;

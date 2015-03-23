@@ -319,8 +319,6 @@ public interface UcCBundle extends ClientBundle {
 		/* UserProfileUc */
 		String profilePopup(); 
 		
-		String profilePopupArrow(); 
-		
 		String profilePopupContainer(); 
 		
 		String profilePopupInnerContaienr(); 

@@ -74,7 +74,6 @@ public class ResourceCollectionView extends Composite{
 	private static ResourceCollectionViewUiBinder uiBinder = GWT.create(ResourceCollectionViewUiBinder.class);
 
 	interface ResourceCollectionViewUiBinder extends UiBinder<Widget, ResourceCollectionView> {
-		
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -85,7 +84,6 @@ public class ResourceCollectionView extends Composite{
 		createdByText.getElement().setAttribute("alt",i18n.GL0622());
 		createdByText.getElement().setAttribute("title",i18n.GL0622());
 		setId();
-		
 	}
 	public void setId(){
 		createdByText.getElement().setId("lblCreatedByText");
@@ -102,27 +100,25 @@ public class ResourceCollectionView extends Composite{
 		createdByText.getElement().setAttribute("alt",i18n.GL0622());
 		createdByText.getElement().setAttribute("title",i18n.GL0622());
 		this.resourceSearchResultDo=resourceSearchResultDo;
-		setCollectionTitle(resourceSearchResultDo.getResourceTitle());
+		setCollectionTitle(resourceSearchResultDo.getResourceTitle()!=null?resourceSearchResultDo.getResourceTitle():"");
 		//This is used for to enable partner names hyperlinks (FTE, Lessonopoly, and Autodesk)
 		setId();
-		String ownerUserName = resourceSearchResultDo.getOwner().getUsername();
 			AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(resourceSearchResultDo.getGooruUId(), new SimpleAsyncCallback<Boolean>() {
 				@Override
 				public void onSuccess(Boolean result) {
 					if(result){
-						setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+						setUserNameDisplay((resourceSearchResultDo.getOwner()!=null&&resourceSearchResultDo.getOwner().getUsername()!=null)?resourceSearchResultDo.getOwner().getUsername():"");
 						setUserProfileName(resourceSearchResultDo.getGooruUId());
 					}else{
-						setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+						setUserNameDisplay((resourceSearchResultDo.getOwner()!=null&&resourceSearchResultDo.getOwner().getUsername()!=null)?resourceSearchResultDo.getOwner().getUsername():"");
 					}
 				}
 			});
 		
 		if(resourceSearchResultDo.getOwner().isProfileUserVisibility()){
-			setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+			setUserNameDisplay((resourceSearchResultDo.getOwner()!=null&&resourceSearchResultDo.getOwner().getUsername()!=null)?resourceSearchResultDo.getOwner().getUsername():"");
 			setUserProfileName(resourceSearchResultDo.getGooruUId());
 		}
-		
 		setCollectionMetadata();
 		setCollectionLink();
 	}
@@ -136,13 +132,12 @@ public class ResourceCollectionView extends Composite{
 	}
 	
 	public void setCollectionMetadata(){
-		
 		int resourceCount = resourceSearchResultDo.getResourceCount();
 		int questionCount = resourceSearchResultDo.getQuestionCount();
 		metadataContainer.clear();
 		metadataContainer.add(getCourseNames());
 		metadataContainer.add(getViewsLabel());
-		if(resourceCount>0 || (resourceCount==0&&questionCount==0)) {
+		if(resourceCount>0 || (resourceCount==0&&questionCount==0)){
 			metadataContainer.add(getSeparator());
 			metadataContainer.add(setResourceCount(resourceCount));
 		}
@@ -189,14 +184,15 @@ public class ResourceCollectionView extends Composite{
 	
 	private Widget getToolTipwidgets(List<String> coursesList) {
 		FlowPanel toolTipwidgets = new FlowPanel();
-		for(int i=1;i<coursesList.size();i++){
-			Label courseLabel = new Label(coursesList.get(i));
-			toolTipwidgets.add(courseLabel);
+		if(coursesList!=null && coursesList.size()>0){
+			for(int i=1;i<coursesList.size();i++){
+				Label courseLabel = new Label(coursesList.get(i));
+				toolTipwidgets.add(courseLabel);
+			}
 		}
 		return toolTipwidgets;
 	}
 
-	
 	private Label getViewsLabel(){
 		String views=resourceSearchResultDo.getTotalViews()==1?resourceSearchResultDo.getTotalViews()+" "+i18n.GL1428():resourceSearchResultDo.getTotalViews()+" "+i18n.GL1099();
 		Label viewsLabel=new Label(views);
@@ -226,7 +222,7 @@ public class ResourceCollectionView extends Composite{
 
 	@UiHandler("collectionThumbnail")
 	public void setDefaultCollectionThumbnail(ErrorEvent event){
-			collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
 	
 	@Override
@@ -257,17 +253,14 @@ public class ResourceCollectionView extends Composite{
 	public class MouseOverShowToolTip implements MouseOverHandler
 	{
 		Widget widget;
-		
 		public MouseOverShowToolTip(Widget coursewidget) {
 			this.widget = coursewidget;
 		}
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTip = new ToolTipPopUp(widget,(event.getRelativeElement().getAbsoluteLeft()-45),(event.getRelativeElement().getAbsoluteTop()+22)); 
 			toolTip.show();
 		}
-		
 	}
 	
 	public class MouseOutHideToolTip implements MouseOutHandler
@@ -276,7 +269,5 @@ public class ResourceCollectionView extends Composite{
 		public void onMouseOut(MouseOutEvent event) {
 			toolTip.hide();
 		}
-		
 	}
-	
 }

@@ -135,7 +135,6 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	public void deserializeSuggestedResources(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
@@ -152,7 +151,6 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	public void deserializeCollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
@@ -171,30 +169,29 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch(Exception e){
-			e.printStackTrace();
 		}
 		
 	}
+	
 	public void deserializeV2CollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
-        searchDo.setSearchResults(new ArrayList<T>());
-        try{
-            if(jsonRep!=null){
-                JSONArray searchResultJsonArray = jsonRep.getJsonArray();
-                List<T> collectionSearchResults = searchDo.getSearchResults();
-                int collectionItemsCount=searchResultJsonArray.length();
-                searchDo.setCollectionItemsCount(collectionItemsCount);
-                for (int pointer = 0; pointer < collectionItemsCount; pointer++) {
-                    T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
-                    if (record != null) {
-                        collectionSearchResults.add(record);
-                    }
-                }
-            }
-        } catch(Exception e){
-        }
-        
-    }
-
+		searchDo.setSearchResults(new ArrayList<T>());
+		try{
+			if(jsonRep!=null){
+				JSONArray searchResultJsonArray = jsonRep.getJsonArray();
+				List<T> collectionSearchResults = searchDo.getSearchResults();
+				int collectionItemsCount=searchResultJsonArray.length();
+				searchDo.setCollectionItemsCount(collectionItemsCount);
+				for (int pointer = 0; pointer < collectionItemsCount; pointer++) {
+					T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
+					if (record != null) {
+						collectionSearchResults.add(record);
+					}
+				}
+			}
+		} catch(Exception e){
+		}
+		
+	}
 	public abstract T deserializeRecord(JSONObject recordJsonObject);
 
 }

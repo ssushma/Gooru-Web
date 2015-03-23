@@ -46,6 +46,8 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -73,7 +75,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers> implements IsPreviewHomeView{
+public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers> implements IsPreviewHomeView,ClientConstants{
 	
 	@UiField Image collectionImage,collectionThumbnail;
 	@UiField HTML collectionGoal;
@@ -182,9 +184,10 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String,String> params = new LinkedHashMap<String,String>();
-				params.put("id", collectionDo.getGooruOid());
-				params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-				
+				if(!StringUtil.isEmpty(collectionDo.getGooruOid())){
+					params.put("id", collectionDo.getGooruOid());
+					params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+				}
 				MixpanelUtil.Preview_Player_Click_Preview();
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
 				if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
@@ -194,9 +197,8 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				}
 				if(collectionItems.size()>0){
 					CollectionItemDo collectionItemDo=collectionItems.get(0);
-					if(collectionItemDo.getCollectionItemId() != null)
-					{
-						if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+					if(collectionItemDo.getCollectionItemId() != null){
+						if(!StringUtil.isEmpty(collectionItemDo.getNarration())){
 							params.put("rid", collectionItemDo.getCollectionItemId());
 							params.put("tab", "narration");
 							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
@@ -207,10 +209,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 						}
 					}
-
-					
-				}
-				else{
+				}else{
 					params.put("view", "end");
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -218,14 +217,13 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			}
 		});
 		setReplyLink();
-		
 	}
 	public void setCollectionImage(String thumbnailUrl){
 		collectionImage.setUrl(thumbnailUrl);
 	}
 	public void setCollectionGoal(String collectionGoal){
 		this.collectionGoal.setHTML("");
-		if(collectionGoal!=null &&!collectionGoal.isEmpty()){
+		if(!StringUtil.isEmpty(collectionGoal)){
 			if(collectionGoal.length()>415){
 				collectionGoal =(collectionGoal.substring(0, 415))+"...";
 				this.collectionGoal.setHTML(collectionGoal);
@@ -250,7 +248,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			nextButton.setVisible(true);
 			for(int itemIndex=0;itemIndex<resourcesSize;itemIndex++){
 				if(collectionDo.getCollectionItems().get(itemIndex).getResource().getResourceFormat()!=null){
-					if(collectionDo.getCollectionItems().get(itemIndex).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+					if(QUESTION.equalsIgnoreCase(collectionDo.getCollectionItems().get(itemIndex).getResource().getResourceFormat().getDisplayName())){
 						questionCount++;
 					}else{
 						resourceCount++;
@@ -277,16 +275,12 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				finalMessage = resourceString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
 			}else if (questionCount >0){
 				finalMessage = questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
-			}else{
-			
-			}
+			}else{}
 			resourceCountTitle.setText(finalMessage);
 			resourceCountTitle.getElement().setAttribute("alt",finalMessage);
 			resourceCountTitle.getElement().setAttribute("title",finalMessage);
 			resourceCurosalContainer.add(curosalPanel);
-		}
-		else
-		{
+		}else{
 			resourceCountTitle.setText(i18n.GL0684());
 			resourceCountTitle.getElement().setAttribute("alt",i18n.GL0684());
 			resourceCountTitle.getElement().setAttribute("title",i18n.GL0684());
@@ -297,8 +291,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			nextButton.setVisible(false);
 			resourceCurosalContainer.add(resourceThumbnail);
 		}
-		
-//http://127.0.0.1:8888/index.html?gwt.codesvr=127.0.0.1:9997#collection-play&id=f9b1b4ca-c784-46bc-9f49-f7d7c5e1d5c1
 	}
 	
 	/**
@@ -322,11 +314,9 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Preview_Click_Assign();
 		   String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
 				if(!isAssignPopup){
 					isAssignPopup=true;
 				AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-					
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
@@ -337,19 +327,17 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
 				successPopupVc.setHeight("635px");
-
 				successPopupVc.show();
 				successPopupVc.center();
 				if (AppClientFactory.isAnonymous()){
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-				}
-				else
-				{
+				}else{
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 				}
 				
 				Map<String,String> params = new HashMap<String,String>();
-				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("id")!=null)
+					params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
@@ -361,9 +349,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				
 			}
-		
 	}
 	/**
 	 * 
@@ -387,16 +373,8 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
-			Boolean loginFlag = false;
-			if (AppClientFactory.isAnonymous()){
-				loginFlag = true;
-			}
-			else
-			{
-				loginFlag = false;
-			}
+			Boolean loginFlag = AppClientFactory.isAnonymous();
 			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
-
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -410,7 +388,8 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			successPopupVc.center();
 
 			Map<String,String> params = new HashMap<String,String>();
-			params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
+			if(AppClientFactory.getPlaceManager().getRequestParameter("id")!=null)
+				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
 			if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
 			if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
@@ -445,12 +424,9 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Preview_Click_Share();
 		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
 				if(!isSharePopup){
 					isSharePopup=true;
-
 				SharePlayerVc successPopupVc = new SharePlayerVc(collectionId) {
-
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
@@ -467,7 +443,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				successPopupVc.show();
 				successPopupVc.center();
 			}
-		
 	}
 	
 	/**
@@ -477,21 +452,12 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	 */
 	
 	private void showPopupAfterGmailSignin() {
-		// TODO Auto-generated method stub
 		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter("Assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("Assign") : null;
-		if(customize!=null && customize.equals("yes")){
-			Boolean loginFlag = false;
-			if (AppClientFactory.isAnonymous()){
-				loginFlag = true;
-			}
-			else
-			{
-				loginFlag = false;
-			}
+		if(customize!=null && YES.equals(customize)){
+			Boolean loginFlag = AppClientFactory.isAnonymous();
 			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
-
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -504,9 +470,8 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			successPopupVc.show();
 			successPopupVc.center();
 		}
-		if(assign!=null && assign.equals("yes")){
+		if(assign!=null && YES.equals(assign)){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-				
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -517,24 +482,16 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
 			successPopupVc.setHeight("635px");
-
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
-			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-			}
-			else
-			{
-			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}else{
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 			}
 		}
-
-
 	}
-
-	
 	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -544,11 +501,9 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
@@ -556,7 +511,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	}
 	
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -566,22 +520,16 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OncustomizeCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
 	
 	public class OnshareCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -591,7 +539,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OnshareCollectionBtnMouseOut implements MouseOutHandler{
@@ -612,28 +559,25 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		shareCollectionBtn.removeFromParent();
 		separationLine.removeFromParent();
 		previewButton.setText(i18n.GL0594());
-		//addHrTag();
 	}
 	
 	public void removeAssignmentImageButtons(){
 		collectionEndImageContainer.setVisible(true);
 		endTextContainer.setVisible(true);
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
-		if(page!=null&&page.equals("teach")){
+		if(page!=null&&TEACH.equals(page)){
 			viewCollectionSummaryBtn.setVisible(false);
 		}else{
 			viewCollectionSummaryBtn.setVisible(true);
 		}
 		endText.getElement().setInnerHTML(i18n.GL0596());
-		viewCollectionSummaryBtn.setText("View your Collection Summary");
+		viewCollectionSummaryBtn.setText(i18n.GL3190());
 		collectionImageContainer.setVisible(false);
 		previewButton.setVisible(false);
 		assignCollectionBtn.removeFromParent();
 		customizeCollectionBtn.removeFromParent();
 		shareCollectionBtn.removeFromParent();
 		separationLine.removeFromParent();
-		
-		//addHrTag();
 	}
 	
 	@UiHandler("collectionThumbnail")

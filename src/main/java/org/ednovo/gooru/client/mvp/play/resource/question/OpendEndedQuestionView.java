@@ -60,9 +60,6 @@ public abstract class OpendEndedQuestionView extends Composite{
 	@UiField TextArea openEndedAnswerTextArea;
 	@UiField QuestionStyleResource oeStyle;
 	@UiField Label submittedText,errorMessageText,messageBodyText, lblCharLimit;
-//	private static final String ERROR_MESSAGE=i18n.GL1458+i18n.GL_SPL_FULLSTOP;
-//	private static final String EMPTY_ERROR_MESSAGE=i18n.GL1459+i18n.GL_SPL_FULLSTOP;
-//	private static final String OPEN_ENDED_BODY_TEXT=i18n.GL1460;
 	private String answerText="";
 	private CollectionItemDo collectionItemDo;
 	private boolean isCheckButtonEnabled=false;
@@ -110,7 +107,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 	
 	public void showPreviousAttemptResult(AttemptedAnswersDo attemptedAnswerDo){
 		if(attemptedAnswerDo!=null){
-			openEndedAnswerTextArea.setValue(attemptedAnswerDo.getAnswersText());
+			openEndedAnswerTextArea.setValue(StringUtil.isEmpty(attemptedAnswerDo.getAnswersText())?"":attemptedAnswerDo.getAnswersText());
 		}
 	}
 	
@@ -118,8 +115,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 	public void onKeypressTextArea(KeyUpEvent event){
 		answerText=openEndedAnswerTextArea.getValue();
 		setOeQuestionAnswerText(answerText);
-		//saveOeAnswerData();
-		 if(answerText!=null){
+		 if(!StringUtil.isEmpty(answerText)){
 			 if(answerText.trim().length()==0){
 				 disableSubmitButton();
 			 }else{
@@ -159,7 +155,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 		}
 		
 		 answerText=openEndedAnswerTextArea.getValue();
-		 if(answerText!=null&&answerText.trim().length()>0){
+		 if(!StringUtil.isEmpty(answerText)){
 			 if(answerText.trim().length()>1000){
 				 errorMessageText.setText(i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
 				 errorMessageText.getElement().setAttribute("alt",i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
@@ -172,7 +168,6 @@ public abstract class OpendEndedQuestionView extends Composite{
 				 submittedText.setText(i18n.GL1138());
 				 submittedText.getElement().setAttribute("alt",i18n.GL1138());
 				 submittedText.getElement().setAttribute("title",i18n.GL1138());
-				 //TODO answer submit API
 				 showSubmitedText();
 				 isOeAnswerSubmited(true);
 			 }
@@ -209,8 +204,12 @@ public abstract class OpendEndedQuestionView extends Composite{
 	public void saveOeAnswerData(){
 		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 		attempteAnswersDo.setAnswersText(openEndedAnswerTextArea.getValue());
+		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
 		attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
-		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
+		}
+		if(!StringUtil.isEmpty(collectionItemDo.getCollectionItemId())){
+			setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
+		}
 	}
 	public void createSesstionItemAttemptOeWhenNavigation(){
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());

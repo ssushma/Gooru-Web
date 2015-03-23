@@ -405,7 +405,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		this.collectionOriginalItemDo = collectionItemDo;
 		
 		setContent(i18n.GL0949(), uiBinder.createAndBindUi(this));
-		getCloseButton().addClickHandler(new ClickHandler() {
+		getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
@@ -672,10 +672,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
 		
-		centuryDefaultText.setText(i18n.GL3121_1());
+		centuryDefaultText.setText(i18n.GL3199());
 		centuryDefaultText.getElement().setId("lblCenturyDefaultText");
-		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3121_1());
-		centuryDefaultText.getElement().setAttribute("title", i18n.GL3121_1());
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3199());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3199());
 		
 		
 		momentsOfLearningTitle.getElement().setInnerHTML(i18n.GL1678());
@@ -1070,7 +1070,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				if(standardsDo!=null && standardsDo.size()>0){
+				/*if(standardsDo!=null && standardsDo.size()>0){
 					for (CodeDo codeObj : standardsDo) {			
 						if(codeObj.getCodeId()==Integer.parseInt(id)){			
 							standardsDo.remove(codeObj);
@@ -1078,6 +1078,25 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 							this.getParent().removeFromParent();
 							return;
 						}
+					}
+				}*/
+				for(final CodeDo codeObj:standardsDo){
+					if(codeObj.getCodeId()==Integer.parseInt(id)){
+						//standardsDo.remove(codeObj);
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								CodeDo deletedObj=new CodeDo();
+								deletedObj.setCodeId(codeObj.getCodeId());
+								deletedStandardsDo.add(deletedObj);
+								standardsDo.remove(codeObj);	
+								centurySelectedValues.remove(Long.parseLong(id));
+							
+							}
+						});
+						this.getParent().removeFromParent();
+						return;
+						
 					}
 				}
 			}
@@ -1615,6 +1634,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 		@Override
 		public void onClick(ClickEvent event) {
+			//here
+			
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -2678,7 +2699,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
 			
 		}
 	}
@@ -2772,7 +2792,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {

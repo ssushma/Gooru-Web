@@ -57,9 +57,7 @@ public class ShareDeSerializer extends DeSerializer {
 			shortenUrl.put(RAW_URL, URLEncoder.encode(getJsonString(shortenUrlJsonObject, RAW_URL),"UTF-8"));
 			shortenUrl.put(SHORTEN_URL, getJsonString(shortenUrlJsonObject, SHORTEN_URL));
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		}
 		return shortenUrl;
 	}
@@ -69,7 +67,6 @@ public class ShareDeSerializer extends DeSerializer {
 			JSONObject shortenUrlJsonObject = jsonRep.getJsonObject();
 			shortenUrl=getJsonString(shortenUrlJsonObject, SHORTEN_URL);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} 
 		return shortenUrl;
 	}

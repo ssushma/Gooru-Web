@@ -442,10 +442,10 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
-		centuryDefaultText.setText(i18n.GL3121_1());
+		centuryDefaultText.setText(i18n.GL3199());
 		centuryDefaultText.getElement().setId("lblCenturyDefaultText");
-		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3121_1());
-		centuryDefaultText.getElement().setAttribute("title", i18n.GL3121_1());
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3199());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3199());
 		standardSgstBox.getElement().setId("StandardSgstBox");
 		browseStandards.addClickHandler(new onBrowseStandarsCLick());
 		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
@@ -1869,7 +1869,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Select
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
