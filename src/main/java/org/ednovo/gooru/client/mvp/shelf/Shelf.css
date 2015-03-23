@@ -100,7 +100,7 @@
 	font-style: italic;
 	position: relative;
 	right: 0px;
-	top: 3px;
+	top: -6px;
 	display: none;
 }
 
@@ -137,6 +137,7 @@
 	overflow: hidden;
 	word-wrap: break-word;
 	font-style: normal !important;
+	overflow-y: auto;
 }
 
 .collectionDescriptionTxtAreaForFolders,.collectionDescriptionHtmlForFolders
