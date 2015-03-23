@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -67,7 +68,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-//import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 
 public class MetadataWidget extends Composite {
 	
@@ -107,26 +107,30 @@ public class MetadataWidget extends Composite {
 		teacherContainer.setVisible(false);
 	}
 	public void setCollectionMetadata(CollectionDo collectionDo) {
+		if(collectionDo!=null){
 		this.collectionDo = collectionDo;
 		teamContainer.clear();
-		//getUiHandlers().getFlagedReport(collectionDo.getGooruOid());
 		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
 			 teamContainer.add(collaboratorsUc);
-			setUserName(collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND());
+			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND():"");
 		}else{
-			setUserName(collectionDo.getUser().getUsernameDisplay());
+			setUserName((collectionDo.getUser()!=null&&collectionDo.getUser().getUsernameDisplay()!=null)?collectionDo.getUser().getUsernameDisplay():"");
 		}
-		setViewCount(collectionDo.getViews());
+		if(!StringUtil.isEmpty(collectionDo.getViews())){
+			setViewCount(collectionDo.getViews());
+		}
 		setUserProfileImage(collectionDo.getUser().getGooruUId());
-		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
-		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards(),true),true);
-		renderStandards(centuryContainer,getStandardsMap(this.collectionDo.getMetaInfo().getSkills(),false),false);
-		renderLanguageObjective(collectionDo.getLanguageObjective());
-		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges());
-		renderInstructionalMethod(collectionDo.getInstructionalMethod());
-		renderAudience(collectionDo.getAudience());
-		renderLearningAndInnovationSkill(collectionDo.getLearningSkills());
+		if(collectionDo.getMetaInfo()!=null&&collectionDo.getMetaInfo().getCourse()!=null){
+			renderCourseInfo(collectionDo.getMetaInfo().getCourse());
+		}
+		renderStandards(standardsContainer,getStandardsMap((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getStandards()!=null)?this.collectionDo.getMetaInfo().getStandards():null,true),true);
+		renderStandards(centuryContainer,getStandardsMap((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getSkills()!=null)?this.collectionDo.getMetaInfo().getSkills():null,false),false);
+		renderLanguageObjective(collectionDo.getLanguageObjective()!=null?collectionDo.getLanguageObjective():"");
+		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges()!=null?collectionDo.getDepthOfKnowledges():null);
+		renderInstructionalMethod(collectionDo.getInstructionalMethod()!=null?collectionDo.getInstructionalMethod():null);
+		renderAudience(collectionDo.getAudience()!=null?collectionDo.getAudience():null);
+		renderLearningAndInnovationSkill(collectionDo.getLearningSkills()!=null?collectionDo.getLearningSkills():null);
 		if(collectionDo.getKeyPoints() != null){
 			if(collectionDo.getKeyPoints().length()>410){
 				authorPanel.getElement().getStyle().setHeight(295, Unit.PX);
@@ -144,18 +148,16 @@ public class MetadataWidget extends Composite {
 			teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
 			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
 		}
-		//setLeftPanelHeight();
 		setTeacherName(collectionDo.getUser().getUsernameDisplay(), collectionDo.getUser().getProfileImageUrl());
-		//placeCollectionMetadataContainer();
+		}
 	}
 	public void setUserName(String userName){
-		//userNameLabel.setText(userName);
-		if(collectionDo.getUser().getCustomFields()!=null){
+		if(collectionDo.getUser()!=null && collectionDo.getUser().getCustomFields()!=null){
 			if(collectionDo.getUser().getCustomFields().get(0).getOptionalValue()!=null){
 				String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
-				if(getUserProfileStatus.equalsIgnoreCase("true")){
+				if(ClientConstants.TRUE.equalsIgnoreCase(getUserProfileStatus)){
 					usernameAnchor = new Anchor();
-					if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+					if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()!=null?collectionDo.getUser().getUsername():"")){
 						usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 					}
 				else{
@@ -178,10 +180,12 @@ public class MetadataWidget extends Composite {
 		}
 	}
 	public void setViewCount(String viewCount){
-		String viewsText=Integer.parseInt(viewCount)==1?viewCount+" "+i18n.GL1428():viewCount+" "+i18n.GL0934();
-		viewsCountLabel.setText(viewsText);
-		viewsCountLabel.getElement().setAttribute("alt",viewsText);
-		viewsCountLabel.getElement().setAttribute("title",viewsText);
+		if(!StringUtil.isEmpty(viewCount)){
+			String viewsText=Integer.parseInt(viewCount)==1?viewCount+" "+i18n.GL1428():viewCount+" "+i18n.GL0934();
+			viewsCountLabel.setText(viewsText);
+			viewsCountLabel.getElement().setAttribute("alt",viewsText);
+			viewsCountLabel.getElement().setAttribute("title",viewsText);
+		}
 	}
 	public void setUserProfileImage(String profileUserId){
 		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?p="+Math.random());
@@ -195,7 +199,6 @@ public class MetadataWidget extends Composite {
 		courseTitle.clear();
 		if(courseInfo!=null&&courseInfo.size()>0){
 			courseSection.setVisible(true);
-			//setCourseTitle(courseInfo.get(0));
 			SearchUiUtil.renderMetaData(courseTitle, courseInfo, 0);
 			Label dummyLabel=new Label();
 			dummyLabel.setStyleName(playerStyle.clearBoth());
@@ -207,21 +210,25 @@ public class MetadataWidget extends Composite {
 	
 	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds,boolean isStandards){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
-		for(int i=0;i<standareds.size();i++){
-			Map<String, String> standardMap=new HashMap<String, String>();
-			if(isStandards){
-				standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
-				standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
-			}else{
-				standardMap.put(STANDARD_CODE, standareds.get(i).getLabel());
-				standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription()!=null?standareds.get(i).getDescription():"");
+		if(standareds!=null && standareds.size()>0){
+			for(int i=0;i<standareds.size();i++){
+				Map<String, String> standardMap=new HashMap<String, String>();
+				if(isStandards){
+					standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
+					standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
+				}else{
+					standardMap.put(STANDARD_CODE, standareds.get(i).getLabel());
+					standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription()!=null?standareds.get(i).getDescription():"");
+				}
+				standardsList.add(standardMap);
 			}
-			standardsList.add(standardMap);
 		}
 		return standardsList;
 	}
 	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList,boolean isStandards) {
 		standardsContainer.clear();
+		String stdCode ="";
+		String stdDec ="";
 		if (standardsList != null&&standardsList.size()>0) {
 			if(isStandards){
 				standardSection.setVisible(true);
@@ -233,8 +240,12 @@ public class MetadataWidget extends Composite {
 			FlowPanel toolTipwidgets = new FlowPanel();
 			while (iterator.hasNext()) {
 				Map<String, String> standard = iterator.next();
-				String stdCode = standard.get(STANDARD_CODE);
-				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				if(standard.containsKey(STANDARD_CODE)){
+					stdCode = standard.get(STANDARD_CODE);
+				}
+				if(standard.containsKey(STANDARD_DESCRIPTION)){
+					stdDec = standard.get(STANDARD_DESCRIPTION);
+				}
 				if (count > 2) {
 					if (count < 18){
 						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
@@ -276,10 +287,9 @@ public class MetadataWidget extends Composite {
 	
 	public void renderLanguageObjective(String languageObjective){	
 		lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
-		if(languageObjective!=null){
+		if(!StringUtil.isEmpty(languageObjective)){
 			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
-			//lbllanguageObjectiveAll.setVisible(false);
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
 			if(languageObjective.length()>=200){
 				seeMoreAnchor.setText(i18n.GL1728());	
@@ -289,7 +299,6 @@ public class MetadataWidget extends Composite {
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("title",languageObjective.substring(0,200));
-					//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
 			}else{
 				seeMoreAnchor.setVisible(false);
 				lbllanguageObjective.setText(languageObjective);
@@ -302,7 +311,7 @@ public class MetadataWidget extends Composite {
 	}
 	public void renderDepthOfKnowledge(List<checkboxSelectedDo> depthofKnowledgeList ) {
 		depthOfKnowledgeContainer.setVisible(false);
-		if(depthofKnowledgeList!=null){
+		if(depthofKnowledgeList!=null&&depthofKnowledgeList.size()>0){
 			depthOfKnowledgePanel.clear();
 			boolean depthofKnowledgeValue = false;
 			for(checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
@@ -312,6 +321,8 @@ public class MetadataWidget extends Composite {
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
 					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
+				}else{
+					depthofKnowledgeValue = false;
 				}
 			}
 			if(depthofKnowledgeValue){
@@ -325,7 +336,7 @@ public class MetadataWidget extends Composite {
 	}
 	public void renderInstructionalMethod(List<checkboxSelectedDo> instructionmethodList){
 		InstructionalmethodContainer.setVisible(false);
-		if(instructionmethodList!=null){
+		if(instructionmethodList!=null&&instructionmethodList.size()>0){
 			instructionalmethodPanel.clear();
 			boolean instructionMethod=false;
 			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) {
@@ -334,6 +345,8 @@ public class MetadataWidget extends Composite {
 					Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
 					instructionalmethodPanel.add(lblInstructionMethod);
 					InstructionalmethodContainer.setVisible(true);
+				}else{
+					instructionMethod = false;
 				}
 			}
 			if(instructionMethod){
@@ -347,7 +360,7 @@ public class MetadataWidget extends Composite {
 	}
 	public void renderAudience(List<checkboxSelectedDo> audienceList){
 		audienceContainer.setVisible(false);
-		if(audienceList!=null){
+		if(audienceList!=null&&audienceList.size()>0){
 			audiencePanel.clear();
 			boolean audience=false;
 			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
@@ -355,6 +368,8 @@ public class MetadataWidget extends Composite {
 					audience = true;
 					Label lblaudience = new Label(checkboxSelectedDo.getValue());
 					audiencePanel.add(lblaudience);
+				}else{
+					audience = false;
 				}
 			}
 			if(audience){
@@ -370,7 +385,7 @@ public class MetadataWidget extends Composite {
 	}
 	public void renderLearningAndInnovationSkill(List<checkboxSelectedDo> learningSkillsList){
 		learningAndInnovationSkillsContainer.setVisible(false);
-		if(learningSkillsList!=null){
+		if(learningSkillsList!=null&&learningSkillsList.size()>0){
 			learningAndInnovationSkillPanel.clear();
 			boolean learningAndInnovationSkill = false;
 			Label lbllearningSkills = null;
@@ -381,6 +396,8 @@ public class MetadataWidget extends Composite {
 					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
 					lbllearningSkills.getElement().setAttribute("style", "display:table");
 					learningAndInnovationSkillPanel.add(lbllearningSkills);
+				}else{
+					learningAndInnovationSkill = false;
 				}
 			}
 			if(learningAndInnovationSkill){
@@ -394,7 +411,6 @@ public class MetadataWidget extends Composite {
 	}
 	@UiHandler("seeMoreAnchor")
 	public void clickSeeAll(ClickEvent event){
-		//lbllanguageObjectiveAll.setVisible(true);
 		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText("");
 		lbllanguageObjective.setText(languageObjectiveValue);
@@ -404,7 +420,6 @@ public class MetadataWidget extends Composite {
 		teacherNameLabel.getElement().setAttribute("alt",userNameDisplay);
 		teacherNameLabel.getElement().setAttribute("title",userNameDisplay);
 		teacherProfileContainer.clear();
-		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
 		teacherProfileContainer.add(new TeacherImage(profileImageUrl+"?p="+Math.random()));
 	}
 	public class TeacherImage extends Composite{
@@ -434,20 +449,8 @@ public class MetadataWidget extends Composite {
 		return date;
 	}
 	
-//	public void setDueDateText(Long date){
-//		
-//		if(date!=null&&!date.equals("")){
-//			String text=CollectionsView.convertMillisecondsToDate(date);
-//			dueDate.setText(text);
-//			dueDate.getElement().setAttribute("alt",text);
-//			dueDate.getElement().setAttribute("title",text);
-//			dueDateSection.setVisible(true);
-//		}else{
-//			dueDateSection.setVisible(false);
-//		}
-//	}
 	public void setDirectionText(String text){
-		if(text!=null&&!text.trim().equals("")){
+		if(!StringUtil.isEmpty(text)){
 			lblDirectionsDesc.setText(text);
 			lblDirectionsDesc.getElement().setAttribute("alt",text);
 			lblDirectionsDesc.getElement().setAttribute("title",text);
@@ -474,10 +477,10 @@ public class MetadataWidget extends Composite {
 		lblStandards.getElement().setAttribute("title",i18n.GL0575());
 		
 		
-		lblcentury.setText(i18n.GL3191());
+		lblcentury.setText(i18n.GL3199());
 		lblcentury.getElement().setId("lblCenturys");
-		lblcentury.getElement().setAttribute("alt",i18n.GL3191());
-		lblcentury.getElement().setAttribute("title",i18n.GL3191());
+		lblcentury.getElement().setAttribute("alt",i18n.GL3199());
+		lblcentury.getElement().setAttribute("title",i18n.GL3199());
 		
 		previewFlagButton.setText(i18n.GL0556());
 		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
@@ -563,10 +566,10 @@ public class MetadataWidget extends Composite {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
 		if(collectionDo!=null){
-			if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+			if(StringUtil.isPartnerUser((collectionDo.getUser()!=null && !StringUtil.isEmpty(collectionDo.getUser().getUsername()))?collectionDo.getUser().getUsername():"")){
 				anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 			}else{
-				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+collectionDo.getUser().getUsername();
+				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+((collectionDo.getUser()!=null && collectionDo.getUser().getUsername()!=null)?collectionDo.getUser().getUsername():"");
 				anchor.setHref(token);
 			}
 			anchor.setText(userName);
@@ -587,7 +590,7 @@ public class MetadataWidget extends Composite {
 		Map<String,String> params = new LinkedHashMap<String,String>();
 		params.put("id", collectionDo.getGooruOid());
 		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-		if(view!=null&&view.equalsIgnoreCase("end")){
+		if(view!=null&&ClientConstants.END.equalsIgnoreCase(view)){
 			params.put("view", "end");
 			params.put("tab", "flag");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
@@ -604,42 +607,6 @@ public class MetadataWidget extends Composite {
 		return previewFlagButton;
 	}
 	
-//	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
-//		hideCollectionDetails(true);
-//		teacherContainer.setVisible(true);
-//		String classTitle=assignmentParentDo.getClassTitle()!=null?assignmentParentDo.getClassTitle():"";
-//		classTitleValue.setText(classTitle);
-//		classTitleValue.getElement().setAttribute("alt",classTitle);
-//		classTitleValue.getElement().setAttribute("title",classTitle);
-//		
-//		lblclassTitle.setText(i18n.GL1578());
-//		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
-//		lblclassTitle.getElement().setAttribute("title",i18n.GL1578());
-//		
-//		lblClassInfo.setText(i18n.GL1579());
-//		lblClassInfo.getElement().setAttribute("alt",i18n.GL1579());
-//		lblClassInfo.getElement().setAttribute("title",i18n.GL1579());
-//		
-//		lblTeacher.setText(i18n.GL1580());
-//		lblTeacher.getElement().setAttribute("alt",i18n.GL1580());
-//		lblTeacher.getElement().setAttribute("title",i18n.GL1580());
-//		
-//		lbldueDate.setText(i18n.GL1581());
-//		lbldueDate.getElement().setAttribute("alt",i18n.GL1581());
-//		lbldueDate.getElement().setAttribute("title",i18n.GL1581());
-//		
-//		lblDirections.setText(i18n.GL1582());
-//		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
-//		lblDirections.getElement().setAttribute("title",i18n.GL1582());
-//		
-//		lblunitTitle.setText(i18n.GL2249());
-//		String unitTitle=assignmentParentDo.getPathwayTitle()!=null?assignmentParentDo.getPathwayTitle():"";
-//		unitTitleValue.setText(unitTitle);
-//		setDueDateText(assignmentParentDo.getPlannedEndDate());
-//		setDirectionText(assignmentParentDo.getNarration());
-//	
-//	}
-	
 	public void hideCollectionDetails(boolean hide){
 		authorPanel.setVisible(!hide);
 		courseSection.setVisible(!hide);
@@ -651,9 +618,9 @@ public class MetadataWidget extends Composite {
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		hideCollectionDetails(true);
 		teacherContainer.setVisible(true);
-		classTitleValue.setText(classpageItemDo.getTitle());
-		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
-		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle());
+		classTitleValue.setText(classpageItemDo.getTitle()!=null?classpageItemDo.getTitle():"");
+		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle()!=null?classpageItemDo.getTitle():"");
+		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle()!=null?classpageItemDo.getTitle():"");
 		
 		lblclassTitle.setText(i18n.GL1578());
 		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
@@ -682,12 +649,11 @@ public class MetadataWidget extends Composite {
 		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
 		
 		teacherProfileContainer.clear();
-		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
 		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
 	}
 
 	public void setDueDateText(String text){
-		if(text!=null&&!text.trim().equals("")){
+		if(!StringUtil.isEmpty(text)){
 			dueDate.setText(text);
 			dueDate.getElement().setAttribute("alt",text);
 			dueDate.getElement().setAttribute("title",text);
@@ -696,7 +662,5 @@ public class MetadataWidget extends Composite {
 			dueDateSection.setVisible(false);
 		}
 	}
-
-
 
 }

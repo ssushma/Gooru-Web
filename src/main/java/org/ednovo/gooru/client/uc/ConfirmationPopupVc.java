@@ -41,6 +41,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -49,7 +50,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class ConfirmationPopupVc extends Composite {
 
-	private AppPopUp appPopUp;
+	private static AppPopUp appPopUp;
 	private boolean isEditQuestion=false;
 	@UiField
 	Button cancelButton;
@@ -111,6 +112,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 				
 			}
 		});
+		setAutoHideEnabled(true);
 	}
 
 	@UiHandler("cancelButton")
@@ -191,6 +193,10 @@ public abstract class ConfirmationPopupVc extends Composite {
 		return okButton;
 	}
 	
-	
+	public static void setAutoHideEnabled(boolean isAutoHide) {
+		if(isAutoHide){
+			appPopUp.setAutoHideEnabled(isAutoHide);
+			}
+	}
 	
 }

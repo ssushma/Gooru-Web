@@ -451,8 +451,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		standardsDefaultText.getElement().setAttribute("alt",i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title",i18n.GL1682());
 		
-		centuaryDefaultText.setText(i18n.GL3191());
-		StringUtil.setAttributes(centuaryDefaultText.getElement(), i18n.GL3191(), i18n.GL3191(), i18n.GL3191());
+		centuaryDefaultText.setText(i18n.GL3199());
+		StringUtil.setAttributes(centuaryDefaultText.getElement(), i18n.GL3199(), i18n.GL3199(), i18n.GL3199());
 		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
