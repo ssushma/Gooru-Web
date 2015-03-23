@@ -168,7 +168,7 @@
 
 .goorulandingFooterContainerNew {
 	height:102px;
-	padding-top: 30px;
+	/* padding-top: 30px;   DO-6799*/
 	clear: both;
 	text-align: center;
 	background-color:#f0f0f0;
