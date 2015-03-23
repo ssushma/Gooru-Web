@@ -246,8 +246,8 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	public void setCollectionGoal(String collectionGoal){
 		this.collectionGoal.setHTML("");
 		if(!StringUtil.isEmpty(collectionGoal)){
-			if(collectionGoal.length()>415){
-				collectionGoal =(collectionGoal.substring(0, 415))+"...";
+			if(collectionGoal.length()>1001){
+				collectionGoal =(collectionGoal.substring(0, 1000))+"...";
 				this.collectionGoal.setHTML(collectionGoal);
 			}
 			else{
