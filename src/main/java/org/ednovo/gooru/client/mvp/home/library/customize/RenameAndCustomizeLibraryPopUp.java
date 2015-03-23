@@ -121,8 +121,6 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						}
 					};
 					loginCustom.add(assignWidget);
-					loginCustom.getElement().getStyle().setOverflowY(Overflow.AUTO);
-					loginCustom.getElement().getStyle().setHeight(550, Unit.PX);
 				} else {
 					loginCustom.setVisible(false);
 					copyCollectionSuccess.setVisible(true);
@@ -151,7 +149,6 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		editCollection.getElement().setAttribute("title",i18n.GL0590());
 		panelAssign.getElement().setAttribute("style", "min-height:367px");
 		panelAssign.getElement().getStyle().setMarginBottom(3, Unit.PX);
-		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		copycollectionTextbox.setMaxLength(50);
 		Window.enableScrolling(false);
 		this.getElement().getStyle().setZIndex(99999);
