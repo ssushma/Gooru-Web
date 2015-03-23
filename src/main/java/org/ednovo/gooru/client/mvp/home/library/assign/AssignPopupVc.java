@@ -277,9 +277,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 		 boolean device = BrowserAgent.isDevice();
 		if(device){
 			ScrollPopupUtil.ScrollPopupUtilWidget(assignPopupContent,false);
-		}else{
-			assignPopupContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
-			assignPopupContent.getElement().getStyle().setHeight(550, Unit.PX);
 		}
 	}
 
