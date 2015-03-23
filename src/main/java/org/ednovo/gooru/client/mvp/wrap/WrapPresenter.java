@@ -42,14 +42,14 @@ import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
+import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
+import org.ednovo.gooru.client.mvp.profilepage.event.UserHeaderImageEventHandler;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchFilterVc;
 import org.ednovo.gooru.client.mvp.search.event.FilterEvent;
 import org.ednovo.gooru.client.mvp.search.event.FilterHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiHandler;
-import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
-import org.ednovo.gooru.client.mvp.profilepage.event.UserHeaderImageEventHandler;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter.IsWrapProxy;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -69,7 +69,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * 
  */
 
-public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler{
+public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler, SearchFilterUiHandler, FilterHandler{
 	
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 
