@@ -450,7 +450,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			if(taxonomyCode!=null){
 				JSONArray taxonomySet = new JSONArray();
 				JSONObject code = new JSONObject();
-				code.put("codeId", taxonomyCode);
+				code.put("codeId", Integer.parseInt(taxonomyCode));
 				taxonomySet.put(code);
 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
 			}
@@ -1463,7 +1463,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.DELETE_TAXONOMY_RESOURCE, resourceId,
 				getLoggedInSessionToken());
-		
+		getLogger().info("deleteTaxonomyResource:"+url);
 		try {
 			JSONObject taxonomyObject = new JSONObject();
 			JSONObject taxonomySetObj = new JSONObject();
@@ -1473,6 +1473,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 			taxonomyObject.put("resource", taxonomySetObj);
+			getLogger().info("deleteTaxonomy:"+taxonomyObject.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());

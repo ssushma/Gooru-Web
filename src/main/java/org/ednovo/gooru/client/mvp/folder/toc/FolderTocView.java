@@ -580,12 +580,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(convertHtml(bannerVal.get(placetoken).get(1)));
-			if(!bannerVal.get(placetoken).get(2).equals("")){
-				logoImage.setUrl(bannerVal.get(placetoken).get(2));
-			}
 			if(bannerVal.get(placetoken).get(2).equals("")){
 				bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
+				bannerLogoImageContainer.setVisible(false);
 			}else{
+				bannerLogoImageContainer.setVisible(true);
+				logoImage.setUrl(bannerVal.get(placetoken).get(2));
 				bannerTitle.getElement().getStyle().clearBackgroundColor();
 				bannerTitle.removeStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 			}
@@ -616,7 +616,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
 		if(!bannerVal.get(placetoken).get(2).equals("")){
+			bannerLogoImageContainer.setVisible(true);
 			logoImage.setUrl(bannerVal.get(placetoken).get(2));
+		}else{
+			bannerLogoImageContainer.setVisible(false);
 		}
 		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;height: 198px;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());

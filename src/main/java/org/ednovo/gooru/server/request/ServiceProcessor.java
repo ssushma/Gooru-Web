@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.server.request;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.restlet.Context;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Encoding;
@@ -342,7 +343,11 @@ public class ServiceProcessor {
            public JsonResponseRepresentation run() throws Exception {
         	   setClientResource(setContext(url, username, password));
                setEncodings(Encoding.GZIP);
-               Representation decodedRep = new DecodeRepresentation(getClientResource().put(formData));
+               Representation decodedRep = null;
+               Representation representation=getClientResource().put(formData);
+               if(representation!=null && !StringUtil.isEmpty(representation.getText())){
+            	   decodedRep = new DecodeRepresentation(representation);
+               }
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((decodedRep!=null) ? decodedRep.getText():""));
