@@ -1382,11 +1382,12 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				}
 			};
 			Window.scrollTo(0, 0);
-			/*	successPopupVc.setWidth("500px");*/
-			//successPopupVc.setHeight("471px");
+			if (!BrowserAgent.isDevice()){
+				successPopupVc.setWidth("500px");
+				successPopupVc.setHeight("515px");
+			}
 			successPopupVc.show();
 			successPopupVc.center();
-			
 			
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);
