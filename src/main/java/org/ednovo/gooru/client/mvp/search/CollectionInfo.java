@@ -195,8 +195,8 @@ public class CollectionInfo extends Composite {
 				loadingImagePanel.setVisible(false);
 				setGradeText(collectionDo.getGrade());
 				if(collectionDo.getMetaInfo()!=null){
-					renderStandards(standardsInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getStandards()!=null?collectionDo.getMetaInfo().getStandards():null),true);
-					renderStandards(centuryInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getSkills()!=null?collectionDo.getMetaInfo().getSkills():null),false);
+					renderStandards(standardsInfoConatiner,getStandardsMap((collectionDo.getMetaInfo().getStandards()!=null?collectionDo.getMetaInfo().getStandards():null),true),true);
+					renderStandards(centuryInfoConatiner,getStandardsMap((collectionDo.getMetaInfo().getSkills()!=null?collectionDo.getMetaInfo().getSkills():null),false),false);
 				}
 				setDepthOfKnlze();
 				setLearningSkills();
@@ -279,12 +279,17 @@ public class CollectionInfo extends Composite {
 	}
 
 
-	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds){
+	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds,boolean isStandards){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
 		for(int i=0;i<standareds.size();i++){
 			Map<String, String> standardMap=new HashMap<String, String>();
-			standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
-			standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
+			if(isStandards){
+				standardMap.put(STANDARD_CODE, standareds.get(i).getCode());
+				standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getDescription());
+			}else{
+				standardMap.put(STANDARD_CODE, standareds.get(i).getLabel());
+				standardMap.put(STANDARD_DESCRIPTION, standareds.get(i).getLabel());
+			}
 			standardsList.add(standardMap);
 		}
 		return standardsList;
