@@ -18,6 +18,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -120,7 +121,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						}
 					};
 					loginCustom.add(assignWidget);
-					panelAssign.getElement().getStyle().setHeight(550, Unit.PX);
+					loginCustom.getElement().getStyle().setOverflowY(Overflow.AUTO);
+					loginCustom.getElement().getStyle().setHeight(550, Unit.PX);
 				} else {
 					loginCustom.setVisible(false);
 					copyCollectionSuccess.setVisible(true);
