@@ -449,7 +449,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 				resourceSearchResultDo.getGooruOid());
 		if (lblResourceTitle.getText().length() > 30) {
 			String lblString = lblResourceTitle.getText();
-			lblString = lblString.substring(0, 24) + "...";
+			lblString = lblString.substring(0, 27) + "...";
 			lblResourceTitle.setText(lblString);
 			// lblResourceTitle.getElement().getStyle().setWidth(240, Unit.PX);
 		}
