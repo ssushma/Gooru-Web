@@ -33,12 +33,14 @@ import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSummaryView> implements CollectionSummaryUiHandlers{
+public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSummaryView> implements CollectionSummaryUiHandlers,ClientConstants{
 	
 	public static final  Object TEACHER_STUDENT_SLOT = new Object();
 	
@@ -96,7 +98,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
-				getView().setUsersData(result);
+				if(result !=null){
+					getView().setUsersData(result);
+				}
 			}
 			
 			@Override
@@ -129,7 +133,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
 				getView().setUserSessionsData(result);
 				if(result.size()!=0){
-					printUserDataDO.setSession("1st Session");
+					printUserDataDO.setSession(FIRST_SESSION);
 					printUserDataDO.setSessionStartTime(AnalyticsUtil.getSessionsCreatedTime(Long.toString(result.get(0).getTimeStamp())));
 					setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId,printUserDataDO);
 				}else{
@@ -181,8 +185,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			
 			@Override
 			public void onSuccess(String result) {
-				getView().getFrame().setUrl(result);
-				//Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
+				if(!StringUtil.isEmpty(result)){
+					getView().getFrame().setUrl(result);
+				}
 			}
 			
 			@Override

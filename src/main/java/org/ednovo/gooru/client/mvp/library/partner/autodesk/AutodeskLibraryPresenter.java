@@ -92,10 +92,12 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+			long startTime = System.currentTimeMillis();
+			AppClientFactory.printInfoLogger("Entered into autodesk start time -- "+startTime);
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
-			
+			AppClientFactory.printInfoLogger("Autodesk End time -- "+(System.currentTimeMillis() -startTime));
 		}
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)

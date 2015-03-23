@@ -46,6 +46,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -117,29 +118,17 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 	}
 	
 	public void displayPopUp(int displayScreen){
-/*		appPopUp = new AppPopUp("NoHeader");
-		appPopUp.setContent(uiBinder.createAndBindUi(this));*/
-		
 		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
-		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		
-		
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
-		
-		panelLoginPopupContent.getElement().getStyle().setPaddingTop(30, Unit.PX);
-		panelLoginPopupContent.getElement().getStyle().setPaddingBottom(30, Unit.PX);
-		
+
 		appPopUp.center();
-		
 		setUiAndIds();
 		showPanelById(displayScreen);
-		
 		account = AppClientFactory.getPlaceManager().getRequestParameter("account") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("account")  :  null ;
 		childDob = AppClientFactory.getPlaceManager().getRequestParameter("dob") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("dob")  :  null ;
 		childUserName = AppClientFactory.getPlaceManager().getRequestParameter("userName") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("userName")  :  null ;
-		
 	}
 
 	private void setUiAndIds(){
@@ -289,11 +278,8 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 			map.remove("callback");
 			map.remove("type");
 			map.remove("rp");
-			
-			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)||
-					AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
-				
-			} else {
+			if (!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) &&
+					!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.FOLDER_TOC)&&!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT) && !AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
 				map.remove("id");
 			}
 			
@@ -420,12 +406,9 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				appPopUp.hide();
 				termsAndPolicyVc = new TermsAndPolicyVc(false) {
-					
 					@Override
 					public void openParentPopup() {
 						Window.enableScrolling(false);
-						//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 						appPopUp.show();
 					}
 				};
@@ -441,12 +424,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				appPopUp.hide();
 				copyRightPolicy = new CopyRightPolicyVc() {
-					
 					@Override
 					public void openParentPopup() {
 						Window.enableScrolling(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 						appPopUp.show();
 					}
 				};
@@ -460,12 +441,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				appPopUp.hide();
 				termsOfUse=new TermsOfUse(){
-
 					@Override
 					public void openParentPopup() {
 						Window.enableScrolling(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 						appPopUp.show();
 					}
 					
@@ -473,12 +452,11 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				termsOfUse.show();
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
-			
 			}
 			//Send data to create user.
 			@Override
-			public void CreateUser(String data, String loginData) {
-				getUiHandlers().CreateUser(data, loginData);
+			public void CreateUser(Map<String, String> registrationDetailsParams, String username,String password) {
+				getUiHandlers().CreateUser(registrationDetailsParams, username, password);
 			}
 
 			@Override

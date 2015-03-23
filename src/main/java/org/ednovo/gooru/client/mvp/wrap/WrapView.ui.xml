@@ -6,100 +6,10 @@
 	xmlns:ps="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style>
 		.wrapper {
-		position: relative;
-<!-- 		min-width: 1024px;
- -->		height: auto !important;
+			position: relative;
 		}
 		.wrapperContent {
-		/* margin-top: 36px; */
-		min-height: 450px;
-		}
-		.tabSection {
-		width: 100%;
-		padding: 20px;
-		box-sizing:border-box;
-		-moz-box-sizing:border-box;
-		background: #f2f2f2;
-		}
-		.viewResult {
-		width: 1000px;
-		margin: 0 auto;
-		}
-		.closesmall {
-		display: inline-block;
-		vertical-align: top;
-		height: 80px;
-		line-height: 80px;
-		padding-right: 10px;
-		cursor:pointer;
-		}
-		.closesmall > img {
-		margin-top: 15px;
-		}
-		.resource-cover {
-		display: inline-block;
-		vertical-align: top;
-		padding-right: 10px;
-		}
-		.gooru {
-		font-size: 16px;
-		line-height: 140%;
-		}
-		.ednovo {
-		font-size: 14px;
-		font-weight: bold;
-		line-height: 140%;
-		}
-		.stars {
-		display: inline-block;
-		width: 100px;
-		height: 22px;
-		background: url(../images/ratings.png) center no-repeat;
-		}
-		.normal {
-		font-size: 14px;
-		}
-		.view {
-		color: #1076bb;
-		font-size: 16px;
-		height: 80px;
-		line-height: 80px;
-	
-		border-right: 1px solid #ddd;
-		}
-		.rating{
-		}
-		.imgSection {
-		display: inline-block;
-		vertical-align: top;
-		
-		}
-		.info {
-		color: #515151;
-		font-size: 14px;
-		display: inline-block;
-		vertical-align: top;
-		padding-top: 15px;
-		padding-left: 10px;
-		}
-		.info div:first-child {
-		color: #4E9746;
-		font-size: 14px;
-		line-height: 150%;
-		}
-		.close {
-		position: absolute;
-		right: 40px;
-		margin-top: 16px;
-		cursor: pointer;
-		}
-		.img{
-			width:100%;
-			height:100%;
-		}
-		.ipadsection{
-			margin:0 auto;
-			text-align:center;	
+			min-height: 450px;
 		}
 	</ui:style>
 
@@ -110,71 +20,9 @@
 	        	<g:HTMLPanel ui:field="collectionSearchFilters" styleName="searchFilters"></g:HTMLPanel>
 	        </g:HTMLPanel>
 	    </g:HTMLPanel>
-		<g:HTMLPanel styleName="{style.tabSection}" ui:field="androidSectiondiv">
-		    <g:HTMLPanel styleName="{style.ipadsection}">
-			<g:HTMLPanel styleName="col-md-2 col-sm-2 {style.imgSection}">
-				<g:Image url="images/tablet.png" styleName="{style.img}"/>
-			</g:HTMLPanel> 
-			<!--  <g:Image styleName="col-md-2 col-xs-2 {style.imgSection}" url="images/tablet.png"/> -->
-			 
-			<g:HTMLPanel styleName="col-md-8 col-xs-10 col-sm-8 {style.info}" ui:field="msglinkPanel">
-				<g:HTMLPanel ui:field="msgPanel"></g:HTMLPanel>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="col-md-2 col-xs-2 col-sm-2">
-					<g:Image url="images/close.png" ui:field="closeAndriodBtn" styleName="{style.close}" />	    
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="clearfix"/>
-			</g:HTMLPanel>	
-		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{style.tabSection}" ui:field="ipadSectiondiv">
-			<g:HTMLPanel styleName="{style.ipadsection}">
-			    <g:HTMLPanel styleName="col-md-6">
-				<g:HTMLPanel styleName="{style.closesmall}">
-					<g:Image ui:field="closeIpadBtn" url="images/close-small.png"
-						width="14" height="14" />
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:Image url="images/gooru-thumbnail.png" width="80" height="79"/>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:HTMLPanel styleName="{style.rating}">
-						<g:HTMLPanel styleName="{style.gooru}" ui:field="gooruPanel"></g:HTMLPanel>
-						<g:HTMLPanel styleName="{style.ednovo}" ui:field="ednovoPanel"></g:HTMLPanel>
-						<g:HTMLPanel styleName="{style.stars}"></g:HTMLPanel>
-						<g:HTMLPanel styleName="{style.normal}" ui:field="appstorePanel"></g:HTMLPanel>
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="col-md-6">
-				<g:Anchor styleName="{style.resource-cover} {style.view}"
-					target="_blank" href="https://itunes.apple.com/in/app/gooru/id674087861?mt=8"
-					ui:field="viewAnchor"></g:Anchor>
-				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:Image url="images/result-img.png" width="100" height="75" />
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:Image url="" width="100" height="74" />
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:Image url="images/result-img.png" width="100" height="75" />
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:Image url="images/result-img-type.png" width="100"
-						height="74" />
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.resource-cover}">
-					<g:Image url="images/result-img.png" width="100" height="75" />
-				</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="clearfix"/>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
-		<g:HTMLPanel ui:field="webcontainer">
-				<sg:HeaderUc ui:field="headerUc" />
-				<g:SimplePanel ui:field="wrapperPanel" styleName="{style.wrapperContent}" />	    
-		</g:HTMLPanel>	
-	
-		<!-- <sg:FooterUc /> -->
+	    <g:HTMLPanel ui:field="panelDevice"></g:HTMLPanel>
+		<sg:HeaderUc ui:field="headerUc" />
+		<g:SimplePanel ui:field="wrapperPanel" styleName="{style.wrapperContent}" />
 	</g:HTMLPanel>
 
 </ui:UiBinder> 

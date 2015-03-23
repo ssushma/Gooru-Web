@@ -83,25 +83,6 @@
 	overflow: auto;
 }
 
-.classpageHover {
-	width: 1002px;
-	height: 735px;
-	margin: 0 auto; 
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-	background: url('../images/no-collections.png') no-repeat;
-}
-
-.classpageHoverTitle {
-	font-size: 24px;
-	color: #999;
-	padding: 100px 180px 0px 180px;
-	text-align: center;
-}
-
 .teachContainer {
 	width: 1002px;
 	margin: 0 auto;
@@ -459,15 +440,6 @@ float: left;
 	display: inline-block;
 	margin-top: 10px;
 }
-
-.profileImg {
-	display: inline-block;
-	vertical-align: top;
-	width: 50px;
-	height: 50px;
-	background: url(../images/profile.png) no-repeat;
-}
-
 .profileText {
 	display: inline-block;
 	vertical-align: top;
@@ -570,10 +542,6 @@ float: left;
 	text-align: center;
 	overflow: hidden;
 	white-space: nowrap;
-}
-
-.threeActions .publicImage {
-	background: url(images/Classpage/Features/public.png) center top no-repeat;
 }
 
 .threeActions .analystic {

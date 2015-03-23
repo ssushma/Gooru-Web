@@ -235,12 +235,6 @@ text-align:center;
 	width: 22px;
 }
 
-/*.pinterestImage {
-	background: url("images/pinterest.png");
-	width: 20px;
-	height: 21px;
-}*/
-
 .facebookImage:hover, .twitterImage:hover, .youtubeImage:hover, .googleplusImage:hover {
 	opacity:0.6;
 }
@@ -359,32 +353,6 @@ div.learnMoreIconsDiv,div.learnMoreIconsDiv {
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 	padding: 4px;
-}
-
-.gooruGuideImg {
-	background: url("images/help_icon_v2.png") no-repeat scroll 0 0
-		transparent;
-	cursor: pointer;
-	/* float: right; */
-	height: 40px;
-	left: 110px;
-	position: relative;
-	right: 157px;
-	top: 6px;
-	width: 26px;
-}
-
-.loggedInGooruGuideImg {
-	background: url("images/help_icon_v2.png") no-repeat scroll 0 0
-		transparent;
-	cursor: pointer;
- 
-	height: 40px;
-	left: 7px;
-	position: relative;
-	 
-	top: 6px;
-	width: 28px;
 }
 
 .imageUrlError {

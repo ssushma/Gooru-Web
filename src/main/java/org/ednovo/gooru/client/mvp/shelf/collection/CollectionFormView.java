@@ -250,7 +250,7 @@ public class CollectionFormView extends
 		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
 
 		appPopUp.setTitle(i18n.GL0993());
-		appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
+		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				appPopUp.hide();
@@ -1021,7 +1021,7 @@ public class CollectionFormView extends
 			rdBtnAssessmentPrivate.setValue(false);
 			requireLoginYes.setValue(false);
 			requireLoginNo.setValue(true);
-			appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
+			appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					appPopUp.hide();

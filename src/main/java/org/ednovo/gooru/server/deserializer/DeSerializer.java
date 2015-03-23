@@ -47,7 +47,6 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return value != null && value.matches(INTEGER_EQ) ? Integer.parseInt(value) : null;
 		} else {
@@ -61,7 +60,6 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return value != null ? value : null;
 		} else {
@@ -75,7 +73,6 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getInt(key);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return value != 0 ? value : 0;
 		} else {
@@ -97,7 +94,6 @@ public abstract class DeSerializer {
 					arrayObj.add(checkBoxObj);
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return arrayObj;
 		} else {
@@ -120,7 +116,6 @@ public abstract class DeSerializer {
 				try {
 					value.append(jsonArray.get(i));
 				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -134,7 +129,6 @@ public abstract class DeSerializer {
 				try {
 					values.add(jsonArray.getString(i));
 				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
 		}

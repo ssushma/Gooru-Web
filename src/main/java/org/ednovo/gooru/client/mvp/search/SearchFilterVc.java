@@ -131,31 +131,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		String reviewCheckBoxStyle();
 		String reviewLabelForCheckbox();
 	}
-
-	/*@UiField
-	DisclosurePanelUc categoryPanelUc;*/
-	
-	/*@UiField
-	Anchor resourceLinkLbl, collectionLinkLbl;*/
-
-	/*@UiField
-	DisclosurePanelUc subjectPanelUc;*/
-
-	/*@UiField
-	DisclosurePanelUc gradePanelUc;*/
-
-	/*@UiField
-	DisclosurePanelUc sourcePanelUc,aggregatorPanelUc;*/
-
-	/*@UiField
-	DisclosurePanelUc standardPanelUc;*/
-
-	/*@UiField
-	DisclosurePanelUc authorPanelUc;*/
 	
 	@UiField HTMLPanel pnl21Century,categoryPanelUc,subjectPanelUc,gradePanelUc,gradePanelUcNext,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
+
 	HTMLPanel aggregatorPanel,centuryPanelUc;
 
 	@UiField(provided = true)
@@ -174,7 +154,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	AppSuggestBox aggregatorSgstBox;
 	
 	@UiField
-	FlowPanel /*flowpanel,*/myCollectionSearch,authorContainerFloPanel;
+	FlowPanel myCollectionSearch,authorContainerFloPanel;
 
 	@UiField
 	FlowPanel sourceContainerFloPanel,aggregatorContainerFloPanel;
@@ -183,12 +163,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	FlowPanel standardContainerFloPanel,centuryContainerFloPanel;
 
 	@UiField
-	Label sourcesNotFoundLbl,/*notifyText,*/aggregatorNotFoundLbl;
-	@UiField
 	PPanel oerPanel,panelNotMobileFriendly;
 
 	@UiField
+	Label sourcesNotFoundLbl,aggregatorNotFoundLbl;
+
+	@UiField
 	H4Panel filtersText;
+	
 	@UiField
 	Label standardsNotFoundLbl,centuryHelpicon,centuryNotFoundLbl;
 	
@@ -198,6 +180,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField Label arrowLblCategory,arrowLblSubject,arrowLblGrade,arrowLblstandard,arrowLblratings,arrowLblsource,arrowLblaggregator,arrowLblaccess,arrowLblauthor;
 
 	@UiField
+
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip,centuryToolTip;
 	
 	@UiField
@@ -207,6 +190,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	H5Panel accessModeLbl,sourceLbl,ratingsLbl,standardLbl,gradeLbl,resourceFormatLbl,subjectLbl,centuryLbl;
 	
 	/*@UiField Image publisherTooltip;*/
+
 	CheckBox chkNotFriendly = null;
 	CheckBox chkReview = null;
 	CheckBox chkRating = null;
@@ -411,28 +395,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 		};
 		
-/*	ClickHandler eve1=new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				if(isSourcePopupShowing){
-					sourceToolTip.setVisible(true);
-					isSourcePopupShowing=false;
-				}else{
-					sourceToolTip.setVisible(false);
-					isSourcePopupShowing=true;
-				}
-				if(isStandardPopupShowing){
-					standardToolTip.setVisible(true);
-					isStandardPopupShowing=false;
-				}else{
-					sourceToolTip.setVisible(false);
-					isStandardPopupShowing=true;
-				}
-			}
-		};
-		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
-*/
-		
 		sourceSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 		sourceSgstBox.getElement().setId("asSourceSgst");
 		sourceSgstBox.getElement().setAttribute("style","margin-top: 5px;");
@@ -457,19 +419,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		filtersText.getElement().setAttribute("title",i18n.GL0719());
 		
 		pnl21Century.setVisible(false);
-		
-		/*resourceLinkLbl.setText(i18n.GL0174());
-		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
-		resourceLinkLbl.getElement().setAttribute("title",i18n.GL0174());*/
-		
-		/*notifyText.setText(i18n.GL0720());
-		notifyText.getElement().setId("lblNotifyText");
-		notifyText.getElement().setAttribute("alt",i18n.GL0720());
-		notifyText.getElement().setAttribute("title",i18n.GL0720());*/
-		
-		/*collectionLinkLbl.setText(i18n.GL0175());
-		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
-		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());*/
 		
 		resourceFormatLbl.setText(i18n.GL0721());
 		resourceFormatLbl.getElement().setId("lblCategory");
@@ -535,12 +484,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+" ");
 		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+" ");
 		
-//		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
 		standardSgstBox.getElement().getStyle().setMarginLeft(2, Unit.PX);
 		
 		browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
-		
-//		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
@@ -642,26 +588,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(resourceSearch){
 			resourceFormatLbl.setText(i18n.GL0721());
 			categoryPanelUc.getElement().addClassName("categoryFilterContainer");
-//			ratingPanelUc.getElement().addClassName("reStar");
 		}else{
 			resourceFormatLbl.getElement().getStyle().setMarginTop(3, Unit.PX);
 			resourceFormatLbl.setText(i18n.GL1465());
 		}
-		
-		/*resourceLinkLbl.getElement().setId("lblResourceLink");
-		collectionLinkLbl.getElement().setId("lblCollectionLink");
-		
-		resourceLinkLbl.setText(i18n.GL0174());
-		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
-		resourceLinkLbl.getElement().setAttribute("title",i18n.GL0174());
-		
-		collectionLinkLbl.setText(i18n.GL0175());
-		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
-		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());*/
-		
+				
 		myCollectionSearch.getElement().setId("fpnlMyCollectionSearch");
-//		flowpanel.getElement().setId("fpnlFlowpanel");
-//		contentpanel.getElement().setId("pnlContentpanel");
 		panelNotMobileFriendly.getElement().setId("pnlPanelNotMobileFriendly");
 		accessModePanel.getElement().setId("pnlaccessMode");
 		oerPanel.getElement().setId("pnlOerPanel");
@@ -701,11 +633,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			MixpanelUtil.mixpanelEvent("search_webpage_filter_selected");
 			categoryChk.getElement().setId("chkwebpage");	
 		}
-		/*else if(value.equalsIgnoreCase("websites"))
-		{
-			MixpanelUtil.mixpanelEvent("search_websites_filter_selected");
-			categoryChk.getElement().setId("chkwebsites");	
-		}*/
 		else if(value.equalsIgnoreCase("interactives")){
 			categoryChk.setText("Interactive");
 			MixpanelUtil.mixpanelEvent("search_interactives_filter_selected");
@@ -730,10 +657,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			MixpanelUtil.mixpanelEvent("search_audios_filter_selected");
 			categoryChk.getElement().setId("chkAudios");
 		}
-		/*else if(value.equalsIgnoreCase("others")){
-			MixpanelUtil.mixpanelEvent("search_others_filter_selected");
-			categoryChk.getElement().setId("chkOther");
-		}*/
 		else if(value.equalsIgnoreCase("science")){
 			categoryChk.getElement().setId("chkScience");
 		}
@@ -851,24 +774,30 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			chkReview.getElement().getFirstChildElement().setClassName(style.reviewCheckBoxStyle());
 			chkReview.getElement().getFirstChildElement().getNextSiblingElement().setClassName(style.reviewLabelForCheckbox());
 		}
+		
 		chkReview.setStyleName(CssTokens.FILTER_CHECKBOX);
-		chkReview.addStyleName(value.toLowerCase());
-			disclosurePanelVc.add(chkReview);
-	
-			chkReview.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+		if(value.equalsIgnoreCase("Only Resources with Reviews")){
+			chkReview.addStyleName("review");
+		}else{
+			chkReview.addStyleName(value.toLowerCase());
+		}
+		
+		disclosurePanelVc.add(chkReview);
 
-			@Override
-			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				if (chkReview.getValue()){
-					MixpanelUtil.mixpanelEvent("checks Only Reviews filter box");
+		chkReview.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
-				}else{
-					MixpanelUtil.mixpanelEvent("unchecks the Only Reviews filter box");
-				}
-				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
-				
+		@Override
+		public void onValueChange(ValueChangeEvent<Boolean> event) {
+			if (chkReview.getValue()){
+				MixpanelUtil.mixpanelEvent("checks Only Reviews filter box");
+
+			}else{
+				MixpanelUtil.mixpanelEvent("unchecks the Only Reviews filter box");
 			}
-		});
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+			
+		}
+	});
 		
 	}
 	
@@ -2126,46 +2055,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					}
 				}
 			}
-			/**
-			 * Removed this logic as per the new requrement in 6.5 sprint
-			 */
-				/*for (Widget filterWidget : filterFlowPanel.getContent()) {
-					if (filterWidget instanceof CheckBox) {
-						CheckBox filterCheckBox = (CheckBox) filterWidget;
-						filterCheckBox.setValue(false);
-						for (String item : items) {
-							if ((filterCheckBox.getName().equals(item))) {	
-								filterCheckBox.setValue(true);
-							}
-						}
-					}
-				}*/
-			//}
-/*			else{
-				boolean isRadioButtonSelected=false;
-				for (Widget filterWidget : filterFlowPanel.getContent()) {
-					if (filterWidget instanceof QuestionTypeFilter) {
-						QuestionTypeFilter questionTypeFilter = (QuestionTypeFilter) filterWidget;
-						//filterCheckBox.setValue(false);
-						questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButton());
-						questionTypeFilter.hiddenRadioButton.setValue(false);
-						for (String item : items) {
-							if ((questionTypeFilter.hiddenRadioButton.getText().equals(item))) {
-								questionTypeFilter.hiddenRadioButton.setValue(true);
-								isRadioButtonSelected=true;
-								questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButtonSelected());
-							}
-						}
-					}
-				}
-//				if(!isRadioButtonSelected){
-//					QuestionTypeFilter questionTypeFilter = (QuestionTypeFilter)filterFlowPanel.getContent().getWidget(2);
-//					questionTypeFilter.hiddenRadioButton.setValue(true);
-//					questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButtonSelected());
-//				}
-				
-			}*/
-			
 		}
 		
 	}	
@@ -2225,34 +2114,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				((CheckBox) filterWidget).setValue(false);
 			}
 		}
-		/**
-		 * Removed this logic as per the new requrement in 6.5 sprint
-		 */
-			/*for (Widget filterWidget : gradePanelUc.getContent()) {
-				if (filterWidget instanceof CheckBox) {
-					((CheckBox) filterWidget).setValue(false);
-				}
-			}*/
-/*		}else{
-			for (Widget filterWidget : filterFlowPanel.getContent()) {
-				if (filterWidget instanceof QuestionTypeFilter) {
-					QuestionTypeFilter questionTypeFilter = (QuestionTypeFilter) filterWidget;
-					questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButton());
-					questionTypeFilter.hiddenRadioButton.setValue(false);
-					if(questionTypeFilter.hiddenRadioButton.getText().equalsIgnoreCase("all")){
-						questionTypeFilter.hiddenRadioButton.setValue(true);
-						questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButtonSelected());
-					}
-
-				}
-				if (filterWidget instanceof CheckBox) {
-					((CheckBox) filterWidget).setValue(false);
-				}
-			}
-//			QuestionTypeFilter questionTypeFilter = (QuestionTypeFilter)filterFlowPanel.getContent().getWidget(2);
-//			questionTypeFilter.hiddenRadioButton.setValue(true);
-//			questionTypeFilter.radioButton.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().questionRadioButtonSelected());
-		}*/
 	}
 
 	/**
@@ -2536,7 +2397,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {

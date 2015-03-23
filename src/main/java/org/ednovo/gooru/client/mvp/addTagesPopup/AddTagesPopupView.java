@@ -404,27 +404,27 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		
-		flashingHazard.setText(i18n.GL1806());
+		flashingHazard.setText(i18n.GL3110());
 		flashingHazard.getElement().setId("lblFlashingHazard");
-		flashingHazard.getElement().setAttribute("alt",i18n.GL1806());
-		flashingHazard.getElement().setAttribute("title",i18n.GL1806());
+		flashingHazard.getElement().setAttribute("alt",i18n.GL3110());
+		flashingHazard.getElement().setAttribute("title",i18n.GL3110());
 		
-		motionSimulationHazard.setText(i18n.GL1808());
+		motionSimulationHazard.setText(i18n.GL3111());
 		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
-		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL1808());
-		motionSimulationHazard.getElement().setAttribute("title",i18n.GL1808());
+		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL3111());
+		motionSimulationHazard.getElement().setAttribute("title",i18n.GL3111());
 		
-		soundHazard.setText(i18n.GL1810());
+		soundHazard.setText(i18n.GL3112());
 		soundHazard.getElement().setId("lblSoundHazard");
-		soundHazard.getElement().setAttribute("alt",i18n.GL1810());
-		soundHazard.getElement().setAttribute("title",i18n.GL1810());
+		soundHazard.getElement().setAttribute("alt",i18n.GL3112());
+		soundHazard.getElement().setAttribute("title",i18n.GL3112());
 		
 		cancelBtn.setText(i18n.GL0142());
 		cancelBtn.getElement().setId("btnCancel");
 		cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 		cancelBtn.getElement().setAttribute("title",i18n.GL0142());
 		
-		addTagsBtn.setText(i18n.GL3188());
+		addTagsBtn.setText(i18n.GL3196());
 		addTagsBtn.getElement().setId("btnAddTags");
 		addTagsBtn.getElement().setAttribute("alt",i18n.GL1795());
 		addTagsBtn.getElement().setAttribute("title",i18n.GL1795());
@@ -451,8 +451,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		standardsDefaultText.getElement().setAttribute("alt",i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title",i18n.GL1682());
 		
-		centuaryDefaultText.setText(i18n.GL3191());
-		StringUtil.setAttributes(centuaryDefaultText.getElement(), i18n.GL3191(), i18n.GL3191(), i18n.GL3191());
+		centuaryDefaultText.setText(i18n.GL3199());
+		StringUtil.setAttributes(centuaryDefaultText.getElement(), i18n.GL3199(), i18n.GL3199(), i18n.GL3199());
 		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
@@ -1484,9 +1484,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		
 		String hazardArr[] = setAccessHazards();
-		for(int i=0;i<hazardArr.length;i++){
-			
-		}
 		if(hazardArr != null)
 		{
 			for(int i=0;i<hazardArr.length;i++)

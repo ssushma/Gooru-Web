@@ -335,17 +335,17 @@ public class CollectionResourceTabView extends
 
 				// newResourceLabel.setVisible(true);
 			}
-			showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
+			//showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
 		}
 		panelLoading.getElement().getStyle().setDisplay(Display.NONE);
 		contentPanel.setVisible(true);
 	}
-	public void showOrHideResourceButton(String collectionType, int size){
+/*	public void showOrHideResourceButton(String collectionType, int size){
 		if(collectionType!=null&&collectionType.equals("quiz")){
 			buttonContainerAddGray.setVisible(false);
 			buttonContainer.setVisible(false);
 		}
-	}
+	}*/
 	
 	public void modifyExistingCollectionItemWidget(final CollectionItemDo collectionItemDo){
 		collectionItemDo.setCollection(collectionDo);
@@ -355,6 +355,7 @@ public class CollectionResourceTabView extends
 					@Override
 					public void onClick(ClickEvent event) {
 						shelfCollectionResourceVc.getResourceEditButtonContainer().setVisible(false);
+
 						shelfCollectionResourceVc.getEditButton().setVisible(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 						if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
@@ -440,11 +441,8 @@ public class CollectionResourceTabView extends
 					}
 				});
 		collectionResourcePanelVc.remove(collectionItemDo.getItemSequence());
-		//sequenceVerPanel.remove(collectionItemDo.getItemSequence()-1);
 		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
-		
 		collectionResourcePanelVc.insert(shelfCollectionResourceVc, collectionItemDo.getItemSequence());
-
 	}
 
 	@Override
@@ -850,8 +848,7 @@ public class CollectionResourceTabView extends
 		@Override
 		public void updateQuestionResource(String collectionItemId,
 				CollectionQuestionItemDo collectionQuestionItemDo) {
-			// getUiHandlers().updateQuestionResource(collectionItemId,
-			// collectionQuestionItemDo);
+			
 			if (editQuestionPopupWidget.getQuestionImageContainer()
 					.getElement().hasChildNodes()) {
 				UpdateQuestionImageView updateQuestionImage = (UpdateQuestionImageView) editQuestionPopupWidget
@@ -1006,6 +1003,7 @@ public class CollectionResourceTabView extends
 	}
 	
 	public void showNoCollectionsItemsMessage(String collectionType){
+
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			setAttributeToWidget(noResourceLineOneLabel,i18n.GL3014());
 			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());

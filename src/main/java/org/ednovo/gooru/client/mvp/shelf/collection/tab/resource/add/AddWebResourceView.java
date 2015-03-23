@@ -589,10 +589,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
 		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
 		
-		centuryDefaultText.setText(i18n.GL3121_1());
+		centuryDefaultText.setText(i18n.GL3199());
 		centuryDefaultText.getElement().setId("lblCenturyDefaultText");
-		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3121_1());
-		centuryDefaultText.getElement().setAttribute("title", i18n.GL3121_1());
+		centuryDefaultText.getElement().setAttribute("alt", i18n.GL3199());
+		centuryDefaultText.getElement().setAttribute("title", i18n.GL3199());
 		
 		resourceDescriptionContainer.getElement().setId("pnlResourceDescriptionContainer");
 		/*slideText.getElement().setInnerHTML(i18n.GL0908);
@@ -2646,18 +2646,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		urlTextBox.setText("");
 		titleTextBox.setText("");
 
-		// if(tinyMce!=null){
-		// tinyMce.setEmptyContent("");
-		// }
-		// try {
-		// tinyMce.setEmptyContent("");
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
-
 		descriptionTxtAera.setText("");
-		// resourceTypeListBox.setSelectedIndex(0);
 		generateImageLbl.setVisible(true);
 		setThumbnailImage.setUrl("");
 		if (thumbnailImages != null) {
@@ -3053,7 +3042,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 					}
 				}
 			}
-		}catch(Exception ex){ex.printStackTrace();}
+		}catch(Exception ex){}
 	}
 	
 	

@@ -111,10 +111,6 @@ public interface GooruCBundle extends ClientBundle {
 		
 		/*String classicViewLabel();*/
 		
-		String gooruGuideImg();
-		
-		String loggedInGooruGuideImg();
-		
 		String imageUrlError();
 		
 		String textboxUrlError();

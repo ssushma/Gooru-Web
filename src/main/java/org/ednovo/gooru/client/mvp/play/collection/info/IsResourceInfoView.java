@@ -34,7 +34,6 @@ public interface IsResourceInfoView extends IsViewWithHandlers<ResourceInfoUiHan
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo);
 	public void loadResourceCollection(ResoruceCollectionDo resoruceCollectionDo);
 	public void setResourceViewsCount(String viewCount);
-	//public void setResourceLikesCount(int likesCount);
 	public void setCollectionTitle(String mycollectionTitle);
 	
 	public Button getPlusAddTagsButton();

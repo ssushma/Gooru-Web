@@ -37,7 +37,6 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -72,7 +71,10 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+	/**
+	 * Default Constructor
+	 * @param eventsBus
+	 */
 	@Inject
 	public ResourceNarrationView(EventBus eventsBus){
 		super(eventsBus);
@@ -97,9 +99,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		authorImage.getElement().setId("imgAuthorImage");
 		narrationText.getElement().setId("htmlNarrationText");
 	}
+
 	public boolean isShowingPopup(){
 		return appPopUp.isShowing();
 	}
+
+	/**
+	 * This method is used to set metadata to Narration Popup.
+	 */
+
 	@Override
 	public void setNarrationMetadata(CollectionItemDo collectionItemDo,String userName,String gooruUid){
 		if (collectionItemDo!=null){
@@ -110,22 +118,34 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 			narrationText.setHTML(narration !=null ? narration : "");
 			narrationText.getElement().setAttribute("alt",narration !=null ? narration : "");
 			narrationText.getElement().setAttribute("title",narration !=null ? narration : "");
-			resourceTitle.setHTML(collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
-			resourceTitle.getElement().setAttribute("alt",collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
-			resourceTitle.getElement().setAttribute("title",collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitle.setHTML(collectionItemDo.getItemSequence()+". "+removeHtmlTags((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
+			resourceTitle.getElement().setAttribute("alt",collectionItemDo.getItemSequence()+". "+removeHtmlTags((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
+			resourceTitle.getElement().setAttribute("title",collectionItemDo.getItemSequence()+". "+removeHtmlTags((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
+			
 			setUserProfileImage(gooruUid);
 			authorName.setText(userName);
 			authorName.getElement().setAttribute("alt",userName);
 			authorName.getElement().setAttribute("title",userName);
 		}
 	}
+	/**
+	 * This is used to display the user profile image in Narration popup.
+	 * @param profileUserId
+	 */
 	private void setUserProfileImage(String profileUserId) {
 		authorImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png");
 	}
+	/**
+	 * This method will set default image incase of error occurs.
+	 * @param event
+	 */
 	@UiHandler("authorImage")
 	public void setDefaultProfileImage(ErrorEvent event){
 		authorImage.setUrl("images/settings/setting-user-image.png");
 	}
+	/**
+	 * This method is used to clear the data inside Narration popup.
+	 */
 	public void resetNattationData(){
 		narrationText.setHTML("");
 		narrationText.getElement().setAttribute("alt","");
@@ -138,6 +158,11 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		authorName.getElement().setAttribute("alt","");
 		authorName.getElement().setAttribute("title","");
 	}
+	/**
+	 * This method will remove the htmltags
+	 * @param html
+	 * @return
+	 */
 	private String removeHtmlTags(String html){
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
         return html;
@@ -158,6 +183,11 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	public void onUnload() {
 		
 	}
+	/**
+	 * This event is used to close the Narration popup on close button click
+	 * @author gooruteam
+	 *
+	 */
 	private class CloseNarrationPopupEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -166,22 +196,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 			hideNarrationPopup();
 		}
 	}
+	/**
+	 * This method is used to close and to set the params on Ok button click
+	 * @author gooruteam
+	 *
+	 */
 	public void hideNarrationPopup(){
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
-			showAddToolTip();
 		}
 		resetNattationData();
-		/*if(Document.get().getElementById("playerid")!=null){
-	         final Element myPlayer = Document.get().getElementById("playerid");
-	         if(myPlayer.getPropertyString("src").contains("youtube")){
-	        	 try{
-	        		 playVideo(myPlayer);
-	        	 }
-	        	 catch(Exception ex){
-	        		 
-	        	 }
-	         }
-		}*/
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
@@ -193,30 +216,26 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
+	/**
+	 * This native method is used to pause the video
+	 * @param myPlayer
+	 */
 	public static native void pauseVideo(Element myPlayer) /*-{
  		myPlayer.pauseVideo();
 	}-*/;
+	/**
+	 * This native method is used to play the video
+	 * @param myPlayer
+	 */
 	public static native void playVideo(Element myPlayer) /*-{
   		myPlayer.playVideo();
    	}-*/;
 	
 	/**
-	 * This method is used to show first time Add tooltip popup.
+	 * This method is used to hide narration popup on clicking outside. 
+	 * @author gooruteam
+	 *
 	 */
-	public void showAddToolTip(){
-/*		String resourcePlayerFirstTimeUser =null;
-		resourcePlayerFirstTimeUser =Cookies.getCookie("resourcePlayerFirstTimeUser");
-		if(resourcePlayerFirstTimeUser==null){
-			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0681, i18n.GL0543);
-			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
-			globalTooltipWithButton.setStyleName("");
-			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
-			globalTooltipWithButton.setPopupPosition(Document.get().getElementById("addButton").getAbsoluteLeft()-16, Document.get().getElementById("addButton").getAbsoluteTop()+22);
-			globalTooltipWithButton.show();
-		}*/
-	}
-	
 	private class NarrationPopupPanel extends PopupPanel{
 		public NarrationPopupPanel(boolean isAutoHide){
 			super(isAutoHide);
@@ -231,5 +250,9 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 				hideNarrationPopup();
 			}
 		}
+	}
+	@Override
+	public void showAddToolTip() {
+		throw new RuntimeException("Not implemented");
 	}
 }

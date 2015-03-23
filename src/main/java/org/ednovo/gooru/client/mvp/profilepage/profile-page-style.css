@@ -4,7 +4,7 @@
 }
 
 body {
-	background-image: url("images/profilepage/gray_noise_25.png");
+	background-image: url("images/landing-page/gray_noise_25.png");
 	font-family: Arial, sans-serif;
 	color:#515151;
 	font-size:12px;
@@ -714,7 +714,7 @@ li.resources {
 	height: 10px;
 	position: relative;
 	left: 22px;
-	background-image: url("images/profilepage/bubble-arrow.png");
+	background-image: url("images/bubble-arrow.png");
 }
 
 .standards li div.standard-popup {
@@ -835,14 +835,6 @@ li.resources {
 
 .collection-info-list li {
 	padding: 5px 0px 5px 30px;
-}
-
-.collection-info-list .grade {
-	background: url("images/profilepage/grade-icon.png") no-repeat;
-}
-
-.collection-info-list .likes {
-	background: url("images/profilepage/likes-icon.png") no-repeat;
 }
 
 .collections-using {

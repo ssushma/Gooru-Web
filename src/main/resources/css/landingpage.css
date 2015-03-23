@@ -149,6 +149,7 @@ footer {
 
 .social ul {
 	margin-bottom: 24px;
+	margin-top: 24px;
 }
 
 .social ul li .fa {
@@ -245,7 +246,7 @@ footer .col-xs-4 {
 	height: 388px;
 	display: block;
 	border-radius: 50% 50%;
-	background: #1076bb url(../images/quote.png) no-repeat center top;
+	background: #1076bb url(${cdn.endpoint}/images/quote.png) no-repeat center top;
 	position: relative;
 	border: 5px solid #86a8cb;
 }
@@ -288,7 +289,7 @@ footer .col-xs-4 {
 }
 
 .rectangle {
-	background: #87badd url(../images/quote1.png) no-repeat 10px 10px;
+	background: #87badd url(${cdn.endpoint}/images/quote1.png) no-repeat 10px 10px;
 	padding: 25px 60px;
 }
 
@@ -1069,7 +1070,7 @@ footer .col-xs-4 {
 
 .getStart .getContentContainer {
 	padding: 10px 10px;
-	min-height: 204px;
+	min-height: 171px;
 }
 
 .getStart .getContentContainer h4 {
@@ -1330,4 +1331,75 @@ footer .col-xs-2:last-child{
 	cursor:pointer;
 	opacity: 1.0 !important;
 }
+
+
+
+/* Landing page CSS sprite images */
+.spriteLandingPage {
+	background: url(${cdn.endpoint}/images/landing-page/landingpageSprite.png) no-repeat;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.spriteLandingPageDropdownMenuArrow {
+    width: 16px;
+    height: 11px;
+    background-position: -2px -2px;
+}
+
+.spriteLandingPageFacebookIco {
+    width: 37px;
+    height: 37px;
+    background-position: -22px -2px;
+}
+
+.spriteLandingPageGooglePlusIco {
+    width: 37px;
+    height: 37px;
+    background-position: -63px -2px;
+}
+
+.spriteLandingPageGooruBadge {
+    width: 162px;
+    height: 162px;
+    background-position: -104px -2px;
+}
+
+.spriteLandingPageMonitorIco {
+    width: 93px;
+    height: 57px;
+    background-position: -270px -2px;
+    display: inline-block;
+}
+
+.spriteLandingPageNextArrow {
+    width: 19px;
+    height: 45px;
+    background-position: -367px -2px;
+}
+
+.spriteLandingPagePreviousArrow {
+    width: 19px;
+    height: 45px;
+    background-position: -390px -2px;
+}
+
+.spriteLandingPageToTop {
+    width: 21px;
+    height: 13px;
+    background-position: -413px -2px;
+}
+
+.spriteLandingPageTwitterIco {
+    width: 37px;
+    height: 37px;
+    background-position: -438px -2px;
+}
+
+.spriteLandingPageYoutubeIco {
+    width: 37px;
+    height: 37px;
+    background-position: -479px -2px;
+}
+
 

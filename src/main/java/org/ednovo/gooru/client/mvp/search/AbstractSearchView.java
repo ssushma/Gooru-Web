@@ -350,6 +350,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		}
 		
 		standardsConatiner.clear();
+
 		showCategoryFilter();
 		showSubjectsFilter();
 		showGradesFilter();

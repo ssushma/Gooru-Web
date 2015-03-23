@@ -39,6 +39,8 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -64,7 +66,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> implements IsPreviewEndView{
+public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> implements IsPreviewEndView,ClientConstants{
 	
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
@@ -184,7 +186,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	}
 	public void setCollectionGoal(String collectionGoal){
 		this.collectionGoal.setHTML("");
-		if(collectionGoal!=null &&!collectionGoal.isEmpty()){
+		if(!StringUtil.isEmpty(collectionGoal)){
 			if(collectionGoal.length()>415){
 				collectionGoal =(collectionGoal.substring(0, 415))+"...";
 				this.collectionGoal.setHTML(collectionGoal);
@@ -217,11 +219,9 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
 		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
 				if(!isAssignPopup){
 					isAssignPopup=true;
 				AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-					
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
@@ -258,9 +258,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				
 			}
-		
 	}
 	/**
 	 * 
@@ -280,21 +278,11 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	 */
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
-		
 		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
 				if(!isCustomizePopup){
 					isCustomizePopup=true;
-				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
+				Boolean loginFlag = AppClientFactory.isAnonymous();
 				RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag,collectionTitle) {
-
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
@@ -320,7 +308,6 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				params.put("customize", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-		
 	}
 	/**
 	 * 
@@ -340,14 +327,10 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	 */
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
-		
 		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
 				if(!isSharePopup){
 					isSharePopup=true;
-
 				SharePlayerVc successPopupVc = new SharePlayerVc(collectionId) {
-
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
@@ -364,7 +347,6 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				successPopupVc.show();
 				successPopupVc.center();
 			}
-		
 	}
 	
 	
@@ -375,21 +357,12 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	 */
 	
 	private void showPopupAfterGmailSignin() {
-		// TODO Auto-generated method stub
 		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter("Assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("Assign") : null;
-		if(customize!=null && customize.equals("yes")){
-			Boolean loginFlag = false;
-			if (AppClientFactory.isAnonymous()){
-				loginFlag = true;
-			}
-			else
-			{
-				loginFlag = false;
-			}
+		if(customize!=null && YES.equals(customize)){
+			Boolean loginFlag = AppClientFactory.isAnonymous();
 			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
-
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -403,9 +376,8 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 			successPopupVc.center();
 
 		}
-		if(assign!=null && assign.equals("yes")){
+		if(assign!=null && YES.equals(assign)){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-				
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -416,7 +388,6 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
 			successPopupVc.setHeight("635px");
-
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
@@ -427,12 +398,9 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 			}
 		}
-
-
 	}
 	
 	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -442,22 +410,16 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
 	
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -467,22 +429,16 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OncustomizeCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
 	
 	public class OnshareCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
@@ -492,18 +448,12 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
 			toolTipPopupPanel.show();
 		}
-		
 	}
 	
 	public class OnshareCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanel.hide();
 		}
-
-		
-		
 	}
-		
 }

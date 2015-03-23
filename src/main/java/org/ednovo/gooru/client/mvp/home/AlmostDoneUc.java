@@ -552,10 +552,8 @@ public class AlmostDoneUc extends PopupPanel{
 				public void onSuccess(V2UserDo result) {
 					AppClientFactory.setLoggedInUser(result.getUser());
 					AppClientFactory.fireEvent(new SetHeaderEvent(result.getUser()));  
-//					Window.enableScrolling(true);
-//					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+
 					hide();
-					
 					
 					SignUpGradeCourseView setCourseView = new SignUpGradeCourseView(AppClientFactory.getLoggedInUser());
 					setCourseView.show();

@@ -179,7 +179,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				}
 				return JsonDeserializer.deserialize(mainObj.toString(), CollectionDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionDo();
@@ -193,7 +192,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 						jsonRep.getJsonObject().toString(), CollectionDo.class);
 				return collectionDo;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionDo();
@@ -226,24 +224,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				}
 				return collectionDo;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionDo();
 	}
-//	Version 1 API
-	/*@Override
-	public List<CollectionDo> getAllClasspages() throws GwtException {
 
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.LIST_MY_CLASSPAGES, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(),
-				getRestPassword());
-
-		return deserializeCollections(jsonRep);
-	}
-*/
 	public List<CollectionDo> deserializeCollections(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -252,7 +237,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<CollectionDo>();
 	}
@@ -322,64 +306,19 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new CollectionItemDo();
 	}
-//	Version 1 API
-	/*@Override
-	public List<CollectionItemDo> getAssignmentCollectionsById(String assignmentId) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_ASSIGNMENT_COLLECTIONS, assignmentId, getLoggedInSessionToken());
-		return deserializeCollectionItems(ServiceProcessor.get(url, getRestUsername(), getRestPassword()));
-	}
-	public List<CollectionItemDo> deserializeCollectionItems(JsonRepresentation jsonRep) {
-		if (jsonRep != null && jsonRep.getSize() != -1) {
-			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemDo>>() {
-				});
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		return new ArrayList<CollectionItemDo>();
-	}
-
-	@Override
-	public void removeCollectionFromAssignment(String collectionId)
-			throws GwtException {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.DELETE_ASSIGNMENT_COLLECION_ITEM, collectionId,
-				getLoggedInSessionToken());
-		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
-	}
-
-	@Override
-	public AssignmentsListDo getAssignemtsByClasspageId(String classpageId,String pageSize, String pageNum)
-			throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken(), pageSize, pageNum);
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		return deserializeAssignmentsList(jsonRep);
-	}	*/
 		
 	public AssignmentsListDo deserializeAssignmentsList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				
 				AssignmentsListDo assignmentList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), AssignmentsListDo.class);
-				
-//				List<CollectionItemDo> collectionItemDo = assignmentList.getSearchResults();
-//				for (int i=0; i<collectionItemDo.size();i++){
-//					long milliseconds = Long.parseLong(collectionItemDo.get(i).getResource().getTrackActivity().getEndTime());
-//					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-//					Date resultdate = new Date(milliseconds);
-//					collectionItemDo.get(i).getResource().getTrackActivity().setEndTime(sdf.format(resultdate));
-//				}
-				
+	
 				return assignmentList;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new AssignmentsListDo();
@@ -483,18 +422,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageListDo deserializeClasspageList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				ClasspageListDo classpageList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageListDo.class);				
-//				List<CollectionDo> collectionDo = classpageList.getSearchResults();
-//				for (int i=0; i<collectionDo.size();i++){
-//					long milliseconds = Long.parseLong(collectionDo.get(i).getTrackActivity().getEndTime());
-//					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-//					Date resultdate = new Date(milliseconds);
-//					collectionDo.get(i).getTrackActivity().setEndTime(sdf.format(resultdate));
-//				}
-				
+				ClasspageListDo classpageList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageListDo.class);								
 				return classpageList;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new ClasspageListDo();
@@ -551,7 +481,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 						jsonRep.getJsonObject().toString(), AssignmentDo.class);
 				return assignmentDo;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new AssignmentDo();
@@ -601,11 +530,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					collectionDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
 					return collectionDo;
 				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return collectionDo;
 	}
@@ -629,7 +556,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				
 				return assignmentList;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new AssignmentsListDo();
@@ -689,7 +615,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				
 				return taskDo;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new TaskDo();
@@ -721,7 +646,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				
 				return taskResourceAssocDo;
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new TaskResourceAssocDo();
@@ -744,7 +668,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 				
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new  ArrayList<ResourceDo>();
@@ -789,8 +712,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			rawUrl=URLEncoder.encode(rawUrl, "UTF-8");
 			
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -809,7 +730,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
 						.toString(), BitlyUrlDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return new BitlyUrlDo();
@@ -855,7 +775,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		} 
 		return new ArrayList<ClassPageCollectionDo>();
 	}
@@ -896,9 +815,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageJsonObject.toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}catch (Exception e) {
-			e.printStackTrace();
 		}
 		return deserializeCollection(jsonRep);
 	}
@@ -923,9 +840,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					classPageDo=new ClasspageDo();
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}else{
 			 classPageDo=new ClasspageDo();
@@ -947,7 +862,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			try{
 				classpageItemDo=deserializeClassPageItem(jsonResponseRep.getJsonRepresentation().getJsonObject(),RESOURCE);
 			}catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return classpageItemDo;
@@ -971,7 +885,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 			
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_ITEM_TO_CLASS, classpageId,collectionOrFolderId,getLoggedInSessionToken(),direction,dueDate);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
@@ -1091,7 +1004,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					}
 				}
 			}catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return classpageItemDo;
@@ -1116,7 +1028,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				classPageItemJsonObject.put(COLLECTIONID, collectionId);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return classPageItemJsonObject;
 	}
@@ -1137,7 +1048,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return classpagesList;
 	}
@@ -1189,7 +1099,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					classpageDo.setPermissions(permissionList);
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 				classpageDo=new ClasspageDo();
 			}
 		return classpageDo;
@@ -1214,7 +1123,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		return classpageItemsList;
 	}
@@ -1238,14 +1146,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		return classpageItemsList;
 	}
 	public ClasspageItemDo deserializeClassPageItem(JSONObject classpageItemJsonObject,String resourceType){
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
 		try{
-			classpageItemDo.setCollectionItemId(classpageItemJsonObject.getString(COLLECTIONITEMID));
+			classpageItemDo.setCollectionItemId(classpageItemJsonObject.isNull(COLLECTIONITEMID)?null:classpageItemJsonObject.getString(COLLECTIONITEMID));
 			classpageItemDo.setDirection(classpageItemJsonObject.isNull(NARRATION)?null:classpageItemJsonObject.getString(NARRATION));
 			classpageItemDo.setStatus(classpageItemJsonObject.isNull(STATUS)?null:classpageItemJsonObject.getString(STATUS));
 			classpageItemDo.setSequenceNumber(classpageItemJsonObject.isNull(ITEMSEQUENCE)?0:classpageItemJsonObject.getInt(ITEMSEQUENCE));
@@ -1259,7 +1166,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				classpageItemDo.setCollectionType(resourceJsonObject.isNull(COLLECTION_TYPE)?null:resourceJsonObject.getString(COLLECTION_TYPE));
 			}
 		}catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return classpageItemDo;
 	}
@@ -1298,7 +1204,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new  ArrayList<ClassPageCollectionDo>();
 	}
@@ -1372,7 +1277,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<CollaboratorsDo>();
 	}
@@ -1432,7 +1336,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new HashMap<String, ArrayList<CollaboratorsDo>>();
 	}
@@ -1445,7 +1348,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new StudentsAssociatedListDo();
 	}
@@ -1462,7 +1364,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),listOfEmail.toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return classpageDo;
 	}
@@ -1487,7 +1388,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return new ArrayList<String>();
 	}
@@ -1496,15 +1396,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ProfilePageDo v2GetClassPartyCustomField(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = new ProfilePageDo();
 		String userUid = getLoggedInUserUid();
-/*		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSPARTY_CUSTOMFIELD, userUid, getLoggedInSessionToken());
-		JsonRepresentation jsonRep = null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} */
+
 		return profilePageDo;
 	}
 

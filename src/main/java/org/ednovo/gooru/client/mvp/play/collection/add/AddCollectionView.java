@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -50,7 +51,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandlers> implements IsAddCollectionView{
+public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandlers> implements IsAddCollectionView,ClientConstants{
 
 
 	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
@@ -61,15 +62,10 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-//	public String ERROR_MSG=i18n.GL1425;
-//	public String URL_CHAR=i18n.GL0323;
-//	public String SPEC_CHAR=i18n.GL1426;
 	public String specialCh = "!@#$%^&*?";
-//	public String MAX_ERROR_MESSAGE=i18n.GL1427;
 	public String thumbnailUrl="";
 	public String collectionGooruOid=null;
 
-    //@UiField Image collImage;
 	
 	@UiField TextBox collectionTitleInCoverPage;
 	
@@ -135,12 +131,6 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		AppClientFactory.getPlaceManager().setRefreshPlace(true);
 	}
 	
-//	public Label getSuccessMessageAddedCollection() {
-//		return successMessageAddedCollection;
-//	}
-//	public void setSuccessMessageAddedCollection(Label successMessageAddedCollection) {
-//		this.successMessageAddedCollection = successMessageAddedCollection;
-//	}
 	public Label getAddingLabel() {
 		return addingLabel;
 	}
@@ -166,27 +156,12 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 			Button addToShelfCollectionButton) {
 		this.addToShelfCollectionButton = addToShelfCollectionButton;
 	}
-//	public Image getCollImage() {
-//		return collImage;
-//	}
-//	public void setCollImage(Image collImage) {
-//		this.collImage = collImage;
-//	}
 	public TextBox getCollectionTitleInCoverPage() {
 		return collectionTitleInCoverPage;
 	}
 	public void setCollectionTitleInCoverPage(TextBox collectionTitleInCoverPage) {
 		this.collectionTitleInCoverPage = collectionTitleInCoverPage;
 	}
-//	public HTMLPanel getCollImageUrlHolderPanel() {
-//		return collImageUrlHolderPanel;
-//	}
-//	public void setCollImageUrlHolderPanel(HTMLPanel collImageUrlHolderPanel) {
-//		this.collImageUrlHolderPanel = collImageUrlHolderPanel;
-//	}
-//	public void displaySuccessLabel(){
-//		successMessageAddedCollection.getElement().getStyle().setDisplay(Display.BLOCK);
-//	}
 	public HTMLPanel getAddToCollectionWidgetContainer() {
 		return addToCollectionWidgetContainer;
 	}
@@ -197,7 +172,7 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	public void showSuccessMessageWidget(String collectionId){
 		getAddingLabel().setVisible(false);
 		getAddToShelfCollectionButton().setVisible(true);
-		if(getAddToShelfCollectionButton().getText().equalsIgnoreCase("Add")){
+		if(ADDTEXTLBL.equalsIgnoreCase(getAddToShelfCollectionButton().getText())){
 			getAddToShelfCollectionButton().setText(i18n.GL0691());
 			successMessageLabelText.setText(i18n.GL0547());
 			successMessageLabelText.getElement().setAttribute("alt",i18n.GL0547());
@@ -211,7 +186,6 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		addResourceInsteadLabel.setText(i18n.GL0685());
 		addCollectionInsteadLabelContainer.add(addResourceInsteadLabel);
 		addResourceInsteadLabel.getElement().getStyle().setMarginRight(60,Unit.PX);
-		//addResourceInsteadLabel.getElement().getStyle().setMarginTop(-15,Unit.PX);
 		collectionAddImageContainer.setVisible(false);
 		collectionAddedSuccessMessageContainer.setVisible(true);
 		workSpaceLink.setHref("#organize&id="+collectionId+"&eventType=refresh");
@@ -236,38 +210,42 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 			addingLabel.getElement().setAttribute("alt",i18n.GL0591());
 			addingLabel.getElement().setAttribute("title",i18n.GL0591());
 			String title = getCollectionTitleInCoverPage().getText();
-			if(title.trim().length()==0){
-				getAddErrorLabel().setVisible(true);
-				getAddErrorLabel().setText(i18n.GL1425());
-			} else if(title.trim().length()>50){
-				getAddErrorLabel().setVisible(true);
-				getAddErrorLabel().setText(i18n.GL1427());
-			}else if (title.toLowerCase().contains("www.") || title.toLowerCase().contains("http://") || title.toLowerCase().contains("https://") || title.toLowerCase().contains("ftp://")){
-				getAddErrorLabel().setVisible(true);
-				getAddErrorLabel().setText(i18n.GL0323());
-			}else if(title.contains(specialCh)){
-				getAddErrorLabel().setVisible(true);
-				getAddErrorLabel().setText(i18n.GL1426());
+			if(title!=null){
+				if(title.trim().length()==0){
+					getAddErrorLabel().setVisible(true);
+					getAddErrorLabel().setText(i18n.GL1425());
+				} else if(title.trim().length()>50){
+					getAddErrorLabel().setVisible(true);
+					getAddErrorLabel().setText(i18n.GL1427());
+				}else if (title.toLowerCase().contains("www.") || title.toLowerCase().contains("http://") || title.toLowerCase().contains("https://") || title.toLowerCase().contains("ftp://")){
+					getAddErrorLabel().setVisible(true);
+					getAddErrorLabel().setText(i18n.GL0323());
+				}else if(title.contains(specialCh)){
+					getAddErrorLabel().setVisible(true);
+					getAddErrorLabel().setText(i18n.GL1426());
+				}
+				else{
+				getAddingLabel().setVisible(true);
+				getAddToShelfCollectionButton().setVisible(false);
+				getAddErrorLabel().setVisible(false);
+				copyCollection(collectionGooruOid,title);
+				}
 			}
-			else{
-			getAddingLabel().setVisible(true);
-			getAddToShelfCollectionButton().setVisible(false);
-			getAddErrorLabel().setVisible(false);
-			copyCollection(collectionGooruOid,title);
-		 }
 	  }		
 	}
 	public class onKeyErrorMsg implements KeyUpHandler{
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			String text=getCollectionTitleInCoverPage().getText();
-			if(text.trim().length()>0){
-				getAddErrorLabel().setVisible(false);
+			if(text!=null){
+				if(text.trim().length()>0){
+					getAddErrorLabel().setVisible(false);
+				}
+				if(text.length()>50){
+					getAddErrorLabel().setVisible(true);
+					getAddErrorLabel().setText(i18n.GL1427());
+				}	
 			}
-			if(text.length()>50){
-				getAddErrorLabel().setVisible(true);
-				getAddErrorLabel().setText(i18n.GL1427());
-			}	
 		}	
 	}
 	
@@ -277,20 +255,11 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		collectionTitleInCoverPage.setValue(collectionTitle);
 		this.collectionGooruOid=collectionId;
 		this.thumbnailUrl=collectionImageUrl;
-		//setCollectionThumbnail();
 		getAddErrorLabel().setVisible(false);
 		getAddingLabel().setVisible(false);
 		getCollectionTitleInCoverPage().setVisible(true);
 		showCollectionAddImageWidget();
 	}
-//	@UiHandler("collImage")
-//	public void setDefaultThumbnail(ErrorEvent event){
-//		collImage.setUrl("");
-//	}
-//	
-//	public void setCollectionThumbnail(){
-//		collImage.setUrl(thumbnailUrl);
-//	}
 	public void copyCollection(String collectionId,String collectionTile){
 		getUiHandlers().copyCollection( collectionId, collectionTile);
 	}
