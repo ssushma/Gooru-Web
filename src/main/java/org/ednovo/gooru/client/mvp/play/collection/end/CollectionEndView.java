@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.Comm
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
@@ -65,7 +66,6 @@ import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -692,12 +692,15 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					}
 				};
 				Window.scrollTo(0, 0);
-				//successPopupVc.setWidth("500px");
-				
+				if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("500px");
+					successPopupVc.setHeight("515px");
+				}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("500px");
+					successPopupVc.setHeight("336px");
+				}
 				successPopupVc.center();
 				successPopupVc.show();
-			
-				
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -755,21 +758,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			        this.hide();
 				}
 			};
-		int clientHeight=Window.getClientHeight();
-		if(clientHeight>625){
-			clientHeight=625;
-		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
-		}else{
-		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
-		}
 		successPopupVc.show();
-		int left = (Window.getClientWidth() - 500) >> 1;
-	    int top = (Window.getClientHeight() - clientHeight) >> 1;
-
-		//added newly
-	    successPopupVc.center();
-		if(AppClientFactory.isAnonymous()){
-			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
+	    
+	    if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+			successPopupVc.setWidth("550px");
+			successPopupVc.setHeight("625px");
+			successPopupVc.center();
+		}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+			successPopupVc.setWidth("550px");
+			successPopupVc.setHeight("502px");
+			successPopupVc.center();
 		}
 	    //till here 
 	    params.put("assign", "yes");
