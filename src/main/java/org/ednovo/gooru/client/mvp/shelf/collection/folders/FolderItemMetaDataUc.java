@@ -215,6 +215,7 @@ public class FolderItemMetaDataUc extends Composite {
 				formButtonsQuestions.setVisible(true);
 				essentialQuestionsHTML.setVisible(true);
 				essentialQuestionsLbl.setVisible(false);
+				
 			}
 		});
 		
@@ -225,6 +226,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(true);
+				essentialQuestionsLbl.addStyleName(folderMetaStyle.addBackground());
 			}
 		});
 		simplePencilPanelquestion.addMouseOutHandler(new MouseOutHandler() {
@@ -234,6 +236,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(false);
+				essentialQuestionsLbl.removeStyleName(folderMetaStyle.addBackground());
 				
 			}
 		});
@@ -244,6 +247,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(true);
+				essentialQuestionsLbl.addStyleName(folderMetaStyle.addBackground());
 			}
 		});
 		essentialQuestionsLbl.addMouseOutHandler(new MouseOutHandler() {
@@ -253,13 +257,14 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(false);
+				essentialQuestionsLbl.removeStyleName(folderMetaStyle.addBackground());
 				
 			}
 		});
 		
 		
 		
-		simplePencilPanelquestion.addMouseMoveHandler(new MouseMoveHandler() {
+		simplePencilPanelTask.addMouseMoveHandler(new MouseMoveHandler() {
 			
 			@Override
 			public void onMouseMove(MouseMoveEvent event) {
@@ -267,15 +272,17 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(true);
 				simplePencilPanelquestion.setVisible(false);
+				performanceTaskLbl.addStyleName(folderMetaStyle.addBackground());
 			}
 		});
-		simplePencilPanelquestion.addMouseOutHandler(new MouseOutHandler() {
+		simplePencilPanelTask.addMouseOutHandler(new MouseOutHandler() {
 				
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
 					simplePencilPanelbigIdeas.setVisible(false);
 					simplePencilPanelTask.setVisible(false);
 					simplePencilPanelquestion.setVisible(false);
+					performanceTaskLbl.removeStyleName(folderMetaStyle.addBackground());
 					
 				}
 			});
