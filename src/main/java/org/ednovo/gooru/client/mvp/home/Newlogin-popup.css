@@ -223,6 +223,7 @@ body {
 .form-control {
 	margin-bottom: 6px;
 	border-radius: 0 0;
+	width:99% !important;
 }
 
 .forgotPasswordLink {
@@ -919,12 +920,14 @@ width: 100%;
 
 
 .dontWorrkText {
-    color: #515151;
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 15px;
-    text-align: center;
-    word-wrap: break-word;
+ word-wrap: break-word;
+  line-height: 15px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #515151;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .contentDesc {
     color: #515151;

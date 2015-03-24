@@ -142,7 +142,7 @@ public class CollectionFormView extends
 			privateRadioButtonPanel,buttonMainContainer,visibilitySection,courseContainer,gradeContainer,shelfItemContent;
 
 	@UiField
-	Label loadingTextLbl,collPopUpMainheading,collPopUpSubheading,collTitleLbl,gradeLbl,courseLbl;
+	Label loadingTextLbl,collPopUpMainheading,collPopUpSubheading,subheadingForAssessmentNote,subheadingForAssessment,collTitleLbl,gradeLbl,courseLbl;
 	
 	@UiField
 	HTMLEventPanel publicShareFloPanel;
@@ -160,7 +160,7 @@ public class CollectionFormView extends
 	RadioButton radioButtonPrivate = new RadioButton("", "");
 	private static final String GOORU_UID = "gooruuid";
 
-	final String[] list = { "- Select Grade(s) -", "Kindergarten", "1", "2",
+	final String[] list = { "- Select Grade -", "Kindergarten", "1", "2",
 			"3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
 			"Higher Education" };
 
@@ -386,6 +386,7 @@ public class CollectionFormView extends
         publicRadioButtonPanel.add(radioButtonPublic);
 		shareRadioButtonPanel.add(radioButtonShare);
 		privateRadioButtonPanel.add(radioButtonPrivate);
+	
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			radioButtonPublic.addClickHandler(new ClickHandler() {
 		           
@@ -444,6 +445,10 @@ public class CollectionFormView extends
 			@Override
 			public void onClick(ClickEvent event) {
 				isAssessmentEditClicked=true;
+				subheadingForAssessment.setVisible(true);
+				subheadingForAssessment.setText(i18n.GL3201());
+				subheadingForAssessmentNote.setVisible(true);
+				subheadingForAssessmentNote.setText(i18n.GL3202());
 				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
 				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
 				btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
@@ -460,6 +465,10 @@ public class CollectionFormView extends
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				subheadingForAssessment.setVisible(true);
+				subheadingForAssessment.setText(i18n.GL3200());
+				subheadingForAssessmentNote.setVisible(false);
+				//subheadingForAssessmentNote.setText(i18n.GL3202());
 				isAssessmentEditClicked=false;
 				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
 				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
@@ -662,6 +671,10 @@ public class CollectionFormView extends
 		txtExistingAssessmentDescription.getElement().setAttribute("maxlength", "300");
 		txtExistingAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(1));
 		txtExistingAssessmentDescription.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(2));
+		 
+	
+		
+
 	}
 	/**
 	 * This inner class is used for handling key up events on title and description.
@@ -913,6 +926,7 @@ public class CollectionFormView extends
 		}else{
 			collection.setCollectionType("collection");
 			collection.setTitle(collectionTitleTxtBox.getText());
+			setPopUpStyle();
 			if (!(gradeDropDownList.getSelectedIndex() == 0)) {
 				collection.setGrade(list[gradeDropDownList.getSelectedIndex()]);
 			}
@@ -1005,12 +1019,16 @@ public class CollectionFormView extends
 			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
 			collPopUpMainheading.setVisible(true);
 			collPopUpSubheading.setVisible(true);
+			subheadingForAssessment.setVisible(false);
+			subheadingForAssessmentNote.setVisible(false);
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			appPopUp.setTitle("");
 			pnlCreateNewAssessment.setVisible(true);
 			bodyContainer.setVisible(false);
 			collPopUpMainheading.setVisible(false);
 			collPopUpSubheading.setVisible(false);
+			subheadingForAssessment.setText(i18n.GL3200());
+			subheadingForAssessmentNote.setVisible(false);
 			pnlNewAssessmentContainer.setVisible(false);
 			pnlExistingAssessmentContainer.setVisible(false);
 			resetAssessmentFields();
@@ -1140,7 +1158,9 @@ public class CollectionFormView extends
 		 * if (collection.getGrade() != null) {
 		 * collectionGradeTxtBox.setText(collection.getGrade()); }
 		 */
+
 		setCourseData();
+	
 		return collection;
 	}
 /**
@@ -1163,8 +1183,8 @@ public class CollectionFormView extends
 	 */
 	@Override
 	public void setLibraryCodes(List<LibraryCodeDo> libraryCode) {
-		courseLisBox.addItem("- Select course -", "-1");
-		assessmentCourseLisBox.addItem("- Select course -", "-1");
+		courseLisBox.addItem("- Select Course -", "-1");
+		assessmentCourseLisBox.addItem("- Select Course -", "-1");
 		if (libraryCode != null) {
 			for (LibraryCodeDo libraryCodes : libraryCode) {
 				for (LibraryCodeDo libCode : libraryCodes.getNode()) {
@@ -1311,5 +1331,21 @@ public class CollectionFormView extends
 		lblExistingAssessmentURLError.setVisible(false);
 		assessmentGradeDropDownList.setSelectedIndex(0);
 		isAddBtnClicked=true;
+	}
+	@Override
+	public void setDefaultCreate() {
+		subheadingForAssessment.setVisible(true);
+		subheadingForAssessment.setText(i18n.GL3200());
+		subheadingForAssessmentNote.setVisible(false);
+		isAssessmentEditClicked=false;
+		btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+		btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+		btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+		btnNewAssessment.addStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+		
+		pnlExistingAssessmentContainer.setVisible(false);
+		pnlNewAssessmentContainer.setVisible(true);
+		btnCreateAssessment.setVisible(true);
+		btnCancelAssessment.setVisible(true);
 	}
 }
