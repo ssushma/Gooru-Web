@@ -295,6 +295,7 @@ public class FolderItemMetaDataUc extends Composite {
 			simplePencilPanelbigIdeas.setVisible(false);
 			simplePencilPanelTask.setVisible(true);
 			simplePencilPanelquestion.setVisible(false);
+			performanceTaskLbl.addStyleName(folderMetaStyle.addBackground());
 		}
 	});
 		performanceTaskLbl.addMouseOutHandler(new MouseOutHandler() {
@@ -304,6 +305,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(false);
+				performanceTaskLbl.removeStyleName(folderMetaStyle.addBackground());
 				
 			}
 		});
