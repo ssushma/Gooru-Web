@@ -8,7 +8,7 @@
 	text-align: center;
 	width: auto;
 }
- .alignLeft{text-align: left;}
+.alignLeft{text-align: left;}
 .setMarginAuto {
 	margin: 0 auto;
 	text-align: center;
@@ -209,6 +209,7 @@
 	text-indent: 0.01px;
 	text-overflow: '';
 	margin-top: 20px;
+    margin-right: 2%;
 }
 
 .collectionBreakDown_infobox {
@@ -283,7 +284,6 @@
 	left: 0 !important;
 	right: 0 !important;
 	top: 180px !important;
-	bottom: 0 !important;
 	position: fixed !important;
 	margin: auto;
 	width: 941px;
