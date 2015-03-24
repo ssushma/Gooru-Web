@@ -199,12 +199,12 @@ display:inline-block;
     cursor: default;
 }
 .pencilHolderDiv{
-	  position: absolute;
-	  width:100%;
-	    top: 55%;
-  left: 50%;
-
+	position: absolute;
+	width: 100%;
+	top: 55%;
+	left: 50%;
 }
+
 .editHolder{
 position: absolute;
   margin:0 auto;

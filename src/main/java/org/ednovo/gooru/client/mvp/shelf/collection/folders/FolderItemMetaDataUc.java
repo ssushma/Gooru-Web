@@ -115,6 +115,7 @@ public class FolderItemMetaDataUc extends Composite {
 		}
 	});
 		
+		
 		bigIdeasLbl.addClickHandler(new ClickHandler() {
 			
 			@Override

@@ -693,17 +693,21 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@Override
 	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId) {
-
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		if(!StringUtil.isEmpty(collectionId)){
-			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+			if(view!=null&&view.equalsIgnoreCase("end")){
+				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+			}else{
+				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+			}
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
 		}else{
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
-				headerView.getAuthorContainer().setVisible(false);
+				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			}
 			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
 			{
@@ -824,7 +828,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
      */
 	@UiHandler("lblSeeMore") 
 	public void clickOnSeeMoreBtn(ClickEvent event){
-
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			if(!isSeeMoreClicked){
 				String narrationText=removeHtmlTags(collectionItemDo.getNarration());
@@ -835,10 +838,19 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				setNarrationInFullScreenMode(collectionItemDo,collectionDo);
 				isSeeMoreClicked=false;
 			}
-		}
-		else
-		{
+		}else{
 			lblNarrationText.setText("");
+		}
+		setSeemoreBackGround();
+	}
+	/**
+	 * This method will set the background image up and arrows
+	 */
+	void setSeemoreBackGround(){
+		if(isSeeMoreClicked){
+			lblSeeMore.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().seelessText());
+		}else{
+			lblSeeMore.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().seelessText());
 		}
 	}
 	private void setUserProfileImage(String profileUserId) {
@@ -868,9 +880,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				lblNarrationText.setText(narrationText);
 				lblSeeMore.setVisible(false);
 			}
-		}
-		else
-		{
+		}else{
 			authorImage.setVisible(false);
 			lblNarrationText.setVisible(false);
 			lblNarrationText.setText("");
