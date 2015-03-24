@@ -693,17 +693,21 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@Override
 	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId) {
-
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		if(!StringUtil.isEmpty(collectionId)){
-			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+			if(view!=null&&view.equalsIgnoreCase("end")){
+				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+			}else{
+				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+			}
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
 		}else{
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
-				headerView.getAuthorContainer().setVisible(false);
+				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			}
 			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
 			{

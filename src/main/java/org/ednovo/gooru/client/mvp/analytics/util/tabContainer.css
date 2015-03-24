@@ -66,6 +66,7 @@
 	border: 1px solid #ccc !important;
 	border-radius: 0px !important;
 	padding: 12px 30px !important;
+	margin-left: -5px;
 }
 .addButonStyle:hover{
 	background: #4C98CC !important;
@@ -153,6 +154,7 @@
 .viewResponsepnl{
 	overflow-y: auto;
 	overflow-x: hidden;
+	height:auto !important;
 }
 .dashboard_view_teacher_feedback {
 	float: left;
@@ -239,4 +241,8 @@
 	padding-left: 14px;
 	padding-bottom: 9px;
 	font-weight: bold;
+}
+.analyticsPrintSave{
+	float: right;
+  	padding-right:47px;
 }

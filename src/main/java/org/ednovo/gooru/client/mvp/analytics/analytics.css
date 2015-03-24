@@ -600,6 +600,7 @@
 .viewSummaryText {
 	padding-left: 5px;
 	padding-right: 10px;
+	float:right;
 }
 
 .viewAssignmentText {
@@ -631,7 +632,6 @@
 	display: block;
 	text-indent: 0.01px;
 	text-overflow: '';
-	margin-right: 7%;
 }
 
 .narrowReportText {
