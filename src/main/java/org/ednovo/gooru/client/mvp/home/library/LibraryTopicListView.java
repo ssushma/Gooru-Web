@@ -1309,13 +1309,27 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				}
 				Window.enableScrolling(false);
 				   
-				if (AppClientFactory.isAnonymous()){
+				/*if (AppClientFactory.isAnonymous()){
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 				}
 				else
 				{
 					successPopupVc.center();
+				}*/
+				
+				if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("550px");
+					successPopupVc.setHeight("625px");
+					successPopupVc.center();
+				}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("550px");
+					successPopupVc.setHeight("502px");
+					successPopupVc.center();
+				}else {
+					successPopupVc.center();
 				}
+				
+				
 				
 				params.put(ASSIGN, "yes");
 				params.put("collectionId", collectionId);
@@ -1382,9 +1396,12 @@ public class LibraryTopicListView extends Composite implements ClientConstants{
 				}
 			};
 			Window.scrollTo(0, 0);
-			if (!BrowserAgent.isDevice()){
+			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 				successPopupVc.setWidth("500px");
 				successPopupVc.setHeight("515px");
+			}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+				successPopupVc.setWidth("500px");
+				successPopupVc.setHeight("336px");
 			}
 			successPopupVc.show();
 			successPopupVc.center();

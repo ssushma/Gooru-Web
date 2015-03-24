@@ -34,12 +34,11 @@ import java.util.List;
 
 import org.ednovo.gooru.server.AppSessionHolder;
 import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.model.drive.ErrorDo;
 import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Encoding;
-import org.restlet.engine.header.Header;
+import org.restlet.data.Header;
 import org.restlet.data.MediaType;
 import org.restlet.data.Preference;
 import org.restlet.engine.header.HeaderConstants;
@@ -148,8 +147,8 @@ public abstract class ServiceRequest {
 			/**
 			 *  Taking values from response header to check authorized user or not. Implemented to differentiate from blocked user or authentication issue.
 			 */
-//			Series<Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
-			Series<org.restlet.engine.header.Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+			Series<Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+//			Series<org.restlet.engine.header.Header> responseHeaders=(Series<Header>)this.clientResource.getResponseAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
             
 			if(responseHeaders!=null){
 				
