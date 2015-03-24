@@ -175,7 +175,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		public void updateSearchResultMetaData(String count, String resourceId,
 				String whatToUpdate) {
 			if(count!=null){
-			updateViews(count, resourceId, whatToUpdate);
+//				updateViews(count, resourceId, whatToUpdate);
 			}
 		}
 	};
