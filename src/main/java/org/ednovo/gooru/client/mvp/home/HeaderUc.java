@@ -414,7 +414,7 @@ public class HeaderUc extends Composite implements
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
 
 		logoutPanelVc = new LogoutPanelVc();
-
+		settingOptionsPopup.add(logoutPanelVc);
 		saveSharePanel = new SaveSharePanel() {
 
 			@Override

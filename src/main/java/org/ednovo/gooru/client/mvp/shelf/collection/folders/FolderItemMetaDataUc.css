@@ -109,6 +109,14 @@
 	white-space: pre-line;
 }
 
+.paddingTextValues{
+	padding: 14px 20px;
+	white-space: pre-line;
+	  overflow-y: auto;
+  word-break: break-word;
+  max-height: 200px;
+}
+
 .textAreaStyle {
 	font-size:10px;
 	color: #515151;
@@ -191,7 +199,20 @@ display:inline-block;
     cursor: default;
 }
 .pencilHolderDiv{
-	  position: absolute;
-  right: 10px;
-  bottom: 12px;
+	position: absolute;
+	width: 100%;
+	top: 55%;
+	left: 50%;
 }
+
+.editHolder{
+position: absolute;
+  margin:0 auto;
+  }
+  .mainWidthDiv{
+  width:100%;
+  }
+  .addBackground{
+    opacity: 0.6;
+  background: #F4F1F1;
+  }

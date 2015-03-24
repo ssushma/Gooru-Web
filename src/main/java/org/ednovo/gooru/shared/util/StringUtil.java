@@ -37,9 +37,9 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.regexp.shared.RegExp;
@@ -300,6 +300,19 @@ public class StringUtil implements ClientConstants {
 	}
 
 	public static Map<String,String> getFolderMetaData(FolderDo folderDo) {
+		Map<String,String> folderMetaData = new HashMap<String,String>();
+		if(folderDo.getIdeas()!=null) {
+			folderMetaData.put("ideas", folderDo.getIdeas());
+		}
+		if(folderDo.getPerformanceTasks()!=null) {
+			folderMetaData.put("performanceTasks", folderDo.getPerformanceTasks());
+		}
+		if(folderDo.getQuestions()!=null) {
+			folderMetaData.put("questions", folderDo.getQuestions());
+		}
+		return folderMetaData;
+	}
+	public static Map<String,String> getFolderMetaDataTocAPI(FolderTocDo folderDo) {
 		Map<String,String> folderMetaData = new HashMap<String,String>();
 		if(folderDo.getIdeas()!=null) {
 			folderMetaData.put("ideas", folderDo.getIdeas());

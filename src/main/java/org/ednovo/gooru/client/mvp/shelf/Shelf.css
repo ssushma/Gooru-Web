@@ -1578,6 +1578,7 @@ padding-left: 11px;
 	height: 18px;
 	width: 14px;
 	cursor: pointer;
+	margin-top: -50px;
 }
 .publishPanel{
 	float: left;

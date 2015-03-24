@@ -35,9 +35,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class FolderItemMetaDataUc extends Composite {
 
-	@UiField Button saveBtnbigIdeas, cancelBtnbigIdeas,saveBtnTasks,cancelBtnTasks,saveBtnQuestions,cancelBtnQuestions;
+	@UiField Button saveBtnbigIdeas,simplePencilPanelbigIdeas,simplePencilPanelTask,simplePencilPanelquestion, cancelBtnbigIdeas,saveBtnTasks,cancelBtnTasks,saveBtnQuestions,cancelBtnQuestions;
 	
-	@UiField Label bigIdeasLbl, essentialQuestionsLbl, performanceTaskLbl,simplePencilPanelbigIdeas,simplePencilPanelquestion,simplePencilPanelTask;
+	@UiField Label bigIdeasLbl, essentialQuestionsLbl, performanceTaskLbl;
 	
 	@UiField TextArea bigIdeasHTML, essentialQuestionsHTML, performanceTaskHTML;
 	
@@ -115,59 +115,6 @@ public class FolderItemMetaDataUc extends Composite {
 		}
 	});
 		
-		simplePencilPanelbigIdeas.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				simplePencilPanelbigIdeas.setVisible(false);
-				formButtons.setVisible(true);
-				bigIdeasHTML.setVisible(true);
-				bigIdeasLbl.setVisible(false);
-			}
-		});
-
-		simplePencilPanelbigIdeas.addMouseMoveHandler(new MouseMoveHandler() {
-
-			@Override
-			public void onMouseMove(MouseMoveEvent event) {
-				simplePencilPanelbigIdeas.setVisible(true);
-			}
-		});
-
-		simplePencilPanelquestion.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				simplePencilPanelquestion.setVisible(false);
-				formButtonsQuestions.setVisible(true);
-				essentialQuestionsHTML.setVisible(true);
-				essentialQuestionsLbl.setVisible(false);
-			}
-		});
-		simplePencilPanelquestion.addMouseMoveHandler(new MouseMoveHandler() {
-
-			@Override
-			public void onMouseMove(MouseMoveEvent event) {
-				simplePencilPanelquestion.setVisible(true);
-			}
-		});
-		simplePencilPanelTask.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				simplePencilPanelTask.setVisible(false);
-				formButtonsTasks.setVisible(true);
-				performanceTaskHTML.setVisible(true);
-				performanceTaskLbl.setVisible(false);	
-			}
-		});
-		simplePencilPanelTask.addMouseMoveHandler(new MouseMoveHandler() {
-
-			@Override
-			public void onMouseMove(MouseMoveEvent event) {
-				simplePencilPanelTask.setVisible(true);
-			}
-		});
 		
 		bigIdeasLbl.addClickHandler(new ClickHandler() {
 			
@@ -176,6 +123,36 @@ public class FolderItemMetaDataUc extends Composite {
 				formButtons.setVisible(true);
 				bigIdeasHTML.setVisible(true);
 				bigIdeasLbl.setVisible(false);
+			}
+		});
+		simplePencilPanelbigIdeas.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelbigIdeas.setVisible(false);
+				formButtons.setVisible(true);
+				bigIdeasHTML.setVisible(true);
+				bigIdeasLbl.setVisible(false);
+			}
+		});
+		simplePencilPanelbigIdeas.addMouseMoveHandler(new MouseMoveHandler() {
+			
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {				
+				simplePencilPanelbigIdeas.setVisible(true);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(false);
+				bigIdeasLbl.addStyleName(folderMetaStyle.addBackground());
+			}
+		});
+		simplePencilPanelbigIdeas.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(false);
+				bigIdeasLbl.removeStyleName(folderMetaStyle.addBackground());
 			}
 		});
 		essentialQuestionsLbl.addClickHandler(new ClickHandler() {
@@ -196,6 +173,16 @@ public class FolderItemMetaDataUc extends Composite {
 				performanceTaskLbl.setVisible(false);	
 			}
 		});
+		simplePencilPanelTask.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelTask.setVisible(false);
+				formButtonsTasks.setVisible(true);
+				performanceTaskHTML.setVisible(true);
+				performanceTaskLbl.setVisible(false);	
+			}
+		});
 		simplePencilPanelbigIdeas.setVisible(false);
 		simplePencilPanelTask.setVisible(false);
 		simplePencilPanelquestion.setVisible(false);
@@ -207,6 +194,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(true);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(false);
+				bigIdeasLbl.addStyleName(folderMetaStyle.addBackground());
 			}
 		});
 		bigIdeasLbl.addMouseOutHandler(new MouseOutHandler() {
@@ -215,7 +203,39 @@ public class FolderItemMetaDataUc extends Composite {
 			public void onMouseOut(MouseOutEvent event) {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
-				simplePencilPanelquestion.setVisible(false);				
+				simplePencilPanelquestion.setVisible(false);	
+				bigIdeasLbl.removeStyleName(folderMetaStyle.addBackground());
+			}
+		});
+		
+		simplePencilPanelquestion.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelquestion.setVisible(false);
+				formButtonsQuestions.setVisible(true);
+				essentialQuestionsHTML.setVisible(true);
+				essentialQuestionsLbl.setVisible(false);
+			}
+		});
+		
+		simplePencilPanelquestion.addMouseMoveHandler(new MouseMoveHandler() {
+			
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {				
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(true);
+			}
+		});
+		simplePencilPanelquestion.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(false);
+				
 			}
 		});
 		essentialQuestionsLbl.addMouseMoveHandler(new MouseMoveHandler() {
@@ -237,6 +257,30 @@ public class FolderItemMetaDataUc extends Composite {
 				
 			}
 		});
+		
+		
+		
+		simplePencilPanelquestion.addMouseMoveHandler(new MouseMoveHandler() {
+			
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(true);
+				simplePencilPanelquestion.setVisible(false);
+			}
+		});
+		simplePencilPanelquestion.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					simplePencilPanelbigIdeas.setVisible(false);
+					simplePencilPanelTask.setVisible(false);
+					simplePencilPanelquestion.setVisible(false);
+					
+				}
+			});
+		
 		performanceTaskLbl.addMouseMoveHandler(new MouseMoveHandler() {
 		
 		@Override
