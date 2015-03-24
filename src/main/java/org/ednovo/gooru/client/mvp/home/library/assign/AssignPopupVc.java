@@ -66,15 +66,11 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -226,7 +222,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 		swithToEmbedLbl.setText(i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
-		assignContainer.getElement().setAttribute("style","min-height:500px");
 		AppClientFactory.getEventBus().addHandler(SetLoginStatusEvent.TYPE, setLoginStatusHandler);
 
 		setLabelsAndIds();

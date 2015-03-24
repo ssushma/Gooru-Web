@@ -979,9 +979,9 @@ font-size: 31px;
 	margin:10px 0;
 }
 .logStatus{
-	margin-top: -23px;
-position: relative;
-float: right;
+	/* margin-top: -23px; */
+	position: relative;
+	float: right;
 }
 
 .closeButton{

@@ -897,7 +897,7 @@ button.LoginText {
 	border:1px solid #1076BB;
 	/* margin-bottom: 15px; */
 	cursor: pointer;
-	margin-top:16px;
+	margin-top:10px;
 }
 
 .gConnectButton:hover {
@@ -908,7 +908,7 @@ button.LoginText {
 	border-bottom:1px solid #ddd;
 	width:100%;
 	height:1em;
-	margin:10px 0px 20px 0px;
+	margin:10px 0px 10px 0px;
 }
 
 .dividerText {
@@ -975,7 +975,7 @@ button.LoginText {
 .loginWithGooru{
 	font-size: 14px;
 	font-weight: normal;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 .directionsChrLimit{

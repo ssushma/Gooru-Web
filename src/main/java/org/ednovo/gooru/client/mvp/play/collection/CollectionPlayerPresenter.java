@@ -517,7 +517,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		});
 	}
 	public void getCollectionDetails(){
-		System.out.println("in the presenter");
 		final String collectionId=getPlaceManager().getRequestParameter("id", null);
 		final String resourceId=getPlaceManager().getRequestParameter("rid", null);
 		final String tabView=getPlaceManager().getRequestParameter("tab", null);
@@ -602,7 +601,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					showTabWidget(tabView,collectionId,resourceId,true,false,view);
 				}
 			}else{
-				System.out.println("in the second");
 				showResourceView(resourceId,tabView,viewFrom);
 				showTabWidget(tabView,collectionId,resourceId,false,false,view);
 			}
@@ -678,8 +676,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			this.collectionMetadataId=null;
 			this.collectionSummaryId=null;
 			/** Commented to implement new study end page **/
-			
-			getView().hidePlayerButtons(false, collectionDo.getGooruOid());
+			getView().hidePlayerButtons(true, collectionDo.getGooruOid());
 			showSignupPopup();
 			getView().setNarrationInFullScreenMode(collectionItemDo!=null?collectionItemDo:null,collectionDo);
 			if(this.collectionItemDo!=null){
@@ -744,7 +741,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 			adjustCollectionMetadaBody(false);
 			addFixedPostionForNavigation();
-			System.out.println("end");
 			/*if(viewFrom!=null && viewFrom.equals("fullScreen")){
 				getView().setFullScreenMode();
 			}*/
@@ -1926,7 +1922,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			System.out.println("logging this issue:::"+"Event start stop issue");
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
@@ -1961,7 +1956,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			System.out.println("logging this issue for item wise:::"+"Event start stop issue");
 		}
 		
 	}
