@@ -24,10 +24,10 @@
 	      </g:HTMLPanel>	     
 	   </g:HTMLPanel>	
 	   </g:HTMLPanel>   
-	   <g:HTMLPanel ui:field="bigIdeasDiv">
-	   	      <g:Label styleName="{folderMetaStyle.padding10}" ui:field="bigIdeasLbl"/>
+	   <g:HTMLPanel ui:field="bigIdeasDiv" styleName="{folderMetaStyle.mainWidthDiv}">
+	   	      <g:Label styleName="{folderMetaStyle.paddingTextValues}" ui:field="bigIdeasLbl"/>
 	   	      	<g:HTMLPanel styleName="{res1.css.teacherTipPencilHolder} {folderMetaStyle.pencilHolderDiv}">
-					<g:Label ui:field="simplePencilPanelbigIdeas" styleName="{res.css.collectionEditImageTeacherTip}" />
+					<g:Button ui:field="simplePencilPanelbigIdeas" styleName="primary {folderMetaStyle.editHolder}">Edit</g:Button>
 				</g:HTMLPanel>
 	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="bigIdeasHTML"/>
 	      <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForBigIdeas"></g:Label>
@@ -39,9 +39,9 @@
 	
 	   </g:HTMLPanel>
 	      <g:HTMLPanel ui:field="questionDiv">
-			<g:Label styleName="{folderMetaStyle.padding10}" ui:field="essentialQuestionsLbl"/>
+			<g:Label styleName="{folderMetaStyle.paddingTextValues}" ui:field="essentialQuestionsLbl"/>
 	   	      	<g:HTMLPanel styleName="{res1.css.teacherTipPencilHolder} {folderMetaStyle.pencilHolderDiv}">
-					<g:Label ui:field="simplePencilPanelquestion" styleName="{res.css.collectionEditImageTeacherTip}" />
+					<g:Button ui:field="simplePencilPanelquestion" styleName="primary {folderMetaStyle.editHolder}">Edit</g:Button>
 				</g:HTMLPanel>
 	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="essentialQuestionsHTML"/>
 	       <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForEssential"></g:Label>
@@ -52,9 +52,9 @@
       </g:HTMLPanel>
 	   </g:HTMLPanel>
 	      <g:HTMLPanel ui:field="taskDiv">
-	   	   <g:Label styleName="{folderMetaStyle.padding10}" ui:field="performanceTaskLbl"/>
+	   	   <g:Label styleName="{folderMetaStyle.paddingTextValues}" ui:field="performanceTaskLbl"/>
 	   	    <g:HTMLPanel styleName="{res1.css.teacherTipPencilHolder} {folderMetaStyle.pencilHolderDiv}">
-					<g:Label ui:field="simplePencilPanelTask" styleName="{res.css.collectionEditImageTeacherTip}" />
+	   	    <g:Button ui:field="simplePencilPanelTask" styleName="primary {folderMetaStyle.editHolder}">Edit</g:Button>
 				</g:HTMLPanel>
 	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="performanceTaskHTML"/>
 	       <g:Label styleName="{folderMetaStyle.errorLabel}" ui:field="charLimitLblForPerformance"></g:Label>
