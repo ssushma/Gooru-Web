@@ -129,6 +129,11 @@
 		width: 127px;
 }
 
+.collectionThumbnail1:hover{
+	opacity: 0.6;
+	cursor: pointer;
+}
+
 .collectionPPPThumbnail {
 	float: left;
 	height: 91px;

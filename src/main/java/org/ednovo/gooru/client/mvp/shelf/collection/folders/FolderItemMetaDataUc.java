@@ -115,6 +115,60 @@ public class FolderItemMetaDataUc extends Composite {
 		}
 	});
 		
+		simplePencilPanelbigIdeas.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelbigIdeas.setVisible(false);
+				formButtons.setVisible(true);
+				bigIdeasHTML.setVisible(true);
+				bigIdeasLbl.setVisible(false);
+			}
+		});
+
+		simplePencilPanelbigIdeas.addMouseMoveHandler(new MouseMoveHandler() {
+
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				simplePencilPanelbigIdeas.setVisible(true);
+			}
+		});
+
+		simplePencilPanelquestion.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelquestion.setVisible(false);
+				formButtonsQuestions.setVisible(true);
+				essentialQuestionsHTML.setVisible(true);
+				essentialQuestionsLbl.setVisible(false);
+			}
+		});
+		simplePencilPanelquestion.addMouseMoveHandler(new MouseMoveHandler() {
+
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				simplePencilPanelquestion.setVisible(true);
+			}
+		});
+		simplePencilPanelTask.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelTask.setVisible(false);
+				formButtonsTasks.setVisible(true);
+				performanceTaskHTML.setVisible(true);
+				performanceTaskLbl.setVisible(false);	
+			}
+		});
+		simplePencilPanelTask.addMouseMoveHandler(new MouseMoveHandler() {
+
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				simplePencilPanelTask.setVisible(true);
+			}
+		});
+		
 		bigIdeasLbl.addClickHandler(new ClickHandler() {
 			
 			@Override
