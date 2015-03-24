@@ -105,7 +105,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	Button addCourseBtn, addStandardBtn,removeCourseBtn;
 
 	@UiField
-	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel,centPanel, KinderGarten, higherEducation,standardContainer;
+	FlowPanel pnl21CenturySkils,gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel,centPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
 	Label  GradeUpdate, languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel,centLabel, standardsDefaultText,centDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
@@ -797,7 +797,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 		spanelInstructionalPanel.setVisible(false);
 		spanelAudiencePanel.setVisible(false);
-		
+		pnl21CenturySkils.setVisible(false);
 	}
 	/**
 	 * 
