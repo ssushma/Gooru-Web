@@ -9,15 +9,16 @@
 		.commentsBtnContainer {
 			padding-left:10px;
 		}
+		.analyticsCollectionImg{
+			float:left;
+			padding-right: 12px;
+		}
 	</ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource"/>
-
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle" field="smallMobile"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle" field="unitStyle"/>
-
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
-
-      <g:FlowPanel ui:field="studyMainContianer" styleName="container studyMainContainer">
+    <g:FlowPanel ui:field="studyMainContianer" styleName="container studyMainContainer">
           <g:HTMLPanel>
       	<g:FlowPanel styleName="row">
       		<!--  new design start -->
@@ -92,7 +93,7 @@
 						    <g:HTMLPanel styleName="{unitStyle.css.collectionSummaryDetailsWrapper}">
 								<g:HTMLPanel styleName="{unitStyle.css.left_container}">
 									<g:HTMLPanel styleName="col-md-9 col-sm-8 {playerStyle.paddingClear}"> 
-									 <g:HTMLPanel styleName="col-md-2 col-sm-2 {playerStyle.paddingClear}">
+									 <g:HTMLPanel styleName="{playerStyle.paddingClear} {style.analyticsCollectionImg}">
 									     <g:Image  ui:field="collectionImage"></g:Image>
 									 </g:HTMLPanel>      
 									<g:HTMLPanel styleName="col-md-10 col-sm-10 {playerStyle.paddingClear}">
