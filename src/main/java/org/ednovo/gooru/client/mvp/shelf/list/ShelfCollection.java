@@ -62,6 +62,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.DOMUtils;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -1105,8 +1106,13 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		}
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
-		AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(collectionDo)));
-
+		AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),false,new SimpleAsyncCallback<FolderTocDo>() {
+			@Override
+			public void onSuccess(FolderTocDo result) {
+				AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaDataTocAPI(result)));
+				
+			}
+		});
 	}
 	
 	public void openCollectionInShelf() {
