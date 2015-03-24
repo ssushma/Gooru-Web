@@ -59,7 +59,7 @@
 			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
 			    </uc:HTMLEventPanel>
 				<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
-				    <g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
+			
 				    <g:HTMLPanel styleName="{res.css.path}">
 					    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
 					    <g:Label styleName="{res.css.line}"></g:Label> -->
@@ -74,7 +74,9 @@
 				<g:HTMLPanel styleName="{res.css.btnContainer}" ui:field="getstarteddiv">
 				<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
 					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
+									<g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
 				</g:HTMLPanel>
+
 				<g:FlowPanel ui:field="dropDownListDiv" styleName="{res.css.dropdowncontainer}">
 					<g:Label styleName="{res.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder"></g:Label>
 					<g:FlowPanel styleName="{res.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">

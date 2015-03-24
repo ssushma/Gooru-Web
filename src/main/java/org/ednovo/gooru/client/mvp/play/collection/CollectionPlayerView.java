@@ -831,7 +831,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			if(!isSeeMoreClicked){
 				String narrationText=removeHtmlTags(collectionItemDo.getNarration());
-				lblSeeMore.setText(i18n.GL_SPL_OPEN_SMALL_BRACKET()+i18n.GL0509()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+				lblSeeMore.setText(i18n.GL0509());
 				lblNarrationText.setText(narrationText);
 				isSeeMoreClicked=true;
 			}else{
@@ -875,7 +875,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			if(narrationText.length()>0 && narrationText.length()>240){
 				lblNarrationText.setText(narrationText.substring(0, 240)+"...");
 				lblSeeMore.setVisible(true);
-				lblSeeMore.setText(i18n.GL_SPL_OPEN_SMALL_BRACKET()+i18n.GL0508()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+				lblSeeMore.setText(i18n.GL0508());
 			}else{
 				lblNarrationText.setText(narrationText);
 				lblSeeMore.setVisible(false);
