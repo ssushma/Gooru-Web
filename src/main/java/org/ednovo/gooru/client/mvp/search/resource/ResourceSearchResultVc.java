@@ -284,12 +284,6 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 				SearchUiUtil.renderSourceMetadata(metaDataFloPanel,
 						publisherData, null, shortenMetaLength ? 15 : 25);
 			}
-			// String source = resourceSearchResultDo.getResourceSource() !=
-			// null ?
-			// resourceSearchResultDo.getResourceSource().getAttribution() :
-			// null;
-			// SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null,
-			// shortenMetaLength ? 15 : 25);
 			if (resourceSearchResultDo.getAggregator() != null) {
 				String aggregatorData = "";
 				for (String aggregator : resourceSearchResultDo.getAggregator()) {
@@ -545,7 +539,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 		public void updateSearchResultMetaData(String count, String resourceId,
 				String whatToUpdate) {
 			if (count != null) {
-				updateViews(count, resourceId, whatToUpdate);
+//				updateViews(count, resourceId, whatToUpdate);
 			}
 		}
 	};
