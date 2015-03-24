@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdatePreviewViewCountE
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopupPlayerVc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -289,6 +290,13 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				};
 				Window.scrollTo(0, 0);
 			//	successPopupVc.setWidth("500px");
+				if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("500px");
+					successPopupVc.setHeight("515px");
+				}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("500px");
+					successPopupVc.setHeight("336px");
+				}
 				successPopupVc.show();
 				successPopupVc.center();
 				Map<String,String> params = new HashMap<String,String>();
@@ -343,11 +351,21 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			  //  successPopupVc.setHeight("658px");
 			   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop()+5, 0));
 
-				successPopupVc.center();
-				if(AppClientFactory.isAnonymous()){
+				
+				/*if(AppClientFactory.isAnonymous()){
 					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 
+				}*/
+				if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("550px");
+					successPopupVc.setHeight("625px");
+					successPopupVc.center();
+				}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+					successPopupVc.setWidth("550px");
+					successPopupVc.setHeight("502px");
+					successPopupVc.center();
 				}
+				
 	}
 	
 	/**

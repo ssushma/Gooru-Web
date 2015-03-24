@@ -179,11 +179,10 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 						}
 					};
 					loginCustom.add(assignWidget);
-					panelAssign.getElement().getStyle().setHeight(550, Unit.PX);
+					panelAssign.getElement().getStyle().setHeight(494, Unit.PX);
 				} else {
 					loginCustom.setVisible(false);
 					copyCollectionSuccess.setVisible(true);
-					panelAssign.getElement().getStyle().setHeight(367, Unit.PX);
 				}
 				popupcontentCustomize.setVisible(true);
 				loadingImageLabel.setVisible(false);
