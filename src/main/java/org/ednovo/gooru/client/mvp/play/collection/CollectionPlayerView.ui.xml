@@ -119,15 +119,6 @@
 		width:150px;
 		line-height: 27px;
 	}
-	.seemoreText{
-		cursor: pointer;
-		color:#12509F;
-		width: 132px;
-		float: right;
-		bottom: 19px;
-		font-size: 15px;
-		text-align: right;
-	}
 	.narrationText{
 		font-size: 20px;
 	}
@@ -196,7 +187,7 @@
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{style.narrationRightContainer} narrationRightContainerFullScreen" >
 							<g:Label styleName="{style.narrationText}" ui:field="lblNarrationText"></g:Label>
-							<g:Label styleName="{style.seemoreText}" ui:field="lblSeeMore"></g:Label>
+							<g:Label styleName="{playerHeaderStyle.getPlayerStyleResource.seemoreText}" ui:field="lblSeeMore"></g:Label>
 						</g:HTMLPanel>
 						<div class="clearfix"></div>
 					</g:HTMLPanel>

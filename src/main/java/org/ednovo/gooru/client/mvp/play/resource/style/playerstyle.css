@@ -1133,3 +1133,17 @@ float: right;
 .scrollStudyContainer{
 	overflow-y: auto !important;
 }
+.seemoreText {
+	cursor: pointer;
+	color: #12509f;
+	width: 132px;
+	font-size: 15px;
+	text-align: center;
+	margin: 15px auto 0;
+	background-image: url(images/downarrow.png);
+	background-repeat: no-repeat;
+	background-position: 11px 6px;
+}
+.seelessText {
+	background-image: url(images/uparrow.png);
+}
