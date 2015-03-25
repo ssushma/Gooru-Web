@@ -585,6 +585,7 @@
 								<jsSourceInclude>errorImageFunction.js</jsSourceInclude>
 								<!-- <jsSourceInclude>highcharts.js</jsSourceInclude> -->
 								<jsSourceInclude>heatmap.js</jsSourceInclude>
+								<jsSourceInclude>push-menu.js</jsSourceInclude>
 							</jsSourceIncludes>
 							<jsSourceExcludes>
 								<jsSourceExclude>*.min.js</jsSourceExclude>

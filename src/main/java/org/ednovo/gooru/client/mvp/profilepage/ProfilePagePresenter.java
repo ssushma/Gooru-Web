@@ -177,7 +177,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		}
 		if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
-			System.out.println("callbcalk-profile");
 			Window.enableScrolling(false);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			String type = getPlaceManager().getRequestParameter("type") ;

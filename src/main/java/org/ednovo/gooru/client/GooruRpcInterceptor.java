@@ -90,7 +90,6 @@ public class GooruRpcInterceptor extends RemoteServiceProxy{
     protected <T> Request doInvoke(ResponseReader responseReader,
                     String methodName, RpcStatsContext statsContext,
                     String requestData, AsyncCallback<T> callback) {
-    				System.out.println("method name=="+methodName);
     				if(methodName.contains("getUserFilterProperties")){
     					return super.doInvoke(responseReader, methodName, statsContext, requestData, callback);
     				}

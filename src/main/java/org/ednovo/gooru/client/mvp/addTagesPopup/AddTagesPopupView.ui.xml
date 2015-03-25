@@ -10,6 +10,7 @@
 	}
 	.browseInput{
 	  float:left;
+	  width: 42% !important;
 	}
 	</ui:style>
 	<g:HTMLPanel styleName="{res1.css.PopupMainSmall}">
