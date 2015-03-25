@@ -676,7 +676,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			this.collectionMetadataId=null;
 			this.collectionSummaryId=null;
 			/** Commented to implement new study end page **/
-			getView().hidePlayerButtons(true, collectionDo.getGooruOid());
+			getView().hidePlayerButtons(false, collectionDo.getGooruOid());
 			showSignupPopup();
 			getView().setNarrationInFullScreenMode(collectionItemDo!=null?collectionItemDo:null,collectionDo);
 			if(this.collectionItemDo!=null){
