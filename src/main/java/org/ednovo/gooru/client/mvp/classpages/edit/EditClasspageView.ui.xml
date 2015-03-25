@@ -6,6 +6,7 @@
 		type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle"
 		field="res" />
 	<ui:style field="unitStyle" src="editclasspage.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:FlowPanel ui:field="mainFlowPanel">
 		<g:HTMLPanel styleName="{res.css.newMockLeftAlignController}">
 			<g:FocusPanel styleName="{res.css.myCollectionShareStudentContainer}"
@@ -54,6 +55,7 @@
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.containerProgress}" ui:field="panelProgressContainer">
+			<g:Label styleName="{res.css.assignementOrderHeaderText}" text="{i18n.GL2006}" title="{i18n.GL2006}"></g:Label>
 			<g:HTMLPanel ui:field="headerAssignments" styleName="{res.css.assignementOrderHeader}"></g:HTMLPanel>
 			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
 			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
