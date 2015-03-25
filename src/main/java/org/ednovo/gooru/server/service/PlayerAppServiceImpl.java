@@ -67,6 +67,8 @@ import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.StringRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +78,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @Service("playerService")
 @ServiceURL("/playerService")
 public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppService {
+	
+	private static Logger logger = LoggerFactory.getLogger(PlayerAppServiceImpl.class);
 
 	private static final long serialVersionUID = 1L;
 	
@@ -126,6 +130,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 					}
 				}
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return collectionDo;
@@ -148,6 +153,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				}
 				resourceCollectionDo.setSearchResults(resourceSearchResultList);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return resourceCollectionDo;
@@ -183,7 +189,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				collectionDo.setKeyPoints(URLDecoder.decode(collectionDo.getKeyPoints(), "UTF-8")); 
 			}
 
-        } catch (UnsupportedEncodingException e) {  
+        } catch (UnsupportedEncodingException e) {
+        	logger.error(e.getMessage());
         }
 		
 		return collectionDo;
@@ -206,6 +213,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceInfoObjectDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new ResourceInfoObjectDo();
@@ -216,7 +224,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
-		System.out.println("getResourceInfoDetails::"+url);
+		getLogger().info("getResourceInfoDetails::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		getLogger().info("player APp Service impl getResourceInfoDetails:::::"+url);
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -233,6 +241,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 							encodeUrl = URLEncoder.encode(collectionItemDo.getResource().getUrl(),"UTF-8").replaceAll("\\+", "%20");
 							collectionItemDo.getResource().setUrl(encodeUrl);
 						} catch (UnsupportedEncodingException e) {
+							logger.error(e.getMessage());
 						}
 					}
 				}
@@ -244,6 +253,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			//Added this line because of URL encoding is not supported in Shared and View packages.
 			//collectionItemDo.getResource().setEncodedUrl(URLEncoder.encode(collectionItemDo.getResource().getUrl()));
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return collectionItemDo;
 	}
@@ -269,6 +279,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 							encodeUrl = URLEncoder.encode(collectionItemDo.getResource().getUrl(),"UTF-8").replaceAll("\\+", "%20");
 							collectionItemDo.getResource().setUrl(encodeUrl);
 						} catch (UnsupportedEncodingException e) {
+							logger.error(e.getMessage());
 						}
 					}
 				}
@@ -280,6 +291,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			//collectionItemDo.getResource().setEncodedUrl(URLEncoder.encode(collectionItemDo.getResource().getUrl()));
 			
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return collectionItemDo;
 	}
@@ -306,6 +318,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			collectionShareUrl=URLDecoder.decode(collectionShareUrl, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
+			logger.error(e.getMessage());
 		}
 		shareUrls.put("sharebitlyurl", shortenUrl);
 		shareUrls.put("shareurl", collectionShareUrl);
@@ -381,6 +394,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				seesionId=createSessionResponse.getString("sessionId");
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return seesionId;
 	}
@@ -405,6 +419,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return sessionItemId;
 	}
@@ -437,6 +452,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return sessionItemId;
 	}
@@ -453,6 +469,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId,getLoggedInSessionToken());
 			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemAttemptTry.toString());
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return "";
 	}
@@ -467,6 +484,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION_ITEM_ATTEMPT, sessionTrackerId,sessionItemTrackerId,getLoggedInSessionToken());
 			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),sessionItemAttemptTry.toString());
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return "";
 	}
@@ -493,6 +511,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SOCIAL_EMAIL,getLoggedInSessionToken());
 			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mailJsonObject.toString());
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return null;
 	}
@@ -512,7 +531,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			}
 		}catch(Exception exception){
-			
+			logger.error(exception.getMessage());
 		}
 		return userProfileVisibility;
 	}
@@ -534,6 +553,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				}
 			}
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return copiedCollectionId;
 	}
@@ -557,6 +577,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				JSONObject copiedCollectionObj=jsonRep.getJsonObject();
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return copiedCollectionItemId;
 	}
@@ -596,6 +617,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}			
 		}//try end
 		catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return resourceModelList;
 	}
@@ -623,6 +645,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 					}
 				}
 			} catch (Exception e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return reactionsList;
@@ -649,6 +672,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),contentReportObject.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 		}catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return null;
 	}
@@ -682,6 +706,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return deserializeResourceReaction(jsonObject); 
 	}
@@ -715,6 +740,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				}
 			}
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		}
 		return reactionsList;
@@ -726,6 +752,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			reactionDo.setReactionText((!jsonObject.isNull("type")&&!jsonObject.getJSONObject("type").isNull("value"))?(jsonObject.getJSONObject("type").getString("value")):""); 	
 			reactionDo.setDeleteReactionGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return reactionDo;
 	}
@@ -748,6 +775,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			contentReportDo.setDeleteContentGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
 			contentReportDo.setContentReportList(contentReportList);
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return contentReportDo;
 	}
@@ -762,6 +790,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),commentObject.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 		}catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return deserializCommentsObject(jsonRep);
 	}
@@ -773,6 +802,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 						jsonRep.getJsonObject().toString(), CommentsDo.class);
 				return commentsDoObj;
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new CommentsDo();
@@ -792,6 +822,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CommentsListDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new CommentsListDo();
@@ -823,6 +854,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				commentsDo.setStatusCode(jsonResponseRep.getStatusCode());
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return commentsDo;
 	}
@@ -840,6 +872,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			stringRepresentation=ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),generatePdfJsonObj.toString());
 			pdfUrl=stringRepresentation.getText();
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return pdfUrl;
 
@@ -899,6 +932,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 
 			}
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return response;
 	}
@@ -943,6 +977,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			
 		}catch(Exception e){
+			logger.error(e.getMessage());
 		}		
 		return featuredContentDos;
 	}
@@ -989,7 +1024,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 }
 			 
 		} catch (Exception e) {
-			
+			logger.error(e.getMessage());
 		}
 		return deserializeResourceStarRatings(jsonObject);
 	}
@@ -1029,6 +1064,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			starRatingsDo.setLastModifiedOn(jsonObject.isNull(LAST_MODIFIED_ON)?0:jsonObject.getLong(LAST_MODIFIED_ON));
 			starRatingsDo.setFreeText(jsonObject.isNull("freeText")?"":jsonObject.getString("freeText"));
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return starRatingsDo;
@@ -1054,6 +1090,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			jsonObject= jsonRep.getJsonObject();
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return deserializeResourceStarRatings(jsonObject);
@@ -1079,6 +1116,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			jsonObject= jsonRepresentation.getJsonObject();
 			}
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return deserializeContentStarRatings(jsonObject);
 	}
@@ -1157,6 +1195,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}//for end
 			contentStarRatingsDo.setScores(contentRatingDistribution);
 		}catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return contentStarRatingsDo;
 	}
@@ -1180,6 +1219,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateStarRatingsJsonObj.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return deserializeStarRatings(jsonRepresentation);
@@ -1198,6 +1238,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				}
 			 }
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return ratingsList;
@@ -1221,6 +1262,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return starRatingsDo;
@@ -1242,6 +1284,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			jsonObject= jsonRepresentation.getJsonObject();
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return deserializeUserStarRatings(jsonObject);
 	}
@@ -1257,6 +1300,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			userStarRatingsDo.setAverage(jsonObject.getInt(AVERAGE));
 			userStarRatingsDo.setCount(jsonObject.getInt(COUNT));
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return userStarRatingsDo;
@@ -1287,8 +1331,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			jsonObject = jsonRep.getJsonObject();
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
+			logger.error(e.getMessage());		
+			}
 		return deserializeGetResourceRatingWithReviews(jsonObject); 
 	}
 	
@@ -1316,6 +1360,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return starRatingsList;
@@ -1333,6 +1378,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
 		return deserializeStarRatings(jsonRepresentation);
@@ -1344,7 +1390,9 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_RATINGS,deleteRatingGooruOid, getLoggedInSessionToken());
 			getLogger().info("-- Delete review --- "+url);
 			ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
-		}catch(Exception e){}
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
 	}
 	
 	@Override
@@ -1374,7 +1422,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}
 			
 		}catch(Exception e){
-			
+			logger.error(e.getMessage());
 		}
 		return youtubeValues;
 	}
@@ -1400,6 +1448,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 					}
 				}
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return insightCollectionDo;
@@ -1418,6 +1467,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			filterJsonObject.put("classId", classpageId);
 			jsonObject.put("filters", filterJsonObject);
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return jsonObject.toString();
 	}
@@ -1436,7 +1486,9 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderWhatsNextCollectionDo>() {});
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		return new FolderWhatsNextCollectionDo();
 	}
 	

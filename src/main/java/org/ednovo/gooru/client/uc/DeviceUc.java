@@ -67,8 +67,6 @@ public class DeviceUc extends Composite {
 		this.headerUc = headerUc;
 		this.wrapperPanel = wrapperPanel;
 		
-		System.out.println("Test in device...");
-		
 		androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
 		ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
 		

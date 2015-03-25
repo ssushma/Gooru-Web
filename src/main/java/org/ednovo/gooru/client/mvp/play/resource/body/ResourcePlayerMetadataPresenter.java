@@ -114,7 +114,6 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 
 	@Override
 	public void showQuestionView(CollectionItemDo collectionItemDo) {
-		System.out.println("full screen question");
 		questionResourcePresenter.setCollectionPlayer(isCollectionPlayer);
 		questionResourcePresenter.setResourcePlayer(isResourcePlayer);
 		questionResourcePresenter.setPreviewPlayer(isPreviewPlayer);

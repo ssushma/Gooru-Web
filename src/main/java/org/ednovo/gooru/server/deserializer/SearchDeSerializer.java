@@ -30,11 +30,15 @@ package org.ednovo.gooru.server.deserializer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.server.service.AnalyticsServiceImpl;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.spi.LoggerFactoryBinder;
 
 /**
  * @author Search Team
@@ -42,6 +46,7 @@ import org.restlet.ext.json.JsonRepresentation;
  */
 public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  extends DeSerializer{
 
+	
 	private static String SEARCH_RESULTS = "searchResults";
 	private static String SEARCH_HITS = "totalHitCount";
 	public static String URL = "url";
@@ -103,13 +108,12 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String CREATOR = "creator";
 	public static final String SUGGEST_RESULTS ="suggestResults";
 	
-	
-	
 	/**
 	 * Deserialize the search json object
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @param searchDo instance of {@link SearchDo}
 	 */
+	private static final Logger logger = LoggerFactory.getLogger(SearchDeSerializer.class);
 	public void deserialize(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
 		searchDo.setSearchResults(new ArrayList<T>());
 		try {
@@ -135,6 +139,8 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
+			logger.error("spellCheckQueryString catch:::"+e.getCause());
+			throw new RuntimeException(e.getCause());
 		}
 	}
 	public void deserializeSuggestedResources(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
