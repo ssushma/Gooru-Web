@@ -240,6 +240,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String assignmentProgressStudent();
         String previousStudent();
         String nextStudent();
+        String assignementOrderHeaderText();
 
 	}
 	@NotStrict

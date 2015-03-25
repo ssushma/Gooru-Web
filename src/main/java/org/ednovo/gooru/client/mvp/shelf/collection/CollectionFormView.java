@@ -667,14 +667,12 @@ public class CollectionFormView extends
 		pnlNewAssessmentContainer.setVisible(false);
 		pnlExistingAssessmentContainer.setVisible(false);
 		resetAssessmentFields();
+		txtNewAssessmentTitle.getElement().setAttribute("maxlength", "50");
 		txtExistingAssessmentTitle.getElement().setAttribute("maxlength", "50");
 		txtExistingAssessmentDescription.getElement().setAttribute("maxlength", "300");
+		txtNewAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(0));
 		txtExistingAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(1));
 		txtExistingAssessmentDescription.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(2));
-		 
-	
-		
-
 	}
 	/**
 	 * This inner class is used for handling key up events on title and description.
@@ -685,6 +683,15 @@ public class CollectionFormView extends
 				this.value=value;
 			}
 			public void onKeyUp(KeyUpEvent event) {
+				if(value==0){
+					if(txtNewAssessmentTitle.getText().length()>=50){
+						txtNewAssessmentTitle.setText(txtNewAssessmentTitle.getText().toString().substring(0,50));
+						lblNewAssessmentError.setVisible(true);
+						lblNewAssessmentError.setText(i18n.GL0143());
+						lblNewAssessmentError.getElement().setAttribute("alt",i18n.GL0143());
+						lblNewAssessmentError.getElement().setAttribute("title",i18n.GL0143());
+					}
+				}
 				if(value==1){
 					if(txtExistingAssessmentTitle.getText().length()>=50){
 						txtExistingAssessmentTitle.setText(txtExistingAssessmentTitle.getText().toString().substring(0,50));
