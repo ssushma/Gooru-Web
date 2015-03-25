@@ -97,9 +97,9 @@ public abstract class ServiceRequest {
 					//throw new ServerDownException(statusCode,"");
 				}
 			}else{
-				if(getClientResource().getResponse()!=null && getClientResource().getResponse().isEntityAvailable()){
-				ResponseStatusDo responseDo = parseJsonErrorResponse(getClientResource().getResponse().getEntity());
-				jsonResponseRepresentation.setResponseDo(responseDo);	
+				if(getClientResource().getResponse()!=null){
+					ResponseStatusDo responseDo = parseJsonErrorResponse(getClientResource().getResponse().getEntity());
+					jsonResponseRepresentation.setResponseDo(responseDo);	
 				}
 				//throw new GwtException(exception.getStatus().getCode(),message);
 			}
