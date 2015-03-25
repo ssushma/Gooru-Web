@@ -96,7 +96,7 @@
 			 <g:FlowPanel ui:field="standardContainer">
 					<g:Label styleName="{res1.css.addQuestionStandard}"	ui:field="standardsDefaultText"></g:Label>
 					<g:FlowPanel styleName="{res1.css.standardsCont}">
-						<gg:AppSuggestBox ui:field="standardSgstBox" styleName="form-control {res1.css.form_control}" />
+						<gg:AppSuggestBox ui:field="standardSgstBox" styleName="form-control {style.browseInput} {res1.css.form_control}" />
 							<g:Label styleName="{res.css.standardMaxHide}" ui:field="standardMaxMsg" />
 							<g:FlowPanel ui:field="standardsPanel"	styleName="{res.css.collectionStandardsMargin}" />
 					</g:FlowPanel>
