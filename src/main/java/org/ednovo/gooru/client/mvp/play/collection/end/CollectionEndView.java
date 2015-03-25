@@ -1538,7 +1538,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(nextCollectionDo!=null){
 			this.nextCollectionDo=nextCollectionDo;
 			hideNextCollectionContainer(true);
-			whatNextCollectionTitle.setText(nextCollectionDo.getTitle().toString().length()>10?nextCollectionDo.getTitle().substring(0,10)+"...":nextCollectionDo.getTitle());
+			whatNextCollectionTitle.setText(nextCollectionDo.getTitle().toString().length()>20?nextCollectionDo.getTitle().substring(0,20)+"...":nextCollectionDo.getTitle());
 			whatNextCollectionTitle.setTitle(nextCollectionDo.getTitle());
 			nextCollectionThumbnail.setUrl(nextCollectionDo.getThumbnails().getUrl());
 			if(nextCollectionDo!=null&&nextCollectionDo.getCollectionItems()!=null){
@@ -1592,7 +1592,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(folderCollectionWhatsNext.getTitle()!=null)
 		{
 			hideNextCollectionContainer(false);	
-			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>10?folderCollectionWhatsNext.getTitle().substring(0,10)+"...":folderCollectionWhatsNext.getTitle());
+			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>20?folderCollectionWhatsNext.getTitle().substring(0,20)+"...":folderCollectionWhatsNext.getTitle());
 			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
 			String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
 			StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");

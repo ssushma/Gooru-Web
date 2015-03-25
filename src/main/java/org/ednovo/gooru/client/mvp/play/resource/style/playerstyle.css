@@ -1090,6 +1090,8 @@ font-size: 31px;
 	display: inline-block;
 	width: 220px;
 	padding-left: 25px;
+	padding-top: 10px;
+	padding-bottom: 28px;
 	border-left: 1px solid #444444;
 
 }
@@ -1114,8 +1116,6 @@ font-size: 31px;
 	font-size: 14px;
 	font-weight: bold;
 	color: #ffffff;
-	margin-bottom:46px;
-	/* margin-bottom: 7px; */
 }
 
 .whatsnext .smallerTxt{

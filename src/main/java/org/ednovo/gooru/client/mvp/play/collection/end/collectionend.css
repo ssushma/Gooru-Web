@@ -737,3 +737,14 @@
 .paddingClear{
 	padding:0;
 }
+.resourceCountStyle{
+	font-size: 13px;
+	font-weight: bold;
+	color: #ffffff;
+	display: inline-block;
+	margin-top: 14px;
+	margin-right: 10px;
+}
+.displayBlock{
+	display: inline-block;
+}

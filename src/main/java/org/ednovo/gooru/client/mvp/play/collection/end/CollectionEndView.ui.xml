@@ -75,9 +75,12 @@
 								 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallTxt}" text="{i18n.GL2087}"></g:Label>
 						    	 <g:Image ui:field="nextCollectionThumbnail"></g:Image>
 								 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.bigTxt}" ui:field="whatNextCollectionTitle"></g:Label>
-						    	 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallerTxt}" ui:field="resourceCount"></g:Label>
-								 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallerTxt}" ui:field="questionCount"></g:Label>
+								 <g:HTMLPanel styleName="{playerStyle.displayBlock}">
+								     <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="resourceCount"></g:Label>
+									 <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="questionCount"></g:Label>
+								 </g:HTMLPanel>
 							</g:FlowPanel>
+							
 					 	</g:FlowPanel>
 					 	<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
       				</html5:SectionTag>
