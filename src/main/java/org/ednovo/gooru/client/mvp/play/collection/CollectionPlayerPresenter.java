@@ -842,22 +842,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
-			//getView().clearActiveButtion();
 			if(ADD.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(false,true, true, true, true,false,true);
 				getView().makeButtonActive(true, false,false, false, false,false,false);	
 			}
-			else if(SHARE.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
+			else if(INFO.equalsIgnoreCase(tabView)){
 				getView().clearActiveButton(true,false, true, true, true,false,true);
 				getView().makeButtonActive(false,true, false, false, false,false,false);	
 			}
 			else if(SHARE.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, false, true, true,false,true);
 				getView().makeButtonActive(false,false, true, false, false,false,false);
 			}
@@ -870,8 +863,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getView().makeButtonActive(false,false, false, false, false,false,true);
 			}
 			else if(NAVIGATION.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, true, true, false,false,true);
 				getView().makeButtonActive(false,false, false, false, true,false,false);
 				
