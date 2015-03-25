@@ -5,37 +5,37 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="tocStyle" src="floderToc.css" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
-	<ui:style field="tocStyle1" src="folderStyleToc.css" />
+	<ui:with field="tocStyle1"  type="org.ednovo.gooru.client.mvp.folder.toc.FolderContainerCBundle"/>
 	<g:HTMLPanel>
 	 	<g:Hidden ui:field="myHiddenField"/>
 		<g:HTMLPanel styleName="{tocStyle.bodyContainer}">
 			<g:HTMLPanel styleName="container">
 				<g:HTMLPanel styleName="row" ui:field="mainContainer">
 				     <!-- Library banner image start here -->
-				    <g:HTMLPanel styleName="{tocStyle1.bannerImageContainer}" ui:field="bannerImagePanel">
+				    <g:HTMLPanel styleName="{tocStyle1.css.bannerImageContainer}" ui:field="bannerImagePanel">
 							<g:Image  styleName="img-responsive" ui:field="bannerImage"/>
-							<g:HTMLPanel styleName="{tocStyle1.bannerImageCaption}">
+							<g:HTMLPanel styleName="{tocStyle1.css.bannerImageCaption}">
 								<tbp:H2Panel ui:field="bannerTitle"></tbp:H2Panel>
-								<g:HTMLPanel ui:field="bannerLogoImageContainer" styleName="{tocStyle1.sublogoContainer}">
+								<g:HTMLPanel ui:field="bannerLogoImageContainer" styleName="{tocStyle1.css.sublogoContainer}">
 									<g:Image  ui:field="logoImage"/>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 					</g:HTMLPanel>
 					<!--  Library banner image ends here -->
 					<!--  Profile banner image starts here -->
-					<g:HTMLPanel styleName="{tocStyle1.bannerimageContainer1}" ui:field="profileBannerPanel">
-						<g:HTMLPanel styleName="{tocStyle1.bannerimageCaption1}">
-							  <g:Image styleName="{tocStyle1.imgResponsive} img-circle" ui:field="profImage"/> <tbp:H2Panel ui:field="userTitle"></tbp:H2Panel>
+					<g:HTMLPanel styleName="{tocStyle1.css.bannerimageContainer1}" ui:field="profileBannerPanel">
+						<g:HTMLPanel styleName="{tocStyle1.css.bannerimageCaption1}">
+							  <g:Image styleName="{tocStyle1.css.imgResponsive} img-circle" ui:field="profImage"/> <tbp:H2Panel ui:field="userTitle"></tbp:H2Panel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<!--  Profile banner image end here -->
 					<g:HTMLPanel ui:field="whiteBgContainer" styleName="{tocStyle.whitebg}">
 						<g:HTMLPanel ui:field="marginDiv" styleName="{tocStyle.marginDiv}">
-						    <g:HTMLPanel styleName="{tocStyle1.paginationBlock}">
+						    <g:HTMLPanel styleName="{tocStyle1.css.paginationBlock}">
 							   <g:HTMLPanel ui:field="breadCrumbsPanel">
 							       <!-- <g:Anchor ui:field="mainTitle"/> > <g:Anchor ui:field="firstTitle"/>  -->
 							   </g:HTMLPanel>
-							   <!-- <g:HTMLPanel styleName="col-md-6 {tocStyle1.shareButton}">
+							   <!-- <g:HTMLPanel styleName="col-md-6 {tocStyle1.css.shareButton}">
 							  		 <g:Label  ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
 							  		 <g:TextBox ui:field="shareTxtBox"></g:TextBox>
 							   </g:HTMLPanel> -->
@@ -44,7 +44,7 @@
 							<g:HTMLPanel styleName="{tocStyle.tocShareContainer}">
 							<g:HTMLPanel styleName="col-md-8 col-xs-6 col-sm-8 {tocStyle.folderTitleContainer}">
 								<tbp:H3Panel styleName="{tocStyle.pageHeader}" ui:field="lblFolderTitle"/></g:HTMLPanel>
-								<g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {tocStyle1.shareButton}" ui:field="sharePanel">
+								<g:HTMLPanel styleName="col-md-4 col-xs-6 col-sm-4 {tocStyle1.css.shareButton}" ui:field="sharePanel">
 									<g:Label styleName="{tocStyle.tocShareBtn}" ui:field="shareLbl" text="{i18n.GL0526}" title="{i18n.GL0526}"></g:Label>
 									<g:TextBox styleName="{tocStyle.tocShareTxb}" ui:field="shareTxtBox"></g:TextBox>
 								</g:HTMLPanel>
@@ -74,15 +74,15 @@
 									</br>
 								</p>
 							</g:HTMLPanel>
-						<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{tocStyle1.dropdownListContainerScrollPanel}">
-	            			<g:HTMLPanel ui:field="floderTreeContainer" styleName="{tocStyle1.folderStucture}">
+						<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{tocStyle1.css.dropdownListContainerScrollPanel}">
+	            			<g:HTMLPanel ui:field="floderTreeContainer" styleName="{tocStyle1.css.folderStucture}">
 			   				</g:HTMLPanel>
 						</g:ScrollPanel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="pageNotFoundPanel">
-				    <g:Image styleName="{tocStyle1.pageNotFoundStyle}" url="images/404_message.png" ui:field="errorPageImg"/>
+				    <g:Image styleName="{tocStyle1.css.pageNotFoundStyle}" url="images/404_message.png" ui:field="errorPageImg"/>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
