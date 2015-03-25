@@ -979,9 +979,9 @@ font-size: 31px;
 	margin:10px 0;
 }
 .logStatus{
-	margin-top: -23px;
-position: relative;
-float: right;
+	/* margin-top: -23px; */
+	position: relative;
+	float: right;
 }
 
 .closeButton{
@@ -1132,4 +1132,18 @@ float: right;
 }
 .scrollStudyContainer{
 	overflow-y: auto !important;
+}
+.seemoreText {
+	cursor: pointer;
+	color: #87badd;
+	width: 132px;
+	font-size: 15px;
+	text-align: center;
+	margin: 15px auto 0;
+	background-image: url(images/downarrow.png);
+	background-repeat: no-repeat;
+	background-position: 11px 6px;
+}
+.seelessText {
+	background-image: url(images/uparrow.png);
 }

@@ -1011,6 +1011,7 @@ public class HeaderUc extends Composite implements
 										// hasClasses =
 										// result.getSearchResults().size() > 0
 										// ? true : false;
+										if(result!=null){
 										if (result.getSearchResults() != null) {
 											if (result.getSearchResults()
 													.size() > 0) {
@@ -1037,6 +1038,11 @@ public class HeaderUc extends Composite implements
 													.redirectPlace(
 															PlaceTokens.STUDY);
 										}
+									} else {
+										AppClientFactory.getPlaceManager()
+												.redirectPlace(
+														PlaceTokens.STUDY);
+									}
 									}
 								});
 			} else {
