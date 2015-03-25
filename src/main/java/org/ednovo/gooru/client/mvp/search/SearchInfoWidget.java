@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.search;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -588,7 +589,23 @@ public class SearchInfoWidget extends Composite {
 			generalLbl.setVisible(false);
 		}
 	}
-
+	/**
+	 * This method is used to get skills list in map
+	 * @param skillsList
+	 * @return
+	 */
+	public List<Map<String,String>> getCenturysMap(List<StandardFo> skillsList){
+		List<Map<String,String>> centuryList=new ArrayList<Map<String,String>>();
+		if(skillsList!=null && skillsList.size()>0){
+			for(int i=0;i<skillsList.size();i++){
+				Map<String, String> standardMap=new HashMap<String, String>();
+				standardMap.put(STANDARD_CODE, skillsList.get(i).getLabel());
+				standardMap.put(STANDARD_DESCRIPTION, skillsList.get(i).getDescription()!=null?skillsList.get(i).getDescription():"");
+				centuryList.add(standardMap);
+			}
+		}
+		return centuryList;
+	}
 	/**
 	 * To set the Host values in search Info
 	 * @param host {@link List}
@@ -736,23 +753,22 @@ public class SearchInfoWidget extends Composite {
 		}
 	}
 	public void renderCentury(FlowPanel centuryContainer, List<StandardFo> centuryList) {
+		List<Map<String,String>> centuryMap=getCenturysMap(centuryList);
 		centuryContainer.clear();
-		
 		if (centuryList != null) {
 			centuryInfo.setVisible(false);
 			centuryContentContainer.setVisible(true);
 			int count = 0;
 			FlowPanel toolTipwidgets = new FlowPanel();
 			for(int centuryCount=0; centuryCount<centuryList.size();centuryCount++) {
-				String stdCode = centuryList.get(centuryCount).getCodeId()+"";
 				String stdDec = centuryList.get(centuryCount).getLabel();
 				if (count > 2) {
 					if (count < 18){
-						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdDec, stdDec);
 						toolTipwidgets.add(standardItem);
 					}
 				} else {
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec));
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdDec), new Label(stdDec),centuryMap);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getcenturyMoreInfo());
 					centuryContainer.add(toolTipUc);
 				}
@@ -766,7 +782,8 @@ public class SearchInfoWidget extends Composite {
 			if (centuryList.size() > 2) {
 				Integer moreStandardsCount = centuryList.size() - 3;
 				if (moreStandardsCount >0){
-					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets);
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets,centuryMap);
+					toolTipUc.setStandards(false);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
 					centuryContainer.add(toolTipUc);
 					centuryContentContainer.setVisible(true);

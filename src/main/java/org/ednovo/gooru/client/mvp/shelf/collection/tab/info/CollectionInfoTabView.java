@@ -962,7 +962,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 		addCourseBtn.setVisible(true);
 		removeCourseBtn.setVisible(false);
-		
+		selectedValuesFromAutoSuggest.clear();
 	}
 
 	@Override
