@@ -124,8 +124,8 @@ public class MetadataWidget extends Composite {
 		if(collectionDo.getMetaInfo()!=null&&collectionDo.getMetaInfo().getCourse()!=null){
 			renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 		}
-		renderStandards(standardsContainer,getStandardsMap((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getStandards()!=null)?this.collectionDo.getMetaInfo().getStandards():null,true),true);
-		renderStandards(centuryContainer,getStandardsMap((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getSkills()!=null)?this.collectionDo.getMetaInfo().getSkills():null,false),false);
+		renderStandards(standardsContainer,getStandardsMap(((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getStandards()!=null)?this.collectionDo.getMetaInfo().getStandards():null),true),true);
+		renderStandards(centuryContainer,getStandardsMap(((this.collectionDo.getMetaInfo()!=null&&this.collectionDo.getMetaInfo().getSkills()!=null)?this.collectionDo.getMetaInfo().getSkills():null),false),false);
 		renderLanguageObjective(collectionDo.getLanguageObjective()!=null?collectionDo.getLanguageObjective():"");
 		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges()!=null?collectionDo.getDepthOfKnowledges():null);
 		renderInstructionalMethod(collectionDo.getInstructionalMethod()!=null?collectionDo.getInstructionalMethod():null);
