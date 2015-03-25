@@ -362,7 +362,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					successPopupVc.center();
 				}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
 					successPopupVc.setWidth("550px");
-					successPopupVc.setHeight("502px");
+					//successPopupVc.setHeight("502px");
 					successPopupVc.center();
 				}
 				
