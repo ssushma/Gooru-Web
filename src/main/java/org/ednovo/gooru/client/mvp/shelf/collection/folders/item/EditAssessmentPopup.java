@@ -262,9 +262,10 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 												AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,requireLoginYes.getValue().toString(), new SimpleAsyncCallback<FolderDo>() {
 												@Override
 												public void onSuccess(FolderDo result) {
-													clickEventOnSaveAssessmentHandler(result);
-													}
-												 });
+													if(result!=null)
+													  clickEventOnSaveAssessmentHandler(result);
+												 }
+												});
 											 }
 											}
 										});
