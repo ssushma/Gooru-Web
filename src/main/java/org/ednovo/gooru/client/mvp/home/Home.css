@@ -2080,7 +2080,7 @@ a.secondary:hover {
 }
 
 .learnMoreContainer {
-	margin: 32px auto;
+	margin: 15px auto;
 	text-align: center;
 	border-bottom: 1px solid #cacaca;
 	height: 10px;
@@ -2247,6 +2247,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 	right: 12%;
 	position: absolute;
 	text-align: center;
+	padding-top: 21px;
 }
 
 .bannerInner .caption h2 {
@@ -2303,7 +2304,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 
 .getStart .getInnerRight {
 	background: #ffffff;
-	padding: 15px 15px;
+	padding: 20px 15px;
 	margin-bottom: 20px;
 	border-radius: 4px 4px;
 }
@@ -2381,6 +2382,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 
 .mission p {
 	font-size: 14px;
+	margin: 0 0 10px;
 }
 
 .mission .col-md-4 {
@@ -2418,10 +2420,12 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 	font-size: 30px;
 	font-weight: bold;
 	margin-top: 0;
+	margin-bottom: 10px;
 }
 
 .yourSupport p {
 	font-size: 14px;
+	margin-bottom: 10px;
 }
 
 .yourSupport h3 {
@@ -2625,16 +2629,17 @@ footer .col-md-4 {
 	background: #ffffff;
 	border-radius: 4px 4px;
 	padding: 10px 10px;
-	margin-bottom: 15px;
 }
 
 .searchContainer .sInner p {
 	font-size: 13px;
 	text-align: left;
+	margin-bottom: 15px;
 }
 
 .searchContainer .sInner p.searchFind {
 	text-align: center;
+	margin-bottom: 5px;
 }
 
 .searchContainer .col-md-3 .animation {
@@ -3075,4 +3080,19 @@ color: #ffffff !important;
     width: 90px;
     height: 90px;
     background-position: -284px -2px;
+}
+
+.spacing {
+	margin-bottom: 7px !important;
+}
+
+.communityblock .h4 {
+	font-size: 18px;
+	font-weight: normal;
+	margin-bottom: 20px;
+}
+
+.contributors {
+	margin-top: 10PX;
+	margin-bottom: 10PX;
 }
