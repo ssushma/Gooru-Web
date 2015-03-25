@@ -73,7 +73,7 @@
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL2037}"></tbp:H2Panel>
 								<div class="clearfix"></div>
 								<tbp:PPanel  text="{i18n.GL2123}"/>
-								<tbp:PPanel>
+								<tbp:PPanel styleName="{res.css.spacing}">
 								    <g:Button styleName="primary {res.css.btnBlock}" ui:field="btnMoreOnCollections" text="{i18n.GL1813}"></g:Button>
 								</tbp:PPanel>
 						   </div>
@@ -88,7 +88,7 @@
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL0526}"></tbp:H2Panel>
 								<div class="clearfix"></div>
 								<tbp:PPanel text="{i18n.GL2124}"/>
-								<tbp:PPanel>
+								<tbp:PPanel styleName="{res.css.spacing}">
 									<g:Button styleName="primary {res.css.btnBlock}" ui:field="btnMoreOnClasses" text="{i18n.GL2125}"></g:Button>    
 								</tbp:PPanel>
 								</div>
@@ -103,7 +103,7 @@
 								<tbp:H2Panel styleName="text-center" text="{i18n.GL2126}"/>
 								<div class="clearfix"></div>
 								<tbp:PPanel text="{i18n.GL2127}"/>
-								<tbp:PPanel>
+								<tbp:PPanel styleName="{res.css.spacing}">
 									<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn" text="{i18n.GL2128}"></g:Button>
 								</tbp:PPanel>	    
 								</div>
@@ -122,7 +122,7 @@
 			    <tbp:H2Panel  text="{i18n.GL2130}"/>
 			    <tbp:H4Panel  text="{i18n.GL2131}"/>
 				<p>
-					<g:HTMLPanel ui:field="contributorsContainer" />
+					<g:HTMLPanel  styleName="{res.css.contributors}" ui:field="contributorsContainer" />
 				</p>
 				<div class="clearfix"></div>
 			</div>
@@ -1005,7 +1005,7 @@
 											</p>
 										</div>
 									</div>
-									<div class="col-md-6 text-center">
+									<div class="col-md-6 col-sm-6 text-center">
 										<p>
 										<div class="spriteLandingPage spriteLandingPageGooruBadge img-responsive"></div>
 										</p>

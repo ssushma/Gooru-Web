@@ -643,5 +643,9 @@ public interface HomeCBundle extends ClientBundle{
 		String spriteRemix();
 
 		String spriteShare();
+		
+		String spacing();
+		
+		String contributors();
 	}
 }

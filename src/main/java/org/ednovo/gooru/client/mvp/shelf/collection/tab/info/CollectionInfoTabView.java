@@ -177,7 +177,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	private static final String NO_MATCH_FOUND = i18n.GL0723();
 	
-	CourseListUc courseListUc;
+	CourseListUc courseListUc=null;
 	
 	List<String> standardPreflist=null;
 	
@@ -1261,11 +1261,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public void onAddCourseClick(ClickEvent clickEvent) {final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 		int left = (Window.getClientWidth() - 542) /2;
 		int top = (Window.getClientHeight() - 469) /2;
-		
 		if (courseListUc == null){
 			courseListUc=new CourseListUc(collectionDo);
 		}else{
-			courseListUc.setDefaultCourseData();
+			courseListUc.setDefaultCourseData(collectionDo);
 		}			
 		
 		courseListUc.center();
@@ -1545,6 +1544,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 		removeCourseBtn.setVisible(false);
 		getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
+		
 		courseCode="";
 	}
 	

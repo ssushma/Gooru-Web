@@ -1,3 +1,10 @@
+.bannerImageContainer {
+	position: relative;
+	height: 115px;
+	background-size: 100% auto !important;
+	margin-top: -36px;
+	}
+	
 .assignmentMainContainer {
 	float: left;
 	padding: 0px 25px 0px 18px;
@@ -790,12 +797,6 @@
 }
 
 /* Banner Image  css here*/
-.bannerImageContainer {
-	position: relative;
-	height: 177px;
-	background-size: 100% auto !important;
-}
-
 .bannerImageCaption {
 	position: absolute;
 	bottom: 0;
@@ -806,7 +807,7 @@
 .bannerImageCaption h2 {
 	font-weight: bold;
 	color: #ffffff;
-	font-size: 33px;
+	font-size: 26px;
 	/* background-color: rgba(16, 118, 187, 0.5); */
 	padding: 10px 0px;
 	margin:0 0;
@@ -890,3 +891,4 @@
 	width: 1000px;
 }
 
+	
