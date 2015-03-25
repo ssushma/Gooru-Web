@@ -2080,7 +2080,7 @@ a.secondary:hover {
 }
 
 .learnMoreContainer {
-	margin: 15px auto;
+	margin: 0px auto;
 	text-align: center;
 	border-bottom: 1px solid #cacaca;
 	height: 10px;
@@ -2629,6 +2629,7 @@ footer .col-md-4 {
 	background: #ffffff;
 	border-radius: 4px 4px;
 	padding: 10px 10px;
+	margin-bottom: 15px;
 }
 
 .searchContainer .sInner p {
@@ -2638,7 +2639,7 @@ footer .col-md-4 {
 }
 
 .searchContainer .sInner p.searchFind {
-	text-align: center;
+	text-align: left;
 	margin-bottom: 5px;
 }
 
