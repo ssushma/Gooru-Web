@@ -615,7 +615,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	@UiHandler("nextCollectionThumbnail")
 	public void nextThumbnailErrorImage(ErrorEvent event){
-		nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");
+		//nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
 	
 
@@ -1532,9 +1534,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	public void displayNextCollectionDetails(final CollectionDo nextCollectionDo,final String subjectId,final String lessonId,final String libraryType){
-
+		
 		if(nextCollectionDo!=null){
-			
 			this.nextCollectionDo=nextCollectionDo;
 			hideNextCollectionContainer(true);
 			whatNextCollectionTitle.setText(nextCollectionDo.getTitle().toString().length()>10?nextCollectionDo.getTitle().substring(0,10)+"...":nextCollectionDo.getTitle());
@@ -1587,12 +1588,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext)
 	{
 		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-		
+		this.folderCollectionWhatsNext=folderCollectionWhatsNext;
 		if(folderCollectionWhatsNext.getTitle()!=null)
 		{
 			hideNextCollectionContainer(false);	
 			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>10?folderCollectionWhatsNext.getTitle().substring(0,10)+"...":folderCollectionWhatsNext.getTitle());
 			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
+			String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
+			StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");
 			nextCollectionThumbnail.setUrl(folderCollectionWhatsNext.getThumbnails().getUrl());	
 			int resourcesCounter = folderCollectionWhatsNext.getResourceCount();
 			int questionsCounter = folderCollectionWhatsNext.getQuestionCount();

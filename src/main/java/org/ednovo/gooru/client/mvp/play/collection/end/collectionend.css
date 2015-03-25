@@ -504,8 +504,9 @@
 }
 
 .collections{
-	background:#333333;
-	padding:15px 0;
+	/* background:#333333; 
+	padding:15px 0;*/
+	padding: 0 0 27px 0;
 }
 .Playlast{
 	min-height:140px;
@@ -513,6 +514,7 @@
 .colleDescriptionBig{
 	font-weight:bold;
 	font-size:20px;
+	margin-bottom: 30px;
 	color:#ffffff
 }
 .whitebg{
@@ -523,7 +525,8 @@
 	width:100%;
 }
 .block{
-	padding: 30px 0;
+	/* padding: 30px 0; */
+	padding: 11px 0;
 }
 .timespend{
 	display: inline-block;
@@ -556,7 +559,7 @@
 }
 .PlayBoxTime{
 	  display: inline-block;
-	   width:200px;
+	   width:125px;
 	   text-align:center;
 	   vertical-align:top;
 }
