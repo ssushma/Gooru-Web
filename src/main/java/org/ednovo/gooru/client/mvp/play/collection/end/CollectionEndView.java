@@ -768,7 +768,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			successPopupVc.center();
 		}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
 			successPopupVc.setWidth("550px");
-			successPopupVc.setHeight("502px");
+			//successPopupVc.setHeight("502px");
 			successPopupVc.center();
 		}
 	    //till here 

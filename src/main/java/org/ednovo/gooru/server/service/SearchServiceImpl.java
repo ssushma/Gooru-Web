@@ -69,6 +69,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +87,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	/**
 	 * 
 	 */
+	private static Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
+	
 	private static final long serialVersionUID = 4286188874651640611L;
 	
 	private static final String RESOURCE = "resource";
@@ -216,10 +220,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("search call ::::::"+e.getMessage());
 		}
 		return searchDo;
 		}catch(Exception e){
+			logger.error("search call 1 ::::::"+e.getMessage());
 		}
 		return searchDOEmpty;
 	}

@@ -1410,3 +1410,15 @@ x {
     height: 90px;
     background-position: -284px -2px;
 }
+.spacing {
+	margin-bottom: 7px !important;
+}
+.communityblock .h4 {
+	font-size: 18px;
+	font-weight: normal;
+	margin-bottom: 20px;
+}
+.contributors {
+	margin-top: 10PX;
+	margin-bottom: 10PX;
+}

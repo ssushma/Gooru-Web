@@ -166,6 +166,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
 						.toString(), CollectionDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new CollectionDo();
@@ -190,6 +191,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				});
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return new ArrayList<CollectionItemDo>();
 	}
@@ -225,6 +227,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				});
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return new ArrayList<CollectionDo>();
 	}
@@ -244,6 +247,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemDo>>() {
 				});
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new ArrayList<CollectionItemDo>();
@@ -275,7 +279,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderListDo>() {});
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		return new FolderListDo();
 	}
 
@@ -302,7 +308,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			folderDo = deserializeCreatedFolder(jsonRep);
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return folderDo;
 	}
@@ -312,7 +320,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderDo>() {});
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		return new FolderDo();
 	}
 
@@ -337,7 +347,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			logger.info("moveCollectionIntoFolder : "+url);
 			logger.info("folderObject 1 :" +folderObject.toString() );
 		} catch (Exception e) {
-			
+			logger.error(e.getMessage());
 		}
 		
 	}
@@ -372,7 +382,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			collectionDo = deserializeCreatedCollInFolder(jsonRep);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return collectionDo;
 	}
@@ -382,7 +392,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<CollectionDo>() {});
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		return new CollectionDo();
 	}
 
@@ -413,7 +425,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				folderObject.put(PERFORMANCE_TASKS, performance);
 			}
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 
 	@Override
@@ -441,6 +455,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			collectionDo = deserializeCreatedCollInFolder(jsonRep);
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return collectionDo;
 	}
@@ -472,6 +487,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		try {
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
 		}catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -495,7 +511,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderTocDo>() {});
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		return new FolderTocDo();
 	}
 	
@@ -529,7 +547,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				}
 				return folderList;
 			}catch(Exception e){
-
+				logger.error(e.getMessage());
 			}
 		}
 		return folderList;

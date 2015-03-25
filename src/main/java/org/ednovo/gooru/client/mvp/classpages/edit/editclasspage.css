@@ -1302,3 +1302,9 @@ margin-bottom: -10px;
 	display: inline-block;
 	top: 0;
 }
+.assignementOrderHeaderText{
+  margin: 20px auto;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}

@@ -75,6 +75,13 @@ public class AppPopUp extends PopupPanel {
 		closeBtn = new HTMLEventPanel("");
 
 		closeBtn.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeButton());
+		closeBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+		});
 		row.add(closeBtn);
 		headerPanel.add(row);
 		innerPanel.add(headerPanel);
