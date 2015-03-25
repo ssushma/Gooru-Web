@@ -357,13 +357,15 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 
 				}*/
 				if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
-					successPopupVc.setWidth("550px");
+					/*successPopupVc.setWidth("550px");
 					successPopupVc.setHeight("625px");
-					successPopupVc.center();
+					successPopupVc.center();*/
+					successPopupVc.setPopupPosition(0, 0);
 				}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
-					successPopupVc.setWidth("550px");
-					//successPopupVc.setHeight("502px");
-					successPopupVc.center();
+					/*successPopupVc.setWidth("550px");
+					successPopupVc.setHeight("502px");
+					successPopupVc.center();*/
+					successPopupVc.setPopupPosition(0, 35);
 				}
 				
 	}

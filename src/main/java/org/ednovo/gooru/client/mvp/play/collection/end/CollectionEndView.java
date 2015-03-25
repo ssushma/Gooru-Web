@@ -761,13 +761,15 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		successPopupVc.show();
 	    
 	    if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
-			successPopupVc.setWidth("550px");
+			/*successPopupVc.setWidth("550px");
 			successPopupVc.setHeight("625px");
-			successPopupVc.center();
+			successPopupVc.center();*/
+	    	successPopupVc.setPopupPosition(0, 0);
 		}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
-			successPopupVc.setWidth("550px");
-			//successPopupVc.setHeight("502px");
-			successPopupVc.center();
+			/*successPopupVc.setWidth("550px");
+			successPopupVc.setHeight("502px");
+			successPopupVc.center();*/
+			successPopupVc.setPopupPosition(0, 35);
 		}
 	    //till here 
 	    params.put("assign", "yes");
