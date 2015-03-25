@@ -1172,13 +1172,28 @@ public class ProfileTopicListView extends Composite{
 		/*	successPopupVc.setWidth("500px");*/
 			//successPopupVc.setHeight("657px");
 			successPopupVc.show();
-			successPopupVc.center();
+			/*successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 			}
 			else {				
 				successPopupVc.center();
+			}*/
+			
+			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+				/*successPopupVc.setWidth("550px");
+				successPopupVc.setHeight("625px");
+				successPopupVc.center();*/
+				successPopupVc.setPopupPosition(0, 0);
+			}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+				/*successPopupVc.setWidth("550px");
+				successPopupVc.setHeight("502px");
+				successPopupVc.center();*/
+				successPopupVc.setPopupPosition(0, 35);
+			}else{
+				successPopupVc.center();
 			}
+			
 			
 			params.put(ASSIGN, "yes");
 			params.put("collectionId", collectionId);
@@ -1215,8 +1230,15 @@ public class ProfileTopicListView extends Composite{
 			Window.scrollTo(0, 0);
 		/*	successPopupVc.setWidth("500px");*/
 			//successPopupVc.setHeight("475px");
-			successPopupVc.show();
-			successPopupVc.center();
+			
+			
+			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+				successPopupVc.setPopupPosition(0, 30);
+			}else{
+				successPopupVc.show();
+				successPopupVc.center();
+				
+			}
 			
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);
