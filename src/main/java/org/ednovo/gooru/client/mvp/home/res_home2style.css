@@ -1422,3 +1422,45 @@ x {
 	margin-top: 10PX;
 	margin-bottom: 10PX;
 }
+.spriteLandingPageGooruBadge  {
+	width: 162px;
+	height: 162px;
+	background:
+		url(/images/landing-page/landingpageSprite.png) -104px -2px
+		no-repeat;
+		display: block;
+}
+
+.spriteLandingPage {
+}
+
+.spriteLandingPageFacebookIco {
+    width: 37px;
+    height: 37px;
+    background:
+		url(/images/landing-page/landingpageSprite.png) -22px -2px
+		no-repeat;
+}
+
+.spriteLandingPageGooglePlusIco {
+    width: 37px;
+    height: 37px;
+    background:
+		url(/images/landing-page/landingpageSprite.png) -63px -2px
+		no-repeat;
+}
+.spriteLandingPageTwitterIco {
+    width: 37px;
+    height: 37px;
+    background:
+		url(/images/landing-page/landingpageSprite.png) -438px -2px
+		no-repeat;
+}
+
+.spriteLandingPageYoutubeIco {
+    width: 37px;
+    height: 37px;
+    background:
+		url(/images/landing-page/landingpageSprite.png) -479px -2px
+		no-repeat;
+}
