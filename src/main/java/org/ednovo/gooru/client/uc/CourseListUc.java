@@ -267,7 +267,8 @@ public class CourseListUc extends PopupPanel {
 	 * To set the Default Course data.
 	 */
 	
-	public void setDefaultCourseData(){
+	public void setDefaultCourseData(CollectionDo collectionDo){
+		this.collectionDo=collectionDo;
 		collectionId=collectionDo.getGooruOid();
 		isSelected=false;
 		for(int i = 0; i < libraryCode.size(); i++) {
@@ -337,7 +338,6 @@ public class CourseListUc extends PopupPanel {
 	 * @param action {@link String}
 	 */
 	public void updateCourse(String collectionId, final String courseCode, String action) {
-	  	
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, courseCode, null, null, action, new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
