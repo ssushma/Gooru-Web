@@ -51,6 +51,8 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -668,7 +670,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					logOutToolTip.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 					logOutToolTip.setStyleName("");
 					logOutToolTip.getElement().getStyle().setZIndex(999999);
-					logOutToolTip.setPopupPosition(headerView.getAuthorContainer().getAbsoluteLeft() + 55, headerView.getAuthorContainer().getAbsoluteTop()+15);
+					logOutToolTip.getElement().getStyle().clearLeft();
+					logOutToolTip.getElement().getStyle().setFloat(Float.RIGHT);
+					logOutToolTip.getElement().getStyle().setRight(23, Unit.PCT);
+					logOutToolTip.getElement().getStyle().setTop(15, Unit.PX);
 					logOutToolTip.show();
 				}
 			}

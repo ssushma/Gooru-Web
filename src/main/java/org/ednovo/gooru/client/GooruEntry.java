@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabCBundle;
+import org.ednovo.gooru.client.mvp.folder.toc.FolderContainerCBundle;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionPlaySummaryCBundle;
@@ -57,7 +58,6 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 /**
@@ -190,6 +190,9 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px) {"+CollectionPlaySummaryCBundle.INSTANCE.getResponsive1Style().getText()+"}");
 		
 		CollectionPlaySummaryCBundle.INSTANCE.css().ensureInjected();
+		
+		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+		FolderContainerCBundle.INSTANCE.css().ensureInjected();
 	}
 	
 	
