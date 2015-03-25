@@ -250,6 +250,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 			return value != null ? Integer.parseInt(value) : null;
 		} else {
@@ -519,8 +520,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 					}
 //				}
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			} 
 			catch (ParseException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return userDo;
@@ -541,7 +544,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		JsonRepresentation jsonRep = null;
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		try {
-			System.out.println("jsonRep.getText() : "+jsonRep.getText());
+			logger.info("jsonRep.getText() : "+jsonRep.getText());
 			setLoggedInSessionToken(jsonRep.getJsonObject().getString(TOKEN));
 			V2UserDo v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 			user = v2UserDo.getUser();
@@ -550,9 +553,9 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			setLoggedInEmailId("");
 			setLoggedInDateOfBirth("");
 		} catch (JSONException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return user;
 	}
@@ -570,6 +573,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			user.setToken(v2UserDo.getUser().getToken() != null ? v2UserDo.getUser().getToken() : v2UserDo.getToken());
 
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return user;
 	}	
