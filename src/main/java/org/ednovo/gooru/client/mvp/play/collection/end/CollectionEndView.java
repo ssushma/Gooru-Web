@@ -1601,9 +1601,13 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			int questionsCounter = folderCollectionWhatsNext.getQuestionCount();
 			if(resourcesCounter>0){
 				this.resourceCount.setText(resourcesCounter==1?resourcesCounter+" Resource":resourcesCounter+" Resources");
+			}else{
+				this.resourceCount.setText("");
 			}
 			if(questionsCounter>0){
 				this.questionCount.setText(questionsCounter==1?questionsCounter+" Question":questionsCounter+" Questions");
+			}else{
+				this.questionCount.setText("");
 			}
 			nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 				@Override

@@ -747,4 +747,5 @@
 }
 .displayBlock{
 	display: inline-block;
+	width: 100%;
 }
