@@ -237,6 +237,9 @@ public interface EditClasspageCBundle extends ClientBundle{
         
         String studentStyle();
         String techerStyle();
+        String assignmentProgressStudent();
+        String previousStudent();
+        String nextStudent();
 
 	}
 	@NotStrict

@@ -44,9 +44,11 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -171,6 +173,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isCCSSAvailable==false){
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(commonStandards.getAbsoluteLeft()+3, commonStandards.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
@@ -189,6 +192,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isNGSSAvailable==false){
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(ngss.getAbsoluteLeft()+3, ngss.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
@@ -202,6 +206,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isTEKSAvailable==false){
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(texasKnowledge.getAbsoluteLeft()+3, texasKnowledge.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
@@ -215,6 +220,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isCAAvailable==false){
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(californiaStandards.getAbsoluteLeft()+3, californiaStandards.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);

@@ -110,7 +110,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName,lblAssignmentProgress;
 	
-	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath,assignmentOrderPanel;
+	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath;
 	@UiField HTMLEventPanel panelPrevious,panelNext;
 	
 	@UiField
@@ -214,7 +214,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		lblAssignmentProgress.getElement().setId("lblAssignmentProgress");
 		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1971());
 		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1971());
-		assignmentOrderPanel.getElement().setInnerHTML(i18n.GL2006());
 		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
 		
 		lblNext.addClickHandler(new ClickHandler() {

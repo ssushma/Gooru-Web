@@ -579,7 +579,7 @@
 }
 
 .addAssignment{
-	margin-top: 20px;
+	margin-top: -50px;
 	margin-left:0px !imporant;
 }
 
@@ -884,6 +884,18 @@ margin-bottom: -10px;
 /*	font-weight: bold;	*/
 	margin:15px;
 	margin-bottom: 19px;
+	border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+.assignmentProgressStudent{
+	text-align: center;
+	font-size: 12px; 
+/*	font-weight: bold;	*/
+	margin:15px;
+	margin-bottom: 19px;
+	border-bottom: 1px solid #ccc;
+  padding-top: 15px;
+    padding-bottom: 12px;
 }
 
 .assignmentPath{
@@ -938,10 +950,18 @@ margin-bottom: -10px;
 }
 
 .next, .previous{
-	margin: 55px auto;
+	margin: 20px auto;
 	width: 2%;
 	float: left;
 	height: 5px;
+	margin-bottom:0px;
+}
+.nextStudent, .previousStudent{
+	margin: 78px auto;
+	width: 2%;
+	float: left;
+	height: 5px;
+	margin-bottom:0px;
 }
 
 .rightArrow {
@@ -1117,7 +1137,7 @@ margin-bottom: -10px;
 
 .btnContainer{
 	text-align : center;
-	border-top: 1px solid #CCC;	
+	border-bottom: 1px solid #EBEAEA;	
 }
 
 .btnContainerStyle{
@@ -1232,8 +1252,6 @@ margin-bottom: -10px;
 .assignementOrderHeader{
 	margin: 20px auto; 
 	text-align: center; 
-	font-size: 14px; 
-	font-weight: bold;
 }
 .errorMessage{
 	height: 170px;

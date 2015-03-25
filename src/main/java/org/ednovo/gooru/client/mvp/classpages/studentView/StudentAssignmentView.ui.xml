@@ -40,17 +40,16 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.css.containerProgress} {style.css.containerProgressWidth}" ui:field="panelProgressContainer">
-		    <uc:HTMLEventPanel styleName="{style.css.next}" ui:field="panelPrevious">
+		    <uc:HTMLEventPanel styleName="{style.css.nextStudent}" ui:field="panelPrevious">
 		        <g:Label styleName="{style.css.leftArrow}" ui:field="lblPrevious"></g:Label>
 		    </uc:HTMLEventPanel>
 			<g:HTMLPanel styleName="{style.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
-			    <g:HTMLPanel styleName="{style.css.assignementOrderHeader}" ui:field="assignmentOrderPanel"></g:HTMLPanel>
-			    <g:Label styleName="{style.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
+			    <g:Label styleName="{style.css.assignmentProgressStudent}" ui:field="lblAssignmentProgress" />
 			    <g:HTMLPanel styleName="{style.css.path}">
 					<g:FlowPanel styleName="{style.css.assignmentPath}" ui:field="panelAssignmentProgress" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<uc:HTMLEventPanel styleName="{style.css.previous}" ui:field="panelNext">
+			<uc:HTMLEventPanel styleName="{style.css.previousStudent}" ui:field="panelNext">
 			    <g:Label styleName="{style.css.rightArrow}" ui:field="lblNext"></g:Label>
 			</uc:HTMLEventPanel>
 		</g:HTMLPanel>
