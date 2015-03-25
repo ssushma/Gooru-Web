@@ -615,7 +615,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	@UiHandler("nextCollectionThumbnail")
 	public void nextThumbnailErrorImage(ErrorEvent event){
-		nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+		String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
+		StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");
+		//nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
 	
 
@@ -1532,12 +1534,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	public void displayNextCollectionDetails(final CollectionDo nextCollectionDo,final String subjectId,final String lessonId,final String libraryType){
-
+		
 		if(nextCollectionDo!=null){
-			
 			this.nextCollectionDo=nextCollectionDo;
 			hideNextCollectionContainer(true);
-			whatNextCollectionTitle.setText(nextCollectionDo.getTitle().toString().length()>10?nextCollectionDo.getTitle().substring(0,10)+"...":nextCollectionDo.getTitle());
+			whatNextCollectionTitle.setText(nextCollectionDo.getTitle().toString().length()>20?nextCollectionDo.getTitle().substring(0,20)+"...":nextCollectionDo.getTitle());
 			whatNextCollectionTitle.setTitle(nextCollectionDo.getTitle());
 			nextCollectionThumbnail.setUrl(nextCollectionDo.getThumbnails().getUrl());
 			if(nextCollectionDo!=null&&nextCollectionDo.getCollectionItems()!=null){
@@ -1587,20 +1588,26 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext)
 	{
 		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-		
+		this.folderCollectionWhatsNext=folderCollectionWhatsNext;
 		if(folderCollectionWhatsNext.getTitle()!=null)
 		{
 			hideNextCollectionContainer(false);	
-			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>10?folderCollectionWhatsNext.getTitle().substring(0,10)+"...":folderCollectionWhatsNext.getTitle());
+			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>20?folderCollectionWhatsNext.getTitle().substring(0,20)+"...":folderCollectionWhatsNext.getTitle());
 			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
+			String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
+			StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");
 			nextCollectionThumbnail.setUrl(folderCollectionWhatsNext.getThumbnails().getUrl());	
 			int resourcesCounter = folderCollectionWhatsNext.getResourceCount();
 			int questionsCounter = folderCollectionWhatsNext.getQuestionCount();
 			if(resourcesCounter>0){
 				this.resourceCount.setText(resourcesCounter==1?resourcesCounter+" Resource":resourcesCounter+" Resources");
+			}else{
+				this.resourceCount.setText("");
 			}
 			if(questionsCounter>0){
 				this.questionCount.setText(questionsCounter==1?questionsCounter+" Question":questionsCounter+" Questions");
+			}else{
+				this.questionCount.setText("");
 			}
 			nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 				@Override

@@ -24,12 +24,14 @@
       		<!--  new design start -->
       		<g:FlowPanel styleName="{playerStyle.collectionEnd}">
       			<g:FlowPanel styleName="col-md-12">
-						<g:FlowPanel styleName="{playerStyle.collections}">
-							<g:FlowPanel styleName="">
-								<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
-							</g:FlowPanel>
-						</g:FlowPanel>     
+						
 						<html5:SectionTag styleName="{playerStyle.block}">
+						   <g:FlowPanel styleName="col-md-9">
+						    <g:FlowPanel styleName="{playerStyle.collections}">
+								<g:FlowPanel styleName="">
+									<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
+								</g:FlowPanel>
+					    	</g:FlowPanel>     
       					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.timespend}">
 							<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.collectionEndImageContainer}" >
 								<g:Image ui:field="collectionThumbnail" styleName="{playerStyle.collectionImage}"></g:Image>
@@ -53,13 +55,7 @@
 												<g:Label styleName="{playerStyle.timeTextBig}" ui:field="avgReactionImage"></g:Label>
 											</g:FlowPanel>
 									</g:FlowPanel>
-									<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.whatsnext}" ui:field="nextCollectionContainer">
-										<g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallTxt}" text="{i18n.GL2087}"></g:Label>
-										<g:Image ui:field="nextCollectionThumbnail"></g:Image>
-										<g:Label styleName="{palyerStyleResource.getPlayerStyleResource.bigTxt}" ui:field="whatNextCollectionTitle"></g:Label>
-										<g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallerTxt}" ui:field="resourceCount"></g:Label>
-										<g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallerTxt}" ui:field="questionCount"></g:Label>
-									</g:FlowPanel>
+									
 								</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">
 									<g:FlowPanel styleName="{smallMobile.getPlayerSmallMobile.endButtonsContainer} {palyerStyleResource.getPlayerStyleResource.endButtonsContainer} clearfix">
@@ -73,6 +69,20 @@
 
 					 	</g:FlowPanel>
 					 	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
+					 	</g:FlowPanel>
+					 	<g:FlowPanel styleName="col-md-3">
+					 	    <g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.whatsnext}" ui:field="nextCollectionContainer">
+								 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.smallTxt}" text="{i18n.GL2087}"></g:Label>
+						    	 <g:Image ui:field="nextCollectionThumbnail"></g:Image>
+								 <g:Label styleName="{palyerStyleResource.getPlayerStyleResource.bigTxt}" ui:field="whatNextCollectionTitle"></g:Label>
+								 <g:HTMLPanel styleName="{playerStyle.displayBlock}">
+								     <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="resourceCount"></g:Label>
+									 <g:Label styleName="{playerStyle.resourceCountStyle}" ui:field="questionCount"></g:Label>
+								 </g:HTMLPanel>
+							</g:FlowPanel>
+							
+					 	</g:FlowPanel>
+					 	<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
       				</html5:SectionTag>
       			</g:FlowPanel>
       		</g:FlowPanel>
