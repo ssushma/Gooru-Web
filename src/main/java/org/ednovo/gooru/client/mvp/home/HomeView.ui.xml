@@ -934,11 +934,8 @@
 							<tbp:H3Panel styleName="first" text="{i18n.GL2140}"/>
 								<div class="spriteLandingPage spriteLandingPageMonitorIco"></div>
 							<div class="clearfix"></div>
-							<h4>
-							     <g:Anchor href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg" target="_blank" text="{i18n.GL2141}"></g:Anchor>
-							</h4>
 							<tbp:PPanel styleName="p" text="{i18n.GL2142}"/>
-							<p>
+							<p style="margin-top:10px;">
 								<g:Anchor href="http://about.goorulearning.org/community/events"
 									text="{i18n.GL2143}" target="_blank"></g:Anchor>
 							</p>
