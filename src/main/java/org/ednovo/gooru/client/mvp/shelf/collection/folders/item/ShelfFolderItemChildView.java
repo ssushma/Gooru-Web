@@ -315,12 +315,14 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
-					folderDo.setTitle(result.getTitle());
-					folderDo.setUrl(result.getUrl());
-					folderDo.setGoals(result.getGoals());
-					folderDo.setSharing(result.getSharing());
-					folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
-					itemTitle.setText(folderDo.getTitle());
+					if(result!=null){
+						folderDo.setTitle(result.getTitle());
+						folderDo.setUrl(result.getUrl());
+						folderDo.setGoals(result.getGoals());
+						folderDo.setSharing(result.getSharing());
+						folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+						itemTitle.setText(folderDo.getTitle());
+					}
 					editAssessmentPopup.hide();
 					Window.enableScrolling(true);
 				}

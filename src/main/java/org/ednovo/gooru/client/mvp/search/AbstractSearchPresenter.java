@@ -737,7 +737,6 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	}
 	@Override
     public void getAddCentury(){
-		System.out.println("in1");
 		addToPopupSlot(addCenturyPresenter);
 		getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
     }

@@ -173,12 +173,12 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isCCSSAvailable==false){
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(commonStandards.getAbsoluteLeft()+3, commonStandards.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
 			}
 		});
@@ -192,12 +192,12 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isNGSSAvailable==false){
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(ngss.getAbsoluteLeft()+3, ngss.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
 			}
 		});
@@ -206,12 +206,12 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isTEKSAvailable==false){
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(texasKnowledge.getAbsoluteLeft()+3, texasKnowledge.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
 			}
 		});
@@ -220,14 +220,13 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isCAAvailable==false){
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 					browseStandardsTooltip.show();
 					browseStandardsTooltip.setPopupPosition(californiaStandards.getAbsoluteLeft()+3, californiaStandards.getAbsoluteTop()+33);
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
+					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
-				
 			}
 		});
 	}
