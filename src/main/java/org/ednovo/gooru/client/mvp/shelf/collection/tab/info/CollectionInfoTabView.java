@@ -325,7 +325,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().getAddCentury();
-				
 			}
 		});
 		
@@ -963,6 +962,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addCourseBtn.setVisible(true);
 		removeCourseBtn.setVisible(false);
 		selectedValuesFromAutoSuggest.clear();
+		hilightSelectedValuesFromAutoSuggest.clear();
 	}
 
 	@Override
