@@ -81,5 +81,8 @@ public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCentu
 	void setAddResourceData(Map<Long,String> codeList);
 
 	void setAddResourceDataForTags(ArrayList<String> centuryDo);
-
+	/**
+	 * This will clear the style for selected widgets
+	 */
+	void resetPopupHilightedData();
 }

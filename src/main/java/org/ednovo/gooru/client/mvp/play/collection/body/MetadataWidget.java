@@ -248,6 +248,9 @@ public class MetadataWidget extends Composite {
 				}
 				if (count > 2) {
 					if (count < 18){
+						if(!isStandards){
+							stdDec=stdCode;
+						}
 						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
 						toolTipwidgets.add(standardItem);
 					}

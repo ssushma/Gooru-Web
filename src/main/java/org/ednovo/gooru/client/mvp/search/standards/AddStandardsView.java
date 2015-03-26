@@ -178,7 +178,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
 			}
 		});
@@ -197,7 +196,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
 			}
 		});
@@ -211,7 +209,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
 			}
 		});
@@ -225,7 +222,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
-					Document.get().getBody().getStyle().setOverflowX(Overflow.HIDDEN);
 				}
 			}
 		});

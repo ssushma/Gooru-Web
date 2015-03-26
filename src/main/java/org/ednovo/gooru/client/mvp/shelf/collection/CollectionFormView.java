@@ -684,6 +684,7 @@ public class CollectionFormView extends
 			}
 			public void onKeyUp(KeyUpEvent event) {
 				if(value==0){
+					lblNewAssessmentError.setVisible(false);
 					if(txtNewAssessmentTitle.getText().length()>=50){
 						txtNewAssessmentTitle.setText(txtNewAssessmentTitle.getText().toString().substring(0,50));
 						lblNewAssessmentError.setVisible(true);
@@ -693,6 +694,7 @@ public class CollectionFormView extends
 					}
 				}
 				if(value==1){
+					lblExistingAssessmentError.setVisible(false);
 					if(txtExistingAssessmentTitle.getText().length()>=50){
 						txtExistingAssessmentTitle.setText(txtExistingAssessmentTitle.getText().toString().substring(0,50));
 						lblExistingAssessmentError.setVisible(true);
@@ -702,6 +704,7 @@ public class CollectionFormView extends
 					}
 				}
 				if(value==2){
+					lblExistingAssessmentDescriptionError.setVisible(false);
 					if(txtExistingAssessmentDescription.getText().length()>=300){
 						txtExistingAssessmentDescription.setText(txtExistingAssessmentDescription.getText().toString().substring(0,300));
 						lblExistingAssessmentDescriptionError.setVisible(true);
@@ -1247,7 +1250,8 @@ public class CollectionFormView extends
 	@Override
 	public String getCourseCodeId() {
 		try {
-			if(pnlNewAssessmentContainer.isVisible()){
+			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
+            if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
 				if (!assessmentCourseLisBox.getValue().equals("-1")) {
 					String selectedValue = assessmentCourseLisBox.getValue(assessmentCourseLisBox.getSelectedIndex());
 					if (!selectedValue.equals("-1")) {
