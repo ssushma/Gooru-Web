@@ -162,7 +162,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 		this.res = ResourceSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		resourceDescriptionHtml.getElement().getStyle().setTextAlign(TextAlign.JUSTIFY);
+		resourceDescriptionHtml.getElement().getStyle().setTextAlign(TextAlign.LEFT);
 		// wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(
 				UpdateSearchResultMetaDataEvent.TYPE, setUpdateMetaData);
