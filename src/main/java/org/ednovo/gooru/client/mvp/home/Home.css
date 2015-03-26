@@ -1141,7 +1141,6 @@ button.primary:hover {
 
 /************* Reset password Success**************/
 .resetPwdSuccessContainer {
-	border: 1px solid #CCCCCC;
 	height: 100px !important;
 	margin: -4px 4px 4px;
 }
