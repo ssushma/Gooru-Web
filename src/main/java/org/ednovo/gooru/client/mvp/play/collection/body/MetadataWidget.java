@@ -289,7 +289,7 @@ public class MetadataWidget extends Composite {
 	}
 	
 	public void renderLanguageObjective(String languageObjective){	
-		lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
+		lbllanguageObjective.getElement().setAttribute("style", "white-space: pre-line;");
 		if(!StringUtil.isEmpty(languageObjective)){
 			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);

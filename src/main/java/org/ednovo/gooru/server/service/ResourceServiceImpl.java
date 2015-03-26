@@ -1819,6 +1819,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		logger.info("assessment update API=>"+url);
 		JSONObject assessmentMainObject=new JSONObject();
 		JSONObject assessmentJsonObject=new JSONObject();
+		JSONObject isRequireJsonObject=new JSONObject();
 		try{
 			assessmentJsonObject.put("title",title);
 			assessmentJsonObject.put("url",assessmentUrl);
@@ -1827,6 +1828,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			if(sharing!=null){
 				assessmentJsonObject.put("sharing", sharing);
+			}
+			if(requireLogin!=null){
+				isRequireJsonObject.put("isLoginRequired",requireLogin);
+				assessmentJsonObject.put("settings",isRequireJsonObject);
 			}
 			assessmentMainObject.put("collection",assessmentJsonObject);
 			logger.info("data for update API=>"+assessmentMainObject.toString());
