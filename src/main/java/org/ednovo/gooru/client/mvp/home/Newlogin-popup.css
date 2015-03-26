@@ -102,6 +102,19 @@ body {
 	padding:3px 3px;
 	z-index:999;
 }
+.PopupMainResetSucessStyle{
+	width:550px;
+	color:#515151;
+	position:relative;
+	margin: 0px auto;
+	font-family:arial;
+	font-size:12px;
+	background:#ffffff;
+	border-radius:0 0;
+	border:1px solid #999;
+	padding:3px 3px;
+	z-index:999;
+}
 .PopupMainV1Small{
 	width:450px;
 	color:#515151;

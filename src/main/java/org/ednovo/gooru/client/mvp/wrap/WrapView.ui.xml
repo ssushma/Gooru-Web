@@ -21,8 +21,10 @@
 	        </g:HTMLPanel>
 	    </g:HTMLPanel>
 	    <g:HTMLPanel ui:field="panelDevice"></g:HTMLPanel>
+	     <g:HTMLPanel ui:field="wrapBodyPanel">
 		<sg:HeaderUc ui:field="headerUc" />
 		<g:SimplePanel ui:field="wrapperPanel" styleName="{style.wrapperContent}" />
+		</g:HTMLPanel>
 	</g:HTMLPanel>
 
 </ui:UiBinder> 

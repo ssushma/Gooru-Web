@@ -278,6 +278,7 @@ public interface LoginPopUpCBundle extends ClientBundle{
 
 		String emailSignIn();
 		String forgotPwdMargin();
+		String PopupMainResetSucessStyle();
 	}
 	@NotStrict
 	@Source("Newlogin-popup.css")
