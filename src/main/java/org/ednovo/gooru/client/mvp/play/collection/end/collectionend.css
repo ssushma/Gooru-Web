@@ -747,3 +747,8 @@
 	display: inline-block;
 	width: 100%;
 }
+.summary {
+	margin-top: -62px;
+	position: relative;
+	display: inline-block;
+}
