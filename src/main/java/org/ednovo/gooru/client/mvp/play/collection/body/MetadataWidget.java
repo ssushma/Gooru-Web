@@ -321,8 +321,6 @@ public class MetadataWidget extends Composite {
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
 					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
-				}else{
-					depthofKnowledgeValue = false;
 				}
 			}
 			if(depthofKnowledgeValue){
@@ -345,8 +343,6 @@ public class MetadataWidget extends Composite {
 					Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
 					instructionalmethodPanel.add(lblInstructionMethod);
 					InstructionalmethodContainer.setVisible(true);
-				}else{
-					instructionMethod = false;
 				}
 			}
 			if(instructionMethod){
@@ -368,8 +364,6 @@ public class MetadataWidget extends Composite {
 					audience = true;
 					Label lblaudience = new Label(checkboxSelectedDo.getValue());
 					audiencePanel.add(lblaudience);
-				}else{
-					audience = false;
 				}
 			}
 			if(audience){
@@ -396,8 +390,6 @@ public class MetadataWidget extends Composite {
 					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
 					lbllearningSkills.getElement().setAttribute("style", "display:table");
 					learningAndInnovationSkillPanel.add(lbllearningSkills);
-				}else{
-					learningAndInnovationSkill = false;
 				}
 			}
 			if(learningAndInnovationSkill){

@@ -223,7 +223,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
 		AppClientFactory.getEventBus().addHandler(SetLoginStatusEvent.TYPE, setLoginStatusHandler);
-
+		Window.enableScrolling(false);
 		setLabelsAndIds();
 		setHandlers();
 		
