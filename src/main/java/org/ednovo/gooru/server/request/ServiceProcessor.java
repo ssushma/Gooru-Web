@@ -345,7 +345,7 @@ public class ServiceProcessor {
                setEncodings(Encoding.GZIP);
                Representation decodedRep = null;
                Representation representation=getClientResource().put(formData);
-               if(representation!=null && !StringUtil.isEmpty(representation.getText())){
+               if(representation!=null){
             	   decodedRep = new DecodeRepresentation(representation);
                }
                // Get the representation as an JsonRepresentation

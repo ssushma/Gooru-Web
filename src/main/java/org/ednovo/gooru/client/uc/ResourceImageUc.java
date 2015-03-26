@@ -28,10 +28,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -87,6 +89,8 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 	
 	private static final String NULL = "null";
+	
+	String selectedFolderId = "";
 
 //	private static final String DEFAULT_THUMBNAIL = "slides/thumbnail.jpg";
 
@@ -382,14 +386,48 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
 			}else{
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
-					String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+					final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+					final HashMap<String,String> params = new HashMap<String,String>();
+					if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+						selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o3");
+					}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+						selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
+					}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+						selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
+					}	
+					params.put("id", collectionId);
+					params.put("rid", gooruOid);
+					if(!selectedFolderId.isEmpty())
+					{
+					AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,false, new SimpleAsyncCallback<FolderTocDo>() {
+						@Override
+						public void onSuccess(FolderTocDo folderListDo) {
+							for(int i=0;i<folderListDo.getCollectionItems().size();i++)
+							{
+								if(collectionId.equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
+								{
+									params.put("folderId", selectedFolderId);
+									params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
+									if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
+										params.put("tab", "narration");
+									}
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+									break;
+								}
+							}
+						}
+					});
+					}
+					else
+					{
 					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
-						
-						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
-						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-					}else{
-						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid);
-						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+						params.put("tab", "narration");
+					}
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);			
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 					}
 				}else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){

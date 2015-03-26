@@ -74,7 +74,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	@UiField
 	HeaderUc headerUc;
 
-	@UiField HTMLPanel panelWrapper, panelDevice,searchPush,menuRight, resorceSearchFilters, collectionSearchFilters;
+	@UiField HTMLPanel panelWrapper, panelDevice,searchPush,menuRight, resorceSearchFilters, collectionSearchFilters,wrapBodyPanel;
 	
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 	
@@ -95,7 +95,8 @@ public class WrapView extends BaseView implements IsWrapView {
 	public WrapView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
-		panelWrapper.getElement().setId("wrapper");	
+		panelWrapper.getElement().setId("wrapper");
+		wrapBodyPanel.getElement().setId("main");
 		headerUc.getElement().setId("homeHeaderUc");
 		wrapperPanel.getElement().setId("spnlWrapperPanel");
 		searchPush.getElement().setId("searchPush");

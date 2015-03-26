@@ -239,6 +239,10 @@ body {
 	width:99% !important;
 }
 
+.popupcornerBg .form-control {
+	margin-bottom: 0px;
+}
+
 .forgotPasswordLink {
 	text-align: left;
 }
@@ -253,8 +257,8 @@ body {
 }
 
 .loginPopupbtnContainer {
-	margin-top: 15px;
-	margin-bottom: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .haveAccount {
