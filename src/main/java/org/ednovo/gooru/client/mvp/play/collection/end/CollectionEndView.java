@@ -1594,7 +1594,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(folderCollectionWhatsNext.getTitle()!=null)
 		{
 			hideNextCollectionContainer(false);	
-			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle().toString().length()>20?folderCollectionWhatsNext.getTitle().substring(0,20)+"...":folderCollectionWhatsNext.getTitle());
+			whatNextCollectionTitle.setText(folderCollectionWhatsNext.getTitle());
 			whatNextCollectionTitle.setTitle(folderCollectionWhatsNext.getTitle());
 			String collectionType=StringUtil.isEmpty(folderCollectionWhatsNext.getCollectionType())?null:folderCollectionWhatsNext.getCollectionType();
 			StringUtil.setDefaultImages(collectionType, nextCollectionThumbnail, "toc");
