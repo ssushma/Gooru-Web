@@ -101,16 +101,13 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				selectedValues.clear();
 			}
 		});
-		
-	
 	
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(AddCenturyBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		AddCenturyBundle.INSTANCE.css().ensureInjected();
 		appPopUp.setViewTitle(i18n.GL3121_1());
-		if(contentsDiv!= null)
-		{
+		if(contentsDiv!= null){
 		contentsDiv.getElement().setAttribute("style", "overflow-y:auto;max-height:440px;");
 		}
 	}
@@ -124,7 +121,8 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	/**
 	 * This method is used for to reset the style for the title widgets
 	 */
-	private void resetPopupHilightedData() {
+	@Override
+	 public void resetPopupHilightedData() {
 		callResetData(ulCongitiveAndStrategies);
 		callResetData(ulKeyContentKnowledge);
 		callResetData(ulKeyLearningSkills);
