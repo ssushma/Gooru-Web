@@ -64,6 +64,7 @@ public class ResourceDeserializer extends DeSerializer {
 	private static final String DATA = "data";
 	private static final String DURATION = "duration";
 	private static final String ERROR = "error";
+	private static final String ERROR_MESSAGE = "errorMessage";
 	private static final String GOORU_UID = "gooruUId";
 	private static final String TOKEN_EXPIRED = "tokenExpired";
 	private static final String USER = "user";
@@ -142,17 +143,24 @@ public class ResourceDeserializer extends DeSerializer {
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @return forgotPassword
 	 */
-	public Map<String, Object> forgotPassword(JsonRepresentation jsonRep) {
+	public Map<String, Object> forgotPassword(JsonRepresentation jsonRep,int code,String errorMessage, ResponseStatusDo responseDo) {
 		JSONObject jsonObject;
 		Map<String, Object> forgotPassword = new HashMap();
-		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				jsonObject = jsonRep.getJsonObject();
-				forgotPassword.put(ERROR, (getJsonString(jsonObject, ERROR)));
-				forgotPassword.put(GOORU_UID, (getJsonString(jsonObject, GOORU_UID)));
+				if(code==400 || code==404 ){
+					forgotPassword.put("code", 400);
+					forgotPassword.put("errorCode", responseDo.getErrorCode());
+					forgotPassword.put("errorMessage", responseDo.getErrorMessage());
+					forgotPassword.put("status", responseDo.getStatus());
+				}else{
+					if(jsonRep != null && jsonRep.getSize() != -1){
+						jsonObject = jsonRep.getJsonObject();
+						forgotPassword.put(GOORU_UID, (getJsonString(jsonObject, GOORU_UID)));
+					}
+				}
 			} catch (JSONException e) {
 			}
-		}
+		/*}*/
 		return forgotPassword;
 	}
 	
