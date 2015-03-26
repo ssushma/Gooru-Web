@@ -166,6 +166,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 			}
 			public void onKeyUp(KeyUpEvent event) {
 				if(value==1){
+					lblExistingAssessmentError.setVisible(false);
 					if(txtExistingAssessmentTitle.getText().length()>=50){
 						txtExistingAssessmentTitle.setText(txtExistingAssessmentTitle.getText().toString().substring(0,50));
 						lblExistingAssessmentError.setVisible(true);
@@ -175,6 +176,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 					}
 				}
 				if(value==2){
+					lblExistingAssessmentDescriptionError.setVisible(false);
 					if(txtExistingAssessmentDescription.getText().length()>=300){
 						txtExistingAssessmentDescription.setText(txtExistingAssessmentDescription.getText().toString().substring(0,300));
 						lblExistingAssessmentDescriptionError.setVisible(true);
