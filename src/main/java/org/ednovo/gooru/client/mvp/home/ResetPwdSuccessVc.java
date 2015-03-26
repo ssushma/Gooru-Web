@@ -87,6 +87,9 @@ public class ResetPwdSuccessVc extends Composite{
 		
 		appPopUp.show();
 		appPopUp.center();
+		appPopUp.getMainPanel().removeStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVVSmall());
+		appPopUp.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVSmall());
+		appPopUp.getMainPanel().addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainResetSucessStyle());
 		okBtnUc.setText(i18n.GL0190());
 		okBtnUc.getElement().setId("btnOkBtnUc");
 		okBtnUc.getElement().setAttribute("alt",i18n.GL0190());
