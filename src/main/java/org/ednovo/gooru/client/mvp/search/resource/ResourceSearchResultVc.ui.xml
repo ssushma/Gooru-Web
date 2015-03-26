@@ -11,7 +11,7 @@
 	<sea:ResourceSearchResultWrapperVc
 		ui:field="wrapperVcr" styleName="{res1.css.panel} panel panel-default">
 		<sea:content>
-			<g:FlowPanel styleName="col-md-9 col-sm-9 col-xs-8 thumbBlock">
+			<g:FlowPanel styleName="col-md-12 col-sm-12 col-xs-12 thumbBlock">
 				<uc:ResourceImageUc ui:field="resourceImageUc"/>
 				<g:FlowPanel	styleName="{res1.css.resourceHeaderTextPanel} col-md-8 {res.css.paddingClear}"
 					ui:field="resourceTitlePanel">
