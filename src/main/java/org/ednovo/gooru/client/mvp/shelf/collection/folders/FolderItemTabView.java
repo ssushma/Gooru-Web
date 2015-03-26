@@ -271,7 +271,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		loadingImage.getElement().setId("pnlLoadingImage");
 		folderContentBlock.getElement().setId("vpnlFolderContentBlock");
 		
-		organizeTitleLbl.getTextBoxSource().getElement().setAttribute("style", "width: 338px !important;");
+		organizeTitleLbl.getTextBoxSource().getElement().setAttribute("style", "width: 338px !important; height: 29px !important;");
 	}
 	
 	public class AddNewFolderClick implements ClickHandler {
