@@ -430,7 +430,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
-		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")){
+		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")||resourceTypeName.equalsIgnoreCase("vimeo/video")){
 			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
