@@ -502,8 +502,8 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep!=null && jsonResponseRep.getJsonRepresentation()!=null){
 			folderTocDo =deserializeFolderTocList(jsonResponseRep.getJsonRepresentation());
-			folderTocDo.setStatusCode(jsonResponseRep.getStatusCode());
 		}
+		folderTocDo.setStatusCode(jsonResponseRep.getStatusCode());
 		return folderTocDo;
 	}
 	public FolderTocDo deserializeFolderTocList(JsonRepresentation jsonRep) {
