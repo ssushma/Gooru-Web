@@ -889,6 +889,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			authorImage.setVisible(false);
 			lblNarrationText.setVisible(false);
 			lblNarrationText.setText("");
+			lblSeeMore.setVisible(false);
 		}
 	}
 	private String removeHtmlTags(String html){
