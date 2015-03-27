@@ -1338,3 +1338,7 @@ x {
 	margin-top: 10PX;
 	margin-bottom: 10PX;
 }
+.caption p button#btnHomeSignUp {
+	font-size: 12px;
+    margin-top: -1px;
+}
