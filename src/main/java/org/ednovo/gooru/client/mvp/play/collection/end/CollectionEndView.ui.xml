@@ -88,6 +88,9 @@
       		</g:FlowPanel>
       	</g:FlowPanel>
       		<!--  new design end -->
+      		
+      		<g:HTMLPanel styleName="{playerStyle.summary}">
+      		
       	<g:FlowPanel styleName="row">
 	      	<g:FlowPanel styleName="col-md-12 {playerStyle.whitebg}">
 				<html5:SectionTag styleName="{palyerStyleResource.getPlayerStyleResource.endPageIframe}" ui:field="dataInsightsPanel">
@@ -207,6 +210,7 @@
 			    </g:HTMLPanel>
 			</g:HTMLPanel>
 		 </html5:SectionTag>
+		 </g:HTMLPanel>
 		</g:HTMLPanel>
         </g:FlowPanel>  
 </ui:UiBinder>

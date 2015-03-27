@@ -1250,7 +1250,8 @@ public class CollectionFormView extends
 	@Override
 	public String getCourseCodeId() {
 		try {
-			if(pnlNewAssessmentContainer.isVisible()){
+			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
+            if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
 				if (!assessmentCourseLisBox.getValue().equals("-1")) {
 					String selectedValue = assessmentCourseLisBox.getValue(assessmentCourseLisBox.getSelectedIndex());
 					if (!selectedValue.equals("-1")) {

@@ -155,8 +155,8 @@ public class ResetPasswordVc extends Composite{
 			resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
 			resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
 			resetNewPwdTxtBox.getElement().setId("txtNewPwd");
-			resetNewPwdTxtBox.getElement().getStyle().setWidth(60, Unit.PCT);
-			resetConfirmPwdTxtBox.getElement().getStyle().setWidth(60, Unit.PCT);
+			resetNewPwdTxtBox.getElement().setAttribute("style", "width:60% !important;");
+			resetConfirmPwdTxtBox.getElement().setAttribute("style", "width:60% !important;");
 			newPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
 					.passwordErrorLabel());
 			newPwdValidationUc.setVisible(false);

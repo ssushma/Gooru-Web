@@ -250,6 +250,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public Map<String, Object> forgotPassword(String emailId) {
 		JsonRepresentation jsonRep = null;
+		String message="";
 		Map<String, String> params = new HashMap<String, String>();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FORGOT_PASSWORD, params, getLoggedInSessionToken());
 		JSONObject forgotPasswordObject = new JSONObject();
@@ -264,7 +265,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		getLogger().info("forgot password url request data::::"+forgotPasswordObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),forgotPasswordObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return resourceDeserializer.forgotPassword(jsonRep);
+		message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";
+		return resourceDeserializer.forgotPassword(jsonRep,jsonResponseRep.getStatusCode(),message, jsonResponseRep.getResponseDo() !=null ? jsonResponseRep.getResponseDo() : null); 
 	}
 
 	@Override
@@ -275,13 +277,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JSONObject formData = new JSONObject();
 		String message="";
 		try {
-			
 			String decryptedPwd = StringUtil.getDecryptedData(password);
-			
 			formData.put(TOKEN, token);
 			formData.put(PWD, decryptedPwd);
 			formData.put(MAIL_CONFORMATION, mailConfirmationUrl);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
+			getLogger().info("resetCredential url post::::::"+url);
+			getLogger().info("resetCredential form data ::::::"+formData.toString());
 			jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			message = jsonResponseRep.getResponseDo() != null ? jsonResponseRep.getResponseDo().getErrorMessage() : "";
