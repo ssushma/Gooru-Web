@@ -55,6 +55,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	private boolean isStandards=true;
 	String newMsg;
 	int Count;
+	boolean isStandardsTitle = false;
 	
 	List<Map<String, String>> standards = null;
 	
@@ -124,16 +125,24 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 			tooltipPopUpUc = new DownToolTipUc();
 			tooltipPopUpUc.getElement().setAttribute("style", "z-index: 99999;");
 			tooltipPopUpUc.setContent(toolTipWidget);
+			isStandardsTitle = true;
+		}else{
+			isStandardsTitle = false;
 		}
 	}
 	
 	@Override
 	public void onClick(ClickEvent event){
+		StandardsPopupVc standardsPopupVc;
 		if (standards.size()>1){
 			if (tooltipPopUpUc != null) {
 				tooltipPopUpUc.hide();
 			}
-			StandardsPopupVc standardsPopupVc = new StandardsPopupVc(standards,isStandards());
+			if(isStandardsTitle){
+				 standardsPopupVc = new StandardsPopupVc(standards,isStandards());
+			}else{
+				 standardsPopupVc = new StandardsPopupVc(standards,false);
+			}
 			standardsPopupVc.center();
 			standardsPopupVc.show();
 		}
