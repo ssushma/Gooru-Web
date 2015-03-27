@@ -2549,7 +2549,7 @@ footer .col-md-4 {
 	padding-left: 0 ;
 	padding-right: 0 ;
 	width: 28% ;
-	z-index:9999;
+/* 	z-index:9999; */
 }
 
 .searchbox .form-group {

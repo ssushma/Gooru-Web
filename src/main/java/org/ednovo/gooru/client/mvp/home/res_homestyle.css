@@ -3,7 +3,7 @@ header {
 }
 
 .banner {
-	margin-top: 35px;
+	margin-top: 0px;
 }
 
 .bannerInner .caption {
@@ -11,6 +11,7 @@ header {
 	position: absolute;
 	right: 4%;
 	text-align: center;
+	padding-top: 0;
 }
 
 .bannerInner .caption h2 {
