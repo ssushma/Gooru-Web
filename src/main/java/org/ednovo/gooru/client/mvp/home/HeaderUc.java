@@ -2078,4 +2078,12 @@ public class HeaderUc extends Composite implements
 	public void updateHeaderProfileImage(String imageUrl) {
 		imgUserProfile.setUrl(imageUrl+ "?" + Math.random());
 	}
+	
+	@UiHandler("toggleButton")
+	public void toggleButtonClick(ClickEvent event){
+		invokeToggleMenuContainer();
+	}
+	public static native void invokeToggleMenuContainer() /*-{
+	$wnd.showToggleMenu();
+}-*/;
 }

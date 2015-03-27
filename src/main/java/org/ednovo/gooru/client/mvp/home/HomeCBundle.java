@@ -56,7 +56,6 @@ public interface HomeCBundle extends ClientBundle{
 	@NotStrict
 	@Source("res_home4style.css")
 	HomeCss getResponsive3Style();
-
 	
 	public interface HomeCss extends CssResource{
 		

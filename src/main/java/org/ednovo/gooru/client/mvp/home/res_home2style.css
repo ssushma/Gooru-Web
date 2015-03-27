@@ -20,7 +20,7 @@ header{
 	position: absolute;
 	right: 6%;
 	text-align: center;
-	top: 3%;
+	top: -13%;
 }
 .searchbox .navbar-form .form-control {
 	width: 88% !important;
@@ -72,14 +72,6 @@ header{
 
 .communityblock a {
 	font-size: 16px;
-}
-
-.bannerInner .caption {
-	left: 5%;
-	position: absolute;
-	right: 6%;
-	text-align: center;
-	top: 3%;
 }
 
 .bannerInner .caption h2 {

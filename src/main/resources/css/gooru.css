@@ -1825,6 +1825,8 @@ color:#999;
 .gwt-Tree > div[hidefocus=true] {
   margin: 0px !important;
   padding: 0px !important;
+  width: 0px !important;
+  height: 0px !important;
 }
 
 .gwt-Tree .gwt-TreeItem {
@@ -1842,6 +1844,7 @@ color:#999;
 .gwt-Tree .gwt-TreeItem-selected > div{
 	margin: 0px !important;
 }
+
 
 /** Add css rules here for your application. */
 

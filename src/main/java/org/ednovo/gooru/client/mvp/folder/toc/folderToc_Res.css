@@ -1,6 +1,6 @@
 .bannerImageContainer {
 	position: relative;
-	height: 115px;
+	/* height: 115px; */
 	background-size: 100% auto !important;
 	margin-top: -36px;
 	}
@@ -8,7 +8,7 @@
 .assignmentMainContainer {
 	float: left;
 	padding: 0px 25px 0px 18px;
-	width: 97%%;
+	width: 97%;
 	/* height: 518px; */
 }
 .assignmentSuccessMainContainer {
@@ -817,7 +817,8 @@
 .sublogoContainer {
 	position: absolute;
 	bottom: 17px;
-	right: 29px;
+	right: 9px;
+	top: -116px;
 }
 
 .bannerimageContainer1{
