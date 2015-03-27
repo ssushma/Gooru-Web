@@ -122,7 +122,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		  }else{
 			  panelDevice.clear();
 			  panelDevice.setVisible(false);
-			  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
+			  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 		  }
 		  
 		  ClickHandler rootClick = new ClickHandler(){
@@ -170,7 +170,7 @@ public class WrapView extends BaseView implements IsWrapView {
 							|| place.equalsIgnoreCase(PlaceTokens.LIFEBOARD)
 							|| place.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)
 							|| place.equalsIgnoreCase(PlaceTokens.STUDENT)) {
-						wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
+						wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 					}else{
 						/*if(isIpad){
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
