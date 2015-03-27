@@ -137,6 +137,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				super.onBrowserEvent(event);
 			}
 		}
+		 public void onLoad(){
+			 super.onLoad();
+			 DOM.setStyleAttribute(folderTocTree.getElement(), "position", "static");
+		 }
 	};
 	private CollectionTreeItem previousSelectedItem = null;
 	private FolderTreeItem currentFolderSelectedTreeItem = null;
@@ -159,6 +163,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * This method is used to set folder TOC Data.
 	 */
 	public void setData() {
+		Window.scrollTo(0, 0);
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTocTree);
 		folderTocTree.addItem(getLoadingImage());
@@ -362,8 +367,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	               && uiObject.getElement().getParentElement().getParentElement() != null
 	               && uiObject.getElement().getParentElement().getParentElement().getStyle() != null) {
 	            Element element = uiObject.getElement().getParentElement().getParentElement();
-	            element.getStyle().setPadding(0, Unit.PX);
-	            element.getStyle().setMarginLeft(0, Unit.PX);
+	           element.getStyle().setPadding(0, Unit.PX);
+	           element.getStyle().setMarginLeft(0, Unit.PX);
 	         }
 	      }
    	}
@@ -489,7 +494,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								adjustTreeItemStyle(folderItem);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
-							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
+							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important; padding-top: 10px !important;");
 							 	item.addItem(folderItem);
 								adjustTreeItemStyle(folderItem);
 						 }
