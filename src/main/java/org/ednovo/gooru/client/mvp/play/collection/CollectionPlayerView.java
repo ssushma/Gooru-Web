@@ -261,6 +261,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void setResourceTitle(String resourceTitle) {
 		headerView.setResourceTitle(resourceTitle);
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+		if(view!=null&&view.equalsIgnoreCase("end")){
+			appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+		}
 	}
 	
 	public void setNarrationButton(Button narrationButton){
@@ -322,7 +326,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			Map<String,String> params = new LinkedHashMap<String,String>();
 			params.put("id", collectionId);
 			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-			
 			if(resourceId!=null&&!resourceId.equalsIgnoreCase("")){
 				appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
 				if(isButtonActive){
@@ -336,11 +339,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 
 				}
-			}
-
-			else if(view!=null&&view.equalsIgnoreCase("end")){
+			}else if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
-
 				if(isButtonActive){
 					params.put("view", "end");
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);

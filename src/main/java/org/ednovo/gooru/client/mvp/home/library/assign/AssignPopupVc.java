@@ -312,7 +312,11 @@ public abstract class AssignPopupVc extends PopupPanel {
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
 		closePoup();
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 		Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
 	}
 
 	/**
