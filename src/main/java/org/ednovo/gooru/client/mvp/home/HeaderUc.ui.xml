@@ -555,7 +555,7 @@
 														<g:HTMLPanel ui:field="myCollectionsPop"></g:HTMLPanel>
 													</uc:HTMLEventPanel>
 												</uc:LiPanel>
-												<uc:LiPanel>
+												<uc:LiPanel styleName="noborder">
 													<uc:HTMLEventPanel ui:field="teachLinkMain">
 														<uc:HTMLEventPanel ui:field="teachLinkContainer">
 															<g:Anchor ui:field="teachLink" />

@@ -10,7 +10,7 @@ xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags" xmlns:panel="urn:impor
 		<g:FlowPanel styleName="container {palyerStyleResource.getPlayerStyleResource.animationWrapper} text-center" ui:field="resourceAnimationContainer"></g:FlowPanel>
 		<g:HTMLPanel styleName="container">
 			<div class="col-md-6 "></div>
-			<div class="col-md-6  {footerstyle.text-right}">
+			<div class="col-md-14  {footerstyle.textRightMargin}">
 				<g:Button styleName="{footerstyle.infoButtonNormal}" ui:field="infoButton"></g:Button>  
 				<g:Button styleName="{footerstyle.addButtonNormal}" ui:field="addButton"></g:Button>  
 				<g:Button styleName="{footerstyle.shareButtonNormal}" ui:field="shareButton"></g:Button> 

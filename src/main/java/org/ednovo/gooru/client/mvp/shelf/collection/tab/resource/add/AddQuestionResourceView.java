@@ -630,7 +630,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {	
 				for(final CodeDo codeObj:standardsDo){
-					if(centuryCode.equalsIgnoreCase(String.valueOf(codeObj.getCodeId()))){
+					if(id.equalsIgnoreCase(String.valueOf(codeObj.getCodeId()))){
 						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void result) {
@@ -639,12 +639,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 								deletedStandardsDo.add(deletedObj);
 								standardsDo.remove(codeObj);	
 								centurySelectedValues.remove(Long.parseLong(id));
-							
 							}
 						});
 						this.getParent().removeFromParent();
 						return;
-						
 					}
 				}
 			}
