@@ -835,7 +835,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void clickOnSeeMoreBtn(ClickEvent event){
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			if(!isSeeMoreClicked){
-				String narrationText=removeHtmlTags(collectionItemDo.getNarration());
+				String narrationText=StringUtil.removeHtml(collectionItemDo.getNarration());
 				lblSeeMore.setText(i18n.GL0509());
 				lblNarrationText.setText(narrationText);
 				isSeeMoreClicked=true;
@@ -874,7 +874,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			authorImage.setVisible(true);
 			lblNarrationText.setVisible(true);
 			setUserProfileImage(collectionDo.getUser().getGooruUId());
-			String narrationText=removeHtmlTags(collectionItemDo.getNarration());
+			String narrationText=StringUtil.removeHtml(collectionItemDo.getNarration());
 			this.collectionItemDo=collectionItemDo;
 			this.collectionDo=collectionDo;
 			if(narrationText.length()>0 && narrationText.length()>240){
@@ -892,15 +892,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			lblSeeMore.setVisible(false);
 		}
 	}
-	private String removeHtmlTags(String html){
-		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
-        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
-        return html;
-	}
-
 	@Override
 	public void removeStudentViewButton() {
 		
 	}
-
 }
