@@ -241,15 +241,15 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerVal.put(PlaceTokens.CCST_Cal_TAC, Arrays.asList("background: url("+Constants.CCST_BANNER +") center no-repeat; height: 245px;",i18n.GL2179(),""));
 		bannerVal.put(PlaceTokens.NGC, Arrays.asList("background: url("+Constants.NGC_BANNER +") center -45px no-repeat; height: 245px;",i18n.GL2030(),""));
 		bannerVal.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList("background: url("+Constants.ASPIRE_BANNER +") center no-repeat; height: 245px;",i18n.GL3107(),""));
-		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center -50px no-repeat;height: 230px;background-size: auto 301px !important;",i18n.GL2174(),""));
+		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center -50px no-repeat;height: 230px;background-size: 100% 301px !important;",i18n.GL2174(),""));
 		bannerVal.put(PlaceTokens.FTE, Arrays.asList("background: url("+Constants.FTE_BANNER +") center no-repeat;height: 245px;",i18n.GL2029(),""));
 		bannerVal.put(PlaceTokens.LESSONOPOLY, Arrays.asList("background: url("+Constants.LESSONOPOLY_BANNER +") center -37px no-repeat;height: 245px;",i18n.GL2032(),""));
 		bannerVal.put(PlaceTokens.LIFEBOARD, Arrays.asList("background: url("+Constants.LIFEBOARD_BANNER +") center no-repeat;height: 245px;","",""));
 		bannerVal.put(PlaceTokens.FINCAPINC, Arrays.asList("background: url("+Constants.FINCAP_BANNER +") center -50px no-repeat; height: 232px;",i18n.GL2033(),""));
-		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center -52px no-repeat;background-size: auto 310px !important; height: 228px;",i18n.GL2041(),""));
+		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center -50px no-repeat;background-size: 100% 301px !important; height: 228px;",i18n.GL2041(),""));
 		bannerVal.put(PlaceTokens.ONR, Arrays.asList("background: url("+Constants.ONR_BANNER +") center no-repeat;height: 245px;",i18n.GL2028(),""));
 		bannerVal.put(PlaceTokens.PSDPAL, Arrays.asList("background: url("+Constants.PSDPAL_BANNER +") center no-repeat;height: 245px;",i18n.GL2034(),""));
-		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center -50px no-repeat; height: 230px;",i18n.GL2186(),""));
+		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center -50px no-repeat;background-size: 100% 301px !important; height: 230px;",i18n.GL2186(),""));
 		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center -48px no-repeat;height: 245px;",i18n.GL2031(),""));
 		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center no-repeat;height: 245px;",i18n.GL2040(),""));
 	}
@@ -626,7 +626,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		}else{
 			bannerLogoImageContainer.setVisible(false);
 		}
-		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;height: 198px;");
+		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center -50px; background-size: 100% auto !important;height: 198px;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
 		setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		bannerImage.addErrorHandler(new ErrorHandler() {
