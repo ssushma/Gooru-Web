@@ -205,6 +205,10 @@ display:inline-block;
 .text-right{
 	text-align:right;
 }
+.textRightMargin{
+	text-align:right;
+	  margin-right: -17px;
+}
 .endPageIframe iframe{
 	width: 100% !important;
 	height: 422px !important;

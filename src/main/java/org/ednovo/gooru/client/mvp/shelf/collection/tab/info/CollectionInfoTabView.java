@@ -325,7 +325,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().getAddCentury();
-				
 			}
 		});
 		
@@ -822,8 +821,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 		addAttributesToWidget(selectGradeLbl,collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3025() : i18n.GL0820());
 		addAttributesToWidget(selectCourseLbl,collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3026() : i18n.GL0846());
-		addAttributesToWidget(standardsDefaultText, collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3027() : i18n.GL0749());
-		addAttributesToWidget(centDefaultText, collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3124_1() : i18n.GL3123_1());
+		addAttributesToWidget(standardsDefaultText, collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3203() : i18n.GL0749());
+		addAttributesToWidget(centDefaultText, collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3204() : i18n.GL3123_1());
 		addAttributesToWidget(depthOfKnowledgeTitle, collectionType!=null&&ASSESSMENT.equals(collectionType)? i18n.GL3028() : i18n.GL1644());
 		addAttributesToWidget(learningInnovationTitle, collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3029() : i18n.GL1650());
 		addAttributesToWidget(instructionalTitle, collectionType!=null&&ASSESSMENT.equals(collectionType) ? i18n.GL3030() : i18n.GL1639());
@@ -963,6 +962,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addCourseBtn.setVisible(true);
 		removeCourseBtn.setVisible(false);
 		selectedValuesFromAutoSuggest.clear();
+		hilightSelectedValuesFromAutoSuggest.clear();
 	}
 
 	@Override

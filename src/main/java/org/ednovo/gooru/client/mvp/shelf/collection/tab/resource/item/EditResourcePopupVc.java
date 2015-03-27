@@ -90,6 +90,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -235,7 +236,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
-	HandlerRegistration videoClickHandler,websiteClickHandler,interactiveClickHandler,imageClickHandler,textClickHandler,audioClickHandler=null;
+	HandlerRegistration videoClickHandler=null,websiteClickHandler=null,interactiveClickHandler=null,imageClickHandler=null,textClickHandler=null,audioClickHandler=null;
 	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
@@ -751,13 +752,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		rightsContainer.getElement().setId("pnlRightsContainer");
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-left:10px");
-		
-		 	videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
 		
 		displayResourceInfo();
 		show();
@@ -1381,23 +1375,42 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		urlTextLbl.setText(url);
 		urlTextLbl.getElement().setAttribute("alt", i18n.GL0827());
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
-		
-		if(urlTextLbl.getText().contains("youtube")){
+	String	userUrlStr = URL.encode(url);
+		if(userUrlStr.indexOf("youtube") >0){
 						setVideoCategory();
 						if(websiteClickHandler!=null){
+							try{
 							websiteClickHandler.removeHandler();
+							}catch(Exception e){
+							}
 						}
 						 if(interactiveClickHandler!=null){
+							 try{
 							 interactiveClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 						 if(imageClickHandler!=null){
+							 try{
 							 imageClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 						 if(textClickHandler!=null){
+							 try{
 							 textClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 						 if(audioClickHandler!=null){
+							 try{
 							 audioClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 					}else{
 						websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
