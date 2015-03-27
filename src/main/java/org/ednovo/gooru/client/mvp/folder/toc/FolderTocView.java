@@ -228,8 +228,8 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png) no-repeat;",i18n.GL2108(),Constants.CORE_LOGO));
 		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-rusd_purple.png) no-repeat;",i18n.GL2053(), Constants.LPS_LOGO));
 		bannerVal.put(PlaceTokens.LUSD, Arrays.asList("background: url(../images/library/district/landing-image-lusd.png) -7px -47px no-repeat;",i18n.GL2181(), Constants.LUSD_LOGO));
-		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -50px no-repeat;background-size: auto 128% !important;",i18n.GL2061(), Constants.VALVERDE_LOGO));
-		bannerVal.put(PlaceTokens.SUSD, Arrays.asList("background: url(../images/library/district/landing-image-susd.png) -7px -50px no-repeat;background-size: auto 127% !important;",i18n.GL2058(), Constants.SUSD_LOGO));
+		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -50px no-repeat;background-size: auto 128% !important;height: 220px;",i18n.GL2061(), Constants.VALVERDE_LOGO));
+		bannerVal.put(PlaceTokens.SUSD, Arrays.asList("background: url(../images/library/district/landing-image-susd.png) -7px -50px no-repeat;background-size: auto 127% !important; height: 220px;",i18n.GL2058(), Constants.SUSD_LOGO));
 		bannerVal.put(PlaceTokens.SAUSD_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-sausd.png) -7px -47px no-repeat;",i18n.GL1902(), Constants.SAUSD_LOGO));
 		 
 		bannerVal.put(PlaceTokens.AUTODESK, Arrays.asList("background: url("+Constants.AUTODESK_BANNER +") center no-repeat; height: 245px;",i18n.GL2027(),""));
