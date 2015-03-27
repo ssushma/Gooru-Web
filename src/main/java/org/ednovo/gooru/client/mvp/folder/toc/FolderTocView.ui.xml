@@ -74,10 +74,8 @@
 									</br>
 								</p>
 							</g:HTMLPanel>
-						<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{tocStyle1.css.dropdownListContainerScrollPanel}">
 	            			<g:HTMLPanel ui:field="floderTreeContainer" styleName="{tocStyle1.css.folderStucture}">
 			   				</g:HTMLPanel>
-						</g:ScrollPanel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
