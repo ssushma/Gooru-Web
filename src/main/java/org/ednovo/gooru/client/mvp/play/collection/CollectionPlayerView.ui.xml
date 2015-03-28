@@ -186,7 +186,7 @@
 						 	<g:Image ui:field="authorImage" styleName="{style.authorImage}"></g:Image>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{style.narrationRightContainer} narrationRightContainerFullScreen" >
-							<g:Label styleName="{style.narrationText}" ui:field="lblNarrationText"></g:Label>
+							<panel:HTMLEventPanel styleName="{style.narrationText}" ui:field="lblNarrationText"></panel:HTMLEventPanel>
 							<g:Label styleName="{playerHeaderStyle.getPlayerStyleResource.seemoreText}" ui:field="lblSeeMore"></g:Label>
 						</g:HTMLPanel>
 						<div class="clearfix"></div>

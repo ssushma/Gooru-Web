@@ -1135,6 +1135,7 @@ user agent stylesheetdiv {
 .myFolderCollectionRefreshInnerContainer {
 	float: left;
 	padding: 5px 0px 0px 0px;
+	display:none;
 }
 
 .myFolderCollectionRefreshInnerContainer {
@@ -1148,6 +1149,7 @@ user agent stylesheetdiv {
 	width: 19px;
 	height: 14px;
 	cursor: pointer;
+	display:none;
 }
 
 .myFolderCollectionRefresh {
@@ -1162,6 +1164,7 @@ user agent stylesheetdiv {
 	color: rgb(153, 153, 153);
 	padding: 4px 0px 0px 5px;
 	cursor: pointer;
+	display:none;
 }
 
 .myFolderCollectionFormTextarea {

@@ -30,7 +30,6 @@ package org.ednovo.gooru.server.deserializer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.server.service.AnalyticsServiceImpl;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.json.JSONArray;
@@ -38,7 +37,6 @@ import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.spi.LoggerFactoryBinder;
 
 /**
  * @author Search Team

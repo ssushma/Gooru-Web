@@ -204,6 +204,7 @@ public class CollectionInfo extends Composite {
 				setInstructionalInfo();
 				setLanguageObjectiveText();
 				setOerInfo();
+				System.out.println("isStandardsInfo::"+isStandardsInfo);
 					if(isGradesInfo==false && isStandardsInfo==false
 						&& isDepthOfKnlzeInfo==false && isLearningSkillsInfo==false
 						&& isAudienceInfo==false && isInstructionalInfo==false
@@ -346,10 +347,11 @@ public class CollectionInfo extends Composite {
 			if(isStandard){
 				panelStandrads.getElement().getStyle().setDisplay(Display.NONE);
 				lblStandrads.setVisible(false);
+				isStandardsInfo = false;
 			}else{
 				panelCentury.setVisible(false);
 			}
-			isStandardsInfo = false;
+			
 		}
 	}
 
