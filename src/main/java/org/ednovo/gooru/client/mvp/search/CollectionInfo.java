@@ -347,10 +347,11 @@ public class CollectionInfo extends Composite {
 			if(isStandard){
 				panelStandrads.getElement().getStyle().setDisplay(Display.NONE);
 				lblStandrads.setVisible(false);
+				isStandardsInfo = false;
 			}else{
 				panelCentury.setVisible(false);
 			}
-			isStandardsInfo = false;
+			
 		}
 	}
 
