@@ -155,7 +155,7 @@ z-index: 100;
 
  .toolTip .resourceInfo .title {
     font-weight:bold;
-    width:250px;
+    width:238px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
