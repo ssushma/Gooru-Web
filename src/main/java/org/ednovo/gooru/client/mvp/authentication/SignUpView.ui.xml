@@ -48,13 +48,13 @@
 						<g:HTMLPanel styleName="{res.css.divider}">
 							<g:Label styleName="{res.css.dividerText}" ui:field="lblOr" />
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="emailSignIn">
+						<g:HTMLPanel styleName="{res.css.emailSignIn}">
 							<g:Label styleName="{res.css.lblDontHaveGoogleAccount}" ui:field="lblDontHaveGoogleAccount" />
 							<g:Anchor styleName="{res.css.lnkSignUpWithEmail}" ui:field="achSignUpWithEmail" />
 						</g:HTMLPanel>
 					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{res.css.haveAccountContainer}">
-						<g:Label styleName="{res.css.haveAccount}" ui:field="lblAlreadyHaveAccount" />
+					<g:HTMLPanel styleName="{res1.css.alreadyHaveContainer}">
+						<g:Label styleName="{res1.css.haveAccount}" ui:field="lblAlreadyHaveAccount" />
 						<g:Anchor ui:field="achClickToLogin" />
 					</g:HTMLPanel>
 				</g:HTMLPanel>
