@@ -317,6 +317,8 @@ button.primary:hover {
 	line-height: 1.42857143;
 	font-family: Arial, Helvetica, sans-serif !important;
 	white-space: pre-line;
+	margin-bottom:10px;
+	margin-top:-5px;
 }
 .lblFolderTitles{
 	font-weight: bold;

@@ -223,8 +223,9 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		try{
 			//String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
-//			String dataPassing="{\"fileName\":\"Mymedia\",\"html\":\""+htmlString+"\"}";
-			String jsonStr = setHTMLtoPDFJsonStr(htmlString); 
+			//To disable escape sequence enabled this line
+			String jsonStr="{\"fileName\":\"Mymedia\",\"html\":\""+htmlString+"\"}";
+			//String jsonStr = setHTMLtoPDFJsonStr(htmlString); 
 			LOGGER.info("html to pdf url"+url);
 			LOGGER.info("html to pdf url json -- "+jsonStr);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),jsonStr);

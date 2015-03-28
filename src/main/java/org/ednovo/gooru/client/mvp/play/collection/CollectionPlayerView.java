@@ -94,9 +94,9 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
 	
-	@UiField Label lblNarrationText,lblSeeMore;
+	@UiField Label lblSeeMore;
 	
-	@UiField HTMLEventPanel pnlBackToCollection;
+	@UiField HTMLEventPanel lblNarrationText,pnlBackToCollection;
 	
 	@UiField Image authorImage;
 	
@@ -835,16 +835,16 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void clickOnSeeMoreBtn(ClickEvent event){
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			if(!isSeeMoreClicked){
-				String narrationText=removeHtmlTags(collectionItemDo.getNarration());
+				String narrationText=collectionItemDo.getNarration();
 				lblSeeMore.setText(i18n.GL0509());
-				lblNarrationText.setText(narrationText);
+				lblNarrationText.getElement().setInnerHTML(narrationText);
 				isSeeMoreClicked=true;
 			}else{
 				setNarrationInFullScreenMode(collectionItemDo,collectionDo);
 				isSeeMoreClicked=false;
 			}
 		}else{
-			lblNarrationText.setText("");
+			lblNarrationText.getElement().setInnerHTML("");
 		}
 		setSeemoreBackGround();
 	}
@@ -874,33 +874,26 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			authorImage.setVisible(true);
 			lblNarrationText.setVisible(true);
 			setUserProfileImage(collectionDo.getUser().getGooruUId());
-			String narrationText=removeHtmlTags(collectionItemDo.getNarration());
+			String narrationText=collectionItemDo.getNarration();
 			this.collectionItemDo=collectionItemDo;
 			this.collectionDo=collectionDo;
 			if(narrationText.length()>0 && narrationText.length()>240){
-				lblNarrationText.setText(narrationText.substring(0, 240)+"...");
+				lblNarrationText.getElement().setInnerHTML(narrationText.substring(0, 240)+"...");
 				lblSeeMore.setVisible(true);
 				lblSeeMore.setText(i18n.GL0508());
 			}else{
-				lblNarrationText.setText(narrationText);
+				lblNarrationText.getElement().setInnerHTML(narrationText);
 				lblSeeMore.setVisible(false);
 			}
 		}else{
 			authorImage.setVisible(false);
 			lblNarrationText.setVisible(false);
-			lblNarrationText.setText("");
+			lblNarrationText.getElement().setInnerHTML("");
 			lblSeeMore.setVisible(false);
 		}
 	}
-	private String removeHtmlTags(String html){
-		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
-        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
-        return html;
-	}
-
 	@Override
 	public void removeStudentViewButton() {
 		
 	}
-
 }

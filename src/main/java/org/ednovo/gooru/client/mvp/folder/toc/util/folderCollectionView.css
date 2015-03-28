@@ -55,7 +55,7 @@
 .sequenceNumner{
 	position: absolute;
 	margin-left: -56px;
-	padding-right:10px;
+	padding-right:2%;
 	text-align: right;
 	color: #06c;
 	width: 3%;
@@ -64,6 +64,7 @@
 	white-space: normal;
 	color:#252525;
 	cursor: auto;
+	margin-top: 8px;
 }
 .resourceTitle{
 	min-width: 50px;

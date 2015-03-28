@@ -368,6 +368,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			collectionDataObject.put("grade", data.getGrade());
 			collectionDataObject.put("mediaType", data.getMediaType());
 			collectionDataObject.put("url", data.getUrl());
+			collectionDataObject.put("goals", data.getGoals());
 			if (courseCodeId != null) {
 				courseIdObj.put("codeId", courseCodeId);
 				ArrayList<JSONObject> taxonomyArray= new ArrayList<JSONObject>();
