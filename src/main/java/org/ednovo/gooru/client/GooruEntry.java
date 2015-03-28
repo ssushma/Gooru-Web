@@ -225,7 +225,7 @@ public class GooruEntry implements EntryPoint {
 					}
 					else if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) && AppClientFactory.isUserflag()){
 						AppClientFactory.setUserflag(false)	;
-						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDY)){
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.FOLDER_TOC)|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDY)){
 							userLoggedOutheader();
 						}
 						else{
