@@ -742,6 +742,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		headerView.displayAuthorName(getCollectionType());
 	}
 	
+	public void hideAuthorInHeader(boolean showOrHide){
+		headerView.getAuthorContainer().setVisible(showOrHide);
+	}
+	
 	public void scrollStudyPage(){
 		appPopUp.getElement().setScrollTop(300);
 	}
@@ -896,4 +900,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void removeStudentViewButton() {
 		
 	}
+
+
 }

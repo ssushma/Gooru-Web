@@ -517,6 +517,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		});
 	}
 	public void getCollectionDetails(){
+		hideAuthorInHeader(false);
 		final String collectionId=getPlaceManager().getRequestParameter("id", null);
 		final String resourceId=getPlaceManager().getRequestParameter("rid", null);
 		final String tabView=getPlaceManager().getRequestParameter("tab", null);
@@ -558,6 +559,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo collectionDo) {
+						updateHeaderView();
+						hideAuthorInHeader(true);
 						if(collectionDo.getStatusCode()!=200){
 							showCollectionErrorMessage();
 						}else{
@@ -1634,6 +1637,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void updateHeaderView(){
 		getView().updateAuthorDetails();
+	}
+	public void hideAuthorInHeader(boolean showorHide){
+		getView().hideAuthorInHeader(showorHide);
 	}
 	public void updateCollectionSummary(){
 		metadataPresenter.setDataInsightsUrl();
