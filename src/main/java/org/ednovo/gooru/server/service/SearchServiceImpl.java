@@ -357,10 +357,10 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
         //This is used for to generate folder toc shorten url
 		if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.FOLDER_TOC)) {	
 			if(params.containsKey(LIBRARY_NAME)){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_LIBRARY.getUrl(), contentGooruOid,params.get(LIBRARY_NAME)));
 				if(params.containsKey(PARENT_ID)){
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PARENT.getUrl(), contentGooruOid,params.get(LIBRARY_NAME),params.get(PARENT_ID)));
 				}
-				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_LIBRARY.getUrl(), contentGooruOid,params.get(LIBRARY_NAME)));
 			}else if(params.containsKey(USER_ID)){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PROFILE.getUrl(), contentGooruOid, params.get(USER_ID)));
 			}else{
