@@ -60,16 +60,16 @@ public abstract class TermsOfUse extends PopupPanel {
 	@UiHandler("privacyCloseBtn")
 	public void privacyCloseButtonClick(ClickEvent clickEvent) {
 		this.hide();
-		/*if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
-			
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || 
+			AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COMMUNITY)){
 			Window.enableScrolling(false);
 			
 		}else{
 			Window.enableScrolling(true);
-		}*/
+		}
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));	
 		openParentPopup();
-		Window.enableScrolling(false);
+		//Window.enableScrolling(false);
 	}
 	public abstract void openParentPopup();
 }
