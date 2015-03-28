@@ -87,6 +87,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gwt.http.client.URL;
 
 
 @Service("resourceService")
@@ -1598,8 +1599,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public void deleteTagsServiceRequest(String resourceId, String addedTags)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
+		try {
+			addedTags = URLEncoder.encode(addedTags, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.DELETE_TAGS, resourceId, getLoggedInSessionToken(),addedTags);
+
 		getLogger().info("delete tags::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
