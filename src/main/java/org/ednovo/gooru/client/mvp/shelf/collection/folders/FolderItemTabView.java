@@ -270,6 +270,14 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderItemMetaDataUc.setVisible(false);
 		loadingImage.getElement().setId("pnlLoadingImage");
 		folderContentBlock.getElement().setId("vpnlFolderContentBlock");
+		try
+		{
+		organizeTitleLbl.getLabelField().getElement().setAttribute("style", "width: 336px !important;");
+		}
+		catch(Exception ex)
+		{
+			
+		}
 		
 		organizeTitleLbl.getTextBoxSource().getElement().setAttribute("style", "width: 338px !important; height: 29px !important;");
 	}

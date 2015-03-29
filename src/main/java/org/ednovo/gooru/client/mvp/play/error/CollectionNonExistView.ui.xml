@@ -4,8 +4,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="errorStyle" src="CollectionNonExistStyle.css" />
 
-	<g:FlowPanel styleName="{errorStyle.collectionWrapper}">
-		<g:HTMLPanel styleName="{errorStyle.collectionContent}">
+	<g:FlowPanel styleName="{errorStyle.collectionWrapper1}">
+		<g:HTMLPanel styleName="{errorStyle.collectionContent1}">
 			<g:Image styleName="{errorStyle.collectionImage}" ui:field="recycleImage"></g:Image>
 		</g:HTMLPanel>
 		<g:FlowPanel styleName="{errorStyle.collectionSpecsRight}">

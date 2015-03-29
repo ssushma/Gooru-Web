@@ -342,6 +342,9 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	public TextBox getTextBoxSource() {
 		return editTextBox;
 	}
+	public Label getLabelField() {
+		return editLabel;
+	}
 	
 	
 }

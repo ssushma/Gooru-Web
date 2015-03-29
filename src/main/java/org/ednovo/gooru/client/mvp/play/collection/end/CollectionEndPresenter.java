@@ -106,6 +106,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
 	
 	PrintUserDataDO printData=new PrintUserDataDO();
+	
+	Boolean whatNextCalled = false;
 
 	String classpageId=null;
 	
@@ -342,7 +344,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		}
 		else
 		{
-		getNextCollectionItem(folderId,folderItemId);
+		if(!whatNextCalled)
+		{
+		getNextCollectionItem(folderId,folderItemId,collectionDo.getUrl());
+		}
 		}
 		
 
@@ -572,16 +577,27 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		
 	}
 	
-	public void getNextCollectionItem(String folderId,String folderItemId) {
+	public void getNextCollectionItem(String folderId,String folderItemId,final String urlVal) {
+		whatNextCalled = true;
 		if(folderId!=null && folderItemId!=null) {			
 			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
 				@Override
 				public void onSuccess(FolderWhatsNextCollectionDo result) {
-					getView().displayWhatsNextContent(result);
+					getCollection(result.getGooruOid(),result);
 				}
 			});
 		} else {
 			getView().hideNextCollectionContainer(true);
 		}
 	}
+	public void getCollection(String nextCollId,final FolderWhatsNextCollectionDo result){
+
+		this.playerAppService.getSimpleCollectionDetils(null,nextCollId,null,null, null, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo collectionDo) {
+				getView().displayWhatsNextContent(result,collectionDo.getUrl());
+			}
+		});
+	}
+	
 }

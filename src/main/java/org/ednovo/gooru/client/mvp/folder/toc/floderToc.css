@@ -107,6 +107,7 @@ button.primary:hover {
 	background:url(../images/folders/panel/folder-small-icon.png) no-repeat 0px 4px;
 	padding-left: 30px;
 	float: left;
+	word-break: break-word;
 }
 
 .marginDiv {
