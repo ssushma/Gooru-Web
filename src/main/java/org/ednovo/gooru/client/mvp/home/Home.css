@@ -2822,7 +2822,7 @@ footer {
 	color: white;
 	/* float: left; */
 	cursor: pointer;
-	padding: 18px 16px;
+	padding: 18px 10px;
 	cursor: pointer;
 	/* 	height: 18px;
  */
@@ -2833,7 +2833,7 @@ footer {
 	color: white;
 	/* float: left; */
 	cursor: pointer;
-	padding: 18px 16px;
+	padding: 18px 10px;
 	cursor: pointer;
 }
 
@@ -2871,11 +2871,11 @@ footer {
 	background-color: #393939;
 }
 .logoutDownArrow {
-	width: 34px;
-	height: 34px;
+	width: 30px;
+	height: 30px;
 	background: url(images/Collection-Search/SettingsIcon.png) no-repeat;
 	float: left;
-	margin: 9px 16px;
+	margin: 10px 5px;
 	cursor:pointer;
 }
 .searchButton{

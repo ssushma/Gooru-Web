@@ -26,14 +26,14 @@
 
 .ideasBlock {
 	 border: 1px solid transparent;
-    border-radius: 4px 4px 0 0;
-    line-height: 1.42857;
-    margin-right: 2px;
-   	display:inline-block;
-    padding: 10px 15px;
-    position: relative;
-    margin-top: -2px;
-  margin-bottom: -1px;
+	border-radius: 4px 4px 0 0;
+	line-height: 1.42857;
+	margin-right: 2px;
+	display: inline-block;
+	padding: 10px 15px;
+	position: relative;
+	margin: 5px 0;
+	color: #999;
 }
 
 .ideasBlockLast {
@@ -103,7 +103,7 @@
 }
 
 .padding10{
-	padding: 14px 20px;
+	padding: 5px 20px;
 	overflow: auto;
 	height:73px;
 	white-space: pre-line;
@@ -169,7 +169,7 @@
 	box-sizing: content-box;
 }
 .sausdContentBlock {
-	width: 680px;
+	width: 696px;
 	background: white;
 	height: 65px;
 }

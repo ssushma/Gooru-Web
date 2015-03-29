@@ -100,7 +100,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
-		//showSignupPopup();
+		showSignupPopup();
 		
 	}
 	/**
