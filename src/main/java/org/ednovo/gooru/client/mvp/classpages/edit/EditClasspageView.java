@@ -767,7 +767,7 @@ public class EditClasspageView extends
 		shareTabContainerPanel.getElement().setId("pnlShareTabContainer");
 		frameDiv.getElement().setId("pnlFrameDiv");
 		frameUrl.getElement().setId("ifFrameUrl");
-		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(22, Unit.PX);
+		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(10, Unit.PX);
 		
 		frameUrl.setVisible(false);
 	}
