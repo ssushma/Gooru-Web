@@ -27,6 +27,8 @@ package org.ednovo.gooru.client.mvp.play.collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.RegEx;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
@@ -840,6 +842,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			if(!isSeeMoreClicked){
 				String narrationText=collectionItemDo.getNarration();
+				narrationText=StringUtil.replaceAnchoreWithTarget(narrationText);
 				lblSeeMore.setText(i18n.GL0509());
 				lblNarrationText.getElement().setInnerHTML(narrationText);
 				isSeeMoreClicked=true;
@@ -879,6 +882,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			lblNarrationText.setVisible(true);
 			setUserProfileImage(collectionDo.getUser().getGooruUId());
 			String narrationText=collectionItemDo.getNarration();
+			narrationText=StringUtil.replaceAnchoreWithTarget(narrationText);
 			this.collectionItemDo=collectionItemDo;
 			this.collectionDo=collectionDo;
 			if(narrationText.length()>0 && narrationText.length()>240){

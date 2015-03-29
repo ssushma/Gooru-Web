@@ -657,4 +657,8 @@ public class StringUtil implements ClientConstants {
 			return false;
 		 }
 	}
+	public static String replaceAnchoreWithTarget(String value){
+		value=value.replaceAll("<(a)([^>]+)>", "<$1 target=\"_blank\"$2>");
+		return value;
+	}
 }
