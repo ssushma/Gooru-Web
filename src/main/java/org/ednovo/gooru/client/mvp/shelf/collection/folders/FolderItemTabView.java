@@ -272,7 +272,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderContentBlock.getElement().setId("vpnlFolderContentBlock");
 		try
 		{
-		organizeTitleLbl.getLabelField().getElement().setAttribute("style", "width: 336px !important;");
+		organizeTitleLbl.getLabelField().getElement().setAttribute("style", "max-width: 336px !important;");
 		}
 		catch(Exception ex)
 		{
