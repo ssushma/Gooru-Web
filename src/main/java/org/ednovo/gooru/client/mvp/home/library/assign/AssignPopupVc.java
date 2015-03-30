@@ -295,6 +295,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 			}
 		};
 		htmlEvenPanelContainer.add(assignWidget);
+		this.setPopupPosition(0, (Window.getClientHeight()-527)/2);
 		htmlEvenPanelContainer.setVisible(true);
 		htmlLoginPanel.setVisible(false);
 

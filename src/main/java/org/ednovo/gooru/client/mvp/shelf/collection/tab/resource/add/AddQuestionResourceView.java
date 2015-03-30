@@ -2230,7 +2230,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						+ collectionItemDo.getResource().getFolder()
 						+ collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
 				
-			} 
+			}else if(collectionItemDo.getResource().getThumbnails()!=null && collectionItemDo.getResource().getThumbnails().getUrl()!=null) {
+				tumbnailUrl = collectionItemDo.getResource().getThumbnails().getUrl();
+			}
 			setEditQuestionImage(tumbnailUrl);
 		}
 		
