@@ -72,13 +72,13 @@ public abstract class TermsAndPolicyVc extends PopupPanel {
 	@UiHandler("privacyCloseBtn")
 	public void privacyCloseButtonClick(ClickEvent clickEvent) {
 		this.hide();
-	/*	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));	
+		openParentPopup();
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			Window.enableScrolling(false);
 		}else{
 			Window.enableScrolling(true);
-		}*/
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));	
-		openParentPopup();
+		}
 	}
 	
 	public abstract void openParentPopup();
