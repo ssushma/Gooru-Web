@@ -1587,7 +1587,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	}
 	
-	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext)
+	public void displayWhatsNextContent(final FolderWhatsNextCollectionDo folderCollectionWhatsNext,final String urlValue)
 	{
 		final String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
 		this.folderCollectionWhatsNext=folderCollectionWhatsNext;
@@ -1614,14 +1614,37 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					if(folderCollectionWhatsNext.getCollectionType()!=null)
+					{
+					if(folderCollectionWhatsNext.getCollectionType().equalsIgnoreCase("assessment/url"))
+					{
+						  Window.open(urlValue, "_blank", "");
+					}
+					else
+					{
 					Map<String,String> params = new LinkedHashMap<String,String>();
 					params.put("id", folderCollectionWhatsNext.getGooruOid());
+
 					if(folderCollectionWhatsNext.getCollectionItemId()!=null)
 					{
 					params.put("folderId", folderId);
 					params.put("folderItemId", folderCollectionWhatsNext.getCollectionItemId());
 					}
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+					}
+					}
+					else
+					{
+					Map<String,String> params = new LinkedHashMap<String,String>();
+					params.put("id", folderCollectionWhatsNext.getGooruOid());
+
+					if(folderCollectionWhatsNext.getCollectionItemId()!=null)
+					{
+					params.put("folderId", folderId);
+					params.put("folderItemId", folderCollectionWhatsNext.getCollectionItemId());
+					}
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+					}
 				}
 			});
 		}
