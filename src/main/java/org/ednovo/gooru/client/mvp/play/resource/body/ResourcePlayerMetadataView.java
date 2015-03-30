@@ -441,8 +441,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					HTMLPanel htmlPanel = new HTMLPanel("");
 					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
 					Image img = new Image();
+					img.addStyleName("img-responsive");
+					img.setHeight("100%");
 					img.setUrl(resourceplayUrl);
 					htmlPanel.add(img);
+					
 					resourceWidgetContainer.add(htmlPanel);
 				}
 				else{
