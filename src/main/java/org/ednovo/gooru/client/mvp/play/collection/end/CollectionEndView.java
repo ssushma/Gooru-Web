@@ -1618,7 +1618,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					{
 					if(folderCollectionWhatsNext.getCollectionType().equalsIgnoreCase("assessment/url"))
 					{
-						  Window.open(urlValue, "_blank", "");
+						  Window.open(urlValue, "_blank", "");						
 					}
 					else
 					{
@@ -1635,6 +1635,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					}
 					else
 					{
+						System.out.println("iam in else2");
 					Map<String,String> params = new LinkedHashMap<String,String>();
 					params.put("id", folderCollectionWhatsNext.getGooruOid());
 
