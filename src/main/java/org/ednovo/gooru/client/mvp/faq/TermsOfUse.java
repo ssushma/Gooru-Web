@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.faq;
 
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -60,14 +61,14 @@ public abstract class TermsOfUse extends PopupPanel {
 	@UiHandler("privacyCloseBtn")
 	public void privacyCloseButtonClick(ClickEvent clickEvent) {
 		this.hide();
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));	
+		openParentPopup();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			Window.enableScrolling(false);
 			
 		}else{
 			Window.enableScrolling(true);
 		}
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));	
-		openParentPopup();
 		//Window.enableScrolling(false);
 	}
 	public abstract void openParentPopup();
