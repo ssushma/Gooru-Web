@@ -1665,3 +1665,16 @@ padding-left: 11px;
 	color: #999;
 	margin-right: 7px;
 }
+.aleartDescTextForNotLoggedInUser{
+	width:100%;
+	padding-left:61px;
+	padding-right:57px;
+	padding-top:28px
+}
+.shelfItemSucessPopUpWithOutWidth{
+	background: none repeat scroll 0 0 #FFFFFF;
+	clip: inherit !important;
+	overflow: visible !important;
+	position: absolute !important;
+	z-index: 999999!important;
+}
