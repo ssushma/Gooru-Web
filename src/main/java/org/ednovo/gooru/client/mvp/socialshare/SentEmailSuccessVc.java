@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -76,7 +77,7 @@ public class SentEmailSuccessVc extends Composite {
 	
 	@UiField
 	Button okLbl;
-	@UiField HTMLPanel emailToFriendText,emailSentText;
+	@UiField HTMLPanel emailToFriendText,emailSentText,popupContainer;
 
 	/**
 	 * Class constructor , create a new pop up
@@ -148,7 +149,14 @@ public class SentEmailSuccessVc extends Composite {
 		okLbl.getElement().setId("lblOkLbl");
 		okLbl.getElement().setAttribute("alt", i18n.GL0190());
 		okLbl.getElement().setAttribute("title", i18n.GL0190());
-		
+		if(i18n.GL1535().equalsIgnoreCase(desc)){
+			popupContainer.getElement().getStyle().setWidth(438, Unit.PX);
+			popupContainer.getElement().getStyle().setMargin(0, Unit.PX);
+			popupContainer.getElement().getStyle().clearHeight();
+			toEmailLbl.getElement().getStyle().clearWidth();
+			toEmailLbl.addStyleName(ShelfCBundle.INSTANCE.css().aleartDescTextForNotLoggedInUser());
+			appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUpWithOutWidth());
+		}
 		Window.enableScrolling(false);
 	}
 

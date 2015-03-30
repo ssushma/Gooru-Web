@@ -4,7 +4,7 @@
 	<ui:style field="SocialShare" src="SocialShareStyles.css" />
 <ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
 		field="res" />
-	<g:HTMLPanel styleName="{res.css.PopupMainVSmall}">
+	<g:HTMLPanel styleName="{res.css.PopupMainVSmall}" ui:field="popupContainer">
 		<g:HTMLPanel styleName="{res.css.popupInnerGrey}">
 			<g:HTMLPanel styleName="{res.css.popupgreyHeader}">
 			    <g:HTMLPanel styleName="row">

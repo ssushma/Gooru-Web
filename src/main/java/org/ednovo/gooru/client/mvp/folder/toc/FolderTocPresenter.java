@@ -147,7 +147,7 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 	
 	@Override
 	public void getTocFolders(final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID), new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,checkSharable(), new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().clearTocData();
@@ -158,16 +158,27 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
 				}else{
 					getView().showPageNotFound(true);
 				}
-				
 			}
 		});
 		getShortenUrl(folderId, params);
 	}
-
-
+	/**
+	 * This method is used to check the sharable value what need to be passed.
+	 * @return
+	 */
+    public boolean checkSharable(){
+    	//This lines is used to check the values exists are not and based on that it will pass sharing value.
+    	boolean value=false;
+		if(params.containsKey(USER_ID)){
+			value=true;
+		}else if(params.containsKey(LIBRARY_NAME)){
+			value=true;
+		}
+		return value;
+    }
 	@Override
 	public void getFolderItems(final TreeItem item,final String folderId) {
-		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,params.containsKey(USER_ID),new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(folderId,checkSharable(),new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 				getView().setFolderItems(item,folderListDo,folderId);
