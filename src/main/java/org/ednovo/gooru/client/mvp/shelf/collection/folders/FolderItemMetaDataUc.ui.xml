@@ -8,17 +8,17 @@
 	field="res1" />
 	<g:HTMLPanel styleName="{folderMetaStyle.mainSection} {folderMetaStyle.contentBlock}">
 	<g:HTMLPanel styleName="{folderMetaStyle.MaintabDiv}" ui:field="tabDiv">
-	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}" ui:field="bigIdeasPanel">
+	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockMyColl}" ui:field="bigIdeasPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.idea}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="ideasStaticLbl"/>
 	      </g:HTMLPanel>
 	   </g:HTMLPanel>
-	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}" ui:field="essentialQuestionsPanel">
+	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockMyColl}" ui:field="essentialQuestionsPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.question}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="questionsStaticLbl"/>
 	      </g:HTMLPanel>	      
 	   </g:HTMLPanel>
-	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockLast}" ui:field="performanceTaskPanel">
+	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockLast} {folderMetaStyle.ideasBlockMyColl}" ui:field="performanceTaskPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.task}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="tasksStaticLbl"/>
 	      </g:HTMLPanel>	     

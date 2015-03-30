@@ -1637,7 +1637,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		@Override
 		public void onClick(ClickEvent event) {
 			//here
-			
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -1658,7 +1657,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 									}else{
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 											boolean isValidate = true;
-											
 											String titleStr = titleTextBox.getText().trim();
 											String categoryStr =resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 											
@@ -2226,7 +2224,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtn.setEnabled(false);
+			//addResourceBtn.setEnabled(false);
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override

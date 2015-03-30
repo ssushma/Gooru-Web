@@ -496,7 +496,12 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 			@Override
 			public void openParentPopup() {
-				Window.enableScrolling(false);
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+					Window.enableScrolling(false);
+					
+				}else{
+					Window.enableScrolling(true);
+				}
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			}
 			
