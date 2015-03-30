@@ -179,8 +179,7 @@ public class ProfileTopicListView extends Composite{
 	private String libraryGooruOid=null;
 	
 	String collectionIdVal = "";
-	String folderIdVal = "";
-	String folderIdValGbl = "";
+
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
 			.create(ProfileTopicListViewUiBinder.class);
@@ -274,12 +273,6 @@ public class ProfileTopicListView extends Composite{
 		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -37px 9px 0 0;");
 		viewAllBtn.getElement().setId("btnViewAll");
 		viewAllBtn.setVisible(true);
-		
-		folderIdValGbl = profileFolderDo.getGooruOid();
-
-		collectionImage.getElement().setAttribute("folderId", profileFolderDo.getGooruOid());
-		collectionTitleLbl.getElement().setAttribute("folderId", profileFolderDo.getGooruOid());
-	
 
 		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid(),parentId));
 		go2Assessment.setVisible(false);
@@ -312,12 +305,6 @@ public class ProfileTopicListView extends Composite{
 		setPlaceToken(placeToken);
 		collectionImage.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
-		if(profileFolderDo.getParentGooruOid()!=null)
-		{
-		collectionImage.getElement().setAttribute("folderId", profileFolderDo.getParentGooruOid());
-		collectionTitleLbl.getElement().setAttribute("folderId", profileFolderDo.getParentGooruOid());
-		}
-
 
 		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,profileFolderDo.getTitle());
 		assignCollectionBtn.setText(i18n.GL0526());
@@ -602,17 +589,7 @@ public class ProfileTopicListView extends Composite{
 								final String domain = domainName;
 								
 								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
-								
-								if(conceptDo.getParentGooruOid()!= null)
-								{
-								resourcePanel.getElement().setAttribute("folderId", conceptDo.getParentGooruOid());
-								resourceCategoryIcon.getElement().setAttribute("folderId", conceptDo.getParentGooruOid());
-								}
-								else
-								{
-									resourcePanel.getElement().setAttribute("folderId", folderIdValGbl);
-									resourceCategoryIcon.getElement().setAttribute("folderId", folderIdValGbl);	
-								}
+	
 								
 								resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
 								   	
@@ -679,12 +656,6 @@ public class ProfileTopicListView extends Composite{
 								resourcePanel.addClickHandler(new ClickHandler() {
 									@Override
 									public void onClick(ClickEvent event) {
-										try{
-											folderIdVal = ((HTMLEventPanel)event.getSource()).getElement().getAttribute("folderId");
-										}
-										catch(Exception ex){
-											folderIdVal = "";
-										}
 										String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 										if(page.equals(COURSE_PAGE)) {
 											MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
@@ -700,81 +671,7 @@ public class ProfileTopicListView extends Composite{
 										}
 										params.put("rid", resourceId);
 										
-										if(folderIdVal!=null && !folderIdVal.isEmpty())
-										{
-
-											AppClientFactory.getInjector().getfolderService().getTocFolders(folderIdVal,false, new SimpleAsyncCallback<FolderTocDo>() {
-												@Override
-												public void onSuccess(FolderTocDo folderListDo) {
-													if(folderListDo.getCollectionItems().size()>0)
-													{
-														String folderItemId = "";
-													for(int i=0;i<folderListDo.getCollectionItems().size();i++)
-													{
-														if(conceptDo.getGooruOid().equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
-														{
-															folderItemId = folderListDo.getCollectionItems().get(i).getCollectionItemId();
-															params.put("folderId", folderIdVal);
-															params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
-															AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
-															PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-															AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-															break;
-														}
-													}
-													if(folderItemId.isEmpty())
-													{
-														
-														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-														params.put("lessonId", lessonId);
-														if(libraryGooruOid!=null){
-															params.put("lid", libraryGooruOid);
-														}
-														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-														if(libraryEventId!=null){
-															params.put("eventid", libraryEventId);
-														}
-														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-															params.put("library", getPlaceToken());
-														}
-														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-														if(standardId!=null){
-															params.put("rootNodeId", standardId);
-														}
-														
-														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-													}
-													}
-													else
-													{
-														
-														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-														params.put("lessonId", lessonId);
-														if(libraryGooruOid!=null){
-															params.put("lid", libraryGooruOid);
-														}
-														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-														if(libraryEventId!=null){
-															params.put("eventid", libraryEventId);
-														}
-														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-															params.put("library", getPlaceToken());
-														}
-														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-														if(standardId!=null){
-															params.put("rootNodeId", standardId);
-														}
-														
-														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-													}
-												}
-											});
-							
-										}
-										else
-										{
+	
 											
 											params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 											params.put("lessonId", lessonId);
@@ -795,27 +692,14 @@ public class ProfileTopicListView extends Composite{
 											
 											PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 											AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-										}
-										
-										
-										
-										
-										
-										
-										
-										
+	
 							
 									}
 								});
 								resourceCategoryIcon.addClickHandler(new ClickHandler() {
 									@Override
 									public void onClick(ClickEvent event) {
-										try{											
-											folderIdVal = ((HTMLEventPanel)event.getSource()).getElement().getAttribute("folderId");
-										}
-										catch(Exception ex){
-											folderIdVal = "";
-										}
+
 										String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 										if(page.equals(COURSE_PAGE)) {
 											MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
@@ -832,79 +716,7 @@ public class ProfileTopicListView extends Composite{
 										params.put("rid", resourceId);
 										
 										
-										
-										if(folderIdVal!=null && !folderIdVal.isEmpty())
-										{
-											AppClientFactory.getInjector().getfolderService().getTocFolders(folderIdVal,false, new SimpleAsyncCallback<FolderTocDo>() {
-												@Override
-												public void onSuccess(FolderTocDo folderListDo) {
-													if(folderListDo.getCollectionItems().size()>0)
-													{
-														String folderItemId = "";
-													for(int i=0;i<folderListDo.getCollectionItems().size();i++)
-													{
-														if(conceptDo.getGooruOid().equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
-														{
-															folderItemId = folderListDo.getCollectionItems().get(i).getCollectionItemId();
-															params.put("folderId", folderIdVal);
-															params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
-															AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
-															PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-															AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-															break;
-														}
-													}
-													if(folderItemId.isEmpty())
-													{
-														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-														params.put("lessonId", lessonId);
-														if(libraryGooruOid!=null){
-															params.put("lid", libraryGooruOid);
-														}
-														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-														if(libraryEventId!=null){
-															params.put("eventid", libraryEventId);
-														}
-														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-															params.put("library", getPlaceToken());
-														}
-														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-														if(standardId!=null){
-															params.put("rootNodeId", standardId);
-														}
-														
-														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-													}
-													}
-													else
-													{
-														params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-														params.put("lessonId", lessonId);
-														if(libraryGooruOid!=null){
-															params.put("lid", libraryGooruOid);
-														}
-														String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-														if(libraryEventId!=null){
-															params.put("eventid", libraryEventId);
-														}
-														if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-															params.put("library", getPlaceToken());
-														}
-														String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-														if(standardId!=null){
-															params.put("rootNodeId", standardId);
-														}
-														
-														PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-														AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-													}
-												}
-											});
-							
-										}
-										else
-										{
+								
 											params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 											params.put("lessonId", lessonId);
 											if(libraryGooruOid!=null){
@@ -924,7 +736,7 @@ public class ProfileTopicListView extends Composite{
 											
 											PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 											AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-										}
+										
 										
 										
 										
@@ -1312,11 +1124,11 @@ public class ProfileTopicListView extends Composite{
 
 				try{
 					collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
-					folderIdVal = ((Image)event.getSource()).getElement().getAttribute("folderId");
+					
 				}
 				catch(Exception ex){
 					collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
-					folderIdVal = ((HTML)event.getSource()).getElement().getAttribute("folderId");
+
 				}
 				String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 				if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
@@ -1327,81 +1139,7 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
 				}
-				if(folderIdVal!=null && !folderIdVal.isEmpty())
-				{
-					final HashMap<String,String> params = new HashMap<String,String>();
-					params.put("id", collectionIdVal);
-
-					AppClientFactory.getInjector().getfolderService().getTocFolders(folderIdVal,false, new SimpleAsyncCallback<FolderTocDo>() {
-						@Override
-						public void onSuccess(FolderTocDo folderListDo) {
-							if(folderListDo.getCollectionItems().size()>0)
-							{
-								String folderItemId = "";
-							for(int i=0;i<folderListDo.getCollectionItems().size();i++)
-							{
-								if(collectionIdVal.equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
-								{
-									folderItemId = folderListDo.getCollectionItems().get(i).getCollectionItemId();
-									params.put("folderId", folderIdVal);
-									params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
-									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
-									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-									break;
-								}
-							}
-							if(folderItemId.isEmpty())
-							{
-								Map<String, String> params = new HashMap<String, String>();
-								params.put("id", collectionIdVal);
-								params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-								params.put("lessonId", lessonId);
-								if(libraryGooruOid!=null){
-									params.put("lid", libraryGooruOid);
-								}
-								String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-								if(libraryEventId!=null){
-									params.put("eventid", libraryEventId);
-								}
-								if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-									params.put("library", getPlaceToken());
-								}
-								String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-								if(standardId!=null){
-									params.put("rootNodeId", standardId);
-								}
-								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-							}
-							}
-							else
-							{
-								Map<String, String> params = new HashMap<String, String>();
-								params.put("id", collectionIdVal);
-								params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-								params.put("lessonId", lessonId);
-								if(libraryGooruOid!=null){
-									params.put("lid", libraryGooruOid);
-								}
-								String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-								if(libraryEventId!=null){
-									params.put("eventid", libraryEventId);
-								}
-								if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-									params.put("library", getPlaceToken());
-								}
-								String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-								if(standardId!=null){
-									params.put("rootNodeId", standardId);
-								}
-								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-							}
-						}
-					});
 	
-				}
-				else
-				{
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", collectionIdVal);
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
@@ -1421,7 +1159,7 @@ public class ProfileTopicListView extends Composite{
 					params.put("rootNodeId", standardId);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-				}
+				
 			}
 		}
 	}

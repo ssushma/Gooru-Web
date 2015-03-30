@@ -54,8 +54,11 @@
 		
 		.cropImageWidget {
 			min-width: 160px;
-			min-height: 250px;
+			min-height: 120px;
+			height: 400px;
 			margin:0 auto;
+			overflow-y:auto;
+			overflow-x:hidden;
 		}
 		
 		.cropImageWidgetLoading {

@@ -68,7 +68,6 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -268,8 +267,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	private static final String O2_LEVEL = "o2";
 	
 	private static final String O3_LEVEL = "o3";
-	
-	String selectedFolderId = "";
 	
 	private static final String ID = "id";
 	
@@ -1449,42 +1446,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void collectionPlay(ClickEvent event) {
 		MixpanelUtil.Preview_Collection_From_CollectionEdit();
 		final HashMap<String,String> params = new HashMap<String,String>();
-		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
-			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o3");
-		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
-			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
-		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
-			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
-		}	
 		params.put("id", collectionDo.getGooruOid());
-		if(!selectedFolderId.isEmpty())
-		{
-		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,false, new SimpleAsyncCallback<FolderTocDo>() {
-			@Override
-			public void onSuccess(FolderTocDo folderListDo) {
-				for(int i=0;i<folderListDo.getCollectionItems().size();i++)
-				{
-					if(collectionDo.getGooruOid().equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
-					{
-						params.put("folderId", selectedFolderId);
-						params.put("folderItemId", folderListDo.getCollectionItems().get(i).getCollectionItemId());
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);							
-						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-						AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-						break;
-					}
-				}
-			}
-		});
-		}
-		else
-		{
+
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);			
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
-		}
 
-		
 	}
 
 	/**
