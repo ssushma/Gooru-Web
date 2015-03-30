@@ -399,7 +399,6 @@
 
 .sendMeCopyBox {
 	float: right;
-	margin-top: 4px;
 	height: 15px;
 	width: 15px;
 }
@@ -454,8 +453,8 @@
 }
 
 div.buttonContainer {
-	margin: 0 0 0 40%;
-	width: 70%;
+	margin: 0 0 0 50%;
+	width: 50%;
 }
 div.emailSuccessMessage{
 	color: #1076BB;

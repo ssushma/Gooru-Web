@@ -60,6 +60,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -161,6 +162,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 					isBrowseStandardsToolTip= true;
 					Document.get().getElementsByTagName("html").getItem(0).getStyle().setOverflowX(Overflow.HIDDEN);
+					Window.enableScrolling(false);
 				}
 			}
 		});
@@ -844,6 +846,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 			isBrowseStandardsToolTip= true;
 			Document.get().getElementsByTagName("html").getItem(0).getStyle().setOverflowX(Overflow.HIDDEN);
+			Window.enableScrolling(false);
 		}
 	}
 	/**
@@ -859,6 +862,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 			isBrowseStandardsToolTip= true;
 			Document.get().getElementsByTagName("html").getItem(0).getStyle().setOverflowX(Overflow.HIDDEN);
+			Window.enableScrolling(false);
 		}
 	}
 	/**
@@ -874,6 +878,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 			isBrowseStandardsToolTip= true;
 			Document.get().getElementsByTagName("html").getItem(0).getStyle().setOverflowX(Overflow.HIDDEN);
+			Window.enableScrolling(false);
 		}
 	}
 	
@@ -890,6 +895,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
 			isBrowseStandardsToolTip= true;
 			Document.get().getElementsByTagName("html").getItem(0).getStyle().setOverflowX(Overflow.HIDDEN);
+			Window.enableScrolling(false);
 		}
 	}
 	
@@ -1046,6 +1052,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				{
 					if(isBrowseStandardsToolTip){
 						browseStandardsTooltip.hide();
+						Window.enableScrolling(true);
 					}
 				}
 			}
@@ -1112,5 +1119,4 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	
 		$wnd.searchStandard4();
 	}-*/;
-	
 }
