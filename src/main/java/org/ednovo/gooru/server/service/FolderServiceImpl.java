@@ -496,9 +496,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	public FolderTocDo getTocFolders(String folderId,boolean fromPPP) throws GwtException,ServerDownException {
 		FolderTocDo folderTocDo = new FolderTocDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
-		if(fromPPP){
-			url=url+"&sharing=public";
-		}
+
+		url=url+"&sharing=public";
+		
 		getLogger().info("-- Folder toc API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep!=null && jsonResponseRep.getJsonRepresentation()!=null){
