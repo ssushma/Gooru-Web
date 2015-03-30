@@ -657,6 +657,11 @@ public class StringUtil implements ClientConstants {
 			return false;
 		 }
 	}
+	/**
+	 * This method is used to append the target for anchore tag in a string
+	 * @param value
+	 * @return
+	 */
 	public static String replaceAnchoreWithTarget(String value){
 		value=value.replaceAll("<(a)([^>]+)>", "<$1 target=\"_blank\"$2>");
 		return value;
