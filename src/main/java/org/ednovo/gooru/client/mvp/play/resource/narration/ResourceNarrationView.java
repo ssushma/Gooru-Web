@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -115,7 +116,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 			if(narration!=null){
 				narration=narration.replaceAll("background-color", "");
 			}
-			narrationText.setHTML(narration !=null ? narration : "");
+			narrationText.setHTML(narration !=null ? StringUtil.replaceAnchoreWithTarget(narration) : "");
 			narrationText.getElement().setAttribute("alt",narration !=null ? narration : "");
 			narrationText.getElement().setAttribute("title",narration !=null ? narration : "");
 			resourceTitle.setHTML(collectionItemDo.getItemSequence()+". "+removeHtmlTags((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
