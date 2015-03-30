@@ -361,7 +361,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setCollectionDoOnRefresh(CollectionDo collectionDo) { 
 		this.collectionDo = collectionDo;
 		getView().setCollectionMetadata(collectionDo);
-		setRelatedConcepts(collectionDo);
 	}
 
 	public CollectionPlayerPresenter getCollectionPlayerPresenter() {
