@@ -27,8 +27,6 @@ package org.ednovo.gooru.client.mvp.play.collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.annotation.RegEx;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
