@@ -311,7 +311,9 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 			mapParms.remove("callback");
 			mapParms.remove("type");
 			mapParms.remove("rp");
-			mapParms.remove("id");
+			if (!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
+				mapParms.remove("id");
+			}
 		}else{
 			mapParms.put("callback", "registerChild");
 		}
