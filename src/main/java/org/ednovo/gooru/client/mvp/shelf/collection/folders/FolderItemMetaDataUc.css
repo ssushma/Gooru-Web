@@ -36,6 +36,10 @@
 	color: #999;
 }
 
+.ideasBlockMyColl {
+	margin: -2px 0 !important;
+}
+
 .ideasBlockLast {
 	border-right: 0px solid #f4f4f4;
 }
