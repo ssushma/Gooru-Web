@@ -105,6 +105,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandlers> implements IsCollectionEndView,ClientConstants{
@@ -200,6 +201,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	private boolean isCustomizePopup = false;
 	
 	private boolean isSharePopup = false;
+	
+	private HandlerRegistration whatsNextHandler;
 	
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
@@ -1611,17 +1614,29 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			}else{
 				this.questionCount.setText("");
 			}
-			nextCollectionThumbnail.addClickHandler(new ClickHandler() {
+			if(folderCollectionWhatsNext.getCollectionType().equalsIgnoreCase("assessment/url"))
+			{
+				if(whatsNextHandler!=null){
+					whatsNextHandler.removeHandler();
+				}
+				whatsNextHandler = nextCollectionThumbnail.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+		
+						Window.open(urlValue, "_blank", "");
+						
+					}
+				});
+			}
+			else
+			{
+				if(whatsNextHandler!=null){
+					whatsNextHandler.removeHandler();
+				}
+				whatsNextHandler = nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					if(folderCollectionWhatsNext.getCollectionType()!=null)
-					{
-					if(folderCollectionWhatsNext.getCollectionType().equalsIgnoreCase("assessment/url"))
-					{
-						  Window.open(urlValue, "_blank", "");
-					}
-					else
-					{
+	
 					Map<String,String> params = new LinkedHashMap<String,String>();
 					params.put("id", folderCollectionWhatsNext.getGooruOid());
 
@@ -1631,22 +1646,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					params.put("folderItemId", folderCollectionWhatsNext.getCollectionItemId());
 					}
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-					}
-					}
-					else
-					{
-					Map<String,String> params = new LinkedHashMap<String,String>();
-					params.put("id", folderCollectionWhatsNext.getGooruOid());
-
-					if(folderCollectionWhatsNext.getCollectionItemId()!=null)
-					{
-					params.put("folderId", folderId);
-					params.put("folderItemId", folderCollectionWhatsNext.getCollectionItemId());
-					}
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-					}
+					
 				}
 			});
+			}
+	
 		}
 		else
 		{

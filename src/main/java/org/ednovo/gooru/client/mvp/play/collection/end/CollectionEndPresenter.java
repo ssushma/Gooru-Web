@@ -106,8 +106,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
 	
 	PrintUserDataDO printData=new PrintUserDataDO();
-	
-	Boolean whatNextCalled = false;
 
 	String classpageId=null;
 	
@@ -344,10 +342,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		}
 		else
 		{
-		if(!whatNextCalled)
-		{
 		getNextCollectionItem(folderId,folderItemId,collectionDo.getUrl());
-		}
 		}
 		
 
@@ -366,7 +361,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setCollectionDoOnRefresh(CollectionDo collectionDo) { 
 		this.collectionDo = collectionDo;
 		getView().setCollectionMetadata(collectionDo);
-		setRelatedConcepts(collectionDo);
 	}
 
 	public CollectionPlayerPresenter getCollectionPlayerPresenter() {
@@ -578,7 +572,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	
 	public void getNextCollectionItem(String folderId,String folderItemId,final String urlVal) {
-		whatNextCalled = true;
 		if(folderId!=null && folderItemId!=null) {			
 			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
 				@Override

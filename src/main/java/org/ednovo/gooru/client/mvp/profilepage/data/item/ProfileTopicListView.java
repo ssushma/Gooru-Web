@@ -635,10 +635,19 @@ public class ProfileTopicListView extends Composite{
 										String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr,Window.Location.getProtocol());
 										resourceImage.setUrl(thumbnailUrl);
 									} else {
+										String youTubeIbStr1 = ResourceImageUtil.getYoutubeVideoId(profileLibraryItem.getUrl());
+										if(youTubeIbStr1!=null && youTubeIbStr1.length()==11)
+										{
+											String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr1,Window.Location.getProtocol());
+											resourceImage.setUrl(thumbnailUrl);
+										}
+										else
+										{
 										if(profileLibraryItem.getThumbnails()!=null&&profileLibraryItem.getThumbnails().getUrl()!=null&&!profileLibraryItem.getThumbnails().getUrl().isEmpty()) {
 											resourceImage.setUrl(profileLibraryItem.getThumbnails().getUrl());
 										} else {
 											resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
+										}
 										}
 									}
 									resourceImage.addErrorHandler(new ErrorHandler() {
