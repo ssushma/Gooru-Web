@@ -35,6 +35,7 @@ import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -146,6 +147,13 @@ public abstract class ImageCropView extends Composite{
 		crop.setAspectRatio(aspectRatio);
 		scrollpanel.add(crop);
 		cropImageWidgetFloPanel.add(scrollpanel);
+		Timer timer = new Timer() {
+		    public void run() {
+		    	cropImageLoading.setVisible(false);
+		    }
+		};
+	   // Execute the timer to expire 7 seconds in the future
+	   timer.schedule(7000);	
 	}
 	
 	/**
