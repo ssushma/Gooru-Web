@@ -379,6 +379,7 @@ public class WrapView extends BaseView implements IsWrapView {
 			isCCSSAvailable = true;
 			isNGSSAvailable = true;
 			isCAAvailable = true;
+			isTEKSAvailable = false;
 			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 				addStandardsPresenter.callDefaultStandardsLoad();
