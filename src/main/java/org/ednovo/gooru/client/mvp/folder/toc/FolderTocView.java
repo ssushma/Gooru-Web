@@ -269,11 +269,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
+						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
 					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
+						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
 					 }
 				 }
 				 floderTreeContainer.clear();
@@ -355,20 +355,60 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-   	private  void adjustTreeItemStyle(final UIObject uiObject) {
+   	private  void adjustTreeItemStyle(final UIObject uiObject, String itemType, int folderLevel) {
 	      if (uiObject instanceof TreeItem) {
 	         if (uiObject != null && uiObject.getElement() != null) {
-	            Element element = uiObject.getElement();
-	            element.getStyle().setPadding(0, Unit.PX);
-	            element.getStyle().setMarginLeft(0, Unit.PX);
+	            Element element = uiObject.getElement();       	
+				 if(FOLDER.equalsIgnoreCase(itemType)){
+						if(folderLevel>=2){
+							 element.getStyle().setPaddingLeft(28, Unit.PX);
+					            element.getStyle().setMarginLeft(0, Unit.PX);
+					            if(folderLevel>2)
+					            {
+					            Element element1 = uiObject.getElement().getParentElement().getParentElement();
+					            element1.getStyle().setPaddingLeft(28, Unit.PX);
+				 		        element1.getStyle().setMarginLeft(0, Unit.PX);
+					            }
+						}
+						else
+						{
+							if(folderLevel == 1)
+							{
+					           element.getStyle().setPaddingLeft(0, Unit.PX);
+					           element.getStyle().setMarginLeft(-10, Unit.PX);
+							}
+							else
+							{
+					           element.getStyle().setPaddingLeft(0, Unit.PX);
+					           element.getStyle().setMarginLeft(0, Unit.PX);
+							}
+
+						}
+				 }else if(SCOLLECTION.equalsIgnoreCase(itemType)){
+					 if(folderLevel>=2){
+						 element.getStyle().setPaddingLeft(69, Unit.PX);
+				            element.getStyle().setMarginLeft(0, Unit.PX);
+				            Element element1 = uiObject.getElement().getParentElement().getParentElement();
+				            element1.getStyle().setPaddingLeft(28, Unit.PX);
+			 		        element1.getStyle().setMarginLeft(0, Unit.PX);
+							}
+							 else
+							 {
+							  element.getStyle().setPaddingLeft(28, Unit.PX);
+				              element.getStyle().setMarginLeft(0, Unit.PX);
+							 }
+				 }
+
 	         }
 	      } else {
 	         if (uiObject != null && uiObject.getElement() != null && uiObject.getElement().getParentElement() != null
 	               && uiObject.getElement().getParentElement().getParentElement() != null
 	               && uiObject.getElement().getParentElement().getParentElement().getStyle() != null) {
 	            Element element = uiObject.getElement().getParentElement().getParentElement();
-	           element.getStyle().setPadding(0, Unit.PX);
-	           element.getStyle().setMarginLeft(0, Unit.PX);
+
+	 	           element.getStyle().setPadding(0, Unit.PX);
+		           element.getStyle().setMarginLeft(1, Unit.PX);
+	            
 	         }
 	      }
    	}
@@ -487,16 +527,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								FolderTreeItem innerFolderTreeItem = new FolderTreeItem(styleName, floderDo.getTitle(),floderDo.getGooruOid());
 								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
-								if(folderLevel>=2){
-									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important;");
-								}
 								item.addItem(folderItem);
-								adjustTreeItemStyle(folderItem);
+								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
-							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*20+"px !important; padding-top: 10px !important;");
+								folderItem.getElement().removeAttribute("style");
 							 	item.addItem(folderItem);
-								adjustTreeItemStyle(folderItem);
+								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
 						 }
 					}
 					item.setState(folderTreeItemWidget.isOpen());
@@ -782,6 +819,20 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiHandler("errorPageImg")
 	public void clickOnErrorImg(ClickEvent clickEvent){
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	}
+	
+	/**
+	* Gets the name of the used browser.
+	*/
+	public static native String getBrowserName() /*-{
+	    return navigator.userAgent.toLowerCase();
+	}-*/;
+	
+	/**
+	* Returns true if the current browser is Firefox.
+	*/
+	public static boolean isFirefoxBrowser() {
+	    return getBrowserName().toLowerCase().contains("firefox");
 	}
 	
 }
