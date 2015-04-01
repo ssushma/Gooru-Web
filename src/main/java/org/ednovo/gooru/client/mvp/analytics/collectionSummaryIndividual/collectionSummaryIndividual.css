@@ -283,12 +283,12 @@
 .setOETextPopupCenter {
 	left: 0 !important;
 	right: 0 !important;
-	top: 180px !important;
+	top: 0px !important;
 	position: fixed !important;
 	margin: auto;
 	width: 941px;
 	min-height: 148px;
-	height: auto;
+	height: 250px;
 	z-index: 99999;
 }
 
