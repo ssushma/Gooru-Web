@@ -50,6 +50,7 @@ public class GwtUrlHandlerMapping extends SimpleUrlHandlerMapping {
 			GwtAbstractServiceImpl controller = entry.getValue();
 			Class serviceClass = controller.getClass();
 
+			@SuppressWarnings("unchecked")
 			ServiceURL serviceURL = (ServiceURL) serviceClass.getAnnotation(ServiceURL.class);
 
 			if (serviceURL == null) {
