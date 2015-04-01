@@ -358,7 +358,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
    	private  void adjustTreeItemStyle(final UIObject uiObject, String itemType, int folderLevel) {
 	      if (uiObject instanceof TreeItem) {
 	         if (uiObject != null && uiObject.getElement() != null) {
-	            Element element = uiObject.getElement();       	
+	            Element element = uiObject.getElement();  
 				 if(FOLDER.equalsIgnoreCase(itemType)){
 						if(folderLevel>=2){
 							 element.getStyle().setPaddingLeft(28, Unit.PX);
@@ -388,15 +388,24 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					 if(folderLevel>=2){
 						 element.getStyle().setPaddingLeft(69, Unit.PX);
 				            element.getStyle().setMarginLeft(0, Unit.PX);
+				            
 				            Element element1 = uiObject.getElement().getParentElement().getParentElement();
 				            element1.getStyle().setPaddingLeft(28, Unit.PX);
 			 		        element1.getStyle().setMarginLeft(0, Unit.PX);
+			
 							}
-							 else
-							 {
-							  element.getStyle().setPaddingLeft(28, Unit.PX);
-				              element.getStyle().setMarginLeft(0, Unit.PX);
-							 }
+					 else
+					 {
+					  element.getStyle().setPaddingLeft(28, Unit.PX);
+		              element.getStyle().setMarginLeft(0, Unit.PX);
+					 }
+					 if(folderLevel==2)
+					 {
+				            Element element1 = uiObject.getElement().getParentElement().getParentElement();
+				            element1.getStyle().setPaddingLeft(0, Unit.PX);
+			 		        element1.getStyle().setMarginLeft(-12, Unit.PX);
+					 }
+			
 				 }
 
 	         }
