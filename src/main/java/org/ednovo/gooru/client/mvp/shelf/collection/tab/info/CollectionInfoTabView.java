@@ -554,48 +554,42 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}else{
 					charLimitErrLbl.setVisible(false);
 				}
-				
-				if(textAreaVal.getText().length() == 0){
+				final String learningObjective=textAreaVal.getText();
+				if(learningObjective.length() == 0){
 					textAreaVal.setText(i18n.GL1641());
 					textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
 					textAreaVal.getElement().setAttribute("title",i18n.GL1641());
 					textAreaVal.getElement().getStyle().setColor("#999");
 				}
-				else
-				{
-					Map<String, String> parms = new HashMap<String, String>();
-					parms.put("text", textAreaVal.getText());
-					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-						
-						@Override
-						public void onSuccess(Boolean value) {
+				//As the learning objective is not mandatory removed the if else condition
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", textAreaVal.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					@Override
+					public void onSuccess(Boolean value) {
 					//callapi
-							if(!value)
-							{
-								textAreaVal.getElement().removeAttribute("style");
-								languageObjectiveerrLabel.setVisible(false);
-								if(collectionDo !=null){
-								AppClientFactory.getInjector().getResourceService().updateCollectionLanguageObjective(collectionDo, textAreaVal.getText(), new SimpleAsyncCallback<CollectionDo>() {
-										@Override
-										public void onSuccess(CollectionDo result) {
+					if(!value){
+						textAreaVal.getElement().removeAttribute("style");
+						languageObjectiveerrLabel.setVisible(false);
+						if(collectionDo !=null){
+							AppClientFactory.getInjector().getResourceService().updateCollectionLanguageObjective(collectionDo,learningObjective, new SimpleAsyncCallback<CollectionDo>() {
+								@Override
+								public void onSuccess(CollectionDo result) {
 											
-										}
-								});
-								}
-							}
-							else
-							{
-								textAreaVal.getElement().getStyle().setBorderColor("orange");
-								languageObjectiveerrLabel.setText(i18n.GL0554());
-								languageObjectiveerrLabel.getElement().setAttribute("alt",i18n.GL0554());
-								languageObjectiveerrLabel.getElement().setAttribute("title",i18n.GL0554());
-								languageObjectiveerrLabel.setVisible(true);
-							}
+									}
+							});
 						}
-					});
+					}else{
+						textAreaVal.getElement().getStyle().setBorderColor("orange");
+						languageObjectiveerrLabel.setText(i18n.GL0554());
+						languageObjectiveerrLabel.getElement().setAttribute("alt",i18n.GL0554());
+						languageObjectiveerrLabel.getElement().setAttribute("title",i18n.GL0554());
+						languageObjectiveerrLabel.setVisible(true);
+					 }
 				}
-			}
-		});
+			});
+		}
+	});
 	
 		List<String> instructionalMethodList = Arrays.asList(InstructionalMethodStr.split(","));
 
@@ -1888,13 +1882,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	@Override
 	public void setUpdatedCentury(Map<Long, String> selectedValues){
+		centPanel.clear();
 		int size=selectedValues.size();
 		if(size>0){
 			for(Iterator<Map.Entry<Long, String>> it = selectedValues.entrySet().iterator(); it.hasNext(); ) {
 			      Map.Entry<Long, String> entry = it.next();
+			      centPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"",""));
 			      if(!hilightSelectedValuesFromAutoSuggest.containsKey(entry.getKey())) {
 			    	  hilightSelectedValuesFromAutoSuggest.put(entry.getKey(), entry.getValue());
-			    	  centPanel.add(create21CenturyLabel(entry.getValue(), entry.getKey()+"",""));
 			      }else{
 			    	  it.remove();
 			      }
