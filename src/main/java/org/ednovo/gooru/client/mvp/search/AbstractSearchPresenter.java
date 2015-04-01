@@ -790,6 +790,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			isCCSSAvailable = true;
 			isNGSSAvailable = true;
 			isCAAvailable = true;
+			isTEKSAvailable = false;
 			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 				addToPopupSlot(addStandardsPresenter);

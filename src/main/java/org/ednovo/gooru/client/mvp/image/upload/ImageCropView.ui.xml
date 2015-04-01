@@ -56,9 +56,11 @@
 			min-width: 160px;
 			min-height: 120px;
 			height: 400px;
+			max-width:1000px;
 			margin:0 auto;
 			overflow-y:auto;
-			overflow-x:hidden;
+			overflow-x:auto;
+			background-color: #000;
 		}
 		
 		.cropImageWidgetLoading {

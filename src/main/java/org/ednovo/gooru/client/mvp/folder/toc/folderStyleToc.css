@@ -423,13 +423,12 @@
     white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	  margin-left: -6px;
 }
 .folderStucture table {
    /*  width:395px; */
 }
-.folderStucture > div > div > div > div {
-    margin-left:0px !important;
-}
+
 
 /*////////////*/
 
@@ -543,7 +542,6 @@
      display:none;
 }
 .arrowActive {
-    background-image: url('../images/folders/panel/arrow-open.png') !important;
     display:block;
 }
 
@@ -758,8 +756,6 @@
     border-radius:2px;
     position:absolute;
     top:0px;
-    margin-left: -54px;
-    background: url('../images/folders/panel/arrow-closed.png') no-repeat center;
 }
 
 .folderTitleStyle {
