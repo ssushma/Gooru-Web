@@ -75,13 +75,15 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	String selectedCodeVal = "";
 	Integer selectedCodeId = 0;
 	String selectedCodeDesc = "";
+	String collectionIdFromCollectionInfo = "";
 	LiPanel liPanel;
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
 	Map<Long,String> selectedValues=new HashMap<Long,String>();
 	Map<Long,String> initialSelectedValues=new HashMap<Long,String>();
-
+	Map<Long, String> collectionInfoSelectedValues;
+	
 	@UiTemplate("AddCenturyView.ui.xml")
 	interface AddCenturyViewUiBinder extends UiBinder<Widget, AddCenturyView> {
 	}
@@ -311,6 +313,12 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());			
 						for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
 							if(selectedValues.containsValue(entry.getValue().trim())){
+								if(collectionIdFromCollectionInfo!=null){
+									getUiHandlers().deleteCourseOrStandard(collectionIdFromCollectionInfo, entry.getKey().toString());
+									if(collectionInfoSelectedValues!=null && collectionInfoSelectedValues.containsKey(entry.getKey())){
+										collectionInfoSelectedValues.remove(entry.getKey());
+									}
+								}
 								selectedValues.remove(entry.getKey());
 								return;
 							}
@@ -377,5 +385,11 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	@Override
 	public void setAddResourceDataForTags(ArrayList<String> centuryDo) {
 		setPopupAddHilightDataForAddTags(centuryDo);
+	}
+
+	@Override
+	public void setCollectionIdFromCollectionInfo(String collectionId,Map<Long, String> collectionInfoSelectedValues) {
+		collectionIdFromCollectionInfo=collectionId;
+		this.collectionInfoSelectedValues=collectionInfoSelectedValues;
 	}
 }

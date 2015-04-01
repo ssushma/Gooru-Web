@@ -154,7 +154,6 @@
 .viewResponsepnl{
 	overflow-y: auto;
 	overflow-x: hidden;
-	height:auto !important;
 }
 .dashboard_view_teacher_feedback {
 	float: left;

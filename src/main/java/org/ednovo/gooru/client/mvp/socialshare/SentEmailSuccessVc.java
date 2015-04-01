@@ -149,7 +149,7 @@ public class SentEmailSuccessVc extends Composite {
 		okLbl.getElement().setId("lblOkLbl");
 		okLbl.getElement().setAttribute("alt", i18n.GL0190());
 		okLbl.getElement().setAttribute("title", i18n.GL0190());
-		if(i18n.GL1535().equalsIgnoreCase(desc)){
+		if(i18n.GL1535().equalsIgnoreCase(desc) || i18n.GL1535_1().equalsIgnoreCase(desc)){
 			popupContainer.getElement().getStyle().setWidth(438, Unit.PX);
 			popupContainer.getElement().getStyle().setMargin(0, Unit.PX);
 			popupContainer.getElement().getStyle().clearHeight();

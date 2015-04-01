@@ -471,8 +471,12 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		if(getView().getSelectedCenturyValuesThroughAutosuggest().size()> 0){
 			addCenturyPresenter.setAddResourceData(getView().getSelectedCenturyValuesThroughAutosuggest());
 		}
-		addToPopupSlot(addCenturyPresenter);
-		getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
+		String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		if(collectionUid!=null){
+			addCenturyPresenter.setCollectionIdFromCollectionInfo(collectionUid,getView().getSelectedCenturyValuesThroughAutosuggest());
+			addToPopupSlot(addCenturyPresenter);
+			getView().OnCenturyClickEvent(addCenturyPresenter.getAddButton());
+		}
 	}
 
 	@Override
