@@ -62,7 +62,7 @@
 	background: -o-linear-gradient(top, #7AB075, #4e9746);
 	
 	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746');
+	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746')");
 }
 
 .popup .closeButton {
@@ -536,7 +536,6 @@ margin-top: -43px;
 	margin: 10px 0px;
 	cursor: default;
 	overflow: hidden;
-	//height: 232px;
 }
 
 .subjectTabs {
@@ -1148,8 +1147,8 @@ input.halfSize {
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius: 5px;
 	border-style: solid;
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#ffdddddd,GradientType=0)";
- 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff, endColorstr=#ffdddddd, GradientType=0);
+	-ms-filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#ffdddddd,GradientType=0)");
+ 	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff, endColorstr=#ffdddddd, GradientType=0)");
 }
 .editBtn:hover {
 	background: #EEE;

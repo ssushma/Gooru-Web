@@ -1438,7 +1438,7 @@ button.primary:hover {
 	color: #FFFFFF !important;
 }
 
-.blueArrow {String landingPageDiscoverIconDetails();
+.blueArrow {
 	background: url("images/all-arrow-icon.png") no-repeat scroll 6px -108px
 		transparent;
 	display: block;
@@ -1461,7 +1461,7 @@ button.primary:hover {
 	width: auto;
 }
 
-.closePopUp {String landingPageDiscoverIconDetails();
+.closePopUp {
 	background: url("images/Collection-Search/icon-sprite.png") repeat
 		scroll -12px -431px transparent;
 	clear: both;
@@ -1516,8 +1516,7 @@ button.primary:hover {
 }
 
 .landingPageSliderArrowSpan {
-	background: url("images/side-arrow.1.png") no-repeat; String
-	landingPageDiscoverIconDetails();
+	background: url("images/side-arrow.1.png") no-repeat; 
 	display: block;
 	height: 50px;
 	position: relative;
@@ -1861,14 +1860,14 @@ button.primary:hover {
 	z-index: 99999;
 	background-color: black;
 	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	filter:literal(" alpha(opacity = 30)");
 }
 
 .playerAddToolTipGlassStyle {
 	z-index: 999999;
 	background-color: black;
 	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	filter: literal("alpha(opacity = 30)");
 }
 
 .userMenuBottomLine {
@@ -2129,9 +2128,7 @@ a.secondary:hover {
 	background: -o-linear-gradient(top, #666, #515151);
 	background-color: #515151;
 	font-size: 16px;
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075',
-		EndColorStr='#4e9746');
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075',EndColorStr='#4e9746')");
 }
 
 .closeButton {
@@ -2897,7 +2894,7 @@ footer {
 	background: -ms-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%); /* W3C */
 	box-shadow: 0 0 3px #999999;
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0 ); /* IE6-8 */
+	filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0 )"); /* IE6-8 */
 }
 .dataTableResultHeading .col-xs-3{
 	border-right:1px solid #cccccc;
@@ -3005,7 +3002,7 @@ footer {
 	/* IE10+ */
 	background: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%);
 	/* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#ffffff',endColorstr='#eeeeee', GradientType=0); /* IE6-8 */
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(  startColorstr='#ffffff',endColorstr='#eeeeee', GradientType=0)"); /* IE6-8 */
 }
 
 
