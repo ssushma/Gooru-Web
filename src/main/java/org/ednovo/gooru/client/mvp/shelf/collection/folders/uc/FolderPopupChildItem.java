@@ -46,6 +46,9 @@ public abstract class FolderPopupChildItem extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(folderDo, level);
 		folderLevel.addClickHandler(new ClickOnFolderLevel());
+		folderLevel.getElement().setId("epnlFolderLevel");
+		arrow.getElement().setId("pnlArrow");
+		title.getElement().setId("lblTitle");
 	}
 	
 	private void setData(FolderDo folderDo, int level) {
@@ -72,6 +75,8 @@ public abstract class FolderPopupChildItem extends Composite{
 		}
 		}
 		title.setText(folderDo.getTitle());
+		title.getElement().setAttribute("alt",folderDo.getTitle());
+		title.getElement().setAttribute("title",folderDo.getTitle());
 		setGooruOid(folderDo.getGooruOid());
 		setSelectedFolderTitle(folderDo.getTitle());
 		if(level==2) {

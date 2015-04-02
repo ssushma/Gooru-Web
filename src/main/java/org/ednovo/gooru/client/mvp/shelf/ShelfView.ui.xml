@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
 		field="res" />
 	<ui:style field="folderStyle" src="folderList.css"
@@ -26,7 +27,7 @@
 			<g:Label styleName="{res.css.loadingImageForSelfEdit}" />
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{folderStyle.editPanel}" ui:field="editPanel">
-			<g:SimplePanel ui:field="folderListPanel"></g:SimplePanel>
+			<g:SimplePanel styleName="searchResults" ui:field="folderListPanel"></g:SimplePanel>
 			<g:FlowPanel ui:field="collectionFloPanel">
 				<g:FlowPanel styleName="{res.css.userCollectionInShelf}">
 					<g:Label ui:field="lblLastEditedBy" styleName="{res.css.lastEditedBy}" />
@@ -58,6 +59,8 @@
 							styleName="{res.css.collectionDescriptionTitleContainer}">
 							<g:Label styleName="{res.css.collectionDescriptionTitle}"
 								ui:field="collectionDescriptionTitle" />
+							<g:Label styleName="{res.css.charLimit}"
+								ui:field="lblCharLimit" text=""/>
 						</panel:HTMLEventPanel>
 
 						<panel:HTMLEventPanel ui:field="editCollectionDescTitle"
@@ -68,15 +71,17 @@
 									extraHtmlStyleName="{res.css.collectionDescriptionHtml}" />
 							</panel:HTMLEventPanel>
 							<g:Label ui:field="simplePencilPanel" styleName="{res.css.collectionEditImage}" />
+							<g:Label styleName="{res.css.descriptionAlertMessage}"
+							ui:field="descriptionAlertMessageLbl" />
 						</panel:HTMLEventPanel>
+						
 						<g:HTMLPanel styleName="{res.css.buttonContainerDesc}">
 							<g:Button ui:field="editSelfCollectionDescSaveButtonCancel"
 								styleName="{res.css.mySelfCollectionEditTitlePreviewCancelButton}"></g:Button>
 							<g:Button ui:field="editSelfCollectionDescSaveButton"
 								styleName="primary {res.css.mySelfCollectionrEditTitle}"></g:Button>
 						</g:HTMLPanel>
-						<g:Label styleName="{res.css.descriptionAlertMessage}"
-							ui:field="descriptionAlertMessageLbl" />
+						
 					</g:FlowPanel>
 
 					<g:FlowPanel styleName="{res.css.panelAlignRight}">
@@ -111,6 +116,14 @@
 					<g:HTMLPanel ui:field="collPopup"></g:HTMLPanel>
 					<g:Label styleName="{res.css.analyticsStyle}" ui:field="statisticsTabVc"></g:Label>
 					<g:HTMLPanel ui:field="statPopup"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.shelfPublishTab}" ui:field="rbPublicPanel">
+			           <g:Button styleName="{res.css.publishButton} primary" ui:field="rbPublic"></g:Button>
+			           <g:Label styleName="{res.css.publishPending}" ui:field="lblPublishPending"></g:Label>
+			        </g:HTMLPanel>
+			        <g:HTMLPanel styleName="{res.css.shelfPublishTabText}" ui:field="publishedPanel">
+			    		<g:Label styleName="{res.css.published}" ui:field="lblPublish"></g:Label>
+			    		<g:Image url="images/right-mark.png"></g:Image>
+					</g:HTMLPanel>
 				</g:FlowPanel>
 				<g:SimplePanel ui:field="collectionMetaDataSimPanel"
 					styleName="{res.css.metaInfo}" />

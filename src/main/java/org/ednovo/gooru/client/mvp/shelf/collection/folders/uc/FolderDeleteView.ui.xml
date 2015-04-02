@@ -9,6 +9,7 @@
                     <g:HTMLPanel styleName="{FolderStyle.icon} {FolderStyle.delete}"/>
                      <g:Label styleName="{FolderStyle.header}" ui:field="headerLabel"/>
                       <g:Label styleName="{FolderStyle.descriptionText}" ui:field="descriptionLabel"/>
+                      <g:Label styleName="{FolderStyle.deleteTextLable}" ui:field="lblDeleteText"/>
                      	<gg:TextBoxWithPlaceholder styleName="{FolderStyle.inputText}"
 								ui:field="txtDelete" />
                  </g:HTMLPanel>

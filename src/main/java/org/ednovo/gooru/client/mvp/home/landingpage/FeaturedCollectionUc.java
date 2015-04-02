@@ -26,15 +26,16 @@ package org.ednovo.gooru.client.mvp.home.landingpage;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -57,7 +58,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FeaturedCollectionUc extends Composite implements MessageProperties{
+public class FeaturedCollectionUc extends Composite{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 	
@@ -87,6 +88,8 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 	interface FeaturedCollectionUcUiBinder extends
 			UiBinder<Widget, FeaturedCollectionUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public FeaturedCollectionUc(CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -94,6 +97,22 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 		featuredCollectionHoverEvent.addMouseOverHandler(new ShowHoverCollectionContainer());
 		featuredCollectionHoverEvent.addMouseOutHandler(new HideHoverCollectionContainer());
 		setCollectionData(collectionDo);
+		
+		courseTitle.getElement().setId("lblCourseTitle");
+		featuredCollectionHoverEvent.getElement().setId("epnlFeaturedCollectionHoverEvent");
+		featuredCollectionImg.getElement().setId("imgFeaturedCollection");
+		featuredCollectionDescription.getElement().setId("htmlFeaturedCollectionDescription");
+		collectionTitle.getElement().setId("lblCollectionTitle");
+		creatorText.getElement().setId("pnlCreatorText");
+		createdByText.getElement().setId("lblCreatedByText");
+		collectionAuthor.getElement().setId("lnkCollectionAuthor");
+		collectionGrades.getElement().setId("pnlCollectionGrades");
+		gradesText.getElement().setId("lblGradesText");
+		gradeTag1.getElement().setId("lblGradeTag1");
+		gradeTag2.getElement().setId("lblGradeTag2");
+		collectionStandards.getElement().setId("pnlCollectionStandards");
+		standardsText.getElement().setId("lblStandardsText");
+		standardsTab.getElement().setId("pnlStandardsTab");
 	}
 	
 	private class ShowHoverCollectionContainer implements MouseOverHandler {
@@ -129,10 +148,22 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 	}
 
 	private void setCollectionData(final CollectionDo collectionDo) {
-			createdByText.setText(GL0622);
-			gradesText.setText(GL1320_1);
-			standardsText.setText(GL0575);
+			createdByText.setText(i18n.GL0622()+" ");
+			createdByText.getElement().setAttribute("alt",i18n.GL0622()+" ");
+			createdByText.getElement().setAttribute("title",i18n.GL0622()+" ");
+			
+			gradesText.setText(i18n.GL1320_1());
+			gradesText.getElement().setAttribute("alt",i18n.GL1320_1());
+			gradesText.getElement().setAttribute("title",i18n.GL1320_1());
+			
+			standardsText.setText(i18n.GL0575());
+			standardsText.getElement().setAttribute("alt",i18n.GL0575());
+			standardsText.getElement().setAttribute("title",i18n.GL0575());
+			
 			collectionTitle.setText(collectionDo.getTitle());
+			collectionTitle.getElement().setAttribute("alt",collectionDo.getTitle());
+			collectionTitle.getElement().setAttribute("title",collectionDo.getTitle());
+		
 			collectionAuthor.setText(collectionDo.getUser().getUsernameDisplay());
 			collectionAuthor.setStyleName(landingPageStyle.userNamePPPdisabled());
 			
@@ -173,7 +204,7 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 					MixpanelUtil.ClickTheCollectionsFromLandingPage();
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", collectionDo.getGooruOid());
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 				}
 			});
 			
@@ -183,11 +214,15 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 					if(collectionDo.getMetaInfo().getCourse().get(0).contains("English Language Arts"))
 					{
 						String courseTitleTxt=collectionDo.getMetaInfo().getCourse().get(0).replaceAll("English Language Arts", "ELA");
-						courseTitle.setText(courseTitleTxt);	
+						courseTitle.setText(courseTitleTxt);
+						courseTitle.getElement().setAttribute("alt",courseTitleTxt);
+						courseTitle.getElement().setAttribute("title",courseTitleTxt);
 					}
 					else
 					{
 						courseTitle.setText(collectionDo.getMetaInfo().getCourse().get(0));	
+						courseTitle.getElement().setAttribute("alt",collectionDo.getMetaInfo().getCourse().get(0));
+						courseTitle.getElement().setAttribute("title",collectionDo.getMetaInfo().getCourse().get(0));
 					}
 					} else {
 					courseTitle.setVisible(false);

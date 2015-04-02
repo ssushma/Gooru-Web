@@ -36,14 +36,18 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfListItemsEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
@@ -74,7 +78,6 @@ import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -141,6 +144,8 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(ResourceDragOverShelfEvent.TYPE, this);
 		addRegisteredHandler(CopyDraggedCollectionEvent.TYPE, this);
 		addRegisteredHandler(RefreshFolderItemEvent.TYPE, this);
+		addRegisteredHandler(RefreshFolderItemForSearchInAddResourceEvent.TYPE, this);
+
 		addRegisteredHandler(ChangeShelfPanelActiveStyleEvent.TYPE, this);
 		addRegisteredHandler(UpdateShelfFolderNameEvent.TYPE, this);
 		addRegisteredHandler(RemoveMovedCollectionFolderEvent.TYPE, this); 
@@ -149,6 +154,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(SetCollectionMovedStyleEvent.TYPE, this); 
 		addRegisteredHandler(SetFolderCollectionStyleEvent.TYPE, this); 
 		addRegisteredHandler(OpenParentFolderEvent.TYPE, this); 
+		addRegisteredHandler(UpdateShelfFolderMetaDataEvent.TYPE, this);
+		addRegisteredHandler(ActivateCollectionStyleEvent.TYPE, this);
+		addRegisteredHandler(ReorderShelfListItemsEvent.TYPE, this);
+		
 	}
 
 	@Override
@@ -174,7 +183,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		getView().resetDragImage();
 		if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
 			getView().reset();
-			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,getUserCollectionAsyncCallback(true));
+			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,true,getUserCollectionAsyncCallback(true));
 			version = AppClientFactory.getLoggedInUser().getToken();
 		}
 		getView().setNewCollectionPanel();
@@ -350,12 +359,12 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void refreshUserShelfCollections() {
 		ShelfListView.setPageNumber(1);
-		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,true,getUserCollectionAsyncCallback(true));
 	}
 
 	@Override
 	public void getSelfCollectionListItems(int pageSize, Integer pageNumber,boolean clearShelfPanel) {
-			getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,getUserCollectionAsyncCallback(clearShelfPanel));
+			getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,true,getUserCollectionAsyncCallback(clearShelfPanel));
 	}
 	
 	public void disableFolderCollectionPanel() {
@@ -381,7 +390,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		if(isDataCalled) {
 			getView().getChildFolderItems(null);
 		} else {
-			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,new AsyncCallback<FolderListDo>() {
+			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,true,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					searchResult.addAll(result.getSearchResult());
@@ -393,10 +402,6 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 						getView().getChildFolderItems(searchResult);
 						searchResult.clear();
 					}
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
 				}
 			});
 		}
@@ -413,14 +418,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		} else {
 			
 			/** Changed to new API call for fetching resources in a order **/
-    		AppClientFactory.getInjector().getfolderService().getCollectionResources(collectionOid,null, null, new AsyncCallback<FolderListDo>(){
+    		AppClientFactory.getInjector().getfolderService().getCollectionResources(collectionOid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
 					getView().getCollectionItems(result.getSearchResult());
-					
-				}
-				@Override
-				public void onFailure(Throwable caught) {
 					
 				}
     		});
@@ -444,8 +445,8 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	}
 
 	@Override
-	public void refreshFolderItem(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params) {
-		getView().refreshFolderItemData(folderDo, refreshFolderType, params);
+	public void refreshFolderItem(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params,CollectionDo collDo) {
+		getView().refreshFolderItemData(folderDo, refreshFolderType, params,collDo);
 	}
 
 	@Override
@@ -454,13 +455,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 			if(parentId.isEmpty()) {
 				addToShelf = true;
 			}
-			AppClientFactory.getInjector().getfolderService().createFolder(parentName, parentId, addToShelf, new AsyncCallback<FolderDo>() {
+			AppClientFactory.getInjector().getfolderService().createFolder(parentName, parentId, addToShelf, new SimpleAsyncCallback<FolderDo>() {
 				@Override
 				public void onSuccess(FolderDo result) {
 					AppClientFactory.fireEvent(new UpdateFolderItemEvent(result, parentId, params));
-				}
-				@Override
-				public void onFailure(Throwable caught) {
 				}
 			});
 	}
@@ -471,8 +469,11 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	}
 	
 	@Override
-	public void updateShelfFolderName(String folderName) {
-		getView().updateShelfFolderName(folderName);
+	public void updateShelfFolderName(String folderName,String folderId) {
+		/**
+		 * Commented, beacuse of DO-4851 and handled in Shelf collection class it self.
+		 */
+//		getView().updateShelfFolderName(folderName);
 	}
 
 	@Override
@@ -504,5 +505,26 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void openParentFolderEvent() {
 		getView().openParentFolderEvent();
+	}
+
+	@Override
+	public void updateShelfFolderMetaData(String ideas, String performanceTasks, String questions) {
+		getView().updateShelfFolderMetaData(ideas, performanceTasks, questions);
+	}
+
+	@Override
+	public void activecollectionStyle() {
+		getView().setCollectionActiveStyle();
+	}
+	@Override
+	public void refreshFolderItemInSearch(FolderDo folderDo,
+			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+		getView().refreshFolderItemDataInSearchAddResource(folderDo, refreshFolderType, params);
+		
+	}
+
+	@Override
+	public void reorderShelfListItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb) {
+		getView().reorderShelfItems(itemId,toBeMovedPos,direction,params,folderDo, itemSeqNumb);
 	}
 }

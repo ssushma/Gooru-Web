@@ -39,6 +39,10 @@ public class GwtException extends RuntimeException {
 	private static final long serialVersionUID = -8131503840164251388L;
 
 	private List<String> errors;
+	
+	private int statusCode;
+	
+	private String errorMessage;
 
 	public GwtException() {
 		errors = new ArrayList<String>();
@@ -46,6 +50,11 @@ public class GwtException extends RuntimeException {
 
 	public GwtException(String message) {
 		super(message);
+	}
+	
+	public GwtException(int statusCode, String errorMessage) {
+		this.statusCode=statusCode;
+		this.errorMessage=errorMessage;
 	}
 
 	public void addError(String error) {

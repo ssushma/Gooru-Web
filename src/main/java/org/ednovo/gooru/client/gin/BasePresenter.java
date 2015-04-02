@@ -33,8 +33,19 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
- * @author Search Team
  * 
+ * @fileName : BasePresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 
 public abstract class BasePresenter<V extends IsView, P extends Proxy<?>> extends Presenter<V, P> {

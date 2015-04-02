@@ -55,6 +55,8 @@ public class ClasspageDo implements Serializable{
 	private String creatorId;
 	private String creatorUsername;
 	private String creatorProfileImage;
+	private String itemCount;
+	private String memberCount;
 	
 	public ClasspageDo(){}
 	
@@ -205,6 +207,22 @@ public class ClasspageDo implements Serializable{
 
 	public void setCreatorProfileImage(String creatorProfileImage) {
 		this.creatorProfileImage = creatorProfileImage;
+	}
+
+	public String getItemCount() {
+		return itemCount;
+	}
+
+	public void setItemCount(String itemCount) {
+		this.itemCount = itemCount;
+	}
+
+	public String getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(String memberCount) {
+		this.memberCount = memberCount;
 	}
 
 

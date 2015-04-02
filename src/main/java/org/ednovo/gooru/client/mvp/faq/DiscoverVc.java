@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.faq;
 
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -43,7 +43,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DiscoverVc extends Composite implements MessageProperties{
+public class DiscoverVc extends Composite{
 
 	@UiField HTMLPanel gooruGuideImage,discoverText,discoverDescLbl,gooruGuideStyle_One,gooruGuideStyle_Two,gooruGuideStyle_Three,
 	gooruGuideStyle_Four,gooruGuideStyle_Five,Style_One_Desc,Style_Two_Desc,Style_Three_Desc,Style_Four_Desc,Style_Five_Desc;
@@ -56,6 +56,8 @@ public class DiscoverVc extends Composite implements MessageProperties{
 
 	interface DiscoverUiBinder extends UiBinder<Widget, DiscoverVc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	HTMLEventPanel firstId,secondId,thirdId,fourthId,fifthId;
@@ -71,20 +73,77 @@ public class DiscoverVc extends Composite implements MessageProperties{
 		thirdId.getElement().setId("three");
 		fourthId.getElement().setId("four");
 		fifthId.getElement().setId("five");
-		discoverText.getElement().setInnerText(GL1342);
-		discoverDescLbl.getElement().setInnerText(GL1343+GL_SPL_FULLSTOP);
-		gooruGuideStyle_One.getElement().setInnerText(GL_GRR_NUMERIC_ONE);
-		Style_One_Desc.getElement().setInnerText(GL1344+GL_SPL_FULLSTOP);
-		gooruGuideStyle_Two.getElement().setInnerText(GL_GRR_NUMERIC_TWO);
-		Style_Two_Desc.getElement().setInnerText(GL1345+GL_SPL_FULLSTOP);
-		gooruGuideStyle_Three.getElement().setInnerText(GL_GRR_NUMERIC_THREE);
-		Style_Three_Desc.getElement().setInnerText(GL1346+GL_SPL_FULLSTOP);
-		gooruGuideStyle_Four.getElement().setInnerText(GL_GRR_NUMERIC_FOUR);
-		Style_Four_Desc.getElement().setInnerText(GL1347+GL_SPL_FULLSTOP);
-		gooruGuideStyle_Five.getElement().setInnerText(GL_GRR_NUMERIC_FIVE);
-		Style_Five_Desc.getElement().setInnerText(GL1348+GL_SPL_FULLSTOP);
-		needHelpLbl.setText(GL1349);
-		supportCenterLbl.setText(GL1307+GL_SPL_FULLSTOP);
+		gooruGuideImage.getElement().setId("pnlGooruGuideImage");
+		
+		discoverText.getElement().setInnerText(i18n.GL1342());
+		discoverText.getElement().setId("pnlDiscoverText");
+		discoverText.getElement().setAttribute("alt",i18n.GL1342());
+		discoverText.getElement().setAttribute("title",i18n.GL1342());
+		
+		discoverDescLbl.getElement().setInnerText(i18n.GL1343()+i18n.GL_SPL_FULLSTOP());
+		discoverDescLbl.getElement().setId("pnlDiscoverDesc");
+		discoverDescLbl.getElement().setAttribute("alt",i18n.GL1343());
+		discoverDescLbl.getElement().setAttribute("title",i18n.GL1343());
+		
+		gooruGuideStyle_One.getElement().setInnerText(i18n.GL_GRR_NUMERIC_ONE());
+		gooruGuideStyle_One.getElement().setId("pnlGooruGuideStyleOne");
+		gooruGuideStyle_One.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_ONE());
+		gooruGuideStyle_One.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_ONE());
+		
+		Style_One_Desc.getElement().setInnerText(i18n.GL1344()+i18n.GL_SPL_FULLSTOP());
+		Style_One_Desc.getElement().setId("pnlStyleOneDesc");
+		Style_One_Desc.getElement().setAttribute("alt",i18n.GL1344());
+		Style_One_Desc.getElement().setAttribute("title",i18n.GL1344());
+		
+		gooruGuideStyle_Two.getElement().setInnerText(i18n.GL_GRR_NUMERIC_TWO());
+		gooruGuideStyle_Two.getElement().setId("pnlGooruGuideStyleTwo");
+		gooruGuideStyle_Two.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_TWO());
+		gooruGuideStyle_Two.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_TWO());
+		
+		Style_Two_Desc.getElement().setInnerText(i18n.GL1345()+i18n.GL_SPL_FULLSTOP());
+		Style_Two_Desc.getElement().setId("pnlStyleTwoDesc");
+		Style_Two_Desc.getElement().setAttribute("alt",i18n.GL1345());
+		Style_Two_Desc.getElement().setAttribute("title",i18n.GL1345());
+		
+		gooruGuideStyle_Three.getElement().setInnerText(i18n.GL_GRR_NUMERIC_THREE());
+		gooruGuideStyle_Three.getElement().setId("pnlGooruGuideStyle_Three");
+		gooruGuideStyle_Three.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_THREE());
+		gooruGuideStyle_Three.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_THREE());
+		
+		Style_Three_Desc.getElement().setInnerText(i18n.GL1346()+i18n.GL_SPL_FULLSTOP());
+		Style_Three_Desc.getElement().setId("pnlStyleThreeDesc");
+		Style_Three_Desc.getElement().setAttribute("alt",i18n.GL1346());
+		Style_Three_Desc.getElement().setAttribute("title",i18n.GL1346());
+		
+		gooruGuideStyle_Four.getElement().setInnerText(i18n.GL_GRR_NUMERIC_FOUR());
+		gooruGuideStyle_Four.getElement().setId("pnlGooruGuideStyleFour");
+		gooruGuideStyle_Four.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_FOUR());
+		gooruGuideStyle_Four.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_FOUR());
+		
+		Style_Four_Desc.getElement().setInnerText(i18n.GL1347()+i18n.GL_SPL_FULLSTOP());
+		Style_Four_Desc.getElement().setId("pnlStyleFourDesc");
+		Style_Four_Desc.getElement().setAttribute("alt",i18n.GL1347());
+		Style_Four_Desc.getElement().setAttribute("title",i18n.GL1347());
+		
+		gooruGuideStyle_Five.getElement().setInnerText(i18n.GL_GRR_NUMERIC_FIVE());
+		gooruGuideStyle_Five.getElement().setId("pnlGooruGuideStyleFive");
+		gooruGuideStyle_Five.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_FIVE());
+		gooruGuideStyle_Five.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_FIVE());
+		
+		Style_Five_Desc.getElement().setInnerText(i18n.GL1348()+i18n.GL_SPL_FULLSTOP());
+		Style_Five_Desc.getElement().setId("pnlStyleFiveDesc");
+		Style_Five_Desc.getElement().setAttribute("alt",i18n.GL1348());
+		Style_Five_Desc.getElement().setAttribute("title",i18n.GL1348());
+		
+		needHelpLbl.setText(i18n.GL1349());
+		needHelpLbl.getElement().setId("lblNeedHelp");
+		needHelpLbl.getElement().setAttribute("alt",i18n.GL1349());
+		needHelpLbl.getElement().setAttribute("title",i18n.GL1349());
+		
+		supportCenterLbl.setText(i18n.GL1307()+i18n.GL_SPL_FULLSTOP());
+		supportCenterLbl.getElement().setId("lnkSupportCenter");
+		supportCenterLbl.getElement().setAttribute("alt",i18n.GL1307());
+		supportCenterLbl.getElement().setAttribute("title",i18n.GL1307());
 		supportCenterLbl.setHref("http://support.goorulearning.org/anonymous_requests/new");
 		firstId.addMouseOverHandler(new HideOtherNumbers("1"));
 		firstId.addMouseOutHandler(new ResetNumbers());

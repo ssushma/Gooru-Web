@@ -23,19 +23,34 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client;
-
+/**
+ * 
+ * @fileName : PlaceTokens.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface PlaceTokens {
-	String HOME = "discover";
+	String HOME = "home";
 	String RESOURCE_SEARCH = "resource-search";
 	String COLLECTION_SEARCH = "collection-search";
 	String ERROR = "error";
-	String SHELF = "organize";
+	String SHELF = "mycollections";
 	String COLLECTION = "collection";
 	String RESOURCE_PLAY_OLD = "resource-play-old";
 	String COLLECTION_PLAY = "collection-play";
 	String COLLECTION_PLAY_OLD = "collection-play-old";
 	String PREVIEW_PLAY = "preview-play";
 	String RESOURCE_PLAY="resource-play";
+	String FOLDER_TOC= "folder-toc";
 	String TEACH = "no-teach";		//This is not used...
 	String FOLDERS = "organizee";
 	String EDIT_FOLDERS = "organize-folder";
@@ -44,7 +59,8 @@ public interface PlaceTokens {
 	String CREATEFOLDER = "createfolder";
 	String REGISTER="registration";
 	String STUDENT = "students-view";
-	String STUDY = "study";
+	String STUDY = "myclasses";
+	String CLASSHOME = "myclasseshome";
 	String PROFILE_PAGE = "profilepage";
 	String RUSD_LIBRARY = "rusd";
 	
@@ -56,4 +72,26 @@ public interface PlaceTokens {
 	String LESSONOPOLY = "Lessonopoly";
 	String NGC = "NGC";
 	String WSPWH = "WSPWH";
+	String PSDPAL = "PSD";
+	String FINCAPINC = "NextGenFinance";
+	String SAUSD_LIBRARY = "sausd";	
+	String DRIVE="drive";
+	
+	String COMMUNITY = "community";
+	String YOUTHVOICES = "youthvoices";
+	String GEOEDUCATION = "GeoEducators";
+	String LIFEBOARD = "lifeboard";
+	String SUSD = "susd";
+	String LPS = "lpslibrary";
+	String MURRIETA = "murrieta";
+	String VALVERDE = "valverde";
+	String DISCOVER = "community";
+	String CORE_LIBRARY = "CoreLibrary";
+	String ESYP = "ESYP";
+	String CCST_Cal_TAC = "CCSTCalTAC";
+	String LUSD = "lusd";	
+	String TICAL = "tical";
+	String DASHBOARD ="dashboard";
+	String ASPIRE_EPACS =  "AspireEPACS"; 
+
 }

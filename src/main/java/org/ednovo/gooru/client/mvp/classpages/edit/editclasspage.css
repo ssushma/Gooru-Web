@@ -196,15 +196,13 @@
 
 .noAssignmentMsg{
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
+	font-size:24px;
 	line-height:120%;
-	font-style:italic;
-	color:rgb(153,153,153);
+	color:#515151;
 	text-align:center;
-	text-align: center;
 	/* width: 350px; */
 	top: 100px;
-	position: relative;
+	/* position: relative; */
 	margin: 0 auto;
 }
 .loadingpanelImage{
@@ -215,7 +213,7 @@
 	position: relative;
 	display: inline-block;
 	text-align: center;
-	margin-left: 300px;
+	margin-left: 400px;
 }
 .myClassPageTitleButtonContainer {
 	float: right;
@@ -242,6 +240,12 @@
 	width: 100%;
 	float: left;
 	margin-top:-7px;
+}
+
+.paginationContainer {
+	float:right;
+	margin-top:7px;
+	text-align:right;
 }
 
 .paginationPanel {
@@ -378,13 +382,14 @@
 	width: 550px !important;
 	font-size: 12px !important;
 	padding: 1px;
-	overflow: hidden;
+	overflow: auto;
 	word-wrap: break-word;
+	white-space: pre-line;
 }
 .classPagebuttonContainer {
 	float: right;
 	margin-top: -43px;
-	margin-right: 20px;
+	margin-right: 210px;
 }
 .classPageEditTitleCancelButton {
 	font-family: Arial, Helvetica, sans-serif;
@@ -537,16 +542,6 @@
 }
 
 
-.classpageCodeHelp {
-	position: relative;
-	float: left;
-	width: 20px;
-	height: 20px;
-	cursor: pointer;
-	margin: 5px 10px 0px 3px;
-	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
-	background-position: 0px -46px;
-}
 .classpageCodeHelp:hover {
 	cursor: pointer;
 }
@@ -580,9 +575,15 @@
 	margin: 0px auto;
 	float:left;
 	text-align: center;
+	margin-top:30px;
 }
 
 .addAssignment{
+	margin-top: -50px;
+	margin-left:0px !imporant;
+}
+
+.addAssignmentStyle{
 	margin-top: 20px;
 	margin-left:0px !imporant;
 }
@@ -592,19 +593,12 @@
 	cursor: pointer;
 }
 
-.classpageAddPlusIcon {
-	position: relative;
-	top: -31px;
-	left: 10px;
-	width: 21px;
-	height: 22px;
-	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
-}
-
 .assignmentsContainer{
 	overflow: hidden;
-	min-height: 400px;
-	height: auto;
+margin-left:-1px;
+}
+.assignmentsContainerHead{
+	margin-top:44px;
 }
 
 .classpageCodeInnerPopup {
@@ -692,9 +686,9 @@
 .teachTab {
        text-align: center;
        padding-bottom: 20px;
-       margin: 20px 0px;
-       border-bottom: 1px solid #ddd;
-       margin-left:122px;
+       margin: 20px auto;
+       width: 62%;
+       /* margin-left:122px; */
 }
 .teachTab .select {
        color: #fff;
@@ -751,13 +745,14 @@
 }
 .classpageHover {
 	width: 1002px;
-    height:241px;
+    height:523px;
 	margin: 0 auto;
     border-radius:4px;
-    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    margin-top:46px;
+    /* -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
-	box-shadow: 0 0 10px rgba(0,0,0,.1);
-	background: url('/images/Classpage/no-collections.png') no-repeat;
+	box-shadow: 0 0 10px rgba(0,0,0,.1); */
+	/* background: url('/images/Classpage/no-collections.png') no-repeat; */
 }
 .classpageHoverTitle {
 	font-size: 24px;
@@ -781,7 +776,37 @@
 	border-radius: 5px 0px 0px 5px;
 }
 
+.teachTab button{
+	margin-left: -4px;
+	color: #515151;
+	cursor: pointer;
+	padding: 10px 60px;
+	background: -moz-linear-gradient(3% 0 -90deg, #fff 0, #ddd 100%);
+	background: -webkit-gradient(linear, 3% 0, 3% 114%, color-stop(0, #fff), color-stop(1, #ddd));
+	background: -webkit-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -o-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -ms-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -linear-gradient(#fff 0, #ddd 100%) !important;
+	border: 1px solid #ccc;
+	/* border-radius: 0px 5px 5px 0px; */
+	
+}
 .teachTab button:last-child{
+	margin-left: -4px;
+	color: #515151;
+	cursor: pointer;
+	padding: 10px 60px;
+	background: -moz-linear-gradient(3% 0 -90deg, #fff 0, #ddd 100%);
+	background: -webkit-gradient(linear, 3% 0, 3% 114%, color-stop(0, #fff), color-stop(1, #ddd));
+	background: -webkit-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -o-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -ms-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -linear-gradient(#fff 0, #ddd 100%) !important;
+	border: 1px solid #ccc;
+	border-radius: 0px 5px 5px 0px;
+	
+}
+.teachTab button:nth-last-child(2){
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -821,4 +846,467 @@
 .backArrowButton{
 	margin-top:20px;
 	margin-bottom:20px;
+}
+.labelCenterAlign{
+	text-align:center;
+	font-size : 18px;
+	margin-top: 14px;
+margin-bottom: -10px;
+}
+.labelCenterAlignText{
+	text-align:center;
+	font-size:20px;
+	
+}
+
+.assignmentPath{
+	
+}
+.assignmentPathContainer{
+	margin-bottom: 10px;
+	/* background-color:rgb(255,255,255); */
+	height:70px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:8px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:8px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:8px;
+	padding : 5px;
+	width: 94%;
+	margin: 0px auto;
+	float: left;
+	margin-top:-20px;
+}
+
+.assignmentProgress{
+	text-align: center;
+	font-size: 12px; 
+/*	font-weight: bold;	*/
+	margin:15px;
+	margin-bottom: 19px;
+	border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+.assignmentProgressStudent{
+	text-align: center;
+	font-size: 12px; 
+/*	font-weight: bold;	*/
+	margin:15px;
+	margin-bottom: 19px;
+	border-bottom: 1px solid #ccc;
+  padding-top: 15px;
+    padding-bottom: 12px;
+}
+
+.assignmentPath{
+	height: 15px;
+}
+
+.line{
+	height: 3px;
+	background: #515151 2px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	margin-left: 7px;
+	width: 10px;
+	float: left;
+}
+
+.squre {
+	width: 15px;
+	height: 15px;
+	background: #009E0F;
+	vertical-align: top;
+	float: left;
+	border: 1px black solid;
+}
+
+.path{
+	margin-top: 15px;
+	margin-left: 8px;
+}
+.classcodeStyles{
+	display: block;
+	width: 75px !important;
+	height: 30px !important;
+	border: 1px solid #ccc;
+	font-size: 12px !important;
+	/* font-weight: bold; */
+	padding: 0 5px;
+	position: absolute;
+	left: 89%;
+	margin-top: -44px;
+	text-align: center;
+}
+
+.classcodeContainer{
+	float: left;
+	
+}
+
+.containerProgress{
+	margin: 0px auto;
+	height: 115px;
+}
+
+.next, .previous{
+	margin: 20px auto;
+	width: 2%;
+	float: left;
+	height: 5px;
+	margin-bottom:0px;
+}
+.nextStudent, .previousStudent{
+	margin: 78px auto;
+	width: 2%;
+	float: left;
+	height: 5px;
+	margin-bottom:0px;
+}
+
+.rightArrow {
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-left: 15px solid #999;
+	display: inline-block;
+	margin-left: 10px;
+	margin-right: -15px;
+	vertical-align: middle;
+	cursor: pointer;
+	margin-top:-28px;
+}
+
+.leftArrow {
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-right: 15px solid #999;
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: -15px;
+	vertical-align: middle;
+	cursor: pointer;
+	margin-top:-28px;
+}
+
+.dropdowncontainer {
+	width: 130px;
+	float: left;
+	margin-right: 10px;
+	margin-left: 42px;
+	margin-bottom: 15px;
+}
+.dropdowncontainerStudent {
+/* 	width: 140px;
+	margin-right: 10px;
+	margin-left: 13.5%;
+	margin-top: 24px; */
+	width: 1000px;
+	margin: 0 auto;
+	margin-top: -10px;
+	/* top: 24px; */
+	left: 36px;
+	position: relative;
+}
+
+.dropdownPlaceHolder {
+	background: url(images/dropdownMenuArrow.png) no-repeat;
+	background-color: white;
+	background-position: right center;
+	color: #999;
+	padding: 5px 25px 5px 5px;
+	border-bottom: 1px solid #ddd;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	display: block;
+	width: 158px;
+	height: auto;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif, Calibri;
+}
+.dropdownPlaceHolderStudent {
+	background: url(images/dropdownMenuArrow.png) no-repeat;
+	background-color: white;
+	background-position: right center;
+	color: #999;
+	padding: 5px 25px 5px 5px;
+	border-bottom: 1px solid #ddd;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	display: block;
+	width: 125px;
+	height: auto;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif, Calibri;
+}
+.dropdownListContainerScrollPanel {
+	border: 1px solid #ddd;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	width: 158px;
+	position:absolute;
+	background-color: #ffffff;
+}
+.dropdownListContainerScrollPanelStudent {
+	border: 1px solid #ddd;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	width: 156px;
+	position:absolute;
+	background-color: #ffffff;
+}
+.dropdownTextLabel{
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: #999;
+	text-align: left;
+	position: relative;
+	background-color: #fff;
+	z-index: 1;
+	width: 100%;
+	padding: 5px 8px 5px 7px;
+}
+.dropdownTextLabel:hover{
+	background-color: #cfe3f1;
+	cursor: pointer;
+}
+.dropdownContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:145px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: absolute;
+	margin-top:11px;
+}
+.placeHolderText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(153,153,153);
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	width: 90%;
+}
+.arrowInstructional {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	float: right;
+	margin-top: -11px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+.scrollPanelContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:145px;
+	height:82px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 7px;
+	left: -1px;
+	z-index: 9;
+	overflow-x:hidden !important;
+}
+
+.btnContainer{
+	text-align : center;
+	border-bottom: 1px solid #EBEAEA;	
+}
+
+.btnContainerStyle{
+	text-align : center;
+	/* border-top: 1px solid #CCC;	 */
+	margin-top: 38px;
+}
+.btnContainerClasswithBG{
+	background: white;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	height: 100px;
+	margin-bottom: -24px;
+}
+
+.section2Div{
+	background: white;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+
+}
+.section3Div{
+	background: white;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	margin-top:20px !important;
+}
+
+
+/* Empty page css */
+.subtitle {
+	font-size: 16px;
+	width: 420px
+}
+.contentBox {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	min-height: 200px;
+	text-align: center;
+}
+.h3 {
+	font-size: 18px;
+	text-align: center;
+	padding: 30px 0px;
+}
+.collectionView {
+	display: block;
+	min-height: 168px;
+	padding: 23px;
+    box-sizing: border-box;
+}
+.circleBlock {
+	display: inline-block;
+	vertical-align: top;
+}
+.circleBg {
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	background: #fbb03b;
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+}
+.circleTitle {
+	color: #fff;
+	font-weight:bold;
+	font-size: 20px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+.desHtml{
+	width: 252px;
+	float: left;
+}
+.desHeader{
+	font-size: 18px;
+	float: left;
+}
+.desc {
+	display: inline-block;
+	color: #515151;
+	vertical-align: top;
+	font-size: 14px;
+	text-align: left;
+	/* padding-left: 10px; */
+	height: 40px;
+	/* line-height: 40px; */
+	margin-top: 14px;
+}
+.collectionView, .img {
+	width: 60%;
+	margin: 0 auto;
+}
+.imgStyle{
+	width: 50%;
+	float: left;
+}
+.imgStyleDiv{
+	max-width: 100%;
+}
+.btn {
+	margin-left: 10px;
+}
+.assignText{
+	color: #1076bb;
+}
+
+.containerProgressWidth{
+	width:1000px;
+}
+.assignementOrderHeader{
+	margin: 20px auto; 
+	text-align: center; 
+}
+.errorMessage{
+	height: 170px;
+	width: 450px;
+	color: #999;
+	position: relative;
+	display: inline-block;
+	margin-left: 282px;
+	font-style: italic;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.studentStyle{
+	float: right;
+    position: relative;
+	width: 176px;
+	top: 32%;
+}
+
+.techerStyle{
+	float: left;
+    position: relative;
+	width: 218px;
+	top: 29%;
+}
+.switchContainer {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	/* left: 0; */
+	width: 216px;
+	/* height: 21px;
+	padding: 3px;*/
+	vertical-align: middle;
+	background-color: white;
+	cursor: pointer;
+	border: 2px solid #1076BB;
+	border-radius: 4px;
+	right: -94px;
+	float: right;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.toggleContainer{
+	float: right;
+	/* position: relative; */
+	display: inline-block;
+	top: 0;
+}
+.assignementOrderHeaderText{
+  margin: 20px auto;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
 }

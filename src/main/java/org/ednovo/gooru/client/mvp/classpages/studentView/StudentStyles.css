@@ -2,8 +2,8 @@
 	width: 1000px;
 	margin: 0 auto;
 	overflow: hidden;
+	clear: both;
 	/* background-color: #eeecec; */
-	margin-top: 26px;
 	min-height:400px;
 }
 
@@ -17,6 +17,7 @@
 	top: 66px;
 	float: left;
 	left: 109px;
+	
 }
 
 .classPageArrContainer {
@@ -286,9 +287,14 @@
 	margin: 0px 0 0 15px;
 }
 .searchResultContainer {
-	width: 600px;
-	float: left;
-	/* margin-left: 14px; */
+	/* text-align: right;
+	height:39px; */
+	float: right;
+	
+}
+.paginationContainer{
+	width: 1000px;
+	margin: 0 auto;
 }
 
 .paginationPanel {
@@ -334,6 +340,7 @@
 	padding: 10px 0px 10px 20px;
 }
 .classpageHoverButton{
+	/* z-index: 98; */
     color: white;
 	font-weight: bold;
 	display: inline-block;
@@ -394,6 +401,9 @@
 	width: 218px;
 	top: 29%;
 }
+
+
+
 .studentWithdrawBtn {
 	float: right;
 	right: 30px;
@@ -404,7 +414,7 @@
 .classpageClasscode {
 	width: 910px;
 	margin: 0 auto;
-	background-color: rgba(221,221,221,0.5);
+	background-color: #ffffff;
 	padding-left: 30px;
 	height: 55px;
 	border: 1px solid rgba(153,153,153,0.5);
@@ -460,4 +470,43 @@ margin-left:-33px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.usernameCssName{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    color: #515151;
+    padding-left: 8px;
+    margin-top: 19px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.assignmentDotsContainer{
+	margin-bottom: 10px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	padding: 5px;
+	width: 1000px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.assignementOrderHeader{
+	margin: 0 auto;
+	margin-top:5px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.lineSeaparation{
+	float: left;
+	height: 29px;
+	margin-left: 8px;
+	font-size: 16px;
+	font-weight: normal;
+	margin-top: -5px;
+	border-right: 2px solid #efefef;
+	margin-bottom: 5px;
 }

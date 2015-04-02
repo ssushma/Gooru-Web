@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:style field="oeStyle" src="questionresource.css"/>
+	<g:FlowPanel styleName="{oeStyle.resourcesQuizzessAnswersOptionsContainer}">
+     	<g:Label styleName="{oeStyle.quizAnswerChoiceOption}" ui:field="answerChoiceResult"></g:Label>
+     	<g:Label ui:field="radioYesButton"></g:Label>
+     	<g:Label ui:field="radioNoButton"></g:Label>
+        <g:HTML styleName="{oeStyle.answerOptionContent}" ui:field="answerOptionText"></g:HTML>
+        <g:RadioButton ui:field="answerOptionYesRadioButton" name="maRadioButton" styleName="{oeStyle.hideButton}"></g:RadioButton>
+        <g:RadioButton ui:field="answerOptionNoRadioButton" name="maRadioButton"  styleName="{oeStyle.hideButton}"></g:RadioButton>
+    </g:FlowPanel>
+</ui:UiBinder> 

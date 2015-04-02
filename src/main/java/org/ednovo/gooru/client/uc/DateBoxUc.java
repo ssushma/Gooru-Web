@@ -26,10 +26,10 @@ package org.ednovo.gooru.client.uc;
 
 import java.util.Date;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
@@ -52,7 +52,7 @@ import com.google.gwt.user.client.ui.TextBox;
  * @author Search Team
  * 
  */
-public class DateBoxUc extends FlowPanel implements MessageProperties {
+public class DateBoxUc extends FlowPanel{
 
 	private TextBox dateBox;
 
@@ -62,10 +62,12 @@ public class DateBoxUc extends FlowPanel implements MessageProperties {
 //	private DatePicker datePicker;
 	
 	boolean isRegistration = true;
-
-	private static final String AFTER_CURRENT_DATE = GL1504;
 	
-	private static final String BEFORE_CURRENT_DATE = GL1505;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+
+	private static final String AFTER_CURRENT_DATE = i18n.GL1504();
+	
+	private static final String BEFORE_CURRENT_DATE = i18n.GL1505();
 
 	/**
 	 * Class constructor
@@ -80,16 +82,17 @@ public class DateBoxUc extends FlowPanel implements MessageProperties {
 		
 		dateBox = new TextBox();
 		dateBox.getElement().setId("tbBirthday");
+		dateBox.getElement().getStyle().setWidth(100, Unit.PCT);
 		dateBox.setReadOnly(true);
 		if (!isRegistration){
 				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());
 				dateBox.getElement().getStyle().setWidth(271, Unit.PX);
 		}else{
-			dateBox.getElement().setAttribute("Placeholder", GL0211);
+			dateBox.getElement().setAttribute("Placeholder", i18n.GL0211());
 			if (!isSmall){
 				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBox());
 			}else{
-				calendarIcon.addStyleName(UcCBundle.INSTANCE.css().iconPosition());
+				calendarIcon.addStyleName(SignUpCBundle.INSTANCE.css().iconPosition());
 			}
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
@@ -177,9 +180,9 @@ public class DateBoxUc extends FlowPanel implements MessageProperties {
 			return false;
 		} else { 
 			if (isRegistration){
-				new AlertContentUc(GL0065, AFTER_CURRENT_DATE);
+				new AlertContentUc(i18n.GL0065(), AFTER_CURRENT_DATE);
 			}else{
-				new AlertContentUc(GL0065, BEFORE_CURRENT_DATE);
+				new AlertContentUc(i18n.GL0065(), BEFORE_CURRENT_DATE);
 			}
 			return false;
 		}

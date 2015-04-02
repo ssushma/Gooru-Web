@@ -53,10 +53,12 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private String narrationType;
 	private String start;
 	private String stop;
+	private Integer totalPages;
 	private List<String> course;
 	private Integer totalHitCount;
 	private Integer statusCode;
-	
+	private ResourceDo questionInfo;
+
 	private List<Map<String, String>> standards;
 	
 	private RatingDo rating;
@@ -240,5 +242,19 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 		this.statusCode = statusCode;
 	}
 
+	public Integer getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
+	}
+	public ResourceDo getQuestionInfo() {
+		return questionInfo;
+	}
+
+	public void setQuestionInfo(ResourceDo questionInfo) {
+		this.questionInfo = questionInfo;
+	}
 	
 }

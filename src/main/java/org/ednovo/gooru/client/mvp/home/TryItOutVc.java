@@ -25,11 +25,8 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.GooruCBundle;
-
-import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,7 +34,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -48,7 +44,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProperties {
+public class TryItOutVc extends PopupPanel implements ClickHandler{
 
 	@UiField
 	Label closePopUpLbl,improveGooruText,celebrationLbl,classicGooruLbl,goBackText;
@@ -63,6 +59,9 @@ public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProper
 
 	interface TryItOutUiBinder extends UiBinder<Widget, TryItOutVc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
 
 	/**
 	 * Class constructor
@@ -75,14 +74,45 @@ public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProper
 		this.addStyleName(GooruCBundle.INSTANCE.css().tryitoutpopup());
 		this.show();
 		this.center();
-		improveGooruText.setText(GL0285);
-		celebrationLbl.setText(GL1314);
+		improveGooruText.setText(i18n.GL0285());
+		improveGooruText.getElement().setId("lblImproveGooruText");
+		improveGooruText.getElement().setAttribute("alt",i18n.GL0285());
+		improveGooruText.getElement().setAttribute("title",i18n.GL0285());
+		
+		celebrationLbl.setText(i18n.GL1314());
+		celebrationLbl.getElement().setId("lblCelebrationLbl");
+		celebrationLbl.getElement().setAttribute("alt",i18n.GL1314());
+		celebrationLbl.getElement().setAttribute("title",i18n.GL1314());
+		
 		learnMoreLbl.setHref("http://support.goorulearning.org/entries/23251492-Why-are-we-retiring-Classic-Gooru-and-transitioning-everyone-over-to-the-new-version-");
-		learnMoreLbl.setText(GL1315);
-		backToClassicAnr.setText(GL1316);
-		classicGooruLbl.setText(GL1317);
-		tryItOutLbl.setText(GL1318);
-		goBackText.setText(GL1319);
+		learnMoreLbl.setText(i18n.GL1315());
+		learnMoreLbl.getElement().setId("lblLearnMoreLbl");
+		learnMoreLbl.getElement().setAttribute("alt",i18n.GL1315());
+		learnMoreLbl.getElement().setAttribute("title",i18n.GL1315());
+		
+		backToClassicAnr.setText(i18n.GL1316());
+		backToClassicAnr.getElement().setId("lnkBackToClassicAnr");
+		backToClassicAnr.getElement().setAttribute("alt",i18n.GL1316());
+		backToClassicAnr.getElement().setAttribute("title",i18n.GL1316());
+		
+		classicGooruLbl.setText(i18n.GL1317());
+		classicGooruLbl.getElement().setId("lnkClassicGooruLbl");
+		classicGooruLbl.getElement().setAttribute("alt",i18n.GL1317());
+		classicGooruLbl.getElement().setAttribute("title",i18n.GL1317());
+		
+		tryItOutLbl.setText(i18n.GL1318());
+		tryItOutLbl.getElement().setId("lnkTryItOutLbl");
+		tryItOutLbl.getElement().setAttribute("alt",i18n.GL1318());
+		tryItOutLbl.getElement().setAttribute("title",i18n.GL1318());
+		
+		goBackText.setText(i18n.GL1319());
+		goBackText.getElement().setId("lblGoBackText");
+		goBackText.getElement().setAttribute("alt",i18n.GL1319());
+		goBackText.getElement().setAttribute("title",i18n.GL1319());
+	
+		closePopUpLbl.getElement().setId("lblClosePopUpLbl");
+		tryItOutNewGooruFloPanel.getElement().setId("fpnlTryItOutNewGooruFloPanel");
+		
 		backToClassicAnr.setHref(AppClientFactory.getLoggedInUser().getSettings().getClassicEndPoint());
 		tryItOutNewGooruFloPanel.addDomHandler(this, ClickEvent.getType());
 	}

@@ -47,9 +47,11 @@ public interface IsPartnerLibraryView extends IsViewWithHandlers<PartnerLibraryU
 	 */
 	public void setUnitList(ArrayList<PartnerFolderDo> folderList);
 
-	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, String folderId);
+	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, String folderId,String libraryGooruOid);
 	
 	public void loadingPanel(boolean isVisible);
 	
 	public void clearPanels();
+ 
+	void getComingSoonText(boolean isVisible);
 }

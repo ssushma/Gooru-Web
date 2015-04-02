@@ -24,8 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,9 +38,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class BalloonPopupVc extends Composite implements MessageProperties {
+public class BalloonPopupVc extends Composite {
 
 	private static BalloonPopupVcUiBinder uiBinder = GWT.create(BalloonPopupVcUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	public Label popupDesc;
@@ -64,8 +65,14 @@ public class BalloonPopupVc extends Composite implements MessageProperties {
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 //		popupDesc.setText(StringUtil.truncateText(desc,60));
-		popupDesc.setText(GL1013);
+		popupContainer.getElement().setId("pnlPopupContainer");
+		popupDesc.setText(i18n.GL1013());
+		popupDesc.getElement().setId("lblPopupDesc");
+		popupDesc.getElement().setAttribute("alt", i18n.GL1013());
+		popupDesc.getElement().setAttribute("title", i18n.GL1013());
 		popupDesc.setText(desc);
+		popupDesc.getElement().setAttribute("alt", desc);
+		popupDesc.getElement().setAttribute("title", desc);
 	}
 
 	

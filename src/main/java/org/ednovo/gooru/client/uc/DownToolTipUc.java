@@ -55,6 +55,7 @@ public class DownToolTipUc extends PopupPanel {
 		super();
 		this.res = UcCBundle.INSTANCE;
 		setWidget(uiBinder.createAndBindUi(this));
+		contentPanel.getElement().setId("spnlContentPanel");
 		setStyleName(res.css().toolTipPopUp());
 	}
 

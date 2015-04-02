@@ -30,26 +30,20 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.FontStyle;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -66,14 +60,10 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -88,7 +78,7 @@ import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
  * @author Search Team
  *
  */
-public class CollectionFormInPlayView extends PopupViewWithUiHandlers<CollectionFormInPlayUiHandlers> implements IsCollectionFormInPlayView,MessageProperties {
+public class CollectionFormInPlayView extends PopupViewWithUiHandlers<CollectionFormInPlayUiHandlers> implements IsCollectionFormInPlayView {
 	@UiField
 	TextBoxWithPlaceholder collectionTitleTxtBox;
 
@@ -144,13 +134,13 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	
 	@UiField
 	Label courseMoreInfoLbl;*/
-	@UiField HTMLPanel publicRadioButtonPanel,shareRadioButtonPanel,privateRadioButtonPanel,buttonMainContainer;
+	@UiField HTMLPanel  pnlExistingAssessmentContainer,pnlNewAssessmentContainer,pnlCreateNewAssessment,bodyContainer,shelfItemContent,publicRadioButtonPanel,shareRadioButtonPanel,privateRadioButtonPanel,buttonMainContainer;
 	
 	RadioButton radioButtonPublic=new RadioButton("","");
 	RadioButton radioButtonShare=new RadioButton("","");
 	RadioButton radioButtonPrivate=new RadioButton("","");
 	
-	final String[] list = { "- Select Grade(s) -","Kindergarten", "1", "2", "3", "4", "5", "6", "7",
+	final String[] list = { "- Select Grade -","Kindergarten", "1", "2", "3", "4", "5", "6", "7",
 			"8", "9", "10", "11", "12", "Higher Education" };
 
 	ListBox gradeDropDownList = new ListBox();
@@ -172,13 +162,15 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 
 //	public static final String COURSE_INFO = MessageProperties.GL0321;
 
-	private static final String TITLE_THIS_COLLECTION = GL0322;
-	
 	private static final String GOORU_UID = "gooruuid";
 	
-	private static String CONFIRM_MESSAGE = GL1490+GL_SPL_EXCLAMATION;
-	
 	private static CollectionFormViewUiBinder uiBinder = GWT.create(CollectionFormViewUiBinder.class);
+	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
+	
+	private static String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
 	
 	boolean isHavingBadWords;
 	
@@ -197,9 +189,16 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		res.css().ensureInjected();*/
 
 		appPopUp = new AppPopUp();
-		
+		if (!BrowserAgent.isDevice()){
+			appPopUp.getMainPanel().getElement().getStyle().setWidth(550, Unit.PX);
+		}
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(CollectionCBundle.INSTANCE.css().gwtGlassPanel());
+		
+
+		pnlCreateNewAssessment.setVisible(false);
+		bodyContainer.setVisible(true);
+		
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 //		buttonFloPanel.add(validationErrorFloPanel);
@@ -209,7 +208,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		//buttonFloPanel.add(cancelAnr);
 		publicShareFloPanel.setVisible(false);
 		appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
-		appPopUp.getElement().getStyle().setHeight(460, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
 		collectionTitleTxtBox.getElement().setAttribute("maxlength", "50");
 		radioButtonPublic.getElement().setId("rdPublic");
 		radioButtonShare.getElement().setId("rdShare");
@@ -220,7 +219,14 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		loadingTextLbl.getElement().getStyle().setDisplay(Display.NONE);
 		mobileTxtLbl.getElement().getStyle().setPaddingTop(6, Unit.PX);*/
 		isCheckedValue=false;
-		appPopUp.setTitle(GL0993);
+		appPopUp.setTitle(i18n.GL0993());
+		buttonFloPanel.setVisible(false);
+		btnOk.getElement().setAttribute("style", "margin-left:10px"); 
+		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt",i18n.GL0591().toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title",i18n.GL0591().toLowerCase());
+		  
 		/*imgQuestionImage.getElement().getStyle().setPaddingTop(16, Unit.PX);
 		imgQuestionImage.addMouseOverHandler(new MouseOverHandler() {
 
@@ -249,39 +255,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 			}
 		});*/
 		
-		btnOk.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", collectionTitleTxtBox.getText());
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					
-					@Override
-					public void onSuccess(Boolean value) {
-						isHavingBadWords = value;
-						btnOk.setEnabled(true);
-						if (value){
-							collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
-							mandatoryErrorLbl.setText(GL0554);
-							mandatoryErrorLbl.setVisible(true);
-						}else{
-							collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
-							collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
-							mandatoryErrorLbl.setVisible(false);
-							
-							if (validateCollectionForm().size() == 0) {
-								btnOk.setEnabled(false);
-								btnOk.getElement().addClassName("disabled");
-								buttonMainContainer.setVisible(false);
-								loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
-								getUiHandlers().saveCollection();
-							}
-						}
-					}
-				});
-			}
-		});
+		
 		cancelAnr.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -295,23 +269,26 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 			
 			@Override
 			public void onBlur(BlurEvent event) {
+				
 				if (collectionTitleTxtBox.getText().length() > 0){
 					Map<String, String> parms = new HashMap<String, String>();
 					parms.put("text", collectionTitleTxtBox.getText());
-					btnOk.setEnabled(false);
-					btnOk.getElement().addClassName("disabled");
+					//btnOk.setEnabled(false);
+					//btnOk.getElement().addClassName("disabled");
 					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 	
 						@Override
 						public void onSuccess(Boolean value) {
+							
 							isHavingBadWords = value;
-							btnOk.setEnabled(true);
-							btnOk.getElement().removeClassName("disabled");
+							
 							if (value){
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
-								mandatoryErrorLbl.setText(GL0554);
+								mandatoryErrorLbl.setText(i18n.GL0554());
 								mandatoryErrorLbl.setVisible(true);
 							}else{
+								btnOk.setEnabled(true);
+								btnOk.getElement().removeClassName("disabled");
 								collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
 								mandatoryErrorLbl.setVisible(false);
@@ -323,6 +300,48 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		});
 		
 		collectionTitleTxtBox.addKeyUpHandler(new TitleKeyUpHandler());
+		btnOk.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//loadingTextLbl.setVisible(true);
+				
+				btnOk.setEnabled(false);
+				btnOk.getElement().addClassName("disabled");
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", collectionTitleTxtBox.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						isHavingBadWords = value;
+						//btnOk.setEnabled(true);
+						if (value){
+							collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
+							mandatoryErrorLbl.setText(i18n.GL0554());
+							mandatoryErrorLbl.setVisible(true);
+							btnOk.setEnabled(true);
+							btnOk.getElement().removeClassName("disabled");
+						}else{
+							collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
+							collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
+							mandatoryErrorLbl.setVisible(false);
+							
+							if (validateCollectionForm().size() == 0) {
+								
+								//loadingTextLbl.setVisible(true);
+								loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK); 
+								
+								btnOk.setEnabled(false);
+								btnOk.getElement().addClassName("disabled");
+								buttonMainContainer.setVisible(false);
+								//loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
+								getUiHandlers().saveCollection();
+							}
+						}
+					}
+				});
+			}
+		});
 		getGradeList();
 		publicRadioButtonPanel.add(radioButtonPublic);
 		shareRadioButtonPanel.add(radioButtonShare);
@@ -391,33 +410,47 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	}
 	
 	public void setTextAndIds(){
-		/*lblDontWorry.setText(MessageProperties.GL0303);
-		lblTitle.setText(MessageProperties.GL0318 + MessageProperties.GL_SPL_STAR);*/
-		//collectionTitleTxtBox.setPlaceholder(MessageProperties.GL0319);
-		collectionTitleTxtBox.getElement().setAttribute("placeholder", GL0319);
-		mandatoryErrorLbl.setText(GL0173);
-//		lblGrade.setText(MessageProperties.GL0325);
-//		gradeHelpIcon.setText(MessageProperties.GL_SPL_QUESTION);
-//		lblCourse.setText(MessageProperties.GL0326);
-//		courseHelpIcon.setText(MessageProperties.GL_SPL_QUESTION);
-//		validationErrorLbl.setText(MessageProperties.GL0327);
-		collPopUpMainheading.setText(GL1032);
-		collPopUpSubheading.setText(GL1033);
-		collTitleLbl.setText(GL0651);
-		lblVisibility.setText(GL0328);
-		lblPublic.setText(GL0329);
-		lblAllow.setText(GL0330);
-		lblShareable.setText(GL0331);
-		lblShareableDesc.setText(GL0332);
-		lblPrivate.setText(GL0333);
-		lblPrivateDesc.setText(GL0334);
+		/*lblDontWorry.setText(MessageProperties.i18n.GL0303);
+		lblTitle.setText(MessageProperties.i18n.GL0318 + MessageProperties.i18n.GL_SPL_STAR);*/
+		//collectionTitleTxtBox.setPlaceholder(MessageProperties.i18n.GL0319);
+		collectionTitleTxtBox.getElement().setAttribute("placeholder", i18n.GL0319());
+		mandatoryErrorLbl.setText(i18n.GL0173());
+//		lblGrade.setText(MessageProperties.i18n.GL0325);
+//		gradeHelpIcon.setText(MessageProperties.i18n.GL_SPL_QUESTION);
+//		lblCourse.setText(MessageProperties.i18n.GL0326);
+//		courseHelpIcon.setText(MessageProperties.i18n.GL_SPL_QUESTION);
+//		validationErrorLbl.setText(MessageProperties.i18n.GL0327);
+		collPopUpMainheading.setText(i18n.GL1032());
+		collPopUpSubheading.setText(i18n.GL1033());
+		collTitleLbl.setText(i18n.GL0651());
+		lblVisibility.setText(i18n.GL0328());
+		lblPublic.setText(i18n.GL0329());
+		if(collectionDo != null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			lblAllow.setText(i18n.GL3175());
+		}
+		else
+		{
+			lblAllow.setText(i18n.GL0330());
+		}
+		lblShareable.setText(i18n.GL0331());
+		lblShareableDesc.setText(i18n.GL0332());
+		lblPrivate.setText(i18n.GL0333());
+		if(collectionDo != null && collectionDo.getCollectionType()!=null && collectionDo.getCollectionType().equalsIgnoreCase("assessment"))
+		{
+			lblPrivateDesc.setText(i18n.GL3176());
+		}
+		else
+		{
+			lblPrivateDesc.setText(i18n.GL0334());
+		}
 		
-		btnOk.setText(GL0190);
+		btnOk.setText(i18n.GL0190());
 		btnOk.getElement().setId("btnOk");
-		gradeLbl.setText(GL0325);
-		courseLbl.setText(GL0326);
+		gradeLbl.setText(i18n.GL0325());
+		courseLbl.setText(i18n.GL0326());
 		cancelAnr.getElement().setId("lnkCancel");
-		cancelAnr.setText(GL0142);
+		cancelAnr.setText(i18n.GL0142());
 	}
 	
 	
@@ -445,7 +478,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryErrorLbl.setVisible(false);
 			if (collectionTitleTxtBox.getText().length() >= 50) {
-				mandatoryErrorLbl.setText(GL0143);
+				mandatoryErrorLbl.setText(i18n.GL0143());
 				mandatoryErrorLbl.setVisible(true);
 			}
 		}
@@ -568,8 +601,8 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 			radioButtonPrivate.setChecked(false);
 		}else{
 			radioButtonPublic.setEnabled(true);
-			radioButtonPublic.setChecked(true);
-			radioButtonShare.setChecked(false);
+			radioButtonPublic.setChecked(false);
+			radioButtonShare.setChecked(true);
 			radioButtonPrivate.setChecked(false);
 		}
 	}
@@ -625,7 +658,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	@Override
 	public void setLibraryCodes(List<LibraryCodeDo> libraryCode) {
 		//courseLisBox.clear();
-		courseLisBox.addItem("- Select course -", "-1");
+		courseLisBox.addItem("- Select Course -", "-1");
 		if (libraryCode != null) {
 			for (LibraryCodeDo libraryCodes : libraryCode) {
 				for (LibraryCodeDo libCode : libraryCodes.getNode()) {
@@ -645,12 +678,12 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		Map<String, String> errorList = new HashMap<String, String>();
 		String tiltle = collectionTitleTxtBox.getText();
 		if (tiltle.toLowerCase().contains("www.") || tiltle.toLowerCase().contains("http://") || tiltle.toLowerCase().contains("https://") || tiltle.toLowerCase().contains("ftp://")){
-			mandatoryErrorLbl.setText(GL0323);
+			mandatoryErrorLbl.setText(i18n.GL0323());
 			mandatoryErrorLbl.setVisible(true);
 			errorList.put("title", "title cannot be a url.");
 		}else if (tiltle.trim().equals("") || tiltle.equalsIgnoreCase("Untitled Collection")) {
 			errorList.put("title", "title can not be empty");
-			mandatoryErrorLbl.setText(GL0746);
+			mandatoryErrorLbl.setText(i18n.GL0746());
 			mandatoryErrorLbl.setVisible(true);
 		}
 		return errorList;
@@ -670,10 +703,10 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	public void getAccountTypeId()
 	{
 	AppClientFactory
-				.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new AsyncCallback<SettingDo>() {
+				.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
 					
 					@Override
-					public void onSuccess(SettingDo result) {
+					public void onSuccess(V2UserDo result) {
 						if(result.getUser().getAccountTypeId()!=null)
 						{
 							if(result.getUser().getAccountTypeId()==2)
@@ -690,12 +723,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 							publicShareFloPanel.setVisible(true);	
 						}
 						
-					}
-
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-					
+					}					
 				});
 		
 	}

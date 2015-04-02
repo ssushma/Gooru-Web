@@ -28,10 +28,10 @@ import java.util.List;
 
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -51,15 +51,29 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-
-public abstract class MembersViewVc extends Composite implements MessageProperties {
+/**
+ * 
+ * @fileName : MembersViewVc.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
+public abstract class MembersViewVc extends Composite {
 
 	private static MembersViewVcUiBinder uiBinder = GWT.create(MembersViewVcUiBinder.class);
 
 	interface MembersViewVcUiBinder extends UiBinder<Widget, MembersViewVc> {
 	}
 	
-	
+	public MessageProperties i18N = GWT.create(MessageProperties.class);
 	List<ClassPageCollectionDo> classpageTitles = new ArrayList<ClassPageCollectionDo>();
 
 	CollaboratorsDo collaboratorsDo = null;
@@ -125,7 +139,25 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 	public void onLoad() {
 //		setDebugId();
 	}
-
+	/**
+	 * 
+	 * @function setDebugId 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setDebugId() {
 		String emailId = collaboratorsDo.getEmailId() != null ? collaboratorsDo.getEmailId() : null;
 		String email = collaboratorsDo.getEmail() != null ? collaboratorsDo.getEmail() : null;
@@ -134,9 +166,11 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 		String status = collaboratorsDo.getStatus();
 		
 		panelCollaboratorsListContainer.getElement().setId(emailId);
-		btnRemove.setText(GL0237);
+		btnRemove.setText(i18N.GL0237());
 		btnRemove.getElement().setId("" + position);
-		
+		btnRemove.getElement().setAttribute("alt",i18N.GL0237());
+		btnRemove.getElement().setAttribute("title",i18N.GL0237());
+
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
 			
 			@Override
@@ -147,6 +181,8 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 
 		if (status.equalsIgnoreCase("pending")){
 			lblEmailId.setText(emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("alt",emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
 			imgProfileImage.setVisible(false);
 			lblUserName.setVisible(false);
 			
@@ -171,15 +207,63 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 			lblUserName.setVisible(true);
 			
 			lblUserName.setText(userName);
+			lblUserName.getElement().setAttribute("alt",userName);
+			lblUserName.getElement().setAttribute("title",userName);
+			
 			lblEmailId.setText(emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("alt",emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
 			imgProfileImage.setUrl(collaboratorsDo.getProfileImageUrl());
 		}
-	}
+		lblUserName.getElement().setId(emailId);
+		lblEmailId.getElement().setId(emailId);
+		panelCollaboratorsListContainer.getElement().setId("pnlCollaboratorsListContainer");
+		panelMembers.getElement().setId("epnlMembers");
+		imgProfileImage.getElement().setId("imgProfileImage");
 	
+	}
+	/**
+	 * 
+	 * @function removeThisFromParent 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void removeThisFromParent(){		
 		this.removeFromParent();
 	}
-	
+	/**
+	 * 
+	 * @function setCollabCount 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param count
+	 * @parm(s) : @param type
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public abstract void setCollabCount(int count, String type);
 	
 	@UiHandler("btnRemove")

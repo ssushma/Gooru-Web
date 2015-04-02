@@ -36,8 +36,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.resource.item.ClasspageResourceItemChildView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -68,7 +68,7 @@ import com.google.inject.Inject;
  *
  * @Reviewer: 
  */
-public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> implements IsClasspageView,MessageProperties{
+public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> implements IsClasspageView{
 
 	
 	@UiField(provided = true)
@@ -94,6 +94,7 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 	@UiField Label needHelpText;
 	
 	@UiField Anchor supportCenterLbl;
+	
 	
 	/** 
 	 * This method is to get the loadingPanel
@@ -130,6 +131,9 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 
 
 	private static ClasspageViewUiBinder uiBinder = GWT.create(ClasspageViewUiBinder.class);
+	
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	interface ClasspageViewUiBinder extends UiBinder<Widget, ClasspageView>{
 		
 	}
@@ -139,41 +143,108 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 		res.css().ensureInjected();
 		
 		setWidget(uiBinder.createAndBindUi(this));
-		classPageLbl.getElement().setInnerText(GL1397);
-		teachLbl.getElement().setInnerText(GL1382+GL_SPL_EXCLAMATION);
-		assignLbl.getElement().setInnerText(GL1383);
-		roundOneLbl.setTitle(GL1398);
-		roundOneLbl.setAltText(GL1398);
+		classPageLbl.getElement().setInnerText(i18n.GL1397());
+		classPageLbl.getElement().setId("pnlClassPage");
+		classPageLbl.getElement().setAttribute("alt",i18n.GL1397());
+		classPageLbl.getElement().setAttribute("title",i18n.GL1397());
+		
+		teachLbl.getElement().setInnerText(i18n.GL1382()+i18n.GL_SPL_EXCLAMATION());
+		teachLbl.getElement().setId("pnlTeach");
+		teachLbl.getElement().setAttribute("alt",i18n.GL1382());
+		teachLbl.getElement().setAttribute("title",i18n.GL1382());
+		
+		assignLbl.getElement().setInnerText(i18n.GL1383());
+		assignLbl.getElement().setId("pnlAssign");
+		assignLbl.getElement().setAttribute("alt",i18n.GL1383());
+		assignLbl.getElement().setAttribute("title",i18n.GL1383());
+		
+		roundOneLbl.setTitle(i18n.GL1398());
+		roundOneLbl.getElement().setId("imgRoundOne");
+		roundOneLbl.getElement().setAttribute("title",i18n.GL1398());
+		roundOneLbl.setAltText(i18n.GL1398());
 		roundOneLbl.setUrl("images/rounded-one.png");
-		createLbl.getElement().setInnerText(GL1335);
-		createClasspageLbl.getElement().setInnerText(GL1399);
-		addClassPageLbl.setTitle(GL1381);
-		addClassPageLbl.setAltText(GL1381);
+		
+		createLbl.getElement().setInnerText(i18n.GL1335());
+		createLbl.getElement().setId("pnlCreate");
+		createLbl.getElement().setAttribute("alt",i18n.GL1335());
+		createLbl.getElement().setAttribute("title",i18n.GL1335());
+		
+		createClasspageLbl.getElement().setInnerText(i18n.GL1399());
+		createClasspageLbl.getElement().setId("pnlCreateClassPage");
+		createClasspageLbl.getElement().setAttribute("alt",i18n.GL1399());
+		createClasspageLbl.getElement().setAttribute("title",i18n.GL1399());
+		
+		addClassPageLbl.setTitle(i18n.GL1381());
+		addClassPageLbl.setAltText(i18n.GL1381());
 		addClassPageLbl.setUrl("images/Classpage/classpage-image.png");
-		roundTwoLbl.setTitle(GL1400);
-		roundTwoLbl.setAltText(GL1400);
+		addClassPageLbl.getElement().setId("imgAddClassPage");
+		
+		roundTwoLbl.setTitle(i18n.GL1400());
+		roundOneLbl.getElement().setId("imgRoundTwo");
+		roundOneLbl.getElement().setAttribute("title",i18n.GL1400());
+		roundTwoLbl.setAltText(i18n.GL1400());
 		roundTwoLbl.setUrl("images/rounded-two.png");
-		assignLblClassPage.getElement().setInnerText(GL1401);
-		addToAssignLbl.getElement().setInnerText(GL1402);
-		addAssignImgLbl.setTitle(GL1401);
-		addAssignImgLbl.setAltText(GL1401);
+		
+		assignLblClassPage.getElement().setInnerText(i18n.GL1401());
+		assignLblClassPage.getElement().setId("pnlAssignClassPage");
+		assignLblClassPage.getElement().setAttribute("alt",i18n.GL1401());
+		assignLblClassPage.getElement().setAttribute("title",i18n.GL1401());
+		
+		addToAssignLbl.getElement().setInnerText(i18n.GL1402());
+		addToAssignLbl.getElement().setId("pnlAddToAssign");
+		addToAssignLbl.getElement().setAttribute("alt",i18n.GL1402());
+		addToAssignLbl.getElement().setAttribute("title",i18n.GL1402());
+		
+		addAssignImgLbl.setTitle(i18n.GL1401());
+		addAssignImgLbl.setAltText(i18n.GL1401());
+		addAssignImgLbl.getElement().setId("imgAssAssignImg");
 		addAssignImgLbl.setUrl("images/Classpage/add-assignment-image.png");
-		roundThreeLbl.setTitle(GL1403);
-		roundThreeLbl.setAltText(GL1403);
+		
+		roundThreeLbl.setTitle(i18n.GL1403());
+		roundThreeLbl.setAltText(i18n.GL1403());
+		roundThreeLbl.getElement().setId("imgRoundThree");
 		roundThreeLbl.setUrl("images/rounded-three.png");
-		shareLbl.getElement().setInnerText(GL0536);
-		shareClassPageText.getElement().setInnerText(GL1404);
-		shareImageLbl.setTitle(GL0526);
-		shareImageLbl.setAltText(GL0526);
+		
+		shareLbl.getElement().setInnerText(i18n.GL0536());
+		shareLbl.getElement().setId("pnlShare");
+		shareLbl.getElement().setAttribute("alt",i18n.GL0536());
+		shareLbl.getElement().setAttribute("title",i18n.GL0536());
+		
+		shareClassPageText.getElement().setInnerText(i18n.GL1404());
+		shareClassPageText.getElement().setId("pnlShareClassPageText");
+		shareClassPageText.getElement().setAttribute("alt",i18n.GL1404());
+		shareClassPageText.getElement().setAttribute("title",i18n.GL1404());
+		
+		shareImageLbl.setTitle(i18n.GL0526());
+		shareImageLbl.setAltText(i18n.GL0526());
+		shareImageLbl.getElement().setId("imgShareImage");
 		shareImageLbl.setUrl("images/Classpage/share-image.png");
-		needHelpText.setText(GL1405);
-		supportCenterLbl.setText(GL1406);
+		
+		needHelpText.setText(i18n.GL1405());
+		needHelpText.getElement().setId("lblNeedHelp");
+		needHelpText.getElement().setAttribute("alt",i18n.GL1405());
+		needHelpText.getElement().setAttribute("title",i18n.GL1405());
+		
+		supportCenterLbl.setText(i18n.GL1406());
+		supportCenterLbl.getElement().setId("lnkSupportCenter");
+		supportCenterLbl.getElement().setAttribute("alt",i18n.GL1406());
+		supportCenterLbl.getElement().setAttribute("title",i18n.GL1406());
 		supportCenterLbl.setHref("http://support.goorulearning.org/forums");
+		
 		loadingPanel.setVisible(false);		
+		loadingPanel.getElement().setId("pnlLoading");
+		
 		classPageScrollPanel.setVisible(false);
+		classPageScrollPanel.getElement().setId("sbClassPageScrollBar");
+		classpageListPanel.getElement().setId("pnlClassPageList");
+		
 		placeHolderForEmptyTeach.setVisible(true);
-		btnNewClasspage.setText(GL1381);
+		placeHolderForEmptyTeach.getElement().setId("pnlPlaceHolderForEmptyTeach");
+		
+		btnNewClasspage.setText(i18n.GL1381());
 		btnNewClasspage.getElement().setId("btnNewClasspage");
+		btnNewClasspage.getElement().setAttribute("alt",i18n.GL1381());
+		btnNewClasspage.getElement().setAttribute("title",i18n.GL1381());
 	}
 	
 	

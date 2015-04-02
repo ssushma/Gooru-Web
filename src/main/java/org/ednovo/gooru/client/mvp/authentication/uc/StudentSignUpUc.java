@@ -25,6 +25,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication.uc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
@@ -38,12 +41,15 @@ import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.google.debugging.sourcemap.dev.protobuf.Message;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.WhiteSpace;
+import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -83,21 +89,24 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class StudentSignUpUc extends PopupPanel implements MessageProperties{
+public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 
 	private static StudentSignUpUcUiBinder uiBinder = GWT
 			.create(StudentSignUpUcUiBinder.class);
 
 	interface StudentSignUpUcUiBinder extends UiBinder<Widget, StudentSignUpUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField Label lblCancel,lblTitle,lblStuDes,lblParentEmailId,lblTxtParent,lblPickWisely,lblQuestionMark,lblWhyEnterBirthday,lblWhyEnterBirthdayDesc;
 	@UiField SimplePanel sPanelDateOfBirth;
 
 	@UiField
-	ErrorLabelUc dateValidationUc,lblSelectRole,passwordValidUc;
-	@UiField HTMLPanel panelUserNamePopUp;
+	ErrorLabelUc userNameValidUc,dateValidationUc,lblSelectRole,passwordValidUc;
+	@UiField HTMLPanel panelUserNamePopUp,panelSignUp;
 	@UiField TextBoxWithPlaceholder txtChooseUsername,txtChoosePassword,txtConfirmPassword;
 	@UiField Label lblTeacher,lblStudent, lblParent, lblOther,lblPasswordTooltipContent,lblPleaseWait;
 	@UiField HTMLPanel rdTeacher, rdStudent, rdParent, rdOther,panelPassword;
@@ -163,7 +172,12 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 	
 		//this.getElement().getStyle().setBackgroundColor("transparent");
 		lblTitle.getElement().setAttribute("style", "height: 17px");
-		lblParentEmailId.setText(emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		lblParentEmailId.setText(emailId != null && !emailId.equalsIgnoreCase("") ?" "+ emailId :" "+ AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		lblParentEmailId.getElement().getStyle().setWhiteSpace(WhiteSpace.PRE);
+		lblParentEmailId.getElement().setId("lblParentEmailId");
+		lblParentEmailId.getElement().setAttribute("alt",emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		lblParentEmailId.getElement().setAttribute("title",emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		
 		txtChooseUsername.setText(username);
 		txtChooseUsername.setReadOnly(true);
 		lblPleaseWait.setVisible(false);
@@ -183,7 +197,7 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event){
 		this.hide();
-		LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(GL1394,lblParentEmailId.getText(),txtChooseUsername.getValue(),dateBoxUc.getDateBox().getText());
+		LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(i18n.GL1394(),lblParentEmailId.getText(),txtChooseUsername.getValue(),dateBoxUc.getDateBox().getText());
 		leaveRegistrationPopUpUc.show();
 	}
 	/**
@@ -206,44 +220,141 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 	 *
 	 */
 	private void setUiAndIds(String dob){
-		lblStuDes.setText(GL0467);
-		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+		lblStuDes.setText(i18n.GL0467());
+		lblStuDes.getElement().setId("lblStuDes");
+		lblStuDes.getElement().setAttribute("alt",i18n.GL0467());
+		lblStuDes.getElement().setAttribute("title",i18n.GL0467());
 		
-		lblTxtParent.setText(GL0468);
+		lblTitle.setText(i18n.GL0186() + i18n.GL_SPL_EXCLAMATION());
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",i18n.GL0186());
+		lblTitle.getElement().setAttribute("title",i18n.GL0186());
+		
+		lblCancel.getElement().setId("lblCancel");
+		panelSignUp.getElement().setId("pnlSignUp");
+		
+		lblTxtParent.setText(i18n.GL0468());
+		lblTxtParent.getElement().setId("lblTxtParent");
+		lblTxtParent.getElement().setAttribute("alt",i18n.GL0468());
+		lblTxtParent.getElement().setAttribute("title",i18n.GL0468());
 		
 		dateBoxUc = new DateBoxUc(true, true,true);
 		sPanelDateOfBirth.add(dateBoxUc);
+		sPanelDateOfBirth.getElement().setId("spnlDateOfBirth");
+		
 		dateBoxUc.getDateBox().setText(dob);
 		panelUserNamePopUp.setVisible(false);
+		panelUserNamePopUp.getElement().setId("pnlUserNamePopup");
+		
 		panelPassword.setVisible(false);
-		lblPickWisely.setText(GL0410);
-		txtChoosePassword.setPlaceholder(GL0204);
-		txtConfirmPassword.setPlaceholder(GL0427);
-		lblQuestionMark.setText(GL_SPL_QUESTION);
-		lblWhyEnterBirthday.setText(GL0411 + GL_SPL_QUESTION);
-		lblWhyEnterBirthdayDesc.setText(GL0412);
-		lblTeacher.setText(GL0416);
-		lblStudent.setText(GL0417);
-		lblParent.setText(GL0418);
-		lblOther.setText(GL0419);
+		panelPassword.getElement().setId("pnlPassword");
+		
+		lblPickWisely.setText(i18n.GL0410());
+		lblPickWisely.getElement().setId("lblPickWisely");
+		lblPickWisely.getElement().setAttribute("alt",i18n.GL0410());
+		lblPickWisely.getElement().setAttribute("title",i18n.GL0410());
+		
+		txtChooseUsername.getElement().setId("txtChooseUserName");
+		userNameValidUc.getElement().setId("errlblUserNameValidUc");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		passwordValidUc.getElement().setId("errlblPasswordValidUc");
+		
+		txtChoosePassword.setPlaceholder(i18n.GL0204());
+		txtChoosePassword.getElement().setId("pswChoosePassword");
+		
+		txtConfirmPassword.setPlaceholder(i18n.GL0427());
+		txtConfirmPassword.getElement().setId("pswConfirmPassword");
+		passwordValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
+		passwordValidUc.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		lblQuestionMark.setText(i18n.GL_SPL_QUESTION());
+		lblQuestionMark.getElement().setId("lblQuestionMark");
+		lblQuestionMark.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
+		lblQuestionMark.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
+		
+		lblWhyEnterBirthday.setText(i18n.GL0411() + i18n.GL_SPL_QUESTION());
+		lblWhyEnterBirthday.getElement().setId("lblWhyEnterBirthday");
+		lblWhyEnterBirthday.getElement().setAttribute("alt",i18n.GL0411());
+		lblWhyEnterBirthday.getElement().setAttribute("title",i18n.GL0411());
+		
+		lblWhyEnterBirthdayDesc.setText(i18n.GL0412());
+		lblWhyEnterBirthdayDesc.getElement().setId("lblWhyEnterBirthdayDesc");
+		lblWhyEnterBirthdayDesc.getElement().setAttribute("alt",i18n.GL0412());
+		lblWhyEnterBirthdayDesc.getElement().setAttribute("title",i18n.GL0412());
+		
+		lblTeacher.setText(i18n.GL0416());
+		lblTeacher.getElement().setId("lblTeacher");
+		lblTeacher.getElement().setAttribute("alt",i18n.GL0416());
+		lblTeacher.getElement().setAttribute("title",i18n.GL0416());
+		
+		lblStudent.setText(i18n.GL0417());
+		lblStudent.getElement().setId("lblStudent");
+		lblStudent.getElement().setAttribute("alt",i18n.GL0417());
+		lblStudent.getElement().setAttribute("title",i18n.GL0417());
+		
+		lblParent.setText(i18n.GL0418());
+		lblParent.getElement().setId("lblParent");
+		lblParent.getElement().setAttribute("alt",i18n.GL0418());
+		lblParent.getElement().setAttribute("title",i18n.GL0418());
+		
+		lblOther.setText(i18n.GL0419());
+		lblOther.getElement().setId("lblOther");
+		lblOther.getElement().setAttribute("alt",i18n.GL0419());
+		lblOther.getElement().setAttribute("title",i18n.GL0419());
+		
+		panelDataOfBirth.getElement().setId("pnlDateOfBirth");
+		
 		rbTeacher = new RadioButton("roleOption","");
 		rbStudent = new RadioButton("roleOption","");
 		rbParent = new RadioButton("roleOption","");
 		rbOther = new RadioButton("roleOption","");
-		btnSignUp.setText(GL0186);
+		btnSignUp.setText(i18n.GL0186());
 		btnSignUp.getElement().setId("btnSignUp");
-		lblAgree.setText(GL0420);
-		ancCopyRight.setText(GL0421+",");
-		ancTermsAndPrivacy.setText(GL0422);
-		ancPrivacy.setText(GL0452);
-		lblPasswordTooltipContent.setText(GL0415);
+		btnSignUp.getElement().setAttribute("alt",i18n.GL0186());
+		btnSignUp.getElement().setAttribute("title",i18n.GL0186());
+		
+		lblAgree.setText(i18n.GL0420());
+		lblAgree.getElement().setId("lblAgree");
+		lblAgree.getElement().setAttribute("alt",i18n.GL0420());
+		lblAgree.getElement().setAttribute("title",i18n.GL0420());
+		
+		ancCopyRight.setText(i18n.GL0421()+",");
+		ancCopyRight.getElement().setId("lnkCopyRight");
+		ancCopyRight.getElement().setAttribute("alt",i18n.GL0421());
+		ancCopyRight.getElement().setAttribute("title",i18n.GL0421());
+		
+		ancTermsAndPrivacy.setText(i18n.GL0422());
+		ancTermsAndPrivacy.getElement().setId("lnkTermsAndPrivacy");
+		ancTermsAndPrivacy.getElement().setAttribute("alt",i18n.GL0422());
+		ancTermsAndPrivacy.getElement().setAttribute("title",i18n.GL0422());
+		
+		ancPrivacy.setText(i18n.GL0452());
+		ancPrivacy.getElement().setId("lnkPrivacy");
+		ancPrivacy.getElement().setAttribute("alt",i18n.GL0422());
+		ancPrivacy.getElement().setAttribute("title",i18n.GL0422());
+		
+		lblPasswordTooltipContent.setText(i18n.GL0415());
+		lblPasswordTooltipContent.getElement().setId("lblPasswordToolTipContent");
+		lblPasswordTooltipContent.getElement().setAttribute("alt",i18n.GL0415());
+		lblPasswordTooltipContent.getElement().setAttribute("title",i18n.GL0415());
+		
 		rbStudent.setChecked(true);
 		MixpanelUtil.select_student();
-		lblSelectRole.setText(GL1146);
-		andText.setText(GL_GRR_AND);
+		lblSelectRole.setText(i18n.GL1146());
+		lblSelectRole.getElement().setId("lblSelectRole");
+		lblSelectRole.getElement().setAttribute("alt",i18n.GL1146());
+		lblSelectRole.getElement().setAttribute("title",i18n.GL1146());
+		
+		andText.setText(i18n.GL_GRR_AND());
+		andText.getElement().setId("spnAndText");
+		andText.getElement().setAttribute("alt",i18n.GL_GRR_AND());
+		andText.getElement().setAttribute("title",i18n.GL_GRR_AND());
+		
 		lblSelectRole.setVisible(false);
 		
-		lblPleaseWait.setText(GL0469);
+		lblPleaseWait.setText(i18n.GL0469());
+		lblPleaseWait.getElement().setId("lblPleaseWait");
+		lblPleaseWait.getElement().setAttribute("alt",i18n.GL0469());
+		lblPleaseWait.getElement().setAttribute("title",i18n.GL0469());
 		
 		txtChooseUsername.addMouseOverHandler(new OnMouseOver());
 		txtChoosePassword.addMouseOverHandler(new OnMouseOver());
@@ -262,9 +373,16 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		rbTeacher.setEnabled(false);
 		rbOther.setEnabled(false);
 		rdTeacher.add(rbTeacher);
+		rdTeacher.getElement().setId("rdTeacher");
+		
 		rdStudent.add(rbStudent);
+		rdStudent.getElement().setId("rdStudent");
+		
 		rdParent.add(rbParent);
+		rdParent.getElement().setId("rdParent");
+		
 		rdOther.add(rbOther);
+		rdOther.getElement().setId("rdOther");
 	
 	}
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -284,7 +402,6 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		};
 		
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);
 	
@@ -308,7 +425,6 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		};
 		
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 	
@@ -332,11 +448,24 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		};
 		
 		copyRightPolicy.show();
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}
-	
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -348,6 +477,21 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 			}	
 		}
 	}
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOut implements MouseOutHandler{
 
 		@Override
@@ -399,7 +543,9 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		if (!password.equalsIgnoreCase(confirmPassword)){
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
-			passwordValidUc.setText(GL0446);
+			passwordValidUc.setText(i18n.GL0446());
+			passwordValidUc.getElement().setAttribute("alt",i18n.GL0446());
+			passwordValidUc.getElement().setAttribute("title",i18n.GL0446());
 			passwordValidUc.setVisible(true);
 			isValid= false;
 		}
@@ -407,13 +553,30 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		RegExp reg = RegExp.compile(PWD_PATTERN, "gi");
 		boolean validatePwd=reg.test(password);
 		if (!validatePwd && password.length() >= 5 && password.length() <= 14){
-			passwordValidUc.setText(StringUtil.generateMessage(GL0073, "Password"));
+			passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0073(), "Password"));
+			passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0073(), "Password"));
+			passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0073(), "Password"));
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}
 		return isValid;
 
 	}
+	/**
+	 * 
+	 * @fileName : StudentSignUpUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
@@ -460,43 +623,30 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		MixpanelUtil.sign_up_Child_registration();
 		String userRole = "student";
 
-		String userName = txtChooseUsername.getText();
+		final String userName = txtChooseUsername.getText();
 		String emilId = lblParentEmailId.getText();
-		String password = txtChoosePassword.getText().trim();
+		final String password = StringUtil.getCryptoData(txtChoosePassword.getText().trim()); 
 		String confirmPassword = txtConfirmPassword.getText().trim();
+		Map<String, String> registrationDetailsParams = new HashMap<String, String>();
+		registrationDetailsParams.put(USER_NAME, userName);
+		registrationDetailsParams.put(EMAIL_ID, emilId);
+		registrationDetailsParams.put(ORGANIZATION_CODE, GOORU);
+		registrationDetailsParams.put(FIRST_NAME, "Child");
+		registrationDetailsParams.put(LAST_NAME, "User");
 		
-		final JSONObject userCreate = new JSONObject();
-		JSONObject user = new JSONObject();
-
-		user.put(USER_NAME, new JSONString(userName));
-		user.put(EMAIL_ID, new JSONString(emilId));
+		registrationDetailsParams.put(PASSWORD, password); 
+		registrationDetailsParams.put("gooruBaseUrl", homeEndPoint + "#discover");
+		registrationDetailsParams.put("role", userRole);
+		registrationDetailsParams.put("dateOfBirth", dateBoxUc.getDateBox().getText());
 		
-		JSONObject organization = new JSONObject();
-		organization.put(ORGANIZATION_CODE, new JSONString(GOORU));
-		user.put("organization", organization);
+		registrationDetailsParams.put("accountType", "Child");
+		registrationDetailsParams.put("userParentId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
 		
-		user.put(FIRST_NAME, new JSONString("Child"));
-		user.put(LAST_NAME, new JSONString("User"));
-//			userCreate.put("gender", new JSONString("Male"));
-		userCreate.put(PASSWORD, new JSONString(password));
-		userCreate.put("gooruBaseUrl", new JSONString(homeEndPoint + "#discover"));
-		userCreate.put("role", new JSONString(userRole));
-		userCreate.put("dateOfBirth", new JSONString(dateBoxUc.getDateBox().getText()));
-		userCreate.put("accountType", new JSONString("Child"));
-		userCreate.put("userParentId", new JSONString(AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId()));
-		
-		userCreate.put("user", user);
-		
-		final JSONObject login = new JSONObject();
-		login.put("username", new JSONString(userName));
-		login.put("password", new JSONString(password));
-		
-		
-		AppClientFactory.getInjector().getUserService().createUser(userCreate.toString(),new SimpleAsyncCallback<UserDo>() {
+		AppClientFactory.getInjector().getUserService().createUser(registrationDetailsParams,CHILD_REG,new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo result) {
 					if (result.getGooruUId() != null && !result.getGooruUId().equalsIgnoreCase("")) {
-						AppClientFactory.getInjector().getAppService().v2Signin(login.toString(),new SimpleAsyncCallback<UserDo>() {
+						AppClientFactory.getInjector().getAppService().v2Signin(userName,password,new SimpleAsyncCallback<UserDo>() {
 							@Override
 							public void onSuccess(UserDo result) {
 								hide();

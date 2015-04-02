@@ -41,7 +41,10 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
@@ -53,13 +56,15 @@ import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.uc.tooltip.SearchDragToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.CustomAnimation;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.DOMUtils;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -79,8 +84,6 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -97,10 +100,12 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class ShelfCollection extends FocusPanel implements DropBox,
-		MouseOverHandler, MessageProperties {
+		MouseOverHandler {
 
 	private static ShelfCollectionUiBinder uiBinder = GWT
 			.create(ShelfCollectionUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ShelfCollectionUiBinder extends UiBinder<Widget, ShelfCollection> {
 	}
@@ -156,7 +161,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	
 //	private static final String EDIT_THIS_COLLECTION = "Drop resource here";
 	
-	private final String CONGRATS_MSG=GL0483.toLowerCase();
+	private final String CONGRATS_MSG=i18n.GL0483().toLowerCase();
 
 	//private static final String EDIT_THIS_COLLECTION = "Edit this Collection";
 
@@ -193,6 +198,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	private static final String O3_LEVEL = "o3";
 	
 	private static final String ID = "id";
+	
+	private static final String ASSESSMENT = "assessment";
 
 	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
 	
@@ -208,8 +215,11 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		res = ShelfListCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		myShelfEditButton.setText(GL0140);
+		myShelfEditButton.setText(i18n.GL0140());
+		myShelfEditButton.getElement().setAttribute("alt", i18n.GL0140());
+		myShelfEditButton.getElement().setAttribute("title", i18n.GL0140());
 		myShelfEditButton.getElement().setId("btnMyShelfEdit");
+		glassContainer.getElement().setId("GlassContainer");
 		glassContainer.setGlassVisible(false);
 		
 		setData(collectionDo,nextLevel);
@@ -218,6 +228,15 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		dropController = new ResourceDropController(this);
 		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 		myShelfEditButton.getElement().getStyle().setMarginRight(20, Unit.PX);
+		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
+		arrowIcon.getElement().setId("pnlArrowIcon");
+		titleLbl.getElement().setId("htmlTitleLbl");
+		panelToolTip.getElement().setId("pnlPanelToolTip");
+		htmlToolTipContent.getElement().setId("htmlHtmlToolTipContent");
+		disPanel.getElement().setId("discpnlDisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		addSuccessMsg.getElement().setId("lblAddSuccessMsg");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 		titleFocPanel.addClickHandler(new ClickOnFolderItem());
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -241,13 +260,13 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			public void onMouseOver(MouseOverEvent event) {
 				if(collectionDo.getType().equalsIgnoreCase("folder")){
 				toolTipPopupPanel.clear();
-				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(GL1472,""));
+				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(i18n.GL1472(),""));
 				toolTipPopupPanel.setStyleName("");
 				toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
 				toolTipPopupPanel.show();
 				}else{
 					toolTipPopupPanel.clear();
-					toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(GL1473, ""));
+					toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(i18n.GL1473(), ""));
 					toolTipPopupPanel.setStyleName("");
 					toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
 					toolTipPopupPanel.show();
@@ -273,12 +292,18 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			}
 		});
 		
-		htmlToolTipContent.setHTML(GL1395);
+		htmlToolTipContent.setHTML(i18n.GL1395());
+		htmlToolTipContent.getElement().setAttribute("alt", i18n.GL1395());
+		htmlToolTipContent.getElement().setAttribute("title", i18n.GL1395());
 		
 		AppClientFactory.getEventBus().addHandler(CollectionAssignShareEvent.TYPE, handler);
 		addSuccessMsg.setVisible(false);
-		addSuccessMsg.setText(GL0591.toLowerCase());
+		addSuccessMsg.setText(i18n.GL0591().toLowerCase());
+		addSuccessMsg.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
+		addSuccessMsg.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
+
 		wrapperFocPanel.addClickHandler(new ClickOnFolderItem());
+		AppClientFactory.getEventBus().addHandler(UpdateShelfFolderNameEvent.TYPE,updateShelfFolderName);
 	}
 
 	@UiHandler("myShelfEditButton")
@@ -296,9 +321,12 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
-		
 		if(!collectionDo.getType().equals("folder")) {
 			titleFocPanel.addStyleName(folderStyle.collection());
+			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
+		}
+		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+			titleFocPanel.addStyleName(folderStyle.assessment());
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		if(collectionDo.getCollectionItems()!=null) {
@@ -309,10 +337,12 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		} else {
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		
 		if(collectionDo.getSharing()!=null && !collectionDo.getSharing().equalsIgnoreCase("") && collectionDo.getSharing().equals("public")) {
-			if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection") ){
+			if(collectionDo.getCollectionType().equals("collection") ){
 				titleFocPanel.addStyleName(folderStyle.publicIcon());
+				panelToolTip.getElement().getStyle().clearDisplay();
+			}else if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+				titleFocPanel.addStyleName(folderStyle.assesstpublicIcon());
 				panelToolTip.getElement().getStyle().clearDisplay();
 			}else{
 				panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
@@ -327,19 +357,19 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 2) {
 			titleLbl.setWidth("142px");
-			titleFocPanel.setWidth("143px");
+			//titleFocPanel.setWidth("143px");
 			titleFocPanel.addStyleName(folderStyle.parent());
 			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
 		} else if(nextLevel == 3) {
 			titleLbl.setWidth("114px");
-			titleFocPanel.setWidth("115px");
+			//titleFocPanel.setWidth("115px");
 			titleFocPanel.addStyleName(folderStyle.child());
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
 		} else if(nextLevel == 4) {
 			titleLbl.setWidth("100px");
-			titleFocPanel.setWidth("89px");
+			//titleFocPanel.setWidth("89px");
 			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
 			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
 			titleFocPanel.addStyleName(folderStyle.collectionChild());
@@ -352,27 +382,37 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
 
 		@Override
-		public void updateShareType(String shareType) {
+		public void updateShareType(String shareType,String publishStatus,boolean isPublish,CollectionDo collec) {
+           if(!isPublish){
+        	   if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection") || collectionDo.getType().equals(ASSESSMENT)){
+   				if(titleFocPanel.getStyleName().contains(folderStyle.open())) {
+   					if(shareType.equalsIgnoreCase("public")){
+   						if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+   							titleFocPanel.addStyleName(folderStyle.assesstpublicIcon());
+   						}else{
+   							titleFocPanel.addStyleName(folderStyle.publicIcon());
+   						}
+   						panelToolTip.getElement().getStyle().clearDisplay();
+   					}else{
+   						if(titleFocPanel.getStyleName().contains("public")){
+   							if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+   								titleFocPanel.removeStyleName(folderStyle.assesstpublicIcon());
+   							}else{
+   								titleFocPanel.removeStyleName(folderStyle.publicIcon());
+   							}
+   							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
+   						}
+   					}
 
-			if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection")){
-				if(titleFocPanel.getStyleName().contains(folderStyle.open())) {
-					if(shareType.equalsIgnoreCase("public")){
-						titleFocPanel.addStyleName(folderStyle.publicIcon());
-						panelToolTip.getElement().getStyle().clearDisplay();
-					}else{
-						if(titleFocPanel.getStyleName().contains("public")){
-							titleFocPanel.removeStyleName(folderStyle.publicIcon());
-							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
-						}
-					}
-
-				}
-			}
+   				}
+   			} 
+           }
+			
 		}
 	};
 
 	public void setEmptyData() {
-		htmlPanel = new HTMLPanel(GL0989);
+		htmlPanel = new HTMLPanel(i18n.GL0989());
 		htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 		htmlPanel.getElement().getStyle().setColor("#999999");
@@ -395,6 +435,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public void updateData(FolderDo collectionDo) {
 		this.collectionDo = collectionDo;
 		titleLbl.setHTML(collectionDo.getTitle());
+		titleLbl.getElement().setAttribute("alt", collectionDo.getTitle());
+		titleLbl.getElement().setAttribute("title", collectionDo.getTitle());
 	}
 
 	/**
@@ -487,7 +529,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		}
 		if(collectionItemDo.getItemCount()==0){
 			if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection")) {
-				htmlPanel = new HTMLPanel(GL0854);
+				htmlPanel = new HTMLPanel(i18n.GL0854());
 				htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 				htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 				htmlPanel.getElement().getStyle().setColor("#999999");
@@ -498,14 +540,14 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		}
 		/*if (collectionItemDo.getCollection().getCollectionItems().size() <= 0) {
 			if (collectionDo.getType().equals("folder")) {
-				htmlPanel = new HTMLPanel(GL0989);
+				htmlPanel = new HTMLPanel(i18n.GL0989());
 				htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 				htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 				htmlPanel.getElement().getStyle().setColor("#999999");
 				htmlPanel.getElement().setId(collectionDo.getGooruOid());
 				contentVerPanel.add(htmlPanel);
 			} else if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection") ) {
-				htmlPanel = new HTMLPanel(GL0854);
+				htmlPanel = new HTMLPanel(i18n.GL0854());
 				htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 				htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 				htmlPanel.getElement().getStyle().setColor("#999999");
@@ -543,7 +585,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	        		titleFocPanel.removeStyleName(folderStyle.draggingInto());
 	        		wrapperFocPanel.getElement().getStyle().clearBackgroundColor();
 	        		toolTipPopupPanel.clear();
-	    			toolTipPopupPanel.setWidget(new SearchDragToolTip(GL1135));
+	    			toolTipPopupPanel.setWidget(new SearchDragToolTip(i18n.GL1135()));
 	    			toolTipPopupPanel.setStyleName("");
 	    			toolTipPopupPanel.setPopupPosition(draggable.getElement().getAbsoluteLeft()+8, draggable.getElement().getAbsoluteTop()+10);
 	    			toolTipPopupPanel.show();
@@ -560,20 +602,16 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     	        		toolTipPopupPanel.hide();
     	        		
 	        			/** Changed to new API call for fetching resources in a order **/
-    	        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+    	        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 							@Override
 							public void onSuccess(FolderListDo result) {
 								setAllResources(result.getSearchResult());
 		    					setCollectionOpenedStatus(true);
 							}
-							@Override
-							public void onFailure(Throwable caught) {
-								
-							}
     	        		});
     	        		
     	        		/** Previously used API Call **/
-    	        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+    	        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
 		    				@Override
 		    				public void onSuccess(FolderListDo result) { 
 		    					setAllResources(result.getSearchResult());
@@ -590,7 +628,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	        }else if(draggable.getType().equals(DRAG_TYPE.COLLECTION)){ 
 	        	if(folderDo.getType().equalsIgnoreCase("scollection")||folderDo.getType().equalsIgnoreCase("collection")){
 	        		toolTipPopupPanel.clear();
-	    			toolTipPopupPanel.setWidget(new SearchDragToolTip(GL1136));
+	    			toolTipPopupPanel.setWidget(new SearchDragToolTip(i18n.GL1136()));
 	    			toolTipPopupPanel.setStyleName("");
 	    			toolTipPopupPanel.setPopupPosition(draggable.getElement().getAbsoluteLeft()+8, draggable.getElement().getAbsoluteTop()+10);
 	    			toolTipPopupPanel.show();
@@ -653,7 +691,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
         	}else{
         		new CustomAnimation(draggable).run(50);
         		/** Changed to new API call for fetching resources in a order **/
-        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 					@Override
 					public void onSuccess(FolderListDo result) {
 						if (result.getCount()<25){
@@ -664,19 +702,15 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	    	                    doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
 	    	                AppClientFactory.fireEvent(new CreateCollectionItemEvent(collectionDo.getGooruOid(), draggable.getDragId()));
 	    	                }else{
-	    	                	AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0302);
+	    	                	AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),i18n.GL0302());
 	    	                }
-					}
-					@Override
-					public void onFailure(Throwable caught) {
-						
 					}
         		});
         		
         		
         		
         		/** Previously used API call **/
-        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(collectionDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(collectionDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
     				@Override
     				public void onSuccess(FolderListDo result) { 
     	                if (result.getCount()<25){
@@ -687,7 +721,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     	                    doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
     	                AppClientFactory.fireEvent(new CreateCollectionItemEvent(collectionDo.getGooruOid(), draggable.getDragId()));
     	                }else{
-    	                	AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0302);
+    	                	AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061,i18n.GL0302);
     	                }
     				}
     				@Override
@@ -756,7 +790,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 //			if(folderDo.getItemCount()==null || folderDo.getItemCount()==0){
 			
 			/** Changed to new API call for fetching resources in a order **/
-    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
 					if(result.getSearchResult().size()==0){
@@ -765,14 +799,10 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 						setCollectionItems(result.getSearchResult());
 					}
 				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
-				}
     		});
 			
 			/**Previously used API call **/
-			/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+			/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null,false, new AsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					if(result.getSearchResult().size()==0){
@@ -974,7 +1004,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			}
 		} else {
 			contentVerPanel.clear();
-			htmlPanel = new HTMLPanel(GL0854);
+			htmlPanel = new HTMLPanel(i18n.GL0854());
 			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 			htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 			htmlPanel.getElement().getStyle().setColor("#999999");
@@ -1076,6 +1106,13 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		}
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
+		AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),false,new SimpleAsyncCallback<FolderTocDo>() {
+			@Override
+			public void onSuccess(FolderTocDo result) {
+				AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaDataTocAPI(result)));
+				
+			}
+		});
 	}
 	
 	public void openCollectionInShelf() {
@@ -1110,5 +1147,21 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			});
 		}
 	}
+	
+	UpdateShelfFolderNameHandler updateShelfFolderName = new UpdateShelfFolderNameHandler(){
+
+		@Override
+		public void updateShelfFolderName(String folderName,String folderId) {
+			if(collectionDo.getGooruOid().equals(folderId)){
+				collectionDo.setTitle(folderName);
+				titleLbl.setHTML(folderName);
+				titleLbl.getElement().setAttribute("alt", folderName);
+				titleLbl.getElement().setAttribute("title", folderName);
+			}
+		}
+		
+	};
+		
+	
 	
 }

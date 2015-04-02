@@ -43,9 +43,64 @@ import org.ednovo.gooru.client.gin.IsView;
  * @Reviewer:
  */
 public interface IsDeviceSupportView extends IsView {
+	/**
+	 * 
+	 * @function setDevice 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param device
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
    void setDevice(String device);
-   
+   /**
+    * 
+    * @function setSize 
+    * 
+    * @created_date : 07-Dec-2014
+    * 
+    * @description
+    * 
+    * 
+    * @parm(s) : @param size
+    * 
+    * @return : void
+    *
+    * @throws : <Mentioned if any exceptions>
+    *
+    * 
+    *
+    *
+    */
    void setSize(String size);
-   
+   /**
+    * 
+    * @function writeToConsole 
+    * 
+    * @created_date : 07-Dec-2014
+    * 
+    * @description
+    * 
+    * 
+    * @parm(s) : @param msg
+    * 
+    * @return : void
+    *
+    * @throws : <Mentioned if any exceptions>
+    *
+    * 
+    *
+    *
+    */
    void writeToConsole(String msg);
 }

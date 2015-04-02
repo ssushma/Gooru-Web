@@ -24,12 +24,21 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.ShelfCollectionResourceChildView;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateQuestionImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
@@ -37,12 +46,14 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -65,6 +76,25 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	private SimpleAsyncCallback<Void> removeImageAsyncCallback;
 	
 	private SimpleAsyncCallback<Void> updateQuestionImageAsyncCallback;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	private boolean isQuestionResource=false;
+	
+	private boolean isUserOwnResource = false;
+	
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
 	
 	public SimpleAsyncCallback<Void> getUpdateQuestionImageAsyncCallback() {
 		if (updateQuestionImageAsyncCallback == null) {
@@ -105,18 +135,21 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	}
 	ImageUploadPresenter imgUploadPresenter=null;
 	AddResourcePresenter addResourcePresenter=null;
+	AddStandardsPresenter addStandardsPresenter = null;
 	
 	CollectionDo collectionDo;
 	
 	@Inject
-	public CollectionResourceTabPresenter(EventBus eventBus, IsCollectionResourceTabView view, ImageUploadPresenter imgUpload,AddResourcePresenter addResourcePresenter) {
+	public CollectionResourceTabPresenter(EventBus eventBus, IsCollectionResourceTabView view, ImageUploadPresenter imgUpload,AddResourcePresenter addResourcePresenter,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.imgUploadPresenter = imgUpload;
 		this.addResourcePresenter = addResourcePresenter;
+		this.addStandardsPresenter = addStandardsPresenter;
 		addRegisteredHandler(UpdateQuestionImageEvent.TYPE, this);
 		addRegisteredHandler(UpdateEditResourceImageEvent.TYPE, this);
-		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, this);
+		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, this); 
+		addRegisteredHandler(ReorderCollectionResourcesEvent.TYPE,this);
 	}
 
 	@Override
@@ -158,7 +191,6 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 
 	@Override
 	public void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
-		//getResourceService().updateQuestionResource(questionItemId, collectionQuestionItemDo,thumbnailUrl, getUpdateQuestionItemResourceAsyncCallback());
 		
 	}
 	
@@ -169,7 +201,6 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 				@Override
 				public void onSuccess(CollectionItemDo result) {
 					getView().hideUpdateResourceQuestionPopup();
-					//getView().updateData(result);
 				}
 			};
 		}
@@ -198,8 +229,8 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	}
 
 	@Override
-	public void updateResourceInfo(CollectionItemDo collectionItemDo) {
-		getResourceService().updateResourceInfo(collectionItemDo, getUpdateResourceItemAsyncCallback());
+	public void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList) {
+		getResourceService().updateResourceInfo(collectionItemDo, tagList,getUpdateResourceItemAsyncCallback());
 	}
 	
 	@Override
@@ -218,7 +249,30 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 				@Override
 				public void onSuccess(CollectionItemDo result) {
 					getView().hideUpdateResourcePopup();
-					redirect(Window.Location.getHref());
+					
+					getView().updateCollectionItem(result);
+					
+					//redirect(Window.Location.getHref());
+//					Map<String,String> params = new HashMap<String,String>();
+//                	
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+//            		}
+//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+//            		}
+//              
+//                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
+//                	{
+//                		params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
+//                	}
+//            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 				}
 			};
 		}
@@ -281,10 +335,96 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hideUpdateOwnResourcePopup();
-				redirect(Window.Location.getHref());
+				//redirect(Window.Location.getHref());
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+    			//String pageLocation=placeRequest.getNameToken();
+				
+				getView().updateCollectionItem(result);
+//        		
+//            	Map<String,String> params = new HashMap<String,String>();
+//            	if(placeRequest.getParameter(O1_LEVEL, "")!= null) {
+//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
+//        		} else if(placeRequest.getParameter(O2_LEVEL, "")!=null) {
+//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
+//        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
+//        		} else if(placeRequest.getParameter(O3_LEVEL, "")!=null){
+//        			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
+//        			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
+//        			params.put(O3_LEVEL, placeRequest.getParameter(O3_LEVEL, ""));
+//        		}
+//            	if(placeRequest.getParameter(ID, "") != null)
+//            	{
+//            	params.put(ID, placeRequest.getParameter(ID, ""));
+//            	}
+//        		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 			}
 			
 		});
+	}
+
+	@Override
+	public void getBrowseStandardsInfo(final boolean val,final boolean userResource) {
+
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+						
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									isQuestionResource = val;
+									isUserOwnResource = userResource;
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addToPopupSlot(addStandardsPresenter);
+									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+					}
+						
+					}
+
+				});
+	
+		
+	}
+
+	@Override
+	public void addUpdatedBrowseStandards() {
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource, this.isUserOwnResource);
+	}
+
+	@Override
+	public void closeBrowseStandardsPopup() {
+		addStandardsPresenter.hidePopup();
+	}
+
+	@Override
+	public void reorderResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow, Integer newSequence) {
+//		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
 	}
 
 	

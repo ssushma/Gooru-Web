@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -40,6 +41,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class ResourceSharePresenter extends PresenterWidget<IsResourceShareView> implements ResourceShareUiHandlers{
 
 	private String resourceId=null;
+	
+	private ResourcePlayerPresenter resourcePlayerPresenter=null;
 	
 	@Inject
 	public ResourceSharePresenter(EventBus eventBus, IsResourceShareView view) {
@@ -85,6 +88,26 @@ public class ResourceSharePresenter extends PresenterWidget<IsResourceShareView>
 				getView().hideSendEmailPopup(toEmail);
 			}
 		});
+		
+	}
+
+
+	public ResourcePlayerPresenter getResourcePlayerPresenter() {
+		return resourcePlayerPresenter;
+	}
+
+
+	public void setResourcePlayerPresenter(ResourcePlayerPresenter resourcePlayerPresenter) {
+		this.resourcePlayerPresenter = resourcePlayerPresenter;
+	}
+
+
+	@Override
+	public void triggerShareDataLogEvent(String resourceGooruOid,
+			String itemType, String shareType, boolean confirmStatus) {
+		if(resourcePlayerPresenter!=null){
+			resourcePlayerPresenter.triggerShareDataLogEvent(resourceGooruOid, itemType,  shareType,  confirmStatus);
+		}
 		
 	}
 	

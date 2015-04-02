@@ -29,18 +29,23 @@ package org.ednovo.gooru.client.mvp.home;
 
 import java.util.Map;
 
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+
 /**
  * @author Search Team
  * 
  */
 public interface HomeUiHandlers extends BaseUiHandlers {
-	
+		
 	/**
 	 * Set home search view
 	 * @param params search results 
@@ -59,4 +64,46 @@ public interface HomeUiHandlers extends BaseUiHandlers {
 	void requestStandardsSuggestion(SearchDo<CodeDo> searchDo);
 	
 	void requestAutoSuggestKeyword(SearchDo<AutoSuggestKeywordSearchDo> searchDo);
+
+	/**
+	 * @function getContributorsSlot 
+	 * 
+	 * @created_date : Jul 28, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : Object
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	Object getContributorsSlot();
+
+	/**
+	 * 
+	 * @function generatePartnerLibraries 
+	 * 
+	 * @created_date : 24-Nov-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void generatePartnerLibraries();
 }

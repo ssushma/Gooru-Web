@@ -3,16 +3,26 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
 		field="res" />
-	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBGprofile}">
-		<g:HTMLPanel styleName="{res.css.popupInner}">
-			<g:Label styleName="{res.css.popupHeader}" ui:field="lblTitle" />
-			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Label>
-			<g:HTMLPanel ui:field="panelSignUp">
-				<g:HTMLPanel styleName="{res.css.popupContentProfilePage}">
-					<g:Label styleName="{res.css.h1} {res.css.green}" ui:field="lblHeading" />
-					<g:Label styleName="{res.css.subheaderprofile}" ui:field="lblSubHeading" />
-
-
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
+	
+	<g:HTMLPanel styleName="{res1.css.LoginpopupMain}">
+		<g:HTMLPanel styleName="{res1.css.popupInnerLeaveReg}">
+		    <g:HTMLPanel styleName="{res1.css.LoginpopupHeader}">
+		        <g:HTMLPanel styleName="row">
+		            <g:HTMLPanel styleName="col-md-9 col-xs-9">
+		            	<g:Label  ui:field="lblTitle" />    
+		            </g:HTMLPanel>
+		    		<g:HTMLPanel styleName="col-md-3 col-xs-3 {res1.css.closeContainer}">
+		    			<g:Anchor styleName="{res1.css.closeButton}" ui:field="lblCancel"></g:Anchor>    
+		    		</g:HTMLPanel>
+					
+		     	</g:HTMLPanel>
+		     </g:HTMLPanel>
+			<g:HTMLPanel ui:field="panelSignUp" styleName="{res1.css.popupContentLeaveRegistration}">
+				<g:HTMLPanel>
+					<g:Label styleName="{res1.css.SignUp_green_h1}" ui:field="lblHeading" />
+					<g:Label styleName="{res1.css.SignUp_h2}" ui:field="lblSubHeading" />
 					<g:HTMLPanel styleName="{res.css.popupcornerBg}">
 
 						<g:HTMLPanel styleName="{res.css.userWhiteBg}">
@@ -26,8 +36,6 @@
 						<g:HTMLPanel styleName="{res.css.usersRight}">
 							<gg:TextBoxWithPlaceholder styleName="{res.css.inputTextStyle}"
 								ui:field="txtFirstName" />
-
-
 							<gg:TextBoxWithPlaceholder styleName="{res.css.inputTextStyle}"
 								ui:field="txtlastName" />
 

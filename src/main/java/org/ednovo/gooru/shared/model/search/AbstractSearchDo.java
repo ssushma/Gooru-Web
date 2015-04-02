@@ -51,6 +51,10 @@ public class AbstractSearchDo<T> implements Serializable {
 
 	private String query;
 	
+	private String spellCheckQueryString;
+	
+	private String userQueryString;
+	
 	private Integer collectionItemsCount;
 
 	private String type;
@@ -61,7 +65,7 @@ public class AbstractSearchDo<T> implements Serializable {
 
 	private int searchHits;
 
-	private T searchResults;
+	private T suggestResults;
 	
 	private Map<String, String> filters;
 
@@ -74,6 +78,8 @@ public class AbstractSearchDo<T> implements Serializable {
 	public static String STANDARD_CODE = "standardCode";
 
 	private static String ALL = "*";
+	
+	private T searchResults;
 
 	public AbstractSearchDo() {
 
@@ -82,6 +88,15 @@ public class AbstractSearchDo<T> implements Serializable {
 	public T getSearchResults() {
 		return searchResults;
 	}
+	
+	public T getSuggestResults() {
+		return suggestResults;
+	}
+
+	public void setSuggestResults(T suggestResults) {
+		this.suggestResults = suggestResults;
+	}
+
 
 	public void setSearchResults(T searchResults) {
 		this.searchResults = searchResults;
@@ -239,5 +254,22 @@ public class AbstractSearchDo<T> implements Serializable {
 	public void setNotFriendly(String notFriendly) {
 		this.notFriendly = notFriendly;
 	}
+
+	public String getSpellCheckQueryString() {
+		return spellCheckQueryString;
+	}
+
+	public void setSpellCheckQueryString(String spellCheckQueryString) {
+		this.spellCheckQueryString = spellCheckQueryString;
+	}
+
+	public String getUserQueryString() {
+		return userQueryString;
+	}
+
+	public void setUserQueryString(String userQueryString) {
+		this.userQueryString = userQueryString;
+	}
+	
 
 }

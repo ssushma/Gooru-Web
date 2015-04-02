@@ -29,13 +29,19 @@ package org.ednovo.gooru.client.mvp.search.resource;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -43,20 +49,90 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultDo> implements IsResourceSearchView {
+	
+	ResourceSearchResultVc resourceSearchResultVc; 
 
 	/**
 	 * Class constructor
+	 */
+	/**
+	 * 
 	 */
 	public ResourceSearchView() {
 		super(true);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.AbstractSearchView#renderSearchResult(org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
+	 */
 	@Override
-	public IsDraggable renderSearchResult(ResourceSearchResultDo searchResultDo) {
-		
-		return new ResourceSearchResultVc(searchResultDo, dragController);
-	}
+	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
+		final ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
+		setResourceSearchResultVc(resourceSearchResultVc);
+		resourceSearchResultVc.setUpdateReviewCount(searchResultDo.getRatings().getReviewCount());
+		resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(resourceSearchResultVc.getUpdateReviewCount()>0){
+					getUiHandlers().showRatingAndReviewPopup(searchResultDo);
+				}
+			}
+		});
+		//		}
 
+
+		resourceSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(AppClientFactory.isAnonymous()){
+					LoginPopupUc loginPopupUc=new LoginPopupUc();
+				}else{
+					getUiHandlers().showAddResourceToShelfView(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
+					getUiHandlers().showAndHideDisclosurePanelOnCLick(resourceSearchResultVc.getDisclosurePanelClose());
+				}
+			}
+		});
+
+		resourceSearchResultVc.getAnalyticsButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(AppClientFactory.isAnonymous()){
+					LoginPopupUc loginPopupUc=new LoginPopupUc();
+				}else{
+					getUiHandlers().setAnalyticsTabData(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
+				}
+			}
+		});
+		
+		/**
+		 * Giving click handler for tags tab in search result widget.
+		 */
+		resourceSearchResultVc.getAddTagsTab().addClickHandler(new ClickHandler() {
+			
+			/** (non-Javadoc)
+			 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+			 */
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setTagsWidget(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,resourceSearchResultVc.isTagsPanelOpen(),resourceSearchResultVc.getAddTagsTab());
+			}
+		});
+		
+		return resourceSearchResultVc;
+	}
+	
+	
+/*	private class ShowRatingPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			
+		}
+	}*/
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.AbstractSearchView#refreshShelfCollections(java.util.List)
+	 */
 	@Override
 	protected void refreshShelfCollections(List<FolderDo> shelfCollections) {
 		
@@ -83,6 +159,33 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 				}
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.AbstractSearchView#setAddResourceContainerPresenter(org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter)
+	 */
+	@Override
+	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter) {
+//		if(resourceSearchResultVc!=null){
+//			resourceSearchResultVc.getAddResourceContainerPanel().clear();
+//			resourceSearchResultVc.getAddResourceContainerPanel().setWidget(addResourceContainerPresenter.getWidget());
+//		}
+	}
+
+
+	/**
+	 * @return the resourceSearchResultVc
+	 */
+	public ResourceSearchResultVc getResourceSearchResultVc() {
+		return resourceSearchResultVc;
+	}
+
+	/**
+	 * @param resourceSearchResultVc the resourceSearchResultVc to set
+	 */
+	public void setResourceSearchResultVc(
+			ResourceSearchResultVc resourceSearchResultVc) {
+		this.resourceSearchResultVc = resourceSearchResultVc;
 	}
 
 }

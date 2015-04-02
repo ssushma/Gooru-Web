@@ -32,34 +32,40 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
-import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEvent;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssetsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.BodyElement;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -76,8 +82,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.logical.shared.InitializeEvent;
-import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -91,19 +95,22 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
  * @author Search Team
  * 
  */
-public class ShelfCollectionResourceChildView extends
+public class ShelfCollectionResourceChildView extends 
 		ChildView<ShelfCollectionResourceChildPresenter> implements
-		IsShelfCollectionResourceView, MessageProperties {
+		IsShelfCollectionResourceView {
 
 	@UiField
 	HTML resourceNarrationHtml;
@@ -111,7 +118,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiField HTMLPanel resourceTitle1,resourceTitleContainer,minsText,secondsText,endMinsText,endSecondsText;
 
 	@UiField
-	Label  confirmDeleteLbl, fromLbl,updatePDFLabelText,startStopTimeDisplayText,editSartPageText,StartPageLbl;
+	Label  confirmDeleteLbl, fromLbl,updatePDFLabelText,startStopTimeDisplayText,editSartPageText,StartPageLbl,errorMsgLabelForPDF;
 	
 	@UiField
 	HTML resourceTitleLbl;
@@ -123,16 +130,16 @@ public class ShelfCollectionResourceChildView extends
 	VerticalPanel actionVerPanel;
 */
 	@UiField
-	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn;
+	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn/*,resourceMoveUpBtn,resourceMoveDownBtn (hotfix changes)*/;
 
 	@UiField
 	FlowPanel editFloPanel, editFieldsFloPanel,actionVerPanel,actionVerPanelForUpdateTime;
 
 	@UiField
-	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber;
+	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber/*,reorderTxtBox (hotfix changes)*/;
 
 	@UiField
-	RichTextArea narrationTxtArea;
+	TextArea narrationTxtArea;
 	
 	/*@UiField
 	TinyMCE narrationTxtArea;*/
@@ -141,12 +148,15 @@ public class ShelfCollectionResourceChildView extends
 	FlowPanel narationFloPanel,resourceFlowPanel,ResourceEditButtonContainer,videoDisplay,narrationConatainer,videoImage,editPdfFlowPanel,actionVerPanelForUpdatePDF;
 
 	@UiField
-	Label pencilEditNarationLbl,updateResourceBtn;
+	Label pencilEditNarationLbl,updateResourceBtn,addTages,endPageLbl;
 
 	@UiField
-	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl;
+	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl,errorMsgLabel, lblCharLimit;
 
 	@UiField Image imgNotFriendly;
+	
+	/* hotfix changes
+	 * @UiField HTMLPanel reorderContainer;*/
 	
 	ToolTip toolTip = null;
 	
@@ -156,8 +166,12 @@ public class ShelfCollectionResourceChildView extends
 //	IsCollectionResourceTabView isCollResourceTabView = null;
 
 	private CollectionItemDo collectionItemDo;
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	List<Integer> collectionItems;
+	
+	String selectedFolderId = "";
 	
 	Map<String, Integer> collectionListCount = new HashMap<String, Integer>();
 	
@@ -166,6 +180,16 @@ public class ShelfCollectionResourceChildView extends
 	private Integer pageNumber=1;
 	
 	private Integer pageSize=20;
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
+	
+	private boolean isReorderContainerVisible=false;
+	
+	private GlobalToolTip globalToolTip;
+	
+	String resourceLinkGlobal="";
+	
+	
 	
 	//private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]\\d):(?:[0-5]\\d)$";
 	
@@ -179,7 +203,7 @@ public class ShelfCollectionResourceChildView extends
 	int narrationDataLength;
 	@UiField
 	Label copyResource, editInfoLbl;
-
+	AddTagesPopupView popup;
 	public Label getEditInfoLbl() {
 		return editInfoLbl;
 	}
@@ -197,9 +221,9 @@ public class ShelfCollectionResourceChildView extends
 	{
 		this.ResourceEditButtonContainer=ResourceEditButtonContainer;
 	}*/
-	private static final String NO_NARRATION_ADDED =GL0956;
+	private static final String NO_NARRATION_ADDED =i18n.GL0956();
 
-	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =GL0967;
+	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =i18n.GL0967();
 
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
 
@@ -211,23 +235,26 @@ public class ShelfCollectionResourceChildView extends
 
 	private static ShelfCollectionResourceChildView previousCollectionResourceChildView;
 
-	private static final String MESSAGE_CONTENT =GL0968;
+	private static final String MESSAGE_CONTENT =i18n.GL0968();
 
-	private static final String MESSAGE_HEADER =GL0748;
+	private static final String MESSAGE_HEADER =i18n.GL0748();
 
-	private static final String PLAYER_NAME =GL0969;
+	private static final String PLAYER_NAME =i18n.GL0969();
 
-	private static final String VALID_START_STOP_TIME = GL0970;
+	private static final String VALID_START_STOP_TIME = i18n.GL0970();
 
-	private static final String YOUTUBE_START_END_TIME = GL0971;
-
-	private static final String FROM_START_TIME =GL0972;
-	private static final String FROM_STOP_TIME = GL0973;
-//	private static final String FROM_START_PAGE = "Start page";
-	private static final String VIDEO_TIME =GL0974;
-	//private static final String START_TIME=GL0972+GL_SPL_SEMICOLON;
+	private static final String YOUTUBE_START_END_TIME = i18n.GL0971();
 	
-	private static final String START_PAGE=GL0961;
+	private static final String VALID_END_PAGE = i18n.GL2025();
+	
+	private static final String FROM_START_TIME =i18n.GL0972();
+	
+	private static final String FROM_STOP_TIME = i18n.GL0973();
+//	private static final String FROM_START_PAGE = "Start page";
+	private static final String VIDEO_TIME =i18n.GL0974();
+	//private static final String START_TIME=i18n.GL0972+i18n.GL_SPL_SEMICOLON;
+	
+	private static final String START_PAGE=i18n.GL0961();
 	private static boolean isConfirmationPopup;
 	private static final String START_MINUTE="00";
 	private static final String START_SEC="00";
@@ -238,9 +265,9 @@ public class ShelfCollectionResourceChildView extends
 
 	private static boolean isEdited = false;
 
-	private static final String OOPS = GL0061;
+	private static final String OOPS = i18n.GL0061();
 
-	private static final String EDIT_CONFIRM =GL0975;
+	private static final String EDIT_CONFIRM =i18n.GL0975();
 
 	private String selectedCollectionId;
 	private boolean youtube;
@@ -249,6 +276,8 @@ public class ShelfCollectionResourceChildView extends
 	boolean setVisibility = false;
 	
 	boolean isHavingBadWords=false;
+	
+	Integer totalPages;
 	
 	private static ShelfCollectionResourceChildViewUiBinder uiBinder = GWT
 			.create(ShelfCollectionResourceChildViewUiBinder.class);
@@ -332,56 +361,139 @@ public class ShelfCollectionResourceChildView extends
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo = collectionItem;
 		
+//		reorderContainer.setVisible(false);
 		editFloPanel.setVisible(false);
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
-		startStopTimeDisplayText.setText(GL0957);
-		minsText.getElement().setInnerHTML(GL0958);
-		secondsText.getElement().setInnerHTML(GL0959);
-		endMinsText.getElement().setInnerHTML(GL0958);
-		endSecondsText.getElement().setInnerHTML(GL0959);
-		editSartPageText.setText(GL0960);
-		StartPageLbl.setText(GL0961);
-		EditBtn.setText(GL0140);
-		updateResourceBtn.setText(GL0962);
-		editInfoLbl.setText(GL0963);
-		editVideoTimeLbl.setText(GL0964);
-		editStartPageLbl.setText(GL0960);
-		copyResource.setText(GL0965);
-		confirmDeleteLbl.setText(GL0237);
-		UpdateTextMessage.setText(GL0966);
-		updateNarrationBtn.setText(GL0240);
-		cancelNarrationBtn.setText(GL0142);
-		updateVideoTimeBtn.setText(GL0240);
-		cancelVideoTimeBtn.setText(GL0142);
-		updatePdfBtn.setText(GL0240);
-		cancelpdfBtn.setText(GL0142);
+		editFloPanel.getElement().setId("fpnlEditFloPanel");
+		
+			
+		startStopTimeDisplayText.getElement().setId("lblStartStopTimeDisplayText");
+		startStopTimeDisplayText.getElement().setAttribute("alt", i18n.GL0957());
+		startStopTimeDisplayText.getElement().setAttribute("title", i18n.GL0957());
+		minsText.getElement().setInnerHTML(i18n.GL0958());
+		minsText.getElement().setId("pnlMinsText");
+		minsText.getElement().setAttribute("alt", i18n.GL0958());
+		minsText.getElement().setAttribute("title", i18n.GL0958());
+		secondsText.getElement().setInnerHTML(i18n.GL0959());
+		secondsText.getElement().setId("pnlSecondsText");
+		secondsText.getElement().setAttribute("alt", i18n.GL0959());
+		secondsText.getElement().setAttribute("title", i18n.GL0959());
+		endMinsText.getElement().setInnerHTML(i18n.GL0958());
+		endMinsText.getElement().setId("pnlEndMinsText");
+		endMinsText.getElement().setAttribute("alt", i18n.GL0958());
+		endMinsText.getElement().setAttribute("title", i18n.GL0958());
+		endSecondsText.getElement().setInnerHTML(i18n.GL0959());
+		endSecondsText.getElement().setId("pnlEndSecondsText");
+		endSecondsText.getElement().setAttribute("alt", i18n.GL0959());
+		endSecondsText.getElement().setAttribute("title", i18n.GL0959());
+		
+		editSartPageText.getElement().setId("lblEditSartPageText");
+		editSartPageText.getElement().setAttribute("alt", i18n.GL0960());
+		editSartPageText.getElement().setAttribute("title", i18n.GL0960());
+		StartPageLbl.setText(i18n.GL0961());
+		StartPageLbl.getElement().setId("lblStartPageLbl");
+		StartPageLbl.getElement().setAttribute("alt", i18n.GL0961());
+		StartPageLbl.getElement().setAttribute("title", i18n.GL0961());
+		EditBtn.setText(i18n.GL0140());
+		EditBtn.getElement().setAttribute("alt", i18n.GL0140());
+		EditBtn.getElement().setAttribute("title", i18n.GL0140());
+		updateResourceBtn.setText(i18n.GL0962());
+		updateResourceBtn.getElement().setAttribute("alt", i18n.GL0962());
+		updateResourceBtn.getElement().setAttribute("title", i18n.GL0962());
+		addTages.setText("Add Tags");
+		addTages.getElement().setAttribute("alt", "Add Tags");
+		addTages.getElement().setAttribute("title", "Add Tags");
+		editInfoLbl.setText(i18n.GL0963());
+		editInfoLbl.getElement().setAttribute("alt", i18n.GL0963());
+		editInfoLbl.getElement().setAttribute("title", i18n.GL0963());
+		editVideoTimeLbl.setText(i18n.GL0964());
+		editVideoTimeLbl.getElement().setAttribute("alt", i18n.GL0964());
+		editVideoTimeLbl.getElement().setAttribute("title", i18n.GL0964());
+		editStartPageLbl.setText(i18n.GL0960());
+		editStartPageLbl.getElement().setAttribute("alt", i18n.GL0960());
+		editStartPageLbl.getElement().setAttribute("title", i18n.GL0960());
+		copyResource.setText(i18n.GL0965());
+		copyResource.getElement().setAttribute("alt", i18n.GL0965());
+		copyResource.getElement().setAttribute("title", i18n.GL0965());
+		confirmDeleteLbl.setText(i18n.GL0237());
+		confirmDeleteLbl.getElement().setAttribute("alt", i18n.GL0237());
+		confirmDeleteLbl.getElement().setAttribute("title", i18n.GL0237());
+		UpdateTextMessage.setText(i18n.GL0966());
+		UpdateTextMessage.getElement().setId("lblUpdateTextMessage");
+		UpdateTextMessage.getElement().setAttribute("alt", i18n.GL0966());
+		UpdateTextMessage.getElement().setAttribute("title", i18n.GL0966());
+		updateNarrationBtn.setText(i18n.GL0240());
+		updateNarrationBtn.getElement().setAttribute("alt", i18n.GL0240());
+		updateNarrationBtn.getElement().setAttribute("title", i18n.GL0240());
+		cancelNarrationBtn.setText(i18n.GL0142());
+		cancelNarrationBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelNarrationBtn.getElement().setAttribute("title", i18n.GL0142());
+		updateVideoTimeBtn.setText(i18n.GL0240());
+		updateVideoTimeBtn.getElement().setAttribute("alt", i18n.GL0240());
+		updateVideoTimeBtn.getElement().setAttribute("title", i18n.GL0240());
+		cancelVideoTimeBtn.setText(i18n.GL0142());
+		cancelVideoTimeBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelVideoTimeBtn.getElement().setAttribute("title", i18n.GL0142());
+		updatePdfBtn.setText(i18n.GL0240());
+		updatePdfBtn.getElement().setAttribute("alt", i18n.GL0240());
+		updatePdfBtn.getElement().setAttribute("title", i18n.GL0240());
+		cancelpdfBtn.setText(i18n.GL0142());
+		cancelpdfBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelpdfBtn.getElement().setAttribute("title", i18n.GL0142());
+		resourceFlowPanel.getElement().setId("collectionItem-"+collectionItem.getResource().getGooruOid());
+		narrationConatainer.getElement().setId("fpnlNarrationConatainer");
+		/**
+		 * Hotfix changes.
+		 */
+		/*reorderContainer.getElement().setId("reorderContainer");
+		resourceMoveUpBtn.getElement().setId("resourceMoveUpBtn");
+		resourceMoveDownBtn.getElement().setId("resourceMoveDownBtn");
+		reorderTxtBox.getElement().setId("reorderTxtBox");*/
 		setData(collectionItem);
 		
 		onResourceNarrationOut();
 		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
-		setPresenter(new ShelfCollectionResourceChildPresenter(this));
+		setPresenter(new ShelfCollectionResourceChildPresenter(this));  
 		//For 5.9 
-		narrationAlertMessageLbl.setText(GL0143);
+		narrationAlertMessageLbl.setText(i18n.GL0143());
+		narrationAlertMessageLbl.getElement().setId("lblNarrationAlertMessageLbl");
+		narrationAlertMessageLbl.getElement().setAttribute("alt", i18n.GL0143());
+		narrationAlertMessageLbl.getElement().setAttribute("title", i18n.GL0143());
 		actionVerPanel.setVisible(false);
+		actionVerPanel.getElement().setId("fpnlActionVerPanel");
+		actionVerPanelForUpdateTime.getElement().setId("fpnlActionVerPanelForUpdateTime");
 		actionVerPanelForUpdateTime.setVisible(false);
 		UpdateTextMessage.setVisible(false);
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.getElement().setId("fpnlResourceEditButtonContainer");
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
 		EditBtn.setVisible(false);
+		/**
+		 * hotfixchanges
+		 */
+//		reorderContainer.setVisible(false);
+		editPdfFlowPanel.getElement().setId("fpnlEditPdfFlowPanel");
 		editPdfFlowPanel.setVisible(false);
+		actionVerPanelForUpdatePDF.getElement().setId("fpnlActionVerPanelForUpdatePDF");
 		actionVerPanelForUpdatePDF.setVisible(false);
+		fromTxt.getElement().setId("txtFromTxt");
 		fromTxt.setFocus(true);
 		toTxt.setFocus(true);
+		toTxt.getElement().setId("txtToTxt");
 		EndTimeTxt1.setFocus(true);
 		EndTimeTxt2.setFocus(true);
+		startpdfPageNumber.getElement().setId("txtStartpdfPageNumber");
 		startpdfPageNumber.setFocus(true);
 		fromTxt.getElement().setAttribute("maxlength", "4");
 		toTxt.getElement().setAttribute("maxlength", "4");
+		EndTimeTxt1.getElement().setId("txtEndTimeTxt1");
 		EndTimeTxt1.getElement().setAttribute("maxlength", "4");
+		EndTimeTxt2.getElement().setId("txtEndTimeTxt2");
 		EndTimeTxt2.getElement().setAttribute("maxlength", "4");
 		startpdfPageNumber.getElement().setAttribute("maxlength", "4");
 		EditBtn.getElement().setId("btnEdit");
 		updateResourceBtn.getElement().setId("lblUpdateResoure");
+		addTages.getElement().setId("lblAddTages");
 		copyResource.getElement().setId("lblCopyResource");
 		editInfoLbl.getElement().setId("lblEditInfo");
 		editStartPageLbl.getElement().setId("lblEditStartPage");
@@ -400,37 +512,67 @@ public class ShelfCollectionResourceChildView extends
 		startpdfPageNumber.addKeyPressHandler(new NumbersOnly());
 		// resourceNarrationHtml.addMouseOverHandler(new showNarationPencil());
 		// resourceNarrationHtml.addMouseOutHandler(new hideNarationPencil());
-		narrationTxtArea.getElement().setAttribute("maxlength", "600");
+		resourceNarrationHtml.getElement().setId("htmlResourceNarrationHtml");
+		narrationTxtArea.getElement().setAttribute("maxlength", "500");
+		narrationTxtArea.getElement().setId("tatNarrationTxtArea");
+		StringUtil.setAttributes(narrationTxtArea, true);
 	//	narrationTxtArea.addKeyUpHandler(new narationValidation());
 		fromTxt.addKeyUpHandler(new fromTxtKeyUpHandler());
 		toTxt.addKeyUpHandler(new toTxtKeyUpHandler());
 		editFieldsFloPanel.setVisible(false);
+		resourceImageUc.getElement().setId("ResourceImageUc");
+		resourceTitle1.getElement().setId("pnlResourceTitle1");
+		resourceTitleContainer.getElement().setId("pnlResourceTitleContainer");
+		resourceTitleLbl.getElement().setId("htmlResourceTitleLbl");
+		pencilEditNarationLbl.getElement().setId("lblPencilEditNarationLbl");
+		narationFloPanel.getElement().setId("fpnlNarationFloPanel");
+		narrationAlertMessageLbl.getElement().setAttribute("alt", i18n.GL0143());
+		videoDisplay.getElement().setId("fpnlVideoDisplay");
+		videoImage.getElement().setId("fpnlVideoImage");
+		videoTimeField.getElement().setId("lblVideoTimeField");
+		fromLblDisplayText.getElement().setId("lblFromLblDisplayText");
+		editFieldsFloPanel.getElement().setId("fpnlEditFieldsFloPanel");
+		fromLbl.getElement().setId("lblFromLbl");
+		ToLbl.getElement().setId("lblToLbl");
+		updatePDFLabelText.getElement().setId("lblUpdatePDFLabelText");
+		//endPageLbl.setVisible(false);
+		endPageLbl.setText(i18n.GL2026());
+		endPageLbl.getElement().setId("endPageLbl");
+		
+		
+		
+		
 		// To check whether resource is public and is created by logged in user
 		String resourceShare = collectionItemDo.getResource().getSharing();
-		String resourceCategory = collectionItemDo.getResource().getCategory();
-
+	
+		String resourceCategory = collectionItemDo.getResource().getResourceFormat() !=null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
+		
+	
 		if (resourceShare.equalsIgnoreCase("public")
 				&& !resourceCategory.equalsIgnoreCase("question")) {
 			editInfoLbl.setVisible(false);
 		} else if (resourceShare.equalsIgnoreCase("public")
 				&& resourceCategory.equalsIgnoreCase("question")
 				&& checkLoggedInUser()) {
+			
 			editInfoLbl.setVisible(true);
 		} else if (resourceShare.equalsIgnoreCase("private")
 				&& !resourceCategory.equalsIgnoreCase("question")
 				&& checkLoggedInUser()) {
+			
 			editInfoLbl.setVisible(true);
 		} else if (!checkLoggedInUser()) {
 			editInfoLbl.setVisible(false);
 		}
-		narrationTxtArea.addInitializeHandler(new InitializeHandler() {
+		
+		/*narrationTxtArea.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
 				    Document document = IFrameElement.as(narrationTxtArea.getElement()).getContentDocument();
 	                BodyElement body = document.getBody();
 	                body.setAttribute("style", "font-family: Arial;font-size:13px;color:#515151;line-height:1.2;margin:0px;");
 			}
-		});
+		});*/
 		
 /*		narrationTxtArea.addBlurHandler(new BlurHandler() {
 			
@@ -455,14 +597,14 @@ public class ShelfCollectionResourceChildView extends
 			public void onKeyPress(KeyPressEvent event) {
 				narrationTxtArea.getElement().getStyle().clearBackgroundColor();
 				narrationTxtArea.getElement().getStyle().setBorderColor("#ccc");
-				if(narrationTxtArea.getText().toString().trim().length() >= 600){ 
+				if(narrationTxtArea.getText().toString().trim().length() >= 500){ 
 					narrationAlertMessageLbl
                     .removeStyleName("titleAlertMessageDeActive");
 					narrationAlertMessageLbl
                     .addStyleName("titleAlertMessageActive");
 					updateNarrationBtn.setEnabled(false);
 	                updateNarrationBtn.getElement().addClassName("disabled");
-					event.preventDefault();
+					//event.preventDefault();
 				}
 				else
 				{ 
@@ -481,7 +623,7 @@ public class ShelfCollectionResourceChildView extends
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				narrationAlertMessageLbl.setVisible(false);
-				if(narrationTxtArea.getText().toString().trim().length() >= 600){ 
+				if(narrationTxtArea.getText().toString().trim().length() >= 500){ 
 					narrationAlertMessageLbl
                     .removeStyleName("titleAlertMessageDeActive");
 					narrationAlertMessageLbl
@@ -489,7 +631,7 @@ public class ShelfCollectionResourceChildView extends
 					updateNarrationBtn.setEnabled(false);
 	                updateNarrationBtn.getElement().addClassName("disabled");
 					if(event.getNativeEvent().getCtrlKey() && event.getNativeEvent().getKeyCode()==86){
-						event.getNativeEvent().preventDefault();
+						//event.getNativeEvent().preventDefault();
 						((RichTextArea)event.getSource()).setFocus(false);
 						narrationAlertMessageLbl.setVisible(true);
 						return;
@@ -510,7 +652,8 @@ public class ShelfCollectionResourceChildView extends
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -531,18 +674,35 @@ public class ShelfCollectionResourceChildView extends
 				  }
 			}
 		});
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		
+		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
+		lblCharLimit.setText(value);
+		lblCharLimit.setVisible(false);
+		
+		AppClientFactory.getEventBus().addHandler(PublishButtonHideEvent.TYPE, publishButtonHideEventHandler); 
 	}
+		PublishButtonHideEventHandler publishButtonHideEventHandler = new PublishButtonHideEventHandler(){
 
+		@Override
+		public void hideEditButton() {
+					
+			collectionItemDo.getResource().setSharing("public");
+			editInfoLbl.setVisible(false);
+		}
+		
+	};
 	public void setUpdatedData(CollectionItemDo collectionItemDo) {
 		
 	}
 	@UiHandler("EditBtn")
 	public void onClickEdit(ClickEvent clickEvent)
 	{
-		if (ResourceEditButtonContainer.getElement().getStyle()
-				.getVisibility().equalsIgnoreCase("VISIBLE")) {
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.HIDDEN);
+		if (/*ResourceEditButtonContainer.getElement().getStyle().getVisibility().equalsIgnoreCase("VISIBLE")*/ResourceEditButtonContainer.isVisible()) {
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+			
 		} else {
 			narrationAlertMessageLbl
 				.addStyleName("titleAlertMessageDeActive");
@@ -552,11 +712,9 @@ public class ShelfCollectionResourceChildView extends
 			narrationTxtArea.getElement().getStyle().clearBackgroundColor();
 			narrationTxtArea.getElement().getStyle().setBorderColor("#ccc");
 			narrationAlertMessageLbl.setVisible(false);
-			
-
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.VISIBLE);
-		}	
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			ResourceEditButtonContainer.setVisible(true);
+			}	
 	}
 	private class toTxtKeyUpHandler implements KeyUpHandler {
 
@@ -608,7 +766,7 @@ public class ShelfCollectionResourceChildView extends
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			narrationDataLength=narrationTxtArea.getText().toString().trim().length();
-			 if (trim(narrationTxtArea.getHTML()).length() > 0 && trim(narrationTxtArea.getHTML()).length() <= 600){
+			 if (trim(narrationTxtArea.getText()).length() > 0 && trim(narrationTxtArea.getText()).length() <= 500){
 				
 				updateNarrationBtn.setEnabled(true);
                 updateNarrationBtn.getElement().removeClassName("disabled");
@@ -650,6 +808,19 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOver(MouseOverEvent event) {
 			if ((actionVerPanel.isVisible()==false) && (actionVerPanelForUpdateTime.isVisible()==false) && (actionVerPanelForUpdatePDF.isVisible()==false)) {
 				EditBtn.setVisible(true);
+				
+				/**
+				 * Hot fix changes
+				 */
+				/*if(isReorderContainerVisible){
+					reorderContainer.setVisible(true);
+				}else{
+					reorderContainer.setVisible(false);
+				}*/
+				
+				/**
+				 * Following code is not changed for hot fix
+				 */
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				//actionVerPanel.setVisible(true);
 				// onResourceNarrationHover();
@@ -668,7 +839,9 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOut(MouseOutEvent event) {
 			//if (updateResourceBtn.getText().equalsIgnoreCase("Edit Narration")) {
 				EditBtn.setVisible(false);
-				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				/*s*/
+				ResourceEditButtonContainer.setVisible(false);
+//				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 				//actionVerPanel.setVisible(false);
 				//actionVerPanelForUpdateTime.setVisible(false);
 				// onResourceNarrationOut();
@@ -684,26 +857,56 @@ public class ShelfCollectionResourceChildView extends
 	 *            instance of {@link CollectionItemDo}
 	 */
 	public void setData(CollectionItemDo collectionItem) {
-		Window.enableScrolling(true);
+		
+		errorMsgLabel.setText("");
+		videoDisplay.setVisible(true);
+		narrationConatainer.setVisible(true);
+		editFieldsFloPanel.setVisible(false);
+		actionVerPanelForUpdateTime.setVisible(false);
+		editFloPanel.setVisible(false);
+		isEdited = false;
+		disableAllEditMode();
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+		
 		String tumbnailUrl;
 		//resourceTitleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 70));
 		String resourceTitle = collectionItem.getResource().getTitle()==null?"":collectionItem.getResource().getTitle();
-		resourceTitleLbl.setHTML(resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
+		String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(resourceTitle);
+		resourceTitleLbl.setHTML(removeHtmlTags(titlelbl1));
+		//resourceTitleLbl.setHTML(resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
+		
+		resourceTitleLbl.getElement().setAttribute("alt", resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
+		resourceTitleLbl.getElement().setAttribute("title", resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
 		resourceTitleLbl.getElement().getStyle().setWidth(63, Unit.PCT);
 		setResourcePlayLink();
 		String resourceType = collectionItemDo.getResource().getResourceType().getName();
 		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
-
+	
 		mediaType = collectionItem.getResource().getMediaType();
-		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
-		imgNotFriendly.setVisible(setVisibility);
+		
+		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
+		}
+		
 		resourceTitle=resourceTitleLbl.getText();
 		if (resourceTitleLbl.getText().length()>=70){
 			resourceTitleLbl.getElement().getStyle().setWidth(80, Unit.PCT);
 		}else{
 			resourceTitleLbl.getElement().getStyle().clearWidth();	
 		}
-		
 		if (collectionItem.getResource().getAssets() != null
 				&& collectionItem.getResource().getAssets().size() > 0) {
 			for (AssetsDo asstesDo : collectionItem.getResource().getAssets()) {
@@ -711,8 +914,10 @@ public class ShelfCollectionResourceChildView extends
 				tumbnailUrl = collectionItem.getCollection().getAssetURI()
 						+ collectionItem.getResource().getFolder()
 						+ asstesDo.getAsset().getName();
+				
 //				resourceImageUc.renderSearch(collectionItem.getResource().getCategory(), tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),PLAYER_NAME,resourceTitle, youtube,"");
-				resourceImageUc.renderSearch(collectionItem.getResource().getCategory(), tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
+				String resourceFormat = collectionItem.getResource().getResourceFormat() !=null ? collectionItem.getResource().getResourceFormat().getDisplayName() : "text";
+				resourceImageUc.renderSearch(resourceFormat, tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
 			}
 		} else {
 				try {
@@ -732,13 +937,16 @@ public class ShelfCollectionResourceChildView extends
 					.getThumbnails().getUrl(), collectionItem.getResource()
 					.getUrl(), collectionItem.getCollectionItemId(),
 					PLAYER_NAME,resourceTitle, youtube,"");*/
-				resourceImageUc.renderSearch(collectionItem.getResource().getCategory(), collectionItem.getResource().getThumbnails().getUrl(), collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
+				String resourceFormat =  collectionItem.getResource().getResourceFormat() != null ? collectionItem.getResource().getResourceFormat().getDisplayName() : "text";
+				resourceImageUc.renderSearch(resourceFormat, collectionItem.getResource().getThumbnails().getUrl(), collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
 		}
 
 		if (collectionItem.getNarration() != null && !collectionItem.getNarration().trim().isEmpty()){
 			narrationData=collectionItem.getNarration();
 			narrationData=narrationData.replaceAll("rgb", "");
 			resourceNarrationHtml.setHTML(narrationData);
+			resourceNarrationHtml.getElement().setAttribute("alt", narrationData);
+			resourceNarrationHtml.getElement().setAttribute("title", narrationData);
 			/*if(collectionItem.getNarration().length() > 80) {
 				narrationData=collectionItem.getNarration();
 			String narration = collectionItem.getNarration().length() > 80 ? collectionItem
@@ -753,8 +961,11 @@ public class ShelfCollectionResourceChildView extends
 				}*/
 		} else {
 			resourceNarrationHtml.setHTML(NO_NARRATION_ADDED);
+			resourceNarrationHtml.getElement().setAttribute("alt", NO_NARRATION_ADDED);
+			resourceNarrationHtml.getElement().setAttribute("title", NO_NARRATION_ADDED);
 		}
-		String category = collectionItemDo.getResource().getCategory();
+		String category = collectionItemDo.getResource().getResourceFormat() != null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
+	
 		if(!youtube){
 			videoImage.removeStyleName(CollectionEditResourceCBundle.INSTANCE.css().videoImageContainer());
 			editVideoTimeLbl.setVisible(false);
@@ -763,7 +974,12 @@ public class ShelfCollectionResourceChildView extends
 		if (youtube) {
 			editStartPageLbl.setVisible(false);
 			editVideoTimeLbl.setVisible(true);
+		
+		
+			
 			videoTimeField.setText(VIDEO_TIME);
+			videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
+			videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
 			videoDisplay.setVisible(true);
 			videoImage.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().videoImageContainer());
 			//if(collectionItemDo.getStart()!=null && collectionItemDo.getStop()!=null && collectionItemDo.getStart()!="00:00:00" && collectionItemDo.getStop()!="00:00:00"){
@@ -775,7 +991,38 @@ public class ShelfCollectionResourceChildView extends
 
 			startTime = startTime.replaceAll("\\.", ":");
 			stopTime = stopTime.replaceAll("\\.", ":");
-			
+			String youTubeVideoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo
+					.getResource().getUrl());
+			AppClientFactory.getInjector().getResourceService().getYoutubeDuration(youTubeVideoId,new SimpleAsyncCallback<String>() {
+						@Override
+						public void onSuccess(String youtubeInfo) {
+							if (youtubeInfo != null) {
+								totalVideoLength = Integer.parseInt(youtubeInfo);
+								
+								String tolTimeInmin = "";
+								String totalTimeSec = "";
+
+								int tolTimeInminutes = totalVideoLength / 60;
+								if (tolTimeInminutes < 10) {
+									tolTimeInmin = "0"
+											+ tolTimeInminutes;
+								} else {
+									tolTimeInmin = tolTimeInminutes
+											+ "";
+								}
+
+								int totalTimeInseconds = totalVideoLength % 60;
+								if (totalTimeInseconds < 10) {
+									totalTimeSec = "0"
+											+ totalTimeInseconds;
+								} else {
+									totalTimeSec = totalTimeInseconds
+											+ "";
+								}
+								startStopTimeDisplayText.setText(i18n.GL0957()+tolTimeInmin+":"+totalTimeSec);
+							}
+						}
+			});
 			if (!"00:00:00".equalsIgnoreCase(stopTime) ||!"00:00:00".equalsIgnoreCase(startTime)) {
 					String[] VideoStartTime=startTime.split(":");
 					String[] VideoEndTime=stopTime.split(":");
@@ -788,6 +1035,7 @@ public class ShelfCollectionResourceChildView extends
 						startSec="00";
 					}
 					String endMm=Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1])+"";
+					
 					if (VideoEndTime.length>2){
 						endSec=Integer.parseInt(VideoEndTime[2])+"";
 					}else{
@@ -811,12 +1059,26 @@ public class ShelfCollectionResourceChildView extends
 						endSec="0"+endSec;
 					}
 					fromTxt.setText(startMm);
+					fromTxt.getElement().setAttribute("alt", startMm);
+					fromTxt.getElement().setAttribute("title", startMm);
 					toTxt.setText(startSec);
+					toTxt.getElement().setAttribute("alt", startSec);
+					toTxt.getElement().setAttribute("title", startSec);
 					EndTimeTxt1.setText(endMm);
+					EndTimeTxt1.getElement().setAttribute("alt", endMm);
+					EndTimeTxt1.getElement().setAttribute("title", endMm);
 					EndTimeTxt2.setText(endSec);
-					fromLblDisplayText.setText(startMm+" "+GL0958+" "+startSec +" "+GL0959+" "+GL_GRR_Hyphen+" "+endMm+" "+GL0958+" "+endSec +" "+GL0959+" ");
+					EndTimeTxt2.getElement().setAttribute("alt", endSec);
+					EndTimeTxt2.getElement().setAttribute("title", endSec);
+					fromLblDisplayText.setText(startMm+" "+i18n.GL0958()+" "+startSec +" "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "+endMm+" "+i18n.GL0958()+" "+endSec +" "+i18n.GL0959()+" ");
+					fromLblDisplayText.getElement().setAttribute("alt", startMm+" "+i18n.GL0958()+" "+startSec +" "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "+endMm+" "+i18n.GL0958()+" "+endSec +" "+i18n.GL0959()+" ");
+					fromLblDisplayText.getElement().setAttribute("title", startMm+" "+i18n.GL0958()+" "+startSec +" "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "+endMm+" "+i18n.GL0958()+" "+endSec +" "+i18n.GL0959()+" ");
 					fromLbl.setText(FROM_START_TIME);
+					fromLbl.getElement().setAttribute("alt", FROM_START_TIME);
+					fromLbl.getElement().setAttribute("title", FROM_START_TIME);
 					ToLbl.setText(FROM_STOP_TIME);
+					ToLbl.getElement().setAttribute("alt", FROM_STOP_TIME);
+					ToLbl.getElement().setAttribute("title", FROM_STOP_TIME);
 			}
 					
 			else
@@ -831,6 +1093,7 @@ public class ShelfCollectionResourceChildView extends
 										public void onSuccess(String youtubeInfo) {
 											if (youtubeInfo != null) {
 												totalVideoLength = Integer.parseInt(youtubeInfo);
+												
 												String tolTimeInmin = "";
 												String totalTimeSec = "";
 
@@ -853,39 +1116,86 @@ public class ShelfCollectionResourceChildView extends
 												}
 												fromLblDisplayText
 														.setText(START_MINUTE
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ START_SEC
-																+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+																+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 																+ tolTimeInmin
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ totalTimeSec
-																+ " "+GL0959+" ");
+																+ " "+i18n.GL0959()+" ");
+												fromLblDisplayText.getElement().setAttribute("alt", START_MINUTE
+														+ " "+i18n.GL0958()+" "
+														+ START_SEC
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
+														+ tolTimeInmin
+														+ " "+i18n.GL0958()+" "
+														+ totalTimeSec
+														+ " "+i18n.GL0959()+" ");
+												fromLblDisplayText.getElement().setAttribute("title", START_MINUTE
+														+ " "+i18n.GL0958()+" "
+														+ START_SEC
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
+														+ tolTimeInmin
+														+ " "+i18n.GL0958()+" "
+														+ totalTimeSec
+														+ " "+i18n.GL0959()+" ");
 												EndTimeTxt1
 														.setText(tolTimeInmin);
+												EndTimeTxt1.getElement().setAttribute("alt", tolTimeInmin);
+												EndTimeTxt1.getElement().setAttribute("title", tolTimeInmin);
 												EndTimeTxt2
 														.setText(totalTimeSec);
+												EndTimeTxt2.getElement().setAttribute("alt", totalTimeSec);
+												EndTimeTxt2.getElement().setAttribute("title", totalTimeSec);
 											} else {
 												fromLblDisplayText
 														.setText(START_MINUTE
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ START_SEC
-																+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+																+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 																+ START_MINUTE
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ END_MINUTE
-																+ " "+GL0959+" ");
+																+ " "+i18n.GL0959()+" ");
+												fromLblDisplayText.getElement().setAttribute("alt", START_MINUTE
+														+ " "+i18n.GL0958()+" "
+														+ START_SEC
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
+														+ START_MINUTE
+														+ " "+i18n.GL0958()+" "
+														+ END_MINUTE
+														+ " "+i18n.GL0959()+" ");
+												fromLblDisplayText.getElement().setAttribute("title", START_MINUTE
+														+ " "+i18n.GL0958()+" "
+														+ START_SEC
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
+														+ START_MINUTE
+														+ " "+i18n.GL0958()+" "
+														+ END_MINUTE
+														+ " "+i18n.GL0959()+" ");
 												EndTimeTxt1.setText(END_MINUTE);
+												EndTimeTxt1.getElement().setAttribute("alt", END_MINUTE);
+												EndTimeTxt1.getElement().setAttribute("title", END_MINUTE);
 												EndTimeTxt2.setText(END_SEC);
-
+												EndTimeTxt2.getElement().setAttribute("alt", END_SEC);
+												EndTimeTxt2.getElement().setAttribute("title", END_SEC);
 											}
 										}
 
 									});
 				}
 				fromLbl.setText(FROM_START_TIME);
+				fromLbl.getElement().setAttribute("alt", FROM_START_TIME);
+				fromLbl.getElement().setAttribute("title", FROM_START_TIME);
 				ToLbl.setText(FROM_STOP_TIME);
+				ToLbl.getElement().setAttribute("alt", FROM_STOP_TIME);
+				ToLbl.getElement().setAttribute("title", FROM_STOP_TIME);
 				fromTxt.setText(START_STOP_MINUTE);
+				fromTxt.getElement().setAttribute("alt", START_STOP_MINUTE);
+				fromTxt.getElement().setAttribute("title", START_STOP_MINUTE);
 				toTxt.setText(START_STOP_SEC);
+				toTxt.getElement().setAttribute("alt", START_STOP_SEC);
+				toTxt.getElement().setAttribute("title", START_STOP_SEC);
 
 			}
 		} else if (category!=null){ 
@@ -913,18 +1223,53 @@ public class ShelfCollectionResourceChildView extends
 			videoImage.removeStyleName(CollectionEditResourceCBundle.INSTANCE.css().videoImageContainer());
 			videoImage.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().pdfImageContainer());
 			String startPageNumber=collectionItemDo.getStart();
+			totalPages = collectionItemDo.getTotalPages();
+			
+			if(totalPages == null)
+			{
+				fromLblDisplayText.setVisible(false);
+				editStartPageLbl.setVisible(false);
+				videoImage.setVisible(false);
+			}
+			else
+			{
+				fromLblDisplayText.setVisible(true);
+				editSartPageText.setText(i18n.GL2039() + totalPages);
+				editStartPageLbl.setVisible(true);	
+				videoImage.setVisible(true);
+			}
+			
+			String endPageNumber=collectionItemDo.getStop();
+
 		//	String endPageNumber=collectionItemDo.getStop();
 			
 			//updatePDFLabelText.setText("0f "+endPageNumber+" pages");
 			if(startPageNumber==null){
 			startpdfPageNumber.setText("1");
+			startpdfPageNumber.getElement().setAttribute("alt", "1");
+			startpdfPageNumber.getElement().setAttribute("title", "1");
 			//videoImage.removeStyleName(CollectionEditResourceCBundle.INSTANCE.css().pdfImageContainer());
 			fromLblDisplayText.setText(START_PAGE+DEFAULT_START_PAGE);
+			fromLblDisplayText.getElement().setAttribute("alt", START_PAGE+DEFAULT_START_PAGE);
+			fromLblDisplayText.getElement().setAttribute("title", START_PAGE+DEFAULT_START_PAGE);
 			//fromLblDisplayText.setText(START_PAGE+DEFAULT_START_PAGE+" of "+DEFAULT_END_PAGE+" pages");
 			}
 			else{
-				fromLblDisplayText.setText(START_PAGE+startPageNumber);
+				if(endPageNumber.equalsIgnoreCase("")){
+					fromLblDisplayText.setText(START_PAGE+startPageNumber+" - "+ i18n.GL2026()+totalPages);
+					stoppdfPageNumber.setText(totalPages+"");
+				}
+				else{
+					fromLblDisplayText.setText(START_PAGE+startPageNumber+" - "+i18n.GL2026()+endPageNumber);	
+					stoppdfPageNumber.setText(endPageNumber+"");
+				}
+				fromLblDisplayText.getElement().setAttribute("alt", START_PAGE+startPageNumber);
+				fromLblDisplayText.getElement().setAttribute("title", START_PAGE+startPageNumber);
+				
 				startpdfPageNumber.setText(startPageNumber);
+			
+				startpdfPageNumber.getElement().setAttribute("alt", startPageNumber);
+				startpdfPageNumber.getElement().setAttribute("title", startPageNumber);
 			//fromLblDisplayText.setText(START_PAGE+startPageNumber+" of "+endPageNumber+" pages");
 			}
 		}
@@ -939,6 +1284,7 @@ public class ShelfCollectionResourceChildView extends
 				editVideoTimeLbl.setVisible(false);
 			}
 		}
+//		Window.enableScrolling(false);
 	}
 		
 	/**
@@ -957,8 +1303,43 @@ public class ShelfCollectionResourceChildView extends
 	}*/
 	
 	public void setResourcePlayLink(){
-		Anchor resourceAnchor=new Anchor();
-		resourceAnchor.setHref(getResourceLink());
+		final Anchor resourceAnchor=new Anchor();
+		String resourceLinkVal = getResourceLink();
+
+		final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);	
+		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o3");
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
+		}	
+		if(!selectedFolderId.isEmpty())
+		{
+		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,false, new SimpleAsyncCallback<FolderTocDo>() {
+			@Override
+			public void onSuccess(FolderTocDo folderListDo) {
+			
+				for(int i=0;i<folderListDo.getCollectionItems().size();i++)
+				{
+					if(collectionId.equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
+					{
+						if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+							resourceAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration"+"&folderId="+selectedFolderId+"&folderItemId="+folderListDo.getCollectionItems().get(i).getCollectionItemId());
+						}else{
+							resourceAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&folderId="+selectedFolderId+"&folderItemId="+folderListDo.getCollectionItems().get(i).getCollectionItemId());
+						}
+						break;
+					}
+				}
+			
+			}
+		});
+		}
+		else
+		{
+			resourceAnchor.setHref(resourceLinkVal);
+		}
 		resourceAnchor.setStyleName("");
 		resourceAnchor.getElement().appendChild(resourceTitleLbl.getElement());
 		resourceTitleContainer.add(resourceAnchor);
@@ -972,13 +1353,16 @@ public class ShelfCollectionResourceChildView extends
 	
 	public String getResourceLink(){
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
-			return resourceLink;
-		}else{
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
-			return resourceLink;
-		}
+			if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+				String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
+				return resourceLink;
+			}else{
+				String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
+				return resourceLink;
+			}
+		
+		
+		
 	}
 
 	/**
@@ -990,12 +1374,61 @@ public class ShelfCollectionResourceChildView extends
 	public void onEditClick(ClickEvent clickEvent) {
 		MixpanelUtil.Organize_Click_Edit_Narration();
 		EditBtn.setVisible(false);
-		ResourceEditButtonContainer.getElement().getStyle()
-		.setVisibility(Visibility.HIDDEN);
+		/*reorderContainer.setVisible(false);*/
+		ResourceEditButtonContainer.setVisible(false);
+		/*ResourceEditButtonContainer.getElement().getStyle()
+		.setVisibility(Visibility.HIDDEN);*/
 		actionVerPanel.setVisible(true);
 			editAndUpdateResource();
 		
-		
+		lblCharLimit.setVisible(true);
+		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
+	}
+	@UiHandler("addTages")
+	public void onAddTagesClick(ClickEvent clickEvent) {
+		if(AppClientFactory.isAnonymous()) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			Window.enableScrolling(false);
+			popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()){
+				
+				@Override
+				public void closePoup(boolean isCancelclicked) {
+			        this.hide();
+			        if(!isCancelclicked){
+			        SuccessPopupViewVc success = new SuccessPopupViewVc() {
+
+						@Override
+						public void onClickPositiveButton(ClickEvent event) {
+							this.hide();
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								Window.enableScrolling(false);
+							}else{
+								Window.enableScrolling(true);
+							}
+						}
+						
+					};
+				/*	success.setHeight("253px");
+					success.setWidth("450px");*/
+					success.setPopupTitle(i18n.GL1795());
+					success.setDescText(i18n.GL1796());
+					success.enableTaggingImage();
+					success.setPositiveButtonText(i18n.GL0190());
+					success.center();
+					success.show();
+			        }else{
+			        	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			    			Window.enableScrolling(false);
+			    		}else{
+			    			Window.enableScrolling(true);
+			    		}
+			        }
+				}
+			};
+			popup.show();
+			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
 	}
 	/*
 	 * This clickEvent is used to edit pdf
@@ -1003,17 +1436,22 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("editStartPageLbl")
 	public void oneditStartPageLblClick(ClickEvent clickEvent) {
 		MixpanelUtil.Organize_Click_Edit_Start_Page();
+		errorMsgLabelForPDF.setText("");
 		actionVerPanelForUpdatePDF.setVisible(true);
+		//endPageLbl.setVisible(true);
 		editPdfFlowPanel.setVisible(true);
-		ResourceEditButtonContainer.getElement().getStyle()
-		.setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+		/*ResourceEditButtonContainer.getElement().getStyle()
+		.setVisibility(Visibility.HIDDEN);*/
 		EditBtn.setVisible(false);
+		/*reorderContainer.setVisible(false);*/
 		fromLblDisplayText.setVisible(false);
 		videoDisplay.setVisible(false);
 		narrationConatainer.setVisible(false);
 		setEditMode(true);
 		
-		
+		lblCharLimit.setVisible(true);
+		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 	}
 	/*
 	 * This clickEvent is used to update pdf start page
@@ -1029,16 +1467,19 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("cancelpdfBtn")
 	public void cancelpdfBtnClick(ClickEvent clickEvent) {
 		fromLblDisplayText.setVisible(true);
+		errorMsgLabel.setText("");
+		errorMsgLabelForPDF.setText("");
 		videoDisplay.setVisible(true);
 		actionVerPanelForUpdatePDF.setVisible(false);
 		editPdfFlowPanel.setVisible(false);
 		narrationConatainer.setVisible(true);
-		videoDisplay.setVisible(true);
 		startpdfPageNumber.setFocus(true);
 		editFloPanel.setVisible(false);
 		isEdited=false;
 		disableAllEditMode();
-		}
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+	}
 	
 	/**
 	 * Add or update narration for the collection resource
@@ -1064,8 +1505,10 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("copyResource")
 	public void copyResource(ClickEvent clickEvent) {
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		/*reorderContainer.setVisible(false);*/
 		if (isEdited) {
 				if (previousCollectionResourceChildView != null	&& previousCollectionResourceChildView.isAttached()) {
 				if (!isConfirmationPopup) {
@@ -1131,8 +1574,10 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("confirmDeleteLbl")
 	public void deleteCollectionItem(ClickEvent clickEvent) {
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		/*reorderContainer.setVisible(false);*/
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
 
@@ -1152,123 +1597,142 @@ public class ShelfCollectionResourceChildView extends
 	 * This clickEvent is used to update pdf
 	 */
 	public void updatePdfStartPage()
-	{
-		MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
-		actionVerPanelForUpdatePDF.setVisible(false);
-		editFloPanel.setVisible(false);
-		editPdfFlowPanel.setVisible(false);
-		actionVerPanelForUpdateTime.setVisible(false);
-		fromLblDisplayText.setVisible(true);
-		videoDisplay.setVisible(true);
-		narrationConatainer.setVisible(true);
-		UpdateTextMessage.setVisible(true);
-		actionVerPanel.setVisible(false);
-		String start=startpdfPageNumber.getText();
-		
-		//collectionItemDo.setStart(start);
-		getPresenter().updateCollectionItem(
-				collectionItemDo.getCollectionItemId(),narrationData,
-				start, "");
-		isEdited = false;
-		
+ {
+		String start = startpdfPageNumber.getText();
+		String enteredStopPage = stoppdfPageNumber.getText();
+		boolean isValid = this.validatePDF(start, enteredStopPage, totalPages);
+		if (isValid) {
+			MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
+			errorMsgLabel.setText("");
+			errorMsgLabelForPDF.setText("");
+			actionVerPanelForUpdatePDF.setVisible(false);
+			editFloPanel.setVisible(false);
+			editPdfFlowPanel.setVisible(false);
+			actionVerPanelForUpdateTime.setVisible(false);
+			fromLblDisplayText.setVisible(true);
+			videoDisplay.setVisible(true);
+			narrationConatainer.setVisible(true);
+			UpdateTextMessage.setVisible(true);
+			actionVerPanel.setVisible(false);
+
+			// collectionItemDo.setStart(start);
+			getPresenter().updateCollectionItem(
+					collectionItemDo.getCollectionItemId(), narrationData,
+					start, enteredStopPage);
+			isEdited = false;
+		}
 	}
 	/*
 	 * This clickEvent is used to update video
 	 */
 	public void editAndUpdateVideoTime()
-	{
+ {
+
 		MixpanelUtil.Organize_Click_Edit_Start_Time_Update();
+		errorMsgLabel.setText("");
 		actionVerPanelForUpdateTime.setVisible(false);
 		actionVerPanelForUpdatePDF.setVisible(false);
 		actionVerPanel.setVisible(false);
 		editFloPanel.setVisible(false);
 		UpdateTextMessage.setVisible(true);
-		videoDisplay.setVisible(true);
+		// videoDisplay.setVisible(true);
 		narrationConatainer.setVisible(true);
 		editFieldsFloPanel.setVisible(false);
-		
-		
+
 		String narration = null;
 		String from = null;
 		String to = null;
-		if (collectionItemDo.getResource().getResourceType().getName()
-				.equalsIgnoreCase("video/youtube")) {
-			from = FROM_START_TIME;
-			to = FROM_STOP_TIME;
+		if((fromTxt.getText().trim().length()>0)&&(toTxt.getText().trim().length()>0)&&(EndTimeTxt1.getText().trim().length()>0)&&(EndTimeTxt2.getText().trim().length()>0)){
+			if (collectionItemDo.getResource().getResourceType().getName()
+					.equalsIgnoreCase("video/youtube")) {
+				from = FROM_START_TIME;
+				to = FROM_STOP_TIME;
+			}
+			/*
+			 * if (resourceNarrationHtml.getHTML().length() > 0) { narration =
+			 * narrationTxtArea.getHTML(); collectionItemDo.setNarration(narration);
+			 * }
+			 */
+			if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
+				from = fromTxt.getText();
+				fromTxt.setText(from);
+				fromTxt.getElement().setAttribute("alt", from);
+				fromTxt.getElement().setAttribute("title", from);
+				from = toTxt.getText();
+				toTxt.setText(from);
+				toTxt.getElement().setAttribute("alt", from);
+				toTxt.getElement().setAttribute("title", from);
+				String startTimeTxtMin = null;
+				String startTimeTxtSec = null;
+				if (fromTxt.getText().length() < 2) {
+					startTimeTxtMin = "0" + fromTxt.getText();
+	
+				} else {
+					startTimeTxtMin = fromTxt.getText();
+				}
+				if (toTxt.getText().length() < 2) {
+					startTimeTxtSec = "0" + toTxt.getText();
+				} else {
+					startTimeTxtSec = toTxt.getText();
+				}
+				from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
+				// collectionItemDo.setStart(from);
+	
+			}
+			if (EndTimeTxt1.getText().length() > 0
+					&& EndTimeTxt2.getText().length() > 0) {
+				to = EndTimeTxt1.getText();
+				EndTimeTxt1.setText(to);
+				EndTimeTxt1.getElement().setAttribute("alt", to);
+				EndTimeTxt1.getElement().setAttribute("title", to);
+				to = EndTimeTxt2.getText();
+				EndTimeTxt2.setText(to);
+				EndTimeTxt2.getElement().setAttribute("alt", to);
+				EndTimeTxt2.getElement().setAttribute("title", to);
+				String EndTimeTxtMin = null;
+				String EndTimeTxtSec = null;
+				if (EndTimeTxt1.getText().length() < 2) {
+					EndTimeTxtMin = "0" + EndTimeTxt1.getText();
+	
+				} else {
+					EndTimeTxtMin = EndTimeTxt1.getText();
+				}
+				if (EndTimeTxt2.getText().length() < 2) {
+					EndTimeTxtSec = "0" + EndTimeTxt2.getText();
+				} else {
+					EndTimeTxtSec = EndTimeTxt2.getText();
+				}
+				to = "00:" + EndTimeTxtMin + ":" + EndTimeTxtSec;
+				// collectionItemDo.setStop(to);
+			}
+	
+			if ((collectionItemDo.getResource().getResourceType().getName()
+					.equalsIgnoreCase("video/youtube"))
+					&& (!from.equals(FROM_START_TIME) || !to.equals(FROM_STOP_TIME))) {
+				this.youtubeValidation(narration, from, to);
+			}else {
+	
+				getPresenter().updateCollectionItem(
+						collectionItemDo.getCollectionItemId(), narrationData,
+						from, to);
+				// setEditMode(false);
+				lblCharLimit.setVisible(false);
+				resourceNarrationHtml.getElement().getStyle().clearWidth();
+			}
+			isEdited = false;
+		}else
+		{
+			actionVerPanelForUpdateTime.setVisible(true);
+			videoDisplay.setVisible(false);
+			narrationConatainer.setVisible(false);
+			editFieldsFloPanel.setVisible(true);
+			ResourceEditButtonContainer.setVisible(false);
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			fromTxt.setFocus(true);
+			UpdateTextMessage.setVisible(false);		
+			errorMsgLabel.setText("");
+			errorMsgLabel.setText(YOUTUBE_START_END_TIME);
 		}
-		/*if (resourceNarrationHtml.getHTML().length() > 0) {
-			narration = narrationTxtArea.getHTML();
-			collectionItemDo.setNarration(narration);
-		}*/
-		if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
-			from = fromTxt.getText();
-			fromTxt.setText(from);
-			from = toTxt.getText();
-			toTxt.setText(from);
-			String startTimeTxtMin = null;
-			String startTimeTxtSec = null;
-			if(fromTxt.getText().length()<2)
-			{
-				startTimeTxtMin="0"+fromTxt.getText();
-				
-			}
-			else
-			{
-				startTimeTxtMin=fromTxt.getText();
-			}
-			if(toTxt.getText().length()<2)
-			{
-				startTimeTxtSec="0"+toTxt.getText();
-			}
-			else
-			{
-				startTimeTxtSec=toTxt.getText();
-			}
-			from="00:"+startTimeTxtMin+":"+startTimeTxtSec;
-			//collectionItemDo.setStart(from);
-		
-		}
-		if (EndTimeTxt1.getText().length() > 0 && EndTimeTxt2.getText().length() > 0 ) {
-			to = EndTimeTxt1.getText();
-			EndTimeTxt1.setText(to);
-			to = EndTimeTxt2.getText();
-			EndTimeTxt2.setText(to);
-			String EndTimeTxtMin = null;
-			String EndTimeTxtSec = null;
-			if(EndTimeTxt1.getText().length()<2)
-			{
-				EndTimeTxtMin="0"+EndTimeTxt1.getText();
-				
-			}
-			else
-			{
-				EndTimeTxtMin=EndTimeTxt1.getText();
-			}
-			if(EndTimeTxt2.getText().length()<2)
-			{
-				EndTimeTxtSec="0"+EndTimeTxt2.getText();
-			}
-			else
-			{
-				EndTimeTxtSec=EndTimeTxt2.getText();
-			}
-			to="00:"+ EndTimeTxtMin+":"+EndTimeTxtSec;
-			//collectionItemDo.setStop(to);
-		}
-		
-		if ((collectionItemDo.getResource().getResourceType().getName()
-				.equalsIgnoreCase("video/youtube"))
-				&& (!from.equals(FROM_START_TIME) || !to
-						.equals(FROM_STOP_TIME))) {
-			this.youtubeValidation(narration, from, to);
-		} else {
-					getPresenter().updateCollectionItem(
-					collectionItemDo.getCollectionItemId(),narrationData,
-					from, to);
-					//setEditMode(false);	
-		}
-		isEdited = false;
-		
 	}
 	/**
 	 * Update the collection item meta data
@@ -1279,9 +1743,17 @@ public class ShelfCollectionResourceChildView extends
 		videoDisplay.setVisible(false);
 		editFieldsFloPanel.setVisible(false);
 			if (collectionItemDo.getNarration() != null) {
-				narrationTxtArea.setHTML(collectionItemDo.getNarration());
+				narrationTxtArea.setText(collectionItemDo.getNarration());
+				narrationTxtArea.getElement().setAttribute("alt", collectionItemDo.getNarration());
+				narrationTxtArea.getElement().setAttribute("title", collectionItemDo.getNarration());
 			}
+			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			resourceNarrationHtml.setHTML(ADD_NARRATION_FOR_YOUR_VIEWERS);
+			String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+			lblCharLimit.setText(value);
+			lblCharLimit.setVisible(true);
+			resourceNarrationHtml.getElement().setAttribute("alt", ADD_NARRATION_FOR_YOUR_VIEWERS);
+			resourceNarrationHtml.getElement().setAttribute("title", ADD_NARRATION_FOR_YOUR_VIEWERS);
 			setEditMode(true);
 
 	}
@@ -1307,7 +1779,10 @@ public class ShelfCollectionResourceChildView extends
 					
 					
 					narrationTxtArea.getElement().getStyle().setBorderColor("orange");
-					narrationAlertMessageLbl.setText(GL0554);
+					narrationAlertMessageLbl.setText(i18n.GL0554());
+					
+					narrationAlertMessageLbl.getElement().setAttribute("alt", i18n.GL0554());
+					narrationAlertMessageLbl.getElement().setAttribute("title", i18n.GL0554());
 					narrationAlertMessageLbl.setVisible(true);
 					
 					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
@@ -1321,7 +1796,7 @@ public class ShelfCollectionResourceChildView extends
 						UpdateTextMessage.setVisible(true);
 						if (resourceNarrationHtml.getHTML().length() > 0) {
 							//narration = narrationTxtArea.getRawContent();
-							narration = trim(narrationTxtArea.getHTML());
+							narration = trim(narrationTxtArea.getText());
 							collectionItemDo.setNarration(narration);
 						}
 					
@@ -1329,9 +1804,10 @@ public class ShelfCollectionResourceChildView extends
 							getPresenter().updateNarrationItem(
 									collectionItemDo.getCollectionItemId(), narration);
 						}catch(Exception e){
-							e.printStackTrace();
 						}
 						isEdited = false;
+						lblCharLimit.setVisible(false);
+						resourceNarrationHtml.getElement().getStyle().clearWidth();
 //					}
 					
 				}
@@ -1348,12 +1824,16 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("cancelNarrationBtn")
 	public void onclickcancelNarrationBtn(ClickEvent event){
-		narrationTxtArea.setHTML(collectionItemDo.getNarration());
+		narrationTxtArea.setText(collectionItemDo.getNarration());
+		narrationTxtArea.getElement().setAttribute("alt", collectionItemDo.getNarration());
+		narrationTxtArea.getElement().setAttribute("title", collectionItemDo.getNarration());
 		fromLblDisplayText.setVisible(true);
 		videoDisplay.setVisible(true);
 		setEditMode(false);
 		isEdited = false;
 		disableAllEditMode();
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
 	/*
 	 * This clickEvent is used to edit video time
@@ -1361,17 +1841,23 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("editVideoTimeLbl")
 	public void onclickEditVideoTimeLbl(ClickEvent event)
 	{
-			if(youtube){
+		
+		if (youtube) {
+			lblCharLimit.setVisible(true);
+			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			MixpanelUtil.Organize_Click_Edit_Start_Time();
 			EditBtn.setVisible(false);
+			/*reorderContainer.setVisible(false);*/
 			actionVerPanelForUpdateTime.setVisible(true);
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
 			editFieldsFloPanel.setVisible(true);
-			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+			/*ResourceEditButtonContainer.getElement().getStyle()
+					.setVisibility(Visibility.HIDDEN);*/
 			fromTxt.setFocus(true);
 			setEditMode(true);
-			
+
 		}
 		
 	}
@@ -1381,6 +1867,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("updateVideoTimeBtn")
 	public void updateVideoTimeBtnClickEvent(ClickEvent event)
 	{
+		
 		editAndUpdateVideoTime();
 	}
 	/*
@@ -1389,6 +1876,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("cancelVideoTimeBtn")
 	public void cancelVideoTimeBtnClickEvent(ClickEvent event)
 	{
+		errorMsgLabel.setText("");
 		videoDisplay.setVisible(true);
 		narrationConatainer.setVisible(true);
 		editFieldsFloPanel.setVisible(false);
@@ -1396,17 +1884,24 @@ public class ShelfCollectionResourceChildView extends
 		editFloPanel.setVisible(false);
 		isEdited = false;
 		disableAllEditMode();
-		
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
 
 	/**
 	 * Reorder the collection item with new new sequence
+	 * @param shelfCollectionResourceChildView 
 	 * 
 	 * @param newSequence
 	 *            reorder the collection item
+	 * @param arrow 
 	 */
-	public void reorderCollectionItem(Integer newSequence) {
+	public void reorderCollectionItem(/*ShelfCollectionResourceChildView shelfCollectionResourceChildView,*/ Integer newSequence/*, String arrow*/) { 
 		collectionItemDo.setItemSequence(newSequence);
+		/**
+		 * enabled again by removing move option
+		 */
+		EditBtn.setVisible(false);
 		getPresenter().reorderCollectionItem(collectionItemDo);
 		new Timer() {
 
@@ -1416,6 +1911,17 @@ public class ShelfCollectionResourceChildView extends
 				//setEditMode(false);
 			}
 		}.schedule(2000);
+		
+		
+		/**
+		 * Added new method in order to implement reordering of resources.
+		 * (Commented the following method to enable DnD)
+		 * 
+		 */
+		
+//		getPresenter().reorderMyCollectionItem(collectionItemDo,shelfCollectionResourceChildView,arrow,newSequence);
+		
+		
 	}
 
 	@Override
@@ -1426,8 +1932,8 @@ public class ShelfCollectionResourceChildView extends
 
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
-		return new ResourceDragUc(collectionItemDo.getResource().getCategory(),
-				collectionItemDo.getResource().getTitle());
+		String resourceFormat = collectionItemDo.getResource().getResourceFormat() !=null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
+		return new ResourceDragUc(resourceFormat,collectionItemDo.getResource().getTitle());
 	}
 
 	@Override
@@ -1459,11 +1965,13 @@ public class ShelfCollectionResourceChildView extends
 		return 225;
 	}
 
+	/**
+	 * Following method again enabled, as drag and drop is not removed for resource reorder at My Collections.
+	 */
 	@Override
 	public void onPostReorder(CollectionItemDo collectionItemDo) {
 		collectionItemDo.setCollection(this.collectionItemDo.getCollection());
-		this.collectionItemDo.setItemSequence(collectionItemDo
-				.getItemSequence());
+		this.collectionItemDo.setItemSequence(collectionItemDo.getItemSequence());
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItemDo, RefreshType.UPDATE));
 
 	}
@@ -1476,7 +1984,8 @@ public class ShelfCollectionResourceChildView extends
 		this.collectionItemDo.setStop(collectionItemDo.getStop());
 		//this.collectionItemDo.setStop(collectionItemDo.getAverageTime());
 		setEditMode(false);
-		
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
 
 	/**
@@ -1521,7 +2030,11 @@ public class ShelfCollectionResourceChildView extends
 		collectionResourceTabView.removeCollectionItem(collectionItemDo, this);
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
 				collectionItemDo, RefreshType.DELETE));
-		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 
@@ -1534,7 +2047,11 @@ public class ShelfCollectionResourceChildView extends
 			AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(
 					collectionItem, RefreshType.INSERT));
 		}
-		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	
 	}
@@ -1575,7 +2092,9 @@ public class ShelfCollectionResourceChildView extends
 		RegExp regExp = RegExp.compile(REG_EXP);
 		if (!(regExp.test(start)) || !(regExp.test(stop))) {
 			UpdateTextMessage.setVisible(false);
-			new AlertContentUc(GL0061, YOUTUBE_START_END_TIME);
+			errorMsgLabel.setText("");
+			errorMsgLabel.setText(YOUTUBE_START_END_TIME);
+			//new AlertContentUc(i18n.GL0061(), YOUTUBE_START_END_TIME);
 			return;
 		}
 		String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo
@@ -1589,8 +2108,10 @@ public class ShelfCollectionResourceChildView extends
 								public void onSuccess(String youtubeInfo) {
 									int totalVideoLengthInMin;
 									if(youtubeInfo!=null){
+									
 									totalVideoLengthInMin = Integer
 											.parseInt(youtubeInfo);
+									
 									String[] startSplitTimeHours = start
 											.split(":");
 									String[] endSplitTimeHours = stop
@@ -1622,9 +2143,19 @@ public class ShelfCollectionResourceChildView extends
 														narrationData, start, stop);
 										///setEditMode(false);
 									} else {
-										UpdateTextMessage.setVisible(false);
-										new AlertContentUc(GL0061,
-												VALID_START_STOP_TIME);
+										actionVerPanelForUpdateTime.setVisible(true);
+										videoDisplay.setVisible(false);
+										narrationConatainer.setVisible(false);
+										editFieldsFloPanel.setVisible(true);
+										ResourceEditButtonContainer.setVisible(false);
+//										ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+										fromTxt.setFocus(true);
+										UpdateTextMessage.setVisible(false);		
+										errorMsgLabel.setText("");
+										errorMsgLabel.setText(VALID_START_STOP_TIME);
+										//setEditMode(true);
+										/*new AlertContentUc(i18n.GL0061(),
+												VALID_START_STOP_TIME);*/
 									}
 								}
 								}
@@ -1636,7 +2167,28 @@ public class ShelfCollectionResourceChildView extends
 		}
 	}
 
-	
+	public boolean validatePDF(String startpage,String stopPage,Integer totalPage){
+		boolean isValid;
+		Integer enteredStopPage =	Integer.parseInt(stopPage);
+		Integer startpdfpage = Integer.parseInt(startpage);
+		if(enteredStopPage > totalPage){
+			errorMsgLabelForPDF.setText(VALID_END_PAGE);
+			isValid = false;
+		}else if( startpdfpage > totalPage){
+			errorMsgLabelForPDF.setText(VALID_END_PAGE);
+			isValid = false;	
+		}
+		else if( enteredStopPage < startpdfpage){
+			errorMsgLabelForPDF.setText(VALID_END_PAGE);
+			isValid = false;	
+		}
+		else
+		{
+			isValid = true;
+			errorMsgLabelForPDF.setText("");
+		}
+		return isValid;
+	}
 	@Override
 	public void onPostUserCollections(List<CollectionDo> result) {
 //		int count = 0;
@@ -1799,5 +2351,126 @@ public class ShelfCollectionResourceChildView extends
 	public void setFolderItems(TreeItem item, FolderListDo folderListDo) {
 		copyConfirmPopupVc.setFolderItems(item,folderListDo);
 	}
+	private String removeHtmlTags(String html){
+//		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
+        return html;
+	}
 	
+	public void setUpDownArrowVisibility(int totalCount) { 
+		
+	}
+	
+	
+	/**
+	 * Sets the re-order Up button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	/*public void upButtonIsVisible(boolean isvisible) {
+		
+		if(isvisible){
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}*/
+
+
+	/**
+	 * Sets the re-order Down button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	/*public void downButtonIsVisible(boolean isvisible) {
+		if(isvisible){
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}*/
+	
+	
+	/*public void showReorderValidationToolTip(String validationMsg){
+		toolTipPopupPanel.clear();
+		globalToolTip = new GlobalToolTip(validationMsg);
+		globalToolTip.confirmationPanel.getElement().getStyle().setWidth(155, Unit.PX);
+		toolTipPopupPanel.setWidget(globalToolTip);
+		toolTipPopupPanel.setStyleName("");
+		toolTipPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()+160, reorderTxtBox.getElement().getAbsoluteTop()-70);
+		toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+		toolTipPopupPanel.show();
+		new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+	}*/
+	
+	
+	public void reorderCollectionResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView, int itemToBeMovedPosSeqNumb, String arrow) { 
+//		reorderCollectionItem(shelfCollectionResourceChildView,itemToBeMovedPosSeqNumb,arrow);
+	}
+	
+	@Override
+	public void onPostResourceReorder(CollectionItemDo collectionItemDo,ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow,Integer newSequence) {
+		collectionItemDo.setCollection(this.collectionItemDo.getCollection());
+		this.collectionItemDo.setItemSequence(collectionItemDo.getItemSequence());
+		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItemDo, RefreshType.UPDATE));
+		
+		/*AppClientFactory.fireEvent(new ReorderCollectionResourcesEvent(shelfCollectionResourceChildView,arrow,newSequence));*/
+	}
+
+	
+/*	
+	Commented the following to enable DnD again, for hot fix
+	
+	public void setReorderContainerVisibility(boolean isEnable) { 
+		isReorderContainerVisible = isEnable;
+	}
+	
+	
+	*//**
+	 * @return the reorderTxtBox
+	 *//*
+	public TextBox getReorderTxtBox() {
+		return reorderTxtBox;
+	}
+	*//**
+	 * @param reorderTxtBox the reorderTxtBox to set
+	 *//*
+	public void setReorderTxtBox(TextBox reorderTxtBox) {
+		this.reorderTxtBox = reorderTxtBox;
+	}
+	*//**
+	 * @return the resourceMoveUpBtn
+	 *//*
+	public Button getResourceMoveUpBtn() {
+		return resourceMoveUpBtn;
+	}
+	*//**
+	 * @param resourceMoveUpBtn the resourceMoveUpBtn to set
+	 *//*
+	public void setResourceMoveUpBtn(Button resourceMoveUpBtn) {
+		this.resourceMoveUpBtn = resourceMoveUpBtn;
+	}
+	*//**
+	 * @return the resourceMoveDownBtn
+	 *//*
+	public Button getResourceMoveDownBtn() {
+		return resourceMoveDownBtn;
+	}
+	*//**
+	 * @param resourceMoveDownBtn the resourceMoveDownBtn to set
+	 *//*
+	public void setResourceMoveDownBtn(Button resourceMoveDownBtn) {
+		this.resourceMoveDownBtn = resourceMoveDownBtn;
+	}
+	*//**
+	 * @return the reorderContainer
+	 *//*
+	public HTMLPanel getReorderContainer() {
+		return reorderContainer;
+	}
+	*//**
+	 * @param reorderContainer the reorderContainer to set
+	 *//*
+	public void setReorderContainer(HTMLPanel reorderContainer) {
+		this.reorderContainer = reorderContainer;
+	}
+*/	
 }

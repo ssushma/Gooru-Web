@@ -32,8 +32,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -44,6 +44,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -51,16 +52,32 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-
-public class ThanksPopupUc extends PopupPanel implements MessageProperties{
+/**
+ * 
+ * @fileName : ThanksPopupUc.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
+public class ThanksPopupUc extends PopupPanel{
  
-	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo,lblClose; //lblDiscover,lblOrganize,lblTeach
+	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo; //lblDiscover,lblOrganize,lblTeach
 	
 	@UiField Button btnStartUsingGooru, btnStartCreatingStudent;//btnDiscover, btnOrganize, btnTeach,
 	
 	@UiField HTML htmlSupport;
 	
-	@UiField HTMLPanel panelPopupInner;
+	@UiField Anchor lblClose;
+	
+	@UiField HTMLPanel panelPopupInner,panelFooter;
 	
 	@UiField(provided = true)
 	SignUpCBundle res;
@@ -76,6 +93,8 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Class constructor , to create Login Popup. 
@@ -97,13 +116,14 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
         userName = AppClientFactory.getPlaceManager().getRequestParameter("userName") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("userName") : null;
         privateGooruUId = AppClientFactory.getPlaceManager().getRequestParameter("privateGooruUId") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("privateGooruUId") : null;
 //        if (account.equalsIgnoreCase("parent")){
-        	this.getElement().getStyle().setHeight(450, Unit.PX);
-        	panelPopupInner.getElement().getStyle().setHeight(360, Unit.PX);
+        //	this.getElement().getStyle().setHeight(450, Unit.PX);
+        //	panelPopupInner.getElement().getStyle().setHeight(360, Unit.PX);
 //        }else{
 //        	this.getElement().getStyle().clearHeight();
 //        	panelPopupInner.getElement().getStyle().clearHeight();
 //        }
 
+     
         setTextAndIds();
         
         setHandlers();
@@ -137,9 +157,9 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		
 //		this.setStyleName(res.css().thanksPopup());
-		this.removeStyleName("gwt-PopupPanel");
-		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
-	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+		/*this.removeStyleName("gwt-PopupPanel");*/
+	/*	this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());*/
 		
 	
 	}
@@ -172,43 +192,63 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(GL0186);
-		lblCongratsHeader.setText(GL0429);
-		lblCheckYourEmail.setText(GL0430);
-		lblWhatsNext.setText(GL0432);
+		lblLoginHeading.setText(i18n.GL0186());
+		lblLoginHeading.getElement().setId("lblLoginHeading");
+		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0186());
+		lblLoginHeading.getElement().setAttribute("title",i18n.GL0186());
+		
+		String congrats = AppClientFactory.getLoggedInUser().getLoginType().equalsIgnoreCase("apps") ? i18n.GL2195() : i18n.GL0429();
+		
+		lblCongratsHeader.setText(congrats);
+		lblCongratsHeader.getElement().setId("lblCongratsHeader");
+		lblCongratsHeader.getElement().setAttribute("alt",congrats);
+		lblCongratsHeader.getElement().setAttribute("title",congrats);
+		
+		lblCheckYourEmail.setText(i18n.GL0430());
+		lblCheckYourEmail.getElement().setId("lblCheckYourEmail");
+		lblCheckYourEmail.getElement().setAttribute("alt",i18n.GL0430());
+		lblCheckYourEmail.getElement().setAttribute("title",i18n.GL0430());
+		
+		lblCheckYourEmail.setVisible( AppClientFactory.getLoggedInUser().getLoginType().equalsIgnoreCase("apps") ? false : true);
+		
+		lblWhatsNext.setText(i18n.GL0432());
+		lblWhatsNext.getElement().setId("lblWhatsNext");
+		lblWhatsNext.getElement().setAttribute("alt",i18n.GL0432());
+		lblWhatsNext.getElement().setAttribute("title",i18n.GL0432());
 	
 		//This is not required when registered as parent.		
-		btnStartUsingGooru.setText(GL0431);
+		btnStartUsingGooru.setText(i18n.GL0431());
 		//This is not required when registered as parent.
-		lblLearnHowTo.setText(GL0433);
+		lblLearnHowTo.setText(i18n.GL0433());
+		lblLearnHowTo.getElement().setId("lblLearnHowTo");
+		lblLearnHowTo.getElement().setAttribute("alt",i18n.GL0433());
+		lblLearnHowTo.getElement().setAttribute("title",i18n.GL0433());
 		lblLearnHowTo.setVisible(false);
 		lblWhatsNext.setVisible(false);
-		//This is not required when registered as parent.
-//		lblDiscover.setText(MessageProperties.GL0179);
-		//This is not required when registered as parent.
-//		lblOrganize.setText(MessageProperties.GL0180);
-		//This is not required when registered as parent.
-//		lblTeach.setText(MessageProperties.GL0181);
 		
 		//This is not required for Regular user.
-		btnStartCreatingStudent.setText(GL0472);
+		btnStartCreatingStudent.setText(i18n.GL0472());
 				
 		btnStartUsingGooru.setVisible(account.equalsIgnoreCase("regular") ? true : false);			
-//		lblWhatsNext.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblLearnHowTo.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblDiscover.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		btnDiscover.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblOrganize.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		btnOrganize.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblTeach.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		btnTeach.setVisible(account.equalsIgnoreCase("regular") ? true : false);
 		
 		btnStartCreatingStudent.setVisible(account.equalsIgnoreCase("parent") ? true : false);
 		
-		htmlSupport.setHTML(GL0437);
+		htmlSupport.setHTML(i18n.GL0437());
+		htmlSupport.getElement().setId("htmlSupport");
+		htmlSupport.getElement().setAttribute("alt",i18n.GL0437());
+		htmlSupport.getElement().setAttribute("title",i18n.GL0437());
 		
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
+		btnStartUsingGooru.getElement().setAttribute("alt",i18n.GL0431());
+		btnStartUsingGooru.getElement().setAttribute("title",i18n.GL0431());
+		
 		btnStartCreatingStudent.getElement().setId("btnStartCreatingStudent");
+		btnStartCreatingStudent.getElement().setAttribute("alt",i18n.GL0472());
+		btnStartCreatingStudent.getElement().setAttribute("title",i18n.GL0472());
+		
+		panelPopupInner.getElement().setId("pnlPopupInner");
+		panelFooter.getElement().setId("pnlFooter");
+		lblClose.getElement().setId("lblClose");
 	}
 	
 	@UiHandler("btnStartUsingGooru")
@@ -228,6 +268,8 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 		map.remove("rp");
 		
 		AppClientFactory.getPlaceManager().revealPlace(viewToken, map);
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		hide();
 	}
 	
@@ -262,7 +304,25 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 		hide();
 		startCreatingStudent();
 	}
-	
+	/**
+	 * 
+	 * @function startCreatingStudent 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void startCreatingStudent(){
 		String externalId = AppClientFactory.getLoggedInUser().getExternalId();
 		String email = AppClientFactory.getLoggedInUser().getEmailId();

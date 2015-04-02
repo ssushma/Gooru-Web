@@ -28,9 +28,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.RemoveCollaboratorObjectEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetCollabCountEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -41,9 +43,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -58,8 +60,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -82,28 +86,33 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<CollectionCollaboratorsTabUiHandlers> implements IsCollectionCollaboratorsTab,MessageProperties, SelectionHandler<SuggestOracle.Suggestion>  {
+public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<CollectionCollaboratorsTabUiHandlers> implements IsCollectionCollaboratorsTab, SelectionHandler<SuggestOracle.Suggestion>  {
 
 	@UiField(provided = true)
 	CollectionCollaboratorsCBundle res;
 	
 	private static CollectionAssignViewTabUiBinder uiBinder = GWT.create(CollectionAssignViewTabUiBinder.class);
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 	
 	CollectionDo collectionDo = null;
 	
-	@UiField HTMLPanel panelViewMode, panelEditMode,panelCreator,panelCollaboratorsList,panelLoading, panelPendingSmallLoadingIcon;//, panelCurrentSmallLoadingIcon;
+	@UiField HTMLPanel panelViewMode, panelEditMode,panelCreator,panelCollaboratorsList,panelLoading, panelPendingSmallLoadingIcon,privacyLabelPanel;//, panelCurrentSmallLoadingIcon;
 	
 	@UiField VerticalPanel panelPendingCollabListContainer, panelActiveCollabListContainer;
 	
-	@UiField HTMLPanel panelPendingContainer, panelActiveContainer, panelSuggestBox, panelActions;
+	@UiField HTMLPanel panelCode,panelPendingContainer, panelActiveContainer, panelSuggestBox, panelActions;
 	
 	@UiField Label lblCollectionCreator, lblCurrentCollaborators, lblYouAreTheCollectionCreator, lblAddCollaborator, lblCollaboratorsDesc, lblInviteCollaborators, lblErrorMessage;
 	
 	@UiField Label lblPendingInvitations, lblCurrentCollabTitle, lblPleaseWait, lblText/*, lblToolTip*/;
 	
 	@UiField Button btnInvite, btnRemoveSelectedInvities;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 	
 	AutoSuggestForm autoSuggetTextBox =null;
 	
@@ -116,6 +125,8 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	int currentCollabCount=0;
 	
 	int overAllCollabCount = 0;
+	
+	private TermsOfUse termsOfUse;
 	
 //	@UiField TextBox txtCollaboratorsName;
 
@@ -184,38 +195,96 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	 */
 	public void setLabelsAndIds(){
 		
-		lblCollectionCreator.setText(GL0936);
-		lblCurrentCollaborators.setText( GL0939);
+		lblCollectionCreator.setText(i18n.GL0936());
+		lblCollectionCreator.getElement().setId("lblCollectionCreator");
+		lblCollectionCreator.getElement().setAttribute("alt",i18n.GL0936());
+		lblCollectionCreator.getElement().setAttribute("title",i18n.GL0936());
 		
-		lblYouAreTheCollectionCreator.setText(GL0940);
-		lblAddCollaborator.setText(GL0941);
-		lblCollaboratorsDesc.setText(GL0942);
-		lblInviteCollaborators.setText(GL0943);
-		lblPendingInvitations.setText(GL1114);
-		lblCurrentCollabTitle.setText(GL1113);
+		lblCurrentCollaborators.setText(i18n.GL0939());
+		lblCurrentCollaborators.getElement().setId("lblCurrentCollaborators");
+		lblCurrentCollaborators.getElement().setAttribute("alt",i18n.GL0939());
+		lblCurrentCollaborators.getElement().setAttribute("title",i18n.GL0939());
 		
-		btnInvite.setText(GL0944);
+		lblYouAreTheCollectionCreator.setText(i18n.GL0940());
+		lblYouAreTheCollectionCreator.getElement().setId("lblYouAreTheCollectionCreator");
+		lblYouAreTheCollectionCreator.getElement().setAttribute("alt",i18n.GL0940());
+		lblYouAreTheCollectionCreator.getElement().setAttribute("title",i18n.GL0940());
+		
+		lblAddCollaborator.setText(i18n.GL0941());
+		lblAddCollaborator.getElement().setId("lblAddCollaborator");
+		lblAddCollaborator.getElement().setAttribute("alt",i18n.GL0941());
+		lblAddCollaborator.getElement().setAttribute("title",i18n.GL0941());
+		
+		lblCollaboratorsDesc.getElement().setId("lblCollaboratorsDesc");
+		
+		
+		lblInviteCollaborators.setText(i18n.GL0943());
+		lblInviteCollaborators.getElement().setId("lblInviteCollaborators");
+		lblInviteCollaborators.getElement().setAttribute("alt",i18n.GL0943());
+		lblInviteCollaborators.getElement().setAttribute("title",i18n.GL0943());
+		
+		lblPendingInvitations.setText(i18n.GL1114());
+		lblPendingInvitations.getElement().setId("lblPendingInvitations");
+		lblPendingInvitations.getElement().setAttribute("alt",i18n.GL1114());
+		lblPendingInvitations.getElement().setAttribute("title",i18n.GL1114());
+		
+		lblCurrentCollabTitle.setText(i18n.GL1113());
+		lblCurrentCollabTitle.getElement().setId("lblCurrentCollabTitle");
+		lblCurrentCollabTitle.getElement().setAttribute("alt",i18n.GL1113());
+		lblCurrentCollabTitle.getElement().setAttribute("title",i18n.GL1113());
+		
+		btnInvite.setText(i18n.GL0944());
 		btnInvite.getElement().setId("btnInvite");
+		btnInvite.getElement().setAttribute("alt",i18n.GL0944());
+		btnInvite.getElement().setAttribute("title",i18n.GL0944());
+		
+		lblPii.setText(i18n.GL1892());
+		lblPii.getElement().setId("lblPii");
+		lblPii.getElement().setAttribute("alt",i18n.GL1892());
+		lblPii.getElement().setAttribute("title",i18n.GL1892());
+		
+		privacyLabelPanel.setVisible(false);
+		ancprivacy.setText(i18n.GL1893());
+		ancprivacy.getElement().setId("lnkAncprivacy");
+		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
+		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
+		
+		toUsText.setText(i18n.GL1894());
+		toUsText.getElement().setId("spnToUsText");
+		toUsText.getElement().setAttribute("alt",i18n.GL1894());
+		toUsText.getElement().setAttribute("title",i18n.GL1894());
+	
 		btnInvite.setEnabled(false);
 		panelActions.getElement().addClassName(res.css().buttonTooltip());
 		btnInvite.setVisible(true);
-		lblText.setText(GL1184);
+		lblText.setText(i18n.GL1184());
+		lblText.getElement().setId("lblText");
+		lblText.getElement().setAttribute("alt",i18n.GL1184());
+		lblText.getElement().setAttribute("title",i18n.GL1184());
+		
 //		btnInvite.addMouseOverHandler(new OnBtnInviteMouseOver());
 //		btnInvite.addMouseOutHandler(new OnBtnInviteMouseOut());
 		
-		btnRemoveSelectedInvities.setText(GL0237);
-		btnRemoveSelectedInvities.setVisible(false);
+		btnRemoveSelectedInvities.setText(i18n.GL0237());
 		btnRemoveSelectedInvities.getElement().setId("btnRemoveSelectedInvities");
+		btnRemoveSelectedInvities.getElement().setAttribute("alt",i18n.GL0237());
+		btnRemoveSelectedInvities.getElement().setAttribute("title",i18n.GL0237());
+		
+		btnRemoveSelectedInvities.setVisible(false);
 		
 		
-/*		lblToolTip.setText(GL1165_1);
+		
+/*		lblToolTip.setText(i18n.GL1165_1);
 		lblToolTip.setVisible(false);
 */		
 		lblErrorMessage.setVisible(false);
 		
 		setInviteButtonEnable(overAllCollabCount);
 		
-		lblPleaseWait.setText(GL1137);
+		lblPleaseWait.setText(i18n.GL1137());
+		lblPleaseWait.getElement().setId("lblPleaseWait");
+		lblPleaseWait.getElement().setAttribute("alt",i18n.GL1137());
+		lblPleaseWait.getElement().setAttribute("title",i18n.GL1137());
 		
 		panelCollaboratorsList.clear();		// View mode
 		panelPendingCollabListContainer.clear();	//edit mode
@@ -224,6 +293,22 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		lblPleaseWait.setVisible(false);
 		
 		createAutoSuggestBox();
+		
+		panelViewMode.getElement().setId("pnlPanelViewMode");
+		panelCreator.getElement().setId("pnlPanelCreator");
+		panelCollaboratorsList.getElement().setId("pnlPanelCollaboratorsList");
+		panelLoading.getElement().setId("pnlPanelLoading");
+		panelEditMode.getElement().setId("pnlPanelEditMode");
+		panelSuggestBox.getElement().setId("pnlPanelSuggestBox");
+		panelActions.getElement().setId("pnlPanelActions");
+		panelCode.getElement().setId("pnlPanelCode");
+		lblErrorMessage.getElement().setId("lblErrorMessage");
+		privacyLabelPanel.getElement().setId("pnlPrivacyLabelPanel");
+		panelPendingSmallLoadingIcon.getElement().setId("pnlPanelPendingSmallLoadingIcon");
+		panelPendingContainer.getElement().setId("pnlPanelPendingContainer");
+		panelPendingCollabListContainer.getElement().setId("vpnlPanelPendingCollabListContainer");
+		panelActiveContainer.getElement().setId("pnlPanelActiveContainer");
+		panelActiveCollabListContainer.getElement().setId("vpnlPanelActiveCollabListContainer");
 	}
 	/**
 	 * @function setInviteButtonEnable 
@@ -308,7 +393,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			@Override
 			public void errorMsgVisibility(boolean visibility, String emailId) {
 				if (visibility){
-					showErrorMessage(StringUtil.generateMessage(GL1019, emailId));
+					showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailId));
 				}else{
 					lblErrorMessage.setVisible(false);
 				}
@@ -369,10 +454,10 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 					hide();
 				}
 			};
-			delete.setPopupTitle(GL1118);
-			delete.setDescText(StringUtil.generateMessage(GL1119, emailIdsToRemove.get(1) != null ? emailIdsToRemove.get(1) : emailIdsToRemove.get(0))); 
-			delete.setPositiveButtonText(GL_GRR_YES);
-			delete.setNegitiveButtonText(GL0142);
+			delete.setPopupTitle(i18n.GL1118());
+			delete.setDescText(StringUtil.generateMessage(i18n.GL1119(), emailIdsToRemove.get(1) != null ? emailIdsToRemove.get(1) : emailIdsToRemove.get(0))); 
+			delete.setPositiveButtonText(i18n.GL_GRR_YES());
+			delete.setNegitiveButtonText(i18n.GL0142());
 			delete.center();
 			delete.show();
 			
@@ -411,7 +496,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");
 		}
 		if (collabEmailIds != null && collabEmailIds.equalsIgnoreCase("")){
-//			showErrorMessage(MessageProperties.GL1015);
+//			showErrorMessage(MessageProperties.i18n.GL1015);
 			lblPleaseWait.setVisible(false);
 			btnInvite.setVisible(true);
 			return;
@@ -421,7 +506,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		if (currentCollabCount > collabLimitCount){
 			lblPleaseWait.setVisible(false);
 			btnInvite.setVisible(true);
-			showErrorMessage(StringUtil.generateMessage(GL1016, ""+collabLimitCount));
+			showErrorMessage(StringUtil.generateMessage(i18n.GL1016(), ""+collabLimitCount));
 			return;
 		}
 				
@@ -433,7 +518,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			if (!from){
 				lblPleaseWait.setVisible(false);
 				btnInvite.setVisible(true);
-				showErrorMessage(StringUtil.generateMessage(GL1019, emailID));
+				showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailID));
 				return;
 			}
 		}
@@ -444,7 +529,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 				if (emailId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getEmailId())){
 					lblPleaseWait.setVisible(false);
 					btnInvite.setVisible(true);
-					showErrorMessage(GL1018);
+					showErrorMessage(i18n.GL1018());
 					isValid = false;
 					break;
 				}
@@ -465,6 +550,8 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	public void showErrorMessage(String errorMessage){
 		lblErrorMessage.setText(errorMessage);
+		lblErrorMessage.getElement().setAttribute("alt",errorMessage);
+		lblErrorMessage.getElement().setAttribute("title",errorMessage);
 		lblErrorMessage.setVisible(true);
 	}
 	
@@ -476,6 +563,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	public void displayView(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		setLabelsAndIds();
+		modifyStaticText(collectionDo.getCollectionType());
 		overAllCollabCount = 0;
 		setInviteButtonEnable(overAllCollabCount);
 
@@ -512,6 +600,17 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 //			panelEditMode.add(suggestBox);
 		}
 		
+	}
+	public void modifyStaticText(String collectionType){
+		if(collectionType!=null&&collectionType.equals("assessment")){
+			lblCollaboratorsDesc.setText(i18n.GL3035());
+			lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL3035());
+			lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL3035());
+		}else{
+			lblCollaboratorsDesc.setText(i18n.GL0942());
+			lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL0942());
+			lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL0942());
+		}
 	}
 	private void updateCollabCount(int count, String type) {
 //		collectionDo.getMeta().setCollaboratorCount(count);
@@ -696,19 +795,23 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 				autoSuggetTextBox.clearAutoSuggestData();
 				createAutoSuggestBox();
 				
-				Window.enableScrolling(true);
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				
 				autoSuggetTextBox.getTxtInput().getTxtInputBox().setFocus(true);
 			}
 		};
-		success.setPopupTitle(GL1120);
+		success.setPopupTitle(i18n.GL1120());
 		if (collabList.size()>1){
-			success.setDescText(GL1121);
+			success.setDescText(i18n.GL1121());
 		}else{
-			success.setDescText(GL1360);
+			success.setDescText(i18n.GL1360());
 		}
-		success.setPositiveButtonText(GL0190);
+		success.setPositiveButtonText(i18n.GL0190());
 		success.center();
 		success.show();
 		
@@ -761,7 +864,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 //		@Override
 //		public void onMouseOver(MouseOverEvent event) {
 //			toolTipPopupPanel.clear();
-//			toolTipPopupPanel.setWidget(new GlobalToolTip(MessageProperties.GL1184,true));
+//			toolTipPopupPanel.setWidget(new GlobalToolTip(MessageProperties.i18n.GL1184,true));
 //			toolTipPopupPanel.setStyleName("");
 //			toolTipPopupPanel.setPopupPosition(btnInvite.getElement().getAbsoluteLeft()-35, btnInvite.getElement().getAbsoluteTop()+4);
 //			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
@@ -778,4 +881,25 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 //			toolTipPopupPanel.hide();
 //		}
 //	}
+	
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
+	}
+	
 }

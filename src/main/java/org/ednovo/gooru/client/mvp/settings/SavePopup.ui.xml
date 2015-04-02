@@ -7,8 +7,11 @@
 	ui:generateLocales='default'>
 <ui:style field="Settings" src="Setting-page.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle"/>
 
-<g:HTMLPanel styleName="{Settings.facebox}"> 
-<g:HTMLPanel styleName="{Settings.popup}">         
+<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+
+<g:HTMLPanel styleName="{res.css.PopupMainVVSmall}"> 
+<g:HTMLPanel styleName="{res.css.popupInnerGrey}">         
 <g:HTMLPanel styleName="{Settings.content}">
 <g:HTMLPanel styleName="{Settings.settingsSuccessPopUpContainer}">
 	<g:HTMLPanel styleName="{Settings.settingsSuccessHeaderTitleDiv}">

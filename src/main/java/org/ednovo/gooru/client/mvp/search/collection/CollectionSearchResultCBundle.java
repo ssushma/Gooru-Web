@@ -73,6 +73,8 @@ public interface CollectionSearchResultCBundle  extends ClientBundle {
 		String authorContainer();
 		
 		String collaboratorStyle();
+		
+		String imgHeight();
 	}
 
 	@Source("CollectionSearchResult.css")

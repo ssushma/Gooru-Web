@@ -32,8 +32,19 @@ import org.ednovo.gooru.client.mvp.home.GooruGuideInfoVc;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
- * @author Search Team
  * 
+ * @fileName : InvokeGooruGuideBubbleHandler.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface InvokeGooruGuideBubbleHandler extends EventHandler {
 

@@ -49,6 +49,7 @@ public class PartnerFolderDo implements Serializable{
 	private ArrayList<ConceptDo> collections;
 	private ResourceFormatDo resourceFormat;
 	private ResourceTypeDo resourceTypeDo;
+	private String parentGooruOid;
 	
 	public PartnerFolderDo(){}
 
@@ -178,6 +179,14 @@ public class PartnerFolderDo implements Serializable{
 
 	public void setCollections(ArrayList<ConceptDo> collections) {
 		this.collections = collections;
+	}
+
+	public String getParentGooruOid() {
+		return parentGooruOid;
+	}
+
+	public void setParentGooruOid(String parentGooruOid) {
+		this.parentGooruOid = parentGooruOid;
 	}
 	
 	

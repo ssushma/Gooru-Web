@@ -36,6 +36,10 @@ public class SubjectDo implements Serializable {
 	private static final long serialVersionUID = 2411080367742513414L;
 	private String code;
 	private ArrayList<CourseDo> data;
+	private Integer libraryId;
+	private String subjectCode;
+	private String subjectName;
+	private String label;
 	
 	public SubjectDo(){}
 
@@ -65,5 +69,62 @@ public class SubjectDo implements Serializable {
 	 */
 	public void setData(ArrayList<CourseDo> data) {
 		this.data = data;
+	}
+	
+
+	/**
+	 * @return the libraryId
+	 */
+	public Integer getLibraryId() {
+		return libraryId;
+	}
+
+	/**
+	 * @param libraryId the libraryId to set
+	 */
+	public void setLibraryId(Integer libraryId) {
+		this.libraryId = libraryId;
+	}
+
+	/**
+	 * @return the subjectCode
+	 */
+	public String getSubjectCode() {
+		return subjectCode;
+	}
+
+	/**
+	 * @param subjectCode the subjectCode to set
+	 */
+	public void setSubjectCode(String subjectCode) {
+		this.subjectCode = subjectCode;
+	}
+
+	/**
+	 * @return the subjectName
+	 */
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	/**
+	 * @param subjectName the subjectName to set
+	 */
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
+
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }

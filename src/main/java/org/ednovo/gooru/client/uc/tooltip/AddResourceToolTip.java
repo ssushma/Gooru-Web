@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -33,11 +33,13 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AddResourceToolTip extends Composite implements MessageProperties{
+public class AddResourceToolTip extends Composite {
 
 	@UiField HTMLPanel collectionLimit;
 	private static AddResourceToolTipUiBinder uiBinder = GWT
 			.create(AddResourceToolTipUiBinder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 
 	interface AddResourceToolTipUiBinder extends
 			UiBinder<Widget, AddResourceToolTip> {
@@ -45,7 +47,10 @@ public class AddResourceToolTip extends Composite implements MessageProperties{
 
 	public AddResourceToolTip() {
 		initWidget(uiBinder.createAndBindUi(this));
-		collectionLimit.getElement().setInnerHTML(GL1059);
+		collectionLimit.getElement().setInnerHTML(i18n.GL1059());
+		collectionLimit.getElement().setId("pnlCollectionLimit");
+		collectionLimit.getElement().setAttribute("alt", i18n.GL1059());
+		collectionLimit.getElement().setAttribute("title", i18n.GL1059());
 	}
 
 }

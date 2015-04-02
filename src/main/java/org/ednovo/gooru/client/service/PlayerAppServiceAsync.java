@@ -25,20 +25,22 @@
 package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
-
 import java.util.Map;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -51,7 +53,9 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize,AsyncCallback<ResoruceCollectionDo> callback);
 	
-	public void getResourceCollectionItem(String apiKey,String resourceId,String tabView,AsyncCallback<CollectionItemDo> callback);
+	public void getResourceInfoDetails(String apiKey,String resourceId,String tabView,AsyncCallback<CollectionItemDo> callback);
+	
+	public void getResourceObj(String resourceId,AsyncCallback<CollectionItemDo> callback);
 	
 	public void getShortenShareUrl(String contentGooruOid,  AsyncCallback<Map<String, String>> callback);
 	
@@ -61,7 +65,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent,AsyncCallback<String> callback);
 	
-	public void createSessionTracker(String collectionGooruOid,AsyncCallback<String> callback);
+	public void createSessionTracker(String collectionGooruOid,String sessionId,AsyncCallback<String> callback);
 	
 	public void updateSessionInCollection(String sessionTrackerId,AsyncCallback<String> callback);
 	
@@ -80,8 +84,6 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void copyCollectionItem(String collectionItemId,String collectionId,AsyncCallback<String> callback);
 	
 	public void getWorkspaceCollections(String userId,String offset,String limit,AsyncCallback<ArrayList<CollectionItemsList>> callback);
-	
-	public void updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing,AsyncCallback<String> callback);
 	
 	public void getContentReport(String associatedGooruOid,String gooruUid,AsyncCallback<ArrayList<ContentReportDo>> callback);
 	
@@ -108,7 +110,72 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void getFeaturedContent(AsyncCallback<ArrayList<FeaturedContentDo>> callback);
 
 	public void deleteReaction(String gooruReactionId,AsyncCallback<Void> callback);
+	
+	/**
+	 * Creates the star rating by calling an API.
+	 * 
+	 * @param associateGooruOid {@link String}
+	 * @param starRatingValue {@link Integer} Input given by the user i.e score out of 5
+	 * @param callback {@link AsyncCallback}  The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method. 
+	 */
+	public void createStarRatings(String associateGooruOid,int starRatingValue,String userReview,AsyncCallback<StarRatingsDo> callback);
 
+	/**
+	 * Gets the resource star ratings.
+	 * 
+	 * @param gooruOid {@link String}
+	 * @param gooruUid {@link String}
+	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method. 
+	 */
+	public void getResourceStarRatings(String gooruOid, String gooruUid,AsyncCallback<StarRatingsDo> callback);
+	
+	/**
+	 * Gets content Star ratings.
+	 * @param gooruOid {@link String}
+	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
+	 */
+	public void getContentStarRatings(String gooruOid,AsyncCallback<ContentStarRatingsDo> callback);
+	
+	/**
+	 * Updates the resource ratings.
+	 * @param gooruOid {@link String}
+	 * @param score {@link Integer}
+	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
+	 */
+	public void updateResourceStarRatings(String gooruOid,int score,AsyncCallback<ArrayList<StarRatingsDo>>callback);
+	
+	/**
+	 * Gets the user star ratings.
+	 * @param gooruUid {@link String}
+	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
+	 */
+	public void getUserStarRatings(String gooruUid,AsyncCallback<UserStarRatingsDo> callback);
+	
+	/**
+	 * Gets the resource star ratings and reviews.
+	 * @param gooruOid {@link String}
+	 * @param gooruUid {@link String}
+	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
+	 */
+	public void getResourceRatingWithReviews(String gooruOid, String gooruUid,int offSet,AsyncCallback<ArrayList<StarRatingsDo>> callback);
+
+	/**
+	 * Updates resource star reviews.
+	 * @param gooruOid {@link String}
+	 * @param gooruUid {@link String}
+	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
+	 */
+	public void updateResourceStarReviews(String deleteRatingGooruOid,Integer score, String userReview,AsyncCallback<ArrayList<StarRatingsDo>> callback); 
+	
+	public void deleteRating(String deleteRatingGooruOid,AsyncCallback<Void> callback);
+	
+	public void getGoogleDriveFileStatusCode(String fileUrl,AsyncCallback<Integer> callback);
+	
+	public void getYoutubeFeedCallback(String utubeId, AsyncCallback<Map<String,String>> callback);
+	
+	public void getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId,AsyncCallback<InsightsCollectionDo> callback);
+	
+	public void getNextCollectionFromToc(String folderId,String collectionItemId,AsyncCallback<FolderWhatsNextCollectionDo> callback);
 	
 	
 }

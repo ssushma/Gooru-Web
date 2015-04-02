@@ -25,10 +25,13 @@
 package org.ednovo.gooru.client.mvp.folders.edit.tab.info;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -38,6 +41,7 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.GradeLabel;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -47,6 +51,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -77,7 +82,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, coursesPanel, KinderGarten, higherEducation;
 
 	@UiField
-	Label courseMaxMsg, standardMaxMsg, courseLabel, standardLabel;
+	Label GradeUpdate,courseMaxMsg, standardMaxMsg, courseLabel, standardLabel;
 
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
@@ -86,6 +91,8 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 	FolderCBundle res;
 
 	private CollectionDo collectionDo = null;
+	
+	private static final List<String> gradeList = new ArrayList<String>();
 	
 	private CollectionDo parentCollectionDo = null;
 
@@ -116,7 +123,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 
 			@Override
-			public void keyAction(String text) {
+			public void keyAction(String text,KeyUpEvent event) {
 				standardSearchDo.setSearchResults(null);
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
@@ -135,6 +142,22 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		FolderCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		addStandardBtn.setVisible(false);
+		courseLabel.getElement().setId("lblCourse");
+		courseData.getElement().setId("fpnlCourseData");
+		collectionCourseLst.getElement().setId("glbCollectionCourseLst");
+		addCourseBtn.getElement().setId("btnAddCource");
+		courseMaxMsg.getElement().setId("lblCourseMaxMsg");
+		coursesPanel.getElement().setId("pnlCoursesPanel");
+		KinderGarten.getElement().setId("fpnlKinderGarten");
+		gradeTopList.getElement().setId("fpnlGradeTopList");
+		gradeMiddleList.getElement().setId("fpnlGradeMiddleList");
+		gradeBottomList.getElement().setId("fpnlGradeBottomList");
+		higherEducation.getElement().setId("fpnlHigherEducation");
+		standardLabel.getElement().setId("lblStandard");
+		standardSgstBox.getElement().setId("tbautoStandardsSgst");
+		addStandardBtn.getElement().setId("btnAddStandard");
+		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		standardsPanel.getElement().setId("pnlStandards");
 	}
 
 	@Override
@@ -339,23 +362,82 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		standardMaxMsg.removeStyleName(FolderCBundle.INSTANCE.css().standardMax());
 		standardsPanel.removeStyleName(FolderCBundle.INSTANCE.css().floatLeftNeeded());
 	}
+	
+	public GradeLabel setGradeLabelValues(String label, CollectionDo collectionDoInternal)
+	{
+		GradeLabel gradeLblKindergarten = new GradeLabel(label, collectionDoInternal) {			
+			@Override
+			public void onClick(ClickEvent event) {
+				GradeUpdate.setVisible(true);
+			
+				gradeTopList.setVisible(false);
+				gradeMiddleList.setVisible(false);
+				gradeBottomList.setVisible(false);
+				KinderGarten.setVisible(false);
+				higherEducation.setVisible(false);
+				if(this.getElement().getAttribute("selected") != null)
+				{
+				if(this.getElement().getAttribute("selected").contains("selected")){
+					this.getElement().getStyle().setProperty("background", "");
+					this.getElement().getStyle().setColor("#999");
+					this.getElement().removeAttribute("selected");
+					try
+					{
+					gradeList.remove(this.getText());	
+					}
+					catch(Exception ex)
+					{
+						
+					}
+				
+				} else {
+					this.getElement().getStyle().setProperty("background", "#0F76BB");
+					this.getElement().getStyle().setColor("#fff");
+					this.getElement().setAttribute("selected", "selected");
+					if(!gradeList.contains(this.getText())){
+						gradeList.add(this.getText());
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+							MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+						}
+					}
+				}
+				} else {
+					this.getElement().getStyle().setProperty("background", "#0F76BB");
+					this.getElement().getStyle().setColor("#fff");
+					this.getElement().setAttribute("selected", "selected");
+					if(!gradeList.contains(this.getText())){
+						gradeList.add(this.getText());
+						//updateGrade(gradeList);
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+							MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+						}
+					}
+				}
+				updateGrade(gradeList);
+				
+			}
+			
+		
+		};
+		return gradeLblKindergarten;
+	}
 
 	/**
 	 * separate the view according to grade level of the collection
 	 */
 	public void setGradeList() {
 		
-		KinderGarten.add(new GradeLabel("Kindergarten", collectionDo));
-		higherEducation.add(new GradeLabel("Higher Education", collectionDo));
+		KinderGarten.add(setGradeLabelValues("Kindergarten", collectionDo));
+		higherEducation.add(setGradeLabelValues("Higher Education", collectionDo));
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 4) {
-				gradeTopList.add(new GradeLabel(i + "", collectionDo));
+				gradeTopList.add(setGradeLabelValues(i + "", collectionDo));
 			}
 			if (i <= 8 && i >= 5) {
-				gradeMiddleList.add(new GradeLabel(i + "", collectionDo));
+				gradeMiddleList.add(setGradeLabelValues(i + "", collectionDo));
 			}
 			if (i <= 12 && i >= 9) {
-				gradeBottomList.add(new GradeLabel(i + "", collectionDo));
+				gradeBottomList.add(setGradeLabelValues(i + "", collectionDo));
 			}
 		}
 	}
@@ -418,9 +500,13 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 			/*courseLabel.setText("COURSE" + " (" + coursesPanel.getWidgetCount() + ")");*/
 			
 			courseLabel.setText("COURSE(S)");
+			courseLabel.getElement().setAttribute("alt","COURSE(S)");
+			courseLabel.getElement().setAttribute("title","COURSE(S)");
 			
 		} else {
 			courseLabel.setText("COURSE(S)");
+			courseLabel.getElement().setAttribute("alt","COURSE(S)");
+			courseLabel.getElement().setAttribute("title","COURSE(S)");
 		}
 	}
 
@@ -551,6 +637,39 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 			gradeStr.append(Integer.parseInt(gradeList[0]));
 		}
 		return gradeStr.toString();
+	}
+	
+	private void updateGrade(List<String> gradeListInternal){
+	AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, join(gradeListInternal, ","), null, null, null,null,null,null, new SimpleAsyncCallback<CollectionDo>(){
+			
+			@Override
+			public void onSuccess(CollectionDo result) {
+				GradeUpdate.setVisible(false);
+				gradeTopList.setVisible(true);
+				gradeMiddleList.setVisible(true);
+				gradeBottomList.setVisible(true);
+				KinderGarten.setVisible(true);
+				higherEducation.setVisible(true);
+				gradeList.clear();
+				List<String> items = Arrays.asList(result.getGrade().split("\\s*,\\s*"));
+				gradeList.addAll(items);
+				collectionDo.setGrade(result.getGrade());
+			}
+		});
+	}
+	
+	private String join(List<?> list,String separator){
+		StringBuilder builder =null;
+		if(list != null){
+			builder = new StringBuilder();
+			for(Object value:list){
+				if(builder.length() > 0){
+					builder.append(separator);
+				}
+				builder.append(value);
+			}
+		}
+		return builder.toString();
 	}
 
 

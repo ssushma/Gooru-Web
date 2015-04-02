@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.faq;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class CustomizeVc extends Composite implements MessageProperties{
+public class CustomizeVc extends Composite{
 
 	@UiField Anchor watchVideoText,watchVideoImage;
 	@UiField Label guideStudentsText;
@@ -49,16 +49,25 @@ public class CustomizeVc extends Composite implements MessageProperties{
 
 	interface customizeUiBinder extends UiBinder<Widget, CustomizeVc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
 	 */
 	public CustomizeVc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		watchVideoText.setText(GL1340);
+		watchVideoText.setText(i18n.GL1340());
+		watchVideoText.getElement().setId("lnkWatchVideoText");
+		watchVideoText.getElement().setAttribute("alt",i18n.GL1340());
+		watchVideoText.getElement().setAttribute("title",i18n.GL1340());
 		watchVideoText.setHref("http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources");
 		watchVideoImage.setHref("http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources");
-		guideStudentsText.setText(GL1341+GL_SPL_FULLSTOP);
+		watchVideoImage.getElement().setId("lnkWatchVideoImage");
+		guideStudentsText.setText(i18n.GL1341()+i18n.GL_SPL_FULLSTOP());
+		guideStudentsText.getElement().setId("lblGuideStudentsText");
+		guideStudentsText.getElement().setAttribute("alt",i18n.GL1341());
+		guideStudentsText.getElement().setAttribute("title",i18n.GL1341());
 	}
 
 }

@@ -29,31 +29,43 @@ package org.ednovo.gooru.client.mvp.search.collection;
 
 import java.util.List;
 
-import org.apache.commons.digester.SetNextRule;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
-import org.ednovo.gooru.client.mvp.search.MoreInfoFieldVc;
 import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
 import org.ednovo.gooru.client.mvp.search.SimpleResourceVc;
+import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchEvent;
+import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchHandler;
+import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 
 /**
  * @author Search Team
  * 
  */
-public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResultDo, CollectionItemSearchResultDo> implements MessageProperties {
+public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResultDo, CollectionItemSearchResultDo> {
 	
-	private static final String NO_RESOURCES_IN_THIS_COLLECTION = GL0684;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	private static final String RESOURCES_IN_THIS_COLLECTION=GL1094;
+	private static final String NO_RESOURCES_IN_THIS_COLLECTION = i18n.GL0684();
+	
+	private static final String RESOURCES_IN_THIS_COLLECTION=i18n.GL1094();
 
 	private String collectionId;
+	
+	UpdateViewCountInSearchHandler updateResourcesViewCount=new UpdateViewCountInSearchHandler() {
+		@Override
+		public void updateCollectionResourceViewCountInCollectionSerach(CollectionDo collectionDo) {
+			updateCollectionResourceViewCountInCollection(collectionDo);
+		}
+	};
 	/**
 	 * Class constructor
 	 * @param searchDragController instance of {@link ResourceDragController}
@@ -61,21 +73,29 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 	public CollectionMoreInfoVc(ResourceDragController searchDragController,String collectionId) {
 		super(searchDragController,false);
 		this.collectionId=collectionId;
-		getRightsField().setVisible(false);
-		getLikesField().setVisible(false);
+/*		getRightsField().setVisible(false);
+		getLikesField().setVisible(false);*/
+		AppClientFactory.getEventBus().addHandler(UpdateViewCountInSearchEvent.TYPE,updateResourcesViewCount);
 	}
 
 	@Override
 	public void renderUsedInResource(CollectionItemSearchResultDo usedInResource) {
 		usedInResource.setCollectionId(collectionId);
-			getUsedInResourcesPanel().addDraggable(new SimpleResourceVc(usedInResource, getUsedInResourcesPanel().getWidgetCount() + 1));
+		SimpleResourceVc simpleReosurceView=new SimpleResourceVc(usedInResource, getUsedInResourcesPanel().getWidgetCount() + 1);
+		getSimpleResourceMap().put(usedInResource.getCollectionItemId(), simpleReosurceView);
+		boolean device = BrowserAgent.isDevice();
+		if (device){
+			getUsedInResourcesPanel().add(simpleReosurceView);
+		}else{
+			getUsedInResourcesPanel().addDraggable(simpleReosurceView);
+		}
 	}
 
 	@Override
 	public void setUsedInResources(List<CollectionItemSearchResultDo> usedInResources) {
-		gradeFieldVc = new MoreInfoFieldVc();
+//		gradeFieldVc = new MoreInfoFieldVc();
 		if (usedInResources.size() == 0) {
-			getMessageInfo().setMessage(NO_RESOURCES_IN_THIS_COLLECTION, GL0091);
+			getMessageInfo().setMessage(NO_RESOURCES_IN_THIS_COLLECTION, i18n.GL0091());
 			getMessageInfo().getElement().getStyle().setDisplay(Display.BLOCK); 
 		} else {
 			setResourceCountTxt(RESOURCES_IN_THIS_COLLECTION);
@@ -86,15 +106,16 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 		for (int j=0; j<getUsedInSearchDo().getCollectionItemsCount()-1; j++){
 			
 			String mediaType = getUsedInSearchDo().getSearchResults().get(j).getMediaType();
-			boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
-			if (notFriendly){
+			boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+			//boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
+			if (!notFriendly){
 				notMobileFriendly++;
 			}
 		}
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
 			showNotFriendly(notMobileFriendly>0 ? true : false);
-			setNotFriendly(StringUtil.generateMessage("("+GL0449+")", String.valueOf(notMobileFriendly), notMobileFriendly>1 ?GL_GRR_ARE :GL_GRR_IS));
+			setNotFriendly(StringUtil.generateMessage("("+i18n.GL0449()+")", String.valueOf(notMobileFriendly), notMobileFriendly>1 ?i18n.GL_GRR_ARE() :i18n.GL_GRR_IS()));
 		}else{
 			showNotFriendly(false);
 		}
@@ -106,6 +127,16 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 	public void requestUsedInResources() {
 		//AppClientFactory.getInjector().getSearchService().getCollectionResources(getUsedInSearchDo(), getUsedInResourcesAsyncCallback());
 		AppClientFactory.getInjector().getSearchService().getCollectionItems(collectionId, getUsedInResourcesAsyncCallback());
+	}
+
+
+	public void updateCollectionResourceViewCountInCollection(CollectionDo collectionDo){
+		if(collectionDo!=null&&collectionId!=null&&collectionDo.getGooruOid().equals(collectionId)){
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+				SimpleResourceVc simpleResourceVc=getSimpleResourceMap().get(collectionDo.getCollectionItems().get(i).getCollectionItemId());
+				simpleResourceVc.updateResourceViewCount(collectionDo.getCollectionItems().get(i).getViews());
+			}
+		}
 	}
 
 }

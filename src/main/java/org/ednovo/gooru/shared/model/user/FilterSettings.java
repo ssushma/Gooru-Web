@@ -67,6 +67,8 @@ public class FilterSettings implements Serializable {
 	
 	private String analyticsEndPoint;
 	
+	private String communityLibraryGooruOid;
+	
 	public FilterSettings(){}
 	
 	public String getApiKeyPoint() {
@@ -231,6 +233,14 @@ public class FilterSettings implements Serializable {
 
 	public void setAnalyticsEndPoint(String analyticsEndPoint) {
 		this.analyticsEndPoint = analyticsEndPoint;
+	}
+
+	public String getCommunityLibraryGooruOid() {
+		return communityLibraryGooruOid;
+	}
+
+	public void setCommunityLibraryGooruOid(String communityLibraryGooruOid) {
+		this.communityLibraryGooruOid = communityLibraryGooruOid;
 	}
 	
 }

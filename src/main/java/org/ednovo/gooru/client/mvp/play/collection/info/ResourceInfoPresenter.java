@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.collection.info;
 
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
@@ -37,6 +38,10 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> implements ResourceInfoUiHandlers{
 
 	private CollectionItemDo collectionItemDo=null;
+	
+	private CollectionPlayerPresenter collectionPlayerPresenter;
+	
+	public String mycollectionTitle;
 	
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -53,13 +58,19 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 				return;
 			}else{
 				this.collectionItemDo=collectionItemDo;
+				getView().setCollectionTitle(mycollectionTitle);
 				getView().setResourceMedaDataInfo(collectionItemDo);
 			}		
 		}
 		else{
 			this.collectionItemDo=collectionItemDo;
+			getView().setCollectionTitle(mycollectionTitle);
 			getView().setResourceMedaDataInfo(collectionItemDo);
 		}
+	}
+	
+	public void setCollectionType(String collectionType){
+		getView().setCollectionType(collectionType);
 	}
 	
 	public void updateViewsCount(String viewCount){
@@ -67,7 +78,6 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 	}
 	
 	public void updateLikesCount(int likesCount){
-		//getView().setResourceLikesCount(likesCount);
 	}
 
 	@Override
@@ -82,6 +92,33 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 	
 	public void resetResourceInfo(){
 		collectionItemDo=null;
+	}
+
+	public void setMycollectionTitle(String mycollectionTitle) {
+		this.mycollectionTitle = mycollectionTitle;
+	}
+	
+	public String getMycollectionTitle() {
+		return mycollectionTitle;
+	}
+
+	@Override
+	public void getAddedResourceTags(String resourceId) {
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.getResourceTagsToDisplay(resourceId);
+		}
+		
+	}
+
+	public CollectionPlayerPresenter getCollectionPlayerPresenter() {
+		return collectionPlayerPresenter;
+	}
+
+	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
+		this.collectionPlayerPresenter = collectionPlayerPresenter;
+	}
+	public void insertHideButtonAtLast(){
+		getView().insertHideButtonAtLast();
 	}
 
 }

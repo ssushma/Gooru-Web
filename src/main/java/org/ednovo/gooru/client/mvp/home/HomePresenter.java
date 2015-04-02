@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,10 +45,12 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpAfterThirt
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.authentication.uc.StudentSignUpUc;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
+import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderHandler;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -55,23 +59,30 @@ import org.ednovo.gooru.client.service.HomeServiceAsync;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -85,7 +96,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @author Search Team
  * 
  */
-public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers,MessageProperties {
+public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers {
 
 	@Inject
 	private SearchServiceAsync searchService;
@@ -99,7 +110,19 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@UiField
 	SearchHomeFilterVc searchHomeFilter;
 	
+	public static final  Object CONTRIBUTORS_SLOT = new Object();
+	
+	/** 
+	 * This method is to get the contributorsSlot
+	 */
+	@Override
+	public  Object getContributorsSlot() {
+		return CONTRIBUTORS_SLOT;
+	}
+
 	SignUpPresenter signUpViewPresenter = null;
+	
+	ContributorsPresenter contributorsPresenter = null;
 	
 	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
 	
@@ -138,6 +161,14 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	private static final String LOGINEVENT = "loginEvent";
 	
+	private static final String ERROR = "error";
+	
+	private static final String CREDENTIAL = "Credential";
+	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	
 	private String parentGooruUID;
 	
 	private boolean isLandingPageLoaded = false;
@@ -147,6 +178,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
+	
+//	PreFilterPopup preFilter = new PreFilterPopup();
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -155,13 +190,16 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy) {
+	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.userRegistrationPresenter = userRegistrationPresenter;
 		this.signUpCompletePresenter = signUpCompletePresenter;
 		this.signUpAfterThirteenPresenter=signUpAfterThirteenPresenter;
+		this.contributorsPresenter = contributorsPresenter;
+		
 		
 		addRegisteredHandler(SetTexasPlaceHolderEvent.TYPE, new SetTexasPlaceHolderHandler() {
 			
@@ -170,14 +208,13 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				
 			}
 		});
-		
-		
-		
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 		MixpanelUtil.Arrive_Landing_Page();
 		setRegisterdUserAsyncCallback(new SimpleAsyncCallback<UserDo>() {
 			@Override
@@ -190,13 +227,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_ANONYMOUS);
 		} else {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_LOGGEDIN);
 		}
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.HOME));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 /*		isLandingPageLoaded = false;
 		if(!isLandingPageLoaded) {
@@ -208,7 +247,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	
 	private void callBackMethods(){
-
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
 			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		}
@@ -216,7 +254,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			this.getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 			parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("changePassword")) {
-			getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+			validateResetLink(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("register")) {
 			getView().registerPopup();
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
@@ -299,36 +337,58 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		}
 		
+		if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("401") && AppClientFactory.isAnonymous()) {
+			new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+		}
+		
+
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
-//			AppClientFactory.getInjector().getUserService().getUserProfileDetails(userDo.getGooruUId(), new SimpleAsyncCallback<SettingDo>(){
-//
-//				@Override
-//				public void onSuccess(SettingDo result) {
-////					MixpanelUtil.Arrive_AlmostDone_Popup();
-////					String email = result.getExternalId();
-////					AppClientFactory.getLoggedInUser().setEmailId(result.getExternalId());
-////					SignUpRoleView signUpRoleView = new SignUpRoleView(email, userDo);
-////					AlmostDoneUc popup = new AlmostDoneUc(email,userDo);  
-////					popup.setGlassEnabled(true);
-////					popup.show();
-////					popup.center();
-//				}				
-//			});
-			
+		//Show Popup where user can update his details like, username and role. Show this only for non regular user and if he is logging for the first time.
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase(CREDENTIAL)) {
+			Window.enableScrolling(false);
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
+			Document doc=Document.get();
+			Element bodyelement = doc.getBody();
+			Window.scrollTo(0, 0);
+			bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 		}
-		else if(flag<=8 && !AppClientFactory.isAnonymous()){
+		else if(flag>0 && flag<=11 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
 		}
+
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
+	}
+	
+	private void validateResetLink(String resetToken) {
+		// TODO Auto-generated method stub
+		AppClientFactory.getInjector().getUserService().isValidResetPasswordLink(resetToken, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				if(result.equals("true")){
+					getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+				}else{
+					new AlertMessageUc(i18n.GL1089(), new HTML(i18n.GL0100()));
+				}
+			}
+		});
 	}
 
 	@Override
 	public void onReset() {
 		super.onReset();
-		
+		/*Window.enableScrolling(true);
+		Window.scrollTo(0, 0);*/
+		if (AppClientFactory.isAnonymous()){
+			getView().getBtnSignUp().setVisible(true);
+		}else{
+			getView().getBtnSignUp().setVisible(false);
+		}
 	}
 	
 	private void getIntoLibrarypage() {
@@ -348,7 +408,14 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		super.prepareFromRequest(request);
 		request.getParameter("", "register");
 		callBackMethods();
+		
 		getIntoLibrarypage();
+		if (AppClientFactory.isAnonymous()){
+			getView().getBtnSignUp().setVisible(true);
+		}else{
+			getView().getBtnSignUp().setVisible(false);
+		}
+		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
 	}
 
 	@Override
@@ -420,7 +487,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		String userType = getPlaceManager().getRequestParameter(USER_TYPE);
 		if (userType == null || (userType != null && !userType.equalsIgnoreCase("Parent") && !userType.equalsIgnoreCase("NonParent"))) {
 
-			alert(GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP, GL1416);
+			alert(i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP(), i18n.GL1416());
 
 		} else if (user != null) {
 			if (user.isAvailability()) {
@@ -433,11 +500,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 						addToPopupSlot(userRegistrationPresenter, true); 
 					}
 					else {
-						alert(GL0065+GL_SPL_FULLSTOP, GL1417);
+						alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1417());
 						
 					}
 				} else if (user.getConfirmStatus() == 1 && !userType.equalsIgnoreCase("Parent")) {
-					alert(GL0065+GL_SPL_FULLSTOP, GL1418); 
+					alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1418()); 
 				} 
 				else {
 					userRegistrationPresenter.setAccountType(userType);
@@ -445,11 +512,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					addToPopupSlot(userRegistrationPresenter, true);
 				}
 			} else {
-				alert(GL0065+GL_SPL_FULLSTOP, GL1419);
+				alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1419());
 			}
 
 		} else {
-			alert(GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP, GL1420+GL_SPL_FULLSTOP);
+			alert(i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP(), i18n.GL1420()+i18n.GL_SPL_FULLSTOP());
 		}
 	}
 
@@ -515,8 +582,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		getStandardSuggestionAsyncCallback().execute(searchDo);
 	}
 	public void showMarketingPopup(UserDo userDo){
-		System.out.println("showMarketingPopup");
-		new ImprovedGooruPopUpView();
+//		new ImprovedGooruPopUpView();
 //		 AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 7, new SimpleAsyncCallback<UserDo>() {
 //				@Override
 //				public void onSuccess(UserDo newUser) {
@@ -554,11 +620,22 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		return autoKeyWordSuggestionAsyncCallback;
 	}
 
+
 	
 	@Override
 	public void requestAutoSuggestKeyword(
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
 			getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
 	}
-
+	@Override
+	public void generatePartnerLibraries() {
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+			@Override
+			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
+				if (partnersList != null){
+					getView().displayPartnerLibraries(partnersList);
+				}
+			}
+		});
+	}
 }

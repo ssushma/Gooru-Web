@@ -4,20 +4,34 @@
 .collectionWrapper {
 	position: relative;
 	margin: 50px auto;
-	background-color: #E5E5E5;
+	background-color: #efefef;
 	width: 960px;
+	border: 1px solid #ccc;
+}
+.collectionWrapper1{
+	position: relative;
+	margin: 0 auto;
+	background-color: #efefef;
+	width: 960px;
+	border: 1px solid #ccc;
 }
 .collectionContent {
 	float: left;
 	width: 216px;
 }
+.collectionContent1{
+		float: left;
+	width: 194px;
+}
 .collectionImage {
-	margin-left: 10px;
-	width:196px;
-	height:226px;
+	margin-top: 60px;
+	width:185px;
+	height:126px;
+	margin-left: 394px;
 }
 .collectionSpecsRight {
 	float: left;
+	margin-top: 60px;
 	/* width: 650px; *//* removed because to remove the extra space*/
 }
 .collectionDesc {
@@ -35,11 +49,10 @@
 	text-align: center;
 	padding-top: 70px;
 	padding-bottom: 10px;
-	border-bottom: 1px solid #ddd;
-	padding-left: 50px;
+	/* border-bottom: 1px solid #ddd; */
 }
 .collectionCoursecontent {
-	background-color: #E5E5E5;
+	background-color: #efefef;
 	border-radius: 4px;
 	padding: 5px 10px;
 	min-height: 233px;
@@ -100,4 +113,56 @@
 }
 .communityStandardStyle:hover{
 	color: #87BADD;
+}
+
+.h3 {
+	font-size: 22px;
+}
+.h4 {
+	font-size: 16px;
+	line-height: 350%;
+}
+.h3, .h4, .desc {
+	color: #515151;
+}
+.display {
+	width: 960px;
+	margin: 0 auto;
+	margin-top: 50px;
+	border: 1px solid #ccc;
+}
+.player-bg {
+	text-align: center;
+	padding: 20px;
+	min-height: 500px;
+	background-color: #efefef;
+}
+.resource-thumbnail {
+	position: relative;
+	padding: 60px 0px;
+}
+.resource-image {
+	width: 80px;
+	height: 60px;
+}
+.resource-type {
+	position: absolute;
+	top: 80px;
+	left: 420px;
+	width: 27px;
+	height: 20px;
+	cursor: pointer;
+	background: url(../images/resource-type-icons.png) no-repeat;
+}
+.desc {
+	font-size: 13px;
+	width: 451px;
+	margin-left: 246px;
+	margin-top: 25px;
+	
+}
+.readMore {
+	color: #1076bb;
+	cursor: pointer;
+	display: inline;
 }

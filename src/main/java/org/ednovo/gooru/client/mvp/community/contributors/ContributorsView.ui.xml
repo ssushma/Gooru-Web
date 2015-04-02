@@ -1,0 +1,10 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="fc" src="featured.css" type="org.ednovo.gooru.client.mvp.community.contributors.ContributorsCBundle" />
+	<g:HTMLPanel ui:field="panelFeaturedContributors" styleName="{fc.panelFeaturedContributors}">
+	    <g:HTMLPanel ui:field="panelContributorsList" styleName="{fc.contriburotsListContainer}">
+	    </g:HTMLPanel>
+	    <g:Anchor ui:field="ancView" styleName="{fc.viewMore}"></g:Anchor>
+	</g:HTMLPanel>
+</ui:UiBinder>

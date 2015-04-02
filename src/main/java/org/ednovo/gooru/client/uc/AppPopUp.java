@@ -24,9 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
-import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -37,10 +39,15 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class AppPopUp extends PopupPanel {
-
+	
+	private FlowPanel mainPanel;
+	private FlowPanel innerPanel;
 	private FlowPanel headerPanel;
 	private FlowPanel content;
 	private Label labletitle;
+
+	private HTMLEventPanel closeBtn;
+
 
 	/**
 	 * Class constructor 
@@ -48,15 +55,40 @@ public class AppPopUp extends PopupPanel {
 	public AppPopUp() {
 		super(false);
 		ShelfCBundle.INSTANCE.css().ensureInjected();
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemShortenUrlPopUp());
+
+		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
+		mainPanel=new FlowPanel();
+		innerPanel=new FlowPanel();
+		mainPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainVVSmall());
+		innerPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().popupInnerGrey());
 		headerPanel = new FlowPanel();
+		headerPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().popupgreyHeader());
+		FlowPanel row=new FlowPanel();
+		row.addStyleName("row");	
 		content = new FlowPanel();
-		headerPanel.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUpOuterDiv());
 		labletitle = new Label();
-		labletitle.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemHeaderText());
-		headerPanel.add(labletitle);
-		content.add(headerPanel);
+		labletitle.addStyleName("col-md-11 col-xs-11");
+		row.add(labletitle);
+		FlowPanel clearfix=new FlowPanel();
+		clearfix.addStyleName("clearfix");
+		row.add(clearfix);
+		closeBtn = new HTMLEventPanel("");
+
+		closeBtn.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeButton());
+		closeBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+		});
+		row.add(closeBtn);
+		headerPanel.add(row);
+		innerPanel.add(headerPanel);
+		mainPanel.add(innerPanel);
+		mainPanel.add(clearfix);
+		content.add(mainPanel);
+
 		this.setWidget(content);
 		setGlassEnabled(true);
 		setAutoHideOnHistoryEventsEnabled(true);
@@ -75,11 +107,9 @@ public class AppPopUp extends PopupPanel {
 	public AppPopUp(String type){
 		super(false);
 			ShelfCBundle.INSTANCE.css().ensureInjected();
-			this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
 			content = new FlowPanel();
 			this.setWidget(content);
 			setGlassEnabled(true);
-		
 	}
 	
 	/**
@@ -89,28 +119,17 @@ public class AppPopUp extends PopupPanel {
 	public AppPopUp(String type,boolean isAutoHide){
 		super(isAutoHide);
 		ShelfCBundle.INSTANCE.css().ensureInjected();
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
 		content = new FlowPanel();
 		this.setWidget(content);
 		setGlassEnabled(true);
 	}
-	/**
-	 * Class constructor with two parameter
-	 * @param title of  AppPopUp
-	 * @param widget instance of {@link Widget} 
-	 */
-	/*public AppPopUp(String title, Widget widget) {
-		this();
-		setContent(title, widget);
-	}*/
-
 	/**
 	 * Set appPopUp content
 	 * @param title for appPopUp
 	 * @param widget instance of {@link Widget}
 	 */
 	public void setContent(String title, Widget widget) {
-		content.add(widget);
+		innerPanel.add(widget);
 		setViewTitle(title);
 	}
 
@@ -118,6 +137,12 @@ public class AppPopUp extends PopupPanel {
 		return headerPanel;
 	}
 
+	public FlowPanel getMainPanel(){
+		return mainPanel;
+	}
+	public FlowPanel getInnerPanel(){
+		return innerPanel;
+	}
 	public void setHeaderPanel(FlowPanel headerPanel) {
 		this.headerPanel = headerPanel;
 	}
@@ -128,6 +153,15 @@ public class AppPopUp extends PopupPanel {
 	
 	public void setViewTitle(String title) {
 		labletitle.setText(title);
+		labletitle.getElement().setAttribute("alt",title);
+		labletitle.getElement().setAttribute("title",title);
+	}
+
+	public HTMLEventPanel getCloseBtn() {
+		return closeBtn;
+	}
+	public void setCloseBtn(HTMLEventPanel closeBtn) {
+		this.closeBtn = closeBtn;
 	}
 	
 }

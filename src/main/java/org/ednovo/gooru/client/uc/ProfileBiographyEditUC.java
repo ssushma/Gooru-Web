@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -75,6 +77,9 @@ public class ProfileBiographyEditUC extends Composite implements
 	public ProfileBiographyEditUC() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("pnlEditLabel");
 		deckPanel.showWidget(0);
 		
 		biographyLabel = new InlineLabel();
@@ -87,6 +92,7 @@ public class ProfileBiographyEditUC extends Composite implements
 		editTextBox.getElement().setAttribute("maxlength", "500");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setAttribute("id", "txtAreaAboutYourself");
+		StringUtil.setAttributes(editTextBox, true);
 		
 	}
 
@@ -199,6 +205,8 @@ public class ProfileBiographyEditUC extends Composite implements
 		editLabel.add(biographyLabel);
 		editLabel.add(biographyEditImage);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**

@@ -52,7 +52,13 @@ public class LicencegItemVc extends Composite {
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		licenceTitle.setHTML(title);
+		licenceTitle.getElement().setId("htmlLicenceTitle");
+		licenceTitle.getElement().setAttribute("alt", title);
+		licenceTitle.getElement().setAttribute("title", title);
 		licenceDesc.setHTML(desc);
+		licenceDesc.getElement().setId("htmlLicenceDesc");
+		licenceDesc.getElement().setAttribute("alt", desc);
+		licenceDesc.getElement().setAttribute("title", desc);
 		
 	}
 

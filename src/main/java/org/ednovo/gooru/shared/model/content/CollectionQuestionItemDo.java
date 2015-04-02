@@ -28,6 +28,9 @@ package org.ednovo.gooru.shared.model.content;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
+
+import org.ednovo.gooru.shared.model.code.CodeDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -54,6 +57,9 @@ public class CollectionQuestionItemDo implements Serializable {
 	private int timeToCompleteInSecs;
 	private HashMap<String,ArrayList<QuestionHintsDo>> hints;
 	private HashMap<String,ArrayList<QuestionAnswerDo>> answers;
+	private HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse;
+	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
+	private HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledges;
 	
 	public CollectionQuestionItemDo(){}
 	
@@ -146,5 +152,30 @@ public class CollectionQuestionItemDo implements Serializable {
 		this.hints = hints;
 	}
 
+	public HashMap<String, ArrayList<CodeDo>> getTaxonomySet() {
+		return taxonomySet;
+	}
+
+	public void setTaxonomySet(HashMap<String, ArrayList<CodeDo>> taxonomySet) {
+		this.taxonomySet = taxonomySet;
+	}
+
+	public HashMap<String, ArrayList<checkboxSelectedDo>> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+
+	public void setDepthOfKnowledges(
+			HashMap<String, ArrayList<checkboxSelectedDo>> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
+	}
+
+	public HashMap<String, ArrayList<checkboxSelectedDo>> getEducationalUse() {
+		return educationalUse;
+	}
+
+	public void setEducationalUse(
+			HashMap<String, ArrayList<checkboxSelectedDo>> educationalUse) {
+		this.educationalUse = educationalUse;
+	}
 	
 }

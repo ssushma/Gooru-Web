@@ -7,7 +7,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionTabTitleVc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.BorderStyle;
@@ -28,10 +28,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author ibc
  *
  */
-public abstract class CollectionAnalyticsUc extends PopupPanel implements MessageProperties {
+public abstract class CollectionAnalyticsUc extends PopupPanel {
 
 	private static CollectionAnalyticsUcUiBinder uiBinder = GWT
 			.create(CollectionAnalyticsUcUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionAnalyticsUcUiBinder extends
 			UiBinder<Widget, CollectionAnalyticsUc> {
@@ -44,21 +46,27 @@ public abstract class CollectionAnalyticsUc extends PopupPanel implements Messag
 	
 	@UiField Label analyticsHeaderLbl,closeButton;
 
-	@UiField FlowPanel analyticsBodyLbl;
+	@UiField FlowPanel analyticsBodyLbl,headerPanel,contentPanel;
 
 	public CollectionAnalyticsUc(final String gooruOid ,String collectionName, CollectionTabTitleVc presentTab) {
 		setWidget(uiBinder.createAndBindUi(this));	
 		if (presentTab!=null){
 			this.presentTab = presentTab;
 		}
-		
+		headerPanel.getElement().setId("fpnlHeaderPanel");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		analyticsBodyLbl.getElement().setId("fpnlAnalyticsBodyLbl");
 		this.getElement().getStyle().setWidth(100, Unit.PCT);
 		this.getElement().getStyle().setHeight(100, Unit.PCT);
 		this.getElement().getStyle().setPadding(0, Unit.PX);
 		this.getElement().getStyle().setZIndex(99999);
 		
 		final int height = Window.getClientHeight()-40;
-		analyticsHeaderLbl.setText(GL0831+" "+GL_GRR_Hyphen+" "+collectionName);
+		analyticsHeaderLbl.getElement().setId("lblAnalyticsHeaderLbl");
+		analyticsHeaderLbl.setText(i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
+		analyticsHeaderLbl.getElement().setAttribute("alt", i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
+		analyticsHeaderLbl.getElement().setAttribute("title", i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
+		closeButton.getElement().setId("lblCloseButton");
 		Window.scrollTo(0, 0);
 				
 		AppClientFactory.getInjector().getAppService().getAnalyticsURL("collection", gooruOid, new SimpleAsyncCallback<String>() {

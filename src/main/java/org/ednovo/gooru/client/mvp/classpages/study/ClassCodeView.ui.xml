@@ -1,25 +1,77 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:twf="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:txt="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 
 	<ui:style field="StudyStyle" src="StudyStyles.css" />
 
-	<g:HTMLPanel styleName="{StudyStyle.classPageContainer}">
-		<g:HTMLPanel styleName="{StudyStyle.classPageContentDiv}">
-			<g:HTMLPanel styleName="{StudyStyle.classPageContentDesc}" ui:field="enterClassCodeText"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{StudyStyle.classPageSearchContainer}">
-				<g:HTMLPanel styleName="{StudyStyle.classPageSearchDesc}" ui:field="classCodelbl"></g:HTMLPanel>
-				<g:HTMLPanel>
-					<twf:TextBoxWithFocus styleName="{StudyStyle.classPageSearchInput}"
-						ui:field="tbCode" />
-				</g:HTMLPanel>
-				<g:Button styleName="primary"
-					ui:field="enterLbl"></g:Button>
+	<g:HTMLPanel styleName="">
+		<g:HTMLPanel styleName="{StudyStyle.container} {StudyStyle.clearfix}">
+			<g:HTMLPanel styleName="{StudyStyle.startsection}">
+				<g:Label styleName="{StudyStyle.title}" ui:field="lblCreateAClass"></g:Label>
+				<g:Label styleName="{StudyStyle.subtitle}" ui:field="lblEasyToOrganize"></g:Label>
+				<br />
+				<g:Button ui:field="btnCreateClass" styleName="primary"></g:Button>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{StudyStyle.clear}"></g:HTMLPanel>
-			<g:Label styleName="{StudyStyle.classPageOrangeText}"
-				ui:field="errorLbl" visible="false"></g:Label>
+			<g:HTMLPanel styleName="{StudyStyle.startsection} {StudyStyle.fright}">
+				<g:HTMLPanel styleName="{StudyStyle.codeBg}">
+					<g:Label styleName="{StudyStyle.codeTitle}" ui:field="lblAccessAClass"></g:Label>
+					<txt:TextBoxWithPlaceholder styleName="{StudyStyle.classCodeTxtBox}" ui:field="txtCode"/>
+					<g:Button styleName="primary" ui:field="btnEnter"></g:Button>
+					<g:Button styleName="primary disabled" ui:field="disabledBtn"></g:Button>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{StudyStyle.clearfix}"></g:HTMLPanel>
+			<g:HTMLPanel styleName="{StudyStyle.leftPanel}">
+				<g:HTMLPanel styleName="{StudyStyle.navBox}">
+					<g:Label styleName="{StudyStyle.h3}" ui:field="lblEasyAccessForStudents"></g:Label>
+					<g:Label styleName="{StudyStyle.desc}" ui:field="lblUniqueClassCode"></g:Label>
+					<g:HTMLPanel styleName="{StudyStyle.hoverCircle}">
+						<g:Label styleName="{StudyStyle.circleTitle}" ui:field="lblOne"></g:Label>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{StudyStyle.navBox}">
+					<g:Label styleName="{StudyStyle.h3}" ui:field="lblManageAssignments"></g:Label>
+					<g:Label styleName="{StudyStyle.desc}" ui:field="lblClearDue"></g:Label>
+					<g:HTMLPanel styleName="{StudyStyle.hoverCircle}">
+						<g:Label styleName="{StudyStyle.circleTitle}" ui:field="lblTwo"></g:Label>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{StudyStyle.navBox}">
+					<g:Label styleName="{StudyStyle.h3}" ui:field="lblMonitorStudentProgress"></g:Label>
+					<g:Label styleName="{StudyStyle.desc}" ui:field="lblMonitorDesc"></g:Label>
+					<g:HTMLPanel styleName="{StudyStyle.hoverCircle}">
+						<g:Label styleName="{StudyStyle.circleTitle}" ui:field="lblThree"></g:Label>
+					</g:HTMLPanel>
+					<g:Anchor styleName="{StudyStyle.navLink}" ui:field="ancSampleReport"></g:Anchor>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{StudyStyle.rightPanel}">
+				<g:Image url="images/EmptyPages/view-img-collection.png" width="690"
+					height="674"></g:Image>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{StudyStyle.classSection}">
+			<g:Label styleName="{StudyStyle.h5}" ui:field="lblFavoriteClasses"></g:Label>
+			<g:HTMLPanel styleName="{StudyStyle.classContent}">
+				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassOne">
+					<g:Image url="images/EmptyPages/algebra.png" width="158" height="132"></g:Image>
+						<g:Label styleName="{StudyStyle.hoverTitle}" ui:field="lblClassOne"></g:Label>
+				</panel:HTMLEventPanel>
+				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassTwo">
+					<g:Image url="images/EmptyPages/ancientcivilization.png" width="158" height="132"></g:Image>
+						<g:Label styleName="{StudyStyle.hoverTitleTwoLine}" ui:field="lblClassTwo"></g:Label>
+				</panel:HTMLEventPanel>
+				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassThree">
+					<g:Image url="images/EmptyPages/physics.png" width="158" height="132"></g:Image>
+						<g:Label styleName="{StudyStyle.hoverTitle}" ui:field="lblClassFour"></g:Label>
+				</panel:HTMLEventPanel>
+				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassFour">
+					<g:Image url="images/EmptyPages/english.png" width="158" height="132"></g:Image>
+						<g:Label styleName="{StudyStyle.hoverTitleTwoLine}" ui:field="lblClassThree"></g:Label>
+				</panel:HTMLEventPanel>
+			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<sg:FooterUc />
 	</g:HTMLPanel>

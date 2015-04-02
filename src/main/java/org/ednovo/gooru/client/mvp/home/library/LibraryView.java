@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
@@ -56,44 +57,79 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
+import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StorageJsonSerializationFactory;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.seanchenxi.gwt.storage.client.StorageExt;
-import com.seanchenxi.gwt.storage.client.StorageKey;
-import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
+import com.googlecode.gwt.serialization.JsonReader;
+import com.googlecode.gwt.serialization.JsonWriter;
 
-public class LibraryView extends Composite implements MessageProperties, ClickHandler {
+public class LibraryView extends Composite implements  ClickHandler {
 
-	@UiField HTMLPanel courseTabs,landingBanner,container,featuredCourseTabs,leftNav,contentScroll,contributorsContainer,courseBanner,featuredEducator,featuredCourses;
+	@UiField
+	static HTMLPanel courseTabs;
 
-	@UiField Label courseTitle, featuredCousesLbl,featuredContributor;
+	@UiField
+	HTMLPanel landingBanner;
+
+	@UiField
+	HTMLPanel container,districtSpecificPartnersMain,districtSpecificPartnersInnerMain,districtSpecificPartnerLogo,districtLibraryHeaderText,districtLibrarySubHeaderText;
+
+	@UiField
+	HTMLPanel featuredCourseTabs;
+
+	@UiField
+	HTMLPanel leftNav;
+
+	@UiField
+	HTMLPanel contentScroll, libraryMetaDataContainer;
+
+	@UiField
+	HTMLPanel contributorsContainer;
+
+	@UiField
+	HTMLPanel courseBanner;
+
+	@UiField
+	HTMLPanel featuredEducator;
+
+	@UiField
+	HTMLPanel featuredCourses,folderListPanel;
+
+	@UiField Label featuredCousesLbl,featuredContributor,comingSoonLbl,folderTopicTitleLbl;
+	
+	@UiField HTML courseTitle;
 	
 	@UiField Anchor featuredContributorsLink;
 	
@@ -102,6 +138,8 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	@UiField HTMLPanel scrollPanel, loadingIconPanel,partnerLogo;
 	
 	@UiField Image courseImage, educatorPhoto;
+	
+	@UiField Button listViewBtn;
 	
 	/*@UiField Button viewStandardButton;*/
 	
@@ -154,9 +192,9 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	
 	private static final String PNG = ".png";
 	
-	private final static String MR = GL1422+GL_SPL_FULLSTOP+" ";
+//	private final static String MR = i18n.GL1422+i18n.GL_SPL_FULLSTOP+" ";
 	
-	private final static String MS = GL1423+GL_SPL_FULLSTOP+" ";
+//	private final static String MS = i18n.GL1423+i18n.GL_SPL_FULLSTOP+" ";
 
 	private final static String FEMALE = "female";
 
@@ -164,11 +202,11 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 
 	private int INITIAL_OFFSET = 0;
 	
-    StorageExt localStorage = StorageExt.getLocalStorage();
+	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
 
-    StorageKey<HashMap<String, SubjectDo>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
+	private Storage stockStore = Storage.getLocalStorageIfSupported();
 	
-    LibraryMenuNav libraryMenuNavigation = null;
+	LibraryMenuNav libraryMenuNavigation = null;
     
     private String placeToken = null;
     
@@ -180,25 +218,53 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	
 	private String standardLibraryName = "";
 	
-	private static final String TEXAS = "texas";
+	private static final String TEXAS = "TEKS";
 	
 	private static final String CCSS = "ccss";
+	
+	private static final String SHARING_TYPE = "public";
+	
+	private static final String COLLECTION_TYPE = "folder";
+	
+	ArrayList<PartnerFolderDo> partnerFolderList = new ArrayList<PartnerFolderDo>();
 	
 	private static LibraryViewUiBinder uiBinder = GWT.create(LibraryViewUiBinder.class);
 
 	interface LibraryViewUiBinder extends UiBinder<Widget, LibraryView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPlaceToken(placeToken);
 		setDebugId();
+		Window.scrollTo(0, 0);
 		AppClientFactory.getEventBus().addHandler(OpenSubjectCourseEvent.TYPE, openSubjectCourseHandler);
 		AppClientFactory.getEventBus().addHandler(SetSubjectDoEvent.TYPE, setSubjectDoHandler);
 		AppClientFactory.getEventBus().addHandler(SetStandardDoEvent.TYPE, setStandardDoHandler);
 		loadingIconPanel.setVisible(false);
-		courseImage.setWidth("1000px");
+//		courseImage.setWidth("1000px");
+		courseImage.getElement().getStyle().setWidth(100, Unit.PCT);
 		courseImage.setHeight("300px");
+		featuredCousesLbl.getElement().setId("lblFeaturedCousesLbl");
+		featuredCourses.getElement().setId("pnlFeaturedCourses");
+		partnerLogo.getElement().setId("pnlPartnerLogo");
+		courseImage.getElement().setId("imgCourseImage");
+		courseTitle.getElement().setId("lblCourseTitle");
+		educatorPhoto.getElement().setId("imgEducatorPhoto");
+		featuredContributor.getElement().setId("lblFeaturedContributor");
+		featuredContributorsLink.getElement().setId("lnkFeaturedContributorsLink");
+		scrollPanel.getElement().setId("pnlScrollPanel");
+		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
+		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
+		contributorsContainer.getElement().setId("pnlContributorsContainer");
+		listViewBtn.addStyleName(libraryStyleUc.listViewBtnStyle());
+		//listAllBtn.addClickHandler(new ListAllBtnHandler());
+		StringUtil.setAttributes(listViewBtn.getElement(), "listViewBtn", listViewBtn.getText(), listViewBtn.getText());
+		StringUtil.setAttributes(folderTopicTitleLbl.getElement(), "folderTopicTitleLbl", "", "");
+		StringUtil.setAttributes(folderListPanel.getElement(), "folderListPanel", "", "");
+		folderListPanel.setVisible(false);
 	}
 	
 	/**
@@ -217,29 +283,68 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	 *
 	 */
 	public void setDebugId() {
-		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
-			partnerLogo.setVisible(true);
-			partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
-			landingBanner.setVisible(false);
-		} else {
+		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
 			partnerLogo.setVisible(false);
-		}
+			contributorsContainer.setVisible(false);
+			courseBanner.setVisible(false);
+			featuredEducator.setVisible(false);
+			courseTabs.setVisible(false);
+			landingBanner.setVisible(false);
+			featuredContributorsLink.setVisible(false);
+			featuredCourseTabs.setVisible(false);
+			featuredCousesLbl.setVisible(false);
+		} else {
+			if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
+				partnerLogo.setStyleName(libraryStyleUc.rusdPartnerLogo());
+				partnerLogo.setVisible(true);
+				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+				landingBanner.setVisible(false);
+			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
+				partnerLogo.setStyleName(libraryStyleUc.sausdPartnerLogo());
+				partnerLogo.setVisible(true);
+				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+				landingBanner.setVisible(false);
+			}else {
+				partnerLogo.setVisible(false);
+			}
 
-		contributorsContainer.setVisible(false);
-		courseBanner.setVisible(false);
-		featuredEducator.setVisible(false);
-		libraryMenuNavigation = new LibraryMenuNav(getPlaceToken());
-		courseTabs.add(libraryMenuNavigation);
-		landingBanner.add(new LibraryBannerView(getPlaceToken()));
-		featuredContributorsLink.setText(GL1005);
-		featuredContributorsLink.setTitle(GL0680);
-		featuredContributorsLink.setHref("#"+getPlaceToken()+"&page="+FEATURED_CONTRIBUTORS);
+			contributorsContainer.setVisible(false);
+			courseBanner.setVisible(false);
+			featuredEducator.setVisible(false);
+			libraryMenuNavigation = new LibraryMenuNav(getPlaceToken());
+			courseTabs.add(libraryMenuNavigation);
+			landingBanner.add(new LibraryBannerView(getPlaceToken()));
+			featuredContributorsLink.setText(i18n.GL1005());
+			featuredContributorsLink.getElement().setAttribute("alt",i18n.GL1005());
+			featuredContributorsLink.getElement().setAttribute("title",i18n.GL1005());
+			featuredContributorsLink.setTitle(i18n.GL0680());
+			featuredContributorsLink.setHref("#"+getPlaceToken()+"&page="+FEATURED_CONTRIBUTORS);
+		}
 	}
 	
 	@Override
 	public void onLoad() {
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+//		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
+//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE); 
+//		  }else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE);
+//		  }else{
+//			  courseTabs.getElement().getStyle().setPosition(Position.FIXED);			  
+//		  }
+		  
+		  courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
+		  
+		
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
+		
 		featuredCourseTabs.getElement().setId("featuredCourseTabs");
 		leftNav.getElement().setId("leftNav");
 		contentScroll.getElement().setId("contentScroll");
@@ -248,10 +353,21 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingRusdBanner");
-			featuredCousesLbl.setText(GL0588);
+			landingBanner.setHeight("250px");
+			featuredCousesLbl.setText(i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0588());
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
+			landingBanner.getElement().setId("landingSausdBanner");
+			landingBanner.setHeight("250px");
+			featuredCousesLbl.setText(i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
 		} else {
 			landingBanner.getElement().setId("landingBanner");
-			featuredCousesLbl.setText(GL0587);
+			featuredCousesLbl.setText(i18n.GL0587());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL0587());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0587());
 		}
 	}
 	
@@ -280,10 +396,8 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			for(int i = 0; i <topicDoList.size(); i++) {
 				contentScroll.add(new LibraryTopicListView(topicDoList.get(i), (i+1), getPlaceToken()));
 			}
-			contentScroll.setVisible(true);
-			loadingIconPanel.setVisible(false);
+			loadingPanel(false);
 		} catch (Exception e) {
-			
 		}
 	}
 	
@@ -311,8 +425,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				}
 				contentScroll.add(paginationFloPanel);
 			}
-			contentScroll.setVisible(true);
-			loadingIconPanel.setVisible(false);
+			loadingPanel(false);
 		} catch (Exception e) {
 			
 		}
@@ -348,6 +461,26 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	 *
 	 */
 	public void loadContributorsPage(String callBack, String placeToken) {
+		if (placeToken.equalsIgnoreCase(PlaceTokens.LIFEBOARD) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY)||
+				placeToken.equalsIgnoreCase(PlaceTokens.FTE)||
+				placeToken.equalsIgnoreCase(PlaceTokens.GEOEDUCATION)||
+				placeToken.equalsIgnoreCase(PlaceTokens.NGC)||
+				placeToken.equalsIgnoreCase(PlaceTokens.FINCAPINC)||
+				placeToken.equalsIgnoreCase(PlaceTokens.ONR)||
+				placeToken.equalsIgnoreCase(PlaceTokens.PSDPAL)||
+				placeToken.equalsIgnoreCase(PlaceTokens.LESSONOPOLY)||
+				placeToken.equalsIgnoreCase(PlaceTokens.WSPWH)||
+				placeToken.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || 
+				placeToken.equalsIgnoreCase(PlaceTokens.ESYP)|| 
+				placeToken.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC)|| 
+				placeToken.equalsIgnoreCase(PlaceTokens.TICAL)|| 
+				placeToken.equalsIgnoreCase(PlaceTokens.ASPIRE_EPACS)){
+			container.getElement().getStyle().setWidth(1000, Unit.PX);
+		}else{
+			container.getElement().getStyle().clearWidth();
+		}
 		setPlaceToken(placeToken);
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UNIT_ID);
@@ -362,7 +495,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		if (!AppClientFactory.isAnonymous()){
 			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 			int flag = AppClientFactory.getLoggedInUser().getViewFlag();
-			if (flag<=7 && !loginType.equalsIgnoreCase("apps")){
+			if (flag<=7 && loginType.equalsIgnoreCase("Credential")){
 				Window.enableScrolling(false);
 			}else{
 				Window.enableScrolling(true);
@@ -370,7 +503,6 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		}else{
 			Window.enableScrolling(true);
 		}
-		
 		
 		if(callBack.equalsIgnoreCase(FEATURED_CONTRIBUTORS)){
 			discoverUrl.replaceAll("&page="+FEATURED_CONTRIBUTORS, "");
@@ -380,6 +512,13 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			landingBanner.setVisible(false);
 			container.setVisible(false);
 			contributorsContainer.setVisible(true);
+			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
+				if(courseMap!=null&&courseMap.get("featured")!=null) {
+						setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
+				} else {
+					getFeaturedCourses(FEATURED_LABEL, false);
+				}
+			}
 			if(contributorsContainer.getWidgetCount()<=0) {
 				contributorsContainer.add(new LibraryContributorsView(getPlaceToken()));
 			}
@@ -399,36 +538,28 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			courseBanner.setVisible(true);
 			container.setVisible(true);
 			
-			Window.scrollTo(0, 0);
-			if(standardId == null)
-			{
-			String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
-			CourseDo courseDo = null;
-			if(subjectName!=null&&courseMap.get(subjectName)!=null&&courseMap.get(subjectName).getData()!=null&&courseId!=null) 
-			{
-				libraryMenuNavigation.setTabSelection(subjectName);
-				courseDo = getCourseDoFromCourseId(courseMap.get(subjectName), courseId);
-				setCourseData(courseDo);
-			} 
-			else 
-			{
-				libraryMenuNavigation.getTaxonomyData(subjectId,courseId);
-			}
-			}
-			else
-			{
-			String subjectName = STANDARDS;
-			CourseDo courseDo = null;
-			if(subjectName!=null&&standardsMap.get(subjectName)!=null&&standardsMap.get(subjectName).getData()!=null&&courseId!=null) 
-			{
-				libraryMenuNavigation.setTabSelection(subjectName);
-				courseDo = getCourseDoFromCourseIdStandards(standardsMap.get(STANDARDS), standardId, courseId);
-				setCourseData(courseDo);
-			} 
-			else 
-			{
-				libraryMenuNavigation.getTaxonomyData(subjectId,courseId);
-			}
+			if(standardId == null) {
+		
+				String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
+				CourseDo courseDo = null;
+				if(subjectName!=null&&courseMap.get(subjectName)!=null&&courseId!=null) {
+					libraryMenuNavigation.setTabSelection(subjectName);
+					courseDo = getCourseDoFromCourseId(courseMap.get(subjectName), courseId);
+					getUnitDataFromService(courseDo, subjectId, courseId);
+					//setCourseData(courseDo);
+				} else {
+					getFeaturedCourses(FEATURED_LABEL, true);
+				}
+			} else {
+				String subjectName = STANDARDS;
+				CourseDo courseDo = null;
+				if(subjectName!=null&&standardsMap.get(subjectName)!=null&&standardsMap.get(subjectName).getData()!=null&&courseId!=null) {
+					libraryMenuNavigation.setTabSelection(subjectName);
+					courseDo = getCourseDoFromCourseIdStandards(standardsMap.get(STANDARDS), standardId, courseId);
+					setCourseData(courseDo);
+				} else {
+					libraryMenuNavigation.getTaxonomyData(subjectName,subjectId,courseId);
+				}
 			}
 			
 		} else if(callBack.equalsIgnoreCase(FEATURED_COURSE_PAGE)){
@@ -444,21 +575,19 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			container.setVisible(true);
 			featuredCourseTabs.setVisible(true);
 			featuredCousesLbl.setVisible(true);
+			
 			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
 				if(courseMap!=null&&courseMap.get("featured")!=null) {
-					setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
+					//if(!(featuredCourses.getWidgetCount()>0)) {
+						setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
+				//	}
 				} else {
-					getFeaturedCourses(FEATURED_LABEL);
+					getFeaturedCourses(FEATURED_LABEL, false);
 				}
 			}
 		} else if (callBack.equalsIgnoreCase(PARTNER_PAGE)) {
-			if(courseMap!=null&&courseMap.get(FEATURED_LABEL)!=null) {
-			} else {
-				getFeaturedCourses(FEATURED_LABEL);
-			}
 			landingBanner.setVisible(false);
 			contributorsContainer.setVisible(false);
-			
 			//For setting the partner's website data
 			featuredEducator.setVisible(true);
 			educatorPhoto.setVisible(false);
@@ -472,6 +601,10 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		}
 		this.previousCallBack = callBack;
 		this.previousCourseId = courseId;
+	}
+	
+	private void getRefreshedSubjects() {
+		
 	}
 	
 	/**
@@ -488,64 +621,89 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void getFeaturedCourses(final String featuredLabel) {
-		try {
-			if(Cookies.getCookie("featured-gooru-release")!=null&&!Cookies.getCookie("featured-gooru-release").contains("5.11")) {
-				if(localStorage!=null&&localStorage.get(libraryStorageObject)!=null&&localStorage.get(libraryStorageObject).get(featuredLabel)!=null){
-					localStorage.get(libraryStorageObject).remove(featuredLabel);
-				}
-			}
-			HashMap<String, SubjectDo> savedValuesMap = localStorage.get(libraryStorageObject);
-			if(savedValuesMap!=null&&savedValuesMap.get(featuredLabel)!=null) {
-				setFeaturedCourseWidgets(savedValuesMap.get(featuredLabel).getData(), false);
-			} else {
-				String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-				if (featuredLabel!=null){
-					if(standardId != null)
-					{
-						AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(featuredLabel, getPlaceToken(), new AsyncCallback<HashMap<String, StandardsDo>>() {
-							
-							@Override
-							public void onFailure(Throwable caught) {
-								
-							}
-		
-							@Override
-							public void onSuccess(
-									HashMap<String, StandardsDo> result) {
-								standardsMap = result;
-								libraryMenuNavigation.setSubjectPanelIdsForStandards(standardsMap);
-								setFeaturedCourseWidgets(standardsMap.get(featuredLabel).getData().get(0).getCourse(), false);
-								
-							}
-						});	
+	public void getFeaturedCourses(final String featuredLabel, final boolean isNotHomePage) {
+		String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+		if (featuredLabel!=null){
+			if(standardId != null)
+			{
+				AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+					@Override
+					public void onSuccess(HashMap<String, StandardsDo> result) {
+						standardsMap = result;
+						libraryMenuNavigation.setSubjectPanelIdsForStandards(standardsMap);
+						setFeaturedCourseWidgets(standardsMap.get(featuredLabel).getData().get(0).getCourse(), false);
 					}
-					else
-					{
-					AppClientFactory.getInjector().getLibraryService().getSubjects(featuredLabel, getPlaceToken(), new AsyncCallback<HashMap<String, SubjectDo>>() {
-	
+				});	
+			}
+			else
+			{
+				final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
+				final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
+				String map = null;
+				final String libraryToken = StringUtil.getPublicLibraryName(getPlaceToken());
+				Map<String, String> params = new HashMap<String,String>();
+				try {
+					params = StringUtil.splitQuery(Window.Location.getHref());
+				} catch (Exception e) {
+				}
+				
+				if(stockStore!=null&&stockStore.getItem(libraryToken+"courseMapDataSerializedStr")!=null&&params.size()==0){
+					map = stockStore.getItem(libraryToken+"courseMapDataSerializedStr");
+					courseMap = courseMapReader.read(map);
+					setLibraryInitialData(featuredLabel,isNotHomePage);
+				} else {
+					String onRefCourseId=null;
+					if((AppClientFactory.getPlaceManager().getRequestParameter("page")!=null?AppClientFactory.getPlaceManager().getRequestParameter("page"):"").equals("featured-course")){
+						onRefCourseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId")!=null?AppClientFactory.getPlaceManager().getRequestParameter("courseId"):null;
+					}else{
+						onRefCourseId=null;
+					}
+					
+					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, onRefCourseId, libraryToken, new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							
 						}
-	
 						@Override
 						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
-							courseMap = subjectDoList;
-							libraryMenuNavigation.setSubjectPanelIds(courseMap);
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-								setFeaturedCourseWidgets(courseMap.get(featuredLabel).getData(), false);
+							String courseMapWriterString = courseMapWriter.write(subjectDoList);
+							if(stockStore!=null) {
+								stockStore.setItem(libraryToken+"courseMapDataSerializedStr", courseMapWriterString);
 							}
+							courseMap = subjectDoList;
+							setLibraryInitialData(featuredLabel,isNotHomePage);
 						}
 					});
+					
+/*					AppClientFactory.getInjector().getLibraryService().getSubjects(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+						@Override
+						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
+								String courseMapWriterString = courseMapWriter.write(subjectDoList);
+								if(stockStore!=null) {
+									stockStore.setItem("courseMapDataSerializedStr", courseMapWriterString);
+								}
+								courseMap = subjectDoList;
+								setLibraryInitialData(featuredLabel);
+							}
+						});
+*/						
 					}
 				}
-			}
-		} catch (SerializationException e) {
-			
 		}
 	}
-		
+	
+	void setLibraryInitialData(String featuredLabel, boolean isNotHomePage) {
+		libraryMenuNavigation.setSubjectPanelIds(courseMap);
+		if(isNotHomePage) {
+			String subjectId = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
+			String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
+			libraryMenuNavigation.getTaxonomyData(subjectName,subjectId,courseId);
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+			setFeaturedCourseWidgets(courseMap.get(featuredLabel).getData(), false);
+		}
+	}
+	
 	/**
 	 * @function setFeaturedCourseWidgets 
 	 * 
@@ -565,23 +723,38 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		featuredCourses.clear();
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		for(int i = 0; i<courseDoList.size(); i++) {
+			
+			//TEMPORARY QA fix as there is no data
+			String userName = "rusdlearns";//courseDoList.get(i).getCreator().getUsername();
+			//TEMPORARY QA fix as there is no data
+			
 			featuredCourses.add(new FeaturedCourseListView(courseDoList.get(i)));
 			if(!isFeaturedCourseSelected) {
 				if(i==0&&(courseId==null)) {
 					featuredCourses.getWidget(i).addStyleName(ACTIVE_STYLE);
 					defaultCourseId = ""+courseDoList.get(i).getCodeId();
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(i).getUnit());
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
+						if(partnerFolderList.size()>0) {
+							setThirdPartyCourseUnitData(partnerFolderList);
+						} else {
+							getPartnerWorkspaceFolders(userName);
+						}
+						//setUnitListData(courseDoList.get(i).getUnit());
 					}
 					else {
-						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);	
+						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);
 					}
 				}
 			} else if(isFeaturedCourseSelected&&courseId==null) {
 				if(i==0) {
 					featuredCourses.getWidget(i).addStyleName(ACTIVE_STYLE);
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(i).getUnit());
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
+						if(partnerFolderList.size()>0) {
+							setThirdPartyCourseUnitData(partnerFolderList);
+						} else {
+							getPartnerWorkspaceFolders(userName);
+						}
+						//setUnitListData(courseDoList.get(i).getUnit());
 					}
 					else{
 						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);	
@@ -600,8 +773,16 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			FeaturedCourseListView featuredCourseListView = ((FeaturedCourseListView) widget);
 			try {
 				if(courseId.equals(""+featuredCourseListView.getCourseId())) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(widgetCount).getUnit());
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
+						if(courseDoList.get(widgetCount).getParentId()!=null) {
+							if(partnerFolderList.size()>0) {
+								setThirdPartyCourseUnitData(partnerFolderList);
+							} else {
+								getPartnerWorkspaceFolders(courseDoList.get(widgetCount).getCreator().getUsername());
+							}
+						} else {
+							setUnitListData(courseDoList.get(widgetCount).getUnit());
+						}
 					}
 					else{
 						getPopularList(courseDoList.get(widgetCount).getUnit(), courseDoList.get(widgetCount).getCodeId(), true);	
@@ -619,11 +800,20 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						widgetsPanel.next().removeStyleName(ACTIVE_STYLE);
 					}
 					widget.addStyleName(ACTIVE_STYLE);
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(widgetCountTemp).getUnit());	
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
+						if(courseDoList.get(widgetCountTemp).getParentId()!=null) {
+							if(partnerFolderList.size()>0) {
+								setThirdPartyCourseUnitData(partnerFolderList);
+							} else {
+								getPartnerWorkspaceFolders(courseDoList.get(widgetCountTemp).getCreator().getUsername());
+							}
+						} else {
+							getUnitDataFromService(courseDoList.get(widgetCountTemp), "featured", courseDoList.get(widgetCountTemp).getCodeId()+"");
+							//setUnitListData(courseDoList.get(widgetCountTemp).getUnit());
+						}
 					}
 					else{
-						getPopularList(courseDoList.get(widgetCountTemp).getUnit(), courseDoList.get(widgetCountTemp).getCodeId(), false);
+						getUnitDataFromService(courseDoList.get(widgetCountTemp), "featured", courseDoList.get(widgetCountTemp).getCodeId()+"");
 					}
 					Map<String,String> params = new HashMap<String, String>();
 					params.put(LIBRARY_PAGE, FEATURED_COURSE_PAGE);
@@ -657,6 +847,8 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		final String standardsLibraryType = AppClientFactory.getPlaceManager().getRequestParameter("libtype");
 		final String subjectId = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME, FEATURED_LABEL);
 		leftNav.clear();
+		if(unitDoList != null)
+		{
 		for(int i = 0; i<unitDoList.size(); i++) {
 			leftNav.add(new LibraryUnitMenuView(unitDoList.get(i)));
 			if(i==0&&(unitId==null)) {
@@ -664,10 +856,18 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				unitListId = unitDoList.get(i).getCodeId()+"";
 				if(unitDoList.get(i).getTopic()!=null&&unitDoList.get(i).getTopic().size()>0) {
 					setLibraryTopicListData(unitDoList.get(i).getTopic());
+					folderTopicTitleLbl.setText(unitDoList.get(i).getLabel());
+					//listAllBtn.addClickHandler(new ListAllBtnHandler(unitDoList.get(i).getTopic()));
+
 				} else {
 					setLibraryConceptOnlyData(unitDoList.get(i).getCollection(), unitDoList.get(i).getCount());
 				}
 			}
+		}
+		}
+		else
+		{
+			loadingPanel(true);
 		}
 		
 		int widgetCount = 0;
@@ -683,13 +883,13 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						unitListId = unitDoList.get(widgetCountTemp).getCodeId()+"";
 						if(unitDoList.get(widgetCountTemp).getTopic()!=null&&unitDoList.get(widgetCountTemp).getTopic().size()>0) {
 							setLibraryTopicListData(unitDoList.get(widgetCountTemp).getTopic());
+							
 						} else {
 							setLibraryConceptOnlyData(unitDoList.get(widgetCountTemp).getCollection(), libraryUnitMenuView.getChildCount());
 						}
 					} else {
 						unitListId = unitDoList.get(widgetCountTemp).getCodeId()+"";
-						contentScroll.setVisible(false);
-						loadingIconPanel.setVisible(true);
+						loadingPanel(true);
 						getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
 					}
 				}
@@ -704,7 +904,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						widgetsPanel.next().removeStyleName(libraryStyleUc.unitLiActive());
 					}
 					widget.addStyleName(libraryStyleUc.unitLiActive());
-					
+					folderTopicTitleLbl.setText(libraryUnitMenuView.getTitle());
 					String callBack = AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE,FEATURED_COURSE_PAGE);
 					String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID,null);
 					if(unitDoList.get(widgetCountTemp).getLabel().equalsIgnoreCase("Popular")){
@@ -716,8 +916,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 								setLibraryConceptOnlyData(unitDoList.get(widgetCountTemp).getCollection(), libraryUnitMenuView.getChildCount());
 							}
 						} else {
-							contentScroll.setVisible(false);
-							loadingIconPanel.setVisible(true);
+							loadingPanel(true);
 							getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
 						}
 					}
@@ -730,8 +929,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 								setLibraryConceptOnlyData(unitDoList.get(widgetCountTemp).getCollection(), libraryUnitMenuView.getChildCount());
 							}
 						} else {
-							contentScroll.setVisible(false);
-							loadingIconPanel.setVisible(true);
+							loadingPanel(true);
 							getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
 						}	
 					}
@@ -778,7 +976,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	 *
 	 */
 	private void getTopicsOnPagination(String subjectId, String unitId, int offset, final int totalCount, String standardsId) {
-		AppClientFactory.getInjector().getLibraryService().getTopicsOnPagination(subjectId, unitId, getPlaceToken(), offset,standardsId, new AsyncCallback<ArrayList<TopicDo>>() {
+		AppClientFactory.getInjector().getLibraryService().getTopicsOnPagination(subjectId, unitId, getPlaceToken(), offset,standardsId, new SimpleAsyncCallback<ArrayList<TopicDo>>() {
 			@Override
 			public void onSuccess(ArrayList<TopicDo> topicDoList) {
 				if(topicDoList!=null&&topicDoList.size()>0) {
@@ -789,16 +987,13 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 					}
 				}
 			}
-			@Override
-			public void onFailure(Throwable caught) {
-			}
 		});
 	}
 	
 	OpenSubjectCourseHandler openSubjectCourseHandler = new OpenSubjectCourseHandler() {
 		@Override
-		public void openSubjectCourse(String subjectName, CourseDo courseDo) {
-			setCourseData(courseDo);
+		public void openSubjectCourse(String subjectCode, CourseDo courseDo) {
+			getUnitDataFromService(courseDo, subjectCode, courseDo.getCodeId()+"");
 		}
 	};
 
@@ -815,6 +1010,19 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			standardsMap.put(subjectCode, standardDo);
 		}
 	};
+	
+	public void getUnitDataFromService(final CourseDo courseDo, String subjectCode, String courseId) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryUnits(subjectCode, courseId, StringUtil.getPublicLibraryName(getPlaceToken()), new SimpleAsyncCallback<ArrayList<UnitDo>>() {
+			@Override
+			public void onSuccess(ArrayList<UnitDo> unitDoList) {
+				courseDo.setUnit(unitDoList);
+				setCourseData(courseDo);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
 	
 	/**
 	 * 
@@ -835,43 +1043,92 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	public void setCourseData(final CourseDo courseDo) {
 			
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)){
+//				courseTitle.setHTML(i18n.GL2054());
+				courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+//				partnerLogo.setStyleName(libraryStyleUc.lpsPartnerLogo());
+//				partnerLogo.setVisible(true);
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)){
+//					courseTitle.setHTML("This library showcases collections created by a team from the California Office to Reform Education.");
+					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+//					partnerLogo.setStyleName(libraryStyleUc.coreDistrictLogo());
+//					partnerLogo.setVisible(true);
+				}
+				else{
+				partnerLogo.setVisible(false);
+				courseTitle.removeStyleName(libraryStyleUc.lpsHeader());
+				courseTitle.setHTML(courseDo.getLabel());
+				courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
+				courseTitle.getElement().setAttribute("title",courseDo.getLabel());
+				}
 				educatorPhoto.setVisible(false);
 				featuredContributor.setVisible(false);
-				courseTitle.setText(courseDo.getLabel());
 				courseImage.setUrl(courseDo.getThumbnails().getUrl());
 				featuredContributorsLink.setText(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
 				featuredContributorsLink.setTarget("_blank");
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.TICAL)){
+					courseTitle.getElement().getStyle().setFontSize(33, Unit.PX);
+					courseTitle.getElement().getStyle().setPaddingTop(21, Unit.PX);
+				}
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
+					courseImage.setHeight("190px");
+					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
+					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+					courseImage.setVisible(false);
+					districtSpecificPartnersMain.setVisible(true);
+					districtLibraryHeaderText.getElement().setInnerText(i18n.GL2108());
+					districtLibrarySubHeaderText.getElement().setInnerText(i18n.GL2172());
+					
+					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainCore());
+					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainCore());
+					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoCore());
+					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextCore());
+					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextCore());
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)) {
+					courseImage.setHeight("190px");
+					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
+					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+					courseImage.setVisible(false);
+					districtSpecificPartnersMain.setVisible(true);
+					districtLibraryHeaderText.getElement().setInnerText(i18n.GL2053());
+					districtLibrarySubHeaderText.getElement().setInnerText(i18n.GL2054());
+					
+					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainlps());
+					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainlps());
+					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogolps());
+					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextlps());
+					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextlps());
+				}
+				else
+				{
+					courseImage.setVisible(true);
+					districtSpecificPartnersMain.setVisible(false);
+
+					//here
+				}
 			} else {
 				educatorPhoto.setVisible(true);
 				featuredContributor.setVisible(true);
 				final String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
 				if(courseDo!=null) {
-					courseImage.setUrl(courseDo.getThumbnails().getUrl());
+					if(courseDo.getThumbnails()!=null&&courseDo.getThumbnails().getUrl().isEmpty()) {
+						setDefaultCourseImage(standardId, courseDo.getLabel());
+					} else {
+						courseImage.setUrl(courseDo.getThumbnails().getUrl());
+					}
+					
 					courseImage.addErrorHandler(new ErrorHandler() {
 						@Override
 						public void onError(ErrorEvent event) {
-							if(standardId != null)
-							{
-								if(standardLibraryName.equals(TEXAS)) {
-									if(courseDo.getLabel().equalsIgnoreCase("Integrated Physics and Chemistry")) {
-										courseImage.setUrl(TEKS_SCIENCE);
-									} else {
-										courseImage.setUrl(TEKS_MATHS);
-									}
-								} else {
-									courseImage.setUrl(STANDARD_DEFAULT_IMG);	
-								}
-							}
-							else
-							{
-							courseImage.setUrl(COURSE_DEFAULT_IMG);
-							}
+							setDefaultCourseImage(standardId, courseDo.getLabel());
 						}
 					});
 					
-					courseTitle.setText(courseDo.getLabel());
+					courseTitle.setHTML(courseDo.getLabel());
+					courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
+					courseTitle.getElement().setAttribute("title",courseDo.getLabel());
 					try {
 						educatorPhoto.setHeight("46px");
 						educatorPhoto.setWidth("46px");
@@ -889,33 +1146,38 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 							}
 						
 							if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
-								authorName = MR+courseDo.getUser().get(j).getLastName();
+								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
 							} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
-								authorName = MS+courseDo.getUser().get(j).getLastName();
+								authorName = (i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
 							} else {
 								authorName = courseDo.getUser().get(j).getLastName();
 							}
 							
 							
 							if (courseDo.getUser().size()>1){
-								featuredContributor.setText(authorName+" "+GL_GRR_AND+" "+GL1117+" "+GL1006+" "+courseDo.getLabel()+". ");
+								featuredContributor.setText(authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("alt",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("title",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
 							}else{
-								featuredContributor.setText(authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
+								featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							}
 							
 							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
 							
 						}else{
 							if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-								authorName = MR+courseDo.getCreator().getLastName();
+								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getCreator().getLastName();
 							} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-								authorName = MS+courseDo.getCreator().getLastName();
+								authorName = i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" "+courseDo.getCreator().getLastName();
 							} else {
 								authorName = courseDo.getCreator().getLastName();
 							}
 							
-							featuredContributor.setText(authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
-							
+							featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+							featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+							featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
 							
 						}
@@ -936,7 +1198,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				
 				String libraryPage = AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE,"emptyPage");
 				if(!isUnitLoaded&&libraryPage.equals(COURSE_PAGE)) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						setUnitListData(courseDo.getUnit());
 					}
 					else{
@@ -946,7 +1208,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 					isUnitLoaded=true;
 				}
 				if(courseDo.getUnit()!=null) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						setUnitListData(courseDo.getUnit());
 					}
 					else{
@@ -955,6 +1217,35 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				}
 			}
 			
+	}
+	
+	private void setDefaultCourseImage(String standardId, String courseLabel) {
+		if(standardId != null)
+			{
+				String libType = AppClientFactory.getPlaceManager().getRequestParameter("libtype");
+				if(standardLibraryName.equals(TEXAS)) {
+				if(courseLabel.equalsIgnoreCase("Integrated Physics and Chemistry")) {
+				courseImage.setUrl(TEKS_SCIENCE);
+				} else {
+				courseImage.setUrl(TEKS_MATHS);
+				}
+				} else {
+				if(libType!=null && libType.equals(TEXAS)){
+				if(courseLabel.equalsIgnoreCase("Integrated Physics and Chemistry")) {
+				courseImage.setUrl(TEKS_SCIENCE);
+				} else {
+				courseImage.setUrl(TEKS_MATHS);
+				}
+				}else{
+				courseImage.setUrl(STANDARD_DEFAULT_IMG);	
+				}
+				}
+			}
+		else
+		{
+		courseImage.setUrl(COURSE_DEFAULT_IMG);
+		}
+
 	}
 	
 	/**
@@ -976,7 +1267,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	 */
 	public String getSubjectNameBySubjectId(HashMap<String, SubjectDo> subjectList, String subjectId) {
 		for (Map.Entry<String, SubjectDo> entry : subjectList.entrySet()) {
-			if(entry.getValue().getCode().equals(subjectId)) {
+			if(entry.getValue().getSubjectCode().equals(subjectId)) {
 				return entry.getKey();
 			}
 		}
@@ -1075,7 +1366,6 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			unitDoListTemp = new ArrayList<UnitDo>();
 			unitDoListTemp = unitDoTempList;
 			setUnitListData(unitDoListTemp);
-			
 /*			if(unitDoListTemp.size()!=0){
 			if(isRefresh&&(!unitDoListTemp.get(0).getLabel().contains("Popular"))) {
 				AppClientFactory.getInjector().getLibraryService().getPopularCollectionsData(""+courseId, new AsyncCallback<ArrayList<ConceptDo>>(){
@@ -1084,14 +1374,13 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						if(result.size()>0) {
 							UnitDo unitDo = new UnitDo();
 							unitDo.setCodeId(courseId);
-							unitDo.setLabel(GL1008);
+							unitDo.setLabel(i18n.GL1008);
 							unitDo.setCollection(result);
 							unitDo.setCount(result.size());
 							unitDoListTemp.add(0, unitDo);	
 						}
 						setUnitListData(unitDoListTemp);
 					}
-
 					@Override
 					public void onFailure(Throwable caught) {
 						
@@ -1112,8 +1401,134 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		return loadingIconPanel;
 	}
 	
+	public Label getComingSoonLabel(){
+		return comingSoonLbl;
+	}
+	
 	public HTMLPanel getContentScroll() {
 		return contentScroll;
 	}
+
+	/**
+	 * @return the folderTopicTitleLbl
+	 */
+	public Label getFolderTopicTitleLbl() {
+		return folderTopicTitleLbl;
+	}
+
+	/**
+	 * @return the listAllBtn
+	 */
+	public Button getListAllBtn() {
+		return listViewBtn;
+	}
+
+	public void getPartnerWorkspaceFolders(String partnerName) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(partnerName, 20, SHARING_TYPE, null, getPlaceToken(), new SimpleAsyncCallback<PartnerFolderListDo>(){
+			@Override
+			public void onSuccess(PartnerFolderListDo result) {
+				partnerFolderList = result.getSearchResult();
+				setThirdPartyCourseUnitData(partnerFolderList);
+			}
+		});
+	}
 	
+	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
+			@Override
+			public void onSuccess(PartnerFolderListDo result) {
+				//getView().setTopicListData(result.getSearchResult(), folderId);
+			}
+			
+		});
+	}
+
+	private void setThirdPartyCourseUnitData(final ArrayList<PartnerFolderDo> folderList) {
+		getLeftNav().clear();
+		getContentScroll().clear();
+		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
+		int j = 0;
+		for(int i = 0; i<folderList.size(); i++) {
+			if(folderList.get(i).getType().equalsIgnoreCase("folder")) {
+				LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(folderList.get(i));
+				getLeftNav().add(libraryUnitMenuView);
+				if(j==0&&folderId==null) {
+					j++;
+					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
+					unitListId = folderList.get(i).getGooruOid();
+					setTopicListData(folderList.get(i).getFolderItems(), unitListId);
+					folderTopicTitleLbl.setText(folderList.get(i).getTitle());
+					//getUiHandlers().getPartnerChildFolderItems(unitListId, );
+				}
+			}
+		}
+		
+		final Iterator<Widget> widgets = getLeftNav().iterator();
+		int widgetCount = 0;
+		while (widgets.hasNext()) {
+			final Widget widget = widgets.next();
+			final LibraryUnitMenuView libraryUnitMenuView = ((LibraryUnitMenuView) widget);
+			final int finalWidgetCount = widgetCount;
+			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					getContentScroll().setVisible(false);
+					final Iterator<Widget> widgetsPanel = getLeftNav().iterator();
+					while (widgetsPanel.hasNext()) {
+						widgetsPanel.next().removeStyleName(libraryStyleUc.unitLiActive());
+					}
+					widget.addStyleName(libraryStyleUc.unitLiActive());
+					unitListId = libraryUnitMenuView.getUnitId();
+					folderTopicTitleLbl.setText(libraryUnitMenuView.getTitle());
+					if(finalWidgetCount==0) {
+						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId);
+					} else {
+						//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
+					}
+				}
+			});
+			widgetCount++;
+		}
+	}
+	
+	public static void onClosingAndriodorIpaddiv() {
+		 courseTabs.getElement().setAttribute("style", "position:fixed;");
+	}
+	
+	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId) {
+		getContentScroll().clear();
+		try {
+			int count = 0;
+			for(int i = 0; i <folderListDo.size(); i++) {
+				count++;
+				getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),null));
+			}
+			getContentScroll().setVisible(true);
+		} catch (Exception e) {
+		}
+	}
+
+	public HTMLPanel getCourseTabs() {
+		return courseTabs;
+	}
+	
+	public HTMLPanel getContainer() {
+		return container;
+	}
+	
+	public void loadingPanel(boolean isVisible) {
+		loadingIconPanel.setVisible(isVisible);
+		contentScroll.setVisible(!isVisible);
+		//folderListPanel.setVisible(!isVisible);
+		libraryMetaDataContainer.setVisible(!isVisible);
+	}
+
+	/**
+	 * @return the folderListPanel
+	 */
+	public HTMLPanel getFolderListPanel() {
+		return folderListPanel;
+	}
+	
+
 }

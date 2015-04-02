@@ -97,7 +97,6 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return collections;
 	}
@@ -116,7 +115,6 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return collection;
 
@@ -133,7 +131,6 @@ public class CollectionDeSerializer extends DeSerializer {
 			JSONObject collectionItemJsonObject = jsonRep.getJsonObject();
 			collectionItemDo = JsonDeserializer.deserialize(collectionItemJsonObject.toString(), CollectionItemDo.class);
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return collectionItemDo;
 	}
@@ -149,7 +146,6 @@ public class CollectionDeSerializer extends DeSerializer {
 			JSONObject collectionJsonObject = jsonRep.getJsonObject();
 			collectionDo = JsonDeserializer.deserialize(collectionJsonObject.toString(), CollectionDo.class);
 		}catch(JSONException exception){
-			exception.printStackTrace();
 		}
 		return collectionDo;
 	}
@@ -173,7 +169,6 @@ public class CollectionDeSerializer extends DeSerializer {
 					collectionItemDo.setNarrationType((String) collectionItemJsonObject.get(NARRATION_TYPE));
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		return collectionItemDo;
@@ -193,7 +188,6 @@ public class CollectionDeSerializer extends DeSerializer {
 				collectionItemDos.add(collectionItemDo);
 			}
 		}catch(JSONException ex){
-			ex.printStackTrace();
 		}
 		return collectionItemDos;
 	}
@@ -226,7 +220,6 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 			collectionDo.setCollectionItems(collectionItemDos);
 		}catch(JSONException ex){
-			ex.printStackTrace();
 		}
 		return collectionDo;
 	}
@@ -260,7 +253,6 @@ public class CollectionDeSerializer extends DeSerializer {
 				}
 			}
 		}catch(Exception ex){
-			ex.printStackTrace();
 		}
 		return collections;
 	}
@@ -279,7 +271,6 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return collectionItem;
 
@@ -323,7 +314,6 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		
 		return collections;

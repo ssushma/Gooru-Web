@@ -183,6 +183,7 @@ public interface FolderCBundle extends ClientBundle{
 		String kinderGartenGrade();
 		
 		String higherEducationGrade();
+		String gradeInfoLabel();
 		
 
 	}

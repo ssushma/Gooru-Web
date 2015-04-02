@@ -7,13 +7,20 @@
 		<ui:with
 		type="org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle"
 		field="resAssign" />
-	<g:HTMLPanel styleName="{res.css.assign}">
-		<g:HTMLPanel styleName="{res.css.assignContent}">
-			<g:HTMLPanel styleName="{res.css.assignHeader}">
-				<g:HTMLPanel styleName="{res.css.assignTitle}" ui:field="successPopUpHeader"></g:HTMLPanel>
-				<g:Label ui:field="cancelButton"
-					styleName="{res.css.assignCloseMarker} {res.css.assignSprite} {res.css.assignCloseMark}"></g:Label>
-			</g:HTMLPanel>
+		<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
+		
+		<g:HTMLPanel styleName="{res1.css.PopupMainVVSmall}">
+		<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
+			<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
+			    <g:HTMLPanel styleName="row">
+			    	<g:HTMLPanel styleName="col-md-8 col-xs-8" ui:field="successPopUpHeader"></g:HTMLPanel>
+					<g:HTMLPanel styleName="col-md-4 col-md-4 {res1.css.closeContainer}">
+					<g:Label ui:field="cancelButton" styleName="{res1.css.closeButton}"></g:Label>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="clearfix"/>
+			  </g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.conent}">
 			
 				<g:HTMLPanel styleName="{res.css.contentSuccess}" ui:field="assignMoreCpContainer">
@@ -27,7 +34,7 @@
 				</g:HTMLPanel>
 					
 			</g:HTMLPanel>
-			
+			<g:HTMLPanel styleName="clearfix"/>
 		</g:HTMLPanel>
 
 </ui:UiBinder> 

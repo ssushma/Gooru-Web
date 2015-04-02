@@ -6,7 +6,6 @@ import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
 
 public class InsertMovedCollectionEvent extends GwtEvent<InsertMovedCollectionHandler> {
 

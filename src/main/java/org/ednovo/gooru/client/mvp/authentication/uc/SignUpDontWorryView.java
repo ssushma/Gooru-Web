@@ -30,7 +30,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,12 +40,27 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-
-public class SignUpDontWorryView extends PopupPanel implements MessageProperties {
+/**
+ * 
+ * @fileName : SignUpDontWorryView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
+public class SignUpDontWorryView extends PopupPanel{
 
 	private static SignUpDontWorryViewUiBinder uiBinder = GWT
 			.create(SignUpDontWorryViewUiBinder.class);
@@ -52,6 +68,8 @@ public class SignUpDontWorryView extends PopupPanel implements MessageProperties
 	interface SignUpDontWorryViewUiBinder extends
 			UiBinder<Widget, SignUpDontWorryView> {
 	}
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
@@ -60,6 +78,8 @@ public class SignUpDontWorryView extends PopupPanel implements MessageProperties
 	Button btnGoToSetting, btnOk;
 	@UiField InlineLabel pleaseContactText;
 	@UiField Anchor supportLink;
+	@UiField HTMLPanel panelSignUp;
+	
 	public SignUpDontWorryView() {
 		super(false);
 		this.res = SignUpCBundle.INSTANCE;
@@ -76,22 +96,76 @@ public class SignUpDontWorryView extends PopupPanel implements MessageProperties
 		//this.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 	}
-
+	/**
+	 * 
+	 * @function setUiAndIds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUiAndIds() {
-		lblTitle.setText(GL0481
-				+ GL_SPL_EXCLAMATION);
-		lblHeading.setText(GL0482);
+		lblTitle.setText(i18n.GL0481()
+				+ i18n.GL_SPL_EXCLAMATION());
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",i18n.GL0481());
+		lblTitle.getElement().setAttribute("title",i18n.GL0481());
+		
+		lblCancel.getElement().setId("lblCancel");
+		lblCancel.getElement().setAttribute("alt","");
+		lblCancel.getElement().setAttribute("title","");
+		
+		panelSignUp.getElement().setId("pnlSignUp");
+		
+		lblHeading.setText(i18n.GL0482());
+		lblHeading.getElement().setId("lblHeading");
+		lblHeading.getElement().setAttribute("alt",i18n.GL0482());
+		lblHeading.getElement().setAttribute("title",i18n.GL0482());
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
-		lblSubHeading.setText(GL0496);
+		
+		lblSubHeading.setText(i18n.GL0496());
+		lblSubHeading.getElement().setId("lblSubHeading");
+		lblSubHeading.getElement().setAttribute("alt",i18n.GL0496());
+		lblSubHeading.getElement().setAttribute("title",i18n.GL0496());
+	
+		btnGoToSetting.setText(i18n.GL0497());
 		btnGoToSetting.getElement().setId("btnGoToSetting");
+		btnGoToSetting.getElement().setAttribute("alt",i18n.GL0497());
+		btnGoToSetting.getElement().setAttribute("title",i18n.GL0497());
+		
 		btnOk.getElement().setId("btnOk");
-		btnOk.setText(GL0190);
-		btnGoToSetting.setText(GL0497);
+		btnOk.setText(i18n.GL0190());
+		btnOk.getElement().setAttribute("alt",i18n.GL0190());
+		btnOk.getElement().setAttribute("title",i18n.GL0190());
 		btnOk.getElement().setAttribute("style", "margin-left: 10px");
-		quriesText.setText(GL1139+GL_GRR_COMMA);
-		pleaseContactText.setText(GL1145);
-		supportLink.setText(GL0299);
-		supportLink.setHref(GL1055);
+		
+		quriesText.setText(i18n.GL1139()+i18n.GL_GRR_COMMA());
+		quriesText.getElement().setId("lblQuriesText");
+		quriesText.getElement().setAttribute("alt",i18n.GL1139());
+		quriesText.getElement().setAttribute("title",i18n.GL1139());
+		
+		pleaseContactText.setText(i18n.GL1145());
+		pleaseContactText.getElement().setId("spnPleaseContactText");
+		pleaseContactText.getElement().setAttribute("alt",i18n.GL1145());
+		pleaseContactText.getElement().setAttribute("title",i18n.GL1145());
+		
+		
+		supportLink.setText(i18n.GL0299());
+		supportLink.getElement().setId("lnkSupportLink");
+		supportLink.getElement().setAttribute("alt",i18n.GL0299());
+		supportLink.getElement().setAttribute("title",i18n.GL0299());
+		supportLink.setHref(i18n.GL1055());
 	}
 
 	@UiHandler("lblCancel")

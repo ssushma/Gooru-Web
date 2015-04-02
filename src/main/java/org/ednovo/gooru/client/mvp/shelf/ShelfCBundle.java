@@ -82,6 +82,8 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String userCollectionMetaResourceImage();
 		
+		String profileMetaDataTabTitleActive();
+		
 		String userCollectionMetaCollaboratorImage();
 		
 		String userCollectionMetaAssignImage();
@@ -390,6 +392,30 @@ public interface ShelfCBundle extends ClientBundle{
 		String deleteOkayButton();
 		
 		String aleartDescText();
+		String aleartDescTextForNotLoggedInUser();
+		String shelfItemSucessPopUpWithOutWidth();
+		String collectionEditImageTeacherTip();
+		
+		String publishPanel();
+		String publishButton();
+		String shelfPublishTab();
+		String publishPending();
+		String published();
+		
+		String userprofilecount();
+		
+		String profileMetaDataTabTitle();
+		
+		String profileMetaDataTabTitleDisabled();
+		
+		String standardsBrowsePopup();
+		
+		String assignSprite();
+		String assignCloseMark();
+		String assignCloseMarker();
+		String charLimit();
+		
+		String shelfPublishTabText();
 	}
 	
 	@Source("Shelf.css")

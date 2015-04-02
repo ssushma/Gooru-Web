@@ -134,7 +134,7 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 
 	void insertDraggedCollectionInShelfList(CollectionDo result, String parentId);   
 	
-	void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String,String> params);
+	void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String,String> params, CollectionDo collDo);
 	
 	void changeShelfPanelActiveStyle();
 	
@@ -159,4 +159,13 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	Integer getChildPageNumber();
 
 	void setChildPageNumber(Integer childPageNumber);
+	
+	void updateShelfFolderMetaData(String ideas, String performanceTasks, String questions);
+
+	void setCollectionActiveStyle();
+	
+	void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
+			RefreshFolderType refreshFolderType, HashMap<String, String> params);
+
+	void reorderShelfItems(String itemId, int toBeMovedPos,String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);   
 }

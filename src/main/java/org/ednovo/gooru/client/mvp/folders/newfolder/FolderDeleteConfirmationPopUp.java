@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,6 +41,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -62,6 +64,9 @@ public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 
 	@UiField
 	Label entityLbl;
+	@UiField FlowPanel buttonContainer;
+	
+//	@UiField BlueButtonUc deleteCollectionDisabledButton;
 
 	private String confirmText = "DELETE";
 	private static FolderDeleteConfirmationPopUpUiBinder uiBinder = GWT
@@ -82,6 +87,15 @@ public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 		setStyleName("deleteResourcePopup");
 		inlineTxtBox.addKeyUpHandler(new ValidateConfirmText());
 		entityLbl.setText(entityInfo);
+		entityLbl.getElement().setId("lblEntity");
+		entityLbl.getElement().setAttribute("alt",entityInfo);
+		entityLbl.getElement().setAttribute("title",entityInfo);
+		inlineTxtBox.getElement().setId("txtInlineTxtBox");
+		StringUtil.setAttributes(inlineTxtBox,true);
+		buttonContainer.getElement().setId("pnlButtonContainer");
+		okButtonUc.getElement().setId("btnDeleteCollectionDisabled");
+		cancelAnr.getElement().setId("lnkCancelAnr");
+		
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));

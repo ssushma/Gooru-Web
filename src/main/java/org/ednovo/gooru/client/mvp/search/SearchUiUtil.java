@@ -36,10 +36,11 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -49,11 +50,13 @@ import com.google.gwt.user.client.ui.Label;
  * @author Search Team
  * 
  */
-public class SearchUiUtil implements MessageProperties{
+public class SearchUiUtil{
 
 	public static final String STANDARD_CODE = "code";
 
 	public static final String STANDARD_DESCRIPTION = "description";
+	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public static void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
 		if (searchResultDo.getStandards() != null) {
@@ -78,12 +81,12 @@ public class SearchUiUtil implements MessageProperties{
 				count++;
 			}
 			if (standards.size()>18){
-				final Label left = new Label(GL_SPL_PLUS+(standards.size() - 18));
+				final Label left = new Label(i18n.GL_SPL_PLUS()+(standards.size() - 18));
 				toolTipwidgets.add(left);
 			}
 			if (searchResultDo.getStandards().size() > 2) {
 				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
-				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreStandardsCount), toolTipwidgets, standards);
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
 				toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLink());
 				standardsContainer.add(toolTipUc);
 				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
@@ -130,8 +133,9 @@ public class SearchUiUtil implements MessageProperties{
 		renderMetaData(flowPanel, data, null, wrapLength);
 	}*/
 
-	public static void renderMetaData(FlowPanel flowPanel, String data, String suffix) {
-		renderMetaData(flowPanel, data, suffix, -1);
+	public static Label renderMetaData(FlowPanel flowPanel, String data, String suffix) {
+		Label label=renderMetaData(flowPanel, data, suffix, -1);
+		return label;
 	}
 
 	/*public static void renderMetaData(FlowPanel flowPanel, List<String> datas) {
@@ -157,13 +161,41 @@ public class SearchUiUtil implements MessageProperties{
 		}
 		if (datas != null && datas.size() > 1) {
 			Integer moreCount = datas.size() - 1;
-			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreCount), toolTipwidgets);
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreCount), toolTipwidgets);
+			toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLinkPad());
+			flowPanel.add(toolTipUc);
+		}
+	}
+	
+	public static void renderMetaData(FlowPanel flowPanel, List<String> datas) {
+		
+		// this method is using to display publisher
+		if (datas == null) {
+			return;
+		}
+		
+		renderMetaData(flowPanel, datas.size() > 0 ? i18n.GL0566()+i18n.GL_SPL_SEMICOLON()+" "+datas.get(0) : null, null, 0);
+		FlowPanel toolTipwidgets = new FlowPanel();
+		FlowPanel toolTipwidget1 = new FlowPanel();
+		for (int count = 0; count < datas.size(); count++) {
+			Label label = new Label(datas.get(count));
+			label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+			if(count==0){
+				toolTipwidget1.add(label);
+			}else{
+				toolTipwidgets.add(label);
+			}
+			
+		}
+		if (datas != null && datas.size() > 1) {
+			Integer moreCount = datas.size() - 1;
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreCount), toolTipwidgets);
 			toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLinkPad());
 			flowPanel.add(toolTipUc);
 		}
 	}
 
-	public static void renderMetaData(FlowPanel flowPanel, String data, String suffix, int wrapLength) {
+	public static Label renderMetaData(FlowPanel flowPanel, String data, String suffix, int wrapLength) {
 		if (suffix != null || StringUtil.hasValidString(data)) {
 			if (wrapLength > 0) {
 				data = StringUtil.truncateText(data, wrapLength);
@@ -174,7 +206,9 @@ public class SearchUiUtil implements MessageProperties{
 			Label label = new Label(data);
 			label.setStyleName(CssTokens.FLOAT_LEFT);
 			renderMetaData(flowPanel, label);
+			return label;
 		}
+		return null;
 	}
 	
 	public static void renderSourceMetadata(FlowPanel flowPanel,String data,String suffix, int wrapLength){

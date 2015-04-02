@@ -86,24 +86,6 @@
 	margin-left: 66px;
 }
 
-.myClassPageCloseBtn {
-	float: right;
-	background: url(../images/content-close-btn-nornal.png);
-	width: 22px;
-	height: 22px;
-	cursor: pointer;
-	margin: 4px 4px 0px 0px;
-}
-
-.myClassPageCloseBtn:hover {
-	float: right;
-	background: url(../images/content-close-btn.png);
-	width: 16px;
-	height: 16px;
-	cursor: pointer;
-	margin: 6px 9px 0px 0px;
-}
-
 .myClassPageCreateClasspageContainer {
 	float: left;
 	width: 160px;
@@ -204,15 +186,6 @@ textarea {
 	margin-top: 16px;
 	float: left;
 	margin-left: 15px;
-}
-
-.myClassPageCloseBtn {
-	float: right;
-	background: url(../images/content-close-btn-nornal.png);
-	width: 22px;
-	height: 22px;
-	cursor: pointer;
-	margin: 4px 4px 0px 0px;
 }
 
 .myClassPageWelcomeText {
@@ -1786,15 +1759,6 @@ input[type="text"] {
 	margin-top: 16px;
 	float: left;
 	margin-left: 15px;
-}
-
-.myClassPageCloseBtn {
-	float: right;
-	background: url(../images/content-close-btn-nornal.png);
-	width: 22px;
-	height: 22px;
-	cursor: pointer;
-	margin: 4px 4px 0px 0px;
 }
 
 .myClassPageWelcomeText {

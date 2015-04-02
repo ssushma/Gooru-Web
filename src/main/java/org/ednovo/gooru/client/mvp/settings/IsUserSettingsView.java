@@ -218,4 +218,64 @@ public interface IsUserSettingsView extends IsViewWithHandlers<UserSettingsUiHan
 	Button getstandardsEditButton();
 	HTMLPanel getuserStandardDefaultView();
 	public void hideEmailContainer();
+	/**
+	 * @function googleDirveStatus 
+	 * 
+	 * @created_date : Jul 2, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	void googleDirveStatus(boolean isConnected);
+	
+	/**
+	 * @function setConnectedAs 
+	 * 
+	 * @created_date : Oct 27, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param	:	connectedEmailId
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	public void setConnectedAs(String connectedEmailId);
+	
+	/**
+	 * 
+	 * @function displayAdminPortal 
+	 * 
+	 * @created_date : 30-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void displayAdminPortal();
 }

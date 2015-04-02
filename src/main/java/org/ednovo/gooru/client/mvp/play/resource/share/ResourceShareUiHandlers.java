@@ -28,4 +28,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface ResourceShareUiHandlers extends BaseUiHandlers{
 	public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message); 
+	public void triggerShareDataLogEvent(String resourceGooruOid,String itemType,String shareType, boolean confirmStatus);
 }

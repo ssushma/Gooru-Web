@@ -28,7 +28,21 @@ package org.ednovo.gooru.client;
 import org.ednovo.gooru.shared.exception.GwtException;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
+/**
+ * 
+ * @fileName : RequestAsyncCallback.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public abstract class RequestAsyncCallback<T, I, V extends HasError> extends SimpleAsyncCallback<T> {
 
 	private V view;

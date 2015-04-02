@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -37,11 +37,13 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class NoCollectionInShelfListView extends Composite implements MessageProperties{
+public class NoCollectionInShelfListView extends Composite{
 
 	@UiField Label emptyCollMsg_1,emptyCollMsg_2;
 	
 	private static NoCollectionInShelfListViewUiBinder uiBinder = GWT.create(NoCollectionInShelfListViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface NoCollectionInShelfListViewUiBinder extends UiBinder<Widget, NoCollectionInShelfListView> {
 	}
@@ -51,8 +53,15 @@ public class NoCollectionInShelfListView extends Composite implements MessagePro
 	 */
 	public NoCollectionInShelfListView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		emptyCollMsg_1.setText(GL1031+GL_SPL_QUESTION);
-		emptyCollMsg_2.setText(GL1058);
+		emptyCollMsg_1.setText(i18n.GL1031()+i18n.GL_SPL_QUESTION());
+		emptyCollMsg_1.getElement().setId("lblEmptyCollMsg_1");
+		emptyCollMsg_1.getElement().setAttribute("alt", i18n.GL1031()+i18n.GL_SPL_QUESTION());
+		emptyCollMsg_1.getElement().setAttribute("title", i18n.GL1031()+i18n.GL_SPL_QUESTION());
+		
+		emptyCollMsg_2.setText(i18n.GL1058());
+		emptyCollMsg_2.getElement().setId("lblEmptyCollMsg_2");
+		emptyCollMsg_2.getElement().setAttribute("alt", i18n.GL1058());
+		emptyCollMsg_2.getElement().setAttribute("title", i18n.GL1058());
 	}
 
 }

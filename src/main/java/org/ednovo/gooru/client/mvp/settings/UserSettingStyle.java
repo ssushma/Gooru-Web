@@ -48,5 +48,6 @@ public interface UserSettingStyle extends CssResource {
 	String defaultTextcss();
 	String deafaultCourse();
 	String standardsCheckBox();
+	String substandardsCheckBox();
 	
 }

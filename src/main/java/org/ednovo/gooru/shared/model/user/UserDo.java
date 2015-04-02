@@ -52,6 +52,7 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String username;
+	private String userName;
 	private String emailId = "";
 	private Integer confirmStatus;
 	private String registerToken;
@@ -73,6 +74,9 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	private String loginType;
 	private String usernameDisplay;
 	private List<CustomFieldDo> customFields;
+	private Integer active;
+	
+	private Integer statusCode;
 	
 	private String createdOn;
 	
@@ -87,6 +91,14 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	private String organizationName;
 	
 	private UserMetaDo meta;
+	
+	private String accessToken;
+	
+	private String refreshToken;
+	
+	private String errorMsg;
+	
+	private ResponseStatusDo responseDo;  
 	
 	public UserDo(){}
 	
@@ -376,6 +388,112 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 
 	public void setMeta(UserMetaDo meta) {
 		this.meta = meta;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	/**
+	 * @return the active
+	 */
+	public Integer getActive() {
+		return active;
+	}
+
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Integer active) {
+		this.active = active;
+	}
+
+
+	/**
+	 * @return the statusCode
+	 */
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+
+	/**
+	 * @param statusCode the statusCode to set
+	 */
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
+
+
+	/** 
+	 * This method is to get the accessToken
+	 */
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+
+	/** 
+	 * This method is to set the accessToken
+	 */
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+
+	/** 
+	 * This method is to get the refreshToken
+	 */
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+
+	/** 
+	 * This method is to set the refreshToken
+	 */
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+
+
+	/**
+	 * @return the errorMsg
+	 */
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+
+	/**
+	 * @param errorMsg the errorMsg to set
+	 */
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
+
+	/** 
+	 * This method is to get the responseDo
+	 */
+	public ResponseStatusDo getResponseDo() {
+		return responseDo;
+	}
+
+
+	/** 
+	 * This method is to set the responseDo
+	 */
+	public void setResponseDo(ResponseStatusDo responseDo) {
+		this.responseDo = responseDo;
 	}
 	
 	

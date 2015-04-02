@@ -123,12 +123,6 @@ public class AssignmentsTabPresenter extends ChildPresenter<AssignmentsTabPresen
 	private void onLoad() {
 		throw new RuntimeException("Not implemented");
 	}
-	/*//to retrive all users collections and display
-	public void getUserCollections() {
-		getResourceService().getUserCollection(getUserCollectionsAsyncCallback());
-	}*/
-	
-	// Getter for ResourceService Async class
 	
 	public ResourceServiceAsync getResourceService() {
 		

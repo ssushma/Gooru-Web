@@ -143,7 +143,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endCo
 }
 .addResourceFormRightOuterDiv {
 	float: left;
-	width: 72.5%;
+	width: 75%;
 	padding: 0px 0px 0px 10px;
 	border-left: 1px solid rgb(221,221,221);
 	background-color:white;
@@ -168,6 +168,14 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endCo
 	color: rgb(81,81,81);
 	text-align: left;
 	padding: 0px 0px 2px 0px;
+}
+.addResourceDepthOfKnoweldgeFormTitle{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81,81,81);
+	text-align: left;
+	padding: 0px 0px 2px 0px;
+	display: inline-block;
 }
 .addResourceFormTitleChoiceOuterdiv {
 	margin: -10px 0px 20px 0px;
@@ -240,6 +248,17 @@ width: 100%;
 	border-width: 1px;
 	border-style: solid;
 	position: relative;
+	box-sizing:content-box;
+}
+.addResourceMultipleAnswerInputControl {
+	float: left;
+	width: 60%;
+	height: 30px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+	box-sizing:content-box;
 }
 .addResourceFormAnswerTextAlign {
 	font-size: 12px;
@@ -295,7 +314,8 @@ width: 100%;
 	border-style: solid;
 	height: 85px!important;
 	min-height: 85px!important;
-	width:302px !important;
+	width:305px !important;
+	box-sizing:content-box;
 
 }
 .addResourceFormInputTextField {
@@ -344,8 +364,18 @@ width: 100%;
 	/* margin-right: 72px;
 	float: right;
 	width:230px; */
-	margin-right: 61px;
+	margin-right: 70px;
 	float: right;
+}
+.addResourceFormInputBottomTextAnswerChoice {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(250,176,58);
+	text-align: right;
+	/* margin-right: 72px;
+	float: right;
+	width:230px; */
+	margin-right: 61px;
 }
 .addResourceThumbImageContainer {
 	position: relative;
@@ -746,10 +776,14 @@ width: 114px;
 /** Search Popup CSS **/
 .addResourceFormOuterDiv {
 	background-color: white;
-	width: 378px;
+	width: 75%;
 	float: left;
 	padding: 15px 10px;
 	border-left: 1px solid rgb(221,221,221);
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	max-height: 567px;
+	min-height: 300px;
 }
 
 .addSearchResourceFormContainer {
@@ -924,8 +958,19 @@ width: 114px;
 .suggestedResources {
 	margin: 25px 0px;
 	overflow: hidden;
-	width: 390px;
+	/* width: 390px; */
+	float: left;
+	border-bottom: none;
+	border-left: none;
+	border-style: solid;
+	border-color: #ddd;
+	border-left: none;
+	border-bottom: none;
+	/*background: url(../images/core/background-image.png) !important; */
+	padding-bottom: 10px;
+	padding-right: 8px;
 }
+
 .addResourceButtonGray{
 	height: 30px;
 	background: -webkit-linear-gradient(top, #bbb, #999);
@@ -987,7 +1032,8 @@ width: 114px;
 	background: #EEE;
 }
 .questionTextContainerStyle{
-	width:80%;
+	display: inline-block;
+	/* width:80%; */
 }
 
 .addSearchTitleText {
@@ -1028,6 +1074,10 @@ width: 114px;
 	margin-left: -3px;
 	margin-top: 30px;	
 }
+.resourceRightsCheckBox input[type="checkbox"]{
+margin: 1px 0;
+vertical-align: middle;
+}
 .resourceRightsContainer {
 	margin-left: 45px;
 	width: 100%;
@@ -1039,18 +1089,32 @@ width: 114px;
 	margin-top: 29px;
 	font-size: 13px;
 }
-.ownResourceFormRightsContent {
-	position: relative;
-	float: left;
-	width: 20px;
-	height: 20px;
-	cursor: pointer;
-	margin: 27px 10px 0px 3px;
-	background: url(images/Classpage/sprite-classpage-type.png) no-repeat
-		left top;
-	background-position: 0px -46px;
-}
 
-.ownResourceFormRightsContent:hover {
-	cursor: pointer;
+.yesNoTextStyle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	text-align: center;
+	position: static;
+	float: left;
+	margin-left: 41px;
+}
+.charLimitStyle{
+	float: right;
+	margin-left: 108px;
+	margin-top:-17px;
+	color: #999;
+}
+.charLimitExplanationStyle{
+	display: inline-flex;	
+	float: right;
+	color: #999;
+	margin-right: 87px;
+}
+.hintsErrorValidation{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(250,176,58);
+	margin-right: 70px;
+	float: right;
 }

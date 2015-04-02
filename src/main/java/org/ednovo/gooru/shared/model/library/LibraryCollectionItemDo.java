@@ -25,9 +25,6 @@
 package org.ednovo.gooru.shared.model.library;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -39,7 +36,7 @@ public class LibraryCollectionItemDo implements Serializable {
 	private String collectionItemId;
 	private Integer itemSequence;
 	private LibraryResourceDo resource;
-	
+
 	public LibraryCollectionItemDo(){}
 	/** 
 	 * This method is to get the collectionItemId

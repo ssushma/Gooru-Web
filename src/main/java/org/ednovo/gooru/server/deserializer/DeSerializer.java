@@ -27,6 +27,7 @@ package org.ednovo.gooru.server.deserializer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +47,6 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return value != null && value.matches(INTEGER_EQ) ? Integer.parseInt(value) : null;
 		} else {
@@ -60,11 +60,44 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			return value != null ? value : null;
 		} else {
 			return null;
+		}
+	}
+	
+	protected static Integer getJsonInteger(JSONObject jsonObject, String key) {
+		if (jsonObject != null && !jsonObject.isNull(key) && jsonObject.has(key)) {
+			int value = 0;
+			try {
+				value = jsonObject.getInt(key);
+			} catch (JSONException e) {
+			}
+			return value != 0 ? value : 0;
+		} else {
+			return 0;
+		}
+	}
+	
+	protected static ArrayList<checkboxSelectedDo> getJsonArray(JSONObject jsonObject, String key) {
+		ArrayList<checkboxSelectedDo> arrayObj = new ArrayList<checkboxSelectedDo>();
+		if (jsonObject != null && !jsonObject.isNull(key) && jsonObject.has(key)) {
+			JSONArray value = null;
+			try {
+				value = jsonObject.getJSONArray(key);
+				for(int i=0; i<value.length();i++)
+				{
+					checkboxSelectedDo checkBoxObj = new checkboxSelectedDo();				
+					checkBoxObj.setSelected(Boolean.valueOf(value.getJSONObject(i).getString("selected")));
+					checkBoxObj.setValue(value.getJSONObject(i).getString("value"));
+					arrayObj.add(checkBoxObj);
+				}
+			} catch (JSONException e) {
+			}
+			return arrayObj;
+		} else {
+			return arrayObj;
 		}
 	}
 
@@ -83,7 +116,6 @@ public abstract class DeSerializer {
 				try {
 					value.append(jsonArray.get(i));
 				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
 		}
@@ -97,7 +129,6 @@ public abstract class DeSerializer {
 				try {
 					values.add(jsonArray.getString(i));
 				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
 		}

@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,7 @@ public class ResourceDeserializer extends DeSerializer {
 	private static final String RESOURCE = "resource";
 	private static final String LABEL = "label";
 	private static final String CATEGORY = "category";
+	private static final String COLLECTIONCOUNT = "scollectionCount";
 	private static final String ID = "id";
 	private static final String DESCRIPTION = "description";
 	private static final String TYPE = "type";
@@ -62,7 +64,8 @@ public class ResourceDeserializer extends DeSerializer {
 	private static final String DATA = "data";
 	private static final String DURATION = "duration";
 	private static final String ERROR = "error";
-	private static final String GOORU_UID = "gooruUid";
+	private static final String ERROR_MESSAGE = "errorMessage";
+	private static final String GOORU_UID = "gooruUId";
 	private static final String TOKEN_EXPIRED = "tokenExpired";
 	private static final String USER = "user";
 	private static final String USER_NAME = "username";
@@ -84,6 +87,7 @@ public class ResourceDeserializer extends DeSerializer {
 			resultDo.setUrl(getJsonString(resourceJsonObject.getJSONObject(THUMBNAILS), YOUTUBE_URL));
 		}
 		resultDo.setCategory(getJsonString(resourceJsonObject, CATEGORY));
+		resultDo.setScollectionCount(getJsonInteger(resourceJsonObject, COLLECTIONCOUNT));
 		resultDo.setGooruOid(getJsonString(resourceJsonObject, ID));
 		resultDo.setDescription(getJsonString(resourceJsonObject, DESCRIPTION));
 		resultDo.setAssetURI(getJsonString(resourceJsonObject, "assetURI"));
@@ -113,7 +117,6 @@ public class ResourceDeserializer extends DeSerializer {
 				resultDos.add(deserialize(resourceJsonArray));
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return resultDos;
 	}
@@ -131,7 +134,6 @@ public class ResourceDeserializer extends DeSerializer {
 			videoDuration =getJsonString(resourceJsonObject, DURATION);
 			
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return videoDuration;
 	}
@@ -141,18 +143,24 @@ public class ResourceDeserializer extends DeSerializer {
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @return forgotPassword
 	 */
-	public Map<String, Object> forgotPassword(JsonRepresentation jsonRep) {
+	public Map<String, Object> forgotPassword(JsonRepresentation jsonRep,int code,String errorMessage, ResponseStatusDo responseDo) {
 		JSONObject jsonObject;
 		Map<String, Object> forgotPassword = new HashMap();
-		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				jsonObject = jsonRep.getJsonObject();
-				forgotPassword.put(ERROR, (getJsonString(jsonObject, ERROR)));
-				forgotPassword.put(GOORU_UID, (getJsonString(jsonObject, GOORU_UID)));
+				if(code==400 || code==404 ){
+					forgotPassword.put("code", 400);
+					forgotPassword.put("errorCode", responseDo.getErrorCode());
+					forgotPassword.put("errorMessage", responseDo.getErrorMessage());
+					forgotPassword.put("status", responseDo.getStatus());
+				}else{
+					if(jsonRep != null && jsonRep.getSize() != -1){
+						jsonObject = jsonRep.getJsonObject();
+						forgotPassword.put(GOORU_UID, (getJsonString(jsonObject, GOORU_UID)));
+					}
+				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
-		}
+		/*}*/
 		return forgotPassword;
 	}
 	
@@ -161,23 +169,24 @@ public class ResourceDeserializer extends DeSerializer {
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @return forgotPassword
 	 */
-	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code) {
+	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code,String errorMessage, ResponseStatusDo responseDo) {
 		JSONObject jsonObject;
-		Map<String, Object> resetPassword = new HashMap();
-		if (jsonRep != null && jsonRep.getSize() != -1) {
+		Map<String, Object> resetPassword = new HashMap<String, Object>();
 			try {
 				if(code==400){
 					resetPassword.put("statusCode", 400);
+					resetPassword.put("errorCode", responseDo.getErrorCode());
+					resetPassword.put("statusMessage", errorMessage);
 				}else{
-					jsonObject = jsonRep.getJsonObject();
-					resetPassword.put(TOKEN_EXPIRED, (getJsonString(jsonObject, TOKEN_EXPIRED)));
-					JSONObject userJsonObject = jsonObject.getJSONObject(USER);
-					resetPassword.put(USER_NAME, (getJsonString(userJsonObject, USER_NAME)));
+					if (jsonRep != null ) {
+						jsonObject = jsonRep.getJsonObject();
+						JSONObject userJsonObject = jsonObject.getJSONObject(USER);
+						resetPassword.put("statusCode", 200);
+						resetPassword.put(USER_NAME, (getJsonString(userJsonObject, USER_NAME)));
+					}
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
-		}
 		return resetPassword;
 	}
 }

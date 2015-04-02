@@ -101,11 +101,9 @@ public class uploadServlet extends UploadAction{
 					try {
 					
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
-						System.out.println("response data::"+responsedata);
 						jsonArray = new JSONArray(responsedata);
 						
 					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
 					}
 					
 					
@@ -121,7 +119,6 @@ public class uploadServlet extends UploadAction{
 			    }
 			} 
 			catch(Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -133,7 +130,6 @@ public class uploadServlet extends UploadAction{
 			try {
 					ret = testUpload(bytes, data, fileName,fileSize,urlVal);
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 			return ret;
 		}
@@ -182,14 +178,12 @@ public class uploadServlet extends UploadAction{
 		  public void checkRequest(HttpServletRequest request) {
 			  try
 			  {
-		   // logger.debug("UPLOAD-SERVLET (" + request.getSession().getId() + ") procesing a request with size: " + request.getContentLength() + " bytes.");
 		    if (request.getContentLength() > 10 * 1024 * 1024) {
 		      throw new UploadSizeLimitException(maxSize, request.getContentLength());
 		    }
 			  }
 			  catch(Exception ex)
 			  {
-				  ex.printStackTrace();
 			  }
 		  }
 		

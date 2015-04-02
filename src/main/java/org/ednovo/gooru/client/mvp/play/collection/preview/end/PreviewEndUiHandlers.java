@@ -28,4 +28,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface PreviewEndUiHandlers extends BaseUiHandlers{
 	public void resetCollectionActivityEventId();
+	public void triggerCollectionShareDataEvent(String collectionId,String itemType,String shareType,boolean confirmStatus);
 }

@@ -30,7 +30,8 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -52,7 +53,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProfilePageDescriptionEditUc extends Composite implements
-		HasValue<String>,MessageProperties {
+		HasValue<String> {
 
 	private static ProfileBiographyEditUCUiBinder uiBinder = GWT
 			.create(ProfileBiographyEditUCUiBinder.class);
@@ -60,6 +61,8 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	interface ProfileBiographyEditUCUiBinder extends
 			UiBinder<Widget, ProfilePageDescriptionEditUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	protected HTMLPanel editLabel;
@@ -85,19 +88,27 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	public ProfilePageDescriptionEditUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("pnlEditLabel");
 		deckPanel.showWidget(0);
-		errorLabel.setText(GL1043);
+		errorLabel.setText(i18n.GL1043());
+		errorLabel.getElement().setId("lblErrorLabel");
+		errorLabel.getElement().setAttribute("alt", i18n.GL1043());
+		errorLabel.getElement().setAttribute("title", i18n.GL1043());
 		biographyLabel = new Label();
-		biographyLabel.getElement().setAttribute("style", "float: left; max-width: 500px; min-height: 33px;");
+		biographyLabel.getElement().setAttribute("style", "float: left; max-width: 709px; min-height: 33px;");
 		
-		biographyEditImage = new Label(GL0140);
+		biographyEditImage = new Label(i18n.GL1786());
 		biographyEditImage.setStyleName(res.css().editImage());
 		errorLabel.setVisible(false);
+		errorLabelForEditText.getElement().setId("lblErrorLabelForEditText");
 		errorLabelForEditText.getElement().setAttribute("style", "float: left;text-align: right;width: 76%;");
 		errorLabelForEditText.setVisible(false);
-		editTextBox.getElement().setAttribute("maxlength", "500");
+		editTextBox.getElement().setAttribute("maxlength", "725");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setAttribute("id", "txtAreaAboutYourself");
+		StringUtil.setAttributes(editTextBox, true);
 		editTextBox.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -136,6 +147,8 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
 		editTextBox.setText(getValue());
+		editTextBox.getElement().setAttribute("alt", getValue());
+		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		
@@ -167,6 +180,8 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	}
 	public void cancel() {
 		editTextBox.setText(biographyLabel.getText());
+		editTextBox.getElement().setAttribute("alt", biographyLabel.getText());
+		editTextBox.getElement().setAttribute("title", biographyLabel.getText());
 		errorLabel.setVisible(false);
 		deckPanel.showWidget(0);
 	}
@@ -205,6 +220,8 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		editLabel.add(biographyLabel);
 		editLabel.add(biographyEditImage);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**

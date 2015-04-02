@@ -38,8 +38,6 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 *
 */
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.AssignmentDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -48,4 +46,5 @@ public interface AddAssignmentContainerUiHandlers extends BaseUiHandlers, EventH
 	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel);
 	public void getFolderItems(TreeItem item,String parentId);
 	public void addCollectionToAssign(String collectionId,String direction,String dueDate);
+	public void addCollectionToAssign(String collectionId);
 }

@@ -19,5 +19,4 @@ public class ShelfFolderItemChildPresenter extends ChildPresenter<ShelfFolderIte
 	public ShelfFolderItemChildPresenter(IsShelfFolderItemView childView) {
 		super(childView);
 	}
-
 }

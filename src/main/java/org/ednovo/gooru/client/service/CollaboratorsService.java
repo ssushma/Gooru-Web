@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -52,7 +53,7 @@ public interface CollaboratorsService extends BaseService {
 	 *
 	 *
 	 */
-	public Map<String, ArrayList<CollaboratorsDo>> getAssociatedCollaborators(String contentId, String type)  throws GwtException;
+	public Map<String, ArrayList<CollaboratorsDo>> getAssociatedCollaborators(String contentId, String type)  throws GwtException, ServerDownException;
 	/**
 	 * 
 	 * @function addCollaboratorToCollectionById 
@@ -75,7 +76,7 @@ public interface CollaboratorsService extends BaseService {
 	 *
 	 *
 	 */
-	public List<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId)  throws GwtException;
+	public List<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId)  throws GwtException, ServerDownException;
 
 	/**
 	 * @function getSuggestionByName 
@@ -96,7 +97,7 @@ public interface CollaboratorsService extends BaseService {
 	 *
 	 * 
 	*/
-	public List<String> getSuggestionByName(String emailId)  throws GwtException;
+	public List<String> getSuggestionByName(String emailId)  throws GwtException, ServerDownException;
 	/**
 	 * @function removeCollaboratorsFromListByEmailIds 
 	 * 
@@ -117,6 +118,6 @@ public interface CollaboratorsService extends BaseService {
 	 * 
 	*/
 	
-	public void removeCollaboratorsFromListByEmailIds(String collectionId, String toRemove) throws GwtException;
+	public void removeCollaboratorsFromListByEmailIds(String collectionId, String toRemove) throws GwtException, ServerDownException;
 	
 }

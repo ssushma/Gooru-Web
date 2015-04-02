@@ -36,10 +36,11 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -69,7 +70,7 @@ import com.google.gwt.user.client.ui.Widget;
 */
 
 public class SocialShareSmallView extends ChildView<SocialShareSmallPresenter> implements
-IsSocialShareSmallView, MessageProperties {
+IsSocialShareSmallView{
 
 	private static SocialShareSmallViewUiBinder uiBinder = GWT
 			.create(SocialShareSmallViewUiBinder.class);
@@ -77,6 +78,7 @@ IsSocialShareSmallView, MessageProperties {
 	interface SocialShareSmallViewUiBinder extends UiBinder<Widget, SocialShareSmallView> {
 	}
 
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	HTMLEventPanel fbPanel,twitterPanel,emailPanel,fbIconPanel,twIconPanel,emailIconPanel;
@@ -147,9 +149,9 @@ IsSocialShareSmallView, MessageProperties {
 
 		setPresenter(new SocialShareSmallPresenter(this));
 		//		shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-		faceBookLbl.getElement().setInnerHTML(GL0646);
-		twitterLbl.getElement().setInnerHTML(GL0647);
-		emailLbl.getElement().setInnerHTML(GL0426);
+		faceBookLbl.getElement().setInnerHTML(i18n.GL0646());
+		twitterLbl.getElement().setInnerHTML(i18n.GL0647());
+		emailLbl.getElement().setInnerHTML(i18n.GL0426());
 		try {
 			if(socialDo.getIsSearchShare()){
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
@@ -248,6 +250,24 @@ IsSocialShareSmallView, MessageProperties {
 		 * @param setHeader is Object of Handler.
 		 */
 		AppClientFactory.getEventBus().addHandler(UpdateSocialShareMetaDataEvent.TYPE,setHeader);
+		
+		shareTextPanel.getElement().setId("pnlShareTextPanel");
+		fbPanel.getElement().setId("epnlFbPanel");
+		faceBookLbl.getElement().setId("pnlFaceBookLbl");
+		twitterPanel.getElement().setId("epnlTwitterPanel");
+		panelTwitter.getElement().setId("pnlPanelTwitter");
+		twitterLbl.getElement().setId("pnlTwitterLbl");
+		emailPanel.getElement().setId("epnlEmailPanel");
+		panelEmail.getElement().setId("pnlPanelEmail");
+		emailLbl.getElement().setId("pnlEmailLbl");
+		shareIconPanel.getElement().setId("pnlShareIconPanel");
+		fbIconPanel.getElement().setId("epnlFbIconPanel");
+		panelfbIcon.getElement().setId("pnlPanelfbIcon");
+		twIconPanel.getElement().setId("epnlTwIconPanel");
+		panelTwIcon.getElement().setId("pnlPanelTwIcon");
+		emailIconPanel.getElement().setId("epnlEmailIconPanel");
+		panelEmailIcon.getElement().setId("pnlPanelEmailIcon");
+		categoryImage.getElement().setId("imgCategoryImage");
 	}
 	public void setSocialShareContainerId(String socialShareId) {
 		socialShareContainer.getElement().setId(socialShareId);
@@ -459,10 +479,10 @@ IsSocialShareSmallView, MessageProperties {
 	private void onEmailShareEvent() {
 		MixpanelUtil.Click_On_Email();
 		if(!(AppClientFactory.isAnonymous())){
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<SettingDo>() {
+			AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<V2UserDo>() {
 
 				@Override
-				public void onSuccess(SettingDo result) {
+				public void onSuccess(V2UserDo result) {
 					socialDo.setEmailId(result.getExternalId());
 					EmailShareUc emailShare=new EmailShareUc(socialDo);
 					emailShare.show();

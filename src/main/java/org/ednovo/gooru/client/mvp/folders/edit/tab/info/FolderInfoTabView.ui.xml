@@ -34,6 +34,8 @@
 				<g:Label styleName="{res.css.shelfGradeInfoTitle}" text="GRADES" />
 			</g:FlowPanel>
 			<g:Label styleName="{res.css.shelfGradeInfoBottom}" text="Select grade(s) below" />
+				<g:Label styleName="{res.css.shelfGradeInfoBottom} {res.css.gradeInfoLabel}"
+						ui:field="GradeUpdate"  />
 			<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}" ui:field="KinderGarten" />
 			<g:FlowPanel styleName="{res.css.gradeListCont}">
 				<g:FlowPanel ui:field="gradeTopList" />

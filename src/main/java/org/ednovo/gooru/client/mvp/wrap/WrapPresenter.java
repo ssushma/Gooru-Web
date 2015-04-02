@@ -31,17 +31,32 @@ import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleHandler;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.event.InvokeLoginHandler;
 import org.ednovo.gooru.client.event.InvokeRegisterHandler;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.HomeHandler;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEvent;
+import org.ednovo.gooru.client.mvp.home.event.PreFilterEventHandler;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkHandler;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
+import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
+import org.ednovo.gooru.client.mvp.profilepage.event.UserHeaderImageEventHandler;
+import org.ednovo.gooru.client.mvp.search.SearchCBundle;
+import org.ednovo.gooru.client.mvp.search.SearchFilterVc;
+import org.ednovo.gooru.client.mvp.search.event.FilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.FilterHandler;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiHandler;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter.IsWrapProxy;
+import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
@@ -53,9 +68,13 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * @author Search Team
  * 
  */
-public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler {
+
+public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler,PreFilterEventHandler,UserHeaderImageEventHandler, SearchFilterUiHandler, FilterHandler{
 	
-	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+
+	private String  RESOURCE_SEARCH="resource-search";
+	private String COLLECTION_SEARCH="collection-search";
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_VIEW = new Type<RevealContentHandler<?>>();
@@ -65,13 +84,20 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	}
 
 	@Inject
-	public WrapPresenter(IsWrapView view, IsWrapProxy proxy) {
+	public WrapPresenter(IsWrapView view, IsWrapProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenter) {
 		super(view, proxy);
+		this.addStandardsPresenter = addStandardsPresenter;
 		addRegisteredHandler(InvokeLoginEvent.TYPE, this);
 		addRegisteredHandler(ActivateSearchBarEvent.TYPE, this);
 		addRegisteredHandler(InvokeGooruGuideBubbleEvent.TYPE, this);
 		addRegisteredHandler(HomeEvent.TYPE, this);
 		addRegisteredHandler(SetDiscoverLinkEvent.TYPE, this);
+		addRegisteredHandler(SearchFilterUiEvent.TYPE, this);
+		addRegisteredHandler(FilterEvent.TYPE, this);
+		addRegisteredHandler(PreFilterEvent.TYPE, this);
+		addRegisteredHandler(UpdateProfileHeaderImageEvent.TYPE, this);
+		
+		showPrefilterPopup();
 	}
 
 	@Override
@@ -123,5 +149,88 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	@Override
 	public void setDiscoverLink(String discoverLink) {
 		getView().setDiscoverLinkFromLibrary(discoverLink);
+	}
+
+	@Override
+	public void requestSearchFilterd(SearchFilterVc filterVc,boolean resource) {
+		// TODO Auto-generated method stub
+		/*getView().getSearchFiltersPanel().clear();
+		getView().getSearchFiltersPanel().getElement().setId("left-menu");
+		filterVc.getMainContainer().setStyleName("col-md-12");
+		filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().filtersContainer());
+		filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().searchFilters());
+		filterVc.getMainContainer().addStyleName("hidden-sm");
+		filterVc.getMainContainer().addStyleName("hidden-md");
+		getView().getSearchFiltersPanel().add(filterVc);*/
+
+		
+		if(resource){
+			getView().getSearchFiltersPanel().clear();
+			getView().getSearchFiltersPanel().getElement().setId("left-menu");
+			filterVc.getMainContainer().setStyleName("col-md-12");
+			filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().filtersContainer());
+			filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().searchFilters());
+			filterVc.getMainContainer().addStyleName("hidden-sm");
+			filterVc.getMainContainer().addStyleName("hidden-md");
+			getView().getSearchFiltersPanel().add(filterVc);
+		}else{
+			getView().getCollectionSearchFiltersPanel().clear();
+			getView().getCollectionSearchFiltersPanel().getElement().setId("left-menu");
+			filterVc.getMainContainer().setStyleName("col-md-12");
+			filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().filtersContainer());
+			filterVc.getMainContainer().addStyleName(SearchCBundle.INSTANCE.css().searchFilters());
+			filterVc.getMainContainer().addStyleName("hidden-sm");
+			filterVc.getMainContainer().addStyleName("hidden-md");
+			getView().getCollectionSearchFiltersPanel().add(filterVc);
+		}
+	}
+
+	@Override
+	public void searchFilters(SearchFilterDo searchDo) {
+		// TODO Auto-generated method stub
+		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(nameToken!=null&&nameToken.equalsIgnoreCase(RESOURCE_SEARCH)){
+			Widget widget=getView().getSearchFiltersPanel()!=null?getView().getSearchFiltersPanel().getWidget(0):null;
+			if(widget!=null&&widget instanceof SearchFilterVc){
+				SearchFilterVc filterVc=(SearchFilterVc)widget;
+				filterVc.renderFilter(searchDo);	
+			}
+		}else if(nameToken!=null&&nameToken.equalsIgnoreCase(COLLECTION_SEARCH)){
+			Widget widget=getView().getCollectionSearchFiltersPanel()!=null?getView().getCollectionSearchFiltersPanel().getWidget(0):null;
+			if(widget!=null&&widget instanceof SearchFilterVc){
+				SearchFilterVc filterVc=(SearchFilterVc)widget;
+				filterVc.renderFilter(searchDo);	
+			}
+		}
+	
+	}
+
+	@Override
+	protected void onReset() {
+		// TODO Auto-generated method stub
+		super.onReset();
+		
+		String nameToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(nameToken!=null&&nameToken.equalsIgnoreCase(RESOURCE_SEARCH)){
+			getView().getSearchFiltersPanel().getElement().getStyle().setDisplay(Display.BLOCK);
+			getView().getCollectionSearchFiltersPanel().getElement().getStyle().setDisplay(Display.NONE);
+		}else if(nameToken!=null&&nameToken.equalsIgnoreCase(COLLECTION_SEARCH)){
+			getView().getSearchFiltersPanel().getElement().getStyle().setDisplay(Display.NONE);
+			getView().getCollectionSearchFiltersPanel().getElement().getStyle().setDisplay(Display.BLOCK);
+
+		}
+	}
+	private void showPrefilterPopup() {
+		getView().showPrefilter(addStandardsPresenter);
+	}
+
+	@Override
+	public void openPreFilterPopup() {
+		getView().openPreFilter();
+	}
+
+	@Override
+	public void setUserHeaderProfileImage(String imageUrl) {
+		getView().updateUserHeaderProfileImage(imageUrl);
 	}
 }

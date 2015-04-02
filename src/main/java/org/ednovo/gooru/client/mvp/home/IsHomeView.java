@@ -27,9 +27,15 @@
  */
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+
+import com.google.gwt.user.client.ui.Button;
 
 /**
  * @author Search Team
@@ -54,5 +60,54 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	 * @param placeToken 
 	 */
 	void loadFeaturedContributors(String callBack, String placeToken);
+
+	/**
+	 * @function getBtnSignUp 
+	 * 
+	 * @created_date : Jul 31, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : Button
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	Button getBtnSignUp();
+
+
+	/**
+	 * 
+	 * @function displayPartnerLibraries 
+	 * 
+	 * @created_date : 17-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param partnersList
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void displayPartnerLibraries(ArrayList<LibraryUserDo> partnersList);
+
+	/**
+	 * To show preFilter popup
+	 * @param addStandardsPresenter 
+	 */
+	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
+
 	
 }

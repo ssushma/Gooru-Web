@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
@@ -82,7 +83,9 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	void v2GetAllClasspages(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
 	
-	void v2GetUserClasses(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
+	void v2GetUserClasses(String limit, String offSet,String randomId, AsyncCallback<ClasspageListDo> callback);
+	
+	void v2GetUserStudyClasses(String limit, String offSet,String randomId, AsyncCallback<ClasspageListDo> callback);
 
 	void v2CreateAssignment(AssignmentDo assignmentDo,AsyncCallback<AssignmentDo> callback);
 	
@@ -120,9 +123,11 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void createClassPageItem(String classpageId,String collectionId,String dueDate,String direction, AsyncCallback<ClasspageItemDo> callback);
 	
-	public void getClassPageItems(String classpageId,String offset,String limit, AsyncCallback<ArrayList<ClasspageItemDo>> callback);
+	public void assignItemToClass(String classpageId,String itemId,String dueDate,String direction,AsyncCallback<ArrayList<ClasspageItemDo>> callback);
 	
-	public void updateClasspageItem(String classpageItemId,String direction,String dueDate, AsyncCallback<String> callback);
+	public void getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus, AsyncCallback<ArrayList<ClasspageItemDo>> callback);
+	
+	public void updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus, AsyncCallback<String> callback);
 	
 	public void deleteClassPageItem(String collectionId, AsyncCallback<String> callback);
 	
@@ -171,4 +176,9 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void v2GetClassPartyCustomField(String gooruUid, AsyncCallback<ProfilePageDo> simpleAsyncCallback);
 	
 	public void getActiveAssociatedStudentListByCode(String classCode, int offSet, int pageSize, String statusType, AsyncCallback<StudentsAssociatedListDo> simpleAsyncCallback);
+	
+	public void v2GetAllClass(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
+	
+	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
+	
 }

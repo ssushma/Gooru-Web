@@ -37,6 +37,7 @@ public class ProfileV2Do implements Serializable{
 	private String grade;
 	private UserDo user;
 	private GenderDo gender;
+	private String userType; 
 	
 	public ProfileV2Do(){}
 	
@@ -77,6 +78,20 @@ public class ProfileV2Do implements Serializable{
 	 */
 	public void setGender(GenderDo gender) {
 		this.gender = gender;
+	}
+
+	/** 
+	 * This method is to get the userType
+	 */
+	public String getUserType() {
+		return userType;
+	}
+
+	/** 
+	 * This method is to set the userType
+	 */
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	
 	

@@ -6,10 +6,7 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 
 public interface CollectionFlagUiHandler extends BaseUiHandlers{
-	public void createCollectionContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids);
+	public void createCollectionContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids,boolean isResourceFlag,String collectionItemId);
 	public void getContentReport(String associatedGooruOid);
 	public String getResourceContentReport(String associatedGooruOid);
-	
-	
-	
 }

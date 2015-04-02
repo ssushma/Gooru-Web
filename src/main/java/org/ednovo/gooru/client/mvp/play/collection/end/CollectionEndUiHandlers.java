@@ -25,9 +25,31 @@
 package org.ednovo.gooru.client.mvp.play.collection.end;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHandler;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
-public interface CollectionEndUiHandlers extends BaseUiHandlers{
-	public void sendEmail(String fromEmail, final String toEmail, String copyEmail,String subject, String message);
-	public void generatePdf(String innerHtml, String completedDateTime,String fromEmail);
-	public void getContentReport(String collectionId);
+public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler {
+	public void createCommentForCollection(String gooruOid, String comment);
+	
+	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit,String commentText);
+	
+	public void getPaginationResults(String gooruOid, String offset, String limit);
+	
+	public void resetCollectionActivityEventId();
+	
+	public void triggerCollectionShareDataEvent(String collectionId,String itemType, String shareType, boolean confirmStatus) ;
+	
+	public void getAvgReaction();
+
+	public void updateCommentsStatus(String string);
+	
+	public void getSessionsDataByUser(String collectionId, String classId, String userId);
+	
+	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId,PrintUserDataDO printData);
+	
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData);
+	
+	public void setCollectionSummaryBasedOnClasspageIdSessionId();
+	
+	public void clearslot();
 }

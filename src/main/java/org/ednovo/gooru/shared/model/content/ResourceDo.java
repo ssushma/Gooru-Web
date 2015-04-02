@@ -25,8 +25,11 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -49,10 +52,15 @@ public class ResourceDo extends ContentDo {
     private LicenseDo license;
     private String grade;
     private String mediaType;
+    private List<StandardFo> skills;
+	private String gooruOid;
     
     private String encodedUrl;
     
     private ResourceFormatDo resourceFormat;
+    
+   
+    private ArrayList<ResourceTagsDo> resourceTags;
     
     public ResourceDo(){}
     
@@ -75,9 +83,160 @@ public class ResourceDo extends ContentDo {
     private String questionText;
     
     private Integer userRating;
-
     
-    /** 
+    private Date createdOn;
+    
+	private SearchRatingsDo ratings;
+
+    /** need to change these after api is finalized  **/
+
+	private String  educationalRole;
+	
+	private String interactivityType;
+	
+	private String gooruSubject;
+	
+	private String contributor;
+	
+	private List<String> keywords;
+	
+	private List<String> readinglevel;
+	
+	private List<String> gooruCourse;
+	
+	private String mobilefriendlyness;
+	
+	private List<String> acessmode;
+	
+	private List<String> mediaFeatures;
+	
+	private List<String> accessibilityAPI;
+	
+	private List<String> aggregator;
+	
+	private List<String> publisher;
+	
+	private List<String> host;
+	
+	private customFieldValuesDO customFieldValues;
+	
+	private UserDo user;
+	
+	private String url;
+	
+	public List<String> getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(List<String> publisher) {
+		this.publisher = publisher;
+	}
+	
+	public List<String> getAggregator() {
+		return aggregator;
+	}
+	public void setAggregator(List<String> aggregator) {
+		this.aggregator = aggregator;
+	}
+	public customFieldValuesDO getCustomFieldValues() {
+		return customFieldValues;
+	}
+	public void setCustomFieldValues(customFieldValuesDO customFieldValues) {
+		this.customFieldValues = customFieldValues;
+	}
+	public List<String> getAccessibilityAPI() {
+		return accessibilityAPI;
+	}
+	public void setAccessibilityAPI(List<String> accessibilityAPI) {
+		this.accessibilityAPI = accessibilityAPI;
+	}
+	
+	public String getHasadaptation() {
+		return hasadaptation;
+	}
+	public void setHasadaptation(String hasadaptation) {
+		this.hasadaptation = hasadaptation;
+	}
+	public String getIsadaptation() {
+		return isadaptation;
+	}
+	public void setIsadaptation(String isadaptation) {
+		this.isadaptation = isadaptation;
+	}
+
+	private String hasadaptation;
+	
+	private String isadaptation;
+	
+	public List<String> getMediaFeatures() {
+		return mediaFeatures;
+	}
+	public void setMediaFeatures(List<String> mediaFeatures) {
+		this.mediaFeatures = mediaFeatures;
+	}
+	public List<String> getAcessmode() {
+		return acessmode;
+	}
+	public void setAcessmode(List<String> acessmode) {
+		this.acessmode = acessmode;
+	}
+	public String getMobilefriendlyness() {
+		return mobilefriendlyness;
+	}
+	public void setMobilefriendlyness(String mobilefriendlyness) {
+		this.mobilefriendlyness = mobilefriendlyness;
+	}
+	public List<String> getGooruCourse() {
+		return gooruCourse;
+	}
+	public void setGooruCourse(List<String> gooruCourse) {
+		this.gooruCourse = gooruCourse;
+	}
+	public List<String> getReadinglevel() {
+		return readinglevel;
+	}
+	public void setReadinglevel(List<String> readinglevel) {
+		this.readinglevel = readinglevel;
+	}
+	public List<String> getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
+	}
+	public String getContributor() {
+		return contributor;
+	}
+	public void setContributor(String contributor) {
+		this.contributor = contributor;
+	}
+	public String getGooruSubject() {
+		return gooruSubject;
+	}
+	public void setGooruSubject(String gooruSubject) {
+		this.gooruSubject = gooruSubject;
+	}
+	
+	public String getInteractivityType() {
+		return interactivityType;
+	}
+	public void setInteractivityType(String interactivityType) {
+		this.interactivityType = interactivityType;
+	}
+	public String getEducationalRole() {
+		return educationalRole;
+	}
+	public void setEducationalRole(String educationalRole) {
+		this.educationalRole = educationalRole;
+	}
+	
+	/** need to change the above **/
+	
+
+	private ArrayList<checkboxSelectedDo> momentsOfLearning;
+	private ArrayList<checkboxSelectedDo> educationalUse;
+	private List<checkboxSelectedDo> depthOfKnowledges;
+
+	/** 
 	 * This method is to get the encodedUrl
 	 */
 	public String getEncodedUrl() {
@@ -145,8 +304,6 @@ public class ResourceDo extends ContentDo {
         this.resourceType = resourceType;
     }
 
-    private String url;
-
     public String getAssetURI() {
         return assetURI;
     }
@@ -209,6 +366,9 @@ public class ResourceDo extends ContentDo {
     }
 
     public void setUrl(String url) {
+    	if(url==null) {
+    		url = "";
+    	}
         this.url = url;
     }
 
@@ -351,6 +511,68 @@ public class ResourceDo extends ContentDo {
 	public void setResourceFormat(ResourceFormatDo resourceFormat) {
 		this.resourceFormat = resourceFormat;
 	}
-	
+	//These are the setters and getters to get created date
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+	public ArrayList<checkboxSelectedDo> getMomentsOfLearning() {
+		return momentsOfLearning;
+	}
+	public void setMomentsOfLearning(ArrayList<checkboxSelectedDo> momentsOfLearning) {
+		this.momentsOfLearning = momentsOfLearning;
+	}
+	public ArrayList<checkboxSelectedDo> getEducationalUse() {
+		return educationalUse;
+	}
+	public void setEducationalUse(ArrayList<checkboxSelectedDo> educationalUse) {
+		this.educationalUse = educationalUse;
+	}
+	public List<checkboxSelectedDo> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
+	}
+
+	public UserDo getUser() {
+		return user;
+	}
+	public void setUser(UserDo user) {
+		this.user = user;
+	}
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
+
+	}
+	public List<String> getHost() {
+		return host;
+	}
+	public void setHost(List<String> host) {
+		this.host = host;
+	}
+	public ArrayList<ResourceTagsDo> getResourceTags() {
+		return resourceTags;
+	}
+	public void setResourceTags(ArrayList<ResourceTagsDo> resourceTags) {
+		this.resourceTags = resourceTags;
+	}
+	public List<StandardFo> getSkills() {
+		return skills;
+	}
+	public void setSkills(List<StandardFo> skills) {
+		this.skills = skills;
+	}
+	public String getGooruOid() {
+		return gooruOid;
+	}
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
 	
 }

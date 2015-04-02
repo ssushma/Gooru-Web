@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.home.register;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,18 +39,20 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ChildAccountPopup extends Composite implements MessageProperties {
+public class ChildAccountPopup extends Composite{
 	private AppPopUp appPopUp;
 	private static ChildAccountPopupUiBinder uiBinder = GWT.create(ChildAccountPopupUiBinder.class);
 
 	interface ChildAccountPopupUiBinder extends UiBinder<Widget, ChildAccountPopup> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	BlueButtonUc confirmationBtnUc;
 	@UiField Label congrtstext,excitedText;
 	
-	private static final String CHILD_SUCCESS_TEXT = GL1214;
+//	private static final String CHILD_SUCCESS_TEXT = i18n.GL1214;
 
 	/**
 	 * Class constructor
@@ -59,13 +61,23 @@ public class ChildAccountPopup extends Composite implements MessageProperties {
 		RegisterCBundle.INSTANCE.css().ensureInjected();
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css().registerPopup());
-		appPopUp.setContent(CHILD_SUCCESS_TEXT, uiBinder.createAndBindUi(this));
+		appPopUp.setContent(i18n.GL1214(), uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		congrtstext.setText(GL1212);
-		excitedText.setText(GL1213);
-		confirmationBtnUc.setText(GL0190);
+		congrtstext.setText(i18n.GL1212());
+		congrtstext.getElement().setId("lblCongrtstext");
+		congrtstext.getElement().setAttribute("alt",i18n.GL1212());
+		congrtstext.getElement().setAttribute("title",i18n.GL1212());
+		
+		excitedText.setText(i18n.GL1213());
+		excitedText.getElement().setId("lblExcitedText");
+		excitedText.getElement().setAttribute("alt",i18n.GL1213());
+		excitedText.getElement().setAttribute("title",i18n.GL1213());
+		
+		confirmationBtnUc.setText(i18n.GL0190());
 		confirmationBtnUc.getElement().setId("btnConfirmation");
+		confirmationBtnUc.getElement().setAttribute("alt",i18n.GL0190());
+		confirmationBtnUc.getElement().setAttribute("title",i18n.GL0190());
 	}
 
 	/**

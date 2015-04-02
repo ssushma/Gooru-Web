@@ -36,6 +36,7 @@ public class CustomFieldDo implements Serializable {
 
 	private String optionalKey;
 	private String optionalValue;
+	private String category;
 	
 	public CustomFieldDo(){}
 	
@@ -50,6 +51,20 @@ public class CustomFieldDo implements Serializable {
 	}
 	public void setOptionalValue(String optionalValue) {
 		this.optionalValue = optionalValue;
+	}
+
+	/** 
+	 * This method is to get the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/** 
+	 * This method is to set the category
+	 */
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

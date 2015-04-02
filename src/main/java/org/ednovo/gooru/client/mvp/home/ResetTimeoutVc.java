@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,7 +40,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ResetTimeoutVc extends PopupPanel  implements MessageProperties {
+public class ResetTimeoutVc extends PopupPanel{
 	
 	private AppPopUp appPopUp;
 	
@@ -52,6 +52,8 @@ public class ResetTimeoutVc extends PopupPanel  implements MessageProperties {
 
 	interface ResetTimeoutVcUiBinder extends UiBinder<Widget, ResetTimeoutVc> {
 	}
+	
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor , create password reset token expired popup 
@@ -60,13 +62,29 @@ public class ResetTimeoutVc extends PopupPanel  implements MessageProperties {
 		setWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName("removeResourcePopup");
-		appPopUp.setContent(GL0062, uiBinder.createAndBindUi(this));
+		appPopUp.setContent(i18n.GL0062(), uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		newPwdLbl.setText(GL1254);
-		timeOutText.setText(GL1257);
-		requestNewText.setText(GL1258);
-		forgotPwdLbl.setText(GL1259);
+		newPwdLbl.setText(i18n.GL1254());
+		newPwdLbl.getElement().setId("lblNewPwdLbl");
+		newPwdLbl.getElement().setAttribute("alt",i18n.GL1254());
+		newPwdLbl.getElement().setAttribute("title",i18n.GL1254());
+		
+		timeOutText.setText(i18n.GL1257());
+		timeOutText.getElement().setId("lblTimeOutText");
+		timeOutText.getElement().setAttribute("alt",i18n.GL1257());
+		timeOutText.getElement().setAttribute("title",i18n.GL1257());
+		
+		requestNewText.setText(i18n.GL1258());
+		requestNewText.getElement().setId("lblRequestNewText");
+		requestNewText.getElement().setAttribute("alt",i18n.GL1258());
+		requestNewText.getElement().setAttribute("title",i18n.GL1258());
+		
+		forgotPwdLbl.setText(i18n.GL1259());
+		forgotPwdLbl.getElement().setId("lblForgotPwdLbl");
+		forgotPwdLbl.getElement().setAttribute("alt",i18n.GL1259());
+		forgotPwdLbl.getElement().setAttribute("title",i18n.GL1259());
+		
 		forgotPwdLbl.addClickHandler(new OnResetPasswordVc());
 	}
 	

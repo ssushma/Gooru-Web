@@ -1,0 +1,28 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<ui:style field="style" src="dashboard.css"/>
+	<!-- <ui:style field="Settings" src="Setting-page.css"
+		type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
+		field="res" />
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
+		field="ccb" />  -->
+	<g:HTMLPanel>
+		<div class="{style.whiteBg}">
+		<div class="{style.panelBox}">
+		<g:Label styleName="col-md-5 {style.greenBig}" ui:field="countLbl"></g:Label>
+		<g:Label styleName="col-md-7 {style.greySmall}" ui:field="textLbl"></g:Label>
+		<div class="{style.clearfix}"></div>
+		</div>
+		</div>
+	</g:HTMLPanel>
+	
+</ui:UiBinder>

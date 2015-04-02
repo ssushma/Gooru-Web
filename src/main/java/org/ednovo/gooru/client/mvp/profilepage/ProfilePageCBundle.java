@@ -24,25 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
  * @author Search Team
  *
  */
-public interface ProfilePageCBundle extends ClientBundle{
-	
-	static final ProfilePageCBundle INSTANCE = GWT.create(ProfilePageCBundle.class);
-	
-	public interface  ProfilePageCss extends CssResource{
-		String folderlimarker();
-		String collectionlimarker();
-		String subFoldersLi();
-	}
-	
-	@Source("profile-page-style.css")
-	ProfilePageCss css();
+public interface ProfilePageCBundle extends CssResource {
+	String addedCourseLbl();
+	String margin5();
+	String tabAlign();
+	String blackPrimaryButton();
+	String followingBtn();
 	
 }

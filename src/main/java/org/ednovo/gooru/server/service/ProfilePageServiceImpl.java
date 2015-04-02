@@ -31,9 +31,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.service.ProfilePageService;
 import org.ednovo.gooru.server.ArrayListSorter;
 import org.ednovo.gooru.server.annotation.ServiceURL;
+import org.ednovo.gooru.server.deserializer.ProfileLibraryDeserializer;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.server.form.ResourceFormFactory;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
@@ -45,10 +47,16 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.library.ConceptDo;
+import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.json.JSONException;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,30 +76,19 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
-
+	private static Logger logger=LoggerFactory.getLogger(ProfilePageServiceImpl.class);
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
 						.toString(), CollectionDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		return new CollectionDo();
 	}
 
-	@Override
-	public List<CollectionItemDo> getUserWorkSpace(String userId) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_PROFILE_WORKSPACE, userId, getLoggedInSessionToken(), pageNum, pageSize);
-		url+="&sharing=public";
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		List<CollectionItemDo> collectionItemDo = deserializeWorkspace(jsonRep);
-		//Collections.sort(collectionItemDo, new ArrayListSorter("itemSequence", true));
-		return collectionItemDo;
-	}
 
 	public List<CollectionItemDo> deserializeWorkspace(JsonRepresentation jsonRep) {
 		try {
@@ -100,19 +97,10 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return new ArrayList<CollectionItemDo>();
 	}
-
-	/*@Override
-	public CollectionDo getFolderInformation(String folderId)
-			throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_A_FOLDER_INFORMATION, folderId, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		return deserializeCollection(jsonRep);
-	}*/
 
 	@Override
 	public List<CollectionItemDo> getFolders(String collectionId) throws GwtException {
@@ -120,6 +108,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLECTION_ITEMS, collectionId, getLoggedInSessionToken(), pageNum, pageSize);
 		url+="&sharing=public";
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		getLogger().info("getFolders:"+url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		List<CollectionItemDo> collectionItemDo = deserializeCollectionItems(jsonRep);
 		//Collections.sort(collectionItemDo, new ArrayListSorter("itemSequence", true));
@@ -132,22 +121,10 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemDo>>() {
 				});
 			} catch (JSONException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		return new ArrayList<CollectionItemDo>();
-	}
-
-	@Override
-	public void profileVisitEvent(String visitorUid) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.PROFILE_PAGE_EVENT, getUUID(),getLoggedInSessionToken());
-		Form form=new Form();
-		form.add("eventName", "profile-visit");
-		form.add("sessionToken", getLoggedInSessionToken());
-		form.add("visitorUid", visitorUid);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),form);
-		jsonRep = jsonResponseRep.getJsonRepresentation();
 	}
 	
 	 public String getUUID(){
@@ -220,4 +197,64 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 	}
+
+	@Override
+	public ProfileLibraryListDo getProfileLibraryWorkspace(String gooruUid, int limit, String sharingType, String collectionType, String placeToken, int offset) throws GwtException {
+		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		String sessionToken = getLoggedInSessionToken();
+		
+		if(sharingType!=null){
+			sessionToken=sessionToken+"&sharing="+sharingType;
+		}
+		if(collectionType!=null){
+			sessionToken=sessionToken+"&collectionType="+collectionType;
+		}
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
+		return profileLibraryListDo;
+	}
+
+	@Override
+	public ProfileLibraryListDo getProfilePaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException {
+		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		String sessionToken = getLoggedInSessionToken();
+		
+		if(sharingType!=null){
+			sessionToken=sessionToken+"&sharing="+sharingType;
+		}
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"","0");
+		getLogger().info("getProfilePaginationWorkspace:"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
+		return profileLibraryListDo;
+	}
+
+	@Override
+	public ProfileLibraryDo getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid, getLoggedInSessionToken(), skipCollectionItems + "");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		getLogger().info("getProfileLibraryCollection:"+url);
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		return deserializeConcept(jsonRepresentation);
+	}
+
+	public ProfileLibraryDo deserializeConcept(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileLibraryDo.class);
+			} catch (JSONException e) {
+				logger.error(e.getMessage());
+			}
+		}
+		return new ProfileLibraryDo();
+	}
+
 }

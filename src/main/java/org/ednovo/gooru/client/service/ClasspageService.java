@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
@@ -42,7 +43,6 @@ import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -55,7 +55,7 @@ public interface ClasspageService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public CollectionDo createClasspage(CollectionDo collectionDo)  throws GwtException;
+	public CollectionDo createClasspage(CollectionDo collectionDo)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get Classpage by Classpage id
@@ -63,14 +63,14 @@ public interface ClasspageService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-//	public CollectionDo getClasspageById(String classpageId) throws GwtException;
+//	public CollectionDo getClasspageById(String classpageId) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get All Classpage by User
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-//	public List<CollectionDo> getAllClasspages() throws GwtException;
+//	public List<CollectionDo> getAllClasspages() throws GwtException, ServerDownException;
 	
 	/**
 	 * Delete Classpage by Id
@@ -78,7 +78,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-	public void deleteClasspage(String classpageId)  throws GwtException;
+	public void deleteClasspage(String classpageId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Create new Assignment in side classpage
@@ -88,7 +88,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-	/*public CollectionDo createAssignment(CollectionDo collectionDo,String gooruContentId, String dueDate)  throws GwtException;*/
+	/*public CollectionDo createAssignment(CollectionDo collectionDo,String gooruContentId, String dueDate)  throws GwtException, ServerDownException;*/
 	
 	/**
 	 * delete Assignment
@@ -96,7 +96,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-//	public void deleteAssignment(String assignmentId)  throws GwtException;
+//	public void deleteAssignment(String assignmentId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Edit Assignment in side classpage
@@ -104,7 +104,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-//	public CollectionDo updateAssignment(CollectionDo collectionDo, String dueDate)  throws GwtException;
+//	public CollectionDo updateAssignment(CollectionDo collectionDo, String dueDate)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get Classpage by Classpage code
@@ -112,16 +112,16 @@ public interface ClasspageService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-//	public CollectionDo getClasspageByCode(String classpageCode) throws GwtException;
+//	public CollectionDo getClasspageByCode(String classpageCode) throws GwtException, ServerDownException;
 	/**
 	 * Adding collection to assignment.
 	 * @param String collectionID and assignmentId
 	 * @return void
 	 * @throws GwtException
 	 */
-//	public CollectionItemDo addCollectionToAssignment(String collectionId, String assignmentId, CollectionDo collectionDo)  throws GwtException;
+//	public CollectionItemDo addCollectionToAssignment(String collectionId, String assignmentId, CollectionDo collectionDo)  throws GwtException, ServerDownException;
 
-//	public List<CollectionItemDo> getAssignmentCollectionsById(String assignmentId);
+//	public List<CollectionItemDo> getAssignmentCollectionsById(String assignmentId) throws GwtException, ServerDownException;
 
 	/**
 	 * Delete/remove collection from assignment.
@@ -129,7 +129,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-//	public void removeCollectionFromAssignment(String collectionId)  throws GwtException;
+//	public void removeCollectionFromAssignment(String collectionId)  throws GwtException, ServerDownException;
 	
 	
 	/**
@@ -138,7 +138,7 @@ public interface ClasspageService extends BaseService {
 	 * @return List<CollectionItemDo>
 	 * @throws GwtException
 	 */
-//	public AssignmentsListDo getAssignemtsByClasspageId(String classpageId,String pageSize, String pageNum) throws GwtException;
+//	public AssignmentsListDo getAssignemtsByClasspageId(String classpageId,String pageSize, String pageNum) throws GwtException, ServerDownException;
 	
 	/**
 	 * To update classpage by Classpage ID
@@ -146,7 +146,7 @@ public interface ClasspageService extends BaseService {
 	 * @return CollectionDo
 	 * @throws GwtException
 	 */
-//	public CollectionDo updateClassPageByid(String classpageId,String CollectionType, String title)throws GwtException;
+//	public CollectionDo updateClassPageByid(String classpageId,String CollectionType, String title)throws GwtException, ServerDownException;
 
 	/**
 	 * Create new Classpage migrating to Version 2 api
@@ -154,7 +154,7 @@ public interface ClasspageService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public CollectionDo v2CreateClasspage(CollectionDo collectionDo);
+	public CollectionDo v2CreateClasspage(CollectionDo collectionDo) throws GwtException, ServerDownException;
 
 	/**
 	 * To update classpage by Classpage ID using Version 2 APIs
@@ -162,15 +162,17 @@ public interface ClasspageService extends BaseService {
 	 * @return CollectionDo
 	 * @throws GwtException
 	 */
-	public CollectionDo v2UpdateClassPageByid(String classpageId, String CollectionType, String title, String shareType) throws GwtException;
+	public CollectionDo v2UpdateClassPageByid(String classpageId, String CollectionType, String title, String shareType) throws GwtException, ServerDownException;
 
-	public AssignmentsListDo v2GetAssignemtsByClasspageId(String classpageId, String pageSize, String pageNum) throws GwtException;
+	public AssignmentsListDo v2GetAssignemtsByClasspageId(String classpageId, String pageSize, String pageNum) throws GwtException, ServerDownException;
 
-	public ClasspageListDo v2GetAllClasspages(String limit, String offSet) throws GwtException;
+	public ClasspageListDo v2GetAllClasspages(String limit, String offSet) throws GwtException, ServerDownException;
 	
-	public ClasspageListDo  v2GetUserClasses(String limit, String offSet) throws GwtException;
+	public ClasspageListDo  v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
 	
-	public AssignmentDo v2CreateAssignment(AssignmentDo assignmentDo) throws GwtException;
+	public ClasspageListDo  v2GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException, ServerDownException;
+	
+	public AssignmentDo v2CreateAssignment(AssignmentDo assignmentDo) throws GwtException, ServerDownException;
 
 	/**
 	 * Get Classpage by Classpage id using V2 APIs
@@ -178,7 +180,7 @@ public interface ClasspageService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public CollectionDo v2GetClasspageById(String classpageId) throws GwtException;
+	public CollectionDo v2GetClasspageById(String classpageId) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get Classpage by Classpage id using V2 APIs
@@ -186,9 +188,9 @@ public interface ClasspageService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public CollectionDo getSCollIdClasspageById(String classpageId) throws GwtException;
+	public CollectionDo getSCollIdClasspageById(String classpageId) throws GwtException, ServerDownException;
 
-	public void socialShareEmail(String fromTxt, String toTxt, String cfm,String subtxt,String msgTxt) throws GwtException;
+	public void socialShareEmail(String fromTxt, String toTxt, String cfm,String subtxt,String msgTxt) throws GwtException, ServerDownException;
 	
 	
 	/**
@@ -197,7 +199,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-	public TaskDo v2UpdateAssignment(AssignmentDo assignmentDo, String assignmentId)  throws GwtException;
+	public TaskDo v2UpdateAssignment(AssignmentDo assignmentDo, String assignmentId)  throws GwtException, ServerDownException;
 
 	
 	/**
@@ -206,7 +208,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-	public void v2DeleteAssignment(String assignmentId)  throws GwtException;
+	public void v2DeleteAssignment(String assignmentId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * add collection to Assignment for v2 apis
@@ -214,7 +216,7 @@ public interface ClasspageService extends BaseService {
 	 * @return TaskResourceAssocDo
 	 * @throws GwtException
 	 */
-	public TaskResourceAssocDo v2AddCollectionToAssignment(String assignmentId, TaskResourceAssocDo taskResourceAssocDo)  throws GwtException;
+	public TaskResourceAssocDo v2AddCollectionToAssignment(String assignmentId, TaskResourceAssocDo taskResourceAssocDo)  throws GwtException, ServerDownException;
 	
 	/**
 	 * get collection to Assignment for v2 apis
@@ -222,7 +224,7 @@ public interface ClasspageService extends BaseService {
 	 * @return List<ResourceDo>
 	 * @throws GwtException
 	 */
-	public List<ResourceDo> v2GetAssignmentCollectionsById(String assignmentId)  throws GwtException;
+	public List<ResourceDo> v2GetAssignmentCollectionsById(String assignmentId)  throws GwtException, ServerDownException;
 
 	/**
 	 * Delete/remove collection from assignment using V2 Apis
@@ -230,7 +232,7 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-	public void v2RemoveCollectionFromAssignment(String collectionId, String assignmentId)  throws GwtException;
+	public void v2RemoveCollectionFromAssignment(String collectionId, String assignmentId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get Classpage by Classpage Code using V2 APIs
@@ -239,7 +241,7 @@ public interface ClasspageService extends BaseService {
 	 * @throws GwtException
 	 */
 	
-	public CollectionDo v2getClasspageByCode(String classpageCode)throws GwtException;
+	public CollectionDo v2getClasspageByCode(String classpageCode)throws GwtException, ServerDownException;
 	
 	/**
 	 * To Generate Bityly link for any URL
@@ -247,7 +249,7 @@ public interface ClasspageService extends BaseService {
 	 * @return BitlyUrlDo
 	 * @throws GwtException
 	 */
-	public List<String> ShotenUrl(String url) throws GwtException;
+	public List<String> ShotenUrl(String url) throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -267,7 +269,7 @@ public interface ClasspageService extends BaseService {
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	/*public MetaDO checkPermissionsForClasspage(String classpageId) throws GwtException;*/
+	/*public MetaDO checkPermissionsForClasspage(String classpageId) throws GwtException, ServerDownException;*/
 
 	/**
 	 * To get know which classpages having this collection. 
@@ -275,7 +277,7 @@ public interface ClasspageService extends BaseService {
 	 * @return ResourceDo
 	 * @throws GwtException
 	 */
-	List<ClassPageCollectionDo> getCollectionClasspageAssoc(String collectionId) throws GwtException;
+	List<ClassPageCollectionDo> getCollectionClasspageAssoc(String collectionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * delete Collection from Classpage/Assignment
@@ -283,17 +285,18 @@ public interface ClasspageService extends BaseService {
 	 * @return void
 	 * @throws GwtException
 	 */
-	public void deleteCollectionAssocInAssignment(String collectionId)  throws GwtException;
+	public void deleteCollectionAssocInAssignment(String collectionId)  throws GwtException, ServerDownException;
 	
 	
 	
-	public ArrayList<ClasspageDo> getMyClassPages(String limit, String offset);
-	public CollectionDo createClassPage(String classPageTitle);
-	public ClasspageDo getClasspage(String classpageId);
-	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction);
-	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit);
-	public String updateClasspageItem(String classpageItemId,String direction,String dueDate);
-	public String deleteClassPageItem(String collectionId);
+	public ArrayList<ClasspageDo> getMyClassPages(String limit, String offset) throws GwtException, ServerDownException;
+	public CollectionDo createClassPage(String classPageTitle) throws GwtException, ServerDownException;
+	public ClasspageDo getClasspage(String classpageId)  throws GwtException, ServerDownException;
+	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction)  throws GwtException, ServerDownException;
+	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId,String dueDate,String direction)  throws GwtException, ServerDownException;
+	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus) throws GwtException, ServerDownException;
+	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus) throws GwtException, ServerDownException;
+	public String deleteClassPageItem(String collectionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -317,7 +320,7 @@ public interface ClasspageService extends BaseService {
 	 *
 	 */
 	public ArrayList<ClassPageCollectionDo> getClasspagesListByCollectionId(String collectionId,
-			String collabUId);
+			String collabUId) throws GwtException, ServerDownException;
 	
 	
 	/**
@@ -339,9 +342,9 @@ public interface ClasspageService extends BaseService {
 	 *
 	 * 
 	*/
-	Integer getCollectionUsedCount(String collectionId);
+	Integer getCollectionUsedCount(String collectionId) throws GwtException, ServerDownException;
 	
-	public ArrayList<String> getCollectionParentFolders(String collectionId);
+	public ArrayList<String> getCollectionParentFolders(String collectionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -363,7 +366,7 @@ public interface ClasspageService extends BaseService {
 	 *
 	 *
 	 */
-	public ArrayList<CollaboratorsDo> inviteStudentToClass(String classId,List<String> lstEmailId) throws GwtException;
+	public ArrayList<CollaboratorsDo> inviteStudentToClass(String classId,List<String> lstEmailId) throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -388,11 +391,11 @@ public interface ClasspageService extends BaseService {
 	 *
 	 */
 	public StudentsAssociatedListDo getAssociatedStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)
-			throws GwtException;
+			throws GwtException, ServerDownException;
 
 	public void removeStudentFromClass(
 			String classCode, String type, String emailIds)
-			throws GwtException;
+			throws GwtException, ServerDownException;
 	/**
 	 * @function studentJoinIntoClass 
 	 * 
@@ -402,7 +405,7 @@ public interface ClasspageService extends BaseService {
 	 * @return ClasspageDo
 	 * @throws GwtException
 	 */
-	public ClasspageDo studentJoinIntoClass(String classCode, String emailId) throws GwtException;
+	public ClasspageDo studentJoinIntoClass(String classCode, String emailId) throws GwtException, ServerDownException;
 
 	/**
 	 * @function getSuggestionByName 
@@ -424,12 +427,62 @@ public interface ClasspageService extends BaseService {
 	 * 
 	*/
 	
-	List<String> getSuggestionByName(String emailId) throws GwtException;
+	List<String> getSuggestionByName(String emailId) throws GwtException, ServerDownException;
 	
-	public ClasspageItemDo getClassPageItem(String classItemId);
+	public ClasspageItemDo getClassPageItem(String classItemId) throws GwtException, ServerDownException;
 
 	ProfilePageDo v2GetClassPartyCustomField(String gooruUid)
-			throws GwtException;
+			throws GwtException, ServerDownException;
 
-	public StudentsAssociatedListDo getActiveAssociatedStudentListByCode(String classCode, int offSet, int pageSize, String statusType) throws GwtException;
+	public StudentsAssociatedListDo getActiveAssociatedStudentListByCode(String classCode, int offSet, int pageSize, String statusType) throws GwtException, ServerDownException;
+
+	/**
+	 * @function v2GetAllClass 
+	 * 
+	 * @created_date : May 20, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param limit
+	 * @param offSet
+	 * @return
+	 * @throws GwtException
+	 * 
+	 * @return : ClasspageListDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	ClasspageListDo v2GetAllClass(String limit, String offSet)
+			throws GwtException, ServerDownException;
+
+	/**
+	 * @function v2ChangeAssignmentSequence 
+	 * 
+	 * @created_date : Jun 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param classpageAssignmentId
+	 * @param sequence
+	 * @throws GwtException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public void v2ChangeAssignmentSequence(String classpageId,
+			String classpageAssignmentId, int sequence) throws GwtException, ServerDownException;
 }

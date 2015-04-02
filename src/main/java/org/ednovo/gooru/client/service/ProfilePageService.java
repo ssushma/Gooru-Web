@@ -28,49 +28,40 @@ import java.util.List;
 import java.util.Set;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/profilePageService")
 public interface ProfilePageService extends BaseService {
 	
-	/**
-	 * Get All folders/collections by the user inside the public profile page
-	 * @return serialized created {@link List<CollectionItemDo>}
-	 * @throws GwtException
-	 */
-	public List<CollectionItemDo> getUserWorkSpace(String userId) throws GwtException;
 		
 	/**
 	 * Get a folder information
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-//	public CollectionDo getFolderInformation(String folderId) throws GwtException;
+//	public CollectionDo getFolderInformation(String folderId) throws GwtException, ServerDownException;
 
 	/**
 	 * Get Folders of the second level and third level by User
 	 * @return serialized created {@link List<CollectionDo>}
 	 * @throws GwtException
 	 */
-	public List<CollectionItemDo> getFolders(String collectionId) throws GwtException;
-	/**
-	 * 
-	 * @throws GwtException
-	 */
+	public List<CollectionItemDo> getFolders(String collectionId) throws GwtException, ServerDownException;
 	
-	public void profileVisitEvent(String visitorUid) throws GwtException;
-
 	/**
 	 * Adds the user grades
 	 * @return serialized created {@link String}
 	 * @throws GwtException
 	 */
 	
-	public void addGradeUserProfile(String grade, String userLevel) throws GwtException;
+	public void addGradeUserProfile(String grade, String userLevel) throws GwtException, ServerDownException;
 	
 	/**
 	 * Delets the user grades
@@ -78,7 +69,7 @@ public interface ProfilePageService extends BaseService {
 	 * @throws GwtException
 	 */
 	
-	public void deleteGradeUserProfile(String grade, String userLevel) throws GwtException;
+	public void deleteGradeUserProfile(String grade, String userLevel) throws GwtException, ServerDownException;
 	
 	/**
 	 * Adds the user course
@@ -86,9 +77,40 @@ public interface ProfilePageService extends BaseService {
 	 * @throws GwtException
 	 */
 	
-	public void addCourseUserProfile(Set<ProfileCodeDo> profileCodeDo,String userLevel) throws GwtException;
+	public void addCourseUserProfile(Set<ProfileCodeDo> profileCodeDo,String userLevel) throws GwtException, ServerDownException;
 	
-	void deleteCourseUserProfile(CodeDo codeDo, String userLevel);
+	void deleteCourseUserProfile(CodeDo codeDo, String userLevel) throws GwtException, ServerDownException;
 	
+	/**
+	 * @function getProfileLibraryWorkspace
+	 * @return : ProfileLibraryListDo
+	 * @description: Get the list of the workspace of the partners
+	 * @parm(s) : @param offset
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param sharingType
+	 * @parm(s) : @param collectionType
+	 * @throws : GwtException
+	 */
+	public ProfileLibraryListDo getProfileLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken, int offset) throws GwtException, ServerDownException;
 	
+	/**
+	 * Get paginated workspace API
+	 * @return serialized created {@link ProfileLibraryListDo}
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param parentId
+	 * @parm(s) : @param sharingType
+	 * @throws GwtException
+	 */
+	public ProfileLibraryListDo getProfilePaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException, ServerDownException;
+	
+	/**
+	 * @function getConcept 
+	 * @return : ConceptDo
+	 * @description: Get the Collection data for a concept
+	 * @param: gooruOid
+	 * @param: skipCollectionItems
+	 * @throws : GwtException
+	 */
+	public ProfileLibraryDo getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException, ServerDownException;
+
 }

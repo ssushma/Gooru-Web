@@ -42,12 +42,15 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 
 	private int resourceCount = 0;
 
+	private int questionCount = 0;
+
 	private String creatorName;
 
 	private int hasAddedToShelf = 0;
 	
 	private Integer collaboratorCount;
 	
+	private Integer onlyResourceCount;
 	
 	public CollectionSearchResultDo() {
 
@@ -84,5 +87,21 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	public void setCollaboratorCount(Integer collaboratorCount) {
 		this.collaboratorCount = collaboratorCount;
 	}
-	
+
+	public int getQuestionCount() {
+		return questionCount;
+	}
+
+	public void setQuestionCount(int questionCount) {
+		this.questionCount = questionCount;
+	}
+
+	public Integer getOnlyResourceCount() {
+		return onlyResourceCount;
+	}
+
+	public void setOnlyResourceCount(Integer onlyResourceCount) {
+		this.onlyResourceCount = onlyResourceCount;
+	}
+
 }

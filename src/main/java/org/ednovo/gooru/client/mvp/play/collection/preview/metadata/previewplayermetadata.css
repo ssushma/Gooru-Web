@@ -54,12 +54,19 @@
 	min-width: 490px;
 	border: 1px solid #dddddd;
 	padding: 5px;
+	resize: none;
 }
 
 .infoSection{
     margin-top:15px;
     padding-bottom:15px;
     border-bottom:1px solid #ddd;
+}
+.infoSectionAuthor{
+    margin-top:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ddd;
+
 }
 .infoSection:last-child {
     border-bottom:none;
@@ -275,3 +282,42 @@
 .marginBotton10Px{
 	margin-bottom: 10px;
 }
+.clearBoth{
+	clear: both;
+}
+.mutedText{
+	color:#EEEEEE;
+}
+.depthofKnow{
+	background: -moz-linear-gradient(center top, #666, #515151) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#666), to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background-image: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	padding: 3px;
+	cursor: default !important;
+}
+.depthOfKnowledgePanel{
+	width: 176px;
+	min-height: 80px;
+	height: auto;
+}
+.teacherTipOuterContainer{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+}
+

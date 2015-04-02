@@ -41,8 +41,8 @@ import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GenderRadioButton;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.ValidTextUc;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -78,11 +78,13 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
  */
 public class UserRegistrationView extends
 		PopupViewWithUiHandlers<UserRegistrationUiHandlers> implements
-		IsUserRegistrationView, MessageProperties {
+		IsUserRegistrationView{
 
 	private static UserRegistrationViewUiBinder uiBinder = GWT
 			.create(UserRegistrationViewUiBinder.class);
 
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField
 	Anchor cancelAnr;
 
@@ -134,17 +136,17 @@ public class UserRegistrationView extends
 
 	private static final String PWD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
 
-	private static final String IS_ALREADY_AVAILABLE = " "+GL1204;
+//	private static final String IS_ALREADY_AVAILABLE = " "+i18n.GL1204;
 
-	private static final String PARENT_GUARDIAN_INFO = GL1205+" "+GL1198;
+//	private static final String PARENT_GUARDIAN_INFO = i18n.GL1205+" "+i18n.GL1198;
 
-	private static final String PARENT_GUARDIAN_ACCOUNT = GL1205+" "+GL0807;
+//	private static final String PARENT_GUARDIAN_ACCOUNT = i18n.GL1205+" "+i18n.GL0807;
 
-	private static final String CHILD_INFO =GL1206+" "+GL1198;
+//	private static final String CHILD_INFO =i18n.GL1206+" "+i18n.GL1198;
 
-	private static final String CHILD_ACCOUNT =GL1206+" "+GL0807;
+//	private static final String CHILD_ACCOUNT =i18n.GL1206+" "+i18n.GL0807;
 
-	private static final String REGISTER_LOGIN = GL1207;
+//	private static final String REGISTER_LOGIN = i18n.GL1207;
 
 	@UiField
 	Anchor termsAndConditionsAnr, copyRightPolicyAnr;
@@ -170,32 +172,135 @@ public class UserRegistrationView extends
 		UcCBundle.INSTANCE.css().ensureInjected();
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css().registerPopup());
-		appPopUp.setContent(REGISTER_LOGIN, uiBinder.createAndBindUi(this));
+		appPopUp.setContent((i18n.GL1207()), uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(RegisterCBundle.INSTANCE.css()
 				.registerPopupGlassPanel());
-		accountTypeFieldLbl.setText(GL0807);
-		accountInformationLbl.setText(GL1198);
-		fName.setText(GL0424);
-		lName.setText(GL0425);
-		uName.setText(GL1035);
-		pWord.setText(GL0204);
-		cPword.setText(GL0427);
-		bdLbl.setText(GL0211);
-		emailText.setText(GL0212);
-		genderText.setText(GL0809);
-		female.setText(GL0811);
-		male.setText(GL0810);
-		other.setText(GL1047);
-		donot.setText(GL1199);
-		aboutMe.setText(GL1200);
-		conditionsText.setText(GL1201+" ");
-		termsAndConditionsAnr.setText(GL0297+" "+GL_GRR_AND+" "+GL0452);
-		andText.setText("  "+GL_GRR_AND+"  ");
-		copyRightPolicyAnr.setText(GL0421);
-		gooruText.setText(" "+GL_GRR_OF+" "+GL1202);
-		updateUserDetailsUc.setText(GL1203);
-		cancelAnr.setText(GL0142);
-		welcomeMessageHtml.setHTML(GL1211);
+		
+		userRegisterFloPanel.getElement().setId("fpnlUserRegisterFloPanel");
+		welcomeMessageHtml.getElement().setId("htmlWelcomeMessageHtml");
+		firstnameFloPanel.getElement().setId("fpnlFirstnameFloPanel");
+		lastnameFloPanel.getElement().setId("fpnlLastnameFloPanel");
+		birthdayFloPanel.getElement().setId("fpnlBirthdayFloPanel");
+		dateSimPanel.getElement().setId("spnlDateSimPanel");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		genderFocusFocPanel.getElement().setId("fouspnlGenderFocusFocPanel");
+		genderFieldsFloPanel.getElement().setId("fouspnlGenderFieldsFloPanel");
+		genderValidUc.getElement().setId("errlblGenderValidUc");
+		userCategoryFloPanel.getElement().setId("fpnlUserCategoryFloPanel");
+		userCategoryLisBox.getElement().setId("lbUserCategoryLisBox");
+		termsAndConditionFloPanel.getElement().setId("fpnlTermsAndConditionFloPanel");
+		
+		
+		accountTypeFieldLbl.setText(i18n.GL0807());
+		accountTypeFieldLbl.getElement().setId("lblAccountTypeFieldLbl");
+		accountTypeFieldLbl.getElement().setAttribute("alt",i18n.GL0807());
+		accountTypeFieldLbl.getElement().setAttribute("title",i18n.GL0807());
+		
+		accountInformationLbl.setText(i18n.GL1198());
+		accountInformationLbl.getElement().setId("lblAccountInformationLbl");
+		accountInformationLbl.getElement().setAttribute("alt",i18n.GL1198());
+		accountInformationLbl.getElement().setAttribute("title",i18n.GL1198());
+		
+		fName.setText(i18n.GL0424());
+		fName.getElement().setId("lblFName");
+		fName.getElement().setAttribute("alt",i18n.GL0424());
+		fName.getElement().setAttribute("title",i18n.GL0424());
+		
+		lName.setText(i18n.GL0425());
+		lName.getElement().setId("lblLName");
+		lName.getElement().setAttribute("alt",i18n.GL0425());
+		lName.getElement().setAttribute("title",i18n.GL0425());
+		
+		uName.setText(i18n.GL1035());
+		uName.getElement().setId("lblUName");
+		uName.getElement().setAttribute("alt",i18n.GL1035());
+		uName.getElement().setAttribute("title",i18n.GL1035());
+		
+		pWord.setText(i18n.GL0204());
+		pWord.getElement().setId("lblPWord");
+		pWord.getElement().setAttribute("alt",i18n.GL0204());
+		pWord.getElement().setAttribute("title",i18n.GL0204());
+		
+		cPword.setText(i18n.GL0427());
+		cPword.getElement().setId("lblCPword");
+		cPword.getElement().setAttribute("alt",i18n.GL0427());
+		cPword.getElement().setAttribute("title",i18n.GL0427());
+		
+		bdLbl.setText(i18n.GL0211());
+		bdLbl.getElement().setId("lblBdLbl");
+		bdLbl.getElement().setAttribute("alt",i18n.GL0211());
+		bdLbl.getElement().setAttribute("title",i18n.GL0211());
+		
+		emailText.setText(i18n.GL0212());
+		emailText.getElement().setId("lblEmailText");
+		emailText.getElement().setAttribute("alt",i18n.GL0212());
+		emailText.getElement().setAttribute("title",i18n.GL0212());
+		
+		genderText.setText(i18n.GL0809());
+		genderText.getElement().setId("lblGenderText");
+		genderText.getElement().setAttribute("alt",i18n.GL0809());
+		genderText.getElement().setAttribute("title",i18n.GL0809());
+		
+		female.setText(i18n.GL0811());
+		female.getElement().setId("rdFemale");
+		female.getElement().setAttribute("alt",i18n.GL0811());
+		female.getElement().setAttribute("title",i18n.GL0811());
+		
+		male.setText(i18n.GL0810());
+		male.getElement().setId("rdMale");
+		male.getElement().setAttribute("alt",i18n.GL0810());
+		male.getElement().setAttribute("title",i18n.GL0810());
+		
+		other.setText(i18n.GL1047());
+		other.getElement().setId("rdOther");
+		other.getElement().setAttribute("alt",i18n.GL1047());
+		other.getElement().setAttribute("title",i18n.GL1047());
+		
+		donot.setText(i18n.GL1199());
+		donot.getElement().setId("rdDoNot");
+		donot.getElement().setAttribute("alt",i18n.GL1199());
+		donot.getElement().setAttribute("title",i18n.GL1199());
+		
+		aboutMe.setText(i18n.GL1200());
+		aboutMe.getElement().setId("lblAboutMe");
+		aboutMe.getElement().setAttribute("alt",i18n.GL1200());
+		aboutMe.getElement().setAttribute("title",i18n.GL1200());
+		
+		conditionsText.setText(i18n.GL1201()+" ");
+		conditionsText.getElement().setId("lblConditionsText");
+		conditionsText.getElement().setAttribute("alt",i18n.GL1201());
+		conditionsText.getElement().setAttribute("title",i18n.GL1201());
+		
+		termsAndConditionsAnr.setText(i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
+		termsAndConditionsAnr.getElement().setAttribute("alt",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
+		termsAndConditionsAnr.getElement().setAttribute("title",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
+		
+		andText.setText("  "+i18n.GL_GRR_AND()+"  ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt","  "+i18n.GL_GRR_AND()+"  ");
+		andText.getElement().setAttribute("title","  "+i18n.GL_GRR_AND()+"  ");
+		
+		copyRightPolicyAnr.setText(i18n.GL0421());
+		copyRightPolicyAnr.getElement().setAttribute("alt",i18n.GL0421());
+		copyRightPolicyAnr.getElement().setAttribute("title",i18n.GL0421());
+		
+		gooruText.setText(" "+i18n.GL_GRR_OF()+" "+i18n.GL1202());
+		gooruText.getElement().setId("lblGooruText");
+		gooruText.getElement().setAttribute("alt"," "+i18n.GL_GRR_OF()+" "+i18n.GL1202());
+		gooruText.getElement().setAttribute("title"," "+i18n.GL_GRR_OF()+" "+i18n.GL1202());
+		
+		updateUserDetailsUc.setText(i18n.GL1203());
+		updateUserDetailsUc.getElement().setAttribute("alt",i18n.GL1203());
+		updateUserDetailsUc.getElement().setAttribute("title",i18n.GL1203());
+		
+		cancelAnr.setText(i18n.GL0142());
+		cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+		
+		welcomeMessageHtml.setHTML(i18n.GL1211());
+		welcomeMessageHtml.getElement().setAttribute("alt",i18n.GL1211());
+		welcomeMessageHtml.getElement().setAttribute("title",i18n.GL1211());
+		
 		passwordFieldTxtBox.addFocusHandler(new OnPasswordFocus());
 		dateBoxUc = new DateBoxUc(true, false, false);
 		dateSimPanel.add(dateBoxUc);
@@ -222,14 +327,11 @@ public class UserRegistrationView extends
 		userNameFieldTxtBox.addBlurHandler(new OnUserNameBlur());
 		userNameFieldTxtBox.addFocusHandler(new OnUserNameFocus());
 		userNameFieldTxtBox.getElement().setId("txtUserName");
+		StringUtil.setAttributes(userNameFieldTxtBox, true);
 		firstNameFieldUc.getElement().setId("txtFirstName");
 		lastNameFieldUc.getElement().setId("txtLastName");
 		passwordFieldTxtBox.getElement().setId("txtpassword");
 		confirmPasswordFieldTxtBox.getElement().setId("txtConfirmPassword");
-		female.getElement().setId("rdFemale");
-		male.getElement().setId("rdMale");
-		other.getElement().setId("rdOther");
-		donot.getElement().setId("rdDoNot");
 		termsAndConditionsAnr.getElement().setId("lnkTermsAndConditions");
 		copyRightPolicyAnr.getElement().setId("lnkCopyRightPolicy");
 		updateUserDetailsUc.getElement().setId("btnRegister");
@@ -238,6 +340,7 @@ public class UserRegistrationView extends
 
 			@Override
 			public void openParentPopup() {
+				//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 				appPopUp.show();
 			}
 		};
@@ -267,13 +370,14 @@ public class UserRegistrationView extends
 							AppClientFactory
 									.fireEvent(new SetHeaderZIndexEvent(98,
 											false));
+							//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 							appPopUp.show();
 						}
 					};
 				}
 				termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("600px", "300px");
+			
 				termsAndPolicyVc.center();
 			}
 		});
@@ -287,7 +391,6 @@ public class UserRegistrationView extends
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("600px", "300px");
 				copyRightPolicy.center();
 			}
 		});
@@ -454,7 +557,7 @@ public class UserRegistrationView extends
 			if (password == null || (password != null && password.isEmpty())) {
 				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 						.userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0070,
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0070(),
 						"Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
@@ -462,7 +565,7 @@ public class UserRegistrationView extends
 			if (password != null && password.length() < 5) {
 				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 						.userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0071,
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0071(),
 						"Password", "5"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
@@ -470,7 +573,7 @@ public class UserRegistrationView extends
 			if (password != null && password.length() >= 14) {
 				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 						.userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0072,
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0072(),
 						"Password", "<= 14"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
@@ -478,7 +581,7 @@ public class UserRegistrationView extends
 			if (password.equalsIgnoreCase("PASSWORD")) {
 				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 						.userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0076,
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0076(),
 						"Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
@@ -489,7 +592,7 @@ public class UserRegistrationView extends
 					&& !password.equalsIgnoreCase("PASSWORD")) {
 				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 						.userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0073,
+				passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0073(),
 						"Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
@@ -497,41 +600,41 @@ public class UserRegistrationView extends
 		} catch (Exception e) {
 		}
 
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
-				.equalsIgnoreCase(GL0077))
+		if ((getRegistartionType().equalsIgnoreCase(i18n.GL0074()) || getRegistartionType()
+				.equalsIgnoreCase(i18n.GL0077()))
 				&& (firstName == null || (firstName != null && firstName
 						.isEmpty()))) {
 			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0067(),
 					"First name"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
-				.equalsIgnoreCase(GL0077)) && (firstName.length() > 20)) {
+		if ((getRegistartionType().equalsIgnoreCase(i18n.GL0074()) || getRegistartionType()
+				.equalsIgnoreCase(i18n.GL0077())) && (firstName.length() > 20)) {
 			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0072(),
 					"First name", "<=20"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
-				.equalsIgnoreCase(GL0077))
+		if ((getRegistartionType().equalsIgnoreCase(i18n.GL0074()) || getRegistartionType()
+				.equalsIgnoreCase(i18n.GL0077()))
 				&& (lastName == null || (lastName != null && lastName.isEmpty()))) {
 			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0067(),
 					"Last Name"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
-				.equalsIgnoreCase(GL0077)) && (lastName.length() > 20)) {
+		if ((getRegistartionType().equalsIgnoreCase(i18n.GL0074()) || getRegistartionType()
+				.equalsIgnoreCase(i18n.GL0077())) && (lastName.length() > 20)) {
 			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0072(),
 					"Last name", "<= 20"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
@@ -543,7 +646,7 @@ public class UserRegistrationView extends
 						.isEmpty()))) {
 			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0067(),
 					"First name"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
@@ -552,7 +655,7 @@ public class UserRegistrationView extends
 				.equalsIgnoreCase("child")) && (firstName.length() > 20)) {
 			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0072(),
 					"First name", "<=20"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
@@ -562,7 +665,7 @@ public class UserRegistrationView extends
 				&& (lastName == null || (lastName != null && lastName.isEmpty()))) {
 			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0067(),
 					"Last Name"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
@@ -571,7 +674,7 @@ public class UserRegistrationView extends
 				.equalsIgnoreCase("child")) && (lastName.length() > 20)) {
 			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(i18n.GL0072(),
 					"Last name", "<= 20"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
@@ -579,7 +682,7 @@ public class UserRegistrationView extends
 		if (userName == null || (userName != null && userName.isEmpty())) {
 			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			userNameValidUc.setText(StringUtil.generateMessage(GL0070,
+			userNameValidUc.setText(StringUtil.generateMessage(i18n.GL0070(),
 					"Username"));
 			userNameValidUc.setVisible(true);
 			isValid = false;
@@ -587,7 +690,7 @@ public class UserRegistrationView extends
 		if (userName.length() < 5) {
 			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			userNameValidUc.setText(StringUtil.generateMessage(GL0071,
+			userNameValidUc.setText(StringUtil.generateMessage(i18n.GL0071(),
 					"Username", "5"));
 			userNameValidUc.setVisible(true);
 			isValid = false;
@@ -595,13 +698,13 @@ public class UserRegistrationView extends
 		if (userName.length() > 20) {
 			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			userNameValidUc.setText(StringUtil.generateMessage(GL0072,
+			userNameValidUc.setText(StringUtil.generateMessage(i18n.GL0072(),
 					"Username", "<=20"));
 			userNameValidUc.setVisible(true);
 			isValid = false;
 		}
 		if (getSelectedGender(genderFieldsFloPanel) == null) {
-			genderValidUc.setText(GL0075);
+			genderValidUc.setText(i18n.GL0075());
 			genderValidUc.setVisible(true);
 			isValid = false;
 		}
@@ -609,7 +712,7 @@ public class UserRegistrationView extends
 				|| (confirmPassword != null && confirmPassword.isEmpty())) {
 			confirmPasswordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE
 					.css().userRegistrationError());
-			confirmPasswordValidUc.setText(StringUtil.generateMessage(GL0070,
+			confirmPasswordValidUc.setText(StringUtil.generateMessage(i18n.GL0070(),
 					"Confirm password"));
 			confirmPasswordValidUc.setVisible(true);
 			isValid = false;
@@ -617,7 +720,7 @@ public class UserRegistrationView extends
 		if (!password.equalsIgnoreCase(confirmPassword)) {
 			confirmPasswordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE
 					.css().userRegistrationError());
-			confirmPasswordValidUc.setText(StringUtil.generateMessage(GL0069,
+			confirmPasswordValidUc.setText(StringUtil.generateMessage(i18n.GL0069(),
 					"Password"));
 			confirmPasswordValidUc.setVisible(true);
 			isValid = false;
@@ -625,7 +728,7 @@ public class UserRegistrationView extends
 		if (password.equalsIgnoreCase(userName)) {
 			passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());
-			passwordValidUc.setText(GL0078);
+			passwordValidUc.setText(i18n.GL0078());
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}
@@ -636,7 +739,7 @@ public class UserRegistrationView extends
 					.parentDateBoxError());
 			dateBoxUc.getDateBox().setStyleName(
 					RegisterCBundle.INSTANCE.css().parentDateTextError());
-			dateValidationUc.setText(StringUtil.generateMessage(GL0082,
+			dateValidationUc.setText(StringUtil.generateMessage(i18n.GL0082(),
 					"birthday."));
 			dateValidationUc.setVisible(true);
 			isValid = false;
@@ -647,7 +750,7 @@ public class UserRegistrationView extends
 					.parentDateBoxError());
 			dateBoxUc.getDateBox().setStyleName(
 					RegisterCBundle.INSTANCE.css().parentDateTextError());
-			dateValidationUc.setText(StringUtil.generateMessage(GL0079));
+			dateValidationUc.setText(StringUtil.generateMessage(i18n.GL0079()));
 			dateValidationUc.setVisible(true);
 			isValid = false;
 		}
@@ -678,10 +781,14 @@ public class UserRegistrationView extends
 	@Override
 	public void setRegisteredUserDetails(UserDo user, String accountType) {
 		userEmailFieldLbl.setText(user.getEmailId());
-		userCategoryLisBox.addItem(GL0417);
-		userCategoryLisBox.addItem(GL0416);
-		userCategoryLisBox.addItem(GL0418);
-		userCategoryLisBox.addItem(GL0419);
+		userEmailFieldLbl.getElement().setId("lblUserEmailFieldLbl");
+		userEmailFieldLbl.getElement().setAttribute("alt",user.getEmailId());
+		userEmailFieldLbl.getElement().setAttribute("title",user.getEmailId());
+		
+		userCategoryLisBox.addItem(i18n.GL0417());
+		userCategoryLisBox.addItem(i18n.GL0416());
+		userCategoryLisBox.addItem(i18n.GL0418());
+		userCategoryLisBox.addItem(i18n.GL0419());
 		userCategoryLisBox.setVisibleItemCount(1);
 		if (user.getConfirmStatus() == 1
 				&& accountType.equalsIgnoreCase("Parent")) {
@@ -689,9 +796,9 @@ public class UserRegistrationView extends
 		} else if (accountType.equalsIgnoreCase("Parent")) {
 			setRegistartionType(accountType);
 			welcomeMessageHtml
-					.setHTML(GL1208);
-			accountTypeFieldLbl.setText(PARENT_GUARDIAN_ACCOUNT);
-			accountInformationLbl.setText(PARENT_GUARDIAN_INFO);
+					.setHTML(i18n.GL1208());
+			accountTypeFieldLbl.setText((i18n.GL1205()+" "+i18n.GL1198()));
+			accountInformationLbl.setText((i18n.GL1205()+" "+i18n.GL1198()));
 			birthdayFloPanel.setVisible(true);
 			userCategoryLisBox.setItemSelected(2, true);
 		} else {
@@ -768,8 +875,8 @@ public class UserRegistrationView extends
 	public void renderChildAccount() {
 		setRegistartionType("Child");
 		welcomeMessageHtml
-				.setHTML(GL1209);
-		appPopUp.setViewTitle(GL1210);
+				.setHTML(i18n.GL1209());
+		appPopUp.setViewTitle(i18n.GL1210());
 		userCategoryFloPanel.setVisible(false);
 		lastnameFloPanel.setVisible(true);
 		firstnameFloPanel.setVisible(true);
@@ -780,8 +887,8 @@ public class UserRegistrationView extends
 		confirmPasswordFieldTxtBox.setText("");
 		passwordFieldTxtBox.setText("");
 		clearSelectedGender(genderFieldsFloPanel);
-		accountTypeFieldLbl.setText(CHILD_ACCOUNT);
-		accountInformationLbl.setText(CHILD_INFO);
+		accountTypeFieldLbl.setText(i18n.GL1206()+" "+i18n.GL0807());
+		accountInformationLbl.setText(i18n.GL1206()+" "+i18n.GL1198());
 		termsAndConditionFloPanel.setVisible(false);
 	}
 
@@ -789,8 +896,8 @@ public class UserRegistrationView extends
 	public void checkUserNameAvailability(UserDo user) {
 		if (user != null && user.isAvailability()
 				&& userNameFieldTxtBox.getText() != null) {
-			userNameValidUc.setText(GL0061+" " + userNameFieldTxtBox.getText()
-					+ IS_ALREADY_AVAILABLE);
+			userNameValidUc.setText(i18n.GL0061()+" " + userNameFieldTxtBox.getText()
+					+ ( " "+i18n.GL1204()));
 			userNameValidUc.setVisible(true);
 			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
 					.userRegistrationError());

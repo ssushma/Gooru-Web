@@ -73,7 +73,6 @@ public class ProfilePageListPresenter extends PresenterWidget<IsProfilePageListV
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 			if(!(userId==version)||(folderId==null)) {
-				//getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
 				Document doc = Document.get();
 				doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 				version = userId;
@@ -117,11 +116,6 @@ public class ProfilePageListPresenter extends PresenterWidget<IsProfilePageListV
 	public void setGetWorkSpaceAsyncCallback(
 			SimpleAsyncCallback<List<CollectionItemDo>> getWorkSpaceAsyncCallback) {
 		this.getWorkSpaceAsyncCallback = getWorkSpaceAsyncCallback;
-	}
-
-	@Override
-	public void getSelfCollectionListItems(int pageSize, Integer pageNumber,boolean clearShelfPanel) {
-		getProfilePageService().getUserWorkSpace("c3a96812-62a1-4318-846f-f16fdb99f8d4", getGetWorkSpaceAsyncCallback());
 	}
 
 	@Override

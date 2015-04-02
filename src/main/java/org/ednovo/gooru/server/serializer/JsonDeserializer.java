@@ -39,7 +39,6 @@ public class JsonDeserializer extends JsonProcessor {
 		try {
 			return getMapper().readValue(json, clazz);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -48,7 +47,6 @@ public class JsonDeserializer extends JsonProcessor {
 		try {
 			return getMapper().readValue(json, type);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}

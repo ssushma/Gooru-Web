@@ -40,8 +40,8 @@ package org.ednovo.gooru.client.mvp.home.library;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.CourseDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -54,7 +54,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FeaturedCourseListView extends Composite implements MessageProperties {
+public class FeaturedCourseListView extends Composite{
 	
 	@UiField HTMLEventPanel featuredCourse;
 	@UiField Label courseTitle;
@@ -71,13 +71,11 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 	
 	private static final String PNG = ".png";
 	
-	private final static String MR =GL_GRR_BYMR+" ";
-	
-	private final static String MS =GL_GRR_BYMS+" ";
-
 	private final static String FEMALE = "female";
 
 	private final static String MALE = "male";
+	
+	private String parentId;
 	
 	private static FeaturedCourseListViewUiBinder uiBinder = GWT
 			.create(FeaturedCourseListViewUiBinder.class);
@@ -85,6 +83,8 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 	interface FeaturedCourseListViewUiBinder extends
 			UiBinder<Widget, FeaturedCourseListView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public FeaturedCourseListView(CourseDo courseDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -111,11 +111,21 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 	 *
 	 */
 	private void setData(CourseDo courseDo) {
+		
+		featuredCourse.getElement().setId("epnlFeaturedCourse");
+		contributorImage.getElement().setId("imgContributorImage");
+		courseAuthor.getElement().setId("lblCourseAuthor");
+		
 		courseTitle.setText(courseDo.getLabel());
+		courseTitle.getElement().setId("lblCourseTitle");
+		courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
+		courseTitle.getElement().setAttribute("title",courseDo.getLabel());
+	
 		featuredCourseImage.setUrl(StringUtil.formThumbnailName(courseDo.getThumbnails().getUrl(),COURSE_100_75_CROP));
 		featuredCourseImage.setWidth("100px");
 		featuredCourseImage.setHeight("75px");
-
+		featuredCourseImage.getElement().setId("imgFeaturedCourseImage");
+		
 		featuredCourseImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -125,57 +135,69 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 
 		contributorImage.setHeight("46px");
 		contributorImage.setWidth("46px");
-		if(courseDo.getCreator()!=null) {
-			courseAuthor.setVisible(true);
-			String authorName = "";
-			String contributorProfileImage = "";
-			/// In User Object is null
-			if (courseDo.getUser()!=null &&  courseDo.getUser().size()>0){
-				int j=0;
-				for (int i=0;i<courseDo.getUser().size();i++){
-					j = i;
-					if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
-						break;
-					}
+		
+		courseAuthor.setVisible(true);
+		String authorName = "";
+		String contributorProfileImage = "";
+		/// In User Object is null
+		if (courseDo.getUser()!=null &&  courseDo.getUser().size()>0){
+			int j=0;
+			for (int i=0;i<courseDo.getUser().size();i++){
+				j = i;
+				if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
+					break;
 				}
-				
-				if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
-					authorName = MR+courseDo.getUser().get(j).getLastName();
-				} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
-			 	    authorName = MS+courseDo.getUser().get(j).getLastName();
-				} else {
-					authorName = courseDo.getUser().get(j).getLastName();
-				}
-				
-				if (courseDo.getUser().size()>1){
-					courseAuthor.setText(authorName +" "+GL_GRR_AND+" "+GL1117);
-				}else{
-					courseAuthor.setText(authorName);
-				}
-				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
+			}
+			
+			if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
+				authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getUser().get(j).getLastName();
+			} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
+		 	    authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getUser().get(j).getLastName();
+			} else {
+				authorName = courseDo.getUser().get(j).getLastName();
+			}
+			
+			if (courseDo.getUser().size()>1){
+				courseAuthor.setText(authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
+				courseAuthor.getElement().setAttribute("alt",authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
+				courseAuthor.getElement().setAttribute("title",authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
 			}else{
-				if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-					authorName = MR+courseDo.getCreator().getLastName();
-				} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-					authorName = MS+courseDo.getCreator().getLastName();
+				courseAuthor.setText(authorName);
+				courseAuthor.getElement().setAttribute("alt",authorName );
+				courseAuthor.getElement().setAttribute("title",authorName);
+			}
+			contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
+		}else{
+			if (courseDo.getCreator() != null){
+				if(courseDo.getCreator().getGender() != null && courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
+					authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getCreator().getLastName();
+				} else if(courseDo.getCreator().getGender() != null && courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
+					authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getCreator().getLastName();
 				} else {
 					authorName = courseDo.getCreator().getLastName();
+					if(courseDo.getCreator().getLastName().contains("RUSD")) {
+						authorName = i18n.GL1747() +" "+authorName;
+					}
 				}
 				courseAuthor.setText(authorName);
-				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
+				courseAuthor.getElement().setAttribute("alt",authorName );
+				courseAuthor.getElement().setAttribute("title",authorName);
+				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG;
 			}
-			contributorImage.setUrl(contributorProfileImage);			
-			contributorImage.addErrorHandler(new ErrorHandler() {
-				@Override
-				public void onError(ErrorEvent event) {
-					contributorImage.setUrl(DEFAULT_USER_IMG);
-				}
-			});
-		} else {
-			courseAuthor.setVisible(false);
-			contributorImage.setUrl(DEFAULT_USER_IMG);
 		}
-		setCourseId(courseDo.getCodeId());
+		contributorImage.setUrl(contributorProfileImage);
+		contributorImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				contributorImage.setUrl(DEFAULT_USER_IMG);
+			}
+		});
+		
+		if(courseDo.getCodeId()!=null) {
+			setCourseId(courseDo.getCodeId());
+		} else {
+			setParentId(courseDo.getParentId());
+		}
 	}
 	
 	public HTMLEventPanel getfeaturedCoursePanel() {
@@ -188,5 +210,13 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 
 	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 }

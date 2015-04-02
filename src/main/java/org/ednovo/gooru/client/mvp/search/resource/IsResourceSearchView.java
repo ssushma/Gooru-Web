@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.search.resource;
 
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
@@ -35,5 +36,5 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
  * 
  */
 public interface IsResourceSearchView extends IsSearchView<ResourceSearchResultDo> {
-
+	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
 }

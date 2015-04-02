@@ -69,28 +69,22 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		addDomHandler(this, ClickEvent.getType());
 		this.profileDo = profileDo;
 		this.setStyleName("profileGradeList");
-		if(label.equals(KIDER_GARTEN)){
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
+			this.getElement().getStyle().setMargin(8, Unit.PX);
+		}
+		if(label.trim().equals(KIDER_GARTEN) || label.trim().equalsIgnoreCase(KIDER_GARTEN)){
 			this.addStyleName(CollectionCBundle.INSTANCE.css().profileKinderGartenGrade());
             if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
 				this.getElement().getStyle().setMarginLeft(70, Unit.PX);
 				this.getElement().getStyle().setMarginTop(30, Unit.PX);
 			}
 		}
-		/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
-			
-			if(label.equals(KIDER_GARTEN)){
-				this.addStyleName(Settings.profileKinderGartenGrade());
-			}
-			if(label.equals(HIGHER_EDUCATION)){
-				this.addStyleName(Settings.profileHigherEducationGrade());
-			}
-		}*/
 		
-		if(label.equals(HIGHER_EDUCATION)){
+		if(label.trim().equals(HIGHER_EDUCATION)||label.trim().equalsIgnoreCase(HIGHER_EDUCATION)){
 			this.addStyleName(CollectionCBundle.INSTANCE.css().profileHigherEducationGrade());
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
-				this.getElement().getStyle().setMarginLeft(60, Unit.PX);
-				this.getElement().getStyle().setMarginBottom(30, Unit.PX);
+//				this.getElement().getStyle().setMarginLeft(60, Unit.PX);
+//				this.getElement().getStyle().setMarginBottom(30, Unit.PX);
 			}
 		}
 		if (grades != null) {
@@ -101,13 +95,14 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 			
 			String grade[] = genGrade.split(",");
 			for (int i = 0; i < grade.length; i++) {
-				if (label.equals(grade[i])) {
+				if (label.trim().equals(grade[i].trim())) {
 					this.getElement().getStyle().setProperty("background", "#0F76BB");
 					this.getElement().getStyle().setColor("#fff");
 					this.getElement().setAttribute("selected", "selected");
 					if(!gradeList.contains(grade[i].toString())){
 						gradeList.add(grade[i].toString());
 					}
+					break;
 				}
 			}
 		}
@@ -173,22 +168,6 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		});
 	}
 
-	/*Unused Method
-	 * private String join(List<?> list,String separator){
-		StringBuilder builder =null;
-		if(list != null){
-			builder = new StringBuilder();
-			for(Object value:list){
-				if(builder.length() > 0){
-					builder.append(separator);
-				}
-				builder.append(value);
-			}
-		}
-		return builder.toString();
-	}*/
-	
-	
 	private String generateGrade(String gradeTxt){
 		String tmpGradeTxt = "";
 		if (gradeTxt.indexOf("-") > 0){
@@ -238,5 +217,4 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		}
 		return gradeStr.toString();
 	}
-	
 }

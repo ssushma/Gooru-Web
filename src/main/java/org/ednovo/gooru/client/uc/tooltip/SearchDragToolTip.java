@@ -3,9 +3,6 @@
  */
 package org.ednovo.gooru.client.uc.tooltip;
 
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.util.MessageProperties;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -15,7 +12,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public class SearchDragToolTip extends Composite implements MessageProperties{
+public class SearchDragToolTip extends Composite {
 	
 
 	
@@ -26,7 +23,7 @@ public class SearchDragToolTip extends Composite implements MessageProperties{
 	Image searchDragToolTipImage;
 
 	private static SearchDragToolTipUiBinder uiBinder = GWT.create(SearchDragToolTipUiBinder.class);
-
+	
 	interface SearchDragToolTipUiBinder extends	UiBinder<Widget, SearchDragToolTip> {
 	}
 
@@ -44,7 +41,12 @@ public class SearchDragToolTip extends Composite implements MessageProperties{
 	public SearchDragToolTip(String description) {
 		initWidget(uiBinder.createAndBindUi(this));
 		searchDragToolTipImage.setUrl("images/SearchDragImages/minus.png");
+		searchDragToolTipImage.getElement().setId("imgSearchDragToolTipImage");
+		
 		desLbl.setText(description);
+		desLbl.getElement().setId("lblDesLbl");
+		desLbl.getElement().setAttribute("alt", description);
+		desLbl.getElement().setAttribute("title", description);
 		
 	}
 

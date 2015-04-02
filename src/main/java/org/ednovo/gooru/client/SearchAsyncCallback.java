@@ -29,7 +29,21 @@ import java.util.Date;
 import org.ednovo.gooru.shared.model.search.AbstractSearchDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
+/**
+ * 
+ * @fileName : SearchAsyncCallback.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public abstract class SearchAsyncCallback<T extends AbstractSearchDo<?>> implements AsyncCallback<T> {
 
 	private long version = 0;

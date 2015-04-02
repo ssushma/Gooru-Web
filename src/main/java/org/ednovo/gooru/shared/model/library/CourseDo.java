@@ -44,6 +44,7 @@ public class CourseDo implements Serializable {
 	private LibraryUserDo creator;
 	private List<LibraryUserDo> user;
 	private String parentId;
+	private Integer grade;
 	
 	public CourseDo(){}
 
@@ -143,4 +144,19 @@ public class CourseDo implements Serializable {
 	public void setUser(List<LibraryUserDo> user) {
 		this.user = user;
 	}
+
+	/**
+	 * @return the grade
+	 */
+	public Integer getGrade() {
+		return grade;
+	}
+
+	/**
+	 * @param grade the grade to set
+	 */
+	public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
+	
 }

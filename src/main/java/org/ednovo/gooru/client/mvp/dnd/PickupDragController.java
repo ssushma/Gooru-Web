@@ -42,7 +42,6 @@ import java.util.HashMap;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.settings.DragDropAnimation;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 

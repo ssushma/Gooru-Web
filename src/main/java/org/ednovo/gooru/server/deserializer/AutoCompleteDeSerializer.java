@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,29 +42,39 @@ import org.springframework.stereotype.Component;
 @Component
 public class AutoCompleteDeSerializer extends DeSerializer {
 
-	private static final String ATTRIBUTION = "attribution";
+	private static final String ATTRIBUTION = "values";
 	private static final String SEARCH_RESULTS = "searchResults";
 	private static final String CODE = "code";
 	private static final String LABEL = "label";
+	private static final String NAME = "name";
 	private static final String CODE_ID = "codeId";
+	private static final String AGGREGATOR = "values";
+
 
 	/**
-	 * Deserialize json object into search query as List
+	 * Deserialize json object to List of Standards
 	 * @param jsonRep instance of {@link JsonRepresentation}
-	 * @return resultQuery
+	 * @return list of standards
 	 */
-	/*public List<String> deserializeSearchQuery(JsonRepresentation jsonRep) {
-		List<String> resultQuery = new ArrayList<String>();
+	public List<StandardFo> deserializeCenturys(JsonRepresentation jsonRep) {
+		List<StandardFo> centurysList = new ArrayList<StandardFo>();
 		try {
-			JSONArray searchQueryJsonArray = jsonRep.getJsonArray();
-			for (int query = 0; query < searchQueryJsonArray.length(); query++) {
-				resultQuery.add((String) searchQueryJsonArray.get(query));
+			JSONObject standardJsonObject = jsonRep.getJsonObject();
+			JSONArray searchResults = standardJsonObject.getJSONArray(SEARCH_RESULTS);
+			for (int i = 0; i < searchResults.length(); i++) {
+				JSONObject code = searchResults.getJSONObject(i);
+				StandardFo codeDo = new StandardFo();
+				if(code.has(CODE_ID)){
+					codeDo.setCodeId(code.getInt(CODE_ID));
+					codeDo.setLabel(code.getString(NAME));
+					centurysList.add(codeDo);
+				}
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return resultQuery;
-	}*/
+		return centurysList;
+	}
 
 	/**
 	 * Deserialize json object to List of Standards
@@ -84,7 +95,6 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				standards.add(codeDo);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return standards;
 	}
@@ -101,12 +111,43 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				JSONArray soruceJsonArray = jsonRep.getJsonArray();
 				for (int sourceCount = 0; sourceCount < soruceJsonArray.length(); sourceCount++) {
 					JSONObject source = soruceJsonArray.getJSONObject(sourceCount);
-					sources.add(source.getString(ATTRIBUTION));
+					JSONArray publisherArrayObj = new JSONArray(getJsonString(source, ATTRIBUTION));
+					for(int i=0;i<publisherArrayObj.length();i++){
+						sources.add(publisherArrayObj.getString(i).toString());
+					}
+					//sources.add(source.getString(ATTRIBUTION));
 				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return sources;
+	}
+	/**
+	 * Deserialize json object to list of resource source
+	 * @param jsonRep instance of {@link JsonRepresentation}
+	 * @return  list of source
+	 */
+	public List<String> deserializeAggregator(JsonRepresentation jsonRep) {
+		List<String> aggregator = new ArrayList<String>();
+		try {
+			if(jsonRep!=null){
+			if (jsonRep.getSize() > 0) {
+				JSONArray aggregatorJsonArray = jsonRep.getJsonArray();
+				
+				for (int aggregatorCount = 0; aggregatorCount < aggregatorJsonArray.length(); aggregatorCount++) {
+					JSONObject aggregatorObj = aggregatorJsonArray.getJSONObject(aggregatorCount);
+					//	aggregator.add(aggregatorObj.getString(AGGREGATOR));
+					
+					JSONArray aggregatorArrayObj = new JSONArray(getJsonString(aggregatorObj, AGGREGATOR));
+					for(int i=0;i<aggregatorArrayObj.length();i++){
+								aggregator.add(aggregatorArrayObj.getString(i).toString());
+									
+					}
+				}
+			}
+			}
+		} catch (JSONException e) {
+		}
+		return aggregator;
 	}
 }

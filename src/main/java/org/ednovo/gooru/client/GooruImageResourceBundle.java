@@ -25,7 +25,21 @@
 package org.ednovo.gooru.client;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-
+/**
+ * 
+ * @fileName : GooruImageResourceBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class GooruImageResourceBundle{
 	public static final String CDN_END_POINT = AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint();
 	

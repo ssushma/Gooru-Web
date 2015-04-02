@@ -146,5 +146,28 @@ public interface IsShelfView extends IsViewWithHandlers<ShelfUiHandlers> {
 	 * 
 	*/
 	
-	HTMLPanel getLoadingImageLabel();  
+	HTMLPanel getLoadingImageLabel();
+
+	void setPusblishStatus(String publishStatus, CollectionDo colleDo);
+
+	/**
+	 * @function getEditPanel 
+	 * 
+	 * @created_date : Jul 23, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : HTMLPanel
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	HTMLPanel getEditPanel();  
 }

@@ -27,16 +27,17 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.LabelUc;
 import org.ednovo.gooru.client.uc.StatisticsItemUc;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 /**
  * @author Search Team
  * 
  */
-public class CollectionStatisticsTabVc extends FlowPanel implements MessageProperties{
+public class CollectionStatisticsTabVc extends FlowPanel {
 
 	private FlowPanel showAddsFloPanel;
 
@@ -47,6 +48,8 @@ public class CollectionStatisticsTabVc extends FlowPanel implements MessagePrope
 	private FlowPanel showAvgTimeFloPanel;
 
 	private LabelUc statisticsLblUc;
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor, creates new objects for
@@ -70,16 +73,16 @@ public class CollectionStatisticsTabVc extends FlowPanel implements MessagePrope
 	 *            instance of the {@link CollectionDo}
 	 */
 	public void setData(CollectionDo collection) {
-		statisticsLblUc = new LabelUc(GL1491+GL_SPL_SEMICOLON);
+		statisticsLblUc = new LabelUc(i18n.GL1491()+i18n.GL_SPL_SEMICOLON()+" ");
 		statisticsLblUc.setStyleName(ShelfCBundle.INSTANCE.css().headerLabel());
 		this.add(statisticsLblUc);
-		showAddsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().addsImageStyle(), GL1493, "50"));
+		showAddsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().addsImageStyle(), i18n.GL1493(), "50"));
 		this.add(showAddsFloPanel);
-		showViewsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().viewsImageStyle(), GL0934, collection.getViews()));
+		showViewsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().viewsImageStyle(), i18n.GL0934(), collection.getViews()));
 		this.add(showViewsFloPanel);
-		showLikesFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().likesImageStyle(), GL0729.toLowerCase(), "49"));
+		showLikesFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().likesImageStyle(), i18n.GL0729().toLowerCase(), "49"));
 		this.add(showLikesFloPanel);
-		showAvgTimeFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().avgTimeImageStyle(), GL1492, collection.getEstimatedTime()));
+		showAvgTimeFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().avgTimeImageStyle(), i18n.GL1492(), collection.getEstimatedTime()));
 		this.add(showAvgTimeFloPanel);
 	}
 

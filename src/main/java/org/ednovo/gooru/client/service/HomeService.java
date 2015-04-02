@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.List;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -40,7 +41,7 @@ public interface HomeService extends BaseService {
 	 * @throws GwtException
 	 */
 //	List<FeaturedCollectionContentDo> getFeaturedCollections() throws GwtException;
-	void updateUserDetails(String userName,String userRole) throws GwtException;
+	void updateUserDetails(String userName,String userRole) throws GwtException, ServerDownException;
 		
 	/**
 	 * Get list of collection
@@ -56,12 +57,12 @@ public interface HomeService extends BaseService {
 	 * @return serialized to List of  {@link FeaturedCollectionContentDo}
 	 * @throws GwtException
 	 */
-	List<FeaturedCollectionContentDo> getFeaturedThemeCollection(String themeType);
+	List<FeaturedCollectionContentDo> getFeaturedThemeCollection(String themeType) throws GwtException, ServerDownException;
 	
-	String whatsNewMosLink() throws GwtException;
-	String whatsNewFibLink() throws GwtException;
+	String whatsNewMosLink() throws GwtException, ServerDownException;
+	String whatsNewFibLink() throws GwtException, ServerDownException;
 	
-	String mosLink() throws GwtException;
+	String mosLink() throws GwtException, ServerDownException;
 	/**
 	 * 
 	 * @function getClientIpAddress 
@@ -82,6 +83,8 @@ public interface HomeService extends BaseService {
 	 *
 	 *
 	 */
-	String getClientIpAddress() throws GwtException;
+	String getClientIpAddress() throws GwtException, ServerDownException;
+	
+	String getRedirectServerUrl() throws GwtException, ServerDownException;
 
 }

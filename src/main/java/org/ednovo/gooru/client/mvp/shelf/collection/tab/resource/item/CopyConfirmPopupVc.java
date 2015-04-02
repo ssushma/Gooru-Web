@@ -31,9 +31,9 @@ import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainer
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -75,7 +75,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public abstract class CopyConfirmPopupVc  implements MessageProperties{
+public abstract class CopyConfirmPopupVc{
 
 //	@UiField BlueButtonUc btnCopy;
 //	
@@ -99,6 +99,8 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 	private int limit=20;
 	private int totalHitCount=0;
 	private int pageNum=1;
+	
+	private static final String ASSESSMENT = "assessment";
 	
 	private CollectionTreeItem cureentcollectionTreeItem=null;
 	private CollectionTreeItem previousSelectedItem=null;
@@ -128,6 +130,8 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 	interface CopyConfirmPopupVcUiBinder extends UiBinder<Widget, CopyConfirmPopupVc> {
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
 		 @Override
 		 public void onBrowserEvent(Event event) {
@@ -147,13 +151,17 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 		popupPanel.setWidget(uiBinder.createAndBindUi(this));
 		setStaticTexts();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
-		popupPanel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainer());
+		popupPanel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainerShelf());
 		popupPanel.setGlassEnabled(true);
 		popupPanel.setAutoHideOnHistoryEventsEnabled(true);
 		popupPanel.show();
 		popupPanel.center();
 		popupPanel.setModal(true);
+		dropdownListContainerScrollPanel.getElement().setId("sbDropdownListContainerScrollPanel");
+		dropdownListContainerScrollPanel.getElement().getStyle().setMarginTop(0, Unit.PX);
 		dropdownListContainerScrollPanel.setVisible(false);
+		chooseCollectionErrorLabel.getElement().setId("lblChooseCollectionErrorLabel");
+		floderTreeContainer.getElement().setId("pnlFloderTreeContainer");
 		addingText.setVisible(false);
 		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
@@ -198,12 +206,12 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 		folderTreePanel.addItem(loadingTreeItem());
 		getWorkspaceData(0,20,true);
 		/*setWidget(uiBinder.createAndBindUi(this));*/
-		//copyCollectionText.getElement().setInnerHTML(GL0947);
-		//loadingTextLbl.setText(GL0110.toLowerCase()+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
-//		btnCopy.setText(GL0827);
-//		btnCancel.setText(GL0142);
-//		copyLabelText.setText(GL0505.toLowerCase());
-		//GL0505
+		//copyCollectionText.getElement().setInnerHTML(i18n.GL0947);
+		//loadingTextLbl.setText(i18n.GL0110.toLowerCase()+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP);
+//		btnCopy.setText(i18n.GL0827);
+//		btnCancel.setText(i18n.GL0142);
+//		copyLabelText.setText(i18n.GL0505.toLowerCase());
+		//i18n.GL0505
 //		setModal(true);
 //		Window.enableScrolling(false);
 //		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
@@ -240,19 +248,39 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 
 	}
 	public void setStaticTexts(){
-		copyCollectionPopupHeader.setText(GL0946);
-		copyResourceTitleLabel.setText(GL0947);
-		dropdownListPlaceHolder.setText(GL1377);
-		copyResourceBtnLbl.setText(GL0827);
-		cancelResourcePopupBtnLbl.setText(GL0142);
+		copyCollectionPopupHeader.setText(i18n.GL0946());
+		copyCollectionPopupHeader.getElement().setId("lblCopyCollectionPopupHeader");
+		copyCollectionPopupHeader.getElement().setAttribute("alt", i18n.GL0946());
+		copyCollectionPopupHeader.getElement().setAttribute("title", i18n.GL0946());
+		copyResourceTitleLabel.setText(i18n.GL0947());
+		copyResourceTitleLabel.getElement().setId("lblCopyResourceTitleLabel");
+		copyResourceTitleLabel.getElement().setAttribute("alt", i18n.GL0947());
+		copyResourceTitleLabel.getElement().setAttribute("title", i18n.GL0947());
+		dropdownListPlaceHolder.setText(i18n.GL1377());
+		dropdownListPlaceHolder.getElement().setId("lblDropdownListPlaceHolder");
+		dropdownListPlaceHolder.getElement().setAttribute("alt", i18n.GL1377());
+		dropdownListPlaceHolder.getElement().setAttribute("title", i18n.GL1377());
+		copyResourceBtnLbl.setText(i18n.GL0827());
+		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
 		copyResourceBtnLbl.getElement().setId("btnCopy");
+		copyResourceBtnLbl.getElement().setAttribute("alt", i18n.GL0827());
+		copyResourceBtnLbl.getElement().setAttribute("title", i18n.GL0827());
+		
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
-		addingText.setText(GL0505.toLowerCase());
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", i18n.GL0142());
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title", i18n.GL0142());
+		addingText.setText(i18n.GL0505().toLowerCase());
+		addingText.getElement().setId("btnCopy");
+		addingText.getElement().setAttribute("alt", i18n.GL0505().toLowerCase());
+		addingText.getElement().setAttribute("title", i18n.GL0505().toLowerCase());
+		
 	}
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
 			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
+			dropdownListPlaceHolder.getElement().setAttribute("alt", cureentcollectionTreeItem.getCollectionName());
+			dropdownListPlaceHolder.getElement().setAttribute("title", cureentcollectionTreeItem.getCollectionName());
 			chooseCollectionErrorLabel.setText("");
 		}
 	}
@@ -332,8 +360,11 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 			this();
 			folderContainer.addStyleName(levelStyleName);
 		}
-		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,int itemCount){
+		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,int itemCount, String collectionType){
 			this();
+			if(ASSESSMENT.equals(collectionType)){
+				folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().folderAssessment());
+			}
 			if(levelStyleName!=null){
 				folderContainer.addStyleName(levelStyleName);
 			}
@@ -377,8 +408,9 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+					 }else{
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount(),collectionType));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -402,8 +434,9 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 						 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
-					 }else if(floderDo.getType().equals("scollection")){
-						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount()));
+					 }else{
+						 String collectionType=floderDo.getCollectionType().equals(ASSESSMENT)?floderDo.getCollectionType():floderDo.getType();
+						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid(),floderDo.getItemCount(),collectionType));
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }
@@ -489,13 +522,17 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 	public void onClickCopyBtn(ClickEvent clickEvent){
 		if(cureentcollectionTreeItem!=null){
 			if(cureentcollectionTreeItem.getItemCount()>= 25){
-				chooseCollectionErrorLabel.setText(GL0302);
+				chooseCollectionErrorLabel.setText(i18n.GL0302());
+				chooseCollectionErrorLabel.getElement().setAttribute("alt", i18n.GL0302());
+				chooseCollectionErrorLabel.getElement().setAttribute("title", i18n.GL0302());
 			}else{
 				hideButton(false);
 				copyResourceToCollection(cureentcollectionTreeItem.getGooruOid());
 			}
 		}else{
-			chooseCollectionErrorLabel.setText(GL1377);
+			chooseCollectionErrorLabel.setText(i18n.GL1377_1());
+			chooseCollectionErrorLabel.getElement().setAttribute("alt", i18n.GL1377_1());
+			chooseCollectionErrorLabel.getElement().setAttribute("title", i18n.GL1377_1());
 		}
 	}
 	public void hideButton(boolean hideButtons){
@@ -506,7 +543,7 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 	}
 	public void hide(){
 		popupPanel.hide();
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	public abstract void copyResourceToCollection(String collectionId);
@@ -525,7 +562,7 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 
 	}*/
 	public TreeItem loadingTreeItem(){
-		Label loadingText=new Label(GL1452);
+		Label loadingText=new Label(i18n.GL1452());
 		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
 	}

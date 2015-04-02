@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -33,6 +34,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -61,6 +63,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	
 	private SimpleAsyncCallback<List<CollectionDo>> getMyUserCollectionsAsyncCallback;
 	
+	
 	@Inject private ImageUploadPresenter imageUploadPresenter;
 
 	/**
@@ -88,9 +91,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	}
 
 	
-	/*public void getUserCollections(){
-		getResourceService().getUserCollection(getUserCollectionsAsyncCallback());
-	}*/
+	
 	public void getUserColletionsList(Integer pageSize,Integer pageNum)
 	{
 		getResourceService().getUserCollectionList(pageSize,pageNum,false,getUserCollectionsAsyncCallback());
@@ -131,10 +132,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	public void createCollectionItem(String collectionId, String collectionItemId) {
 		getResourceService().copyCollectionItem(collectionId, collectionItemId, getCopyCollectionItemAsyncCallback());
 	}
-    /*public void updateResourceQuestion(String collectionItemId,CollectionQuestionItemDo collectionQuestionItemDo){
-    //	getResourceService().updateQuestionResource(collectionItemId, collectionQuestionItemDo, getUpdateQuestionItemResourceAsyncCallback());
-    	
-    }*/
+    
 	/**
 	 * @return instance of {@link CollectionItemDo} after update the collection item
 	 */
@@ -152,7 +150,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	}
 	
 	public void getWorkspaceData(int offset,int limit,final boolean clearShelfPanel){
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, null,false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().displayWorkspaceData(folderListDo,clearShelfPanel);
@@ -161,7 +159,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	}
 
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null,false, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
@@ -182,6 +180,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 				}
 				@Override
 				public void onFailure(Throwable arg0) {
+					super.onFailure(arg0);
 					getView().getVisible().setVisible(false);
 				}
 			};
@@ -279,4 +278,17 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		return AppClientFactory.getInjector().getResourceService();
 	}
 
+/*	
+	public void reorderMyCollectionItem(CollectionItemDo collectionItemDo, final ShelfCollectionResourceChildView shelfCollectionResourceChildView,final String arrow, final Integer newSequence) {
+		AppClientFactory.getInjector().getResourceService().reorderCollectionItem(collectionItemDo, new SimpleAsyncCallback<CollectionItemDo>() {
+
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				getView().onPostResourceReorder(result,shelfCollectionResourceChildView,arrow,newSequence);  
+			}
+		});
+	}
+
+	
+*/	
 }

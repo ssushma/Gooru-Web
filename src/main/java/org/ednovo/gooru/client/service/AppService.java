@@ -27,9 +27,8 @@
  */
 package org.ednovo.gooru.client.service;
 
-import java.util.Map;
-
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -46,27 +45,19 @@ public interface AppService extends BaseService {
 	 * @return serialized to {@link UserDo} has loggedIn user details
 	 * @throws GwtException
 	 */
-	UserDo getLoggedInUser() throws GwtException;
+	UserDo getLoggedInUser() throws GwtException, ServerDownException;
 
-	/**
-	 * User signin
-	 * @param username of the user account for signin
-	 * @param password of the user account
-	 * @return serialized to {@link UserDo} loggedIn user details 
-	 * @throws GwtException
-	 */
-	UserDo signin(String username, String password) throws GwtException;
 	
 	/**
 	 * signout from the account
 	 * @return serialized anonymous {@link UserDo}
 	 * @throws GwtException
 	 */
-	UserDo signout() throws GwtException;
+	UserDo signout() throws GwtException, ServerDownException;
 	
-	UserDo v2Signin(String postData) throws GwtException;
+	UserDo v2Signin(String userName, String password) throws GwtException, ServerDownException;
 
-	UserDo v2Signout() throws GwtException;
+	UserDo v2Signout() throws GwtException, ServerDownException;
 
 	/**
 	 * @function getAnalyticsURL 
@@ -88,5 +79,7 @@ public interface AppService extends BaseService {
 	 * 
 	*/
 	
-	String getAnalyticsURL(String type, String id)  throws GwtException;
+	String getAnalyticsURL(String type, String id) throws GwtException, ServerDownException;
+	
+	public UserDo getUserFilterProperties() throws GwtException, ServerDownException;
 }

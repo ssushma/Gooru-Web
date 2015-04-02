@@ -15,7 +15,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="ccb" />
-
+		
 	<g:HTMLPanel styleName="{Settings.settingWrapper}">
 		<!-- right panel -->
 		<g:HTMLPanel styleName="{RightPanel.settingContentWrapperNew}">
@@ -86,6 +86,7 @@
 								ui:field="btnSeeMyProfile"></g:Button>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
+					<g:Button styleName="{Settings.adminStyle} primary" ui:field="btnViewAdmin"></g:Button>
 				</g:HTMLPanel>
 				<!-- end of user image part -->
 				<g:HTMLPanel styleName="{Settings.settingPageInfoContainerWrapper}">
@@ -108,8 +109,6 @@
 									</g:HTMLPanel>
 								</g:HTMLPanel>
 
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
-									ui:field="accountExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="accountMiniusArrow" visible="false"></g:HTMLPanel>
 
@@ -188,7 +187,7 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 
-
+						<!-- Email -->
 						<g:HTMLPanel styleName="{Settings.settingInfoTitleOneContainer}" ui:field="emailPanel">
 							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
 								ui:field="plContact">
@@ -207,8 +206,6 @@
 										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
-									ui:field="contactExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="contactMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
@@ -226,6 +223,33 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
+						
+						<!-- Google Drive -->
+						<g:HTMLPanel styleName="{Settings.settingInfoTitleOneContainer}" ui:field="panelGoogleDrive">
+							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
+								ui:field="panelDrive">
+								<g:Label styleName="{Settings.settingInfoTitle}"
+									ui:field="panelHeading" />
+							</panel:HTMLEventPanel>
+							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}">
+							    <g:HTMLPanel styleName="{Settings.div1}">
+							        <g:Button ui:field="btnConnect" styleName="{Settings.buttonConnect}"></g:Button>
+							        <g:Label ui:field="lblDisconnect"/>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{Settings.div2}">
+							        <g:Image url="images/GoogleDriveIcon.png" styleName="{Settings.driveImage}"></g:Image>
+							        <g:Label ui:field="lblImageSubHeading">
+								    </g:Label>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{Settings.div3}">
+								    <g:Label ui:field="lblHeading" styleName="{Settings.lblHeading}">
+								    </g:Label>
+								    <g:Label ui:field="lblSubHeading">
+								    </g:Label>
+							    </g:HTMLPanel>
+							</g:HTMLPanel>
+							<g:HTML ui:field="htmlConnectedAs"></g:HTML>
+						</g:HTMLPanel>
 
 
 
@@ -235,7 +259,7 @@
 								<g:HTMLPanel styleName="{Settings.settingInfoTitle}"
 									ui:field="securityText"></g:HTMLPanel>
 								<!-- <g:HTMLPanel ui:field="editButtonContaineSecurity"><g:Button 
-									ui:field="editButtonSecurity" text="Edit" styleName="{Settings.settingEditButton}"/></g:HTMLPanel> -->								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" ui:field="securityExpandArrow"></g:HTMLPanel> -->
+									ui:field="editButtonSecurity" text="Edit" styleName="{Settings.settingEditButton}"/></g:HTMLPanel> -->								
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="securityMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
@@ -268,8 +292,6 @@
 										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
-									ui:field="educationalExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="educationalMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
@@ -358,8 +380,15 @@
 								ui:field="userStandardDefaultView">
 								<g:HTMLPanel styleName="{Settings.settingOneSetOfStandardInputContainer}">
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCommonCore"></g:Label>
-								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCaliforniaScience"></g:Label>
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblTexas"></g:Label>
+								    <g:Label styleName="{Settings.standardsText}" ui:field="lblNgss"></g:Label>
+								    
+								     <g:Label styleName="{Settings.standardsText}" ui:field="lblCSS"></g:Label>
+								    <g:HTMLPanel styleName="{Settings.cssubStadard}">
+								      <g:Label styleName="{Settings.standardsText}" ui:field="lblCaliforniaScience"></g:Label>
+								      <g:Label styleName="{Settings.standardsText}" ui:field="lblCaliforniaSocialSciencesStandards"></g:Label>
+								      <g:Label styleName="{Settings.standardsText}" ui:field="lblCaliforniaELDS"></g:Label>
+								    </g:HTMLPanel>
 								    <g:Label styleName="{Settings.defaultTextcss}" ui:field="lblUserMessage"></g:Label>
 								</g:HTMLPanel>
 							</g:HTMLPanel>

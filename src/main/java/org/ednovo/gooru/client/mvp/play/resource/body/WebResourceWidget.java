@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.BodyElement;
@@ -38,6 +41,7 @@ import com.google.gwt.event.logical.shared.HasInitializeHandlers;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Frame;
 
@@ -54,6 +58,12 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 		resourcePreviewFrame.removeStyleName("gwt-Frame");
 		resourcePreviewFrame.getElement().getStyle().setBackgroundColor("white");
 		resourcePreviewFrame.getElement().setAttribute("id", "resourcePlayerContainer");
+		int windowHeight=Window.getClientHeight();
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			resourcePreviewFrame.setHeight((windowHeight-(116))+"px");
+		}else{
+			resourcePreviewFrame.setHeight((windowHeight-(193))+"px");
+		}
 	}
 	
 	public Frame getResourcePreviewFrame() {
@@ -73,13 +83,10 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
     	 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
  			@Override
  			public void execute() {
- 				//timer.schedule(100); 
  				try{
  				 Document document = IFrameElement.as(getResourcePreviewFrame().getElement()).getContentDocument();
  	             BodyElement body = document.getBody();
  			 	 Element html=document.getDocumentElement();
- 			 	/*getResourcePreviewFrame().getElement().getStyle().setVisibility(Visibility.HIDDEN);
- 			 	getResourcePreviewFrame().getElement().getStyle().setPosition(Position.ABSOLUTE);*/
  	             int bodyHeight=Math.max(body.getScrollHeight(), body.getOffsetHeight());
  	             bodyHeight=Math.max(bodyHeight, html.getOffsetHeight());
  	             bodyHeight=Math.max(bodyHeight, html.getClientHeight());
@@ -96,12 +103,7 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 
 	@Override
 	public HandlerRegistration addLoadHandler(LoadHandler handler) {
-		// TODO Auto-generated method stub
 		  return addHandler(handler, LoadEvent.getType());
 	}
-	
-    	
-   
-   
    
 }

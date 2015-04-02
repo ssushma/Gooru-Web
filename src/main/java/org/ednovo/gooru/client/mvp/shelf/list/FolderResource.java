@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
@@ -45,9 +46,9 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -65,20 +66,22 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FolderResource extends FocusPanel implements ClickHandler,
-		MouseOverHandler, DropBox,MessageProperties {
+		MouseOverHandler, DropBox {
 
 	private static FolderResourceUiBinder uiBinder = GWT
 			.create(FolderResourceUiBinder.class);
+	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderResourceUiBinder extends UiBinder<Widget, FolderResource> {
 	}
@@ -103,6 +106,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 
 	@UiField
 	VerticalPanel contentVerPanel;
+	
+	@UiField Label blueLbl,greyLbl;
 
 	@UiField(provided = true)
 	ShelfListCBundle res;
@@ -117,8 +122,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	AlertContentUc alertContentUc;
 
 	private ResourceDropController dropController;
-	private static final String EDIT_THIS_COLLECTION = GL0991;
-	private static final String ADD_TO_THIS_COLLECTION = GL0990;
+	private static final String EDIT_THIS_COLLECTION = i18n.GL0991();
+	private static final String ADD_TO_THIS_COLLECTION = i18n.GL0990();
 
 	private static FolderResource folderResource;
 
@@ -129,14 +134,27 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 		res = ShelfListCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		glassContainer.setGlassText(GL0991);
+		glassContainer.setGlassText(i18n.GL0991());
+		glassContainer.getElement().setId("GlassContainer");
+		glassContainer.getElement().setAttribute("alt", i18n.GL0991());
+		glassContainer.getElement().setAttribute("title", i18n.GL0991());
+
 		glassContainer.setGlassVisible(false);
 		this.collectionItemDo = collectionItem;
 
 		dropController = new ResourceDropController(this);
 		this.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourcePanel());
+		L1titleFocPanel.getElement().setId("focuspnlL1titleFocPanel");
 		L1titleFocPanel.addClickHandler(this);
+		secondLevelFolders.getElement().setId("fpnlsecondLevelFolders");
 		secondLevelFolders.getElement().getStyle().setFloat(Float.LEFT);
+		collectionIcon.getElement().setId("fpnlCollectionIcon");
+		folderL2Icon.getElement().setId("fpnlFolderL2Icon");
+		blueLbl.getElement().setId("lblBlueLbl");
+		greyLbl.getElement().setId("lblGreyLbl");
+		folderL2DisPanel.getElement().setId("discpnlFolderL2DisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 		wrapperFocPanel.addMouseOverHandler(this);
 		wrapperFocPanel.addMouseOutHandler(new MouseOutHandler() {
 
@@ -207,10 +225,14 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			// 30));
 			folderL2TitleLbl.setHTML(StringUtil.truncateText(collectionItem
 					.getResource().getTitle(), 30));
+			folderL2TitleLbl.getElement().setAttribute("alt", collectionItem.getResource().getTitle());
+			folderL2TitleLbl.getElement().setAttribute("title", collectionItem.getResource().getTitle());
 			folderL2TitleLbl.getElement().setId(
 					collectionItem.getResource().getGooruOid());
+			
 		} else {
 			folderL2TitleLbl.setText("--");
+			folderL2TitleLbl.getElement().setId(collectionItem.getResource().getGooruOid());
 		}
 	}
 
@@ -246,13 +268,13 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						.getInjector()
 						.getfolderService()
 						.getFolders(gooruOId,
-								new AsyncCallback<List<CollectionItemDo>>() {
+								new SimpleAsyncCallback<List<CollectionItemDo>>() {
 									@Override
 									public void onSuccess(
 											List<CollectionItemDo> result) {
 										if (result.size() == 0) {
 											htmlPanel = new HTMLPanel(
-													GL0989);
+													i18n.GL0989());
 											htmlPanel
 													.getElement()
 													.getStyle()
@@ -272,10 +294,6 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 											addFolderItems(collectionFolderItems);
 										}
 									}
-
-									@Override
-									public void onFailure(Throwable caught) {
-									}
 								});
 			}
 			if (collectionItemDo.getResource().getResourceType().getName()
@@ -286,14 +304,10 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						.getResourceService()
 						.getCollection(
 								collectionItemDo.getResource().getGooruOid(),
-								false, new AsyncCallback<CollectionDo>() {
+								false, new SimpleAsyncCallback<CollectionDo>() {
 									@Override
 									public void onSuccess(CollectionDo result) {
 										setL2FoldersData(result);
-									}
-
-									@Override
-									public void onFailure(Throwable caught) {
 									}
 								});
 			}
@@ -338,9 +352,9 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			}
 		} else {
 			if (collectionDo.getCollectionType().equals("folder")) {
-				htmlPanel = new HTMLPanel(GL0989);
+				htmlPanel = new HTMLPanel(i18n.GL0989());
 			} else if (collectionDo.getCollectionType().equals("collection")) {
-				htmlPanel = new HTMLPanel(GL0854);
+				htmlPanel = new HTMLPanel(i18n.GL0854());
 			}
 
 			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -387,6 +401,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	public void setOpen() {
 		if (folderResource == null || !folderResource.equals(this)) {
 			glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 			if (folderResource != null) {
 				folderResource.setOpen(false);
 				folderResource.L1titleFocPanel.setStyleName(res.css()
@@ -426,6 +442,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 				if (collectionItemDo.getResource().getResourceType().getName()
 						.equalsIgnoreCase("scollection")) {
 					glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 					glassContainer.setGlassVisible(true);
 				}
 
@@ -458,8 +476,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						draggable.getDragId()));
 			} else {
 				   alertContentUc = new AlertContentUc(
-						   GL0061,
-						   GL0302);
+						   i18n.GL0061(),
+						   i18n.GL0302());
 			}
 		} else if (draggable.getType().equals(DRAG_TYPE.COLLECTION)) {
 			AppClientFactory.fireEvent(new CreateCollectionItemInFoldersEvent(
@@ -474,6 +492,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 		if (collectionItemDo.getResource().getResourceType().getName()
 				.equalsIgnoreCase("scollection")) {
 			glassContainer.setGlassText(ADD_TO_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("alt", ADD_TO_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("title", ADD_TO_THIS_COLLECTION);
 			glassContainer.setGlassVisible(true);
 			if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
 				draggable.getDraggableMirageUc().onDroppable(true);

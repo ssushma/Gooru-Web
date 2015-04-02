@@ -27,20 +27,21 @@ package org.ednovo.gooru.client.mvp.play.resource.report;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.player.resource.client.ResourcePlayerComponentService;
 import org.ednovo.gooru.player.resource.client.ResourcePlayerComponentServiceAsync;
 import org.ednovo.gooru.player.resource.client.presenter.ResourcePlayerPresenter;
 import org.ednovo.gooru.player.resource.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.QuestionResourceImageBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
@@ -50,7 +51,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ResourceContentReportView extends PopupPanel implements MessageProperties{
+public class ResourceContentReportView extends PopupPanel{
 
 	private static ResourceFlagToolTipUiBinder uiBinder = GWT
 			.create(ResourceFlagToolTipUiBinder.class);
@@ -58,7 +59,12 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	interface ResourceFlagToolTipUiBinder extends
 			UiBinder<Widget, ResourceContentReportView> {
 	}
+	
+	
 	private ResourcePlayerComponentServiceAsync  playerRpcService = GWT.create(ResourcePlayerComponentService.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	ResourceContentReportView resourceFlagToolTip;
 	@UiField HTMLEventPanel closeButton;
 	@UiField Button cancelButton,submitButton,submitButtonGray;
@@ -72,7 +78,7 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	private String assocGooruOid;
 	int formateSize=0;
 	HTMLEventPanel resourceflagButton=new HTMLEventPanel("");
-	private static final String HEADER_LINK = GL1430;
+//	private static final String HEADER_LINK = i18n.GL1430;
 	String gooruOid="";
 	String contentResourceGooruOid="";
 	String formatting1="";
@@ -89,37 +95,73 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
-		flagText.setText(GL0600);
-		inappropriateText.setText(GL0612);
-		unavailableText.setText(GL0613);
-		inaccurateText.setText(GL0614);
-		otherReasonText.setText(GL0606);
-		provideMoreText.setText(GL0607);
-		cancelButton.setText(GL0608);
-		submitButton.setText(GL0486);
-		submitButtonGray.setText(GL0486);
+		flagText.setText(i18n.GL0600());
+		flagText.getElement().setId("lblFlagText");
+		flagText.getElement().setAttribute("alt",i18n.GL0600());
+		flagText.getElement().setAttribute("title",i18n.GL0600());
+		
+		inappropriateText.setText(i18n.GL0612());
+		inappropriateText.getElement().setId("lblInappropriateText");
+		inappropriateText.getElement().setAttribute("alt",i18n.GL0612());
+		inappropriateText.getElement().setAttribute("title",i18n.GL0612());
+		
+		unavailableText.setText(i18n.GL0613());
+		unavailableText.getElement().setId("lblUnavailableText");
+		unavailableText.getElement().setAttribute("alt",i18n.GL0613());
+		unavailableText.getElement().setAttribute("title",i18n.GL0613());
+		
+		inaccurateText.setText(i18n.GL0614());
+		inaccurateText.getElement().setId("lblInaccurateText");
+		inaccurateText.getElement().setAttribute("alt",i18n.GL0614());
+		inaccurateText.getElement().setAttribute("title",i18n.GL0614());
+		
+		otherReasonText.setText(i18n.GL0606());
+		otherReasonText.getElement().setId("lblOtherReasonText");
+		otherReasonText.getElement().setAttribute("alt",i18n.GL0606());
+		otherReasonText.getElement().setAttribute("title",i18n.GL0606());
+		
+		provideMoreText.setText(i18n.GL0607());
+		provideMoreText.getElement().setId("lblProvideMoreText");
+		provideMoreText.getElement().setAttribute("alt",i18n.GL0607());
+		provideMoreText.getElement().setAttribute("title",i18n.GL0607());
+		
+		cancelButton.setText(i18n.GL0608());
+		cancelButton.getElement().setAttribute("id", "cancelButton");
+		cancelButton.getElement().setAttribute("alt",i18n.GL0608());
+		cancelButton.getElement().setAttribute("title",i18n.GL0608());
+		
+		submitButton.setText(i18n.GL0486());
+		submitButton.getElement().setAttribute("id", "SubmitButton");
+		submitButton.getElement().setAttribute("alt",i18n.GL0486());
+		submitButton.getElement().setAttribute("title",i18n.GL0486());
+		
+		submitButtonGray.setText(i18n.GL0486());
+		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
+		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
+		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
 		
 		this.restEndPoint=restEndPoint;
 		this.session=session;
 		this.assocGooruOid=assocGooruOid;
 		this.resourceflagButton=resourceflagButton;
-		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
+		if(!StringUtil.isEmpty(resourceTitle)){
+			resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+			titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+			titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+			titleText.getElement().setAttribute("title",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		}
+		
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
-		cancelButton.getElement().setAttribute("id", "cancelButton");
-		submitButton.getElement().setAttribute("id", "SubmitButton");
-		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
+		
+	
+	
 		resourcePlayerPresenter=new ResourcePlayerPresenter();
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 
-		playerRpcService.getContentReport(restEndPoint, session, assocGooruOid, new AsyncCallback<GetFlagContentDO>() {
+		playerRpcService.getContentReport(restEndPoint, session, assocGooruOid, new SimpleAsyncCallback<GetFlagContentDO>() {
 
 			@Override
-			public void onFailure(Throwable caught) {
-							
-			}
-		@Override
 			public void onSuccess(GetFlagContentDO result) {
 			ArrayList<String> formateType=new ArrayList<String>();
 			if(result!=null&&result.getGetTypeList()!=null) {
@@ -128,17 +170,23 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 					gooruOidList.addAll(result.getGetAsscociatedId());
 					for(int i=0;i<gooruOidList.size();i++)
 					{
-						
 						gooruOid+=gooruOidList.get(i)+",";
-						
 					}
 					}
 					formateSize=formateType.size();
-				
 			}
 			}
-			});
+		});
 		
+		closeButton.getElement().setId("epnlCloseButton");
+		popUpCloseButton.getElement().setId("imgPopUpCloseButton");
+		titleText.getElement().setId("htmlTitleText");
+		checkBox4.getElement().setId("chkCheckBox4");
+		checkBox3.getElement().setId("chkCheckBox3");
+		checkBox2.getElement().setId("chkCheckBox2");
+		checkBox1.getElement().setId("chkCheckBox1");
+		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
+		StringUtil.setAttributes(descriptionTextArea, true);
 	}
 
 	@UiHandler("closeButton")
@@ -149,17 +197,17 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	@UiHandler("cancelButton")
 	public void onClickOfCancelButton(ClickEvent event)
 	{
-	checkBox1.setChecked(false);
-	checkBox2.setChecked(false);
-	checkBox3.setChecked(false);
-	checkBox4.setChecked(false);
+	checkBox1.setValue(false);
+	checkBox2.setValue(false);
+	checkBox3.setValue(false);
+	checkBox4.setValue(false);
 	descriptionTextArea.setText("");
 	
 	}
 	@UiHandler("checkBox1")
 	public void onClickOfcheckBox1(ClickEvent event)
 	{
-	if(checkBox1.isChecked()||checkBox2.isChecked()||checkBox3.isChecked()||checkBox4.isChecked())
+	if(checkBox1.getValue()||checkBox2.getValue()||checkBox3.getValue()||checkBox4.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -174,7 +222,7 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	@UiHandler("checkBox2")
 	public void onClickOfcheckBox2(ClickEvent event)
 	{
-		if(checkBox2.isChecked()||checkBox3.isChecked()||checkBox4.isChecked()||checkBox1.isChecked())
+		if(checkBox2.getValue()||checkBox3.getValue()||checkBox4.getValue()||checkBox1.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -189,7 +237,7 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	@UiHandler("checkBox3")
 	public void onClickOfcheckBox3(ClickEvent event)
 	{
-		if(checkBox3.isChecked()||checkBox4.isChecked()||checkBox2.isChecked()||checkBox1.isChecked())
+		if(checkBox3.getValue()||checkBox4.getValue()||checkBox2.getValue()||checkBox1.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -205,7 +253,7 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	@UiHandler("checkBox4")
 	public void onClickOfcheckBox4(ClickEvent event)
 	{
-		if(checkBox4.isChecked()||checkBox3.isChecked()||checkBox2.isChecked()||checkBox1.isChecked())
+		if(checkBox4.getValue()||checkBox3.getValue()||checkBox2.getValue()||checkBox1.getValue())
 		{
 			submitButtonGray.setVisible(false);
 			submitButton.setVisible(true);
@@ -221,19 +269,19 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	public void onClicksubmitButton(ClickEvent event)
 	{
 		
-		if(checkBox1.isChecked())
+		if(checkBox1.getValue())
 		{
 			formatting1="missing-concept";
 		}
-		if(checkBox2.isChecked())
+		if(checkBox2.getValue())
 		{
 			formatting2="not-loading";
 		}
-		if(checkBox3.isChecked())
+		if(checkBox3.getValue())
 		{
 			formatting3="inappropriate";
 		}
-		if(checkBox4.isChecked())
+		if(checkBox4.getValue())
 		{
 		
 			formatting4="other";
@@ -244,26 +292,20 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		}
 		
 		if(formateSize>0){	
-			playerRpcService.deleteContentReport(restEndPoint, session, gooruOid, new AsyncCallback<String>() {
+			playerRpcService.deleteContentReport(restEndPoint, session, gooruOid, new SimpleAsyncCallback<String>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
+				@Override
+				public void onSuccess(String result) {
+					if(result==null){
+					resourcePlayerPresenter.createContentReportData(restEndPoint,session,assocGooruOid,"content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText());
+					
+					}
+				}
+				
+			});
+			if(!descriptionTextArea.getText().equals("")){
+				resourcePlayerPresenter.updateReport(restEndPoint,session,gooruOid,descriptionTextArea.getText());
 			}
-
-			@Override
-			public void onSuccess(String result) {
-				if(result==null){
-				resourcePlayerPresenter.createContentReportData(restEndPoint,session,assocGooruOid,"content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText());
-				
-				}
-				}
-				
-		});
-				
-		
-		if(!descriptionTextArea.getText().equals("")){
-			resourcePlayerPresenter.updateReport(restEndPoint,session,gooruOid,descriptionTextArea.getText());
-		}
 	}
 	getThankYouPopUp();
 	}
@@ -271,9 +313,6 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	public void getThankYouPopUp()
 	{
 	this.hide();
-	//ThankYouToolTip thankYouToolTip=new ThankYouToolTip();
-	//thankYouToolTip.setPopupPosition((Window.getClientWidth()-400)/2,(Window.getClientHeight()-165)/2+Window.getScrollTop());
-	//thankYouToolTip.show();
 	resourceflagButton.removeStyleName(QuestionResourceImageBundle.IMAGEBUNDLEINSTANCE.questionResourcesStyleImages().flagImageResource());
 	resourceflagButton.setStyleName(QuestionResourceImageBundle.IMAGEBUNDLEINSTANCE.questionResourcesStyleImages().flagImageOrange());
 	submitButtonGray.setVisible(true);

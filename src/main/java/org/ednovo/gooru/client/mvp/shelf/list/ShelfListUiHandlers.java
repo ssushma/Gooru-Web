@@ -29,13 +29,18 @@ import java.util.HashMap;
 import org.ednovo.gooru.client.event.RegisterTabDndHandler;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionHandler;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCollectionHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderHandler;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEventForSearchInAddResourceHandler;
+
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderHandler;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfListItemsEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleHandler;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionHandler;
@@ -59,7 +64,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.UserInfoMsgShelfHandler;
  * @author Search Team
  *
  */
-public interface ShelfListUiHandlers extends BaseUiHandlers, CopyCollectionHandler , CreateCollectionItemHandler, CreateCollectionItemInFoldersHandler, CreateCollectionAndItemHandler, RequestShelfHandler, RegisterTabDndHandler, RefreshCollectionInShelfListHandler, RefreshLevelFolderInShelfListHandler, InsertFolderInShelfViewEventHandler, DeleteFolderInShelfViewEventHandler, DisableDraggableEventHandler, RequestShelfCollectionHandler, RefreshCollectionItemInShelfListHandler,RefreshUserShelfCollectionsEventHandler,RequestShelfOpenClickHandler,UserInfoMsgShelfHandler,ResourceDragOverShelfHandler,CopyDraggedCollectionHandler, RefreshFolderItemHandler, ChangeShelfPanelActiveStyleHandler, UpdateShelfFolderNameHandler,RemoveMovedCollectionFolderHandler,DragOverOpenFolderHandler,InsertMovedCollectionHandler,SetCollectionMovedStyleHandler,SetFolderCollectionStyleHandler,OpenParentFolderHandler{
+public interface ShelfListUiHandlers extends BaseUiHandlers, CopyCollectionHandler , CreateCollectionItemHandler, CreateCollectionItemInFoldersHandler, CreateCollectionAndItemHandler, RequestShelfHandler, RegisterTabDndHandler, RefreshCollectionInShelfListHandler, RefreshLevelFolderInShelfListHandler, InsertFolderInShelfViewEventHandler, DeleteFolderInShelfViewEventHandler, DisableDraggableEventHandler, RequestShelfCollectionHandler, RefreshCollectionItemInShelfListHandler,RefreshUserShelfCollectionsEventHandler,RequestShelfOpenClickHandler,UserInfoMsgShelfHandler,ResourceDragOverShelfHandler,CopyDraggedCollectionHandler, RefreshFolderItemHandler, ChangeShelfPanelActiveStyleHandler, UpdateShelfFolderNameHandler,RemoveMovedCollectionFolderHandler,DragOverOpenFolderHandler,InsertMovedCollectionHandler,SetCollectionMovedStyleHandler,SetFolderCollectionStyleHandler,OpenParentFolderHandler,UpdateShelfFolderMetaDataHandler,ActivateCollectionStyleHandler,RefreshFolderItemEventForSearchInAddResourceHandler,ReorderShelfListItemsEventHandler{
 	
 	/**
 	 * Get create collection page view

@@ -18,9 +18,10 @@
 		
 			
 			<g:Label styleName="{res.css.pencilEditImage}" ui:field="pencilEditNarationLbl"/>
+			<g:Label styleName="{res.css.charLimit}" ui:field="lblCharLimit"></g:Label>
 			<g:FlowPanel ui:field="editFloPanel" styleName="{res.css.editPanel}">
 				<g:FlowPanel ui:field="narationFloPanel" styleName="resourceNarrationContainer">
-					 <g:RichTextArea styleName="{res.css.resourceNarrationEdit}"  ui:field="narrationTxtArea"/> 
+					 <g:TextArea styleName="{res.css.resourceNarrationEdit}"  ui:field="narrationTxtArea"/> 
 					<!-- <tinyMce:TinyMCE ui:field="narrationTxtArea"></tinyMce:TinyMCE> -->
 					<!-- <g:Label styleName="{res.css.pencilEditImage}" ui:field="pencilEditNaration"/> -->
 					<g:Label styleName="{res.css.narrationAlertMessage}" ui:field="narrationAlertMessageLbl" />
@@ -60,27 +61,33 @@
 						</g:FlowPanel>
 						<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="endSecondsText"></g:HTMLPanel>
 					</g:FlowPanel>
+					
 				</g:FlowPanel>
-				
+				<g:Label ui:field="errorMsgLabel" styleName="{res.css.errorMsgLabel}"></g:Label>
 				
 					<!-- end video time -->
 				<!-- for pdf -->
 				<g:FlowPanel ui:field="editPdfFlowPanel"  styleName="{res.css.outerdivContainer}">
 				    <g:FlowPanel styleName="{res.css.pdfImageContainer}"></g:FlowPanel>
 			<g:Label styleName="{res.css.startStopTimeDisplayText}" ui:field="editSartPageText"></g:Label>
-			<g:FlowPanel styleName="{res.css.editTimeContainer}">
+			<g:FlowPanel styleName="{res.css.editpdfContainer}">
 					    <g:Label styleName="{res.css.fromLbl}" ui:field="StartPageLbl"/>
-					    	<g:FlowPanel styleName="{res.css.textAlignContainer}">
-					   	<g:TextBox styleName="{res.css.textBox}" ui:field="startpdfPageNumber" />
+					    <g:FlowPanel styleName="{res.css.textAlignContainer}">
+					  	 	<g:TextBox styleName="{res.css.textBox}" ui:field="startpdfPageNumber" />
+					   	</g:FlowPanel>
+					   	 <g:Label styleName="{res.css.stopPdfLbl}" ui:field="endPageLbl"/>
+					   	 <g:FlowPanel styleName="{res.css.textAlignContainer}">
+					  	 	<g:TextBox styleName="{res.css.textBox}" ui:field="stoppdfPageNumber" />
 					   	</g:FlowPanel>
 					   	<g:Label styleName="{res.css.MinuteLabel}" ui:field="updatePDFLabelText"></g:Label>
 				</g:FlowPanel>
 					
 		</g:FlowPanel>
+		 <g:Label ui:field="errorMsgLabelForPDF" styleName="{res.css.errorMsgLabel}"></g:Label>
 		</g:FlowPanel>
 		<!-- end pdf -->
 		<g:FlowPanel styleName="{res.css.panelAlignRight}">
-		 <g:Button styleName="{res.css.gEditButton}" ui:field="EditBtn"></g:Button>
+			 <g:Button styleName="{res.css.gEditButton}" ui:field="EditBtn"></g:Button>
 		 </g:FlowPanel>
 		 <g:FlowPanel styleName="{res.css.editButtonContainer}" ui:field="ResourceEditButtonContainer">
 		      <g:Label styleName="{res.css.editButtonText}" ui:field="updateResourceBtn"/>
@@ -89,6 +96,7 @@
 		      <g:Label styleName="{res.css.editButtonText}" ui:field="editStartPageLbl" />
 		    <g:Label styleName="{res.css.editButtonText}" ui:field="copyResource" />
 			<g:Label styleName="{res.css.editButtonText}"  ui:field="confirmDeleteLbl" />
+				<g:Label styleName="{res.css.editButtonText}"  ui:field="addTages" />
 			</g:FlowPanel>
 		<g:Label styleName="{res.css.updateTextStyle}" ui:field="UpdateTextMessage"/>
 		 <g:FlowPanel styleName="{res.css.actionPanel}" ui:field="actionVerPanel">

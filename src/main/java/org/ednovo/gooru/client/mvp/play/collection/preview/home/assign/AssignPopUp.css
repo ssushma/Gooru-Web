@@ -60,7 +60,7 @@
 	font-size:12px;
 	line-height:120%;
 	color:rgb(81,81,81);
-	text-align:left;
+	text-align:center;
 	padding-top: 3px;
 }
 
@@ -71,7 +71,7 @@
 	color:rgb(81,81,81);
 	text-align: center;
 	padding-top: 8px;
-	width: 445px;
+	
 }
 
 .placeHolderText{
@@ -115,7 +115,8 @@
 
 .scrollPanelContainer{
 	background-color:rgb(255,255,255);
-	width:310px;
+	/* width:310px; */
+	width:100%
 	border-color:rgb(221,221,221);
 	border-width:1px;
 	/* Firefox v1.0+ */
@@ -303,8 +304,7 @@ text-align:center;
 	text-overflow: ellipsis;
 }
 .assignHeader {
-	height: 31px;
-	padding: 10px 0px 0px 10px;
+	padding: 10px 0px 10px 10px;
 	background-color: rgb(81,81,81);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
 	background: -webkit-linear-gradient(top, #666, #515151);
@@ -345,7 +345,7 @@ text-align:center;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
 	border-style: solid;
-	height:530px;
+	height:630px;
 }
 .shareContent {
 	background-color: transparent;
@@ -383,7 +383,7 @@ text-align:center;
 	width: 99%;
 	text-align: center;
 	padding: 15px 15px 40px 10px;
-	height:220px;
+	
 }
 
 .labelTextDisable{
@@ -485,9 +485,15 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndC
 	padding: 15px;
 }
 .heightClasspagecontainer{
-	height:155px;
+/* 	height:155px; */
 	margin-right: auto;
 	display: inline-block;
+	width:100%;
+}
+.classContainer{
+	margin-right: auto;
+	display: inline-block;
+	margin-top:10px;
 }
 .contentTitle {
 	color: #fff;
@@ -661,7 +667,7 @@ button.LoginText {
 }
 .contentBorder {
 	text-align: center;
-	margin-top: 10px;
+	margin-top: -13px;
 	margin-bottom: 15px;
 	border-bottom: 1px solid rgb(221,221,221);
 }
@@ -674,7 +680,7 @@ button.LoginText {
 .inputBlockOuter {
 	width: 300px;
 	margin: 0 auto;
-	padding-top: 20px;
+	/* padding-top: 20px; */
 	padding-left: 35px;
 }
 .inputBlock {
@@ -772,7 +778,7 @@ button.LoginText {
 }
 
 .noClassPageBanner{
-	margin-left: -23px;
+	margin-left: -23spx;
 }
 
 .assignClassPageBtn {
@@ -882,6 +888,69 @@ button.LoginText {
 	float:left;
 }
 
+.gConnectButton {
+	padding:16px 16px 15px 64px;
+	color:white;
+	background: #1076BB url("images/login/g.png") left center no-repeat;
+	background: url("images/login/g.png") left center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: url("images/login/g.png") left center no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/login/g.png") left center no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/login/g.png") left center no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+	border-radius:4px;
+	border:1px solid #1076BB;
+	/* margin-bottom: 15px; */
+	cursor: pointer;
+}
+
+.gConnectButton:hover {
+	background: #1076BB url("images/login/g.png") left center no-repeat;
+}
+
+.divider {
+	border-bottom:1px solid #ddd;
+	width:100%;
+	height:1em;
+	margin:10px 0px 20px 0px;
+}
+
+.dividerText {
+	display:inline;
+	position:relative;
+	top:.5em;
+	padding:0px 10px;
+	background-color:white;
+	font-size: 12px;
+}
+
 /*End Success popup */
 
+.privacyAlignStyle{
+	margin-right: 2px;
+}
 
+.privacyContainer{
+	margin: 0px;
+	text-align: left;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: 70%;
+}
+
+.errorLabel {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(250,176,58);
+	text-align: right;
+	margin-right: -53px;
+	float: right;
+}
+
+
+.popupStyle{
+	z-index: 99999;
+	visibility: visible;
+	position: absolute;
+	top: 26px !important;
+	
+	overflow: visible;
+}

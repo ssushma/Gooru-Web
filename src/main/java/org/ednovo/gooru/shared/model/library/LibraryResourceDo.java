@@ -25,10 +25,12 @@
 package org.ednovo.gooru.shared.model.library;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -47,6 +49,9 @@ public class LibraryResourceDo implements Serializable {
 	private ResourceSourceDo resourceSource;
 	private ResourceTypeDo resourceType;
 	private ResourceFormatDo resourceFormat;
+	private ArrayList<String> publisher;
+	
+	private SearchRatingsDo ratings;
 	public LibraryResourceDo(){}
 	
 	/** 
@@ -149,4 +154,21 @@ public class LibraryResourceDo implements Serializable {
 	public void setCollectionItemId(String collectionItemId) {
 		this.collectionItemId = collectionItemId;
 	}
+
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
+	}
+
+	public ArrayList<String> getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(ArrayList<String> publisher) {
+		this.publisher = publisher;
+	}
+	
 }

@@ -33,18 +33,16 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionAndItemEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.CustomAnimation;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
-import com.google.gwt.user.client.Window;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -54,7 +52,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ShelfAddCollection extends FocusPanel implements DropBox,MessageProperties {
+public class ShelfAddCollection extends FocusPanel implements DropBox {
 
 	private ResourceDropController dropController;
 
@@ -63,6 +61,8 @@ public class ShelfAddCollection extends FocusPanel implements DropBox,MessagePro
 	private Label blueLbl;
 	
 	private FlowPanel gradientContFloPanel;
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -94,7 +94,7 @@ public class ShelfAddCollection extends FocusPanel implements DropBox,MessagePro
 		if (draggable.getType().equals(DRAG_TYPE.COLLECTION)) { 
 			MixpanelUtil.Drag_Collection();
 			new CustomAnimation(draggable).run(50);
-			this.setLabel(GL0591);
+			this.setLabel(i18n.GL0591());
 			/*RenameCustomizePopUp renameCustomizePopUp = new RenameCustomizePopUp(draggable.getDragId()){
 				@Override
 				public void closePoup() {

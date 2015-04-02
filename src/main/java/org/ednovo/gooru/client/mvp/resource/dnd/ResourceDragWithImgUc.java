@@ -79,6 +79,7 @@ public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMira
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		container.setWidgetPosition(dragImage, 226, 0);
+		container.getElement().setAttribute("style","box-sizing:content-box");
 		onDroppable(false);
 		setData(category, title);
 	}
@@ -90,6 +91,13 @@ public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMira
 	 */
 	public void setData(String category, String title) {
 		dragresourceTitle.setHTML(title);
+		dragresourceTitle.getElement().setId("htmlDragresourceTitle");
+		dragresourceTitle.getElement().setAttribute("alt",title);
+		dragresourceTitle.getElement().setAttribute("title",title);
+		container.getElement().setId("apnlContainer");
+		labelPanel.getElement().setId("fpnlLabelPanel");
+		dragResourceImage.getElement().setId("lblDragResourceImage");
+		
 		ImageUtil.renderResourceImage(dragResourceImage, category);
 	}
 

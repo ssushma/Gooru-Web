@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -40,7 +40,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class AboutViewVc extends Composite implements MessageProperties {
+public class AboutViewVc extends Composite {
 
 	private static final String CDN_END_POINT = AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint();
 
@@ -49,6 +49,8 @@ public class AboutViewVc extends Composite implements MessageProperties {
 
 	interface AboutViewUiBinder extends UiBinder<Widget, AboutViewVc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField(provided=true)
 	HomeCBundle res;
@@ -66,32 +68,68 @@ public class AboutViewVc extends Composite implements MessageProperties {
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		lblWonderfulSupporters.setText(GL0245);
-		backto.setText(GL1260);
-		ciscoImg.setTitle(GL1267);
-		ciscoImg.setAltText(GL1267);
-		gatesImg.setTitle(GL1268);
-		gatesImg.setAltText(GL1268);
-		onrImg.setTitle(GL1269);
-		onrImg.setAltText(GL1269);
-		googleImg.setTitle(GL1270);
-		googleImg.setAltText(GL1270);
-		nglcImg.setTitle(GL1271);
-		nglcImg.setAltText(GL1271);
-		pearsonImg.setTitle(GL1272);
-		pearsonImg.setAltText(GL1272);
-		hewlettImg.setTitle(GL1273);
-		hewlettImg.setAltText(GL1273);
-		scefdnImg.setTitle(GL1274);
-		scefdnImg.setAltText(GL1274);
-		fenwickImg.setTitle(GL1275);
-		fenwickImg.setAltText(GL1275);
-		ramImg.setTitle(GL1276);
-		ramImg.setAltText(GL1276);
-		nonProfitLbl.setText(GL1277);
-		about.setText(GL1242);
+		lblWonderfulSupporters.setText(i18n.GL0245());
+		lblWonderfulSupporters.getElement().setId("lblWonderfulSupporters");
+		lblWonderfulSupporters.getElement().setAttribute("alt",i18n.GL0245());
+		lblWonderfulSupporters.getElement().setAttribute("title",i18n.GL0245());
+		
+		backto.setText(i18n.GL1260());
+		backto.getElement().setAttribute("alt",i18n.GL1260());
+		backto.getElement().setAttribute("title",i18n.GL1260());
+		
+		ciscoImg.setTitle(i18n.GL1267());
+		ciscoImg.getElement().setId("imgCisco");
+		ciscoImg.setAltText(i18n.GL1267());
+
+		gatesImg.setTitle(i18n.GL1268());
+		gatesImg.setAltText(i18n.GL1268());
+		gatesImg.getElement().setId("imgGates");
+		
+		onrImg.setTitle(i18n.GL1269());
+		onrImg.setAltText(i18n.GL1269());
+		onrImg.getElement().setId("imgOnr");
+		
+		googleImg.setTitle(i18n.GL1270());
+		googleImg.setAltText(i18n.GL1270());
+		googleImg.getElement().setId("imgGoogle");
+		
+		nglcImg.setTitle(i18n.GL1271());
+		nglcImg.setAltText(i18n.GL1271());
+		nglcImg.getElement().setId("imgNglc");
+		
+		pearsonImg.setTitle(i18n.GL1272());
+		pearsonImg.setAltText(i18n.GL1272());
+		pearsonImg.getElement().setId("imgPearson");
+		
+		hewlettImg.setTitle(i18n.GL1273());
+		hewlettImg.setAltText(i18n.GL1273());
+		hewlettImg.getElement().setId("imgHewlett");
+		
+		scefdnImg.setTitle(i18n.GL1274());
+		scefdnImg.setAltText(i18n.GL1274());
+		scefdnImg.getElement().setId("imgScefdn");
+		
+		fenwickImg.setTitle(i18n.GL1275());
+		fenwickImg.setAltText(i18n.GL1275());
+		fenwickImg.getElement().setId("imgFenwick");
+		
+		ramImg.setTitle(i18n.GL1276());
+		ramImg.setAltText(i18n.GL1276());
+		ramImg.getElement().setId("imgRam");
+		
+		nonProfitLbl.setText(i18n.GL1277());
+		nonProfitLbl.getElement().setId("lblNonProfit");
+		nonProfitLbl.getElement().setAttribute("alt",i18n.GL1277());
+		nonProfitLbl.getElement().setAttribute("title",i18n.GL1277());
+		
+		about.setText(i18n.GL1242());
+		about.getElement().setAttribute("alt",i18n.GL1242());
+		about.getElement().setAttribute("title",i18n.GL1242());
 		about.setHref("http://about.goorulearning.org");
-		sectionText.setText(" "+GL1278);
+		sectionText.setText(" "+i18n.GL1278());
+		sectionText.getElement().setId("lblSection");
+		sectionText.getElement().setAttribute("alt",i18n.GL1278());
+		sectionText.getElement().setAttribute("title",i18n.GL1278());
 		//
 		backto.getElement().setId("lnkBackTo");
 		about.getElement().setId("lnkAbout");

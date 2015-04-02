@@ -55,7 +55,14 @@ public class ProfilePageCollectionMetaData extends Composite {
 
 	public void setData(CollectionItemDo collectionItemDo) {
 		folderTitle.setText(collectionItemDo.getCollection().getTitle());
+		folderTitle.getElement().setId("lblFolderTitle");
+		folderTitle.getElement().setAttribute("alt",collectionItemDo.getCollection().getTitle());
+		folderTitle.getElement().setAttribute("title",collectionItemDo.getCollection().getTitle());
+		
 		folderDescription.setText(collectionItemDo.getCollection().getGoals());
+		folderDescription.getElement().setId("lblFolderDescription");
+		folderDescription.getElement().setAttribute("alt",collectionItemDo.getCollection().getGoals());
+		folderDescription.getElement().setAttribute("title",collectionItemDo.getCollection().getGoals());
 	}
 
 }

@@ -24,9 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 /**
@@ -69,7 +71,25 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 			String teacherTip);
 
 	void getCollectionTeacherTipInfo(String collectionId);*/
-	
-	
 
+	void deleteCourseOrStandard(String collectionId, String courseCode);
+
+	void getAutoSuggestedStandardsList(SearchDo<CodeDo> standardSearchDo);
+	
+	void getAutoSuggestedCenturyList(SearchDo<StandardFo> centurySearchDo);
+
+	void getAddStandards();
+
+	void setUpdatedStandards();
+	
+	void setUpdatedCentury();
+	
+	void getAddCentury();
+	
+	void closeCenturyPopup();
+
+	void closeStandardsPopup();
+
+	void updateCentury(String gooruOid, String action,Map<Long, String> selectedValues);
+	
 }

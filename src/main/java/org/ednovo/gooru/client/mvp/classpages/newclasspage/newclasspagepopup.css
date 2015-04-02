@@ -132,8 +132,8 @@
 	text-align: center;
 	width: 100%;
 	margin: auto;
-	margin-top: 13px;
-	margin-bottom: 24px;
+	/* margin-top: 13px;
+	margin-bottom: 24px; */
 	float: left;
 	font-style: italic;
 	color:#999;

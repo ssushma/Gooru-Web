@@ -52,15 +52,6 @@
 	width: 700px;
 }
 
-.settingInfoExpanderArrow {
-	background: url(images/settings/setting-info-expander.png);
-	float: right;
-	width: 10px;
-	height: 16px;
-	cursor: pointer;
-	margin: 20px 0px 0px 0px;
-}
-
 .settingInfoMimiusArrow {
 	background: url(images/settings/setting-info-minimus.png);
 	width: 16px;
@@ -399,12 +390,10 @@ input.styled {
 }
 
 .settingWrapper {
-	/* background: url(images/settings/gray_noise_25.png); */
 	font-family: Arial, sans-serif;
 	color: #333;
 	font-size: 12px;
 	width: 1110px;
-	/* height: 1020px; */
 	margin: 0 auto;
 }
 
@@ -484,7 +473,6 @@ input.styled {
 	border: 0;
 	float: right;
 	width: 322px;
-	height: 30px;
 	padding: 15px 0px 0px 0px;
 	vertical-align: middle;
 	line-height: 30px;
@@ -688,6 +676,8 @@ input.styled {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: rgb(81, 81, 81);
+	float: left;
+	margin-top: 8px;
 }
 
 .clear {
@@ -695,7 +685,8 @@ input.styled {
 }
 
 .publicProfileOnButtonContent {
-	margin: 10px 0px 30px 0px;
+	margin: 0px 0px 0px 9px;
+	float: left;
 }
 
 .publicProfileOnButtonContent button {
@@ -898,7 +889,8 @@ input.styled {
 
 .publicProfileSaveButtonContent {
 	float: right;
-	margin-bottom: 5px;
+	position: absolute;
+	right: 0;
 }
 
 .publicProfileSeePageButtonBg:hover {
@@ -1029,6 +1021,7 @@ input.styled {
 }
 
 .uploadProfileImageButton {
+	box-sizing:content-box;
 	display: none;
 	position: relative;
 	text-align: center;
@@ -1061,6 +1054,7 @@ input.styled {
 	float: left;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC',
 		endColorstr='#1076BB');
+	
 }
 
 .uploadProfileImageButton:hover {
@@ -1362,6 +1356,53 @@ input.styled {
 }
 .standardsCheckBox{
 	float: left;
-	width: 285px;
+	width: 350px;
 	margin: 2px 14px;
+}
+.standardsCheckBox label, .substandardsCheckBox label{
+	font-weight: normal;
+}
+
+.substandardsCheckBox
+{
+	float: left;
+	width: 350px;
+	margin: 2px 28px;
+}
+.adminStyle{
+	float: left;
+	margin-top: 32px;
+	padding: 7px 46px !important;
+	border-radius: 1px !important;
+	width:245px;
+}
+
+.div1, .div2, .div3{
+	float: left;
+}
+
+.driveImage{
+	width: 50px;
+	height: auto;
+}
+.div1, .div2{
+	width: 20%;
+	text-align: center;
+}
+.div1{
+	margin: 10px auto;
+}
+
+.buttonConnect{
+	width: 135px;
+	margin-bottom: 12px;
+}
+.lblHeading{
+	font-size: 24px;
+	font-weight: bold;
+	padding-bottom: 6px;
+}
+.cssubStadard
+{
+	
 }

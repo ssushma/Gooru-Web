@@ -4,9 +4,9 @@
 }
 
 .userInput .popupContent input[type="text"] {
-    width: 406px;
     margin:0px;
     margin-bottom:5px;
+	width:100%;
 }
 
 
@@ -77,6 +77,11 @@ p {
 
 .popupContent .header {
 	font-size:16px;
+    margin-bottom:10px;
+    word-wrap: break-word;
+}
+.popupContent .headerppp {
+	font-size:12px;
     margin-bottom:10px;
 }
 
@@ -252,10 +257,11 @@ p {
     font-size: 12px;
     margin:10px 3px 0px 3px;
     background-color:#f9f9f9;
+    box-sizing:content-box;
 }
 .popupMain {
 	background-color:white;
-	width: 450px;
+	/* width: 450px; */
 	/* margin:50px auto; */
 	padding: 0px 0px 0 3px;
 }
@@ -277,4 +283,9 @@ p {
 	position: absolute;
 	z-index: 5;
 	margin-left: 31%;
+}
+.deleteTextLable{
+	text-align: left;
+	margin-left: 53px;
+	margin-bottom: -6px;
 }

@@ -5,6 +5,8 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle"
 		field="res" />
+	<ui:style field="unitStyle" src="editclasspage.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:FlowPanel ui:field="mainFlowPanel">
 		<g:HTMLPanel styleName="{res.css.newMockLeftAlignController}">
 			<g:FocusPanel styleName="{res.css.myCollectionShareStudentContainer}"
@@ -34,7 +36,10 @@
 							<g:Button ui:field="btnClasspageCancel"
 								styleName="secondary {res.css.classpageTitleCancel}" />
 						</g:HTMLPanel>
-
+						<g:HTMLPanel styleName="{res.css.classcodeContainer}">
+							<g:TextBox styleName="{res.css.classcodeStyles}" ui:field="classCodeTextBox"/>
+							<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
+						</g:HTMLPanel>
 						<g:FlowPanel styleName="{res.css.titleAlertContainer}">
 							<g:Label styleName="{res.css.titleAlertMessage}"
 								ui:field="titleAlertMessageLbl" />
@@ -42,57 +47,120 @@
 					</g:FlowPanel>
 				</g:HTMLPanel>
 			</g:FocusPanel>
-			<!-- <g:HTMLPanel styleName="{res.css.classpageClasscode}"> <g:HTMLPanel 
-				styleName="{res.css.classpageCodeDesc}"> <g:HTML styleName="{res.css.classpageCodeShare}" 
-				ui:field="htmlShareText"></g:HTML> <g:HTMLPanel styleName="{res.css.classpageCodeShareInput}"> 
-				<g:TextBox styleName="{res.css.classpageShareCodeInput}" ui:field="txtClasspageCodeShare" 
-				/> </g:HTMLPanel> <g:Label ui:field="lblCodeHelp" styleName="{res.css.classpageCodeHelp}"></g:Label> 
-				<g:HTMLPanel styleName="{res.css.codePopupContainer}" ui:field="panelCode"> 
-				<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel> <g:HTMLPanel 
-				styleName="{res.css.arrowBorder}"></g:HTMLPanel> <g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel> 
-				<g:HTMLPanel styleName="{res.css.classpageCodeInnerPopup}"> <g:Label styleName="{res.css.classpageCodePopupTitle}" 
-				ui:field="lblPopupTitle" /> <g:HTML ui:field="htmlPopupTitleDesc" /> </g:HTMLPanel> 
-				</g:HTMLPanel> <g:Label styleName="{res.css.classpageCodeShareOr}" ui:field="lblOr"></g:Label> 
-				<g:Label styleName="{res.css.classpageCodeShare}" ui:field="lblAWebLink"></g:Label> 
-				<g:HTMLPanel styleName="{res.css.classpageCodeShareInput}"> <g:TextBox styleName="{res.css.classpageShareLinkInput}" 
-				ui:field="txtClasspageLinkShare" /> </g:HTMLPanel> <g:Label ui:field="lblWebHelp" 
-				styleName="{res.css.classpageCodeHelp}"></g:Label> <g:HTMLPanel styleName="{res.css.webLinkPopupContainer}" 
-				ui:field="panelWebLink"> <g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel> 
-				<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel> <g:HTMLPanel 
-				styleName="{res.css.arrow}"></g:HTMLPanel> <g:HTMLPanel styleName="{res.css.classpageCodeInnerPopup}"> 
-				<g:Label styleName="{res.css.classpageCodePopupTitle}" ui:field="lblWebLink"></g:Label> 
-				<g:HTML ui:field="htmlWebLinkTitleDesc"></g:HTML> </g:HTMLPanel> </g:HTMLPanel> 
-				</g:HTMLPanel> </g:HTMLPanel> -->
+			
 			<g:HTMLPanel ui:field="mainContainer">
 			<g:HTMLPanel styleName="{res.css.teachTab}">
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
+				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 			</g:HTMLPanel>
-
-			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
-				<g:HTMLPanel>
-					<g:Button ui:field="btnNewAssignment" text=""
-						styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
+			<g:HTMLPanel styleName="{res.css.containerProgress}" ui:field="panelProgressContainer">
+			<g:Label styleName="{res.css.assignementOrderHeaderText}" text="{i18n.GL2006}" title="{i18n.GL2006}"></g:Label>
+			<g:HTMLPanel ui:field="headerAssignments" styleName="{res.css.assignementOrderHeader}"></g:HTMLPanel>
+			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
+			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
+			    </uc:HTMLEventPanel>
+				<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
+			
+				    <g:HTMLPanel styleName="{res.css.path}">
+					    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
+					    <g:Label styleName="{res.css.line}"></g:Label> -->
+						<g:HTMLPanel styleName="{res.css.assignmentPath}" ui:field="panelAssignmentProgress" />
+					</g:HTMLPanel>
 				</g:HTMLPanel>
+				<uc:HTMLEventPanel styleName="{res.css.previous}" ui:field="panelNext">
+				    <g:Label styleName="{res.css.rightArrow}" ui:field="lblNext"></g:Label>
+				</uc:HTMLEventPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">						
+				<g:HTMLPanel styleName="{res.css.btnContainer}" ui:field="getstarteddiv">
+				<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
+					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
+									<g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
+				</g:HTMLPanel>
+
+				<g:FlowPanel ui:field="dropDownListDiv" styleName="{res.css.dropdowncontainer}">
+					<g:Label styleName="{res.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder"></g:Label>
+					<g:FlowPanel styleName="{res.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">
+					</g:FlowPanel>
+				</g:FlowPanel>
+				<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel">
+				</g:FlowPanel>
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->
+						<g:Label  styleName="{res.css.noAssignmentMsg}" ui:field="lblAssignHeader"></g:Label>
 					<g:HTMLPanel styleName="{res.css.classpageHover}">
-						<g:Label styleName="{res.css.classpageHoverTitle}"
-							ui:field="noAssignmentsMessageLblTwo">
-							</g:Label>
+						<!-- <g:Label styleName="{res.css.classpageHoverTitle}"
+							ui:field="noAssignmentsMessageLblTwo"> 
+							</g:Label>-->
+							<!-- New layout for empty classpage.  -->
+							  <g:HTMLPanel styleName="{res.css.contentBox}">
+							      <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section2Div}">
+<!-- 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblOne"></g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel> -->
+							      <g:HTMLPanel styleName="{res.css.desHtml}">
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblAssignText"/>
+							          <g:Label styleName="{res.css.desc}" ui:field="lblAssignDes"/>
+							      </g:HTMLPanel>
+							      
+							      <g:HTMLPanel styleName="{res.css.imgStyle}">
+							          <g:Button styleName="plusButton {res.css.addAssignmentStyle}" ui:field="btnAssignCollection"></g:Button>
+							          <g:Label styleName="{res.css.assignText}" ui:field="lblStartAssign"/>
+							      </g:HTMLPanel>
+							    </g:HTMLPanel>
+							   
+							    <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section3Div}">
+							      <!-- <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblTwo"></g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel> -->
+							      
+							      <g:HTMLPanel styleName="{res.css.desHtml}">
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblSequenceText"/>
+							          <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
+							      </g:HTMLPanel>
+							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/Classpage/assignments/sequence.png" width="692" height="141"></g:Image></g:HTMLPanel>
+							    </g:HTMLPanel>
+							    
+							     <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section3Div}">
+<!-- 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblOne"></g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel> -->
+							      <g:HTMLPanel styleName="{res.css.desHtml}">
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblAssignDetails"></g:Label>
+							          <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
+							      </g:HTMLPanel>
+							      
+							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/Classpage/assignments/date_directions.png" width="626" height="212"></g:Image></g:HTMLPanel>
+							    </g:HTMLPanel>
+							  </g:HTMLPanel>
 					</g:HTMLPanel>
+					
+					<g:HTMLPanel styleName="{res.css.btnContainerStyle}">
+			        	<g:Label  styleName="{res.css.labelCenterAlign}" ui:field="lblReadytoStart"></g:Label>
+					    <g:Button styleName="plusButton {res.css.addAssignmentStyle}" ui:field="btnReadytoStart"/>
+				    </g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel ui:field="assignmentsTabContainerPanel">
+			<g:HTMLPanel styleName="{res.css.assignmentsContainerHead}" ui:field="assignmentsTabContainerPanel">
 				<g:FlowPanel ui:field="assignmentsContainerPanel"
 					styleName="{res.css.assignmentsContainer}">
 					<!-- This container for Assignments -->
 
 				</g:FlowPanel>
-				<g:FlowPanel styleName="{res.css.searchResultContainer}"
-					ui:field="paginationFocPanel">
+				
+					<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel1">
 				</g:FlowPanel>
+				
 				<g:HTMLPanel styleName="{res.css.classpageTopLine}">
 					<g:Button ui:field="btnDeleteClasspage"
 						styleName="secondary {res.css.classpageDeleteButton}"></g:Button>
@@ -109,8 +177,18 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="frameDiv">
 		<g:Button styleName="{res.css.backArrowButton} backArrowButton" ui:field="backArrowButton"></g:Button>
-		<g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorProgress"></g:Button>
+		<!-- <g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorProgress"></g:Button>
+		<g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorSummary"></g:Button> -->
+		<g:HTMLPanel ui:field="hideToggleButtons" styleName="{unitStyle.toggleContainer} ">
+			<label class="{unitStyle.switchContainer} switchGreen">
+				<g:SimpleCheckBox styleName="switchInput1" ui:field="changeProgressSummary" checked="true"></g:SimpleCheckBox>
+				<g:InlineLabel styleName="switchLabel1" ui:field="monitorProgress">Progress</g:InlineLabel>
+				<g:InlineLabel styleName="switchLabel1" ui:field="monitorSummary">Summary</g:InlineLabel>
+				<g:InlineLabel styleName="switchHandle1" ui:field="sequenceNumberLabel"></g:InlineLabel>
+			</label> 
+		</g:HTMLPanel>
 		<g:Frame styleName="{res.css.iframeBorder}" ui:field="frameUrl" width="900" height="500"></g:Frame>
+		<g:HTMLPanel ui:field="frameContainer"></g:HTMLPanel>
 		</g:HTMLPanel>
 		</g:HTMLPanel>
 		<sg:FooterUc />

@@ -54,7 +54,6 @@ public interface LibraryStyleBundle extends CssResource {
 	String blueLink();
 
 	String bannerSpanBlock();
-	String partnerLogo();
 	String resourcesInsideSubStyle();
 	String collectionInfoSubStyle();
 	String collectionViewerSubStyle();
@@ -69,5 +68,36 @@ public interface LibraryStyleBundle extends CssResource {
 	String popularStarImage();
 	String math();
 	String partnerMenuPadding();
+	String lessonTitleProfile();
+	String collectionSmall();
+	String conceptTitleLeft();
 	
-}
+	String rusdPartnerLogo();
+	String sausdPartnerLogo();
+	String gradeOption();
+	
+	String collectionQuizTab();
+	String collectionQuizTabActive();
+	
+	String lpsPartnerLogo();
+	String lpsHeader();
+	
+	String coreDistrictLogo();
+	String coreDistrictHeader();
+	String districtSpecificPartnersMainCore();
+	String districtSpecificPartnersInnerMainCore();
+	String districtSpecificPartnerLogoCore();
+	String districtLibraryHeaderTextCore();
+	String districtLibrarySubHeaderTextCore();
+	
+	String districtSpecificPartnersMainlps();
+	String districtSpecificPartnersInnerMainlps();
+	String districtSpecificPartnerLogolps();
+	String districtLibraryHeaderTextlps();
+	String districtLibrarySubHeaderTextlps();
+	
+	String topicTitleStyle();
+	String topicBlockStyle();
+	
+	String listViewBtnStyle();
+	}

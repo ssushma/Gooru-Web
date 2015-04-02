@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
@@ -35,9 +36,9 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshLevelFolderInShelfListEven
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -53,17 +54,20 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHandler,MouseOverHandler,DropBox,MessageProperties {
+public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHandler,MouseOverHandler,DropBox {
 	private static ThirdLevelFolderResourceDataUiBinder uiBinder = GWT.create(ThirdLevelFolderResourceDataUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	interface ThirdLevelFolderResourceDataUiBinder extends UiBinder<Widget, ThirdLevelFolderResourceData> {
 	}
 	
@@ -88,6 +92,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 	@UiField
 	VerticalPanel contentVerPanel;
 	
+	@UiField Label blueLbl,greyLbl;
+	
 	@UiField(provided = true)
 	ShelfListCBundle res;
 	 
@@ -98,8 +104,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 	private static final String FOLDER_LEVEL = "2";
 	
 	private ResourceDropController dropController;
-	private static final String EDIT_THIS_COLLECTION = GL0991;
-	private static final String ADD_TO_THIS_COLLECTION =GL0990;
+	private static final String EDIT_THIS_COLLECTION = i18n.GL0991();
+	private static final String ADD_TO_THIS_COLLECTION =i18n.GL0990();
 	
 	private static ThirdLevelFolderResourceData thirdLevelFolderResourceData;
 	
@@ -109,9 +115,21 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 		setWidget(uiBinder.createAndBindUi(this));
 //		this.setCollectionItemDo(collectionItem);
 		this.collectionItemDo = collectionItem;
-		glassContainer.setGlassText(GL0991);
+		glassContainer.setGlassText(i18n.GL0991());
+		glassContainer.getElement().setId("GlassContainer");
+		glassContainer.getElement().setAttribute("alt", i18n.GL0991());
+		glassContainer.getElement().setAttribute("title", i18n.GL0991());
 		glassContainer.setGlassVisible(false);
 		this.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourcePanel());
+		thirdLevelFoldersData.getElement().setId("fpnlThirdLevelFoldersData");
+		L3DataTitleFocPanel.getElement().setId("focuspnlL3DataTitleFocPanel");
+		collectionIcon.getElement().setId("fpnlCollectionIcon");
+		blueLbl.getElement().setId("lblBlueLbl");
+		greyLbl.getElement().setId("lblGreyLbl");
+		folderL3DataIcon.getElement().setId("fpnlFolderL3DataIcon");
+		folderL3DataDisPanel.getElement().setId("discpnlFolderL3DataDisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 		thirdLevelFoldersData.getElement().getStyle().setFloat(Float.LEFT);
 		L3DataTitleFocPanel.addClickHandler(this);
 		wrapperFocPanel.addMouseOverHandler(this);
@@ -141,9 +159,13 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 			L3DataTitleFocPanel.getElement().setAttribute("collectionType", collectionItem.getResource().getResourceType().getName());
 		//	folderL3TitleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 30));
 			folderL3TitleLbl.setHTML(StringUtil.truncateText(collectionItem.getResource().getTitle(), 30));
+			folderL3TitleLbl.getElement().setAttribute("alt", collectionItem.getResource().getTitle());
+			folderL3TitleLbl.getElement().setAttribute("title", collectionItem.getResource().getTitle());
+
 			folderL3TitleLbl.getElement().setId(collectionItem.getResource().getGooruOid());
 		}else {
 			folderL3TitleLbl.setText("--");
+			folderL3TitleLbl.getElement().setId(collectionItem.getResource().getGooruOid());
 		}
 	}
 	
@@ -156,15 +178,12 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 			AppClientFactory.fireEvent(new RefreshLevelFolderInShelfListEvent(collectionItemDo.getResource().getGooruOid(), RefreshType.UPDATE,FOLDER_LEVEL,collectionItemDo.getItemSequence(),true));
 			if(widgetCount==0)
 			{
-				AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new AsyncCallback<CollectionDo>() {
+				AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo result) {
 						setL3FoldersData(result);
 					}
 					
-					@Override
-					public void onFailure(Throwable caught) {
-					}
 				});
 			}
 			setOpen();
@@ -180,15 +199,12 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 		int widgetCount = contentVerPanel.getWidgetCount();
 		if(widgetCount==0)
 		{
-			AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new AsyncCallback<CollectionDo>() {
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					setL3FoldersData(result);
 				}
 				
-				@Override
-				public void onFailure(Throwable caught) {
-				}
 			});
 		}
 		setOpen();
@@ -202,7 +218,7 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 		} 
 		else {
 			 
-			htmlPanel = new HTMLPanel(GL0854);
+			htmlPanel = new HTMLPanel(i18n.GL0854());
 			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 			htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 			htmlPanel.getElement().getStyle().setColor("#999999");
@@ -250,6 +266,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 	public void setOpen() {
 		if (thirdLevelFolderResourceData == null || !thirdLevelFolderResourceData.equals(this)) {
 			glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 			if (thirdLevelFolderResourceData != null) {
 				thirdLevelFolderResourceData.setOpen(false);
 				thirdLevelFolderResourceData.L3DataTitleFocPanel.setStyleName(res.css().shelfCollectionTitle()); 
@@ -288,6 +306,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 				if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("scollection"))
 				{
 					glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 					glassContainer.setGlassVisible(true);
 				}
 			}
@@ -313,6 +333,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 	@Override
 	public void onDragOver(Draggable draggable) {
 		glassContainer.setGlassText(ADD_TO_THIS_COLLECTION);
+		glassContainer.getElement().setAttribute("alt", ADD_TO_THIS_COLLECTION);
+		glassContainer.getElement().setAttribute("title", ADD_TO_THIS_COLLECTION);
 		glassContainer.setGlassVisible(true);
 		if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
 			draggable.getDraggableMirageUc().onDroppable(true);

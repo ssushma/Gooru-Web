@@ -35,26 +35,41 @@ import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
+import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchEvent;
+import org.ednovo.gooru.client.mvp.search.event.FilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterUiEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
+import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
+import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -65,15 +80,19 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <T>
  *            type of ResourceSearchResultDo
  */
-public abstract class AbstractSearchView<T extends ResourceSearchResultDo> extends BaseViewWithHandlers<SearchUiHandlers> implements IsSearchView<T>, ClickHandler,MessageProperties {
+public abstract class AbstractSearchView<T extends ResourceSearchResultDo> extends BaseViewWithHandlers<SearchUiHandlers> implements IsSearchView<T>, ClickHandler {
 
 	private static AbstractSearchViewUiBinder uiBinder = GWT.create(AbstractSearchViewUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AbstractSearchViewUiBinder extends UiBinder<Widget, AbstractSearchView<?>> {
 	}
 
 	@UiField(provided = true)
 	SearchFilterVc searchFilterVc;
+	
+	SearchFilterVc searchFilterVc1;
 
 	@UiField(provided = true)
 	AppMirageDragContainer searchResultPanel;
@@ -84,11 +103,32 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@UiField
 	ScrollPanel searchFilterPanel;
 	
+	@UiField
+	Style style;
+	
+	@UiField
+	HTML queriedTextHtml;
+	
+	@UiField
+	FlowPanel standardsConatiner;
+	
+	@UiField HTMLPanel spellerrorqueriedTextHtml,correctSpellHTML;
+	
+	@UiField
+	Button resourceSearchBtn, collectionSearchBtn;
+	
+	@UiField Label wrongQueryText;
+	
+	@UiField Label correctQueryText;
+		
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author,reviewTag;
+
+	
 	protected ResourceDragController dragController;
 
-	private static final String PREVIOUS = GL1462.toUpperCase();
+	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
 
-	private static final String NEXT = GL1463.toUpperCase();
+	private static final String NEXT = i18n.GL1463().toUpperCase();
 
 	protected final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
@@ -96,6 +136,17 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 
 	public boolean refreshedShelfCollections;
 	String rootWebUrl = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+	
+	private HandlerRegistration handlerRegistration=null;
+	private HandlerRegistration handlerForCentury=null;
+	public interface Style extends CssResource {
+
+		String resourceBtnActive();
+		String collectionBtnActive();
+		String secondaryResourceSearchBtn();
+		String secondaryCollectionSearchBtn();
+	}
+	
 	/**
 	 * Assign new instance for {@link ResourceDragController}, {@link AppMirageDragContainer}, {@link SearchFilterVc}
 	 * 
@@ -106,18 +157,104 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		dragController = new ResourceDragController(RootPanel.get());
 		searchResultPanel = new AppMirageDragContainer(dragController);
 		searchFilterVc = new SearchFilterVc(resourceSearch);
+		searchFilterVc1 = new SearchFilterVc(resourceSearch);
 		setWidget(uiBinder.createAndBindUi(this));
+		
+		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
+		
+		resourceSearchBtn.getElement().setId("btnResource");
+		collectionSearchBtn.getElement().setId("btnCollection");
+		
+		resourceSearchBtn.setText(i18n.GL0174());
+		collectionSearchBtn.setText(i18n.GL0175());
+		
 		searchFilterPanel.getElement().setId("searchFilterPanelDiv");
+		searchFilterVc.getElement().setId("searchFilterVcsearchFilterVc");
+		
+		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
+		searchResultPanel.getElement().setId("appMirageDragContainer");
+		
+		correctSpellHTML.setVisible(false);
+		spellerrorqueriedTextHtml.setVisible(false);
+		
+		
+		standardsConatiner.clear();
+		showCategoryFilter();
+		showSubjectsFilter();
+		showGradesFilter();
+		showStandardsFilter();
+		showPublisherFilter();
+		showAggregatorFilter();
+		showOERFilter();
+		showMobileFriendlyFilter();
+		showAccessModeFilter();
+		showAuthorFilter();
+		showRatingsFilter();
+		showReviewFilter();
+	
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null || publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+			standardsConatiner.setVisible(false);
+		}else{
+			standardsConatiner.setVisible(true);
+		}
+		
+		AppClientFactory.fireEvent(new SearchFilterUiEvent(searchFilterVc1,resourceSearch));
+		
+		getBrowseBtn().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+			getUiHandlers().getAddStandards();
+				
+			}
+		});
+		//This is for handling click on browse 21 century
+		getCentruyBrowseBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+			}
+		});
+		
+		searchFilterVc1.browseStandards.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddStandards();
+	
+			}
+		});
+		//This is for handling click on browse 21 century
+		searchFilterVc1.browse21Century.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddCentury();
+			}
+		});
 	}
 
 	@Override
 	public void preSearch(SearchDo<T> searchDo) {
 		reset();
 		searchFilterVc.setFilter(searchDo.getFilters());
+		searchFilterVc1.setFilter(searchDo.getFilters());
 		if(!AppClientFactory.isAnonymous()) {
 			searchFilterVc.getUserStandardPrefCodeId();
+			searchFilterVc1.getUserStandardPrefCodeId();
 		}else{
 			searchFilterVc.getStandardVisiblity();
+			searchFilterVc1.getStandardVisiblity();
+		}
+		
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			resourceSearchBtn.addStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.secondaryResourceSearchBtn()); 
+			collectionSearchBtn.addStyleName(style.secondaryCollectionSearchBtn());
+		} else {
+			collectionSearchBtn.addStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.secondaryCollectionSearchBtn());
+			resourceSearchBtn.addStyleName(style.secondaryResourceSearchBtn()); 
 		}
 		}
 		
@@ -126,13 +263,123 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void postSearch(SearchDo<T> searchDo) {
 		//searchResultPanel.setVisible(false);
+		
+		int countValue = searchDo.getSearchResults().size();
+		String searchText = AppClientFactory.getPlaceManager()
+				.getRequestParameter("query");
+		
+		if (searchText == null) {
+			searchText = "";
+
+		} else {
+			if (searchText.contains("252")) {
+				searchText = searchText.replaceAll("%", " ")
+						.replaceAll("2", "").replaceAll("5", "")
+						.replaceAll("B", "");
+			}
+			searchText = searchText.trim();
+			if (searchText.length() > 50) {
+				if (countValue > 0) {
+					searchText = searchText.substring(0, 50) + "...";
+					searchText = " " + i18n.GL1468() + " <b>" + searchText
+							+ "</b>";
+				} else {
+					searchText = searchText.substring(0, 50) + "...";
+					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
+				}
+
+			} else {
+				if (countValue > 0) {
+					searchText = "" + i18n.GL1468() + " <b>" + searchText
+							+ "</b>";
+				} else {
+					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
+				}
+			}
+			queriedTextHtml.setHTML(searchText);
+			queriedTextHtml.getElement().setAttribute("alt", StringUtil.removeHtml(searchText));
+			queriedTextHtml.getElement().setAttribute("title", StringUtil.removeHtml(searchText));
+			
+		}
+		
+		if(searchDo.getSpellCheckQueryString() == null){
+			correctSpellHTML.setVisible(false);
+			spellerrorqueriedTextHtml.setVisible(false);
+			queriedTextHtml.setVisible(true);
+		}
+		else
+		{
+
+			wrongQueryText.setText(searchDo.getUserQueryString());
+			wrongQueryText.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+						AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText(),""));
+					}
+					else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+						AppClientFactory.fireEvent(new DisableSpellSearchEvent(PlaceTokens.COLLECTION_SEARCH,getSearchText(),""));
+					}
+				}
+			});
+
+			final String correctSearchTerm = searchDo.getSpellCheckQueryString();
+			String searchTextValue = i18n.GL1468() + " <b>" + correctSearchTerm + "</b>";
+			
+			queriedTextHtml.setHTML(searchTextValue);
+			queriedTextHtml.getElement().setAttribute("alt", StringUtil.removeHtml(searchTextValue));
+			queriedTextHtml.getElement().setAttribute("title", StringUtil.removeHtml(searchTextValue));
+			
+			correctQueryText.setText(searchDo.getSpellCheckQueryString());
+			correctQueryText.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					correctSpellHTML.setVisible(false);
+					spellerrorqueriedTextHtml.setVisible(false);
+					queriedTextHtml.setVisible(true);
+				}
+			});
+			
+			correctSpellHTML.setVisible(true);
+			spellerrorqueriedTextHtml.setVisible(true);
+			queriedTextHtml.setVisible(false);
+			
+			
+		}
+		
+		standardsConatiner.clear();
+
+		showCategoryFilter();
+		showSubjectsFilter();
+		showGradesFilter();
+		showStandardsFilter();
+		showPublisherFilter();
+		showAggregatorFilter();
+		showOERFilter();
+		showMobileFriendlyFilter();
+		showAccessModeFilter();
+		showAuthorFilter();
+		showRatingsFilter();
+		showReviewFilter();
+		if(!(categories!=null ||stdCode!=null || grades!=null || subjects!=null || oerTag!=null || mobileFirendlyTag!=null || ratingTag!=null|| publisher!=null || aggregator!=null || accessMode!=null || author!=null|| reviewTag!=null)){
+			standardsConatiner.setVisible(false);
+		}else{
+			standardsConatiner.setVisible(true);
+		}
+		
 		searchResultPanel.setClonnable(true);
 		
-		
+		boolean device = BrowserAgent.isDevice();
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
-				searchResultPanel.addDraggable(renderSearchResult(searchResult));
+				if (device){
+					searchResultPanel.add(renderSearchResult(searchResult));
+				}else{
+					searchResultPanel.addDraggable(renderSearchResult(searchResult));
+				}
 			}
 			if (searchDo.getTotalPages() > 1) {
 				if (searchDo.getPageNum() > 1) {
@@ -179,6 +426,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		searchResultPanel.clear();
 		paginationFocPanel.clear();
 		SHELF_COLLECTIONS.clear();
+		queriedTextHtml.setHTML("<p></p>");
+		queriedTextHtml.getElement().setAttribute("alt","<p></p>");
+		queriedTextHtml.getElement().setAttribute("title","<p></p>");
 	}
 
 	/**
@@ -193,6 +443,8 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void setSearchFilter(SearchFilterDo searchFilterDo) {
 		getSearchFilterVc().renderFilter(searchFilterDo);
+		searchFilterVc1.renderFilter(searchFilterDo);
+		AppClientFactory.getEventBus().fireEvent(new FilterEvent(searchFilterDo));
 		getUiHandlers().initiateSearch();
 	}
 
@@ -222,11 +474,19 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void setSourceSuggestions(SearchDo<String> sourceSuggestions) {
 		searchFilterVc.setSourceSuggestions(sourceSuggestions);
+		searchFilterVc1.setSourceSuggestions(sourceSuggestions);
 	}
 
 	@Override
+	public void setAggregatorSuggestions(SearchDo<String> aggregatorSuggestions) {
+		searchFilterVc.setAggregatorSuggestions(aggregatorSuggestions);
+		searchFilterVc1.setAggregatorSuggestions(aggregatorSuggestions);
+	}
+	
+	@Override
 	public void setStandardsSuggestions(SearchDo<CodeDo> standardsSuggestions) {
 		searchFilterVc.setStandardSuggestions(standardsSuggestions);
+		searchFilterVc1.setStandardSuggestions(standardsSuggestions);
 	}
 
 	@Override
@@ -268,6 +528,339 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void resetFilters(){
 		searchFilterVc.clearAllFields();
+		searchFilterVc1.clearAllFields();
+	}
+	
+	public Button getBrowseBtn(){
+		return searchFilterVc.browseStandards;
+	}
+	public Button getCentruyBrowseBtn(){
+		return searchFilterVc.browse21Century;
+	}
+	
+	public void OnStandardsClickEvent(Button standardsButtonClicked)
+	{
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedStandards();
+			}
+		});
+	}
+	public void OnCenturyClickEvent(Button centuryButtonClicked)
+	{
+		if(handlerForCentury!=null){
+			handlerForCentury.removeHandler();
+		}
+		handlerForCentury=centuryButtonClicked.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedCentury();
+			}
+		});
+	}
+	
+	public void setUpdatedStandards(String standardsCode)
+	{
+		if(!standardsCode.isEmpty())
+		{
+			searchFilterVc.addStandardFilter(standardsCode);
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+		}
+		getUiHandlers().closeStandardsPopup();
 	}
 
+	public void setUpdatedCentury(Map<Long, String> centuryValues)
+	{
+		if(centuryValues.size()>0)
+		{
+			searchFilterVc.addCenturyFilter(centuryValues);
+			AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+		}
+		getUiHandlers().closeCenturyPoup();
+	}
+	@Override
+	public String getSearchText() {
+//		return searchBarVc.getSearchText();
+		return AppClientFactory.getPlaceManager().getRequestParameter("query");
+	}
+	
+	/**
+	 * Set resource search page view
+	 * @param clickEvent instance of {@link ClickEvent}
+	 */
+	@UiHandler("resourceSearchBtn")
+	public void onResourceSearchButtonClicked(ClickEvent clickEvent) {
+		if(getSearchText()!=null || getSearchText().length()>0){
+			MixpanelUtil.Show_Resource_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText()));	
+		}
+		
+		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
+			MixpanelUtil.Show_Collection_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
+		}
+	}
+
+	/**
+	 * Set collection search page view 
+	 * @param clickEvent instance of {@link ClickEvent}
+	 */
+	@UiHandler("collectionSearchBtn")
+	public void onCollectionSearchBtnClicked(ClickEvent clickEvent) {
+		if(getSearchText()!=null || getSearchText().length()>0){
+			MixpanelUtil.Show_Collection_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,getSearchText()));
+		}
+		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
+			MixpanelUtil.Show_Collection_Search_Results();
+			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
+		}
+	}
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showSubjectsFilter() {
+		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+		if(subjects!=null){
+			String[] split = subjects.split("~~");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"subjectPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showCategoryFilter() {
+		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
+		if(categories!=null){
+			standardsConatiner.setVisible(true);
+			String[] split = categories.split(",");
+			for(int i=0; i<split.length; i++){
+				if(!split[i].equalsIgnoreCase("all"))
+				{
+					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
+					standardsConatiner.add(createTagsLabel(filterName,"categoryPanel"));
+				}
+			} 
+				
+		}
+	}
+
+	/**
+	 * Pre-Selected grades showing in search page
+	 */
+	private void showGradesFilter() {
+	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
+		if(grades!=null){
+			standardsConatiner.setVisible(true);
+			String[] gradesSplit = grades.split(",");
+			for(int i=0; i<gradesSplit.length; i++){
+				if(gradesSplit[i].equals("12gte")){
+					standardsConatiner.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
+				}
+				else if(gradesSplit[i].equalsIgnoreCase("pre-k")){
+					standardsConatiner.add(createTagsLabel(i18n.GL3070(),"gradePanel"));
+				}
+				else{
+					standardsConatiner.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
+				}
+				
+			}
+				
+		}
+	}
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showStandardsFilter() {
+	    stdCode = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
+		if(stdCode!=null){
+			standardsConatiner.setVisible(true);
+			String[] stdSplit = stdCode.split(",");
+			for(int i=0; i<stdSplit.length; i++){
+				standardsConatiner.add(createTagsLabel(stdSplit[i],"standPanel"));
+			}
+//			standardsConatiner.add(createTagsLabel(stdCode,"standPanel"));
+		}
+	}
+	/**
+	 * To show the publisher values in search page
+	 */
+	private void showPublisherFilter() {
+		publisher = AppClientFactory.getPlaceManager().getRequestParameter("flt.publisher");
+		if(publisher!=null){
+			standardsConatiner.setVisible(true);
+			String[] split = publisher.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"publisherPanel"));
+			}
+				
+		}
+	}
+	
+	/**
+	 * To show the aggregator values in search page
+	 */
+	private void showAggregatorFilter() {
+		aggregator = AppClientFactory.getPlaceManager().getRequestParameter("flt.aggregator");
+		if(aggregator!=null){
+			standardsConatiner.setVisible(true);
+			String[] split = aggregator.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"aggregatorPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * To show the Access mode values in search page
+	 */
+	private void showAccessModeFilter() {
+		accessMode = AppClientFactory.getPlaceManager().getRequestParameter("flt.cfAccessMode");
+		if(accessMode!=null){
+			standardsConatiner.setVisible(true);
+			String[] split = accessMode.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"accessPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * To show the Author values in search page
+	 */
+	private void showAuthorFilter() {
+		author = AppClientFactory.getPlaceManager().getRequestParameter("flt.owner");
+		if(author!=null){
+			standardsConatiner.setVisible(true);
+			String[] split = author.split(",");
+			for(int i=0; i<split.length; i++){
+				standardsConatiner.add(createTagsLabel(split[i],"authorPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * To show the Author values in search page
+	 */
+	private void showReviewFilter() {
+		reviewTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
+		if(reviewTag!=null){
+			standardsConatiner.setVisible(true);
+			if(reviewTag.equalsIgnoreCase("1"))
+			{
+				standardsConatiner.add(createTagsLabel("Only Resources with Reviews","onlyReviewPanel"));
+			}
+
+		}
+	}
+
+	/**
+	 * Show user searched filter 
+	 * 
+	 * @param filterValue
+	 *            search filter of the label widget which is user searched filter value
+	 * @return the label of user search filter.
+	 */
+	protected CloseLabelSetting createTagsLabel(final String filterValue, final String panelName) {
+		return new CloseLabelSetting(filterValue) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				String newFilterVal = filterValue;
+				
+				if (panelName != null && panelName.equalsIgnoreCase("categoryPanel") && !newFilterVal.equalsIgnoreCase("Audio")&& !newFilterVal.equalsIgnoreCase("Webpage")){
+					newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
+				}
+				
+				if(filterValue.contains("Grade "))
+				{
+					newFilterVal = filterValue.replaceAll("Grade ", "");
+				}
+				else if(filterValue.contains("Higher Ed"))
+				{
+					newFilterVal = filterValue.replaceAll("Higher Ed", "12gte");
+				}
+				AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
+			}
+		};
+	}
+	
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showOERFilter() {
+		oerTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isOer");
+		if(oerTag!=null){
+			standardsConatiner.setVisible(true);
+			if(oerTag.equalsIgnoreCase("1"))
+			{
+				standardsConatiner.add(createTagsLabel("OER","oerPanel"));
+			}
+
+		}
+	}
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showMobileFriendlyFilter() {
+		mobileFirendlyTag = AppClientFactory.getPlaceManager().getRequestParameter("fltNot.mediaType");
+		if(mobileFirendlyTag!=null){
+			if(mobileFirendlyTag.equalsIgnoreCase("not_ipad_friendly"))
+			{
+				standardsConatiner.setVisible(true);
+				standardsConatiner.add(createTagsLabel("Mobile Friendly","mobileFirendlyPanel"));
+			}
+
+		}
+	}
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showRatingsFilter() {
+
+		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+		if(ratingTag!=null){
+			standardsConatiner.setVisible(true);
+			if(ratingTag.equalsIgnoreCase("5,4,3,2,1,0"))
+			{
+				standardsConatiner.add(createTagsLabel("All Ratings","ratingallPanel"));
+			}
+			else 
+			{
+				String[] ratingsSplit = ratingTag.split(",");
+				for(int i=0; i<ratingsSplit.length; i++){
+					if(ratingsSplit[i].equalsIgnoreCase("0"))
+					{
+						standardsConatiner.add(createTagsLabel("No Ratings","ratingPanel"));	
+					}
+					else
+					{
+						if (ratingsSplit[i].equalsIgnoreCase("1")){
+							standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Star","ratingPanel"));
+						}else{
+							standardsConatiner.add(createTagsLabel(ratingsSplit[i]+" Stars","ratingPanel"));
+						}
+					}
+				}
+			}
+			
+
+		}
+	}
+	
+	
+	public abstract void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
+	
+	@Override
+	public Map<String, String> getSearchFilters1() {
+		return searchFilterVc1.getFilter();
+	}
 }

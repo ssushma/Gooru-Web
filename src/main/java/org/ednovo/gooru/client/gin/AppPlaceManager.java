@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -42,8 +44,19 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AppPlaceManager.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 @Singleton
 public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager {
@@ -67,12 +80,25 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	private String beforePlayerOpenSeoToken="";
 	
 	private String classpageEventId="";
+	
+	private String classpageId=null;
+	
+	private String userShelfId=null;
+	
+	private boolean isLibraryEventTriggered=false;
+	
+	private ArrayList<String> libraryList;
+	
+	private Map<String,Boolean> libraryEventMap=new HashMap<String, Boolean>();
+	
+	private String isLibraryEventId=null;
 
 	@Inject
 	public AppPlaceManager(EventBus eventBus, TokenFormatter tokenFormatter, @AppDefaultPlace String place) {
 		super(eventBus, tokenFormatter);
 		this.defaultPlaceRequest = new PlaceRequest(place);
-		this.errorPlaceRequest = new PlaceRequest(PlaceTokens.ERROR);
+		this.errorPlaceRequest = new PlaceRequest(PlaceTokens.HOME);
+		addAllLibraries();
 	}
 
 	@Override
@@ -92,9 +118,6 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	
 	@Override
 	public void revealPlace(boolean refresh, PlaceRequest place,boolean isPlayerRequest) {
-//		if (previousRequest != null && !previousRequest.equals(place)) {
-//			playerBackRequest=previousRequest;
-//		}
 		setRefreshPlace(refresh);
 		super.revealPlace(place);
 	}
@@ -117,7 +140,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 
 	@Override
 	public void revealErrorPlace(String invalidHistoryToken) {
-		revealPlace(errorPlaceRequest, false);
+		revealPlace(errorPlaceRequest, true);
 	}
 
 	@Override
@@ -152,11 +175,6 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 				placeRequest = placeRequest.with(key, params.get(key));
 			}
 		}
-		
-		/*if (onlyIfNew && placeRequest.equals(AppClientFactory.getPlaceManager().getCurrentPlaceRequest())) {
-			
-			return;
-		}*/
 		revealPlace(placeRequest);
 	}
 
@@ -271,6 +289,12 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	    		getCurrentPlaceHierarchy().set(getCurrentPlaceHierarchy().size() - 1, placeRequest);
 	    		return placeRequest;
 	    	}
+	    	if(placeRequest.getNameToken().contains(PlaceTokens.PREVIEW_PLAY)){
+	    		placeRequest=getReplacedPlaceRequest(placeRequest);
+	    		getCurrentPlaceHierarchy().set(getCurrentPlaceHierarchy().size() - 1, placeRequest);
+	    		setPreviousRequestUrl(placeRequest);
+	    		return placeRequest;
+	    	}
 	    	setPreviousRequestUrl(placeRequest);
 	        return placeRequest;
 	    } else {
@@ -278,16 +302,26 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	    }
 	  }
 	
+	public PlaceRequest getReplacedPlaceRequest(PlaceRequest placeRequest){
+		PlaceRequest newPlaceRequest=new PlaceRequest(replaceNameToken(placeRequest.getNameToken()));
+		Set<String> parameters=placeRequest.getParameterNames();
+		Iterator<String> parmsItr= parameters.iterator();
+		while (parmsItr.hasNext()) {
+			String paramName=parmsItr.next();
+			newPlaceRequest=newPlaceRequest.with(paramName, placeRequest.getParameter(paramName, ""));
+		}
+		return newPlaceRequest;
+	}
+	
 	public PlaceRequest getModifiedPlaceRequest(PlaceRequest placeRequest){
 		PlaceRequest newPlaceRequest=new PlaceRequest(modifyNameToken(placeRequest.getNameToken()));
 		Set<String> parameters=placeRequest.getParameterNames();
 		Iterator<String> parmsItr= parameters.iterator();
 		while (parmsItr.hasNext()) {
 			String paramName=parmsItr.next();
-			newPlaceRequest.with(paramName, placeRequest.getParameter(paramName, ""));
+			newPlaceRequest=newPlaceRequest.with(paramName, placeRequest.getParameter(paramName, ""));
 		}
 		return newPlaceRequest;
-		
 	}
 	public String modifyNameToken(String historyToken){
 		  String unescapedHistoryToken = URL.decodeQueryString(historyToken);
@@ -295,7 +329,12 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			  unescapedHistoryToken=unescapedHistoryToken.substring(1);
 		  }	  
 		  return unescapedHistoryToken;
-	  }
+	}
+	public String replaceNameToken(String historyToken){
+		  String unescapedHistoryToken = URL.decodeQueryString(historyToken);
+		  unescapedHistoryToken=unescapedHistoryToken.replaceAll(PlaceTokens.PREVIEW_PLAY, PlaceTokens.COLLECTION_PLAY);
+		  return unescapedHistoryToken;
+	}
 
 	/**
 	 * @return the previousRequestUrl
@@ -327,32 +366,38 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		public PlaceRequest getPreviousPlayerRequestUrl() {
 			return previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 		}
+		public String getSeachEventPageLocation(){
+			String pageLocation="home-search";
+			if(getSearchMovedPlaceRequest()!=null){
+				if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.HOME)||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY)
+						||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SAUSD_LIBRARY)){
+					pageLocation="home-search";
+				}else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+					pageLocation="shelf-search";
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
+					pageLocation="profile-search";					
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
+					pageLocation="teach-search";			
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
+					pageLocation="study-search";			
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT)){
+					pageLocation="study-search";			
+				}
+			}else{
+				pageLocation="home-search";
+			}
+			return pageLocation;
+		}
 		
 		public String getPageLocation(){
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
 			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
-				if(getSearchMovedPlaceRequest()!=null){
-					if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.HOME)||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY)){
-						pageLocation="home-search";
-					}else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
-						pageLocation="shelf-search";
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
-						pageLocation="profile-search";					
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
-						pageLocation="teach-search";			
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
-						pageLocation="study-search";			
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT)){
-						pageLocation="study-search";			
-					}
-				}else{
-					pageLocation="home-search";
-				}
+				pageLocation=getSeachEventPageLocation();
 			}else{
 				if(pageLocation.equals(PlaceTokens.HOME)){
 					String page=AppClientFactory.getPlaceManager().getRequestParameter("page",null);
@@ -367,12 +412,14 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 					}else{
 						pageLocation="home";
 					}
-				}else if(pageLocation.equals(PlaceTokens.RUSD_LIBRARY)){
-					pageLocation="home";
+				}else if(isLibraryToken(pageLocation)){
+					pageLocation="library";
 				}else if(pageLocation.equals(PlaceTokens.SHELF)){
 					pageLocation="shelf";
 				}else if(pageLocation.equals(PlaceTokens.PROFILE_PAGE)){
 					pageLocation="profile";
+				}else if(pageLocation.equals(PlaceTokens.DASHBOARD)){
+					pageLocation="dashboard";
 				}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 					pageLocation="teach";
 				}else if(pageLocation.equals(PlaceTokens.STUDENT)){
@@ -383,6 +430,40 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return pageLocation;
 		}
+		
+		public boolean isLibraryToken(String token){
+			if(libraryList!=null){
+				return libraryList.contains(token);
+			}
+			return false;
+		}
+		
+		public void addAllLibraries(){
+			libraryList=new ArrayList<String>();
+			libraryList.add(PlaceTokens.RUSD_LIBRARY);
+			libraryList.add(PlaceTokens.SAUSD_LIBRARY);
+			libraryList.add(PlaceTokens.FTE);
+			libraryList.add(PlaceTokens.ONR);
+			libraryList.add(PlaceTokens.AUTODESK);
+			libraryList.add(PlaceTokens.LESSONOPOLY);
+			libraryList.add(PlaceTokens.NGC);
+			libraryList.add(PlaceTokens.WSPWH);
+			libraryList.add(PlaceTokens.PSDPAL);
+			libraryList.add(PlaceTokens.FINCAPINC);
+			libraryList.add(PlaceTokens.COMMUNITY);
+			libraryList.add(PlaceTokens.YOUTHVOICES);
+			libraryList.add(PlaceTokens.GEOEDUCATION);
+			libraryList.add(PlaceTokens.LIFEBOARD);
+			libraryList.add(PlaceTokens.SUSD);
+			libraryList.add(PlaceTokens.LPS);
+			libraryList.add(PlaceTokens.MURRIETA);
+			libraryList.add(PlaceTokens.VALVERDE);
+			libraryList.add(PlaceTokens.ESYP);
+			libraryList.add(PlaceTokens.CCST_Cal_TAC);
+			libraryList.add(PlaceTokens.LUSD);
+			libraryList.add(PlaceTokens.TICAL);
+		}
+		
 		public String getPlayerMode(){
 			String mode=PlayerDataLogEvents.PREVIEW;
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
@@ -393,11 +474,11 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			return mode;
 		}
 		public String getPlayerModeInTeach(){
-			String mode=PlayerDataLogEvents.STUDY;
+			String mode=PlayerDataLogEvents.PREVIEW;
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
-			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				 mode=PlayerDataLogEvents.PREVIEW;
+			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
+				 mode=PlayerDataLogEvents.STUDY;
 			}
 			return mode;
 		}
@@ -415,27 +496,30 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return folderIds;
 		}
-		public String getDataLogClasspageId(){
-			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+		public String getFolderIdsInString(){
+			String folderIds="";
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
-			String classpageId="";
-			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				classpageId=placeRequest.getParameter("classpageid", "");
-			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
-				classpageId=placeRequest.getParameter("id", "");
+			if(pageLocation.equals(PlaceTokens.SHELF)){
+				for(int i=1;i<4;i++){
+					String folderId=placeRequest.getParameter("o"+i, "");
+					if(folderId!=null&&!folderId.equals("")){
+						folderIds=folderIds+folderId+"/";
+					}
+				}
 			}
-			return classpageId;
+			return folderIds;
+		}
+		
+		public void setDataLogClasspageId(String classpageId){
+			this.classpageId=classpageId;
+		}
+		
+		public String getDataLogClasspageId(){
+			return this.classpageId;
 		}
 		public String getClasspageEventId(){
-			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
-			String pageLocation=placeRequest.getNameToken();
-			String classpageEventId="";
-			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				classpageEventId=this.classpageEventId;
-			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
-				classpageEventId=this.classpageEventId;
-			}
-			return classpageEventId;
+			return this.classpageEventId;
 		}
 		public void setClasspageEventId(String classpageEventId){
 			this.classpageEventId=classpageEventId;
@@ -473,5 +557,57 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			this.searchMovedPlaceRequest = searchMovedPlaceRequest;
 		}
 
+		@Override
+		public boolean isLibaryEventTriggered(String libraryName) {
+			Boolean isLibraryEvent=libraryEventMap.get(libraryName);
+			return isLibraryEvent!=null?isLibraryEvent:false;
+		}
+
+		@Override
+		public String getLibaryEventId() {
+			return this.isLibraryEventId;
+		}
+		
+		@Override
+		public void setLibraryEventId(String libraryEventId){
+			this.isLibraryEventId=libraryEventId;
+		}
+		
+		@Override
+		public void setLibaryEventTriggered(String libraryName){
+			libraryEventMap.put(libraryName, true);
+			isLibraryEventTriggered=true;
+		}
+		
+		@Override
+		public void resetLibraryEventData(String libraryName){
+			libraryEventMap.remove(libraryName);
+			isLibraryEventId=null;
+		}
+
+		public String getShelfParentGooruOid() {
+			String parentGooruId="";
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			if(pageLocation.equals(PlaceTokens.SHELF)){
+				for(int i=1;i<4;i++){
+					String folderId=placeRequest.getParameter("o"+i, "");
+					if(folderId!=null&&!folderId.equals("")){
+						parentGooruId=folderId;
+					}
+				}
+				if(parentGooruId.equals("")){
+					parentGooruId=userShelfId==null?"":userShelfId;
+				}
+			}
+			return parentGooruId;
+		}
+		
+
+		public void setUserShelfId(String userShelfId) {
+			this.userShelfId = userShelfId;
+		}
+		
+		
 
 }

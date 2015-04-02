@@ -73,10 +73,13 @@ public class MoreInfoFieldVc extends Composite {
 			imageIconSimPanel.setVisible(false);
 			contentFloPanel.getElement().getStyle().setFloat(Float.RIGHT);
 			contentFloPanel.getElement().getStyle().setPosition(Position.RELATIVE);
-			contentFloPanel.getElement().getStyle().setMarginRight(-45, Unit.PX);
+			contentFloPanel.getElement().getStyle().setMarginRight(22, Unit.PX);
 //			contentFloPanel.getElement().getStyle().setTop(70, Unit.PX);
 		}
-		
+		imageIconSimPanel.getElement().setId("spnlImageIconSimPanel");
+		toolTipHtml.getElement().setId("htmlToolTipHtml");
+		contentFloPanel.getElement().setId("fpnlContentFloPanel");
+		clearSimplePanel.getElement().setId("spnlClearSimplePanel");
 	}
 
 	/**
@@ -127,6 +130,8 @@ public class MoreInfoFieldVc extends Composite {
 	 */
 	public void setToolTip(String html) {
 		toolTipHtml.setHTML(html);
+		toolTipHtml.getElement().setAttribute("alt",html);
+		toolTipHtml.getElement().setAttribute("title",html);
 	}
 
 }

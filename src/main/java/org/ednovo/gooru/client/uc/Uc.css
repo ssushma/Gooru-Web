@@ -9,6 +9,13 @@
 	cursor: pointer;
 	padding: 1px 5px 0px 0px;
 }
+.closeLabelRemoveInCentury {
+	display: block;
+	float: right;
+	width: 16px;
+	cursor: pointer;
+	padding: 2px 0px 0px 5px;
+}
 .closeLabelRemoveInSetting {
 	display: block;
 	float: left;
@@ -20,6 +27,7 @@
 .closeLabelText {
 	float: left;
 	font-size:12px;
+	padding-left:4px;
 	/*width: 125px;*/
 }
 
@@ -32,6 +40,59 @@
 	background-image: -ms-linear-gradient(top, #666, #515151);
 	background: -o-linear-gradient(top, #666, #515151);
 	background-color: #515151;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-top: 5px;
+	padding: 3px 1px;
+	cursor: default !important;
+	min-height: 12px;
+	height: auto;
+}
+
+.closeLabelCentury {
+	background: -moz-linear-gradient(center top,#7AB075, #7AB075) repeat
+		scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7AB075),
+		to(#7AB075));
+	background: -webkit-linear-gradient(top, #7AB075, #7AB075);
+	background-image: -ms-linear-gradient(top, #7AB075, #7AB075);
+	background: -o-linear-gradient(top,#7AB075, #7AB075);
+	background-color: #7AB075;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	float: left;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-top: 5px;
+	padding: 3px 1px;
+	cursor: default !important;
+	min-height: 12px;
+	height: auto;
+}
+.closeLabelSearch {
+	background: -moz-linear-gradient(center top, #88bbe1, #88bbe1) repeat
+		scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#88bbe1),
+		to(#88bbe1));
+	background: -webkit-linear-gradient(top, #88bbe1, #88bbe1);
+	background-image: -ms-linear-gradient(top, #88bbe1, #88bbe1);
+	background: -o-linear-gradient(top, #88bbe1, #88bbe1);
+	background-color: #88bbe1;
 	border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 	-moz-border-radius: 3px 3px 3px 3px;
@@ -63,6 +124,16 @@
 	
 }
 
+.collectionThumbnail1{
+		height: 91px;
+		width: 127px;
+}
+
+.collectionThumbnail1:hover{
+	opacity: 0.6;
+	cursor: pointer;
+}
+
 .collectionPPPThumbnail {
 	float: left;
 	height: 91px;
@@ -73,8 +144,8 @@
 }
 
 .collectionThumbnails {
-	width: 120px;
-	height: 90px;
+	width: 120px !important;
+	height: 90px !important;
 	border-left:7px solid #1076BB;
 }
 
@@ -235,7 +306,7 @@
 	color: #515151;
 	padding: 0px;
 	font-size: 12px !important;
-	max-width: 548px;
+	max-width: 823px;
 	float: left;
 	word-wrap: break-word;
 }
@@ -261,8 +332,8 @@
 
 .profilePageTextAreaDecsription {
 	background-color: rgb(255, 255, 255);
-	width: 488px !important;
-	height: 70px !important;
+	width: 680px !important;
+	height: 60px !important;
 	font-size: 12px;
 	word-wrap: break-word;
 	border-color: rgb(221, 221, 221);
@@ -402,7 +473,7 @@
 
 .resourceThumbnail:hover {
 	/* display: block; */
-	opacity: 0.6;
+	/*opacity: 0.6;*/
 	cursor: pointer;
 }
 
@@ -543,13 +614,14 @@
 }
 
 .paginationUc {
-	background-color: white;
-	border: 1px solid #DDDDDD;
-	border-radius: 4px 4px 4px 4px;
-	padding: 7px 10px;
-	cursor: pointer;
-	margin: 0 5px 0 0;
-	color: #1076bb;
+background-color: white;
+border: 1px solid #ddd;
+border-radius: 4px 4px 4px 4px;
+padding: 7px 10px;
+cursor: pointer;
+margin: 0 5px 5px 0;
+color: #1076bb;
+float: left;
 }
 
 .separator {
@@ -558,7 +630,13 @@
 	width: 17px;
 	color: #999999;
 }
-
+.separatorSuggested {
+	float: left;
+	width: 17px;
+	color: #999999;
+	display:inline-block;
+	text-align: center;
+}
 .labelGlassPanelText {
 	margin-top: 10px;
 	color: #FFFFFF;
@@ -593,6 +671,17 @@
 
 /**************/
 .resourceName {
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 61px;
+	/* left: -8px; */
+	position: relative;
+	text-align: center;
+	top: -61px;
+	width: 81px;
+}
+
+.resourceNameNew {
 	background: url("../images/resource-type-icons.png") no-repeat
 		transparent;
 	color: #FFFFFF;
@@ -606,58 +695,130 @@
 }
 
 .videoSmall {
-	background-position: 0px 0px !important;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
 }
 
 .interactiveSmall {
-	background-position: 0px -28px !important;
+	background:url("../images/Interactive_1.png") no-repeat
+		transparent;
 }
 
 .websiteSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
 }
 .webpageSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
 }
 .examSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -84px !important; */
 }
 .textSmall {
-	background-position: 0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 .textbookSmall {
-	background-position: 0px -196px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 
 .handoutSmall {
-	background-position: 0px -196px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -56px !important; */
 }
 
 .lessonSmall {
-	background-position: 0px -196px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -112px !important; */
 }
 
 .slideSmall {
-	background-position: 0px -251px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -168px !important; */
 }
 
 .questionSmall {
-	background-position: 0px -140px !important;
+	background:url("../images/Question_1.png") no-repeat
+		transparent;
 }
 .imageSmall {
-	background-position: 0px -251px !important;
+	background:url("../images/Image_1.png") no-repeat
+		transparent;
 }
 .audioSmall{
-	background-position: 0px -279px !important;
+	background:url("../images/Audio_1.png") no-repeat
+		transparent;
 }
 .otherSmall{
-	background-position: 0px -307px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 /**************/
+
+
+/******/
+
+
+.videoSmallNew {
+	background-position: 0px 0px !important;
+}
+
+.interactiveSmallNew {
+	background-position: 0px -28px !important;
+}
+
+.websiteSmallNew {
+	background-position: 0px -224px !important;
+}
+.webpageSmallNew {
+	background-position: 0px -224px !important;
+}
+.examSmallNew {
+	background-position: 0px -224px !important;
+	/* background-position: 0px -84px !important; */
+}
+.textSmallNew {
+	background-position: 0px -55px !important;
+}
+.textbookSmallNew {
+	background-position: 0px -196px !important;
+}
+
+.handoutSmallNew {
+	background-position: 0px -196px !important;
+	/* background-position: 0px -56px !important; */
+}
+
+.lessonSmallNew {
+	background-position: 0px -196px !important;
+	/* background-position: 0px -112px !important; */
+}
+
+.slideSmallNew {
+	background-position: 0px -251px !important;
+	/* background-position: 0px -168px !important; */
+}
+
+.questionSmallNew {
+	background-position: 0px -140px !important;
+}
+.imageSmallNew {
+	background-position: 0px -251px !important;
+}
+.audioSmallNew{
+	background-position: 0px -279px !important;
+}
+.otherSmallNew{
+	background-position: 0px -307px !important;
+}
+/*********/
 .imageUploadPopup {
 	width: 500px;
 	height: 247px;
@@ -675,6 +836,7 @@
 	width: 235px;
 	padding: 5px;
 	text-align: left;
+	box-sizing:content-box;
 }
 
 .textBoxWithPlaceholderText {
@@ -717,6 +879,7 @@
 	border-radius: 6px 6px 0px 0px;
 	height: 21px;
 	padding: 4px;
+	box-sizing:content-box;
 }
 
 .yearListStyle {
@@ -746,6 +909,7 @@
 	border-radius: 0px 0px 6px 6px;
 	height: 21px;
 	padding: 4px;
+	box-sizing: content-box;
 }
 
 .gooruDateBox {
@@ -761,7 +925,9 @@
 	float: left;
 	/* margin-bottom: 22px; */
 	padding: 2px;
-	width: 308px;
+/* 	width: 308px; */
+	width: 100%;
+	margin-bottom: 10px;
 }
 
 .gooruDateText {
@@ -776,7 +942,7 @@
 		scroll -7px -472px transparent;
 	cursor: pointer;
 	display: block;
-	float: left;
+	float: right;
 	height: 21px;
 	margin-left: 4px;
 	width: 30px;
@@ -1295,13 +1461,6 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 }
 
-.profilePopupArrow {
-	background: url(/images/profilepage/user-profile-popup-arrow-pic.png);
-	width: 24px;
-	height: 10px;
-	margin-left: 122px;
-}
-
 .profilePopupContainer {
 	position: absolute;
 	margin-top: 22px;
@@ -1369,7 +1528,6 @@
 }
 
 .editImage {
-	margin-top:-7px;
 	float: left;
 	margin-left: 5px;
 	color: #1076bb;
@@ -1687,4 +1845,11 @@ button.emailSecondary:hover {
 	float: left;
     margin-right: 4px;
 	
+}
+.privacyAlignStyle{
+	margin-right: 2px;
+}
+
+.paddingClear{
+	padding:0;
 }

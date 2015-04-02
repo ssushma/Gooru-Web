@@ -26,9 +26,15 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
@@ -37,6 +43,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * 
@@ -68,28 +75,94 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	protected void onBind() {
 		super.onBind();
 	}
+	
+	/**
+	 * 
+	 * @function getUserShelfData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getUserShelfData(){
 		getView().clearShelfData();
 		getWorkspaceData(0,20,true);
 	}
+	/**
+	 * 
+	 * @function getWorkspaceData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : offset
+	 * @param	:	limit
+	 * @param	:	clearShelfPanel
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel){
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
-				getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+				if(folderListDo.getCount()==0){
+					getView().displayNoCollectionsMsg();
+				}else{
+					getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+				}
 			}
 		});
 	}
 
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function addCollectionToAssign 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : collectionId
+	 * @param	:	direction
+	 * @param	:	dueDate
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void addCollectionToAssign(String collectionId,String direction,String dueDate){
 		AppClientFactory.getInjector().getClasspageService().createClassPageItem(this.classpageId, collectionId, dueDate, direction, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
@@ -99,15 +172,136 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function addCollectionToAssign 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : collectionId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void addCollectionToAssign(String collectionId){
+		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
+				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
+					getView().hideAddCollectionPopup("");
+				//	AppClientFactory.fireEvent(new ResetProgressEvent());
+/*					for(int i=0;i<classpageItemDoList.size();i++){
+						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
+						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
+					}*/
+					showCollectionsAfterAddingNewCollections();
+					
+				}
+			}
+		});
+	}
+	/**
+	 * 
+	 * @function showCollectionsAfterAddingNewCollections 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void showCollectionsAfterAddingNewCollections(){
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		params.put("order", "asce");
+		params.put("classpageid", classpageid);
+		params.put("pageNum", 1+"");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+		AppClientFactory.fireEvent(new ResetProgressEvent());
+	}
+	/**
+	 * 
+	 * @function setClasspageId 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param editClasspagePresenter
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setClasspageId(String classpageId,EditClasspagePresenter editClasspagePresenter){
 		this.classpageId=classpageId;
 		this.setEditClasspagePresenter(editClasspagePresenter);
 	}
-
+	/**
+	 * 
+	 * @function getEditClasspagePresenter 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : EditClasspagePresenter
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public EditClasspagePresenter getEditClasspagePresenter() {
 		return editClasspagePresenter;
 	}
-
+	/**
+	 * 
+	 * @function setEditClasspagePresenter 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param editClasspagePresenter
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setEditClasspagePresenter(EditClasspagePresenter editClasspagePresenter) {
 		this.editClasspagePresenter = editClasspagePresenter;
 	}

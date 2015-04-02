@@ -30,10 +30,20 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
-
 /**
- * @author Search Team
+ * 
+ * @fileName : EditClasspageCBundle.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface EditClasspageCBundle extends ClientBundle{
 	
@@ -77,6 +87,8 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String editTitleButton();
 		
 		String searchResultContainer();
+		
+		String paginationContainer();
 
 		String paginationPanel();
 				
@@ -119,8 +131,6 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String classpageCodeShare();
 		
 		String classpageCodeShareInput();
-
-		String classpageCodeHelp();
 		
 		String classpageShareCodeInput();
 		
@@ -134,8 +144,6 @@ public interface EditClasspageCBundle extends ClientBundle{
 		
 		String addAssignment();
 				
-		String classpageAddPlusIcon();
-		
 		String assignmentsContainer();
 		
 		String classpageCodeInnerPopup();
@@ -168,6 +176,72 @@ public interface EditClasspageCBundle extends ClientBundle{
         String monitorButton();
         
         String backArrowButton();
+        
+        String labelCenterAlign();
+        String labelCenterAlignText();
+        String classcodeStyles();
+        String assignmentPath();
+        String assignmentProgress();
+        
+        String assignmentPathContainer();
+        String line();
+        String squre();
+        String path();
+        String classcodeContainer();
+        String containerProgress();
+        String next();
+        String previous();
+        String rightArrow();
+        String leftArrow();
+        
+        String dropdowncontainer();
+        String dropdownPlaceHolder();
+        String dropdownListContainerScrollPanel();
+        String dropdownTextLabel();
+        
+        
+        String dropdownContainerInstructional();
+        String placeHolderText();
+        String arrowInstructional();
+        String scrollPanelContainerInstructional();
+        String btnContainer();
+        String btnContainerStyle();
+        String addAssignmentStyle();
+        
+        String subtitle();
+        String contentBox();
+        String h3();
+        String circleBlock();
+        String circleBg();
+        String circleTitle();
+        String desc();
+        String collectionView();
+        String img();
+        String btn();
+        String dropdowncontainerStudent();
+        String dropdownPlaceHolderStudent();
+        String dropdownListContainerScrollPanelStudent();
+        String containerProgressWidth();
+        String assignmentsContainerHead();
+        String btnContainerClasswithBG();
+        String section2Div();
+        String section3Div();
+        String assignementOrderHeader();
+        String errorMessage();
+        
+        String desHtml();
+        String desHeader();
+        String imgStyle();
+        String imgStyleDiv();
+        String assignText();
+        
+        String studentStyle();
+        String techerStyle();
+        String assignmentProgressStudent();
+        String previousStudent();
+        String nextStudent();
+        String assignementOrderHeaderText();
+
 	}
 	@NotStrict
 	@Source("editclasspage.css")

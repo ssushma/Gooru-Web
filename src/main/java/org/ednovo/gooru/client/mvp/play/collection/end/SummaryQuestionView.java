@@ -29,10 +29,10 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
@@ -48,7 +48,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SummaryQuestionView extends Composite implements MessageProperties{
+public class SummaryQuestionView extends Composite{
 	
 	@UiField HTML questionText,questionExplanation;
 	@UiField HTMLPanel questionAnswerContainer;
@@ -57,7 +57,7 @@ public class SummaryQuestionView extends Composite implements MessageProperties{
 	private CollectionItemDo collectionItemDo=null;
 	private AttemptedAnswersDo attemptedAnswersDo=null;
 	
-	private static final String FIB_SEPARATOR = GL0885;
+//	private static final String FIB_SEPARATOR = i18n.GL0885;
 	
 	public boolean fibAnsIsCorrect=true;
 	
@@ -66,6 +66,8 @@ public class SummaryQuestionView extends Composite implements MessageProperties{
 	interface SummaryQuestionViewUiBinder extends UiBinder<Widget, SummaryQuestionView> {
 		
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public SummaryQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -85,18 +87,31 @@ public class SummaryQuestionView extends Composite implements MessageProperties{
 	protected void renderSummaryQuestionView(){
 		if(collectionItemDo.getResource().getType()==4){
 			questionSerialNum.setText(""+collectionItemDo.getItemSequence());
+			questionSerialNum.getElement().setAttribute("alt",""+collectionItemDo.getItemSequence());
+			questionSerialNum.getElement().setAttribute("title",""+collectionItemDo.getItemSequence());
+			  
 			if(attemptedAnswersDo!=null){	
 				String fibQuest = renderFibQuestion(attemptedAnswersDo);
 				SummaryAnswerView summaryAnwerView=new SummaryAnswerView(fibQuest,fibAnsIsCorrect); 
 				questionAnswerContainer.add(summaryAnwerView);
 			}else{
-				questionText.setHTML(GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+				questionText.setHTML(i18n.GL0702()+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+				questionText.getElement().setAttribute("alt",i18n.GL0702()+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+				questionText.getElement().setAttribute("title",i18n.GL0702()+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 			}
 			return;
 		}
-		questionText.setHTML(GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		questionText.setHTML(i18n.GL0702()+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		questionText.getElement().setAttribute("alt",i18n.GL0702()+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		questionText.getElement().setAttribute("title",i18n.GL0702()+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+	
 		questionExplanation.setHTML(removeHtmlTags(collectionItemDo.getResource().getExplanation()));
+		questionExplanation.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getExplanation()));
+		questionExplanation.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getExplanation()));
+		  
 		questionSerialNum.setText(""+collectionItemDo.getItemSequence());
+		questionSerialNum.getElement().setAttribute("alt",""+collectionItemDo.getItemSequence());
+		questionSerialNum.getElement().setAttribute("title",""+collectionItemDo.getItemSequence());
 		if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
 			if(collectionItemDo.getResource().getAnswers().size()>0){
 				TreeSet<QuestionAnswerDo> answersList=collectionItemDo.getResource().getAnswers();
@@ -126,7 +141,7 @@ public class SummaryQuestionView extends Composite implements MessageProperties{
 	}
 	
 	public String renderFibQuestion(AttemptedAnswersDo attemptedAnswersDo){ 
-		String[] fibArray = this.collectionItemDo.getResource().getQuestionText().split(FIB_SEPARATOR);
+		String[] fibArray = this.collectionItemDo.getResource().getQuestionText().split(i18n.GL0885());
 		String fibQuestionTxt = "";
 		int j=0;
 		int answerArraySize = this.collectionItemDo.getResource().getAnswers().size();
@@ -194,5 +209,13 @@ public class SummaryQuestionView extends Composite implements MessageProperties{
 			i++;
 		}
 		return questionAnswerDo;
+	}
+	
+	public void setId(){
+		questionSerialNum.getElement().setId("lblQuestionSerialNum");
+		questionThumbnail.getElement().setId("imgQuestionThumbnail");
+		questionText.getElement().setId("htmlQuestionText");
+		questionAnswerContainer.getElement().setId("pnlQuestionAnswerContainer");
+		questionExplanation.getElement().setId("htmlQuestionExplanation");
 	}
 }

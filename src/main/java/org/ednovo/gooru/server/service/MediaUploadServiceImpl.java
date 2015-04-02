@@ -24,17 +24,47 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.UnsupportedEncodingException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeSet;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.ednovo.gooru.client.service.MediaUploadService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
+import org.ednovo.gooru.server.form.ResourceFormFactory;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
+import org.ednovo.gooru.server.request.ServiceRequest;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.server.serializer.JsonSerializer;
+import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Form;
+import org.restlet.data.MediaType;
+import org.restlet.ext.html.FormData;
+import org.restlet.ext.html.FormDataSet;
 import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.representation.Representation;
+import org.restlet.resource.ClientResource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -49,7 +79,9 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	/**
 	 * 
 	 */
+		 
 	private static final long serialVersionUID = -8673556966040594979L;
+	private static final String ADDED = "added";
 
 	@Override
 	public MediaUploadDo imageWebUpload(String imageURL) {
@@ -57,34 +89,86 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator
 				.generateUrl(getRestEndPoint(), UrlToken.MEDIA_FILE_UPLOAD,
-						getLoggedInSessionToken(), imageURL);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
+						getLoggedInSessionToken());
+		JSONObject jsonObj=new JSONObject();
 		try {
-			mediaUploadDo = JsonDeserializer.deserialize(jsonRep.getJsonArray()
-					.get(0).toString(), MediaUploadDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+			jsonObj.put("imageURL", imageURL);
+			jsonObj.put("reSize",true);
+			jsonObj.put("width",750);
+			jsonObj.put("height",525);
+		} catch (JSONException e1) {
+			getLogger().error(e1.getMessage());
+		}		
+
+		String responseText ="";
+			try {
+				responseText = fileUploadImage(jsonObj.toString(), url);
+			} catch (Exception e) {
+				getLogger().error(e.getMessage());
+			}
+			
+			try {
+				mediaUploadDo = JsonDeserializer.deserialize(responseText, MediaUploadDo.class);
+			} catch (Exception e) {
+				getLogger().error(e.getMessage());
+			}
 		return mediaUploadDo;
 
 	}
-
+	
 	@Override
-	public String saveImage(String gooruOid, String fileName) {
+	public String saveImageCollection(String gooruOid, String fileName) {
 		String filePath = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),fileName);
+	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			filePath = jsonRep.getText(); 
 		} catch (Exception e) {
-			e.printStackTrace();
+			getLogger().error(e.getMessage());
 		}
 		return filePath;
+	}
+
+	@Override
+	public CollectionItemDo saveImage(String gooruOid, String resourceId, String fileName) {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_ITEM,gooruOid, getLoggedInSessionToken());
+		try{
+		JSONObject createCollectionJsonObject=new JSONObject();
+		JSONObject itemTypeJsonObject=new JSONObject();
+		itemTypeJsonObject.put("itemType", ADDED);
+		createCollectionJsonObject.put("collectionItem", itemTypeJsonObject);
+		if (resourceId != null) {
+			createCollectionJsonObject.put("resourceId", resourceId);
+		}
+		if (fileName != null) {
+			createCollectionJsonObject.put("mediaFileName", fileName);
+		}
+		
+//		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		}catch(Exception e){
+			getLogger().error(e.getMessage());
+		}
+		return deserializeCollectionItem(jsonRep);
+	}
+	
+	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
+			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
+			}
+		}
+		return new CollectionItemDo();
 	}
 
 	@Override
@@ -93,11 +177,21 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),
 				height, width, xPosition, yPosition);
+
+		try
+		{
 		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
 				new Form());
+		}
+		catch(Exception ex)
+		{
+			getLogger().error(ex.getMessage());
+		}
+		
 		if (imageUrl == null) {
 			return fileName;
-		} else {
+		} 
+		else {
 			return imageUrl;
 		}
 
@@ -111,7 +205,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				JSONArray responseJson = new JSONArray(response);
 				mediaUploadDo = JsonDeserializer.deserialize(responseJson.get(0).toString(), MediaUploadDo.class);
 			} catch (JSONException e) {
-				e.printStackTrace();
+				getLogger().error(e.getMessage());
 			}
 		}
 		return mediaUploadDo;
@@ -119,37 +213,138 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 	// Request
 	// URL:http://www.goorulearning.org/gooruapi/rest/quiz-question/newQuestion/media?sessionToken=f6ded446-a9a9-11e2-ba82-123141016e2a&mediaFileName=bbda9546-cb15-453e-a107-f073b09eccdc.jpg&assetKey=asset-question
-	public String saveQuestionImage(String collectionItemId, String fileName) {
-		String filePath = null;
-		JsonRepresentation jsonRep = null;
+	public CollectionItemDo saveQuestionImage(String collectionItemId, String fileName) {
+	
+		CollectionItemDo collItemDo = getCollectionItem(collectionItemId);
 
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_QUESTION_IMAGE, collectionItemId, getLoggedInSessionToken(), fileName);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		JsonRepresentation jsonRep = null;
+		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
+		collectionAddQuestionItemDo.setQuestion(collItemDo.getCollectionQuestionItemDo());
+		collectionAddQuestionItemDo.setMediaFileName(fileName);
+	
+		CollectionItemDo collectionItemDoNew=new CollectionItemDo();
+		
+
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId(), getLoggedInSessionToken());
+		
+		collItemDo.getQuestionInfo().setLicense(null);
+		collItemDo.getQuestionInfo().setResourceFormat(null);
+		collItemDo.getQuestionInfo().setTaxonomySet(null);
+		collItemDo.getQuestionInfo().setThumbnails(null);
+		collItemDo.getQuestionInfo().setResourceType(null);
+		collItemDo.getQuestionInfo().setCreator(null);
+		collItemDo.getQuestionInfo().setUser(null);
+		collItemDo.getQuestionInfo().setCreatedOn(null);
+		collItemDo.getQuestionInfo().setUrl(null);
+		collItemDo.getQuestionInfo().setViews(null);
+		collItemDo.getQuestionInfo().setGooruOid(null);
+		collItemDo.getQuestionInfo().setAssets(null);
+		
+		TreeSet<QuestionHintsDo> treeSetHints = new TreeSet<QuestionHintsDo>();
+		treeSetHints.addAll(collItemDo.getQuestionInfo().getHints());
+		
+		 Object[] objArrayHints = treeSetHints.toArray();
+		 JSONArray jArrHints = new JSONArray();
+		 
+		 for(int i=0; i < objArrayHints.length ; i++)
+		 {
+			 try {
+				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArrayHints[i],null));
+				jArrHints.put(jsonObjVal);
+			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
+			}
+		
+		 }
+		
+		TreeSet<QuestionAnswerDo> treeSet = new TreeSet<QuestionAnswerDo>();
+		treeSet.addAll(collItemDo.getQuestionInfo().getAnswers());
+		
+		 Object[] objArray = treeSet.toArray();
+		 JSONArray jArr = new JSONArray();
+		 
+		 for(int i=0; i < objArray.length ; i++)
+		 {
+			 try {
+				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray[i],null));
+				jArr.put(jsonObjVal);
+			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
+			}
+		
+		 }
+		 
+
+
+
+
+		collItemDo.getQuestionInfo().setAnswers(null);
+		collItemDo.getQuestionInfo().setHints(null);
+		  JSONObject mainQuestionTempObj = new JSONObject();
+		  JSONObject mainAnswerTempObj = new JSONObject();
+		  JSONObject mainQTempObj = new JSONObject();
+		  JSONObject mainHintTempObj = new JSONObject();
+		  String data = "";
+		 // mainQTempObj. = new LinkedHashMap();
+		  try {
+			  
+			  mainQuestionTempObj.put("question", ResourceFormFactory.generateStringDataForm(collItemDo.getQuestionInfo(), null));
+			  JSONObject mainQuestionTempObj1 = new JSONObject(mainQuestionTempObj.get("question").toString());
+			  mainAnswerTempObj.put("answer", jArr);
+			  mainHintTempObj.put("hint", jArrHints);
+			  mainQuestionTempObj1.put("answers", mainAnswerTempObj);
+			  mainQuestionTempObj1.put("hints", mainHintTempObj);
+
+		
+			  
+			  data = "{\""+"question"+"\" : " + mainQuestionTempObj1.toString() +", \""+"mediaFileName"+"\" : " +fileName+"}";
+			  
+			
+			  mainQTempObj.put("question", mainQuestionTempObj1).put("mediaFileName", fileName);
+			  //mainQTempObj.put("mediaFileName", fileName);
+			
+		} catch (JSONException e) {
+			getLogger().error(e.getMessage());
+		}
+
+		  
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), data);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			filePath = jsonRep.getText();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return filePath;
+		collectionItemDoNew=deserializeCollectionItem(jsonRep);
+		collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
+		collItemDo.setStandards(collectionItemDoNew.getStandards());
+		return collItemDo;
 	}
-
-	/*@Override
-	public String saveResourceImage(String gooruOid, String fileName) {
-		String filePath = null;
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),
-				fileName);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),
-				getRestPassword());
-		try {
-			filePath = jsonRep.getText();
-		} catch (Exception e) {
-			e.printStackTrace();
+	
+	
+	public CollectionItemDo convertResourceToCollectionItemDo(ResourceDo resourceDo,CollectionItemDo collectionItemDo){	
+		
+		collectionItemDo.setResource(resourceDo);// replacing the update question details Do
+		collectionItemDo.setCollectionQuestionItemDo(null);// removing existing collection item object details.
+		
+		return collectionItemDo;
+	}
+	
+	public ResourceDo deserializeResourceDoItem(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
+			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
+			}
 		}
-		return filePath;
-	}*/
+		return null;
+	}
+	
+	public CollectionItemDo getCollectionItem(String collectionItemId) {
+		
+		JsonRepresentation jsonRep = null;		
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
+	
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCollectionItem(jsonRep);
+	}
 
 	@Override
 	public String uploadProfileImage(String fileNameWithOurRespository,String fileName) {
@@ -158,6 +353,24 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		form.add("sessionToken",getLoggedInSessionToken());
 		ServiceProcessor.post(url, getRestUsername(),getRestPassword(),form);
 		return fileName;
+	}
+	
+	public String fileUploadImage(String data,String webServiceUrl)
+			throws Exception {
+		String respStr = "";
+		FormData fd = new FormData("data", data);        
+	    FormDataSet fds = new FormDataSet();
+	    fds.setMultipart(true);
+	    String boundary = "boundary";
+	    fds.setMediaType(MediaType.MULTIPART_FORM_DATA);
+	    fds.setMultipartBoundary(boundary);
+	    fds.setMultipart(true);
+	    fds.getEntries().add(fd);
+	    ClientResource c = new ClientResource(webServiceUrl);
+		c.setEntityBuffering(true);
+	    Representation cr = c.post(fds, MediaType.MULTIPART_FORM_DATA);
+		respStr = cr.getText();
+		return respStr;
 	}
 
 }

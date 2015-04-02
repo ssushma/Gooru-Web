@@ -34,10 +34,9 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -63,7 +62,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class ErrorPopup extends PopupPanel implements MessageProperties{
+public class ErrorPopup extends PopupPanel{
       
 //	@UiField HTMLEventPanel cancelButton;
 	
@@ -79,6 +78,8 @@ public class ErrorPopup extends PopupPanel implements MessageProperties{
 
 	}	
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public ErrorPopup(String message){
 		this.res = ErrorPopUpCBundle.INSTANCE;
@@ -87,18 +88,32 @@ public class ErrorPopup extends PopupPanel implements MessageProperties{
 		this.setGlassEnabled(true);
 //		this.setSize("475px", "200px");
 		this.center();
-		errorpopupHeaderTitle.setText(GL1177);
-//		questionsEmailText.setText(GL0298);
-//		emailId.setText(GL0299);
+		errorpopupHeaderTitle.setText(i18n.GL1177());
+		errorpopupHeaderTitle.getElement().setId("lblErrorpopupHeaderTitle");
+		errorpopupHeaderTitle.getElement().setAttribute("alt",i18n.GL1177());
+		errorpopupHeaderTitle.getElement().setAttribute("title",i18n.GL1177());
+		
+//		questionsEmailText.setText(i18n.GL0298());
+//		emailId.setText(i18n.GL0299());
 		questionsEmailText.setVisible(false);
 		emailId.setVisible(false);
-		btnOk.setText(GL0190);
+		btnOk.setText(i18n.GL0190());
+		btnOk.getElement().setId("btnOk");
+		btnOk.getElement().setAttribute("alt",i18n.GL0190());
+		btnOk.getElement().setAttribute("title",i18n.GL0190());
+		
 		errorMessage.setText(message);
+		errorMessage.getElement().setId("errlblErrorMessage");
+		errorMessage.getElement().setAttribute("alt",message);
+		errorMessage.getElement().setAttribute("title",message);
+		
+		questionsEmailText.getElement().setId("lblQuestionsEmailText");
+		emailId.getElement().setId("lblEmailId");
 	}
 	
 	public void closePopup(){
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
-			navigateShelf();
+			//navigateShelf();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			navigateClasspage();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
@@ -117,19 +132,7 @@ public class ErrorPopup extends PopupPanel implements MessageProperties{
 //		closePopup();
 //	}
 	
-	private void navigateShelf(){
-		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
-            @Override
-            public void onSuccess(List<CollectionDo> result) {
-                if(result.size()>0) {
-                    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", result.get(0).getGooruOid() });
-                } else {
-                    AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
-                }
-                AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
-            }
-        });
-	}
+	
 	private void navigateClasspage(){
 		AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages("1", "0", new SimpleAsyncCallback<ClasspageListDo>() {
 

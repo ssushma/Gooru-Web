@@ -28,11 +28,13 @@
 package org.ednovo.gooru.server.deserializer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
@@ -48,14 +50,20 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
+import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.user.CreatorDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gwt.dev.jjs.ast.js.JsonObject;
 
 /**
@@ -89,6 +97,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String OWNER_FIRST_NAME = "userFirstName";
 	public static final String OWNER_LAST_NAME = "userLastName";
 	public static final String OWNER_NAME_DISPLAY = "usernameDisplay";
+	public static final String USERNAME = "username";
+	public static final String CREATOR = "creator";
 	public static final String OWNER_PROFILE_USER_VISIBILITY = "profileUserVisibility";
 	public static final String OWNER_GOORU_UID = "gooruUId";
 	public static final String STANDARD_CODE = "code";
@@ -102,6 +112,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String CURRICULUM_CODE = "curriculumCode";
 	public static final String CURRICULUM_DESCRIPTION = "curriculumDesc";
 	public static final String TAXONOMY_DATA_SET = "taxonomyDataSet";
+	public static final String TAXONOMY_SET = "taxonomySet";
 	public static final String RESOURCE_TAXONOMY_DATA_SET = "resourceTaxonomyData";
 	public static final String GRADE = "grade";
 	public static final String TAGS = "tags";
@@ -120,6 +131,9 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static String TIME_TO_COMPLETE_IN_SEC="timeToCompleteInSec";
 	public static String QUESTION_TYPE_NAME="typeName";
 	public static final String COLLECTION_ITEMS="collectionItems";
+	public static final String EDUCATIONALUSE = "educationalUse";
+	public static final String MOMENTSOFLEARNING = "momentsOfLearning";
+	public static final String DEPTHOFKNOWLEDGE = "depthOfKnowledges";
 	
 	public static final String NUMBEROF_RESOURECES="numberOfResources";
 	
@@ -162,38 +176,29 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	
 	public static final String RESOURCE_FORMAT = "resourceFormat";
 	
+	public static final String RESOURCE_COUNT="resourceCount";
+
+	public static final String QUESTION_COUNT="questionCount";
+	
+	public static final String CUSTOM_FIELDS="customFieldValues";
+	
+	public static final String RATINGS = "ratings";
+	
+	public static final String AGGREGATOR="aggregator";
+	
+	public static final String PUBLISHER="publisher";
+	
+	public static final String HOST="host";
+
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
-//		try {
-//			JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
-//			resourceSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
-//			resourceSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
-//			
-//			JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
-//			ResourceSourceDo resourceSourceDo=JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);;
-//			resourceSearchResultDo.setResourceSource(resourceSourceDo);
-//		} catch (JSONException e1) {
-//			e1.printStackTrace();
-//		}
 		try {
-//			if (resourceSearchResultDo.getResourceTypeString() != null && resourceSearchResultDo.getResourceTypeString().equalsIgnoreCase(VIDEO_YOUTUBE)) {
-//				resourceSearchResultDo.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(getJsonString(recordJsonObject, URL))));
-//			} else { 			
 				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
-//			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setFolder((getJsonString(recordJsonObject, FOLDER)));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
-//		if(resourceSearchResultDo.getResourceType().getName().equals(ASSESSMENT_QUESTION)){
-//			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, TIME_TO_COMPLETE_IN_SEC));
-//			resourceSearchResultDo.setQuestionType(getJsonString(recordJsonObject, QUESTION_TYPE_NAME));
-//			
-//		}else{
-//			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, DURATION_IN_SEC));
-//		}
 		
 		resourceSearchResultDo.setVotesUp(stringtoInteger(recordJsonObject, VOTES_UP, 0));
 		resourceSearchResultDo.setVotesDown(stringtoInteger(recordJsonObject, VOTES_DOWN, 0));
@@ -202,6 +207,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceSearchResultDo.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
 		resourceSearchResultDo.setNumOfPages(getJsonString(recordJsonObject, NO_OF_PAGES));
 		resourceSearchResultDo.setNoOfResources(stringtoInteger(recordJsonObject, NUMBEROF_RESOURECES, 0));
+		resourceSearchResultDo.setQuestionCount(stringtoInteger(recordJsonObject, QUESTION_COUNT, 0));
+		resourceSearchResultDo.setResourceCount(stringtoInteger(recordJsonObject, RESOURCE_COUNT, 0));
 		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 
@@ -209,33 +216,51 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		ownerDo.setFirstName(getJsonString(recordJsonObject, OWNER_FIRST_NAME));
 		ownerDo.setLastName(getJsonString(recordJsonObject, OWNER_LAST_NAME));
 		ownerDo.setUsername(getJsonString(recordJsonObject, OWNER_NAME_DISPLAY));
+		
 		resourceSearchResultDo.setOwner(ownerDo);
-
-		try {
-			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {
+		JSONArray standardCodes = null; 
+		JSONArray standardDescriptions = null;
+		try{
+			if(getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {
 				JSONObject taxonomyDataSet = new JSONObject(getJsonString(recordJsonObject, TAXONOMY_DATA_SET));
-				JSONObject curriculum = taxonomyDataSet.getJSONObject(CURRICULUM);
-				JSONArray standardCodes = (JSONArray) curriculum.get(CURRICULUM_CODE);
-				JSONArray standardDescriptions = (JSONArray) curriculum.get(CURRICULUM_DESCRIPTION);
+				JSONObject curriculum =taxonomyDataSet.isNull(CURRICULUM)?null:taxonomyDataSet.getJSONObject(CURRICULUM);
+				if(!curriculum.isNull(CURRICULUM_CODE)){
+					standardCodes = (JSONArray) (curriculum.get(CURRICULUM_CODE));
+				}
+				if(!curriculum.isNull(CURRICULUM_DESCRIPTION)){
+					standardDescriptions = (JSONArray) (curriculum.get(CURRICULUM_DESCRIPTION));
+				}
 				List<Map<String, String>> standards = new ArrayList<Map<String, String>>();
-				for (int i = 0; i < standardCodes.length(); i++) {
-					Map<String, String> standard = new HashMap<String, String>();
-					standard.put(STANDARD_CODE, (String) standardCodes.get(i));
-					if (standardDescriptions.get(i) != null) {
-						standard.put(STANDARD_DESCRIPTION, (String) standardDescriptions.get(i));
+				if(standardCodes!=null&&standardCodes.length()>0){
+					for (int i = 0; i < standardCodes.length(); i++) {
+						Map<String, String> standard = new HashMap<String, String>();
+						if(standardCodes.get(i)!=null){
+							standard.put(STANDARD_CODE, (String)standardCodes.get(i));
+						}
+						if(standardDescriptions.get(i) != null) {
+							standard.put(STANDARD_DESCRIPTION, (String)standardDescriptions.get(i));
+						}
+						standards.add(standard);
 					}
-					standards.add(standard);
 				}
 				resourceSearchResultDo.setStandards(standards);
-
-				resourceSearchResultDo.setSubjectNames(convertJSONArrayToList(((JSONArray) taxonomyDataSet.get(TAXONOMY_SUBJECT))));
-				resourceSearchResultDo.setCourseNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_COURSE)));
-				resourceSearchResultDo.setUnitNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_UNIT)));
-				resourceSearchResultDo.setTopicNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_TOPIC)));
-				resourceSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
+				if(!taxonomyDataSet.isNull(TAXONOMY_SUBJECT)){
+					resourceSearchResultDo.setSubjectNames(convertJSONArrayToList(((JSONArray) taxonomyDataSet.get(TAXONOMY_SUBJECT))));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_COURSE)){
+					resourceSearchResultDo.setCourseNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_COURSE)));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_UNIT)){
+					resourceSearchResultDo.setUnitNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_UNIT)));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_TOPIC)){
+					resourceSearchResultDo.setTopicNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_TOPIC)));
+				}
+				if(!taxonomyDataSet.isNull(TAXONOMY_LESSON)){
+					resourceSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
+				}
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		resourceSearchResultDo.setAverageTime(getJsonString(recordJsonObject, AVERAGE_TIME));
 		resourceSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
@@ -244,6 +269,51 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceSearchResultDo.setGooruUId(getJsonString(recordJsonObject, GOORUUID));
 		
 		return resourceSearchResultDo;
+	}
+	
+	public static CollectionItemDo deserializeCollectionItemDoV2API(ResourceInfoObjectDo recordJsonObject){
+		CollectionItemDo collectionItemDo=new CollectionItemDo();
+		ResourceDo resourceDo=new ResourceDo();
+		List<Map<String, String>> standards = new ArrayList<Map<String, String>>();
+		Set<CodeDo> taxonomySet = new HashSet<CodeDo>();
+		List<StandardFo> centurySkills = new ArrayList<StandardFo>();
+		int size = 0;
+		StringTokenizer courses = null;
+		try{
+			resourceDo = recordJsonObject.getResource();
+			if(recordJsonObject.getCourse()!=null && recordJsonObject.getCourse().size()>0){
+				size=recordJsonObject.getCourse().size();
+			}else{
+				if(resourceDo.getCustomFieldValues()!=null && !resourceDo.getCustomFieldValues().equals("")){
+					if(resourceDo.getCustomFieldValues().getCfGooruCourse()!=null && !resourceDo.getCustomFieldValues().getCfGooruCourse().equalsIgnoreCase("")&&!resourceDo.getCustomFieldValues().getCfGooruCourse().equalsIgnoreCase("null")){
+					courses = new StringTokenizer(resourceDo.getCustomFieldValues().getCfGooruCourse(), ",");
+					size=courses.countTokens();
+					}
+				}
+			}
+			
+			for(int j=0;j<size;j++){
+				
+				CodeDo codeDo=new CodeDo();
+				codeDo.setDepth(DEPTH);
+				if(recordJsonObject.getCourse().size()==0){
+					codeDo.setLabel(courses.nextToken());
+				}else{
+					codeDo.setLabel(recordJsonObject.getCourse().get(j));
+				}
+				
+				taxonomySet.add(codeDo);
+				
+			}
+	
+			resourceDo.setTaxonomySet(taxonomySet);
+			resourceDo.setSkills(recordJsonObject.getSkills());
+			
+			collectionItemDo.setStandards(recordJsonObject.getStandards());
+		}catch(Exception e){
+		}
+		collectionItemDo.setResource(resourceDo);
+		return collectionItemDo;
 	}
 	
 	public static CollectionItemDo deserializeCollectionItemDo(JSONObject recordJsonObject){
@@ -256,8 +326,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			JSONObject resourceSourceJson = recordJsonObject.isNull(RESOURCE_SOURCE)?null:recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 			ResourceSourceDo resourceSourceDo=resourceSourceJson==null?null:JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);
 			resourceDo.setResourceSource(resourceSourceDo);
+			
 		} catch (JSONException e1) {
-			e1.printStackTrace();
 		}
 		
 		try {
@@ -265,13 +335,12 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			resourceDo.setThumbnails(JsonDeserializer.deserialize(thumbnailJson.toString(), ThumbnailDo.class));
 			
 		} catch (JSONException e1) {
-			e1.printStackTrace();
 		}
 		
 		resourceDo.setTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceDo.setFolder((getJsonString(recordJsonObject, FOLDER)));
 		resourceDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
-		
+	
 		try {
 			if (getJsonString(recordJsonObject, RESOURCE_TAXONOMY_DATA_SET) != null) {
 				JSONObject taxonomyDataSet = new JSONObject(getJsonString(recordJsonObject, RESOURCE_TAXONOMY_DATA_SET));
@@ -289,17 +358,19 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				}
 				collectionItemDo.setStandards(standards);
 				Set<CodeDo> taxonomySet = new HashSet<CodeDo>();
-				JSONArray courseArray=taxonomyDataSet.getJSONArray(TAXONOMY_COURSE);
+				//JSONArray courseArray=taxonomyDataSet.getJSONArray(TAXONOMY_COURSE);
+				JSONArray courseArray = new JSONArray(getJsonString(recordJsonObject, TAXONOMY_SET));
 				for(int j=0;j<courseArray.length();j++){
-					CodeDo codeDo=new CodeDo();
-					codeDo.setDepth(DEPTH);
-					codeDo.setLabel(courseArray.getString(j));
-					taxonomySet.add(codeDo);
+					if(courseArray.getJSONObject(j).getInt("depth")==DEPTH){
+						CodeDo codeDo=new CodeDo();
+						codeDo.setDepth(DEPTH);
+						codeDo.setLabel(courseArray.getJSONObject(j).getString("label"));
+						taxonomySet.add(codeDo);
+						}
 				}
 				resourceDo.setTaxonomySet(taxonomySet);
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		resourceDo.setUrl(getJsonString(recordJsonObject, URL));
 		resourceDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
@@ -307,31 +378,74 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setCategory(getJsonString(recordJsonObject, CATEGORY));
 		resourceDo.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		resourceDo.setGrade(getJsonString(recordJsonObject, GRADE));
+		resourceDo.setEducationalUse(getJsonArray(recordJsonObject, EDUCATIONALUSE));
+		resourceDo.setMomentsOfLearning(getJsonArray(recordJsonObject, MOMENTSOFLEARNING));
+
+		try {
+			resourceDo.setPublisher(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(PUBLISHER).toString(), new TypeReference<List<String>>() {
+			}));
+		} catch (JSONException e2) {
+		}
+
+		try {
+			if(!recordJsonObject.isNull(HOST)){
+				resourceDo.setHost(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(HOST).toString(), new TypeReference<List<String>>() {
+				}));
+			}
+			
+		} catch (JSONException e2) {
+		}
+		
+		try {
+			resourceDo.setAggregator(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(AGGREGATOR).toString(), new TypeReference<List<String>>() {
+			}));
+		} catch (JSONException e2) {
+		}
+		
+		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
+		UserDo ownerDo = new UserDo();
+			try {
+				JSONObject createrObject = new JSONObject(getJsonString(recordJsonObject, CREATOR));
+				ownerDo.setUsername(getJsonString(createrObject,USERNAME));
+				resourceDo.setCreator(ownerDo);
+				resourceDo.setUser(ownerDo);
+			} catch (JSONException e1) {
+			}
+		try{
+			resourceDo.setCustomFieldValues(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(CUSTOM_FIELDS).toString(), customFieldValuesDO.class));
+		}catch(Exception e){
+			
+		}
 		try{
 			resourceDo.setResourceFormat(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RESOURCE_FORMAT).toString(), ResourceFormatDo.class));
 		}catch(Exception e){
 			
 		}
 		try{
+			resourceDo.setRatings(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RATINGS).toString(), SearchRatingsDo.class));
+		}catch(Exception e){
+			
+		}
+		/*JSONObject resourceRating = recordJsonObject.getJSONObject(RATINGS);
+		SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
+		resourceDo.setSearchRatingsDo(searchRatingsDo);*/
+		try{
 			resourceDo.setHasFrameBreaker(recordJsonObject.isNull(HAS_FRAME_BREAKER)?null:recordJsonObject.getBoolean(HAS_FRAME_BREAKER));
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		try{
 			resourceDo.setLicense(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(LICENSE).toString(), LicenseDo.class));
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		try{
 			RatingDo ratindDo=new RatingDo();
 			JSONObject ratingObject=recordJsonObject.isNull(SCOCIAL)?null:recordJsonObject.getJSONObject(SCOCIAL);
-			ratindDo.setVotesUp(ratingObject.isNull(CONTENT_RATING)?null:ratingObject.getJSONObject(CONTENT_RATING).getInt(VOTES_UP));
-			resourceDo.setUserRating(ratingObject.isNull(CONTENT_USER_RATING)?0:ratingObject.getInt(CONTENT_USER_RATING));
+				ratindDo.setVotesUp(ratingObject.isNull(CONTENT_RATING)?null:ratingObject.getJSONObject(CONTENT_RATING).getInt(VOTES_UP));
+				resourceDo.setUserRating(ratingObject.isNull(CONTENT_USER_RATING)?0:ratingObject.getInt(CONTENT_USER_RATING));
 			collectionItemDo.setRating(ratindDo);
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		
 		try{
@@ -377,14 +491,13 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 					}	
 				}
 				resourceDo.setAssets(assetsList);
+					
 			}
 			
+			
+			
 		}catch(Exception e){
-			e.printStackTrace();
 		}
-		
-		
-		
 		collectionItemDo.setResource(resourceDo);
 		return collectionItemDo;
 		

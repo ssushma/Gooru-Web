@@ -26,14 +26,13 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.gargoylesoftware.htmlunit.html.applets.AppletClassLoader;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
@@ -43,6 +42,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -64,13 +64,14 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProperties{
+public class ThanksEmailConfirmPopupUc extends PopupPanel{
  
-	@UiField Label lblLoginHeading, lblCongratsHeader, lblClose; //lblDiscover,lblOrganize,lblTeach
+	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail; //lblDiscover,lblOrganize,lblTeach
 	
 	@UiField Button btnStartUsingGooru;//btnDiscover, btnOrganize, btnTeach,
 	
 	@UiField HTMLPanel panelPopupInner;
+	@UiField Anchor lblClose;
 	
 	@UiField(provided = true)
 	SignUpCBundle res;
@@ -80,12 +81,16 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 	String userName = null;
 	String privateGooruUId = null;
 	
+	protected AppPopUp appPopUp;
+	
 	@UiTemplate("ThanksEmailConfirmPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, ThanksEmailConfirmPopupUc> {
 
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Class constructor , to create Login Popup. 
@@ -97,8 +102,12 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 		
         this.res = SignUpCBundle.INSTANCE;
         res.css().ensureInjected();
-        add(binder.createAndBindUi(this));
-
+        
+        appPopUp = new AppPopUp(i18n.GL0501());
+		appPopUp.setContent(binder.createAndBindUi(this));
+        //add(binder.createAndBindUi(this));
+		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
     	this.getElement().getStyle().setHeight(332, Unit.PX);
     	panelPopupInner.getElement().getStyle().setHeight(277, Unit.PX);
 
@@ -106,7 +115,7 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
         
         setHandlers();
         
-		this.center();
+        appPopUp.center();
 	}
 
 	
@@ -134,8 +143,8 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		
-		this.removeStyleName("gwt-PopupPanel");
-		this.getElement().getStyle().setZIndex(99999);
+		//this.removeStyleName("gwt-PopupPanel");
+		//this.getElement().getStyle().setZIndex(99999);
 	
 	}
 	
@@ -160,13 +169,28 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(GL0501);
-		lblCongratsHeader.setText(GL0502);
+		lblLoginHeading.setText(i18n.GL0501());
+		lblLoginHeading.getElement().setId("lblLoginHeading");
+		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0501());
+		lblLoginHeading.getElement().setAttribute("title",i18n.GL0501());
+		
+		lblCongratsHeader.setText(i18n.GL0502());
+		lblCongratsHeader.getElement().setId("lblCongratsHeader");
+		lblCongratsHeader.getElement().setAttribute("alt",i18n.GL0502());
+		lblCongratsHeader.getElement().setAttribute("title",i18n.GL0502());
 		lblCongratsHeader.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 
-		btnStartUsingGooru.setText(GL0431);						
+		btnStartUsingGooru.setText(i18n.GL0431());						
 		btnStartUsingGooru.setVisible(true);
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
+		btnStartUsingGooru.getElement().setAttribute("alt",i18n.GL0431());
+		btnStartUsingGooru.getElement().setAttribute("title",i18n.GL0431());
+		
+		lblClose.getElement().setId("lblClose");
+		panelPopupInner.getElement().setId("pnlPopupInner");
+		
+		lblCheckYourEmail.getElement().setId("lblCheckYourEmail");
+		
 	}
 	
 	@UiHandler("lblClose")
@@ -210,6 +234,7 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params);
 		
 		hide();
+		appPopUp.hide();
 	}
 
 }

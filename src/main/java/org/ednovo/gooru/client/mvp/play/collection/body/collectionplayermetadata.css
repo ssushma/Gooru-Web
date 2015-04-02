@@ -6,7 +6,7 @@
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
-     margin-top:50px;
+   /*   margin-top:50px; */
 }
 .clearfix:after { 
    content: "."; 
@@ -18,7 +18,7 @@
 .leftPanel {
     width:700px;
    /*  min-height:100%; */
-   	height:650px;
+   	min-height:650px;
     float:left;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
@@ -30,7 +30,7 @@
 .rightPanel {
     width:240px;
    /*  height:100%; */
-    height:650px;
+    min-height:650px;
     float:right;
     padding: 30px 20px 20px 20px;
     box-sizing:border-box;
@@ -47,15 +47,16 @@
 }
 
 .commentField {
-	max-width: 490px;
+	/* max-width: 490px; */
 	max-height: 80px;
     float:left;
     font-size: 12px;
     margin-right:10px;
     min-height: 80px;
-	min-width: 490px;
+	/* min-width: 490px; */
 	border: 1px solid #dddddd;
 	padding: 5px;
+	resize: none;
 }
 
 .infoSection{
@@ -69,10 +70,10 @@
 .infoSection:first-child {
     margin-top:0px;
 }
-.rightPanel .infoSection h3{
+.infoSection h3{
 	margin-bottom:10px;
 }
-.rightPanel  .userImageContainer {
+  .userImageContainer {
     margin-right:10px;
     width:40px;
     height:40px;
@@ -80,15 +81,16 @@
     display:inline-block;
     vertical-align:middle;
     border:3px solid #87BADD;
+    box-sizing: content-box;
 }
-.rightPanel .userImage{
+ .userImage{
     width:40px;
     height:40px;
      border-radius:40px;
     display:inline-block;
     vertical-align:middle;
 }
-.rightPanel  .username {
+ .username {
     display:inline-block;
     vertical-align:middle;
 }
@@ -102,11 +104,11 @@
     font-size:10px;
     font-weight:bold
 }
-.rightPanel .relatedConcepts a {
+ .relatedConcepts a {
     display:block;
     margin:1px 0px;
 }
-.rightPanel a.flagCollection {
+ a.flagCollection {
     color: #515151;
     padding-left:30px;
     background:url('images/flag.png') no-repeat;
@@ -117,7 +119,7 @@
     padding-left:30px;
     background:url('images/flag.png') no-repeat;
 }
-.rightPanel a.flaggedCollection {
+a.flaggedCollection {
     color: #999;
     padding-left:30px;
     background:url('images/flagged.png') no-repeat;
@@ -127,7 +129,7 @@
     padding-left:30px;
     background:url('images/flagged.png') no-repeat;
 }
-.rightPanel a.flaggedCollection:hover {
+ a.flaggedCollection:hover {
     opacity:1;
     cursor:default;
 }
@@ -169,7 +171,20 @@
 	margin: 10px 0px;
 }
 
-.commentsSection .userPhoto {
+.commentsSection{
+	border-top:1px solid #dedede;
+
+	/* -webkit-box-shadow:0 2px 2px rgba(0,0,0,.08),0 1px 0 rgba(0,0,0,.08);
+  box-shadow:0 2px 2px rgba(0,0,0,.08),0 1px 0 rgba(0,0,0,.08);*/
+background: -moz-linear-gradient(top,  #efefef 0%, #f9f9f9 20%, #ffffff 40%, #ffffff 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efefef), color-stop(20%,#f9f9f9), color-stop(40%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #efefef 0%,#f9f9f9 20%,#ffffff 40%,#ffffff 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+ .userPhoto {
     margin-right:10px;
     width:40px;
     height:40px;
@@ -191,17 +206,19 @@
     margin-top:30px
 }
 
-.commentsSection .addComment .loginMessaging {
-    width:570px;
-    height:100px;
-    background:#f0f0f0;
-    border:1px solid #ddd;
-    color:#999;
-    line-height:100px;
-    vertical-align:middle;
-    text-align:center;
-    float:left;
-    margin-right:15px;
+
+.loginMessaging {
+   width: 100%;
+/* min-height: 100px; */
+	height: 100px;
+	background: #f0f0f0;
+	border: 1px solid #ddd;
+	color: #999;
+	/* line-height: 100px; */
+	text-align: center;
+	padding: 5px;
+	line-height: 6.25em;
+	vertical-align: middle;
 }
 
 .commentsSection .addComment button#post,
@@ -216,11 +233,9 @@
 
 .successPostMsg {
 	text-align: center;
-	height: 60px;
-	width: 505px;
-	margin-right: 20px;
+	height: 80px;
 	float: left;
-	padding-top: 40px;
+	padding-top: 30px;
 	border: 1px solid #dddddd;
 }
 
@@ -235,9 +250,10 @@
 
 .commentsH2 {
 	margin-bottom: 10px;
-	display: block;
+	display: inline-block;
 	font-size: 1.5em;
 	font-weight: bold;
+	width: 58%;
 }
 .standard_section{
 	display:inline-block;
@@ -249,7 +265,7 @@
 	transition: height 1s ease;
 	position: relative;
 	text-align: center;
-	width: 626px;
+	width: 100%;
 	color: #1076BB;
 	cursor: pointer;
 }
@@ -261,6 +277,10 @@
 .errorMessage {
 	float: right;
 	margin-right: 80px;
+	margin-top: 10px;
+}
+.errorMessageCommentsSection {
+	float: right;
 	margin-top: 10px;
 }
 
@@ -488,4 +508,166 @@
 	color:#999;
 	font-style: italic;
 }
+.clearBoth{
+	clear: both;
+}
+.mutedText{
+	color:#EEEEEE;
+}
+.timeTextBig{
+	color:#fff;
+	font-size:30px;
+}
+.timeTextSmall{
+	color:#fff;
+	font-size:20px;
+}
+.teacherTipOuterContainer{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+}
+.depthofKnow{
+	background: -moz-linear-gradient(center top, #666, #515151) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#666), to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background-image: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	padding: 3px;
+	cursor: default !important;
+}
+.reactionCanExplain{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -7px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionCanUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -53px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionDonotUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -141px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionMeh{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -95px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionNeedHelp{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -184px -4px;
+	width: 35px;
+	height: 35px;
+}
 
+.commentsCharLimit{
+	margin-top: -10px;
+	color: #999;
+	text-align: right;
+}
+.onoffbtns{
+	display:inline-block;
+	margin-left:15px;
+}
+
+.switchContainer {
+
+ 	 position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 59px;
+	height: 28px;
+	padding: 3px;
+	vertical-align: middle;
+	background-color: white;
+	border-radius: 18px;
+	cursor: pointer;
+}
+
+.block{
+    padding: 30px 0;
+}
+
+.avatarblock{
+	width:100%;
+/*	margin:25px 0;*/
+	padding:35px 0;
+	border-bottom:1px solid #dedede;
+}
+
+.avatarblock .avatar{
+	width:48px;
+	height:48px;
+	display:inline-block;
+	margin-right: 15px;
+	   vertical-align: top;
+}
+.avatarblock .commentsSection{
+display: inline-block;
+    vertical-align: top;
+    width:70%;
+}
+.avatarblock:last-child{
+	border-bottom:none;
+}
+
+.avatarblock .commentsHeader{
+	font-size:15px;
+	font-weight:bold;
+	margin-bottom:10px;
+}
+
+
+.avatarblock .commentsStatus{
+    display: inline-block;
+    width: auto;
+	color:#adadad;
+	font-weight:bold;
+	text-align:right;
+	vertical-align:top;
+	float:right;
+	
+}
+
+.avatarblock .ActiveButton{
+	float:right;
+	margin-right:0;
+	margin-top:0;
+	margin-bottom:0;
+}
+
+.avatarblock .commentsSection textarea{
+	width:100%;
+	border:1px solid #e1e1e1;
+}
+
+.commentsTable{
+	width:100%;
+ 	position: relative;
+	vertical-align: top;
+	padding: 3px;
+	vertical-align: middle;
+	background-color: white;
+	cursor: pointer;
+
+}

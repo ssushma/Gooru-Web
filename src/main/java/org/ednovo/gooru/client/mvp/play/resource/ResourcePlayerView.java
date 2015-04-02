@@ -28,23 +28,31 @@ package org.ednovo.gooru.client.mvp.play.resource;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
-import org.ednovo.gooru.client.mvp.home.HomeCBundle;
+import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.header.ResourcePlayerHeaderView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Cookies;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -53,13 +61,21 @@ import com.gwtplatform.mvp.client.proxy.NavigationEvent;
 import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayerUiHandlers> implements IsResourcePlayerView, MessageProperties{
+public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayerUiHandlers> implements IsResourcePlayerView{
 	
 	
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
 	
+	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
+	
+	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
+	
 	@UiField ResourcePlayerHeaderView headerView;
-	//ResourceInfoView resourceInfoView=new ResourceInfoView();
+
+	@UiField Anchor viewAnchor;
+	
+	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+
 	private PopupPanel appPopUp;
 	private boolean isInfoButtonActive=false;
 	private boolean isShareButtonActive=false;
@@ -75,6 +91,8 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 
 	interface CollectionPlayerViewUiBinder extends UiBinder<Widget, ResourcePlayerView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public ResourcePlayerView(EventBus eventBus){
@@ -92,10 +110,38 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
 		headerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
 		
-		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
-		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());*/
-		//resourceInfoView.getHideButton().addClickHandler(new ShowTabWidgetView("info"));
+
 		setAutoHideOnNavigationEventEnabled(true);
+		
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  headerView.getElement().setAttribute("style", "position:relative;");
+			 ipadSectiondiv.setVisible(true);
+			 androidSectiondiv.setVisible(false);
+
+		  }
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  headerView.getElement().setAttribute("style", "position:relative;");
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(true);
+		  }
+		  else
+		  {
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(false);
+			  headerView.getElement().setAttribute("style", "position:fixed;");
+			  
+		  }
+		  setUiText();
 	}
 	 
 	  @Override
@@ -165,14 +211,32 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	
 	public class CloseResourcePlayerEvent implements ClickHandler{
 		public void onClick(ClickEvent event) {
-			hideFromPopup(true);
-			resetPlayer();
+		
+			if (AppClientFactory.getPlaceManager().getPreviousRequest()!=null){
+				if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("resource-search") || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("collection-search")){
+					Window.enableScrolling(false);
+				}
+			}
+		
+			if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+				new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						hideFromPopup(true);
+						resetPlayer();
+					}
+				};
+			}else{
+				hideFromPopup(true);
+				resetPlayer();
+			}
+			
 		}
 	}
 	
 	public void resetPlayer(){
 		hide();
-		resetThumbsButtons();
 		resetResourcePlayer();
 	}
 	
@@ -186,7 +250,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 				    PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).with("id", resourceId).with("tab", tabView);
 				    boolean refreshPlace=tabView.equalsIgnoreCase("add")?true:false;
 					AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-					ResourcePlayerMetadataView.removePadding();
+					
 			 }
 		}
 		
@@ -194,16 +258,20 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		
 	@Override
     public void setInSlot(Object slot, Widget content) {
-		if(slot==ResourcePlayerPresenter.TAB_PRESENTER_SLOT){
-			getNavigationContainer().clear();
-			getNavigationContainer().setVisible(false);
-			if(content!=null){
-				getNavigationContainer().add(content);
-			}
-		}else if(slot==ResourcePlayerPresenter.METADATA_PRESENTER_SLOT){
-			getPlayerBodyContainer().clear();
-			getPlayerBodyContainer().add(content);
-		}  
+		if(slot!=null){
+			if(slot==ResourcePlayerPresenter.TAB_PRESENTER_SLOT){
+				getNavigationContainer().clear();
+				getNavigationContainer().setVisible(false);
+				if(content!=null){
+					getNavigationContainer().add(content);
+				}
+			}else if(slot==ResourcePlayerPresenter.METADATA_PRESENTER_SLOT){
+				getPlayerBodyContainer().clear();
+				if(content!=null){
+				getPlayerBodyContainer().add(content);
+				}
+			}  
+		}
 	}
 
 	@Override
@@ -213,10 +281,10 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		setActiveButton(makeAddButtonActive, makeInfoButtionActive,makeShareButtonActive,makeFlagButtonActive);
 		if(makeInfoButtionActive || makeShareButtonActive)
 		{
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 		if(!AppClientFactory.isAnonymous() && makeAddButtonActive){
-			ResourcePlayerMetadataView.removePadding();
+			
 		}
 	}
 
@@ -224,7 +292,6 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectFlagButton) {
 		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion,deselectFlagButton);		
 		setActiveButton(false,false,false,false);
-		ResourcePlayerMetadataView.addPadding();
 	}
 	
 	public void setActiveButton(boolean makeAddButtonActive,boolean makeInfoButtionActive,
@@ -248,55 +315,9 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void resetResourcePlayer(){
 		getUiHandlers().resetResourcePlayer();
 	}
-	/*private class UpdateThumbsDownEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(AppClientFactory.isAnonymous()){
-				getUiHandlers().showLoginPopupWidget(RESOURCE_THUMBS_WIDGET_MODE);
-			}else{
-				int thumbsStaus=userRating==0||userRating==1?-1:0;
-				getUiHandlers().updateResourceThumbsRating(thumbsStaus);
-			}
-		}
-	}
 	
-	private class UpdateThumbsUpEvent implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			if(AppClientFactory.isAnonymous()){
-				getUiHandlers().showLoginPopupWidget(RESOURCE_THUMBS_WIDGET_MODE);
-			}else{
-				int thumbsStaus=userRating==0||userRating==-1?1:0;
-				getUiHandlers().updateResourceThumbsRating(thumbsStaus);
-			}
-		}
-	}*/
 	@Override
-	public void updateThumbsRatingView(int userThumbRating) {
-		/*userRating=userThumbRating;
-		if(userThumbRating==0){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
-		}else if(userThumbRating==-1){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownActive());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
-		}else if(userThumbRating==1){
-			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpActive());
-		}*/
-		
-		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
-		if(resourcePlayerFirstTimeUser==null){
-			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
-			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
-			globalTooltipWithButton.setStyleName("");
-			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
-			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
-			globalTooltipWithButton.show();
-		}
-		
-	}
+	public void updateThumbsRatingView(int userThumbRating) {}
 
 	public int getUserRating() {
 		return userRating;
@@ -306,12 +327,39 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		this.userRating = userRating;
 	}
 	
-	public void resetThumbsButtons(){
-		/*userRating=0;
-		headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-		headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());*/
+
+	@UiHandler("closeIpadBtn")
+	public void onIpadCloseClick(ClickEvent clickEvent){
+		 ipadSectiondiv.setVisible(false);
+		  androidSectiondiv.setVisible(false);
+		  headerView.getElement().setAttribute("style", "position:fixed;");
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		  int count=navigationContainer.getWidgetCount();
+		  if(count>0){
+			  getNavigationContainer().getWidget(0).getElement().getStyle().setMarginTop(50, Unit.PX);
+		  }
+		 // CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
+		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
 	}
 
+	@UiHandler("closeAndriodBtn")
+	public void onAndriodCloseClick(ClickEvent clickEvent){
+		 ipadSectiondiv.setVisible(false);
+		  androidSectiondiv.setVisible(false);
+		  headerView.getElement().setAttribute("style", "position:fixed;");
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		 setMarginTopToNav();
+		  //CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
+		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
+	}
+	
+	public void setMarginTopToNav(){
+		 int count=navigationContainer.getWidgetCount();
+		  if(count>0){
+			  getNavigationContainer().getWidget(0).getElement().getStyle().setMarginTop(50, Unit.PX);
+		  }
+	}
+	
 	@Override
 	public Button getFlagButton() {
 		return headerView.getFlagButton();
@@ -321,5 +369,45 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void makeFlagButtonOrange() {
 		headerView.makeFlagButtonOrange();
 	}
-	
+	public void setUiText()
+	{ 
+		  androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
+		  closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
+		  ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
+		  closeIpadBtn.getElement().setId("imgCloseIpadBtn");
+		  headerView.getElement().setId("collectionPlayerHeaderView");
+		  navigationContainer.getElement().setId("fpnlNavigationContainer");
+		  playerBodyContainer.getElement().setId("fpnlPlayerBodyContainer");
+		  
+		  msgPanel.getElement().setInnerHTML(i18n.GL1983());
+		  msgPanel.getElement().setId("pnlMsgPanel");
+		  msgPanel.getElement().setAttribute("alt",i18n.GL1983());
+		  msgPanel.getElement().setAttribute("title",i18n.GL1983());
+		  
+		  msglinkPanel.getElement().setInnerHTML(i18n.GL1984());
+		  msglinkPanel.getElement().setId("pnlMsglinkPanel");
+		  msglinkPanel.getElement().setAttribute("alt",i18n.GL1984());
+		  msglinkPanel.getElement().setAttribute("title",i18n.GL1984());
+		  
+		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
+		  gooruPanel.getElement().setId("pnlGooruPanel");
+		  gooruPanel.getElement().setAttribute("alt",i18n.GL0733());
+		  gooruPanel.getElement().setAttribute("title",i18n.GL0733());
+		  
+		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
+		  ednovoPanel.getElement().setId("pnlEdnovoPanel");
+		  ednovoPanel.getElement().setAttribute("alt",i18n.GL1985());
+		  ednovoPanel.getElement().setAttribute("title",i18n.GL1985());
+		  
+		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
+		  appstorePanel.getElement().setId("pnlAppstorePanel");
+		  appstorePanel.getElement().setAttribute("alt",i18n.GL1986());
+		  appstorePanel.getElement().setAttribute("title",i18n.GL1986());
+		  
+		  viewAnchor.setText(i18n.GL1428());
+		  viewAnchor.getElement().setId("lnkViewAnchor");
+		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
+		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
+		  
+	}
 }

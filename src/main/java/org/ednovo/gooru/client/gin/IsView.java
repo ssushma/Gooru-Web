@@ -30,8 +30,19 @@ package org.ednovo.gooru.client.gin;
 import com.gwtplatform.mvp.client.View;
 
 /**
- * @author Search Team
  * 
+ * @fileName : IsView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface IsView extends View {
 

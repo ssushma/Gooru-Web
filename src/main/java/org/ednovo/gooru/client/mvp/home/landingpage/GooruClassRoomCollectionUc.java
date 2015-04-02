@@ -31,8 +31,8 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -51,7 +51,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GooruClassRoomCollectionUc extends Composite implements MessageProperties{
+public class GooruClassRoomCollectionUc extends Composite{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 	
@@ -85,6 +85,8 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 	interface GooruClassRoomCollectionUcUiBinder extends
 			UiBinder<Widget, GooruClassRoomCollectionUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public GooruClassRoomCollectionUc(FeaturedCollectionContentDo featuredCollectionContentDo, String tabfilter, String title, String useCase, String description, String collectionId) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -93,6 +95,11 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 		worksOnGooruLbl2 = new InlineLabel();
 		setData(featuredCollectionContentDo, title, useCase, description,collectionId);
 		
+		methodsCollection.getElement().setId("imgMethodsCollection");
+		contentTitle.getElement().setId("lblContentTitle");
+		contentDescription.getElement().setId("htmlContentDescription");
+		howToUseTitle.getElement().setId("lblHowToUseTitle");
+		howToUseDescription.getElement().setId("pnlHowToUseDescription");
 	}
 	
 	private void setData(final FeaturedCollectionContentDo featuredCollectionContentDo, String title, String useCase, String description, final String collectionId) {
@@ -109,7 +116,7 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 				SetTab(Tabfilter);
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", featuredCollectionContentDo.getScollections().get(0).getGooruOid());
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 			}
 		});
 		methodsCollection.addErrorHandler(new ErrorHandler() {
@@ -120,8 +127,12 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 		});
 		
 		contentTitle.setText(title);
+		contentTitle.getElement().setAttribute("alt",title);
+		contentTitle.getElement().setAttribute("title",title);
 		contentTitle.getElement().getStyle().setMarginBottom(3, Unit.PX);
 		contentDescription.setHTML(useCase);
+		contentDescription.getElement().setAttribute("alt",useCase);
+		contentDescription.getElement().setAttribute("title",useCase);
 		contentDescription.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		
 		if(!collectionId.equalsIgnoreCase("na")) {
@@ -137,13 +148,15 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 				public void onClick(ClickEvent event) {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", collectionId);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 				}
 			});
 		} else {
 			howToUseDescription.add(new HTML(description));
 		}
-		howToUseTitle.setText(GL1321);
+		howToUseTitle.setText(i18n.GL1321());
+		howToUseTitle.getElement().setAttribute("alt",i18n.GL1321());
+		howToUseTitle.getElement().setAttribute("title",i18n.GL1321());
 		howToUseTitle.getElement().getStyle().setMarginBottom(3, Unit.PX);
 	}
 	

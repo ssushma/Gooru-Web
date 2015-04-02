@@ -28,7 +28,21 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEventHandler;
 
 import com.google.gwt.event.shared.EventHandler;
-
+/**
+ * 
+ * @fileName : SignUpCompleteProfileUiHandler.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface SignUpCompleteProfileUiHandler extends BaseUiHandlers,EventHandler,SetUpdateProfileImageEventHandler{
 	public void showUploadProfileImageWidget();
 	public void displayView();

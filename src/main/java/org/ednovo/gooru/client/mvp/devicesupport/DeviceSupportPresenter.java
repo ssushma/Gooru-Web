@@ -39,8 +39,19 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
 /**
- * @author Search Team
+ * 
+ * @fileName : DeviceSupportPresenter.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class DeviceSupportPresenter extends Presenter<IsDeviceSupportView, DeviceSupportPresenter.IsDeviceSupportProxy>{
     
@@ -70,7 +81,26 @@ public class DeviceSupportPresenter extends Presenter<IsDeviceSupportView, Devic
     protected void revealInParent() {
         RevealRootContentEvent.fire(this, this);
     }
-    
+    /**
+     * 
+     * @function getDeviceDetails 
+     * 
+     * @created_date : 07-Dec-2014
+     * 
+     * @description
+     * 
+     * 
+     * @parm(s) : @param device
+     * @parm(s) : @param size
+     * 
+     * @return : void
+     *
+     * @throws : <Mentioned if any exceptions>
+     *
+     * 
+     *
+     *
+     */
     public void getDeviceDetails(String device, String size){
         
         getView().writeToConsole("device : "+device);

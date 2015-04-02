@@ -31,12 +31,13 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -54,12 +55,23 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author
  * 
+ * @fileName : AssignmentsView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class AssignmentsView extends
 		ChildView<AssignmentsPresenter> implements
-		IsAssignmentsView, MessageProperties {
+		IsAssignmentsView {
 
 	@UiField(provided = true)
 	AssignmentsViewCBundle res;
@@ -108,6 +120,8 @@ public class AssignmentsView extends
 
 	private static AssignmentsViewUiBinder uiBinder = GWT
 			.create(AssignmentsViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AssignmentsViewUiBinder extends
 			UiBinder<Widget, AssignmentsView> {
@@ -134,13 +148,30 @@ public class AssignmentsView extends
 		this.assignmentsSearchDo = assignmentsSearchDo;
 		assignmentId = assignmentsSearchDo.getTask().getGooruOid();
 		titleLb.setText(taskTitle);
+		titleLb.getElement().setId("lblTitle");
+		titleLb.getElement().setAttribute("alt",taskTitle);
+		titleLb.getElement().setAttribute("title",taskTitle);
+		
 		descLbl.setText(description);
-		expandLbl.setText(GL0241);
+		descLbl.getElement().setId("lblDesc");
+		descLbl.getElement().setAttribute("alt",description);
+		descLbl.getElement().setAttribute("title",description);
+		
+		
+		expandLbl.setText(i18n.GL0241());
+		expandLbl.getElement().setAttribute("alt",i18n.GL0241());
+		expandLbl.getElement().setAttribute("title",i18n.GL0241());
 		expandLbl.getElement().setId("lblexpand");
+		
+		dueLbl.getElement().setId("lblDue");
 		if (dueDate!=null && !dueDate.equalsIgnoreCase("")){
-			dueLbl.setText(GL0238+GL_SPL_SEMICOLON+" "+dueDate);
+			dueLbl.setText(i18n.GL0238()+i18n.GL_SPL_SEMICOLON()+" "+dueDate);
+			dueLbl.getElement().setAttribute("alt",i18n.GL0238()+i18n.GL_SPL_SEMICOLON()+" "+dueDate);
+			dueLbl.getElement().setAttribute("title",i18n.GL0238()+i18n.GL_SPL_SEMICOLON()+" "+dueDate);
 		}else{
 			dueLbl.setText(" ");
+			dueLbl.getElement().setAttribute("alt","");
+			dueLbl.getElement().setAttribute("title","");
 		}
 		emptyAssignmentLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		getPresenter().getAssignmentCollections(assignmentId);
@@ -152,15 +183,30 @@ public class AssignmentsView extends
 		if (isOpen){
 				descPanel.getElement().getStyle().setDisplay(Display.INLINE);
 				this.description= true;
-				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 		}else{
 				descPanel.getElement().getStyle().setDisplay(Display.NONE);
 				this.description= false;
 		}
-		
-		
+		assignmentPanel.getElement().setId("pnlAssignment");
+		colletionPanel.getElement().setId("pnlColletion");
+		emptyAssignmentLbl.getElement().setId("lblEmptyAssignment");
 	}
-		
+	/**
+	 * 
+	 * @fileName : AssignmentsView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOver implements MouseOverHandler{
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -170,7 +216,21 @@ public class AssignmentsView extends
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @fileName : AssignmentsView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOut implements MouseOutHandler{
 		
 		@Override
@@ -178,7 +238,21 @@ public class AssignmentsView extends
 			expandLbl.setVisible(false);
 		}
 	}
-	
+	/**
+	 * 
+	 * @fileName : AssignmentsView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnTitleClick implements ClickHandler{
 
 		@Override
@@ -186,17 +260,21 @@ public class AssignmentsView extends
 			if((description == null || !description)){
 				descPanel.getElement().getStyle().setDisplay(Display.INLINE);
 				description= true;
-				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 			}
 			else{
 				descPanel.getElement().getStyle().setDisplay(Display.NONE);
 				description= false;
-//				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+//				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 			}
 			
 		}
 		
 	}
+	
+	/**
+	 * 
+	 */
 	public void insertCollectionToAssignment(ResourceDo resourceDo){
 		CollectionsView cv = new CollectionsView();
 		
@@ -209,7 +287,9 @@ public class AssignmentsView extends
 	public void emptyAssignment() {
 		
 		if((descLbl.getText()==null || descLbl.getText().equalsIgnoreCase(""))){
-			emptyAssignmentLbl.setText(GL1129);
+			emptyAssignmentLbl.setText(i18n.GL1129());
+			emptyAssignmentLbl.getElement().setAttribute("alt",i18n.GL1129());
+			emptyAssignmentLbl.getElement().setAttribute("title",i18n.GL1129());
 		}
 	}
 

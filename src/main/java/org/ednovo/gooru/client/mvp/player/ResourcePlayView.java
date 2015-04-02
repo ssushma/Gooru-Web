@@ -35,10 +35,11 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ShareViewUc;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
@@ -58,7 +59,7 @@ import com.google.inject.Inject;
  */
 public class ResourcePlayView extends
 		BasePopupViewWithHandlers<ResourcePlayUiHandlers> implements
-		IsResourcePlayView,MessageProperties {
+		IsResourcePlayView {
 
 	private ResourcePlayWidget gooruResourcePlayer;
 
@@ -75,6 +76,8 @@ public class ResourcePlayView extends
 	String contentId;
 
 	HandlerRegistration playerCloseHandler;
+	
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor, style for resource player popup panel
@@ -153,7 +156,7 @@ public class ResourcePlayView extends
 						&& gooruResourcePlayer.getUserDo() != null) {
 					if (gooruResourcePlayer.getUserDo().getUsername() != null
 							&& gooruResourcePlayer.getUserDo()
-									.getUserPassword() != null) {
+									.getUserPassword() != null) {/*
 						AppClientFactory
 								.getInjector()
 								.getAppService()
@@ -177,11 +180,10 @@ public class ResourcePlayView extends
 											@Override
 											public void onFailure(
 													Throwable caught) {
-												new AlertContentUc(GL0061,
-														caught.getMessage());
+//												new AlertContentUc(i18n.GL0061(),caught.getMessage());
 											}
 										});
-					}
+					*/}
 				}
 				/*if (gooruResourcePlayer.getIsResourceAdded()) {
 					// redirect(reloadUrl);

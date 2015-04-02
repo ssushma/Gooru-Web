@@ -24,10 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
@@ -35,7 +38,11 @@ import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
@@ -67,8 +74,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 //	void listCollections(Integer pageSize,Integer pageNum,String scollection,AsyncCallback<List<CollectionDo>> callback);
 	
-	void getUserCollection(AsyncCallback<List<CollectionDo>> callback);
-	
 	void createCollectionWithItem(CollectionDo collectionDo, String codeId, String resourceId, AsyncCallback<CollectionDo> callback);
 	
 //	void updateCollectionItem(CollectionItemDo collectionItem, AsyncCallback<CollectionItemDo> callback);
@@ -77,19 +82,11 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop, AsyncCallback<CollectionItemDo> callback);
 	
-	void addCollaborator(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
-	
-	void getCollaborators(String gooruOid,AsyncCallback<List<UserDo>> callback);
-	
-	void deleteCollaborators(String gooruOid,String collaboratorId,AsyncCallback<UserDo> callback);
-
-//	void copyCollectionItem(String collectionItemId,AsyncCallback<CollectionItemDo> callback);
-	
 	void getYoutubeDuration(String videoId,AsyncCallback<String> callback);
 	
 //	void getMyUserCollections(AsyncCallback<List<CollectionItemsListDo>> callback) throws GwtException;
 
-	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, AsyncCallback<CollectionItemDo> callback);
+	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards,String hostName,List<String> tagList, AsyncCallback<CollectionItemDo> callback);
 	
 	void getResourceMetaInfo(String url, AsyncCallback<ResourceMetaInfoDo> callback);
 	
@@ -99,9 +96,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 			CollectionQuestionItemDo collectionQuestionItemDo,
 			AsyncCallback<CollectionItemDo> addQuestionResourceAsyncCallback);
 	
-	void updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl, AsyncCallback<CollectionItemDo> updateQuestionItemResourceAsyncCallback);
-	
-	void updateResourceInfo(CollectionItemDo collectionItemDo,AsyncCallback<CollectionItemDo> callback);
+	void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList,AsyncCallback<CollectionItemDo> callback);
 	
 	void removeQuestionImage(String collectionQuestionId, AsyncCallback<Void> callback);
 	
@@ -133,10 +128,55 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 	void checkProfanityForList(List<ProfanityCheckDo> parms, AsyncCallback<List<ProfanityCheckDo>> callback);
 
-	void getFolderWorkspace(int offset, int limit,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
+	void getFolderWorkspace(int offset, int limit,String sharingType, String collectionType,boolean isExcludeAssessment, AsyncCallback<FolderListDo> callback);
 	
 	void updateCollectionInfo(CollectionDo collectionDo,
 			String teacherTips, AsyncCallback<CollectionDo> asyncCallback);
 	
+	void updateCollectionLanguageObjective(CollectionDo collectionDo,
+			String languageObjective, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void updateCollectionDepthOfKnowledge(CollectionDo collectionDo,
+			String depthOfKnowledge,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void updateCollectionInstructionalMethod(CollectionDo collectionDo,
+			String instructionMethod,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void updateCollectionAudience(CollectionDo collectionDo,
+			String instructionMethod,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
+	
+	void updateCollectionLearningSkills(CollectionDo collectionDo,
+			String depthOfKnowledge,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
 	void getCollectionInfoV2API(String collectionId, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void deleteTaxonomyResource(String resourceId,Integer codeId,AsyncCallback<Void> asyncCallback);
+	
+	void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj,AsyncCallback<Void> asyncCallback);
+	
+	void addTagsToResource(String resourceId, String addedTags,AsyncCallback<List<ResourceTagsDo>> asyncCallback);
+	
+	void getTagsToResource(String resourceId, AsyncCallback<List<ResourceTagsDo>> asyncCallback);
+	
+	void deleteTagsServiceRequest(String resourceId, String addedTags,AsyncCallback<Void> callback);
+
+	//void getfolderList(String id, AsyncCallback<List<DriveDo>> asyncCallback);
+
+	void getGoogleDriveFilesList(String folderId,String nextPageToken,AsyncCallback<GoogleDriveDo> callback);
+	
+    void updateFileShareToAnyoneWithLink(String driveFileId,AsyncCallback<GoogleDriveDo> callback);
+
+	//void updatePermissions(DriveDo driveObject,AsyncCallback<DriveDo> simpleAsyncCallback);
+    void refreshGoogleAccessToken(String refreshToken, AsyncCallback<GoogleToken> callback);
+    
+    void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl, AsyncCallback<CollectionItemDo> updateQuestionItemResourceAsyncCallback);
+    
+    void updateCollectionSettingForComments(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType, String action, String comments, AsyncCallback<CollectionDo> callback);
+    
+    void getUserShelfDetails(String userUid,AsyncCallback<String> callback);
+    
+    void updateAssessmentDetails(String assessmentId,String title,String assessmentUrl,String description,String sharing,String requireLogin,AsyncCallback<FolderDo> callback);
+    
+    void update21CenturySkills(String collectionId,String action,Map<Long, String> skillsData,AsyncCallback<CollectionDo> callback);
 }

@@ -25,14 +25,17 @@
 package org.ednovo.gooru.shared.model.search;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.shared.model.content.LicenseDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchResultsTagsDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
@@ -113,6 +116,31 @@ public class ResourceSearchResultDo implements Serializable {
 
 	private String gooruUId;
 	
+	private int noOfQuestions;
+	
+	private int scollectionCount;
+	
+	private int resourceCount;
+	
+	private int questionCount;
+	
+	private SearchRatingsDo ratings;
+	
+	private List<String> publisher;
+	
+	private List<String> aggregator;
+	
+	private List<SearchResultsTagsDo> resourceTags = new ArrayList<SearchResultsTagsDo>();
+
+	
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
+	}
+
 	/** 
 	 * This method is to get the mediaType
 	 */
@@ -422,4 +450,74 @@ public class ResourceSearchResultDo implements Serializable {
 	public void setGooruUId(String gooruUId) {
 		this.gooruUId = gooruUId;
 	}
+
+	public int getNoOfQuestions() {
+		return noOfQuestions;
+	}
+
+	public void setNoOfQuestions(int noOfQuestions) {
+		this.noOfQuestions = noOfQuestions;
+	}
+
+	public int getResourceCount() {
+		return resourceCount;
+	}
+
+	public void setResourceCount(int resourceCount) {
+		this.resourceCount = resourceCount;
+	}
+
+	public int getQuestionCount() {
+		return questionCount;
+	}
+
+	public void setQuestionCount(int questionCount) {
+		this.questionCount = questionCount;
+	}
+
+	public int getScollectionCount() {
+		return scollectionCount;
+	}
+
+	public void setScollectionCount(int scollectionCount) {
+		this.scollectionCount = scollectionCount;
+	}
+	
+	
+
+	public List<String> getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(List<String> publisher) {
+		this.publisher = publisher;
+	}
+
+	public List<String> getAggregator() {
+		return aggregator;
+	}
+
+	public void setAggregator(List<String> aggregator) {
+		this.aggregator = aggregator;
+	}
+
+	/**
+	 * @return the resourceTags
+	 */
+	public List<SearchResultsTagsDo> getResourceTags() {
+		return resourceTags;
+	}
+
+	/**
+	 * @param resourceTags the resourceTags to set
+	 */
+	public void setResourceTags(List<SearchResultsTagsDo> resourceTags) {
+		this.resourceTags = resourceTags;
+	}
+
+	
+
+	
+	
+	
 }

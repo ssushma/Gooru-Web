@@ -26,13 +26,12 @@ package org.ednovo.gooru.client.mvp.shelf.list;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -41,9 +40,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class MoreCollectionPrompt extends Composite implements MessageProperties{
+public class MoreCollectionPrompt extends Composite {
 
 	private static MoreCollectionPromptUiBinder uiBinder = GWT.create(MoreCollectionPromptUiBinder.class);
+	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	protected AppPopUp appPopUp;
 	@UiField Label manyResourcesText,tipLabelText,splitCollectionText;
@@ -58,14 +59,32 @@ public class MoreCollectionPrompt extends Composite implements MessageProperties
 	 */
 	public MoreCollectionPrompt() {
 		appPopUp = new AppPopUp();
-		appPopUp.setContent(GL0981,uiBinder.createAndBindUi(this));
+		appPopUp.setContent(i18n.GL0981(),uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		manyResourcesText.setText(GL0978);
-		tipLabelText.setText(GL0979);
-		splitCollectionText.setText(GL0980);
-		okButton.setText(GL0190.toLowerCase());
-		cancelButton.setText(GL0142);
+		manyResourcesText.setText(i18n.GL0978());
+		manyResourcesText.getElement().setId("lblManyResourcesText");
+		manyResourcesText.getElement().setAttribute("alt", i18n.GL0978());
+		manyResourcesText.getElement().setAttribute("title", i18n.GL0978());
+		tipLabelText.setText(i18n.GL0979());
+		tipLabelText.getElement().setId("lblTipLabelText");
+		tipLabelText.getElement().setAttribute("alt", i18n.GL0979());
+		tipLabelText.getElement().setAttribute("title", i18n.GL0979());
+		
+		splitCollectionText.setText(i18n.GL0980());
+		splitCollectionText.getElement().setId("lblSplitCollectionText");
+		splitCollectionText.getElement().setAttribute("alt", i18n.GL0980());
+		splitCollectionText.getElement().setAttribute("title", i18n.GL0980());
+		
+		okButton.setText(i18n.GL0190().toLowerCase());
+		okButton.getElement().setId("bluebtnOkButton");
+		okButton.getElement().setAttribute("alt", i18n.GL0190().toLowerCase());
+		okButton.getElement().setAttribute("title", i18n.GL0190().toLowerCase());
+		
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setId("lnkCancelButton");
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
 	}
 
 }

@@ -78,7 +78,7 @@
 
 
 .framebreaker-image{
-	margin-bottom: 60px;
+	padding-left: 80px;
 }
 
 .textColorWhite{
@@ -100,7 +100,7 @@
 }
 .resourceCategoryImage{
 	position: relative;
-	right: 90px;
+	right: 83px;
 	display: inline-block;
 }
 .resourceImage{
@@ -108,6 +108,7 @@
 	display: inline-block;
 	width: 80px;
 	height: 60px;
+	vertical-align: initial;
 }
 .resourceComeBack{
 	font-size: 14px;

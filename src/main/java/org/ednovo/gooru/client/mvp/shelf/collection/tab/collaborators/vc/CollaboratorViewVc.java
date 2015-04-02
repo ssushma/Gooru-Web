@@ -41,10 +41,10 @@ import org.ednovo.gooru.client.mvp.search.event.SetPanelVisibilityEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -69,9 +69,11 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class CollaboratorViewVc extends Composite implements MessageProperties {
+public abstract class CollaboratorViewVc extends Composite {
 
 	private static CollaboratorViewVcUiBinder uiBinder = GWT.create(CollaboratorViewVcUiBinder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollaboratorViewVcUiBinder extends UiBinder<Widget, CollaboratorViewVc> {
 	}
@@ -191,11 +193,16 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 		panelYou.getElement().setId("divYou");
 		panelCollaborators.getElement().setId("divCollaborators");
 		
-		btnRemoveFromList.setText(GL0937);
+		btnRemoveFromList.setText(i18n.GL0937());
+		btnRemoveFromList.getElement().setAttribute("alt",i18n.GL0937());
+		btnRemoveFromList.getElement().setAttribute("title",i18n.GL0937());
 		btnRemoveFromList.getElement().setId("btnRemoveFromList");
-		lblYou.setText(GL0938);
-		
-		btnRemoveCollab.setText(GL0237);
+		lblYou.setText(i18n.GL0938());
+		lblYou.getElement().setAttribute("alt",i18n.GL0938());
+		lblYou.getElement().setAttribute("title",i18n.GL0938());
+		btnRemoveCollab.setText(i18n.GL0237());
+		btnRemoveCollab.getElement().setAttribute("alt",i18n.GL0237());
+		btnRemoveCollab.getElement().setAttribute("title",i18n.GL0237());
 		btnRemoveCollab.setVisible(false);
 		
 		if (collaboratorsDo!=null && collaboratorsDo.getStatus().equalsIgnoreCase("pending")){
@@ -221,7 +228,11 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 			
 			//imgProfileImage.setUrl((collectionDo.getUser() !=null && collectionDo.getUser().getProfileImageUrl() !=null ) ? collectionDo.getUser().getProfileImageUrl() : defaultProfileImage);
 			lblUserName.setText((collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
+			lblUserName.getElement().setAttribute("alt",(collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
+			lblUserName.getElement().setAttribute("title",(collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
 			lblEmailId.setText((collectionDo.getUser() !=null && collectionDo.getUser().getEmailId() !=null )  ? collectionDo.getUser().getEmailId() : "");
+			lblEmailId.getElement().setAttribute("alt",(collectionDo.getUser() !=null && collectionDo.getUser().getEmailId() !=null )  ? collectionDo.getUser().getEmailId() : "");
+			lblEmailId.getElement().setAttribute("title",(collectionDo.getUser() !=null && collectionDo.getUser().getEmailId() !=null )  ? collectionDo.getUser().getEmailId() : "");
 			lblRadioButton.getElement().setId(lblEmailId.getText());
 			lblRadioButton.getElement().setAttribute("userName", lblUserName.getText());
 			
@@ -232,7 +243,11 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 			imgProfileImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+collaboratorsDo.getGooruUid()+".png");
 			//imgProfileImage.setUrl((collaboratorsDo.getProfileImageUrl() !=null ) ? collaboratorsDo.getProfileImageUrl() : defaultProfileImage);
 			lblUserName.setText((collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
+			lblUserName.getElement().setAttribute("alt",(collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
+			lblUserName.getElement().setAttribute("title",(collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
 			lblEmailId.setText((collaboratorsDo.getEmailId() !=null)  ? collaboratorsDo.getEmailId() : "");
+			lblEmailId.getElement().setAttribute("alt",(collaboratorsDo.getEmailId() !=null)  ? collaboratorsDo.getEmailId() : "");
+			lblEmailId.getElement().setAttribute("title",(collaboratorsDo.getEmailId() !=null)  ? collaboratorsDo.getEmailId() : "");
 			lblRadioButton.getElement().setId(lblEmailId.getText());
 			lblRadioButton.getElement().setAttribute("username", (collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : lblEmailId.getText());
 			
@@ -252,11 +267,11 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 		if (collaboratorsDo!=null){
 			if (collaboratorsDo.getStatus().equalsIgnoreCase("pending")){
 				imgProfileImage.getElement().getStyle().setDisplay(Display.NONE);
-				lblEmailId.getElement().getStyle().setWidth(85, Unit.PCT);
+				lblEmailId.getElement().getStyle().setWidth(81, Unit.PCT);
 				lblEmailId.getElement().getStyle().setPaddingLeft(15, Unit.PX);
-				lblEmailId.getElement().getStyle().setMarginTop(9, Unit.PX);
-				panelCollaborators.getElement().getStyle().setHeight(35, Unit.PX);
-				btnRemoveCollab.getElement().getStyle().setMarginTop(0, Unit.PX);
+				lblEmailId.getElement().getStyle().setMarginTop(11, Unit.PX);
+				panelCollaborators.getElement().getStyle().setHeight(50, Unit.PX);
+				btnRemoveCollab.getElement().getStyle().setMarginTop(4, Unit.PX);
 				
 			}else{
 				panelCollaborators.getElement().getStyle().clearHeight();;
@@ -281,7 +296,11 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 				imgYourPhoto.setUrl(defaultProfileImage);
 			}
 		});
-		
+		imgYourPhoto.getElement().setId("imgYourPhoto");
+		lblYou.getElement().setId("lblYou");
+		imgProfileImage.getElement().setId("imgProfileImage");
+		lblUserName.getElement().setId("lblUserName");
+		lblEmailId.getElement().setId("lblEmailId");
 	}
 	
 	@UiHandler("btnRemoveCollab")
@@ -325,20 +344,20 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 			}
 		};
 		if (classpageTitles.size() > 0 && collaboratorsDo.getStatus().equalsIgnoreCase("active")){
-			delete.setPopupTitle(GL1163);
-			delete.setNotes(StringUtil.generateMessage(GL1164, lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
-			delete.setDescText(GL1165);
-			delete.setPositiveButtonText(GL0237);
+			delete.setPopupTitle(i18n.GL1163());
+			delete.setNotes(StringUtil.generateMessage(i18n.GL1164(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
+			delete.setDescText(i18n.GL1165());
+			delete.setPositiveButtonText(i18n.GL0237());
 		}else{
-			delete.setPopupTitle(GL1118);
-			delete.setNotes(GL0748);
-			delete.setDescText(StringUtil.generateMessage(GL1119, lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
-			delete.setPositiveButtonText(GL0190);
+			delete.setPopupTitle(i18n.GL1118());
+			delete.setNotes(i18n.GL0748());
+			delete.setDescText(StringUtil.generateMessage(i18n.GL1119(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
+			delete.setPositiveButtonText(i18n.GL0190());
 		}
-		delete.setPleaseWaitText(GL1021);
+		delete.setPleaseWaitText(i18n.GL1021());
 		 
 		
-		delete.setNegitiveButtonText(GL0142);
+		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.center();
 		delete.show();
 	}
@@ -408,7 +427,7 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 				hide();
 			}
 		};
-		delete.setPopupTitle(GL0748);		
+		delete.setPopupTitle(i18n.GL0748());		
 		if (classpageTitles.size()>0){
 			StringBuffer sb = new StringBuffer();
 			String anchString = "<a href=\"{0}\" target=\"_blank\">{1}</a>";
@@ -420,7 +439,7 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 					sb.append(StringUtil.generateMessage(anchString, url,classpageTitles.get(i).getTitle()));
 				}else{
 					if (i == (count-1)){
-						sb.append(GL_GRR_AND+" "+StringUtil.generateMessage(anchString, url,classpageTitles.get(i).getTitle()));
+						sb.append(i18n.GL_GRR_AND()+" "+StringUtil.generateMessage(anchString, url,classpageTitles.get(i).getTitle()));
 					}else{
 						sb.append(StringUtil.generateMessage(anchString, url,classpageTitles.get(i).getTitle()) + ", ");
 					}
@@ -428,35 +447,35 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 			}
 			String remaining;
 			if (classpageTitles.size()>defaultCollabCount){
-				remaining = "+"+(classpageTitles.size() - count) +" "+ GL1153;
+				remaining = "+"+(classpageTitles.size() - count) +" "+ i18n.GL1153();
 			}else{
 				if (classpageTitles.size()==1){
-					remaining = (" "+GL1155);
+					remaining = (" "+i18n.GL1155());
 				}else{
-					remaining = (" "+GL1154+GL_SPL_EXCLAMATION);
+					remaining = (" "+i18n.GL1154()+i18n.GL_SPL_EXCLAMATION());
 				}
 			}
-			delete.setNotes(GL1156+" "+sb.toString()+" "+remaining);
+			delete.setNotes(i18n.GL1156()+" "+sb.toString()+" "+remaining);
 		}else{
-			delete.setNotes(GL1128);
+			delete.setNotes(i18n.GL1128());
 		}
 		if (classpageTitles.size()>0){
 			if (classpageTitles.size() == 1){
-				delete.setDescText(GL1157+ " "+GL1155+".");
+				delete.setDescText(i18n.GL1157()+ " "+i18n.GL1155()+".");
 			}else{
-				delete.setDescText(GL1157+ " "+GL1154+GL_SPL_EXCLAMATION+".");
+				delete.setDescText(i18n.GL1157()+ " "+i18n.GL1154()+i18n.GL_SPL_EXCLAMATION()+".");
 			}
 			
 		}else{
-			delete.setDescText(GL1125);
+			delete.setDescText(i18n.GL1125());
 		}
 		if (classpageTitles.size()>0){
-			delete.setPositiveButtonText(GL0237);
+			delete.setPositiveButtonText(i18n.GL0237());
 		}else{
-			delete.setPositiveButtonText(GL0190);
+			delete.setPositiveButtonText(i18n.GL0190());
 		}
-		delete.setPleaseWaitText(GL0339);
-		delete.setNegitiveButtonText(GL0142);
+		delete.setPleaseWaitText(i18n.GL0339());
+		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.center();
 		delete.show();
 	}

@@ -48,13 +48,14 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -95,6 +96,9 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	private String limit="10";//pagesize
     int resultSize;
 	private int offSet=0;
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.TEACH)
 	public interface IsClasspageProxy extends ProxyPlace<ClasspagePresenter> {
@@ -172,7 +176,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 				assignmentDo.setClasspageId(classpageId);
 				
 				TaskDo taskDo = new TaskDo();
-				taskDo.setTitle(GL0121);
+				taskDo.setTitle(i18n.GL0121());
 				taskDo.setTypeName("assignment");
 				assignmentDo.setTask(taskDo);
 				
@@ -247,7 +251,25 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			refreshClasspage();
 		
 	}
-
+	/**
+	 * 
+	 * @function refreshClasspage 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void refreshClasspage(){
 	  List<CollectionDo> tmpClasspageList = new ArrayList<CollectionDo>();
 		
@@ -291,7 +313,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	@Override
 	public void createClasspage(CollectionDo collectionDo) {
 
-//		getClasspageService().createClasspage(collectionDo, getCollectionAsyncCallback());
 		getClasspageService().v2CreateClasspage(collectionDo, getCollectionAsyncCallback());
 		 getView().getClassPageScrollPanel().scrollToTop();
 		
@@ -299,8 +320,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	
 	@Override
 	public void getAllClasspages(String limit, String offSet) {
-
-		
 		getClasspageService().v2GetAllClasspages(limit, offSet, getGetAllClasspagesAsyncCallback());
 	}
 	

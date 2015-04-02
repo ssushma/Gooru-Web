@@ -25,11 +25,12 @@
 package org.ednovo.gooru.client.mvp.library.partner;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -50,6 +51,8 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 
 	@Override
@@ -57,44 +60,58 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 		super.onReveal();
 		getView().onLoad();
 		getView().reset();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
 	}
 
 	@Override
+	public void onReset() {
+		super.onReset();
+		Window.enableScrolling(true);
+		Window.scrollTo(0, 0);
+	}
+	@Override
 	public void getPartnerWorkspaceFolders() {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, COLLECTION_TYPE, new AsyncCallback<PartnerFolderListDo>(){
-			@Override
-			public void onFailure(Throwable caught) {}
-			
+		final long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("API Hit start --- "+AppClientFactory.getCurrentPlaceToken()+" ------ "+startTime); 
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, null, AppClientFactory.getCurrentPlaceToken(), new SimpleAsyncCallback<PartnerFolderListDo>(){
+			 
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
+				AppClientFactory.printInfoLogger(" API Totaltime consumed on success @ client --- "+(System.currentTimeMillis()-startTime));
+				AppClientFactory.printInfoLogger(" ---- Ui Rendering --- ");
 				getView().setUnitList(result.getSearchResult());
 			}
 		});
 	}
 	
 	@Override
-	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
-		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<PartnerFolderListDo>() {
+	public void getPartnerChildFolderItems(final String folderId, final int pageNumber,final String libraryGooruOid) {
+		final long startTime = System.currentTimeMillis();
+		AppClientFactory.printInfoLogger("Lib unit API call start --- "+AppClientFactory.getCurrentPlaceToken()+" ---- "+startTime);
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
-				getView().setTopicListData(result.getSearchResult(), folderId);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
+				AppClientFactory.printInfoLogger("Lib unit API call consumed on success @ client --- "+(System.currentTimeMillis() - startTime));
+				AppClientFactory.printInfoLogger(" ---- Ui Rendering --- ");
+				getView().setTopicListData(result.getSearchResult(), folderId,libraryGooruOid);
+				
 			}
 		});
 	}
 	
 	public void setPartnerWidget() {
-		if(AppClientFactory.getLoggedInUser()!=null) {
-			getView().clearPanels();
-			getView().loadingPanel(true);
-			getIntoPartnerLibrarypage();
-			getPartnerWorkspaceFolders();
-		} else {
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ERROR);
-		}
+//		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+			if(AppClientFactory.getLoggedInUser()!=null) {
+				getView().clearPanels();
+				getView().getComingSoonText(false);
+				getView().loadingPanel(true);
+				getIntoPartnerLibrarypage();
+				getPartnerWorkspaceFolders();
+			} else {
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+			}
+//		}
 	}
 	
 	/**
@@ -110,7 +127,8 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		
+		return AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 	}
 
 }

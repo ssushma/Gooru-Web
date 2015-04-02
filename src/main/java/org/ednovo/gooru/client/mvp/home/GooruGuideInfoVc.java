@@ -28,8 +28,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -45,7 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class GooruGuideInfoVc extends PopupPanel implements MessageProperties {
+public class GooruGuideInfoVc extends PopupPanel {
 	
 	
 	@UiField
@@ -58,14 +58,22 @@ public class GooruGuideInfoVc extends PopupPanel implements MessageProperties {
 	interface GooruGuideInfoUiBinder extends UiBinder<Widget, GooruGuideInfoVc> {
 	}
 
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	/**
 	 * Class constructor
 	 */
 	public GooruGuideInfoVc() {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
-		gooruGuideLbl.setText(GL1247);
-		guideSlideHomeBtnUc.setText(GL0543);
+		gooruGuideLbl.setText(i18n.GL1247());
+		gooruGuideLbl.getElement().setId("lblGooruGuide");
+		gooruGuideLbl.getElement().setAttribute("alt",i18n.GL1247());
+		gooruGuideLbl.getElement().setAttribute("title",i18n.GL1247());
+		
+		guideSlideHomeBtnUc.setText(i18n.GL0543());
+		guideSlideHomeBtnUc.getElement().setAttribute("alt",i18n.GL0543());
+		guideSlideHomeBtnUc.getElement().setAttribute("title",i18n.GL0543());
 		guideSlideHomeBtnUc.getElement().setId("btnGuideSlideHome");
 	}
 	

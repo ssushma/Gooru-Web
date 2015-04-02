@@ -28,4 +28,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface ResourceInfoUiHandlers extends BaseUiHandlers{
 	public void getCollectionList(String resourceGooruOid,String pageNum,String pageSize);
+	public void getAddedResourceTags(String resourceId);
 }

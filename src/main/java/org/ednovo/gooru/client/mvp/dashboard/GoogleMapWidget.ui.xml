@@ -1,0 +1,63 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<ui:style field="style" src="dashboard.css"/>
+	
+	<g:HTMLPanel ui:field="googleMapWidgetPnl">
+						<div class="{style.whiteBg}">
+							
+							<div class="col-md-4 {style.graphStatistics}">
+							<div class="{style.panelBox}">
+							<g:Label styleName="col-md-6 {style.greenBig}" ui:field="collectionCountNum"></g:Label>
+							<g:Label styleName="col-md-6 {style.greySmall}" ui:field="collectionCountText"></g:Label>
+							<div class="{style.clearfix}"></div>
+							</div>
+							
+							<div class="{style.statisticsBlock}">
+							<div class="col-md-6">
+							<g:Label styleName="{style.collHead}" ui:field="cityNameLblLeft"></g:Label>
+							<div class="{style.collSmallHead}"><g:InlineLabel ui:field="percentageLblLeft"></g:InlineLabel> </div>
+							
+							<div class="{style.collHead}">Washington</div>
+							<div class="{style.collSmallHead}"><span>18%</span> </div>
+							
+							<div class="{style.collHead}">Pennsylvania</div>
+							<div class="{style.collSmallHead}"><span>15%</span> </div>
+							
+							<div class="{style.collHead}">Maryland</div>
+							<div class="{style.collSmallHead}"><span>5%</span> </div>
+							</div>
+							
+							
+							<div class="col-md-6">
+							<g:Label styleName="{style.collHead}" ui:field="cityNameLblRight"></g:Label>
+							<div class="{style.collSmallHead}"><g:InlineLabel ui:field="percentageLblRight"></g:InlineLabel></div>
+							
+							<div class="{style.collHead}">New York</div>
+							<div class="{style.collSmallHead}"><span>16%</span> </div>
+							
+							<div class="{style.collHead}">Michigan</div>
+							<div class="{style.collSmallHead}"><span>11%</span> </div>
+							
+							<div class="{style.collHead}">Texas</div>
+							<div class="{style.collSmallHead}"><span>2%</span> </div>
+							</div>
+							
+							<div class="{style.clearfix}"></div>
+							</div>
+							</div>
+							
+							<g:HTMLPanel styleName="col-md-8 {style.graphContainer}" ui:field="graphContainer">
+							 <img src="../images/profileimages/graph.png" />
+							</g:HTMLPanel>
+							<div class="{style.clearfix}"></div>
+							</div>
+	</g:HTMLPanel>
+	
+</ui:UiBinder>

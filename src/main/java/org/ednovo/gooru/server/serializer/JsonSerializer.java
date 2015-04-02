@@ -89,7 +89,6 @@ public class JsonSerializer {
 		try {
 			return getWriter(null).writeValueAsString(object);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
 	}

@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.service;
 
 import java.util.List;
 
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -50,4 +51,6 @@ public interface HomeServiceAsync extends BaseServiceAsync {
 	void mosLink(AsyncCallback<String> callback);
 	
 	void getClientIpAddress(AsyncCallback<String> callback);
+	
+	void  getRedirectServerUrl(AsyncCallback<String> callback);
 }

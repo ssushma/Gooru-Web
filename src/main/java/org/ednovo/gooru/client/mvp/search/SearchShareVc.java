@@ -32,30 +32,31 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
+import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Float;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
  * 
  */
-public class SearchShareVc extends Composite implements MessageProperties {
+public class SearchShareVc extends Composite {
 
 	private static SearchShareVcUiBinder uiBinder = GWT
 			.create(SearchShareVcUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchShareVcUiBinder extends UiBinder<Widget, SearchShareVc> {
 	}
@@ -76,7 +77,7 @@ public class SearchShareVc extends Composite implements MessageProperties {
 	/*@UiField FlowPanel embedContainer;*/
 	
 	@UiField FlowPanel socialShareLinksViewContainer;
-	@UiField Label shareViaText;
+	@UiField PPanel shareViaText;
 	
 	public SocialShareLinksView socialShareLinksView = null;
 
@@ -95,13 +96,19 @@ public class SearchShareVc extends Composite implements MessageProperties {
 		initWidget(uiBinder.createAndBindUi(this));
 		socialShareLinksView = new SocialShareLinksView();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
-		shareViaText.setText(GL0638);
-		socialShareLinksView.getShareLbl().setText(GL0511);
-		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
+		shareViaText.setText(i18n.GL0638());
+		shareViaText.getElement().setId("lblShareViaText");
+		shareViaText.getElement().setAttribute("alt",i18n.GL0638());
+		shareViaText.getElement().setAttribute("title",i18n.GL0638());
+		socialContentPanel.getElement().setId("pnlSocialContentPanel");
+		socialShareLinksViewContainer.getElement().setId("fpnlSocialShareLinksViewContainer");
+		
+		socialShareLinksView.getShareLbl().setText(i18n.GL0511());
+		/*socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setWidth(22, Unit.PC);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setFloat(Float.LEFT);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingLeft(10, Unit.PX);
-		socialShareLinksView.getShareLinkContainer().getElement().getStyle().setWidth(353, Unit.PX);
+		socialShareLinksView.getShareLinkContainer().getElement().getStyle().setWidth(353, Unit.PX);*/
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
 			public void onSuccess(Map<String, String> shortenUrl) {
@@ -204,7 +211,15 @@ public class SearchShareVc extends Composite implements MessageProperties {
 		shareDo.setDecodeRawUrl(socialShareLinksView.getshareLinkTxtBox().getText());
 		shareDo.setOnlyIcon(false);
 		shareDo.setShareType("public");
-		SocialShareView socialView = new SocialShareView(shareDo);
+		SocialShareView socialView = new SocialShareView(shareDo){
+			public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", null,"", "", "", PlayerDataLogEvents.RESOURCE, shareType, confirmStaus, "", searchResultDo.getGooruOid(), AppClientFactory.getPlaceManager().getSeachEventPageLocation());
+				}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", null,"", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", searchResultDo.getGooruOid(), AppClientFactory.getPlaceManager().getSeachEventPageLocation());
+				}
+			}
+		};
 		socialContentPanel.add(socialView);
 
 	}

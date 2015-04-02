@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.AppServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.service.CollaboratorsServiceAsync;
@@ -40,10 +41,20 @@ import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 
 import com.google.gwt.inject.client.Ginjector;
-
 /**
- * @author Search Team
  * 
+ * @fileName : ServiceInjector.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public interface ServiceInjector extends Ginjector {
 
@@ -74,5 +85,7 @@ public interface ServiceInjector extends Ginjector {
 	LibraryServiceAsync getLibraryService();
 	
 	CollaboratorsServiceAsync getCollaboratorsService();
+	
+	AnalyticsServiceAsync getAnalyticsService();
 
 }

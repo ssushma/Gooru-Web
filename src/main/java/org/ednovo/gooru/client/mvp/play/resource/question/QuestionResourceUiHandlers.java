@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 public interface QuestionResourceUiHandlers extends BaseUiHandlers{
@@ -40,10 +41,13 @@ public interface QuestionResourceUiHandlers extends BaseUiHandlers{
 	public void saveOeQuestionAnswerDataLogEvent();
 	public void setUserAttemptedQuestionTypeAndStatus(boolean isUserAttemptedResult,int questionType);
 	public void setAnswerIdWithTime(Integer answerId,Integer attemptStatus,Integer attemptSequence);
+	public void setAnswerIdWithTimeForMa(List<Integer> answerId,Integer attemptStatus,Integer attemptSequence);
 	public void setExplanationIdWithTime(String explanaion);
 	public void setHintIdWithTime(Integer hintId);
 	public void setResourceScore(Integer score);
 	public void triggerSaveOeAnswerTextDataEvent();
 	public void setFibAnswerIdsWithTime(List<Integer> attemptAnswerIds,List<Integer> attemptTrySequenceArray,List<Integer> attemptStatusArray);
 	public void increaseUserAttemptCount();
+	public void isOeAnswerSubmited(boolean isOeAnswerSubmited);
+	public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);
 }

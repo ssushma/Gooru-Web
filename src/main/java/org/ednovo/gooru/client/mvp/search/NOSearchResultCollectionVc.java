@@ -33,8 +33,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -67,11 +67,13 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class NOSearchResultCollectionVc extends Composite implements MessageProperties {
+public class NOSearchResultCollectionVc extends Composite {
 
 	private static NOSearchResultCollectionVcUiBinder uiBinder = GWT
 			.create(NOSearchResultCollectionVcUiBinder.class);
 
+	MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	interface NOSearchResultCollectionVcUiBinder extends
 			UiBinder<Widget, NOSearchResultCollectionVc> {
 	}
@@ -92,16 +94,54 @@ public class NOSearchResultCollectionVc extends Composite implements MessageProp
 	public NOSearchResultCollectionVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		suggestedCollectionContainer.setVisible(false);
-		btnLibrary.setText(GL0506);
-		btnLibrary.getElement().getStyle().setMarginLeft(180, Unit.PX);
-		didnotFindText.setText(GL0704);
-		orText.setText(GL0209.toUpperCase());
-		tryTipsText.setText(GL0705);
-		removeFiltersText.setText(GL0706);
-		checkSpellingText.setText(GL0707);
-		differentKeywordText.setText(GL0708);
-		changeToggleText.setText(GL0709);
-		suggestedCollectionsText.setText(GL0710);
+		btnLibrary.setText(i18n.GL0506());
+		btnLibrary.getElement().setId("btnLibrary");
+		btnLibrary.getElement().setAttribute("alt",i18n.GL0506());
+		btnLibrary.getElement().setAttribute("title",i18n.GL0506());
+		
+		/*btnLibrary.getElement().getStyle().setMarginLeft(180, Unit.PX);*/
+		didnotFindText.setText(i18n.GL0704());
+		didnotFindText.getElement().setId("lblDidnotFindText");
+		didnotFindText.getElement().setAttribute("alt",i18n.GL0704());
+		didnotFindText.getElement().setAttribute("title",i18n.GL0704());
+		
+		orText.setText(i18n.GL0209().toUpperCase());
+		orText.getElement().setId("lblOrText");
+		orText.getElement().setAttribute("alt",i18n.GL0209().toUpperCase());
+		orText.getElement().setAttribute("title",i18n.GL0209().toUpperCase());
+		
+		tryTipsText.setText(i18n.GL0705());
+		tryTipsText.getElement().setId("lblTryTipsText");
+		tryTipsText.getElement().setAttribute("alt",i18n.GL0705());
+		tryTipsText.getElement().setAttribute("title",i18n.GL0705());
+		
+		removeFiltersText.setText(i18n.GL0706());
+		removeFiltersText.getElement().setId("lblRemoveFiltersText");
+		removeFiltersText.getElement().setAttribute("alt",i18n.GL0706());
+		removeFiltersText.getElement().setAttribute("title",i18n.GL0706());
+		
+		checkSpellingText.setText(i18n.GL0707());
+		checkSpellingText.getElement().setId("lblCheckSpellingText");
+		checkSpellingText.getElement().setAttribute("alt",i18n.GL0707());
+		checkSpellingText.getElement().setAttribute("title",i18n.GL0707());
+		
+		differentKeywordText.setText(i18n.GL0708());
+		differentKeywordText.getElement().setId("lblDifferentKeywordText");
+		differentKeywordText.getElement().setAttribute("alt",i18n.GL0708());
+		differentKeywordText.getElement().setAttribute("title",i18n.GL0708());
+		
+		changeToggleText.setText(i18n.GL0709());
+		changeToggleText.getElement().setId("lblChangeToggleText");
+		changeToggleText.getElement().setAttribute("alt",i18n.GL0709());
+		changeToggleText.getElement().setAttribute("title",i18n.GL0709());
+		
+		suggestedCollectionsText.setText(i18n.GL0710());
+		suggestedCollectionsText.getElement().setId("lblSuggestedCollectionsText");
+		suggestedCollectionsText.getElement().setAttribute("alt",i18n.GL0710());
+		suggestedCollectionsText.getElement().setAttribute("title",i18n.GL0710());
+		
+		suggestedCollectionContainer.getElement().setId("pnlSuggestedCollectionContainer");
+		suggestedCollectionCountLbl.getElement().setId("lblSuggestedCollectionCountLbl");
 		//getCollectionData();
 	}
 	
@@ -158,7 +198,7 @@ public class NOSearchResultCollectionVc extends Composite implements MessageProp
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id",collectionThumbnail.getElement().getId());
 						com.google.gwt.user.client.Window.scrollTo(0, 0);
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 					}
 				});
 			}

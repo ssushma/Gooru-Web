@@ -15,6 +15,8 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -41,6 +43,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	/**
 	 * 
 	 */
+	private static final Logger logger= LoggerFactory.getLogger(CollaboratorsServiceImpl.class);
 	private static final long serialVersionUID = 7664026537827418066L;
 
 	/**
@@ -79,7 +82,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return new ArrayList<String>();
 	}
@@ -150,7 +153,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return new ArrayList<CollaboratorsDo>();
 	}
@@ -183,7 +186,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return new HashMap<String, ArrayList<CollaboratorsDo>>();
 	}

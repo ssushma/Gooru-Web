@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.shared.model.content;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -45,7 +47,9 @@ public class NewResourceDo extends ResourceDo {
 	private String thumbnailImgUrl;
 	private Integer stop;
 	private ResourceFormatDo resourceFormat;
-	
+	private ArrayList<checkboxSelectedDo> educationalUse;
+	private ArrayList<checkboxSelectedDo> momentsOfLearning;
+	private ArrayList<String> host;
 	private String thumbnail;
 	
 	/** 
@@ -120,6 +124,32 @@ public class NewResourceDo extends ResourceDo {
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 	}
+
+	
+	public ArrayList<checkboxSelectedDo> getEducationalUse() {
+		return educationalUse;
+	}
+
+	public void setEducationalUse(ArrayList<checkboxSelectedDo> educationalUse) {
+		this.educationalUse = educationalUse;
+	}
+
+	public ArrayList<checkboxSelectedDo> getMomentsOfLearning() {
+		return momentsOfLearning;
+	}
+
+	public void setMomentsOfLearning(ArrayList<checkboxSelectedDo> momentsOfLearning) {
+		this.momentsOfLearning = momentsOfLearning;
+	}
+
+	public ArrayList<String> getHost() {
+		return host;
+	}
+
+	public void setHost(ArrayList<String> host) {
+		this.host = host;
+	}
+
 	
 
 }

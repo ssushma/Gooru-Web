@@ -41,7 +41,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -63,7 +62,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Gooru Team
  * 
  */
-public class FolderItemChildView extends ChildView<FolderItemChildPresenter> implements IsFolderItemView, MessageProperties {
+public class FolderItemChildView extends ChildView<FolderItemChildPresenter> implements IsFolderItemView {
 
 	@UiField(provided = true)
 	FolderItemCBundle res;
@@ -74,7 +73,7 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 	Label folderTitleLbl,confirmDeleteLbl, openFolderpageLbl, folderdescriptionLbl;
 
 	@UiField
-	HTMLPanel folderIcon, collectionIcon, myFolderPageGoals;
+	HTMLPanel folderIcon, collectionIcon, myFolderPageGoals,folderItemPanel;
 	
 	@UiField
 	VerticalPanel actionVerPanel;
@@ -112,6 +111,15 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		setPresenter(new FolderItemChildPresenter(this));
 		actionVerPanel.setVisible(false);
+		folderItemPanel.getElement().setId("pnlFolderItem");
+		folderIcon.getElement().setId("pnlFolderIcon");
+		collectionIcon.getElement().setId("pnlCollectionIcon");
+		folderTitleLbl.getElement().setId("lblFolderTitle");
+		myFolderPageGoals.getElement().setId("pnlMyFolderPageGoals");
+		folderdescriptionLbl.getElement().setId("lblFolderdescription");
+		actionVerPanel.getElement().setId("vpnlActionVer");
+		openFolderpageLbl.getElement().setId("lblOpenFolderpage");
+		confirmDeleteLbl.getElement().setId("lblConfirmDelete");
 	}
 
 	/**
@@ -166,7 +174,7 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 				CollectionDo collectionDo = null;
 				getPresenter().deleteMyFolder(collectionItemDo.getResource().getGooruOid(), collectionItemDo);
 				folderDeleteConfirmationPopUp.hide();
-				Window.enableScrolling(true);
+//				Window.enableScrolling(true);
 		        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 //					AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.DELETE));

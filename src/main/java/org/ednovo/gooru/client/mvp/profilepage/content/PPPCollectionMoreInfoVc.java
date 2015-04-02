@@ -39,11 +39,11 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.ErrorMessagePanel;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -69,14 +69,17 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 
-public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, CollectionItemSearchResultDo> implements MessageProperties {
+public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, CollectionItemSearchResultDo> {
 	
 	private static PPPCollectionMoreInfoVcUiBinder uiBinder = GWT.create(PPPCollectionMoreInfoVcUiBinder.class);
 
 	interface PPPCollectionMoreInfoVcUiBinder extends UiBinder<Widget, PPPCollectionMoreInfoVc> {
 	}
-	private static final String NO_RESOURCES_IN_THIS_COLLECTION =GL0684;
-	private static final String RESOURCES_IN_THIS_COLLECTION= GL1094;
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+//	private static final String NO_RESOURCES_IN_THIS_COLLECTION =i18n.GL0684;
+//	private static final String RESOURCES_IN_THIS_COLLECTION= i18n.GL1094;
 	
 	@UiField
 	MoreInfoFieldVc gradeFieldVc, tagsFieldVc, timeFieldVc, rightsFieldVc,
@@ -113,9 +116,9 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 
 	private SearchDo<CollectionItemSearchResultDo> usedInSearchDo;
 
-	protected static final String OER_DESCRIPTION =GL1092;
+//	protected static final String OER_DESCRIPTION =i18n.GL1092;
 
-	protected static final String OER_TITLE =GL1093;
+//	protected static final String OER_TITLE =i18n.GL1093;
 
 	private static final String OER_PNG_IMG ="oer.png";
 
@@ -138,18 +141,47 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		usedInSearchDo = new SearchDo<CollectionItemSearchResultDo>();
 		usedInSearchDo.setPageSize(20);
 		setWidget(uiBinder.createAndBindUi(this));
-		moreInfotext.setText(GL0726);
-		gradeFieldVc.setToolTip(GL1076);
-		tagsFieldVc.setToolTip(GL0727);
-		timeFieldVc.setToolTip(GL0728);
-		likesFieldVc.setToolTip(GL0729);
-		shareField.setToolTip(GL0526);
-		rightsFieldVc.setToolTip(GL1091);
-		rightsLbl.setText(GL0731);
-		resourceSearchRightsFieldVc.setToolTip(GL0730);
-		imgQuestionImage.setAltText(GL0732);
+		moreInfotext.setText(i18n.GL0726());
+		moreInfotext.getElement().setId("lblMoreInfotext");
+		moreInfotext.getElement().setAttribute("alt",i18n.GL0726());
+		moreInfotext.getElement().setAttribute("title",i18n.GL0726());
+		
+		gradeFieldVc.setToolTip(i18n.GL1076());
+		gradeFieldVc.getElement().setId("moreInfoFieldVcGradeFieldVc");
+		gradeFieldVc.getElement().setAttribute("alt",i18n.GL1076());
+		gradeFieldVc.getElement().setAttribute("title",i18n.GL1076());
+		
+		tagsFieldVc.setToolTip(i18n.GL0727());
+		tagsFieldVc.getElement().setId("moreInfoFieldVcTgsFieldVc");
+		tagsFieldVc.getElement().setAttribute("alt",i18n.GL0727());
+		tagsFieldVc.getElement().setAttribute("title",i18n.GL0727());
+		
+		timeFieldVc.setToolTip(i18n.GL0728());
+		timeFieldVc.getElement().setId("moreInfoFieldVcTimeFieldVc");
+		timeFieldVc.getElement().setAttribute("alt",i18n.GL0728());
+		timeFieldVc.getElement().setAttribute("title",i18n.GL0728());
+		
+		likesFieldVc.setToolTip(i18n.GL0729());
+		likesFieldVc.getElement().setId("moreInfoFieldVcLikesFieldVc");
+		likesFieldVc.getElement().setAttribute("alt",i18n.GL0729());
+		likesFieldVc.getElement().setAttribute("title",i18n.GL0729());
+		
+		shareField.setToolTip(i18n.GL0526());
+		shareField.getElement().setId("moreInfoFieldVcShareField");
+		shareField.getElement().setAttribute("alt",i18n.GL0526());
+		shareField.getElement().setAttribute("title",i18n.GL0526());
+		
+		rightsFieldVc.setToolTip(i18n.GL1091());
+		rightsLbl.setText(i18n.GL0731());
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt",i18n.GL0731());
+		rightsLbl.getElement().setAttribute("title",i18n.GL0731());
+		
+		resourceSearchRightsFieldVc.setToolTip(i18n.GL0730());
+		imgQuestionImage.setAltText(i18n.GL0732());
+		imgQuestionImage.getElement().setId("imgQuestionImage");
 		imgQuestionImage.setUrl("images/mos/questionmark.png");
-		resourceSearchGradeFieldVc.setToolTip(GL1076);
+		resourceSearchGradeFieldVc.setToolTip(i18n.GL1076());
 		setUsedInResourcesAsyncCallback(new SimpleAsyncCallback<SearchDo<CollectionItemSearchResultDo>>() {
 
 			@Override
@@ -193,6 +225,17 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			}
 		});
 		imgQuestionImage.setVisible(false);
+		
+		metaInfoFloPanel.getElement().setId("fpnlMetaInfoFloPanel");
+		resourceSearchRightsFieldVc.getElement().setId("moreInfoFieldVcResourceSearchRightsFieldVc");
+		resourceScrPanel.getElement().setId("sbResourceScrPanel");
+		resourceMoreInfoRightPanel.getElement().setId("fpnlResourceMoreInfoRightPanel");
+		countLblTxt.getElement().setId("lblCountLblTxt");
+		countLbl.getElement().setId("lblCountLbl");
+    	lblNotFriendly.getElement().setId("lblNotFriendly");
+		resourceSearchGradeFieldVc.getElement().setId("moreInfoFieldVcResourceSearchGradeFieldVc");
+		messageInfo.getElement().setId("errpnlMessageInfo");
+		profileusedInResourcesPanel.getElement().setId("vpnlProfileusedInResourcesPanel");
 	}
 	
 	public void reset() {
@@ -258,11 +301,11 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			StringBuilder finalGradeStringB = new StringBuilder();
 
 			if (isKindergarten) {
-				finalGradeStringB.append(GL0850+GL_GRR_COMMA+" ");
+				finalGradeStringB.append(i18n.GL0850()+i18n.GL_GRR_COMMA()+" ");
 			}
 
 			List<Integer> gradeListInt = new ArrayList<Integer>();
-			finalGradeStringB.append(gradeListSize > 1 ? GL1320_1+" " : GL0325+" ");
+			finalGradeStringB.append(gradeListSize > 1 ? i18n.GL1320_1()+" " : i18n.GL0325()+" ");
 
 			for (String eachGrade1 : gradeList) {
 				if (!eachGrade1.equalsIgnoreCase("Kindergarten")
@@ -293,7 +336,6 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 
 					} catch (Exception e) {
 						gradeListInt.add(0);
-						e.printStackTrace();
 					}
 				}
 			}
@@ -310,7 +352,7 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			}
 
 			if (isHigherEducation) {
-				finalGradeStringB.append(GL_GRR_COMMA+" "+GL0169);
+				finalGradeStringB.append(i18n.GL_GRR_COMMA()+" "+i18n.GL0169());
 			}
 
 			grade = finalGradeStringB.toString();
@@ -337,8 +379,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		}
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& !searchResultDo.getLicense().getIcon().equals(NULL)) {
 			Image image = new Image(searchResultDo.getAssetURI()+ searchResultDo.getLicense().getIcon());
-			image.setAltText(GL0730);
-			image.setTitle(GL0730);
+			image.setAltText(i18n.GL0730());
+			image.setTitle(i18n.GL0730());
 			StandardSgItemVc standardItem = null;
 			if (searchResultDo.getLicense().getCode() != null&& !searchResultDo.getLicense().getCode().equalsIgnoreCase(NULL)) {
 				standardItem = new StandardSgItemVc(searchResultDo.getLicense().getCode(), searchResultDo.getLicense().getDefinition());
@@ -348,9 +390,9 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			rightsFieldVc.addWidget(widget);
 		} else if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getTag() == OER|| (searchResultDo.getUrl() != null && searchResultDo.getUrl().indexOf(OERCOMMONS_ORG) >= 0)) {
 			Image image = new Image(LICENSE_FOLDER + OER_PNG_IMG);
-			image.setAltText(GL1098);
-			image.setTitle(GL1098);
-			StandardSgItemVc standardItem = new StandardSgItemVc(OER_TITLE,	OER_DESCRIPTION);
+			image.setAltText(i18n.GL1098());
+			image.setTitle(i18n.GL1098());
+			StandardSgItemVc standardItem = new StandardSgItemVc(i18n.GL1093(),	i18n.GL1092());
 			standardItem.setHeight("100px");
 			DownToolTipWidgetUc widget = new DownToolTipWidgetUc(image,	standardItem);
 			widget.setStyleName("rightsToolTip");
@@ -445,10 +487,10 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	public void setUsedInResources(List<CollectionItemSearchResultDo> childResources) {
 		gradeFieldVc = new MoreInfoFieldVc();
 		if (childResources.size() == 0) {
-			getMessageInfo().setMessage(NO_RESOURCES_IN_THIS_COLLECTION, "");
+			getMessageInfo().setMessage(i18n.GL0684(), "");
 			getMessageInfo().getElement().getStyle().setDisplay(Display.BLOCK);
 		} else {
-			setResourceCountTxt(RESOURCES_IN_THIS_COLLECTION);
+			setResourceCountTxt(i18n.GL1094());
 			setResourceCount("(" + getUsedInSearchDo().getCollectionItemsCount()+ ")");
 		}
 		if (childResources != null) {
@@ -485,6 +527,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	 */
 	public void setResourceCount(String text) {
 		countLbl.setText(text);
+		countLbl.getElement().setAttribute("alt",text);
+		countLbl.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -495,6 +539,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	 */
 	public void setResourceCountTxt(String text) {
 		countLblTxt.setText(text);
+		countLblTxt.getElement().setAttribute("alt",text);
+		countLblTxt.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -530,6 +576,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	}
 	public void setNotFriendly(String text){
 		lblNotFriendly.setText(text);
+		lblNotFriendly.getElement().setAttribute("alt",text);
+		lblNotFriendly.getElement().setAttribute("title",text);
 	}
 	public void showNotFriendly(boolean visibility){
 		lblNotFriendly.setVisible(visibility);

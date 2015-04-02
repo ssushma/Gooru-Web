@@ -209,6 +209,15 @@ public class FolderPopUpUiBinder extends
 		});
 		setAutoHideOnNavigationEventEnabled(true);
 		getGradeList();
+		
+		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
+		validationErrorLbl.getElement().setId("errlblValidation");
+		collectionGradeTxtBox.getElement().setId("spnlCollectionGrade");
+		groupSimPanel.getElement().setId("spnlGroupSimPanel");
+		buttonFloPanel.getElement().setId("fpnlButtonFloPanel");
+		validationErrorFloPanel.getElement().setId("fpnlValidationErrorFloPanel");
+		okBtnUc.getElement().setId("btnOkBtnUc");
+		cancelAnr.getElement().setId("lnkCancelAnr");
 	}
 	
 /*	InsertMetaDataInNewFolderHandler setGradeCourse=new InsertMetaDataInNewFolderHandler(){

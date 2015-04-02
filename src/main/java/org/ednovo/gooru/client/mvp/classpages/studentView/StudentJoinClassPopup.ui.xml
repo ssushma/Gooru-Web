@@ -69,8 +69,13 @@
 			color: #4c9746;
 			font-size: 20px;
 			text-align: center;
-			margin: 0px 0px 15px 0px;
 		}
+		
+		.h2 {
+			color: #4c9746;
+			font-size: 20px;
+			text-align: center;
+			}
 		
 		.signInContainer {
 			text-align: center;
@@ -80,17 +85,28 @@
 		.desc {
 			color: #515151;
 			font-size: 12px;
+			text-align: left;
+			line-height: 125%;
+		}
+		
+		.headerdesc {
+			color: #515151;
+			font-size: 14px;
 			text-align: center;
 			line-height: 125%;
+			margin-top:10px;
+			margin-bottom:10px;
 		}
 		
 		.descInformation {
 			color: #515151;
 			font-size: 12px;
-			text-align: center;
+			text-align: left;
 			line-height: 125%;
 			margin-top:20px;
+			width: 400px;
 		}
+		
 		
 		.middleBg {
 			margin: 15px 0px;
@@ -105,6 +121,11 @@
 			font-weight: bold;
 			text-align: center;
 		}
+        .lblJoining{
+			font-style: italic;
+			color: #515151;
+			font-size: 12px;	
+        }
 		
 		.btnJoin {
 			font-weight: bold;
@@ -117,17 +138,20 @@
 					<g:HTMLPanel styleName="{style.popupHeader}" ui:field="headerPanel"/>
 					<g:Label styleName="{style.closeButton}" ui:field="closeLbl"/>
 					<g:HTMLPanel styleName="{style.popupContent}">
-						<!-- <g:HTMLPanel styleName="{style.h1}" ui:field="welcomePanel"/> -->
-						<!-- <g:HTMLPanel styleName="{style.desc}" ui:field="descPanel"/> --> 
+						 <g:HTMLPanel styleName="{style.h1}" ui:field="welcomePanel"/>
+						 <g:HTMLPanel styleName="{style.h2}" ui:field="classNamePanel"/>
+						<g:HTMLPanel styleName="{style.headerdesc}" ui:field="descPanel"/> 
 						<!-- <g:HTMLPanel styleName="{style.middleBg}">
 							<g:HTMLPanel styleName="{style.privacyTxt}" ui:field="termsPanel"/>
 						</g:HTMLPanel> -->
 						<g:HTML styleName="{style.desc}" ui:field="htmlAgree"/>
 						<g:HTML styleName="{style.descInformation}" ui:field="htmlInformation"/>
 						<g:HTMLPanel styleName="{style.signInContainer}">
-							<g:HTMLPanel>
+							<g:HTMLPanel ui:field="joinBtnPanel">
+							    <g:Button styleName="secondary {style.btnJoin}" ui:field="joinLaterBtn"/>
 								<g:Button styleName="primary {style.btnJoin}" ui:field="joinClassBtn"/>
 							</g:HTMLPanel>
+							<g:Label styleName="{style.lblJoining}" ui:field="lblJoining"/>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>

@@ -1,0 +1,10 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style field="toolTip" src="ToolTip.css" />
+	<g:HTMLPanel styleName="{toolTip.tooltipContainer}" ui:field="panelCode">
+		<g:HTMLPanel styleName="{toolTip.myCollectoinTooltipContent}" ui:field="tooltipPanel">
+			<g:Label styleName="{toolTip.dashBoardToolTipLabel}" ui:field="lblDashBoard" />
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

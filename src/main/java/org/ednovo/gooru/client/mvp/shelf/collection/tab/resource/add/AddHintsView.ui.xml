@@ -19,6 +19,6 @@
            			
                 </g:HTMLPanel>     
               </g:HTMLPanel>
-               <g:Label text="" ui:field="errorMessageforHints" styleName="{addWebResourceStyle.addResourceFormInputBottomText}"/>
+               <g:Label text="" ui:field="errorMessageforHints" styleName="{addWebResourceStyle.hintsErrorValidation}"/>
        </g:HTMLPanel>
 </ui:UiBinder>

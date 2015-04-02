@@ -29,7 +29,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
@@ -46,6 +47,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
@@ -65,7 +67,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class EditableTextAreaUc extends Composite implements HasValue<String>,MessageProperties {
+public class EditableTextAreaUc extends Composite implements HasValue<String> {
 
 	private static EditableLabelUiBinder uiBinder = GWT
 			.create(EditableLabelUiBinder.class);
@@ -73,6 +75,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 	interface EditableLabelUiBinder extends
 			UiBinder<Widget, EditableTextAreaUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	protected HTML html;
@@ -92,6 +96,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 
 	@UiField Label lblErrorMessage;
 	
+	@UiField HTMLPanel duplicateTinyMce,fakeContent;
+	
 	@UiField(provided = true)
 	UcCBundle res;
 
@@ -102,10 +108,15 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
-		
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
 		lblErrorMessage.setVisible(false);
+		lblErrorMessage.getElement().setId("lblLblErrorMessage");
 		lblErrorMessage.getElement().getStyle().setFloat(Float.LEFT);
-
+		html.getElement().setId("htmlHtml");
+		duplicateTinyMce.getElement().setId("pnlDuplicateTinyMce");
+		fakeContent.getElement().setId("pnlFakeContent");
+		StringUtil.setAttributes(textArea, true);
 		textArea.addBlurHandler(new BlurHandler() {
 			
 			@Override
@@ -119,7 +130,9 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 						boolean isHavingBadWords = value;
 						if (value){
 							textArea.getElement().getStyle().setBorderColor("orange");
-							lblErrorMessage.setText(GL0554);
+							lblErrorMessage.setText(i18n.GL0554());
+							lblErrorMessage.getElement().setAttribute("alt", i18n.GL0554());
+							lblErrorMessage.getElement().setAttribute("title", i18n.GL0554());
 							lblErrorMessage.setVisible(true);
 							showProfanityError(true);
 						}else{
@@ -158,10 +171,12 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 			return;
 		textArea.setText(html.getHTML().equals(getPlaceholder()) ? "" :
 		html.getHTML());
+		textArea.getElement().setAttribute("alt", html.getHTML().equals(getPlaceholder()) ? "" :html.getHTML());
+		textArea.getElement().setAttribute("title", html.getHTML().equals(getPlaceholder()) ? "" :html.getHTML());
 		deckPanel.showWidget(1);
 		textArea.setFocus(true);
 		textArea.addStyleName("shelfEditDesc");
-		textArea.getElement().setAttribute("maxlength", "415");
+		textArea.getElement().setAttribute("maxlength", "1000");
 	}
 
 	/**
@@ -181,7 +196,9 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 				boolean isHavingBadWords = value;
 				if (value){
 					textArea.getElement().getStyle().setBorderColor("orange");
-					lblErrorMessage.setText(GL0554);
+					lblErrorMessage.setText(i18n.GL0554());
+					lblErrorMessage.getElement().setAttribute("alt", i18n.GL0554());
+					lblErrorMessage.getElement().setAttribute("title", i18n.GL0554());
 					lblErrorMessage.setVisible(true);
 					showProfanityError(true);
 				}else{
@@ -255,7 +272,11 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 			value = getPlaceholder();
 		}
 		html.setHTML(value);
+		html.getElement().setAttribute("alt", value);
+		html.getElement().setAttribute("title", value);
 		textArea.setText(value);
+		textArea.getElement().setAttribute("alt", value);
+		textArea.getElement().setAttribute("title", value);
 	}
 
 	public void setExtraHtmlStyleName(String style) {

@@ -24,19 +24,90 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.end;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.model.folder.FolderWhatsNextCollectionDo;
+import org.ednovo.gooru.shared.model.library.ConceptDo;
+import org.ednovo.gooru.shared.model.player.CommentsDo;
+import org.ednovo.gooru.shared.model.player.CommentsListDo;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 public interface IsCollectionEndView extends IsViewWithHandlers<CollectionEndUiHandlers>{
-	public void showSummaryQuestionView(CollectionDo collectionDo,Map<String,AttemptedAnswersDo> attemptedAnswerMap);
-	public void showShareWidget(CollectionDo collectionDo,Map<String,String> collectionShare);
-	public void hideSendEmailPopup(String toEmail);
-	public Label getFlagButton();
-	public void setCollectionEndTime(String collectionEndTime,String userSpentTime);
+public void setCollectionMetadata(CollectionDo collectionDo);
+	
+	public void setViewCount(String viewCount);
+	
+	public void setUserProfileName(String gooruUid);
+	
+	public void setLikesCount(int likesCount);
+	
+	public void resetMetadataFields();
+	
+	public void displayAuthorDetails(boolean isDisplayDetails);
+	
+	public Anchor getFlagButton();
+
+	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList, String coursePage, String subject, String lessonId, String libraryName);
+
+	public void isConceptsContainerVisible(boolean isVisible);
+
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo); 
+	
+	public void setDataInsightsSummaryUrl(String sessionId);
+	
+	public void setDataInsightsUrl();
+	
+	public void clearDashBoardIframe();
+	
+	public void setClasspageInsightsUrl(String classpageId, String sessionId);
+	
+	public void setCommentsData(CommentsListDo commentDoList, CollectionDo collectionDo, boolean isToClearCommentContainer);
+	
+	public void setCommentsWidget(CommentsDo commentsDo, String action);
+	
+	public void displaySuccessMsg(boolean isVisible);
+	
+	public void updateCommentChildView(String commentUid, String action);
+	
+	public void clearCommentContainer(boolean isClear);
+	
+	public void setPlayerLoginStatus(boolean isLoggedIn);
+	
+	public void displaySpendTime(Long hours,Long mins, Double secs);
+	
+	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
+	
+	public void displayNextCollectionDetails(CollectionDo collectionDo,String subjectId,String courseId,String libraryType);
+	
+	public void hideNextCollectionContainer(boolean hide);
+	
+	public void showAvgReaction(String averageReaction);
+	
+	public void dispalyTime();
+
+	public void changeCommentsButton(CollectionDo collectionDoObj);
+
+	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
+
+	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> result);
+	
+	public void resetCollectionMetaData();
+	
+	public HTMLPanel getLoadingImageLabel();
+	
+	public void hidePanel();
+	
+	public void resetData();
+	
+	public void showMessageWhenDataNotFound();
+
+	public void displayWhatsNextContent(FolderWhatsNextCollectionDo result, String urlValue);
 }

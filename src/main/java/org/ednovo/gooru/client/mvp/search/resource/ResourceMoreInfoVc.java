@@ -34,31 +34,42 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.search.MoreInfoFieldVc;
 import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
 import org.ednovo.gooru.client.mvp.search.SimpleCollectionVc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+
+import com.google.gwt.core.client.GWT;
 
 /**
  * @author Search Team
  * 
  */
-public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo, CollectionSearchResultDo> implements MessageProperties {
+public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo, CollectionSearchResultDo> {
 	
-	private static final String RESOURCE_NOT_IN_COLLECTION = GL1469+" ";
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	private static final String RESOURCE_NOT_IN_COLLECTION = i18n.GL1469()+" ";
 	
 //	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = "This resource is used in";
-	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = GL1470+GL_SPL_SEMICOLON;
+	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = i18n.GL1470();
 	/**
 	 * Class constructor
 	 * @param searchDragController instance of {@link ResourceDragController}
 	 */
 	public ResourceMoreInfoVc(ResourceDragController searchDragController) {
-		super(searchDragController,true);
+		super(searchDragController,false);
 	}
 
 	@Override
 	public void renderUsedInResource(CollectionSearchResultDo childResource) {
-		getUsedInResourcesPanel().addDraggable(new SimpleCollectionVc(childResource));
+		boolean device = BrowserAgent.isDevice();
+		if (device){
+			getUsedInResourcesPanel().add(new SimpleCollectionVc(childResource));
+		}else{
+			getUsedInResourcesPanel().addDraggable(new SimpleCollectionVc(childResource));
+		}
 	}
 
 	@Override
@@ -70,7 +81,7 @@ public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo,
 			rightsLbl.setVisible(false);
 			resourceSearchGradeFieldVc.setVisible(false);
 			getMessageInfo().setVisible(true);
-			getMessageInfo().setMessage(RESOURCE_NOT_IN_COLLECTION, GL0093);
+			getMessageInfo().setMessage(RESOURCE_NOT_IN_COLLECTION, i18n.GL0093());
 		} else {
 			
 				setResourceCountTxt(COLLECTIONS_THAT_USE_THIS_RESOURCE);

@@ -26,8 +26,8 @@ package org.ednovo.gooru.client.uc;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.register.RegisterCBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -59,7 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class SettingEmailEditLabelUc extends Composite implements MessageProperties,HasValue<String> {
+public class SettingEmailEditLabelUc extends Composite implements HasValue<String> {
 
 	private static SettingEmailEditLabelUcUiBinder uiBinder = GWT
 			.create(SettingEmailEditLabelUcUiBinder.class);
@@ -67,6 +67,8 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 	interface SettingEmailEditLabelUcUiBinder extends
 			UiBinder<Widget, SettingEmailEditLabelUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 	
@@ -83,17 +85,22 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 	protected FocusPanel focusPanel;
 	boolean emailAvailable;
 	protected String text;
-	private static final String EMAIL = GL0212.toLowerCase();
+//	private static final String EMAIL = i18n.GL0212.toLowerCase();
 	@UiField(provided = true)
 	UcCBundle res;
 	public SettingEmailEditLabelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("lblEditLabel");
+		errorLabel.getElement().setId("errlblErrorLabel");
 		deckPanel.showWidget(0);
 		
 		editTextBox.getElement().setAttribute("maxlength", "500");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtEmail");
+		StringUtil.setAttributes(editTextBox, true);
 	}
 	private class ValidateConfirmText implements KeyUpHandler {
 
@@ -112,6 +119,8 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
 		editTextBox.setText(getValue());	
+		editTextBox.getElement().setAttribute("alt", getValue());
+		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName(res.css().SettingEditEmail());
@@ -144,14 +153,18 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 										}else {
 											
 											errorLabel.setVisible(true);
-											errorLabel.setText(StringUtil.generateMessage(GL0082, EMAIL));
+											errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
+											errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
+											errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 												return;
 											
 											
 										}
 										if ((getText() != null && text.trim().length() > 0)) {
 											if(emailAvailable){
-											errorLabel.setText(StringUtil.generateMessage(GL0428, EMAIL));	
+											errorLabel.setText(StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));	
+											errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));
+											errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));
 											errorLabel.setVisible(true);
 											}
 											if(!emailAvailable){
@@ -165,7 +178,6 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 									}
 								});
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 		
@@ -183,6 +195,8 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 	public void cancel() {
 		deckPanel.showWidget(0);
 		editTextBox.setText(editLabel.getText());
+		editTextBox.getElement().setAttribute("alt", editLabel.getText());
+		editTextBox.getElement().setAttribute("title",editLabel.getText());
 		errorLabel.setVisible(false);
 	}
 
@@ -219,7 +233,11 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 		/*editLabel.setText(value.length() > 50 ? value.substring(0, 50) + "..."
 				: value);
 	*/	editLabel.setText(value);
+	editLabel.getElement().setAttribute("alt", value);
+	editLabel.getElement().setAttribute("title", value);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title",value);
 	}
 
 	/**
@@ -253,13 +271,18 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 		Boolean hasvalidData = editTextBox.getText().matches(EMAIL_REGEX);
 		
 		if ((editTextBox.getText() != null && !editTextBox.getText().isEmpty()) && !hasvalidData) {
-			errorLabel.setText(StringUtil.generateMessage(GL0067, EMAIL));
+			errorLabel.setText(StringUtil.generateMessage(i18n.GL0067(), i18n.GL0212().toLowerCase()));
+			errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0067(), i18n.GL0212().toLowerCase()));
+			errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0067(), i18n.GL0212().toLowerCase()));
 			errorLabel.setVisible(true);
 			isValid = false;
 		}	
 		if (editTextBox.getText() == null || editTextBox.getText().isEmpty() || editTextBox.getText().trim().equals(""))
 		 { 
-			errorLabel.setText(StringUtil.generateMessage(GL0082, EMAIL));
+			errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
+			errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
+			errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
+	
 			errorLabel.setVisible(true);
 			editTextBox.addStyleName(RegisterCBundle.INSTANCE.css().errorBoxStyle());
 			isValid = false;

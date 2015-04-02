@@ -24,9 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.json.client.JSONObject;
 
 /**
  * 
@@ -45,5 +48,5 @@ import com.google.gwt.event.shared.EventHandler;
  */
 public interface SignUpUiHandlers extends BaseUiHandlers, EventHandler {
 
-	void CreateUser(String postData, String loginData);
+	void CreateUser(Map<String, String> registrationDetailsParams, String username,String password);
 }

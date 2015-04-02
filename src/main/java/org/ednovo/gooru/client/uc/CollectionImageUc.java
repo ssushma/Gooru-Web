@@ -30,7 +30,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -51,7 +50,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @author Search Team
  *
  */
-public class CollectionImageUc extends Composite implements ClickHandler,MessageProperties {
+public class CollectionImageUc extends Composite implements ClickHandler {
 
 	private static CollectionImageUcUiBinder uiBinder = GWT.create(CollectionImageUcUiBinder.class);
 
@@ -79,6 +78,8 @@ public class CollectionImageUc extends Composite implements ClickHandler,Message
 	public CollectionImageUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		collectionThumbnail.getElement().setId("fpnlCollectionThumbnail");
+		image.getElement().setId("imgImage");
 		image.addErrorHandler(new ErrorHandler() {
 
 			@Override
@@ -105,7 +106,7 @@ public class CollectionImageUc extends Composite implements ClickHandler,Message
 	 * @param url of the image
 	 */
 	public void setUrl(String url, String title) {
-		if (url == null || url.endsWith(NULL)) {
+		if (url == null || url.endsWith(NULL) || (url!=null&&url.trim().isEmpty())) {
 			image.setUrl(DEFULT_IMAGE);
 		} else {
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
@@ -135,7 +136,7 @@ public class CollectionImageUc extends Composite implements ClickHandler,Message
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionGooruOid.getValue());
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 }

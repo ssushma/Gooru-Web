@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,6 +34,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,7 +42,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class AleartPopupVc extends Composite implements MessageProperties {
+public class AleartPopupVc extends Composite{
 
 	private AppPopUp appPopUp;
 
@@ -50,12 +51,16 @@ public class AleartPopupVc extends Composite implements MessageProperties {
 	
 	@UiField Label storeResourcesText;
 	
-	private static final String IS_COLLECTIONS = GL1089+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP;
+	@UiField HTMLPanel buttonContainer;
+	
+//	private static final String IS_COLLECTIONS = i18n.GL1089+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP;
 
 	private static AleartPopupVcUiBinder uiBinder = GWT.create(AleartPopupVcUiBinder.class);
 
 	interface AleartPopupVcUiBinder extends UiBinder<Widget, AleartPopupVc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor , get confirm logout popup
@@ -64,11 +69,19 @@ public class AleartPopupVc extends Composite implements MessageProperties {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName("removeResourcePopup");
-		appPopUp.setContent(IS_COLLECTIONS, uiBinder.createAndBindUi(this));
+		appPopUp.setContent((i18n.GL1089()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()), uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		okBtnUc.setText(GL0190);
-		storeResourcesText.setText(GL1237);
+		okBtnUc.setText(i18n.GL0190());
+		okBtnUc.getElement().setId("btnOkBtnUc");
+		okBtnUc.getElement().setAttribute("alt",i18n.GL0190());
+		okBtnUc.getElement().setAttribute("title",i18n.GL0190());
+		
+		storeResourcesText.setText(i18n.GL1237());
+		storeResourcesText.getElement().setId("lblStoreResourcesText");
+		storeResourcesText.getElement().setAttribute("alt",i18n.GL1237());
+		storeResourcesText.getElement().setAttribute("title",i18n.GL1237());
+		buttonContainer.getElement().setId("pnlButtonContainer");
 	}
 
 	/**

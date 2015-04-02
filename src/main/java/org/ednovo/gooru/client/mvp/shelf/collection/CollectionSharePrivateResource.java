@@ -71,33 +71,53 @@ public class CollectionSharePrivateResource extends Composite {
 		String resourceHtmlTitle=collectionItemDo.getResourceTitle();
 		resourceHtmlTitle=resourceHtmlTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		resourceTitle.setHTML(resourceHtmlTitle);
+		resourceTitle.getElement().setAttribute("alt",resourceHtmlTitle);
+		resourceTitle.getElement().setAttribute("title",resourceHtmlTitle);
 		resourceTitle.setStyleName("resourceTitleShare");
 		category = collectionItemDo.getResource().getCategory();
 		if(category.equalsIgnoreCase("question")){
 			resourceCategory.setText("Question");
+			resourceCategory.getElement().setAttribute("alt","Question");
+			resourceCategory.getElement().setAttribute("title","Question");
 		}else if(category.equalsIgnoreCase("text")){
 			resourceCategory.setText("Text");
+			resourceCategory.getElement().setAttribute("alt","Text");
+			resourceCategory.getElement().setAttribute("title","Text");
 		}
 		else if(category.equalsIgnoreCase("slide")){
 			resourceCategory.setText("Slide");
+			resourceCategory.getElement().setAttribute("alt","Slide");
+			resourceCategory.getElement().setAttribute("title","Slide");
 		}
 		else if(category.equalsIgnoreCase("webpage")){
-			resourceCategory.setText("Webpage");	
+			resourceCategory.setText("Webpage");
+			resourceCategory.getElement().setAttribute("alt","Webpage");
+			resourceCategory.getElement().setAttribute("title","Webpage");
 		}
 		else if(category.equalsIgnoreCase("interactive")){
 			resourceCategory.setText("Interactive");	
+			resourceCategory.getElement().setAttribute("alt","Interactive");
+			resourceCategory.getElement().setAttribute("title","Interactive");
 		}
 		else if(category.equalsIgnoreCase("audio")){
 			resourceCategory.setText("Audio");	
+			resourceCategory.getElement().setAttribute("alt","Audio");
+			resourceCategory.getElement().setAttribute("title","Audio");
 		}
 		else if(category.equalsIgnoreCase("video")){
 			resourceCategory.setText("Video");	
+			resourceCategory.getElement().setAttribute("alt","Video");
+			resourceCategory.getElement().setAttribute("title","Video");
 		}
 		else if(category.equalsIgnoreCase("handout")){
 			resourceCategory.setText("Text");	
+			resourceCategory.getElement().setAttribute("alt","Text");
+			resourceCategory.getElement().setAttribute("title","Text");
 		}
 		else{
 			resourceCategory.setText(category);
+			resourceCategory.getElement().setAttribute("alt",category);
+			resourceCategory.getElement().setAttribute("title",category);
 		}
 		resourceCategoryIcon.addStyleName(UcCBundle.INSTANCE.css().resourceName());
 		resourceCategoryIcon.addStyleName(category.toLowerCase() + SMALL);
@@ -133,5 +153,10 @@ public class CollectionSharePrivateResource extends Composite {
 				resourceImageUc.setUrl(DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG);
 			}
 		});
+		resourceImageUc.getElement().setId("imgResourceImageUc");
+		resourceCategoryIcon.getElement().setId("pnlResourceCategoryIcon");
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		resourceCategory.getElement().setId("lblResourceCategory");
+		resourceDescription.getElement().setId("htmlResourceDescription");
 	}
 }

@@ -38,10 +38,11 @@ import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -66,7 +67,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class RegisterVc extends PopupPanel implements MessageProperties {
+public class RegisterVc extends PopupPanel {
 	
 	@UiField Label lblSignUp,lblAsBetauser,lblSignWithGoogle,lblOr,lblBirthday, lblEmail;
 	
@@ -102,7 +103,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 
 	private String dob;
 	
-	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = GL0214;
+//	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = i18n.GL0214;
 	
 	private static final String PARENT = "Parent";
 	
@@ -148,6 +149,8 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor, focus and blur events on emailId , dateBox field
@@ -183,18 +186,50 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		emailIdTxtBox.addFocusHandler(new OnEmailFocus());
 		emailIdTxtBox.addBlurHandler(new OnEmailBlur());
 		emailIdTxtBox.getElement().setId("tbEmail");
-		goBtnUc.getElement().setId("btnGo");
+		StringUtil.setAttributes(emailIdTxtBox, true);
+		
+		emailValidationUc.getElement().setId("errlblEmailValidationUc");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		dateSimPanel.getElement().setId("spnlDateSimPanel");
 		gmailButton.getElement().setId("btnGmail");
 	    dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		
-	    lblSignUp.setText(GL0186+GL_SPL_EXCLAMATION);
-	    lblAsBetauser.setText(GL0210);
-	    lblSignWithGoogle.setText(GL0203);
+	    lblSignUp.setText(i18n.GL0186()+i18n.GL_SPL_EXCLAMATION());
+	    lblSignUp.getElement().setId("lblSignUp");
+	    lblSignUp.getElement().setAttribute("alt",i18n.GL0186()+i18n.GL_SPL_EXCLAMATION());
+	    lblSignUp.getElement().setAttribute("title",i18n.GL0186()+i18n.GL_SPL_EXCLAMATION());
+		
+	    lblAsBetauser.setText(i18n.GL0210());
+	    lblAsBetauser.getElement().setId("lblAsBetauser");
+	    lblAsBetauser.getElement().setAttribute("alt",i18n.GL0210());
+	    lblAsBetauser.getElement().setAttribute("title",i18n.GL0210());
+	    
+	    lblSignWithGoogle.setText(i18n.GL0203());
 	    lblSignWithGoogle.getElement().setId("lblSignWithGoogle");
-	    lblOr.setText(GL0209);
-	    lblBirthday.setText(GL0211);
-	    lblEmail.setText(GL0212);
-	    goBtnUc.setText(GL0213);
+	    lblSignWithGoogle.getElement().setAttribute("alt",i18n.GL0203());
+	    lblSignWithGoogle.getElement().setAttribute("title",i18n.GL0203());
+	    
+	    lblOr.setText(i18n.GL0209());
+	    lblOr.getElement().setId("lblOr");
+	    lblOr.getElement().setAttribute("alt",i18n.GL0209());
+	    lblOr.getElement().setAttribute("title",i18n.GL0209());
+	    
+	    lblBirthday.setText(i18n.GL0211());
+	    lblBirthday.getElement().setId("lblBirthday");
+	    lblBirthday.getElement().setAttribute("alt",i18n.GL0211());
+	    lblBirthday.getElement().setAttribute("title",i18n.GL0211());
+	    
+	    lblEmail.setText(i18n.GL0212());
+	    lblEmail.getElement().setId("lblEmail");
+	    lblEmail.getElement().setAttribute("alt",i18n.GL0212());
+	    lblEmail.getElement().setAttribute("title",i18n.GL0212());
+	    
+	    goBtnUc.setText(i18n.GL0213());
+	    goBtnUc.getElement().setId("btnGo");
+	    goBtnUc.getElement().setAttribute("alt",i18n.GL0212());
+	    goBtnUc.getElement().setAttribute("title",i18n.GL0212());
+	    
+	    cancelButton.getElement().setId("epnlCancelButton");
 	    
 		emailValidationUc.setVisible(false);
 		dateValidationUc.setVisible(false);
@@ -225,7 +260,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 	
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
-		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"home",System.currentTimeMillis(),System.currentTimeMillis(), "",AppClientFactory.getLoggedInUser().getToken());
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"home",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "",AppClientFactory.getLoggedInUser().getToken());
 
 		String callBack = Window.Location.getHref();
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
@@ -280,7 +315,6 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 									}
 								});
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -330,14 +364,14 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 			params.put(ACCOUNT_TYPE, accountType);
 			sendConfirmationMail(params);
 			new AlertContentUc(
-					GL0065,
-					GL0092);
+					i18n.GL0065(),
+					i18n.GL0092());
 
 		} else if (user.isAvailability() && user.getConfirmStatus() == 1) {
 			if (!accountType.equalsIgnoreCase(PARENT)) {
 				new AlertContentUc(
-						GL0065,
-						LOGIN_YOUR_EXISTING_ACCOUNT);
+						i18n.GL0065(),
+						i18n.GL0214());
 			} else {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put(GOORU_UID, user.getGooruUId());
@@ -412,9 +446,15 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		if ((email == null || (email != null && email.isEmpty()))
 				&& (dob == null || (dob != null && dob.isEmpty()))) {
 			emailValidationUc
-					.setText(StringUtil.generateMessage(GL0082, EMAIL));
+					.setText(StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
 			emailValidationUc.setVisible(true);
-			dateValidationUc.setText(StringUtil.generateMessage(GL0082,
+			dateValidationUc.setText(StringUtil.generateMessage(i18n.GL0082(),
+					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(),
+					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(),
 					BIRTH_DAY));
 			dateValidationUc.setVisible(true);
 			dateBoxUc.addStyleName(NewRegisterCBundle.INSTANCE.css().gooruDateBoxError());
@@ -425,14 +465,18 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		if (email == null || (email != null && email.isEmpty())) {
 			emailValidationUc.setVisible(true);
 			emailValidationUc
-					.setText(StringUtil.generateMessage(GL0082, EMAIL));
+					.setText(StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
 			emailIdTxtBox.addStyleName(NewRegisterCBundle.INSTANCE.css().errorBoxStyle());
 			isValid = false;
 		}
 		if (dob == null || (dob != null && dob.isEmpty())) {
 			dateBoxUc.addStyleName(NewRegisterCBundle.INSTANCE.css().gooruDateBoxError());
 			dateBoxUc.getDateBox().addStyleName(NewRegisterCBundle.INSTANCE.css().gooruDateError());
-			dateValidationUc.setText(StringUtil.generateMessage(GL0082,	BIRTH_DAY));
+			dateValidationUc.setText(StringUtil.generateMessage(i18n.GL0082(),	BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(),	BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(),	BIRTH_DAY));
 			dateValidationUc.setVisible(true);
 			isValid = false;
 		}
@@ -440,7 +484,9 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 			emailIdTxtBox.addStyleName(NewRegisterCBundle.INSTANCE.css().errorBoxStyle());
 			emailValidationUc.setVisible(true);
 			emailValidationUc
-					.setText(StringUtil.generateMessage(GL0067, EMAIL));
+					.setText(StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
 			isValid = false;
 		}
 		if (((email != null && !email.isEmpty()) && !email.contains(AT_SYMBOL))
@@ -450,7 +496,9 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 					.gooruDateBoxError());
 			dateBoxUc.getDateBox().addStyleName(NewRegisterCBundle.INSTANCE.css().gooruDateError());
 			emailValidationUc
-					.setText(StringUtil.generateMessage(GL0067, EMAIL));
+					.setText(StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
 			emailValidationUc.setVisible(true);
 			dateValidationUc.setVisible(true);
 			isValid = false;

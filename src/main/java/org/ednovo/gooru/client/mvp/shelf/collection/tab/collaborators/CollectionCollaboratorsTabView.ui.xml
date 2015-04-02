@@ -54,6 +54,11 @@
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:Label ui:field="lblErrorMessage" styleName="errorMessage {res.css.error}" />
+					<g:HTMLPanel ui:field="privacyLabelPanel">
+						<g:InlineLabel ui:field="lblPii"></g:InlineLabel>
+						<g:Anchor ui:field="ancprivacy" styleName="{res.css.privacyAlignStyle}"></g:Anchor>
+						<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
+					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 				

@@ -2,7 +2,8 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="flagPopUpstyle" src="player-flag-popup.css" />
-	<g:HTMLPanel>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"	field="res1" />
+	<g:HTMLPanel styleName="{flagPopUpstyle.playerflagcontainer} {res1.css.PopupMainVVSmall}">
 		<div class="{flagPopUpstyle.playerflagpopupwrapper}">
 			<div class="{flagPopUpstyle.playerflagpopupinnerwrapper}">
 				<div class="{flagPopUpstyle.playerflagpopupheader}">

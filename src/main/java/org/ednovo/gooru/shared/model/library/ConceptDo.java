@@ -48,6 +48,13 @@ public class ConceptDo implements Serializable {
 	private ThumbnailDo thumbnails;
 	private CollectionMetaInfoDo metaInfo;
 	private List<Map<String, String>> standards;
+	private String collectionType;
+	private Integer codeId;
+	private String label;
+	private String code;
+	private ArrayList<ConceptDo> collection;
+	private Integer itemCount;
+	
 	public ConceptDo(){}
 	
 	public String getGoals() {
@@ -125,13 +132,89 @@ public class ConceptDo implements Serializable {
 		this.id = id;
 	}
 
-	
-
 	public List<Map<String, String>> getStandards() {
 		return standards;
 	}
 
 	public void setStandards(List<Map<String, String>> standards) {
 		this.standards = standards;
-	}		
+	}
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
+	/**
+	 * @return the codeId
+	 */
+	public Integer getCodeId() {
+		return codeId;
+	}
+
+	/**
+	 * @param codeId the codeId to set
+	 */
+	public void setCodeId(Integer codeId) {
+		this.codeId = codeId;
+	}
+
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	/**
+	 * @return the collection
+	 */
+	public ArrayList<ConceptDo> getCollection() {
+		return collection;
+	}
+
+	/**
+	 * @param collection the collection to set
+	 */
+	public void setCollection(ArrayList<ConceptDo> collection) {
+		this.collection = collection;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	/**
+	 * @return the itemCount
+	 */
+	public Integer getItemCount() {
+		return itemCount;
+	}
+
+	/**
+	 * @param itemCount the itemCount to set
+	 */
+	public void setItemCount(Integer itemCount) {
+		this.itemCount = itemCount;
+	}
+	
+	
 }

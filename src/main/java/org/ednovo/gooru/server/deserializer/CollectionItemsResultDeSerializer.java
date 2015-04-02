@@ -38,6 +38,7 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -71,21 +72,30 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 	private static final String ITEM_SEQUENCE="itemSequence";
 	
 	private static final String VIEWS="views";
+	
+	private static final String RATINGS="ratings";
 
 	@Override
 	public CollectionItemSearchResultDo deserializeRecord(JSONObject collectionItemJsonObject) {
 		CollectionItemSearchResultDo collectionItemSearchResultDo=new CollectionItemSearchResultDo();
-	
 		try{
 			JSONObject recordJsonObject=collectionItemJsonObject.getJSONObject(RESOURCE);
 			collectionItemSearchResultDo.setCollectionItemId(getJsonString(collectionItemJsonObject, COLLECTION_ITEM_ID));
 			collectionItemSearchResultDo.setItemSequence(stringtoInteger(collectionItemJsonObject, ITEM_SEQUENCE));
 			try {
 				
-	
-				JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
-				collectionItemSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
-				collectionItemSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
+				if(!recordJsonObject.isNull(RATINGS)){
+
+					JSONObject ratingsObj = recordJsonObject.getJSONObject(RATINGS);
+					collectionItemSearchResultDo.setRatings(JsonDeserializer.deserialize(ratingsObj.toString(), SearchRatingsDo.class));
+				}
+				
+				if(!recordJsonObject.isNull(RESOURCE_TYPE)){
+					JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
+					collectionItemSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
+					collectionItemSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
+				}
+
 				
 				//JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 				if(getJsonString(recordJsonObject, RESOURCE_SOURCE) != null){
@@ -94,7 +104,6 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setResourceSource(resourceSourceDo);
 				}
 			} catch (JSONException e1) {
-				e1.printStackTrace();
 			}
 			try {
 				if (collectionItemSearchResultDo.getResourceTypeString() != null && collectionItemSearchResultDo.getResourceTypeString().equalsIgnoreCase(VIDEO_YOUTUBE)) {
@@ -103,7 +112,6 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			collectionItemSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 			collectionItemSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
@@ -156,7 +164,6 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
 				}
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 			collectionItemSearchResultDo.setAverageTime(getJsonString(recordJsonObject, AVERAGE_TIME));
 			collectionItemSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
@@ -178,7 +185,6 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 				}
 				
 			} catch (JSONException e) {
-				e.printStackTrace();
 			}
 		}
 		catch(JSONException e){

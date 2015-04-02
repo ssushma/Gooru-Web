@@ -27,14 +27,23 @@
  */
 package org.ednovo.gooru.client.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
+import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -52,7 +61,7 @@ public interface UserService extends BaseService {
 	 * @return serialized {@link UserDo}
 	 * @throws GwtException
 	 */
-//	UserDo getUser(String userUid) throws GwtException;
+//	UserDo getUser(String userUid) throws GwtException, ServerDownException;
 
 	/**
 	 * Get user details by emailId
@@ -60,7 +69,7 @@ public interface UserService extends BaseService {
 	 * @return serialized {@link UserDo}
 	 * @throws GwtException
 	 */
-	UserDo getEmailId(String email) throws GwtException;
+	UserDo getEmailId(String email) throws GwtException, ServerDownException;
 
 	/**
 	 * Get user details by userName or emailId
@@ -69,14 +78,14 @@ public interface UserService extends BaseService {
 	 * @return serialized {@link UserDo}
 	 * @throws GwtException
 	 */
-	UserDo getEmailId(String email, String type) throws GwtException;
+	UserDo getEmailId(String email, String type) throws GwtException, ServerDownException;
 
 	/**
 	 * Get register user details
 	 * @param params has user details 
 	 * @throws GwtException
 	 */
-	void registerUser(Map<String, String> params) throws GwtException;
+	void registerUser(Map<String, String> params) throws GwtException, ServerDownException;
 
 	/**
 	 * Get register user details by userId
@@ -84,7 +93,7 @@ public interface UserService extends BaseService {
 	 * @return serialized {@link UserDo}
 	 * @throws GwtException
 	 */
-	UserDo getRegistredUserDetails(String gooruUid) throws GwtException;
+	UserDo getRegistredUserDetails(String gooruUid) throws GwtException, ServerDownException;
 
 	/**
 	 * Get user profile details after update
@@ -94,14 +103,14 @@ public interface UserService extends BaseService {
 	 * @return serialized {@link ProfileDo}
 	 * @throws GwtException
 	 */
-	ProfileDo updateUserDetails(String gooruUid, String token, Map<String, String> params) throws GwtException;
+	ProfileDo updateUserDetails(String gooruUid, String token, Map<String, String> params) throws GwtException, ServerDownException;
 
 	/**
 	 * Send confirmation mail to user to update their profile
 	 * @param params has details of the user
 	 * @throws GwtException
 	 */
-	void resendConfirmationMail(Map<String, String> params) throws GwtException;
+	void resendConfirmationMail(Map<String, String> params) throws GwtException, ServerDownException;
 
 	/**
 	 * Send forget possword link to user registered mail id
@@ -109,16 +118,15 @@ public interface UserService extends BaseService {
 	 * @return user details and userId
 	 * @throws GwtException 
 	 */
-	Map<String, Object> forgotPassword(String emailId) throws GwtException;
+	Map<String, Object> forgotPassword(String emailId) throws GwtException, ServerDownException;
 
 	/**
 	 * Reset the user password  
-	 * @param password to be updated
-	 * @param token reset token
+	 * @JSON Object with token and password
 	 * @return user  credential
 	 * @throws GwtException
 	 */
-	Map<String, Object> resetCredential(String password, String token) throws GwtException;
+	Map<String, Object> resetCredential(String token, String password, String mailConfirmationUrl) throws GwtException, ServerDownException;
 	
 	/**
 	 * Update user view flag when user logIn in first time
@@ -127,31 +135,18 @@ public interface UserService extends BaseService {
 	 * @return serialized {@link UserDo}
 	 * @throws GwtException
 	 */
-	UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException;
+	UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException, ServerDownException;
 
-	/**
-	 * Get User profile details for settings page
-	 * @return serialized {@link SettingDo}
-	 * @throws GwtException
-	 */
-	SettingDo getUserProfileDetails(String gooruUid) throws GwtException;
 	
 	/**
 	 * Get User profile details for settings page
 	 * @return serialized {@link SettingDo}
 	 * @throws GwtException
 	 */
-	V2UserDo getV2UserProfileDetails(String gooruUid) throws GwtException;
+	V2UserDo getV2UserProfileDetails(String gooruUid) throws GwtException, ServerDownException;
 
-	/**
-	 * Update user profile details
-	 * @param gooruUid of the user
-	 * @param token session token to set for loogedIn user
-	 * @param params has user details
-	 * @return serialized {@link ProfileDo}
-	 * @throws GwtException
-	 */
-	SettingDo updateProfileSettings(String gooruUid, Map<String, String> params) throws GwtException;
+	
+	
 	/**
 	 * Update user profile visibilty
 	 * @param gooruUid of the user
@@ -162,22 +157,22 @@ public interface UserService extends BaseService {
 	 * @throws GwtException
 	 */
 	
-	ProfilePageDo updateUserProfileVisibility(String gooruUid,String optionalValue )throws GwtException;
+	ProfilePageDo updateUserProfileVisibility(String gooruUid,String optionalValue )throws GwtException, ServerDownException;
 	
 	/**
 	 * Get User profile details for settings page
 	 * @return serialized {@link ProfileDo}
 	 * @throws GwtException
 	 */
-	ProfileDo getUserProfileV2Details(String gooruUid, String userMetaActiveFlag) throws GwtException;
+	ProfileDo getUserProfileV2Details(String gooruUid, String userMetaActiveFlag) throws GwtException, ServerDownException;
 	
-	ProfilePageDo getUserProfilePage(String gooruUid) throws GwtException;
+	ProfilePageDo getUserProfilePage(String gooruUid) throws GwtException, ServerDownException;
 	
-	BiographyDo updateProfileBiography(String gooruUid,String biography,String role,String firstName,String lastName,String gender)throws GwtException;
+	BiographyDo updateProfileBiography(String gooruUid,String biography,String role,String firstName,String lastName,String gender)throws GwtException, ServerDownException;
 
-	ProfilePageDo getUserPublicProfilePage(String gooruUid) throws GwtException;
+	ProfilePageDo getUserPublicProfilePage(String gooruUid) throws GwtException, ServerDownException;
 	
-	//ProfilePageDo updateProfileBiography(String gooruUid,String biography )throws GwtException;
+	//ProfilePageDo updateProfileBiography(String gooruUid,String biography )throws GwtException, ServerDownException;
 	/**
 	 * 
 	 * @function createUser 
@@ -199,13 +194,62 @@ public interface UserService extends BaseService {
 	 *
 	 *
 	 */
-	UserDo createUser(String postData) throws GwtException;
+	UserDo createUser(Map<String, String> registrationDetailsParams,String regType) throws GwtException, ServerDownException;
 	
-	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException;
+	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException, ServerDownException;
 	
-	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail);
+	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail,String userType)  throws GwtException, ServerDownException;
 	
-	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException;
+	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException, ServerDownException;
 	
-	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException;
+	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException, ServerDownException;
+	
+	//followingUser
+	List<UserFollowDo> getFollowedOnUsers(String gooruUid,String offset, String limit)throws GwtException, ServerDownException;
+	
+	//followerUser
+	List<UserFollowDo> getFollowedByUsers(String gooruUid,String offset, String limit)throws GwtException, ServerDownException;
+	
+	void followUser(String gooruUid)throws GwtException, ServerDownException;
+	
+	void unFollowUser(String gooruUid)throws GwtException, ServerDownException;
+	
+	IsFollowDo isFollowedUser(String gooruUid)throws GwtException, ServerDownException;
+	
+	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset,String limit)throws GwtException, ServerDownException;
+	
+	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit,String userIdVal)throws GwtException, ServerDownException;
+	
+	String getRefershToken(String gooruUid)throws GwtException,ServerDownException;
+	
+	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
+	
+	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
+	
+	/**
+	 * This method is used to get the count of flagged,views,shared and add to collection count in the profile analytics.
+	 * @param fieldVal
+	 * @param StartDate
+	 * @param endDate
+	 * @param operator
+	 * @return
+	 */
+	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator);
+
+    UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
+
+    UserDashBoardCommonInfoDO getFiveStarRatedResources();
+    
+    UserDashBoardCommonInfoDO getFiveStarReviewdResources();
+
+    /**
+     * This method is used to get the review and comments count in the profile analytics.
+     * @return
+     */
+    ProfileRatingsReactionsDO getProfileAnalyticsRatings();
+    
+    UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval);
+    
+    FilterSettings setUserProperties(UserDo user);
+
 }

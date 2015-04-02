@@ -26,11 +26,13 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -39,15 +41,16 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
  *
  */
-public abstract class ConfirmationPopupVc extends Composite implements MessageProperties {
+public abstract class ConfirmationPopupVc extends Composite {
 
-	private AppPopUp appPopUp;
+	private static AppPopUp appPopUp;
 	private boolean isEditQuestion=false;
 	@UiField
 	Button cancelButton;
@@ -61,9 +64,11 @@ public abstract class ConfirmationPopupVc extends Composite implements MessagePr
 	@UiField
 	FlowPanel buttonContainer;
 	
-	private static RemoveResourcePopupVcUiBinder uiBinder = GWT.create(RemoveResourcePopupVcUiBinder.class);
+	private static ConfirmationPopupVcUiBinder uiBinder = GWT.create(ConfirmationPopupVcUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface RemoveResourcePopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
+	interface ConfirmationPopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
 	}
 
 	/**
@@ -74,19 +79,40 @@ public abstract class ConfirmationPopupVc extends Composite implements MessagePr
 	public ConfirmationPopupVc(String messageHeader, String  messageContent) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
+//		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(messageHeader, uiBinder.createAndBindUi(this));
 		contentText.setText(messageContent);
+		contentText.getElement().setId("lblContentText");
+		contentText.getElement().setAttribute("alt", messageContent);
+		contentText.getElement().setAttribute("title", messageContent);
 		appPopUp.show();
 		appPopUp.center();
-		cancelButton.setText(GL0142);
-		okButton.setText(GL0190);
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
+		cancelButton.setVisible(true);
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt", i18n.GL0190());
+		okButton.getElement().setAttribute("title", i18n.GL0190());
 		okButton.getElement().setId("btnOk");
-		loadingTextLbl.setText(GL1021);
+		loadingTextLbl.setText(i18n.GL1021());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt", i18n.GL1021());
+		loadingTextLbl.getElement().setAttribute("title", i18n.GL1021());
 		cancelButton.getElement().setId("lnkCancel");
 		loadingTextLbl.setVisible(false);
+		buttonContainer.getElement().setId("fpnlButtonContainer");
         buttonContainer.setVisible(true);
 		cancelButton.getElement().getStyle().setMarginRight(10, Unit.PX);
+		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				appPopUp.hide();
+				
+			}
+		});
+		setAutoHideEnabled(true);
 	}
 
 	@UiHandler("cancelButton")
@@ -138,6 +164,39 @@ public abstract class ConfirmationPopupVc extends Composite implements MessagePr
 
 	public void setDeleteData(String deleteMsg, String deleteBtnTxt) {
 		loadingTextLbl.setText(deleteMsg);
+		loadingTextLbl.getElement().setAttribute("alt", deleteMsg);
+		loadingTextLbl.getElement().setAttribute("title", deleteMsg);
 		okButton.setText(deleteBtnTxt);
+		okButton.getElement().setAttribute("alt", deleteBtnTxt);
+		okButton.getElement().setAttribute("title", deleteBtnTxt);
 	}
+
+	/**
+	 * @return the cancelButton
+	 */
+	public Button getCancelButton() {
+		return cancelButton;
+	}
+	
+	public void setAndHideButtonInPlayer(String okText, String cancelTxt){
+		okButton.setText(okText);
+		cancelButton.setText(cancelTxt);
+		buttonContainer.getElement().setAttribute("style", "margin-top:0px;");
+		StringUtil.setAttributes(okButton.getElement(), okText, okText, okText);
+		StringUtil.setAttributes(cancelButton.getElement(), cancelTxt, cancelTxt, cancelTxt);
+	}
+
+	/**
+	 * @return the okButton
+	 */
+	public BlueButtonUc getOkButton() {
+		return okButton;
+	}
+	
+	public static void setAutoHideEnabled(boolean isAutoHide) {
+		if(isAutoHide){
+			appPopUp.setAutoHideEnabled(isAutoHide);
+			}
+	}
+	
 }

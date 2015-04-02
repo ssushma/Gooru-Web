@@ -61,20 +61,25 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
+import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FocusWidget;
@@ -107,6 +112,9 @@ public class UserSettingsPresenter
 	private SimpleAsyncCallback<BiographyDo> userProfileBiographyAsyncCallback;
 	
 	private SimpleAsyncCallback<V2UserDo> userV2ProfilePageAsyncCallback;
+	
+	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
+	private static final String GOOGLE_ACCESS_TOKEN = "google-access-token";
 
 	Date dob;
 	SettingDo user = null;
@@ -126,7 +134,7 @@ public class UserSettingsPresenter
 	String aboutUs;
 	String userName;
 	String gender;
-
+	private String Refersh_emailId;
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -139,6 +147,8 @@ public class UserSettingsPresenter
 			ProxyPlace<UserSettingsPresenter> {
 
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
 	public UserSettingsPresenter(final IsUserSettingsView view,
@@ -159,9 +169,64 @@ public class UserSettingsPresenter
 				.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		getView().clearPanels();
 		getView().getAboutUsContainer().setVisible(false);
+		
+		if (AppClientFactory.isAnonymous()){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
+		
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
+//		Cookies.setCookie("GOOGLE_ACCESS_TOKEN", "ya29.PADXXYiamS8JHxsAAADsdCb743SQMuoXVuZlTw5kC3kLVP_-UThz6jTa0kv7NA");
+		//Make an API call to get the accesstoken using refresh token.
+		
+		final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
+//		StringUtil.consoleLog("refresh token : "+refresh_token);
+		if (refresh_token != null){
+			
+			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {
+
+				@Override
+				public void onSuccess(GoogleToken result) {
+//					StringUtil.consoleLog("refreshGoogleAccessToken : Success");
+					final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+//					StringUtil.consoleLog("access_token : Success : "+access_token);
+					if (access_token !=null ){
+						
+						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+							@Override
+							public void onSuccess(GoogleDriveDo googleDriveDo) {
+								if(googleDriveDo!=null){
+									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+//										StringUtil.consoleLog("access_token : 401");
+										getView().googleDirveStatus(false);
+									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+//										StringUtil.consoleLog("access_token : 403");
+										getView().googleDirveStatus(false);
+									}else{
+//										StringUtil.consoleLog("access_token : no error");
+										UserDo user = AppClientFactory.getLoggedInUser();
+										user.setAccessToken(access_token);
+										AppClientFactory.setLoggedInUser(user);
+										
+										getView().googleDirveStatus(true);
+									}
+								}else{
+//									StringUtil.consoleLog("google drive file list empty");
+									getView().googleDirveStatus(false);
+								}
+							}
+						});
+					}else{
+//						StringUtil.consoleLog("refresh token null");
+						getView().googleDirveStatus(false);
+					}
+				}
+			});
+		}else{
+			getView().googleDirveStatus(false);
+		}
+		
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(
 				"userId");
 		String confirmStatus = AppClientFactory.getPlaceManager()
@@ -217,9 +282,10 @@ public class UserSettingsPresenter
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		this.getUserService().getUserProfilePage(
+/*		this.getUserService().getV2UserProfileDetails(
 				AppClientFactory.getPlaceManager().getRequestParameter(
-						GOORU_UID), getUserProfilePageAsyncCallback());
+						GOORU_UID), getUserV2ProfilePageAsyncCallback());*/
+
 		getView().setUserProfileImageUrl("EMPTY");
 	}
 
@@ -233,7 +299,7 @@ public class UserSettingsPresenter
 
 			@Override
 			public void onSuccess(V2UserDo user) {
-
+				
 				// For child account set the edit button visibility false.
 				// for some old account, AccountTypeId is null.
 				getView().getAccountSavingText().setVisible(false);
@@ -293,8 +359,8 @@ public class UserSettingsPresenter
 									+ user.getGender().getName().substring(1);
 							if ("Do not wish to share".equalsIgnoreCase(gender)) {
 								String gender1 = gender.replace(
-										GL1199,
-										GL0812);
+										i18n.GL1199(),
+										i18n.GL0812());
 								getView().getGenderText().setText(gender1);
 							} else {
 								getView().getGenderText().setText(gender);
@@ -321,24 +387,34 @@ public class UserSettingsPresenter
 							user.getUser().getFirstName());
 					getView().getTbLastName().setText(
 							user.getUser().getLastName());
+					getView().getLbUserName().setText(
+							user.getUser().getUsername());
 					getView().hideuserDetailsContainerOnClickOfTab();
+					if(user.getUserType() != null && user.getUserType().length() > 1)
+					{
+						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
+					}
 					if (user.getUser().getLoginType()
-							.equalsIgnoreCase("credential")) {
+							.equalsIgnoreCase("credential")) {					
 						if (dob != null) {
 							getView().getLbUName().getElement()
 									.setAttribute("dob", "" + dob);
 							int age = getAge(dob);
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
-							if (age < 13) {
-								getView().getLbRole().setText(GL0417);
-							} else {
+					
+							if (age < 13) 
+							{
+								getView().getLbRole().setText(i18n.GL0417());
+							} 
+							else 
+							{
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
 						} else if (user.getUser().getAccountTypeId() != null) {
 							if (user.getUser().getAccountTypeId() == 2) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 								
 							} else {
 								getView().getLbRole().setText(
@@ -353,10 +429,14 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+					if (user.getUser().getEmailId() != null) {
+						Refersh_emailId=user.getUser().getEmailId();
+						boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 						if(isValidEmail){
-							getView().getLbEmail().setText(user.getExternalId());
+							getView().getLbEmail().setText(user.getUser().getEmailId());
+							//StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
+							
+							
 						}else{
 							getView().hideEmailContainer();
 						}
@@ -364,8 +444,12 @@ public class UserSettingsPresenter
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 							if(user.getUser().getEmailId()!=null){
-								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+								Refersh_emailId=user.getUser().getEmailId();
+								boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 								if(isValidEmail){
+									//StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
+									
+									
 									getView().getLbEmail().setText(
 											user.getUser().getEmailId());
 									}
@@ -379,8 +463,8 @@ public class UserSettingsPresenter
 					getView().getLbName().setText(
 							user.getUser().getFirstName() + " "
 									+ user.getUser().getLastName());
-					getView().getLbUserName().setText(
-							user.getUser().getUsername());
+					
+					
 					if (user.getUser().getLoginType() != null) {
 						if (user.getUser().getLoginType().trim()
 								.equalsIgnoreCase("apps")) {
@@ -438,16 +522,24 @@ public class UserSettingsPresenter
 						getView().getAboutUsContainer().setVisible(true);
 						setUserUnder13(false);
 					}
+					getView().setData(user);
+					
+					if(AppClientFactory.getLoggedInUser().getSettings()!=null && AppClientFactory.getLoggedInUser().getSettings()
+							.getProfileImageUrl() != null)
+					{
 					getView().setUserProfileImageUrl(
 							AppClientFactory.getLoggedInUser().getSettings()
 									.getProfileImageUrl()
 									+ user.getUser().getGooruUId()
 									+ "-158x158.png");
+					}
 
-					getView().setData(user);
+				
 				} else {
 					
 				}
+				updateRefershToken();
+				getView().displayAdminPortal();
 				/**
 				 * This RPC is to get the User profile Details(grade value)
 				 */
@@ -586,8 +678,8 @@ public class UserSettingsPresenter
 									+ user.getGender().getName().substring(1);
 							if ("Do not wish to share".equalsIgnoreCase(gender)) {
 								String gender1 = gender.replace(
-										GL1199,
-										GL0812);
+										i18n.GL1199(),
+										i18n.GL0812());
 								getView().getGenderText().setText(gender1);
 							} else {
 								getView().getGenderText().setText(gender);
@@ -621,14 +713,14 @@ public class UserSettingsPresenter
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
 							if (age < 13) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 							} else {
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
 						} else if (user.getUser().getAccountTypeId() != null) {
 							if (user.getUser().getAccountTypeId() == 2) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 								
 							} else {
 								getView().getLbRole().setText(
@@ -643,12 +735,19 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						getView().getLbEmail().setText(user.getExternalId());
+					if (user.getUser().getEmailId() != null) {
+						getView().getLbEmail().setText(user.getUser().getEmailId());
+						//StringUtil.consoleLog("setEmailId 3"+user.getExternalId());
+						Refersh_emailId = user.getUser().getEmailId();
+						
+						
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 						getView().getLbEmail().setText(
 								user.getUser().getEmailId());
+						//StringUtil.consoleLog("setEmailId 4"+user.getUser().getEmailId());
+						Refersh_emailId = user.getUser().getEmailId();
+						
 						}
 					}
 					// getView().getLbEmail().setText(user.getExternalId());
@@ -712,13 +811,18 @@ public class UserSettingsPresenter
 						getView().getAboutUsContainer().setVisible(true);
 						setUserUnder13(false);
 					}
+
+					getView().setData(user);
+					if(AppClientFactory.getLoggedInUser().getSettings()!=null && AppClientFactory.getLoggedInUser().getSettings()
+							.getProfileImageUrl() != null)
+					{
 					getView().setUserProfileImageUrl(
 							AppClientFactory.getLoggedInUser().getSettings()
 									.getProfileImageUrl()
 									+ user.getUser().getGooruUId()
 									+ "-158x158.png");
+					}
 
-					getView().setData(user);
 				} else {
 					
 				}
@@ -905,15 +1009,8 @@ public class UserSettingsPresenter
 			updateUserDetails.put("gender", "X");
 			gender = "X";
 		}
-		
-//		updateUserDetails.put("aboutMe", getView().getProfileBiographyEditUC()
-//				.getText());
-//		this.getUserService().updateProfileSettings(
-//				AppClientFactory.getPlaceManager().getRequestParameter(
-//						GOORU_UID), updateUserDetails,
-//				getUserprofileAsyncCallback());
-		
-		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, getUserV2ProfilePageAsyncCallback());
+
+		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, null, getUserV2ProfilePageAsyncCallback());
 
 	}
 
@@ -1009,7 +1106,7 @@ public class UserSettingsPresenter
 				.getInjector()
 				.getUserService()
 				.updateNewEmailStatus(emailValue, isEmailConfirmed,
-						new AsyncCallback<Void>() {
+						new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void Result) {
 								if (isEmailConfirmed) {
@@ -1030,9 +1127,6 @@ public class UserSettingsPresenter
 								AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(false));
 							}
 
-							@Override
-							public void onFailure(Throwable caught) {
-							}
 						});
 	}
 
@@ -1053,15 +1147,10 @@ public class UserSettingsPresenter
 
 	@Override
 	public void updatePartyCustomField(String optionKey, String optionValue) {
-		getView().getStandardSavingTextLabel().setText(MessageProperties.GL0808);
+		getView().getStandardSavingTextLabel().setText(i18n.GL0808());
 		getView().getstandardsSaveCancelButtonContainer().setVisible(false);
 		getView().getstandardsEditButton().setVisible(false);
-		AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,optionKey,optionValue,new AsyncCallback<Void>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-								
-			}
+		AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,optionKey,optionValue,new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
@@ -1085,4 +1174,97 @@ public class UserSettingsPresenter
 		
 	}
 
+	
+	public void updateRefershToken() {
+		final String refreshToken = AppClientFactory.getLoggedInUser().getRefreshToken();
+		if(refreshToken==null){
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String result) {
+					UserDo user = AppClientFactory.getLoggedInUser();
+					user.setRefreshToken(result);
+					AppClientFactory.setLoggedInUser(user);
+					if(result!=null&&!result.equals("")&&!result.equals("null")){
+						getGoogleAccessToken(result);
+					}
+				}
+			});
+		}else{
+			getGoogleAccessToken(refreshToken);
+		}
+	}
+
+	public void getGoogleAccessToken(String refreshToken){
+		AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refreshToken, new SimpleAsyncCallback<GoogleToken>() {
+			@Override
+			public void onSuccess(GoogleToken result) {
+				final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+				final String connectedEmailId = result.getEmailId() !=null && !result.getEmailId().equalsIgnoreCase("") ? result.getEmailId() : null;
+				if (access_token !=null ){
+					UserDo user = AppClientFactory.getLoggedInUser();
+					user.setAccessToken(access_token);
+					AppClientFactory.setLoggedInUser(user);
+					AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+						@Override
+						public void onSuccess(GoogleDriveDo googleDriveDo) {
+							if(googleDriveDo!=null){
+								if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+									getView().googleDirveStatus(false);
+								}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+									getView().googleDirveStatus(false);
+								}else{
+									UserDo user = AppClientFactory.getLoggedInUser();
+									user.setAccessToken(access_token);
+									AppClientFactory.setLoggedInUser(user);
+									getView().googleDirveStatus(true);
+									getView().setConnectedAs(connectedEmailId);
+								}
+							}else{
+								getView().googleDirveStatus(false);
+							}
+						}
+					});
+				}else{
+					getView().googleDirveStatus(false);
+				}
+			}
+		});
+	}
+	@Override
+	public void revokeToken() {
+		AppClientFactory.getInjector().getUserService().revokeToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				getView().googleDirveStatus(true);
+			}
+			@Override
+			public void onSuccess(String result) {
+				UserDo user = AppClientFactory.getLoggedInUser();
+				user.setRefreshToken(null);
+				AppClientFactory.setLoggedInUser(user);			
+				getView().googleDirveStatus(false);
+			}
+		});
+		
+	}
+
+	@Override
+	public void getGoogleDrive() {
+		Map<String, String> parms = new HashMap<String, String>();
+		parms = StringUtil.splitQuery(Window.Location.getHref());
+		parms.put("emailId", Refersh_emailId);
+		AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String redirectUrl) {
+				
+				MixpanelUtil.mixpanelEvent("Access_Google_Drive");
+				Window.Location.replace(redirectUrl);
+
+			}
+		});
+		
+	}
+	
 }

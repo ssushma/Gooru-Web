@@ -24,10 +24,18 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEventHandler;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers {
+import com.google.gwt.user.client.ui.FlowPanel;
+
+public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,OpenReviewPopUpEventHandler,UpdateUserStarReviewEventHandler,DeletePlayerStarReviewHandler,DeletePlayerStarRatingsEventHandler {
 	
 	public void showQuestionView(CollectionItemDo collectionItemDo);
 
@@ -36,4 +44,31 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers {
 	public void deleteReaction(String gooruReactionId);   
 	
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
+	
+	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String userReview,String resourceGooruId);   
+	
+	public boolean isOeAnswerSubmited();
+
+	public void updateStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String resourceGooruId);
+
+	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview,String resourceGooruId);
+
+	public void getAvgRatingAndCount(String assocGooruOid, Integer score, String review);   
+	
+	public void setResourceMetaData(String resourceTitle);
+
+	void createCollectionContentReport(String associatedGooruOid,
+			String freeText, ArrayList<String> contentReportList,
+			String deleteContentReportGooruOids);
+	
+	public void getGoogleDriveFile(String fileUrl);
+	public void getResourceTagsToDisplay(String resourceId);
+
+	public void getYoutubeFeedCallback(String utubeId);
+
+	public void updateResourceReview(String gooruOid,Integer reviewCount);
+
+	public void updateResourceRatings(String gooruOid,double average); 
+	public FlowPanel getQuestioncontainer();
+	public void setFullScreen(boolean isFullScreen,FlowPanel pnlFullScreenNarration);
 }

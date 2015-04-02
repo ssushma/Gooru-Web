@@ -2,6 +2,8 @@ package org.ednovo.gooru.server.request;
 
 import java.io.Serializable;
 
+import org.ednovo.gooru.shared.model.drive.ErrorDo;
+import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.restlet.ext.json.JsonRepresentation;
 
 /**
@@ -17,7 +19,7 @@ import org.restlet.ext.json.JsonRepresentation;
 * 
 * @Reviewer: Gooru Team.
 */
-public class JsonResponseRepresentation implements Serializable{
+public class JsonResponseRepresentation  implements Serializable{
 
 	/**
 	 * 
@@ -27,6 +29,8 @@ public class JsonResponseRepresentation implements Serializable{
 	private Integer statusCode=200;
 	
 	private JsonRepresentation jsonRepresentation;
+	
+	private ResponseStatusDo responseDo=null;
 
 	/**
 	 * @return the statusCode
@@ -52,5 +56,18 @@ public class JsonResponseRepresentation implements Serializable{
 	public void setJsonRepresentation(JsonRepresentation jsonRepresentation) {
 		this.jsonRepresentation = jsonRepresentation;
 	}
+	/** 
+	 * This method is to get the responseDo
+	 */
+	public ResponseStatusDo getResponseDo() {
+		return responseDo;
+	}
+	/** 
+	 * This method is to set the responseDo
+	 */
+	public void setResponseDo(ResponseStatusDo responseDo) {
+		this.responseDo = responseDo;
+	}
+	
 
 }

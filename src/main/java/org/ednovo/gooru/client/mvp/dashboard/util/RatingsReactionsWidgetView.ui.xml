@@ -1,0 +1,22 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.dashboard.util.RatingsReactionsWidgetCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.ratingListBlock}">
+
+<g:HTMLPanel styleName="{res.css.col6}">
+<g:HTMLPanel styleName="{res.css.collHead}" ui:field="resourcesTitle"><g:Image ui:field="resourceTypeIcon" /> </g:HTMLPanel>
+</g:HTMLPanel>
+<g:HTMLPanel styleName="{res.css.col6}">
+<g:HTMLPanel styleName="{res.css.collSmallHead}" ui:field="labelValue"><g:FlowPanel ui:field="ratingReactionWidget"></g:FlowPanel></g:HTMLPanel>
+</g:HTMLPanel>
+<g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
+
+
+</g:HTMLPanel>
+
+
+</ui:UiBinder> 

@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -45,7 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class FeaturedContentVc extends Composite implements MouseOverHandler, MouseOutHandler,MessageProperties {
+public class FeaturedContentVc extends Composite implements MouseOverHandler, MouseOutHandler{
 
 	private static FeaturedContentVcUiBinder uiBinder = GWT.create(FeaturedContentVcUiBinder.class);
 
@@ -54,6 +54,8 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 	interface FeaturedContentVcUiBinder extends UiBinder<Widget, FeaturedContentVc> {
 	}
 
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField
 	FlowPanel featuredSlideFloPanel;
 
@@ -76,7 +78,12 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		featuredLbl.setText(GL1240);
+		featuredLbl.setText(i18n.GL1240());
+		featuredLbl.getElement().setId("lblFeatured");
+		featuredLbl.getElement().setAttribute("alt",i18n.GL1240());
+		featuredLbl.getElement().setAttribute("title",i18n.GL1240());
+		featuredContentTitleFloPanel.getElement().setId("fpnlFeaturedContentTitleFloPanel");
+		featuredSlideFloPanel.getElement().setId("fpnlFeaturedSlideFloPanel");
 		 elapsedTimer = new Timer () {
 		      public void run() {
 		    	  if(countOfChild>3){

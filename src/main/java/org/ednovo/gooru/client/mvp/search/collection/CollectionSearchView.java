@@ -28,14 +28,19 @@
 package org.ednovo.gooru.client.mvp.search.collection;
 
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -52,8 +57,32 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 	}
 
 	@Override
-	public IsDraggable renderSearchResult(CollectionSearchResultDo searchResultDo) {
-		return new CollectionSearchResultVc(searchResultDo, dragController);
+	public IsDraggable renderSearchResult(final CollectionSearchResultDo searchResultDo) {
+		final CollectionSearchResultVc collectionSearchResultVc=new CollectionSearchResultVc(searchResultDo, dragController);
+		collectionSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(AppClientFactory.isAnonymous()){
+					LoginPopupUc loginPopupUc=new LoginPopupUc();
+				}else{
+				getUiHandlers().showAddCollectionToShelfView(collectionSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"collection");
+				getUiHandlers().showAndHideDisclosurePanelOnCLick(collectionSearchResultVc.getDisclosurePanelClose());
+				}
+				}
+		});
+		
+		collectionSearchResultVc.getAnalyticsButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+						if(AppClientFactory.isAnonymous()){
+							LoginPopupUc loginPopupUc=new LoginPopupUc();
+						}else{
+							getUiHandlers().setAnalyticsTabDataForCollections(collectionSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"collection");
+					}
+					}
+				});
+		return collectionSearchResultVc;
 	}
 
 	@Override
@@ -74,5 +103,12 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 				}
 			}
 		}
+	}
+
+	@Override
+	public void setAddResourceContainerPresenter(
+			AddResourceContainerPresenter addResourceContainerPresenter) {
+		// TODO Auto-generated method stub
+		
 	}
 }

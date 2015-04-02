@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -33,13 +33,22 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TeachToolTip extends Composite implements MessageProperties{
+public class TeachToolTip extends Composite {
 	@UiField HTMLPanel assignToSTudentsText,teachText;
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	public TeachToolTip(){
 		initWidget(teachToolTipUiBinder.createAndBindUi(this));
-		teachText.getElement().setInnerHTML(GL0181);
-		assignToSTudentsText.getElement().setInnerHTML(GL1067);
+		teachText.getElement().setInnerHTML(i18n.GL0181());
+		teachText.getElement().setId("pnlTeachText");
+		teachText.getElement().setAttribute("alt", i18n.GL0181());
+		teachText.getElement().setAttribute("title", i18n.GL0181());
+		
+		assignToSTudentsText.getElement().setInnerHTML(i18n.GL1067());
+		assignToSTudentsText.getElement().setId("pnlAssignToSTudentsText");
+		assignToSTudentsText.getElement().setAttribute("alt", i18n.GL1067());
+		assignToSTudentsText.getElement().setAttribute("title", i18n.GL1067());
 	}
 	
 	public interface TeachToolTipUiBinder extends UiBinder<Widget, TeachToolTip>{

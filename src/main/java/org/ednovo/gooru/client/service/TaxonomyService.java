@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.List;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -41,12 +42,12 @@ public interface TaxonomyService extends BaseService {
 	 * @return serialized {@link LibraryCodeDo}
 	 * @throws GwtException
 	 */
-//	LibraryCodeDo getTaxonomyTree(int depthLimit, String parentCodeId) throws GwtException;
+//	LibraryCodeDo getTaxonomyTree(int depthLimit, String parentCodeId) throws GwtException, ServerDownException;
 
 	/**
 	 * Get taxonomy course
 	 * @return List of course value 
 	 * @throws GwtException
 	 */
-	List<LibraryCodeDo> getCourse() throws GwtException;
+	List<LibraryCodeDo> getCourse() throws GwtException, ServerDownException;
 }

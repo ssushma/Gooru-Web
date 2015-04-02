@@ -58,6 +58,6 @@ public interface OpenLessonConceptHandler extends EventHandler {
 	 * @throws : <Mentioned if any exceptions>
 	*/
 	
-	void openLessonConcept(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode);
+	void openLessonConcept(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode,String libraryGooruOid);
 
 }

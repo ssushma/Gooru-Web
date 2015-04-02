@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.deserializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -38,9 +37,7 @@ import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -94,7 +91,6 @@ public class SearchFilterDeSerialier extends DeSerializer {
 				});
 				filterDo.setGradeLevels(gradeLevels);
 			} catch (Exception e) {
-				e.printStackTrace();
 			}
 
 			JSONArray subjectsJsonArray = taxonomyJsonObject.getJSONArray(SUBJECT);
@@ -110,7 +106,6 @@ public class SearchFilterDeSerialier extends DeSerializer {
 			}
 				
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return filterDo;
 	}

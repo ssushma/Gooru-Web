@@ -25,23 +25,32 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.google.gwt.core.client.GWT;
 
 
 public class EmbedController extends MultiActionController{
 	
+	private static final String HTTPS = "https";
+	
+	private static final String HTTP = "http";
+	
 	@Inject
 	private ResourceServiceImpl resourceService;
+	
+	
 	
 	public void collection(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		String id=request.getParameter("id");
@@ -52,11 +61,11 @@ public class EmbedController extends MultiActionController{
 			String protocolRequest = request.getScheme();
 			String homeEndPoint = resourceService.getHomeEndPointForEmbed();
 			String restEndPoint = resourceService.getRestEndPointForEmbed();
-			String cssEndPoint=homeEndPoint.replaceAll(MessageProperties.HTTP+":", "").replaceAll(MessageProperties.HTTPS+":", "");
+			String cssEndPoint=homeEndPoint.replaceAll(HTTP+":", "").replaceAll(HTTPS+":", "");
 
-			if(protocolRequest.equalsIgnoreCase(MessageProperties.HTTPS)) {
-				homeEndPoint = homeEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
-				restEndPoint = restEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
+			if(protocolRequest.equalsIgnoreCase(HTTPS)) {
+				homeEndPoint = homeEndPoint.replaceAll(HTTP, HTTPS);
+				restEndPoint = restEndPoint.replaceAll(HTTP, HTTPS);
 			}
 			
 			 CollectionDo collectionDo=resourceService.getCollectionFromEmbed(id,restEndPoint);

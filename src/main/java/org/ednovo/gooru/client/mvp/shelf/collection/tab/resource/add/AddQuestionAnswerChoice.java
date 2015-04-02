@@ -52,33 +52,90 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	
 	public static AddQuestionAnswerChoiceUiBinder uiBinder=GWT.create(AddQuestionAnswerChoiceUiBinder.class);
 	
-	@UiField Label labelChoice,optionSelectedButton,errorMessageforAnswerChoice;
+	@UiField Label labelChoice,optionSelectedButton,errorMessageforAnswerChoice,optionNoButton;
 	@UiField TinyMCE answerTextBox;
-	@UiField HTMLPanel deleteButtonContainer,tinyOrTextBoxConatiner;
+	@UiField HTMLPanel deleteButtonContainer,tinyOrTextBoxConatiner,optionNoButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
 	private String richTextData=null;
 	public AddQuestionAnswerChoice(){
 		initWidget(uiBinder.createAndBindUi(this));
+		labelChoice.getElement().setId("lblLabelChoice");
+		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
+		optionNoButton.getElement().setId("lblOptionNoButton");
+		optionSelectedButton.getElement().setId("lblOptionSelectedButton");
+		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		deleteButtonContainer.add(ansChoiceDeleteButton);
+		optionNoButtonContainer.setVisible(false);
 	}
 	public AddQuestionAnswerChoice(String labelName){
 		initWidget(uiBinder.createAndBindUi(this));
+		labelChoice.getElement().setId("lblLabelChoice");
 		labelChoice.setText(labelName);
+		labelChoice.getElement().setAttribute("alt", labelName);
+		labelChoice.getElement().setAttribute("title", labelName);
+		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
+		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
+		optionNoButton.getElement().setId("lblOptionNoButton");
+		optionSelectedButton.getElement().setId("lblOptionSelectedButton");
+		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
+		optionNoButtonContainer.setVisible(false);
 	}
 	public AddQuestionAnswerChoice(String labelName,String richTextData){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.richTextData=richTextData;
+		labelChoice.getElement().setId("lblLabelChoice");
 		labelChoice.setText(labelName);
+		labelChoice.getElement().setAttribute("alt", labelName);
+		labelChoice.getElement().setAttribute("title", labelName);
+		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		deleteButtonContainer.add(ansChoiceDeleteButton);
+		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
+		optionNoButton.getElement().setId("lblOptionNoButton");
+		optionSelectedButton.getElement().setId("lblOptionSelectedButton");
+		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
+		optionNoButtonContainer.setVisible(false);
+	}
+	public void showAnswerChoicesForMultipleAnswers(){
+		labelChoice.getElement().setId("lblLabelChoice");
+		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
+		tinyOrTextBoxConatiner.setStyleName(addWebResourceStyle.addResourceMultipleAnswerInputControl());
+		tinyOrTextBoxConatiner.addStyleName("multiAnswerChoiceContainer");
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
+		optionNoButton.getElement().setId("lblOptionNoButton");
+		optionSelectedButton.getElement().setId("lblOptionSelectedButton");
+		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
+		optionNoButtonContainer.setVisible(true);
+	}
+	public void showAnswerChoicesForOthers(){
+		labelChoice.getElement().setId("lblLabelChoice");
+		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
+		tinyOrTextBoxConatiner.setStyleName(addWebResourceStyle.addResourceFormAnswerInputControl());
+		tinyOrTextBoxConatiner.addStyleName("answerChoiceAndHintsTextcontainer");
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
+		optionNoButton.getElement().setId("lblOptionNoButton");
+		optionSelectedButton.getElement().setId("lblOptionSelectedButton");
+		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
+		optionNoButtonContainer.setVisible(false);
 	}
 	@Override
 	public void onLoad(){
@@ -91,12 +148,31 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	       });
 	}
 	 public void setRichTextData(){
+		 tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		 answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
+		 deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		 optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
+		 optionNoButton.getElement().setId("lblOptionNoButton");
+		 optionSelectedButton.getElement().setId("lblOptionSelectedButton");
+		 errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
+			   answerTextBox.getElement().setAttribute("alt", richTextData);
+			   answerTextBox.getElement().setAttribute("title", richTextData); 
 		   }	   
 	   }
 	public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
+		labelChoice.getElement().setId("lblLabelChoice");
+		labelChoice.getElement().setAttribute("alt", labelName);
+		labelChoice.getElement().setAttribute("title", labelName);
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
+		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");
+		optionNoButton.getElement().setId("lblOptionNoButton");
+		optionSelectedButton.getElement().setId("lblOptionSelectedButton");
+		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
+		errorMessageforAnswerChoice.getElement().setId("errlblErrorMessageforAnswerChoice");
 	}
 	@Override
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
@@ -107,6 +183,12 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
+	}
+	public TinyMCE getAnswerTextBox() {
+		return answerTextBox;
+	}
+	public void setAnswerTextBox(TinyMCE answerTextBox) {
+		this.answerTextBox = answerTextBox;
 	}
 	
 //	@UiHandler("answerTextBox")

@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.image.upload;
 
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.LoadingUc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.code.gwt.crop.client.GWTCropper;
 import com.google.gwt.core.client.GWT;
@@ -35,12 +35,14 @@ import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -48,13 +50,13 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public abstract class ImageCropView extends Composite implements MessageProperties{
+public abstract class ImageCropView extends Composite{
 
 	@UiField
 	Label backPageLinkLbl;
 
 	@UiField
-	FlowPanel cropImageWidgetFloPanel;
+	FlowPanel cropImageWidgetFloPanel,imagCropContainer;
 
 	@UiField
 	BlueButtonUc cropImageBtn;
@@ -77,12 +79,16 @@ public abstract class ImageCropView extends Composite implements MessageProperti
 	FlowPanel buttonContainer;
 	
 	private GWTCropper crop;
+	
+	private ScrollPanel scrollpanel = new ScrollPanel();
 
 
 	private static ImageCropViewUiBinder uiBinder = GWT.create(ImageCropViewUiBinder.class);
 
 	interface ImageCropViewUiBinder extends UiBinder<Widget, ImageCropView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -90,16 +96,46 @@ public abstract class ImageCropView extends Composite implements MessageProperti
 	public ImageCropView() {
 		super();
 		initWidget(uiBinder.createAndBindUi(this));
-		backPageLinkLbl.setText(GL1231);
-		cropText.setHTML(GL1232);
-		dragText.setHTML(GL1233);
-		cropImageLoading.setLoadingText(GL1234);
-		cropImageBtn.setText(GL1235);
-		cancelButtonAnr.setText(GL0142);
-		loadingTextLbl.setText(GL1236);
+		backPageLinkLbl.setText(i18n.GL1231());
+		backPageLinkLbl.getElement().setId("lblBackPageLinkLbl");
+		backPageLinkLbl.getElement().setAttribute("alt",i18n.GL1231());
+		backPageLinkLbl.getElement().setAttribute("title",i18n.GL1231());
+		
+		cropText.setHTML(i18n.GL1232());
+		cropText.getElement().setId("htmlCropText");
+		cropText.getElement().setAttribute("alt",i18n.GL1232());
+		cropText.getElement().setAttribute("title",i18n.GL1232());
+		
+		dragText.setHTML(i18n.GL1233());
+		dragText.getElement().setId("htmlDragText");
+		dragText.getElement().setAttribute("alt",i18n.GL1233());
+		dragText.getElement().setAttribute("title",i18n.GL1233());
+		
+		cropImageLoading.setLoadingText(i18n.GL1234());
+		cropImageBtn.setText(i18n.GL1235());
+		cropImageBtn.getElement().setId("btnCropImageBtn");
+		cropImageBtn.getElement().setAttribute("alt",i18n.GL1235());
+		cropImageBtn.getElement().setAttribute("title",i18n.GL1235());
+		
+		cancelButtonAnr.setText(i18n.GL0142());
+		cancelButtonAnr.getElement().setId("lnkCancelButtonAnr");
+		cancelButtonAnr.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButtonAnr.getElement().setAttribute("title",i18n.GL0142());
+		
+		loadingTextLbl.setText(i18n.GL1236());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt",i18n.GL1236());
+		loadingTextLbl.getElement().setAttribute("title",i18n.GL1236());
+		
 		cropImageLoadingVerPanel.setCellVerticalAlignment(cropImageLoading, HasVerticalAlignment.ALIGN_MIDDLE);
 		buttonContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);
+		
+		imagCropContainer.getElement().setId("fpnlImagCropContainer");
+		cropImageWidgetFloPanel.getElement().setId("fpnlCropImageWidgetFloPanel");
+		cropImageLoadingVerPanel.getElement().setId("vpnlCropImageLoadingVerPanel");
+		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
+		buttonContainer.getElement().setId("fpnlButtonContainer");
 	}
 
 	/**
@@ -109,7 +145,15 @@ public abstract class ImageCropView extends Composite implements MessageProperti
 	public void cropImage(String imageURL,float aspectRatio) {
 		crop = new GWTCropper(imageURL);
 		crop.setAspectRatio(aspectRatio);
-		cropImageWidgetFloPanel.add(crop);
+		scrollpanel.add(crop);
+		cropImageWidgetFloPanel.add(scrollpanel);
+		Timer timer = new Timer() {
+		    public void run() {
+		    	cropImageLoading.setVisible(false);
+		    }
+		};
+	   // Execute the timer to expire 7 seconds in the future
+	   timer.schedule(7000);	
 	}
 	
 	/**

@@ -36,11 +36,11 @@ public interface FlagBundle extends ClientBundle{
 	
 	public static final FlagBundle IMAGEBUNDLEINSTANCE =  GWT.create(FlagBundle.class);
 	
-	@Source("org/ednovo/gooru/player/resource/client/view/resourceplayer/images/flag-header-close-btn.png")
+	@Source("images/flag-header-close-btn.png")
 	@ImageOptions(repeatStyle=RepeatStyle.None)
 	ImageResource closeFlagPopUpImages();
 	
-	@Source("org/ednovo/gooru/player/resource/client/view/resourceplayer/flag/player-flag-popup.css")
+	@Source("org/ednovo/gooru/client/mvp/play/resource/report/player-flag-popup.css")
 	FlagStyles flagstyle();
 	
 	public interface FlagStyles extends CssResource{

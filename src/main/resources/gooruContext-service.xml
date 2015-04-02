@@ -74,6 +74,13 @@
 				<prop key="facebook.app_id">${facebook.app_id}</prop>
 				<prop key="facebook.dialogfeedurl">${facebook.dialogfeedurl}</prop>
 				<prop key="taxonomy.preferences">${taxonomy.preferences}</prop>
+				<prop key="redirect.url">${redirect.url}</prop>
+				<prop key="drive.api">${drive.api}</prop>
+				<prop key="google.restendpoint">${google.restendpoint}</prop>
+				<prop key="stories.url">${stories.url}</prop>
+				<prop key="community.library.gooruOid">${community.library.gooruOid}</prop>
+				<prop key="show.stories">${show.stories}</prop>
+				<prop key="clientside.loggers">${clientside.loggers}</prop>
 			</props>
 		</property>
 	</bean>

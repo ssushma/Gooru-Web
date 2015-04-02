@@ -45,6 +45,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String narrationLink;
 	private String notes;
 	private String keyPoints;
+	private String languageObjective;
 	private String language;
 	private String goals;
 	private String grade;
@@ -57,19 +58,70 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private CollectionMetaInfoDo metaInfo;
 	private MetaDO meta;
 	private Integer statusCode;
+	private Integer itemCount;
 	private String classpageCode;
 	private Date lastModified;
 	private UserDo lastModifiedUser;
+	private UserDo user;
+	private Integer memberCount;
 	private TrackActivityDo trackActivity;
 	private String sharing;
+	private PublishDo publishStatus;
 	private String status;
+	private String action;
+	private List<checkboxSelectedDo> depthOfKnowledges;
+	private List<checkboxSelectedDo> instructionalMethod;
+	private List<checkboxSelectedDo> audience;
+	private List<checkboxSelectedDo> learningSkills;
+	private CollectionSettingsDo settings;
+	private String gooruOid;
 	
 	public CollectionDo(){
 		
 	}
 
+	public String getGooruOid() {
+		return gooruOid;
+	}
+
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+
 	public String getAdds() {
 		return adds;
+	}
+
+	public List<checkboxSelectedDo> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+
+	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
+	}
+
+	public List<checkboxSelectedDo> getInstructionalMethod() {
+		return instructionalMethod;
+	}
+
+	public void setInstructionalMethod(List<checkboxSelectedDo> instructionalMethod) {
+		this.instructionalMethod = instructionalMethod;
+	}
+
+	public List<checkboxSelectedDo> getAudience() {
+		return audience;
+	}
+
+	public void setAudience(List<checkboxSelectedDo> audience) {
+		this.audience = audience;
+	}
+
+	public List<checkboxSelectedDo> getLearningSkills() {
+		return learningSkills;
+	}
+
+	public void setLearningSkills(List<checkboxSelectedDo> learningSkills) {
+		this.learningSkills = learningSkills;
 	}
 
 	public void setAdds(String adds) {
@@ -273,5 +325,70 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getLanguageObjective() {
+		return languageObjective;
+	}
+
+	public void setLanguageObjective(String languageObjective) {
+		this.languageObjective = languageObjective;
+	}
+
+	/**
+	 * @return the publishStatus
+	 */
+	public PublishDo getPublishStatus() {
+		return publishStatus;
+	}
+
+	/**
+	 * @param publishStatus the publishStatus to set
+	 */
+	public void setPublishStatus(PublishDo publishStatus) {
+		this.publishStatus = publishStatus;
+	}
+
+	public Integer getItemCount() {
+		return itemCount;
+	}
+
+	public void setItemCount(Integer itemCount) {
+		this.itemCount = itemCount;
+	}
+
+	public UserDo getUser() {
+		return user;
+	}
+
+	public void setUser(UserDo user) {
+		this.user = user;
+	}
+
+	public Integer getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(Integer memberCount) {
+		this.memberCount = memberCount;
+	}
+
+	public CollectionSettingsDo getSettings() {
+		return settings;
+	}
+
+	public void setSettings(CollectionSettingsDo settings) {
+		this.settings = settings;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
 	
+	
+
 }

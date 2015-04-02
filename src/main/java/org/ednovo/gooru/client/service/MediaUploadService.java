@@ -28,6 +28,8 @@
 package org.ednovo.gooru.client.service;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -45,16 +47,8 @@ public interface MediaUploadService extends BaseService {
 	 * @return serialized to {@link MediaUploadDo} after upload
 	 * @throws GwtException
 	 */
-	MediaUploadDo imageWebUpload(String imageURL) throws GwtException;
+	MediaUploadDo imageWebUpload(String imageURL) throws GwtException, ServerDownException;
 
-	/**
-	 * Save uploaded image after crop for collection/resource
-	 * @param gooruOid of collection/resource 
-	 * @param fileName image file name or url
-	 * @return image file path which is uploaded
-	 * @throws GwtException
-	 */
-	String saveImage(String gooruOid, String fileName) throws GwtException;
 
 	/**
 	 * Crop uploaded image 
@@ -66,7 +60,7 @@ public interface MediaUploadService extends BaseService {
 	 * @return file name of the cropped image
 	 * @throws GwtException
 	 */
-	String cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) throws GwtException;
+	String cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) throws GwtException, ServerDownException;
 	
 	/**
 	 * Upload image from local file
@@ -74,10 +68,10 @@ public interface MediaUploadService extends BaseService {
 	 * @return serialized to {@link MediaUploadDo} after upload
 	 * @throws GwtException
 	 */
-	MediaUploadDo imageFileUpload(String response) throws GwtException;
+	MediaUploadDo imageFileUpload(String response) throws GwtException, ServerDownException;
 	
 	
-	String saveQuestionImage(String colletionItemId, String fileName);
+	CollectionItemDo saveQuestionImage(String colletionItemId, String fileName)  throws GwtException, ServerDownException;
 	
 
 	/**
@@ -89,5 +83,11 @@ public interface MediaUploadService extends BaseService {
 //	String saveResourceImage(String gooruOid, String fileName);
 	
 	
-	String uploadProfileImage(String fileNameWithOutRepository,String fileName);
+	String uploadProfileImage(String fileNameWithOutRepository,String fileName)  throws GwtException, ServerDownException;
+
+	CollectionItemDo saveImage(String gooruOid, String resourceId,
+			String fileName);
+
+	
+	String saveImageCollection(String gooruOid, String fileName) throws GwtException, ServerDownException;
 }

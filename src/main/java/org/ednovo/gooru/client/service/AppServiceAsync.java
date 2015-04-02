@@ -36,13 +36,13 @@ public interface AppServiceAsync extends BaseServiceAsync {
 	
 	void getLoggedInUser(AsyncCallback<UserDo> callback);
 
-	void signin(String username, String password, AsyncCallback<UserDo> callback);
-
 	void signout(AsyncCallback<UserDo> callback);
 	
-	void v2Signin(String postData,AsyncCallback<UserDo> callback);
+	void v2Signin(String userName, String password,AsyncCallback<UserDo> callback); 
 	
 	void v2Signout(AsyncCallback<UserDo> callback);
 	
 	void getAnalyticsURL(String type, String id, AsyncCallback<String> callback);
+	
+	void getUserFilterProperties(AsyncCallback<UserDo> callback);
 }

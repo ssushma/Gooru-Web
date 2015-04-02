@@ -31,8 +31,8 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -41,15 +41,28 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
-
-public class SignUpRoleView extends PopupPanel implements MessageProperties{
+/**
+ * 
+ * @fileName : SignUpRoleView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
+public class SignUpRoleView extends PopupPanel{
 
 	@UiField Label lblTitle, lblCancel,teachLbl,studentLbl,parentLbl,otherLbl;
 	
@@ -72,17 +85,43 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 	interface SignUpRoleViewUiBinder extends UiBinder<Widget, SignUpRoleView> {
 	}
 
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	public SignUpRoleView(String email, UserDo userDo) {
 		this.res = SignUpCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		oneMoreStepText.getElement().setInnerText(GL0898+GL_SPL_EXCLAMATION);
-		fillText.getElement().setInnerText(GL0953);
-		teachLbl.setText(GL0416);
-		studentLbl.setText(GL0417);
-		parentLbl.setText(GL0418);
-		otherLbl.setText(GL0419);
-		submitRegistration.setText(GL0486);
+		oneMoreStepText.getElement().setInnerText(i18n.GL0898()+i18n.GL_SPL_EXCLAMATION());
+		oneMoreStepText.getElement().setId("pnlOneMoreStepText");
+		oneMoreStepText.getElement().setAttribute("alt",i18n.GL0898());
+		oneMoreStepText.getElement().setAttribute("title",i18n.GL0898());
+		
+		fillText.getElement().setInnerText(i18n.GL0953());
+		fillText.getElement().setId("pnlFillText");
+		fillText.getElement().setAttribute("alt",i18n.GL0953());
+		fillText.getElement().setAttribute("title",i18n.GL0953());
+		
+		teachLbl.setText(i18n.GL0416());
+		teachLbl.getElement().setId("lblTeach");
+		teachLbl.getElement().setAttribute("alt",i18n.GL0416());
+		teachLbl.getElement().setAttribute("title",i18n.GL0416());
+		
+		studentLbl.setText(i18n.GL0417());
+		studentLbl.getElement().setId("lblStudent");
+		studentLbl.getElement().setAttribute("alt",i18n.GL0417());
+		studentLbl.getElement().setAttribute("title",i18n.GL0417());
+		
+		parentLbl.setText(i18n.GL0418());
+		parentLbl.getElement().setId("lblParent");
+		parentLbl.getElement().setAttribute("alt",i18n.GL0418());
+		parentLbl.getElement().setAttribute("title",i18n.GL0418());
+		
+		otherLbl.setText(i18n.GL0419());
+		otherLbl.getElement().setId("lblOther");
+		otherLbl.getElement().setAttribute("alt",i18n.GL0419());
+		otherLbl.getElement().setAttribute("title",i18n.GL0419());
+		
+		submitRegistration.setText(i18n.GL0486());
 		teacherRb = new RadioButton("roleRadioGroup", "");
 		studentRb = new RadioButton("roleRadioGroup", "");
 		parentRb = new RadioButton("roleRadioGroup", "");
@@ -93,21 +132,54 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 		otherRb.addClickHandler(new OtherRbClick());
 		
 		teacherRg.add(teacherRb);
+		teacherRg.getElement().setId("rdTeacher");
+		
 		studentRg.add(studentRb);
+		studentRg.getElement().setId("rdStudent");
+		
 		parentRg.add(parentRb);
+		parentRg.getElement().setId("rdParent");
+		
 		otherRg.add(otherRb);
+		otherRg.getElement().setId("rdOther");
 		
 		submitRegistration.getElement().setId("submitRegistration");
+		
 		loginTxtBox.addStyleName(res.css().loginTextBoxMargin());
         loginTxtBox.getElement().setAttribute("placeholder", "Username");
-		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
-
+        loginTxtBox.getElement().setId("txtLogin");
+		
+        lblTitle.setText(i18n.GL0186() + i18n.GL_SPL_EXCLAMATION());
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",i18n.GL0186());
+		lblTitle.getElement().setAttribute("title",i18n.GL0186());
+		
+		lblCancel.getElement().setId("lblCancel");
+		
 		this.setGlassEnabled(true);
 		this.show();
 		this.center();
 		
 	}
-
+	/**
+	 * 
+	 * @function closeSignUpRoleView 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void closeSignUpRoleView() {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		Window.enableScrolling(true);
@@ -119,14 +191,42 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 	public void onCancelClick(ClickEvent clickEvent) {
 		closeSignUpRoleView();
 	}
-
+	/**
+	 * 
+	 * @fileName : SignUpRoleView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class TeacherRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			userRole = "Teacher";
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : SignUpRoleView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class StudentRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -159,7 +259,6 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 	 * @param type 
 	 * 
 	 */
-	
 	public void checkUserAvailability(String userName, String type) {
 		AppClientFactory.getInjector().getUserService().getEmailId(userName, type, new SimpleAsyncCallback<UserDo>()
 		{
@@ -185,7 +284,7 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 			String userRole = this.userRole;
 			final UserDo userDo = AppClientFactory.getLoggedInUser();
 			
-			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new AsyncCallback<Void>(){
+			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new SimpleAsyncCallback<Void>(){
 				@Override
 				public void onSuccess(Void result) {
 					AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
@@ -201,10 +300,6 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 					});
 					Window.enableScrolling(false);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
 				}
 			});
 		}

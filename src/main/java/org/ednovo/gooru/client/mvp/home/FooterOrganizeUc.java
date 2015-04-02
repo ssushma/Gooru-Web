@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -9,7 +12,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -30,12 +33,14 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class FooterOrganizeUc extends Composite implements MessageProperties {
+public class FooterOrganizeUc extends Composite {
 
 	private static FooterUcUiBinder uiBinder = GWT.create(FooterUcUiBinder.class);
 
 	interface FooterUcUiBinder extends UiBinder<Widget, FooterOrganizeUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	SetFooterHandler setFooter=new SetFooterHandler(){
 
@@ -72,7 +77,7 @@ public class FooterOrganizeUc extends Composite implements MessageProperties {
 	Anchor copyRightAnr;
 
 	@UiField
-	Anchor careersAnr,mixpanelLink;
+	Anchor careersAnr;
 
 	@UiField
 	Anchor contactUsAnr;
@@ -133,7 +138,7 @@ public class FooterOrganizeUc extends Composite implements MessageProperties {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("902px", "300px");
+				
 				termsAndPolicyVc.center();
 			}
 		});
@@ -143,7 +148,6 @@ public class FooterOrganizeUc extends Composite implements MessageProperties {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				termsOfUse.show();
-				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 			}
 		});
@@ -158,24 +162,56 @@ public class FooterOrganizeUc extends Composite implements MessageProperties {
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();				
 			}
 		});
 
 		initWidget(uiBinder.createAndBindUi(this));
-		aboutGooruAnr.setText(GL1242);
-		communityAnr.setText(GL1243);
-		supportAnr.setText(GL0194);
-		termsAndPolicyAnr.setText(GL0872);
-		privacyAndPolicyAnr.setText(GL0873);
-		copyRightAnr.setText(GL0875);
-		careersAnr.setText(GL1244);
-		contactUsAnr.setText(GL1245);
-		copyRightYearText.setText(GL1246);
-		mixpanelLink.setTarget("_blank");
+		aboutGooruAnr.setText(i18n.GL1242());
+		aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1242());
+		aboutGooruAnr.getElement().setAttribute("title",i18n.GL1242());
+		
+		communityAnr.setText(i18n.GL1243());
+		communityAnr.getElement().setAttribute("alt",i18n.GL1243());
+		communityAnr.getElement().setAttribute("title",i18n.GL1243());
+		
+		supportAnr.setText(i18n.GL0194());
+		supportAnr.getElement().setAttribute("alt",i18n.GL0194());
+		supportAnr.getElement().setAttribute("title",i18n.GL0194());
+		
+		termsAndPolicyAnr.setText(i18n.GL0872());
+		termsAndPolicyAnr.getElement().setAttribute("alt",i18n.GL0872());
+		termsAndPolicyAnr.getElement().setAttribute("title",i18n.GL0872());
+		
+		privacyAndPolicyAnr.setText(i18n.GL0873());
+		privacyAndPolicyAnr.getElement().setAttribute("alt",i18n.GL0873());
+		privacyAndPolicyAnr.getElement().setAttribute("title",i18n.GL0873());
+		
+		copyRightAnr.setText(i18n.GL0875());
+		copyRightAnr.getElement().setAttribute("alt",i18n.GL0875());
+		copyRightAnr.getElement().setAttribute("title",i18n.GL0875());
+		
+		careersAnr.setText(i18n.GL1244());
+		careersAnr.getElement().setAttribute("alt",i18n.GL1244());
+		careersAnr.getElement().setAttribute("title",i18n.GL1244());
+		
+		contactUsAnr.setText(i18n.GL1245());
+		contactUsAnr.getElement().setAttribute("alt",i18n.GL1245());
+		contactUsAnr.getElement().setAttribute("title",i18n.GL1245());
+		
+		
+		Date todaysYear = new Date();
+		String copyRight = i18n.GL1246() + "" + (todaysYear.getYear() + 1900);
+		
+		copyRightYearText.setText(copyRight);
+		copyRightYearText.getElement().setId("lblCopyRightYearText");
+		copyRightYearText.getElement().setAttribute("alt",copyRight);
+		copyRightYearText.getElement().setAttribute("title",copyRight);
+		
+		
+		/*mixpanelLink.setTarget("_blank");
 		mixpanelLink.setHref("https://mixpanel.com/f/partner");
-	
+		mixpanelLink.getElement().setId("lnkMixPanel");*/
 		aboutGooruAnr.setHref("http://about.goorulearning.org/");
 		aboutGooruAnr.setTarget("_blank");
 		//featuresAnr.setHref("http://about.goorulearning.org/product/overview/");
@@ -196,6 +232,9 @@ public class FooterOrganizeUc extends Composite implements MessageProperties {
 		careersAnr.getElement().setId("lnkCareers");
 		contactUsAnr.getElement().setId("lnkcontactUs");
 		AppClientFactory.getEventBus().addHandler(SetFooterEvent.TYPE,setFooter);
+		goorulandingFooterContainer.getElement().setId("fpnlGoorulandingFooterContainer");
+		innerFooterDiv.getElement().setId("fpnlInnerFooterDiv");
+		privacyAndPolicyAnr.getElement().setId("lnkPrivacyAndPolicy");
 	}
 	
 	public void setMargins(String placeName){

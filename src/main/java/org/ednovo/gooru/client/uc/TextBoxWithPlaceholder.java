@@ -61,6 +61,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 		TextBoxWithPlaceholder textBox = new TextBoxWithPlaceholder(element);
 		// Mark it attached and remember it for cleanup.
 		textBox.onAttach();
+		textBox.getElement().setAttribute("spellcheck", "true");
 		RootPanel.detachOnWindowClose(textBox);
 
 		return textBox;
@@ -72,6 +73,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 	public TextBoxWithPlaceholder() {
 		this(DOM.createInputText());
 		setStyleName(UcCBundle.INSTANCE.css().textBoxWithPlaceholder());
+		this.getElement().setAttribute("spellcheck", "true");
 	}
 
 	/**
@@ -85,6 +87,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 	protected TextBoxWithPlaceholder(Element element) {
 		super(element);
 		setupHandlers();
+		this.getElement().setAttribute("spellcheck", "true");
 	}
 
 	@Override

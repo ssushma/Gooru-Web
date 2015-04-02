@@ -25,6 +25,7 @@
 package org.ednovo.gooru.shared.util;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class AttemptedAnswersDo implements Serializable{
 	
@@ -35,6 +36,7 @@ public class AttemptedAnswersDo implements Serializable{
 	private String answersText;
 	private int answerId;
 	private String[] fibAnswersList;
+	private Map<Integer,Boolean> answerOptionResult;
 	
 	public int getQuestionType() {
 		return questionType;
@@ -71,6 +73,12 @@ public class AttemptedAnswersDo implements Serializable{
 	 */
 	public void setFibAnswersList(String[] fibAnswersList) {
 		this.fibAnswersList = fibAnswersList;
+	}
+	public Map<Integer,Boolean> getAnswerOptionResult() {
+		return answerOptionResult;
+	}
+	public void setAnswerOptionResult(Map<Integer,Boolean> answerOptionResult) {
+		this.answerOptionResult = answerOptionResult;
 	}
 
 }

@@ -36,17 +36,20 @@ import java.util.Set;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
-import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
+import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
+import org.ednovo.gooru.shared.model.content.SearchResultsTagsDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * @author Search Team
@@ -65,6 +68,8 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 	
 	private static final String TAG_SET = "tagSet";
 	
+	private static final String RESOURCE_TAGS = "resourceTags";
+	
 	@Override
 	public ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
@@ -81,6 +86,10 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			SearchResourceFormatDO resourceFormatDO =JsonDeserializer.deserialize(resourceFormat.toString(), SearchResourceFormatDO.class);
 			resourceSearchResultDo.setResourceFormat(resourceFormatDO);
 			
+			JSONObject resourceRating = recordJsonObject.getJSONObject(RATINGS);
+			SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
+			resourceSearchResultDo.setRatings(searchRatingsDo);
+			
 		} catch (JSONException e1) {
 			
 		}
@@ -96,6 +105,9 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
+		
+		resourceSearchResultDo.setScollectionCount(getJsonInteger(recordJsonObject, COLLECTIONCOUNT));
+		
 		if(resourceSearchResultDo.getResourceType().getName().equals(ASSESSMENT_QUESTION)){
 			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, TIME_TO_COMPLETE_IN_SEC));
 			resourceSearchResultDo.setQuestionType(getJsonString(recordJsonObject, QUESTION_TYPE_NAME));
@@ -109,16 +121,48 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		resourceSearchResultDo.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		resourceSearchResultDo.setCategory(getJsonString(recordJsonObject, CATEGORY));
 		resourceSearchResultDo.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
-		resourceSearchResultDo.setNumOfPages(getJsonString(recordJsonObject, NO_OF_PAGES));
+		
+		if (getJsonString(recordJsonObject, AGGREGATOR) != null) {
+			try {
+				JSONArray aggregatorArrayObj = new JSONArray(getJsonString(recordJsonObject, AGGREGATOR));
+				List<String> aggregatorList=new ArrayList<String>();
+				for(int i=0;i<aggregatorArrayObj.length();i++){
+					aggregatorList.add(aggregatorArrayObj.getString(i).toString());
+				
+				}
+				resourceSearchResultDo.setAggregator(aggregatorList);
+			} catch (JSONException e) {
+			}
+		}
+		if (getJsonString(recordJsonObject, PUBLISHER) != null) {
+			try {
+				JSONArray publisherArrayObj = new JSONArray(getJsonString(recordJsonObject, PUBLISHER));
+				List<String> bublisherList=new ArrayList<String>();
+				for(int i=0;i<publisherArrayObj.length();i++){
+					bublisherList.add(publisherArrayObj.getString(i).toString());
+				
+				}
+				resourceSearchResultDo.setPublisher(bublisherList);
+			} catch (JSONException e) {
+			}
+		}
+		
+		/**
+		 * Deserialzing Resource tags.
+		 */
+		
+		try {
+			if(recordJsonObject.get(RESOURCE_TAGS)!= null){
+				List<SearchResultsTagsDo> searchTags = new ArrayList<SearchResultsTagsDo>();
+				searchTags.addAll((ArrayList<SearchResultsTagsDo>) JsonDeserializer.deserialize(recordJsonObject.getJSONArray(RESOURCE_TAGS).toString(),new TypeReference<List<SearchResultsTagsDo>>() {}));
+				resourceSearchResultDo.setResourceTags(searchTags);
+			}
+		} catch (Exception e) {
+		}
+		
 		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
-
-		UserDo ownerDo = new UserDo();
-		ownerDo.setFirstName(getJsonString(recordJsonObject, OWNER_FIRST_NAME));
-		ownerDo.setLastName(getJsonString(recordJsonObject, OWNER_LAST_NAME));
-		ownerDo.setUsername(getJsonString(recordJsonObject, OWNER_NAME_DISPLAY));
-		resourceSearchResultDo.setOwner(ownerDo);
 
 		try {
 			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {
@@ -130,9 +174,11 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				for (int i = 0; i < standardCodes.length(); i++) {
 					Map<String, String> standard = new HashMap<String, String>();
 					standard.put(STANDARD_CODE, (String) standardCodes.get(i));
+					try{
 					if (standardDescriptions.get(i) != null) {
 						standard.put(STANDARD_DESCRIPTION, (String) standardDescriptions.get(i));
 					}
+					}catch(Exception ex){}
 					standards.add(standard);
 				}
 				resourceSearchResultDo.setStandards(standards);
@@ -169,6 +215,11 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		}
 
 		return resourceSearchResultDo;
+	}
+
+	public void deserializeSuggestedResorcesRecord(JSONObject recordJsonObject) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

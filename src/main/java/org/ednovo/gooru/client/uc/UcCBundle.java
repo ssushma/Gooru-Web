@@ -52,6 +52,8 @@ public interface UcCBundle extends ClientBundle {
 		
 		String closeLabel();
 		
+		String closeLabelSearch();
+		
 		String closeLabelText();
 		
 		String closeLabelRemove();
@@ -83,11 +85,13 @@ public interface UcCBundle extends ClientBundle {
 		String paginationUc(); 
 		
 		String separator();
-		
+		String	separatorSuggested();
 		
 		/*CollectionImageUc*/
 		
 		String collectionThumbnail();
+		
+		String collectionThumbnail1();
 		
 		String collectionNotify();
 		
@@ -123,6 +127,8 @@ public interface UcCBundle extends ClientBundle {
 		String resourceThumbnails();
 		
 		String resourceName();
+		
+		String resourceNameNew();
 		
 		String resourceHover();
 		
@@ -203,7 +209,36 @@ public interface UcCBundle extends ClientBundle {
 		String otherSmall();
 		
 		String webpageSmall();
+
 		
+		String videoSmallNew();
+		
+		String interactiveSmallNew();
+		
+		String websiteSmallNew();
+		
+		String examSmallNew();
+		
+		String textbookSmallNew();
+		
+		String textSmallNew();
+		
+		String handoutSmallNew();
+		
+		String lessonSmallNew();
+		
+		String slideSmallNew();
+		
+		String questionSmallNew();
+
+		String imageSmallNew();
+		
+		String audioSmallNew();
+		
+		String otherSmallNew();
+		
+		String webpageSmallNew();
+
 		String imageUploadPopup();
 		
 		String textBoxWithPlaceholderText();
@@ -283,8 +318,6 @@ public interface UcCBundle extends ClientBundle {
 		
 		/* UserProfileUc */
 		String profilePopup(); 
-		
-		String profilePopupArrow(); 
 		
 		String profilePopupContainer(); 
 		
@@ -423,6 +456,11 @@ public interface UcCBundle extends ClientBundle {
 		
 		String txtAlignLeft();
 		
+		String privacyAlignStyle();
+		
+		String paddingClear();
+		String closeLabelCentury();
+		String closeLabelRemoveInCentury();
 	}
 
 	@Source("Uc.css")

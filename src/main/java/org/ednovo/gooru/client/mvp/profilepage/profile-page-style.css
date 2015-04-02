@@ -4,7 +4,7 @@
 }
 
 body {
-	background-image: url("images/profilepage/gray_noise_25.png");
+	background-image: url("images/landing-page/gray_noise_25.png");
 	font-family: Arial, sans-serif;
 	color:#515151;
 	font-size:12px;
@@ -47,45 +47,58 @@ a:hover {
 }
 
 .profileContainer {
-	padding:20px;
-	width:1121px;
+	width:1000px;
 	margin:auto;
-	position: fixed;
 }
 
 .userInfo {
-	overflow:hidden;
+	
 }
 
 .avatar {
-	width:100px;
-	height:100px;
+	width:174px;
+	height:175px;
+	position: relative;
 	background-color:white;
 	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
-	padding:10px;
 	float:left;
-	margin-right:20px;
 }
 
 .aboutUserText {
-	width:633px;
-	float:left;
+	width: 80%;
+	float: right;
+	padding: 10px;
+	margin-top:5px;
+	box-sizing:content-box;
+	
 }
 
 .userName {
-	font-size: 38px;
+	font-size: 18px;
 	font-weight: bold;
 	color: rgba(100,100,100, 0.8);
 	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
 	background-color: transparent;
+	float: left;
+	padding: 4px;
+}
+
+.userNameForCollection{
+	font-size: 18px;
+	font-weight: bold;
+	color: rgba(100,100,100, 0.8);
+	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
+	background-color: transparent;
+	float: left;
+	margin-top: 10px;
 }
 
 .userBio {
 	padding-top: 0px;
 	line-height: 140% !important;
-	width: 550px;
+	width: 794px;
 }
 
 .userTitle {
@@ -94,7 +107,7 @@ a:hover {
 }
 
 .userContent {
-	clear:both;
+	float: left;
 	border-bottom:1px solid #ddd;
 }
 
@@ -102,6 +115,7 @@ a:hover {
 	height: 35px;
 	width: 100%;
 	border:1px solid #ddd;
+	display: none;
 	background: rgb(239,239,239); /* Old browsers */
 	/* Safari 4-5, Chrome 1-9 */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#EDEDED));
@@ -211,8 +225,7 @@ a:hover {
 }	
 
 .contentView {
-	height:600px; /* This needs to be calculated. Use the window height - 210px */
-	border-top: 1px solid #ddd;
+	
 }
 
 .folderBlock {
@@ -236,17 +249,14 @@ a:hover {
 	float:left;
 	border-right: 1px dashed #ccc;
 	padding:20px 20px 0px 0px;
-	position: fixed;
 }
 
 .contentVisualView {
-	width:713px;
+	width:708px;
 	height:100%;
 	overflow:auto;
 	overflow-x: hidden;
-	float:left;
 	padding:20px;
-	position: fixed;
 	margin-left: 370px;
 }
 
@@ -704,7 +714,7 @@ li.resources {
 	height: 10px;
 	position: relative;
 	left: 22px;
-	background-image: url("images/profilepage/bubble-arrow.png");
+	background-image: url("images/bubble-arrow.png");
 }
 
 .standards li div.standard-popup {
@@ -825,14 +835,6 @@ li.resources {
 
 .collection-info-list li {
 	padding: 5px 0px 5px 30px;
-}
-
-.collection-info-list .grade {
-	background: url("images/profilepage/grade-icon.png") no-repeat;
-}
-
-.collection-info-list .likes {
-	background: url("images/profilepage/likes-icon.png") no-repeat;
 }
 
 .collections-using {
@@ -984,8 +986,7 @@ li.resources {
 }
 
 .userMetadata {
-	width: 700px;
-	padding-top: 10px;
+	width: 800px;
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -995,10 +996,8 @@ li.resources {
 	padding-top: 5px;
 }
 .userCount {
-	width: 462px;
 	float: left;
 	text-align: center;
-	margin-left: 5px;
 	margin-right: 5px;
 	overflow: hidden;
     height: 25px;
@@ -1028,7 +1027,7 @@ li.resources {
     top: 43px;
     left: 73px;
     width: 392px;
-    padding: 5px;
+    padding: 25px;
     background:#fff;
 	background-color:rgb(255,255,255);
 	border-color:rgb(221,221,221);
@@ -1038,6 +1037,7 @@ li.resources {
 	-webkit-box-shadow:0px 0px 2px 1px rgba(221,221,221,0.5);
 	box-shadow:0px 0px 2px 1px rgba(221,221,221,0.5);
 	z-index: 1;	
+	box-sizing:content-box;
 }
 .userCourseName {
 	color: white;
@@ -1068,6 +1068,7 @@ li.resources {
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
 	background: -o-linear-gradient(top, #fdfdfd, #ddd);
 	border: 1px solid #ddd;
+	float:left;
 }
 .edit-Button:hover {
 	cursor: pointer;
@@ -1081,14 +1082,14 @@ li.resources {
 	padding: 4px 0px;
 }
 .aboutUserTextRight {
-	overflow: hidden;
-	width: 348px;
-	float: left;
+	float: right;
 }
 .gooru-social-buttons {
 	float: right;
 	clear: right;
-	width: 102px;
+	width: 115px;
+	margin-top: -10px;
+	margin-left: 10px;
 }
 .gooru-social-Input {
 	float: right;
@@ -1117,14 +1118,11 @@ li.resources {
 .gooruProfileOnOffContainer {
 	float: right;
 	clear: right;
-	height: 75px;
 	text-align: center;
 }
 
 .profileGradeInfoContainer {
 	float: left;
-	margin-left: 10px;
-	margin-top: 10px;
 	width: 385px;
 }
 
@@ -1138,36 +1136,45 @@ li.resources {
 
 .profileGradeInfoTitleContainer {
 	float: left;
-	width: 60px;
+	width: 100%;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 15px;
 }
 
 .profileGradeContentContainer {
 	float: left;
-	width: 250px;
+	width: 393px;
 	margin-top: -10px;
 }
 
 .profileGradeInfoTitle {
-	font-size: 12px;
+	font-size: 14px;
 	color: #515151;
 }
 
 .profileCourseInfoTitle {
-	font-size: 12px;
+	font-size: 14px;
 	color: #515151;
 	padding-top: 13px;
 }
 
 .profileGradeGartenContainer {
 	float: left;
-	width: 250px;
+	width: 135px;
 	opacity: 0.6;
 }
 
+.profileGradeHigherContainer {
+	float: left;
+	width: 135px;
+}
+
 .addedCoursesList {
-	float: right;
-	width: 321px;
-	margin: 5px 0px 10px 0px;
+	float: left;
+	width: 385px;
+	margin: 20px 0 10px 0;
+	background: #F0F0F0;
+	
 }
 
 .editPencil {
@@ -1181,7 +1188,8 @@ li.resources {
 
 .bioMainContainer {
 	float: left;
-	width: 635px;
+	padding-top: 10px;
+	border-top: 1px solid #999;
 }
 
 .bioLeftContainer {
@@ -1191,23 +1199,25 @@ li.resources {
 
 .bioRightContainer {
 	float: left;
-	width: 560px;
+	width: 795px;
 }
 
 .metaDataContainer {
 	float: left;
-	max-width: 530px;
-	min-height: 40px;
+	max-width: 700px;
+	margin-bottom: 5px;
 }
 
 .bioTextAreaContainer {
-	width: 477px;
+	width: 755px;
 	float: left;
 }
 .userMetaDataContainer {
+	width: 1000px;
 	float:left;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	margin-top:28px;
+	background: white;
 }
 .coursePopupCancelLbl {
 	float: left;
@@ -1240,7 +1250,8 @@ li.resources {
 }
 
 .moreGradeCourseLbl {
-	margin-top: 5px;
+	margin-top: 8px;
+	margin-right: 5px;
 	margin-left: 0px;
 	float: left;
 	color: #4c98cc;
@@ -1261,4 +1272,282 @@ li.resources {
 	width: 50px;
 	height: 25px;
 	margin-left: 10px;
+}
+
+.starBg {
+	color: #fff;
+	cursor: pointer;
+	bottom: 0px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	position: absolute;
+	font-weight: bold;
+	padding: 10px 7px;
+	padding-left: 30px;
+	background: #4D9645 url('images/profilepage/rating.png') 5px 8px no-repeat;
+}
+
+.gooruSocialButtonsContainer {
+	float: left;
+}
+.profilePageEditBioPanel {
+	position: relative;
+}
+
+.roleStyle {
+	display: inline-block;
+	font-size: 16px;
+	padding-left: 14px;
+	float: left;
+	padding-top: 5px;
+}
+
+.userNameborder {
+	width: 100%;
+	float: left;
+	height: 10px;
+	border-bottom: 1px solid #ddd;
+}
+.qmark {
+	position: relative;
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	margin-top: 7px;
+	background: url('images/mos/questionmark.png') no-repeat;
+	margin-left: 5px;
+}
+.qmark:hover .profileVisiblityPopup {
+	display: block;
+}
+.qmark:hover .userLibraryPopup {
+	display: block;
+}
+.profileVisiblityPopup {
+	position: absolute;
+	left: -93px;
+	top: 14px;
+	display: none;
+	text-align: left;
+	z-index: 999;
+}
+
+.bubble-arrow-style {
+	width: 0;
+	height: 0;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	top: 1px;
+	margin: auto;
+	border-top: none;
+	z-index: 100000;
+	left: 0;
+	right: 0;
+}
+
+.standards-inner {
+	color: #515151;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	font-size: 12px;
+	padding: 30px;
+	width: 369px;
+	min-height: 110px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+.standards-Popup {
+	width: 200px;
+	height: 138px;
+	padding: 20px;
+}
+
+.userLibraryPopup {
+	position: absolute;
+	left: -142px;
+	top: 14px;
+	display: none;
+	z-index: 10000;
+}
+.marginTop10 {
+	margin-top: -10px;
+}
+.popup-left {
+	left: 27px;
+	top: -47px;
+}
+
+.arrow-left {
+	left: -188px;
+	top: 50px;
+	transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
+}
+.paddinBottom15 {
+	padding-bottom: 15px;
+	font-size: 14px;
+}
+
+.gradeBoxStyle {
+	float: left;
+}
+.addCourseBtnStyle {
+	margin: 5px 9px;
+}
+.addedCourseLbl {
+	font-size: 14px;
+	margin: 5px;
+}
+
+.margin5 {
+	margin: 5px !important;
+	padding: 5px !important;
+}
+.userinfoContainer{
+	clear: both;
+	float: left;
+	height: 45px;
+	position: relative;
+	width: 100%;
+	margin: 0 !important;
+	color: #515151 !important;
+	border-bottom: 1px solid #ddd !important;
+	border-top: 1px solid #eee !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#ededed)) !important;
+	background: -moz-linear-gradient(center top, #fdfdfd, #ededed) repeat scroll 0 0 transparent !important;
+	background-color: #ededed;
+	padding: 0 !important;
+}
+.profilepageFollwoingContent{
+	Width:100%;
+	float:left;
+	
+}
+.profilepageFollwoingContentlabel{
+	float:left;
+}
+.profilepageTagContentMainDiv{
+	Width:90%;
+	float:left;
+}
+.profilepageTagContentMainDivconent{
+	float:left;
+	width:65%;
+	color:green;
+}
+.profilepageTagContentMainDivconentcount{
+	float:left;
+	width:25%;
+	color:green;
+}
+.infoSectionAuthor{
+    margin-top:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ddd;
+
+}
+.rightPanel .userImageContainer {
+    margin-right:10px;
+    width:40px;
+    height:40px;
+    border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+    border:3px solid #87BADD;
+}
+.rightPanel .userImage{
+    width:40px;
+    height:40px;
+     border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+}
+.teacherTipOuterContainer
+{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+	
+}
+.rightPanel  .username {
+    display:inline-block;
+    vertical-align:middle;
+}
+.tabContent{
+	width: 70%;
+	margin: 0 auto;
+	padding-left: 90px;
+}
+.tabAlign{
+	display: inline-block;
+	vertical-align: top;
+}
+.followButton{
+	
+}
+.followingBtn
+{
+color: #FFF;
+background-color: #1076BB;
+border-radius: 4px;
+padding: 6px 10px 8px 10px;
+font-size: 13px;
+padding-left: 33px;
+border: 1px solid #1076BB;
+font-family: Arial, sans-serif;
+background: #1076BB;
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+text-align: center;
+
+}
+
+.followingBtn:hover
+{
+	cursor: pointer;
+}
+.blackPrimaryButton{
+	color: #fff;
+	border-radius: 4px;
+	padding: 7px 9px 8px 10px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background-color: #515151;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#515151), to(#333));
+	background: -webkit-linear-gradient(top, #515151, #333);
+	background: -moz-linear-gradient(top, #515151, #333);
+	background: -ms-linear-gradient(top, #515151, #333);
+	background: -o-linear-gradient(top, #515151, #333);
+	float: left;
+	width: 100px;
+	
+	
+}
+.blackPrimaryButton:hover{
+	cursor: pointer;
+	background: #393939;
+}
+.floatLeft{
+	float:left;
+		margin-top:-5px;
+}
+.profileDescCharLimit{
+	float: right;
+	margin-right: 141px;
+	color: #999;
 }

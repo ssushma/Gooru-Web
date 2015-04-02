@@ -50,6 +50,7 @@ public class SummaryAnswerView extends Composite{
 	}
 	public SummaryAnswerView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		setId();
 	}
 	
 	@UiConstructor
@@ -61,18 +62,23 @@ public class SummaryAnswerView extends Composite{
 		}else{
 			questionAnswerChoice.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 		}
+		setId();
 	}
 	
 	public SummaryAnswerView(AttemptedAnswersDo attemptedAnswersDo) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		questionAnswerText.setHTML(removeHtmlTags(attemptedAnswersDo.getAnswersText()));
-				
+		setId();
 	}
 	@UiConstructor
 	public SummaryAnswerView(QuestionAnswerDo questionAnserDo,int sequenceNum,boolean userAttempedStatus){
 		initWidget(uiBinder.createAndBindUi(this));
 		questionAnswerSequence.setText((char) (65 + sequenceNum)+")");
+		questionAnswerSequence.getElement().setAttribute("alt",(char) (65 + sequenceNum)+")");
+		questionAnswerSequence.getElement().setAttribute("title",(char) (65 + sequenceNum)+")");
 		questionAnswerText.setHTML(removeHtmlTags(questionAnserDo.getAnswerText()));
+		questionAnswerText.getElement().setAttribute("alt",removeHtmlTags(questionAnserDo.getAnswerText()));
+		questionAnswerText.getElement().setAttribute("title",removeHtmlTags(questionAnserDo.getAnswerText()));
 		if(userAttempedStatus){
 			if(questionAnserDo.isIsCorrect()){
 				questionAnswerChoice.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
@@ -80,11 +86,16 @@ public class SummaryAnswerView extends Composite{
 				questionAnswerChoice.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 			}	
 		}
+		setId();
 	}
 	private String removeHtmlTags(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return html;
 	}
-		
+	public void setId(){
+		questionAnswerChoice.getElement().setId("lblQuestionAnswerChoice");
+		questionAnswerSequence.getElement().setId("htmlQuestionAnswerSequence");
+		questionAnswerText.getElement().setId("htmlQuestionAnswerText");
+	}
 		
 }

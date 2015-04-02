@@ -4,11 +4,13 @@
 	<ui:style field="FolderStyle" src="folderPopup.css"/>
 	<g:HTMLPanel>
 	     <div class="{FolderStyle.popupMain}">
-			<div class="{FolderStyle.popupInner}">
+			<div>
 			<!--  <g:Label styleName="{FolderStyle.popupHeader}" ui:field="titleLabel"/> -->
 				<g:HTMLPanel styleName="{FolderStyle.popupContent}" ui:field="contentPnl">
                     <div class="{FolderStyle.icon} {FolderStyle.complete}"></div>
                    		 <g:Label styleName="{FolderStyle.header}" ui:field="headerTitle"/>
+                   		 <g:InlineLabel styleName="{FolderStyle.headerppp}" ui:field="headerTitleDes"></g:InlineLabel>
+                   		 <g:InlineLabel styleName="{FolderStyle.headerppp}" ui:field="headerTitleDesUsername"></g:InlineLabel>
                  </g:HTMLPanel>
 				<g:HTMLPanel styleName="{FolderStyle.okCancel}" ui:field="buttonContainer">
 					 <g:Button styleName="secondary" ui:field="cancelButton"/>

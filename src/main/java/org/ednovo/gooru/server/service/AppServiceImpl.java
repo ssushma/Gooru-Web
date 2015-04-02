@@ -30,7 +30,6 @@ import java.util.Date;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AppService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
-import org.ednovo.gooru.server.form.AppFormFactory;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
@@ -38,8 +37,13 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 
 /**
  * @author Search Team
@@ -52,7 +56,13 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	/**
 	 * 
 	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(AppServiceImpl.class);
+	
 	private static final long serialVersionUID = -6736852011457993775L;
+	
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+	
 
 	@Override
 	public UserDo getLoggedInUser() {
@@ -61,114 +71,75 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		if (!isLoggedInUserAnonymous()) {
 			user = getUserInfo(userUid);
 			user.setToken(getLoggedInSessionToken());
+			user.setDateOfBirth(getLoggedInDateOfBirth()); 
 //			user.setEmailId(getLoggedInEmailId());
 		}
 		if (user == null) {
-//			user = guestSignIn();
 			user = v2GuestSignIn();
 		}
 		setUserFilterProperties(user);
 		return user;
 	}
 
-	@Override
-	public UserDo signin(String username, String password) {
-		UserDo user = null;
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNIN, getApiKey(), getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), AppFormFactory.getSigninForm(username, password));
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		String content = null;
-		try {
-			content = jsonRep.getText();
-			
-			if (content.contains("{")) {
-				user = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
-				// if user created after production switch
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					user.setBeforeProductionSwitch(false);
-				}else{
-					user.setBeforeProductionSwitch(true);
-				}
-				
-				setUserFilterProperties(user);
-				deleteLoggedInInfo();
-				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId());
-				return user;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new GwtException(e.getMessage());
-		}
-		if (content != null) {
-			String[] parsed = content.split(":");
-			if (parsed.length > 1) {
-				content = parsed[1];
-			}
-		}
-		throw new GwtException(content);
-	}
 
 	@Override
-	public UserDo signout() {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNOUT, getLoggedInSessionToken());
-		ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		deleteLoggedInInfo();
-		UserDo user = guestSignIn();
-		setUserFilterProperties(user);
-		return user;
-	}
+	public UserDo signout() {return null;}
 
 	
 	/// V2 Apis
 	@Override
-	public UserDo v2Signin(String postData) {
+	public UserDo v2Signin(String userName, String password) {
+		JSONObject postData = new JSONObject();
 		UserDo user = null;
 		V2UserDo v2UserDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
 		
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData);
-		jsonRep =jsonResponseRep.getJsonRepresentation();
+		String decryptedPwd = StringUtil.getDecryptedData(password);
 		String content = null;
 		try {
-			content = jsonRep.getText();
-			if (content.contains("{")) {
-				v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
-				user = v2UserDo.getUser();
-				user.setToken(v2UserDo.getToken());
-				
-				user.setDateOfBirth(v2UserDo.getDateOfBirth());
-				user.setAccountCreatedType(user.getAccountCreatedType());
-				
-//				user.setCreatedOn(v2UserDo.getCreatedOn());
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
-				// if user created after production switch
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					user.setBeforeProductionSwitch(false);
-				}else{
-					user.setBeforeProductionSwitch(true);
+			postData.put(USERNAME, userName);
+			postData.put(PASSWORD, decryptedPwd);
+			 
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			
+			if (jsonResponseRep.getStatusCode()==200){
+				content = jsonRep.getText();
+				if (content.contains("{")) {
+					v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
+					user = v2UserDo.getUser();
+					user.setToken(v2UserDo.getToken());
+					user.setStatusCode(jsonResponseRep.getStatusCode());
+					user.setDateOfBirth(v2UserDo.getDateOfBirth());
+					user.setAccountCreatedType(user.getAccountCreatedType());
+
+					//				user.setCreatedOn(v2UserDo.getCreatedOn());
+					Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
+					Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
+					// if user created after production switch
+					if (userCreatedDate.getTime() >= prodDate.getTime()){
+						user.setBeforeProductionSwitch(false);
+					}else{
+						user.setBeforeProductionSwitch(true);
+					}
+
+					setUserFilterProperties(user);
+					deleteLoggedInInfo();
+					setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
+					AppClientFactory.setLoggedInUser(user);
+					return user;
 				}
-				
-				setUserFilterProperties(user);
-				deleteLoggedInInfo();
-				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId());
-				AppClientFactory.setLoggedInUser(user);
+			}else {
+				user = new UserDo();
+				user.setStatusCode(jsonResponseRep.getStatusCode());
+				user.setResponseDo(jsonResponseRep.getResponseDo());
 				return user;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e.getMessage());
 			throw new GwtException(e.getMessage());
 		}
-//		if (content != null) {
-//			String[] parsed = content.split(":");
-//			if (parsed.length > 1) {
-//				content = parsed[1];
-//			}
-//		}
 		throw new GwtException(content);
 	}
 	
@@ -189,6 +160,13 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		
 		String analyticsUrl = getAnalyticsEndPoint() +"dashboard/#/" + type +"/"+id+"?session_token="+getLoggedInSessionToken();		
 		return analyticsUrl;
+	}
+	
+	@Override
+	public UserDo getUserFilterProperties(){
+		UserDo userDo=new UserDo();
+		userDo.setSettings(getFilterProperties());
+		return userDo;
 	}
 	
 }

@@ -1,0 +1,75 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<ui:style field="style" src="dashboard.css"/>
+	
+	<g:HTMLPanel ui:field="ratingsAndreactionsGivenPnl">
+			<div class="{style.whiteBg}">
+				<div class="{style.panelBox}">
+					<g:Label styleName="{style.smallHeader}" ui:field="smallHeaderTextLbl"></g:Label>
+					<g:HTMLPanel  ui:field="ratingsOrReviewsBlock">
+									<div class="{style.panelRatingLabels}">
+											<div class="ratingsPanel">
+						            		    <g:Label styleName="{style.ratingLabel}" ui:field="ratingLblPoor"></g:Label> 
+						               			<div class="{style.ratingStars}"><g:Image ui:field="ratingorReactionImgPoor"/></div>
+						               		</div>
+						               			
+						              		<div class="ratingsPanel">
+						              			<g:Label styleName="{style.ratingLabel}" ui:field="ratingLabelFair"></g:Label>
+						                  		<div class="{style.ratingStars}"><g:Image ui:field="ratingorReactionImgFair"/></div>
+						                    </div>
+						                    	 
+						                    <div class="ratingsPanel">
+						                 		<g:Label styleName="{style.ratingLabel}" ui:field="ratingLabelGood"></g:Label>
+						                  		<div class="{style.ratingStars}"><g:Image ui:field="ratingorReactionImgGood"/></div>
+						                    </div>
+						                   
+						                   <div class="ratingsPanel">
+						                   		<g:Label styleName="{style.ratingLabel}" ui:field="ratingLabelVeryGood"></g:Label>
+						                    	<div class="{style.ratingStars}"><g:Image ui:field="ratingorReactionImgVeryGood"/></div>
+						                   </div>
+						                   
+						                   <div class="ratingsPanel">
+						        				<g:Label styleName="{style.ratingLabel}" ui:field="ratingLabelExcellent"></g:Label>
+						        				<div class="{style.ratingStars}"><g:Image ui:field="ratingorReactionImgExcellent"/></div>
+						         		   </div>
+						       	 </div>
+       
+						        <g:HTMLPanel styleName="{style.panelRatingValues}">
+								      <div class="{style.prgressBar}"> 
+								      <g:HTMLPanel  ui:field="dataOne" styleName="{style.bar}"></g:HTMLPanel>
+								      <g:Label styleName="{style.count}" ui:field="countLblPoor"></g:Label>
+								      </div>
+						      
+								      <div class="{style.prgressBar}"> 
+								      <g:HTMLPanel  ui:field="dataTwo" styleName="{style.bar} {style.data-two}"></g:HTMLPanel> 
+								       <g:Label styleName="{style.count}" ui:field="countLblFair"></g:Label>  
+								       </div>
+						       
+								        <div class="{style.prgressBar}">  
+								        <g:HTMLPanel  ui:field="dataThree" styleName="{style.bar} {style.data-three}"></g:HTMLPanel>
+								       <g:Label styleName="{style.count}" ui:field="countLblGood"></g:Label>  
+								       </div>
+								     
+								       <div class="{style.prgressBar}">  
+								       <g:HTMLPanel  ui:field="dataFour" styleName="{style.bar} {style.data-three}"></g:HTMLPanel>
+								        <g:Label styleName="{style.count}" ui:field="countLblVeryGood"></g:Label> 
+								       </div> 
+								       
+								       <div class="{style.prgressBar}">  
+								       <g:HTMLPanel  ui:field="dataFive" styleName="{style.bar} {style.data-four}"></g:HTMLPanel>
+								       <g:Label styleName="{style.count}" ui:field="countLblExcellent"></g:Label>  
+								       </div>
+						        </g:HTMLPanel>
+        							   <div class="{style.clearfix}"></div>
+					</g:HTMLPanel>
+				</div>
+			</div>
+     </g:HTMLPanel>
+</ui:UiBinder>

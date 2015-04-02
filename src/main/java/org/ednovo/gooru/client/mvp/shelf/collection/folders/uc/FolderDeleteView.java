@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,25 +24,25 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
  * 
  */
-public class FolderDeleteView extends PopupPanel implements MessageProperties{
+public class FolderDeleteView extends AppPopUp {
 
 	private static FolderDeleteViewUiBinder uiBinder = GWT
 			.create(FolderDeleteViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderDeleteViewUiBinder extends
 			UiBinder<Widget, FolderDeleteView> {
 	}
-	@UiField Label titleLabel,headerLabel,descriptionLabel,deleteText;
+	@UiField Label titleLabel,headerLabel,descriptionLabel,deleteText,lblDeleteText;
 	@UiField Button cancelButton,okButton;
 	@UiField TextBoxWithPlaceholder txtDelete;
 	
@@ -62,6 +66,8 @@ public class FolderDeleteView extends PopupPanel implements MessageProperties{
 		}
 		setWidget(uiBinder.createAndBindUi(this)); 
 		setView();
+		
+		
 	}
 	/**
 	 * @function setview
@@ -78,15 +84,44 @@ public class FolderDeleteView extends PopupPanel implements MessageProperties{
 	*/
 	public void setView()
 	{
-		titleLabel.setText(GL1176);
-		cancelButton.setText(GL0142);
-		okButton.setText(GL0190);
-		headerLabel.setText(GL1174);
-		descriptionLabel.setText(GL1328);
-		txtDelete.setPlaceholder(GL1175);
+		titleLabel.setText(i18n.GL1176());
+		titleLabel.getElement().setId("lblTitleLabel");
+		titleLabel.getElement().setAttribute("alt",i18n.GL1176());
+		titleLabel.getElement().setAttribute("title",i18n.GL1176());
+		
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setId("btnCancelButton");
+		cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
+		
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setId("btnOkButton");
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
+		
+		headerLabel.setText(i18n.GL1174());
+		headerLabel.getElement().setId("lblHeaderLabel");
+		headerLabel.getElement().setAttribute("alt",i18n.GL1174());
+		headerLabel.getElement().setAttribute("title",i18n.GL1174());
+		
+		descriptionLabel.setText(i18n.GL1328());
+		descriptionLabel.getElement().setId("lblDescriptionLabel");
+		descriptionLabel.getElement().setAttribute("alt",i18n.GL1328());
+		descriptionLabel.getElement().setAttribute("title",i18n.GL1328());
+		
+		lblDeleteText.setText(i18n.GL2189());
+		StringUtil.setAttributes(lblDeleteText.getElement(), "lblDeleteText", null, "lblDeleteText");
+		
+		//txtDelete.setPlaceholder(i18n.GL1175());
+		txtDelete.getElement().setId("txtTxtDelete");
+		
 		txtDelete.addKeyUpHandler(new ValidateConfirmText());
 		okButton.getElement().addClassName("disabled");
-		deleteText.setText(GL0560);
+		deleteText.setText(i18n.GL0560());
+		deleteText.getElement().setId("lblDeleteText");
+		deleteText.getElement().setAttribute("alt",i18n.GL0560());
+		deleteText.getElement().setAttribute("title",i18n.GL0560());
+		
 		deleteText.setVisible(false);
 	}
 	/**
@@ -104,7 +139,7 @@ public class FolderDeleteView extends PopupPanel implements MessageProperties{
 	*/
 	@UiHandler("cancelButton")
 	public void onClickOfCancelButton(ClickEvent event){
-		this.hide();	
+		hide();	
 		Window.enableScrolling(true);
 	}
 	
@@ -170,7 +205,7 @@ public class FolderDeleteView extends PopupPanel implements MessageProperties{
 		deleteText.setVisible(true);
 		okButton.setVisible(false);
 		cancelButton.setVisible(false);
-		AppClientFactory.getInjector().getfolderService().deleteCollectionsFolder(parentId, new AsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().deleteCollectionsFolder(parentId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				okButton.setVisible(true);
@@ -178,21 +213,17 @@ public class FolderDeleteView extends PopupPanel implements MessageProperties{
 				deleteText.setVisible(false);
 				FolderDo folderDo = new FolderDo();
 				folderDo.setGooruOid(parentId);
-				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.DELETE, null));
+				CollectionDo collDo = new CollectionDo();
+				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.DELETE, null,collDo));
 				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView() {
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
-						Window.enableScrolling(true);
+//						Window.enableScrolling(true);
 						appPopUp.hide();
 					}
 				};
 				hide();
 				getPreviousPlace();
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}

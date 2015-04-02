@@ -34,9 +34,9 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,12 +53,23 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
- * @author Search Team
  * 
+ * @fileName : ClasspageResourceItemChildView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class ClasspageResourceItemChildView extends
 		ChildView<ClasspageResourceItemChildPresenter> implements
-		IsClasspageResourceItemView, MessageProperties {
+		IsClasspageResourceItemView{
 
 	@UiField(provided = true)
 	ClasspageResourceItemCBundle res;
@@ -73,6 +84,7 @@ public class ClasspageResourceItemChildView extends
 	
 	@UiField
 	Label confirmDeleteLbl;
+	@UiField HTMLPanel classpageItemPanel;
 	
 	DeleteConfirmPopupVc deleteConfirmVc =null;
 
@@ -81,6 +93,8 @@ public class ClasspageResourceItemChildView extends
 	
 	private static ClasspageResourceItemChildViewUiBinder uiBinder = GWT
 			.create(ClasspageResourceItemChildViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ClasspageResourceItemChildViewUiBinder extends
 			UiBinder<Widget, ClasspageResourceItemChildView> {
@@ -98,10 +112,25 @@ public class ClasspageResourceItemChildView extends
 		res = ClasspageResourceItemCBundle.INSTANCE;
 		ClasspageResourceItemCBundle.INSTANCE.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		classpageTitleLbl.setText(GL1409);
-		openClasspageLbl.setText(GL1115);
-		studentViewLbl.setText(GL0139);
-		confirmDeleteLbl.setText(GL0558);
+		classpageTitleLbl.setText(i18n.GL1409());
+		classpageTitleLbl.getElement().setId("lblClasspageTitle");
+		classpageTitleLbl.getElement().setAttribute("alt",i18n.GL1409());
+		classpageTitleLbl.getElement().setAttribute("title",i18n.GL1409());
+		
+		openClasspageLbl.setText(i18n.GL1115());
+		openClasspageLbl.getElement().setId("lblOpenClasspage");
+		openClasspageLbl.getElement().setAttribute("alt",i18n.GL1115());
+		openClasspageLbl.getElement().setAttribute("title",i18n.GL1115());
+		
+		studentViewLbl.setText(i18n.GL0139());
+		studentViewLbl.getElement().setId("lblStudentView");
+		studentViewLbl.getElement().setAttribute("alt",i18n.GL0139());
+		studentViewLbl.getElement().setAttribute("title",i18n.GL0139());
+		
+		confirmDeleteLbl.setText(i18n.GL0558());
+		confirmDeleteLbl.getElement().setId("lblConfirmDeleteLbl");
+		confirmDeleteLbl.getElement().setAttribute("alt",i18n.GL0558());
+		confirmDeleteLbl.getElement().setAttribute("title",i18n.GL0558());
 		this.collectionDo = collection;
 		
 		setData(collection);
@@ -111,6 +140,7 @@ public class ClasspageResourceItemChildView extends
 		setPresenter(new ClasspageResourceItemChildPresenter(this));
 		
 		actionVerPanel.setVisible(false);
+		actionVerPanel.getElement().setId("pnlActionVer");
 		/**
 		 * create delete confirmation pop and delete the collection if user wants
 		 * 
@@ -122,7 +152,7 @@ public class ClasspageResourceItemChildView extends
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				deleteConfirmVc = new DeleteConfirmPopupVc(GL0748,"\""+ collectionDo.getTitle() + "\"" + " "+GL0102+GL_SPL_FULLSTOP)  {
+				deleteConfirmVc = new DeleteConfirmPopupVc(i18n.GL0748(),"\""+ collectionDo.getTitle() + "\"" + " "+i18n.GL0102()+i18n.GL_SPL_FULLSTOP())  {
 					
 					@Override
 					public void onTextConfirmed() {
@@ -151,6 +181,7 @@ public class ClasspageResourceItemChildView extends
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
 			}
 		});
+		classpageItemPanel.getElement().setId("pnlClasspageItem");
 	}
 
 	@Override
@@ -194,7 +225,8 @@ public class ClasspageResourceItemChildView extends
 	private void setData(CollectionDo collection) {
 		
 		classpageTitleLbl.setText(collection.getTitle());
-		
+		classpageTitleLbl.getElement().setAttribute("alt",collection.getTitle());
+		classpageTitleLbl.getElement().setAttribute("title",collection.getTitle());
 	}
 
 	@UiHandler("openClasspageLbl")

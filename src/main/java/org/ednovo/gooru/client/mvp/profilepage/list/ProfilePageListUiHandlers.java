@@ -33,6 +33,4 @@ import org.ednovo.gooru.client.mvp.profilepage.event.RefreshProfileListHandler;
  */
 public interface ProfilePageListUiHandlers extends BaseUiHandlers, RefreshProfileListHandler {
 	
-	void getSelfCollectionListItems(int i, Integer pageNumber,boolean isShelfListCleared);
-
 }

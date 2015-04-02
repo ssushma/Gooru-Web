@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -37,7 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class SearchInfoVc extends Composite implements MessageProperties{
+public class SearchInfoVc extends Composite{
 	
 	@UiField Label searchText,moreTimeText,startSearchText;
 
@@ -45,15 +45,29 @@ public class SearchInfoVc extends Composite implements MessageProperties{
 
 	interface SearchInfoVcBinder extends UiBinder<Widget, SearchInfoVc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
 
 	/**
 	 * Class constructor
 	 */
 	public SearchInfoVc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		searchText.setText(GL0176.toUpperCase());
-		moreTimeText.setText(GL1312);
-		startSearchText.setText(GL1313);
+		searchText.setText(i18n.GL0176().toUpperCase());
+		searchText.getElement().setId("lblSearchText");
+		searchText.getElement().setAttribute("alt",i18n.GL0176().toUpperCase());
+		searchText.getElement().setAttribute("title",i18n.GL0176().toUpperCase());
+		
+		moreTimeText.setText(i18n.GL1312());
+		moreTimeText.getElement().setId("lblMoreTimeText");
+		moreTimeText.getElement().setAttribute("alt",i18n.GL1312());
+		moreTimeText.getElement().setAttribute("title",i18n.GL1312());
+		
+		startSearchText.setText(i18n.GL1313());
+		startSearchText.getElement().setId("lblStartSearchText");
+		startSearchText.getElement().setAttribute("alt",i18n.GL1313());
+		startSearchText.getElement().setAttribute("title",i18n.GL1313());
 	}
 
 }
