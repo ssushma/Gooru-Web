@@ -30,44 +30,13 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 
 
 public interface IsCollectionSummaryView extends IsViewWithHandlers<CollectionSummaryUiHandlers>{
-	/**
-	 * This method is used to set the users data.
-	 * @param result
-	 */
 	void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result);
-	/**
-	 * This method is used to set collection meta data.
-	 * @param result
-	 * @param pathwayId
-	 * @param classpageId
-	 */
-	void setCollectionMetaData(CollectionSummaryMetaDataDo result,String pathwayId,String classpageId);
-	/**
-	 * This method is used to set collection resource data.
-	 * @param result
-	 */
+	void setCollectionMetaData(CollectionSummaryMetaDataDo result,String pathwayId);
 	void setCollectionResourcesData(ArrayList<UserDataDo> result);
-	/**
-	 * This method is used to set users session data.
-	 * @param result
-	 */
 	void setUserSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
-	/**
-	 * This method is used to get the loading image.
-	 * @return
-	 */
 	HTMLPanel getLoadinImage();
-	/**
-	 * This method is used to get the frame
-	 * @return
-	 */
-	Frame getFrame();
-	
-    void resetDataIfNoSessions();
 }

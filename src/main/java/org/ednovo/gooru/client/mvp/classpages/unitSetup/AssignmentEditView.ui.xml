@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:cas="urn:import:org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections">
+	<ui:style field="style" src="unitsetup.css" />
+	<g:FlowPanel styleName="{style.classEdit}">
+		<g:Label ui:field="deleteAssignmentLbl" styleName="{style.cancelbutton}"></g:Label> 
+		<cas:ChangeAssignmentStatusView ui:field="changeAssignmentStatusView" labelDisplayOption="false" switchStyleName="{style.onOffButton}"></cas:ChangeAssignmentStatusView>
+		<g:Label ui:field="assignmentReorderLbl" styleName="{style.reorderbutton}"></g:Label>
+	</g:FlowPanel>
+</ui:UiBinder>

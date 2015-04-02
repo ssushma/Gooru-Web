@@ -83,6 +83,25 @@
 	overflow: auto;
 }
 
+.classpageHover {
+	width: 1002px;
+	height: 735px;
+	margin: 0 auto; 
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	background: url('../images/no-collections.png') no-repeat;
+}
+
+.classpageHoverTitle {
+	font-size: 24px;
+	color: #999;
+	padding: 100px 180px 0px 180px;
+	text-align: center;
+}
+
 .teachContainer {
 	width: 1002px;
 	margin: 0 auto;
@@ -330,7 +349,7 @@ float: left;
 
 .input1 {
 	color: #515151;
-	width: 72px !important;
+	width: 63px !important;
 	height: 15px !important;
 	margin-top: 10px;
 	margin-bottom: 15px !important;
@@ -371,10 +390,10 @@ float: left;
 	margin: 15px 0px;
 }
 
-/* .btn {
+.btn {
 	margin-left: 10px;
 	padding: 7px 20px !important;
-} */
+}
 
 .btn1 {
 	vertical-align: top;
@@ -440,6 +459,15 @@ float: left;
 	display: inline-block;
 	margin-top: 10px;
 }
+
+.profileImg {
+	display: inline-block;
+	vertical-align: top;
+	width: 50px;
+	height: 50px;
+	background: url(../images/profile.png) no-repeat;
+}
+
 .profileText {
 	display: inline-block;
 	vertical-align: top;
@@ -544,6 +572,10 @@ float: left;
 	white-space: nowrap;
 }
 
+.threeActions .publicImage {
+	background: url(images/Classpage/Features/public.png) center top no-repeat;
+}
+
 .threeActions .analystic {
 	background: url(images/Classpage/Features/analytics.png) center top no-repeat;
 }
@@ -593,13 +625,12 @@ float: left;
 
 .shareTextboxLink {
 	width: 300px;
-	height: 31px !important;
+	height: 17px;
 	padding: 5px;
 	border: 1px solid #DDD;
 	font-family: arial, sans-serif;
 	font-size: 12px;
 	background-color: #fff;
-	margin-top: 0px;
 }
 
 .classTypeCheckbox {

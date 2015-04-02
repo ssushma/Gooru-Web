@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -39,22 +40,9 @@ public class LineChartView extends Composite {
 	}
 	@UiField CollectionChartCBundle res;
 	
-	/**
-	 * Constructor
-	 */
 	public LineChartView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	/**
-	 * This method is used to create a line.
-	 * @param title1
-	 * @param title2
-	 * @param categories
-	 * @param contentList
-	 * @param data
-	 * @param chartmetadata
-	 * @param isFirst
-	 */
 	public void createLineChart(String title1,String title2,String []categories,List<String> contentList,Map<String,Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst){
 	/*	option1.setText(title1);
 		option2.setText(title2);*/

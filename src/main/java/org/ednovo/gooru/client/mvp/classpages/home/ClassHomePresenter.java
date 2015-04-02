@@ -31,7 +31,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter.IsClassHomeProxy;
-import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
@@ -46,21 +45,7 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-/**
- * 
- * @fileName : ClassHomePresenter.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+
 public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsClassHomeProxy> implements ClassHomeUiHandlers {
 	
 	
@@ -92,28 +77,10 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	@Override
 	public void onBind() {
 		super.onBind();
-		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
+
+		
 	}
-	/**
-	 * 
-	 * @function callBackMethods 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void callBackMethods(){
 		getView().callServiceRequestsToBindData();
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
@@ -127,22 +94,12 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 				addToPopupSlot(signUpViewPresenter);
 			}
 		}
-		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
-		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
-			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
-			update.setGlassEnabled(true);
-			update.show();
-			update.center();
-		}
 	}
 	
 	
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
@@ -159,8 +116,7 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	@Override
 	protected void onReset() {
 		super.onReset();
-		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
+
 	}
 	
 	@Override

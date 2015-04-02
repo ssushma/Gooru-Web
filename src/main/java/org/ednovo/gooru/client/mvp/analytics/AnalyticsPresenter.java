@@ -25,31 +25,48 @@
 package org.ednovo.gooru.client.mvp.analytics;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
+import org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.util.ClientConstants;
-import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers,ClientConstants{
+public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers{
+	
+	private int limit = 5;
+	private int offSet = 0;
+	private int assignmentOffset=0;
+	private int assignmentLimit=10;
 	
 	private CollectionProgressPresenter collectionProgressPresenter;
 	
 	private CollectionSummaryPresenter collectionSummaryPresenter;
 	
+	private AnalyticsUnitAssignmentsPresenter analyticsUnitAssignmentsPresenter;
+	
+	private PersonalizeUnitPresenter personalizeUnitPresenter;
+	
 	public static final  Object COLLECTION_PROGRESS_SLOT = new Object();
 	
-	public static final  Object COLLECTION_SUMMARY_SLOT = new Object();
+	public static final  Object UNIT_ASSIGNMENT_SLOT = new Object();
+	
+	public static final  Object PERSONALIZE_SLOT = new Object();
+	
+	final String SUMMARY="Summary",PROGRESS="Progress";
+	
+	private String pathwayId=null;
 	
 	ClasspageDo classpageDo=null;
 	
@@ -59,197 +76,197 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	@Inject
 	private ClasspageServiceAsync classpageService;
 	
-	/**
-	 * AnalyticsPresenter constructor
-	 * @param eventBus
-	 * @param view
-	 * @param collectionProgressPresenter
-	 * @param collectionSummaryPresenter
-	 * @param analyticsUnitAssignmentsPresenter
-	 * @param personalizeUnitPresenter
-	 */
 	@Inject
-	public AnalyticsPresenter(EventBus eventBus, IsAnalyticsView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
+	public AnalyticsPresenter(EventBus eventBus, IsAnalyticsView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter,AnalyticsUnitAssignmentsPresenter analyticsUnitAssignmentsPresenter,PersonalizeUnitPresenter personalizeUnitPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.collectionProgressPresenter=collectionProgressPresenter;
 		this.collectionSummaryPresenter=collectionSummaryPresenter;
+		this.analyticsUnitAssignmentsPresenter=analyticsUnitAssignmentsPresenter;
+		this.personalizeUnitPresenter=personalizeUnitPresenter;
 	}
+
 	@Override
-	public void getGradeCollectionJson() {
-		clearSlot(COLLECTION_PROGRESS_SLOT);
-		setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
-		getView().getCollectionProgressSlot().clear();
-		
-		clearSlot(COLLECTION_SUMMARY_SLOT);
-		setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
-		getView().getCollectionSummarySlot().clear();
-		getView().getLoadCollections().clear();
-		
-		getView().resetData();
-		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		try {
-			if(classpageId!=null && !classpageId.isEmpty()){
-				AppClientFactory.getInjector().getAnalyticsService().getAnalyticsGradeData(classpageId,"", new AsyncCallback<ArrayList<GradeJsonData>>() {
-					@Override
-					public void onSuccess(final ArrayList<GradeJsonData> result) {
-						if(result.size()>0){
-							if(result.get(0).getAggregateData()!=null && result.get(0).getAggregateData().equalsIgnoreCase("false")){
-								getView().setNoDataText();
-							}else{
-								getView().setGradeCollectionData(result);
-								AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", result.get(0).getResourceGooruOId(), new AsyncCallback<CollectionSummaryMetaDataDo>() {
-									@Override
-									public void onSuccess(CollectionSummaryMetaDataDo collectionData) {
-										if(collectionData!=null && collectionData.getViews()!=0){
-										}else{
-											getView().setNoDataText();
-										}
-									}
-									@Override
-									public void onFailure(Throwable caught) {
-									}
-								});
-							}
-						}
-					}
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-				});
+	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+			@Override
+			public void onSuccess(UnitAssignmentsDo result) {
+				//classpageId,pathwayid
+				getGradeCollectionJson(classpageId, pathwayGooruOid);
+				getView().removeAndAddUnitSelectedStyle();
 			}
-		} catch (Exception e) {
-			AppClientFactory.printSevereLogger(e.getMessage());
+		});
+	}
+
+	@Override
+	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
+		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
+			@Override
+			public void onSuccess(ClassDo classDo) {
+				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+					if(unitId==null){
+                        pathwayId=classDo.getSearchResults().get(0).getResource().getGooruOid();
+						getView().revealPlace("reports",null,pathwayId,null);
+					}else{
+						getView().clearDownArrow();
+						clearSlot(COLLECTION_PROGRESS_SLOT);
+						getView().hidePersonalizeContainers();
+						getView().showUnitNames(classDo,clearPanel);
+						getPathwayItems(classpageId,unitId,"sequence",assignmentLimit,assignmentOffset);
+					}
+				}
+			}
+		});
+	}
+
+	@Override
+	public void setClickedTabPresenter(String clickedTab,String collectionId) {
+		String pathWayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		clearSlot(COLLECTION_PROGRESS_SLOT);
+		if(clickedTab!=null){
+			if(clickedTab.equalsIgnoreCase(SUMMARY)){
+				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathWayId);
+				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
+			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId,false);
+				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
+			}
+		}else{
+			setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#setClickedTabPresenter(java.lang.String, java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle) {
-			if(SUMMARY.equalsIgnoreCase(clickedTab)){ 
-				clearSlot(COLLECTION_SUMMARY_SLOT);	
-				collectionSummaryPresenter.clearFrames();
-				collectionSummaryPresenter.setCollectionSummaryData(collectionId,"");
-				setInSlot(COLLECTION_SUMMARY_SLOT, collectionSummaryPresenter,false);
-			}else if(PROGRESS.equalsIgnoreCase(clickedTab)){
-				clearSlot(COLLECTION_PROGRESS_SLOT);
-				collectionProgressPresenter.setCollectionProgressData(collectionId,"",false,selectedCollectionTitle);
-				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
-			}else if(CLEARPROGRESS.equalsIgnoreCase(clickedTab)){
-				clearSlot(COLLECTION_PROGRESS_SLOT);
-				setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
-				getView().getCollectionProgressSlot().clear();
-			}else if(CLEARSUMMARY.equalsIgnoreCase(clickedTab)){
-				collectionSummaryPresenter.clearFrames();
-				clearSlot(COLLECTION_SUMMARY_SLOT);
-				setInSlot(COLLECTION_SUMMARY_SLOT, null,false);
-				getView().getCollectionSummarySlot().clear();
-			}
-	}
-	
-	/**
-	 * Get the analytics service
-	 * @return
-	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
-	
-	/**
-	 * Set the analytics service
-	 * @param analyticService
-	 */
+
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gwtplatform.mvp.client.PresenterWidget#onHide()
-	 */
+	@Override
+	public void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder) {
+		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId,sortOrder, new AsyncCallback<ArrayList<GradeJsonData>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setBottomStudentsData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+	
+	@Override
+	public void getTopStudentsData(String classpageId, String pathwayId,String collectionId, String sortOrder) {
+		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId,sortOrder, new AsyncCallback<ArrayList<GradeJsonData>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setTopStudentsData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+
+	@Override
+	public void getGradeCollectionJson(final String classpageId, final String pathwayId) {
+		getView().LoadingImageLabeltrue();
+		this.analyticService.getAnalyticsGradeData(classpageId, pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
+			@Override
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setGradeCollectionData(result);
+				if(result.size()!=0){
+					getTopStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"DESC");
+					getBottomStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"ASC");
+				}
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+	public void getClassUnits(ClasspageDo classpageDo){
+		this.classpageDo=classpageDo;
+		//String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		/*if(unitId!=null && getView().getUnitPanel().getWidgetCount()!=0){
+			getPathwayItems(classpageDo.getClasspageId(),unitId,"sequence",assignmentLimit,assignmentOffset);
+		}else{*/
+			getPathwayUnits(classpageDo.getClasspageId(),limit,offSet,true);
+		/*}*/
+	}
+
 	@Override
 	protected void onHide() {
 		super.onHide();
-		clearSlot(COLLECTION_PROGRESS_SLOT);	
-		clearSlot(COLLECTION_SUMMARY_SLOT);	
+		getView().resetData();
+		clearSlot(UNIT_ASSIGNMENT_SLOT);	
+		clearSlot(COLLECTION_PROGRESS_SLOT);
+		clearSlot(PERSONALIZE_SLOT);	
 	}
 	
-	/**
-	 * Get the class page service
-	 * @return
-	 */
+	@Override
+	public void exportOEPathway(String classpageId, String pathwayId,String timeZone) {
+		this.analyticService.exportPathwayOE(classpageId, pathwayId,timeZone,new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+
+	@Override
+	public void getUnitAssignments() {
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(unitId!=null){
+			getUnitAssignments(classpageId, unitId, "sequence", assignmentLimit, assignmentOffset);
+		}else{
+			getUnitAssignments(classpageId, pathwayId, "sequence", assignmentLimit, assignmentOffset);
+		}
+	}
+
+	@Override
+	public void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId) {
+		clearSlot(UNIT_ASSIGNMENT_SLOT);	
+		analyticsUnitAssignmentsPresenter.setAnalyticsAssignmentsPresenter(result,classpageId,pathwayId);
+		setInSlot(UNIT_ASSIGNMENT_SLOT, analyticsUnitAssignmentsPresenter,false);
+	}
+
+	@Override
+	public void getUnitAssignments(final String classpageId, final String pathwayGooruOid,String sequence, int limit, int offSet) {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+			@Override
+			public void onSuccess(UnitAssignmentsDo result) {
+				setAnalyticsAssignmentsPresenter(result,classpageId, pathwayGooruOid);
+			}
+		});
+	}
+
+	@Override
+	public void setPersonalizeData() {
+		clearSlot(PERSONALIZE_SLOT);	
+		personalizeUnitPresenter.setClasspageData(classpageDo);
+		setInSlot(PERSONALIZE_SLOT, personalizeUnitPresenter,false);
+	}
+
 	public ClasspageServiceAsync getClasspageService() {
 		return classpageService;
 	}
 
-	/**
-	 * Sets the class page service
-	 * @param classpageService
-	 */
 	public void setClasspageService(ClasspageServiceAsync classpageService) {
 		this.classpageService = classpageService;
-	}
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#exportOEPathway(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void exportOEPathway(String classpageId, String pathwayId,String timeZone) {
-		if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(timeZone)){
-			this.analyticService.exportPathwayOE(classpageId, pathwayId,timeZone,new AsyncCallback<String>() {
-				
-				@Override
-				public void onSuccess(String result) {
-					getView().getFrame().setUrl(result);
-					//Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-			});
-		}
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getCollectionProgressPresenter()
-	 */
-	@Override
-	public CollectionProgressPresenter getCollectionProgressPresenter() {
-		return collectionProgressPresenter;
-	}
-	
-	
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.AnalyticsUiHandlers#getCollectionSummaryPresenter()
-	 */
-	@Override
-	public CollectionSummaryPresenter getCollectionSummaryPresenter() {
-		return collectionSummaryPresenter;
-	}
-	
-	@Override
-	public void checkCollectionStaus(String classpageId, String collectionId) {
-		if(!StringUtil.isEmpty(classpageId) && !StringUtil.isEmpty(collectionId)){
-			AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, "", collectionId, new AsyncCallback<CollectionSummaryMetaDataDo>() {
-				@Override
-				public void onSuccess(CollectionSummaryMetaDataDo result) {
-					if(result!=null && result.getViews()!=0){
-						setClickedTabPresenter(CLEARPROGRESS,"","");
-						setClickedTabPresenter(CLEARSUMMARY,"","");
-						getView().resetDataText();
-					}else{
-						getView().setNoDataText();
-					}
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-				}
-			});
-		}
-	}
-	@Override
-	public Frame getIframe() {
-		return getView().getFrame();
 	}
 }

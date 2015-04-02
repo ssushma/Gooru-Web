@@ -21,19 +21,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : WelcomeClassView.java
+ * @author Gooru Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public class WelcomeClassView extends PopupPanel {
 
@@ -70,26 +59,9 @@ public class WelcomeClassView extends PopupPanel {
 		center();
 		setDefaultText();
 	}
-	/**
-	 * 
-	 * @function setDefaultText 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void setDefaultText() {
+		// TODO Auto-generated method stub
 		btnOk.setText(i18n.GL1386());
 		btnOk.getElement().setId("btnOk");
 		btnOk.getElement().setAttribute("alt",i18n.GL1386());

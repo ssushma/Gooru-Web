@@ -26,106 +26,17 @@ package org.ednovo.gooru.client.mvp.classpages.studentView;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
-/**
- * 
- * @fileName : StudentAssignmentUiHandlers.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+
 public interface StudentAssignmentUiHandlers extends BaseUiHandlers {
 	
 	public static final Object SLOT_assignment=new Object();
-	/**
-	 * 
-	 * @function asyMethodCall 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	void asyMethodCall();
-	/**
-	 * 
-	 * @function getAssignmentsList 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param pageNum
-	 * @parm(s) : @param pageSize
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	void getAssignmentsList(String pageNum,String pageSize);
-	/**
-	 * 
-	 * @function getNextClasspageItems 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param offset
-	 * @parm(s) : @param limit
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void getNextClasspageItems(Integer offset,Integer limit);
-	/**
-	 * 
-	 * @function removeUserFromClass 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageDo
-	 * @parm(s) : @param emailId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	void removeUserFromClass(ClasspageDo classpageDo, String emailId);
 
 	/**

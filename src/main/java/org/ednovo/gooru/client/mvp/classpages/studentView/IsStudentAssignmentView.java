@@ -31,124 +31,22 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.user.client.ui.Button;
-/**
- * 
- * @fileName : IsStudentAssignmentView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author tumbalam
- *
- * @Reviewer:
- */
+
 public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssignmentUiHandlers>  {
 
-	/**
-	 * 
-	 * @function getBackToEditPanel 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Button
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+	
+	
 	public Button getBackToEditPanel();
-	/**
-	 * 
-	 * @function clearAll 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
+
+	
+
 	void clearAll();
 	
-	/**
-	 * 
-	 * @function setClasspageData 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	void setClasspageData( ClasspageDo classpageDo);
-	/**
-	 * 
-	 * @function showClasspageItems 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageItemsList
-	 * @parm(s) : @param sortOrder
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String sortOrder);
-	/**
-	 * 
-	 * @function showClasspageItemsForAssignmentPath 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageItemsList
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList);
 
 
@@ -180,45 +78,12 @@ public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssig
 
 
 
-
-	/**
-	 * @function setSortingOrderInDropdown 
-	 * 
-	 * @created_date : Jun 17, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param sortingOrder
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
+		
 	
-	void setSortingOrderInDropdown(String sortingOrder);			
-	/**
-	 * 
-	 * @function resetAll 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	void resetAll();
+
+
+
+
+	void hidePanel();
 }

@@ -30,20 +30,10 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
+
 /**
- * 
- * @fileName : EditClasspageCBundle.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public interface EditClasspageCBundle extends ClientBundle{
 	
@@ -131,6 +121,8 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String classpageCodeShare();
 		
 		String classpageCodeShareInput();
+
+		String classpageCodeHelp();
 		
 		String classpageShareCodeInput();
 		
@@ -144,6 +136,8 @@ public interface EditClasspageCBundle extends ClientBundle{
 		
 		String addAssignment();
 				
+		String classpageAddPlusIcon();
+		
 		String assignmentsContainer();
 		
 		String classpageCodeInnerPopup();
@@ -186,6 +180,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String assignmentPathContainer();
         String line();
         String squre();
+        String progressStart();
         String path();
         String classcodeContainer();
         String containerProgress();
@@ -237,11 +232,19 @@ public interface EditClasspageCBundle extends ClientBundle{
         
         String studentStyle();
         String techerStyle();
-        String assignmentProgressStudent();
-        String previousStudent();
-        String nextStudent();
-        String assignementOrderHeaderText();
+    
+        String frameDiv();
 
+        String classcodeLabel();
+        String ccContainer();
+        String arrowDropdown();
+        String studentListContainer();
+        String selectedStudent();
+        String studentList();
+        String studentListContainer1();
+        String student();
+        String scrollPanel();
+        String tabContainerDiv();
 	}
 	@NotStrict
 	@Source("editclasspage.css")

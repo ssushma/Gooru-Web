@@ -600,7 +600,6 @@
 .viewSummaryText {
 	padding-left: 5px;
 	padding-right: 10px;
-	float:right;
 }
 
 .viewAssignmentText {
@@ -620,7 +619,7 @@
 }
 
 .filterDropDown {
-	float: right;
+	float: left;
 	border: 1px solid #ddd;
 	cursor: pointer;
 	display: block;
@@ -636,9 +635,10 @@
 
 .narrowReportText {
 	float: left;
-	font-size: 14px;
-	position: relative;
-	width: 50%;
+	padding-top: 6px;
+	text-align: center;
+	width: 40%;
+	margin-left: 50px;
 }
 
 .arrowStyle {
@@ -984,45 +984,4 @@
 	padding-left: 0;
 	padding-right: 0;
 	width: 100% !important;
-}
-.labelForClassReport{
-	font-family: Arial, Verdana, Sans-serif;
-	font-size: 16px;
-	font-weight: bold;
-	margin: 1% 0;
-	margin-bottom: 1%;
-	color: #515151;
-}
-.reportDiv{
-	background: none repeat scroll 0 0 #FFFFFF;
-	border: 1px solid #DDDDDD;
-	clear: both;
-	float: left;
-	height: 35px;
-	line-height: 35px;
-	margin: 1% 0;
-	padding: 1% 0;
-	width: 100%;
-	box-sizing: content-box;
-}
-.reportsGeneration{
-		font-family: Arial, Verdana, Sans-serif;
-	font-size: 16px;
-	color: #515151;
-	width: 77%;
-	margin-left: 2%;
-	float: left;
-	margin-top: 5px;
-}
-.showEmptyMessage{
-	font-weight: normal;
-	margin: 5% 0;
-	text-align: center;
-	width: 100%;
-	background-color: white;
-	padding: 20px 0px;
-	box-shadow: 0 2px 2px #ccc;
-}
-.btnLineHeight{
-	line-height:20px;
 }

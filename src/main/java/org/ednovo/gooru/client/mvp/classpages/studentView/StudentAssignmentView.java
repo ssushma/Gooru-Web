@@ -38,27 +38,19 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -71,9 +63,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -81,6 +70,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -108,10 +98,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 	}
 	
-	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName,lblAssignmentProgress;
+	@UiField Label mainTitleLbl,lblUserName;
 	
-	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath;
-	@UiField HTMLEventPanel panelPrevious,panelNext;
+	@UiField FlowPanel studentsetupContainer;
 	
 	@UiField
 	static HTMLPanel mainContainer,lineSeparation,memberContainer;
@@ -125,7 +114,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
-	@UiField FlowPanel paginationFocPanel,paginationFocPanel1,panelAssignmentProgress,dropDownListContainer;
+//	@UiField HTMLEventPanel backToTeacherView;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -133,7 +122,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //	static Image userImage;
 	
 	@UiField
-	static Label lblWebHelp,dropdownPlaceHolder, lblNext, lblPrevious;
+	static Label lblWebHelp;
+	
+//	@UiField ScrollPanel spanelSutdentsList;
+	
+//	@UiField HTMLPanel panelSutdentsList,teacherViewPanel;
 
 	@UiField
 	static
@@ -180,8 +173,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	private Integer defaultOffsetForPath=0;
 	private Integer defaultLimitForPath=20;
 	
-	private static final String GOORU_UID = "gooruuid";
-	
 	public static final MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	@Inject
@@ -189,6 +180,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		setWidget(uiBinder.createAndBindUi(this));
 		EditClasspageCBundle.INSTANCE.css().ensureInjected();
 		setStaticData();
+//		teacherViewPanel.setVisible(false);
 		lblWebHelp.addMouseOverHandler(new OnMouseOver());
 		lblWebHelp.addMouseOutHandler(new OnMouseOut());
 		OpenJoinClassPopupHandler openJoinClassPopupHandler=new OpenJoinClassPopupHandler() {
@@ -201,9 +193,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 		AppClientFactory.getEventBus().addHandler(OpenJoinClassPopupEvent.TYPE,openJoinClassPopupHandler);
 
-		addSortingOptionsToList();
-		addSortEventToText();
-		dropdownPlaceHolder.setText(i18n.GL1946());
+		//addSortingOptionsToList();
+		//addSortEventToText();
+/*		dropdownPlaceHolder.setText(i18n.GL1946());
 		dropdownPlaceHolder.getElement().setId("lblDropdownPlaceHolder");
 		dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1946());
 		dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1946());
@@ -214,8 +206,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		lblAssignmentProgress.getElement().setId("lblAssignmentProgress");
 		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1971());
 		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1971());
-		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
-		
+		assignmentOrderPanel.getElement().setInnerHTML(i18n.GL2006());
+		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());*/
+/*		
 		lblNext.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -224,9 +217,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
 			}
-		});
+		});*/
 	
-		lblPrevious.addClickHandler(new ClickHandler() {
+/*		lblPrevious.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -239,85 +232,38 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
 				
 			}
-		});
+		});*/
 		
-		lblNext.setVisible(false);
-		lblPrevious.setVisible(false);
+		//lblNext.setVisible(false);
+		//lblPrevious.setVisible(false);
 		
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
+/*		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hideDropDown(event);
 	          }
-	    });
+	    });*/
 	}
-	/**
-	 * 
-	 * @function addSortEventToText 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	private void addSortEventToText(){
+	
+/*	private void addSortEventToText(){
 		if(sortingOptionsList.size()>0){
 			for(int i=0;i < sortingOptionsList.size();i++){
 				String sortType=sortingOptionsList.get(i);
 				Label sortingLabel=new Label(sortType);
 				sortingLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().dropdownTextLabel());
-				dropDownListContainer.add(sortingLabel);
+				//dropDownListContainer.add(sortingLabel);
 				sortingLabel.addClickHandler(new SortAssignmentEvents(sortType));
 			}
 		}
 		
-	}
-	/**
-	 * 
-	 * @fileName : StudentAssignmentView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	public class SortDropDownEvent implements ClickHandler{
+	}*/
+/*	public class SortDropDownEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			new CustomAnimation(dropDownListContainer).run(300);
 		}
 	}
-	/**
-	 * 
-	 * @fileName : StudentAssignmentView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
-	public class SortAssignmentEvents implements ClickHandler{
+	*/
+	/*public class SortAssignmentEvents implements ClickHandler{
 		private String sortType=null;
 		public SortAssignmentEvents(){}
 		public SortAssignmentEvents(String sortType){
@@ -354,93 +300,37 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 
 		}
-	}
+	}*/
 	
-	/**
-	 * 
-	 * @function hideDropDown 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void hideDropDown(NativePreviewEvent event){
+	
+	/*public void hideDropDown(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
         	if(!target){
-        		dropDownListContainer.setVisible(false);
+        		//dropDownListContainer.setVisible(false);
         	}
     	}
-     }
-	/**
-	 * 
-	 * @function eventTargetsPopup 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	private boolean eventTargetsPopup(NativeEvent event) {
+     }*/
+/*	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
 			return dropDownListContainer.getElement().isOrHasChild(Element.as(target))||dropdownPlaceHolder.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
-	}
-	/**
-	 * 
-	 * @function setStaticData 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	}*/
+
 	private void setStaticData() {
 		backToEditPanel.setText(i18n.GL1130());
 		backToEditPanel.getElement().setAttribute("alt",i18n.GL1130());
 		backToEditPanel.getElement().setAttribute("title",i18n.GL1130());
 		backToEditPanel.getElement().setId("btnBackToEdit");
-		
+/*		
 		noAssignmentMsg.setText(i18n.GL1131());
 		noAssignmentMsg.getElement().setId("lblNoAssignmentMsg");
 		noAssignmentMsg.getElement().setAttribute("alt",i18n.GL1131());
 		noAssignmentMsg.getElement().setAttribute("title",i18n.GL1131());
-		
+		*/
 		btnJoinClass.setText(i18n.GL1536());
 		btnJoinClass.getElement().setAttribute("alt",i18n.GL1536());
 		btnJoinClass.getElement().setAttribute("title",i18n.GL1536());
@@ -456,7 +346,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		LblMember.getElement().setAttribute("title",i18n.GL1549());
 		
 	
-		noAssignmentMsg.setVisible(false);
+		//noAssignmentMsg.setVisible(false);
 		btnJoinClass.setVisible(false);
 		lblWebHelp.setVisible(false);
 		lblWebHelp.getElement().setId("lblWebHelp");
@@ -470,17 +360,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		imgProfileImage.getElement().setId("imgProfileImage");
 		lblUserName.getElement().setId("lblUserName");
 		btnJoinClass.getElement().setId("btnJoinClass");
-		panelProgressContainer.getElement().setId("pnlProgressContainer");
+/*		panelProgressContainer.getElement().setId("pnlProgressContainer");
 		panelPrevious.getElement().setId("pnlPrevious");
 		lblPrevious.getElement().setId("lblPrevious");
 		panelAssignmentPath.getElement().setId("pnlAssignmentPath");
-		panelAssignmentProgress.getElement().setId("pnlAssignmentProgress");
-		panelNext.getElement().setId("pnlNext");
-		lblNext.getElement().setId("lblNext");
-		dropDownListContainer.getElement().setId("fpnlDropDownListContainer");
+		panelAssignmentProgress.getElement().setId("pnlAssignmentProgress");*/
+	//	panelNext.getElement().setId("pnlNext");
+		//lblNext.getElement().setId("lblNext");
+/*		dropDownListContainer.getElement().setId("fpnlDropDownListContainer");
 		paginationFocPanel.getElement().setId("fpnlPaginationFoc");
 		paginationFocPanel1.getElement().setId("fpnlPaginationFoc1");
-		contentpanel.getElement().setId("pnlContent");
+		contentpanel.getElement().setId("pnlContent");*/
 	}
 
 	@Override
@@ -504,6 +394,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				imgProfileImage.setUrl(defaultProfileImage);
 			}
 		});
+		
+		if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+			System.out.println("teacher view");
+//			teacherViewPanel.setVisible(true);
+		}
 		
 		studentViewImage.addErrorHandler(new ErrorHandler() {
 			
@@ -535,10 +430,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
 				btnWithDraw.setVisible(true);
-				memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 				lineSeparation.setVisible(true);
-				LblMember.setVisible(true);
-				LblMember.setText(StudentAssignmentView.i18n.GL1549());
+				memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 				LblMember.setVisible(true);
 //				userImage.setVisible(true);
 				LblMember.setText(i18n.GL1549());
@@ -569,17 +462,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					
 					@Override
 					void joinIntoClass() {
-							AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
-
-								@Override
-								public void onSuccess(V2UserDo result) {
-									String emailId="";
-									if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
-										emailId=AppClientFactory.getLoggedInUser().getUsername();
-									}else{
-										emailId=AppClientFactory.getLoggedInUser().getEmailId();
-									}
-							
+							String emailId=AppClientFactory.getLoggedInUser().getEmailId();
 							AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 								@Override
@@ -600,8 +483,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //											userImage.setVisible(true);
 											lblWebHelp.setVisible(false);
 											btnWithDraw.setVisible(true);
-											memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 											lineSeparation.setVisible(true);
+											memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 											LblMember.setVisible(true);
 											LblMember.setText(StudentAssignmentView.i18n.GL1549());
 											mainContainer.setVisible(true);
@@ -611,6 +494,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										}
 										
 									};
+									success.setHeight("248px");
                                     success.setWidth("450px");
                                     success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                     success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
@@ -620,9 +504,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 						
 								}
 							});
-								}
-							});
-							
 					}
 
 					@Override
@@ -669,11 +550,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					btnJoinClass.setVisible(false);
 //					userImage.setVisible(true);
 					lblWebHelp.setVisible(false);
-					btnWithDraw.setVisible(true);
-					memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-					lineSeparation.setVisible(true);
+					btnWithDraw.setVisible(false);
 					LblMember.setVisible(true);
-					LblMember.setText(StudentAssignmentView.i18n.GL1549());
 //					userImage.setVisible(true);
 					mainContainer.setVisible(true);
 				}
@@ -696,16 +574,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							
 							@Override
 							void joinIntoClass() {
-									AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
-
-										@Override
-										public void onSuccess(V2UserDo result) {
-											String emailId="";
-											if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
-												emailId=AppClientFactory.getLoggedInUser().getUsername();
-											}else{
-												emailId=AppClientFactory.getLoggedInUser().getEmailId();
-											}
+									String emailId=AppClientFactory.getLoggedInUser().getEmailId();
 									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 										@Override
@@ -725,9 +594,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													btnJoinClass.setVisible(false);
 //													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
-													btnWithDraw.setVisible(true);
-													memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-													lineSeparation.setVisible(true);
+													btnWithDraw.setVisible(false);
 													LblMember.setVisible(true);
 													LblMember.setText(StudentAssignmentView.i18n.GL1549());
 													mainContainer.setVisible(true);
@@ -737,6 +604,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												}
 												
 											};
+											success.setHeight("248px");
                                             success.setWidth("450px");
                                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                             success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
@@ -746,12 +614,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								
 										}
 									});
-									
-										}
-									});	
-									
-									
-									
 							}
 
 							@Override
@@ -811,104 +673,63 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 		//here we need to check for http://collab.ednovo.org/jira/browse/CORE-516 this 
 		//api response and display the button text and functionality.
-		//DataLogEvents.classpageView(GwtUUIDGenerator.uuid(), "classpage-view", classpageDo.getClasspageId(), AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+		//DataLogEvents.classpageView(GwtUUIDGenerator.uuid(), "classpage-view", classpageDo.getClasspageId(), AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 	}
 	
 	@Override
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1, String sortOrder){
-		removeLoadingPanel();
-		contentpanel.clear();
+		//removeLoadingPanel();
+		//contentpanel.clear();
 		ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
 		classpageItemsList.clear();
 		classpageItemsList.addAll(classpageItemsList1);
 		
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
-			noAssignmentMsg.setVisible(false);
+			//noAssignmentMsg.setVisible(false);
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
-					public void resetPagination(){
-						setPagination();
-						contentpanel.add(setLoadingPanel());
-						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
-					}
-					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
-						updateCircleColors(collectionItemId,readStatus);
-					}
-				};
+//				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
+//					public void resetPagination(){
+//						setPagination();
+//						contentpanel.add(setLoadingPanel());
+//						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
+//					}
+//					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
+//						updateCircleColors(collectionItemId,readStatus);
+//					}
+//				};
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
-				contentpanel.add(collectionsView);
+			//	contentpanel.add(collectionsView);
 			}
-			setPagination();
+			//setPagination();
 		}else{
 			this.totalHitCount=0;
-			setPagination();
-			noAssignmentMsg.setVisible(true);
+			//setPagination();
+			//noAssignmentMsg.setVisible(true);
 		}
 	}
-	/**
-	 * 
-	 */
 	public void resetAll(){
-		contentpanel.clear();
-		contentpanel.add(setLoadingPanel());
+/*		contentpanel.clear();
+		contentpanel.add(setLoadingPanel());*/
 		this.totalHitCount=0;
-		setPagination();
+		//setPagination();
 		mainTitleLbl.setText("");
 		studentViewImage.setAltText("");
 		studentViewImage.setTitle("");
 		studentViewImage.setUrl("");
 		imgProfileImage.setUrl("");
 		lblUserName.setText("");
-		panelAssignmentProgress.clear();
+		//panelAssignmentProgress.clear();
 		assignmentsDotsMap.clear();
 	}
-	/**
-	 * 
-	 * @function setPagination 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void setPagination(){
+/*	public void setPagination(){
 		if(this.totalHitCount>5){
 			showPaginationButton();
 		}else{
 			clearPaginationButton();
 		}
-	}
-	/**
-	 * 
-	 * @function showPaginationButton 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void showPaginationButton(){
+	}*/
+	/*public void showPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", "1");
@@ -939,45 +760,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				paginationFocPanel1.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
 			}
 		}
-	}
-	/**
-	 * 
-	 * @function clearPaginationButton 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void clearPaginationButton(){
+	}*/
+/*	public void clearPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 	}
-	/**
-	 * 
-	 * @fileName : StudentAssignmentView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
 	private class PaginationEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -986,92 +773,35 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			contentpanel.add(setLoadingPanel());
 			getUiHandlers().getNextClasspageItems(((pageNumber-1)*limit),limit);
 		}
-	}
-	/**
-	 * 
-	 * @function resetEditClasspageView 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void resetEditClasspageView(){
+	}*/
+	/*public void resetEditClasspageView(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
 		limit=5;
 		pageNumber=1;
-	}
-	/**
-	 * 
-	 * @function setLoadingPanel 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Label
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public Label setLoadingPanel(){
+	}*/
+/*	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
 		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
 		return loadingImage;
-	}
-	/**
-	 * 
-	 * @function removeLoadingPanel 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void removeLoadingPanel(){
+	}*/
+/*	public void removeLoadingPanel(){
 		if(contentpanel.getWidgetCount()>0){
 			Widget loadingPanel=contentpanel.getWidget(contentpanel.getWidgetCount()-1);
 			if(loadingPanel!=null&&loadingPanel instanceof Label){
 				loadingPanel.removeFromParent();
 			}
 		}
-	}
+	}*/
 	
 	@Override
 	public void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList) {
 		//TODO 
-		panelAssignmentProgress.clear();
+	//	panelAssignmentProgress.clear();
 		assignmentsDotsMap.clear(); // TODO dont forget to clear when panelAssignmentProgress clear
-		if(classpageItemsList!=null&&classpageItemsList.size()>0){
+/*		if(classpageItemsList!=null&&classpageItemsList.size()>0){
 			//hide/show the next and previous buttons
 			if (classpageItemsList.get(0).getTotalHitCount() > defaultLimitForPath && classpageItemsList.size() == defaultLimitForPath){
 				lblNext.setVisible(true);
@@ -1094,28 +824,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				panelAssignmentProgress.add(assignmentProgressVc);
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
 			}
-		}
+		}*/
 	}
-	/**
-	 * 
-	 * @function updateCircleColors 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemId
-	 * @parm(s) : @param readStatus
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void updateCircleColors(String collectionItemId,String readStatus){
 		AssignmentProgressVc assignmentProgressVc=assignmentsDotsMap.get(collectionItemId);
 		if(assignmentProgressVc!=null){
@@ -1153,9 +864,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	if (event.getSource() instanceof PaginationButtonUc) {
 			int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
 			pageNumber = pagenumber;
-			setPagination();
+/*			setPagination();
 			contentpanel.clear();
-			contentpanel.add(setLoadingPanel());
+			contentpanel.add(setLoadingPanel());*/
 			Map<String,String> params = new HashMap<String,String>();
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
@@ -1192,17 +903,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				
 				@Override
 				void joinIntoClass() {
-						AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
-
-							@Override
-							public void onSuccess(V2UserDo result) {
-								String emailId="";
-								if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
-									emailId=AppClientFactory.getLoggedInUser().getUsername();
-								}else{
-									emailId=AppClientFactory.getLoggedInUser().getEmailId();
-								}
-						
+						String emailId=AppClientFactory.getLoggedInUser().getEmailId();
 						AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 							@Override
@@ -1232,6 +933,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									}
 									
 								};
+								success.setHeight("248px");
                                 success.setWidth("450px");
                                 success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                 success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
@@ -1241,11 +943,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								
 							}
 						});
-						
-							}
-						});
-						
-						
 				}
 
 				@Override
@@ -1305,37 +1002,31 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 	@Override
 	public void clearAll() {
-		paginationFocPanel.clear();
+		/*paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
 		limit=5;
-		pageNumber=1;
+		pageNumber=1;*/
+
+	}
+	
+	@Override
+	public void hidePanel() {
+		/*paginationFocPanel.clear();
+		paginationFocPanel1.clear();
+		contentpanel.clear();
+		contentpanel.add(setLoadingPanel());
+		limit=5;
+		pageNumber=1;*/
+		mainContainer.setVisible(false);
 	}
 
 	@Override
 	public Button getBackToEditPanel() {
 		return backToEditPanel;
 	}
-	/**
-	 * 
-	 * @function setPrivatePage 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public static void setPrivatePage()
 	{
 		btnJoinClass.setVisible(false);
@@ -1346,25 +1037,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		LblMember.setText(i18n.GL1551());
 		mainContainer.setVisible(true);
 	}
-	/**
-	 * 
-	 * @function setPrivatePageActive 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public static void setPrivatePageActive()
 	{	
 	btnJoinClass.setVisible(false);
@@ -1375,25 +1047,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	LblMember.setText(i18n.GL1549());
 	mainContainer.setVisible(true);
 	}
-	/**
-	 * 
-	 * @function setPrivatePagePending 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public static void setPrivatePagePending()
 	{
 	btnJoinClass.setVisible(true);
@@ -1419,15 +1073,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			
 			@Override
 			void joinIntoClass() {
-					AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
-						@Override
-						public void onSuccess(V2UserDo result) {
-							String emailId="";
-							if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
-								emailId=AppClientFactory.getLoggedInUser().getUsername();
-							}else{
-								emailId=AppClientFactory.getLoggedInUser().getEmailId();
-							}
+					String emailId=AppClientFactory.getLoggedInUser().getEmailId();
 					AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 						@Override
@@ -1447,9 +1093,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									btnJoinClass.setVisible(false);
 //									userImage.setVisible(true);
 									lblWebHelp.setVisible(false);
-									btnWithDraw.setVisible(true);
-									memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-									lineSeparation.setVisible(true);
+									btnWithDraw.setVisible(false);
 									LblMember.setVisible(true);
 									LblMember.setText(StudentAssignmentView.i18n.GL1549());
 									mainContainer.setVisible(true);
@@ -1459,6 +1103,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								}
 								
 							};
+							success.setHeight("248px");
                             success.setWidth("450px");
                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                             success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
@@ -1468,10 +1113,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				
 						}
 					});
-					
-						}
-			 });
-			
 			}
 
 			@Override
@@ -1491,25 +1132,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	}
 	
 	}
-	/**
-	 * 
-	 * @function setPublicPage 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public static void setPublicPage()
 	{
 		btnJoinClass.setVisible(false);
@@ -1517,30 +1140,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		lblWebHelp.setVisible(false);
 		btnWithDraw.setVisible(true);
 		memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-		lineSeparation.setVisible(false);
+		lineSeparation.setVisible(true);
 		LblMember.setVisible(true);
 		LblMember.setText(i18n.GL1551());
 		mainContainer.setVisible(true);
 	}
-	/**
-	 * 
-	 * @function setPublicPageActive 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public static void setPublicPageActive()
 	{	
 		btnJoinClass.setVisible(false);
@@ -1550,28 +1154,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 		lineSeparation.setVisible(true);
 		LblMember.setVisible(true);
-		LblMember.setText(StudentAssignmentView.i18n.GL1549());
+		LblMember.setText(i18n.GL1549());
 		mainContainer.setVisible(true);
 	}
-	/**
-	 * 
-	 * @function setPublicPagePending 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public static void setPublicPagePending()
 	{
 		btnJoinClass.setVisible(true);
@@ -1593,57 +1179,51 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					if(!isJoinPopupPublic){
 						isJoinPopupPublic=true;
 						joinPopupPublic =  new StudentJoinClassPopup(classpageDo) {
+						
 						@Override
 						void joinIntoClass() {
-							AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
-								@Override
-								public void onSuccess(V2UserDo result) {
-									String emailId="";
-									if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
-										emailId=AppClientFactory.getLoggedInUser().getUsername();
-									}else{
-										emailId=AppClientFactory.getLoggedInUser().getEmailId();
-									}
-									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
-										@Override
-										public void onSuccess(ClasspageDo result) {
-											joinPopupPublic.hide();
-											mainContainer.setVisible(true);
-											SuccessPopupViewVc success=new SuccessPopupViewVc(){
+								String emailId=AppClientFactory.getLoggedInUser().getEmailId();
+								AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
-												@Override
-												public void onClickPositiveButton(
-														ClickEvent event) {
-													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-														Window.enableScrolling(false);
-													}else{
-														Window.enableScrolling(true);
-													}
-													btnJoinClass.setVisible(false);
-//													userImage.setVisible(true);
-													lblWebHelp.setVisible(false);
-													btnWithDraw.setVisible(true);
-													memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-													lineSeparation.setVisible(true);
-													LblMember.setVisible(true);
-													LblMember.setText(StudentAssignmentView.i18n.GL1549());
-													mainContainer.setVisible(true);
-													this.hide();
-													isJoinPopupPublic=false;
+									@Override
+									public void onSuccess(ClasspageDo result) {
+										joinPopupPublic.hide();
+										mainContainer.setVisible(true);
+										SuccessPopupViewVc success=new SuccessPopupViewVc(){
+
+											@Override
+											public void onClickPositiveButton(
+													ClickEvent event) {
+												if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+													Window.enableScrolling(false);
+												}else{
+													Window.enableScrolling(true);
 												}
+												btnJoinClass.setVisible(false);
+//												userImage.setVisible(true);
+												lblWebHelp.setVisible(false);
+												btnWithDraw.setVisible(true);
+												memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+												lineSeparation.setVisible(true);
+												LblMember.setVisible(true);
+												LblMember.setText(StudentAssignmentView.i18n.GL1549());
+												mainContainer.setVisible(true);
+												this.hide();
+												isJoinPopupPublic=false;
 												
-											};
-			                                success.setWidth("450px");
-			                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-			                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
-			                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
-			                                success.center();
-			                                success.show();
-								
-										}
-									});
-								}
-							});
+											}
+											
+										};
+										success.setHeight("248px");
+		                                success.setWidth("450px");
+		                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+		                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+		                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
+		                                success.center();
+		                                success.show();
+							
+									}
+								});
 						}
 
 						@Override
@@ -1667,21 +1247,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : StudentAssignmentView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
 	private class OnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -1700,21 +1265,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : StudentAssignmentView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
 	private class OnMouseOut implements MouseOutHandler{
 
 		@Override
@@ -1726,25 +1276,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 	}
 	
-	/**
-	 * 
-	 * @function openJoinClassEvent 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void openJoinClassEvent()
 	{
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
@@ -1774,7 +1306,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 						memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
 						lineSeparation.setVisible(true);
 						LblMember.setVisible(true);
-						LblMember.setText(StudentAssignmentView.i18n.GL1549());
+//						userImage.setVisible(true);
+						LblMember.setText(i18n.GL1549());
 						mainContainer.setVisible(true);
 					}
 					else 
@@ -1802,58 +1335,49 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							
 							@Override
 							void joinIntoClass() {
-									AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
+									String emailId=AppClientFactory.getLoggedInUser().getEmailId();
+									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 										@Override
-										public void onSuccess(V2UserDo result) {
-											String emailId="";
-											if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
-												emailId=AppClientFactory.getLoggedInUser().getUsername();
-											}else{
-												emailId=AppClientFactory.getLoggedInUser().getEmailId();
-											}
-											
-											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+										public void onSuccess(ClasspageDo result) {
+											joinPopupPublic.hide();
+											mainContainer.setVisible(true);
+											SuccessPopupViewVc success=new SuccessPopupViewVc(){
 
 												@Override
-												public void onSuccess(ClasspageDo result) {
-													joinPopupPublic.hide();
+												public void onClickPositiveButton(
+														ClickEvent event) {
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+														Window.enableScrolling(false);
+													}else{
+														Window.enableScrolling(true);
+													}
+													btnJoinClass.setVisible(false);
+//													userImage.setVisible(true);
+													lblWebHelp.setVisible(false);
+													btnWithDraw.setVisible(true);
+													memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
+													lineSeparation.setVisible(true);
+													LblMember.setVisible(true);
+													LblMember.setText(StudentAssignmentView.i18n.GL1549());
 													mainContainer.setVisible(true);
-													SuccessPopupViewVc success=new SuccessPopupViewVc(){
-
-														@Override
-														public void onClickPositiveButton(
-																ClickEvent event) {
-															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-																Window.enableScrolling(false);
-															}else{
-																Window.enableScrolling(true);
-															}
-															btnJoinClass.setVisible(false);
-//															userImage.setVisible(true);
-															lblWebHelp.setVisible(false);
-															btnWithDraw.setVisible(true);
-															memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-															lineSeparation.setVisible(true);
-															LblMember.setVisible(true);
-															LblMember.setText(StudentAssignmentView.i18n.GL1549());
-															mainContainer.setVisible(true);
-															this.hide();
-															isJoinPopupPublic=false;
-														}
-													};
-				                                    success.setWidth("450px");
-				                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
-				                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
-				                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
-				                                    success.center();
-				                                    success.show();
+													this.hide();
+													isJoinPopupPublic=false;
+													
 												}
-											});
-											
+												
+											};
+											success.setHeight("248px");
+		                                    success.setWidth("450px");
+		                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+		                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+		                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
+		                                    success.center();
+		                                    success.show();
+								
 										}
-									});		
-								}
+									});
+							}
 
 							@Override
 							public void closePoup() {
@@ -1900,11 +1424,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							btnJoinClass.setVisible(false);
 //							userImage.setVisible(true);
 							lblWebHelp.setVisible(false);
-							btnWithDraw.setVisible(true);
-							memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-							lineSeparation.setVisible(true);
+							btnWithDraw.setVisible(false);
 							LblMember.setVisible(true);
-							LblMember.setText(StudentAssignmentView.i18n.GL1549());
 //							userImage.setVisible(true);
 							mainContainer.setVisible(true);
 						}
@@ -1927,17 +1448,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									
 									@Override
 									void joinIntoClass() {
-											AppClientFactory.getInjector().getUserService().getV2UserProfileDetails(GOORU_UID, new SimpleAsyncCallback<V2UserDo>() {
-
-												@Override
-												public void onSuccess(V2UserDo result) {
-													String emailId="";
-													if(result.getUser().getAccountTypeId()!=null && result.getUser().getAccountTypeId()==2){
-														emailId=AppClientFactory.getLoggedInUser().getUsername();
-													}else{
-														emailId=AppClientFactory.getLoggedInUser().getEmailId();
-													}
-											
+											String emailId=AppClientFactory.getLoggedInUser().getEmailId();
 											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
 
 												@Override
@@ -1957,9 +1468,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 															btnJoinClass.setVisible(false);
 //															userImage.setVisible(true);
 															lblWebHelp.setVisible(false);
-															btnWithDraw.setVisible(true);
-															memberContainer.setStyleName(EditClasspageCBundle.INSTANCE.css().studentStyle());
-															lineSeparation.setVisible(true);
+															btnWithDraw.setVisible(false);
 															LblMember.setVisible(true);
 															LblMember.setText(StudentAssignmentView.i18n.GL1549());
 															mainContainer.setVisible(true);
@@ -1969,6 +1478,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														}
 														
 													};
+													success.setHeight("248px");
 		                                            success.setWidth("450px");
 		                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
 		                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
@@ -1976,8 +1486,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		                                            success.center();
 		                                            success.show();
 										
-												}
-											});
 												}
 											});
 									}
@@ -2023,25 +1531,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 
 	}
-	/**
-	 * 
-	 * @function getMainContainerStatus 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public static boolean getMainContainerStatus()
 	{
 		Boolean mainContainerStatus = false;
@@ -2055,25 +1545,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 		return mainContainerStatus;		
 	}
-	/**
-	 * 
-	 * @function addSortingOptionsToList 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void addSortingOptionsToList(){
 		sortingOptionsList.clear();
 		sortingOptionsList.add(i18n.GL1946());
@@ -2108,25 +1580,42 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call showClasspageItemsForAssignmentPath
 	}
 	
+
+
+	public FlowPanel getStudentsetupContainer() {
+		return studentsetupContainer;
+	}
+
+	public void setStudentsetupContainer(FlowPanel studentsetupContainer) {
+		this.studentsetupContainer = studentsetupContainer;
+	}
+	
 	@Override
-	public void setSortingOrderInDropdown(String sortingOrder) {
-		if(sortingOrder !=null && sortingOrder.equalsIgnoreCase("completed")){
-			dropdownPlaceHolder.setText(i18n.GL1952());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1952());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1952());
-		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("todo")){
-			dropdownPlaceHolder.setText(i18n.GL1953());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1953());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1953());
-		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("all")){
-			dropdownPlaceHolder.setText(i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1946());
-		}else{
-			dropdownPlaceHolder.setText(i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1946());
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			 if(slot==StudentAssignmentPresenter.STUDY_SLOT){
+				getStudentsetupContainer().clear();
+				getStudentsetupContainer().add(content);
+			}else{
+				//getClassContainer().setVisible(false);
+			}
 		}
 	}
+	
+	/*@UiHandler("backToTeacherView")
+	public void backToTeacherviewEvent(ClickEvent clickEvent){
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+		String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+		params.put("pos", pos);
+		params.put("classpageid", classpageid);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
+	}*/
+	
 	
 }

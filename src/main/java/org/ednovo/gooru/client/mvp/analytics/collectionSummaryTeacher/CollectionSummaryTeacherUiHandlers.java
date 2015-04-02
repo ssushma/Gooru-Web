@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 
@@ -31,26 +33,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface CollectionSummaryTeacherUiHandlers extends BaseUiHandlers{
  
- /**
- * @param collectionId
- * @param classpageId
- * @param pathwayId
- * @param result
- * @param loadingImage
- */
-void setTeacherData(String collectionId,String classpageId,String pathwayId,CollectionSummaryMetaDataDo result,HTMLPanel loadingImage);
+ void setTeacherData(String collectionId,String classpageId,String pathwayId,CollectionSummaryMetaDataDo result,HTMLPanel loadingImage);
  
- /**
- * @param resourceGooruId
- * @param questionType
- */
-void setOEtextData(String resourceGooruId,String questionType);
-
-/**
- * @param string
- */
-void setHtmltopdf(String string,String collectionTitle);
-
-public void clearFrame();
+ void setOEtextData(String resourceGooruId,String questionType);
 
 }

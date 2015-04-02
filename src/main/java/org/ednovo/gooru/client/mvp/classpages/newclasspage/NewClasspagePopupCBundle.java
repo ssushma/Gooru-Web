@@ -31,19 +31,8 @@ import com.google.gwt.resources.client.CssResource;
 
 
 /**
- * 
- * @fileName : NewClasspagePopupCBundle.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public interface NewClasspagePopupCBundle extends ClientBundle{
 	

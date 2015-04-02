@@ -34,7 +34,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter.IsClassCodeProxy;
-import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
@@ -49,21 +48,7 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-/**
- * 
- * @fileName : ClassCodePresenter.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+
 public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsClassCodeProxy> implements ClassCodeUiHandlers {
 	
 	
@@ -117,25 +102,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		});
 		
 	}
-	/**
-	 * 
-	 * @function callBackMethods 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void callBackMethods(){
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
@@ -147,14 +114,6 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 				signUpViewPresenter.displayPopup(displayScreen);
 				addToPopupSlot(signUpViewPresenter);
 			}
-		}
-		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
-		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		if(!AppClientFactory.isAnonymous() && flag==0 &&  !loginType.equalsIgnoreCase("Credential")) {
-			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
-			update.setGlassEnabled(true);
-			update.show();
-			update.center();
 		}
 	}
 	
@@ -168,7 +127,6 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
-		Window.enableScrolling(true);
 	}
 
 	@Override
