@@ -262,7 +262,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void setResourceTitle(String resourceTitle) {
 		headerView.setResourceTitle(resourceTitle);
 		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-		if(view!=null&&view.equalsIgnoreCase("end")){
+		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+		if((view!=null&&view.equalsIgnoreCase("end")) || (resourceId==null)){
 			appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
 		}
 	}
