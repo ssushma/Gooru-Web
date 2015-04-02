@@ -59,6 +59,7 @@ import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -359,10 +360,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				sequenceNumber=collectionItemDo.getItemSequence();
 			}
 			if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getTitle()!=null){
-				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
-				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(titlelbl1));
-				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
-				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				String titlelblBold=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
+				String filteredText = StringUtil.removeAllHtmlCss(titlelblBold);
+				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(filteredText));
+				resourceTitleLbl.getElement().setAttribute("alt",filteredText);
+				resourceTitleLbl.getElement().setAttribute("title",filteredText);
 			}else{
 				resourceTitleLbl.setHTML("");
 				resourceTitleLbl.getElement().setAttribute("alt","");
