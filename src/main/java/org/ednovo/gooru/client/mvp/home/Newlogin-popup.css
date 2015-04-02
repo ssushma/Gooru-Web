@@ -11,7 +11,7 @@ body {
 	z-index: 99999;
 	background-color: black;
 	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	filter:literal("alpha(opacity = 30)");
 }
 .activeGrade{
 	background-color: #87badd;
@@ -1567,6 +1567,7 @@ display:inline-block;
     padding: 0 10px;
     position: relative;
     top: 0.5em;
+}
 
 .divider {
 	border-bottom:1px solid #ddd;
@@ -1643,7 +1644,7 @@ display:inline-block;
 	background: -o-linear-gradient(top, #7AB075, #4e9746);
 
 	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746');
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746')");
 }
 
 .forgotPasswordSuccessText{
