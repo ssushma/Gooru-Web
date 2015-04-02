@@ -40,6 +40,7 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
  * @Reviewer:
  */
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -73,44 +74,30 @@ public class SuccessMessagePopupView extends Composite{
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public SuccessMessagePopupView(String collectonTitle) {
-		Window.enableScrolling(false);
 		appPopUp=new PopupPanel();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		setStaticTexts(collectonTitle);
-		//appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().successPopupContainer());
+		Window.enableScrolling(false);
+		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().successPopupContainer());
 		appPopUp.setGlassEnabled(true);
-		appPopUp.setHeight("320px");
 		appPopUp.show();
 		appPopUp.center();
 	}
-	
-	/**
-	 * 
-	 * @function setStaticTexts 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param collectonTitle
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setStaticTexts(String collectonTitle){
 		successPopupHeader.setText(i18n.GL1384());
 		successPopupHeader.getElement().setId("lblSuccessPopupHeader");
 		successPopupHeader.getElement().setAttribute("alt",i18n.GL1384());
 		successPopupHeader.getElement().setAttribute("title",i18n.GL1384());
 		
-		successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(pageLocation.equals(PlaceTokens.STUDENT)){
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2241(), collectonTitle));
+		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2241(), collectonTitle));
+		}else{
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
+		}
 		successPopupBodyText.getElement().setId("htmlSuccessPoupBodyText");
 		successPopupBodyText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
 		successPopupBodyText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
@@ -124,25 +111,6 @@ public class SuccessMessagePopupView extends Composite{
 	public void closePopupEvent(ClickEvent event){
 		hide();
 	}
-	/**
-	 * 
-	 * @function hide 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void hide(){
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));

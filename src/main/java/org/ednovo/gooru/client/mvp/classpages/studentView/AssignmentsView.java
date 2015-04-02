@@ -31,7 +31,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -55,19 +54,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author
  * 
- * @fileName : AssignmentsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public class AssignmentsView extends
 		ChildView<AssignmentsPresenter> implements
@@ -183,7 +171,7 @@ public class AssignmentsView extends
 		if (isOpen){
 				descPanel.getElement().getStyle().setDisplay(Display.INLINE);
 				this.description= true;
-				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 		}else{
 				descPanel.getElement().getStyle().setDisplay(Display.NONE);
 				this.description= false;
@@ -192,21 +180,7 @@ public class AssignmentsView extends
 		colletionPanel.getElement().setId("pnlColletion");
 		emptyAssignmentLbl.getElement().setId("lblEmptyAssignment");
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+		
 	private class OnMouseOver implements MouseOverHandler{
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -216,21 +190,7 @@ public class AssignmentsView extends
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	private class OnMouseOut implements MouseOutHandler{
 		
 		@Override
@@ -238,21 +198,7 @@ public class AssignmentsView extends
 			expandLbl.setVisible(false);
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentsView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	private class OnTitleClick implements ClickHandler{
 
 		@Override
@@ -260,21 +206,17 @@ public class AssignmentsView extends
 			if((description == null || !description)){
 				descPanel.getElement().getStyle().setDisplay(Display.INLINE);
 				description= true;
-				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 			}
 			else{
 				descPanel.getElement().getStyle().setDisplay(Display.NONE);
 				description= false;
-//				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+//				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 			}
 			
 		}
 		
 	}
-	
-	/**
-	 * 
-	 */
 	public void insertCollectionToAssignment(ResourceDo resourceDo){
 		CollectionsView cv = new CollectionsView();
 		

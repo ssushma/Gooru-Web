@@ -80,7 +80,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 	
 	@UiField Label panelLoading;
 	
-	@UiField HTMLPanel panelControls,titlePanel,headerPanel,bodyConatiner, panelPleaseWait;
+	@UiField HTMLPanel panelControls,titlePanel,headerPanel;
 		
 	interface NewClasspagePopupViewUiBinder extends
 		UiBinder<Widget, NewClasspagePopupView> {
@@ -93,15 +93,13 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		this.res = NewClasspagePopupCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		//this.getElement().getStyle().setWidth(450,Unit.PX);
+		this.getElement().getStyle().setWidth(450,Unit.PX);
 		btnCancel.addClickHandler(new CloseExistsClickHandler());
 		btnAdd.addClickHandler(new AddExistsClickHandler());
 		classpageTitleTxt.getElement().setAttribute("placeholder", i18n.GL1124());
 		classpageTitleTxt.getElement().setAttribute("maxlength", "50");
 		classpageTitleTxt.getElement().setId("txtClassPageTitle");
 		StringUtil.setAttributes(classpageTitleTxt, true);
-		bodyConatiner.getElement().getStyle().setPadding(15, Unit.PX);
-		titlePanel.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		
 		btnAdd.getElement().setId("btnAdd");
 		btnAdd.setText(i18n.GL0745());
@@ -159,8 +157,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		mandatoryClasspageTitleLbl.setVisible(false);
-//		panelLoading.setVisible(false);
-		panelPleaseWait.setVisible(false);
+		panelLoading.setVisible(false);
 		panelLoading.setText(i18n.GL0122());
 		panelControls.setVisible(true);
 		show();
@@ -169,21 +166,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		panelLoading.getElement().setId("pnlLoading");
 		panelControls.getElement().setId("pnlControls");
 	}
-	/**
-	 * 
-	 * @fileName : NewClasspagePopupView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -196,21 +179,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : NewClasspagePopupView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	//Click handler for Close/Cancel
 	private class CloseExistsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -223,22 +192,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 	        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}		
 	}
-
-	/**
-	 * 
-	 * @fileName : NewClasspagePopupView.java
-	 *
-	 * @description : 
-	 * 	Click event to handle Add existing resource/collection item to collection.
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	//Click event to handle Add existing resource/collection item to collection.
 	private class AddExistsClickHandler implements ClickHandler{
 
 		@Override
@@ -258,8 +212,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 						}else{
 							createNewClasspage(title);
 							panelControls.setVisible(false);
-//							panelLoading.setVisible(true);
-							panelPleaseWait.setVisible(true);
+							panelLoading.setVisible(true);
 							classpageTitleTxt.getElement().getStyle().clearBackgroundColor();
 							classpageTitleTxt.getElement().getStyle().setBorderColor("#ccc");
 						}
@@ -270,25 +223,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function validateFields 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public boolean validateFields(){
 		boolean isValid=true;
 		String title = classpageTitleTxt.getText().trim();
@@ -299,30 +234,11 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		
 		return isValid;
 	}
-	/**
-	 * 
-	 * @function ClosePopup 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void ClosePopup(){
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-//		panelLoading.setVisible(false);
-        panelPleaseWait.setVisible(false);
+		panelLoading.setVisible(false);
 		hide();
 	}
 	

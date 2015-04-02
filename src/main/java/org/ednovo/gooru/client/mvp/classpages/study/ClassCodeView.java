@@ -63,21 +63,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-/**
- * 
- * @fileName : ClassCodeView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
+
 public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> implements IsClassCodeView {
 	
 	private static ClassCodeViewUiBinder uiBinder = GWT
@@ -125,28 +111,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		};
 		AppClientFactory.getEventBus().addHandler(
 				SetButtonEvent.TYPE, setButtonVisibility);
-		
-		Window.enableScrolling(true);
 	}
-	/**
-	 * 
-	 * @function setCreateClassVisibility 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	private void setCreateClassVisibility() {
 		if (AppClientFactory.isAnonymous()){
 			btnCreateClass.setVisible(false);
@@ -173,7 +138,9 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	*/
 	
 	private void setText() {
+		
 		setCreateClassVisibility();
+		
 		btnCreateClass.setText(i18n.GL1771());
 		btnCreateClass.getElement().setId("btnCreateClass");
 		btnCreateClass.getElement().setAttribute("alt",i18n.GL1771());
@@ -309,7 +276,6 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		});
 		btnEnter.addClickHandler(new OnEnterClassCodeClick());
 		btnCreateClass.addClickHandler(new OnClickCreateClass());
-		Window.enableScrolling(true);
 	}
 	
 	@UiHandler("panelClassOne")
@@ -331,26 +297,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		OpenClasspageEdit("18c2e8db-ffcc-471e-960b-78b5ae30b98d", PlaceTokens.STUDENT);
 	}
 	
-	/**
-	 * 
-	 * @function OpenClasspageEdit 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param gooruOId
-	 * @parm(s) : @param token
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", gooruOId);
@@ -364,21 +311,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		AppClientFactory.getPlaceManager().revealPlace(
 				token, params);
 	}
-	/**
-	 * 
-	 * @fileName : ClassCodeView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class OnClickCreateClass implements ClickHandler{
 
 		@Override
@@ -442,21 +375,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : ClassCodeView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class OnEnterClassCodeClick implements ClickHandler {
 
 		@Override
@@ -627,25 +546,6 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 			});
 		}
 	}
-	/**
-	 * 
-	 * @function setEnterLblVisbility 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param isVisible
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setEnterLblVisbility(boolean isVisible) {
 		btnEnter.setVisible(!isVisible);
 		disabledBtn.setVisible(isVisible);

@@ -44,7 +44,6 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -240,6 +239,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	private void setUiElements() {
 		panelLoading.getElement().setId("pnlLoadingPanel");
+		panelLoading.getElement().getStyle().setZIndex(9999);
+		panelLoading.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 		txtClasspageCodeShare.setReadOnly(true);
 		txtClasspageCodeShare.getElement().setId("txtClassPageCodeShare");
@@ -557,21 +558,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		panelSuggestBox.add(autoSuggetTextBox);
 		autoSuggetTextBox.getTxtInput().getTxtInputBox().setFocus(true);
 	}
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
 
 		@Override
@@ -585,21 +572,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 
 	}
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+
 	public class MouseOutHideToolTip1 implements MouseOutHandler{
 
 		@Override
@@ -607,21 +580,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			toolTipPopupPanelNew.hide();
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class MouseOverShowClassCodeToolTip2 implements MouseOverHandler{
 
 		@Override
@@ -635,21 +594,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 
 	}
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+
 	public class MouseOutHideToolTip2 implements MouseOutHandler{
 
 		@Override
@@ -658,21 +603,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 	}
 	
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
 	public class MouseOverShowClassCodeToolTip3 implements MouseOverHandler{
 
 		@Override
@@ -686,21 +616,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 
 	}
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+
 	public class MouseOutHideToolTip3 implements MouseOutHandler{
 
 		@Override
@@ -709,21 +625,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 	}
 	
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class InviteStudentInClass implements ClickHandler{
 
 		@Override
@@ -743,21 +645,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+
 	public class TextCopyHandler implements ClickHandler{
 
 		@Override
@@ -767,21 +655,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : ClassListView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 07-Dec-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer:
-	 */
+	
 	public class ClassCodeCopy implements ClickHandler{
 
 		@Override
@@ -798,11 +672,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@Override
 	public void setClassPageDo(ClasspageDo classpageDo) {
 		this.classpageDo = classpageDo;
-		
 		clearMembersListPanel();
 		setLoadingPanelVisibility(true);
 		txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
-		// call an API to get the list of students in this class.
 		activeListPageNum=0;
 		activeListTotalCount=0;
 		pendingListPageNum=0;
@@ -818,34 +690,17 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			visibilityRadioInviteOnly.setChecked(true);
 		}
 	}
-	
-	/**
-	 * 
-	 * @function addShareClass 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	private void addShareClass() {
 		shareDo = new SocialShareDo();
+		if(classpageDo != null)
+		{
 		shareDo.setTitle(classpageDo.getTitle());
 		shareDo.setDecodeRawUrl(txtClasspageCodeShare.getText());
 		shareDo.setBitlylink(txtClasspageLinkShare.getText());
 		shareDo.setCategoryType(AppClientFactory.getLoggedInUser().getUsername());
 		shareDo.setOnlyIcon(false);
 		shareDo.setIsSearchShare(false);
+		}
 	}
 
 	/**
@@ -1093,7 +948,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 					delete.setPositiveButtonText(i18n.GL0190());						
 					delete.setNegitiveButtonText(i18n.GL0142());
 					delete.setDeleteValidate("delete");
-					delete.setPixelSize(450, 353);		
+					delete.setPixelSize(450, 344);		
 					delete.show();
 					delete.center();
 				}
@@ -1104,9 +959,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 				panelPendingMembersList.add(membersViewVc);
 			}
 	 }
-	/**
-	 * 
-	 */
+	
 	public void removePendiUserWidget(MembersViewVc membersViewVc,boolean isPendingList){
 		membersViewVc.removeFromParent();
 		if(isPendingList){
@@ -1175,9 +1028,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			}
 		}
 	}
-	/**
-	 * 
-	 */
+	
 	public void getPendingMembersList(){
 		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), 0, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
 	}
@@ -1219,7 +1070,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 				delete.setPositiveButtonText(i18n.GL0190());						
 				delete.setNegitiveButtonText(i18n.GL0142());
 				delete.setDeleteValidate("delete");
-				delete.setPixelSize(450, 353);	
+				delete.setPixelSize(450, 344);		
 				delete.show();
 				delete.center();
 			}
@@ -1297,8 +1148,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			}
 			
 		};
-	/*	success.setHeight("253px");
-		success.setWidth("450px");*/
+		success.setHeight("253px");
+		success.setWidth("450px");
 		success.setPopupTitle(i18n.GL1556());
 		if (listSize>1){
 			success.setDescText(i18n.GL1557());
@@ -1347,6 +1198,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			
 		};
 		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
 	}

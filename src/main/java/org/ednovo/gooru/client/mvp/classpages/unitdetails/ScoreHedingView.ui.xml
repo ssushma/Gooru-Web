@@ -1,0 +1,36 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="unitStyle" src="unitassignment.css" />
+	<g:HTMLPanel styleName="{unitStyle.col-xs-4}">
+
+		<div class="scorMetInner">
+
+			<g:Label styleName="{unitStyle.scoreHeding}" ui:field="lblTitle"></g:Label>
+
+			<div class="goalTracker">
+
+				<div class="circle" id="tracker">
+					<g:Label styleName="{unitStyle.circle}" ui:field="lblRedControl"></g:Label>
+					<g:Label styleName="{unitStyle.circle}" ui:field="lblControl"></g:Label>
+					<div class="circle" id="circleMiddle"></div>
+					<div class="emptybox"></div>
+				</div>
+
+				<div class="setGloalBtn">
+					<div class="perTextBox">
+						<g:TextBox ui:field="txtScore" />
+					</div>
+					<g:Label ui:field="lblValidation"></g:Label>
+                    <g:Label styleName="{unitStyle.scoreLabelStyle}" ui:field="lblScore"></g:Label>
+					<p>
+						<g:Button styleName="primary" ui:field="btnSetGoal"></g:Button>
+					</p>
+				</div>
+
+			</div>
+
+		</div>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 

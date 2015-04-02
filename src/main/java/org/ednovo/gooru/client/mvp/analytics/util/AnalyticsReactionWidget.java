@@ -22,10 +22,6 @@ public class AnalyticsReactionWidget extends Composite {
 	
 	CollectionSummaryIndividualCBundle res;
 	
-	/**
-	 * Constructor
-	 * @param reaction
-	 */
 	public AnalyticsReactionWidget(int reaction) {
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
 		res.css().ensureInjected();

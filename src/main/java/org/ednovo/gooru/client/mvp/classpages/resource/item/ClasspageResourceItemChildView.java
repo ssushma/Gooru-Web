@@ -53,19 +53,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
+ * @author Search Team
  * 
- * @fileName : ClasspageResourceItemChildView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 07-Dec-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
  */
 public class ClasspageResourceItemChildView extends
 		ChildView<ClasspageResourceItemChildPresenter> implements

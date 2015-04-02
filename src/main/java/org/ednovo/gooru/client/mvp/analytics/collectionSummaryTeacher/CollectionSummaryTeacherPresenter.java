@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
@@ -41,49 +40,30 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	private  AnalyticsServiceAsync analyticService;
 	
 	private String collectionId,classpageId,pathwayId;
-	 
-	/**
-	 * Constructor
-	 * @param eventBus
-	 * @param view
-	 */
+	
 	@Inject
 	public CollectionSummaryTeacherPresenter(EventBus eventBus, IsCollectionSummaryTeacherView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
 
-	/**
-	 * Get the analytics service
-	 * @return
-	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
-	/**
-	 * Set the analytics service
-	 * @param analyticService
-	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherUiHandlers#setTeacherData(java.lang.String, java.lang.String, java.lang.String, org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo, com.google.gwt.user.client.ui.HTMLPanel)
-	 */
 	@Override
 	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final CollectionSummaryMetaDataDo result,final HTMLPanel loadingImage) {
 		this.pathwayId=pathwayId;
-		this.classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		this.classpageId=classpageId;
 		this.collectionId=collectionId;
-		this.analyticService.getCollectionResourceData(this.collectionId,this.classpageId,"",new AsyncCallback<ArrayList<UserDataDo>>() {
+		this.analyticService.getCollectionResourceData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> userData) {
-				if(userData != null){
-					getView().setTeacherResourceData(userData,result,loadingImage);
-				}
-				
+				getView().setTeacherResourceData(userData,result,loadingImage);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -91,44 +71,16 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 		});		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherUiHandlers#setOEtextData(java.lang.String, java.lang.String)
-	 */
 	@Override
 	public void setOEtextData(final String resourceGooruId,final String questionType) {
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"AS","","", new AsyncCallback<ArrayList<OetextDataDO>>() {
 			@Override
 			public void onSuccess(ArrayList<OetextDataDO> result) {
-				if(result !=null){
-					getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,"AS");
-				}
+				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,"AS");
 			}
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 		});
-	}
-
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherUiHandlers#setHtmltopdf(java.lang.String)
-	 */
-	@Override
-	public void setHtmltopdf(String htmlString,String collectionTitle) {
-		this.analyticService.setHTMLtoPDF(htmlString,collectionTitle,false, new AsyncCallback<String>() {
-					@Override
-					public void onSuccess(String result) {
-						getView().getFrame().setUrl(result);
-						//Window.open(result, "_blank", "status=0,toolbar=0,menubar=0,location=0");
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						
-					}
-				});
-	}
-	@Override
-	public void clearFrame(){
-		getView().getFrame().setUrl("");
 	}
 }

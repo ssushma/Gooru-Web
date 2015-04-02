@@ -29,10 +29,6 @@ public interface CollectionProgressCBundle extends ClientBundle{
 	        String incorrect_legend();
 	        String floatLeft();
 	        String resource_monitor_header_title();
-	        String correct_incorrect_text();
-			
-	        String setOETextPopupCenter();
-			String setGlassStyleName();
 	}
 	@NotStrict
 	@Source("collectionProgress.css")

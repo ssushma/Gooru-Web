@@ -50,18 +50,12 @@ public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
 	 * @param isClickedOnEmail
 	 */
 	void setHtmltopdf(String htmlString,String collectionTitle, boolean isClickedOnEmail);
-	/**
-	 * This method is used to set Open-ended response data
-	 * @param resourceGooruId
-	 * @param questionType
-	 */
 	void setOEtextData(String resourceGooruId,String questionType);
 	/**
 	 * This method is used to set error message
 	 * @param loadingImage
 	 */
 	void setNoDataMessage(HTMLPanel loadingImage);
-	
 	public void clearFrame();
 	/**
 	 * This method is used to set teacher image

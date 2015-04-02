@@ -1,13 +1,8 @@
-@external .collectionSummaryDetailsWrapper,.left_container,.collection_teacher_img,.collection_details_teacher,.question_resource_details,.resource_in_collection_teacher_summary,.collectionLastAccessed,.question_resource_details;
 .maincontainer {
-	background-color: inherit;
+	background-color: white;
 	text-align: center;
-	clear:both;
 }
-.exportImage{
-	float: right;
-	margin-top: -4%;
-}
+
 .summary_title {
 	float: left;
 	text-align: center;
@@ -76,7 +71,6 @@
 .left_container {
 	width: 100%;
 	float: left;
-	margin-left: 28px; 
 }
 
 .collection_teacher_img {
@@ -172,22 +166,4 @@
 	position: absolute;
 	z-index: 5;
 	margin-left: 375px;
-}
-.questionImage{
-	position: relative;
-	bottom: 20px;
-	left: 129px;
-}
-.subText{
-	font-size: 15px;
-	font-family: Arial, Verdana, Sans-serif;
-}
-.showEmptyMessage{
-	font-weight: normal;
-	margin: 5% 0;
-	text-align: center;
-	width: 100%;
-	background-color: white;
-	padding: 20px 0px;
-	box-shadow: 0 2px 2px #ccc;
 }

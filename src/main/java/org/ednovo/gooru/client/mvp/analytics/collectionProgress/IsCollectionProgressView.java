@@ -28,23 +28,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 
-import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.HTMLPanel;
-
 
 public interface IsCollectionProgressView extends IsViewWithHandlers<CollectionProgressUiHandlers>{
-	/**
-	 * This method is used to set collection progress data.
-	 * @param collectionProgressData
-	 * @param isCollectionView
-	 * @param collectionTitle
-	 */
-	void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView,String collectionTitle);
-	/**
-	 * This method is used to get loading image.
-	 * @return
-	 */
-	HTMLPanel getLoadingImage();
-	
-	Frame getFrame();
+	void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView);
 }

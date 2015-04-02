@@ -27,6 +27,7 @@
 */
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,9 +41,12 @@ import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.WelcomeClassView;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEvent;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -102,24 +106,25 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
 	
-//	private ShelfListPresenter shelfListPresenter;
-	
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionDo> updateAssignmentAsyncCallback;
-	
-	AnalyticsPresenter analyticsPresenter=null;
 
 	AddAssignmentContainerPresenter assignmentContainer=null;
-	
-	public static final  Object SLOT_SET_SUMMARY_PROGRESS = new Object();
-	final String SUMMARY="Summary",PROGRESS="Progress",REPORTS="reports";
 	
 	private Integer offset=0;
 	private Integer limit=5;
 	private static final Integer DEFAULT_LIMITVALUE=5;
 	
-	ClassListPresenter classlistPresenter;
+	private ClassListPresenter classlistPresenter;
+	
+	private ClassSetupPresenter classSetupPresenter;
+	
+	private UnitSetupPresenter unitSetupPresenter;
+	
+	private UnitAssignmentPresenter unitAssignmentPresenter;
+	
+	private AnalyticsPresenter analyticsPresenter;
 	
 	public static final  Object CLASSLIST_SLOT = new Object();
 	
@@ -141,15 +146,16 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
-	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,AnalyticsPresenter analyticsPresenter) {
+	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,
+								ClassSetupPresenter classSetupPresenter, UnitSetupPresenter unitSetupPresenter , UnitAssignmentPresenter unitAssignmentPresenter,AnalyticsPresenter analyticsPresenter) {
 		super(view, proxy);
-		
 		getView().setUiHandlers(this);
-		
-//		this.shelfListPresenter = shelfTabPresenter;
 		this.assignmentContainer = assignmentContainer;
 		this.imageUploadPresenter=imageUploadPresenter;		
 		this.classlistPresenter=classlistPresenter;
+		this.classSetupPresenter=classSetupPresenter;
+		this.unitSetupPresenter=unitSetupPresenter;
+		this.unitAssignmentPresenter=unitAssignmentPresenter;
 		this.analyticsPresenter=analyticsPresenter;
 		addRegisteredHandler(AssignmentEvent.TYPE, this);
 		addRegisteredHandler(RefreshAssignmentsListEvent.TYPE, this);
@@ -170,7 +176,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 		getView().clearPanel();
@@ -194,14 +199,12 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		imageUploadPresenter.getView().closeImageUploadWidget();
 		assignmentContainer.getView().onUnload();
 		this.classpageDo=null;
-		AppClientFactory.getPlaceManager().setClasspageEventId(null);
+		
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
-		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
 		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -253,14 +256,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		});
 		
 	}
-	/*@Override
-	private void generateShareLink(String classpageId){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
-		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
-	}*/
 	
-
 	@Override
 	public void generateShareLink(String classpageId) {
 		try{
@@ -274,9 +270,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	@Override
 	protected void onReset() {
-//		setInSlot(TYPE_SHELF_TAB, shelfListPresenter);
-		Window.enableScrolling(true);
-		Window.scrollTo(0, 0);
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -284,10 +277,22 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		if(isTab==null){
 			getView().clearPanel();
 		}
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
+/*		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
 			getView().getGlobalClasspageProcess().clear();
+			System.out.println("INININ");
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			int offsetVal = 0;
+			if(pageNum != null)
+			{
+				offsetVal = Integer.parseInt(pageNum);
+				if(offsetVal!=0)
+				{
+				offsetVal = (offsetVal-1);
+				}
+			}
+			unitSetupPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 			//getClasspage();
-		}
+		}*/
 		
 	}
 	
@@ -352,7 +357,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public void setClasspageService(ClasspageServiceAsync classpageService) {
 		this.classpageService = classpageService;
 	}
-	
+
 	/** 
 	 * This method is to get the collectionAsyncCallback
 	 */
@@ -395,25 +400,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	//	classpageDo = null;
 		getClasspage();
 	}
-	/**
-	 * 
-	 * @function getClasspage 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void getClasspage(){
 		this.analyticsId= getPlaceManager().getRequestParameter("analyticsId");
 		this.monitorId = getPlaceManager().getRequestParameter("monitorid");
@@ -436,19 +422,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					});
 					EditClasspagePresenter.this.classpageDo=classpageDo;
 					if(classpageDo.getPermissions()!=null&&classpageDo.getPermissions().contains("edit")&& classpageDo.getClasspageId() != null){
-						offset=0;
-						limit=5;
-						generateShareLink(classpageDo.getClasspageId());
-						getView().setSortingOrderInDropdown(sortingOrder);
-						if(sortingOrder!=null&&(sortingOrder.equals("earliest")||sortingOrder.equals("latest"))){
-							getAssignmentsCount(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
-						}else{
-							getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder,0);
-						}
-						getAssignmentsProgress(classpageId, "0", "20");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
-                        classlistPresenter.setClassPageDo(classpageDo);
-                        setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
+                        showTabWidget(tab);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 					} else {
 						ErrorPopup error = new ErrorPopup(i18n.GL0341());
@@ -458,34 +433,36 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 				}
 			});
 		}else{
-			getView().setSortingOrderInDropdown(sortingOrder);
-			getView().hideNoAssignmentsMessagePanel();
-			if(sortingOrder!=null&&(sortingOrder.equals("earliest")||sortingOrder.equals("latest"))){
-				getAssignmentsCount(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
-			}else{
-				getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder,0);
-			}
+			 showTabWidget(tab);
 		}
 	}
-	/**
-	 * 
-	 * @function getOffsetValue 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Integer
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	public void showTabWidget(String tabValue){
+		getView().highlightTab(tab);
+		generateShareLink(classpageId);
+		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
+	     	classlistPresenter.setClassPageDo(classpageDo);
+	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
+	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
+	    	 System.out.println(" first");
+	    	 analyticsPresenter.getClassUnits(classpageDo);
+	    	 setInSlot(CLASSLIST_SLOT, analyticsPresenter,false);
+	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
+	    	 unitSetupPresenter.clearUnitAssignmentWidgetContaner();
+	    	 //unitSetupPresenter.getUnitsWithAssignemnts();
+	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
+	     }
+	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
+	    	 unitAssignmentPresenter.showAssignmentDetails();
+	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
+	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
+	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
+	     }
+	     else {
+	    	 classSetupPresenter.loadPathways();
+	    	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
+	     }
+	}
+
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
 		int pageNumber=0;
@@ -499,32 +476,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		return (((pageNumber-1)*DEFAULT_LIMITVALUE));
 		
 	}
-	/**
-	 * 
-	 * @function getClasspageItems 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageId
-	 * @parm(s) : @param offset
-	 * @parm(s) : @param limit
-	 * @parm(s) : @param tab
-	 * @parm(s) : @param analyticsId
-	 * @parm(s) : @param monitorId
-	 * @parm(s) : @param sortingOrder
-	 * @parm(s) : @param assignemntCount
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder,final int assignemntCount){
 		this.classpageService.getClassPageItems(classpageId, offset, limit,sortingOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
@@ -535,31 +487,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function getAssignmentsCount 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageId
-	 * @parm(s) : @param offset
-	 * @parm(s) : @param limit
-	 * @parm(s) : @param tab
-	 * @parm(s) : @param analyticsId
-	 * @parm(s) : @param monitorId
-	 * @parm(s) : @param sortingOrder
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void getAssignmentsCount(final String classpageId,final String offset,final String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder){
 		this.classpageService.getClassPageItems(classpageId, "0", "1",null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
@@ -580,25 +508,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");
 		//getClasspageItems( classpageId,offset.toString(),limit.toString(), tab, analyticsId,monitorId,null);
 	}
-	/**
-	 * 
-	 * @function initParam 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	private void initParam() {
 		classpageId = getPlaceManager().getRequestParameter("classpageid");
 		String pageSize = getPlaceManager().getRequestParameter("pageSize");
@@ -608,7 +517,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		getView().getClasspageById(classpageId, pageSize, pageNum, pos);
 //		getView().getAssignemntsByClasspageId(classpageId, pageSize, pageNum);
 //		getAssignmentsByClasspageById(classpageId, pageSize, pageNum);
-//		generateShareLink(classpageId);
+		generateShareLink(classpageId);
 	}
 
 	@Override
@@ -656,25 +565,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 		return updateAssignmentAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setUpdateAssignmentAsyncCallback 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param updateAssignmentAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUpdateAssignmentAsyncCallback(
 			SimpleAsyncCallback<CollectionDo> updateAssignmentAsyncCallback) {
 		this.updateAssignmentAsyncCallback = updateAssignmentAsyncCallback;
@@ -696,26 +587,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public void setClasspageItemDo(ClasspageItemDo classpageItemDo){
 		getView().setClasspageItemOnTop(classpageItemDo);
 	}
-	/**
-	 * 
-	 * @function triggerClassPageNewDataLogStartStopEvent 
-	 * 
-	 * @created_date : 07-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageId
-	 * @parm(s) : @param classCode
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
 		JSONObject classpageDataLog=new JSONObject();
 		String classpageEventId=GwtUUIDGenerator.uuid();
@@ -724,8 +596,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		classpageDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.CLASSPAGE_VIEW));
 		classpageDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(null));
 		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
-		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
-		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(PlayerDataLogEvents.getUnixTime()));
+		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(System.currentTimeMillis()));
+		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(System.currentTimeMillis()));
 		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"teach"));
 		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0));
@@ -741,28 +613,9 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
-					getView().displayAssignmentPath(classpageItemsList);
 					//getClasspage();
 				}
 			}
 		});
-	}
-
-	@Override
-	public void setCollectionProgressData(String clickedTab,String collectionId,String collectionTitle) {
-		analyticsPresenter.getIframe().setUrl("");
-		clearSlot(SLOT_SET_SUMMARY_PROGRESS);
-		if(clickedTab!=null){
-			if(clickedTab.equalsIgnoreCase(SUMMARY)){
-				analyticsPresenter.getCollectionSummaryPresenter().setCollectionSummaryData(collectionId,"");
-				setInSlot(SLOT_SET_SUMMARY_PROGRESS, analyticsPresenter.getCollectionSummaryPresenter(),false);
-			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				analyticsPresenter.getCollectionProgressPresenter().setCollectionProgressData(collectionId, "", false, collectionTitle);
-				setInSlot(SLOT_SET_SUMMARY_PROGRESS, analyticsPresenter.getCollectionProgressPresenter(),false);	
-			}else if(clickedTab.equalsIgnoreCase(REPORTS)){
-				analyticsPresenter.getGradeCollectionJson();
-				setInSlot(SLOT_SET_SUMMARY_PROGRESS, analyticsPresenter,false);	
-			}
-		}
 	}
 }

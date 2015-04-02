@@ -25,20 +25,24 @@
 package org.ednovo.gooru.client.mvp.analytics;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
-
-import com.google.gwt.user.client.ui.Frame;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 public interface AnalyticsUiHandlers extends BaseUiHandlers{
-	void getGradeCollectionJson() ;
-	/**
-	 * This method is used to set the clicked tab presenter on the slot.
-	 * @param clickedTab
-	 * @param collectionId
-	 * @param selectedCollectionTitle
-	 */
-	void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle);
+	void getPathwayItems(String classpageId,String pathwayGooruOid,String sequence,int limit,int offSet);
+	
+	void getUnitAssignments(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet);
+	
+	void getPathwayUnits(String classId,int limit, int offset ,boolean clearPanel);
+	
+	void setClickedTabPresenter(String clickedTab,String collectionId);
+	
+	void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
+	
+	void getTopStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
+	
+	void getGradeCollectionJson(String classpageId,String pathwayId);
+	
 	/**
 	 * This method is used to export the OE responses.
 	 * @param classpageId
@@ -47,18 +51,9 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	 */
 	void exportOEPathway(String classpageId,String pathwayId,String timeZone);
 	
-	/**
-	 * This method is used to get the collection progress presenter.
-	 * @return
-	 */
-	CollectionProgressPresenter getCollectionProgressPresenter();
-	/**
-	 * This method is used to get the collection summary presenter.
-	 * @return
-	 */
-	CollectionSummaryPresenter getCollectionSummaryPresenter();
+	void getUnitAssignments();
 	
-	void checkCollectionStaus(String classpageId,String collectionId);
+	void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId);
 	
-	Frame getIframe();
+	void setPersonalizeData();
 }

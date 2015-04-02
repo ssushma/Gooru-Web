@@ -27,14 +27,5 @@ package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface CollectionProgressUiHandlers extends BaseUiHandlers{
-  /**
-  * This method is used to set collection progress data.
- * @param collectionId
- * @param pathwayId
- * @param isCollectionView
- * @param collectionTitle
- */
-void setCollectionProgressData(String collectionId,String pathwayId,boolean isCollectionView,String collectionTitle);
-
-void exportCollectionProgress(String collectionId,String classpageId,String timeZone);
+  void setCollectionProgressData(String collectionId,String pathwayId,boolean isCollectionView);
 }

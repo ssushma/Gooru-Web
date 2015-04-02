@@ -27,40 +27,37 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.ListBox;
 
 
 public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
-    /**
-     * This method is used to reset data.
-     */
+	
+	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
+	
+	public void hideMoreUnitsLink();
+	
+	public void setBottomStudentsData(ArrayList<GradeJsonData> result);
+	
+	public void setTopStudentsData(ArrayList<GradeJsonData> result);
+	
+	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
+	
+	HTMLPanel getUnitPanel();
+
+	void LoadingImageLabeltrue();
+
+	void LoadingImageLabelFalse();
+	
+	void clearDownArrow();
+	
+	void hidePersonalizeContainers();
+	
+	void revealPlace(String tab,String pageNum,String  unitId,String assignmentId);
+	 
+	void removeAndAddUnitSelectedStyle();
+	
     void resetData();
-    /**
-     * This method is used to set collection title to the dropdown.
-     * @param gradeData
-     */
-    void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
-    /**
-     * This will return the collection summary panel
-     * @return
-     */
-    HTMLPanel getCollectionSummarySlot();
-    /**
-     * This will return the collection progress panel
-     * @return
-     */
-    HTMLPanel getCollectionProgressSlot();
-    /**
-     * This method is used to enable the no data message text.
-     */
-    void setNoDataText();
-    /**
-     * This method is used to reset the data.
-     */
-    void resetDataText() ;
-	Frame getFrame();
-	ListBox getLoadCollections();
+    
 }
