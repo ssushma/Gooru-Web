@@ -1691,7 +1691,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void resetCollectionPlayer(){
 		if(collectionDo!=null){
-			AppClientFactory.getEventBus().fireEvent(new UpdateViewCountInSearchEvent(collectionDo));
 			stopCollectionDataLogs();
 			getView().hidePlayerButtons(true,null);
 			AppClientFactory.getPlaceManager().setDataLogClasspageId(null);
