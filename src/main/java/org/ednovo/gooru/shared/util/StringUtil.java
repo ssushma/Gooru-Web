@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Cookies;
@@ -538,6 +539,21 @@ public class StringUtil implements ClientConstants {
 		result = htmText.replace(regex, "");
 		return result;
 	}-*/;
+	
+	/**
+	 * To remove rich text content using the following method.
+	 * 
+	 * @param htmlText
+	 * @return filteredInnerText
+	 */
+	public static String removeAllHtmlCss(String htmlText){
+		Element element=Document.get().createElement("div");
+		element.setInnerHTML(htmlText);
+		String filteredInnerText = element.getInnerText(); 
+		element.removeFromParent();
+		return filteredInnerText;
+	}
+	
 	
 	/**
 	 * 
