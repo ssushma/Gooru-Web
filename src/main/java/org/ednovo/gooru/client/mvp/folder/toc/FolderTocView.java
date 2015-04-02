@@ -844,4 +844,5 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	    return getBrowserName().toLowerCase().contains("firefox");
 	}
 	
+	
 }
