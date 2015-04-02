@@ -132,7 +132,7 @@ public enum UrlToken {
 	LIST_COLLECTION(
 			"/scollection/list?sessionToken={0}&pageSize={1}&pageSize={2}&sCollection={3}"),
 
-	TAXONOMY_COURSE("/taxonomy/course.json?sessionToken={0}"),
+	V2_TAXONOMY_COURSE("/v2/taxonomy/course?sessionToken={0}"),
 
 	USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&filterBy=collection&merge=permissions"),
 	
