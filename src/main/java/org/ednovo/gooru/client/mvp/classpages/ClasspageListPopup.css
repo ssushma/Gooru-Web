@@ -32,7 +32,7 @@
 	color: #515151;
 	font-size: 12px;
 	cursor: pointer;
-	width: 82%;
+	width: 100%;
 	background: url(images/Classpage/plus.png) 14px 9px no-repeat;
 }
 
@@ -40,7 +40,6 @@
 	background-color: #cfe3f1 !important;
 	color: #515151;
 	opacity: 1;
-	width:100%;
 }
 .classpageListTitle{
 	float: left;
@@ -171,5 +170,4 @@
 	padding: 6px;
 	font-family: Tahoma, sans-serif !important;
 	text-transform: uppercase;
-	
 }
