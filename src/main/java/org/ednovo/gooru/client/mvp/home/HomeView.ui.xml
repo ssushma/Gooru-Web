@@ -1125,23 +1125,23 @@
 							<ul class="list-unstyled list-inline">
 								<li>
 									<a href="https://www.facebook.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/facebook-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageFacebookIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://www.twitter.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/twitter-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageTwitterIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://www.youtube.com/gooru" target="_blank">
-										<img class="" src="images/landing-page/youtube-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageYoutubeIco" ></div>
 									</a>
 								</li>
 								<li>
 									<a href="https://plus.google.com/105874563188592272186/posts"
 										target="_blank">
-										<img class="" src="images/landing-page/google-plus-ico.png"></img>
+										<div class="spriteLandingPage spriteLandingPageGooglePlusIco" ></div>
 									</a>
 								</li>
 
