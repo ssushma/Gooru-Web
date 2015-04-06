@@ -279,6 +279,7 @@ public interface AssignPopUpCBundle extends ClientBundle{
 
 		String marginTop();
 		String privacyText();
+		String errorLabelUnit();
 	}
 
 	@Source("AssignPopUp.css")

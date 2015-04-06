@@ -96,7 +96,10 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 
 			@Override
 			public void onSuccess(ClasspageListDo result) {
+				if(shareType != null)
+				{
 				getView().setPrivateLableVisibility(shareType.equalsIgnoreCase("private") ? true : false);
+				}
 				getView().setClasspageData(result);
 			}
 		});
