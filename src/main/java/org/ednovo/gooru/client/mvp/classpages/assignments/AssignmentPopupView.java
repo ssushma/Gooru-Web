@@ -181,11 +181,6 @@ public abstract class AssignmentPopupView extends Composite{
 		dateValidationUc.getElement().setId("errlblDateValidationUc");
 		
 		addResourceBtnPanel.getElement().setId("pnlAddResource");
-		//Dont enable this.
-//		Window.enableScrolling(false);
-//        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
-
-		
 		clearFields();
 	}
 
@@ -204,8 +199,6 @@ public abstract class AssignmentPopupView extends Composite{
 
 		boolean isValid = true;
 		if (dueDate == null || (dueDate != null && dueDate.isEmpty())) {
-		//dateBoxUc.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateBoxError());
-			//dateBoxUc.getDateBox().addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateError());
 			dateValidationUc.setText("");
 			assignmentDueDateLabel.getElement().setAttribute("alt","");
 			assignmentDueDateLabel.getElement().setAttribute("title","");
@@ -267,7 +260,6 @@ public abstract class AssignmentPopupView extends Composite{
 						.getText().isEmpty())
 						&& dateBoxUc.hasValidateDate()) {
 				Date date = dateBoxUc.getValue();
-				
 				} else {
 					dateBoxUc.getDatePickerUc().hide();
 				}
@@ -355,15 +347,6 @@ public abstract class AssignmentPopupView extends Composite{
 					mandatoryDueDateLabel.setVisible(true);
 				}
 			}
-//			if (!isFormFilled || dueDate == null || dueDate.equalsIgnoreCase("")){
-//				
-
-//			}
-//			if (directions == null || directions.equalsIgnoreCase("")) {
-//				mandatoryDirectionLabel.setText(MANDATORY_DIRECTIONS);
-//				mandatoryDirectionLabel.setVisible(true);
-//				isFormFilled = false;
-//			} else 
 			if (directions.length() > 400) {
 				mandatoryDirectionLabel.setText(CHARACTERS_LIMIT);
 				mandatoryDirectionLabel.setVisible(true);
@@ -371,16 +354,6 @@ public abstract class AssignmentPopupView extends Composite{
 			}
 
 			if (isFormFilled) {
-
-				// //noAssignmentsMessagePanel.setVisible(false);
-//				CollectionDo collectionDo = new CollectionDo();
-//				collectionDo.setTitle(title);
-//				collectionDo.setDescription(directions);
-//				collectionDo.setCollectionType("assignment");
-//				collectionDo.setGooruOid(getClasspageId());
-//				collectionDo.setTaxonomySet(null);
-//				collectionDo.setTrackActivity(null);
-				
 				AssignmentDo assignmentDo = new AssignmentDo();
 				if (dueDate!=null && !dueDate.equalsIgnoreCase("")){
 					assignmentDo.setPlannedEndDate(dueDate);
@@ -412,22 +385,6 @@ public abstract class AssignmentPopupView extends Composite{
 		}
 	}
 
-	// private class DueDateCalender implements ClickHandler {
-	//
-	// @Override
-	// public void onClick(ClickEvent event) {
-	// mandatoryDueDateLabel.setVisible(false);
-	//
-	// }
-	// }
-	//
-	// private class DueDateKeyUpHandler implements KeyUpHandler {
-	//
-	// public void onKeyUp(KeyUpEvent event) {
-	// mandatoryDueDateLabel.setVisible(false);
-	// }
-	// }
-	
 	
 	/**
 	 * 
@@ -510,9 +467,6 @@ public abstract class AssignmentPopupView extends Composite{
 		mandatoryDirectionLabel.setVisible(false);
 		mandatoryDueDateLabel.setVisible(false);
 		mandatoryTitleLabel.setVisible(false);
-
-		// mandatoryTitleLabel.getElement().setAttribute("style",
-		// "display:none");
 
 		assignmentDirectionsTxtArea.setText("");
 		assignmentTitleTxt.setText("");

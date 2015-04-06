@@ -69,33 +69,12 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
 	
 	@Override
 	protected void onBind() {
-		
-//		setMembersActiveAsyncCallback(new SimpleAsyncCallback<StudentsAssociatedListDo>() {
-//
-//			@Override
-//			public void onSuccess(StudentsAssociatedListDo result) {
-//				//Display all members in active list.
-//				getView().displayActiveMembersList(result.getSearchResults(), false, result.getTotalHitCount());
-//			}
-//		});
-		
-//		setCollabAsyncCallback(new SimpleAsyncCallback<StudentsAssociatedListDo>() {
-//
-//			@Override
-//			public void onSuccess(StudentsAssociatedListDo result) {
-//				//Display all members in pending list.
-//				getView().displayPendingMembersList(result.getSearchResults(), false, result.getTotalHitCount());
-//			}
-//		});
-		
 		setAddMembersAsyncCallback(new SimpleAsyncCallback<ArrayList<CollaboratorsDo>>() {
-
 			@Override
 			public void onSuccess(ArrayList<CollaboratorsDo> result) {
 				getView().displayInvitationSuccessPopUp(result.size());
@@ -108,7 +87,6 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 					getView().getInviteButton().setVisible(true);
 				}else{
 					//Display pending members list.
-				//	getView().displayPendingMembersList(result, true, result.size(),false,true);
 					getView().displayPendingMembersList(result, true, result.size(),false,false);
 				}
 			}
@@ -117,10 +95,8 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	@Override
 	public void updateClassPageInfo(String classPageId,String collectionType, String title, String shareType){
 		AppClientFactory.getInjector().getClasspageService().v2UpdateClassPageByid(classPageId,collectionType, title, shareType, new SimpleAsyncCallback<CollectionDo>() {
-
 			@Override
 			public void onSuccess(CollectionDo result) {
-			
 			}
 		});
 		

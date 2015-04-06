@@ -779,7 +779,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					}
 					catch(Exception ex)
 					{
-						
+						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				       if(AppClientFactory.isAnonymous()){
 				    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
@@ -916,7 +916,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			pageNumber=Integer.parseInt(pageNum);
 			pageNumber=pageNumber==0?1:pageNumber;
 		}catch(NumberFormatException e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		int totalPages = (this.totalHitCount / 5)
 				+ ((this.totalHitCount % 5) > 0 ? 1 : 0);
@@ -2007,7 +2007,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							}
 							catch(Exception ex)
 							{
-								
+								AppClientFactory.printSevereLogger(ex.getMessage());
 							}
 						       if(AppClientFactory.isAnonymous()){
 						    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
@@ -2051,7 +2051,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		return mainContainerStatus;		
 	}

@@ -50,7 +50,7 @@ import com.google.gwt.core.shared.GWT;
 @ServiceURL("/homeService")
 public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 	
-private static  Logger looger =LoggerFactory.getLogger(HomeServiceImpl.class);
+private static  Logger logger =LoggerFactory.getLogger(HomeServiceImpl.class);
 
 	@Autowired
 	FeaturedContentDeSerializer featuredContentDeSerializer;
@@ -92,7 +92,7 @@ private static  Logger looger =LoggerFactory.getLogger(HomeServiceImpl.class);
 				GWT.log("jsonResp:>>"+jsonRep.toString());
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
 			} catch (JSONException e) {
-				looger.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new CollectionDo();

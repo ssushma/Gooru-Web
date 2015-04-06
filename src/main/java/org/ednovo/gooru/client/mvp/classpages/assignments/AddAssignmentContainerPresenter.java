@@ -197,13 +197,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
 				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
 					getView().hideAddCollectionPopup("");
-				//	AppClientFactory.fireEvent(new ResetProgressEvent());
-/*					for(int i=0;i<classpageItemDoList.size();i++){
-						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
-						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
-					}*/
 					showCollectionsAfterAddingNewCollections();
-					
 				}
 			}
 		});
@@ -305,6 +299,5 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	public void setEditClasspagePresenter(EditClasspagePresenter editClasspagePresenter) {
 		this.editClasspagePresenter = editClasspagePresenter;
 	}
-	
 	
 }

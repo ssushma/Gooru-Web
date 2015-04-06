@@ -220,11 +220,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			logger.error("search call ::::::"+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return searchDo;
 		}catch(Exception e){
-			logger.error("search call 1 ::::::"+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return searchDOEmpty;
 	}
@@ -269,6 +269,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
 		return searchDo;
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		return searchDOEmpty;
 	}
@@ -390,7 +391,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("Exception::", e);
 		}
 		
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -431,7 +432,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("Exception::", e);
 		}
 		
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -508,6 +509,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo);
 			return searchDo;
 			}catch(Exception e){
+				logger.error("Exception::", e);
 			}
 			return searchDOEmpty;
 		}
@@ -589,10 +591,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("Exception::", e);
 		}
 		return searchDo;
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		return searchDOEmpty;
 	
@@ -617,7 +620,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -642,7 +645,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -667,7 +670,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -691,7 +694,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -731,7 +734,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			searchResourcesTagsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SearchResourcesTagsDo.class);
 		}
 		catch(JSONException ex){
-			
+			logger.error("Exception::", ex);
 		}
 		return searchResourcesTagsDo;
 	}
@@ -749,7 +752,9 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		try{
 			centurySkilsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CenturySkilsDo.class);
-		}catch(JSONException ex){}
+		}catch(JSONException ex){
+			logger.error("Exception::", ex);
+		}
 		return centurySkilsDo;
 	}
 

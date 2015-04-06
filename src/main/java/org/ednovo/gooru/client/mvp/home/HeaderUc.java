@@ -181,6 +181,7 @@ public class HeaderUc extends Composite implements
 					doc.getElementById("goToClasicInnerPanel").getStyle()
 							.clearZIndex();
 				} catch (Exception ex) {
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 			} else {
 				try {
@@ -189,6 +190,7 @@ public class HeaderUc extends Composite implements
 					doc.getElementById("goToClasicInnerPanel").getStyle()
 							.setZIndex(value);
 				} catch (Exception e) {
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			}
 		}
@@ -758,7 +760,7 @@ public class HeaderUc extends Composite implements
 						}
 					});
 		} catch (RequestException e) {
-
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 
@@ -847,6 +849,7 @@ public class HeaderUc extends Composite implements
 					Document.get().getElementById("LinkheaderElement" + i)
 							.addClassName(HomeCBundle.INSTANCE.css().menu());
 				} catch (Exception e) {
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 
 			} else {
@@ -1584,6 +1587,7 @@ public class HeaderUc extends Composite implements
 				addedAccounts = true;
 			}
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 

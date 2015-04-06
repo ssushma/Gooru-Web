@@ -387,7 +387,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 					}
 					catch(Exception ex)
 					{
-						
+						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				
 				} else {
