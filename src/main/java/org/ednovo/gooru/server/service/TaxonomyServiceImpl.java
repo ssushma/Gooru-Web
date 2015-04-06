@@ -46,20 +46,9 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 	 */
 	private static final long serialVersionUID = 6947235468580822129L;
 	
-//	private static final String DEFAULT = "default"; 
-	
 	@Autowired
 	private TaxonomyDeSerializer taxonomyDeSerializer;
 	
-	/*@Override
-	public LibraryCodeDo getTaxonomyTree(int depthLimit, String parentCodeId) {
-		if (parentCodeId == null) {
-			parentCodeId = DEFAULT;
-		}
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_TREE, parentCodeId, getLoggedInSessionToken());
-		JsonRepresentation jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		return taxonomyDeSerializer.getTree(depthLimit, jsonRep);
-	}*/
 
 	@Override
 	public List<LibraryCodeDo> getCourse() {
