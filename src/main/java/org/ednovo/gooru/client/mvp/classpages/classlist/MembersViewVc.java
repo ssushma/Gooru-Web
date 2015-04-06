@@ -75,8 +75,6 @@ public abstract class MembersViewVc extends Composite {
 	
 	@UiField HTMLPanel panelCollaboratorsListContainer;
 	
-//	@UiField Button btnRemoveFromList;
-	
 	@UiField Button btnRemove; // Remove other collaborators from list.
 	
 	@UiField Label lblUserName, lblEmailId;
@@ -96,7 +94,6 @@ public abstract class MembersViewVc extends Composite {
 		this.position = k;
 		
 		panelMembers.addMouseOverHandler(new MouseOverHandler() {
-			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				btnRemove.setVisible(true);

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.analytics.ChartMetaDataOptions;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.moxieapps.gwt.highcharts.client.Chart;
@@ -63,6 +64,7 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		        	minimumScore[i]=miniscoreVal;
 			    	averageScore[i]= miniscoreVal-(miniscoreVal/2);	
 		    		}catch(Exception ex){
+		    			AppClientFactory.printSevereLogger(ex.getMessage());
 		    		}
 		    	}else{
 		    		minimumScore[i]=0;

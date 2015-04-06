@@ -82,7 +82,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			logger.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return new ArrayList<String>();
 	}
@@ -153,7 +153,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			logger.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return new ArrayList<CollaboratorsDo>();
 	}
@@ -186,7 +186,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 				});
 			}
 		} catch (JSONException e) {
-			logger.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return new HashMap<String, ArrayList<CollaboratorsDo>>();
 	}

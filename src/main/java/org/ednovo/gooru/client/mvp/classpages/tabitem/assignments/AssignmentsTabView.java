@@ -204,11 +204,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		btnAddCollectionToAssign
 				.addClickHandler(new OnClickAddCollectionToAssignment());
 
-		//addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
-		//addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		asignmentTiltleContainer.addMouseOutHandler(new ActionPanelOut());
 		asignmentTiltleContainer.addMouseOverHandler(new ActionPanelHover());
-		// addDomHandler(new ActionPanelClick(), ClickEvent.getType());
 
 		clickEventPanel.addClickHandler(new ActionPanelClick());
 		clickToExpandLabel.addClickHandler(new ActionPanelClick());
@@ -395,7 +392,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	// To hide and show controls (parms visibility)
 	private void hideShowControls(boolean visibility) {
 		assignmentTitleTxt.setVisible(visibility);
-		// assignmentDueDateTxt.setVisible(visibility);
 		dateBoxUc.setVisible(visibility);
 		assignmentDescriptionTxtArea.setVisible(visibility);
 		assignmentTitleTxtPanel.setVisible(visibility);
@@ -431,7 +427,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
         	assignmentTitleTxt.getElement().setAttribute("alt",assignmentTitelLbl.getText().trim());
 			assignmentTitleTxt.getElement().setAttribute("title",assignmentTitelLbl.getText().trim());
         }
-		//assignmentTitleTxt.setText(taskTitle.trim());
 		
 		dueDateLbl.setText(dueDate);
 		dueDateLbl.getElement().setAttribute("alt",dueDate);
@@ -479,8 +474,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 						String assignmentId = assignmentsSearchDo.getTask()
 								.getGooruOid();
 
-						// String collectionId = addCollections.copyPopupListBox
-						// .getValue(selectedIndex);
 						String collectionId = addCollections.collectionFirstElement
 								.getElement().getId();
 						TaskResourceAssocDo taskResourceAssocDo = new TaskResourceAssocDo();
@@ -560,8 +553,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 				count++;
 				addCollections.addLabel.setVisible(true);
 				addCollections.btnCancel.setVisible(true);
-	//			addCollections.addLabel.getElement().getStyle().setVisibility(Visibility.VISIBLE);
-	//			addCollections.btnCancel.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				addCollections.loadingPanel.setVisible(false);
 				addCollections.nocollectionMsgLabel.setVisible(false);
 				int collectionItemDoSize = collection.getCollectionItems().size();
@@ -634,19 +625,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 					}
 				});
-
-		// Set current collection as selected
-		// for (int i = 0; i < result.size(); i++) {
-		//
-		// if (addCollections.copyPopupListBox.getValue(i).equalsIgnoreCase(
-		// collectionItemDo.getCollection().getGooruOid())) {
-		//
-		// addCollections.copyPopupListBox.setItemSelected(i, true);
-		// collId = collectionItemDo.getCollection().getGooruOid();
-		// break;
-		//
-		// }
-		// }
 	}
 
 	@UiHandler("btnEditAssignment")
@@ -656,7 +634,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			btnEditAssignment.setText(i18n.GL0240());
 			btnEditAssignment.getElement().setAttribute("alt",i18n.GL0240());
 			btnEditAssignment.getElement().setAttribute("title",i18n.GL0240());
-//			btnEditAssignment.setStyleName("myCollectionUpdateText");
 
 			cancelLabel.setVisible(true);
 			deleteLabel.setVisible(false);
@@ -688,11 +665,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 					isFormFilled = false;
 				}
 			}
-//			if (directions == null || directions.equalsIgnoreCase("")) {
-//				mandatoryDirectionLabel.setText(MANDATORY_DIRECTIONS);
-//				mandatoryDirectionLabel.setVisible(true);
-//				isFormFilled = false;
-//			} else 
 			if (directions.length() > 400) {
 				mandatoryDirectionLabel.setText(CHARACTERS_LIMIT);
 				mandatoryDirectionLabel.setVisible(true);
@@ -705,7 +677,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 				btnEditAssignment.setText(i18n.GL0140());
 				btnEditAssignment.getElement().setAttribute("alt",i18n.GL0140());
 				btnEditAssignment.getElement().setAttribute("title",i18n.GL0140());
-//				btnEditAssignment.setStyleName("myCollectionEditText");
 
 				AssignmentDo assignmentDo = new AssignmentDo();
 				if (dueDate!=null && !dueDate.equalsIgnoreCase("")){
@@ -714,10 +685,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 				TaskDo taskDo = new TaskDo();
 				taskDo.setTitle(assignmentTitleTxt.getText().trim());
-//				if (directions!=null && !directions.trim().equalsIgnoreCase("")){
 					taskDo.setDescription(assignmentDescriptionTxtArea.getText()
 							.trim());
-//				}
 				taskDo.setStatus("open");
 
 			    assignmentDo.setTask(taskDo);
@@ -758,7 +727,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		btnEditAssignment.setText(i18n.GL0140());
 		btnEditAssignment.getElement().setAttribute("alt",i18n.GL0140());
 		btnEditAssignment.getElement().setAttribute("title",i18n.GL0140());
-//		btnEditAssignment.setStyleName("myCollectionEditText");
 		cancelLabel.setVisible(false);
 		deleteLabel.setVisible(true);
 		hideShowControls(false);
@@ -802,7 +770,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			if (!isInEditMode && !isExpandable) {
-				// actionPanel.setVisible(true);
 				clickToExpandLabel.setVisible(true);
 			} else if (!isInEditMode && isExpandable) {
 				actionPanel.setVisible(true);
@@ -819,7 +786,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!isInEditMode && !isExpandable) {
-				// actionPanel.setVisible(false);
 				clickToExpandLabel.setVisible(false);
 			} else if (!isInEditMode && isExpandable) {
 				actionPanel.setVisible(false);
@@ -949,11 +915,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		if(addCollections !=null){
 			addCollections.hide();
 		}
-//		if(cv !=null){
-//			cv.hideWaitPopup();
-//		}
-		
-		
 	}
 	GetStudentJoinListHandler getStudentJoinListHandler = new GetStudentJoinListHandler(){
 			

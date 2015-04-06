@@ -64,8 +64,6 @@ public class AssignmentsView extends
 	@UiField(provided = true)
 	AssignmentsViewCBundle res;
 	
-	/*AddCollectionsPopupVc addCollections=null;*/
-
 	List<Integer> collectionItems;
 	
 	private String collId;
@@ -271,21 +269,4 @@ public class AssignmentsView extends
 		throw new RuntimeException("Not implemented");
 	}
 
-
-
-	/*@Override
-	public void setData() {
-		throw new RuntimeException("Not implemented");
-	}
-
-	@Override
-	public void showPanel(boolean visible) {
-		assignmentContainerPanel.setVisible(visible);
-		noAssignmentContainerPanel.setVisible(!visible);
-	}
-
-	@Override
-	public void disableAddNewCollection() {
-		addCollectionToAssignLbl.setVisible(false);
-	}	*/
 }
