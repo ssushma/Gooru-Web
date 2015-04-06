@@ -49,6 +49,8 @@ public class LogoutPanelVc extends Composite{
 
 	@UiField
 	Anchor logoutAnr, anrSettings, gooruTutorialsAnr;
+
+	
 	
 	@UiField
 	Anchor feedbackAnr;
