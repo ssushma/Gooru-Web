@@ -87,7 +87,7 @@ public abstract class GwtAbstractServiceImpl extends RemoteServiceServlet implem
 			}
 			catch (InterruptedException e)
 			{
-				// Ignore
+				logger.error("InterruptedException::", e);
 			}
 		}
 		super.onBeforeRequestDeserialized(serializedRequest);

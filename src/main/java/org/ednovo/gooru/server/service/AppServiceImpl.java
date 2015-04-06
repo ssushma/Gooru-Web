@@ -56,7 +56,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	/**
 	 * 
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(AppServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
 	
 	private static final long serialVersionUID = -6736852011457993775L;
 	
@@ -137,7 +137,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				return user;
 			}
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
+			logger.error("Exception::", e);
 			throw new GwtException(e.getMessage());
 		}
 		throw new GwtException(content);
