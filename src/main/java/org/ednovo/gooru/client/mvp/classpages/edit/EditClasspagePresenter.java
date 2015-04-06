@@ -102,8 +102,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
 	
-//	private ShelfListPresenter shelfListPresenter;
-	
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionDo> updateAssignmentAsyncCallback;
@@ -139,14 +137,11 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
-	//ShelfListPresenter shelfTabPresenter
 	@Inject
 	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,AnalyticsPresenter analyticsPresenter) {
 		super(view, proxy);
 		
 		getView().setUiHandlers(this);
-		
-//		this.shelfListPresenter = shelfTabPresenter;
 		this.assignmentContainer = assignmentContainer;
 		this.imageUploadPresenter=imageUploadPresenter;		
 		this.classlistPresenter=classlistPresenter;
@@ -217,7 +212,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						error.show();
 					}
 				}catch(Exception e){
-					
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			}
 		});
@@ -253,14 +248,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		});
 		
 	}
-	/*@Override
-	private void generateShareLink(String classpageId){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
-		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
-	}*/
-	
-
 	@Override
 	public void generateShareLink(String classpageId) {
 		try{
@@ -268,13 +255,12 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
 			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
 	@Override
 	protected void onReset() {
-//		setInSlot(TYPE_SHELF_TAB, shelfListPresenter);
 		Window.enableScrolling(true);
 		Window.scrollTo(0, 0);
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
@@ -385,14 +371,10 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
-//		if (AppClientFactory.getPlaceManager().refreshPlace()) {
-//			getView().resetEditClasspageView();
-//		}
 		this.classpageId=getPlaceManager().getRequestParameter("classpageid");
 		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetEditClasspageView();
 		}
-	//	classpageDo = null;
 		getClasspage();
 	}
 	/**
@@ -606,9 +588,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		String pos = getPlaceManager().getRequestParameter("pos");
 		getView().setClasspageId(classpageId);
 		getView().getClasspageById(classpageId, pageSize, pageNum, pos);
-//		getView().getAssignemntsByClasspageId(classpageId, pageSize, pageNum);
-//		getAssignmentsByClasspageById(classpageId, pageSize, pageNum);
-//		generateShareLink(classpageId);
 	}
 
 	@Override
@@ -623,7 +602,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void insertAssignment(CollectionItemDo collectionItemDo) {	
 		
-//		getView().setAssignmentData(collectionItemDo,false);
 	}
 	
 	// @description to get all Assignments of a particular classpages
@@ -742,7 +720,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
 					getView().displayAssignmentPath(classpageItemsList);
-					//getClasspage();
 				}
 			}
 		});

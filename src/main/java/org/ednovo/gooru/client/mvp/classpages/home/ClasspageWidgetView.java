@@ -65,8 +65,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ClasspageWidgetView extends Composite {
 
-/*	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5;*/
-	
 	@UiField Image classImage,imgUserProfile;
 	
 	@UiField HTMLPanel classTitle,assignmentsCount,ownerName,assignmentsCounter;
@@ -101,9 +99,6 @@ public class ClasspageWidgetView extends Composite {
 		assignmentsCount.getElement().setId("pnlAssignmentsCount");
 	}
 
-/*	public InlineLabel getRatingCountLabel(){
-		return ratingCountLabel;
-	}*/
 	/**
 	 * 
 	 * @function setClassPageImage 
@@ -225,9 +220,5 @@ public class ClasspageWidgetView extends Composite {
 				
 			}
 		});
-		
-		
-		
-		
 	}
 }

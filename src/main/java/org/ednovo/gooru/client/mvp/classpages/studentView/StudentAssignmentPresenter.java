@@ -131,11 +131,6 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
-//		if (!AppClientFactory.isAnonymous()){
-//			getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.INLINE);
-//			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
-//		}
-		
 		if(AppClientFactory.getPlaceManager().getRequestParameter("b") != null){
 			if (AppClientFactory.getPlaceManager().getRequestParameter("b").equalsIgnoreCase("true")){
 				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.INLINE);
@@ -164,7 +159,6 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			initParam();
 		}
-		//getClasspage();
 	}
 	private void initParam() {
 		getView().clearAll();
@@ -282,7 +276,9 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			if(pageNumber==0){
 				pageNumber=1;
 			}
-		}catch(Exception e){}
+		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
+		}
 		
 		return (((pageNumber-1)*DEFAULT_LIMITVALUE));
 	}
