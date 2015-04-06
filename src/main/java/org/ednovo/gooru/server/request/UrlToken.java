@@ -222,7 +222,7 @@ public enum UrlToken {
 	
 	V2_CREATE_USER("/v2/user?sessionToken={0}"),
 	
-	V2_SIGNIN("/v2/account/login?apiKey={0}"),
+	V2_SIGNIN("/v2/account/login?"),
 	
 	V2_SIGNOUT("/v2/account/logout?sessionToken={0}"),
 	
