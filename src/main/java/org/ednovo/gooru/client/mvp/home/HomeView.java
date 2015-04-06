@@ -794,7 +794,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		try{
 			scrollTop = Document.get().getElementById("getStarted").getAbsoluteTop();
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		
 		Window.scrollTo(0, scrollTop-40);

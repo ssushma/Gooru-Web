@@ -76,8 +76,12 @@ public enum UrlToken {
 					
 	V2_GET_COLLECTIONForStandards("/v2/collection/{0}?sessionToken={1}&rootNodeId={2}&skipCollectionItem={3}&includeMetaInfo=true&merge=permissions"),
 					
-	TAXONOMY_COURSE("/taxonomy/course.json?sessionToken={0}"),
-	
+	GET_TREE("/taxonomy/{0}/tree.json?sessionToken={1}"),
+
+	LIST_COLLECTION("/scollection/list?sessionToken={0}&pageSize={1}&pageSize={2}&sCollection={3}"),
+
+	V2_TAXONOMY_COURSE("/v2/taxonomy/course?sessionToken={0}"),
+
 	USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&filterBy=collection&merge=permissions"),
 
 	SHARABLE_USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&sharing=public,anyonewithlink&filterBy=collection&merge=permissions"),
@@ -218,7 +222,7 @@ public enum UrlToken {
 	
 	V2_CREATE_USER("/v2/user?sessionToken={0}"),
 	
-	V2_SIGNIN("/v2/account/login?apiKey={0}"),
+	V2_SIGNIN("/v2/account/login?"),
 	
 	V2_SIGNOUT("/v2/account/logout?sessionToken={0}"),
 	

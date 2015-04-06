@@ -69,9 +69,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ThanksPopupUc extends PopupPanel{
  
-	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo; //lblDiscover,lblOrganize,lblTeach
+	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo; 
 	
-	@UiField Button btnStartUsingGooru, btnStartCreatingStudent;//btnDiscover, btnOrganize, btnTeach,
+	@UiField Button btnStartUsingGooru, btnStartCreatingStudent;
 	
 	@UiField HTML htmlSupport;
 	
@@ -103,31 +103,15 @@ public class ThanksPopupUc extends PopupPanel{
 	public ThanksPopupUc(){
 		super(false);
 		this.setGlassEnabled(true);
-		
         this.res = SignUpCBundle.INSTANCE;
         res.css().ensureInjected();
         add(binder.createAndBindUi(this));
-        
-
-        
         account = AppClientFactory.getPlaceManager().getRequestParameter("account") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("account") : "regular";
-//        parentEmailId = AppClientFactory.getPlaceManager().getRequestParameter("parentEmailId") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("parentEmailId") : null;
         dob = AppClientFactory.getPlaceManager().getRequestParameter("dob") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("dob").replaceAll("D", "/") : null;
         userName = AppClientFactory.getPlaceManager().getRequestParameter("userName") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("userName") : null;
         privateGooruUId = AppClientFactory.getPlaceManager().getRequestParameter("privateGooruUId") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("privateGooruUId") : null;
-//        if (account.equalsIgnoreCase("parent")){
-        //	this.getElement().getStyle().setHeight(450, Unit.PX);
-        //	panelPopupInner.getElement().getStyle().setHeight(360, Unit.PX);
-//        }else{
-//        	this.getElement().getStyle().clearHeight();
-//        	panelPopupInner.getElement().getStyle().clearHeight();
-//        }
-
-     
         setTextAndIds();
-        
         setHandlers();
-        
 		this.center();
 	}
 
@@ -152,16 +136,8 @@ public class ThanksPopupUc extends PopupPanel{
 	 *
 	 */
 	private void setHandlers(){
-
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		
-//		this.setStyleName(res.css().thanksPopup());
-		/*this.removeStyleName("gwt-PopupPanel");*/
-	/*	this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
-	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());*/
-		
-	
 	}
 	
 	public void setAccountType(String type){
@@ -286,19 +262,7 @@ public class ThanksPopupUc extends PopupPanel{
 		}
 		hide();
 	}
-//	@UiHandler("btnDiscover")
-//	public void clickOnDiscoverBtn(ClickEvent event){
-//		
-//	}
-//	@UiHandler("btnOrganize")
-//	public void clickOnOrganizeBtn(ClickEvent event){
-//		
-//	}
-//	@UiHandler("btnTeach")
-//	public void clickOnTeachBtn(ClickEvent event){
-//		
-//	}
-	
+
 	@UiHandler("btnStartCreatingStudent")
 	public void clickOnStartCreatingStudent(ClickEvent event){
 		hide();
@@ -326,12 +290,9 @@ public class ThanksPopupUc extends PopupPanel{
 	private void startCreatingStudent(){
 		String externalId = AppClientFactory.getLoggedInUser().getExternalId();
 		String email = AppClientFactory.getLoggedInUser().getEmailId();
-		
 		parentEmailId = externalId != null ? externalId : email != null ? email : null;
 		privateGooruUId = AppClientFactory.getLoggedInUser().getGooruUId();
-		
 		AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
-
 			@Override
 			public void onSuccess(UserDo userDo) {
 				AppClientFactory.setLoggedInUser(userDo);

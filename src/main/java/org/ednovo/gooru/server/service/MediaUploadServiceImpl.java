@@ -65,6 +65,8 @@ import org.restlet.ext.html.FormDataSet;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -82,6 +84,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		 
 	private static final long serialVersionUID = -8673556966040594979L;
 	private static final String ADDED = "added";
+	private static final Logger logger = LoggerFactory.getLogger(MediaUploadServiceImpl.class);
 
 	@Override
 	public MediaUploadDo imageWebUpload(String imageURL) {
@@ -104,13 +107,13 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			try {
 				responseText = fileUploadImage(jsonObj.toString(), url);
 			} catch (Exception e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 			
 			try {
 				mediaUploadDo = JsonDeserializer.deserialize(responseText, MediaUploadDo.class);
 			} catch (Exception e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		return mediaUploadDo;
 
@@ -129,7 +132,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		try {
 			filePath = jsonRep.getText(); 
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return filePath;
 	}
@@ -154,7 +157,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}catch(Exception e){
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return deserializeCollectionItem(jsonRep);
 	}
@@ -165,7 +168,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new CollectionItemDo();
@@ -185,7 +188,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 		catch(Exception ex)
 		{
-			getLogger().error(ex.getMessage());
+			logger.error("Exception::", ex);
 		}
 		
 		if (imageUrl == null) {
@@ -205,7 +208,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				JSONArray responseJson = new JSONArray(response);
 				mediaUploadDo = JsonDeserializer.deserialize(responseJson.get(0).toString(), MediaUploadDo.class);
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return mediaUploadDo;
@@ -252,7 +255,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArrayHints[i],null));
 				jArrHints.put(jsonObjVal);
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		
 		 }
@@ -269,7 +272,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray[i],null));
 				jArr.put(jsonObjVal);
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		
 		 }
@@ -304,7 +307,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			  //mainQTempObj.put("mediaFileName", fileName);
 			
 		} catch (JSONException e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 
 		  
@@ -330,7 +333,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return null;

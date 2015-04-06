@@ -12,6 +12,9 @@
 				<g:Anchor styleName="{res.css.logoutText}" ui:field="classicGooruAnr"></g:Anchor>            
 	       		<g:HTMLPanel styleName="{res.css.userMenuBottomLine}" />
 			</uc:LiPanel>
+			<uc:LiPanel>
+					<g:Anchor styleName="{res.css.logoutText}" ui:field="gooruTutorialsAnr" target="_blank"></g:Anchor>            
+	        </uc:LiPanel>
 	        <uc:LiPanel>
 					<g:Anchor styleName="{res.css.logoutText}" ui:field="supportAnr" target="_blank"></g:Anchor>            
 	        </uc:LiPanel>

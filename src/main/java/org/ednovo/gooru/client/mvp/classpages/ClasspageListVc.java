@@ -94,24 +94,14 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	@UiField
 	Label lblTitle;
-//	@UiField
-//	HTMLPanel  htmlPanelNoClasspageContainer;
-//	@UiField
-//	VerticalPanel htmlPanelClasspageList;
 	@UiField
 	Anchor ancNewClasspage;
 
 	@UiField
 	Button enterLbl;
 
-	/*@UiField
-	InlineLabel inLineLblCheckOut;*/// , inLineLblGooruGuide, inLineLblCreateOne;
-
 	@UiField
 	TextBoxWithPlaceholder classCodeTxtBox;
-
-/*	@UiField
-	ScrollPanel spanelCollectionList;*/
 
 	ClasspageListDo classpageListDo = null;
 
@@ -133,8 +123,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	private static ClasspageListVcUiBinder uiBinder = GWT.create(ClasspageListVcUiBinder.class);
 	interface ClasspageListVcUiBinder extends UiBinder<Widget, ClasspageListVc> {
 	}
-	
-	
 
 	@UiField(provided = true)
 	ClasspageListPopupViewCBundle res;
@@ -169,7 +157,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			public void refreshClasspage() {
 				toClear = true;
 				offSet = 0;
-//				getAllClasspages(String.valueOf(offSet), false, null);
 			}
 		};
 
@@ -178,7 +165,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			@Override
 			public void updateClasspageTitle(String classpageId,
 					String classpageTitle) {
-//				updateTitle(classpageId, classpageTitle);
 			}
 		};
 
@@ -189,28 +175,8 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		AppClientFactory.getEventBus().addHandler(
 				UpdateClasspageTitleEvent.TYPE, updateTitleHandler);
 
-	/*	spanelCollectionList.addScrollHandler(new ScrollHandler() {
-
-			@Override
-			public void onScroll(ScrollEvent event) {
-				if (spanelCollectionList.getVerticalScrollPosition() == spanelCollectionList
-						.getMaximumVerticalScrollPosition()
-						&& !isApiCalling
-						&& resultSize >= limit) {
-					tmpOffSet = offSet;
-					offSet += limit;
-					htmlPanelClasspageList.add(createClasspageTitleLabel(
-							"Loading...", "lblLoading", true));
-					isApiCalling = true;
-//					getAllClasspages(String.valueOf(offSet), false, null);
-				}
-			}
-		});*/
 		setLabels();
-//		showLoading();
 		toClear = true;
-//		getAllClasspages(String.valueOf(offSet), isClasspageRefreshed,
-//				deletedClasspageId);
 	}
 
 	/**
@@ -235,44 +201,12 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 */
 
 	private void updateTitle(String classpageId, String classpageTitle) {
-	/*	Iterator<Widget> widgets = htmlPanelClasspageList.iterator();
-		while (widgets.hasNext()) {
-			Widget widget = widgets.next();
-			if (widget.getElement().getId().equalsIgnoreCase(classpageId)) {
-				widget.getElement().setInnerHTML(createTitle(classpageTitle, null));
-			}
-		}*/
-
 		// Update the ClasspageObject inside classpageList object.
 
 		CollectionDo classpageDo = classpageList.get(classpageId);
 		classpageDo.setTitle(classpageTitle);
 		classpageList.put(classpageId, classpageDo);
 
-	}
-
-	/**
-	 * 
-	 * @function showDefualts
-	 * 
-	 * @created_date : Aug 14, 2013
-	 * 
-	 * @description This method to show Loading content by default and hide
-	 *              Content Container.
-	 * 
-	 * @parm(s) :
-	 * 
-	 * @return : void
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	private void showLoading() {
-	//	lblLoading.setVisible(true);
-	//	htmlPanelNoClasspageContainer.setVisible(false);
-	//	spanelCollectionList.setVisible(false);
 	}
 
 	/**
@@ -295,9 +229,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void showClasspageList() {
-	//	lblLoading.setVisible(false);
-	//	htmlPanelNoClasspageContainer.setVisible(false);
-	//	spanelCollectionList.setVisible(true);
 	}
 
 	/**
@@ -320,10 +251,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void showNoClasspages() {
-	/*//	lblLoading.setVisible(false);
-		htmlPanelNoClasspageContainer.setVisible(true);
-//		spanelCollectionList.setVisible(false);
-*/	}
+    }
 
 	/**
 	 * 
@@ -343,36 +271,16 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void setLabels() {
-	/*	lblLoading.setText(i18n.GL0110()+ i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
-				+ i18n.GL_SPL_FULLSTOP());
-		lblLoading.getElement().setId("lblLoading");
-		lblLoading.getElement().setAttribute("alt",i18n.GL0110() + i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
-				+ i18n.GL_SPL_FULLSTOP());
-		lblLoading.getElement().setAttribute("title",i18n.GL0110() + i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
-				+ i18n.GL_SPL_FULLSTOP());*/
-		
 		ancNewClasspage.setText(i18n.GL0115());
 		ancNewClasspage.getElement().setId("lnkNewClassPage");
 		ancNewClasspage.getElement().setAttribute("alt",i18n.GL0115());
 		ancNewClasspage.getElement().setAttribute("title",i18n.GL0115());
-		
-/*		lblNoClasspageYet.setText(i18n.GL0117());
-		lblNoClasspageYet.getElement().setId("lblNoClasspageYet");
-		lblNoClasspageYet.getElement().setAttribute("alt",i18n.GL0117());
-		lblNoClasspageYet.getElement().setAttribute("title",i18n.GL0117());*/
-		
-	/*	inLineLblCheckOut.setText(i18n.GL0118());
-		inLineLblCheckOut.getElement().setId("spnCheckOut");
-		inLineLblCheckOut.getElement().setAttribute("alt",i18n.GL0118());
-		inLineLblCheckOut.getElement().setAttribute("title",i18n.GL0118());*/
-
 		enterLbl.addClickHandler(new OnEnterClassCodeClick());
 		enterLbl.setText(i18n.GL1065());
 		enterLbl.getElement().setId("btnEnter");
 		enterLbl.getElement().setAttribute("alt",i18n.GL1065());
 		enterLbl.getElement().setAttribute("title",i18n.GL1065());
 		classCodeTxtBox.addKeyPressHandler(new KeyPressHandler() {
-			
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
 				setButtonStatus("active");
@@ -385,24 +293,12 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 				setButtonStatus("active");
 			}
 		});
-		
-
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
 		classCodeTxtBox.getElement().setId("txtClassCode");
 		classCodeTxtBox.setPlaceholder(i18n.GL1762_1());
 
 		setButtonStatus("active");
-	/*	
-		spanelCollectionList.setVisible(false);
-		spanelCollectionList.getElement().setId("sbCollectionList");
-		htmlPanelClasspageList.getElement().setId("vpnlClassPageList");
-		
-		htmlPanelContentContainer.setVisible(false);
-		htmlPanelContentContainer.getElement().setId("pnlHtmlContentContainer");
-		htmlPanelNoClasspageContainer.getElement().setId("pnlNoClassPageContentContainer");
-		// inLineLblGooruGuide.setText(MessageProperties.GL0119);
-*/		// inLineLblCreateOne.setText(MessageProperties.GL0120);
 		lblTitle.getElement().setId("lblTitle");
 	}
 	/**
@@ -456,12 +352,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 					.getClasspageService()
 					.v2getClasspageByCode(classCodeTxtBox.getText().trim(),
 							new SimpleAsyncCallback<CollectionDo>() {
-
-//								@Override
-//								public void onFailure(Throwable caught) {
-//									setButtonStatus("");
-//								}
-
 								@Override
 								public void onSuccess(CollectionDo result) {
 									setButtonStatus("");
@@ -516,7 +406,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 														PlaceTokens.STUDENT,
 														params);
 										classCodeTxtBox.setText("");
-										//hide();
 										if (alertMessageUc != null)
 											alertMessageUc.hide();
 									} else if (result.getSharing()
@@ -547,7 +436,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -575,7 +463,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -603,7 +490,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -641,7 +527,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 														PlaceTokens.STUDENT,
 														params);
 										classCodeTxtBox.setText("");
-										//hide();
 										if (alertMessageUc != null)
 											alertMessageUc.hide();
 
@@ -726,7 +611,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 */
 	private void listClasspages(ClasspageListDo result,
 			boolean isClasspageRefershed, String deletedClasspageId) {
-//		lblLoading.setVisible(false);
 		isApiCalling = false;
 		if (classpageListDo != null) {
 			resultSize = classpageListDo.getSearchResults() != null ? classpageListDo
@@ -735,15 +619,10 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			resultSize = 0;
 		}
 		if (resultSize > 0) {
-			//htmlPanelNoClasspageContainer.setVisible(false);
-			//htmlPanelClasspageList.setVisible(true);
-		//	spanelCollectionList.setVisible(true);
 			if (toClear) {
-			//	htmlPanelClasspageList.clear();
 				toClear = false;
 				classpageList.clear();
 			}
-
 			for (int i = 0; i < resultSize; i++) {
 				String classpageId = classpageListDo.getSearchResults().get(i)
 						.getGooruOid();
@@ -755,7 +634,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 		} else {
 			// Set no classpage info, if there are not classpages.
 			if (toClear) {
-				//htmlPanelNoClasspageContainer.setVisible(true);
 			}
 			offSet = tmpOffSet;
 			Element element = Document.get().getElementById("lblLoading");
@@ -792,103 +670,7 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 */
 	public void generateClasspageList() {
-	/*	htmlPanelClasspageList.clear();
-		for (int i = 0; i < listClasspage.size(); i++) {
-			String title = classpageList.get(listClasspage.get(i)).getTitle();
-			title = createTitle(title, classpageList.get(listClasspage.get(i)).getUser().getGooruUId());
-			htmlPanelClasspageList.add(createClasspageTitleLabel(
-					title, listClasspage.get(i), false));
-		}*/
 	}
-	/**
-	 * 
-	 * @function createTitle 
-	 * 
-	 * @created_date : 06-Dec-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param title
-	 * @parm(s) : @param classpageOwnerId
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	private String createTitle(String title, String classpageOwnerId){
-		String tmptitle = "";
-		title = title.length() >= 18 ? title.substring(0, 18) + "..." : title;
-		if(classpageOwnerId==null || classpageOwnerId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())){
-			tmptitle = title + " (Owner)";
-		}else{
-			tmptitle = title + " (Member)";
-		}
-		
-		return tmptitle;
-	}
-
-	/**
-	 * 
-	 * @function createClasspageTitleLabel
-	 * 
-	 * @created_date : Aug 15, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param classpageTitle
-	 * @parm(s) : @param classpageId
-	 * @parm(s) : @return
-	 * 
-	 * @return : Label
-	 * 
-	 * @throws : <Mentioned if any exceptions>
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	private Label createClasspageTitleLabel(String classpageTitle,
-			final String classpageId, boolean isStatic) {
-		Label titleLabel = null;
-		if (classpageTitle != null) {
-			if (classpageTitle.length() >= 30) {
-				titleLabel = new Label(classpageTitle.substring(0, 30));
-			} else {
-				titleLabel = new Label(classpageTitle);
-			}
-			titleLabel.getElement().setAttribute("id", classpageId);
-			if (!isStatic) {
-				titleLabel.setStyleName(ClasspageListPopupViewCBundle.INSTANCE
-						.css().classpageTitleHeader());
-			} else {
-				titleLabel.setStyleName(ClasspageListPopupViewCBundle.INSTANCE
-						.css().classpageLoadingOnPagination());
-			}
-			// Set Click event for title
-			titleLabel.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					OpenClasspageEdit(classpageId);
-					//hide();
-				}
-			});
-		}
-		return titleLabel;
-	}
-
-	// Ui Handlers.
-	// @UiHandler("inLineLblGooruGuide")
-	// public void onClickGooruGuide(ClickEvent event){
-	//
-	// }
 
 	/**
 	 * 
@@ -913,7 +695,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	public void onClickNewClasspage(ClickEvent event) {
 		MixpanelUtil.ClickOnNewClassPage();
 		HeaderUc.closeClassContainer();
-		//hide();
 		newPopup = new NewClasspagePopupView() {
 
 			@Override
@@ -963,8 +744,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 																	AssignmentDo result) {
 																// Assig to
 																// classpage.
-																/*htmlPanelClasspageList
-																		.clear();*/
 																generateClasspageList();
 																showClasspageList();
 																OpenClasspageEdit(classpageId);
@@ -1081,17 +860,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 	 * 
 	 */
 	private void setClasspageSetSelected(String classpageId) {
-		/*Iterator<Widget> widgets = htmlPanelClasspageList.iterator();
-		while (widgets.hasNext()) {
-			Widget widget = widgets.next();
-			if (widget.getElement().getId().equalsIgnoreCase(classpageId)) {
-				widget.getElement().setClassName(
-						res.css().classpageTitleHeaderActive());
-			} else {
-				widget.getElement().setClassName(
-						res.css().classpageTitleHeader());
-			}
-		}*/
 	}
 
 	/**
@@ -1134,7 +902,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 				nextClasspageId = listClasspage.get(0);
 			}
 		}
-	//	htmlPanelClasspageList.clear();
 		generateClasspageList();
 		if (nextClasspageId != null) {
 			OpenClasspageEdit(nextClasspageId);
@@ -1174,7 +941,6 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
-		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
 

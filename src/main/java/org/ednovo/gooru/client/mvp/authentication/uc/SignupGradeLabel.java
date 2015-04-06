@@ -60,9 +60,6 @@ public class SignupGradeLabel extends Anchor implements ClickHandler {
 	
 	ProfileDo profileDo = null;
 	
-	private static final String KIDER_GARTEN = "Kindergarten";
-	
-	private static final String HIGHER_EDUCATION = "Higher Education";
 	
 	private static final String REGISTER_USER_LEVEL = "settings";
 	

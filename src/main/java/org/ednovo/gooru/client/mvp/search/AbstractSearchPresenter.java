@@ -455,16 +455,21 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		String queryVal = "";
 		if (getPlaceManager().getRequestParameter(QUERY) != null) {
 			queryVal = getPlaceManager().getRequestParameter(QUERY);
-			/* queryVal = queryVal.replaceAll("%5C1", "&"); */
 		}
 		try {
 			queryVal = URL.decodeQueryString(queryVal);
 		} catch (Exception ex) {
 
 		}
+		Map<String, String> filterMap = new HashMap<String, String>();
+		if(getSearchDo().getFilters() != null)
+		{
+		filterMap = getSearchDo().getFilters();
+		}
 		if (getViewToken().equalsIgnoreCase(getCurrentPlaceToken())) {
 			getSearchDo().setPageNum(pageNum);
 			getSearchDo().setQuery(queryVal);
+			getSearchDo().setFilters(filterMap);
 			onSearchRequest(null);
 		}
 	}
@@ -534,6 +539,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					.getCurrentPlaceToken())) {
 				params.clear();
 				String categoryParam = getPlaceManager().getRequestParameter(IsSearchView.CATEGORY_FLT,null);
+				String disableSpellCheckFilter = getPlaceManager().getRequestParameter("disableSpellCheck",null);
 				if (categoryParam != null && viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) && !categoryParam.equals("onlyQuestion")) {
 					params.put(IsSearchView.CATEGORY_FLT, categoryParam);
 				}else{
@@ -559,6 +565,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
 					String reviewTag = getPlaceManager().getRequestParameter(IsSearchView.REVIEWS_FLT);
 					String ratingsFilter = getPlaceManager().getRequestParameter(IsSearchView.RATINGS_FLT);
+
 					if (ratingsFilter != null) {
 						params.put(IsSearchView.RATINGS_FLT, ratingsFilter);	
 					}
@@ -589,6 +596,15 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				}
 
 				getView().resetFilters();
+				if(disableSpellCheckFilter != null)
+				{
+					params.put("disableSpellCheck", disableSpellCheckFilter);
+				}
+			}
+			String disableSpellCheckFilter = getPlaceManager().getRequestParameter("disableSpellCheck",null);
+			if(disableSpellCheckFilter != null)
+			{
+				params.put("disableSpellCheck", disableSpellCheckFilter);
 			}
 			params.put(QUERY, getSearchDo().getUrlQuery());
 			params.put(PAGE_SIZE, getSearchDo().getPageSize() + "");

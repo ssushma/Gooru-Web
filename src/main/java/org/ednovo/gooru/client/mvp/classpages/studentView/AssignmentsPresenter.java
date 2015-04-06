@@ -106,15 +106,8 @@ public class AssignmentsPresenter extends ChildPresenter<AssignmentsPresenter, I
 	 
 	public void getAssignmentCollections(String assignmentId) {
 		AppClientFactory.getInjector().getClasspageService().v2GetAssignmentCollectionsById(assignmentId, new SimpleAsyncCallback<List<ResourceDo>>() {
-
 			@Override
 			public void onSuccess(List<ResourceDo> result) {
-				/*if (result.size()>0){
-					getView().showPanel(true);
-				}
-				if (result.size()>=10){
-					getView().disableAddNewCollection();
-				}*/
 				if(result.size()==0){
 					getView().emptyAssignment();
 				}

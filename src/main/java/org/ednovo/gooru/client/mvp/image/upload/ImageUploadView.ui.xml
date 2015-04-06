@@ -133,11 +133,11 @@
 			font-size: 12px;
 			font-weight: bold;
 			padding: 8px 9px;
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB');
+			filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB')");
 		}
 		.uploadImageButtonOnWeb:hover {
 			background: #1076BB;
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB', endColorstr='#1076BB');
+			filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB', endColorstr='#1076BB')");
 		}
 		.uploadGooruImagesContainer{
 			display:none;
@@ -169,12 +169,12 @@
 			width: 50px;
 			margin-left: 130px;
 			float: left;
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB');
+			filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB')");
 		}
 		.okButtonOnUploadGooruImages:hover{
 			background: #1076BB;
 			color: white !important;
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB', endColorstr='#1076BB');
+			filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB', endColorstr='#1076BB')");
 		}
 		.cancelButtonOnUploadGooruImages{
 			float: left;
