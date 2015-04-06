@@ -131,7 +131,33 @@ public interface CollectionAssignCBundle extends ClientBundle{
 		
 		String duedateContainer();
 		
-		String charLimitStyle();
+		String unitContainer();
+		
+		String errorLabelUnit();
+		
+		String fromLbl();
+		
+		String textAlignContainer();
+		
+		String textBox();
+		
+		String MinuteLabel();
+		
+		String scoreLbl();
+		
+		String textScoreBox();
+		
+		String mainDivContainer();
+		
+		String collectionBlocks();
+		
+		//String scoreErrorLabel();
+		
+		String suggestTimeErrorLabel();
+		
+		String scoreMainDev();
+		
+		String questionImage();
 	}
 	@Source("CollectionAssign.css")
 	CollectionAssignCss css();

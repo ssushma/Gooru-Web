@@ -35,6 +35,18 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"/>
+			<g:Label ui:field="lblClasspagesUnits" styleName="col-md-4 col-sm-4 {res.css.marginTop}"></g:Label>
+			<g:HTMLPanel styleName="col-md-8 col-sm-8 {res.css.marginTop}">
+				<g:HTMLPanel styleName="{res.css.dropdownContainer}">
+			    <g:Label ui:field="lblClasspageUnitPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
+				<g:Label ui:field="lblClasspagesUnitArrow" styleName="{res.css.arrow}"></g:Label>
+				<g:ScrollPanel ui:field="spanelClasspagesUnitPanel"			styleName="{res.css.scrollPanelContainer}">
+					<g:HTMLPanel ui:field="htmlClasspagesUnitListContainer"></g:HTMLPanel>
+				</g:ScrollPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="clearfix"/>
+			<g:Label ui:field="errorLabel" styleName="{res.css.errorLabelUnit}"></g:Label>
 		<g:HTMLPanel styleName="col-md-4 col-sm-4 {res.css.marginTop}">
 			<g:Label ui:field="lblDuedate" styleName="{res.css.duedateDivLabel}"></g:Label>
 				<g:Label ui:field="lblDuedateOptional" styleName="{res.css.duedateDivLabel}"></g:Label>
