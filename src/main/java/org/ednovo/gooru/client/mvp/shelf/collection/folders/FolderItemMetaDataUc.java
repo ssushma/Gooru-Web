@@ -35,9 +35,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class FolderItemMetaDataUc extends Composite {
 
-	@UiField Button saveBtnbigIdeas, cancelBtnbigIdeas,saveBtnTasks,cancelBtnTasks,saveBtnQuestions,cancelBtnQuestions;
+	@UiField Button saveBtnbigIdeas,simplePencilPanelbigIdeas,simplePencilPanelTask,simplePencilPanelquestion, cancelBtnbigIdeas,saveBtnTasks,cancelBtnTasks,saveBtnQuestions,cancelBtnQuestions;
 	
-	@UiField Label bigIdeasLbl, essentialQuestionsLbl, performanceTaskLbl,simplePencilPanelbigIdeas,simplePencilPanelquestion,simplePencilPanelTask;
+	@UiField Label bigIdeasLbl, essentialQuestionsLbl, performanceTaskLbl;
 	
 	@UiField TextArea bigIdeasHTML, essentialQuestionsHTML, performanceTaskHTML;
 	
@@ -115,6 +115,7 @@ public class FolderItemMetaDataUc extends Composite {
 		}
 	});
 		
+		
 		bigIdeasLbl.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -122,6 +123,36 @@ public class FolderItemMetaDataUc extends Composite {
 				formButtons.setVisible(true);
 				bigIdeasHTML.setVisible(true);
 				bigIdeasLbl.setVisible(false);
+			}
+		});
+		simplePencilPanelbigIdeas.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelbigIdeas.setVisible(false);
+				formButtons.setVisible(true);
+				bigIdeasHTML.setVisible(true);
+				bigIdeasLbl.setVisible(false);
+			}
+		});
+		simplePencilPanelbigIdeas.addMouseMoveHandler(new MouseMoveHandler() {
+			
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {				
+				simplePencilPanelbigIdeas.setVisible(true);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(false);
+				bigIdeasLbl.addStyleName(folderMetaStyle.addBackground());
+			}
+		});
+		simplePencilPanelbigIdeas.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(false);
+				bigIdeasLbl.removeStyleName(folderMetaStyle.addBackground());
 			}
 		});
 		essentialQuestionsLbl.addClickHandler(new ClickHandler() {
@@ -142,6 +173,16 @@ public class FolderItemMetaDataUc extends Composite {
 				performanceTaskLbl.setVisible(false);	
 			}
 		});
+		simplePencilPanelTask.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelTask.setVisible(false);
+				formButtonsTasks.setVisible(true);
+				performanceTaskHTML.setVisible(true);
+				performanceTaskLbl.setVisible(false);	
+			}
+		});
 		simplePencilPanelbigIdeas.setVisible(false);
 		simplePencilPanelTask.setVisible(false);
 		simplePencilPanelquestion.setVisible(false);
@@ -153,6 +194,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(true);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(false);
+				bigIdeasLbl.addStyleName(folderMetaStyle.addBackground());
 			}
 		});
 		bigIdeasLbl.addMouseOutHandler(new MouseOutHandler() {
@@ -161,7 +203,42 @@ public class FolderItemMetaDataUc extends Composite {
 			public void onMouseOut(MouseOutEvent event) {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
-				simplePencilPanelquestion.setVisible(false);				
+				simplePencilPanelquestion.setVisible(false);	
+				bigIdeasLbl.removeStyleName(folderMetaStyle.addBackground());
+			}
+		});
+		
+		simplePencilPanelquestion.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				simplePencilPanelquestion.setVisible(false);
+				formButtonsQuestions.setVisible(true);
+				essentialQuestionsHTML.setVisible(true);
+				essentialQuestionsLbl.setVisible(false);
+				
+			}
+		});
+		
+		simplePencilPanelquestion.addMouseMoveHandler(new MouseMoveHandler() {
+			
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {				
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(true);
+				essentialQuestionsLbl.addStyleName(folderMetaStyle.addBackground());
+			}
+		});
+		simplePencilPanelquestion.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(false);
+				simplePencilPanelquestion.setVisible(false);
+				essentialQuestionsLbl.removeStyleName(folderMetaStyle.addBackground());
+				
 			}
 		});
 		essentialQuestionsLbl.addMouseMoveHandler(new MouseMoveHandler() {
@@ -171,6 +248,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(true);
+				essentialQuestionsLbl.addStyleName(folderMetaStyle.addBackground());
 			}
 		});
 		essentialQuestionsLbl.addMouseOutHandler(new MouseOutHandler() {
@@ -180,9 +258,36 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(false);
+				essentialQuestionsLbl.removeStyleName(folderMetaStyle.addBackground());
 				
 			}
 		});
+		
+		
+		
+		simplePencilPanelTask.addMouseMoveHandler(new MouseMoveHandler() {
+			
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				
+				simplePencilPanelbigIdeas.setVisible(false);
+				simplePencilPanelTask.setVisible(true);
+				simplePencilPanelquestion.setVisible(false);
+				performanceTaskLbl.addStyleName(folderMetaStyle.addBackground());
+			}
+		});
+		simplePencilPanelTask.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					simplePencilPanelbigIdeas.setVisible(false);
+					simplePencilPanelTask.setVisible(false);
+					simplePencilPanelquestion.setVisible(false);
+					performanceTaskLbl.removeStyleName(folderMetaStyle.addBackground());
+					
+				}
+			});
+		
 		performanceTaskLbl.addMouseMoveHandler(new MouseMoveHandler() {
 		
 		@Override
@@ -191,6 +296,7 @@ public class FolderItemMetaDataUc extends Composite {
 			simplePencilPanelbigIdeas.setVisible(false);
 			simplePencilPanelTask.setVisible(true);
 			simplePencilPanelquestion.setVisible(false);
+			performanceTaskLbl.addStyleName(folderMetaStyle.addBackground());
 		}
 	});
 		performanceTaskLbl.addMouseOutHandler(new MouseOutHandler() {
@@ -200,6 +306,7 @@ public class FolderItemMetaDataUc extends Composite {
 				simplePencilPanelbigIdeas.setVisible(false);
 				simplePencilPanelTask.setVisible(false);
 				simplePencilPanelquestion.setVisible(false);
+				performanceTaskLbl.removeStyleName(folderMetaStyle.addBackground());
 				
 			}
 		});
@@ -482,106 +589,95 @@ public class FolderItemMetaDataUc extends Composite {
 		Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text", bigIdeasHTML.getText());
 
-						AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-							
-							@Override
-							public void onSuccess(Boolean value) {
-								if(!value)
-								{
-								clearErrorMsgs();
-								setMetaDataBigIdeas(bigIdeasHTML.getText());
-								showEditableMetaData(true);
-								if(folderId == null)
-								{
-								updateFolderDatabyService("ideas");
-								}
-								else
-								{
-								updateideasInfo(folderId, title,bigIdeasHTML.getText());
-								}	
-								}
-								else
-								{
-									bigIdeasHTML.getElement().getStyle().setBorderColor("orange");
-									errorLabelbigIdeasHTML.setText(i18n.GL0554());
-									errorLabelbigIdeasHTML.getElement().setAttribute("alt",i18n.GL0554());
-									errorLabelbigIdeasHTML.getElement().setAttribute("title",i18n.GL0554());
-									errorLabelbigIdeasHTML.setVisible(true);
-								}
-							}
-						});
-						
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean value) {
+				if(!value){
+					clearErrorMsgs();
+					setMetaDataBigIdeas(bigIdeasHTML.getText());
+					showEditableMetaData(true);
+					if(folderId == null){
+						updateFolderDatabyService("ideas");
+					}else{
+						updateideasInfo(folderId, title,bigIdeasHTML.getText());
+					}	
+				}else{
+					bigIdeasHTML.getElement().getStyle().setBorderColor("orange");
+					errorLabelbigIdeasHTML.setText(i18n.GL0554());
+					errorLabelbigIdeasHTML.getElement().setAttribute("alt",i18n.GL0554());
+					errorLabelbigIdeasHTML.getElement().setAttribute("title",i18n.GL0554());
+					errorLabelbigIdeasHTML.setVisible(true);
+				}
+			}
+		});
+
 
 	}
 	@UiHandler("saveBtnQuestions")
 	public void clickSaveBtnQuestions(ClickEvent event) {
-		
-				Map<String, String> parms1 = new HashMap<String, String>();
-				parms1.put("text", essentialQuestionsHTML.getText());
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms1, new SimpleAsyncCallback<Boolean>() {
-					
-					@Override
-					public void onSuccess(Boolean value) {
-						if(!value)
-						{
-							clearErrorMsgs();
-							setMetaDataessentialQuestions(essentialQuestionsHTML.getText());
-							showEditableMetaData(true);
-							if(folderId == null)
-							{
-							updateFolderDatabyService("questions");
-							}
-							else
-							{
-								updatequestionsInfo(folderId, title,essentialQuestionsHTML.getText());
-							}
-						}
-						else
-						{
-							essentialQuestionsHTML.getElement().getStyle().setBorderColor("orange");
-							errorLabelessentialQuestionsHTML.setText(i18n.GL0554());
-							errorLabelperformanceTaskHTML.getElement().setAttribute("alt",i18n.GL0554());
-							errorLabelperformanceTaskHTML.getElement().setAttribute("title",i18n.GL0554());
-							errorLabelessentialQuestionsHTML.setVisible(true);
-						}
+
+		Map<String, String> parms1 = new HashMap<String, String>();
+		parms1.put("text", essentialQuestionsHTML.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms1, new SimpleAsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean value) {
+				if(!value){
+					clearErrorMsgs();
+					setMetaDataessentialQuestions(essentialQuestionsHTML.getText());
+					showEditableMetaData(true);
+					if(folderId == null){
+						updateFolderDatabyService("questions");
+					}else{
+						updatequestionsInfo(folderId, title,essentialQuestionsHTML.getText());
 					}
-				});
-				
+				}
+				else{
+					essentialQuestionsHTML.getElement().getStyle().setBorderColor("orange");
+					errorLabelessentialQuestionsHTML.setText(i18n.GL0554());
+					errorLabelperformanceTaskHTML.getElement().setAttribute("alt",i18n.GL0554());
+					errorLabelperformanceTaskHTML.getElement().setAttribute("title",i18n.GL0554());
+					errorLabelessentialQuestionsHTML.setVisible(true);
+				}
+			}
+		});
+
 	}
 	@UiHandler("saveBtnTasks")
 	public void clickSaveBtnTasks(ClickEvent event) {
-		
-					Map<String, String> parms2 = new HashMap<String, String>();
-						parms2.put("text", performanceTaskHTML.getText());
-						AppClientFactory.getInjector().getResourceService().checkProfanity(parms2, new SimpleAsyncCallback<Boolean>() {
-							
-							@Override
-							public void onSuccess(Boolean value) {
-								if(!value)
-								{
-									clearErrorMsgs();
-									setMetaDataPerformanceTask(performanceTaskHTML.getText());
-									showEditableMetaData(true);
-									if(folderId == null)
-									{
-									updateFolderDatabyService("tasks");
-									}
-									else
-									{
-										updateperformanceInfo(folderId, title,performanceTaskHTML.getText());
-									}
-								}
-								else
-								{
-									performanceTaskHTML.getElement().getStyle().setBorderColor("orange");
-									errorLabelperformanceTaskHTML.setText(i18n.GL0554());
-									errorLabelperformanceTaskHTML.getElement().setAttribute("alt",i18n.GL0554());
-									errorLabelperformanceTaskHTML.getElement().setAttribute("title",i18n.GL0554());
-									errorLabelperformanceTaskHTML.setVisible(true);	
-								}
-							}
-						});
-						
+
+		Map<String, String> parms2 = new HashMap<String, String>();
+		parms2.put("text", performanceTaskHTML.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms2, new SimpleAsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean value) {
+				if(!value)
+				{
+					clearErrorMsgs();
+					setMetaDataPerformanceTask(performanceTaskHTML.getText());
+					showEditableMetaData(true);
+					if(folderId == null)
+					{
+						updateFolderDatabyService("tasks");
+					}
+					else
+					{
+						updateperformanceInfo(folderId, title,performanceTaskHTML.getText());
+					}
+				}
+				else
+				{
+					performanceTaskHTML.getElement().getStyle().setBorderColor("orange");
+					errorLabelperformanceTaskHTML.setText(i18n.GL0554());
+					errorLabelperformanceTaskHTML.getElement().setAttribute("alt",i18n.GL0554());
+					errorLabelperformanceTaskHTML.getElement().setAttribute("title",i18n.GL0554());
+					errorLabelperformanceTaskHTML.setVisible(true);	
+				}
+			}
+		});
+
 	}
 	
 	public void updateideasInfo(final String folderId, final String title, String ideas) {
@@ -647,53 +743,34 @@ public class FolderItemMetaDataUc extends Composite {
 		String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 		String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
 		String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-		if(O3_LEVEL_VALUE!= null)
-		{
+		if(O3_LEVEL_VALUE!= null){
 			folderIdLocal = O3_LEVEL_VALUE;
-		}
-		else if(O2_LEVEL_VALUE!=null)
-		{
+		}else if(O2_LEVEL_VALUE!=null){
 			folderIdLocal = O2_LEVEL_VALUE;	
-		}
-		else if(O1_LEVEL_VALUE!=null)
-		{
+		}else if(O1_LEVEL_VALUE!=null){
 			folderIdLocal = O1_LEVEL_VALUE;	
 		}
+		
 		AppClientFactory.getInjector().getfolderService().getFolderInformation(folderIdLocal, new AsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo result) {
-				folderId = result.getGooruOid();
-				title = result.getTitle();
-				if(textToSave.equalsIgnoreCase("ideas"))
-				{
-				updateideasInfo(folderId, title,bigIdeasHTML.getText());
-				}
-				else if(textToSave.equalsIgnoreCase("questions"))
-				{
-				updatequestionsInfo(folderId, title,essentialQuestionsHTML.getText());
-				}
-				else
-				{
-				updateperformanceInfo(folderId, title,performanceTaskHTML.getText());
+				
+				if(textToSave.equalsIgnoreCase("ideas")){
+					updateideasInfo(result.getGooruOid(), result.getTitle(),bigIdeasHTML.getText());
+				}else if(textToSave.equalsIgnoreCase("questions")){
+					updatequestionsInfo(result.getGooruOid(), result.getTitle(),essentialQuestionsHTML.getText());
+				}else{
+					updateperformanceInfo(result.getGooruOid(), result.getTitle(),performanceTaskHTML.getText());
 				}			
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
 
-				
+
 			}
 		});
 		
 		
-	}
-	
-	public void updateFolderMetaData() {
-		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, bigIdeasHTML.getText(), essentialQuestionsHTML.getText(), performanceTaskHTML.getText(), new SimpleAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				
-			}
-		});
 	}
 }

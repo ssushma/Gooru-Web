@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.home.ForgotPasswordVc;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle;
+import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -295,8 +296,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 				loginButton.setVisible(false);
 				lblPleaseWait.setVisible(true);
 
-				AppClientFactory
-						.getInjector()
+				AppClientFactory.getInjector()
 						.getAppService()
 						.v2Signin(username,password,
 								new SimpleAsyncCallback<UserDo>() {
@@ -321,6 +321,9 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 													.fireEvent(new SetUserDetailsInCollectionPlayEvent(
 															result.getToken(),
 															result.getGooruUId()));
+											 if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
+											    	AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
+											    }
 											/*previously commented AppClientFactory
 													.getInjector()
 													.getResourceService()
@@ -496,7 +499,12 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 			@Override
 			public void openParentPopup() {
-				Window.enableScrolling(false);
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+					Window.enableScrolling(false);
+					
+				}else{
+					Window.enableScrolling(true);
+				}
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			}
 			

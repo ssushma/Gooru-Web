@@ -39,7 +39,7 @@
 	        </g:HTMLPanel>
 	        <g:HTMLPanel styleName="{playerStyle.resource-info-description}">
 	         <g:HTMLPanel styleName="{playerStyle.resource-info-more-titleDesc}"  ui:field="resourceDescriptionTitle"/>
-	           <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="resourceDescription"/>
+	           <g:HTMLPanel styleName="{playerStyle.resource-info-about}" ui:field="resourceDescription"/>
 	        </g:HTMLPanel>
 	        
 	         <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">

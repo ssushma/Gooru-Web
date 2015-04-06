@@ -414,7 +414,7 @@ public class HeaderUc extends Composite implements
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
 
 		logoutPanelVc = new LogoutPanelVc();
-
+		settingOptionsPopup.add(logoutPanelVc);
 		saveSharePanel = new SaveSharePanel() {
 
 			@Override
@@ -1011,6 +1011,7 @@ public class HeaderUc extends Composite implements
 										// hasClasses =
 										// result.getSearchResults().size() > 0
 										// ? true : false;
+										if(result!=null){
 										if (result.getSearchResults() != null) {
 											if (result.getSearchResults()
 													.size() > 0) {
@@ -1037,6 +1038,11 @@ public class HeaderUc extends Composite implements
 													.redirectPlace(
 															PlaceTokens.STUDY);
 										}
+									} else {
+										AppClientFactory.getPlaceManager()
+												.redirectPlace(
+														PlaceTokens.STUDY);
+									}
 									}
 								});
 			} else {
@@ -1508,16 +1514,11 @@ public class HeaderUc extends Composite implements
 
 			loggedInfoLbl.setText(userDo.getUsername());
 			loggedInfoLbl.setTitle(userDo.getUsername());
-			loggedInfoLbl.getElement()
-					.setAttribute("alt", userDo.getUsername());
 
-			imgUserProfile.setUrl(userDo.getProfileImageUrl() != ""
-					&& userDo.getProfileImageUrl() != null ? userDo
-					.getProfileImageUrl() : null);
-
-			imgUserProfile.getElement().setAttribute("onerror",
-					"imgError(this);");
-
+			loggedInfoLbl.getElement().setAttribute("alt", userDo.getUsername());
+			imgUserProfile.setUrl(userDo.getProfileImageUrl() != "" && userDo.getProfileImageUrl() !=null ? userDo.getProfileImageUrl()+ "?" + Math.random() : DEFAULT_PROFILE_IMAGE);
+			
+			imgUserProfile.getElement().setAttribute("onerror","imgError(this);");
 			imgUserProfile.setAltText(userDo.getUsername());
 			imgUserProfile.getElement().setId("imgUserProfile");
 			imgUserProfile.getElement().setAttribute("alt",
@@ -2073,4 +2074,16 @@ public class HeaderUc extends Composite implements
 	public static void setStandardsCode(String stadardCodeId, int id, String code){
 		stadardCode=stadardCodeId;
 	}
+
+	public void updateHeaderProfileImage(String imageUrl) {
+		imgUserProfile.setUrl(imageUrl+ "?" + Math.random());
+	}
+	
+	@UiHandler("toggleButton")
+	public void toggleButtonClick(ClickEvent event){
+		invokeToggleMenuContainer();
+	}
+	public static native void invokeToggleMenuContainer() /*-{
+	$wnd.showToggleMenu();
+}-*/;
 }

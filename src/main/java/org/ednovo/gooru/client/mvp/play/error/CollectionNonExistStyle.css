@@ -8,9 +8,20 @@
 	width: 960px;
 	border: 1px solid #ccc;
 }
+.collectionWrapper1{
+	position: relative;
+	margin: 0 auto;
+	background-color: #efefef;
+	width: 960px;
+	border: 1px solid #ccc;
+}
 .collectionContent {
 	float: left;
 	width: 216px;
+}
+.collectionContent1{
+		float: left;
+	width: 194px;
 }
 .collectionImage {
 	margin-top: 60px;
@@ -39,7 +50,6 @@
 	padding-top: 70px;
 	padding-bottom: 10px;
 	/* border-bottom: 1px solid #ddd; */
-	padding-left: 50px;
 }
 .collectionCoursecontent {
 	background-color: #efefef;

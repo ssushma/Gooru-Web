@@ -802,6 +802,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	@UiHandler("viewSampleResportsBtn")
 	public void onClickViewSampleReportBtn(ClickEvent event){
+		Window.scrollTo(0, 0);
 		SampleReportView sampleReportView= new SampleReportView();
 	}
 	@UiHandler("achTerms")

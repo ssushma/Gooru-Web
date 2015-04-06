@@ -72,9 +72,19 @@ public interface AddCenturyUiHandlers extends BaseUiHandlers {
 	 */
 	void setEditResourceData(List<StandardFo> codeList);
 	/**
-	 * This method will reset the data in the add resoruce popups
+	 * This method will reset the data in the add resource popups
 	 * @param codeList
 	 */
 	void setAddResourceData(Map<Long,String> codeList);
 	void setAddResourceDataAddTags(ArrayList<String> centuryDo);
+	/**
+	 * This method will set the collectionId, If we are coming from collection into tab in my collections
+	 */
+	void setCollectionIdFromCollectionInfo(String collectionId,Map<Long, String> collectionInfoSelectedValues);
+	/**
+	 * This method is used to delete century value for collection.
+	 * @param collectionId
+	 * @param courseCode
+	 */
+	void deleteCourseOrStandard(String collectionId, String courseCode);
 }

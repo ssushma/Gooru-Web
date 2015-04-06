@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.analytics.util;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
@@ -115,6 +117,10 @@ public class ViewResponsesPopup extends PopupPanel {
 	@Override
 	protected void onUnload() {
 		super.onUnload();
-		Window.enableScrolling(true);
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+			  Window.enableScrolling(false);
+			}else{
+			   Window.enableScrolling(true);
+		}
 	}
 }

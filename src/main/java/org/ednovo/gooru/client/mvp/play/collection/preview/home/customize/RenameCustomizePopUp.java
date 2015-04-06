@@ -179,11 +179,10 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 						}
 					};
 					loginCustom.add(assignWidget);
-					panelAssign.getElement().getStyle().setHeight(550, Unit.PX);
+					panelAssign.getElement().getStyle().setHeight(494, Unit.PX);
 				} else {
 					loginCustom.setVisible(false);
 					copyCollectionSuccess.setVisible(true);
-					panelAssign.getElement().getStyle().setHeight(367, Unit.PX);
 				}
 				popupcontentCustomize.setVisible(true);
 				loadingImageLabel.setVisible(false);
@@ -278,7 +277,8 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		editCollection.getElement().setAttribute("collectionId", collectionId);
 		customizeText.getElement().setInnerHTML(i18n.GL0743());
 
-		panelAssign.getElement().getStyle().setHeight(367, Unit.PX);
+		panelAssign.getElement().getStyle().setHeight(336, Unit.PX);
+		this.center();
 	}
 
 	/**

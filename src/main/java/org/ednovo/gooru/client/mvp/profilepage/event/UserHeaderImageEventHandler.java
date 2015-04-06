@@ -22,46 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics.util;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.profilepage.event;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.CssResource.NotStrict;
 
-public interface AnalyticsTabCBundle extends ClientBundle{
-	static final AnalyticsTabCBundle INSTANCE = GWT.create(AnalyticsTabCBundle.class);
-	
-	@NotStrict
-	@Source("tabContainer.css")
-	AnalyticsCss css();
-	
-	@NotStrict
-	@Source("res_tabContainer.css")
-	AnalyticsCss getResponsiveStyle();
-	
-	@NotStrict
-	@Source("res_tabContainer1.css")
-	AnalyticsCss getResponsive1Style();
-	
-	@NotStrict
-	@Source("res_tabContainer2.css")
-	AnalyticsCss getResponsive2Style();
+import com.google.gwt.event.shared.EventHandler;
 
-	@NotStrict
-	@Source("res_tabContainer3.css")
-	AnalyticsCss getResponsive3Style();
-	
-	public interface AnalyticsCss extends CssResource{
-		String buttonsPanel();
-		String tabs_teacher_Summary();
-		String collectionsGroupBtns();
-		String addButonStyle();
-		String print_icon_image();
-		String printSaveContainer();
-		String mail_icon_image();
-		String save_icon_image();
-		String addButonStyleActive();
-		String analyticsPrintSave();
-	}
+/**
+ * @author Search Team
+ * 
+ */
+public interface UserHeaderImageEventHandler extends EventHandler {
+
+	void setUserHeaderProfileImage(String imageUrl);
+
 }

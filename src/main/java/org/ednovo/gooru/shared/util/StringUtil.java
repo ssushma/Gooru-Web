@@ -37,10 +37,11 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.Cookies;
@@ -312,6 +313,19 @@ public class StringUtil implements ClientConstants {
 		}
 		return folderMetaData;
 	}
+	public static Map<String,String> getFolderMetaDataTocAPI(FolderTocDo folderDo) {
+		Map<String,String> folderMetaData = new HashMap<String,String>();
+		if(folderDo.getIdeas()!=null) {
+			folderMetaData.put("ideas", folderDo.getIdeas());
+		}
+		if(folderDo.getPerformanceTasks()!=null) {
+			folderMetaData.put("performanceTasks", folderDo.getPerformanceTasks());
+		}
+		if(folderDo.getQuestions()!=null) {
+			folderMetaData.put("questions", folderDo.getQuestions());
+		}
+		return folderMetaData;
+	}
 
 	public static String replaceSpecial(String originalString){
 		String str = "";
@@ -527,6 +541,21 @@ public class StringUtil implements ClientConstants {
 	}-*/;
 	
 	/**
+	 * To remove rich text content using the following method.
+	 * 
+	 * @param htmlText
+	 * @return filteredInnerText
+	 */
+	public static String removeAllHtmlCss(String htmlText){
+		Element element=Document.get().createElement("div");
+		element.setInnerHTML(htmlText);
+		String filteredInnerText = element.getInnerText(); 
+		element.removeFromParent();
+		return filteredInnerText;
+	}
+	
+	
+	/**
 	 * 
 	 * @function SysOut 
 	 * 
@@ -643,5 +672,14 @@ public class StringUtil implements ClientConstants {
 		} else {
 			return false;
 		 }
+	}
+	/**
+	 * This method is used to append the target for anchore tag in a string
+	 * @param value
+	 * @return
+	 */
+	public static String replaceAnchoreWithTarget(String value){
+		value=value.replaceAll("<(a)([^>]+)>", "<$1 target=\"_blank\"$2>");
+		return value;
 	}
 }

@@ -55,7 +55,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	@UiField ListBox loadCollections;
 	
-	@UiField HTMLPanel pnlMainContainer,collectionProgressSlot,collectionSummarySlot;
+	@UiField HTMLPanel pnlTopCointer,pnlMainContainer,collectionProgressSlot,collectionSummarySlot;
 	
 	@UiField Image collectionProgressQuestionimg,collectionSummaryQuestionimg,collectionExportQuestionimg;
 	
@@ -110,6 +110,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
 		pnlMainContainer.setVisible(true);
 		setNoDataText.setVisible(false);
+		pnlTopCointer.setVisible(true);
 		loadcollectionsmap.clear();
 		loadCollections.clear();
 		if(gradeData!=null && !gradeData.isEmpty() ){
@@ -300,11 +301,13 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	public void setNoDataText() {
 		pnlMainContainer.setVisible(false);
 		setNoDataText.setVisible(true);
+		pnlTopCointer.setVisible(false);
 	}
 	@Override
 	public void resetDataText() {
 		pnlMainContainer.setVisible(true);
 		setNoDataText.setVisible(false);
+		pnlTopCointer.setVisible(true);
 	}
 	@Override
 	public Frame getFrame() {

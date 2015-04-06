@@ -153,6 +153,8 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		txtExistingAssessmentDescription.getElement().setAttribute("maxlength", "300");
 		txtExistingAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(1));
 		txtExistingAssessmentDescription.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(2));
+		txtExistingAssessmentTitle.setPlaceholder(i18n.GL3123());
+		txtExistingAssessmentURL.setPlaceholder(i18n.GL3124());
 	}
 	/**
 	 * This inner class is used for handling key up events on title and description.
@@ -164,6 +166,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 			}
 			public void onKeyUp(KeyUpEvent event) {
 				if(value==1){
+					lblExistingAssessmentError.setVisible(false);
 					if(txtExistingAssessmentTitle.getText().length()>=50){
 						txtExistingAssessmentTitle.setText(txtExistingAssessmentTitle.getText().toString().substring(0,50));
 						lblExistingAssessmentError.setVisible(true);
@@ -173,6 +176,7 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 					}
 				}
 				if(value==2){
+					lblExistingAssessmentDescriptionError.setVisible(false);
 					if(txtExistingAssessmentDescription.getText().length()>=300){
 						txtExistingAssessmentDescription.setText(txtExistingAssessmentDescription.getText().toString().substring(0,300));
 						lblExistingAssessmentDescriptionError.setVisible(true);
@@ -260,9 +264,10 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 												AppClientFactory.getInjector().getResourceService().updateAssessmentDetails(folderDo.getGooruOid(), assessmentExistingTitle, assessmentURL,txtExistingAssessmentDescription.getText(),privacy,requireLoginYes.getValue().toString(), new SimpleAsyncCallback<FolderDo>() {
 												@Override
 												public void onSuccess(FolderDo result) {
-													clickEventOnSaveAssessmentHandler(result);
-													}
-												 });
+													if(result!=null)
+													  clickEventOnSaveAssessmentHandler(result);
+												 }
+												});
 											 }
 											}
 										});

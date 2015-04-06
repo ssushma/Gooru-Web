@@ -12,7 +12,7 @@
 		      <g:Label ui:field="collectionDescription" styleName="{res1.css.contentDesc}"></g:Label>
 		      <g:HTMLPanel styleName="{res.css.loginPopupStyle}">
 			    <g:Label styleName="{res.css.loginWithGooru}" ui:field="lblLoginwithGooru"></g:Label>
-			    <g:Button ui:field="gmailButton" styleName="{res1.css.gConnectButton}"></g:Button>
+			    <g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
 			    <g:HTMLPanel styleName="{res.css.dividerCustomize}">
 			      <g:Label styleName="{res1.css.dividerText}" ui:field="lblOr"/>
 			  </g:HTMLPanel>

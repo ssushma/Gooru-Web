@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInPlayEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusHandler;
+import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -66,15 +67,11 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -226,9 +223,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		swithToEmbedLbl.setText(i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("alt",i18n.GL0640());
 		swithToEmbedLbl.getElement().setAttribute("title",i18n.GL0640());
-		assignContainer.getElement().setAttribute("style","min-height:500px");
 		AppClientFactory.getEventBus().addHandler(SetLoginStatusEvent.TYPE, setLoginStatusHandler);
-
+		Window.enableScrolling(false);
 		setLabelsAndIds();
 		setHandlers();
 		
@@ -277,9 +273,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 		 boolean device = BrowserAgent.isDevice();
 		if(device){
 			ScrollPopupUtil.ScrollPopupUtilWidget(assignPopupContent,false);
-		}else{
-			assignPopupContent.getElement().getStyle().setOverflowY(Overflow.AUTO);
-			assignPopupContent.getElement().getStyle().setHeight(550, Unit.PX);
 		}
 	}
 
@@ -302,6 +295,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 			}
 		};
 		htmlEvenPanelContainer.add(assignWidget);
+		this.setPopupPosition(0, (Window.getClientHeight()-527)/2);
 		htmlEvenPanelContainer.setVisible(true);
 		htmlLoginPanel.setVisible(false);
 
@@ -320,7 +314,11 @@ public abstract class AssignPopupVc extends PopupPanel {
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
 		closePoup();
-		
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
 	}
 
 	/**
@@ -741,68 +739,72 @@ public abstract class AssignPopupVc extends PopupPanel {
 				lblPleaseWait.setVisible(true);
 
 				AppClientFactory.getInjector().getAppService().v2Signin(username,password, new SimpleAsyncCallback<UserDo>() {
-									@Override
-									public void onSuccess(UserDo result) {
-										
-										int statusCode = result.getStatusCode();
-										String errorCode = null;
-										String errorMessage = null;
-										if (result.getResponseDo() !=null){
-											 errorCode = result.getResponseDo().getErrorCode();
-											 errorMessage = result.getResponseDo().getErrorMessage();
-										}
-										
-										if(statusCode==HTTP_SUCCESS_STATUS_CODE){
-										
-											MixpanelUtil.Regular_User_Logged_In();
-											AppClientFactory.setLoggedInUser(result);
-											AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
-											AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
+					@Override
+					public void onSuccess(UserDo result) {
 
-											AppClientFactory.fireEvent(new SetHeaderEvent(result));
+						int statusCode = result.getStatusCode();
+						String errorCode = null;
+						String errorMessage = null;
+						if (result.getResponseDo() !=null){
+							errorCode = result.getResponseDo().getErrorCode();
+							errorMessage = result.getResponseDo().getErrorMessage();
+						}
 
-											if (result.getUsername().equalsIgnoreCase("TexasTeacher")) {
-												AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));
-												AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
-											} else {
-												AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
-												AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
-											}
+						if(statusCode==HTTP_SUCCESS_STATUS_CODE){
 
-											AppClientFactory.setUserflag(true);
-											AppClientFactory.resetPlace();
+							MixpanelUtil.Regular_User_Logged_In();
+							AppClientFactory.setLoggedInUser(result);
+							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
+							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
 
-											loadListContainers();
-											MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
-										}else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
-											loginButton.setVisible(true);
-											lblPleaseWait.setVisible(false);
-											if (errorCode.equalsIgnoreCase(ERR_GL0078)){
-												new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-											}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
-												// For blocked users
-												new AlertContentUc(i18n.GL1966(), i18n.GL1938());
-											}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
-												new AlertContentUc(i18n.GL1966(), i18n.GL3114());
-											}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
-												new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-											}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
-												new AlertContentUc(i18n.GL1966(), i18n.GL0347());
-											}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
-												new AlertContentUc(i18n.GL1966(), i18n.GL3119());
-											}
-										}else{
-											new AlertContentUc(i18n.GL1966(), errorMessage);
-										}
-									}
+							AppClientFactory.fireEvent(new SetHeaderEvent(result));
 
-									@Override
-									public void onFailure(Throwable caught) {
-										loginButton.setVisible(true);
-										lblPleaseWait.setVisible(false);
-//										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
-									}
-								});
+							if (result.getUsername().equalsIgnoreCase("TexasTeacher")) {
+								AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));
+								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
+							} else {
+								AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
+								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
+							}
+
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
+								AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
+							}
+
+							AppClientFactory.setUserflag(true);
+							AppClientFactory.resetPlace();
+
+							loadListContainers();
+							MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
+						}else if(statusCode==HTTP_UNAUTHORISED_STATUS_CODE){
+							loginButton.setVisible(true);
+							lblPleaseWait.setVisible(false);
+							if (errorCode.equalsIgnoreCase(ERR_GL0078)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL0079)){
+								// For blocked users
+								new AlertContentUc(i18n.GL1966(), i18n.GL1938());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL010501)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL3114());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL010502)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL010503)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+							}else if (errorCode.equalsIgnoreCase(ERR_GL0081)){
+								new AlertContentUc(i18n.GL1966(), i18n.GL3119());
+							}
+						}else{
+							new AlertContentUc(i18n.GL1966(), errorMessage);
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						loginButton.setVisible(true);
+						lblPleaseWait.setVisible(false);
+						//										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
+					}
+				});
 			} else {
 				loginButton.setVisible(true);
 				lblPleaseWait.setVisible(false);

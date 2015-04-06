@@ -304,8 +304,7 @@ text-align:center;
 	text-overflow: ellipsis;
 }
 .assignHeader {
-	height: 31px;
-	padding: 10px 0px 0px 10px;
+	padding: 10px 0px 10px 10px;
 	background-color: rgb(81,81,81);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
 	background: -webkit-linear-gradient(top, #666, #515151);

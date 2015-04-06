@@ -165,6 +165,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	PPanel oerPanel,panelNotMobileFriendly;
 
+	@UiField
 	Label sourcesNotFoundLbl,aggregatorNotFoundLbl;
 
 	@UiField

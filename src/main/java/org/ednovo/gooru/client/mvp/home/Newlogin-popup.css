@@ -11,7 +11,7 @@ body {
 	z-index: 99999;
 	background-color: black;
 	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	filter:literal("alpha(opacity = 30)");
 }
 .activeGrade{
 	background-color: #87badd;
@@ -92,8 +92,21 @@ body {
 .PopupMainVSmall{
 	width:550px;
 	color:#515151;
-	margin: 30px auto;
+	margin: 10px auto;
 	position:relative;
+	font-family:arial;
+	font-size:12px;
+	background:#ffffff;
+	border-radius:0 0;
+	border:1px solid #999;
+	padding:3px 3px;
+	z-index:999;
+}
+.PopupMainResetSucessStyle{
+	width:550px;
+	color:#515151;
+	position:relative;
+	margin: 0px auto;
 	font-family:arial;
 	font-size:12px;
 	background:#ffffff;
@@ -162,6 +175,7 @@ body {
 	font-size: 20px;
 	margin: 0 0 8px;
 	text-align: center;
+	padding-top: 12px;
 }
 
 .LoginpopupContent .subheader {
@@ -223,6 +237,11 @@ body {
 .form-control {
 	margin-bottom: 6px;
 	border-radius: 0 0;
+	width:99% !important;
+}
+
+.popupcornerBg .form-control {
+	margin-bottom: 0px;
 }
 
 .forgotPasswordLink {
@@ -239,8 +258,8 @@ body {
 }
 
 .loginPopupbtnContainer {
-	margin-top: 15px;
-	margin-bottom: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .haveAccount {
@@ -255,6 +274,11 @@ body {
 }
 
 .haveAccountContainer {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.haveSignupAccountContainer {
 	margin-top: 15px;
 	text-align: center;
 }
@@ -919,20 +943,20 @@ width: 100%;
 
 
 .dontWorrkText {
-    color: #515151;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 21px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    text-align: center;
-    word-wrap: break-word;
+ word-wrap: break-word;
+  line-height: 15px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #515151;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .contentDesc {
     color: #515151;
     font-size: 12px;
     line-height: 120%;
-    padding: 20px;
+    padding: 8px;
     text-align: center;
 }
 .assignContainer .dontWorrkText{
@@ -940,7 +964,7 @@ width: 100%;
     padding-top: 20px;
 }
 .shareSelection .dontWorrkText{
-	padding:20px 0 0 0;
+	padding:5px 0 0 0;
 }
 .loginShareContainer .dontWorrkText{
 	padding:20px 0 0 0;
@@ -984,7 +1008,7 @@ width: 100%;
 	
 }
 .shareSelection .contentDesc{
-	padding:5px 0 20px 0;
+	padding:5px 0 10px 0;
 }
 .addSelection .contentDesc{
 	padding:5px 25px 25px 25px;
@@ -1543,6 +1567,7 @@ display:inline-block;
     padding: 0 10px;
     position: relative;
     top: 0.5em;
+}
 
 .divider {
 	border-bottom:1px solid #ddd;
@@ -1619,7 +1644,7 @@ display:inline-block;
 	background: -o-linear-gradient(top, #7AB075, #4e9746);
 
 	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746');
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746')");
 }
 
 .forgotPasswordSuccessText{

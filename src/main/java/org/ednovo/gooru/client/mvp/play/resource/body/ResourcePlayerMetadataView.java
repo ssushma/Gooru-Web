@@ -59,6 +59,7 @@ import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -359,10 +360,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				sequenceNumber=collectionItemDo.getItemSequence();
 			}
 			if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getTitle()!=null){
-				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
-				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(titlelbl1));
-				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
-				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				String titlelblBold=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
+				String filteredText = StringUtil.removeAllHtmlCss(titlelblBold);
+				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(filteredText));
+				resourceTitleLbl.getElement().setAttribute("alt",filteredText);
+				resourceTitleLbl.getElement().setAttribute("title",filteredText);
 			}else{
 				resourceTitleLbl.setHTML("");
 				resourceTitleLbl.getElement().setAttribute("alt","");
@@ -430,7 +432,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
-		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")){
+		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")||resourceTypeName.equalsIgnoreCase("vimeo/video")){
 			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
@@ -441,8 +443,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					HTMLPanel htmlPanel = new HTMLPanel("");
 					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
 					Image img = new Image();
+					img.addStyleName("img-responsive");
+					img.setHeight("100%");
 					img.setUrl(resourceplayUrl);
 					htmlPanel.add(img);
+					
 					resourceWidgetContainer.add(htmlPanel);
 				}
 				else{
@@ -463,7 +468,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				if(urlExtension.equalsIgnoreCase("pdf")){
 					String signedFlag=resourceplayUrl.contains("http")||resourceplayUrl.contains("https")?"0":"1";
 					String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
-					resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
+					String endPage=collectionItemDo.getStop()!=null?collectionItemDo.getStop():"";
+					resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage="+endPage+"&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceplayUrl));
 				}
 				else
 				{

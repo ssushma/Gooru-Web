@@ -87,6 +87,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gwt.http.client.URL;
 
 
 @Service("resourceService")
@@ -166,6 +167,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			jsonObj = new JSONObject(form);	
 			jsonObj.put(ADD_TO_SHELF, TRUE);
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		getLogger().info("payload data create collection API:::"+jsonObj.toString());
 
@@ -207,7 +209,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		}catch(Exception e){}
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
 		return deserializeCollectionItem(jsonRep);
 	}
 
@@ -254,7 +258,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 		}
 		}
-		catch(Exception ex){}
+		catch(Exception ex){
+			logger.error(ex.getMessage());
+		}
 		return collectionDoObj;
 	}
 
@@ -285,6 +291,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 
         } catch (UnsupportedEncodingException e) {  
+        	logger.error(e.getMessage());
         }
 		
 		return collectionDoObj;
@@ -296,6 +303,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceMetaInfoDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new ResourceMetaInfoDo();
@@ -306,6 +314,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new CollectionDo();
@@ -316,6 +325,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new CollectionItemDo();
@@ -326,6 +336,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionQuestionItemDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new CollectionQuestionItemDo();
@@ -335,6 +346,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try{
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), MetaDO.class);
 			}catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new MetaDO();
@@ -346,6 +358,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				});
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return new ArrayList<CollectionDo>();
 	}
@@ -358,6 +371,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemsListDo>>() {});
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return new ArrayList<CollectionItemsListDo>();
 	}
@@ -368,6 +382,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemDo>>() {
 				});
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new ArrayList<CollectionItemDo>();
@@ -379,6 +394,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<UserDo>>() {
 				});
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new ArrayList<UserDo>();
@@ -411,6 +427,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			jsonObj.put(RESOURCE_ID,resourceId);
 		}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObj.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -450,7 +467,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			if(taxonomyCode!=null){
 				JSONArray taxonomySet = new JSONArray();
 				JSONObject code = new JSONObject();
-				code.put("codeId", taxonomyCode);
+				code.put("codeId", Integer.parseInt(taxonomyCode));
 				taxonomySet.put(code);
 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
 			}
@@ -462,7 +479,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			classPageJsonObject.put("collection", collectionTypeJsonObject);
 		}catch(Exception e){
-			
+			logger.error(e.getMessage());
 		}
 	 	getLogger().info("updateCollectionMetadata::API:"+url);
 	 	getLogger().info("data passed:::"+classPageJsonObject.toString());
@@ -499,7 +516,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionTypeJsonObject.put("action", action);
 			}
 			classPageJsonObject.put("collection", collectionTypeJsonObject);
-		}catch(Exception e){}
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
 	 	getLogger().info("updateCollection 21 skills::API:"+url);
 	 	getLogger().info("data passed 21 skills:::"+classPageJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), classPageJsonObject.toString());
@@ -560,7 +579,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			  
 			
 		}catch(Exception e){
-			
+			logger.error(e.getMessage());
 		}
 	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), form);
 	    jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -597,7 +616,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			if(jsonRep != null && jsonRep.getSize() != -1){
 			return resourceDeserializer.serializeYoutubeInfo(jsonRep);
 			}
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
 		
 		return youtubeDuration;
 	}
@@ -701,6 +722,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		try {
 			url = URLEncoder.encode(url, "UTF-8");
 		} catch (UnsupportedEncodingException ex) {
+			logger.error(ex.getMessage());
 		}
 	
 		JsonRepresentation jsonRep = null;
@@ -716,6 +738,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resource").toString(), ExistsResourceDo.class);
 				} catch (JSONException e) {
+					logger.error(e.getMessage());
 			}
 		}
 		return new ExistsResourceDo();
@@ -726,6 +749,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return null;
@@ -886,6 +910,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionItemDo.setItemSequence(map.get("itemSequence") != null ? Integer.parseInt(map.get("itemSequence").toString()) : 1 );
 				collectionItemDo.setResource(resourceDo);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return collectionItemDo;
@@ -960,7 +985,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		try {
 			shortenUrl = URLEncoder.encode(shortenUrl, "UTF-8");
-		} catch (UnsupportedEncodingException ex) {}
+		} catch (UnsupportedEncodingException ex) {
+			logger.error(ex.getMessage());
+		}
 	
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_SHORTEN_URL,shortenUrl,getLoggedInSessionToken()); 
 		getLogger().info("CHECK_SHORTEN_URL get call::::"+url);
@@ -972,6 +999,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				isShortenUrl=jsonRep.getJsonObject().getBoolean("shortenedUrlStatus");
 			}
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		return isShortenUrl ? "true" : "false";
 	}
@@ -1001,7 +1029,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionDoObj.setKeyPoints(URLDecoder.decode(collectionDoObj.getKeyPoints(), "UTF-8")); 
 			}
 
-        } catch (UnsupportedEncodingException e) {  
+        } catch (UnsupportedEncodingException e) {
+        	logger.error(e.getMessage());
         }	
 		
 		return collectionDoObj;
@@ -1032,7 +1061,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionDoObj.setKeyPoints(URLDecoder.decode(collectionDoObj.getKeyPoints(), "UTF-8")); 
 			}
 
-        } catch (UnsupportedEncodingException e) {  
+        } catch (UnsupportedEncodingException e) {
+        	logger.error(e.getMessage());
         }	
 		
 		return collectionDoObj;
@@ -1100,7 +1130,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			collectionItemObject.put("collectionItem", narrationObject);
 		} catch (JSONException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), collectionItemObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1148,6 +1178,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				profanityDo =  JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfanityDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		if (profanityDo!=null){
@@ -1184,6 +1215,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			try {
 				profanityDo =  JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfanityDo.class);
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		if (profanityDo!=null){
@@ -1220,6 +1252,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderListDo>() {});
 			}
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		return new FolderListDo();
 	}
@@ -1236,7 +1269,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				try {  
 					teacherTips = URLEncoder.encode(teacherTips, "UTF-8");  
 
-	            } catch (UnsupportedEncodingException e) {  
+	            } catch (UnsupportedEncodingException e) {
+	            	logger.error(e.getMessage());
 	            }
 			}
 			
@@ -1259,7 +1293,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 
         } catch (UnsupportedEncodingException e) {  
-            // TODO Auto-generated catch block  
+        	logger.error(e.getMessage());
         }	
 		return collectionDoObj;
 
@@ -1277,7 +1311,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				try {  
 					languageObjective = URLEncoder.encode(languageObjective, "UTF-8");  
 
-	            } catch (UnsupportedEncodingException e) {  
+	            } catch (UnsupportedEncodingException e) {
+	            	logger.error(e.getMessage());
 	            }
 			}
 
@@ -1298,7 +1333,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
 			}
 		
-		  } catch (UnsupportedEncodingException e) {  
+		  } catch (UnsupportedEncodingException e) {
+			  logger.error(e.getMessage());
           }
 		return collectionObjectDo;
 
@@ -1328,7 +1364,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
 			}
 		
-		  } catch (UnsupportedEncodingException e) {  
+		  } catch (UnsupportedEncodingException e) {
+			  logger.error(e.getMessage());
           }
 		return collectionObjectDo;
 
@@ -1358,7 +1395,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
 			}
 		
-		  } catch (UnsupportedEncodingException e) {  
+		  } catch (UnsupportedEncodingException e) {
+			  logger.error(e.getMessage());
           }
 		return collectionObjectDo;
 
@@ -1388,7 +1426,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
 			}
 		
-		  } catch (UnsupportedEncodingException e) {  
+		  } catch (UnsupportedEncodingException e) {
+			  logger.error(e.getMessage());
           }
 		return collectionObjectDo;
 
@@ -1418,7 +1457,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
 			}
 		
-		  } catch (UnsupportedEncodingException e) {  
+		  } catch (UnsupportedEncodingException e) {
+			  logger.error(e.getMessage());
           }
 		return collectionObjectDo;
 
@@ -1448,7 +1488,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
 			}
 		
-		  } catch (UnsupportedEncodingException e) {  
+		  } catch (UnsupportedEncodingException e) {
+			  logger.error(e.getMessage());
           }
 		
 		return collectionObjectDo;
@@ -1463,7 +1504,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.DELETE_TAXONOMY_RESOURCE, resourceId,
 				getLoggedInSessionToken());
-		
+		getLogger().info("deleteTaxonomyResource:"+url);
 		try {
 			JSONObject taxonomyObject = new JSONObject();
 			JSONObject taxonomySetObj = new JSONObject();
@@ -1473,12 +1514,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 			taxonomyObject.put("resource", taxonomySetObj);
+			getLogger().info("deleteTaxonomy:"+taxonomyObject.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
 			
 		} catch (Exception ex) {
-			
+			logger.error(ex.getMessage());
 		}
 
 	}
@@ -1507,7 +1549,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 					jsonRep = jsonResponseRep.getJsonRepresentation();
 					
 				} catch (Exception ex) {
-					
+					logger.error(ex.getMessage());
 				}
 			}
 		}
@@ -1547,6 +1589,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				});
 				
 			} catch (JSONException e) {
+				logger.error(e.getMessage());
 			}
 		}
 		return new  ArrayList<ResourceTagsDo>();
@@ -1556,8 +1599,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public void deleteTagsServiceRequest(String resourceId, String addedTags)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
+		try {
+			addedTags = URLEncoder.encode(addedTags, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.DELETE_TAGS, resourceId, getLoggedInSessionToken(),addedTags);
+
 		getLogger().info("delete tags::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1577,6 +1627,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				enocodedString=enocodedString+"&pageToken="+nextPageToken;
 			}
 		} catch (UnsupportedEncodingException e) {
+			logger.error(e.getMessage());
 		}
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
@@ -1601,6 +1652,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			premissonJsonObject.put("type", "anyone");
 			premissonJsonObject.put("withLink", true);
 		} catch (JSONException e) {
+			logger.error(e.getMessage());
 		}
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.UPDATE_FILE_PERMISSION, driveFileId);
 		String response=new WebService(url,false).postWebservice("POST",premissonJsonObject.toString(),contentType,access_token);
@@ -1694,6 +1746,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
 			}
 		} catch (JSONException eJson) {
+			logger.error(eJson.getMessage());
 		}
 		return token;
 	}
@@ -1774,6 +1827,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		logger.info("assessment update API=>"+url);
 		JSONObject assessmentMainObject=new JSONObject();
 		JSONObject assessmentJsonObject=new JSONObject();
+		JSONObject isRequireJsonObject=new JSONObject();
 		try{
 			assessmentJsonObject.put("title",title);
 			assessmentJsonObject.put("url",assessmentUrl);
@@ -1782,6 +1836,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			if(sharing!=null){
 				assessmentJsonObject.put("sharing", sharing);
+			}
+			if(requireLogin!=null){
+				isRequireJsonObject.put("isLoginRequired",requireLogin);
+				assessmentJsonObject.put("settings",isRequireJsonObject);
 			}
 			assessmentMainObject.put("collection",assessmentJsonObject);
 			logger.info("data for update API=>"+assessmentMainObject.toString());

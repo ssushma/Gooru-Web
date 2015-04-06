@@ -39,6 +39,8 @@ import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 import org.json.JSONException;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,8 @@ import com.google.gwt.core.shared.GWT;
 @Service("homeService")
 @ServiceURL("/homeService")
 public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
+	
+private static  Logger looger =LoggerFactory.getLogger(HomeServiceImpl.class);
 
 	@Autowired
 	FeaturedContentDeSerializer featuredContentDeSerializer;
@@ -88,6 +92,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				GWT.log("jsonResp:>>"+jsonRep.toString());
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionDo.class);
 			} catch (JSONException e) {
+				looger.error(e.getMessage());
 			}
 		}
 		return new CollectionDo();

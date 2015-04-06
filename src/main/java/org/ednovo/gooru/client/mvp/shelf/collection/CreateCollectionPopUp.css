@@ -424,3 +424,14 @@ button.secondary {
 	line-height: 21px;
 	font-weight: normal;
 }
+.creatNew{
+	margin-left:18px;
+}
+.headingTextDisplay{
+  margin-top: -10px;
+  margin-bottom: 15px;
+  }
+  .headingTextDisplayNote{
+    margin-top: -27px;
+  margin-bottom: 18px;
+  }

@@ -151,6 +151,7 @@ public interface PlayerStyleBundle extends ClientBundle {
 		public String smallerTxt();
 		public String endPageIframe();
 		public String metatDataContainer();
-		
+		String seemoreText();
+		String seelessText();
 	}
 }

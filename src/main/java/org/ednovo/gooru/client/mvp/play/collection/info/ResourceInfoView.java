@@ -215,10 +215,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		standardsText.getElement().setAttribute("alt",i18n.GL1877());
 		standardsText.getElement().setAttribute("title",i18n.GL1877());
 		
-		centuryText.setText(i18n.GL3191().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		centuryText.setText(i18n.GL3199().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		centuryText.getElement().setId("lblStandardsText");
-		centuryText.getElement().setAttribute("alt",i18n.GL3191());
-		centuryText.getElement().setAttribute("title",i18n.GL3191());
+		centuryText.getElement().setAttribute("alt",i18n.GL3199());
+		centuryText.getElement().setAttribute("title",i18n.GL3199());
 
 		collectionsText.getElement().setId("pnlCollectionsText");
 		collectionsText.getElement().setInnerHTML(i18n.GL0620());

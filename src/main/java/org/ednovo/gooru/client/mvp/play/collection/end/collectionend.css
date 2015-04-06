@@ -479,10 +479,8 @@
 	height:100%;
 }
 .messageContainer{
-	margin: 95px 30px 0 30px;
 	padding: 35px 15px;
 	background: #f1f0f0;
-	border-top: 1px solid #ddd;
 	text-align: center;
 }
 .messageTextHeader{
@@ -504,8 +502,9 @@
 }
 
 .collections{
-	background:#333333;
-	padding:15px 0;
+	/* background:#333333; 
+	padding:15px 0;*/
+	padding: 0 0 27px 0;
 }
 .Playlast{
 	min-height:140px;
@@ -513,6 +512,7 @@
 .colleDescriptionBig{
 	font-weight:bold;
 	font-size:20px;
+	margin-bottom: 30px;
 	color:#ffffff
 }
 .whitebg{
@@ -523,7 +523,8 @@
 	width:100%;
 }
 .block{
-	padding: 30px 0;
+	/* padding: 30px 0; */
+	padding: 11px 0;
 }
 .timespend{
 	display: inline-block;
@@ -556,7 +557,7 @@
 }
 .PlayBoxTime{
 	  display: inline-block;
-	   width:200px;
+	   width:125px;
 	   text-align:center;
 	   vertical-align:top;
 }
@@ -733,4 +734,22 @@
 }
 .paddingClear{
 	padding:0;
+}
+.resourceCountStyle{
+	font-size: 13px;
+	font-weight: bold;
+	color: #ffffff;
+	display: inline-block;
+	margin-top: 14px;
+	margin-right: 10px;
+}
+.displayBlock{
+	display: inline-block;
+	width: 100%;
+}
+.summary {
+	margin-top: -62px;
+	position: relative;
+	display: inline-block;
+	width:100%;
 }

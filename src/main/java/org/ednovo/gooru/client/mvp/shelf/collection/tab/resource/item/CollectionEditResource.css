@@ -846,13 +846,10 @@ user agent stylesheetdiv {
 	border-bottom: 1px solid #ddd;
 	border-top: 1px solid #eee;
 	background: white;
-	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
-		
-		 
-		'#FDFDFD', endColorstr=    '#EDEDED');
 	background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD),
 		to(#EDEDED));
 	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFD, endColorstr=#EDEDED)");
 }
 
 .myFolderCollectionUrlbg:hover {
@@ -865,12 +862,8 @@ user agent stylesheetdiv {
 	-moz-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
 	-webkit-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
 	box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ffffffff,GradientType=0)";
-	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
-		
-		 
-		#ffdddddd, endColorstr=    #ffffffff, GradientType=    0);
+	-ms-filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ffffffff,GradientType=0)");
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endColorstr=#ffffffff, GradientType=0)");
 }
 
 .myFolderCollectionUrlbgTitle {
@@ -1135,6 +1128,7 @@ user agent stylesheetdiv {
 .myFolderCollectionRefreshInnerContainer {
 	float: left;
 	padding: 5px 0px 0px 0px;
+	display:none;
 }
 
 .myFolderCollectionRefreshInnerContainer {
@@ -1148,6 +1142,7 @@ user agent stylesheetdiv {
 	width: 19px;
 	height: 14px;
 	cursor: pointer;
+	display:none;
 }
 
 .myFolderCollectionRefresh {
@@ -1162,6 +1157,7 @@ user agent stylesheetdiv {
 	color: rgb(153, 153, 153);
 	padding: 4px 0px 0px 5px;
 	cursor: pointer;
+	display:none;
 }
 
 .myFolderCollectionFormTextarea {
@@ -1525,16 +1521,16 @@ user agent stylesheetdiv {
 }
 
 .newPopupTextArea {
-	width: 98%;
+	width: 100%;
 	height: 98%;
 	border: 0px;
 	font-size: 12px;
-	max-width: 351px;
+	max-width: 376px;
 	max-height: 79px;
 }
 
 .newPopupTextAreaEdit {
-	width: 98%;
+	width: 100%;
 	height: 98%;
 	border: 0px;
 	font-size: 12px;
@@ -1577,6 +1573,7 @@ user agent stylesheetdiv {
 
 .resourceExistsPopupPopupOuterContainer { /* width: 35%; */
 	margin: 0 auto;
+	padding:0;
 }
 
 .resourceExistsPopupContainer {
@@ -1847,10 +1844,7 @@ input[type="text"] {
 	padding: 10px;
 	cursor: default;
 	border-bottom: 1px solid #ddd;
-	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
-		
-		 
-		'#ddd', endColorstr=    '#f5f5f5');
+	filter:  literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ddd, endColorstr=#f5f5f5)");
 }
 
 .buttonDeSelected {
@@ -1864,10 +1858,7 @@ input[type="text"] {
 	background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD),
 		to(#EDEDED));
 	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
-	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
-		
-		 
-		'#FDFDFD', endColorstr=    '#EDEDED');
+	filter:  literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#FDFDFD, endColorstr=#EDEDED)");
 }
 
 .buttonDeSelected:hover {
@@ -2029,10 +2020,8 @@ input[type="text"] {
 	float: left;
 	margin-left: 20px;
 	background-color: #1076BB;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0);
+	-ms-filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)");
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb, GradientType=0)");
 }
 
 .assessmentPopup {
@@ -2763,17 +2752,14 @@ margin-top: 18px; */
 	background: rgb(230, 230, 230) !important;
 	cursor: default;
 	border-bottom: 1px solid #ddd !important;
-	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
-		
-		 
-		'#ddd', endColorstr=    '#f5f5f5');
+	filter: literal("progid: DXImageTransform.Microsoft.gradient(startColorstr=#ddd,endColorstr=#f5f5f5)");
 }
 
 .loginPopupGlassStyle {
 	z-index: 99999;
 	background-color: black;
 	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	filter: literal("alpha(opacity = 30)");
 }
 .andText{
 	/* float: right;

@@ -109,3 +109,14 @@ function showSearchFilters(){
 	} )( jQuery );
 
 */
+function showToggleMenu(){
+	var $body = $( 'body' ),
+	$page = $( '#bs-example-navbar-collapse-1' );
+	$body.addClass( 'animating' );
+	if ( $page.hasClass('in') ) {
+		$page.removeClass( 'in' );
+	} else {
+		$page.addClass( 'in' );
+	}
+
+}

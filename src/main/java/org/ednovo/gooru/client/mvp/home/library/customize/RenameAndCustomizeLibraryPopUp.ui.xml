@@ -18,6 +18,7 @@
 				<g:HTMLPanel styleName="{res.css.assignTitle}" ui:field="customizeText"></g:HTMLPanel>
 				<g:Label ui:field="cancelButton"
 					styleName="{res.css.assignCloseMarker} {res.css.assignSprite} {res.css.assignCloseMark}"></g:Label>
+				<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}" ui:field="loadingImageLabel">
 		      <g:Label  styleName="{res.css.loadingImageForSelfEditCustomize}" />

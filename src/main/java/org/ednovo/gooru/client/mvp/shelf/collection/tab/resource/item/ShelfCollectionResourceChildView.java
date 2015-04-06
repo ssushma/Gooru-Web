@@ -58,6 +58,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -100,6 +101,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
@@ -169,6 +171,8 @@ public class ShelfCollectionResourceChildView extends
 
 	List<Integer> collectionItems;
 	
+	String selectedFolderId = "";
+	
 	Map<String, Integer> collectionListCount = new HashMap<String, Integer>();
 	
 	private int totalSize;
@@ -182,6 +186,8 @@ public class ShelfCollectionResourceChildView extends
 	private boolean isReorderContainerVisible=false;
 	
 	private GlobalToolTip globalToolTip;
+	
+	String resourceLinkGlobal="";
 	
 	
 	
@@ -1297,8 +1303,43 @@ public class ShelfCollectionResourceChildView extends
 	}*/
 	
 	public void setResourcePlayLink(){
-		Anchor resourceAnchor=new Anchor();
-		resourceAnchor.setHref(getResourceLink());
+		final Anchor resourceAnchor=new Anchor();
+		String resourceLinkVal = getResourceLink();
+
+		final String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);	
+		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o3");
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
+		}	
+		if(!selectedFolderId.isEmpty())
+		{
+		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,false, new SimpleAsyncCallback<FolderTocDo>() {
+			@Override
+			public void onSuccess(FolderTocDo folderListDo) {
+			
+				for(int i=0;i<folderListDo.getCollectionItems().size();i++)
+				{
+					if(collectionId.equalsIgnoreCase(folderListDo.getCollectionItems().get(i).getGooruOid()))
+					{
+						if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+							resourceAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration"+"&folderId="+selectedFolderId+"&folderItemId="+folderListDo.getCollectionItems().get(i).getCollectionItemId());
+						}else{
+							resourceAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&folderId="+selectedFolderId+"&folderItemId="+folderListDo.getCollectionItems().get(i).getCollectionItemId());
+						}
+						break;
+					}
+				}
+			
+			}
+		});
+		}
+		else
+		{
+			resourceAnchor.setHref(resourceLinkVal);
+		}
 		resourceAnchor.setStyleName("");
 		resourceAnchor.getElement().appendChild(resourceTitleLbl.getElement());
 		resourceTitleContainer.add(resourceAnchor);
@@ -1312,13 +1353,16 @@ public class ShelfCollectionResourceChildView extends
 	
 	public String getResourceLink(){
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
-			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
-			return resourceLink;
-		}else{
-			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
-			return resourceLink;
-		}
+			if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+				String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
+				return resourceLink;
+			}else{
+				String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
+				return resourceLink;
+			}
+		
+		
+		
 	}
 
 	/**

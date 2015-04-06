@@ -142,7 +142,7 @@ public class CollectionFormView extends
 			privateRadioButtonPanel,buttonMainContainer,visibilitySection,courseContainer,gradeContainer,shelfItemContent;
 
 	@UiField
-	Label loadingTextLbl,collPopUpMainheading,collPopUpSubheading,collTitleLbl,gradeLbl,courseLbl;
+	Label loadingTextLbl,collPopUpMainheading,collPopUpSubheading,subheadingForAssessmentNote,subheadingForAssessment,collTitleLbl,gradeLbl,courseLbl;
 	
 	@UiField
 	HTMLEventPanel publicShareFloPanel;
@@ -160,7 +160,7 @@ public class CollectionFormView extends
 	RadioButton radioButtonPrivate = new RadioButton("", "");
 	private static final String GOORU_UID = "gooruuid";
 
-	final String[] list = { "- Select Grade(s) -", "Kindergarten", "1", "2",
+	final String[] list = { "- Select Grade -", "Kindergarten", "1", "2",
 			"3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
 			"Higher Education" };
 
@@ -203,7 +203,7 @@ public class CollectionFormView extends
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
-	boolean isAssessmentEditClicked=false;
+	boolean isAssessmentEditClicked=false,isAddBtnClicked=true;
 	String assessmentURL;
 
 	private static CollectionFormViewUiBinder uiBinder = GWT
@@ -250,7 +250,7 @@ public class CollectionFormView extends
 		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
 
 		appPopUp.setTitle(i18n.GL0993());
-		appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
+		appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				appPopUp.hide();
@@ -386,6 +386,7 @@ public class CollectionFormView extends
         publicRadioButtonPanel.add(radioButtonPublic);
 		shareRadioButtonPanel.add(radioButtonShare);
 		privateRadioButtonPanel.add(radioButtonPrivate);
+	
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			radioButtonPublic.addClickHandler(new ClickHandler() {
 		           
@@ -444,6 +445,10 @@ public class CollectionFormView extends
 			@Override
 			public void onClick(ClickEvent event) {
 				isAssessmentEditClicked=true;
+				subheadingForAssessment.setVisible(true);
+				subheadingForAssessment.setText(i18n.GL3201());
+				subheadingForAssessmentNote.setVisible(true);
+				subheadingForAssessmentNote.setText(i18n.GL3202());
 				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
 				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
 				btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
@@ -460,6 +465,10 @@ public class CollectionFormView extends
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				subheadingForAssessment.setVisible(true);
+				subheadingForAssessment.setText(i18n.GL3200());
+				subheadingForAssessmentNote.setVisible(false);
+				//subheadingForAssessmentNote.setText(i18n.GL3202());
 				isAssessmentEditClicked=false;
 				btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
 				btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
@@ -476,113 +485,125 @@ public class CollectionFormView extends
 		btnCreateAssessment.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if(isAssessmentEditClicked){
-					//Code when edit assessment selected
-					String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
-					assessmentURL=txtExistingAssessmentURL.getText();
-					if(StringUtil.isEmpty(assessmentExistingTitle)){
-						lblExistingAssessmentError.setVisible(true);
-						lblExistingAssessmentError.setText(i18n.GL1026());
-					}else if(StringUtil.isEmpty(assessmentURL)){
-						lblExistingAssessmentError.setVisible(false);
-						lblExistingAssessmentError.setText("");
-						lblExistingAssessmentURLError.setVisible(true);
-						lblExistingAssessmentURLError.setText(i18n.GL3166());
-					}else{
-						assessmentURL = URL.encode(assessmentURL);
-						if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
+				if(isAddBtnClicked){
+					isAddBtnClicked=false;
+					if(isAssessmentEditClicked){
+						//Code when edit assessment selected
+						String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
+						assessmentURL=txtExistingAssessmentURL.getText();
+						if(StringUtil.isEmpty(assessmentExistingTitle)){
+							lblExistingAssessmentError.setVisible(true);
+							lblExistingAssessmentError.setText(i18n.GL1026());
+							isAddBtnClicked=true;
+						}else if(StringUtil.isEmpty(assessmentURL)){
 							lblExistingAssessmentError.setVisible(false);
 							lblExistingAssessmentError.setText("");
 							lblExistingAssessmentURLError.setVisible(true);
-							lblExistingAssessmentURLError.setText(i18n.GL0924());
-							return;
+							lblExistingAssessmentURLError.setText(i18n.GL3166());
+							isAddBtnClicked=true;
 						}else{
-							boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
-							if (!isStartWithHttp) {
-								assessmentURL = "http://" + assessmentURL;
-								txtExistingAssessmentURL.setText(assessmentURL);
-								txtExistingAssessmentURL.getElement().setAttribute("alt",assessmentURL);
-								txtExistingAssessmentURL.getElement().setAttribute("title", assessmentURL);
+							assessmentURL = URL.encode(assessmentURL);
+							if(StringUtil.checkUrlContainesGooruUrl(assessmentURL)){
+								lblExistingAssessmentError.setVisible(false);
+								lblExistingAssessmentError.setText("");
+								lblExistingAssessmentURLError.setVisible(true);
+								lblExistingAssessmentURLError.setText(i18n.GL0924());
+								isAddBtnClicked=true;
+								return;
+							}else{
+								boolean isStartWithHttp = assessmentURL.matches("^(http|https)://.*$");
+								if (!isStartWithHttp) {
+									assessmentURL = "http://" + assessmentURL;
+									txtExistingAssessmentURL.setText(assessmentURL);
+									txtExistingAssessmentURL.getElement().setAttribute("alt",assessmentURL);
+									txtExistingAssessmentURL.getElement().setAttribute("title", assessmentURL);
+								}
+							}
+							if(!StringUtil.isValidUrl(assessmentURL, true)){
+								lblExistingAssessmentError.setVisible(false);
+								lblExistingAssessmentError.setText("");
+								lblExistingAssessmentURLError.setVisible(true);
+								lblExistingAssessmentURLError.setText(i18n.GL0926());
+								isAddBtnClicked=true;
+							}else{
+								final Map<String, String> parms = new HashMap<String, String>();
+								parms.put("text", assessmentExistingTitle);
+								AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
+									@Override
+									public void onSuccess(Boolean value) {
+										if(value){
+											//Displaying error message
+											SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentTitle, lblExistingAssessmentError, value);
+											isAddBtnClicked=true;
+										}else{
+											lblExistingAssessmentError.setVisible(false);
+											lblExistingAssessmentError.setText("");
+											parms.put("text", assessmentURL);
+											AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
+												@Override
+												public void onSuccess(Boolean result) {
+													if(result){
+														//Displaying error message
+														SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
+														isAddBtnClicked=true;
+													}else{
+														parms.put("text", txtExistingAssessmentDescription.getText());
+														lblExistingAssessmentDescriptionError.setVisible(false);
+														lblExistingAssessmentDescriptionError.setText("");
+														AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>(){
+															@Override
+															public void onSuccess(Boolean result) {
+																if(result){
+																	SetStyleForProfanity.SetStyleForProfanityForTextArea(txtExistingAssessmentDescription, lblExistingAssessmentDescriptionError, result);
+																	isAddBtnClicked=true;
+																}else{
+																	lblExistingAssessmentDescriptionError.setVisible(false);
+																	lblExistingAssessmentDescriptionError.setText("");
+																	String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+																	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+																	final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+																	final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+																	getUiHandlers().saveCollection(folderId, o1, o2, o3);
+	  														    }
+															}
+														});
+													}
+												}
+											});
+										}
+									}
+								});
 							}
 						}
-						if(!StringUtil.isValidUrl(assessmentURL, true)){
-							lblExistingAssessmentError.setVisible(false);
-							lblExistingAssessmentError.setText("");
-							lblExistingAssessmentURLError.setVisible(true);
-							lblExistingAssessmentURLError.setText(i18n.GL0926());
+					}else{
+						//Creating new assessment
+						String assessmentTitle=txtNewAssessmentTitle.getText();
+						if(StringUtil.isEmpty(assessmentTitle)){
+							lblNewAssessmentError.setVisible(true);
+							lblNewAssessmentError.setText(i18n.GL1026());
+							isAddBtnClicked=true;
 						}else{
-							final Map<String, String> parms = new HashMap<String, String>();
-							parms.put("text", assessmentExistingTitle);
+							Map<String, String> parms = new HashMap<String, String>();
+							parms.put("text", assessmentTitle);
 							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
 								@Override
 								public void onSuccess(Boolean value) {
 									if(value){
 										//Displaying error message
-										SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentTitle, lblExistingAssessmentError, value);
+										SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtNewAssessmentTitle, lblNewAssessmentError, value);
+										isAddBtnClicked=true;
 									}else{
-										lblExistingAssessmentError.setVisible(false);
-										lblExistingAssessmentError.setText("");
-										parms.put("text", assessmentURL);
-										AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
-											@Override
-											public void onSuccess(Boolean result) {
-												if(result){
-													//Displaying error message
-													SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtExistingAssessmentURL, lblExistingAssessmentURLError, result);
-												}else{
-													parms.put("text", txtExistingAssessmentDescription.getText());
-													lblExistingAssessmentDescriptionError.setVisible(false);
-													lblExistingAssessmentDescriptionError.setText("");
-													AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>(){
-														@Override
-														public void onSuccess(Boolean result) {
-															if(result){
-																SetStyleForProfanity.SetStyleForProfanityForTextArea(txtExistingAssessmentDescription, lblExistingAssessmentDescriptionError, result);
-															}else{
-																lblExistingAssessmentDescriptionError.setVisible(false);
-																lblExistingAssessmentDescriptionError.setText("");
-																String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-																final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-																final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-																final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-																getUiHandlers().saveCollection(folderId, o1, o2, o3);
-  														    }
-														}
-													});
-												}
-											}
-										});
+										lblNewAssessmentError.setVisible(false);
+										lblNewAssessmentError.setText("");
+										String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+										final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+										final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+										final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+										getUiHandlers().saveCollection(folderId, o1, o2, o3);
 									}
 								}
 							});
 						}
-					}
-				}else{
-					//Creating new assessment
-					String assessmentTitle=txtNewAssessmentTitle.getText();
-					if(StringUtil.isEmpty(assessmentTitle)){
-						lblNewAssessmentError.setVisible(true);
-						lblNewAssessmentError.setText(i18n.GL1026());
-					}else{
-						Map<String, String> parms = new HashMap<String, String>();
-						parms.put("text", assessmentTitle);
-						AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
-							@Override
-							public void onSuccess(Boolean value) {
-								if(value){
-									//Displaying error message
-									SetStyleForProfanity.SetStyleForProfanityForTextBoxWithPlaceholder(txtNewAssessmentTitle, lblNewAssessmentError, value);
-								}else{
-									lblNewAssessmentError.setVisible(false);
-									lblNewAssessmentError.setText("");
-									String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
-									final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-									final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-									final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-									getUiHandlers().saveCollection(folderId, o1, o2, o3);
-								}
-							}
-						});
 					}
 				}
 			}
@@ -646,8 +667,10 @@ public class CollectionFormView extends
 		pnlNewAssessmentContainer.setVisible(false);
 		pnlExistingAssessmentContainer.setVisible(false);
 		resetAssessmentFields();
+		txtNewAssessmentTitle.getElement().setAttribute("maxlength", "50");
 		txtExistingAssessmentTitle.getElement().setAttribute("maxlength", "50");
 		txtExistingAssessmentDescription.getElement().setAttribute("maxlength", "300");
+		txtNewAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(0));
 		txtExistingAssessmentTitle.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(1));
 		txtExistingAssessmentDescription.addKeyUpHandler(new TitleAndDescriptionKeyUpHandler(2));
 	}
@@ -660,7 +683,18 @@ public class CollectionFormView extends
 				this.value=value;
 			}
 			public void onKeyUp(KeyUpEvent event) {
+				if(value==0){
+					lblNewAssessmentError.setVisible(false);
+					if(txtNewAssessmentTitle.getText().length()>=50){
+						txtNewAssessmentTitle.setText(txtNewAssessmentTitle.getText().toString().substring(0,50));
+						lblNewAssessmentError.setVisible(true);
+						lblNewAssessmentError.setText(i18n.GL0143());
+						lblNewAssessmentError.getElement().setAttribute("alt",i18n.GL0143());
+						lblNewAssessmentError.getElement().setAttribute("title",i18n.GL0143());
+					}
+				}
 				if(value==1){
+					lblExistingAssessmentError.setVisible(false);
 					if(txtExistingAssessmentTitle.getText().length()>=50){
 						txtExistingAssessmentTitle.setText(txtExistingAssessmentTitle.getText().toString().substring(0,50));
 						lblExistingAssessmentError.setVisible(true);
@@ -670,6 +704,7 @@ public class CollectionFormView extends
 					}
 				}
 				if(value==2){
+					lblExistingAssessmentDescriptionError.setVisible(false);
 					if(txtExistingAssessmentDescription.getText().length()>=300){
 						txtExistingAssessmentDescription.setText(txtExistingAssessmentDescription.getText().toString().substring(0,300));
 						lblExistingAssessmentDescriptionError.setVisible(true);
@@ -901,6 +936,7 @@ public class CollectionFormView extends
 		}else{
 			collection.setCollectionType("collection");
 			collection.setTitle(collectionTitleTxtBox.getText());
+			setPopUpStyle();
 			if (!(gradeDropDownList.getSelectedIndex() == 0)) {
 				collection.setGrade(list[gradeDropDownList.getSelectedIndex()]);
 			}
@@ -993,12 +1029,16 @@ public class CollectionFormView extends
 			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
 			collPopUpMainheading.setVisible(true);
 			collPopUpSubheading.setVisible(true);
+			subheadingForAssessment.setVisible(false);
+			subheadingForAssessmentNote.setVisible(false);
 		if(collectionType!=null&&collectionType.equals("assessment")){
 			appPopUp.setTitle("");
 			pnlCreateNewAssessment.setVisible(true);
 			bodyContainer.setVisible(false);
 			collPopUpMainheading.setVisible(false);
 			collPopUpSubheading.setVisible(false);
+			subheadingForAssessment.setText(i18n.GL3200());
+			subheadingForAssessmentNote.setVisible(false);
 			pnlNewAssessmentContainer.setVisible(false);
 			pnlExistingAssessmentContainer.setVisible(false);
 			resetAssessmentFields();
@@ -1009,7 +1049,7 @@ public class CollectionFormView extends
 			rdBtnAssessmentPrivate.setValue(false);
 			requireLoginYes.setValue(false);
 			requireLoginNo.setValue(true);
-			appPopUp.getCloseButton().addClickHandler(new ClickHandler() {
+			appPopUp.getCloseBtn().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					appPopUp.hide();
@@ -1128,7 +1168,9 @@ public class CollectionFormView extends
 		 * if (collection.getGrade() != null) {
 		 * collectionGradeTxtBox.setText(collection.getGrade()); }
 		 */
+
 		setCourseData();
+	
 		return collection;
 	}
 /**
@@ -1151,8 +1193,8 @@ public class CollectionFormView extends
 	 */
 	@Override
 	public void setLibraryCodes(List<LibraryCodeDo> libraryCode) {
-		courseLisBox.addItem("- Select course -", "-1");
-		assessmentCourseLisBox.addItem("- Select course -", "-1");
+		courseLisBox.addItem("- Select Course -", "-1");
+		assessmentCourseLisBox.addItem("- Select Course -", "-1");
 		if (libraryCode != null) {
 			for (LibraryCodeDo libraryCodes : libraryCode) {
 				for (LibraryCodeDo libCode : libraryCodes.getNode()) {
@@ -1208,7 +1250,8 @@ public class CollectionFormView extends
 	@Override
 	public String getCourseCodeId() {
 		try {
-			if(pnlNewAssessmentContainer.isVisible()){
+			String collectionType=AppClientFactory.getPlaceManager().getRequestParameter("type",null);
+            if(collectionType!=null&&collectionType.equalsIgnoreCase("assessment")){
 				if (!assessmentCourseLisBox.getValue().equals("-1")) {
 					String selectedValue = assessmentCourseLisBox.getValue(assessmentCourseLisBox.getSelectedIndex());
 					if (!selectedValue.equals("-1")) {
@@ -1298,5 +1341,22 @@ public class CollectionFormView extends
 		lblExistingAssessmentError.setVisible(false);
 		lblExistingAssessmentURLError.setVisible(false);
 		assessmentGradeDropDownList.setSelectedIndex(0);
+		isAddBtnClicked=true;
+	}
+	@Override
+	public void setDefaultCreate() {
+		subheadingForAssessment.setVisible(true);
+		subheadingForAssessment.setText(i18n.GL3200());
+		subheadingForAssessmentNote.setVisible(false);
+		isAssessmentEditClicked=false;
+		btnExistingAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+		btnExistingAssessment.addStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+		btnNewAssessment.removeStyleName(CollectionCBundle.INSTANCE.css().deselecteAssessment());
+		btnNewAssessment.addStyleName(CollectionCBundle.INSTANCE.css().selecteAssessment());
+		
+		pnlExistingAssessmentContainer.setVisible(false);
+		pnlNewAssessmentContainer.setVisible(true);
+		btnCreateAssessment.setVisible(true);
+		btnCancelAssessment.setVisible(true);
 	}
 }

@@ -392,6 +392,8 @@ public interface ShelfCBundle extends ClientBundle{
 		String deleteOkayButton();
 		
 		String aleartDescText();
+		String aleartDescTextForNotLoggedInUser();
+		String shelfItemSucessPopUpWithOutWidth();
 		String collectionEditImageTeacherTip();
 		
 		String publishPanel();

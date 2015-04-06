@@ -97,17 +97,20 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			jsonObj.put("width",750);
 			jsonObj.put("height",525);
 		} catch (JSONException e1) {
+			getLogger().error(e1.getMessage());
 		}		
 
 		String responseText ="";
 			try {
 				responseText = fileUploadImage(jsonObj.toString(), url);
 			} catch (Exception e) {
+				getLogger().error(e.getMessage());
 			}
 			
 			try {
 				mediaUploadDo = JsonDeserializer.deserialize(responseText, MediaUploadDo.class);
 			} catch (Exception e) {
+				getLogger().error(e.getMessage());
 			}
 		return mediaUploadDo;
 
@@ -126,6 +129,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		try {
 			filePath = jsonRep.getText(); 
 		} catch (Exception e) {
+			getLogger().error(e.getMessage());
 		}
 		return filePath;
 	}
@@ -149,7 +153,9 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 //		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		}catch(Exception e){}
+		}catch(Exception e){
+			getLogger().error(e.getMessage());
+		}
 		return deserializeCollectionItem(jsonRep);
 	}
 	
@@ -159,6 +165,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
 			}
 		}
 		return new CollectionItemDo();
@@ -178,7 +185,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 		catch(Exception ex)
 		{
-			
+			getLogger().error(ex.getMessage());
 		}
 		
 		if (imageUrl == null) {
@@ -198,6 +205,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				JSONArray responseJson = new JSONArray(response);
 				mediaUploadDo = JsonDeserializer.deserialize(responseJson.get(0).toString(), MediaUploadDo.class);
 			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
 			}
 		}
 		return mediaUploadDo;
@@ -244,6 +252,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArrayHints[i],null));
 				jArrHints.put(jsonObjVal);
 			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
 			}
 		
 		 }
@@ -260,6 +269,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray[i],null));
 				jArr.put(jsonObjVal);
 			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
 			}
 		
 		 }
@@ -294,6 +304,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			  //mainQTempObj.put("mediaFileName", fileName);
 			
 		} catch (JSONException e) {
+			getLogger().error(e.getMessage());
 		}
 
 		  
@@ -319,6 +330,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
 			} catch (JSONException e) {
+				getLogger().error(e.getMessage());
 			}
 		}
 		return null;

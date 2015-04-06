@@ -74,9 +74,18 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private List<checkboxSelectedDo> audience;
 	private List<checkboxSelectedDo> learningSkills;
 	private CollectionSettingsDo settings;
+	private String gooruOid;
 	
 	public CollectionDo(){
 		
+	}
+
+	public String getGooruOid() {
+		return gooruOid;
+	}
+
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
 	}
 
 	public String getAdds() {

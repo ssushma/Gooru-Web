@@ -137,6 +137,10 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 				super.onBrowserEvent(event);
 			}
 		}
+		 public void onLoad(){
+			 super.onLoad();
+			 DOM.setStyleAttribute(folderTocTree.getElement(), "position", "static");
+		 }
 	};
 	private CollectionTreeItem previousSelectedItem = null;
 	private FolderTreeItem currentFolderSelectedTreeItem = null;
@@ -159,6 +163,7 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * This method is used to set folder TOC Data.
 	 */
 	public void setData() {
+		Window.scrollTo(0, 0);
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTocTree);
 		folderTocTree.addItem(getLoadingImage());
@@ -224,29 +229,29 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@Override
 	public void setBannerStaticImages() {
 		bannerVal= new HashMap<String, List<String>>();
-		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px;",i18n.GL0532(),Constants.RUSD_LOGO));
-		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png);",i18n.GL2108(),Constants.CORE_LOGO));
-		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-rusd_purple.png);",i18n.GL2053(), Constants.LPS_LOGO));
-		bannerVal.put(PlaceTokens.LUSD, Arrays.asList("background: url(../images/library/district/landing-image-lusd.png) -7px -47px;",i18n.GL2181(), Constants.LUSD_LOGO));
-		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -47px;",i18n.GL2061(), Constants.VALVERDE_LOGO));
-		bannerVal.put(PlaceTokens.SUSD, Arrays.asList("background: url(../images/library/district/landing-image-susd.png) -7px -47px;",i18n.GL2058(), Constants.SUSD_LOGO));
-		bannerVal.put(PlaceTokens.SAUSD_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-sausd.png) -7px -47px;",i18n.GL1902(), Constants.SAUSD_LOGO));
-		
-		bannerVal.put(PlaceTokens.AUTODESK, Arrays.asList("background: url("+Constants.AUTODESK_BANNER +") center; height: 245px;",i18n.GL2027(),""));
-		bannerVal.put(PlaceTokens.CCST_Cal_TAC, Arrays.asList("background: url("+Constants.CCST_BANNER +") center; height: 245px;",i18n.GL2179(),""));
-		bannerVal.put(PlaceTokens.NGC, Arrays.asList("background: url("+Constants.NGC_BANNER +") center -45px; height: 245px;",i18n.GL2030(),""));
-		bannerVal.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList("background: url("+Constants.ASPIRE_BANNER +") center; height: 245px;",i18n.GL3107(),""));
-		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center -50px;height: 230px;",i18n.GL2174(),""));
-		bannerVal.put(PlaceTokens.FTE, Arrays.asList("background: url("+Constants.FTE_BANNER +") center;height: 245px;",i18n.GL2029(),""));
-		bannerVal.put(PlaceTokens.LESSONOPOLY, Arrays.asList("background: url("+Constants.LESSONOPOLY_BANNER +") center -37px;height: 245px;",i18n.GL2032(),""));
-		bannerVal.put(PlaceTokens.LIFEBOARD, Arrays.asList("background: url("+Constants.LIFEBOARD_BANNER +") center;height: 245px;","",""));
-		bannerVal.put(PlaceTokens.FINCAPINC, Arrays.asList("background: url("+Constants.FINCAP_BANNER +") center -50px; height: 232px;",i18n.GL2033(),""));
-		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center -50px; height: 228px;",i18n.GL2041(),""));
-		bannerVal.put(PlaceTokens.ONR, Arrays.asList("background: url("+Constants.ONR_BANNER +") center;height: 245px;",i18n.GL2028(),""));
-		bannerVal.put(PlaceTokens.PSDPAL, Arrays.asList("background: url("+Constants.PSDPAL_BANNER +") center;height: 245px;",i18n.GL2034(),""));
-		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center -50px; height: 230px;",i18n.GL2186(),""));
-		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center -48px;height: 245px;",i18n.GL2031(),""));
-		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center;height: 245px;",i18n.GL2040(),""));
+		bannerVal.put(PlaceTokens.RUSD_LIBRARY, Arrays.asList("background: url(../images/library/landing-image-rusd.png) -7px -47px no-repeat;",i18n.GL0532(),Constants.RUSD_LOGO));
+		bannerVal.put(PlaceTokens.CORE_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-rusd_orange.png) no-repeat;",i18n.GL2108(),Constants.CORE_LOGO));
+		bannerVal.put(PlaceTokens.LPS, Arrays.asList("background: url(../images/library/district/landing-image-rusd_purple.png) no-repeat;",i18n.GL2053(), Constants.LPS_LOGO));
+		bannerVal.put(PlaceTokens.LUSD, Arrays.asList("background: url(../images/library/district/landing-image-lusd.png) 0px 0px no-repeat;background-size: auto 130% !important;",i18n.GL2181(), Constants.LUSD_LOGO));
+		bannerVal.put(PlaceTokens.VALVERDE, Arrays.asList("background: url(../images/library/district/landing-image-valverde.png)-7px -50px no-repeat;background-size: auto 128% !important;height: 220px; margin-top: -12px;",i18n.GL2061(), Constants.VALVERDE_LOGO));
+		bannerVal.put(PlaceTokens.SUSD, Arrays.asList("background: url(../images/library/district/landing-image-susd.png) -7px -63px no-repeat;background-size: auto 131% !important; height: 220px;",i18n.GL2058(), Constants.SUSD_LOGO));
+		bannerVal.put(PlaceTokens.SAUSD_LIBRARY, Arrays.asList("background: url(../images/library/district/landing-image-sausd.png) 0px -7px no-repeat;",i18n.GL1902(), Constants.SAUSD_LOGO));
+		 
+		bannerVal.put(PlaceTokens.AUTODESK, Arrays.asList("background: url("+Constants.AUTODESK_BANNER +") center no-repeat; height: 230px;",i18n.GL2027(),""));
+		bannerVal.put(PlaceTokens.CCST_Cal_TAC, Arrays.asList("background: url("+Constants.CCST_BANNER +") center no-repeat; height: 230px;",i18n.GL2179(),""));
+		bannerVal.put(PlaceTokens.NGC, Arrays.asList("background: url("+Constants.NGC_BANNER +") center -38px no-repeat; height: 245px;",i18n.GL2030(),""));
+		bannerVal.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList("background: url("+Constants.ASPIRE_BANNER +") center no-repeat; height: 230px;",i18n.GL3107(),""));
+		bannerVal.put(PlaceTokens.ESYP, Arrays.asList("background: url("+Constants.ESYP_BANNER +") center -50px no-repeat;height: 230px;background-size: 100% 301px !important;",i18n.GL2174(),""));
+		bannerVal.put(PlaceTokens.FTE, Arrays.asList("background: url("+Constants.FTE_BANNER +") center no-repeat;height: 241px;",i18n.GL2029(),""));
+		bannerVal.put(PlaceTokens.LESSONOPOLY, Arrays.asList("background: url("+Constants.LESSONOPOLY_BANNER +") center -37px no-repeat;height: 235px;",i18n.GL2032(),""));
+		bannerVal.put(PlaceTokens.LIFEBOARD, Arrays.asList("background: url("+Constants.LIFEBOARD_BANNER +") center no-repeat;height: 230px;","",""));
+		bannerVal.put(PlaceTokens.FINCAPINC, Arrays.asList("background: url("+Constants.FINCAP_BANNER +") center -50px no-repeat; height: 232px;",i18n.GL2033(),""));
+		bannerVal.put(PlaceTokens.GEOEDUCATION, Arrays.asList("background: url("+Constants.GEOEDU_BANNER +") center -50px no-repeat;background-size: 100% 301px !important; height: 228px;",i18n.GL2041(),""));
+		bannerVal.put(PlaceTokens.ONR, Arrays.asList("background: url("+Constants.ONR_BANNER +") center no-repeat;height: 230px;",i18n.GL2028(),""));
+		bannerVal.put(PlaceTokens.PSDPAL, Arrays.asList("background: url("+Constants.PSDPAL_BANNER +") center -37px no-repeat;height: 245px;",i18n.GL2034(),""));
+		bannerVal.put(PlaceTokens.TICAL, Arrays.asList("background: url("+Constants.TICAL_BANNER +") center -50px no-repeat;background-size: 100% 301px !important; height: 230px;",i18n.GL2186(),""));
+		bannerVal.put(PlaceTokens.WSPWH, Arrays.asList("background: url("+Constants.WSPH_BANNER +") center -48px no-repeat;height: 230px;",i18n.GL2031(),""));
+		bannerVal.put(PlaceTokens.YOUTHVOICES, Arrays.asList("background: url("+Constants.YOUTH_VOICES_BANNER +") center no-repeat;height: 230px;",i18n.GL2040(),""));
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.folder.toc.IsFolderTocView#setFolderItems(org.ednovo.gooru.shared.model.folder.FolderTocDo)
@@ -264,11 +269,11 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 					 if(FOLDER.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTocTree.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
+						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
 					 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 						 TreeItem folderItem=new TreeItem(new FolderCollectionView(null,floderDo,null));
 						 folderTocTree.addItem(folderItem);
-						 adjustTreeItemStyle(folderItem);
+						 adjustTreeItemStyle(folderItem,floderDo.getType(),0);
 					 }
 				 }
 				 floderTreeContainer.clear();
@@ -350,20 +355,69 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-   	private  void adjustTreeItemStyle(final UIObject uiObject) {
+   	private  void adjustTreeItemStyle(final UIObject uiObject, String itemType, int folderLevel) {
 	      if (uiObject instanceof TreeItem) {
 	         if (uiObject != null && uiObject.getElement() != null) {
-	            Element element = uiObject.getElement();
-	            element.getStyle().setPadding(0, Unit.PX);
-	            element.getStyle().setMarginLeft(0, Unit.PX);
+	            Element element = uiObject.getElement();  
+				 if(FOLDER.equalsIgnoreCase(itemType)){
+						if(folderLevel>=2){
+							 element.getStyle().setPaddingLeft(28, Unit.PX);
+					            element.getStyle().setMarginLeft(0, Unit.PX);
+					            if(folderLevel>2)
+					            {
+					            Element element1 = uiObject.getElement().getParentElement().getParentElement();
+					            element1.getStyle().setPaddingLeft(28, Unit.PX);
+				 		        element1.getStyle().setMarginLeft(0, Unit.PX);
+					            }
+						}
+						else
+						{
+							if(folderLevel == 1)
+							{
+					           element.getStyle().setPaddingLeft(0, Unit.PX);
+					           element.getStyle().setMarginLeft(-10, Unit.PX);
+							}
+							else
+							{
+					           element.getStyle().setPaddingLeft(0, Unit.PX);
+					           element.getStyle().setMarginLeft(0, Unit.PX);
+							}
+
+						}
+				 }else if(SCOLLECTION.equalsIgnoreCase(itemType)){
+					 if(folderLevel>=2){
+						 element.getStyle().setPaddingLeft(69, Unit.PX);
+				            element.getStyle().setMarginLeft(0, Unit.PX);
+				            
+				            Element element1 = uiObject.getElement().getParentElement().getParentElement();
+				            element1.getStyle().setPaddingLeft(28, Unit.PX);
+			 		        element1.getStyle().setMarginLeft(0, Unit.PX);
+			
+							}
+					 else
+					 {
+					  element.getStyle().setPaddingLeft(28, Unit.PX);
+		              element.getStyle().setMarginLeft(0, Unit.PX);
+					 }
+					 if(folderLevel==2)
+					 {
+				            Element element1 = uiObject.getElement().getParentElement().getParentElement();
+				            element1.getStyle().setPaddingLeft(0, Unit.PX);
+			 		        element1.getStyle().setMarginLeft(-12, Unit.PX);
+					 }
+			
+				 }
+
 	         }
 	      } else {
 	         if (uiObject != null && uiObject.getElement() != null && uiObject.getElement().getParentElement() != null
 	               && uiObject.getElement().getParentElement().getParentElement() != null
 	               && uiObject.getElement().getParentElement().getParentElement().getStyle() != null) {
 	            Element element = uiObject.getElement().getParentElement().getParentElement();
-	            element.getStyle().setPadding(0, Unit.PX);
-	            element.getStyle().setMarginLeft(0, Unit.PX);
+
+	 	           element.getStyle().setPadding(0, Unit.PX);
+		           element.getStyle().setMarginLeft(1, Unit.PX);
+	            
 	         }
 	      }
    	}
@@ -482,16 +536,13 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 								FolderTreeItem innerFolderTreeItem = new FolderTreeItem(styleName, floderDo.getTitle(),floderDo.getGooruOid());
 								innerFolderTreeItem.setFolerLevel(folderLevel + 1);
 								TreeItem folderItem = new TreeItem(innerFolderTreeItem);
-								if(folderLevel>=2){
-									folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
-								}
 								item.addItem(folderItem);
-								adjustTreeItemStyle(folderItem);
+								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
 						 }else if(SCOLLECTION.equalsIgnoreCase(floderDo.getType())){
 							 	TreeItem folderItem = new TreeItem(new  FolderCollectionView(null,floderDo,parentId));
-							 	folderItem.getElement().setAttribute("style", "padding-left:"+folderLevel*35+"px !important;");
+								folderItem.getElement().removeAttribute("style");
 							 	item.addItem(folderItem);
-								adjustTreeItemStyle(folderItem);
+								adjustTreeItemStyle(folderItem,floderDo.getType(),folderLevel);
 						 }
 					}
 					item.setState(folderTreeItemWidget.isOpen());
@@ -580,12 +631,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 			}
 			bannerImagePanel.getElement().setAttribute("style", bannerVal.get(placetoken).get(0));
 			bannerTitle.setText(convertHtml(bannerVal.get(placetoken).get(1)));
-			if(!bannerVal.get(placetoken).get(2).equals("")){
-				logoImage.setUrl(bannerVal.get(placetoken).get(2));
-			}
 			if(bannerVal.get(placetoken).get(2).equals("")){
 				bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
+				bannerLogoImageContainer.setVisible(false);
 			}else{
+				bannerLogoImageContainer.setVisible(true);
+				logoImage.setUrl(bannerVal.get(placetoken).get(2));
 				bannerTitle.getElement().getStyle().clearBackgroundColor();
 				bannerTitle.removeStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 			}
@@ -616,9 +667,12 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 		bannerTitle.setStyleName(FolderContainerCBundle.INSTANCE.css().bannerImageTitle());
 		String placetoken=AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_NAME,null);
 		if(!bannerVal.get(placetoken).get(2).equals("")){
+			bannerLogoImageContainer.setVisible(true);
 			logoImage.setUrl(bannerVal.get(placetoken).get(2));
+		}else{
+			bannerLogoImageContainer.setVisible(false);
 		}
-		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center; background-size: 100% auto !important;height: 198px;");
+		bannerImagePanel.getElement().setAttribute("style", "background: url("+"\""+folderDo.getThumbnails().getUrl()+"\"" +") no-repeat center -50px; background-size: 100% auto !important;height: 198px;");
 		bannerImage.setUrl(folderDo.getThumbnails().getUrl());
 		setBreadCrumbsText(bannerTitle.getText(),lblFolderTitle.getText());
 		bannerImage.addErrorHandler(new ErrorHandler() {
@@ -774,6 +828,20 @@ public class FolderTocView extends BaseViewWithHandlers<FolderTocUiHandlers> imp
 	@UiHandler("errorPageImg")
 	public void clickOnErrorImg(ClickEvent clickEvent){
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	}
+	
+	/**
+	* Gets the name of the used browser.
+	*/
+	public static native String getBrowserName() /*-{
+	    return navigator.userAgent.toLowerCase();
+	}-*/;
+	
+	/**
+	* Returns true if the current browser is Firefox.
+	*/
+	public static boolean isFirefoxBrowser() {
+	    return getBrowserName().toLowerCase().contains("firefox");
 	}
 	
 }

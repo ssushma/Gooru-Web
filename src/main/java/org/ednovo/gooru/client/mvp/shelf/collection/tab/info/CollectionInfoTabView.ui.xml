@@ -190,10 +190,9 @@
 					<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}" />
 				</g:FlowPanel>
 
-				<g:FlowPanel styleName="{res.css.depthOfKnowledgeContainer}">
+				<g:FlowPanel styleName="{res.css.depthOfKnowledgeContainer}" ui:field="pnl21CenturySkils">
 					<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer} {res.css.learningInnovationSkills}">
-						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
-							ui:field="learningInnovationHeader" />
+						<g:Label styleName="{res.css.shelfGradeInfoTitle}"	ui:field="learningInnovationHeader" />
 					</g:FlowPanel>
 					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
 						ui:field="learningInnovationTitle" />

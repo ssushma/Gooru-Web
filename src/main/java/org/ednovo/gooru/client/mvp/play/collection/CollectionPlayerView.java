@@ -51,6 +51,8 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -92,9 +94,9 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
 	
-	@UiField Label lblNarrationText,lblSeeMore;
+	@UiField Label lblSeeMore;
 	
-	@UiField HTMLEventPanel pnlBackToCollection;
+	@UiField HTMLEventPanel lblNarrationText,pnlBackToCollection;
 	
 	@UiField Image authorImage;
 	
@@ -259,6 +261,11 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void setResourceTitle(String resourceTitle) {
 		headerView.setResourceTitle(resourceTitle);
+		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
+		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
+		if((view!=null&&view.equalsIgnoreCase("end")) || (resourceId==null)){
+			appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
+		}
 	}
 	
 	public void setNarrationButton(Button narrationButton){
@@ -320,7 +327,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			Map<String,String> params = new LinkedHashMap<String,String>();
 			params.put("id", collectionId);
 			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-			
 			if(resourceId!=null&&!resourceId.equalsIgnoreCase("")){
 				appPopUp.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
 				if(isButtonActive){
@@ -334,11 +340,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 
 				}
-			}
-
-			else if(view!=null&&view.equalsIgnoreCase("end")){
+			}else if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
-
 				if(isButtonActive){
 					params.put("view", "end");
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
@@ -668,7 +671,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 					logOutToolTip.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 					logOutToolTip.setStyleName("");
 					logOutToolTip.getElement().getStyle().setZIndex(999999);
-					logOutToolTip.setPopupPosition(headerView.getAuthorContainer().getAbsoluteLeft() + 55, headerView.getAuthorContainer().getAbsoluteTop()+15);
+					logOutToolTip.getElement().getStyle().clearLeft();
+					logOutToolTip.getElement().getStyle().setFloat(Float.RIGHT);
+					logOutToolTip.getElement().getStyle().setRight(23, Unit.PCT);
+					logOutToolTip.getElement().getStyle().setTop(15, Unit.PX);
 					logOutToolTip.show();
 				}
 			}
@@ -693,17 +699,21 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@Override
 	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId) {
-
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);
 		if(!StringUtil.isEmpty(collectionId)){
-			headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+			if(view!=null&&view.equalsIgnoreCase("end")){
+				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
+			}else{
+				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+			}
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
 		}else{
 			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
 			if(view!=null&&view.equalsIgnoreCase("end")){
 				appPopUp.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().scrollStudyContainer());
-				headerView.getAuthorContainer().setVisible(false);
+				headerView.getAuthorContainer().setVisible(!isHidePlayerButtons);
 			}
 			else if(view!=null&&view.equalsIgnoreCase("fullScreen"))
 			{
@@ -731,6 +741,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	public void updateAuthorDetails(){
 		headerView.displayAuthorName(getCollectionType());
+	}
+	
+	public void hideAuthorInHeader(boolean showOrHide){
+		headerView.getAuthorContainer().setVisible(showOrHide);
 	}
 	
 	public void scrollStudyPage(){
@@ -824,21 +838,30 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
      */
 	@UiHandler("lblSeeMore") 
 	public void clickOnSeeMoreBtn(ClickEvent event){
-
 		if(collectionItemDo!=null && collectionItemDo.getNarration()!=null){
 			if(!isSeeMoreClicked){
-				String narrationText=removeHtmlTags(collectionItemDo.getNarration());
-				lblSeeMore.setText(i18n.GL_SPL_OPEN_SMALL_BRACKET()+i18n.GL0509()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
-				lblNarrationText.setText(narrationText);
+				String narrationText=collectionItemDo.getNarration();
+				narrationText=StringUtil.replaceAnchoreWithTarget(narrationText);
+				lblSeeMore.setText(i18n.GL0509());
+				lblNarrationText.getElement().setInnerHTML(narrationText);
 				isSeeMoreClicked=true;
 			}else{
 				setNarrationInFullScreenMode(collectionItemDo,collectionDo);
 				isSeeMoreClicked=false;
 			}
+		}else{
+			lblNarrationText.getElement().setInnerHTML("");
 		}
-		else
-		{
-			lblNarrationText.setText("");
+		setSeemoreBackGround();
+	}
+	/**
+	 * This method will set the background image up and arrows
+	 */
+	void setSeemoreBackGround(){
+		if(isSeeMoreClicked){
+			lblSeeMore.addStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().seelessText());
+		}else{
+			lblSeeMore.removeStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().seelessText());
 		}
 	}
 	private void setUserProfileImage(String profileUserId) {
@@ -857,34 +880,29 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			authorImage.setVisible(true);
 			lblNarrationText.setVisible(true);
 			setUserProfileImage(collectionDo.getUser().getGooruUId());
-			String narrationText=removeHtmlTags(collectionItemDo.getNarration());
+			String narrationText=collectionItemDo.getNarration();
+			narrationText=StringUtil.replaceAnchoreWithTarget(narrationText);
 			this.collectionItemDo=collectionItemDo;
 			this.collectionDo=collectionDo;
 			if(narrationText.length()>0 && narrationText.length()>240){
-				lblNarrationText.setText(narrationText.substring(0, 240)+"...");
+				lblNarrationText.getElement().setInnerHTML(narrationText.substring(0, 240)+"...");
 				lblSeeMore.setVisible(true);
-				lblSeeMore.setText(i18n.GL_SPL_OPEN_SMALL_BRACKET()+i18n.GL0508()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+				lblSeeMore.setText(i18n.GL0508());
 			}else{
-				lblNarrationText.setText(narrationText);
+				lblNarrationText.getElement().setInnerHTML(narrationText);
 				lblSeeMore.setVisible(false);
 			}
-		}
-		else
-		{
+		}else{
 			authorImage.setVisible(false);
 			lblNarrationText.setVisible(false);
-			lblNarrationText.setText("");
+			lblNarrationText.getElement().setInnerHTML("");
+			lblSeeMore.setVisible(false);
 		}
 	}
-	private String removeHtmlTags(String html){
-		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
-        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
-        return html;
-	}
-
 	@Override
 	public void removeStudentViewButton() {
 		
 	}
+
 
 }

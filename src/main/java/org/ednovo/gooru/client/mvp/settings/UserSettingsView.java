@@ -1458,11 +1458,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					public void onSuccess(Map<String, Object> result) {
 						lblPleaseWait.setVisible(false);
 						forgetPassword.setVisible(true);
-					if (result != null && result.containsKey("error") && result.get("error").toString().length() > 0) {
+					if (result != null && result.containsKey("error") && result.get("error") !=null  && result.get("error").toString().length() > 0) {
 						alertContentUc=new AlertContentUc(i18n.GL0061(), (String) result.get("error"));
 						return;
 					}
-					if (result != null && result.containsKey("gooruUid") && result.get("gooruUid").toString().length() > 0) {
+					if (result != null && result.containsKey("gooruUId") && result.get("gooruUId").toString().length() > 0) {
 						Window.enableScrolling(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 						forgotPwdSuccessVc=new ForgotPwdSuccessVc();

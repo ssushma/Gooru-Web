@@ -114,7 +114,7 @@ public class ResourceFrameBreakerView extends Composite implements ClientConstan
 			}
 		}
 		if(collectionItemDo!=null && collectionItemDo.getResource()!=null){
-			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
+			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnails().getUrl());
 			if(collectionItemDo.getResource().getResourceFormat()!=null){
 				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():"";
 				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()!=null?collectionItemDo.getResource().getResourceFormat().getDisplayName():""));

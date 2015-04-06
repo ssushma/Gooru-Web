@@ -1,4 +1,4 @@
-@external .alignLeft,.printWidget,.collectionBreakDown_infobox_titles_print,.maincontainer_collectionOverView_print,.collectionBreakDown_infobox_titles_print1,.collectionBreakDown_infobox_print,.collectionBreakDown_infobox_print,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1; 
+@external .alignLeft,.printWidget,.collectionBreakDown_infobox_titles_print,.maincontainer_collectionOverView_print,.collectionBreakDown_infobox_titles_print1,.collectionBreakDown_infobox_print,.collectionBreakDown_infobox_print,.collectionOverviewText,.collectionOverViewpnl,.setProgressBar,.category_new_type_audio,.category_new_type_image,.category_new_type_other,.category_new_type_interactive,.category_new_type_question,.category_new_type_text,.category_new_type_video,.category_new_type_webpage,.reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand  ; 
 .reportsTableContainer {
 	padding-top: 15px;
 }
@@ -8,7 +8,7 @@
 	text-align: center;
 	width: auto;
 }
- .alignLeft{text-align: left;}
+.alignLeft{text-align: left;}
 .setMarginAuto {
 	margin: 0 auto;
 	text-align: center;
@@ -45,6 +45,20 @@
 .reaction_needhelp1 {
 	background: url(/images/analyticsReactions.png) no-repeat scroll -285px
 		0px transparent;
+	height: 35px;
+	width: 35px
+}
+
+.reaction_redneedhelp {
+	background: url(/images/analyticsReactions.png) no-repeat scroll -81px
+		-45px transparent;
+	height: 35px;
+	width: 35px
+}
+
+.reaction_reddontunderstand {
+	background: url(/images/analyticsReactions.png) no-repeat scroll -1px
+		-45px transparent;
 	height: 35px;
 	width: 35px
 }
@@ -161,6 +175,7 @@
 	top: 0px;
 	width: 32px;
 }
+
 .category_new_type_webpage {
 	background: url(/images/analytics/categoryAnalytics.png) no-repeat 0
 		-222px;
@@ -174,6 +189,10 @@
 	float: left;
 	height: 25px;
 	background-color: rgb(16, 118, 187);
+}
+
+.resourceBreakDownTimeSpent {
+	width: auto;
 }
 
 .filterDropDown {
@@ -190,6 +209,7 @@
 	text-indent: 0.01px;
 	text-overflow: '';
 	margin-top: 20px;
+    margin-right: 2%;
 }
 
 .collectionBreakDown_infobox {
@@ -263,13 +283,12 @@
 .setOETextPopupCenter {
 	left: 0 !important;
 	right: 0 !important;
-	top: 180px !important;
-	bottom: 0 !important;
+	top: 0px !important;
 	position: fixed !important;
 	margin: auto;
 	width: 941px;
 	min-height: 148px;
-	height: auto;
+	height: 250px;
 	z-index: 99999;
 }
 
@@ -380,7 +399,6 @@
 
 .sendMeCopyBox {
 	float: right;
-	margin-top: 4px;
 	height: 15px;
 	width: 15px;
 }
@@ -435,8 +453,8 @@
 }
 
 div.buttonContainer {
-	margin: 0 0 0 40%;
-	width: 70%;
+	margin: 0 0 0 50%;
+	width: 50%;
 }
 div.emailSuccessMessage{
 	color: #1076BB;

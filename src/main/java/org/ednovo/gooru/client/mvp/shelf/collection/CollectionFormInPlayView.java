@@ -140,7 +140,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	RadioButton radioButtonShare=new RadioButton("","");
 	RadioButton radioButtonPrivate=new RadioButton("","");
 	
-	final String[] list = { "- Select Grade(s) -","Kindergarten", "1", "2", "3", "4", "5", "6", "7",
+	final String[] list = { "- Select Grade -","Kindergarten", "1", "2", "3", "4", "5", "6", "7",
 			"8", "9", "10", "11", "12", "Higher Education" };
 
 	ListBox gradeDropDownList = new ListBox();
@@ -658,7 +658,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	@Override
 	public void setLibraryCodes(List<LibraryCodeDo> libraryCode) {
 		//courseLisBox.clear();
-		courseLisBox.addItem("- Select course -", "-1");
+		courseLisBox.addItem("- Select Course -", "-1");
 		if (libraryCode != null) {
 			for (LibraryCodeDo libraryCodes : libraryCode) {
 				for (LibraryCodeDo libCode : libraryCodes.getNode()) {

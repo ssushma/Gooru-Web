@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.wrap;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -34,19 +33,14 @@ import org.ednovo.gooru.client.gin.BaseView;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.PreFilterPopup;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
-import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
-import org.ednovo.gooru.client.mvp.shelf.ShelfView;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DeviceUc;
-import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
-import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,10 +49,7 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -83,7 +74,7 @@ public class WrapView extends BaseView implements IsWrapView {
 	@UiField
 	HeaderUc headerUc;
 
-	@UiField HTMLPanel panelWrapper, panelDevice,searchPush,menuRight, resorceSearchFilters, collectionSearchFilters;
+	@UiField HTMLPanel panelWrapper, panelDevice,searchPush,menuRight, resorceSearchFilters, collectionSearchFilters,wrapBodyPanel;
 	
 	AddStandardsPreSearchPresenter addStandardsPresenter = null;
 	
@@ -104,7 +95,8 @@ public class WrapView extends BaseView implements IsWrapView {
 	public WrapView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
-		panelWrapper.getElement().setId("wrapper");	
+		panelWrapper.getElement().setId("wrapper");
+		wrapBodyPanel.getElement().setId("main");
 		headerUc.getElement().setId("homeHeaderUc");
 		wrapperPanel.getElement().setId("spnlWrapperPanel");
 		searchPush.getElement().setId("searchPush");
@@ -180,13 +172,13 @@ public class WrapView extends BaseView implements IsWrapView {
 							|| place.equalsIgnoreCase(PlaceTokens.STUDENT)) {
 						wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 					}else{
-						if(isIpad){
+						/*if(isIpad){
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 						}else if(isAndriod){
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
 						}else{
 							  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
-						}
+						}*/
 					}
 				}
 				wrapperPanel.setWidget(content);
@@ -387,11 +379,17 @@ public class WrapView extends BaseView implements IsWrapView {
 			isCCSSAvailable = true;
 			isNGSSAvailable = true;
 			isCAAvailable = true;
+			isTEKSAvailable = false;
 			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
 				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
 				addStandardsPresenter.callDefaultStandardsLoad();
 			}
 		}
 
+	}
+
+	@Override
+	public void updateUserHeaderProfileImage(String imageUrl) {
+		headerUc.updateHeaderProfileImage(imageUrl);
 	}
 }
