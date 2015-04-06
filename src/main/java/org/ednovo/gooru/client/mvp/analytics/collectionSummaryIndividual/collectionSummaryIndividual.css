@@ -290,6 +290,7 @@
 	min-height: 148px;
 	height: 250px;
 	z-index: 99999;
+	bottom: 0 !important;
 }
 
 .setGlassStyleName {
