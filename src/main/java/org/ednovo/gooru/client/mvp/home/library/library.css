@@ -262,7 +262,7 @@
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
 	/* IE 6-9 */	
-	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorStr=#FDFDFD, EndColorStr=#EDEDED)");
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
 
 }
 
@@ -999,7 +999,7 @@ margin-bottom: 15px;
 	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -o-linear-gradient(top, #FFFFFF, #FFFFFF);
 
 	/* IE 6-9 */
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorStr=#FDFDFD, EndColorStr=#EDEDED)");
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
 	
 }
 
@@ -1269,7 +1269,7 @@ margin-left: 82px;
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
 	/* IE 6-9 */	
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorStr=#FDFDFD, EndColorStr=#EDEDED)");
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
 	
 }
 .listViewBtnStyle{

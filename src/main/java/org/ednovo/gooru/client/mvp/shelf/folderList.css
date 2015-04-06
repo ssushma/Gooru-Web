@@ -224,7 +224,7 @@
     background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
     background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* IE10+ */
     background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* W3C */
-    filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#00ffffff, endColorstr=#ffffff,GradientType=1 )"); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
 }
 
 .folderLevel:hover {
@@ -628,7 +628,7 @@
     background: -o-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* Opera 11.10+ */
     background: -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* IE10+ */
     background: linear-gradient(to right, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* W3C */
-    filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#f5f5f5, endColorstr=#00ffffff,GradientType=1)"); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
 }
 
 .contentBlock.folder .contents.empty {
@@ -642,7 +642,7 @@
 	  background-repeat: no-repeat;
 	  background-position:center;
 	  background-color: -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%);
-    filter:literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#f5f5f5, endColorstr=#00ffffff,GradientType=1 )"); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
 }
 
 .contentBlock.collection .contents.empty {
@@ -656,7 +656,7 @@
 	background-repeat: no-repeat;
 	background-position:center;
 	background-color: -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%);
-    filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#f5f5f5, endColorstr=#00ffffff,GradientType=1 )"); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
 }
 
 .contentBlock.assessment .contents.empty {
@@ -670,7 +670,7 @@
 	background-repeat: no-repeat;
 	background-position:center;
 	background-color: -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%);
-    filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#f5f5f5, endColorstr=#00ffffff,GradientType=1 )"); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
 }
 
 .contentBlock .contents .resource {
@@ -771,7 +771,7 @@ background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,25
 background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%);
 background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%);
 background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%);
-filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#00ffffff, endColorstr=#ffffff,GradientType=1 )");
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
 }
 
 .editPanelContent .mainSection.emptyFolder {
@@ -803,6 +803,7 @@ filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#00ff
     -webkit-transition: visibility 0.2s linear, opacity 0.2s linear;
     -moz-transition: visibility 0.2s linear, opacity 0.2s linear;
     -o-transition: visibility 0.2s linear, opacity 0.2s linear;
+    //transition: visibility 0 linear 0.2s, opacity 0.2s linear;
 }
 
 .tooltipContainer .arrowBorder {
