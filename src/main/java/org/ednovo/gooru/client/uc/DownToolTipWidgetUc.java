@@ -134,7 +134,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	@Override
 	public void onClick(ClickEvent event){
 		StandardsPopupVc standardsPopupVc;
-		if (standards.size()>1){
+		if (standards!=null && standards.size()>1){
 			if (tooltipPopUpUc != null) {
 				tooltipPopUpUc.hide();
 			}

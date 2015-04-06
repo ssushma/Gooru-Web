@@ -1166,10 +1166,8 @@ float: left;
 		rgb(81, 81, 81) 100%);
 	background-color: #515151;
 	height: 38px;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff666666,endColorstr=#ff515151,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff666666,
-		endColorstr=#ff515151, GradientType=0);
+	-ms-filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff666666,endColorstr=#ff515151,GradientType=0)");
+	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff666666,endColorstr=#ff515151, GradientType=0)");
 }
 
 .classPageEmailHeaderDesc {
@@ -1266,10 +1264,8 @@ float: left;
 	border-radius: 5%/5%;
 	border-style: solid;
 	margin: 3px 0px 0px 0px;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#fff0f0f0,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,
-		endColorstr=#fff0f0f0, GradientType=0);
+	-ms-filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#fff0f0f0,GradientType=0)");
+	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#fff0f0f0, GradientType=0)");
 }
 
 .classPageEmailCheckBoxBg:hover {
@@ -1313,10 +1309,8 @@ float: left;
 	padding: 7px 5px 7px 5px;
 	border-radius: 4px;
 	background-color: #1076bb;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0);
+	-ms-filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)");
+	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb, GradientType=0)");
 }
 
 .classPageEmailButtonBg:hover {
@@ -1337,10 +1331,8 @@ float: left;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	background-color: #1076bb;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff1076bb,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff1076bb,
-		endColorstr=#ff1076bb, GradientType=0);
+	-ms-filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff1076bb,endColorstr=#ff1076bb,GradientType=0)");
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff1076bb,endColorstr=#ff1076bb, GradientType=0)");
 }
 
 .classPageEmailButtonTitle {
@@ -1351,7 +1343,6 @@ float: left;
 	color: rgb(255, 255, 255);
 	text-align: center;
 	cursor: pointer;
-	/* padding: 1px 5px 1px 5px; */
 	border: 0 outset buttonface;
 	border-image: initial;
 	background-color: transparent;
@@ -1679,8 +1670,8 @@ float: left;
 	border-radius:4px;
 	color:rgb(255,255,255);
 	background-color: rgb(187,187,187);
-	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffbbbbbb,endColorstr=#ff999999,GradientType=0)";
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffbbbbbb,endColorstr=#ff999999,GradientType=0);
+	-ms-filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffbbbbbb,endColorstr=#ff999999,GradientType=0)");
+	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffbbbbbb,endColorstr=#ff999999,GradientType=0)");
 }
 /* Standards Popup*/
 .standardsHeader {

@@ -55,11 +55,7 @@
 		.cropImageWidget {
 			min-width: 160px;
 			min-height: 120px;
-			height: 400px;
-			max-width:1000px;
 			margin:0 auto;
-			overflow-y:auto;
-			overflow-x:auto;
 			background-color: #000;
 		}
 		
@@ -97,10 +93,8 @@
 		
 		<g:FlowPanel ui:field="cropImageWidgetFloPanel" styleName="{style.cropImageWidget}">
 			 <g:FlowPanel styleName="{style.cropImageWidgetLoading}">
-				<g:VerticalPanel styleName="{style.cropImageLoadingPanel}"
-					ui:field="cropImageLoadingVerPanel">
-					<gg:LoadingUc 
-						ui:field="cropImageLoading" />
+				<g:VerticalPanel styleName="{style.cropImageLoadingPanel}" ui:field="cropImageLoadingVerPanel">
+					<gg:LoadingUc ui:field="cropImageLoading" />
 				</g:VerticalPanel> 
 			</g:FlowPanel>
 		</g:FlowPanel>

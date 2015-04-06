@@ -85,4 +85,8 @@ public interface IsAddCenturyView extends PopupView, IsViewWithHandlers<AddCentu
 	 * This will clear the style for selected widgets
 	 */
 	void resetPopupHilightedData();
+	/**
+	 * This method will set the collectionId, If we are coming from collection into tab in my collections
+	 */
+	void setCollectionIdFromCollectionInfo(String collectionId,Map<Long, String> collectionInfoSelectedValues);
 }

@@ -58,7 +58,7 @@
 	padding-right:2%;
 	text-align: right;
 	color: #06c;
-	width: 3%;
+	width: 3.3%;
 }
 .collectionDesc{
 	white-space: normal;
@@ -71,7 +71,7 @@
 	width: 10%;
 	color:#1076bb;
 	font-size:12px;
-	padding-left:12px;
+	padding-left:0px;
 }
 .lockImage{
 	background: url(../images/folders/lock-icon.png) no-repeat;

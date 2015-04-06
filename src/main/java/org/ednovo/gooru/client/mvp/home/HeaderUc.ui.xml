@@ -20,23 +20,6 @@
 
 		}
 
-		/* .login a {
-		color:
-		#FFFFFF !important;
-		float: left !important;
-		/*
-		padding: 2px !important;
-		*/
-		text-decoration: none !important;
-		position:
-		relative;
-		left: 10px;
-		}
-
-		.login a:hover {
-		opacity: 0.5;
-		}
-		*/
 		.centerBar {
 		float: left;
 		display: none;
