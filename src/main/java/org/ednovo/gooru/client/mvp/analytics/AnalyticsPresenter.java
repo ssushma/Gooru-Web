@@ -111,8 +111,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 									}
 								});
 							}
-						}else{
-							getView().setNoDataText();
 						}
 					}
 					@Override
