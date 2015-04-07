@@ -19,6 +19,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;

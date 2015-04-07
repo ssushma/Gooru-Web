@@ -213,6 +213,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		AppClientFactory.getInjector().getUserService().getUserPublicProfilePage(userId,new SimpleAsyncCallback<ProfilePageDo>(){
 			@Override
 			public void onSuccess(ProfilePageDo result) {
+				if(result!=null)
+				{
 				final String profileOptionvalue=result.getOptionalValue();
 				AppClientFactory.getInjector().getUserService().getUserProfileV2Details(userId, USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>(){
 					@Override
@@ -253,6 +255,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 						getView().editOptions(false);
 						getView().getChilNoShareOption().setVisible(false);
 					}
+				}
 				}
 				
 			}
