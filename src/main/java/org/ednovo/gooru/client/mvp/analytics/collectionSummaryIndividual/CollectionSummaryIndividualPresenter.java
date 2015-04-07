@@ -31,13 +31,15 @@ import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsCollectionSummaryIndividualView> implements CollectionSummaryIndividualUiHandlers{
+public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsCollectionSummaryIndividualView> implements CollectionSummaryIndividualUiHandlers,ClientConstants{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
 	
@@ -45,20 +47,35 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	private boolean isSummary;
 	ClasspageItemDo classpageItemDo=null;
 	
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
 	@Inject
 	public CollectionSummaryIndividualPresenter(EventBus eventBus, IsCollectionSummaryIndividualView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
 
+	/**
+	 * Get analytics service
+	 * @return
+	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
+	/**
+	 * @param analyticService
+	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setIndividualData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, com.google.gwt.user.client.ui.HTMLPanel, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
+	 */
 	@Override
 	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
 		this.pathwayId=pathwayId;
@@ -67,11 +84,14 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		this.userId=userId;
 		this.sessionId=sessionId;
 		this.isSummary=isSummary;
+		getView().enableAndDisableEmailButton(isSummary);
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				getView().setIndividualCollectionMetaData(result);
+				if(!StringUtil.checkNull(result)){
+					getView().setIndividualCollectionMetaData(result,printUserDataDO);
+				}
 			}
 			
 			@Override
@@ -83,7 +103,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> result) {
-				getView().setIndividualData(result,loadingImage);
+				if(!StringUtil.checkNull(result)){
+					getView().setIndividualData(result,loadingImage);
+				}
 			}
 			
 			@Override
@@ -102,7 +124,13 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			@Override
 			public void onSuccess(String result) {
 
-	
+				if(!StringUtil.checkNull(result)){
+					if(isClickedOnEmail){
+						getView().setPdfForEmail(result);
+					}else{
+						getView().getFrame().setUrl(result);
+					}
+				}
 			}
 			
 			@Override
@@ -111,29 +139,35 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setOEtextData(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void setOEtextData(final String resourceGooruId, final String questionType) {
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {
 			@Override
 			public void onSuccess(ArrayList<OetextDataDO> result) {
-				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId);
+				if(!StringUtil.checkNull(result)){
+					getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId,classpageItemDo);
+				}
 			}
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 		});
 	}
-	@Override
-	public void setTeacherImage(ClasspageItemDo classpageItemDo){
-      this.classpageItemDo=classpageItemDo;
-	}
-	@Override
-	public void clearFrame(){
-		//getView().getFrame().setUrl("");
-	}
+
 	@Override
 	public void setNoDataMessage(HTMLPanel loadingImage) {
 		loadingImage.setVisible(false);
-	//	getView().setErrorMessage();
+		getView().setErrorMessage();
+	}
+	@Override
+	public void clearFrame(){
+		getView().getFrame().setUrl("");
+	}
+	@Override
+	public void setTeacherImage(ClasspageItemDo classpageItemDo){
+      this.classpageItemDo=classpageItemDo;
 	}
 }

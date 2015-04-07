@@ -39,7 +39,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshPathwayItemsEvent;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssigmentReorder;
 import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
-import org.ednovo.gooru.client.mvp.search.event.DisplayNextSetAssignmentsEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -59,12 +58,15 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -126,7 +128,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
-	private int totalHitCount=0;
+	private int totalHitCount=0,navigationCount=1,visibleCount=0;
 	private String seqNumber;
 	
 	private String pathwayId;
@@ -154,8 +156,50 @@ public class UnitsAssignmentWidgetView extends Composite {
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 		unitDetailsButton.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
+		Window.addResizeHandler(new ResizeLogicEvent());
 	}
 	
+	public class ResizeLogicEvent implements ResizeHandler{
+		@Override
+		public void onResize(ResizeEvent event) {
+			addWidthCarouselContainer();
+			setWidgetsVisiblity();
+		}
+	}
+	public void setWidgetsVisiblity(){
+		int visibleItems=((assignmentsContainer.getOffsetWidth())/10);
+		Iterator<Widget> assessmentWidget = assignmentsContainer.iterator();
+		while(assessmentWidget.hasNext()){
+			Widget widget = assessmentWidget.next();
+			visibleCount=0;
+			if(widget instanceof AssignmentsContainerWidget){
+				if(visibleItems!=visibleCount){
+					System.out.println("widget.getElement().getStyle().getVisibility():"+widget.getElement().getStyle().getVisibility());
+					if(widget.getElement().getStyle().getVisibility().equalsIgnoreCase("hidden")){
+						widget.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+						visibleCount++;
+					}else{
+						widget.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+					}
+				}
+			}
+		}
+	}
+	public void addWidthCarouselContainer(){
+		if(assignmentsContainer!=null){
+			assignmentsContainer.setWidth((getTotalViewableWidth())+"px");
+		}
+	}
+	public int getTotalViewableWidth(){
+		int totalClientWidth=Window.getClientWidth();
+		int totalViewableWidth=0;
+		if(totalClientWidth>1000){
+			 totalViewableWidth=800;
+		}else{
+			 totalViewableWidth=totalClientWidth-100;
+		}
+		return totalViewableWidth;
+	}
 	/**
 	 * class constructor, executes for student view.
 	 * @param sequenceNum {@link Integer}
@@ -606,6 +650,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
+		System.out.println("assignmentsContainer:"+assignmentsContainer.getOffsetWidth());
+		System.out.println("navigationCount:"+navigationCount);
 		clearAssignmentsFromDo();
 		insightOffset=insightOffset+insightLimit;
 		setLoadingIcon(true);

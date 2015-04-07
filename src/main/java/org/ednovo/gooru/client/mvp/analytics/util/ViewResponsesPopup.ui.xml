@@ -2,8 +2,8 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="unitStyle" src="tabContainer.css" />
-	<g:HTMLPanel>
-	<g:Label styleName="{unitStyle.totalResponselbl}" ui:field="totalResponselbl"/>
-	<g:HTMLPanel styleName="{unitStyle.viewResponsepnl}" ui:field="viewResponsepnl"/>
+	<g:HTMLPanel styleName="{unitStyle.popupContainer}">
+		<g:Label styleName="{unitStyle.totalResponselbl}" ui:field="totalResponselbl"/>
+		<g:HTMLPanel styleName="{unitStyle.viewResponsepnl}" ui:field="viewResponsepnl"/>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -28,6 +28,11 @@ public class HCLineChart {
 	final Chart chart = new Chart();
 	
 	
+/**
+ * This method is used to create a line chart
+ * @param gradeData
+ * @return
+ */
 public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		HTMLPanel studyChartContainer=new HTMLPanel("");
 		ChartMetaDataOptions chartmetadata=new ChartMetaDataOptions();
@@ -97,7 +102,7 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 			contentListNew.add(subject);
 		}
 		List<String> contentListNew1=new ArrayList<String>();
-		String subjects1[]={"Average Score","Minimum Score"};
+		String subjects1[]={"Minimum Score","Average Score"};
 		for(String subject:subjects1){
 			contentListNew1.add(subject);
 		}
@@ -171,7 +176,18 @@ private String getTimeSpent(Long commentCreatedTime) {
 	return createdTime;
 }
 	
+	/**
+	 * This method is used to create chart line
+	 * @param categories
+	 * @param legend
+	 * @param data
+	 * @param chartmetadata
+	 * @param isFirst
+	 * @return
+	 */
 	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst) {
+	
+		String[] colors={"red","green","blue","gray"};
 		chart.setType(Series.Type.LINE)  
 	        .setZoomType(Chart.ZoomType.X_AND_Y)
 			.setChartTitle(new ChartTitle()  
@@ -248,6 +264,7 @@ private String getTimeSpent(Long commentCreatedTime) {
 			chart.addSeries(chart.createSeries()
 					.setName(legend.get(series))
 					.setPoints(data.get(legend.get(series))));
+				/*	.setColors(colors[series]);*/
 		}
 		
 		if(chartmetadata.getyMaxValue()!=0){

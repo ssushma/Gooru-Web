@@ -9,7 +9,6 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	static final CollectionSummaryIndividualCBundle INSTANCE = GWT.create(CollectionSummaryIndividualCBundle.class);
 	public interface CollectionSummaryIndividualCss extends CssResource{
 		    String alignCenterAndBackground();
-
 		    String alignLeft();
 		    String setMarginAuto();
 	        String reaction_explain1();
