@@ -97,6 +97,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		individualResourceBreakdownDatapnl.setVisible(false);
 	}
 	void setData(){
+		downloadFile.setVisible(false);
 		individualTabContainer=new AnalyticsTabContainer() {
 			@Override
 			public void onTabClick(String tabClicked) {

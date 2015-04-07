@@ -41,6 +41,8 @@ import com.google.gwt.resources.client.CssResource;
 		String stylishBub();
 		String redCircle();
 		String greenCircle();
+		String classBubbleWithcheckmark();
+		String classBubble();
 		
 	}
 
