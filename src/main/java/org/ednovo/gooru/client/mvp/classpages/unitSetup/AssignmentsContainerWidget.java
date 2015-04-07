@@ -135,8 +135,15 @@ public class AssignmentsContainerWidget extends Composite  {
 			{
 				if(classpageItemDo.getStatus().equalsIgnoreCase("completed"))
 				{
+					if(classpageItemDo.getIsRequired())
+					{
 					//unitCircleView.setUnitSequenceNumber(0);
-					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.classBubbleWithcheckmark());
+					}
+					else
+					{
+						unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.classBubble());
+					}
 				}
 			}
 			if(classpageItemDo.getIsRequired() != null)

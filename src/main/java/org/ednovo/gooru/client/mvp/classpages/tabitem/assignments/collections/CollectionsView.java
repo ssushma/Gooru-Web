@@ -368,7 +368,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public class SummaryEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			frameContainer.setVisible(true);
+			frameContainer.setVisible(false);
 			reportsFrame.getElement().getStyle().setWidth(771, Unit.PX);
 			//reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
 			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
@@ -379,7 +379,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public class ProgressEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			frameContainer.setVisible(true);
+			frameContainer.setVisible(false);
 			reportsFrame.getElement().getStyle().setWidth(771, Unit.PX);
 			//reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
 			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
@@ -392,7 +392,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		frameContainer.clear();
 		if (content != null) {
 			 if(slot==AnalyticsPresenter.COLLECTION_PROGRESS_SLOT){
-				 frameContainer.setVisible(true);
+				 frameContainer.setVisible(false);
 				 frameContainer.add(content);
 			}else{
 				frameContainer.setVisible(false);

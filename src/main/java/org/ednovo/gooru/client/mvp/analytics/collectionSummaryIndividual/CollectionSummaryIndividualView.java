@@ -97,6 +97,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		individualResourceBreakdownDatapnl.setVisible(false);
 	}
 	void setData(){
+		downloadFile.setVisible(false);
 		individualTabContainer=new AnalyticsTabContainer() {
 			@Override
 			public void onTabClick(String tabClicked) {
@@ -334,7 +335,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		@Override
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE)){
+			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId"))){
 				getUiHandlers().setOEtextData(ele.getAttribute("resourceGooruId"),ele.getAttribute("questionType"));
 			}
 		}

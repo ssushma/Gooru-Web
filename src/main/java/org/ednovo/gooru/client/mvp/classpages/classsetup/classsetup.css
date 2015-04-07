@@ -547,7 +547,7 @@ display:inline-block;
 
 		border:1px solid #bdbcc4;
 		padding:7px 120px 10px 1px;
-		width:379px;
+		width:445px;
 	
 	}
 	
@@ -581,8 +581,7 @@ color: inherit;
 margin-top: 20px;
 	}
 	.divcontainertext{
-	border: 1px solid #bdbcc4;
-width: 570px;
+width: 470px;
 height: 24px;
 padding-top: 6px;
 }
@@ -729,6 +728,7 @@ width:100%;
 	position: absolute;
 left: 589px;
 margin-top: 26px;
+right:0%;
 }
 .saveBtnsReorder{
 position: relative;
