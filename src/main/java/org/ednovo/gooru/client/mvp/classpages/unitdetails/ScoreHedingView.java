@@ -85,9 +85,9 @@ public class ScoreHedingView extends Composite {
 
 	private int redScore, finalScore;
 
-	private String SETGOAL= i18n.GL2197();
+	private String SETGOAL= i18n.GL2197_1();
 
-	private String EDITGOAL= i18n.GL2196();
+	private String EDITGOAL= i18n.GL2196_1();
 
 
 
@@ -114,7 +114,7 @@ public class ScoreHedingView extends Composite {
 	}
 
 	private void setStaticText() {
-		lblTitle.setText(i18n.GL2195());
+		lblTitle.setText(i18n.GL2195_1());
 		lblControl.getElement().setId("controll");
 		btnSetGoal.setText(SETGOAL);
 		StringUtil.setAttributes(lblTitle.getElement(),"lblTitle", null, lblTitle.getText());
@@ -129,7 +129,7 @@ public class ScoreHedingView extends Composite {
 	public void showUnitStatus() {
 		// TODO Auto-generated method stub
 		if(classUnitsListDo!=null){
-			if(getLblTitle().getText().equals(i18n.GL2195())){
+			if(getLblTitle().getText().equals(i18n.GL2195_1())){
 				if(classUnitsListDo.getMinimumScoreByUser()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getMinimumScoreByUser()+"");
@@ -262,7 +262,7 @@ public class ScoreHedingView extends Composite {
 						StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 						collectionItemId=classUnitsListDo.getCollectionItemId();
 						if(collectionItemId!=null){
-							if(getLblTitle().getText().equals(i18n.GL2195())){
+							if(getLblTitle().getText().equals(i18n.GL2195_1())){
 								updateUnitstatus(collectionItemId, txtScore.getText(), null, null);
 							}else{
 								updateUnitstatus(collectionItemId, null, txtScore.getText(), null);
