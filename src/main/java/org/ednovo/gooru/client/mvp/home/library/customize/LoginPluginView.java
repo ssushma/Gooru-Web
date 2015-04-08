@@ -121,11 +121,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	CollectionDo collectionObject = new CollectionDo();
 	String collectionTitle="";
-
-//	private static final String OOPS =i18n.GL0061;
-//	private static final String LOGIN_ERROR =i18n.GL0347;
-//	private static final String LOGIN_COOKIE_DISABLE_MESSAGE =i18n.GL0348;
-	
 	private TermsOfUse termsOfUse;
 	
 	private static final int HTTP_UNAUTHORISED_STATUS_CODE = 401;
@@ -207,8 +202,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		hangOnText.getElement().setId("pnlHangOnText");
 		hangOnText.getElement().setAttribute("alt",i18n.GL0740());
 		hangOnText.getElement().setAttribute("title",i18n.GL0740());
-		
-	//	signUpPanel.getElement().setAttribute("style", "display: inline-block;");
 		signUpPanel.getElement().setId("pnlSignUpPanel");
 		
 		donotHaveAcount.setText(i18n.GL0634()+" ");
@@ -324,14 +317,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 											 if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 											    	AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
 											    }
-											/*previously commented AppClientFactory
-													.getInjector()
-													.getResourceService()
-													.copyCollection(
-															collectionObject,
-															"true",
-															null,
-															getSaveCollectionAsyncCallback());*/
 											
 											showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
 											MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
@@ -361,7 +346,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 									public void onFailure(Throwable caught) {
 										loginButton.setVisible(true);
 										lblPleaseWait.setVisible(false);
-//										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 									}
 								});
 			} else {
@@ -379,8 +363,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	}
 
 	private void setHandlers() {
-
-		/*this.setSize("515px", "547px");*/
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
@@ -421,7 +403,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		}
 		LibraryTopicListView.isCustomizePopup=false;
 		ProfileTopicListView.isCustomizePopup=false;
-		//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
     	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 		closePoupfromChild();
@@ -435,7 +416,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		forgotPasswordVc.show();
 		forgotPasswordVc.center();
 		closePoupfromChild();
-		// this.hide();
 
 	}
 	
@@ -459,7 +439,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		
 			@Override
 			public void onSuccess(String result) {
-//				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				Window.Location.replace(result);
 			
 			}

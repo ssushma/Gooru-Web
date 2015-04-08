@@ -27,17 +27,10 @@
  */
 package org.ednovo.gooru.server.form;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.server.serializer.JsonSerializer;
-import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.data.Form;
-
-import com.google.gwt.dev.json.JsonArray;
 
 /**
  * @author Search Team

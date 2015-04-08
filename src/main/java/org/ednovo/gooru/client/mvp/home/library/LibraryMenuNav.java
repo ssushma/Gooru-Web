@@ -49,7 +49,6 @@ import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
-import org.ednovo.gooru.shared.util.StorageJsonSerializationFactory;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -61,7 +60,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
@@ -73,9 +71,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.seanchenxi.gwt.storage.client.StorageExt;
-import com.seanchenxi.gwt.storage.client.StorageKey;
-import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
 
 public class LibraryMenuNav extends Composite{
 
@@ -105,9 +100,9 @@ public class LibraryMenuNav extends Composite{
 	
 	public boolean checkRefreshVal = false;
 	
-    StorageExt localStorage = StorageExt.getLocalStorage();
+//    StorageExt localStorage = StorageExt.getLocalStorage();
 
-    StorageKey<HashMap<String, ArrayList<CourseDo>>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
+//    StorageKey<HashMap<String, ArrayList<CourseDo>>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
 
 	Map<String,CourseDo> courseDoMap = new LinkedHashMap<String,CourseDo>();
 	
@@ -125,9 +120,9 @@ public class LibraryMenuNav extends Composite{
 	
 	private boolean isStandardToolTipShow=false;
 	
-	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
+//	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
 
-	private Storage stockStore = Storage.getLocalStorageIfSupported();
+//	private Storage stockStore = Storage.getLocalStorageIfSupported();
 
 	HashMap<String, SubjectDo> courseMap = new HashMap<String, SubjectDo>();
 
@@ -229,7 +224,9 @@ public class LibraryMenuNav extends Composite{
 		if(!AppClientFactory.isAnonymous()){
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 		}
 		
 		featuredCourses.addClickHandler(new ClickHandler() {
@@ -344,7 +341,9 @@ public class LibraryMenuNav extends Composite{
 				if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 					getStandardPrefCode(standPrefCode);
 				}
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 			return standPrefCode;
 			
 			}
@@ -426,7 +425,7 @@ public class LibraryMenuNav extends Composite{
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 		
@@ -439,7 +438,7 @@ public class LibraryMenuNav extends Composite{
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		
 	}
@@ -874,6 +873,7 @@ public class LibraryMenuNav extends Composite{
 				try {
 					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
 				} catch (Exception e) {
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			} else {
 				getStandardPrefCode(null);

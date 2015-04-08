@@ -407,7 +407,6 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		viewClickRegistration.removeHandler();
 		getView().hideAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
-//		collectionResourceTabPresenter.closePopUp();
 		AppClientFactory.getPlaceManager().setUserShelfId(null);
 		
 	}
@@ -444,7 +443,6 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 				@Override
 				public void onSuccess(CollectionDo result) {
 					FolderDo folderDo=getView().getFolderDo(result);
-//					AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
 					HashMap<String,String> params = new HashMap<String,String>();
 					if(O3_LEVEL_VALUE!=null) {
 						params.put("o3", O3_LEVEL_VALUE);
@@ -464,34 +462,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		return copyCollectionAsyncCallback;
 	}
 		
-//	public SimpleAsyncCallback<MetaDO> getPermissionsAsyncCallback() {
-//		if (permissionsAsyncCallback == null) {
-//			permissionsAsyncCallback = new SimpleAsyncCallback<MetaDO>() {
-//
-//				@Override
-//				public void onSuccess(MetaDO result) {
-//					if (result.getPermissions().size() != 0) {
-//						getView().getLoadingImageVisible();
-//						String Values = result.getPermissions().toString();
-////						for (int i = 0; i < result.getPermissions().size(); i++) {
-//							if (Values.contains("edit")) {
-//								String id = getPlaceManager()
-//										.getRequestParameter("id", "INVALID");
-////								getResourceService().getCollection(id, false,
-////										getCollectionAsyncCallback());
-//							} else {
-////								invokeErrorPopup();
-//							}
-////						}
-//					} else {
-////						invokeErrorPopup();
-//					}
-//					//AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
-//				}
-//			};
-//		}
-//		return permissionsAsyncCallback;
-//	}
+
 	/**
 	 * @param collectionAsyncCallback
 	 *            instance of {@link CollectionDo}

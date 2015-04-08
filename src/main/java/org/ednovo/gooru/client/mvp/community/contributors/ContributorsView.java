@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.community.contributors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -39,6 +40,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -46,8 +48,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import com.googlecode.gwt.serialization.JsonReader;
-import com.googlecode.gwt.serialization.JsonWriter;
+
 
 /**
  * 
@@ -73,8 +74,8 @@ public class ContributorsView extends
 
 	private static String CONTRIBUTORS_DATA = "contributorsData";
 	ArrayList<LibraryUserDo> contributorsList = new ArrayList<LibraryUserDo>();
-	StorageJsonSerializationFactory factory = GWT
-			.create(StorageJsonSerializationFactory.class);
+//	StorageJsonSerializationFactory factory = GWT
+//			.create(StorageJsonSerializationFactory.class);
 
 	interface ContributorsViewUiBinder extends
 			UiBinder<Widget, ContributorsView> {
@@ -155,18 +156,31 @@ public class ContributorsView extends
 	 * 
 	 */
 	public void getContributorsList() {
-		final JsonWriter<ArrayList<LibraryUserDo>> courseMapWriter = factory
-				.getWriter();
-		final JsonReader<ArrayList<LibraryUserDo>> courseMapReader = factory
-				.getReader();
+//		final JsonWriter<ArrayList<LibraryUserDo>> courseMapWriter = factory
+//				.getWriter();
+//		final JsonReader<ArrayList<LibraryUserDo>> courseMapReader = factory
+//				.getReader();
 
 		String map = null;
 
-		if (stockStore != null && stockStore.getItem(CONTRIBUTORS_DATA) != null) {
-			map = stockStore.getItem(CONTRIBUTORS_DATA);
-			contributorsList = courseMapReader.read(map);
-			displayContributors(contributorsList);
-		} else {
+//		if (stockStore != null && stockStore.getItem(CONTRIBUTORS_DATA) != null) {
+//			map = stockStore.getItem(CONTRIBUTORS_DATA);
+//			AppClientFactory.printInfoLogger("Map : "+map);
+////			contributorsList = courseMapReader.read(map);
+//			
+//			AppClientFactory.getInjector().getLibraryService().deserializeCollaborators(map, new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+//
+//				@Override
+//				public void onSuccess(ArrayList<LibraryUserDo> result) {
+//					AppClientFactory.printInfoLogger("result : "+result.get(0).toString());
+//					contributorsList = result;
+//					displayContributors(result);
+//				}
+//			});
+//			
+//			
+//			
+//		} else {
 			AppClientFactory
 					.getInjector()
 					.getLibraryService()
@@ -177,15 +191,15 @@ public class ContributorsView extends
 								public void onSuccess(
 										ArrayList<LibraryUserDo> result) {
 									displayContributors(result);
-									String courseMapWriterString = courseMapWriter
-											.write(result);
-									if (stockStore != null) {
-										stockStore.setItem(CONTRIBUTORS_DATA,
-												courseMapWriterString);
-									}
+//									String courseMapWriterString = courseMapWriter
+//											.write(result);
+//									if (stockStore != null) {
+//										stockStore.setItem(CONTRIBUTORS_DATA,
+//												result.toString());
+//									}
 								}
 							});
-		}
+//		}
 	}
 
 	/**

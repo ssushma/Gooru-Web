@@ -59,8 +59,6 @@ public class GooruInClassRoomVc extends Composite{
 	
 	@UiField Label classroomText,teachingMethodsLbl;
 	
-	private List<String> gooruClassCollectionList = new ArrayList<String>();
-	
 	private List<String> gooruClassRoomHowToUse = new ArrayList<String>();
 	
 	private HTMLPanel tabContent1, tabContent2, tabContent3, tabContent4, tabContent5, loadingImage;
@@ -75,36 +73,6 @@ public class GooruInClassRoomVc extends Composite{
 
 	private final String CLASSROOM_TAB5 = "gooruCrTab5";
 	
-//	private final String BLENDED_TITLE=i18n.GL0148;
-
-//	private final String BLENDED_USE_CASE=i18n.GL0149;
-
-//	private final String BLENDED_DESCRIPTION=i18n.GL0150;
-
-//	private final String FLIPPED_TITLE=i18n.GL0151;
-
-//	private final String FLIPPED_USE_CASE=i18n.GL0152;
-
-//	private final String FLIPPED_DESCRIPTION=i18n.GL0153;
-
-//	private final String ASSESSMENT_TITLE=i18n.GL0154;
-
-//	private final String ASSESSMENT_USE_CASE=i18n.GL0155;
-
-//	private final String ASSESSMENT_DESCRIPTION=i18n.GL0156;
-
-//	private final String PROJECT_TITLE=i18n.GL0157;
-
-//	private final String PROJECT_USE_CASE=i18n.GL0158;
-
-//	private final String PROJECT_DESCRIPTION=i18n.GL0159;
-
-//	private final String ENRICHED_TITLE=i18n.GL0160;
-
-//	private final String ENRICHED_USE_CASE=i18n.GL0161;
-
-//	private final String ENRICHED_DESCRIPTION=i18n.GL0162;
-
 	private final String CLASSROOM = "classroom";
 	
 	List<FeaturedCollectionContentDo> classroomContent = null;

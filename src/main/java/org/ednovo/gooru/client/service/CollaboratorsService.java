@@ -76,7 +76,7 @@ public interface CollaboratorsService extends BaseService {
 	 *
 	 *
 	 */
-	public List<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId)  throws GwtException, ServerDownException;
+	public ArrayList<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId)  throws GwtException, ServerDownException;
 
 	/**
 	 * @function getSuggestionByName 

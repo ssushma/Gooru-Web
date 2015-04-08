@@ -451,6 +451,7 @@ public class SearchInfoWidget extends Composite {
 						listI.add(k);
 					} catch (Exception e) {
 						listS.add(newst[i]);
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 				}
 				Collections.sort(listS, Collections.reverseOrder());
@@ -1497,6 +1498,7 @@ public class SearchInfoWidget extends Composite {
 			catch(Exception ex)
 			{
 				gradeStr.append(gradeList[0].trim());
+				AppClientFactory.printSevereLogger(ex.getMessage());
 			}
 		}
 		return gradeStr.toString();

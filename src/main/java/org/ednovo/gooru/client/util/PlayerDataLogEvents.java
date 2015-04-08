@@ -182,7 +182,7 @@ public class PlayerDataLogEvents {
 				eventJsonObject.put(SESSIONID, new JSONString(sessionId));
 			}
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(eventJsonObject.toString());
 	}
@@ -192,7 +192,7 @@ public class PlayerDataLogEvents {
 		try{
 			eventJsonObject.put(GOORUUID, new JSONString(AppClientFactory.getLoggedInUser().getGooruUId()));
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(eventJsonObject.toString());
 	}
@@ -223,7 +223,7 @@ public class PlayerDataLogEvents {
 			}
 			contextMap.put(MODE, new JSONString(mode));
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
@@ -255,7 +255,7 @@ public class PlayerDataLogEvents {
 			}
 			contextMap.put(URL, new JSONString(url));
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
@@ -269,7 +269,7 @@ public class PlayerDataLogEvents {
 			contextMap.put(PATH, new JSONString(libaryGooruOid));
 			contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
@@ -279,7 +279,7 @@ public class PlayerDataLogEvents {
 		try{
 			versionMap.put(LOGAPI, new JSONString("0.1")); 
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(versionMap.toString());
 	}
@@ -288,7 +288,7 @@ public class PlayerDataLogEvents {
 		try{
 			metricsMap.put(TOTALTIMESPENTINMS, new JSONNumber(totalTimesInSec));
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(metricsMap.toString());
 	}
@@ -298,7 +298,7 @@ public class PlayerDataLogEvents {
 			metricsMap.put(TOTALTIMESPENTINMS, new JSONNumber(totalTimesInSec));
 			metricsMap.put(SCORE,new JSONNumber(score));
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(metricsMap.toString());
 	}
@@ -321,7 +321,7 @@ public class PlayerDataLogEvents {
 				payLoadMap.put(SEARCHTERM, new JSONString(searchTerm));
 			}
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		String payLoad = payLoadMap.toString();
 		payLoad = payLoad.replaceAll("\\\\\"\\[", "[").replaceAll("\\]\\\\\"", "]");
@@ -332,7 +332,7 @@ public class PlayerDataLogEvents {
 		JSONObject payLoadMap=new JSONObject();
 		try{
 		}catch(Exception e){
-		
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}
@@ -342,7 +342,7 @@ public class PlayerDataLogEvents {
 		try{
 			payLoadMap.put(ITEMTYPE, new JSONString(itemType));
 		}catch(Exception e){
-		
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}
@@ -353,7 +353,7 @@ public class PlayerDataLogEvents {
 			payLoadMap.put(SHARETYPE, new JSONString(shareType));
 			payLoadMap.put(CONFIRMSTATUS, JSONBoolean.getInstance(confirmStatus));
 		}catch(Exception e){
-		
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}
@@ -368,7 +368,7 @@ public class PlayerDataLogEvents {
 			}
 			payLoadMap.put(OPTIONTEXT, flagList);
 		}catch(Exception e){
-		
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}
@@ -535,7 +535,7 @@ public class PlayerDataLogEvents {
 		try{
 			payLoadMap.put(CODEID, new JSONString(codeId));
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}
@@ -707,6 +707,7 @@ public class PlayerDataLogEvents {
 				payLoadMap.put(TEXT, new JSONString(com.google.gwt.http.client.URL.encodeQueryString(commentText)));
 			}
 		}catch(Exception e){
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}
@@ -742,7 +743,7 @@ public class PlayerDataLogEvents {
 			}
 			
 		}catch(Exception e){
-			
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(contextMap.toString());
 	}
@@ -760,6 +761,7 @@ public class PlayerDataLogEvents {
 			payLoadMap.put(PREVIOUS_RATE, new JSONNumber(previousRate));
 			payLoadMap.put(ITEMTYPE, new JSONString(RESOURCE));
 		}catch(Exception e){
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}
@@ -774,6 +776,7 @@ public class PlayerDataLogEvents {
 			payLoadMap.put(TEXT, new JSONString(com.google.gwt.http.client.URL.encodeQueryString(reviewText)));
 			payLoadMap.put(ITEMTYPE, new JSONString(RESOURCE));
 		}catch(Exception e){
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return new JSONString(payLoadMap.toString());
 	}

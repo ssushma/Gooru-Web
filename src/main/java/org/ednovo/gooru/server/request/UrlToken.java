@@ -36,25 +36,25 @@ public enum UrlToken {
 
 	GET_USER("/v2/user/{0}?sessionToken={1}"),
 
-	V2_RESOURCE_SEARCH("/gooru-search/rest/v2/search/resource?sessionToken={0}&q={1}&start={2}&length={3}&queryType={4}&allowDuplicates={5}&fetchHitsInMulti={6}&allowScripting={7}"),
+	V2_RESOURCE_SEARCH("/gooru-search/rest/v2/search/resource?sessionToken={0}"),
 	
-	V2_SIMPLE_COLLECTION_SEARCH("/gooru-search/rest/v2/search/scollection?sessionToken={0}&q={1}&start={2}&length={3}&accessType={4}"),
+	V2_SIMPLE_COLLECTION_SEARCH("/gooru-search/rest/v2/search/scollection?sessionToken={0}"),
 	
-	V2_RESOURCE_COLLECTION_LIST("/gooru-search/rest/v2/search/scollection?sessionToken={0}&q={1}&start={2}&length={3}&accessType=my&category=all&flt.resourceGooruOIds={4}&boostField.hasNoThumbnail=0&showCanonicalOnly=false"),
+	V2_RESOURCE_COLLECTION_LIST("/gooru-search/rest/v2/search/scollection?sessionToken={0}"),
 	
 	COLLECTION_ITEMS_LIST("/scollection/{0}?sessionToken={1}"),
 	
 	V2_COLLECTION_ITEMS_LIST("/v2/collection/{0}/item?sessionToken={1}"),
 
-	SEARCH_FILTER("/search/index/filters?sessionToken={0}&type={1}"),
+	SEARCH_FILTER("/search/index/filters?sessionToken={0}"),
 
-	V2_SEARCH_SUGGEST_STANDARD("/gooru-search/rest/v2/search/{0}?sessionToken={1}&q={2}&length={3}&start={4}"),
+	V2_SEARCH_SUGGEST_STANDARD("/gooru-search/rest/v2/search/{0}?sessionToken={1}"),
 	
-	SUGGEST_STANDARD_BY_FILTER("/v2/collection/standards?sessionToken={0}&query={1}"),
+	SUGGEST_STANDARD_BY_FILTER("/v2/collection/standards?sessionToken={0}"),
 	
-	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?sessionToken={0}&q={1}&length={2}&queryType={3}&start={4}"),
+	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?sessionToken={0}"),
 
-	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?sessionToken={0}&q={1}&length={2}&start={3}"),
+	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?sessionToken={0}"),
 
 	UPDATE_V2_COLLLECTION("/v2/collection/{0}?sessionToken={1}"),
 
@@ -238,7 +238,7 @@ public enum UrlToken {
 	
 	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?sessionToken={0}"),
 	
-	SEARCH_SUGGEST_NO_RESULT("/suggest/resource?sessionToken={0}&context={1}"),
+	SEARCH_SUGGEST_NO_RESULT("/suggest/resource?sessionToken={0}"),
 			
 	UPDATE_VIEW_COUNT("/resource/update/views/{0}.json?sessionToken={1}"),
 	
@@ -412,13 +412,13 @@ public enum UrlToken {
 	
 	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
 	
-	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?sessionToken={0}&q={1}&length={2}&start={3}"),
+	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?sessionToken={0}"),
 			
 	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
 	
 	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"),
 	
-	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?sessionToken={0}&searchTerm={1}&event={2}&contentGooruOid={3}"),
+	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?sessionToken={0}"),
 
 	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}&offset={2}&limit={3}"),
 	
@@ -464,7 +464,7 @@ public enum UrlToken {
 	
 	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?sessionToken={2}&direction={3}&planedEndDate={4}"),
 	
-	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?sessionToken={0}&q={1}"),
+	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?sessionToken={0}"),
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
@@ -480,7 +480,7 @@ public enum UrlToken {
 
 	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?sessionToken={0}&data={1}"),
 
-	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
+	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}"),
 	
 	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}"),
 	
@@ -545,7 +545,7 @@ GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={
 	
 	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
 	
-	SUGGEST_CENTURY_BY_QUERY("/search/skills?sessionToken={0}&query={1}"),
+	SUGGEST_CENTURY_BY_QUERY("/search/skills?sessionToken={0}"),
 
 	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}");
 

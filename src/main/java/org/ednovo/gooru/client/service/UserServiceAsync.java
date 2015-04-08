@@ -63,7 +63,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
     
     void updateUserDetails(String gooruUid, String token, Map<String, String> params, AsyncCallback<ProfileDo> callback);
     
-    void resendConfirmationMail(Map<String, String> params, AsyncCallback<Object> callback);
+    void resendConfirmationMail(Map<String, String> params, AsyncCallback<Void> callback);
     
     void forgotPassword(String emailId, AsyncCallback<Map<String, Object>> callback );
     
@@ -90,7 +90,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biographyString ,String password,String userName, String gender, boolean isSendConfirmEmail,String userType, AsyncCallback<V2UserDo> callback);
    
-   void sendWelcomeMail(String gooruUId, String emailType, AsyncCallback<Object> callback);
+   void sendWelcomeMail(String gooruUId, String emailType, AsyncCallback<Void> callback);
    
    void updatePartyCustomField(String gooruUid,String optionKey,String optionValue,AsyncCallback<Void> callback);
    

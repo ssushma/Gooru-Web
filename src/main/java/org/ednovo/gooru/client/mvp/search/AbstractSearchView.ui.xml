@@ -175,7 +175,6 @@
 			}
 		.searchResultError {
 			color: #515151;
-				/*float: left; */
 				margin: 5px 0 0 6px;
 				padding-bottom: 10px;
 	
@@ -235,7 +234,6 @@
 					<g:FlowPanel styleName="{style.prefilterPanel}" ui:field="standardsConatiner"/>
 					<g:HTMLPanel styleName="{style.buttonsContainer}">
 						<g:Button styleName="{style.secondaryResourceSearchBtn}" ui:field="resourceSearchBtn"/>
-				<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
 						<g:Button styleName="{style.secondaryCollectionSearchBtn}" ui:field="collectionSearchBtn"/>
 					</g:HTMLPanel>
 				</g:HTMLPanel>

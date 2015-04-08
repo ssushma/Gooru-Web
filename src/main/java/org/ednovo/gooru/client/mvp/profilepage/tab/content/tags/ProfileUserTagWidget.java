@@ -60,7 +60,6 @@ public class ProfileUserTagWidget extends Composite {
 	String titleLabelName;
 	public ProfileUserTagWidget(){
 		initWidget(uiBinder.createAndBindUi(this));
-		
 	}
 	public ProfileUserTagWidget(UserTagsDo userTagDo,HTMLPanel followingContainer, HTMLPanel tagResourceContainer) {
 		this.userTagDo = userTagDo;
@@ -85,9 +84,6 @@ public class ProfileUserTagWidget extends Composite {
 		titleLabelName=userTagDo.getLabel();
 		mainContainer.setTitle(titleLabel);
 		mainContainer.getElement().setAttribute("alt", titleLabel);
-		/*if(titleLabel.length()>=12){
-			titleLabel = titleLabel.substring(0, 12) + "...";
-		}*/
 		tagTitle.setText(titleLabel);
 		tagTitle.getElement().setId("lblTagTitle");
 		tagTitle.getElement().setAttribute("alt",titleLabel);
@@ -99,9 +95,6 @@ public class ProfileUserTagWidget extends Composite {
 		tagcount.getElement().setAttribute("title",userTagDo.getCount());
 		
 		mainContainer.getElement().setId(userTagDo.getTagGooruOid());
-		
-		
-		
 	}
 	@UiHandler("mainContainer")
 	public void onclick(ClickEvent event)
@@ -164,8 +157,4 @@ public class ProfileUserTagWidget extends Composite {
 		tagcount.setStyleName(styleName);
 		tagTitle.setStyleName(styleName);
 	}
-	
-	
-	
-	
 }
