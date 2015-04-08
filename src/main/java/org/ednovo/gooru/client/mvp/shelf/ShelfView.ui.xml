@@ -71,15 +71,17 @@
 									extraHtmlStyleName="{res.css.collectionDescriptionHtml}" />
 							</panel:HTMLEventPanel>
 							<g:Label ui:field="simplePencilPanel" styleName="{res.css.collectionEditImage}" />
+							<g:Label styleName="{res.css.descriptionAlertMessage}"
+							ui:field="descriptionAlertMessageLbl" />
 						</panel:HTMLEventPanel>
+						
 						<g:HTMLPanel styleName="{res.css.buttonContainerDesc}">
 							<g:Button ui:field="editSelfCollectionDescSaveButtonCancel"
 								styleName="{res.css.mySelfCollectionEditTitlePreviewCancelButton}"></g:Button>
 							<g:Button ui:field="editSelfCollectionDescSaveButton"
 								styleName="primary {res.css.mySelfCollectionrEditTitle}"></g:Button>
 						</g:HTMLPanel>
-						<g:Label styleName="{res.css.descriptionAlertMessage}"
-							ui:field="descriptionAlertMessageLbl" />
+						
 					</g:FlowPanel>
 
 					<g:FlowPanel styleName="{res.css.panelAlignRight}">

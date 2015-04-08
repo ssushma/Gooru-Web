@@ -165,6 +165,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	PPanel oerPanel,panelNotMobileFriendly;
 
+	@UiField
 	Label sourcesNotFoundLbl,aggregatorNotFoundLbl;
 
 	@UiField
@@ -2121,6 +2122,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	@UiHandler("clearAll")
 	public void onClearFilter(ClickEvent clickEvent) {
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			chkNotFriendly.setValue(false);
+			chkOER.setValue(false);
+		}
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(gradePanelUcNext);
@@ -2128,6 +2133,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(accessModePanel);
 		clearFilter(ratingPanelUc);
 		clearFilter(reviewPanelUc);
+		clearFilter(panelNotMobileFriendly);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -2141,10 +2147,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		authorContainerFloPanel.clear();
 		standardCodesMap.clear();
 		aggregatorContainerFloPanel.clear();
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			chkNotFriendly.setValue(false);
-			chkOER.setValue(false);
-		}
+		
 		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 	}
 	

@@ -145,6 +145,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			public void onSuccess(CollectionDo result) {
 		
 				getView().resetAssessmentFields();
+				getView().setDefaultCreate();
 				Map<String, String> params = new HashMap<String, String>();
 				String level = AppClientFactory.getPlaceManager().getRequestParameter("level");
 				String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
@@ -321,6 +322,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 		if(!(AppClientFactory.isAnonymous())){
 			getView().getAccountTypeId();
 		}
+		getView().setDefaultCreate();
 	}
 
 	@Override

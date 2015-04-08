@@ -1141,7 +1141,6 @@ button.primary:hover {
 
 /************* Reset password Success**************/
 .resetPwdSuccessContainer {
-	border: 1px solid #CCCCCC;
 	height: 100px !important;
 	margin: -4px 4px 4px;
 }
@@ -1439,7 +1438,7 @@ button.primary:hover {
 	color: #FFFFFF !important;
 }
 
-.blueArrow {String landingPageDiscoverIconDetails();
+.blueArrow {
 	background: url("images/all-arrow-icon.png") no-repeat scroll 6px -108px
 		transparent;
 	display: block;
@@ -1462,7 +1461,7 @@ button.primary:hover {
 	width: auto;
 }
 
-.closePopUp {String landingPageDiscoverIconDetails();
+.closePopUp {
 	background: url("images/Collection-Search/icon-sprite.png") repeat
 		scroll -12px -431px transparent;
 	clear: both;
@@ -1517,8 +1516,7 @@ button.primary:hover {
 }
 
 .landingPageSliderArrowSpan {
-	background: url("images/side-arrow.1.png") no-repeat; String
-	landingPageDiscoverIconDetails();
+	background: url("images/side-arrow.1.png") no-repeat; 
 	display: block;
 	height: 50px;
 	position: relative;
@@ -1862,14 +1860,14 @@ button.primary:hover {
 	z-index: 99999;
 	background-color: black;
 	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	filter:literal(" alpha(opacity = 30)");
 }
 
 .playerAddToolTipGlassStyle {
 	z-index: 999999;
 	background-color: black;
 	opacity: 0.3;
-	filter: alpha(opacity = 30);
+	filter: literal("alpha(opacity = 30)");
 }
 
 .userMenuBottomLine {
@@ -2080,7 +2078,7 @@ a.secondary:hover {
 }
 
 .learnMoreContainer {
-	margin: 32px auto;
+	margin: 0px auto;
 	text-align: center;
 	border-bottom: 1px solid #cacaca;
 	height: 10px;
@@ -2130,9 +2128,7 @@ a.secondary:hover {
 	background: -o-linear-gradient(top, #666, #515151);
 	background-color: #515151;
 	font-size: 16px;
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075',
-		EndColorStr='#4e9746');
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075',EndColorStr='#4e9746')");
 }
 
 .closeButton {
@@ -2247,6 +2243,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 	right: 12%;
 	position: absolute;
 	text-align: center;
+	padding-top: 21px;
 }
 
 .bannerInner .caption h2 {
@@ -2303,8 +2300,8 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 
 .getStart .getInnerRight {
 	background: #ffffff;
-	padding: 15px 15px;
-	margin-bottom: 20px;
+	padding: 20px 15px;
+	margin-bottom: 23px;
 	border-radius: 4px 4px;
 }
 
@@ -2381,6 +2378,7 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 
 .mission p {
 	font-size: 14px;
+	margin: 0 0 10px;
 }
 
 .mission .col-md-4 {
@@ -2418,10 +2416,12 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 	font-size: 30px;
 	font-weight: bold;
 	margin-top: 0;
+	margin-bottom: 10px;
 }
 
 .yourSupport p {
 	font-size: 14px;
+	margin-bottom: 10px;
 }
 
 .yourSupport h3 {
@@ -2546,7 +2546,7 @@ footer .col-md-4 {
 	padding-left: 0 ;
 	padding-right: 0 ;
 	width: 28% ;
-	z-index:9999;
+/* 	z-index:9999; */
 }
 
 .searchbox .form-group {
@@ -2624,28 +2624,30 @@ footer .col-md-4 {
 .searchContainer .sInner {
 	background: #ffffff;
 	border-radius: 4px 4px;
-	padding: 10px 10px;
+	padding: 10px 9px;
 	margin-bottom: 15px;
 }
 
 .searchContainer .sInner p {
 	font-size: 13px;
 	text-align: left;
+	margin-bottom: 15px;
 }
 
 .searchContainer .sInner p.searchFind {
-	text-align: center;
+	text-align: left;
+	margin-bottom: 5px;
 }
 
 .searchContainer .col-md-3 .animation {
-	margin-right: 12px;
+	margin-right: 4px;
 	float: left;
 }
 
 .searchContainer .col-md-3 h2 {
 	display: inline-block;
 	font-family: 'Arvo', serif !important;
-	font-size: 21px;
+	font-size: 24px;
 	vertical-align: middle;
 	margin: 44px 0;
 }
@@ -2817,7 +2819,7 @@ footer {
 	color: white;
 	/* float: left; */
 	cursor: pointer;
-	padding: 18px 16px;
+	padding: 18px 10px;
 	cursor: pointer;
 	/* 	height: 18px;
  */
@@ -2828,7 +2830,7 @@ footer {
 	color: white;
 	/* float: left; */
 	cursor: pointer;
-	padding: 18px 16px;
+	padding: 18px 10px;
 	cursor: pointer;
 }
 
@@ -2866,11 +2868,11 @@ footer {
 	background-color: #393939;
 }
 .logoutDownArrow {
-	width: 34px;
-	height: 34px;
+	width: 30px;
+	height: 30px;
 	background: url(images/Collection-Search/SettingsIcon.png) no-repeat;
 	float: left;
-	margin: 9px 16px;
+	margin: 10px 5px;
 	cursor:pointer;
 }
 .searchButton{
@@ -2892,7 +2894,7 @@ footer {
 	background: -ms-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%); /* W3C */
 	box-shadow: 0 0 3px #999999;
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0 ); /* IE6-8 */
+	filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0 )"); /* IE6-8 */
 }
 .dataTableResultHeading .col-xs-3{
 	border-right:1px solid #cccccc;
@@ -3000,7 +3002,7 @@ footer {
 	/* IE10+ */
 	background: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%);
 	/* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#ffffff',endColorstr='#eeeeee', GradientType=0); /* IE6-8 */
+	filter: literal("progid:DXImageTransform.Microsoft.gradient(  startColorstr='#ffffff',endColorstr='#eeeeee', GradientType=0)"); /* IE6-8 */
 }
 
 
@@ -3075,4 +3077,19 @@ color: #ffffff !important;
     width: 90px;
     height: 90px;
     background-position: -284px -2px;
+}
+
+.spacing {
+	margin-bottom: 7px !important;
+}
+
+.communityblock .h4 {
+	font-size: 18px;
+	font-weight: normal;
+	margin-bottom: 20px;
+}
+
+.contributors {
+	margin-top: 10PX;
+	margin-bottom: 10PX;
 }

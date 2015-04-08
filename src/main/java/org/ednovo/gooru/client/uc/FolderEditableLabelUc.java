@@ -192,6 +192,8 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 		
 	}
 
+
+
 	@Override
 	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
 		return addHandler(handler, ValueChangeEvent.getType());

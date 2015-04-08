@@ -295,12 +295,15 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	public void onMoreInfoLinkClicked(ClickEvent clickEvent) {
 		openMoreInfoContainer();
 		
+		
 	}
 	
 	public void openMoreInfoContainer() {
 		
 		if (moreInfoMode && (colleResMode || shareMode || addMode || analyticsMode || addTagsMode)) {
 			disclosureContentSimPanel.clear();
+			moreInfoMode = false;
+
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				disclosureContentSimPanel.setWidget(getSearchInfoWidget());
 				getSearchInfoWidget().setData(this.searchResultDo);
@@ -314,6 +317,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			MixpanelUtil.Click_moreInfo();
 			setCssStyleForTabs(MORE_INFO);
 		} else {
+			moreInfoMode = true;
 			onDisclosureClose();
 			setCssStyleForTabs(INACTIVE);
 		}
@@ -346,6 +350,10 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	@UiHandler("collectionFocPanel")
 	public void onInfoTabClick(ClickEvent clickEvent) {
+		if(!moreInfoMode)
+		{
+			moreInfoMode = true;
+		}
 		
 		if (colleResMode && (shareMode || moreInfoMode || addMode || analyticsMode || addTagsMode)) {
 			disclosureContentSimPanel.clear();

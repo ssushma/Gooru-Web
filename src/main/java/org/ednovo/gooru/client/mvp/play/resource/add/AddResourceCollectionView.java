@@ -294,7 +294,6 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		}
 		public CollectionTreeItem(String levelStyleName,String folderTitle,String gooruOid,int itemsCount,String collectionType){
 			this();
-			System.out.println("collectiontreeitem+"+collectionType);
 			if(ASSESSMENT.equals(collectionType)){
 				folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().folderAssessment());
 			}

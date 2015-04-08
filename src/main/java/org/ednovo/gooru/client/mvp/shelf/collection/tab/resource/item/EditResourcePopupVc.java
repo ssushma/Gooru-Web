@@ -90,6 +90,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -235,7 +236,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
-	HandlerRegistration videoClickHandler,websiteClickHandler,interactiveClickHandler,imageClickHandler,textClickHandler,audioClickHandler=null;
+	HandlerRegistration videoClickHandler=null,websiteClickHandler=null,interactiveClickHandler=null,imageClickHandler=null,textClickHandler=null,audioClickHandler=null;
 	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
@@ -405,7 +406,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		this.collectionOriginalItemDo = collectionItemDo;
 		
 		setContent(i18n.GL0949(), uiBinder.createAndBindUi(this));
-		getCloseButton().addClickHandler(new ClickHandler() {
+		getCloseBtn().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				hide();
@@ -752,13 +753,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-left:10px");
 		
-		 	videoClickHandler=videoResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	interactiveClickHandler = interactiveResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	imageClickHandler=imageResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	textClickHandler = textResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		 	audioClickHandler = audioResourcePanel.addClickHandler(new checkAvailableClickHandler());
-		
 		displayResourceInfo();
 		show();
 		center();
@@ -1070,19 +1064,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				/*if(standardsDo!=null && standardsDo.size()>0){
-					for (CodeDo codeObj : standardsDo) {			
-						if(codeObj.getCodeId()==Integer.parseInt(id)){			
-							standardsDo.remove(codeObj);
-							centurySelectedValues.remove(Long.parseLong(id));
-							this.getParent().removeFromParent();
-							return;
-						}
-					}
-				}*/
 				for(final CodeDo codeObj:standardsDo){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
-						//standardsDo.remove(codeObj);
 						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void result) {
@@ -1392,23 +1375,42 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		urlTextLbl.setText(url);
 		urlTextLbl.getElement().setAttribute("alt", i18n.GL0827());
 		urlTextLbl.getElement().setAttribute("title", i18n.GL0827());
-		
-		if(urlTextLbl.getText().contains("youtube")){
+	String	userUrlStr = URL.encode(url);
+		if(userUrlStr.indexOf("youtube") >0){
 						setVideoCategory();
 						if(websiteClickHandler!=null){
+							try{
 							websiteClickHandler.removeHandler();
+							}catch(Exception e){
+							}
 						}
 						 if(interactiveClickHandler!=null){
+							 try{
 							 interactiveClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 						 if(imageClickHandler!=null){
+							 try{
 							 imageClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 						 if(textClickHandler!=null){
+							 try{
 							 textClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 						 if(audioClickHandler!=null){
+							 try{
 							 audioClickHandler.removeHandler();
+						 }catch(Exception e){
+								
+							}
 						}
 					}else{
 						websiteClickHandler=websiteResourcePanel.addClickHandler(new checkAvailableClickHandler());
@@ -1635,7 +1637,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		@Override
 		public void onClick(ClickEvent event) {
 			//here
-			
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -1656,7 +1657,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 									}else{
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 											boolean isValidate = true;
-											
 											String titleStr = titleTextBox.getText().trim();
 											String categoryStr =resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 											
@@ -2224,7 +2224,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtn.setEnabled(false);
+			//addResourceBtn.setEnabled(false);
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override

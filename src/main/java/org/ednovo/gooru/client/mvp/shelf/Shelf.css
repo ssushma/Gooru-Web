@@ -100,7 +100,7 @@
 	font-style: italic;
 	position: relative;
 	right: 0px;
-	top: 3px;
+	top: -6px;
 	display: none;
 }
 
@@ -137,6 +137,7 @@
 	overflow: hidden;
 	word-wrap: break-word;
 	font-style: normal !important;
+	overflow-y: auto;
 }
 
 .collectionDescriptionTxtAreaForFolders,.collectionDescriptionHtmlForFolders
@@ -1575,8 +1576,8 @@ padding-left: 11px;
 	background: url(images/Collection-Search/icon-sprite.png) repeat scroll -71px -169px transparent;
 	float: right;
 	height: 18px;
-	margin-right: 78px;
 	width: 14px;
+	margin-right: 78px;
 	cursor: pointer;
 }
 .publishPanel{
@@ -1663,4 +1664,17 @@ padding-left: 11px;
 	float : right;
 	color: #999;
 	margin-right: 7px;
+}
+.aleartDescTextForNotLoggedInUser{
+	width:100%;
+	padding-left:61px;
+	padding-right:57px;
+	padding-top:28px
+}
+.shelfItemSucessPopUpWithOutWidth{
+	background: none repeat scroll 0 0 #FFFFFF;
+	clip: inherit !important;
+	overflow: visible !important;
+	position: absolute !important;
+	z-index: 999999!important;
 }

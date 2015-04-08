@@ -51,9 +51,11 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	private Widget toolTipWidget;
 	private boolean isIe= false;
 	private boolean isFireFox=false;
-	private boolean isStandards;
+	//assigning the default value true so that it will display always standards text, if we need to display 21st centruy skills we need to set the isStandards value as false.
+	private boolean isStandards=true;
 	String newMsg;
 	int Count;
+	boolean isStandardsTitle = false;
 	
 	List<Map<String, String>> standards = null;
 	
@@ -123,18 +125,24 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 			tooltipPopUpUc = new DownToolTipUc();
 			tooltipPopUpUc.getElement().setAttribute("style", "z-index: 99999;");
 			tooltipPopUpUc.setContent(toolTipWidget);
+			isStandardsTitle = true;
+		}else{
+			isStandardsTitle = false;
 		}
 	}
 	
 	@Override
 	public void onClick(ClickEvent event){
-		if (standards.size()>1){
+		StandardsPopupVc standardsPopupVc;
+		if (standards!=null && standards.size()>1){
 			if (tooltipPopUpUc != null) {
 				tooltipPopUpUc.hide();
 			}
-
-			StandardsPopupVc standardsPopupVc = new StandardsPopupVc(standards,isStandards());
-
+			if(isStandardsTitle){
+				 standardsPopupVc = new StandardsPopupVc(standards,isStandards());
+			}else{
+				 standardsPopupVc = new StandardsPopupVc(standards,false);
+			}
 			standardsPopupVc.center();
 			standardsPopupVc.show();
 		}

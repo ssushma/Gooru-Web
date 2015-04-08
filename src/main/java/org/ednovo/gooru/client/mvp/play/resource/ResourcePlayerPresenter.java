@@ -541,7 +541,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void setResourceInfoView(String resourceId){
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
-		System.out.println("BrowserAgent.isDevice() resource info view:::::"+BrowserAgent.isDevice());
 		if(BrowserAgent.isDevice()){
 			resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(0, Unit.PX);
 		}else{

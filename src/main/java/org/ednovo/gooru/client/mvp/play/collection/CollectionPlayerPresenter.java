@@ -98,11 +98,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-
 import com.google.gwt.user.client.ui.FlowPanel;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -517,7 +513,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		});
 	}
 	public void getCollectionDetails(){
-		System.out.println("in the presenter");
+		hideAuthorInHeader(false);
 		final String collectionId=getPlaceManager().getRequestParameter("id", null);
 		final String resourceId=getPlaceManager().getRequestParameter("rid", null);
 		final String tabView=getPlaceManager().getRequestParameter("tab", null);
@@ -559,6 +555,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo collectionDo) {
+						updateHeaderView();
+						hideAuthorInHeader(true);
 						if(collectionDo.getStatusCode()!=200){
 							showCollectionErrorMessage();
 						}else{
@@ -602,7 +600,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					showTabWidget(tabView,collectionId,resourceId,true,false,view);
 				}
 			}else{
-				System.out.println("in the second");
 				showResourceView(resourceId,tabView,viewFrom);
 				showTabWidget(tabView,collectionId,resourceId,false,false,view);
 			}
@@ -678,7 +675,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			this.collectionMetadataId=null;
 			this.collectionSummaryId=null;
 			/** Commented to implement new study end page **/
-			
 			getView().hidePlayerButtons(false, collectionDo.getGooruOid());
 			showSignupPopup();
 			getView().setNarrationInFullScreenMode(collectionItemDo!=null?collectionItemDo:null,collectionDo);
@@ -744,7 +740,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 			adjustCollectionMetadaBody(false);
 			addFixedPostionForNavigation();
-			System.out.println("end");
 			/*if(viewFrom!=null && viewFrom.equals("fullScreen")){
 				getView().setFullScreenMode();
 			}*/
@@ -846,22 +841,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
-			//getView().clearActiveButtion();
 			if(ADD.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(false,true, true, true, true,false,true);
 				getView().makeButtonActive(true, false,false, false, false,false,false);	
 			}
-			else if(SHARE.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
+			else if(INFO.equalsIgnoreCase(tabView)){
 				getView().clearActiveButton(true,false, true, true, true,false,true);
 				getView().makeButtonActive(false,true, false, false, false,false,false);	
 			}
 			else if(SHARE.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, false, true, true,false,true);
 				getView().makeButtonActive(false,false, true, false, false,false,false);
 			}
@@ -874,8 +862,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getView().makeButtonActive(false,false, false, false, false,false,true);
 			}
 			else if(NAVIGATION.equalsIgnoreCase(tabView)){
-				
-				//CollectionPlayerMetadataView.addPadding();
 				getView().clearActiveButton(true,true, true, true, false,false,true);
 				getView().makeButtonActive(false,false, false, false, true,false,false);
 				
@@ -1648,6 +1634,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void updateHeaderView(){
 		getView().updateAuthorDetails();
 	}
+	public void hideAuthorInHeader(boolean showorHide){
+		getView().hideAuthorInHeader(showorHide);
+	}
 	public void updateCollectionSummary(){
 		metadataPresenter.setDataInsightsUrl();
 		metadataPresenter.setDataInsightsSummaryUrl(sessionId);
@@ -1702,7 +1691,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void resetCollectionPlayer(){
 		if(collectionDo!=null){
-			AppClientFactory.getEventBus().fireEvent(new UpdateViewCountInSearchEvent(collectionDo));
 			stopCollectionDataLogs();
 			getView().hidePlayerButtons(true,null);
 			AppClientFactory.getPlaceManager().setDataLogClasspageId(null);
@@ -1926,7 +1914,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			System.out.println("logging this issue:::"+"Event start stop issue");
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
@@ -1961,7 +1948,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
-			System.out.println("logging this issue for item wise:::"+"Event start stop issue");
 		}
 		
 	}

@@ -427,7 +427,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		public void updateSearchResultMetaData(String count, String resourceId,
 				String whatToUpdate) {
 			if(count!=null){
-			updateViews(count, resourceId, whatToUpdate);
+//				updateViews(count, resourceId, whatToUpdate);
 			}
 		}
 	};

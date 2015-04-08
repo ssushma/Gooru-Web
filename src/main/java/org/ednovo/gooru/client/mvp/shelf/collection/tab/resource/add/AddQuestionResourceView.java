@@ -628,14 +628,23 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public DownToolTipWidgetUc create21CenturyLabel(final String centuryCode, final String id, String description) {
 		CloseLabelCentury closeLabel = new CloseLabelCentury(centuryCode) {
 			@Override
-			public void onCloseLabelClick(ClickEvent event) {
-				for(int i=0;i<standardsDo.size();i++){
-					if(centuryCode.equalsIgnoreCase(standardsDo.get(i).getCode())){
-						standardsDo.remove(i);
-						centurySelectedValues.remove(Long.parseLong(id));
+			public void onCloseLabelClick(ClickEvent event) {	
+				for(final CodeDo codeObj:standardsDo){
+					if(id.equalsIgnoreCase(String.valueOf(codeObj.getCodeId()))){
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
+							@Override
+							public void onSuccess(Void result) {
+								CodeDo deletedObj=new CodeDo();
+								deletedObj.setCodeId(codeObj.getCodeId());
+								deletedStandardsDo.add(deletedObj);
+								standardsDo.remove(codeObj);	
+								centurySelectedValues.remove(Long.parseLong(id));
+							}
+						});
+						this.getParent().removeFromParent();
+						return;
 					}
 				}
-				this.getParent().removeFromParent();
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
@@ -2221,7 +2230,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						+ collectionItemDo.getResource().getFolder()
 						+ collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
 				
-			} 
+			}else if(collectionItemDo.getResource().getThumbnails()!=null && collectionItemDo.getResource().getThumbnails().getUrl()!=null) {
+				tumbnailUrl = collectionItemDo.getResource().getThumbnails().getUrl();
+			}
 			setEditQuestionImage(tumbnailUrl);
 		}
 		

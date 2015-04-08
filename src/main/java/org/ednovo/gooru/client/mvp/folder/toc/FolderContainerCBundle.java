@@ -27,10 +27,18 @@ package org.ednovo.gooru.client.mvp.folder.toc;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
 public interface FolderContainerCBundle extends ClientBundle {
 	static final FolderContainerCBundle INSTANCE = GWT.create(FolderContainerCBundle.class);
+	
+	@Source("folderStyleToc.css")
+	FolderTocCss css();
+	
+	@NotStrict
+	@Source("folderToc_Res.css")
+	FolderTocCss getResponsiveStyle();
 	
 	public interface  FolderTocCss extends CssResource{
 		
@@ -175,6 +183,5 @@ public interface FolderContainerCBundle extends ClientBundle {
 		String emptySubFolderStyle();
 		String pageNotFoundStyle();
 	}
-	@Source("folderStyleToc.css")
-	FolderTocCss css();
+	
 }

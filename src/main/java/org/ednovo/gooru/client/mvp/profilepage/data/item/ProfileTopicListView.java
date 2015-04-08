@@ -54,6 +54,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
@@ -176,6 +177,9 @@ public class ProfileTopicListView extends Composite{
 	private static final String  COLLECTION = "collection";
 	
 	private String libraryGooruOid=null;
+	
+	String collectionIdVal = "";
+
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
 			.create(ProfileTopicListViewUiBinder.class);
@@ -249,6 +253,8 @@ public class ProfileTopicListView extends Composite{
 		
 		loadingImage.setVisible(false);
 		
+
+		
 		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
@@ -267,6 +273,7 @@ public class ProfileTopicListView extends Composite{
 		viewAllBtn.getElement().setAttribute("style", "float:right;margin: -37px 9px 0 0;");
 		viewAllBtn.getElement().setId("btnViewAll");
 		viewAllBtn.setVisible(true);
+
 		viewAllBtn.addClickHandler(new ViewAllBtnClickHandler(profileFolderDo.getGooruOid(),parentId));
 		go2Assessment.setVisible(false);
 
@@ -298,6 +305,7 @@ public class ProfileTopicListView extends Composite{
 		setPlaceToken(placeToken);
 		collectionImage.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
+
 		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,profileFolderDo.getTitle());
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
@@ -445,6 +453,7 @@ public class ProfileTopicListView extends Composite{
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode,final String libraryGooruOid) {
 		setConceptDo(conceptDo);
+
 			
 			this.lessonCode=lessonCode;
 			if(this.topicId==topicId) {
@@ -544,7 +553,7 @@ public class ProfileTopicListView extends Composite{
 									profileLibraryTemp = libraryResources.get(i);
 								}
 								final ProfileLibraryDo profileLibraryItem = profileLibraryTemp;
-								
+							
 								String categoryString = "";
 								if(profileLibraryItem.getResourceFormat()!=null){
 									categoryString = profileLibraryItem.getResourceFormat().getDisplayName();
@@ -553,10 +562,12 @@ public class ProfileTopicListView extends Composite{
 								final String category = categoryString;
 								final HTMLEventPanel resourcePanel = new HTMLEventPanel("");
 								resourcePanel.setStyleName(style.resourceImage());
+						
 								
 								final Image resourceImage = new Image();
 								resourceImage.setWidth("80px");
 								resourceImage.setHeight("60px");
+					
 								try
 								{
 									String resourceTitle = profileLibraryItem.getTitle().replaceAll("\\<[^>]*>","");
@@ -569,24 +580,7 @@ public class ProfileTopicListView extends Composite{
 								final String categoryImage=categoryString;
 								
 								String sourceAttribution = "";
-								/*if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
-									sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
-								}*/
-								
-//								if(profileLibraryItem.getResourceSource()!=null){
-//									if(profileLibraryItem.getResourceSource().getDomainName()!=null){
-//									if(!profileLibraryItem.getResourceSource().getDomainName().equalsIgnoreCase("docs.google.com"))
-//									{
-//										sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
-//									}
-//									
-//									}
-//									else
-//									{
-//										sourceAttribution="";
-//									}
-//									
-//								}
+
 								final List<String> attribution = profileLibraryItem.getPublisher();
 								String domainName = "";
 								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getDomainName()!=null) {
@@ -595,6 +589,7 @@ public class ProfileTopicListView extends Composite{
 								final String domain = domainName;
 								
 								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+	
 								
 								resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
 								   	
@@ -640,10 +635,19 @@ public class ProfileTopicListView extends Composite{
 										String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr,Window.Location.getProtocol());
 										resourceImage.setUrl(thumbnailUrl);
 									} else {
+										String youTubeIbStr1 = ResourceImageUtil.getYoutubeVideoId(profileLibraryItem.getUrl());
+										if(youTubeIbStr1!=null && youTubeIbStr1.length()==11)
+										{
+											String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr1,Window.Location.getProtocol());
+											resourceImage.setUrl(thumbnailUrl);
+										}
+										else
+										{
 										if(profileLibraryItem.getThumbnails()!=null&&profileLibraryItem.getThumbnails().getUrl()!=null&&!profileLibraryItem.getThumbnails().getUrl().isEmpty()) {
 											resourceImage.setUrl(profileLibraryItem.getThumbnails().getUrl());
 										} else {
 											resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
+										}
 										}
 									}
 									resourceImage.addErrorHandler(new ErrorHandler() {
@@ -667,7 +671,7 @@ public class ProfileTopicListView extends Composite{
 										} else {
 											MixpanelUtil.mixpanelEvent("LandingPage_Plays_Resource");
 										}
-										Map<String, String> params = new HashMap<String, String>();
+										final Map<String, String> params = new HashMap<String, String>();
 										params.put("id", conceptDo.getGooruOid());
 										
 										String resourceId = profileLibraryItem.getCollectionItemId();
@@ -675,37 +679,43 @@ public class ProfileTopicListView extends Composite{
 											resourceId = profileLibraryItem.getCollectionItemId();
 										}
 										params.put("rid", resourceId);
-										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-										params.put("lessonId", lessonId);
-										if(libraryGooruOid!=null){
-											params.put("lid", libraryGooruOid);
-										}
-										String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-										if(libraryEventId!=null){
-											params.put("eventid", libraryEventId);
-										}
-										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-											params.put("library", getPlaceToken());
-										}
-										String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-										if(standardId!=null){
-											params.put("rootNodeId", standardId);
-										}
 										
-										PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-										AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+	
+											
+											params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+											params.put("lessonId", lessonId);
+											if(libraryGooruOid!=null){
+												params.put("lid", libraryGooruOid);
+											}
+											String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+											if(libraryEventId!=null){
+												params.put("eventid", libraryEventId);
+											}
+											if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+												params.put("library", getPlaceToken());
+											}
+											String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+											if(standardId!=null){
+												params.put("rootNodeId", standardId);
+											}
+											
+											PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+											AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+	
+							
 									}
 								});
 								resourceCategoryIcon.addClickHandler(new ClickHandler() {
 									@Override
 									public void onClick(ClickEvent event) {
+
 										String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 										if(page.equals(COURSE_PAGE)) {
 											MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
 										} else {
 											MixpanelUtil.mixpanelEvent("LandingPage_Plays_Resource");
 										}
-										Map<String, String> params = new HashMap<String, String>();
+										final Map<String, String> params = new HashMap<String, String>();
 										params.put("id", conceptDo.getGooruOid());
 										
 										String resourceId = profileLibraryItem.getCollectionItemId();
@@ -713,25 +723,34 @@ public class ProfileTopicListView extends Composite{
 											resourceId = profileLibraryItem.getCollectionItemId();
 										}
 										params.put("rid", resourceId);
-										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
-										params.put("lessonId", lessonId);
-										if(libraryGooruOid!=null){
-											params.put("lid", libraryGooruOid);
-										}
-										String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
-										if(libraryEventId!=null){
-											params.put("eventid", libraryEventId);
-										}
-										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-											params.put("library", getPlaceToken());
-										}
-										String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-										if(standardId!=null){
-											params.put("rootNodeId", standardId);
-										}
 										
-										PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-										AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+										
+								
+											params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+											params.put("lessonId", lessonId);
+											if(libraryGooruOid!=null){
+												params.put("lid", libraryGooruOid);
+											}
+											String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+											if(libraryEventId!=null){
+												params.put("eventid", libraryEventId);
+											}
+											if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+												params.put("library", getPlaceToken());
+											}
+											String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+											if(standardId!=null){
+												params.put("rootNodeId", standardId);
+											}
+											
+											PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+											AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+										
+										
+										
+										
+										
+									
 									}
 								});
 								
@@ -772,7 +791,6 @@ public class ProfileTopicListView extends Composite{
 	}
 
 	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList, final String gooruOid,final String libraryGooruOid) {
-		
 		boolean isLessonHighlighted = true;
 		final int count = profileLibraryDoList.size();
 		if(profileLibraryDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
@@ -957,6 +975,12 @@ public class ProfileTopicListView extends Composite{
 	private void setMetaDataInfo(ProfileLibraryDo profileLibraryDo) {
 		collectionImage.getElement().setAttribute("collid", profileLibraryDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute("collid", profileLibraryDo.getGooruOid());
+		if(profileLibraryDo.getParentGooruOid()!=null)
+		{
+		collectionImage.getElement().setAttribute("folderId", profileLibraryDo.getParentGooruOid());
+		collectionTitleLbl.getElement().setAttribute("folderId", profileLibraryDo.getParentGooruOid());
+
+		}
 		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,profileLibraryDo.getTitle());
 		if(AppClientFactory.isAnonymous()){
 			standardsFloPanel.clear();
@@ -1106,12 +1130,14 @@ public class ProfileTopicListView extends Composite{
 			if(collectionType.equals(ASSESSMENT_URL)){
 				Window.open(conceptDo.getUrl(), "", "");
 			}else{
-				String collectionIdVal = "";
+
 				try{
 					collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
+					
 				}
 				catch(Exception ex){
 					collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
+
 				}
 				String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 				if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
@@ -1122,6 +1148,7 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
 				}
+	
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", collectionIdVal);
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
@@ -1141,6 +1168,7 @@ public class ProfileTopicListView extends Composite{
 					params.put("rootNodeId", standardId);
 				}
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+				
 			}
 		}
 	}
@@ -1172,13 +1200,28 @@ public class ProfileTopicListView extends Composite{
 		/*	successPopupVc.setWidth("500px");*/
 			//successPopupVc.setHeight("657px");
 			successPopupVc.show();
-			successPopupVc.center();
+			/*successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), -30);
 			}
 			else {				
 				successPopupVc.center();
+			}*/
+			
+			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+				/*successPopupVc.setWidth("550px");
+				successPopupVc.setHeight("625px");
+				successPopupVc.center();*/
+				successPopupVc.setPopupPosition(0, (Window.getClientHeight()-625)/2);
+			}else if(!BrowserAgent.isDevice() && !AppClientFactory.isAnonymous()){
+				/*successPopupVc.setWidth("550px");
+				successPopupVc.setHeight("502px");
+				successPopupVc.center();*/
+				successPopupVc.setPopupPosition(0, (Window.getClientHeight()-527)/2);
+			}else{
+				successPopupVc.center();
 			}
+			
 			
 			params.put(ASSIGN, "yes");
 			params.put("collectionId", collectionId);
@@ -1215,8 +1258,15 @@ public class ProfileTopicListView extends Composite{
 			Window.scrollTo(0, 0);
 		/*	successPopupVc.setWidth("500px");*/
 			//successPopupVc.setHeight("475px");
-			successPopupVc.show();
-			successPopupVc.center();
+			
+			
+			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
+				successPopupVc.setPopupPosition(0, 30);
+			}else{
+				successPopupVc.show();
+				successPopupVc.center();
+				
+			}
 			
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);

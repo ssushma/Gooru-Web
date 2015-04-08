@@ -13,14 +13,14 @@
 			<g:Label styleName="{toolTip.mycollectionsToolTipLabel} {toolTip.mycollectionsToolTipLabel}" ui:field="lblEditMyCollections" />
 		</g:HTMLPanel> -->
 		<uc:UlPanel ui:field="tooltipPanel" styleName="dropdown-menu {res.css.dropdowDisplay}">
+		<uc:LiPanel>
+				<g:Anchor styleName="{res.css.folderToolTipLabel} " ui:field="lblCreateFolder" />
+		    </uc:LiPanel>
 		    <uc:LiPanel>
 		       <g:Anchor styleName="{res.css.collectionToolTipLabel}" ui:field="lblCreateCollection" />		        
 		    </uc:LiPanel>
 		    <uc:LiPanel>
 		    	<g:Anchor styleName="{res.css.assessmentToolTipLabel}" ui:field="lblCreateAsseement" />
-		    </uc:LiPanel>
-		    <uc:LiPanel>
-				<g:Anchor styleName="{res.css.folderToolTipLabel} " ui:field="lblCreateFolder" />
 		    </uc:LiPanel>
 		    <uc:LiPanel>
 		        <g:Anchor ui:field="lblEditMyCollections" />

@@ -35,12 +35,14 @@ import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -77,6 +79,8 @@ public abstract class ImageCropView extends Composite{
 	FlowPanel buttonContainer;
 	
 	private GWTCropper crop;
+	
+	private ScrollPanel scrollpanel = new ScrollPanel();
 
 
 	private static ImageCropViewUiBinder uiBinder = GWT.create(ImageCropViewUiBinder.class);
@@ -141,7 +145,15 @@ public abstract class ImageCropView extends Composite{
 	public void cropImage(String imageURL,float aspectRatio) {
 		crop = new GWTCropper(imageURL);
 		crop.setAspectRatio(aspectRatio);
-		cropImageWidgetFloPanel.add(crop);
+		scrollpanel.add(crop);
+		cropImageWidgetFloPanel.add(scrollpanel);
+		Timer timer = new Timer() {
+		    public void run() {
+		    	cropImageLoading.setVisible(false);
+		    }
+		};
+	   // Execute the timer to expire 7 seconds in the future
+	   timer.schedule(7000);	
 	}
 	
 	/**

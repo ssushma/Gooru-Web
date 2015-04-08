@@ -192,9 +192,9 @@ public class ForgotPasswordVc extends PopupPanel {
 
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-                    if (result != null && result.containsKey("error")) {
-                    	if(result.get("error")!=null){
-                    		String	error=(String) result.get("error");
+                    if (result != null && result.containsKey("errorMessage")) {
+                    	if(result.get("errorMessage")!=null){
+                    		String	error=(String) result.get("errorMessage");
                     		if("Looks like this email is tied with Google!".equalsIgnoreCase(error)){
    							 errorMessage.setVisible(true);
    							 hide();

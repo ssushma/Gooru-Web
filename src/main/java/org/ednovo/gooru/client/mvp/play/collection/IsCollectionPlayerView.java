@@ -73,4 +73,5 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public void restFullScreenChanges();
 	public void setFullScreenMode();
 	public void setNarrationInFullScreenMode(CollectionItemDo collectionItemDo, CollectionDo collectionDo);
+	public void hideAuthorInHeader(boolean isHidePlayerButtons);
 }

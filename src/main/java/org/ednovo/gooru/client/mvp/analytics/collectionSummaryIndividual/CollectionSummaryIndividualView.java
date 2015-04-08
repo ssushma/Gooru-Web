@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
@@ -321,7 +322,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        Table table = new Table(data, options);
 		        printResourceData.add(table);
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	/**
@@ -445,6 +446,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			});
 	    	
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	        if(loadingImage!=null)
 	        loadingImage.setVisible(false);
@@ -509,7 +511,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	printOpendedData.add(erroeMsg);
 	        }
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	/**
@@ -579,7 +581,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		@Override
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE)){
+			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId"))){
 				getUiHandlers().setOEtextData(ele.getAttribute("resourceGooruId"),ele.getAttribute("questionType"));
 			}
 		}
@@ -768,6 +770,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	printScoredData.add(erroeMsg);
 	        }
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	/**

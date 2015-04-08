@@ -341,9 +341,9 @@
 }
 
 .top-level{
-overflow:hidden;
-min-height:80px !important;
-height:auto !important;
+	overflow:hidden;
+	min-height:80px !important;
+	height:auto !important;
 }
 /*End */
 @media print

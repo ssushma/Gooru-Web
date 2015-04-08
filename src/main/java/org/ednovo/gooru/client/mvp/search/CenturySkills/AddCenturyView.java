@@ -75,13 +75,15 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	String selectedCodeVal = "";
 	Integer selectedCodeId = 0;
 	String selectedCodeDesc = "";
+	String collectionIdFromCollectionInfo = "";
 	LiPanel liPanel;
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	private static final String TITLE_THIS_COLLECTION = i18n.GL0322();
 	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
 	Map<Long,String> selectedValues=new HashMap<Long,String>();
 	Map<Long,String> initialSelectedValues=new HashMap<Long,String>();
-
+	Map<Long, String> collectionInfoSelectedValues;
+	
 	@UiTemplate("AddCenturyView.ui.xml")
 	interface AddCenturyViewUiBinder extends UiBinder<Widget, AddCenturyView> {
 	}
@@ -101,16 +103,13 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 				selectedValues.clear();
 			}
 		});
-		
-	
 	
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(AddCenturyBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
 		AddCenturyBundle.INSTANCE.css().ensureInjected();
 		appPopUp.setViewTitle(i18n.GL3121_1());
-		if(contentsDiv!= null)
-		{
+		if(contentsDiv!= null){
 		contentsDiv.getElement().setAttribute("style", "overflow-y:auto;max-height:440px;");
 		}
 	}
@@ -124,7 +123,8 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	/**
 	 * This method is used for to reset the style for the title widgets
 	 */
-	private void resetPopupHilightedData() {
+	@Override
+	 public void resetPopupHilightedData() {
 		callResetData(ulCongitiveAndStrategies);
 		callResetData(ulKeyContentKnowledge);
 		callResetData(ulKeyLearningSkills);
@@ -313,6 +313,12 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 						titleText.removeStyleName(AddCenturyBundle.INSTANCE.css().hilighTitleText());			
 						for (Map.Entry<Long, String> entry : selectedValues.entrySet()){
 							if(selectedValues.containsValue(entry.getValue().trim())){
+								if(collectionIdFromCollectionInfo!=null){
+									getUiHandlers().deleteCourseOrStandard(collectionIdFromCollectionInfo, entry.getKey().toString());
+									if(collectionInfoSelectedValues!=null && collectionInfoSelectedValues.containsKey(entry.getKey())){
+										collectionInfoSelectedValues.remove(entry.getKey());
+									}
+								}
 								selectedValues.remove(entry.getKey());
 								return;
 							}
@@ -379,5 +385,11 @@ public class AddCenturyView extends PopupViewWithUiHandlers<AddCenturyUiHandlers
 	@Override
 	public void setAddResourceDataForTags(ArrayList<String> centuryDo) {
 		setPopupAddHilightDataForAddTags(centuryDo);
+	}
+
+	@Override
+	public void setCollectionIdFromCollectionInfo(String collectionId,Map<Long, String> collectionInfoSelectedValues) {
+		collectionIdFromCollectionInfo=collectionId;
+		this.collectionInfoSelectedValues=collectionInfoSelectedValues;
 	}
 }

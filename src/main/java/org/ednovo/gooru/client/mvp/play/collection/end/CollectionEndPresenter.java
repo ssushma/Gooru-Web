@@ -342,7 +342,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		}
 		else
 		{
-		getNextCollectionItem(folderId,folderItemId);
+		getNextCollectionItem(folderId,folderItemId,collectionDo.getUrl());
 		}
 		
 
@@ -361,7 +361,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setCollectionDoOnRefresh(CollectionDo collectionDo) { 
 		this.collectionDo = collectionDo;
 		getView().setCollectionMetadata(collectionDo);
-		setRelatedConcepts(collectionDo);
 	}
 
 	public CollectionPlayerPresenter getCollectionPlayerPresenter() {
@@ -572,16 +571,26 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		
 	}
 	
-	public void getNextCollectionItem(String folderId,String folderItemId) {
+	public void getNextCollectionItem(String folderId,String folderItemId,final String urlVal) {
 		if(folderId!=null && folderItemId!=null) {			
 			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
 				@Override
 				public void onSuccess(FolderWhatsNextCollectionDo result) {
-					getView().displayWhatsNextContent(result);
+					getCollection(result.getGooruOid(),result);
 				}
 			});
 		} else {
 			getView().hideNextCollectionContainer(true);
 		}
 	}
+	public void getCollection(String nextCollId,final FolderWhatsNextCollectionDo result){
+
+		this.playerAppService.getSimpleCollectionDetils(null,nextCollId,null,null, null, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo collectionDo) {
+				getView().displayWhatsNextContent(result,collectionDo.getUrl());
+			}
+		});
+	}
+	
 }

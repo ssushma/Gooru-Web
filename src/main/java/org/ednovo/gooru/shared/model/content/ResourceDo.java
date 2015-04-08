@@ -53,6 +53,7 @@ public class ResourceDo extends ContentDo {
     private String grade;
     private String mediaType;
     private List<StandardFo> skills;
+	private String gooruOid;
     
     private String encodedUrl;
     
@@ -567,4 +568,11 @@ public class ResourceDo extends ContentDo {
 	public void setSkills(List<StandardFo> skills) {
 		this.skills = skills;
 	}
+	public String getGooruOid() {
+		return gooruOid;
+	}
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+	
 }

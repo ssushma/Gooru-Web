@@ -20,23 +20,6 @@
 
 		}
 
-		/* .login a {
-		color:
-		#FFFFFF !important;
-		float: left !important;
-		/*
-		padding: 2px !important;
-		*/
-		text-decoration: none !important;
-		position:
-		relative;
-		left: 10px;
-		}
-
-		.login a:hover {
-		opacity: 0.5;
-		}
-		*/
 		.centerBar {
 		float: left;
 		display: none;
@@ -555,7 +538,7 @@
 														<g:HTMLPanel ui:field="myCollectionsPop"></g:HTMLPanel>
 													</uc:HTMLEventPanel>
 												</uc:LiPanel>
-												<uc:LiPanel>
+												<uc:LiPanel styleName="noborder">
 													<uc:HTMLEventPanel ui:field="teachLinkMain">
 														<uc:HTMLEventPanel ui:field="teachLinkContainer">
 															<g:Anchor ui:field="teachLink" />

@@ -35,6 +35,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Search Team
@@ -42,6 +44,7 @@ import org.restlet.ext.json.JsonRepresentation;
  */
 public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  extends DeSerializer{
 
+	
 	private static String SEARCH_RESULTS = "searchResults";
 	private static String SEARCH_HITS = "totalHitCount";
 	public static String URL = "url";
@@ -103,13 +106,12 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String CREATOR = "creator";
 	public static final String SUGGEST_RESULTS ="suggestResults";
 	
-	
-	
 	/**
 	 * Deserialize the search json object
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @param searchDo instance of {@link SearchDo}
 	 */
+	private static final Logger logger = LoggerFactory.getLogger(SearchDeSerializer.class);
 	public void deserialize(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
 		searchDo.setSearchResults(new ArrayList<T>());
 		try {
@@ -135,6 +137,8 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
+			logger.error("Exception::", e);
+			throw new RuntimeException(e.getCause());
 		}
 	}
 	public void deserializeSuggestedResources(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
@@ -151,6 +155,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
+			logger.error("Exception::", e);
 		}
 	}
 	public void deserializeCollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
@@ -169,29 +174,11 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		
 	}
-	public void deserializeV2CollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
-        searchDo.setSearchResults(new ArrayList<T>());
-        try{
-            if(jsonRep!=null){
-                JSONArray searchResultJsonArray = jsonRep.getJsonArray();
-                List<T> collectionSearchResults = searchDo.getSearchResults();
-                int collectionItemsCount=searchResultJsonArray.length();
-                searchDo.setCollectionItemsCount(collectionItemsCount);
-                for (int pointer = 0; pointer < collectionItemsCount; pointer++) {
-                    T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
-                    if (record != null) {
-                        collectionSearchResults.add(record);
-                    }
-                }
-            }
-        } catch(Exception e){
-        }
-        
-    }
-
+	
 	public void deserializeV2CollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
 		searchDo.setSearchResults(new ArrayList<T>());
 		try{
@@ -208,6 +195,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		
 	}

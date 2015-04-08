@@ -247,14 +247,14 @@ public class ResourceRequest implements ClickHandler{
 	}
 	
 	public void setNavigationResourceTitle(String title){
-		
-		resourceHoverTitle.setHTML(getHTML(title).toString());
+		String titleLbl	=StringUtil.removeHtml(title.toString());
+		resourceHoverTitle.setHTML(titleLbl);
 		resourceHoverTitle.getElement().setAttribute("alt", getHTML(title).toString());
 		resourceHoverTitle.getElement().setAttribute("title", getHTML(title).toString());
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
 		
-		String titleLbl	=InfoUtil.removeQuestionTagsOnBoldClick(StringUtil.toString(title));
+		String titleLbl	=StringUtil.removeHtml(title.toString());
 		resourceHoverTitle.setHTML(titleLbl);
 		resourceHoverTitle.getElement().setAttribute("alt", StringUtil.toString(title));
 		resourceHoverTitle.getElement().setAttribute("title", StringUtil.toString(title));
@@ -374,7 +374,8 @@ public class ResourceRequest implements ClickHandler{
 	}
 	
 	private HTML getHTML(String html){
-		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		//html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		html=StringUtil.removeHtml(html);
 		contentHtml.setHTML(html);
 		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sequenceNumber());
 		return contentHtml;

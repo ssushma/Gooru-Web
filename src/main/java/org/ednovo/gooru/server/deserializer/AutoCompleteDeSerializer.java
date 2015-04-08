@@ -64,9 +64,11 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 			for (int i = 0; i < searchResults.length(); i++) {
 				JSONObject code = searchResults.getJSONObject(i);
 				StandardFo codeDo = new StandardFo();
-				codeDo.setCodeId(code.getInt(CODE_ID));
-				codeDo.setLabel(code.getString(NAME));
-				centurysList.add(codeDo);
+				if(code.has(CODE_ID)){
+					codeDo.setCodeId(code.getInt(CODE_ID));
+					codeDo.setLabel(code.getString(NAME));
+					centurysList.add(codeDo);
+				}
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

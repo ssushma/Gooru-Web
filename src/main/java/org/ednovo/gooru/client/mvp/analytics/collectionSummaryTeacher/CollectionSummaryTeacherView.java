@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.HCBarChart;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryWidget;
@@ -24,6 +25,7 @@ import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.ClientConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -318,7 +320,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        printWidget.add(printOpendedData);
 	    	printOpendedData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
         }catch(Exception e){
-        	
+        	AppClientFactory.printSevereLogger(e.getMessage());
         }
 	}
 	/**
@@ -407,7 +409,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		@Override
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase("View Response")){
+			if(ele.getInnerText().equalsIgnoreCase("View Response") && !StringUtil.isEmpty(ele.getAttribute("resourceGooruId"))){
 				getUiHandlers().setOEtextData(ele.getAttribute("resourceGooruId"),ele.getAttribute("questionType"));
 			}
 		}
@@ -529,6 +531,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        printResourceData.add(table);
 	        printWidget.add(printResourceData);
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	/**

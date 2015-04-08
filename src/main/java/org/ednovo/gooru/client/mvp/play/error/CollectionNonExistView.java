@@ -99,7 +99,6 @@ public class CollectionNonExistView extends Composite{
 		btnLibrary.getElement().setAttribute("alt",i18n.GL1831());
 		btnLibrary.getElement().setAttribute("title",i18n.GL1831());
 		
-		btnLibrary.getElement().getStyle().setMarginLeft(50, Unit.PX);
 		feautredCollectionContainer.getElement().setId("fpnlFeautredCollectionContainer");
 		
 		recycleImage.getElement().setId("imgRecycleImage");

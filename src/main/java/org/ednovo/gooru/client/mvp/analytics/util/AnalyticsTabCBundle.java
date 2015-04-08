@@ -62,5 +62,6 @@ public interface AnalyticsTabCBundle extends ClientBundle{
 		String mail_icon_image();
 		String save_icon_image();
 		String addButonStyleActive();
+		String analyticsPrintSave();
 	}
 }

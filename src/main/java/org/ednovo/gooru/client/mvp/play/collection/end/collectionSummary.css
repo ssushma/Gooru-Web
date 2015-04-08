@@ -115,12 +115,10 @@
 .collection_last_accessed {
 	margin-top: 0px;
 	width: 100%;
-	/* border-top: 1px solid #DDD; */
 	padding-top: 0px;
 	float: left;
 	clear: both;
 	font-size: 13px;
-	padding-left: 10px;
 }
 
 .right_session {
@@ -166,7 +164,8 @@
 }
 .sessionpnl{
 	line-height: 39px;
-	width: 71%;
+	width: 73%;
+	padding:0;
 }
 .collection_session_panel{
 	width:27%;

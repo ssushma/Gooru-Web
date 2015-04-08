@@ -69,6 +69,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +87,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	/**
 	 * 
 	 */
+	private static Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
+	
 	private static final long serialVersionUID = 4286188874651640611L;
 	
 	private static final String RESOURCE = "resource";
@@ -216,10 +220,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("Exception::", e);
 		}
 		return searchDo;
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		return searchDOEmpty;
 	}
@@ -264,6 +269,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
 		return searchDo;
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		return searchDOEmpty;
 	}
@@ -352,10 +358,10 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
         //This is used for to generate folder toc shorten url
 		if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.FOLDER_TOC)) {	
 			if(params.containsKey(LIBRARY_NAME)){
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_LIBRARY.getUrl(), contentGooruOid,params.get(LIBRARY_NAME)));
 				if(params.containsKey(PARENT_ID)){
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PARENT.getUrl(), contentGooruOid,params.get(LIBRARY_NAME),params.get(PARENT_ID)));
 				}
-				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_LIBRARY.getUrl(), contentGooruOid,params.get(LIBRARY_NAME)));
 			}else if(params.containsKey(USER_ID)){
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/"+ ShareUrlToken.FOLDERTOC_URL_PROFILE.getUrl(), contentGooruOid, params.get(USER_ID)));
 			}else{
@@ -385,7 +391,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("Exception::", e);
 		}
 		
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -426,7 +432,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("Exception::", e);
 		}
 		
 		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
@@ -503,6 +509,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo);
 			return searchDo;
 			}catch(Exception e){
+				logger.error("Exception::", e);
 			}
 			return searchDOEmpty;
 		}
@@ -584,10 +591,11 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		catch(Exception e)
 		{
-			
+			logger.error("Exception::", e);
 		}
 		return searchDo;
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		return searchDOEmpty;
 	
@@ -612,7 +620,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -637,7 +645,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -662,7 +670,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -686,7 +694,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				return standardLevelArry;
 			}
 		} catch (Exception e) {
-			
+			logger.error("Exception::", e);
 		}
 		return standardLevelArry;
 	}
@@ -726,7 +734,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			searchResourcesTagsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SearchResourcesTagsDo.class);
 		}
 		catch(JSONException ex){
-			
+			logger.error("Exception::", ex);
 		}
 		return searchResourcesTagsDo;
 	}
@@ -744,7 +752,9 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		try{
 			centurySkilsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CenturySkilsDo.class);
-		}catch(JSONException ex){}
+		}catch(JSONException ex){
+			logger.error("Exception::", ex);
+		}
 		return centurySkilsDo;
 	}
 

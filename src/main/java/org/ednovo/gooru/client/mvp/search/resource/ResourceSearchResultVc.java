@@ -162,7 +162,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 		this.res = ResourceSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		resourceDescriptionHtml.getElement().getStyle().setTextAlign(TextAlign.JUSTIFY);
+		resourceDescriptionHtml.getElement().getStyle().setTextAlign(TextAlign.LEFT);
 		// wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(
 				UpdateSearchResultMetaDataEvent.TYPE, setUpdateMetaData);
@@ -284,12 +284,6 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 				SearchUiUtil.renderSourceMetadata(metaDataFloPanel,
 						publisherData, null, shortenMetaLength ? 15 : 25);
 			}
-			// String source = resourceSearchResultDo.getResourceSource() !=
-			// null ?
-			// resourceSearchResultDo.getResourceSource().getAttribution() :
-			// null;
-			// SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null,
-			// shortenMetaLength ? 15 : 25);
 			if (resourceSearchResultDo.getAggregator() != null) {
 				String aggregatorData = "";
 				for (String aggregator : resourceSearchResultDo.getAggregator()) {
@@ -449,7 +443,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 				resourceSearchResultDo.getGooruOid());
 		if (lblResourceTitle.getText().length() > 30) {
 			String lblString = lblResourceTitle.getText();
-			lblString = lblString.substring(0, 24) + "...";
+			lblString = lblString.substring(0, 27) + "...";
 			lblResourceTitle.setText(lblString);
 			// lblResourceTitle.getElement().getStyle().setWidth(240, Unit.PX);
 		}
@@ -545,7 +539,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 		public void updateSearchResultMetaData(String count, String resourceId,
 				String whatToUpdate) {
 			if (count != null) {
-				updateViews(count, resourceId, whatToUpdate);
+//				updateViews(count, resourceId, whatToUpdate);
 			}
 		}
 	};

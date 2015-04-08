@@ -10,4 +10,5 @@ public interface FolderItemMetaDataUcStyleBundle  extends CssResource{
 	String errorLabel();
 	String highlightContent();
 	String pencilHolderDiv();
+	String addBackground();
 }

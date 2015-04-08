@@ -141,4 +141,17 @@ public class AddCenturyPresenter extends PresenterWidget<IsAddCenturyView> imple
 	public void setAddResourceDataAddTags(ArrayList<String> centuryDo) {
 		getView().setAddResourceDataForTags(centuryDo);
 	}
+
+	@Override
+	public void setCollectionIdFromCollectionInfo(String collectionId,Map<Long, String> collectionInfoSelectedValues) {
+		getView().setCollectionIdFromCollectionInfo(collectionId,collectionInfoSelectedValues);
+	}
+	@Override
+	public void deleteCourseOrStandard(String collectionId, String courseCode) {
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.valueOf(courseCode), new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+			}
+		});
+	}
 }

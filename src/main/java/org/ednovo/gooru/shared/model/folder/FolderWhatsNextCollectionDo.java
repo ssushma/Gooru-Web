@@ -42,6 +42,7 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 	    private String collectionItemId;
 	    private Integer resourceCount;
 	    private Integer questionCount;
+	    private String collectionType;
 	    
 	
 	public FolderWhatsNextCollectionDo(){}
@@ -93,7 +94,19 @@ public class FolderWhatsNextCollectionDo implements Serializable{
 	public void setQuestionCount(Integer questionCount) {
 		this.questionCount = questionCount;
 	}
-	
 
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
 	
 }

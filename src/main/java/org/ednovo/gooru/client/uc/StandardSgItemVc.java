@@ -60,10 +60,10 @@ public class StandardSgItemVc extends Composite {
 	 * @param desc standard description
 	 */
 	public StandardSgItemVc(String title, String desc) {
+		this.res = UcCBundle.INSTANCE;
+		res.css().ensureInjected();
+		initWidget(uiBinder.createAndBindUi(this));
 		if(!StringUtil.isEmpty(title) && !StringUtil.isEmpty(desc)){
-			this.res = UcCBundle.INSTANCE;
-			res.css().ensureInjected();
-			initWidget(uiBinder.createAndBindUi(this));
 			standardsTitle.setHTML(title);
 			standardsTitle.getElement().setId("htmlStandardsTitle");
 			standardsTitle.getElement().setAttribute("alt", title);

@@ -62,6 +62,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.folder.FolderTocDo;
 import org.ednovo.gooru.shared.util.DOMUtils;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -199,6 +200,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	private static final String ID = "id";
 	
 	private static final String ASSESSMENT = "assessment";
+	
+	private static final String ASSESSMENT_URL = "assessment/url";
 
 	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
 	
@@ -242,6 +245,11 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			public void onMouseOver(MouseOverEvent event) {
 				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
 					myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
+					/*if(collectionDo.getType().equalsIgnoreCase("assessment/url")) {
+						myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
+					}else{
+						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
+					}*/
 				}
 			}
 		});
@@ -257,19 +265,18 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
+				String tooltipText="";
 				if(collectionDo.getType().equalsIgnoreCase("folder")){
+					tooltipText = i18n.GL1472();
+				}else{
+					tooltipText = i18n.GL1473();
+				}
+				
 				toolTipPopupPanel.clear();
-				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(i18n.GL1472(),""));
+				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(tooltipText,""));
 				toolTipPopupPanel.setStyleName("");
 				toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
 				toolTipPopupPanel.show();
-				}else{
-					toolTipPopupPanel.clear();
-					toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(i18n.GL1473(), ""));
-					toolTipPopupPanel.setStyleName("");
-					toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
-					toolTipPopupPanel.show();
-				}
 			}
 			
 		});
@@ -313,7 +320,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			MixpanelUtil.mixpanelEvent("Search_click_folder_edit");
 			isEditButtonSelected=true;
 			openFolderInShelf();
-		} else {
+		}else {
 			openCollectionInShelf();
 		}
 	}
@@ -1105,8 +1112,13 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		}
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
-		AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(collectionDo)));
-
+		AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),false,new SimpleAsyncCallback<FolderTocDo>() {
+			@Override
+			public void onSuccess(FolderTocDo result) {
+				AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaDataTocAPI(result)));
+				
+			}
+		});
 	}
 	
 	public void openCollectionInShelf() {
