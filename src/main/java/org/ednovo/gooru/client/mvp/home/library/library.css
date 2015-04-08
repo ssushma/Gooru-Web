@@ -261,9 +261,6 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
-	/* IE 6-9 */	
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
-
 }
 
 #contentScroll .topicBlock .searchLink {
@@ -998,9 +995,6 @@ margin-bottom: 15px;
 	/* Opera 11.10+ */
 	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -o-linear-gradient(top, #FFFFFF, #FFFFFF);
 
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
-	
 }
 
 .collectionSmall {
@@ -1268,9 +1262,6 @@ margin-left: 82px;
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 
-	/* IE 6-9 */	
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
-	
 }
 .listViewBtnStyle{
 	float:right;

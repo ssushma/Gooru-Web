@@ -244,12 +244,12 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
-					if(collectionDo.getType().equalsIgnoreCase("assessment/url")) {
+					myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
+					/*if(collectionDo.getType().equalsIgnoreCase("assessment/url")) {
 						myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 					}else{
 						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
-					}
-					
+					}*/
 				}
 			}
 		});
@@ -331,7 +331,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			titleFocPanel.addStyleName(folderStyle.collection());
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		if(collectionDo.getCollectionType().contains(ASSESSMENT)){
+		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
 			titleFocPanel.addStyleName(folderStyle.assessment());
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
@@ -586,7 +586,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	@Override
 	public void onDragOver(final Draggable draggable) {
 	        if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
-	        	if(folderDo.getType().equalsIgnoreCase("folder") || folderDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL) ){
+	        	if(folderDo.getType().equalsIgnoreCase("folder")){
 	        		draggable.getDraggableMirageUc().onDroppable(false);
 	        		titleFocPanel.removeStyleName(folderStyle.draggingInto());
 	        		wrapperFocPanel.getElement().getStyle().clearBackgroundColor();
@@ -632,7 +632,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 //	        		AppClientFactory.fireEvent(new ResourceDragOverShelfEvent(folderDo.getGooruOid())); 
 	        	}
 	        }else if(draggable.getType().equals(DRAG_TYPE.COLLECTION)){ 
-	        	if(folderDo.getType().equalsIgnoreCase("scollection")||folderDo.getType().equalsIgnoreCase("collection") || folderDo.getType().contains(ASSESSMENT)){
+	        	if(folderDo.getType().equalsIgnoreCase("scollection")||folderDo.getType().equalsIgnoreCase("collection")){
 	        		toolTipPopupPanel.clear();
 	    			toolTipPopupPanel.setWidget(new SearchDragToolTip(i18n.GL1136()));
 	    			toolTipPopupPanel.setStyleName("");
@@ -692,7 +692,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public void onDrop(final Draggable draggable) {
         if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
             //setOpen();
-        	if(folderDo.getType().equalsIgnoreCase("folder") || folderDo.getCollectionType().equals(ASSESSMENT_URL)){
+        	if(folderDo.getType().equalsIgnoreCase("folder")){
         		toolTipPopupPanel.hide();
         	}else{
         		new CustomAnimation(draggable).run(50);
@@ -844,7 +844,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(!collectionDo.getType().equals("folder") && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
+			if(!collectionDo.getType().equals("folder")) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
 		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
