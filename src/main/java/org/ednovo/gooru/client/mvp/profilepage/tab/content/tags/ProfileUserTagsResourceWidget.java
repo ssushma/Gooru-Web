@@ -113,7 +113,6 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	public void setResourceTypeImage(String resourceType){
 		if(resourceType!=null){
 			resourceType=resourceType.toLowerCase();
-			//lblresourceType.setText(resourceType);
 			resourceTypeIcon.setStyleName(getResourceTypeImage(resourceType));
 		}
 	}

@@ -97,10 +97,6 @@ import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
  * 
  */
 public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTabUiHandlers> implements IsCollectionInfoTabView, SelectionHandler<SuggestOracle.Suggestion> {
-
-	/*@UiField
-	FlowPanel collectionCourseLstPanel;
-*/
 	@UiField
 	Button addCourseBtn, addStandardBtn,removeCourseBtn;
 
@@ -120,10 +116,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	@UiField TextArea textAreaVal;
 	
 	@UiField CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,learninglevel1,learninglevel2,learninglevel3;
-	
-	
-/*	@UiField TextArea teacherTipTextarea;*/
-	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
 	
@@ -218,7 +210,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
@@ -247,16 +238,13 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						
 					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
 						getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
 					}
 					else{
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-						//standardSuggestOracle.add(i18n.GL1613);
 					}
 					
 					}
@@ -264,7 +252,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
@@ -743,21 +730,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		});
 		
 		AppClientFactory.getEventBus().addHandler(AddCourseEvent.TYPE, addCourseHandler);
-/*		addTeacherTip.addBlurHandler(new BlurHandler() {
-			
-			@Override
-			public void onBlur(BlurEvent event) {
-				if(teacherTipTextarea.getText().length()>0){
-					errorLabelForTeacherTip.setVisible(false);
-				}
-				
-			}
-		});
-		teacherTipTextLabel.setText(MessageProperties.i18n.GL0750);*/
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
 		centDefaultText.getElement().setId("lblCenturyDefaultText");
-		
-		
 		panelLoading.getElement().setId("pnlPanelLoading");
 		mainInfoPanel.getElement().setId("pnlMainInfoPanel");
 		KinderGarten.getElement().setId("fpnlKinderGarten");
@@ -767,7 +741,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		higherEducation.getElement().setId("fpnlHigherEducation");
 		courseLabel.getElement().setId("lblCourseLabel");
 		courseData.getElement().setId("fpnlCourseData");
-		//courseLbl.getElement().setId("lblCourseLbl");
 		standardsPanel.getElement().setId("fpnlStandardsPanel");
 		secondaryContentsContainer.getElement().setId("pnlSecondaryContentsContainer");
 		languageObjectiveTitle.getElement().setId("lblLanguageObjectiveTitle");
@@ -946,10 +919,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardCodesMap.clear();
 		courseDo.clear();
 		courseData.clear();
-/*		courseLbl.setText("");
-		courseLbl.getElement().setAttribute("alt","");
-		courseLbl.getElement().setAttribute("title","");
-		courseLbl.getElement().getStyle().setDisplay(Display.NONE);*/
 		addCourseBtn.setText(ADD_COURSE);
 		addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
 		addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
@@ -966,7 +935,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		modifyStaticText(collectionDo.getCollectionType());
 			if(collectionDoVal.getLanguageObjective() != null)
 			{
-
 				textAreaVal.setText(collectionDo.getLanguageObjective());
 				textAreaVal.getElement().setAttribute("alt",collectionDo.getLanguageObjective());
 				textAreaVal.getElement().setAttribute("title",collectionDo.getLanguageObjective());
@@ -977,8 +945,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
 				textAreaVal.getElement().setAttribute("title",i18n.GL1641());
 			}
-			
-
 			if(collectionDoVal.getDepthOfKnowledges()!=null){
 				for(int i=0; i<collectionDoVal.getDepthOfKnowledges().size(); i++)
 				{
@@ -987,7 +953,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					String compareValueLevelCheckbox1 = chkLevelSkillConcept.getText().replaceAll("\\s+","");
 					String compareValueLevelCheckbox2 = chkLevelExtendedThinking.getText().replaceAll("\\s+","");
 					String compareValueLevelCheckbox3 = chkLevelStrategicThinking.getText().replaceAll("\\s+","");
-					
 					if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 					{
 						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
@@ -1042,8 +1007,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					String compareValueLevelFetched = learninglevel1.getText().replaceAll("\\s+","");
 					String compareValueLevelCheckbox1 = learninglevel2.getText().replaceAll("\\s+","");
 					String compareValueLevelCheckbox2 = learninglevel3.getText().replaceAll("\\s+","");
-
-					
 					if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 					{
 						if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
@@ -1144,18 +1107,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
 					addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 					removeCourseBtn.setVisible(false);
-//					if(courseCode!=null&&!courseCode.equals("")){
-//						getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
-//					}
 					courseCode="";
 				}else{
 					for (CodeDo code : collectionDoVal.getTaxonomySet()) {
 						if (code.getDepth() == 2) {
 							courseDo.add(code.getLabel());
 							courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
-							//courseLbl.setText(code.getLabel());
-						/*	courseLbl.getElement().setAttribute("alt",code.getLabel());
-							courseLbl.getElement().setAttribute("title",code.getLabel());*/
 							courseData.getElement().getStyle().setDisplay(Display.BLOCK);
 							courseCode=Integer.toString(code.getCodeId());
 							addCourseBtn.setText(ADD_COURSE);
@@ -1183,16 +1140,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			resetCourseCount();
 			setGradeList();
 			reset21CenturyCount();
-			/*if(collectionDo.getMediaType()!=null) {
-				if(collectionDo.getMediaType().equalsIgnoreCase("iPad_friendly")){
-					isCheckedValue=true;
-					checkMobileSupport.setStyleName(res.css().classPageEmailCheckBoxBgHover());
-				}else{
-					checkMobileSupport.setStyleName(res.css().classPageEmailCheckBoxBgHoverSprite());
-					isCheckedValue = false;
-				}
-			}*/
-		
 	}
 
 	@Override
@@ -1207,9 +1154,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 			}
 		}
-		/*collectionCourseLstPanel.clear();
-		collectionCourseLstPanel.add(collectionCourseLst);*/
-
 		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		
@@ -1275,8 +1219,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	public void courseMaxShow() {
 		courseData.setStyleName(CollectionCBundle.INSTANCE.css().coursesContainer());
-		//collectionCourseLst.setStyleName(CollectionCBundle.INSTANCE.css().courseTextBox());
-		//addCourseBtn.setStyleName(CollectionCBundle.INSTANCE.css().courseAddButton());
 	}
 
 	/**
@@ -1286,7 +1228,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		courseData.setStyleName(CollectionCBundle.INSTANCE.css().floatLeft());
 		collectionCourseLst.setStyleName(CollectionCBundle.INSTANCE.css().infoTextBox());
 		addCourseBtn.setStyleName(CollectionCBundle.INSTANCE.css().infoAddButton());
-//		courseMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().courseMaxMsg());
 	}
 
 	/**
@@ -1299,17 +1240,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
 		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
-
-	/**
-	 * to hide message if standard less than fifteen
-	 *//*
-    	public void standardMaxHide() {
-		standardSgstBox.removeStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
-		addStandardBtn.removeStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
-		standardMaxMsg.removeStyleName(CollectionCBundle.INSTANCE.css().standardMax());
-		standardsPanel.removeStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
-	}*/
-	
 	public GradeLabel frameLabel(String label, CollectionDo collectionDoInternal)
 	{
 		GradeLabel gradeLblKindergarten = new GradeLabel(label, collectionDoInternal) {			
@@ -1334,7 +1264,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					}
 					catch(Exception ex)
 					{
-						
+						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				
 				} else {
@@ -1505,11 +1435,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		courseLabel.setText(i18n.GL0574());
 		courseLabel.getElement().setAttribute("alt",i18n.GL0574());
 		courseLabel.getElement().setAttribute("title",i18n.GL0574());
-		/*if (coursesPanel.getWidgetCount() > 0) {
-			courseLabel.setText("COURSE" + " (" + coursesPanel.getWidgetCount() + ")");
-		} else {
-			courseLabel.setText("COURSE");
-		}*/
 	}
 	
 	AddCourseHandler addCourseHandler=new AddCourseHandler() {
@@ -1517,7 +1442,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		public void onAddCourse(String courseName, String courseId) {
 			courseDo.add(courseName);
 			courseData.add(createCourseLabel(courseName, courseId + "", courseName));
-		//.	courseLbl.setText(courseName);
 			courseLabel.getElement().setAttribute("alt",courseName);
 			courseLabel.getElement().setAttribute("title",courseName);
 			courseData.setVisible(true);
@@ -1547,7 +1471,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		if(mainInfoPanel.isVisible())
 		{
 			mainInfoPanel.setVisible(false);
-			//toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottom());
 			toggleArrowButtonPrimary.addStyleName(res.css().primaryToggleArrowBottomrotateRight());
 			
 		}
@@ -1555,7 +1478,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		{
 			mainInfoPanel.setVisible(true);
 			toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
-			//toggleArrowButtonPrimary.setStyleName(res.css().primaryToggleArrowBottom());
 		}
 	}
 	
@@ -1564,7 +1486,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		if(secondaryContentsContainer.isVisible())
 		{
 			secondaryContentsContainer.setVisible(false);
-			//toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottom());
 			toggleArrowButtonSecondary.addStyleName(res.css().primaryToggleArrowBottomrotateRight());
 			
 		}
@@ -1572,23 +1493,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		{
 			secondaryContentsContainer.setVisible(true);
 			toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
-			//toggleArrowButtonPrimary.setStyleName(res.css().primaryToggleArrowBottom());
 		}
 	}
-	
-/*	@UiHandler("addTeacherTip")
-	public void onClickAddTeacherTip(ClickEvent clickEvent){
-		getUiHandlers().updateCollectionTeacherTipInfo(collectionDo, teacherTipTextarea.getText());
-		
-		
-	}*/
-
-/*	public void displayErrorMsgTeacherTip(){
-
-		errorLabelForTeacherTip.setVisible(true);
-		errorLabelForTeacherTip.setText(MessageProperties.i18n.GL1116);
-		
-	}*/
 	/**
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
@@ -1703,27 +1609,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.parseInt(courseCode), new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-			/*	CodeDo deletedObj=new CodeDo();
-				deletedObj.setCodeId(codeObj.getCodeId());
-				deletedStandardsDo.add(deletedObj);
-				standardsDo.remove(codeObj);*/								
 			}
 		});
 	}
 
 	@Override
 	public void onPostCourseUpdate(CollectionDo collectionDo) {
-//		collectionCourseLst.setSelectedIndex(0);
 		this.collectionDo = collectionDo;
-		//resetCourseCount();
 	}
-
-/*	@Override
-	public void setExistingTeacherTip(CollectionDo collectionDo) {
-		this.collectionDo = collectionDo;
-		teacherTipTextarea.setText(collectionDo.getKeyPoints());
-	}*/
-	
 	@Override
 	public void onPostStandardUpdate(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;

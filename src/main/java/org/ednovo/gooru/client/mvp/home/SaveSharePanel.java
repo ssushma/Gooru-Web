@@ -50,7 +50,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class SaveSharePanel extends PopupPanel{
 
- 
 	@UiField
 	Anchor gettingAnchr;
 	@UiField FlowPanel helpContainer;
@@ -118,7 +117,6 @@ public abstract class SaveSharePanel extends PopupPanel{
 		searchText.getElement().setAttribute("alt",i18n.GL0176());
 		searchText.getElement().setAttribute("title",i18n.GL0176());
 		
-//		helpImage.setUrl("images/02_help.png");
 		helpImage.getElement().setId("imgHelpImage");
 		
 		howDoISearchText.setText(i18n.GL1290()+i18n.GL_SPL_QUESTION());
@@ -150,10 +148,8 @@ public abstract class SaveSharePanel extends PopupPanel{
 		videoBigIconImage.setUrl("images/folders/video-big-icon.png");
 		videoBigIconImage.getElement().setId("imgVideoBigIconImage");
 		
-//		plusIconImage.setUrl("images/plus-icon.png");
 		plusIconImage.getElement().setId("imgPlusIconImage");
 		
-//		plusImage.setUrl("images/plus-icon.png");
 		plusImage.getElement().setId("imgPlusImage");
 		
 		topArrowImage.setUrl("images/top-arrow.png");
@@ -162,7 +158,6 @@ public abstract class SaveSharePanel extends PopupPanel{
 		smalllArrowImage.setUrl("images/small-arrow.png");
 		smalllArrowImage.getElement().setId("imgSmalllArrowImage");
 		
-//		textBookBigIconImage.setUrl("images/text-book-big-icon.png");
 		textBookBigIconImage.getElement().setId("imgTextBookBigIconImage");
 		
 		lessonText.setText(i18n.GL1296());
@@ -292,10 +287,8 @@ public abstract class SaveSharePanel extends PopupPanel{
 		if(isAttached()){
 			new CustomAnimation(saveSharePanelContentContainer).run(500);
 		}
-		
 	}
 	
 	@UiHandler("closeButton")
 	public abstract void closeButton(ClickEvent clickEvent);
-	
 }

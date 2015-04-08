@@ -115,10 +115,6 @@ public class ProfileUserTagsResourceView extends Composite{
 		
 		tagContainer.getElement().setAttribute("alt", labelName);
 		tagContainer.setTitle(labelName);
-		
-		/*if(labelName.length()>=12){
-			labelName = labelName.substring(0, 12) + "...";
-		}*/
 		tagType.setText(labelName);
 		tagType.getElement().setId("lblTagType");
 		tagType.getElement().setAttribute("alt",labelName);

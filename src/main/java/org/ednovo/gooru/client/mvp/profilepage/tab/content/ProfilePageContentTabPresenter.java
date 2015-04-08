@@ -72,7 +72,6 @@ public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePag
 		setGetWorkSpaceAsyncCallback(new SimpleAsyncCallback<List<CollectionItemDo>>() {
 			@Override
 			public void onSuccess(List<CollectionItemDo> collectionItemDo) {
-				
 				if(collectionItemDo.size()>0) {
 					String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
 					if(folderId!=null) {
@@ -102,7 +101,6 @@ public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePag
 	protected void onReset(){
 		getView().clearContentItemData();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
-		String userId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		if(folderId!=null) {
 			getProfilePageService().getFolders(folderId, getGetWorkSpaceAsyncCallback());
 		}

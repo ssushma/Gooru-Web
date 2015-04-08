@@ -120,7 +120,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		super(eventBus, view);
 		this.setShelfView(isShelfView);
 		this.setAddResourceView(addResourceView);
-		//this.setAddResourcePresenter(addResourcePresenter);
 		getView().setUiHandlers(this);
 	}
 
@@ -160,7 +159,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 
 					saveQuestionImage(filename);
 				}else if (isEditResourceImage){
-//					saveImage(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
 					AppClientFactory.fireEvent(new UpdateEditResourceImageEvent(filename,fileNameWithoutRepository,isEditUserOwnResourceImage));
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
@@ -180,7 +178,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					getView().resetImageUploadWidget();
 				}
 				else{
-				    //getAddResourceView().setImageUrl(filename);
 					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
 					getView().closeImageUploadWidget();
 					getView().resetImageUploadWidget();
@@ -242,7 +239,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setSaveQuestionImageAysncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo collItem) {
-				//AppClientFactory.fireEvent(new UpdateQuestionImageEvent(url,fileNameWithoutRepository));
 				AppClientFactory.fireEvent(new AddResouceImageEvent(collItem.getUrl(),fileNameWithoutRepository,isUpdateQuestionImage,isuserOwnResourceImage));
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -318,23 +314,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	@Override
 	public void saveImageCollection(String gooruOid, String fileName) {
 		this.getMediaUploadService().saveImageCollection(gooruOid, fileName, getSaveImageCollectionAsyncCallback());
-		
-		
-/*		AppClientFactory.getInjector().getMediaUploadService().saveImageCollection(gooruOid, fileName, new AsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
-				getShelfView().onPostCollectionImageUpload(result);
-				getView().closeImageUploadWidget();
-				getView().resetImageUploadWidget();
-				
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-		});*/
 	}
 	
 	
@@ -342,11 +321,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	public void saveQuestionImage(String fileName){
 		this.getMediaUploadService().saveQuestionImage(getCollectionItemId(), fileName, saveQuestionImageAysncCallback);
 	}
-	
-	/*public void saveResourceImage(String fileName){
-		this.getMediaUploadService().saveResourceImage(getCollectionItemId(), fileName, editResourceImageAysncCallback);
-	}*/
-	
 	public void saveUserProfileImage(String fileName){
 		this.getMediaUploadService().uploadProfileImage(fileNameWithoutRepository,fileName, uploadProfileImageAsyncCallback);
 	}
@@ -360,7 +334,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	public void cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) {
 		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
-		//if(isCollectionImage||isQuestionImage){
 
 		if(isCollectionImage||isUpdateQuestionImage||isClassPageImage){
 			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,null, getCropImageAsyncCallback());
@@ -583,8 +556,4 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			SimpleAsyncCallback<String> saveImageCollectionAsyncCallback) {
 		this.saveImageCollectionAsyncCallback = saveImageCollectionAsyncCallback;
 	}
-	
-	
-
-
 }

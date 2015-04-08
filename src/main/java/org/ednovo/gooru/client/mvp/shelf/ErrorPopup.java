@@ -64,8 +64,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ErrorPopup extends PopupPanel{
       
-//	@UiField HTMLEventPanel cancelButton;
-	
 	@UiField Button btnOk;
 	
 	@UiField(provided = true)
@@ -86,15 +84,11 @@ public class ErrorPopup extends PopupPanel{
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-//		this.setSize("475px", "200px");
 		this.center();
 		errorpopupHeaderTitle.setText(i18n.GL1177());
 		errorpopupHeaderTitle.getElement().setId("lblErrorpopupHeaderTitle");
 		errorpopupHeaderTitle.getElement().setAttribute("alt",i18n.GL1177());
 		errorpopupHeaderTitle.getElement().setAttribute("title",i18n.GL1177());
-		
-//		questionsEmailText.setText(i18n.GL0298());
-//		emailId.setText(i18n.GL0299());
 		questionsEmailText.setVisible(false);
 		emailId.setVisible(false);
 		btnOk.setText(i18n.GL0190());
@@ -113,7 +107,6 @@ public class ErrorPopup extends PopupPanel{
 	
 	public void closePopup(){
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
-			//navigateShelf();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			navigateClasspage();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
@@ -126,16 +119,8 @@ public class ErrorPopup extends PopupPanel{
 	public void onOkClicked(ClickEvent event){
 		closePopup();
 	}
-	
-//	@UiHandler("cancelButton")
-//	public void onCancelClicked(ClickEvent clickEvent) {
-//		closePopup();
-//	}
-	
-	
 	private void navigateClasspage(){
 		AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages("1", "0", new SimpleAsyncCallback<ClasspageListDo>() {
-
 			@Override
 			public void onSuccess(ClasspageListDo result) {
 				if (result.getSearchResults().size()>0){

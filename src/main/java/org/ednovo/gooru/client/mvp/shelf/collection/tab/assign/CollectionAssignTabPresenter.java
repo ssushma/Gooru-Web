@@ -68,7 +68,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 	
 	String shareType=null;
 	
-	String limit="10";//pagesize
+	String limit="10";
 	
 	int classpageOffSet=0;
 	int assignmentOffSet=0;
@@ -140,9 +140,6 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 	@Override
 	protected void onReset() {
 		super.onReset();
-//		getView().clearPanels();
-//		isApiCalling = false;
-//		getClasspage(collectionDo);
 	}
 	
 	@Override
