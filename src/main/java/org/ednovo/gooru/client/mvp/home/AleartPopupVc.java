@@ -34,7 +34,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -51,7 +51,7 @@ public class AleartPopupVc extends Composite{
 	
 	@UiField Label storeResourcesText;
 	
-	@UiField HTMLPanel buttonContainer;
+	@UiField FlowPanel buttonContainer;
 	
 //	private static final String IS_COLLECTIONS = i18n.GL1089+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP;
 

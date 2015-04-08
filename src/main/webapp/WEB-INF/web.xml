@@ -10,14 +10,23 @@
 		</param-value>
 	</context-param>
 	
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<url-pattern>/newgooru/logging</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
+	
+	<servlet>
+    	<servlet-name>remoteLogging</servlet-name>
+    	<servlet-class>com.google.gwt.logging.server.RemoteLoggingServiceImpl</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>remoteLogging</servlet-name>
+   	 	<url-pattern>/newgooru/remote_logging</url-pattern>
+  	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
