@@ -350,7 +350,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		@Override
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE)){
+			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE) && !StringUtil.isEmpty(ele.getAttribute("question"))){
 
 				showResponsesPopup=new ViewResponsesPopup(ele.getAttribute("questionCount"),ele.getAttribute("question"),ele.getAttribute("questionAnswer"), ele.getAttribute("questionType"));
 
