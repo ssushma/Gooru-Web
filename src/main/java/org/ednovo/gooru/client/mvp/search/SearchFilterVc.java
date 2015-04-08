@@ -1917,25 +1917,29 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				try{
 					chkNotFriendly.setValue(true);
 				}catch(Exception e){
-					
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			}else{
 				try{
 					chkNotFriendly.setValue(false);
 				}catch(Exception e){
-					
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			}
 		if(oer!=null)
 			{
 				try{
 				chkOER.setValue(true);
-				}catch(Exception e){}
+				}catch(Exception e){
+					AppClientFactory.printSevereLogger(e.getMessage());
+				}
 			}
 			else{
 				try{
 				chkOER.setValue(false);
-				}catch(Exception e){}
+				}catch(Exception e){
+					AppClientFactory.printSevereLogger(e.getMessage());
+				}
 			}
 		
 		}
@@ -1943,13 +1947,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			try{
 				chkReview.setValue(true);
 			}catch(Exception e){
-				
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}else{
 			try{
 				chkReview.setValue(false);
 			}catch(Exception e){
-				
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 		if(grade == null){
@@ -2122,6 +2126,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	@UiHandler("clearAll")
 	public void onClearFilter(ClickEvent clickEvent) {
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			chkNotFriendly.setValue(false);
+			chkOER.setValue(false);
+		}
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(gradePanelUcNext);
@@ -2129,6 +2137,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(accessModePanel);
 		clearFilter(ratingPanelUc);
 		clearFilter(reviewPanelUc);
+		clearFilter(panelNotMobileFriendly);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -2142,10 +2151,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		authorContainerFloPanel.clear();
 		standardCodesMap.clear();
 		aggregatorContainerFloPanel.clear();
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			chkNotFriendly.setValue(false);
-			chkOER.setValue(false);
-		}
+		
 		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 	}
 	
@@ -2397,7 +2403,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					}
 				}
 			}
-		}catch(Exception ex){}
+		}catch(Exception ex){
+			AppClientFactory.printSevereLogger(ex.getMessage());
+		}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
@@ -2405,7 +2413,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if (Element.is(target)) {
 			try{
 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
-			}catch(Exception ex){}
+			}catch(Exception ex){
+				AppClientFactory.printSevereLogger(ex.getMessage());
+			}
 		}
 		return false;
 	}

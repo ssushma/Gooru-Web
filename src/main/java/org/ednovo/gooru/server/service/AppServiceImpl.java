@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -37,6 +38,7 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
@@ -56,7 +58,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	/**
 	 * 
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(AppServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
 	
 	private static final long serialVersionUID = -6736852011457993775L;
 	
@@ -100,7 +102,10 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 			postData.put(USERNAME, userName);
 			postData.put(PASSWORD, decryptedPwd);
 			 
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN);
+			String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.API_KEY,getApiKey());
+			getLogger().info("sign in API -- "+url);
+			getLogger().info("sign in API payload -- "+postData.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			
@@ -137,7 +142,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				return user;
 			}
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
+			logger.error("Exception::", e);
 			throw new GwtException(e.getMessage());
 		}
 		throw new GwtException(content);

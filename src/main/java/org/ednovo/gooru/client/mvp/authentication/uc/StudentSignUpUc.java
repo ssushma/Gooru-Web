@@ -47,9 +47,9 @@ import org.ednovo.gooru.shared.util.ClientConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.WhiteSpace;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.WhiteSpace;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -57,8 +57,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -119,16 +117,6 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	
 	private String homeEndPoint = null;
 	
-	private static final String PARENT = "Parent";
-	
-	private static final String BIRTH_DAY = "birthday";
-	
-	private static final String GOORU_UID = "gooruUid";
-	
-	private static final String ACCOUNT_TYPE = "accountType";
-	
-	private static final String DATE_OF_BIRTH = "dateOfBirth";
-	
 	private static final String FIRST_NAME = "firstName";
 	
 	private static final String USER_NAME = "username";
@@ -147,7 +135,6 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 	RadioButton rbStudent;
 	RadioButton rbParent;
 	RadioButton rbOther;
-	private String selectedRole = null;
 	private static final String PWD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
 	
 	private DateBoxUc dateBoxUc;
@@ -170,7 +157,6 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 		this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
 	
-		//this.getElement().getStyle().setBackgroundColor("transparent");
 		lblTitle.getElement().setAttribute("style", "height: 17px");
 		lblParentEmailId.setText(emailId != null && !emailId.equalsIgnoreCase("") ?" "+ emailId :" "+ AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
 		lblParentEmailId.getElement().getStyle().setWhiteSpace(WhiteSpace.PRE);
@@ -182,7 +168,6 @@ public class StudentSignUpUc extends PopupPanel implements ClientConstants{
 		txtChooseUsername.setReadOnly(true);
 		lblPleaseWait.setVisible(false);
 		setUiAndIds(dob);
-		//this.setSize("500px","500px");
 		txtChoosePassword.setFocus(true);
 		
 		AppClientFactory.getInjector().getSearchService().getHomeEndPointUrl(new SimpleAsyncCallback<String>() {

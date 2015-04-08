@@ -48,8 +48,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class LogoutPanelVc extends Composite{
 
 	@UiField
-	Anchor logoutAnr, anrSettings;
-	
+	Anchor logoutAnr, anrSettings, gooruTutorialsAnr;
 	@UiField
 	Anchor feedbackAnr;
 	
@@ -98,6 +97,15 @@ public class LogoutPanelVc extends Composite{
 		supportAnr.getElement().setAttribute("alt",i18n.GL0194());
 		supportAnr.getElement().setAttribute("title",i18n.GL0194());
 		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
+		
+		
+		gooruTutorialsAnr.setText(i18n.GL3205());
+		gooruTutorialsAnr.getElement().setId("lnkGooruTutorials");
+		gooruTutorialsAnr.getElement().setAttribute("alt",i18n.GL3205());
+		gooruTutorialsAnr.getElement().setAttribute("title",i18n.GL3205());
+		gooruTutorialsAnr.setHref("#profilepage&pageSize=5&id=9aeb031a-4c43-4d4b-9b30-84261e39fdb2&user=GooruTutorials&pageNum=0&pos=1");
+		
+
 		
 		feedbackAnr.setText(i18n.GL0195());
 		feedbackAnr.getElement().setId("lnkFeedback");

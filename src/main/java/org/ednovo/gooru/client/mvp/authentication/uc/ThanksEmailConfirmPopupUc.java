@@ -66,9 +66,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ThanksEmailConfirmPopupUc extends PopupPanel{
  
-	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail; //lblDiscover,lblOrganize,lblTeach
+	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail; 
 	
-	@UiField Button btnStartUsingGooru;//btnDiscover, btnOrganize, btnTeach,
+	@UiField Button btnStartUsingGooru;
 	
 	@UiField HTMLPanel panelPopupInner;
 	@UiField Anchor lblClose;
@@ -105,7 +105,6 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
         
         appPopUp = new AppPopUp(i18n.GL0501());
 		appPopUp.setContent(binder.createAndBindUi(this));
-        //add(binder.createAndBindUi(this));
 		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
     	this.getElement().getStyle().setHeight(332, Unit.PX);
@@ -139,13 +138,8 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
 	 *
 	 */
 	private void setHandlers(){
-
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		
-		//this.removeStyleName("gwt-PopupPanel");
-		//this.getElement().getStyle().setZIndex(99999);
-	
 	}
 	
 	
@@ -190,7 +184,6 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel{
 		panelPopupInner.getElement().setId("pnlPopupInner");
 		
 		lblCheckYourEmail.getElement().setId("lblCheckYourEmail");
-		
 	}
 	
 	@UiHandler("lblClose")

@@ -63,6 +63,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -108,6 +110,8 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private final static String RUSDLEARNS = "rusdlearns";
 	private final static String RUSD_LAST_NAME = "RUSD Teachers";
 	private final static String NODE = "node";
+	
+	private static final Logger logger = LoggerFactory.getLogger(LibraryServiceImpl.class);
 	
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
@@ -246,7 +250,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<LibraryUserDo>>() {
 				});
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ArrayList<LibraryUserDo>();
@@ -307,7 +311,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep1, new TypeReference<ArrayList<CourseDo>>() {
 				});
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ArrayList<CourseDo>();
@@ -349,7 +353,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 					lessonDoList.add(lessonDo);
 				}
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return lessonDoList;
@@ -383,7 +387,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return subjectList;
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new HashMap<String,SubjectDo>();
@@ -411,7 +415,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		data.add(0, courseDo);
 		subjectList.get(subjectName).setData(data);
@@ -470,7 +474,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}*/
 				return JsonDeserializer.deserialize(jsonRepStr, new TypeReference<HashMap<String, StandardsDo>>() {});
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new HashMap<String,StandardsDo>();
@@ -501,7 +505,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ConceptDo.class);
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ConceptDo();
@@ -577,7 +581,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}*/
 			} 
 			catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			} 
 		}
 		return topicDoList;
@@ -634,7 +638,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<ConceptDo>>() {
 				});
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ArrayList<ConceptDo>();
@@ -648,7 +652,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		try {
 			jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		} catch (Exception e){
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		if(jsonResponseRep.getStatusCode()==200) {
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -745,7 +749,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			}
 			return searchResults;
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return new PartnerFolderListDo();
 	}
@@ -812,7 +816,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return secondLevelFolders;
 	}
@@ -846,7 +850,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				conceptDo.setCollectionItems(collectionItems);
 			}
 		} catch (JSONException e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return conceptDo;
 	}
@@ -857,7 +861,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<PartnerConceptListDo>() {});
 			}
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return new PartnerConceptListDo();
 	}
@@ -874,7 +878,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			}
 			return searchResults;
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return new PartnerFolderListDo();
 	}
@@ -958,7 +962,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (JSONException e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return standardCourseList;
 	}
@@ -1013,7 +1017,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return subjectMap;
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new HashMap<String,SubjectDo>();
@@ -1055,7 +1059,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 				return courseDoList;
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ArrayList<CourseDo>();
@@ -1082,7 +1086,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		courseDoList.add(0, courseDo);
 		return courseDoList;
@@ -1105,7 +1109,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<UnitDo>>() {
 				});
 			} catch (JSONException e) {
-				getLogger().error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ArrayList<UnitDo>();

@@ -45,8 +45,8 @@ public class WelcomeClassView extends PopupPanel {
 	}
 	
 	@UiField Button btnOk;
-	@UiField HTMLPanel popupHeader,/*headingTittle,*/headingTxt,manageList;
-	@UiField InlineHTML /*popupContentDesc,popupContentDesc1,*//*popupContentTxt,*/headingTxtDesc,manageListDesc;
+	@UiField HTMLPanel popupHeader,headingTxt,manageList;
+	@UiField InlineHTML headingTxtDesc,manageListDesc;
 	@UiField Label popupContentDesc,popupContentDesc1;
 	private static final String CLASSKEY = "classpage_welcome_popup_is_autoopen";
 
@@ -100,7 +100,6 @@ public class WelcomeClassView extends PopupPanel {
 		popupHeader.getElement().setAttribute("alt",i18n.GL1605());
 		popupHeader.getElement().setAttribute("title",i18n.GL1605());
 		
-//		headingTittle.getElement().setInnerHTML(GL1607);
 		headingTxt.getElement().setInnerHTML(i18n.GL1609());
 		headingTxt.getElement().setId("pnlHeadingText");
 		headingTxt.getElement().setAttribute("alt",i18n.GL1609());
@@ -121,7 +120,6 @@ public class WelcomeClassView extends PopupPanel {
 		popupContentDesc1.getElement().setAttribute("alt",i18n.GL1606_1());
 		popupContentDesc1.getElement().setAttribute("title",i18n.GL1606_1());
 		
-//		popupContentTxt.setText(GL1608);
 		headingTxtDesc.setText(i18n.GL1610());
 		headingTxtDesc.getElement().setId("spnHeadingTxtDesc");
 		headingTxtDesc.getElement().setAttribute("alt",i18n.GL1610());

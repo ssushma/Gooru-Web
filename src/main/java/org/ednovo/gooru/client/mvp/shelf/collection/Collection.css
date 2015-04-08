@@ -157,11 +157,9 @@
 	margin-left: 28px;
 	float: left;
 	height: 32px;
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C98CC, endColorstr=#1076BB)");
 }
 .changeImage:hover{
 	background: #1076BB;
-	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#1076BB, endColorstr=#1076BB)");
 }
 .shelfGradeInfoTitle {
 	color: #515151;
@@ -704,7 +702,7 @@
 	z-index:99999;
 	background-color:#000;
 	opacity: 0.3;
-	filter:literal("alpha(opacity=30)");
+	filter: literal("alpha(opacity=30)");
 }
 
 
@@ -938,12 +936,10 @@
 	width: 85px;
 	margin-left: 45.5px;
 	float: left;
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#fdfdfd, endColorstr=#dddddd)");
 	
 }
 .profileEditImageButton:hover{
 	background: #eee;
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#EEEEEE, endColorstr=#EEEEEE)");
 }
 
 .profileKinderGartenGrade {
@@ -1016,7 +1012,7 @@
 	z-index:999998;
 	background-color: black;
 	opacity: 0.3;
-	filter:literal(" alpha(opacity=30)");
+	filter: literal("alpha(opacity=30)");
 }
 .settingPageDefaultGrade{
 color: rgb(255, 255, 255);
@@ -1086,9 +1082,6 @@ float: left;
 	border-radius: 5%/5%;
 	border-style: solid;
 	margin: 11px 0px 0px 0px;
-	-ms-filter:
-		literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#fff0f0f0,GradientType=0)");
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#fff0f0f0, GradientType=0)");
 }
 
 .classPageEmailCheckBoxBg:hover {

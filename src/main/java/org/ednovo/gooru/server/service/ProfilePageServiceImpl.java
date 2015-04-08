@@ -83,7 +83,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
 						.toString(), CollectionDo.class);
 			} catch (JSONException e) {
-				logger.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new CollectionDo();
@@ -97,7 +97,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 				});
 			}
 		} catch (JSONException e) {
-			logger.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return new ArrayList<CollectionItemDo>();
 	}
@@ -121,7 +121,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<List<CollectionItemDo>>() {
 				});
 			} catch (JSONException e) {
-				logger.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ArrayList<CollectionItemDo>();
@@ -251,7 +251,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileLibraryDo.class);
 			} catch (JSONException e) {
-				logger.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return new ProfileLibraryDo();

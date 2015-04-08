@@ -138,8 +138,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	@UiField Button listViewBtn;
 	
-	/*@UiField Button viewStandardButton;*/
-	
 	private FlowPanel paginationFloPanel;
 		
 	ArrayList<CourseDo> courseDo = new ArrayList<CourseDo>();
@@ -189,10 +187,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	private static final String PNG = ".png";
 	
-//	private final static String MR = i18n.GL1422+i18n.GL_SPL_FULLSTOP+" ";
-	
-//	private final static String MS = i18n.GL1423+i18n.GL_SPL_FULLSTOP+" ";
-
 	private final static String FEMALE = "female";
 
 	private final static String MALE = "male";
@@ -221,8 +215,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	private static final String SHARING_TYPE = "public";
 	
-	private static final String COLLECTION_TYPE = "folder";
-	
 	ArrayList<PartnerFolderDo> partnerFolderList = new ArrayList<PartnerFolderDo>();
 	
 	private static LibraryViewUiBinder uiBinder = GWT.create(LibraryViewUiBinder.class);
@@ -241,7 +233,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 		AppClientFactory.getEventBus().addHandler(SetSubjectDoEvent.TYPE, setSubjectDoHandler);
 		AppClientFactory.getEventBus().addHandler(SetStandardDoEvent.TYPE, setStandardDoHandler);
 		loadingIconPanel.setVisible(false);
-//		courseImage.setWidth("1000px");
 		courseImage.getElement().getStyle().setWidth(100, Unit.PCT);
 		courseImage.setHeight("300px");
 		featuredCousesLbl.getElement().setId("lblFeaturedCousesLbl");
@@ -257,7 +248,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
 		contributorsContainer.getElement().setId("pnlContributorsContainer");
 		listViewBtn.addStyleName(libraryStyleUc.listViewBtnStyle());
-		//listAllBtn.addClickHandler(new ListAllBtnHandler());
 		StringUtil.setAttributes(listViewBtn.getElement(), "listViewBtn", listViewBtn.getText(), listViewBtn.getText());
 		StringUtil.setAttributes(folderTopicTitleLbl.getElement(), "folderTopicTitleLbl", "", "");
 		StringUtil.setAttributes(folderListPanel.getElement(), "folderListPanel", "", "");
@@ -327,18 +317,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
-//		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
-//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE); 
-//		  }else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
-//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE);
-//		  }else{
-//			  courseTabs.getElement().getStyle().setPosition(Position.FIXED);			  
-//		  }
-		  
 		  courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
-		  
-		
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
 		
@@ -395,6 +374,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			loadingPanel(false);
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
@@ -424,7 +404,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			loadingPanel(false);
 		} catch (Exception e) {
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
@@ -575,9 +555,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			
 			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
 				if(courseMap!=null&&courseMap.get("featured")!=null) {
-					//if(!(featuredCourses.getWidgetCount()>0)) {
 						setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
-				//	}
 				} else {
 					getFeaturedCourses(FEATURED_LABEL, false);
 				}
@@ -642,6 +620,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				try {
 					params = StringUtil.splitQuery(Window.Location.getHref());
 				} catch (Exception e) {
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 				
 				if(stockStore!=null&&stockStore.getItem(libraryToken+"courseMapDataSerializedStr")!=null&&params.size()==0){
@@ -773,7 +752,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 					}
 					widget.addStyleName(ACTIVE_STYLE);
 				}
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 			featuredCourseListView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -877,7 +858,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 						getTopicsOnPagination(subjectId, libraryUnitMenuView.getUnitId(), INITIAL_OFFSET, libraryUnitMenuView.getChildCount(),standardsId);
 					}
 				}
-			} catch(Exception e) {}
+			} catch(Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 			
 			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
@@ -1177,6 +1160,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 					} catch (Exception e) {
 						educatorPhoto.setVisible(false);
 						featuredContributor.setVisible(false);
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 				}
 				
@@ -1489,6 +1473,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			getContentScroll().setVisible(true);
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 

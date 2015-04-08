@@ -499,6 +499,7 @@ public class SignUpCompleteProfileView extends
 				isValid = false;
 			}
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		RegExp reg = RegExp.compile(PWD_PATTERN, "gi");
 		if (firstName.length() > 20) {

@@ -137,7 +137,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
-			logger.error("spellCheckQueryString catch:::"+e.getCause());
+			logger.error("Exception::", e);
 			throw new RuntimeException(e.getCause());
 		}
 	}
@@ -155,6 +155,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch (Exception e) {
+			logger.error("Exception::", e);
 		}
 	}
 	public void deserializeCollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
@@ -173,6 +174,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		
 	}
@@ -193,6 +195,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				}
 			}
 		} catch(Exception e){
+			logger.error("Exception::", e);
 		}
 		
 	}

@@ -211,7 +211,6 @@
 	float: left;
 	padding: 9px 5.5%;
 	text-align: center;
-	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ddd, endColorstr=#f5f5f5) !important");
 }
 
 .collectionMetaDataTabTitleDisabled {
@@ -225,7 +224,6 @@
 
 .userCollectionMetaInfoImage,.userCollectionMetaCollaboratorImage,.userCollectionMetaResourceImage,.userCollectionMetaAssignImage,.userCollectionMetaShareImage,.userCollectionMetaStatisticsImage
 	{
-	/*background: url("images/Collection-Search/icon-sprite.png") no-repeat*/
 	float: left;
 	margin-right: 5px;
 	position: relative;
@@ -1083,7 +1081,6 @@
 	border-radius: 4px;
 	background-color:#1076BB;
 	cursor: pointer;
-	filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#1076bb, endColorstr=#87badd,GradientType=0)"); /* IE6-9 */
 }
 
 .mySelfCollectionEditDescSaveButton:hover {
@@ -1103,7 +1100,6 @@
 	background: -o-linear-gradient(top, #4C98CC, #1076BB);
 	border-radius: 4px;
 	background-color:#1076BB;
-	filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr=#1076bb, endColorstr=#87badd,GradientType=0 )"); /* IE6-9 */
 }
 
 .mySelfCollectionEditTitleSaveButton:hover {
@@ -1225,8 +1221,6 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 	
-	/* IE */
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorStr=#FDFDFD, EndColorStr=#EDEDED)");
 }
 
 .tabsLi:hover {
@@ -1247,7 +1241,6 @@
 	background: -moz-linear-gradient(top, #DDD, #F5F5F5);
 	background: -ms-linear-gradient(top, #DDD, #F5F5F5);
 	background: -o-linear-gradient(top, #DDD, #F5F5F5);
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#DDDDDD, endColorstr=#F5F5F5)");
 }
 
 .tabsLiActive:hover {
@@ -1277,8 +1270,6 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 	
-	/* IE */
-	filter:literal("progid:DXImageTransform.Microsoft.gradient(startColorStr=#FDFDFD, EndColorStr=#EDEDED)");
 }
 
 .tabsLi:hover {
@@ -1627,7 +1618,6 @@ padding-left: 11px;
 	float: left;
 	padding: 3px 5.5%;
 	text-align: center;
-	filter: literal("progid:DXImageTransform.Microsoft.gradient(startColorstr=#ddd, endColorstr=#f5f5f5)")!important;
 }
 .profileMetaDataTabTitleDisabled {
 	color: #999;

@@ -89,7 +89,6 @@ public class ThankPopUpForUpdateProfile extends PopupPanel{
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 		this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
-		//this.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 	}
 	/**

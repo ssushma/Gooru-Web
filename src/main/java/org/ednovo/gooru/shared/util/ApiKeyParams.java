@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,41 +23,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.server.service;
 
-import java.util.List;
+package org.ednovo.gooru.shared.util;
 
-import org.ednovo.gooru.client.service.TaxonomyService;
-import org.ednovo.gooru.server.annotation.ServiceURL;
-import org.ednovo.gooru.server.deserializer.TaxonomyDeSerializer;
-import org.ednovo.gooru.server.request.JsonResponseRepresentation;
-import org.ednovo.gooru.server.request.ServiceProcessor;
-import org.ednovo.gooru.server.request.UrlToken;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.restlet.ext.json.JsonRepresentation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service("taxonomyService")
-@ServiceURL("/taxonomyService")
-public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyService {
-
+public interface ApiKeyParams {
+	
+	String API_KEY = "apiKey";
+	
 	/**
-	 * 
+	 * Search related parameters.
 	 */
-	private static final long serialVersionUID = 6947235468580822129L;
-	
-	@Autowired
-	private TaxonomyDeSerializer taxonomyDeSerializer;
-	
-
-	@Override
-	public List<LibraryCodeDo> getCourse() {
-		JsonRepresentation jsonRep =null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_TAXONOMY_COURSE, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return taxonomyDeSerializer.getCourse(jsonRep);
-	}
+	String TYPE = "type";
+	String Q = "q";
+	String START = "start";
+	String LENGTH = "length";
+	String ACCESS_TYPE = "accessType";
+	String QUERY_TYPE = "queryType";
+	String ALLOW_DUPLICATES = "allowDuplicates";
+	String FETCH_HITS_IN_MULTI ="fetchHitsInMulti";
+	String ALLOW_SCRIPTING = "allowScripting";
+	String PROTOCOL_SUPPORTED = "protocolSupported";
+	String CATEGORY = "category";
+	String FILTER_RES_GOORU_OID = "flt.resourceGooruOIds";
+	String BOOSTFIELD_HASNO_THUMBNAIL = "boostField.hasNoThumbnail";
+	String SHOW_CANONICAL_ONLY = "showCanonicalOnly";
+	String QUERY = "query";
+	String CONTEXT = "context";
+	String SEARCH_TERM = "searchTerm";
+	String EVENT = "event";
+	String CONTENT_GOORU_OID = "contentGooruOid";
+	String OFFSET = "offset";
+	String LIMIT = "limit";
 
 }

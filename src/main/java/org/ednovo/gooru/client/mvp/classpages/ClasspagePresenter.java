@@ -93,7 +93,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	
 	private boolean toClear = true;
 	
-	private String limit="10";//pagesize
+	private String limit="10";
     int resultSize;
 	private int offSet=0;
 	
@@ -106,7 +106,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 
 	@Inject
 	public ClasspagePresenter(EventBus eventBus, IsClasspageView view, IsClasspageProxy proxy) {
-		
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshClasspageResourceItemListEvent.TYPE, this);
@@ -126,10 +125,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 		});
 		
 	}
-
-
-	
-	
 	@Override
 	public String getViewToken() {
 		throw new RuntimeException("Not implemented");
@@ -137,13 +132,11 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 
 	@Override
 	protected void onReveal() {
-		
 		super.onReveal();
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		if (AppClientFactory.isAnonymous()){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
-			
 		}
 		getView().clearClasspageListPanel();  
 		getView().showPlaceHolderForEmptyTeach(false);
@@ -240,7 +233,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	@Override
 	public void refreshClasspageResourceItemList(
 			CollectionDo classpageResourceItem, RefreshType refreshType) {
-					
 			classpageHash.remove(classpageResourceItem.getGooruOid());
 			if(classpageHash.size()==0)
 			{
@@ -249,7 +241,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			}
 			toClear = true;
 			refreshClasspage();
-		
 	}
 	/**
 	 * 
@@ -300,22 +291,16 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			
 		}
 		if(getView().getClasspageListPanel().getWidgetCount()>0) {
-//			getView().showPlaceHolderForEmptyTeach(false);
-//			getView().getClassPageScrollPanel().setVisible(true);
 		} else {
 			getView().showPlaceHolderForEmptyTeach(true);
 			getView().getClassPageScrollPanel().setVisible(false);
 		}
 		
 	}
-	
-
 	@Override
 	public void createClasspage(CollectionDo collectionDo) {
-
 		getClasspageService().v2CreateClasspage(collectionDo, getCollectionAsyncCallback());
 		 getView().getClassPageScrollPanel().scrollToTop();
-		
 	}
 	
 	@Override
@@ -367,7 +352,5 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			SimpleAsyncCallback<ClasspageListDo> getAllClasspagesAsyncCallback) {
 		this.getAllClasspagesAsyncCallback = getAllClasspagesAsyncCallback;
 	}
-	
-
 	
 }

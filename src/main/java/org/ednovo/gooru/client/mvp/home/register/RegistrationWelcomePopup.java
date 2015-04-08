@@ -54,7 +54,6 @@ public class RegistrationWelcomePopup extends Composite{
 	
 	private AppPopUp appPopUp;
 	
-//	private static final String READY_TO_USE_GOORU = i18n.GL1190+i18n.GL_SPL_EXCLAMATION;
 
 	/**
 	 * Class constructor, creates welcome popup after successful registration 

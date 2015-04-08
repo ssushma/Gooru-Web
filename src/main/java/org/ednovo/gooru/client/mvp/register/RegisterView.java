@@ -228,10 +228,6 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		appPopUp.setAutoHideEnabled(true);
 		appPopUp.setAutoHideOnHistoryEventsEnabled(false);
 		this.center();
-		/*GlassPanel glassPanel = new GlassPanel
-				(true);
-		glassPanel.setStyleName("gwt-PopupPanelGlass");
-		RootPanel.get().add(glassPanel,0,0);*/
 	}
 
 
@@ -289,6 +285,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 									}
 								});
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}

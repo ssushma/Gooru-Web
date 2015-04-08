@@ -126,7 +126,6 @@ public class TryItOutVc extends PopupPanel implements ClickHandler{
 		this.hide();
 		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 		if(flag == 1 &&  !AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)){
-//			AppClientFactory.fireEvent(new InvokeGooruGuideBubbleEvent());
 		}
 	}
 

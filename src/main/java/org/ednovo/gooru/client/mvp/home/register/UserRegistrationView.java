@@ -136,18 +136,6 @@ public class UserRegistrationView extends
 
 	private static final String PWD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
 
-//	private static final String IS_ALREADY_AVAILABLE = " "+i18n.GL1204;
-
-//	private static final String PARENT_GUARDIAN_INFO = i18n.GL1205+" "+i18n.GL1198;
-
-//	private static final String PARENT_GUARDIAN_ACCOUNT = i18n.GL1205+" "+i18n.GL0807;
-
-//	private static final String CHILD_INFO =i18n.GL1206+" "+i18n.GL1198;
-
-//	private static final String CHILD_ACCOUNT =i18n.GL1206+" "+i18n.GL0807;
-
-//	private static final String REGISTER_LOGIN = i18n.GL1207;
-
 	@UiField
 	Anchor termsAndConditionsAnr, copyRightPolicyAnr;
 
@@ -340,7 +328,6 @@ public class UserRegistrationView extends
 
 			@Override
 			public void openParentPopup() {
-				//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 				appPopUp.show();
 			}
 		};
@@ -363,14 +350,12 @@ public class UserRegistrationView extends
 				hide();
 				if (termsAndPolicyVc == null) {
 					termsAndPolicyVc = new TermsAndPolicyVc(false) {
-
 						@Override
 						public void openParentPopup() {
 							Window.enableScrolling(false);
 							AppClientFactory
 									.fireEvent(new SetHeaderZIndexEvent(98,
 											false));
-							//appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 							appPopUp.show();
 						}
 					};
@@ -386,7 +371,6 @@ public class UserRegistrationView extends
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// appPopUp.show();
 				hide();
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -495,9 +479,6 @@ public class UserRegistrationView extends
 			} else if (getRegistartionType().equalsIgnoreCase("Parent")) {
 				params.put("dateOfBirth", dateBoxUc.getDateBox().getText());
 			}
-			// if (getRegistartionType().equalsIgnoreCase("Child")) {
-			// params.put("dateOfBirth", "00/00/0000");
-			// }
 			params.put("username", userNameFieldTxtBox.getText());
 			params.put("password", passwordFieldTxtBox.getText());
 			params.put("gender", getSelectedGender(genderFieldsFloPanel));
@@ -598,6 +579,7 @@ public class UserRegistrationView extends
 				isValid = false;
 			}
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 
 		if ((getRegistartionType().equalsIgnoreCase(i18n.GL0074()) || getRegistartionType()

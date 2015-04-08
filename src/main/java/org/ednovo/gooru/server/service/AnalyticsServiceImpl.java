@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AnalyticsService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
@@ -60,7 +61,7 @@ import com.googlecode.gwt.crypto.util.Str;
 @ServiceURL("/analyticsService")
 public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsService, AnalyticsServiceConstants{
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(AnalyticsServiceImpl.class);
 
 	/**
 	 * 
@@ -71,18 +72,17 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId,String pathwayId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionProgressDataDo> collectionProgressDataList=new ArrayList<CollectionProgressDataDo>();
-//		String dataPassing="{%22fields%22:%22timeSpent,avgTimeSpent,resourceGooruOId,OE,questionType,category,gooruUId,userName,userData,metaData,reaction,gooruOId,title,description,options,skip%22,%22filters%22:{%22session%22:%22FS%22,%22classId%22:%22"+classPageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}";
 		String jsonStr = getCollectionProgressDataJsonStr(classPageId, pathwayId); 
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_COLLECTIONPROGRESSDATA, collectionId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
-		LOGGER.info("getCollectionProgressData url:+--->> "+url);
+		logger.info("getCollectionProgressData url:+--->> "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){ 
 			try {
 				collectionProgressDataList= (ArrayList<CollectionProgressDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionProgressDataDo>>() {});
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -97,14 +97,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String jsonStr = getCollectionSummaryUsersDataJsonStr();
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETUSERSFORPATHWAY, classpageId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
-		LOGGER.info("getCollectionSummaryUsersData url:+"+url);
+		logger.info("getCollectionSummaryUsersData url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				collectionSummaryUsersDataDoList= (ArrayList<CollectionSummaryUsersDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryUsersDataDo>>() {});
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -120,14 +120,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String jsonStr = getCollectionResourceDataJsonStr(classpageId, pathwayId); 
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONRESOURCEDATA, collectionId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
-		LOGGER.info("getCollectionResourceData url:+"+url);
+		logger.info("getCollectionResourceData url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<UserDataDo>>() {});
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return collectionResourcesList;
@@ -144,7 +144,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 //		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}";
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, collectionId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonString); 
-		LOGGER.info("url:+------ "+url);
+		logger.info("url:+------ "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -155,7 +155,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 					}
 					}
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -174,14 +174,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		params.put(TIME_STAMP_LOWER_CASE, TIME_STAMP_LOWER_CASE_VALUE);
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONDATABYUSERSESSION, collectionId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
-		LOGGER.info("getUserSessionDataByUser url:+--- "+url);
+		logger.info("getUserSessionDataByUser url:+--- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				collectionResourcesList= (ArrayList<UserDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<UserDataDo>>() {});
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -198,14 +198,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 //		String dataPassing="{%22fields%22:%22thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22classId%22:%22"+classId+"%22}}";
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonString);
-		LOGGER.info(" getCollectionMetaDataByUserAndSession url:+--- "+url);
+		logger.info(" getCollectionMetaDataByUserAndSession url:+--- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				collectionSummaryMetaDataDoList= (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -227,8 +227,8 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			htmlString=htmlString.replaceAll("max-height: 100%;", "");
 			String jsonStr="{\"fileName\":\"Mymedia\",\"html\":\""+htmlString+"\"}";
 			//String jsonStr = setHTMLtoPDFJsonStr(htmlString); 
-			LOGGER.info("html to pdf url"+url);
-			LOGGER.info("html to pdf url json -- "+jsonStr);
+			logger.info("html to pdf url"+url);
+			logger.info("html to pdf url json -- "+jsonStr);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),jsonStr);
 			savedFileName=stringRepresentation.getText();
 			if(isClickedOnEmail){
@@ -237,7 +237,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,getLoggedInSessionToken(),savedFileName,pdfName);
 			}
 		}catch(Exception e){
-			LOGGER.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return downloadUrl;
 	}
@@ -251,7 +251,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String jsonStr = getAnalyticsGradeDatajsonStr(pathwayId);
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classpageId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
-		LOGGER.info("getAnalyticsGradeData url:+"+url);
+		logger.info("getAnalyticsGradeData url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -270,7 +270,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				}
 				
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -286,7 +286,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		params.put(TIME_ZONE, timeZone);
 		params.put(DATA, jsonStr);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
-		LOGGER.info("exportPathwayOE url:+"+url);
+		logger.info("exportPathwayOE url:+"+url);
 		return url;
 	}
 
@@ -300,14 +300,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String jsonStr = getBottomAndTopScoresDatajsonStr(collectionId,pathwayId,sortOrder);
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
-		LOGGER.info("getBottomAndTopScoresData url:+"+url);
+		logger.info("getBottomAndTopScoresData url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				collectionResourcesList= (ArrayList<GradeJsonData>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<GradeJsonData>>() {});
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -325,7 +325,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
 		String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, urlDataParameterValue);
-		LOGGER.info("getAssignmentAverageData url==>"+url);
+		logger.info("getAssignmentAverageData url==>"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -333,10 +333,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				JSONArray jsonArray=jsonRep.getJsonObject().getJSONArray("content");
 				if(jsonArray!=null&&jsonArray.length()>0){
 					collectionSummaryMetaDataDo=JsonDeserializer.deserialize(jsonArray.getJSONObject(0).toString(),new TypeReference<CollectionSummaryMetaDataDo>(){});
-					LOGGER.info("JSON_RESPONSE==>"+jsonArray.getJSONObject(0).toString());
+					logger.info("JSON_RESPONSE==>"+jsonArray.getJSONObject(0).toString());
 				}
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}
 		return collectionSummaryMetaDataDo;
@@ -362,7 +362,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			jsonDataObject.put(PAGINATE, paginateJsonObject);
 			
 		} catch (JSONException e) {
-			LOGGER.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return jsonDataObject.toString();
 	}
@@ -409,7 +409,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 					
 					oetextlistObj.add(oetextDataDOObj);
 				} catch (JSONException e) {
-					LOGGER.error(e.getMessage());
+					logger.error("Exception::", e);
 				}
 			}
 		}
@@ -423,7 +423,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ITEMFEEDBACK, session,getLoggedInSessionToken());
 		//String url ="http://www.goorulearning.org/gooruapi/rest/v2/session/AS/item/feedback?sessionToken=08a99a16-4ea5-11e4-8d6c-123141016e2a";
-		LOGGER.info("url:+"+url);
+		logger.info("url:+"+url);
 		JSONObject mainObj=new JSONObject();
 		JSONObject userObj=new JSONObject();
 		JSONObject setPlayLoadObj=new JSONObject();
@@ -447,7 +447,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			mainObj.put("freeText",freeText);
 			mainObj.put("payLoadObject",setPlayLoadObj.toString());
 			mainObj.put("user",userObj);
-			LOGGER.info("mainObj.toString()::"+mainObj.toString());
+			logger.info("mainObj.toString()::"+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			if(jsonResponseRep.getStatusCode()==200){
@@ -455,7 +455,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			}else{
 			}
 		} catch (JSONException e) {
-			LOGGER.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return feedBackResponseDataDO;
 	}
@@ -492,7 +492,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 					feedBackResponseDataDO.setUserGooruId(jsonObject.getJSONObject("user").getString("gooruUId"));
 					
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		return feedBackResponseDataDO;
 	}
@@ -505,14 +505,14 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		String jsonStr = getOETextDataJsonStr(resourceId, classpageId, pathwayId, session, sessionId, userUId);
 		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_OETEXTJSON, collectionId,getLoggedInSessionToken());
 		String url = AddQueryParameter.constructQueryParams(partialUrl, DATA, jsonStr);
-		LOGGER.info("getOETextData url:+"+url);
+		logger.info("getOETextData url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				collectionResourcesList=deserializeOETextResponse(jsonRep.getJsonObject().getJSONArray("content"));
 			} catch (JSONException e) {
-				LOGGER.error(e.getMessage());
+				logger.error("Exception::", e);
 			}
 		}else{
 		}
@@ -525,7 +525,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		JsonRepresentation jsonRep = null;
 		//String url = "http://www.goorulearning.org/gooruapi/rest/v2/share/mail?sessionToken=5ef6d576-663a-11e4-a2ea-123141016e2a";
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SEND_EMAIL_WITH_PDF,getLoggedInSessionToken());
-		LOGGER.info("sendEmail url:+"+url);
+		logger.info("sendEmail url:+"+url);
 		JSONObject mainObj=new JSONObject();
 		JSONObject attachmentObj=new JSONObject();
 		JSONArray setPlayLoadObj=new JSONArray();
@@ -541,10 +541,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			mainObj.put("fromDisplayName",displayName);
 			mainObj.put("attachment",setPlayLoadObj.toString());
 			
-			LOGGER.info("mainObj.toString()::"+mainObj.toString());
+			logger.info("mainObj.toString()::"+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
 		} catch (JSONException e) {
-			LOGGER.error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 	}
 	
@@ -573,7 +573,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(PAGINATE, paginateObj);
 
 		}catch (Exception e) {
-			getLogger().error("---- " + e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -605,7 +605,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			
 			
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -643,7 +643,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FIELDS, FIELDS_USER_SESSION_DATA_BY_USER);
 			
 		} catch (Exception e) {
-			 getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -674,7 +674,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FIELDS,FIELDS_COLL_PROG_DATA);
 			
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -691,7 +691,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		try {
 			dataObj.put(FIELDS,FIELDS_COLL_SUMMARY_USERS_DATA);
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		
 		return dataObj.toString();
@@ -722,7 +722,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FILTERS,filtersObj);
 			dataObj.put(FIELDS,FIELDS_USER_SESSION_DATA_BY_USER);
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -741,7 +741,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FILE_NAME, FILE_NAME_VALUE);
 			dataObj.put(HTML, html_str);
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -773,7 +773,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FIELDS, FIELDS_ANALYTICS_GRADE_DATA);
 			
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -812,7 +812,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FIELDS, FIELDS_OE_TXT_DATA);
 			
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -843,7 +843,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FIELDS, "");
 			
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -878,7 +878,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FIELDS, FIELDS_BOTTOM_AND_TOP_SCORES);
 			
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -909,7 +909,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FILTERS, filtersObj);
 			dataObj.put(FIELDS, "");
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -938,7 +938,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			dataObj.put(FILTERS, filtersObj);
 			dataObj.put(FIELDS, "");
 		} catch (Exception e) {
-			getLogger().error("-- "+e.getMessage());
+			logger.error("Exception::", e);
 		}
 		return dataObj.toString();
 	}
@@ -952,7 +952,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		params.put(DATA, jsonStr);
 		params.put(TIME_ZONE, timeZone);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
-		LOGGER.info("exportTeacherSummary url:+"+url);
+		logger.info("exportTeacherSummary url:+"+url);
 		return url;
 	}
 
@@ -965,7 +965,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		params.put(DATA, jsonStr);
 		params.put(TIME_ZONE, timeZone);
 		String url= AddQueryParameter.constructQueryParams(partialUrl, params);
-		LOGGER.info("exportProgress url:+"+url);
+		logger.info("exportProgress url:+"+url);
 		return url;
 	}
 }

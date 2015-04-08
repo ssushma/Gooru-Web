@@ -78,7 +78,6 @@ public class SuccessMessagePopupView extends Composite{
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		setStaticTexts(collectonTitle);
-		//appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().successPopupContainer());
 		appPopUp.setGlassEnabled(true);
 		appPopUp.setHeight("320px");
 		appPopUp.show();

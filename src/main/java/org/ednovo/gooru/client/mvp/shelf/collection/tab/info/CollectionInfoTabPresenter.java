@@ -235,53 +235,6 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 			}
 		});
 	}
-	
-/*	@Override
-	public void updateCollectionTeacherTipInfo(CollectionDo collectionDo, String teacherTip) {
-		if(teacherTip.length()>0)
-		{
-		AppClientFactory.getInjector().getResourceService().updateCollectionInfo(collectionDo, teacherTip, new AsyncCallback<CollectionDo>() {
-
-			@Override
-			public void onSuccess(CollectionDo result) {
-				getView().setExistingTeacherTip(result);
-				//getView().onPostCourseUpdate(result);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		}
-		else
-		{
-			getView().displayErrorMsgTeacherTip();
-		}
-
-	}*/
-	
-/*	@Override
-	public void getCollectionTeacherTipInfo(String collectionId) {
-
-		AppClientFactory.getInjector().getResourceService().getCollectionInfoV2API(collectionId, new AsyncCallback<CollectionDo>() {
-
-			@Override
-			public void onSuccess(CollectionDo result) {
-				getView().setExistingTeacherTip(result);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-
-
-	}*/
-
 	@Override
 	public void updateStandard(String collectionId, String taxonomyCodeId, String action) {
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, taxonomyCodeId, "false", null,action, new SimpleAsyncCallback<CollectionDo>() {
@@ -427,7 +380,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 					}
 				}
 			}
-		}catch(Exception ex){}
+		}catch(Exception ex){
+			AppClientFactory.printSevereLogger(ex.getMessage());
+		}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
@@ -435,7 +390,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		if (Element.is(target)) {
 			try{
 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
-			}catch(Exception ex){}
+			}catch(Exception ex){
+				AppClientFactory.printSevereLogger(ex.getMessage());
+			}
 		}
 		return false;
 	}
@@ -468,6 +425,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	@Override
 	public void getAddCentury() {
 		addCenturyPresenter.getView().resetPopupHilightedData();
+		addCenturyPresenter.getSelectedValues().clear();
 		if(getView().getSelectedCenturyValuesThroughAutosuggest().size()> 0){
 			addCenturyPresenter.setAddResourceData(getView().getSelectedCenturyValuesThroughAutosuggest());
 		}

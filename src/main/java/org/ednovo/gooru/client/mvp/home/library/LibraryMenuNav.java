@@ -224,7 +224,9 @@ public class LibraryMenuNav extends Composite{
 		if(!AppClientFactory.isAnonymous()){
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 		}
 		
 		featuredCourses.addClickHandler(new ClickHandler() {
@@ -339,7 +341,9 @@ public class LibraryMenuNav extends Composite{
 				if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 					getStandardPrefCode(standPrefCode);
 				}
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 			return standPrefCode;
 			
 			}
@@ -421,7 +425,7 @@ public class LibraryMenuNav extends Composite{
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 		
@@ -434,7 +438,7 @@ public class LibraryMenuNav extends Composite{
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		
 	}
@@ -869,6 +873,7 @@ public class LibraryMenuNav extends Composite{
 				try {
 					getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
 				} catch (Exception e) {
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			} else {
 				getStandardPrefCode(null);

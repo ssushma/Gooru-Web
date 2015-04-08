@@ -254,8 +254,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			else{
 				this.collectionGoal.setHTML(collectionGoal);
 			}
-		}else{
-			this.collectionGoal.setHTML(i18n.GL1374());
 		}
 	}
 	/**

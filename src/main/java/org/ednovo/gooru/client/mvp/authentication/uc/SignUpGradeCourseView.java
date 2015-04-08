@@ -105,10 +105,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 
 	private static final String ELA_LBL = "Language Arts";
 	
-	private static final String ARTS_HUMANITIES = "Arts & Humanities";
-	
-	private static final String TECH_ENGEE = "Technology & Engineering";
-	
 	private static final String REGISTER_USER_LEVEL = "settings";
 	
 	@UiField Image imgLoading;
@@ -148,14 +144,10 @@ public class SignUpGradeCourseView extends PopupPanel{
 		mathCourseContainer = new HTMLPanel("");
 		socialCourseContainer = new HTMLPanel("");
 		elaCourseContainer = new HTMLPanel("");
-		
-//		artsHumanitiesContainer = new HTMLPanel("");
-//		techologyEngineeringContainer = new HTMLPanel("");
-		
+
 		imgLoading.setVisible(true);
 		imgLoading.setUrl("images/core/B-Dot.gif");
 		
-
 		setRegisterGradeList();
 		setRegisterCourseList();
 		
@@ -173,8 +165,6 @@ public class SignUpGradeCourseView extends PopupPanel{
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
         this.setGlassEnabled(true);
         this.getElement().getStyle().setZIndex(99999);
-        /*this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
-        this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());*/
         this.show();
         this.center();
         congratsLbl.getElement().setInnerHTML(i18n.GL1159()+i18n.GL_SPL_EXCLAMATION());
@@ -228,6 +218,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	public void senEmail(){
+
 	       //If account type is 2 (student) then call API to send Welcome Email
 //        if (userDo.getAccountTypeId() == 2){
         	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), "welcome", new SimpleAsyncCallback<Void>() {
@@ -237,7 +228,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 					// Do nothing....
 				}
 			});
-//        }
 	}
 	
 	/**
@@ -260,20 +250,12 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	public void closeSignUpGradeCourseView() {
-//		Window.enableScrolling(true);
-//		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-//		String account = AppClientFactory.getPlaceManager().getRequestParameter("account") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("account") : "regular";
-//		if (account.equalsIgnoreCase("parent")){
-//			OpenThanksPopup();
-//		}else{
 			AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
 			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 			if(!AppClientFactory.isAnonymous() &&  loginType.equalsIgnoreCase("Credential")) {
 				senEmail();
 			}
 			OpenThanksPopup();
-//		}
-		
 	}
 	/**
 	 * 
@@ -374,9 +356,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 		scienceCourseLbl.setHTML("<span>"+SCIENCE_LBL+"</span>");
 		elaCourseLbl.setHTML("<span>"+ELA_LBL+"</span>");
 		socialCourseLbl.setHTML("<span>"+SOCIAL_LBL+"</span>");
-	
-//		artsAndHumanitiesLbl.add(new InlineLabel(ARTS_HUMANITIES));
-//		technologyAndEngineeringLbl.add(new InlineLabel(TECH_ENGEE));
 
 		imgLoading.setVisible(true);
 		AppClientFactory.getInjector().getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
@@ -453,11 +432,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 			} else if(courseLabel.equalsIgnoreCase(SOCIAL_LBL)) {
 				socialCourseContainer.add(signupCourseLabel);
 			}
-//			else if(courseLabel.equalsIgnoreCase(ARTS_HUMANITIES)) {
-//				 artsHumanitiesContainer.add(signupCourseLabel);
-//			} else if(courseLabel.equalsIgnoreCase(TECH_ENGEE)) {
-//				techologyEngineeringContainer.add(signupCourseLabel);
-//			}
 		}
 		imgLoading.setVisible(false);
 		if(courseLabel.equalsIgnoreCase(MATH_LBL)) {
@@ -469,11 +443,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 		} else if(courseLabel.equalsIgnoreCase(SOCIAL_LBL)) {
 			courseContainer.add(socialCourseContainer);
 		}
-//		else if(courseLabel.equalsIgnoreCase(ARTS_HUMANITIES)) {
-//			courseContainer.add(artsHumanitiesContainer);
-//		} else if(courseLabel.equalsIgnoreCase(TECH_ENGEE)) {
-//			courseContainer.add(techologyEngineeringContainer);
-//		}
 				
 	}
 	/* Ui Hanlders*/
@@ -590,67 +559,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 		setCourseContainerVisibility(ELA_LBL);
 	}
 	
-	/**
-	 * 
-	 * @function clickArtsAndHumanitiesLbl 
-	 * 
-	 * @created_date : Nov 8, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-//	@UiHandler("artsAndHumanitiesLbl")
-//	public void clickArtsAndHumanitiesLbl(ClickEvent event){
-////		removeStyleNames();
-////		artsAndHumanitiesLbl.addStyleName(SignUpCBundle.INSTANCE.css().active());
-////		
-////		if(!(artsHumanitiesContainer.getWidgetCount()>0)) {
-////			setCourseData(libraryDo.get(4), ARTS_HUMANITIES);
-////		}
-////		
-////		setCourseContainerVisibility(ARTS_HUMANITIES);
-//	}
-	/**
-	 * 
-	 * @function clickTechEnggLbl 
-	 * 
-	 * @created_date : Nov 8, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	
-//	@UiHandler("technologyAndEngineeringLbl")
-//	public void clickTechEnggLbl(ClickEvent event){
-//		removeStyleNames();
-////		technologyAndEngineeringLbl.addStyleName(SignUpCBundle.INSTANCE.css().active());
-////		
-////		if(!(techologyEngineeringContainer.getWidgetCount()>0)) {
-////			setCourseData(libraryDo.get(5), TECH_ENGEE);
-////		}
-////		
-////		setCourseContainerVisibility(TECH_ENGEE);
-//	}
+
 	/**
 	 * Hide the popup and redirect to home page while clicking cancel
 	 * @param clickEvent instance of {@link ClickEvent}
@@ -743,8 +652,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 		scienceCourseLbl.removeStyleName(LoginPopUpCBundle.INSTANCE.css().sceinceActive());
 		elaCourseLbl.removeStyleName(LoginPopUpCBundle.INSTANCE.css().elaActive());
 		socialCourseLbl.removeStyleName(LoginPopUpCBundle.INSTANCE.css().ssActive());
-//		artsAndHumanitiesLbl.removeStyleName(SignUpCBundle.INSTANCE.css().active());
-//		technologyAndEngineeringLbl.removeStyleName(SignUpCBundle.INSTANCE.css().active());
 	}
 	/**
 	 * 
@@ -770,8 +677,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 		scienceCourseContainer.setVisible(courseLabel.equalsIgnoreCase(SCIENCE_LBL) ? true : false);
 		elaCourseContainer.setVisible(courseLabel.equalsIgnoreCase(ELA_LBL) ? true : false);
 		socialCourseContainer.setVisible(courseLabel.equalsIgnoreCase(SOCIAL_LBL) ? true : false);
-//		artsHumanitiesContainer.setVisible(courseLabel.equalsIgnoreCase(ARTS_HUMANITIES) ? true : false);
-//		techologyEngineeringContainer.setVisible(courseLabel.equalsIgnoreCase(TECH_ENGEE) ? true : false);		
 	}
 	@UiHandler("menuIcon")
 	public void menuIconClickEvent(ClickEvent event){

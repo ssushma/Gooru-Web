@@ -204,7 +204,6 @@ public class CollectionInfo extends Composite {
 				setInstructionalInfo();
 				setLanguageObjectiveText();
 				setOerInfo();
-				System.out.println("isStandardsInfo::"+isStandardsInfo);
 					if(isGradesInfo==false && isStandardsInfo==false
 						&& isDepthOfKnlzeInfo==false && isLearningSkillsInfo==false
 						&& isAudienceInfo==false && isInstructionalInfo==false

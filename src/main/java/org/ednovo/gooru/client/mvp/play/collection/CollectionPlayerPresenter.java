@@ -66,7 +66,6 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
-import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
@@ -1691,7 +1690,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void resetCollectionPlayer(){
 		if(collectionDo!=null){
-			AppClientFactory.getEventBus().fireEvent(new UpdateViewCountInSearchEvent(collectionDo));
 			stopCollectionDataLogs();
 			getView().hidePlayerButtons(true,null);
 			AppClientFactory.getPlaceManager().setDataLogClasspageId(null);

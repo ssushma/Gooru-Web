@@ -90,16 +90,11 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	
 	private static final String NULL = "null";
 
-//	private static final String DEFAULT_THUMBNAIL = "slides/thumbnail.jpg";
-
 	private boolean failedThumbnailGeneration = false;
 
 	/**
 	 * Class constructor
 	 */
-//	private static final String SMALL = i18n.GL0900;
-
-//	private static final String PNG = i18n.GL0899;
 	
 	boolean suggestFlag;
 	/**
@@ -410,11 +405,6 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 			
 			}
 		}
-/*		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", getResourceId());
-		params.put("pn", getPlayerName());
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);*/
-		
 	}
 	/**
 	 * 

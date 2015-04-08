@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -73,8 +74,6 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 
 	int collectionItemDoSize;
 	
-//	private final String PROFILE_LEVEL_ZERO = "0";
-
 	private final String PROFILE_LEVEL_ONE = "1";
 	
 	private final String PROFILE_LEVEL_TWO = "2";
@@ -201,6 +200,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 				selectedProfilePageCollectionChild.setOpenFolderStyle(true);
 			}
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
@@ -254,16 +254,6 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		return null;
 	}
 
-	/*@Override
-	public void collectionListScrollpanel(boolean isSetClear) {
-		if (isSetClear) {
-			collectionListScrollpanel.getElement().getStyle().clearHeight();
-		} else {
-			collectionListScrollpanel.getElement().getStyle()
-			.setHeight(Window.getClientHeight() - 182, Unit.PX);
-		}
-	}*/
-	
 	@Override
 	public void clearMyShelfVerPanel() {
 		myShelfVerPanel.clear();
