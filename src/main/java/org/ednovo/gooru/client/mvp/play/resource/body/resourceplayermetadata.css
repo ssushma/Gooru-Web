@@ -275,10 +275,7 @@ content:â€�â€¦â€�;
 
 .rating {
 	margin: 3px 10px 3px 0px;
-	font-size: 12px; //
-	width: 95px; /* used in search */ //
-	float: right; /* used in search */ //
-	text-align: right; /* used in search */
+	font-size: 12px; 
 	vertical-align: middle;
 	line-height: 1.4em;
 }
@@ -353,9 +350,6 @@ body.popupBG {
 	background: -ms-linear-gradient(top, #666, #515151);
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666',
-		EndColorStr='#515151');
 }
 
 .popupHeader h1 {
@@ -418,8 +412,7 @@ h3 {
 
 .bar {
 	height: 10px;
-	background-color: #8CC63E; //
-	float: left;
+	background-color: #8CC63E; 
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -592,9 +585,7 @@ fieldset {
 
 .ratingContainer {
 	height: 60px;
-	white-space: nowrap; //
-	overflow: hidden; //
-	text-align: center;
+	white-space: nowrap; 
 	-webkit-font-smoothing: antialiased !important;
 	margin: 10px;
 	position: relative;
