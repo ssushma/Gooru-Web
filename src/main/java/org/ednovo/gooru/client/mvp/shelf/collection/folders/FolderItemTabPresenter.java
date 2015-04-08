@@ -165,10 +165,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 				getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 			}
 		});
-		
-//		getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 	}
-
 
 	@Override
 	public void deletAssessment(String assessmentId,final FolderDo folderDo) {

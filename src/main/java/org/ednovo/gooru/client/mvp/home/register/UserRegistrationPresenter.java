@@ -84,7 +84,6 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 	
 	private static final String PARENT = "Parent";
 	
-//	private static final String OH_NO_TEXT = i18n.GL1415+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP;
 	
 	private static final String ACCOUNT_TYPE = "accountType";
 	
@@ -100,9 +99,6 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 	
 	private static final String GOORU = "gooru";
 	
-	private static final String CHILD_LAST_NAME = "childlastname";
-	
-	private static final String CHILD_FIRST_NAME = "childfirstname";
 	
 	private static final String GMAIL_ADDRESS = "@gmail.com";
 	
@@ -145,7 +141,6 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 			@Override
 			public void onFailure(Throwable caught) {
 				UcCBundle.INSTANCE.css().ensureInjected();
-//				new AlertContentUc((i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()), caught.getMessage()).getAlertBox().addStyleName(UcCBundle.INSTANCE.css().increaseZindex());
 			}
 
 		});

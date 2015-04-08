@@ -105,7 +105,6 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		setElementId();
 		
 		txtConfirmAction.addKeyUpHandler(new ValidateConfirmText());
-//		txtConfirmAction.setText(i18n.GL1175());
 		txtConfirmAction.getElement().getStyle().setColor("#515151");
 		txtConfirmAction.addClickHandler(new ClickHandler() {
 			
@@ -128,13 +127,11 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 			public void onBlur(BlurEvent event) {
 				if(txtConfirmAction.getText().isEmpty())
 				{
-//					txtConfirmAction.setText(i18n.GL1175());
 					txtConfirmAction.getElement().getStyle().setColor("#515151");
 				}
 				
 			}
 		});
-//		txtConfirmAction.getElement().setAttribute("placeholder", i18n.GL1175());
 		StringUtil.setAttributes(txtConfirmAction, true);
 		btnNegitive.setText(StringUtil.generateMessage(i18n.GL0142()));
 		btnNegitive.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0142()));
@@ -150,7 +147,6 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		this.center();
-//		this.show();
 	}
 	
 

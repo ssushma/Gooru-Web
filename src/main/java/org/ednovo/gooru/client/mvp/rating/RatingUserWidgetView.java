@@ -221,11 +221,9 @@ public class RatingUserWidgetView extends Composite {
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 		  }else{
-			//reviewContainer.setVisible(false);
 			userName.setText(starRatingsDo.getCreator().getUsername());
 			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
 			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
-			//editReviewLabelContainer.setVisible(false);
 		}
 			
 		}else{
@@ -277,18 +275,13 @@ public class RatingUserWidgetView extends Composite {
 			if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
 				reviewContainer.setVisible(true);
 				editReviewLabelContainer.setVisible(true);
-			}else{
-				//reviewContainer.setVisible(false);
-				//editReviewLabelContainer.setVisible(false);
 			}
 		}
 		
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
-			//reviewContainer.addStyleName(style.creatorReviewPanel());
 			editReview.addStyleName(style.editReview());
 			editReviewBtn.removeStyleName(style.editReview());
 			cancelReviewBtn.removeStyleName(style.editReview());
-			//editReview.setVisible(true);
 			userName.setText(i18n.GL1850());
 			userName.getElement().setAttribute("alt",i18n.GL1850());
 			userName.getElement().setAttribute("title",i18n.GL1850());
@@ -499,7 +492,6 @@ public class RatingUserWidgetView extends Composite {
 			errorLbl.getElement().setAttribute("alt",i18n.GL0143());
 			errorLbl.getElement().setAttribute("title",i18n.GL0143());
 			errorLbl.setVisible(true);
-		//	fieldValidationStaus=false;
 		}else{
 			errorLbl.setVisible(false);
 		}
@@ -548,7 +540,6 @@ public class RatingUserWidgetView extends Composite {
 		// TODO Auto-generated method stub
 		if(starRatingsDo.getScore() == 1)
 		{
-
 			starOne.addStyleName(style.filled());
 			starOne.getElement().addClassName(FILLED_BLUE);
 			

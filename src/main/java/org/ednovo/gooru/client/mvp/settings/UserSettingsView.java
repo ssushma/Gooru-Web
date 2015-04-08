@@ -1579,7 +1579,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
 				uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
 			}catch(Exception exception){
-
+				AppClientFactory.printSevereLogger(exception.getMessage());
 			}
 		}
 	}
@@ -1595,7 +1595,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
 			uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
 		}catch(Exception exception){
-
+			AppClientFactory.printSevereLogger(exception.getMessage());
 		}
 
 	}
@@ -1663,6 +1663,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					listI.add(k);
 				} catch (Exception e) {
 					listS.add(newst[i]);
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			}
 			Collections.sort(listS, Collections.reverseOrder());

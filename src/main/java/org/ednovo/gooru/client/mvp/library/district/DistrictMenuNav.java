@@ -67,11 +67,7 @@ public abstract class DistrictMenuNav extends Composite {
 	
 	@UiField Anchor aboutGooruAnr;
 	
-	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning",ELEMENTARY="elementary";
-	
-	private static final String LIBRARY_PAGE = "page";
-	
-	private static final String SUBJECT = "subject";
+	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning";
 	
 	private static final String ACTIVE = "active";
 	

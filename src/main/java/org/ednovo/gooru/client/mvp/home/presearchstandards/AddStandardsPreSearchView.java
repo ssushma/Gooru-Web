@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -519,6 +520,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			}
 			catch(Exception ex)
 			{
+				AppClientFactory.printSevereLogger(ex.getMessage());
 			}
 		}
 	}
@@ -603,6 +605,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				}
 				catch(Exception ex)
 				{
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 				}
 
@@ -656,6 +659,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 				}
 					catch(Exception ex)
 					{
+						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				}
 				
@@ -1056,7 +1060,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 					}
 				}
 			}
-		}catch(Exception ex){}
+		}catch(Exception ex){
+			AppClientFactory.printSevereLogger(ex.getMessage());
+		}
 	}
 	
 	/**
@@ -1068,7 +1074,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		if (Element.is(target)) {
 			try{
 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
-			}catch(Exception ex){}
+			}catch(Exception ex){
+				AppClientFactory.printSevereLogger(ex.getMessage());
+			}
 		}
 		return false;
 	}

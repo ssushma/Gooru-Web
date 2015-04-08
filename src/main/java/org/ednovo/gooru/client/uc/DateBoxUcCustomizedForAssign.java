@@ -209,6 +209,7 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 					}
 				}
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}

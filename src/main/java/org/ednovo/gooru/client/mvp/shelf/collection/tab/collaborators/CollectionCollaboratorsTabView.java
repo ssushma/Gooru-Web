@@ -118,8 +118,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 	
-//	private PopupPanel toolTipPopupPanel=new PopupPanel();
-	
 	private static int collabLimitCount = 20;
 	
 	int currentCollabCount=0;
@@ -127,11 +125,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	int overAllCollabCount = 0;
 	
 	private TermsOfUse termsOfUse;
-	
-//	@UiField TextBox txtCollaboratorsName;
-
-//	SuggestBox suggestBox =null;
-	
 	interface CollectionAssignViewTabUiBinder extends UiBinder<Widget, CollectionCollaboratorsTabView> {
 	}
 
@@ -139,35 +132,27 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	 * Class constructor
 	 */
 	public CollectionCollaboratorsTabView() {
-		
 		res = CollectionCollaboratorsCBundle.INSTANCE;
 		CollectionCollaboratorsCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		
 		SetPanelVisibilityHandler panelHander = new SetPanelVisibilityHandler() {
-			
 			@Override
 			public void setPendingActiveVisibility() {
 				setPanelsVisibility();
 			}
 		};
 		AppClientFactory.getEventBus().addHandler(SetPanelVisibilityEvent.TYPE, panelHander);
-		
 		clearContainers();
 	}
-	
 	/**
 	 * 
 	 */
 	@Override
 	public void onLoad() {
-		
 	}
 	
 	@Override
 	public void onUnload() {
-//		setLabelsAndIds();
-		
 	}
 
 	@Override
@@ -217,7 +202,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		
 		lblCollaboratorsDesc.getElement().setId("lblCollaboratorsDesc");
 		
-		
 		lblInviteCollaborators.setText(i18n.GL0943());
 		lblInviteCollaborators.getElement().setId("lblInviteCollaborators");
 		lblInviteCollaborators.getElement().setAttribute("alt",i18n.GL0943());
@@ -261,22 +245,12 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		lblText.getElement().setId("lblText");
 		lblText.getElement().setAttribute("alt",i18n.GL1184());
 		lblText.getElement().setAttribute("title",i18n.GL1184());
-		
-//		btnInvite.addMouseOverHandler(new OnBtnInviteMouseOver());
-//		btnInvite.addMouseOutHandler(new OnBtnInviteMouseOut());
-		
 		btnRemoveSelectedInvities.setText(i18n.GL0237());
 		btnRemoveSelectedInvities.getElement().setId("btnRemoveSelectedInvities");
 		btnRemoveSelectedInvities.getElement().setAttribute("alt",i18n.GL0237());
 		btnRemoveSelectedInvities.getElement().setAttribute("title",i18n.GL0237());
 		
 		btnRemoveSelectedInvities.setVisible(false);
-		
-		
-		
-/*		lblToolTip.setText(i18n.GL1165_1);
-		lblToolTip.setVisible(false);
-*/		
 		lblErrorMessage.setVisible(false);
 		
 		setInviteButtonEnable(overAllCollabCount);
@@ -362,17 +336,14 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	private void createAutoSuggestBox() {
 		panelSuggestBox.setStyleName("auto_suggest");
 		autoSuggetTextBox = new AutoSuggestForm(oracle) {
-
 			@Override
 			public void onSubmit(DomEvent<EventHandler> event) {
 				// Nothing to do....
 			}
-
 			@Override
 			public void dataObjectModel(String text) {
 				if (text.trim().length() > 0){
 					AppClientFactory.getInjector().getCollaboratorsService().getSuggestionByName(text.trim(), new SimpleAsyncCallback<List<String>>() {
-	
 						@Override
 						public void onSuccess(List<String> lstOfSuggestedCollaborators) {
 							autoSuggetTextBox.clearAutoSuggestData();
@@ -384,12 +355,10 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 					});
 				}
 			}
-
 			@Override
 			public void keyPressOnTextBox(KeyPressEvent event) {
 				lblErrorMessage.setVisible(false);
 			}
-
 			@Override
 			public void errorMsgVisibility(boolean visibility, String emailId) {
 				if (visibility){
@@ -428,15 +397,12 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 					AppClientFactory.getInjector().getCollaboratorsService().removeCollaboratorsFromListByEmailIds(collectionId, "[\"" + toRemove +"\"]", new SimpleAsyncCallback<Void>() {
 						@Override
 						public void onSuccess(Void result) {
-							
 							hide();
 							Window.enableScrolling(true);
 							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 							
 							AppClientFactory.fireEvent(new RemoveCollaboratorObjectEvent(toRemove));
 							AppClientFactory.fireEvent(new SetCollabCountEvent("decrementBy", 1));
-//							collectionDo.getMeta().setCollaboratorCount(collectionDo.getMeta().getCollaboratorCount() -1);
-							
 							if(panelActiveCollabListContainer.getWidgetCount() <= 0){
 								panelActiveContainer.setVisible(false);
 							}
@@ -496,7 +462,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");
 		}
 		if (collabEmailIds != null && collabEmailIds.equalsIgnoreCase("")){
-//			showErrorMessage(MessageProperties.i18n.GL1015);
 			lblPleaseWait.setVisible(false);
 			btnInvite.setVisible(true);
 			return;
@@ -613,7 +578,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		}
 	}
 	private void updateCollabCount(int count, String type) {
-//		collectionDo.getMeta().setCollaboratorCount(count);
 		if (type.equalsIgnoreCase("decrementBy")){
 			if (overAllCollabCount > count){
 				overAllCollabCount -= count;
@@ -630,7 +594,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	 */
 	@Override
 	public void displayViewCollaboratorsByList(List<CollaboratorsDo> listCollaboratosDo){
-		// TODO create method to set the collobrators list from API.
 		panelCollaboratorsList.clear();	
 		panelLoading.setVisible(false);
 		CollaboratorsDo collbDoYou = new CollaboratorsDo();
@@ -640,7 +603,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		collbDoYou.setProfileImageUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl() !=null ? AppClientFactory.getLoggedInUser().getProfileImageUrl() : "");
 		collbDoYou.setStatus("active");
 		collbDoYou.setUsername(AppClientFactory.getLoggedInUser().getUsername());
-		
 		
 		for(CollaboratorsDo collbDo : listCollaboratosDo){
 			boolean isYou = collbDo.getGooruUid().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()) ? true : false;
@@ -787,7 +749,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 					MixpanelUtil.mixpanelEvent("Collaborator_invite_success");	//called for every user.
 				}
 				AppClientFactory.fireEvent(new SetCollabCountEvent("incrementBy", addedCount));
-//				collectionDo.getMeta().setCollaboratorCount(collectionDo.getMeta().getCollaboratorCount() + addedCount);//this is not required since this is handled by service.
 				overAllCollabCount +=addedCount;
 				overAllCollabCount +=pendingCount;
 				currentCollabCount = overAllCollabCount; 
@@ -858,31 +819,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		panelPendingCollabListContainer.clear();
 		panelCollaboratorsList.clear();	//View mode.
 	}
-	
-//	public class OnBtnInviteMouseOver implements MouseOverHandler{
-//
-//		@Override
-//		public void onMouseOver(MouseOverEvent event) {
-//			toolTipPopupPanel.clear();
-//			toolTipPopupPanel.setWidget(new GlobalToolTip(MessageProperties.i18n.GL1184,true));
-//			toolTipPopupPanel.setStyleName("");
-//			toolTipPopupPanel.setPopupPosition(btnInvite.getElement().getAbsoluteLeft()-35, btnInvite.getElement().getAbsoluteTop()+4);
-//			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
-//			toolTipPopupPanel.getElement().getStyle().setMarginLeft(40, Unit.PX);
-//			toolTipPopupPanel.show();
-//		}
-//		
-//	}
-	
-//	public class OnBtnInviteMouseOut implements MouseOutHandler{
-//
-//		@Override
-//		public void onMouseOut(MouseOutEvent event) {
-//			toolTipPopupPanel.hide();
-//		}
-//	}
-	
-	
 	@UiHandler("ancprivacy")
 	public void onClickPrivacyAnchor(ClickEvent clickEvent){
 		Window.enableScrolling(false);
@@ -894,7 +830,6 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 			}
-			
 		};
 		termsOfUse.show();
 		termsOfUse.setSize("902px", "300px");

@@ -153,7 +153,6 @@ public abstract class CollaboratorViewVc extends Composite {
 			@Override
 			public void removeFromParentByEmailId(String emailId) {
 				if (emailId.trim().equalsIgnoreCase(lblEmailId.getText().trim())){
-//					new FadeInAndOut(panelCollaboratorsListContainer.getElement(), 5000);
 					CustomAnimation animation = new CustomAnimation(panelCollaboratorsListContainer);
 					animation.run(300);
 					removeThisFromParent();
@@ -223,10 +222,7 @@ public abstract class CollaboratorViewVc extends Composite {
 		}
 
 		if (collaboratorsDo == null && isCreator){
-			
 			imgProfileImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+collectionDo.getUser().getGooruUId()+".png");
-			
-			//imgProfileImage.setUrl((collectionDo.getUser() !=null && collectionDo.getUser().getProfileImageUrl() !=null ) ? collectionDo.getUser().getProfileImageUrl() : defaultProfileImage);
 			lblUserName.setText((collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
 			lblUserName.getElement().setAttribute("alt",(collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
 			lblUserName.getElement().setAttribute("title",(collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
@@ -235,13 +231,11 @@ public abstract class CollaboratorViewVc extends Composite {
 			lblEmailId.getElement().setAttribute("title",(collectionDo.getUser() !=null && collectionDo.getUser().getEmailId() !=null )  ? collectionDo.getUser().getEmailId() : "");
 			lblRadioButton.getElement().setId(lblEmailId.getText());
 			lblRadioButton.getElement().setAttribute("userName", lblUserName.getText());
-			
 			btnRemoveCollab.getElement().setId(lblEmailId.getText());
 			btnRemoveCollab.getElement().setAttribute("username", lblUserName.getText());
 			
 		}else if (collaboratorsDo != null && !isCreator){
 			imgProfileImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+collaboratorsDo.getGooruUid()+".png");
-			//imgProfileImage.setUrl((collaboratorsDo.getProfileImageUrl() !=null ) ? collaboratorsDo.getProfileImageUrl() : defaultProfileImage);
 			lblUserName.setText((collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
 			lblUserName.getElement().setAttribute("alt",(collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
 			lblUserName.getElement().setAttribute("title",(collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
@@ -250,17 +244,13 @@ public abstract class CollaboratorViewVc extends Composite {
 			lblEmailId.getElement().setAttribute("title",(collaboratorsDo.getEmailId() !=null)  ? collaboratorsDo.getEmailId() : "");
 			lblRadioButton.getElement().setId(lblEmailId.getText());
 			lblRadioButton.getElement().setAttribute("username", (collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : lblEmailId.getText());
-			
 			btnRemoveCollab.getElement().setId(lblEmailId.getText());
 			btnRemoveCollab.getElement().setAttribute("username", (collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : lblEmailId.getText());
 		}
 		
 		if (collectionDo.getMeta() !=null &&  collectionDo.getMeta().isIsCollaborator()){
-//			lblRadioButton.setVisible(false);
 			btnRemoveCollab.setVisible(false);
 		}else{
-//			lblRadioButton.setVisible(true);
-//			btnRemoveCollab.setVisible(true);
 			lblUserName.getElement().getStyle().setDisplay(lblUserName.getText() !=null && !lblUserName.getText().equalsIgnoreCase("") ? Display.INLINE_BLOCK : Display.NONE);
 		}
 		//TODO - This should be managed from css class 
@@ -272,7 +262,6 @@ public abstract class CollaboratorViewVc extends Composite {
 				lblEmailId.getElement().getStyle().setMarginTop(11, Unit.PX);
 				panelCollaborators.getElement().getStyle().setHeight(50, Unit.PX);
 				btnRemoveCollab.getElement().getStyle().setMarginTop(4, Unit.PX);
-				
 			}else{
 				panelCollaborators.getElement().getStyle().clearHeight();;
 				btnRemoveCollab.getElement().getStyle().clearMarginTop();
@@ -314,24 +303,18 @@ public abstract class CollaboratorViewVc extends Composite {
 				AppClientFactory.getInjector().getCollaboratorsService().removeCollaboratorsFromListByEmailIds(collectionId, "[\"" + toRemove +"\"]", new SimpleAsyncCallback<Void>() {
 					@Override
 					public void onSuccess(Void result) {
-						
-						
 						hide();
 						Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-						
 						AppClientFactory.fireEvent(new RemoveCollaboratorObjectEvent(toRemove));
 						if (collaboratorsDo.getStatus().equalsIgnoreCase("active")){
 							AppClientFactory.fireEvent(new SetCollabCountEvent("decrementBy", 1));
 							collectionDo.getMeta().setCollaboratorCount(collectionDo.getMeta().getCollaboratorCount() -1);
-							
 						}
 						setCollabCount(1, "decrementBy");
 						btnRemoveCollab.setEnabled(true);
 						btnRemoveCollab.removeStyleName("disabled");
-						
 						AppClientFactory.fireEvent(new SetPanelVisibilityEvent());
-						
 					}
 				});
 			}
@@ -355,8 +338,6 @@ public abstract class CollaboratorViewVc extends Composite {
 			delete.setPositiveButtonText(i18n.GL0190());
 		}
 		delete.setPleaseWaitText(i18n.GL1021());
-		 
-		
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.center();
 		delete.show();
@@ -364,9 +345,6 @@ public abstract class CollaboratorViewVc extends Composite {
 	
 	@UiHandler("lblRadioButton")
 	public void onSelect(ClickEvent event){
-		// This method is not required....
-//		AppClientFactory.fireEvent(new DeselectRadioButtonEvent());
-//		lblRadioButton.getElement().addClassName("radio-selected-icon");
 	}
 	
 	public void deselectRadioButton(){
@@ -398,14 +376,10 @@ public abstract class CollaboratorViewVc extends Composite {
 				AppClientFactory.getInjector().getCollaboratorsService().removeCollaboratorsFromListByEmailIds(collectionId, "[\"" + toRemove +"\"]", new SimpleAsyncCallback<Void>() {
 					@Override
 					public void onSuccess(Void result) {
-						
 						hide();
 						Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						setPersistantTabFlag("resourceTab");
-//						AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(
-//						 	 collectionDo, RefreshType.DELETE));
-						
 						Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
 						if (map.size()>1){
 							map.remove("id");
@@ -413,8 +387,6 @@ public abstract class CollaboratorViewVc extends Composite {
 						}else{
 							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 						}
-						//AppClientFactory.fireEvent(new SetPanelVisibilityEvent());
-						//AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
 						AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(collectionId)); 
 					}
 				});

@@ -224,6 +224,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 
@@ -249,6 +250,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	

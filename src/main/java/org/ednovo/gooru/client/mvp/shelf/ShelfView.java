@@ -162,10 +162,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@UiField
 	CollectionUploadImageUc collectionImageShelfUc;
-
-	/*
-	 * @UiField FocusPanel simplePencilFocPanel;
-	 */
 	@UiField
 	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,editPanel,rbPublicPanel,publishedPanel;
 
@@ -194,8 +190,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	private DeleteConfirmPopupVc deleteConfirmPopup;
 	
 	private FolderPopupUc folderPopupUc;
-
-//	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
 
 	private CollectionShareTabVc collectionShareTabVc;
 	
@@ -424,8 +418,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		
 		collectionDescriptionUc.setPlaceholder(WHAT_IS_THIS_COLLECTION_ABOUT);
 		collectionDescriptionUc.getElement().setId("tatCollectionDescription");
-		// collectionDescriptionUc.getElement().setAttribute("placeholder",
-		// WHAT_IS_THIS_COLLECTION_ABOUT);
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
@@ -575,7 +567,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				.setDisplay(Display.NONE);
 		editSelfCollectionDescSaveButtonCancel.getElement().getStyle()
 				.setDisplay(Display.NONE);
-		//collectionPreviewBtn.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
 		simplePencilPanel.setVisible(false);
 
 		editCollectionDescTitle
@@ -857,8 +848,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			resourcesCount = collectionDo.getCollectionItems().size();
 		}
 		resourceTabVc.setLabel(""+i18n.GL0829()+" (" + resourcesCount + ")");
-		
-		//getCollectionShareTabVc();
 	}
 	public void setCollabCount(int count){
 		//	Set the count of Collaborators;
@@ -1025,6 +1014,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		}
 		catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 
 	}
@@ -1077,8 +1067,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				setPersistantTabFlag("collaboratorTab");
 				collaboratorTabVc.setSelected(true);
 				collectionMetaDataSimPanel.getElement().removeAttribute("style");
-				
-//				collectionMetaDataSimPanel.setWidget(getCollectionCollaboratorTabVc());
 				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLABORATOR_TAB, collectionDo);
 			}
 			else if (tab.equals(assignTabVc)) {
@@ -1735,9 +1723,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@Override
 	public void setNoDataCollection() {
-		//temporary fix
-//		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
-		////
 		if (AppClientFactory.isAnonymous()){
 			Window.enableScrolling(true);
 		}else{
@@ -1761,7 +1746,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void setOnlyNoDataCollection() {
 		
 		getLoadingImageInvisible();
-//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
 		shelfTabSimPanel.setVisible(false);
@@ -1887,7 +1871,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName,collectionDo) { 
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
-//				Window.enableScrolling(true);
 				appPopUp.hide();
 				AppClientFactory.fireEvent(new SetCollectionMovedStyleEvent(folderDo.getGooruOid()));  
 			}
@@ -1943,8 +1926,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void showNotInProgress(){
 		deleteUserCollectionLbl.setVisible(true);
 		lblDeleting.setVisible(false);
-		
-//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	

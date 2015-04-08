@@ -122,7 +122,6 @@ public abstract class FolderPopupChildItem extends Composite{
 	public class ClickOnFolderLevel implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			//setFolderStyle();
 		}
 	}
 	

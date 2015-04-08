@@ -38,7 +38,6 @@ public abstract class DeleteFolderSuccessView extends Composite {
 	public AppPopUp appPopUp;
 	
 	public DeleteFolderSuccessView() {
-//		setWidget(uiBinder.createAndBindUi(this));
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.getElement().getStyle().setWidth(456, Unit.PX);
@@ -60,7 +59,6 @@ public abstract class DeleteFolderSuccessView extends Composite {
 		headerTitle.getElement().setAttribute("alt",i18n.GL1173());
 		headerTitle.getElement().setAttribute("title",i18n.GL1173());
 		
-//		titleLabel.setText(MessageProperties.i18n.GL1176);
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
 		headerTitleDes.setVisible(false);
@@ -71,7 +69,6 @@ public abstract class DeleteFolderSuccessView extends Composite {
 	public DeleteFolderSuccessView(String movedFolderName, CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		/*appPopUp.setStyleName("removeResourcePopup");*/
 		appPopUp.getElement().getStyle().setWidth(456, Unit.PX);
 		appPopUp.getElement().getStyle().setHeight(245, Unit.PX);
 		appPopUp.getHeaderPanel().getElement().getStyle().setMarginBottom(-2, Unit.PX);

@@ -65,7 +65,7 @@ public class PPPCollectionResult extends Composite{
 	
 	@UiField
 	Label resourceCountLbl;
-	//creatorNameLbl,creatorNameLblValue
+
 	@UiField
 	HTML collectionDescriptionHtml,collectionTitleLbl;
 
@@ -82,15 +82,6 @@ public class PPPCollectionResult extends Composite{
 	PPPCollectionResultCBundle res;
 
 	private CollectionItemDo collectionItemDo;
-	
-//	private static final String VIEWS =" "+i18n.GL1099;
-	
-//	private static final String CREATED_BY = "Created by ";
-	
-//	private static final String RESOURCES =i18n.GL0174;
-	
-//	private static final String RESOURCE = " "+i18n.GL1110;
-	
 	/**
 	 * Class constructor, creates new instance of PPPCollectionSearchResultWrapperVc and call collection search result setData method
 	 * @param collectionItemDo instance {@link CollectionItemDo}
@@ -110,16 +101,12 @@ public class PPPCollectionResult extends Composite{
 	 * @param collectionItemDo instance of {@link CollectionItemDo}
 	 */
 	public void setData(CollectionItemDo collectionItemDo) {
-		
 		this.collectionItemDo = collectionItemDo;
 		wrapperVc.setData(collectionItemDo);
 		collectionTitleLbl.setHTML(StringUtil.truncateText(collectionItemDo.getResourceTitle(), 40));
 		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
 		collectionTitleLbl.getElement().setAttribute("alt",StringUtil.truncateText(collectionItemDo.getResourceTitle(), 40));
 		collectionTitleLbl.getElement().setAttribute("title",StringUtil.truncateText(collectionItemDo.getResourceTitle(), 40));
-		
-		//creatorNameLbl.setText(CREATED_BY);
-		//creatorNameLblValue.setText(" "+collectionItemDo.getCreator().getUsernameDisplay());
 		collectionDescriptionHtml.setHTML(collectionItemDo.getDescription());
 		collectionDescriptionHtml.getElement().setId("htmlCollectionDescriptionHtml");
 		collectionDescriptionHtml.getElement().setAttribute("alt",collectionItemDo.getDescription());
@@ -129,7 +116,6 @@ public class PPPCollectionResult extends Composite{
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionItemDo.getViews() + "", " "+i18n.GL1099());
 		metaDataPanelFloPanel.add(new SeparatorUc());
 		collectionImageUc.setUrl(collectionItemDo.getUrl(),collectionItemDo.getResourceTitle());
-//		collectionImageUc.getElement().getStyle().setZIndex(9999);
 		collectionImageUc.setGooruOid(collectionItemDo.getGooruOid());
 		resourceCountLbl.getElement().setId("lblResourceCountLbl");
 		if(collectionItemDo.getResourceCount()==1)
