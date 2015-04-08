@@ -112,7 +112,6 @@ public class FolderDeleteView extends AppPopUp {
 		lblDeleteText.setText(i18n.GL2189());
 		StringUtil.setAttributes(lblDeleteText.getElement(), "lblDeleteText", null, "lblDeleteText");
 		
-		//txtDelete.setPlaceholder(i18n.GL1175());
 		txtDelete.getElement().setId("txtTxtDelete");
 		
 		txtDelete.addKeyUpHandler(new ValidateConfirmText());
@@ -218,7 +217,6 @@ public class FolderDeleteView extends AppPopUp {
 				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView() {
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
-//						Window.enableScrolling(true);
 						appPopUp.hide();
 					}
 				};

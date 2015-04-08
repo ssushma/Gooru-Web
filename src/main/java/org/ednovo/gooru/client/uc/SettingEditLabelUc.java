@@ -123,9 +123,6 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("SettingEditName");
-		//editTextBox.setMaxLength(50);
-		//errorLabel.setVisible(false);
-
 	}
 
 	/**

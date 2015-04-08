@@ -127,7 +127,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
 		setFolderDo(folderDo);
-//		setItemNo(folderNumber);
 		setFolderData(folderDo);
 		reorderTxtBox.addMouseOverHandler(new OnMouseOver());
 		reorderTxtBox.addMouseOutHandler(new OnMouseOut());
@@ -161,13 +160,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public void setFolderData(final FolderDo folderDo) {
 		itemTitle.addStyleName(folderStyle.folderTitleElipses());
 		final String folderType = folderDo.getType();
-		/*
-		if(getItemNo() == 1){
-			moveUpBtn.setVisible(false);
-		}else{
-			moveUpBtn.setVisible(true); 
-		}*/
-			
 		if(folderType.equals(FOLDER)) {
 			folderImage.setVisible(true);
 			collectionImage.setVisible(false);
@@ -223,7 +215,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 						resourcePanel.add(resourceCategoryPanel);
 					}
 					HTML resourceTitle = new HTML(StringUtil.getRefinedQuestionText(folderItem.getTitle()));
-				//	resourceTitle.setStyleName(folderStyle.shelfFolderItemTitle());
 					resourceTitle.setStyleName("shelfFolderItemTitle");
 					resourcePanel.add(resourceTitle);
 					contents.add(resourcePanel);
@@ -281,8 +272,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				contents.addStyleName(folderStyle.empty());
 			}
 		}
-		/*reorderTxtBox.setText(getItemNo()+""); 
-		itemNumber.setText(getItemNo()+"");*/ 
 		itemTitle.setText(folderDo.getTitle());	
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
@@ -380,19 +369,16 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@Override
 	public DRAG_TYPE getDragType() {
 		throw new RuntimeException("Not implemented");
-//		return DRAG_TYPE.COLLECTION_ITEM;
 	}
 
 	@Override
 	public int getDragTopCorrection() {
 		throw new RuntimeException("Not implemented");
-//		return 5;
 	}
 
 	@Override
 	public int getDragLeftCorrection() {
 		throw new RuntimeException("Not implemented");
-//		return 225;
 	}
 	
 	private HashMap<String,String> urlParams(String assetType, String folderId) {
@@ -754,9 +740,4 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public void setReorderPanel(FlowPanel reorderPanel) {
 		this.reorderPanel = reorderPanel;
 	}
-	
-
-	/*public void reorderCollectionItem(int widgetIndex) { 
-		
-	}*/
 }

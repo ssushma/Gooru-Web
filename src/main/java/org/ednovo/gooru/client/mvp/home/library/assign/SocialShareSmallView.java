@@ -148,7 +148,6 @@ IsSocialShareSmallView{
 		}
 
 		setPresenter(new SocialShareSmallPresenter(this));
-		//		shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		faceBookLbl.getElement().setInnerHTML(i18n.GL0646());
 		twitterLbl.getElement().setInnerHTML(i18n.GL0647());
 		emailLbl.getElement().setInnerHTML(i18n.GL0426());
@@ -157,7 +156,7 @@ IsSocialShareSmallView{
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
 			}
 		} catch (Exception e) {
-
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 
 		if (socialDo.isOnlyIcon()) {
@@ -179,7 +178,6 @@ IsSocialShareSmallView{
 				socialDo.setTitle(title.replaceAll("<p>","").replaceAll("</p>", ""));
 			}
 		}
-		//        if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
 		if((socialDo.getShareType().equalsIgnoreCase("private"))){
 
 			panelfbIcon.setStyleName(socialShareSmallStyle.classPageShareButtonsFTEBgDisable());
@@ -190,8 +188,6 @@ IsSocialShareSmallView{
 			panelTwitter.setStyleName(socialShareSmallStyle.classPageShareButtonsBgDisable());
 			panelEmail.setStyleName(socialShareSmallStyle.classPageShareButtonsBgDisable());
 
-			//				shareTextPanel.getElement().getStyle().setCursor(Cursor.DEFAULT);
-			//				shareIconPanel.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		}else{
 
 			panelfbIcon.setStyleName(socialShareSmallStyle.fbPageShareIconButtonsBg());
@@ -202,10 +198,7 @@ IsSocialShareSmallView{
 			panelTwitter.setStyleName(socialShareSmallStyle.twitterPageShareButtonsBg());
 			panelEmail.setStyleName(socialShareSmallStyle.classPageShareButtonsBg());
 
-			//				shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-			//				shareIconPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		}
-		//		}
 
 		categoryImage.addErrorHandler(new ErrorHandler() {
 

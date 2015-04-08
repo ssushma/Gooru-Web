@@ -79,13 +79,7 @@ public class DistrictPresenter extends PresenterWidget<IsDistrictView> implement
 			update.center();
 		}
 	}
-	
-/*	@Override
-	public void prepareFromRequest(PlaceRequest request) {
-		super.prepareFromRequest(request);
-	}
-	
-*/	private void getIntoLibrarypage() {
+	private void getIntoLibrarypage() {
 		String sharing = "public";
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
 			sharing = null;

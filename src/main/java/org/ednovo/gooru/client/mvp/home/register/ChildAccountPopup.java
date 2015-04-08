@@ -52,7 +52,6 @@ public class ChildAccountPopup extends Composite{
 	BlueButtonUc confirmationBtnUc;
 	@UiField Label congrtstext,excitedText;
 	
-//	private static final String CHILD_SUCCESS_TEXT = i18n.GL1214;
 
 	/**
 	 * Class constructor

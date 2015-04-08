@@ -64,8 +64,6 @@ public  class CollectionConfirmationPopup extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		this.getElement().setAttribute("style", "min-height:247px; width:436px;");
-		//this.setWidth("436px");
-		
 		shareMsgTitle.setText(i18n.GL0836());
 		shareMsgTitle.getElement().setId("lblShareMsgTitle");
 		shareMsgTitle.getElement().setAttribute("alt",i18n.GL0836());
@@ -99,17 +97,6 @@ public  class CollectionConfirmationPopup extends PopupPanel {
 		
 		
 		this.setGlassEnabled(true);
-		
-        /*this.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
-
-            public void setPosition(int offsetWidth, int offsetHeight) {
-                int left = (Window.getClientWidth() - offsetWidth) / 3;
-                int top = (Window.getClientHeight() - offsetHeight) / 3;
-                left=left+250;
-                top=top+40;
-                setPopupPosition(left, top);
-            }
-        });*/
 		this.center();
         this.show();
         

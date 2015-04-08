@@ -78,9 +78,6 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-//	private static final String NO_RESOURCES_IN_THIS_COLLECTION =i18n.GL0684;
-//	private static final String RESOURCES_IN_THIS_COLLECTION= i18n.GL1094;
-	
 	@UiField
 	MoreInfoFieldVc gradeFieldVc, tagsFieldVc, timeFieldVc, rightsFieldVc,
 			likesFieldVc,resourceSearchGradeFieldVc,resourceSearchRightsFieldVc,shareField;
@@ -115,10 +112,6 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	private CollectionItemDo searchResultDo;
 
 	private SearchDo<CollectionItemSearchResultDo> usedInSearchDo;
-
-//	protected static final String OER_DESCRIPTION =i18n.GL1092;
-
-//	protected static final String OER_TITLE =i18n.GL1093;
 
 	private static final String OER_PNG_IMG ="oer.png";
 
@@ -323,19 +316,15 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 					eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
 							.replaceAll("k", "");
 					try {
-
-						
-						 
 						gradeListInt.clear();
 						String grad[] = generateGradeIfHypen(eachGrade1).trim()
 								.split(",");
 						for (int i = 0; i < grad.length; i++) {
- 
 							gradeListInt.add(Integer.parseInt(grad[i]));
 						}
-
-					} catch (Exception e) {
+					}catch (Exception e) {
 						gradeListInt.add(0);
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 				}
 			}
@@ -356,9 +345,6 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			}
 
 			grade = finalGradeStringB.toString();
-
-			// gradeFieldVc.setHtmlTxt((grade.split(",").length > 1 ? "Grades "
-			// : "Grade ") + grade);
 			if(!(gradeFieldVc.getElement().toString().contains("Kinder")||gradeFieldVc.getElement().toString().contains("Higher")||gradeFieldVc.getElement().toString().contains("Grades"))) {
 				gradeFieldVc.setHtmlTxt(grade);
 			}
@@ -366,16 +352,11 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			gradeFieldVc.setHtmlTxt(null);
 		}
 		timeFieldVc.setHtmlTxt(StringUtil.getValidString(searchResultDo.getAverageTime(), null));
-		//timeFieldVc.getElement().getStyle().setDisplay(Display.NONE);\
 		if(!likesFieldVc.getElement().toString().contains(" likes")) {
-//			likesFieldVc.setHtmlTxt(StringUtil.getValidStringWithSuffix(searchResultDo.getVotesUp() + "", "0", " likes"));
 		}
-//		likesFieldVc.getElement().getStyle().setDisplay(Display.BLOCK);
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& searchResultDo.getLicense().getIcon().isEmpty()) {
-
 			rightsFieldVc.contentFloPanel.setVisible(false);
 			rightsFieldVc.imageIconSimPanel.setVisible(false);
-
 		}
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& !searchResultDo.getLicense().getIcon().equals(NULL)) {
 			Image image = new Image(searchResultDo.getAssetURI()+ searchResultDo.getLicense().getIcon());
@@ -430,10 +411,7 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		} else {
 			tagsFieldVc.setHtmlTxt(null);
 		}
-		//tagsFieldVc.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	
-	
 	private String generateGradeIfHypen(String grade) {
 		String gradeList[];
 	 
@@ -454,9 +432,10 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 				}
 			} else {
 				gradeStr.append(Integer.parseInt(gradeList[0]));
-				/*gradeStr.append(Integer.parseInt("0"));*/
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
+		}
 		return gradeStr.toString();
 	}
 

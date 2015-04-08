@@ -87,46 +87,7 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 		editTextBox.getElement().setId("txtEditTextBox");
 		StringUtil.setAttributes(editTextBox, true);
 		deckPanel.showWidget(0);
-		/*focusPanel.addFocusHandler(new FocusHandler() {
-			@Override
-			public void onFocus(FocusEvent event) {
-				switchToEdit();
-			}
-		});
 
-		focusPanel.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				switchToEdit();
-			}
-		});
-
-		editLabel.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				switchToEdit();
-			}
-		});
-
-		editTextBox.addBlurHandler(new BlurHandler() {
-			@Override
-			public void onBlur(BlurEvent event) {
-				switchToLabel();
-			}
-		});
-
-		editTextBox.addKeyPressHandler(new KeyPressHandler() {
-
-			@Override
-			public void onKeyPress(KeyPressEvent event) {
-
-				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
-					switchToLabel();
-				} else if (event.getCharCode() == KeyCodes.KEY_ESCAPE) {
-					editTextBox.setText(editLabel.getText()); // reset to the original value
-				}
-			}
-		});*/
 		
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 	}
