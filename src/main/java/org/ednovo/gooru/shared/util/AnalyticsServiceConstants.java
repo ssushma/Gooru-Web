@@ -88,12 +88,12 @@ public interface AnalyticsServiceConstants {
 	String TIME_STAMP_LOWER_CASE = "timestamp";
 	String TIME_STAMP_LOWER_CASE_VALUE = "1410757700537";
 	
-	String FIELDS_METADATA_BY_USR_AND_SESSION ="thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage";
-	String FIELDS_COLL_PROG_DATA = "timeSpent,avgTimeSpent,resourceGooruOId,OE,questionType,category,gooruUId,userName,userData,metaData,reaction,gooruOId,title,description,options,skip";
+	String FIELDS_METADATA_BY_USR_AND_SESSION ="thumbnail,userCount,lastAccessed,completionStatus,timeSpent,views,avgTimeSpent,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage,resourceCount,hasFrameBreaker,itemCount";
+	String FIELDS_COLL_PROG_DATA = "timeSpent,avgTimeSpent,resourceGooruOId,questionType,category,gooruUId,userName,userData,metaData,reaction,title,description,options,skip,resourceCount,hasFrameBreaker,itemCount and onResourceCount";
 	String FIELDS_COLL_SUMMARY_USERS_DATA = "userGroupUId,userName,gooruUId";
 	String FIELDS_ANALYTICS_GRADE_DATA = "timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,title";
-	String FIELDS_OE_TXT_DATA = "feedbackStatus,userName,OEText,gooru_uid,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject";
-	String FIELDS_BOTTOM_AND_TOP_SCORES ="timeSpent,firstName,lastName,emailId,profileUrl,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title";
+	String FIELDS_OE_TXT_DATA = "feedbackStatus,userName,OEText,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject,gooruUid,organizationUId,status";
+	String FIELDS_BOTTOM_AND_TOP_SCORES ="timeSpent,firstName,lastName,emailId,profileUrl,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,title";
 	
 	
 	String FIELDS_USER_SESSION_DATA_BY_USER = "answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence";

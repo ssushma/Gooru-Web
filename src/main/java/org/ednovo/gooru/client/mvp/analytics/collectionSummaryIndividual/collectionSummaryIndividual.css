@@ -2,10 +2,8 @@
 .reportsTableContainer {
 	padding-top: 15px;
 }
-.reportsTableContainer{
-	padding-top: 15px;
-}
-.alignCenterAndBackground{
+
+.alignCenterAndBackground {
 	background-color: inherit !important;
 	text-align: center;
 	width: auto;
@@ -71,49 +69,6 @@
 	padding-bottom: 20px;
 }
 
-.setMarginAuto{
-	margin: 0 auto;
-	text-align: center;
-}
-.reaction_explain1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll 0px 0px transparent;
-	height: 35px;
-	width: 35px
-}
-.reaction_understand1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -78px 1px transparent;
-	height: 35px;
-	width: 35px
-}
-.reaction_mean1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -148px 1px transparent;
-	height: 35px;
-	width: 35px
-}
-.reaction_dontunderstand1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -217px 2px transparent;
-	height: 35px;
-	width: 35px
-}
-.reaction_needhelp1 {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -285px 0px transparent;
-	height: 35px;
-	width: 35px
-}
-.reaction_redneedhelp {
-	background: url(/images/analyticsReactions.png) no-repeat scroll -81px -45px transparent;
-	height: 35px;
-	width: 35px
-}
-.reaction_reddontunderstand {
-	background:url(/images/analyticsReactions.png) no-repeat scroll -1px -45px transparent;
-	height: 35px;
-	width: 35px
-}
-.individualScore{
-	clear: both;
-	padding-top: 20px;
-}
 .correct_legend_one {
 	float: left;
 	width: 15px;
@@ -127,8 +82,6 @@
 	height: 15px;
 	background: #FFE7C2;
 }
-
-
 
 .incorrect_legend {
 	float: left;
@@ -147,12 +100,6 @@
 }
 
 .resource_monitor_header_title {
-	margin: 3px;
-}
-.floatLeft{
-	float: left;
-}
-.resource_monitor_header_title{
 	float: left;
 	width: 100%;
 	/* width: 77%; */
@@ -164,6 +111,7 @@
 	padding-left: 23px;
 	padding-bottom: 10px;
 }
+
 .category_new_type_audio {
 	background: url(/images/analytics/categoryAnalytics.png) no-repeat 0px
 		-277px;
@@ -203,37 +151,6 @@
 .category_new_type_question {
 	background: url(/images/analytics/categoryAnalytics.png) no-repeat 0
 		-139px;
-}
-.category_new_type_audio {
- 	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0px -277px;
-	height: 22px;
-	position: relative;
-	top: 7px;
-	width: 32px;
-}
-.category_new_type_image {
-    background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -251px;
-    height: 22px;
-	position: relative;
-	top: 7px;
-	width: 32px;
-}
-.category_new_type_other {
-	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -140px;
-	height: 22px;
-	position: relative;
-	top: 7px;
-	width: 32px;
-}
-.category_new_type_interactive {
-	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -27px;
-	height: 22px;
-	position: relative;
-	top: 7px;
-	width: 32px;
-}
-.category_new_type_question {
-	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -139px;
 	height: 22px;
 	margin-left: 8px;
 	margin-right: auto;
@@ -269,43 +186,16 @@
 }
 
 .setProgressBar {
-=======
-	top: 7px;
-	width: 32px;
-}
-.category_new_type_text {
-	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -55px;
-	height: 22px;
-	position: relative;
-	top: 7px;
-	width: 32px;
-}
-.category_new_type_video {
-	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 2px;
-	height: 22px;
-	position: relative;
-	top: 7px;
-	width: 32px;
-}
-.category_new_type_webpage {
-	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -222px;
-	height: 22px;
-	position: relative;
-	top: 7px;
-	width: 32px;
-}
-.setProgressBar{
 	float: left;
 	height: 25px;
 	background-color: rgb(16, 118, 187);
 }
+
 .resourceBreakDownTimeSpent {
 	width: auto;
 }
-.resourceBreakDownTimeSpent{
-	width: auto;
-}
-.filterDropDown{
+
+.filterDropDown {
 	float: right;
 	border: 1px solid #ddd;
 	cursor: pointer;
@@ -341,6 +231,7 @@
 }
 
 .collectionOverviewText {
+
 }
 .collectionBreakDown_infobox{
 	margin-top: 23px;
@@ -371,6 +262,7 @@
 	font-weight: bold;
 	color: #515151;
 }
+
 .viewResponseTextOpended {
 	padding: 3px;
 	border-radius: 4px;
@@ -393,11 +285,7 @@
 	padding-top: 16px;
 }
 
-.collectionOverViewpnl{
-	clear:both;
-	padding-top: 16px;
-}
-.displayMessageTextForScoredQuestions{
+.displayMessageTextForScoredQuestions {
 	float: left;
 	border-bottom: 1px solid #eee;
 	border-left: 1px solid #eee;
@@ -416,6 +304,7 @@
 	padding: 24px;
 	text-align: center;
 }
+
 .setOETextPopupCenter {
 	left: 0 !important;
 	right: 0 !important;
@@ -627,20 +516,4 @@ div.emailSuccessMessage{
 .no-gutter >[class*='col-md-']{
 	padding-left:0;
 	padding-right:0;
-}
-.setOETextPopupCenter {
-	left: 0 !important;
-	right: 0 !important;
-	top: 180px !important;
-	bottom: 0 !important;
-	margin: auto;
-	width: 941px;
-	min-height: 148px;
-	height:auto;
-	z-index: 99999;
-}
-.setGlassStyleName{
-	background-color: #000;
-	opacity: 0.3;
-	z-index: 99999;
 }
