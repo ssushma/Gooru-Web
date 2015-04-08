@@ -349,8 +349,8 @@ float: left;
 
 .input1 {
 	color: #515151;
-	width: 63px !important;
-	height: 15px !important;
+	width: 85px !important;
+	height: 25px !important;
 	margin-top: 10px;
 	margin-bottom: 15px !important;
 }
@@ -815,7 +815,7 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 }
 
 .inviteDivContainer{
-	min-height: 167px;
+	min-height: 184px;
 }
 
 .rightInviteContainer{

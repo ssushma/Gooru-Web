@@ -12,7 +12,7 @@
 					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.detailsBtn}">
-					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2204}"></g:Anchor>
+					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2204_1}"></g:Anchor>
 				</g:HTMLPanel>
 			</uc:HTMLEventPanel>
 			

@@ -359,7 +359,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				String type="suggestedscore";
-				toolTip = new ToolTip(i18n.GL2193(),type);
+				toolTip = new ToolTip(i18n.GL2193_1(),type);
 				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 250px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -1205,7 +1205,7 @@ public class CpuTitleLabelClick implements ClickHandler{
 						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
 					}
 				}else{
-					suggestTimeErrorLabel.setText(i18n.GL2194());
+					suggestTimeErrorLabel.setText(i18n.GL2194_1());
 					suggestTimeErrorLabel.setVisible(true);
 					btnAssign.setEnabled(false);
 					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
