@@ -1,7 +1,7 @@
 .assignmentMainContainer {
 	float: left;
 	padding: 0px 25px 0px 18px;
-	width: 97%%;
+	width: 97%;
 	/* height: 518px; */
 }
 .assignmentSuccessMainContainer {
@@ -67,10 +67,6 @@
 	border-radius: 4px;
 	float: left;
 	background-color: #1076BB;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0);
 
 }
 
@@ -124,7 +120,6 @@
 
 /* Container */
 .assignmentContainerMainPanel {
-	/* width: 42%; */
 	margin: 0 auto;
 	position: relative;
 	padding: 3px 6px 3px 3px;
@@ -192,8 +187,6 @@
 	background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD),
 		to(#EDEDED));
 	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDFDFD',
-		endColorstr='#EDEDED');
 }
 
 .buttonSelected:hover,.buttonDeSelected:hover {
@@ -415,8 +408,6 @@
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
 	
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#515151');
 }
 .popupHeaderText{
 	color:white;
