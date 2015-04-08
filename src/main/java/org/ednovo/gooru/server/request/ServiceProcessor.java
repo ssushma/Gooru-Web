@@ -84,7 +84,27 @@ public class ServiceProcessor {
            }
        }.execute();
    }
-   
+   /**
+    * This method is used to for get API call with out setting any hearder. As by default it will support the json formatter
+    * @param url
+    * @param username
+    * @param password
+    * @return
+    */
+   public static JsonResponseRepresentation get(final String url, final String username, final String password,boolean analyticsApis) {
+       return new ServiceRequest() {
+           @Override
+           public JsonResponseRepresentation run() throws Exception {
+        	   setClientResource(setContext(url, username, password));
+               setEncodings(Encoding.GZIP);
+               Representation decodedRep = new DecodeRepresentation(getClientResource().get()); 
+               // Get the representation as an JsonRepresentation
+               JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(decodedRep.getText()));
+               return jsonResponseRepresentation;
+           }
+       }.execute();
+   }
    /**
     * @param url
     * @param type
