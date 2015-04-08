@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMeta
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameHandler;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.EditAssessmentPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
@@ -84,6 +85,7 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -205,6 +207,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 
 	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
 	
+	EditAssessmentPopup editAssessmentPopup=null;
+	
 
 	/**
 	 * Class constructor , assign the {@link CollectionDo} instance
@@ -244,39 +248,48 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
-					myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
-					/*if(collectionDo.getType().equalsIgnoreCase("assessment/url")) {
+					if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
 						myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 					}else{
 						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
-					}*/
+					}
+				}else{
+					if(collectionDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL)) {
+						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
+					}
 				}
 			}
 		});
 		titleFocPanel.addMouseOutHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
+				myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
+				/*if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
 					myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
-				}
+				}else{
+					myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
+				}*/
 			}
 		});
 		myShelfEditButton.addMouseOverHandler(new MouseOverHandler() {
 		
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				String tooltipText="";
-				if(collectionDo.getType().equalsIgnoreCase("folder")){
-					tooltipText = i18n.GL1472();
-				}else{
-					tooltipText = i18n.GL1473();
+				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
+					String tooltipText="";
+					if(collectionDo.getType().equalsIgnoreCase("folder")){
+						tooltipText = i18n.GL1472();
+					}else{
+						tooltipText = i18n.GL1473();
+					}
+					
+					toolTipPopupPanel.clear();
+					toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(tooltipText,""));
+					toolTipPopupPanel.setStyleName("");
+					toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
+					toolTipPopupPanel.show();
 				}
 				
-				toolTipPopupPanel.clear();
-				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(tooltipText,""));
-				toolTipPopupPanel.setStyleName("");
-				toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
-				toolTipPopupPanel.show();
 			}
 			
 		});
@@ -314,15 +327,48 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 
 	@UiHandler("myShelfEditButton")
 	public void myShelfEditButtonHandler(ClickEvent event){
-		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
-		isValue=false;
-		if(collectionDo.getType().equalsIgnoreCase("folder")){
-			MixpanelUtil.mixpanelEvent("Search_click_folder_edit");
-			isEditButtonSelected=true;
-			openFolderInShelf();
-		}else {
-			openCollectionInShelf();
+		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
+			myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
+			isValue=false;
+			if(collectionDo.getType().equalsIgnoreCase("folder")){
+				MixpanelUtil.mixpanelEvent("Search_click_folder_edit");
+				isEditButtonSelected=true;
+				openFolderInShelf();
+			}else {
+				openCollectionInShelf();
+			}
+		}else{
+			if(ASSESSMENT_URL.equals(collectionDo.getCollectionType())){
+				Window.enableScrolling(false);
+				editAssessmentPopup=new EditAssessmentPopup(collectionDo) {
+					@Override
+					public void clickEventOnSaveAssessmentHandler(FolderDo result) {
+						if(result!=null){
+							collectionDo.setTitle(result.getTitle());
+							collectionDo.setUrl(result.getUrl());
+							collectionDo.setGoals(result.getGoals());
+							collectionDo.setSharing(result.getSharing());
+							collectionDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+						}
+						editAssessmentPopup.hide();
+						Window.enableScrolling(true);
+					}
+					
+					@Override
+					public void clickEventOnCancelAssessmentHandler(ClickEvent event) {
+						editAssessmentPopup.hide();
+						Window.enableScrolling(true);						
+					}
+				};
+					
+					
+				
+				editAssessmentPopup.setGlassEnabled(true);
+				editAssessmentPopup.show();
+				editAssessmentPopup.center();
+			}
 		}
+		
 	}
 	
 	public void setData(FolderDo collectionDo, int nextLevel) {
@@ -331,7 +377,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			titleFocPanel.addStyleName(folderStyle.collection());
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
-		if(collectionDo.getCollectionType().equals(ASSESSMENT)){
+		if(collectionDo.getCollectionType().contains(ASSESSMENT)){
 			titleFocPanel.addStyleName(folderStyle.assessment());
 			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 		}
@@ -586,7 +632,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	@Override
 	public void onDragOver(final Draggable draggable) {
 	        if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
-	        	if(folderDo.getType().equalsIgnoreCase("folder")){
+	        	if(folderDo.getType().equalsIgnoreCase("folder") || folderDo.getCollectionType().equalsIgnoreCase(ASSESSMENT_URL) ){
 	        		draggable.getDraggableMirageUc().onDroppable(false);
 	        		titleFocPanel.removeStyleName(folderStyle.draggingInto());
 	        		wrapperFocPanel.getElement().getStyle().clearBackgroundColor();
@@ -692,7 +738,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public void onDrop(final Draggable draggable) {
         if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
             //setOpen();
-        	if(folderDo.getType().equalsIgnoreCase("folder")){
+        	if(folderDo.getType().equalsIgnoreCase("folder") || folderDo.getCollectionType().equals(ASSESSMENT_URL)){
         		toolTipPopupPanel.hide();
         	}else{
         		new CustomAnimation(draggable).run(50);
@@ -844,7 +890,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public class ClickOnFolderItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if(!collectionDo.getType().equals("folder")) {
+			if(!collectionDo.getType().equals("folder") && !collectionDo.getCollectionType().equals(ASSESSMENT_URL)) {
 				if (event.getSource().equals(titleFocPanel)) {
 		        	MixpanelUtil.Expand_CollectionPanel();
 		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {

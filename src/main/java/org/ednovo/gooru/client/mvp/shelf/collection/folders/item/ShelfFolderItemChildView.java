@@ -313,6 +313,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			Window.enableScrolling(false);
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
+				public
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					if(result!=null){
 						folderDo.setTitle(result.getTitle());
@@ -326,7 +327,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 					Window.enableScrolling(true);
 				}
 				@Override
-				void clickEventOnCancelAssessmentHandler(ClickEvent event) {
+				public void clickEventOnCancelAssessmentHandler(ClickEvent event) {
 					editAssessmentPopup.hide();
 					Window.enableScrolling(true);
 				}
