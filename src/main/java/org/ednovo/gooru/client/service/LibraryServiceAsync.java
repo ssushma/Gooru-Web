@@ -72,5 +72,5 @@ public interface LibraryServiceAsync extends BaseServiceAsync {
 	void getLibraryUnits(String subjectName, String courseId, String libraryName, AsyncCallback<ArrayList<UnitDo>> callback);
 	void getLibraryTopics(String subjectName, String unitId, String libraryName, int offset, int limit, AsyncCallback<ArrayList<TopicDo>> callback);
 	void getLibraryLessons(String subjectName, String topicId, String libraryName, int offset, int limit, AsyncCallback<ArrayList<LessonDo>> callback);
-
+	void deserializeCollaborators(String jsonString, AsyncCallback<ArrayList<LibraryUserDo>> callback);
 }

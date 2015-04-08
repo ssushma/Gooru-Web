@@ -297,9 +297,9 @@ public class SignUpTurnsAfterThirteenView extends
 				.getInjector()
 				.getUserService()
 				.resendConfirmationMail(params,
-						new SimpleAsyncCallback<Object>() {
+						new SimpleAsyncCallback<Void>() {
 							@Override
-							public void onSuccess(Object result) {
+							public void onSuccess(Void result) {
 
 							}
 						});

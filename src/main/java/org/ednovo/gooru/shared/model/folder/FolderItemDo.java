@@ -26,6 +26,7 @@ package org.ednovo.gooru.shared.model.folder;
 
 import java.io.Serializable;
 
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -43,6 +44,10 @@ public class FolderItemDo implements Serializable{
 	private String collectionItemId;
 	private String description;
 	private String collectionType;
+	private String url;
+	private String goals;
+	private CollectionSettingsDo settings;
+	private String sharing;
 	
 	public FolderItemDo(){}
 
@@ -136,6 +141,62 @@ public class FolderItemDo implements Serializable{
 	 */
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/**
+	 * @return the goals
+	 */
+	public String getGoals() {
+		return goals;
+	}
+
+	/**
+	 * @param goals the goals to set
+	 */
+	public void setGoals(String goals) {
+		this.goals = goals;
+	}
+
+	/**
+	 * @return the settings
+	 */
+	public CollectionSettingsDo getSettings() {
+		return settings;
+	}
+
+	/**
+	 * @param settings the settings to set
+	 */
+	public void setSettings(CollectionSettingsDo settings) {
+		this.settings = settings;
+	}
+
+	/**
+	 * @return the sharing
+	 */
+	public String getSharing() {
+		return sharing;
+	}
+
+	/**
+	 * @param sharing the sharing to set
+	 */
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
 	}
 	
 }
