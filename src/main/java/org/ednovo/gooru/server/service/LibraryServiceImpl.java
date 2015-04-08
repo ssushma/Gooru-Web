@@ -256,6 +256,36 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		return new ArrayList<LibraryUserDo>();
 	}
 	
+	
+	/**
+	 * 
+	 * @function deserializeCollaborators 
+	 * 
+	 * @created_date : 08-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param jsonString
+	 * @parm(s) : @return
+	 * 
+	 * @return : ArrayList<LibraryUserDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public ArrayList<LibraryUserDo> deserializeCollaborators(String jsonString) {
+		getLogger().info("jsonString : "+jsonString);
+		if (jsonString != null) {
+			return JsonDeserializer.deserialize(jsonString, new TypeReference<ArrayList<LibraryUserDo>>() {
+			});
+		}
+		return new ArrayList<LibraryUserDo>();
+	}
+	
 	/**
 	 * 
 	 * @function deserializeCourses 

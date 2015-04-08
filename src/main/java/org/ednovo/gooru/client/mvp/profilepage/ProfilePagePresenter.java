@@ -85,8 +85,6 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  */
 public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, IsProfilePageProxy> implements ProfilePageUiHandlers {
 	
-//	private SimpleAsyncCallback<List<CollectionDo>> userCollectionAsyncCallback;
-
 	private ImageUploadPresenter imageUploadPresenter;
 	
 	private ProfileDo profileDo;
@@ -116,7 +114,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	
 	SignUpPresenter signUpViewPresenter = null;
 	
-	private boolean isRefresh = false;
 	UserFollowDo userFollowDo=new UserFollowDo();
 	
 	@Inject

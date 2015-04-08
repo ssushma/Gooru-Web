@@ -44,8 +44,6 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 	
 	private static final String SHARING_TYPE = "public";
 	
-	private static final String COLLECTION_TYPE = "folder";
-
 	/**
 	 * Class constructor
 	 * 

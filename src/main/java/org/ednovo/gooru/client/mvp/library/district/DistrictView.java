@@ -140,7 +140,9 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				if(courseId.equals(districtFeaturedView.getCourseId())) {
 					widget.addStyleName(ACTIVE_STYLE);
 				}
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 			districtFeaturedView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -259,6 +261,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 
@@ -284,6 +287,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			loadingPanel(false);
 		} catch (Exception e) {
 			loadingPanel(false);
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
@@ -480,6 +484,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						loadingPanel(false);
 					} catch (Exception e) {
 						loadingPanel(false);
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 				}
 			});

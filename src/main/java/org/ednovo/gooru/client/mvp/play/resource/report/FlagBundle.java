@@ -36,7 +36,7 @@ public interface FlagBundle extends ClientBundle{
 	
 	public static final FlagBundle IMAGEBUNDLEINSTANCE =  GWT.create(FlagBundle.class);
 	
-	@Source("images/flag-header-close-btn.png")
+	@Source("flag-header-close-btn.png")
 	@ImageOptions(repeatStyle=RepeatStyle.None)
 	ImageResource closeFlagPopUpImages();
 	

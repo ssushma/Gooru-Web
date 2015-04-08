@@ -83,7 +83,6 @@ public class SampleReportEndView extends PopupPanel {
 			this.setHeight("584px"); 
 			int clientHeight = Window.getClientHeight();
 			int marginTop = (clientHeight - 584) / 2;
-			
 			panelMain.getElement().getStyle().setMarginTop(marginTop <0 ? 0 : marginTop, Unit.PX);
 		}
 		this.show();
@@ -91,7 +90,6 @@ public class SampleReportEndView extends PopupPanel {
 		Window.enableScrolling(false);
 		setUiField();
 		this.getElement().getStyle().setZIndex(99999);
-
 	}
 	
 	/**
@@ -119,16 +117,12 @@ public class SampleReportEndView extends PopupPanel {
 		lblCollectionProgressDetails.setText(i18n.GL3068());
 		lblHeading.setText(i18n.GL3069());
 		
-		
 		StringUtil.setAttributes(lblsummaryText.getElement(), "lblsummaryText", i18n.GL3067(), i18n.GL3067());
 		StringUtil.setAttributes(lblCollectionProgress.getElement(), "lblCollectionProgress", i18n.GL1587(), i18n.GL1587());
 		StringUtil.setAttributes(lblCollectionProgressDetails.getElement(), "lblCollectionProgressDetails", i18n.GL3068(), i18n.GL3068());
 		StringUtil.setAttributes(lblHeading.getElement(), "lblHeading", i18n.GL3069(), i18n.GL3069());
 		
-		
-	//	rightImage.setUrl("images/landing-page/nextArrow.png");
 		leftImage.setUrl("images/landing-page/previousArrow.png");
-		
 		bgImage.setUrl("images/landing-page/collectionSummary3.png");
 		bgImage.getElement().setAttribute("style", "width:100%");
 		

@@ -44,6 +44,7 @@ import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/libraryService")
@@ -261,4 +262,26 @@ public interface LibraryService extends BaseService {
 	 */
 	public ArrayList<LessonDo> getLibraryLessons(String subjectName, String topicId, String libraryName, int offset, int limit) throws GwtException;
 
+	/**
+	 * 
+	 * @function deserializeCollaborators 
+	 * 
+	 * @created_date : 08-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param jsonString
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * 
+	 * @return : ArrayList<LibraryUserDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public ArrayList<LibraryUserDo> deserializeCollaborators(String jsonString) throws GwtException;
 }

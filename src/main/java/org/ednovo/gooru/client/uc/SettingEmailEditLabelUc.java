@@ -85,7 +85,6 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 	protected FocusPanel focusPanel;
 	boolean emailAvailable;
 	protected String text;
-//	private static final String EMAIL = i18n.GL0212.toLowerCase();
 	@UiField(provided = true)
 	UcCBundle res;
 	public SettingEmailEditLabelUc() {
@@ -178,17 +177,9 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 									}
 								});
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
-		
-		//String text = getValue();
-
-	/*	if ((getText() != null && text.trim().length() > 0)) {
-			deckPanel.showWidget(0);
-			setText(editTextBox.getText());
-			onEditDisabled(editTextBox.getText());
-			errorLabel.setVisible(false);
-		}*/
 
 	}
 
@@ -229,10 +220,7 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 
 	@Override
 	public void setValue(String value) {
-
-		/*editLabel.setText(value.length() > 50 ? value.substring(0, 50) + "..."
-				: value);
-	*/	editLabel.setText(value);
+	editLabel.setText(value);
 	editLabel.getElement().setAttribute("alt", value);
 	editLabel.getElement().setAttribute("title", value);
 		editTextBox.setText(value);

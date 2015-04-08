@@ -18,7 +18,7 @@
 		<!-- resource player versions -->
 		<player.resource.version>SNAPSHOT-5.11.2</player.resource.version>
 		<!-- Convenience property to set the GWT version -->
-		<gwtVersion>2.5.0</gwtVersion>
+		<gwtVersion>2.7.0</gwtVersion>
 		<!-- <project.build.directory>/home/rajam/pandoraspace</project.build.directory> 
 			<project.build.finalName>/beta</project.build.finalName> -->
 		<!-- GWT needs at least java 1.6 -->
@@ -216,11 +216,11 @@
 			<artifactId>gwt-user</artifactId>
 			<version>${gwtVersion}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-incubator</artifactId>
-			<version>2.0.1</version>
-		</dependency>
+			<version>2.1.0</version>
+		</dependency> -->
 		<dependency>
 			<groupId>com.allen-sauer.gwt.dnd</groupId>
 			<artifactId>gwt-dnd</artifactId>
@@ -229,7 +229,7 @@
 		<dependency>
 			<groupId>com.google.gwt.inject</groupId>
 			<artifactId>gin</artifactId>
-			<version>2.0.0</version>
+			<version>2.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>
@@ -275,7 +275,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>2.5.0</version>
+			<version>2.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
@@ -322,6 +322,12 @@
 			<groupId>org.gooru.resource.player</groupId>
 			<artifactId>gooru.resource.player</artifactId>
 			<version>${player.resource.version}</version>
+			<exclusions>
+			   	<exclusion>
+					<artifactId>gwt-dev</artifactId>
+					<groupId>com.google.gwt</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -332,6 +338,12 @@
 			<groupId>org.gooru.collection.player</groupId>
 			<artifactId>gooru.collection.player</artifactId>
 			<version>${player.collection.version}</version>
+			<exclusions>
+			   	<exclusion>
+					<artifactId>gwt-dev</artifactId>
+					<groupId>com.google.gwt</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -368,21 +380,21 @@
 			<artifactId>gwt-print-it</artifactId>
 			<version>1.13</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>code.google.com</groupId>
 			<artifactId>gwt-storage</artifactId>
-			<version>1.0</version>
-		</dependency>
+			<version>1.2</version>
+		</dependency> -->
 		<dependency>
 			<groupId>com.googlecode.gwtupload</groupId>
 			<artifactId>gwtupload</artifactId>
 			<version>0.6.6</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>code.google.com</groupId>
 			<artifactId>gwt-serialization</artifactId>
 			<version>1.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>com.googlecode.gwtquery</groupId>
 			<artifactId>gwtquery</artifactId>
@@ -397,6 +409,12 @@
 			<groupId>com.github.branflake2267</groupId>
 			<artifactId>gwt-maps-api</artifactId>
 			<version>3.10.0-alpha-7</version>
+			<exclusions>
+			   	<exclusion>
+					<artifactId>gwt-dev</artifactId>
+					<groupId>com.google.gwt</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.samaxes.maven</groupId>
@@ -508,10 +526,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<!-- TODO: Update version to 2.5.0 once gwt-maven-plugin 2.5.0 final 
-					is released (post-GWT 2.5.0) -->
-				<version>2.5.0</version>
-				<!-- JS is only needed in the package phase, this speeds up testing -->
+				<version>2.7.0</version>
 				<executions>
 					<execution>
 						<phase>prepare-package</phase>
@@ -531,7 +546,9 @@
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<logLevel>ERROR</logLevel>
 					<style>${gwt.style}</style>
-					<extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs>
+					<!-- <extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs> -->
+					<extraJvmArgs>-XX:MaxPermSize=1028m -Xmx4096m</extraJvmArgs>
+					<!-- <extraJvmArgs>-Xmx896M -Xms2048m -XX:PermSize=64m -XX:MaxPermSize=128m</extraJvmArgs> -->
 					<copyWebapp>true</copyWebapp>
 				</configuration>
 				<dependencies>
@@ -544,7 +561,7 @@
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-dev</artifactId>
-						<version>${gwtVersion}</version>
+						<version>2.7.0</version>
 					</dependency>
 				</dependencies>
 			</plugin>

@@ -164,9 +164,6 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			addRegisteredHandler(AggregatorSuggestionEvent.TYPE, this);
 		}
 	}
-
-
-
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, SearchRootPresenter.TYPE_VIEW, this);
@@ -176,12 +173,10 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	public void onBind() {
 		super.onBind();
 		setSearchAsyncCallback(new SearchAsyncCallback<SearchDo<T>>() {
-
 			@Override
 			protected void run(SearchDo<T> searchDo) {
 				requestSearch(searchDo, this);
 			}
-
 			@Override
 			public void onCallSuccess(SearchDo<T> result) {
 				setSearchDo(result);
@@ -440,7 +435,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		try {
 			queryVal = URL.decodeQueryString(queryVal);
 		} catch (Exception ex) {
-
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		getSearchDo().setQuery(queryVal);
 		getSearchDo().setPageNum(
@@ -459,7 +454,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		try {
 			queryVal = URL.decodeQueryString(queryVal);
 		} catch (Exception ex) {
-
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		Map<String, String> filterMap = new HashMap<String, String>();
 		if(getSearchDo().getFilters() != null)
@@ -664,10 +659,6 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					params.remove(IsSearchView.OER_FLT);
 					params.remove(IsSearchView.ACCESS_MODE_FLT);
 				}
-				
-				
-				
-				
 				getView().resetFilters();
 			}
 			params.put("disableSpellCheck", "true");

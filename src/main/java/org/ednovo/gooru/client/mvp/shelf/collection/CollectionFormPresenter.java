@@ -293,7 +293,6 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 							} else {
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 							}
-//							fireEvent(new CreateCollectionInFolder(result));
 							
 						}
 					});
@@ -305,7 +304,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 						collection.setMediaType(mediaType);
 					}
 				}catch(Exception e){
-					
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 				
 				getResourceService().createCollectionWithItem(collection, getView().getCourseCodeId(), resourceUid, getSaveCollectionAsyncCallback());
@@ -331,9 +330,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 		resourceUid = getPlaceManager().getRequestParameter(RESOURCE_ID);
 		if(getPlaceManager().getRequestParameter(MEDIA_TYPE)!=null) {
 			mediaType = getPlaceManager().getRequestParameter(MEDIA_TYPE);
-//			getView().updateCollectionFormCheckBox(false);
 		} else {
-//			getView().updateCollectionFormCheckBox(true);
 		}
 		collectionUid = getPlaceManager().getRequestParameter(ID);
 		if (collectionUid != null) {
@@ -421,7 +418,6 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 		collectionDo.setSharing("anyonewithlink");
 		collectionDo.setTitle(collectionTitle);
 		collectionDo.setGooruOid(collectionId);
-//		AppClientFactory.fireEvent(new CopyCollectionEvent(collectionDo,getView().getCourseCodeId()));   
 		AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collectionDo,getView().getCourseCodeId(),selectedFolderId));   
 		getView().hide();
 	}
@@ -467,7 +463,6 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 					if(IS_FROM_ADDRESOURCE.equalsIgnoreCase("resourceidfromAddResourcePresenter")){
 						Map<String,String> params1 = new HashMap<String,String>();
 						params1.put("id", result.getGooruOid());
-						//fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
 						AppClientFactory.getInjector().getResourceService().createCollectionItem(result.getGooruOid(), RESOURCE_ID_TO_ADD, new SimpleAsyncCallback<CollectionItemDo>() {
 
 							@Override
@@ -478,12 +473,10 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
 						
 						
-					}	// TODO Auto-generated method stub
+					}	
 					
 				}
 			});
-		//	getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
-			
 		}
 		
 	}

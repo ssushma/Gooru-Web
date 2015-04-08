@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionResourceView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -442,7 +443,7 @@ public class TinyMCE extends Composite{
 			  // Document.get().getElementById(id+"_external").getStyle().setDisplay(Display.NONE);
 			   Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 		   }catch(Exception e){
-			   
+			   AppClientFactory.printSevereLogger(e.getMessage());
 		   }
 		   lastButtonId=id;
 	}
@@ -452,7 +453,7 @@ public class TinyMCE extends Composite{
 			 Document.get().getElementById(id+"_external").setAttribute("style", "display:none !important");
 		   Document.get().getElementById(id+BUTTONID).getStyle().setDisplay(Display.NONE);
 		}catch(Exception e){
-			   
+			 AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	  
 	}
@@ -468,7 +469,7 @@ public class TinyMCE extends Composite{
 			try{
 				Document.get().getElementById(lastButtonId+BUTTONID).getStyle().setDisplay(Display.NONE);
 			}catch(Exception e){
-				
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}
@@ -503,14 +504,14 @@ public class TinyMCE extends Composite{
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText("");
 		}catch(Exception e){
-				
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	public void setErrorMessage(String errorMessage,String tinyMceId){
 		try{
 			Document.get().getElementById(tinyMceId+"_message").setInnerText(errorMessage);
 		}catch(Exception e){
-				
+			AppClientFactory.printSevereLogger(e.getMessage());	
 		}
 	}
 	public String getHiddenValue(String tinyMceId){
@@ -523,13 +524,6 @@ public class TinyMCE extends Composite{
 	}
 	
 	public void onKeypereesss(){
-//		ed.onKeyPress.add(function(ed, ev) {
-//				var content=this.getContent({format : 'raw'});
-//			var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
-//			if(noOfCharacters>20){
-//				ev.stopPropagation();
-//			}
-//			});
 	}
 	
 

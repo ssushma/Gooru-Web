@@ -184,7 +184,7 @@ public class FeaturedCollectionUc extends Composite{
 					}
 				}
 			} catch(Exception e) {
-				
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 			
 			featuredCollectionImg.setUrl(StringUtil.formThumbnailName(collectionDo.getThumbnails().getUrl(),"-160x120."));
@@ -260,7 +260,7 @@ public class FeaturedCollectionUc extends Composite{
 						displayGradesLabel = true;
 					}
 				} catch (Exception e) {
-					
+					AppClientFactory.printSevereLogger(e.getMessage());
 				}
 			} else {
 				collectionGrades.setVisible(false);

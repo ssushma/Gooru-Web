@@ -228,10 +228,6 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		appPopUp.setAutoHideEnabled(true);
 		appPopUp.setAutoHideOnHistoryEventsEnabled(false);
 		this.center();
-		/*GlassPanel glassPanel = new GlassPanel
-				(true);
-		glassPanel.setStyleName("gwt-PopupPanelGlass");
-		RootPanel.get().add(glassPanel,0,0);*/
 	}
 
 
@@ -289,6 +285,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 									}
 								});
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}
@@ -303,13 +300,15 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 				.getInjector()
 				.getUserService()
 				.resendConfirmationMail(params,
-						new SimpleAsyncCallback<Object>() {
+						new SimpleAsyncCallback<Void>() {
+
 							@Override
-							public void onSuccess(Object result) {
+							public void onSuccess(Void result) {
 								if (parentRegisterVc != null) {
 									parentRegisterVc.getPopupPanel().hide();
 								}
 							}
+							
 						});
 	}
 

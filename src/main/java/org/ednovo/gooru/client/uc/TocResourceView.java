@@ -417,7 +417,7 @@ public class ResourceRequest implements ClickHandler{
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return thumbnailImage!=null?thumbnailImage:"images/defaultRes.png";
 	}
