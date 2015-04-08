@@ -67,7 +67,6 @@ import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
-import org.ednovo.gooru.shared.util.StorageJsonSerializationFactory;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -92,8 +91,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.googlecode.gwt.serialization.JsonReader;
-import com.googlecode.gwt.serialization.JsonWriter;
 
 public class LibraryView extends Composite implements  ClickHandler {
 
@@ -202,7 +199,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 
 	private int INITIAL_OFFSET = 0;
 	
-	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
+//	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
 
 	private Storage stockStore = Storage.getLocalStorageIfSupported();
 	
@@ -637,8 +634,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			else
 			{
-				final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
-				final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
+//				final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
+//				final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
 				String map = null;
 				final String libraryToken = StringUtil.getPublicLibraryName(getPlaceToken());
 				Map<String, String> params = new HashMap<String,String>();
@@ -649,7 +646,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				
 				if(stockStore!=null&&stockStore.getItem(libraryToken+"courseMapDataSerializedStr")!=null&&params.size()==0){
 					map = stockStore.getItem(libraryToken+"courseMapDataSerializedStr");
-					courseMap = courseMapReader.read(map);
+//					courseMap = courseMapReader.read(map);
 					setLibraryInitialData(featuredLabel,isNotHomePage);
 				} else {
 					String onRefCourseId=null;
@@ -666,27 +663,14 @@ public class LibraryView extends Composite implements  ClickHandler {
 						}
 						@Override
 						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
-							String courseMapWriterString = courseMapWriter.write(subjectDoList);
+//							String courseMapWriterString = courseMapWriter.write(subjectDoList);
 							if(stockStore!=null) {
-								stockStore.setItem(libraryToken+"courseMapDataSerializedStr", courseMapWriterString);
+//								stockStore.setItem(libraryToken+"courseMapDataSerializedStr", courseMapWriterString);
 							}
 							courseMap = subjectDoList;
 							setLibraryInitialData(featuredLabel,isNotHomePage);
 						}
 					});
-					
-/*					AppClientFactory.getInjector().getLibraryService().getSubjects(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
-						@Override
-						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
-								String courseMapWriterString = courseMapWriter.write(subjectDoList);
-								if(stockStore!=null) {
-									stockStore.setItem("courseMapDataSerializedStr", courseMapWriterString);
-								}
-								courseMap = subjectDoList;
-								setLibraryInitialData(featuredLabel);
-							}
-						});
-*/						
 					}
 				}
 		}

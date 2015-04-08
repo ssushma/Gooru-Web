@@ -30,7 +30,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.Collection
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.anotherbigidea.flash.structs.Color;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
