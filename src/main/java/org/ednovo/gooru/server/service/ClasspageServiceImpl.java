@@ -451,6 +451,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_LISTTEACHCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+		getLogger().info("v2GetUserClasses::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -463,6 +464,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_LISTSTUDYCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+		getLogger().info("v2GetUserStudyClasses::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();

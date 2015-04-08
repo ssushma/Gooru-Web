@@ -131,7 +131,7 @@
 									</g:HTMLPanel>
 									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
-										<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel> 
+										<g:InlineLabel text="{i18n.GL2201_1}"></g:InlineLabel> 
 									</g:HTMLPanel>
 									
 									<g:HTMLPanel ui:field="personalizePanel">

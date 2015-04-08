@@ -265,8 +265,8 @@ public class AlmostDoneUc extends PopupPanel{
 		StringUtil.setAttributes(lblSubHeader.getElement(), "lblSubHeader", i18n.GL2197(), i18n.GL2197());
 		lblTeacherContainer.setText(i18n.GL0416());
 		StringUtil.setAttributes(lblTeacherContainer.getElement(), "lblTeacherContainer", i18n.GL0416(), i18n.GL0416());
-		lblTeacherDesc.setText(i18n.GL2198());
-		StringUtil.setAttributes(lblTeacherDesc.getElement(), "lblTeacherDesc", i18n.GL2198(), i18n.GL2198());
+		lblTeacherDesc.setText(i18n.GL2198_1());
+		StringUtil.setAttributes(lblTeacherDesc.getElement(), "lblTeacherDesc", i18n.GL2198_1(), i18n.GL2198_1());
 		lblTooltipStudent.setText(i18n.GL0417());
 		StringUtil.setAttributes(lblTooltipStudent.getElement(), "lblTooltipStudent", i18n.GL0417(), i18n.GL0417());
 		lblStudentDesc.setText(i18n.GL2199());

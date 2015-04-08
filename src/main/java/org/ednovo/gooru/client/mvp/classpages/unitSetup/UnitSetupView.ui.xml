@@ -27,7 +27,7 @@
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-6  text-left {style.uniRequired}">
 							<g:HTMLPanel styleName="{style.bubbleStyle}"></g:HTMLPanel>
-							<g:Label text="{i18n.GL2201}" styleName="{style.requiredLabel}"></g:Label>
+							<g:Label text="{i18n.GL2201_1}" styleName="{style.requiredLabel}"></g:Label>
 						</g:HTMLPanel>
 					</ptag:PPanel>
 				</g:HTMLPanel>

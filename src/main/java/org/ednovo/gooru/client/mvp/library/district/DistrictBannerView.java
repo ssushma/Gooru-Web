@@ -109,7 +109,7 @@ public class DistrictBannerView extends Composite {
 			partnerLogo.setVisible(true);
 			bannerContainer.setVisible(false);
 		} else if(placeToken.contains(PlaceTokens.LUSD)) {
-			setLandingBannerText(i18n.GL2181(),i18n.GL2182(),"","","","");
+			setLandingBannerText(i18n.GL2181_1(),i18n.GL2182_1(),"","","","");
 			partnerLogo.setStyleName(districtStyleUc.lusdPartnerLogo());
 			partnerLogo.setVisible(true);
 			bannerContainer.setVisible(false);

@@ -105,7 +105,7 @@ public class AnalyticsUnitAssignmentsView extends BaseViewWithHandlers<Analytics
 			}
 		}
 		if(totalAssignmentHitcount==0){
-			Label noAssignmentlabel = new Label(i18n.GL2202());
+			Label noAssignmentlabel = new Label(i18n.GL2202_1());
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
 		}

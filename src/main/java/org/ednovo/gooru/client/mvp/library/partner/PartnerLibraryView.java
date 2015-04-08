@@ -785,10 +785,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 		@Override
 		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
-			courseDo.setLabel(i18n.GL2174());
+			courseDo.setLabel(i18n.GL2174_1());
 			thumbnailDo.setUrl(Constants.ESYP_BANNER);
-			libraryUserDo.setPartnerName(i18n.GL2175());
-			libraryUserDo.setPartnerUrl(i18n.GL2176());
+			libraryUserDo.setPartnerName(i18n.GL2175_1());
+			libraryUserDo.setPartnerUrl(i18n.GL2176_1());
 			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
 		}
 
@@ -822,10 +822,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 		@Override
 		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
-			courseDo.setLabel(i18n.GL2179());
+			courseDo.setLabel(i18n.GL2179_1());
 			thumbnailDo.setUrl(Constants.CCST_BANNER);
-			libraryUserDo.setPartnerName(i18n.GL2177());
-			libraryUserDo.setPartnerUrl(i18n.GL2178());
+			libraryUserDo.setPartnerName(i18n.GL2177_1());
+			libraryUserDo.setPartnerUrl(i18n.GL2178_1());
 			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
 		}
 
@@ -859,10 +859,10 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 		@Override
 		public void loadLibBanner(CourseDo courseDo, ThumbnailDo thumbnailDo,LibraryUserDo libraryUserDo) {
-			courseDo.setLabel(i18n.GL2186());
+			courseDo.setLabel(i18n.GL2186_1());
 			thumbnailDo.setUrl(Constants.TICAL_BANNER);
-			libraryUserDo.setPartnerName(i18n.GL2187());
-			libraryUserDo.setPartnerUrl(i18n.GL2188());
+			libraryUserDo.setPartnerName(i18n.GL2187_1());
+			libraryUserDo.setPartnerUrl(i18n.GL2188_1());
 			libCourseDo = setCourseDoObject(courseDo,thumbnailDo,libraryUserDo);
 		}
 

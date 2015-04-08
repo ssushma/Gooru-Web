@@ -124,9 +124,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private String MINUTES= i18n.GL1437();
 	private String HOURS= i18n.GL1435();
 	
-	private String SETGOAL= i18n.GL2197();
+	private String SETGOAL= i18n.GL2197_1();
 	
-	private String EDITGOAL= i18n.GL2196();
+	private String EDITGOAL= i18n.GL2196_1();
 	
 	private String ASSIGNMENTS="assignments";
 	private Boolean isClickOnAssignment =false;
@@ -177,20 +177,20 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		requiredText.getElement().setAttribute("style", "display: inline;margin-right: 22px;");
 		if(pageLocation.equals(PlaceTokens.STUDENT)){
-			unitSetupButton.setText(i18n.GL2198());			
+			unitSetupButton.setText(i18n.GL2198_1());			
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 			unitSetupButton.setText(i18n.GL2216());	
 		}
 		assignmentContainer.setVisible(true);
-		lblMoreUnits.setText(i18n.GL2199());
-		btnDashBoard.setText(i18n.GL2200());
+		lblMoreUnits.setText(i18n.GL2199_1());
+		btnDashBoard.setText(i18n.GL2200_1());
 		btnAssignment.setText(i18n.GL1933());
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 
 //		requiredLabel.setText(i18n.GL2200());
-//		optionalLabel.setText(i18n.GL2201());
-		btnSetGoal.setText(i18n.GL2197());
+//		optionalLabel.setText(i18n.GL2201_1());
+		btnSetGoal.setText(i18n.GL2197_1());
 
 		
 		txtHours.getElement().setAttribute("placeholder", "h");
@@ -335,7 +335,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT) && insightsUserList!=null){
 							System.out.println("insightsUserList:::::");
-							unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),insightsUserList.get(i));
+							unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),null);
 						}else{
 							unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), null);
 						}
@@ -373,7 +373,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			}
 		}
 		if(totalAssignmentHitcount==0){
-			Label noAssignmentlabel = new Label(i18n.GL2202());
+			Label noAssignmentlabel = new Label(i18n.GL2202_1());
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
 			panelPersonalizeButtonContainer.setVisible(false);
@@ -800,7 +800,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		circleContainerPanel.add(requiredText);
 
 		if(totalAssignmentHitcount==0){
-			Label noAssignmentlabel = new Label(i18n.GL2202());
+			Label noAssignmentlabel = new Label(i18n.GL2202_1());
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
 		}
@@ -987,9 +987,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		for(int i=0; i<2; i++){
 			scoreHedingView=new ScoreHedingView(classUnits);
 			if(i==0){
-				scoreHedingView.getLblTitle().setText(i18n.GL2195());
+				scoreHedingView.getLblTitle().setText(i18n.GL2195_1());
 			}else{
-				scoreHedingView.getLblTitle().setText(i18n.GL2203());
+				scoreHedingView.getLblTitle().setText(i18n.GL2203_1());
 			}
 			scoreHedingView.showUnitStatus();
 			scoreHedingContainer.add(scoreHedingView);

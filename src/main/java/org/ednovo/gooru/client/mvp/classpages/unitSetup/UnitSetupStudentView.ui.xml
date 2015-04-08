@@ -24,7 +24,7 @@
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
 							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.stylishBub}"></g:InlineLabel>
-							<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel> 
+							<g:InlineLabel text="{i18n.GL2201_1}"></g:InlineLabel> 
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
 							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.greenBubble}"></g:InlineLabel>
