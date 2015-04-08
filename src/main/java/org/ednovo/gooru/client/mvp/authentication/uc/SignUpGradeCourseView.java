@@ -218,9 +218,14 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	public void senEmail(){
-        	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), "welcome", new SimpleAsyncCallback<Object>() {
+
+	       //If account type is 2 (student) then call API to send Welcome Email
+//        if (userDo.getAccountTypeId() == 2){
+        	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), "welcome", new SimpleAsyncCallback<Void>() {
+
 				@Override
-				public void onSuccess(Object result) {
+				public void onSuccess(Void result) {
+					// Do nothing....
 				}
 			});
 	}

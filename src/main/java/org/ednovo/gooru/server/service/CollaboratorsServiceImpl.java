@@ -88,7 +88,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	}
 	
 	@Override
-	public List<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId){
+	public ArrayList<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_COLLABORATORS, collectionId, getLoggedInSessionToken());
@@ -145,11 +145,11 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	 *
 	 *
 	 */
-	public  List<CollaboratorsDo> deserializeCollaboratorsList(JsonRepresentation jsonRep) {
+	public ArrayList<CollaboratorsDo> deserializeCollaboratorsList(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
-						.toString(), new TypeReference<List<CollaboratorsDo>>() {
+						.toString(), new TypeReference<ArrayList<CollaboratorsDo>>() {
 				});
 			}
 		} catch (JSONException e) {

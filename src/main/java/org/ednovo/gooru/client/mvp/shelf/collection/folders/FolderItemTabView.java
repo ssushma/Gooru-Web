@@ -83,7 +83,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
 	@UiField FolderStyleBundle folderStyle;
 	@UiField HTMLPanel loadingImage;
-//	@UiField FolderItemPanelVc folderItemPanel;
 	
 	@UiField
 	FolderItemMetaDataUc folderItemMetaDataUc;
@@ -261,7 +260,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		assessmentButton.getElement().setId("btnNewCollectionBtn");
 		assessmentButton.getElement().setAttribute("alt",i18n.GL3024());
 		assessmentButton.getElement().setAttribute("title",i18n.GL3024());
-		//assessmentButton.removeFromParent();
 		
 		newFolderBtn.setText(i18n.GL1450());
 		newFolderBtn.getElement().setId("btnNewFolderBtn");
@@ -276,7 +274,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		
 		organizeTitleLbl.getTextBoxSource().getElement().setAttribute("style", "width: 338px !important; height: 29px !important;");
@@ -291,19 +289,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
 						if(!folderName.isEmpty()) {
 							getUiHandlers().createFolderInParent(folderName, parentId);
-//							Window.enableScrolling(true);
 							this.hide();
 						}
 					}
 				};
 				folderPopupUc.setGlassEnabled(true);
-				/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-				if(isFolderType){
-					folderPopupUc.getElement().setAttribute("style", "top:50px !important;");	
-				}else{
-					folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - (464), Window.getScrollTop() + 233);
-				}
-				*/
 				Window.enableScrolling(false);
 				folderPopupUc.show();
 				folderPopupUc.center();
@@ -335,14 +325,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId,int totalCount) { 
 		setFolderUrlParams();
 		setTotalCount(totalCount);
-		/*Label label = new Label("");
-		label.setStyleName(getCss().shelfFoldereDragdropSpacer());
-		folderItemPanel.superAdd(label);
-		
-		Label toplabel = new Label("");
-		toplabel.setStyleName(getCss().shelfFoldereDragdropSpacer());
-		folderItemPanel.add(toplabel);*/
-		
 		if(O1_LEVEL_VALUE==null&&O2_LEVEL_VALUE==null&&O3_LEVEL_VALUE==null) {
 			isRootFolder = true;
 			editButtonEventPanel.setVisible(false);
@@ -387,17 +369,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					if (ele!=null){
 						ele.removeFromParent();
 					}
-					//				folderContentBlock.add(new FoldersWelcomePageToolTip());
-					//				folderContentBlock.add(new FoldersWelcomePage());
 					AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
-
 				}else{
 					folderContentBlock.clear();
 					isFolderType = false;
 					mainSection.addStyleName(folderStyle.mainSection()); 
 					mainSection.addStyleName(folderStyle.emptyFolder());
 				}
-
 			}
 			else{
 				mainSection.removeStyleName(folderStyle.emptyFolder());
@@ -975,7 +953,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					
 					itemSeqToAPI= getMoveUpItemSeq(itemPosSeqNumb,itemToBeMovedPosSeqNumb);
 					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
-					/*reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);*/
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}

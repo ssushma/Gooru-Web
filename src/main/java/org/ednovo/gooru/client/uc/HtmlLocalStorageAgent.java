@@ -37,23 +37,19 @@
  */
 package org.ednovo.gooru.client.uc;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.ednovo.gooru.shared.model.library.CourseDo;
-
-import com.seanchenxi.gwt.storage.client.StorageExt;
-import com.seanchenxi.gwt.storage.client.StorageKey;
-import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
+//import com.seanchenxi.gwt.storage.client.StorageExt;
+//import com.seanchenxi.gwt.storage.client.StorageKey;
+//import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
 
 public class HtmlLocalStorageAgent {
-    StorageExt localStorage = StorageExt.getLocalStorage();
-    StorageKey<HashMap<String, ArrayList<CourseDo>>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
-    
-    public static boolean getLocalStorage() {
-    	
-    	return false;
-    }
-    
-    
+//    StorageExt localStorage = StorageExt.getLocalStorage();
+//    StorageKey<HashMap<String, ArrayList<CourseDo>>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
+//    
+//    public static boolean getLocalStorage() {
+//    	
+//    	return false;
+//    }
+//    
+//    
 }

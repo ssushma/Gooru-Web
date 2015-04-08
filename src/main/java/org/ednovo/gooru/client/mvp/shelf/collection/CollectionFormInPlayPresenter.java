@@ -130,7 +130,6 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 
 			@Override
 			public void onSuccess(List<LibraryCodeDo> result) {
-				//getView().reset();
 				getView().setLibraryCodes(result);
 			}
 		});
@@ -151,7 +150,6 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 	}
 	
 	public void getCourse(){
-	//	this.getTaxonomyService().getCourse(getCourseAsyncCallback());
 	}
 
 	@Override

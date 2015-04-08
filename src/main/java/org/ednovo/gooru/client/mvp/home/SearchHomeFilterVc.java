@@ -52,11 +52,9 @@ public class SearchHomeFilterVc extends Composite{
 	private static SearchHomeFilterVcUiBinder uiBinder = GWT.create(SearchHomeFilterVcUiBinder.class);
 
 	interface SearchHomeFilterVcUiBinder extends UiBinder<Widget, SearchHomeFilterVc> {
-
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
 
 	@UiField
 	FlowPanel filterGradeFloPanel;

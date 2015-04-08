@@ -372,7 +372,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 						}
 
 					} catch (Exception e) {
-						//gradeListInt.add(0);
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 				}
 			}
@@ -564,6 +564,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			
 			
 		} catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return grade.toString();
 	}

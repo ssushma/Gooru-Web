@@ -117,8 +117,6 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		reviewsContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 		reviewScrollPanel.setHeight("500px");
 		reviewScrollPanel.getElement().getStyle().setOverflow(Overflow.AUTO);
-//		this.center();
-//		appPopUp.center();
 	}
 
 	@UiHandler("closeButton")
@@ -336,7 +334,6 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		}
 		
 		apiInprogress=false;
-//		appPopUp.center();
 
 	}
 

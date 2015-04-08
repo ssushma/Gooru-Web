@@ -226,6 +226,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 						} 
 						catch (Exception e) 
 						{
+							AppClientFactory.printSevereLogger(e.getMessage());
 						}
 					}
 				}
@@ -441,6 +442,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 
 		} 
 		catch (Exception e) {
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return grade.toString();
 	}

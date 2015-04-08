@@ -170,7 +170,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public void registerUser(Map<String, String> params) {
+	public UserDo registerUser(Map<String, String> params) {
 		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.REGISTER_USER, params, getLoggedInSessionToken());
@@ -182,6 +182,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		} 
+		return null;
 	}
 
 	@Override

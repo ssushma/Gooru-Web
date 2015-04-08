@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.search.standards;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 
@@ -546,6 +547,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 			catch(Exception ex)
 			{
+				AppClientFactory.printSevereLogger(ex.getMessage());
 			}
 		}
 	}
@@ -625,6 +627,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				}
 				catch(Exception ex)
 				{
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 				}
 
@@ -674,6 +677,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				}
 					catch(Exception ex)
 					{
+						AppClientFactory.printSevereLogger(ex.getMessage());
 					}
 				}
 				
@@ -955,7 +959,9 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					}
 				}
 			}
-		}catch(Exception ex){}
+		}catch(Exception ex){
+			AppClientFactory.printSevereLogger(ex.getMessage());
+		}
 	}
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
@@ -963,7 +969,9 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		if (Element.is(target)) {
 			try{
 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
-			}catch(Exception ex){}
+			}catch(Exception ex){
+				AppClientFactory.printSevereLogger(ex.getMessage());
+			}
 		}
 		return false;
 	}

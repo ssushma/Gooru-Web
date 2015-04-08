@@ -180,6 +180,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	
 	ToolTip toolTip=null;
     
+	String textAreaPlaceHolder="";
+	
 	/**
 	 * Class constructor
 	 */
@@ -278,17 +280,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				textAreaVal.getElement().getStyle().setColor("black");
 			}
 		});
-		
-		/*textAreaVal.addKeyPressHandler(new KeyPressHandler() {
-			
-			@Override
-			public void onKeyPress(KeyPressEvent event) {
-				if(textAreaVal.getText().length() > 415)
-				{
-					textAreaVal.cancelKey();
-				}
-			}
-		});*/
 		textAreaVal.addKeyUpHandler(new KeyUpHandler() {
 			
 			@Override
@@ -420,17 +411,16 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		showHideScrollPanel(false);
 		
 		toClear= true;
-		
-		//htmlAssignmentsListContainer.clear();
 		htmlClasspagesListContainer.clear();
+
 		htmlClasspagesUnitListContainer.clear();
 		//lblAssignmentErrorMsg.setVisible(false);
+
 	}
 
 	@Override
 	public void reset() {
 		super.reset();
-		//lblAssignmentErrorMsg.setVisible(false);
 	}
 	
 	/**
@@ -454,7 +444,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	 */
 	public void setLabelsAndIds(){
 		
-		
 		remainderLbl.setText(i18n.GL1889());
 		remainderLbl.getElement().setId("lblRemainderLbl");
 		remainderLbl.getElement().setAttribute("alt",i18n.GL1889());
@@ -473,6 +462,11 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL0101());
 		lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL0101());
 		
+
+		remainderLbl.getElement().setId("lblRemainderLbl");
+		lblAssignCollectionPrivate.getElement().setId("lblAssignCollectionPrivate");
+		lblAssignCollectionTitle.getElement().setId("lblAssignCollectionTitle");
+
 		lblClasspages.setText(i18n.GL0102());
 		lblClasspages.getElement().setId("lblClasspages");
 		lblClasspages.getElement().setAttribute("alt",i18n.GL0102());
@@ -485,14 +479,15 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		
 		//lblAssignments.setText(i18n.GL0103);
 		
+
 		btnAssign.setText(i18n.GL0104());
 		btnAssign.getElement().setAttribute("alt",i18n.GL0104());
 		btnAssign.getElement().setAttribute("title",i18n.GL0104());
-		
 		lblClasspagePlaceHolder.setText(i18n.GL0105());
 		lblClasspagePlaceHolder.getElement().setId("lblClasspagePlaceHolder");
 		lblClasspagePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
 		lblClasspagePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+
 		//lblAssignmentsPlaceHolder.setText(i18n.GL0105);
 		
 		lblClasspageUnitPlaceHolder.setText(i18n.GL0105());
@@ -519,19 +514,14 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		minutesText.getElement().setAttribute("alt", i18n.GL0958());
 		minutesText.getElement().setAttribute("title", i18n.GL0958());
 		
-		
 		lblNoClasspages.setText(i18n.GL0106());
 		lblNoClasspages.getElement().setId("lblNoClasspages");
 		lblNoClasspages.getElement().setAttribute("alt",i18n.GL0106());
 		lblNoClasspages.getElement().setAttribute("title",i18n.GL0106());
-//		htmlGoto.setHTML(MessageProperties.i18n.GL0107);
-//		ancTeach.setText(MessageProperties.i18n.GL0108);
 		htmlTab.setHTML(i18n.GL0109());
 		htmlTab.getElement().setId("htmlTab");
 		htmlTab.getElement().setAttribute("alt",i18n.GL0109());
 		htmlTab.getElement().setAttribute("title",i18n.GL0109());
-		//ancTeach.setHref("#"+PlaceTokens.TEACH);
-		
 		//Ids
 		btnAssign.getElement().setAttribute("id", "btnAssign");
 		btnAssign.setStyleName(res.css().disableAssignButon());
@@ -642,15 +632,11 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 					btnAssign.setText(i18n.GL1172());
 					btnAssign.getElement().setAttribute("alt",i18n.GL1172());
 					btnAssign.getElement().setAttribute("title",i18n.GL1172());
-					//btnAssign.getElement().getStyle().setMarginRight(17, Unit.PCT);
-				
 					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-					
 					TaskResourceAssocDo taskResourceAssocDo = new TaskResourceAssocDo();
 					ResourceDo resourceDo = new ResourceDo();
 					resourceDo.setGooruOid(collectionDo.getGooruOid());
 					taskResourceAssocDo.setResource(resourceDo);
-					
 					//Track Mixpanel
 					MixpanelUtil.Click_Assign_Click();
 					// Api call for adding Collection to Assignment
@@ -697,14 +683,12 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 								
 								@Override
 								public void closePoup() {
-						
-									
 									lblClasspagePlaceHolder.setText(i18n.GL0105());
 									lblClasspagePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
 									lblClasspagePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 									lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
 									lblAssignCollectionPrivate.setVisible(false);
-									
+
 									
 									lblClasspageUnitPlaceHolder.setText(i18n.GL0105());
 									lblClasspageUnitPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
@@ -718,18 +702,16 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 									toTxt.setText("");
 									from =null;
 									minScore=null;
+
 									htmlClasspagesListContainer.clear();
 									htmlClasspagesUnitListContainer.clear();
 									getUiHandlers().getAllClasspages("10", "0");
-									
 									Window.enableScrolling(true);
 									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-									
 									textAreaVal.setText("");
 									textAreaVal.getElement().setAttribute("alt","");
 									textAreaVal.getElement().setAttribute("title","");
 									dateBoxUc.getDateBox().setValue("");
-								
 									btnAssign.getElement().setAttribute("id", "btnAssign");
 									btnAssign.setStyleName(res.css().disableAssignButon());
 									btnAssign.setText(i18n.GL0104());
@@ -737,7 +719,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 									btnAssign.getElement().setAttribute("title",i18n.GL0104());
 									btnAssign.setEnabled(false);
 									btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-									
 							        this.hide();
 								}
 							};
@@ -746,125 +727,12 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 							
 						}
 					});
-					
-					/*AppClientFactory.getInjector().getClasspageService().assignItemToClass(classpageId, collectionDo.getGooruOid(),dueDateVal, directionsVal, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
-						@Override
-						public void onSuccess(ArrayList<ClasspageItemDo> result) {
-							// TODO Auto-generated method stub
-							if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)) {
-								AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.INSERT));
-							}
-							
-							btnAssign.setText(i18n.GL0104());
-							btnAssign.getElement().setAttribute("alt",i18n.GL0104());
-							btnAssign.getElement().setAttribute("title",i18n.GL0104());
-							SuccessPopupVc successPopupVc = new SuccessPopupVc(classpageId, collectionDo.getTitle(), lblClasspagePlaceHolder.getText()) {
-								
-								@Override
-								public void closePoup() {
-						
-									
-									lblClasspagePlaceHolder.setText(i18n.GL0105());
-									lblClasspagePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-									lblClasspagePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
-									lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
-									lblAssignCollectionPrivate.setVisible(false);
-									
-									htmlClasspagesListContainer.clear();
-									getUiHandlers().getAllClasspages("10", "0");
-									
-									Window.enableScrolling(true);
-									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-									
-									textAreaVal.setText("");
-									textAreaVal.getElement().setAttribute("alt","");
-									textAreaVal.getElement().setAttribute("title","");
-									dateBoxUc.getDateBox().setValue("");
-								
-									btnAssign.getElement().setAttribute("id", "btnAssign");
-									btnAssign.setStyleName(res.css().disableAssignButon());
-									btnAssign.setText(i18n.GL0104());
-									btnAssign.getElement().setAttribute("alt",i18n.GL0104());
-									btnAssign.getElement().setAttribute("title",i18n.GL0104());
-									btnAssign.setEnabled(false);
-									btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-									
-							        this.hide();
-								}
-							};
-							successPopupVc.center();
-							successPopupVc.show();
-							
-						}
-					});*/
-					
-					
-				/*	AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId, collectionDo.getGooruOid() ,dueDateVal, directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
-						@Override
-						public void onSuccess(ClasspageItemDo result) {
-							
-							if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)) {
-								AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.INSERT));
-							}
-							
-							btnAssign.setText(i18n.GL0104());
-							btnAssign.getElement().setAttribute("alt",i18n.GL0104());
-							btnAssign.getElement().setAttribute("title",i18n.GL0104());
-							SuccessPopupVc successPopupVc = new SuccessPopupVc(classpageId, collectionDo.getTitle(), lblClasspagePlaceHolder.getText()) {
-								
-								@Override
-								public void closePoup() {
-						
-									
-									lblClasspagePlaceHolder.setText(i18n.GL0105());
-									lblClasspagePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-									lblClasspagePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
-									lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
-									lblAssignCollectionPrivate.setVisible(false);
-									
-									htmlClasspagesListContainer.clear();
-									getUiHandlers().getAllClasspages("10", "0");
-									
-									Window.enableScrolling(true);
-									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-									
-									textAreaVal.setText("");
-									textAreaVal.getElement().setAttribute("alt","");
-									textAreaVal.getElement().setAttribute("title","");
-									dateBoxUc.getDateBox().setValue("");
-								
-									btnAssign.getElement().setAttribute("id", "btnAssign");
-									btnAssign.setStyleName(res.css().disableAssignButon());
-									btnAssign.setText(i18n.GL0104());
-									btnAssign.getElement().setAttribute("alt",i18n.GL0104());
-									btnAssign.getElement().setAttribute("title",i18n.GL0104());
-									btnAssign.setEnabled(false);
-									btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-									
-							        this.hide();
-								}
-							};
-							successPopupVc.center();
-							successPopupVc.show();
-							
-							//Need to handle if Collection is already added.
-			//				{"code":500,"status":"Resource already associated"}
-						}
-			//			@Override
-			//			public void onFailure(Throwable caught) {
-			//				
-			//			}
-					});*/
 				}
-		}
+			}
 		});
 	}
-	
-	
 	@UiHandler("htmlEvenPanelContainer")
 	public void OnClickEventPanel(ClickEvent event){
-//		spanelAssignmentsPanel.setVisible(false);
-//		spanelClasspagesPanel.setVisible(false);
 	}
 	
 	
@@ -919,6 +787,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 						resetText();
 						btnAssign.setEnabled(true);
 						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+
 						//btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
 
 						classpageUnitOffSet=0;
@@ -1072,7 +941,38 @@ public class CpuTitleLabelClick implements ClickHandler{
 		this.collectionDo = collectionDo;
 	}
 
-	
+	public void modifyStaticText(String collectionType){
+		if(collectionType!=null&&collectionType.equals("assessment")){
+			lblAssignCollectionTitle.setText(i18n.GL3032());
+			lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL3032());
+			lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL3032());
+			remainderLbl.setText(i18n.GL3033());
+			remainderLbl.getElement().setAttribute("alt",i18n.GL3033());
+			remainderLbl.getElement().setAttribute("title",i18n.GL3033());
+			textAreaPlaceHolder=i18n.GL3034();
+			textAreaVal.setText(i18n.GL3034());
+			textAreaVal.getElement().setAttribute("alt",i18n.GL3034());
+			textAreaVal.getElement().setAttribute("title",i18n.GL3034());
+			lblAssignCollectionPrivate.setText(i18n.GL3040());
+			lblAssignCollectionPrivate.getElement().setAttribute("alt",i18n.GL3040());
+			lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL3040());
+		}else{
+			lblAssignCollectionTitle.setText(i18n.GL0101());
+			lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL0101());
+			lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL0101());
+			remainderLbl.setText(i18n.GL1889());
+			remainderLbl.getElement().setAttribute("alt",i18n.GL1889());
+			remainderLbl.getElement().setAttribute("title",i18n.GL1889());
+			textAreaPlaceHolder=i18n.GL1389();
+			textAreaVal.setText(i18n.GL1389());
+			textAreaVal.getElement().setAttribute("alt",i18n.GL1389());
+			textAreaVal.getElement().setAttribute("title",i18n.GL1389());
+			lblAssignCollectionPrivate.setText(i18n.GL0112());
+			lblAssignCollectionPrivate.getElement().setAttribute("alt",i18n.GL0112());
+			lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL0112());
+		}
+	}
+
 	@Override
 	public void hideContainers(){
 		htmlClasspagesListContainer.clear();
@@ -1085,6 +985,7 @@ public class CpuTitleLabelClick implements ClickHandler{
 	public void setPrivateLableVisibility(boolean visibility) {
 		lblAssignCollectionPrivate.setVisible(visibility);
 	}
+
 
 	public void getNextClasspagesUnit(){
 		if(classpageId != null){

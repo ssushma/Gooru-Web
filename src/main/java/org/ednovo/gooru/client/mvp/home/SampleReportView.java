@@ -59,8 +59,6 @@ public class SampleReportView extends PopupPanel {
 		setUiField();
 		this.getElement().getStyle().setZIndex(99999);
 		this.center();
-
-
 	}
 
 	private void setUiField() {

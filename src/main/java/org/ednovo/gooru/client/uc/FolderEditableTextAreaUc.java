@@ -84,40 +84,7 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 		textArea.getElement().setId("tatTextArea");
 		StringUtil.setAttributes(textArea, true);
 		deckPanel.showWidget(0);
-		/*focusPanel.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				switchToEdit();
-			}
-		});*/
-
-		/*html.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				switchToEdit();
-			}
-		});*/
-
-		/*textArea.addBlurHandler(new BlurHandler() {
-			@Override
-			public void onBlur(BlurEvent event) {
-				switchToLabel();
-			}
-		});*/
-
-		/*textArea.addKeyPressHandler(new KeyPressHandler() {
-
-			@Override
-			public void onKeyPress(KeyPressEvent event) {
-
-				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
-					switchToLabel();
-				} else if (event.getCharCode() == KeyCodes.KEY_ESCAPE) {
-					textArea.setText(html.getText()); // reset to the original value
-				}
-			}
-		});*/
+	
 		textArea.addKeyUpHandler(new ValidateConfirmText());
 	}
 	
@@ -208,14 +175,6 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 	public void setExtraTextAreaStyleName(String style) {
 		textArea.addStyleName(style);
 	}
-
-	/*public String getPlaceholder() {
-		return placeholder;
-	}
-
-	public void setPlaceholder(String placeholder) {
-		this.placeholder = placeholder;  
-	}*/
 
 	public String getText() {
 		return text;

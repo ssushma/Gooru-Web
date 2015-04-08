@@ -54,8 +54,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class DeleteConfirmPopupVc extends AppPopUp {
 
-	/*@UiField
-	Anchor cancelAnr;*/
 
 	@UiField Button okButtonUc,cancelAnr;
 
@@ -143,14 +141,7 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
 		
 		msgFlowPanel.getElement().setId("fpnlMsgFlowPanel");
 		entityLbl.getElement().setId("lblEntityLbl");
-		//GL0190
 	}
-
-	/*@Override
-	public void onUnload(){
-		hide(true);
-	}*/
-
 	/**
 	 * Hide {@link DeleteConfirmPopupVc} popup
 	 * 
@@ -162,7 +153,6 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
 		hide();
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
 	}
 
 	/**
@@ -177,7 +167,6 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
 			this.onTextConfirmed();
 			buttonContainer.setVisible(false);
 			loadingTextLbl.setVisible(true);
-		   
 		}
 	}
 
@@ -188,7 +177,6 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
 	 * 
 	 */
 	private class ValidateConfirmText implements KeyUpHandler {
-
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			okButtonUc.setStyleName("deleteCollectionDisabledButton");

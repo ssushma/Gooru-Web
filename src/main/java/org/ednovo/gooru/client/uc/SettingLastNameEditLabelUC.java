@@ -78,7 +78,6 @@ public class SettingLastNameEditLabelUC extends Composite implements HasValue<St
 	@UiField
 	protected FocusPanel focusPanel;
 	protected String text;
-//	private static final String LNAME = i18n.GL1048;
 	
 	@UiField(provided = true)
 	UcCBundle res;
@@ -119,8 +118,6 @@ public class SettingLastNameEditLabelUC extends Composite implements HasValue<St
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("SettingEditLastName");
-		//editTextBox.setMaxLength(50);
-		//errorLabel.setVisible(false);
 
 	}
 

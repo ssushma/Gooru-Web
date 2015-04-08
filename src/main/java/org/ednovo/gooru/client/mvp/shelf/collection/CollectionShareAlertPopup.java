@@ -75,11 +75,9 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		privateResourceLbl.getElement().setAttribute("alt",i18n.GL0840());
 		privateResourceLbl.getElement().setAttribute("title",i18n.GL0840());
 		
-//		goBackBtn.setText(i18n.GL0841);
 		goBackBtn.setText(i18n.GL1923());
 		goBackBtn.getElement().setAttribute("alt",i18n.GL1923());
 		goBackBtn.getElement().setAttribute("title",i18n.GL1923());
-//		okButton.setText(i18n.GL0190);
 		okButton.setText(i18n.GL1922());
 		okButton.getElement().setAttribute("alt",i18n.GL1922());
 		okButton.getElement().setAttribute("title",i18n.GL1922());
@@ -93,8 +91,6 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		resourceHeaderPanel.getElement().setId("sbResourceHeaderPanel");
 		privateResourcePanel.getElement().setId("pnlPrivateResourcePanel");
 		buttonContainer.getElement().setId("pnlButtonContainer");
-	/*	this.show();
-		this.center();*/
 	}
 
 	@UiHandler("okButton")
@@ -134,14 +130,12 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 			alertSuccessTitleTxt.setVisible(true);
 		} else {
 			setPublicMsgData();
-//			setPublicFromAlert();
 		}
 	}
 	
 	public void setPublicMsgData() {
 		isPrivateResource = true;
 		setVisibilityData(true, true);
-//		shareMsgTitle.setText(i18n.GL0362 + i18n.GL0329 +i18n.GL0686);
 		shareMsgTitle.setText(i18n.GL1965());
 		shareMsgTitle.getElement().setAttribute("alt",i18n.GL1965());
 		shareMsgTitle.getElement().setAttribute("title",i18n.GL1965());
@@ -202,7 +196,6 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 	public void confirmPopup() {
 		isPrivateResource = true;
 		setVisibilityData(true, true);
-//		shareMsgTitle.setText(i18n.GL0362 + i18n.GL0329 +i18n.GL0686);
 		shareMsgTitle.setText(i18n.GL0748());
 		shareMsgTitle.getElement().setAttribute("alt",i18n.GL0748());
 		shareMsgTitle.getElement().setAttribute("title",i18n.GL0748());
@@ -244,7 +237,6 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 		privateResourceLbl.setVisible(!isVisible);
 		resourceHeaderPanel.setVisible(!isVisible);
 		alertSuccessTitleTxt.setVisible(isVisible);
-//		goBackBtn.setVisible(isVisible);
 		showPopup();
 		shareAlertPopup.getElement().getStyle().clearMargin();
 	}

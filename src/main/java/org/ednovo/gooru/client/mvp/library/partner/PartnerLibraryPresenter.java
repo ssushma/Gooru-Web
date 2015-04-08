@@ -40,8 +40,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	
 	private static final String SHARING_TYPE = "public";
 	
-	private static final String COLLECTION_TYPE = "folder";
-	
 	@Inject
 	public PartnerLibraryPresenter(EventBus eventBus, IsPartnerLibraryView view) {
 		super(eventBus, view);
@@ -101,7 +99,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public void setPartnerWidget() {
-//		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			if(AppClientFactory.getLoggedInUser()!=null) {
 				getView().clearPanels();
 				getView().getComingSoonText(false);
@@ -111,7 +108,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 			} else {
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 			}
-//		}
 	}
 	
 	/**
@@ -127,7 +123,6 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public String getViewToken() {
-		
 		return AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 	}
 

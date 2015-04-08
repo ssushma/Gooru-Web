@@ -29,5 +29,30 @@ package org.ednovo.gooru.shared.util;
 public interface ApiKeyParams {
 	
 	String API_KEY = "apiKey";
+	
+	/**
+	 * Search related parameters.
+	 */
+	String TYPE = "type";
+	String Q = "q";
+	String START = "start";
+	String LENGTH = "length";
+	String ACCESS_TYPE = "accessType";
+	String QUERY_TYPE = "queryType";
+	String ALLOW_DUPLICATES = "allowDuplicates";
+	String FETCH_HITS_IN_MULTI ="fetchHitsInMulti";
+	String ALLOW_SCRIPTING = "allowScripting";
+	String PROTOCOL_SUPPORTED = "protocolSupported";
+	String CATEGORY = "category";
+	String FILTER_RES_GOORU_OID = "flt.resourceGooruOIds";
+	String BOOSTFIELD_HASNO_THUMBNAIL = "boostField.hasNoThumbnail";
+	String SHOW_CANONICAL_ONLY = "showCanonicalOnly";
+	String QUERY = "query";
+	String CONTEXT = "context";
+	String SEARCH_TERM = "searchTerm";
+	String EVENT = "event";
+	String CONTENT_GOORU_OID = "contentGooruOid";
+	String OFFSET = "offset";
+	String LIMIT = "limit";
 
 }

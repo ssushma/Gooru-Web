@@ -435,15 +435,12 @@ public abstract class FolderPopupUc extends PopupPanel {
 						validationTitleLbl.getElement().setAttribute("alt",i18n.GL0554());
 						validationTitleLbl.getElement().setAttribute("title",i18n.GL0554());
 						validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
-//						validationTitleLbl.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
 					}else{
 						folderTitle.getElement().getStyle().clearBackgroundColor();
 						folderTitle.getElement().setAttribute("style", "border-color:#E3E3E3");
-//						folderTitle.getElement().setAttribute("style", "border-color:#ccc !important");	
 						if(validationTitleLbl.getText().equalsIgnoreCase(i18n.GL0554()))
 							validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 					}
-//					SetStyleForProfanity.SetStyleForProfanityForTextBox(folderTitle, validationTitleLbl, result);
 				}
 				
 			});
@@ -543,7 +540,6 @@ public abstract class FolderPopupUc extends PopupPanel {
 					public void onSuccess(Boolean result) {
 						if(result){
 							showAddingMsg(true);
-//							SetStyleForProfanity.SetStyleForProfanityForTextBox(folderTitle, validationTitleLbl, result);
 							folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
 							validationTitleLbl.setText(i18n.GL0554());
 							validationTitleLbl.getElement().setAttribute("alt",i18n.GL0554());
@@ -609,7 +605,6 @@ public abstract class FolderPopupUc extends PopupPanel {
 		} else {
 			okBtn.setEnabled(true);
 			okBtn.getElement().addClassName("enabled");
-			//folderStructureTree.addStyleName(folderPopupStyle.emptyFolder());
 		}
 	}
 

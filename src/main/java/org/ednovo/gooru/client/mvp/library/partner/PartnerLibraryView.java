@@ -75,8 +75,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	
 	private String unitListId = "";
 	
-	private static final String LIBRARY_PAGE = "partner-page";
-	
 	private CourseDo courseDo;
 	
 	private String placeToken;
@@ -204,6 +202,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			AppClientFactory.printInfoLogger(" ---- on unit selected Ui End time consumed --- "+(System.currentTimeMillis()-startTime));
 		} catch (Exception e) {
 			loadingPanel(false);
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
