@@ -103,7 +103,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 			postData.put(PASSWORD, decryptedPwd);
 			 
 			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN);
-			String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.API_KEY,getApiKey());
+			String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.APIKEY,getApiKey());
 			getLogger().info("sign in API -- "+url);
 			getLogger().info("sign in API payload -- "+postData.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData.toString());

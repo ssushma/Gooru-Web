@@ -28,12 +28,11 @@ package org.ednovo.gooru.shared.util;
 
 public interface ApiKeyParams {
 	
-	String API_KEY = "apiKey";
+	String APIKEY = "apiKey";
 	
 	/**
 	 * Search related parameters.
 	 */
-	String TYPE = "type";
 	String Q = "q";
 	String START = "start";
 	String LENGTH = "length";
@@ -54,5 +53,29 @@ public interface ApiKeyParams {
 	String CONTENT_GOORU_OID = "contentGooruOid";
 	String OFFSET = "offset";
 	String LIMIT = "limit";
+	
+	/**
+	 * Library related parameters.
+	 */
+	String LIBRARY_NAME = "libraryName";
+	String SKIP_COLL_ITEM = "skipCollectionItem";
+	String INCLUDE_META_INFO = "includeMetaInfo";
+	String MERGE = "merge";
+	String INCLUDE_CONTENT_PROVDER = "includeContentProvider";
+	String INCLUDE_CUSTOM_FIELDS = "includeCustomFields";
+	String ROOT_NODE_ID = "rootNodeId";
+	String PAGE_NUM = "pageNum";
+	String PAGE_SIZE = "pageSize";
+	String FETCH_CHILDS = "fetchChilds";
+	String ITEM_LIMIT ="itemLimit";
+	String TOP_LEVEL_COLLECTION_TYPE = "topLevelCollectionType";
+	String ORDER_BY = "orderBy";
+	String SHARING = "sharing";
+	String COLLECTION_TYPE = "collectionType";
+	
+	
+	
+	
+	
 
 }
