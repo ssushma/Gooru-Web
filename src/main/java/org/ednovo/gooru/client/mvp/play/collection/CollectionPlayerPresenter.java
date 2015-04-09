@@ -487,7 +487,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
 				metadataPresenter.setTeacherInfo(classpageItemDo);
 				collectionEndPresenter.setTeacherInfo(classpageItemDo);
-				classpageId=classpageItemDo.getClasspageId();
+				classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classPageId");
 				AppClientFactory.getPlaceManager().setDataLogClasspageId(classpageId);
 				if(getPlaceManager().getRequestParameter("view")!=null){
 				}else{
@@ -495,7 +495,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 					sessionId=GwtUUIDGenerator.uuid();
 					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
 				}
-				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
+				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageId));
 			}
 		});
 	}
@@ -504,7 +504,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
-				classpageId=classpageItemDo.getClasspageId();
+				classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classPageId");
 				String view=getPlaceManager().getRequestParameter("view", null);
 				boolean isHomeView=view!=null?false:true;
 				setClasspageInsightsUrl(isHomeView);
