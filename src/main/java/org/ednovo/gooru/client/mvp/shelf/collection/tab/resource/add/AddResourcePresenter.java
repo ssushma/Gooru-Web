@@ -39,11 +39,8 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
@@ -71,14 +68,10 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
 	private ImageUploadPresenter imageUploadPresenter;
-	
-//	private ExistsResourcePresenter alreadyExistsResourcePresenter;
-	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> collectionItemAsyncCallback;
@@ -161,10 +154,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.isCollResourceTabView = isCollResourceTabView;
 		this.drivePresenter=drivePresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
-
-//		,ExistsResourcePresenter alreadyExistsResourcePresenter
-//		this.alreadyExistsResourcePresenter = alreadyExistsResourcePresenter;
-
 	}
 
 	@Override
@@ -176,7 +165,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		imageUploadPresenter.setUserOwnResourceImage(false);
 		imageUploadPresenter.setEditUserOwnResourceImage(false);
 		imageUploadPresenter.getView().isFromEditQuestion(true);
-		
 	}
 	
 	@Override
@@ -220,11 +208,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void setImageUploadPresenter(ImageUploadPresenter imageUploadPresenter) {
 		this.imageUploadPresenter = imageUploadPresenter;
 	}
-	
-//	public void setImageUrl(String fileName,boolean isQuestionImage){
-//		getView().setImageUrl(fileName,isQuestionImage);
-//	}
-
 	@Override
 	public void setResourceImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage) {
 	    getView().setImageUrl(fileName,fileNameWithoutRepository,isQuestionImage,isUserOwnResourceImage);	
@@ -239,7 +222,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
-				/*tagResourceAsOER(result);*/ // Don't enable
 				isCollResourceTabView.insertData(result);
 			}
 
@@ -260,11 +242,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 				/**
 				 * Dis-abled for 6.5 release
 				 */
-				/*tagResourceAsOER(result);*/
 				MixpanelUtil.AddResourceByUrl();
-				
-//				updateShare("private");
-				
 			}
 		});
 		setResoureMetaInfoAsyncCallback(new SimpleAsyncCallback<ResourceMetaInfoDo>() {
@@ -300,7 +278,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             		/**
     				 *  dis-abled tagging Quest resource for 6.5 release
     				 */
-            		/*tagResourceAsOER(result); */
                     isCollResourceTabView.insertData(result);
                     MixpanelUtil.AddQuestion();
             }
@@ -315,7 +292,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-            		//redirect(Window.Location.getHref());
                   isCollResourceTabView.updateCollectionItem(result);
                     MixpanelUtil.AddQuestion();
             }
@@ -326,52 +302,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
                     isCollResourceTabView.updateCollectionItem(result);
-            		
-//                	Map<String,String> params = new HashMap<String,String>();
-//                	
-//                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
-//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-//            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
-//            		}
-//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
-//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-//            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
-//            		}
-//                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
-//            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
-//            		}
-//                	
-//              
-//                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
-//                	{
-//                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
-//                	}
-//            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
-            		
                     MixpanelUtil.AddQuestion();
-                   // redirect(Window.Location.getHref());
             }
 		});
 	}
-	
-	/**
-	 * Dis-abled this method for 6.5 release.
-	 * @param url
-	 */
-	/*protected void tagResourceAsOER(final CollectionItemDo collectionItemDo) {
-		List<String> tagList = new ArrayList<String>();
-		tagList.add("\"" +KEY_OER+"  :"+VAL_OER+"\"");
-		AppClientFactory.getInjector().getResourceService().addTagsToResource(collectionItemDo.getGooruOid(), tagList.toString(), new SimpleAsyncCallback<List<ResourceTagsDo>>() {
-
-			@Override
-			public void onSuccess(List<ResourceTagsDo> result) {
-				isCollResourceTabView.insertData(collectionItemDo); 
-			}
-			
-		});
-	}*/
-
 	native void redirect(String url)
     /*-{
             $wnd.location.reload();
@@ -425,18 +359,6 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-
-	/*@Override
-	public void updateShare(String shareType) {
-		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, null, shareType, null, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
-
-			@Override
-			public void onSuccess(CollectionDo result) {
-				collectionDo = result;
-				getView().hide();
-			}
-		});
-	}*/
 	public CollectionDo getCollectionDo() {
 		return collectionDo;
 	}
@@ -467,9 +389,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	public void addQeustionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo) {
 		getResourceService().addQuestionResource(collectionDo.getGooruOid(), mediaFileName, collectionQuestionItemDo, getAddQuestionResourceAsyncCallback());
-		
 	}
-	
 
 	@Override
 	public CollectionDo getParentCollectionDetails() {
@@ -570,13 +490,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
-		//if(AppClientFactory.getLoggedInUser().getAccessToken()!=null){
 			drivePresenter.setAddResourcePresenter(this);
 			drivePresenter.getGoogleDriveFiles(null, null, true);
 			drivePresenter.setBreadCrumbLabel(null,null);
-		//}else{
-			//drivePresenter.showDriveNotConnectedErrorMessage();
-		//}
 		tabContainer.add(drivePresenter.getWidget());
 		tabContainer.getElement().setId("pnlTabViewContainer");
 	}

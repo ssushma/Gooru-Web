@@ -318,6 +318,6 @@ public abstract class EditAssessmentPopup extends PopupPanel {
 		requireLoginYes.setValue(false);
 		requireLoginNo.setValue(false);
 	}
-	abstract void clickEventOnSaveAssessmentHandler(FolderDo result);
-	abstract void clickEventOnCancelAssessmentHandler(ClickEvent event);
+	public abstract void clickEventOnSaveAssessmentHandler(FolderDo result);
+	public abstract void clickEventOnCancelAssessmentHandler(ClickEvent event);
 }

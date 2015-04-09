@@ -305,6 +305,7 @@ public class ResourceRegister extends PopupPanel{
 									}
 								});
 			} catch (Exception e) {
+				AppClientFactory.printSevereLogger(e.getMessage());
 			}
 		}
 	}

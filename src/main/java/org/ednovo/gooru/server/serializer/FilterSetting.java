@@ -30,6 +30,10 @@ package org.ednovo.gooru.server.serializer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.server.request.ServiceRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Acts as a container for ObjectWriter filter provider
  * 
@@ -41,6 +45,8 @@ public final class FilterSetting implements Cloneable {
 	private Map<String, String[]> includes;
 
 	private Map<String, String[]> excludes;
+	
+	private static final Logger logger = LoggerFactory.getLogger(FilterSetting.class);
 
 	private FilterSetting() {
 		includes = new HashMap<String, String[]>();
@@ -77,6 +83,7 @@ public final class FilterSetting implements Cloneable {
 		try {
 			return (FilterSetting) super.clone();
 		} catch (CloneNotSupportedException exception) {
+			logger.error("Exception::", exception);
 			return null;
 		}
 	}

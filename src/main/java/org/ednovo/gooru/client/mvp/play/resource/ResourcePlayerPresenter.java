@@ -786,7 +786,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		      try{
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCounts.toString(), collectionItemDo.getResource().getGooruOid(), "views"));
 		         }
-		      catch(Exception ex){}
+		      catch(Exception ex){
+		    	  AppClientFactory.printSevereLogger(ex.getMessage());
+		      }
 		}
 	}
 
