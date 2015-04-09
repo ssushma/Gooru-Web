@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -245,7 +246,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		return thumbnailImage;
 	}
@@ -339,7 +340,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 						try{
 							answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 						}catch(Exception e){
-							
+							AppClientFactory.printSevereLogger(e.getMessage());	
 						}
 						if((i+1)!=userAttemptedAnswers.size()){
 							attemptedAnswers=attemptedAnswers+",";
@@ -414,7 +415,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 					try{
 						answerId=answerId+(StringUtil.toString(answerIds.get(i)));
 					}catch(Exception e){
-						
+						AppClientFactory.printSevereLogger(e.getMessage());
 					}
 					if((i+1)!=userAttemptedAnswers.size()){
 						attemptedAnswers=attemptedAnswers+",";

@@ -27,10 +27,13 @@
  */
 package org.ednovo.gooru.server.form;
 
+import org.ednovo.gooru.server.deserializer.TaxonomyDeSerializer;
 import org.ednovo.gooru.server.serializer.JsonSerializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.data.Form;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Search Team
@@ -38,6 +41,7 @@ import org.restlet.data.Form;
  */
 public class ResourceFormFactory {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ResourceFormFactory.class);
 	/**
 	 * Generate form object, respect to individual object 
 	 * @param object instance of the {@link Object} 
@@ -238,7 +242,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -282,7 +286,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -325,7 +329,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -370,7 +374,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}
@@ -388,7 +392,7 @@ public class ResourceFormFactory {
 		}
 		catch(Exception ex)
 		{
-			
+			logger.error("Exception::", ex);
 		}
 		return form;
 	}

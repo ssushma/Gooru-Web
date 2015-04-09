@@ -989,7 +989,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				try{
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(collectionDo.getViews(), collectionDo.getGooruOid(), "views"));
 		         }
-				catch(Exception ex){}
+				catch(Exception ex){
+					AppClientFactory.printSevereLogger(ex.getMessage());
+				}
 		}
 	}
 	public void updateViewCount(String collectionItemId){
@@ -1134,7 +1136,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		         }
 			}   
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}
@@ -1913,6 +1915,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
@@ -1947,6 +1950,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		catch(Exception ex)
 		{
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		
 	}

@@ -420,6 +420,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			}
 		}
 		catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 
 	}
@@ -963,7 +964,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				shelfCollection.setOpenStatus(true);
 			}
 		} catch(Exception e) {
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	
