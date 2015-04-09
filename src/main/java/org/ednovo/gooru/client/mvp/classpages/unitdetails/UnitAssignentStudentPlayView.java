@@ -120,8 +120,8 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("id", collectionId);
 				parms.put("cid", collectionItemId);
+				parms.put("classPageId", getClasspageId());
 				parms.put("page", "study");
-				
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
 			}
 		});
@@ -142,6 +142,18 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 			directionTextLabel.setStyleName(res.unitAssignment().directionDesc());
 			directionContainer.add(directionHeadLabel);
 			directionContainer.add(directionTextLabel);
+		}
+	}
+	/**
+	 * This method will return the classpage id
+	 * @return
+	 */
+	public String getClasspageId(){
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(viewToken.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			return AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		}else{
+			return AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		}
 	}
 	public static String convertMillisecondsToDate(Long milliseconds){
