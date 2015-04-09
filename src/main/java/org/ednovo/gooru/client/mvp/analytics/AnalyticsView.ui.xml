@@ -61,8 +61,8 @@
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- end view assignments -->
-				
-				
+			<!-- At present we are hiding this functionality -->
+			<div style="display:none;">
 				<g:HTMLPanel styleName="row {unitStyle.setBroder}">
 					<div class=" {unitStyle.studentPerformance}">
 					<div class="row">
@@ -111,8 +111,6 @@
 					</div>
 					</div>
 				</g:HTMLPanel>
-				
-				
 				<div class="row {unitStyle.personalBtn}">
 					<div class="col-xs-12">
 						<div class="{unitStyle.rowInner}">
@@ -166,6 +164,7 @@
 					<g:HTMLPanel ui:field="personalizeContainer"></g:HTMLPanel>
 					<g:Button ui:field="btnViewHighlightedStudents" styleName="primary {unitStyle.viewAllStudentsBtn}" text="{i18n.GL2293}"/>
 					</g:HTMLPanel>
+			</div>
 			</div>
 			<div class="clearfix"></div>
 		</div>
