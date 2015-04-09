@@ -38,6 +38,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -71,6 +73,7 @@ public class ResourceDeserializer extends DeSerializer {
 	private static final String USER_NAME = "username";
 	private static final String ASSET_URI = "assetURI";
 
+	private static final Logger logger = LoggerFactory.getLogger(ResourceDeserializer.class);
 	/**
 	 * Deserialize json object to {@link ResourceSearchResultDo}
 	 * @param resourceJsonObject instance of {@link JSONObject}
@@ -117,6 +120,7 @@ public class ResourceDeserializer extends DeSerializer {
 				resultDos.add(deserialize(resourceJsonArray));
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return resultDos;
 	}
@@ -134,6 +138,7 @@ public class ResourceDeserializer extends DeSerializer {
 			videoDuration =getJsonString(resourceJsonObject, DURATION);
 			
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return videoDuration;
 	}
@@ -159,6 +164,7 @@ public class ResourceDeserializer extends DeSerializer {
 					}
 				}
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 		/*}*/
 		return forgotPassword;
@@ -186,6 +192,7 @@ public class ResourceDeserializer extends DeSerializer {
 					}
 				}
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 		return resetPassword;
 	}

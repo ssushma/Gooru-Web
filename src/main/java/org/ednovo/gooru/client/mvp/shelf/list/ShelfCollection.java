@@ -427,7 +427,9 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			titleFocPanel.addStyleName(folderStyle.collectionChild());
 			try {
 				titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
-			} catch (Exception e){}
+			} catch (Exception e){
+				AppClientFactory.printSevereLogger(e.getMessage());
+			}
 		}
 	}
 	

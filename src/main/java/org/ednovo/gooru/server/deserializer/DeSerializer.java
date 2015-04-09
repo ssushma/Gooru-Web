@@ -31,10 +31,13 @@ import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class DeSerializer {
 	
 	private static String INTEGER_EQ = ".*\\d.*";
+	private static final Logger logger = LoggerFactory.getLogger(DeSerializer.class);
 
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key, Integer defaultValue) {
 		Integer value = stringtoInteger(jsonObject, key);
@@ -47,6 +50,7 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 			return value != null && value.matches(INTEGER_EQ) ? Integer.parseInt(value) : null;
 		} else {
@@ -60,6 +64,7 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getString(key);
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 			return value != null ? value : null;
 		} else {
@@ -73,6 +78,7 @@ public abstract class DeSerializer {
 			try {
 				value = jsonObject.getInt(key);
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 			return value != 0 ? value : 0;
 		} else {
@@ -94,6 +100,7 @@ public abstract class DeSerializer {
 					arrayObj.add(checkBoxObj);
 				}
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 			return arrayObj;
 		} else {
@@ -116,6 +123,7 @@ public abstract class DeSerializer {
 				try {
 					value.append(jsonArray.get(i));
 				} catch (JSONException e) {
+					logger.error("Exception::", e);
 				}
 			}
 		}
@@ -129,6 +137,7 @@ public abstract class DeSerializer {
 				try {
 					values.add(jsonArray.getString(i));
 				} catch (JSONException e) {
+					logger.error("Exception::", e);
 				}
 			}
 		}

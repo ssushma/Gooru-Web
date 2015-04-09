@@ -21,12 +21,10 @@ public class GoogleWebResource extends Composite {
 
 	interface GoogleWebResourceUiBinder extends
 			UiBinder<Widget, GoogleWebResource> {
-
 	}
-
+	
 	String folderMimeType = "application/vnd.google-apps.folder";
 	String type = null;
-
 	String dataIconType = null;
 	@UiField
 	Label imageIcon;
@@ -36,11 +34,10 @@ public class GoogleWebResource extends Composite {
 	HTMLPanel contentPanel;
 	@UiField
 	HTMLPanel folderContent;
-
+	
 	GoogleDriveItemDo driveDo = new GoogleDriveItemDo();
 
 	public GoogleWebResource(GoogleDriveItemDo driveDo) {
-
 		initWidget(uiBinder.createAndBindUi(this));
 		this.driveDo = driveDo;
 		driveText.setText(driveDo.getTitle());
@@ -54,61 +51,21 @@ public class GoogleWebResource extends Composite {
 		type = driveDo.getMimeType();
 		String dataType[] = type.split("\\.");
 		dataIconType = dataType[0];
-
 	}
 
 	ClickHandler contentClick = new ClickHandler() {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-
 			if (type.equalsIgnoreCase(folderMimeType)) {
-
 				folderContent(driveDo.getId());
-
-
 			} else {
 				AppClientFactory.fireEvent(new DriveEvent(driveDo));
-
 			}
-
 		}
-
 	};
 
 	private void folderContent(String id) {
 		folderContent.clear();
-		// TODO Auto-generated method stub
-//		AppClientFactory.getInjector().getResourceService()
-//				.getfolderList(id, new AsyncCallback<List<GoogleDriveItemDo>>() {
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						// TODO Auto-generated method stub
-//
-//					}
-//
-//					@Override
-//					public void onSuccess(List<GoogleDriveItemDo> result) {
-//
-//						AppClientFactory.fireEvent(new FolderEvent(driveDo
-//								.getTitle(), driveDo.getId(), result));
-//						// TODO Auto-generated method stub
-//						/*
-//						 * if (result != null) {
-//						 * 
-//						 * for(int m=0;m<result.size();m++){
-//						 * 
-//						 * folderContent.add(new
-//						 * GoogleWebResource(result.get(m)));
-//						 * 
-//						 * }
-//						 * 
-//						 * }
-//						 */
-//					}
-//				});
-
 	}
 }
