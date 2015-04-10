@@ -42,9 +42,6 @@
 	background: -ms-linear-gradient(top, #666, #515151);
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #666, #515151);
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666',
-		EndColorStr='#515151');
 }
 
 .teachPopupContent {

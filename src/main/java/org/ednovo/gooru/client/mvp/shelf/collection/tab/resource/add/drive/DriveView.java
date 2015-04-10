@@ -120,7 +120,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		panelFileList.clear();
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
-		//lblLoading.setVisible(false);
 		panelFileList.add(new GoogleDocsResourceView(driveDo));
 
 	}
@@ -153,7 +152,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		panelFileList.clear();
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
-		//lblLoading.setVisible(false);
 		for (int n = 0; n < result.size(); n++) {
 			panelFileList.add(new GoogleWebResource(result.get(n)));
 		}

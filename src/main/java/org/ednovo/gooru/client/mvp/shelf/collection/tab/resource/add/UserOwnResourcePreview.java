@@ -43,21 +43,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class UserOwnResourcePreview extends PopupPanel {
-	
-	/*@UiField Label shareMsgTitle,descriptionTxt,filePathValueLbl,filePathLbl;
-	
-	@UiField HTMLPanel shareAlertPopup, buttonContainer,descriptionTxtContainer,filePathTxtContainer;
-
-	@UiField BlueButtonUc okButton, goBackBtn;*/
-	
 	@UiField BlueButtonUc okButton, goBackBtn;
-	
-	
 	@UiField Label descriptionTxtValueLbl,filePathValueLbl,resourceTitleValueLbl,categoryValueLbl,thumbnailLbl,previewCloseButton;
-	
 	@UiField
 	public Image setThumbnailImage;
-	
 	@UiField HTMLPanel actionPanel;
 	
 	/** 
@@ -152,7 +141,6 @@ public abstract class UserOwnResourcePreview extends PopupPanel {
 	
 	@UiHandler("previewCloseButton")
 	public void onClickClosePreviewBtn(ClickEvent event){
-//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		hide();
 		closeAppPopUp();

@@ -133,6 +133,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 			doc.getElementById("headerMainPanel").getStyle().setZIndex(0);
 			doc.getElementById("goToClasicInnerPanel").getStyle().setZIndex(0);
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	@Override
@@ -158,6 +159,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 			doc.getElementById("headerMainPanel").getStyle().setZIndex(0);
 			doc.getElementById("goToClasicInnerPanel").getStyle().setZIndex(0);
 		}catch(Exception e){
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		String loggedInGooruUserId=AppClientFactory.isAnonymous()?"ANONYMOUS":AppClientFactory.loggedInUser.getGooruUId();
 		gooruCollectionPlayer.setData(gooruOid, token, getSettings()
@@ -181,10 +183,10 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 														
 							}
 							catch(NumberFormatException ex){
-								
+								AppClientFactory.printSevereLogger(ex.getMessage());
 							}
 							catch(Exception exc){
-								
+								AppClientFactory.printSevereLogger(exc.getMessage());
 							}
 							}
 							updateview=false;
@@ -195,6 +197,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 								ifrmaeElement.setAttribute("src", "");
 							}
 						}catch(Exception exception){
+							AppClientFactory.printSevereLogger(exception.getMessage());
 						}
 							hideFromPopup(true);
 							hide();
@@ -202,7 +205,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 							doc.getElementById("headerMainPanel").getStyle().clearZIndex();
 							doc.getElementById("goToClasicInnerPanel").getStyle().clearZIndex();
 						}catch(Exception ex){
-							
+							AppClientFactory.printSevereLogger(ex.getMessage());
 						}
 						doc.getElementById("uvTab").getStyle()
 								.setDisplay(Display.BLOCK);

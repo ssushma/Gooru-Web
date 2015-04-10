@@ -256,36 +256,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		return new ArrayList<LibraryUserDo>();
 	}
 	
-	
-	/**
-	 * 
-	 * @function deserializeCollaborators 
-	 * 
-	 * @created_date : 08-Apr-2015
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param jsonString
-	 * @parm(s) : @return
-	 * 
-	 * @return : ArrayList<LibraryUserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public ArrayList<LibraryUserDo> deserializeCollaborators(String jsonString) {
-		getLogger().info("jsonString : "+jsonString);
-		if (jsonString != null) {
-			return JsonDeserializer.deserialize(jsonString, new TypeReference<ArrayList<LibraryUserDo>>() {
-			});
-		}
-		return new ArrayList<LibraryUserDo>();
-	}
-	
 	/**
 	 * 
 	 * @function deserializeCourses 
@@ -902,7 +872,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, sessionToken, limit+"",offset+"","14");
-		getLogger().info("getLibraryWorkspace::"+url);
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1136,6 +1105,13 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLessons(jsonRepresentation);
+	}
+
+	@Override
+	public ArrayList<LibraryUserDo> deserializeCollaborators(String jsonString)
+			throws GwtException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

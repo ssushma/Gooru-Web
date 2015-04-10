@@ -251,6 +251,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				ifrmaeElement.setAttribute("src", "");
 			}
 		} catch (Exception exception) {
+			AppClientFactory.printSevereLogger(exception.getMessage());
 		}
 	}
 	

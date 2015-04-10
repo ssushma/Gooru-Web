@@ -114,16 +114,6 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	public void reorderCollectionItem(CollectionItemDo collectionItem) {
 		getResourceService().reorderCollectionItem(collectionItem, getReorderCollectionItemAsyncCallback());
 	}
-
-	/**
-	 * Copy collection item by collection item id which is mandatory  
-	 * 
-	 * @param collectionItemId gooruOid of collection item
-	 */
-	/*public void copyCollectionItem(String collectionItemId) {
-		getResourceService().copyCollectionItem(collectionItemId, getCopyCollectionItemAsyncCallback());
-	}*/
-	
 	/**
 	 * create collection item by collection item id which is mandatory  
 	 * 
@@ -269,26 +259,8 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		this.updateQuestionItemResourceAsyncCallback = updateQuestionItemResourceAsyncCallback;
 		
 	}
-	
-	
-	
-
 	public ResourceServiceAsync getResourceService() {
 		
 		return AppClientFactory.getInjector().getResourceService();
 	}
-
-/*	
-	public void reorderMyCollectionItem(CollectionItemDo collectionItemDo, final ShelfCollectionResourceChildView shelfCollectionResourceChildView,final String arrow, final Integer newSequence) {
-		AppClientFactory.getInjector().getResourceService().reorderCollectionItem(collectionItemDo, new SimpleAsyncCallback<CollectionItemDo>() {
-
-			@Override
-			public void onSuccess(CollectionItemDo result) {
-				getView().onPostResourceReorder(result,shelfCollectionResourceChildView,arrow,newSequence);  
-			}
-		});
-	}
-
-	
-*/	
 }

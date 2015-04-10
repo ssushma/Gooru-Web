@@ -125,10 +125,6 @@ public class ShelfCollectionResourceChildView extends
 
 	@UiField
 	ResourceImageUc resourceImageUc;
-
-	/*@UiField
-	VerticalPanel actionVerPanel;
-*/
 	@UiField
 	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn/*,resourceMoveUpBtn,resourceMoveDownBtn (hotfix changes)*/;
 
@@ -930,6 +926,7 @@ public class ShelfCollectionResourceChildView extends
 						ThumbnailDo thumbnailDo = new ThumbnailDo();
 						collectionItem.getResource().setThumbnails(thumbnailDo);
 						collectionItem.getResource().getThumbnails().setUrl("/null");
+						AppClientFactory.printSevereLogger(e.getMessage());
 				}
 				
 				/*resourceImageUc.renderSearch(collectionItem.getResource()
@@ -1804,6 +1801,7 @@ public class ShelfCollectionResourceChildView extends
 							getPresenter().updateNarrationItem(
 									collectionItemDo.getCollectionItemId(), narration);
 						}catch(Exception e){
+							AppClientFactory.printSevereLogger(e.getMessage());
 						}
 						isEdited = false;
 						lblCharLimit.setVisible(false);
