@@ -1023,6 +1023,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_COLL_DETAILS, classItemId,getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		logger.info("getClassPageItem::"+url);
 		if(jsonResponseRep.getStatusCode()==200){
 			try{
 				classpageItemDo=deserializeClassPageItem(jsonResponseRep.getJsonRepresentation().getJsonObject(),RESOURCE);
