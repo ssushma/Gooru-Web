@@ -73,6 +73,12 @@ public interface ApiKeyParams {
 	String SHARING = "sharing";
 	String COLLECTION_TYPE = "collectionType";
 	
+	/**
+	 * Collaborators related parameters.
+	 */
+	
+	String GROUP_BY_STATUS = "groupByStatus";
+	String DATA = "data";
 	
 	
 	
