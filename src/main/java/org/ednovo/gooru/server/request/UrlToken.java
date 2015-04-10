@@ -72,9 +72,9 @@ public enum UrlToken {
 
 	GET_COLLECTION_ITEMS("/scollection/{0}/item?sessionToken={1}&pageSize={2}&pageNo={3}"),
 
-	V2_GET_COLLECTION("/v2/collection/{0}?sessionToken={1}"),
+	V2_GET_COLLECTION("/v2/collection/{0}?sessionToken={1}&skipCollectionItem={2}&includeMetaInfo=true&merge=permissions&includeContentProvider=false&includeCustomFields=false"),
 					
-	V2_GET_COLLECTIONForStandards("/v2/collection/{0}?sessionToken={1}"),
+	V2_GET_COLLECTIONForStandards("/v2/collection/{0}?sessionToken={1}&rootNodeId={2}&skipCollectionItem={3}&includeMetaInfo=true&merge=permissions"),
 					
 	GET_TREE("/taxonomy/{0}/tree.json?sessionToken={1}"),
 
@@ -298,11 +298,11 @@ public enum UrlToken {
 	
 	V2_GET_LIBRARY_COURSES("/v2/library/{0}?sessionToken={1}"),
 	
-	V2_GET_LIBRARY_TOPIC_OFFSET("/v2/library/{0}/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_TOPIC_OFFSET("/v2/library/{0}/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
 	V2_UPDATE_USER_PROFILE("/v2/user/{0}?sessionToken={1}"),
 		
-	V2_GET_LIBRARY_UNIT_OFFSET("/v2/library/{0}/unit/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_UNIT_OFFSET("/v2/library/{0}/unit/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
 	V2_GET_COLLECTION_COMMENTS("/v2/comment?sessionToken={0}&gooruOid={1}&offset={2}&limit={3}"),
 	
@@ -340,9 +340,9 @@ public enum UrlToken {
 	 	
 	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}&offset={1}&limit={2}&orderBy=sequence"),
 	
-	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}"),
+	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&orderBy=sequence"),
 	
-	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?sessionToken={1}"),
+	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&sharing=public"),
 	
 	V2_DELETE_COLLABORATORS("/v2/collaborator/content/{0}?sessionToken={1}"),
 	
@@ -354,7 +354,7 @@ public enum UrlToken {
 	
 	V2_MOVE_COLLECTION("/v2/folder/move?sessionToken={0}"), 
 	
-	V2_GET_POPULAR_LIBRARY("/v2/library/{0}/collection/popular?sessionToken={1}"),
+	V2_GET_POPULAR_LIBRARY("/v2/library/{0}/collection/popular?sessionToken={1}&libraryName=popular&pageNum=1&pageSize=5"),
 	
 	V2_CREATE_COLLECTION_IN_FOLDER("/v2/collection?sessionToken={0}"),
 	
@@ -376,7 +376,7 @@ public enum UrlToken {
 	
 	V2_GET_CLASSPAGE_COLL_DETAILS("/v2/classpage/item/{0}?sessionToken={1}"),
 	
-	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}"),
+	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&topLevelCollectionType=folder&orderBy=sequence"),
 	
 	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&orderBy=sequence"),
 	
@@ -384,7 +384,7 @@ public enum UrlToken {
 	
 	V2_UPDATE_PARTY_CUSTOM_FIELD("/v2/party/{0}/custom-field?sessionToken={1}"),
 	
-	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}"),
+	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&fetchChilds=true&&itemLimit={2}&offset={3}&orderBy=sequence"),
 	
 	V2_GET_PARTNERS("/v2/partner?sessionToken={0}"),
 	
@@ -436,7 +436,7 @@ public enum UrlToken {
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	
-	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}"),
+	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&&topLevelCollectionType=folder&orderBy=sequence"),
 	
 	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?sessionToken={1}"),
 	
@@ -448,15 +448,15 @@ public enum UrlToken {
 	
 	UPDATE_FILE_PERMISSION("/v2/files/{0}/permissions"),
 	
-	V2_GET_LIBRARY_SUBJECTS_OPTIMIZED("/v2/library?sessionToken={0}"),
+	V2_GET_LIBRARY_SUBJECTS_OPTIMIZED("/v2/library?sessionToken={0}&libraryName={1}"),
 	
-	V2_GET_LIBRARY_COURSES_OPTIMIZED("/v2/library/{0}/item?sessionToken={1}"),
+	V2_GET_LIBRARY_COURSES_OPTIMIZED("/v2/library/{0}/item?sessionToken={1}&libraryName={2}"),
 	
 	V2_GET_LIBRARY_UNITS_OPTIMIZED("/v2/library/{0}/item/course/{1}?sessionToken={2}"),
 	
-	V2_GET_LIBRARY_TOPICS_OPTIMIZED("/v2/library/{0}/item/unit/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_TOPICS_OPTIMIZED("/v2/library/{0}/item/unit/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
-	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
 	V2_LevelWiseStandards("/v2/standard/{0}/{1}?sessionToken={2}"),
 	
