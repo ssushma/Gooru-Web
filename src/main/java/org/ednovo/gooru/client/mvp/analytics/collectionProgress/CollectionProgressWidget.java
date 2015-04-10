@@ -68,184 +68,188 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	}
 	@Override
 	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView){
-		if(!isCollectionView){
-			scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgress());
-		}else{
-			scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgressCollectionView());
-		}
-		final List<Integer> questionColumnIndex=new ArrayList<Integer>();
-		final List<Integer> resourceColumnIndex=new ArrayList<Integer>();
-		collectionProgressCount=1;
-		int noOfQuestions=0;
-		htmlpnlProgress.clear();
-		filterDropDown.clear();
-		CollectionProgressDataDo defaultUserDataForUsers=null;
-		final DataTable data = DataTable.create();
-		data.addColumn(ColumnType.STRING, i18n.GL2287());
-		data.addColumn(ColumnType.STRING, i18n.GL2288());
-		for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
-			defaultUserDataForUsers=collectionProgressDataDo;
-			if(collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
-				 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
-				 noOfQuestions++;
-				 questionColumnIndex.add(collectionProgressCount+1);
-			}else{
-				 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
-				 resourceColumnIndex.add(collectionProgressCount+1);
-			}
-			collectionProgressCount++;
-		}
-		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionColumnIndex);
-		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceColumnIndex);
-		
-		if(defaultUserDataForUsers!=null){
-			int sizeNames=defaultUserDataForUsers.getUserData().size();
-			if(sizeNames!=0){
-				data.addRows(sizeNames);
-			}
-	        int columnsSize=collectionProgressData.size();
-	        for(int i=0;i<sizeNames;i++) {
-	        	  int score=0;
-	        	  for(int j=0;j<columnsSize;j++) {
-	        		  	  String color=WHITE;
-	        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
-		        		  if(!collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
-		        			  int reaction=collectionProgressData.get(j).getUserData().get(i).getReaction();
-		        			  Label reactionlbl=new Label();
-				        		 if(reaction == 0){
-				        			 reactionlbl.setText("--");
-				        		 }else{
-				        			  String customClass=res.css().reaction_redneedhelp();
-					        		  if (reaction==1) {
-										  customClass = res.css().reaction_redneedhelp();
-									  } else if (reaction==2) {
-										  customClass = res.css().reaction_reddontunderstand();
-									  } else if (reaction==3) {
-										  customClass =res.css().reaction_mean1();
-									  } else if (reaction==4) {
-										  customClass = res.css().reaction_understand1();
-									  }else if (reaction>4) {
-										  customClass = res.css().reaction_explain1();
-									  }
-					        		  reactionlbl.addStyleName(customClass);
-				        		 }
-			        		  mainDataVpnl.add(reactionlbl);
-			        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
-		        		  }else{
-		        			  String typeOfQuestion=collectionProgressData.get(j).getType();
-		        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions();
-		        			  String answer="";
-		        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
-		        			  if(typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE")){
-		        				  Label viewResponselbl=new Label();
-				        		  mainDataVpnl.add(viewResponselbl);
-		        				  String answerText="--";
-		        				  if(answerOption!=null){
-					        		  answerText=VIEWRESPONSE;
-					        		  viewResponselbl.getElement().getParentElement().addClassName(res.css().viewResponseInCollectionProgress());
-		        				  }else{
-		        					  answerText="--";
-		        					  viewResponselbl.getElement().getParentElement().getStyle().setBackgroundColor(WHITE);
-		        				  }
-		        				  viewResponselbl.setText(answerText);
-		        			  }else{
-		        				  String answerText="";
-				        		  if(answerOption!=null){
-				        			  JSONValue value = JSONParser.parseStrict(answerOption);
-					        		  JSONObject optionObj = value.isObject();
-					        		  Set<String> keys=optionObj.keySet();
-					        		  if(keys.iterator().hasNext())
-					        			  answer= keys.iterator().next().toString();
-					        		  
-					        		  if(typeOfQuestion.equalsIgnoreCase("TF")){
-			        					  if(answer.equalsIgnoreCase("A")){
-			        						  answerText="true";
-			        					  }else if(answer.equalsIgnoreCase("B")){
-			        						  answerText="false";
-			        					  }else{
-			        						  answerText="--";
-			        					  }
-			        				  }else{
-			        					  answerText=answer;
-			        				  }
+			try{
+				if(!isCollectionView){
+					scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgress());
+				}else{
+					scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgressCollectionView());
+				}
+				final List<Integer> questionColumnIndex=new ArrayList<Integer>();
+				final List<Integer> resourceColumnIndex=new ArrayList<Integer>();
+				collectionProgressCount=1;
+				int noOfQuestions=0;
+				htmlpnlProgress.clear();
+				filterDropDown.clear();
+				CollectionProgressDataDo defaultUserDataForUsers=null;
+				final DataTable data = DataTable.create();
+				data.addColumn(ColumnType.STRING, i18n.GL2287());
+				data.addColumn(ColumnType.STRING, i18n.GL2288());
+				for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
+					defaultUserDataForUsers=collectionProgressDataDo;
+					if(collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+						 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
+						 noOfQuestions++;
+						 questionColumnIndex.add(collectionProgressCount+1);
+					}else{
+						 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
+						 resourceColumnIndex.add(collectionProgressCount+1);
+					}
+					collectionProgressCount++;
+				}
+				final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionColumnIndex);
+				final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceColumnIndex);
+				
+				if(defaultUserDataForUsers!=null){
+					int sizeNames=defaultUserDataForUsers.getUserData().size();
+					if(sizeNames!=0){
+						data.addRows(sizeNames);
+					}
+			        int columnsSize=collectionProgressData.size();
+			        for(int i=0;i<sizeNames;i++) {
+			        	  int score=0;
+			        	  for(int j=0;j<columnsSize;j++) {
+			        		  	  String color=WHITE;
+			        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
+				        		  if(!collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
+				        			  int reaction=collectionProgressData.get(j).getUserData().get(i).getReaction();
+				        			  Label reactionlbl=new Label();
+						        		 if(reaction == 0){
+						        			 reactionlbl.setText("--");
+						        		 }else{
+						        			  String customClass=res.css().reaction_redneedhelp();
+							        		  if (reaction==1) {
+												  customClass = res.css().reaction_redneedhelp();
+											  } else if (reaction==2) {
+												  customClass = res.css().reaction_reddontunderstand();
+											  } else if (reaction==3) {
+												  customClass =res.css().reaction_mean1();
+											  } else if (reaction==4) {
+												  customClass = res.css().reaction_understand1();
+											  }else if (reaction>4) {
+												  customClass = res.css().reaction_explain1();
+											  }
+							        		  reactionlbl.addStyleName(customClass);
+						        		 }
+					        		  mainDataVpnl.add(reactionlbl);
+					        		  reactionlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
 				        		  }else{
-				        			  answerText="--"; 
+				        			  String typeOfQuestion=collectionProgressData.get(j).getType()!=null?collectionProgressData.get(j).getType():"";
+				        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions();
+				        			  String answer="";
+				        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
+				        			  if(typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE")){
+				        				  Label viewResponselbl=new Label();
+						        		  mainDataVpnl.add(viewResponselbl);
+				        				  String answerText="--";
+				        				  if(answerOption!=null){
+							        		  answerText=VIEWRESPONSE;
+							        		  viewResponselbl.getElement().getParentElement().addClassName(res.css().viewResponseInCollectionProgress());
+				        				  }else{
+				        					  answerText="--";
+				        					  viewResponselbl.getElement().getParentElement().getStyle().setBackgroundColor(WHITE);
+				        				  }
+				        				  viewResponselbl.setText(answerText);
+				        			  }else{
+				        				  String answerText="";
+						        		  if(answerOption!=null){
+						        			  JSONValue value = JSONParser.parseStrict(answerOption);
+							        		  JSONObject optionObj = value.isObject();
+							        		  Set<String> keys=optionObj.keySet();
+							        		  if(keys.iterator().hasNext())
+							        			  answer= keys.iterator().next().toString();
+							        		  
+							        		  if(typeOfQuestion.equalsIgnoreCase("TF")){
+					        					  if(answer.equalsIgnoreCase("A")){
+					        						  answerText="true";
+					        					  }else if(answer.equalsIgnoreCase("B")){
+					        						  answerText="false";
+					        					  }else{
+					        						  answerText="--";
+					        					  }
+					        				  }else{
+					        					  answerText=answer;
+					        				  }
+						        		  }else{
+						        			  answerText="--"; 
+						        		  }
+				        				  Label answerlbl=new Label(answerText);
+						        		  mainDataVpnl.add(answerlbl);
+						        		  answerlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
+				        			  }
+				        			  if(answerOption!=null && collectionProgressData.get(j).getMetaData()!=null){
+				        					int scoreValue=collectionProgressData.get(j).getUserData().get(i).getScore();
+				        					 if(scoreValue>=1){
+				        						 if(attemptCount>1){
+							        				  color=ORANGE;
+							        			  }else if(attemptCount==1){
+							        				  score++;
+							        				  color=GREEN;
+							        			  }else{
+							        				  color=WHITE;
+							        			  } 
+				        					 }else{
+				        						 color=RED;
+				        					 }
+				        			  }
 				        		  }
-		        				  Label answerlbl=new Label(answerText);
-				        		  mainDataVpnl.add(answerlbl);
-				        		  answerlbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
-		        			  }
-		        			  if(answerOption!=null && collectionProgressData.get(j).getMetaData()!=null){
-		        					int scoreValue=collectionProgressData.get(j).getUserData().get(i).getScore();
-		        					 if(scoreValue>=1){
-		        						 if(attemptCount>1){
-					        				  color=ORANGE;
-					        			  }else if(attemptCount==1){
-					        				  score++;
-					        				  color=GREEN;
-					        			  }else{
-					        				  color=WHITE;
-					        			  } 
-		        					 }else{
-		        						 color=RED;
-		        					 }
-		        			  }
-		        		  }
-		        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUserData().get(i).getTimeSpent()));
-		        		  mainDataVpnl.add(timeStamplbl);
-		        		  timeStamplbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
-		        		  Properties properties=Properties.create();
-		        		  properties.set("style", "background-color: "+color);
-		        		  com.google.gwt.visualization.client.Properties p=properties.cast();
-		        		  mainDataVpnl.addStyleName(res.css().mainDataVpnl());
-		        		  data.setCell(i, j+2,mainDataVpnl.toString(),null,p);
-	        	   }
-	        	  data.setValue(i, 0,defaultUserDataForUsers.getUserData().get(i).getUserName());
-	        	  VerticalPanel scoreWidget=new VerticalPanel();
-	        	  Label noOfQuestionAttened=new Label(score+"/"+noOfQuestions);
-	        	  int percent=0;
-	        	  if(noOfQuestions!=0){
-	        		  percent=((score*100)/noOfQuestions);
-	        	  }
-	        	  Label percentage=new Label("("+percent+"%)");
-	        	  scoreWidget.add(noOfQuestionAttened);
-	        	  scoreWidget.add(percentage);
-	        	  data.setValue(i, 1,scoreWidget.toString());
-	        }
+				        		  Label timeStamplbl=new Label(getTimeSpent(collectionProgressData.get(j).getUserData().get(i).getTimeSpent()));
+				        		  mainDataVpnl.add(timeStamplbl);
+				        		  timeStamplbl.getElement().getParentElement().addClassName(res.css().alignCenterAndBackground());
+				        		  Properties properties=Properties.create();
+				        		  properties.set("style", "background-color: "+color);
+				        		  com.google.gwt.visualization.client.Properties p=properties.cast();
+				        		  mainDataVpnl.addStyleName(res.css().mainDataVpnl());
+				        		  data.setCell(i, j+2,mainDataVpnl.toString(),null,p);
+			        	   }
+			        	  data.setValue(i, 0,defaultUserDataForUsers.getUserData().get(i).getUserName());
+			        	  VerticalPanel scoreWidget=new VerticalPanel();
+			        	  Label noOfQuestionAttened=new Label(score+"/"+noOfQuestions);
+			        	  int percent=0;
+			        	  if(noOfQuestions!=0){
+			        		  percent=((score*100)/noOfQuestions);
+			        	  }
+			        	  Label percentage=new Label("("+percent+"%)");
+			        	  scoreWidget.add(noOfQuestionAttened);
+			        	  scoreWidget.add(percentage);
+			        	  data.setValue(i, 1,scoreWidget.toString());
+			        }
+				}
+				
+		        final Options options = Options.create();
+		        options.setAllowHtml(true);
+		        
+		        final DataView view =DataView.create(data);
+		        
+		        final Table table = new Table(view, options);
+		        table.setStyleName("collectionProgressTable");
+		     
+		        filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
+		        filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
+		        filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
+		        filterDropDown.addChangeHandler(new ChangeHandler() {
+				
+					@Override
+					public void onChange(ChangeEvent event) {
+							htmlpnlProgress.clear();
+							int selectedIndex=filterDropDown.getSelectedIndex();
+						 	operationsView=DataView.create(data);
+							 if(selectedIndex==1){
+								 operationsView.hideColumns(primitivesResources); 
+							 }
+							 if(selectedIndex==2){
+								 operationsView.hideColumns(primitivesQuestions); 
+							 }
+							 Table table = new Table(operationsView, options);
+						     table.setStyleName("collectionProgressTable");
+						     htmlpnlProgress.add(table);	
+						     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+					}
+				});
+		        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+		        htmlpnlProgress.add(table);	
+				}catch(Exception e){
+					e.printStackTrace();
 		}
-		
-        final Options options = Options.create();
-        options.setAllowHtml(true);
-        
-        final DataView view =DataView.create(data);
-        
-        final Table table = new Table(view, options);
-        table.setStyleName("collectionProgressTable");
-     
-        filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
-        filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
-        filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
-        filterDropDown.addChangeHandler(new ChangeHandler() {
-		
-			@Override
-			public void onChange(ChangeEvent event) {
-					htmlpnlProgress.clear();
-					int selectedIndex=filterDropDown.getSelectedIndex();
-				 	operationsView=DataView.create(data);
-					 if(selectedIndex==1){
-						 operationsView.hideColumns(primitivesResources); 
-					 }
-					 if(selectedIndex==2){
-						 operationsView.hideColumns(primitivesQuestions); 
-					 }
-					 Table table = new Table(operationsView, options);
-				     table.setStyleName("collectionProgressTable");
-				     htmlpnlProgress.add(table);	
-				     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-			}
-		});
-        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
-        htmlpnlProgress.add(table);	
 	}
 	
 	/**

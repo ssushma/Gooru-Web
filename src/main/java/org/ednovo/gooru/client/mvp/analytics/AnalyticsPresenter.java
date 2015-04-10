@@ -183,10 +183,11 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			@Override
 			public void onSuccess(ArrayList<GradeJsonData> result) {
 				getView().setGradeCollectionData(result);
-				if(result.size()!=0){
+				//As off now this functionality is off so commented
+				/*if(result.size()!=0){
 					getTopStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"DESC");
 					getBottomStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"ASC");
-				}
+				}*/
 			}
 			@Override
 			public void onFailure(Throwable caught) {

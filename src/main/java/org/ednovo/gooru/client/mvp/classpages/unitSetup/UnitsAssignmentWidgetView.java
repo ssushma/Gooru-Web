@@ -156,7 +156,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 		unitDetailsButton.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
-		Window.addResizeHandler(new ResizeLogicEvent());
+		//Window.addResizeHandler(new ResizeLogicEvent());
 	}
 	
 	public class ResizeLogicEvent implements ResizeHandler{
