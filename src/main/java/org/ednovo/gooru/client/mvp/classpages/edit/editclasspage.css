@@ -59,7 +59,7 @@
 }
 
 .myClasspageWrapperTwoChapterText {
-	float: left; 
+	float: left; /*width:257px;*/
 	height: 28px;
 	margin: 17px;
 	font-size: 20px;
@@ -122,7 +122,6 @@
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
 	border: 1px solid #ddd;
 	margin: 0px 21px 0px 26px;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
 }
 
 .tabsli {
@@ -149,7 +148,6 @@
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
 	background: linear-gradient(to bottom, rgba(239, 239, 239, 1) 0%,
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
 }
 
 .tabsli:hover {
@@ -179,9 +177,6 @@
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
 	background: linear-gradient(to bottom, rgba(239, 239, 239, 1) 0%,
 		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
-	/*filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#efefef',
-		endColorstr='#efefef', GradientType=0);*/
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
 }
 
 .addAsAnAssignmentMarginBlue {
@@ -243,7 +238,7 @@
 }
 
 .paginationContainer {
-	width: 100%;
+	float:right;
 	margin-top:7px;
 	text-align:right;
 }
@@ -305,9 +300,7 @@
 .simplePencil {
 	height: 64px;
 	min-width: 50px;
-	float: left;
 }
-
 
 .collectionEditImage {
 	background: url("images/Collection-Search/icon-sprite.png") repeat
@@ -384,12 +377,14 @@
 	width: 550px !important;
 	font-size: 12px !important;
 	padding: 1px;
-	overflow: hidden;
+	overflow: auto;
 	word-wrap: break-word;
+	white-space: pre-line;
 }
 .classPagebuttonContainer {
-	float: left;
-	margin-top: 19px;
+	float: right;
+	margin-top: -43px;
+	margin-right: 210px;
 }
 .classPageEditTitleCancelButton {
 	font-family: Arial, Helvetica, sans-serif;
@@ -435,10 +430,6 @@
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius: 4px;
 	background: #1076bb;
-	-ms-filter:
-		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
-		endColorstr=#ff1076bb, GradientType=0);
 }
 .classPageEditTitle {
 	color: #fff;
@@ -542,16 +533,6 @@
 }
 
 
-.classpageCodeHelp {
-	position: relative;
-	float: left;
-	width: 20px;
-	height: 20px;
-	cursor: pointer;
-	margin: 5px 10px 0px 3px;
-	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
-	background-position: 0px -46px;
-}
 .classpageCodeHelp:hover {
 	cursor: pointer;
 }
@@ -589,27 +570,18 @@
 }
 
 .addAssignment{
-	margin-top: 20px;
-	margin-left:0px !imporant;
+	margin-top: -50px;
+	margin-left:0px !important;
 }
 
 .addAssignmentStyle{
 	margin-top: 20px;
-	margin-left:0px !imporant;
+	margin-left:0px !important;
 }
 
 .addAssignment:hover{
 	background: url("images/Classpage/plus_blue.png") 11px 11px no-repeat, #eee;
 	cursor: pointer;
-}
-
-.classpageAddPlusIcon {
-	position: relative;
-	top: -31px;
-	left: 10px;
-	width: 21px;
-	height: 22px;
-	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
 }
 
 .assignmentsContainer{
@@ -703,12 +675,11 @@ margin-left:-1px;
        overflow: visible;
 }
 .teachTab {
-	text-align: center;
-	padding-bottom: 20px;
-	width: 101%;
-	padding-top: 20px;
-	padding-left: 10px;
-	background: #FFF;
+       text-align: center;
+       padding-bottom: 20px;
+       margin: 20px auto;
+       width: 62%;
+       /* margin-left:122px; */
 }
 .teachTab .select {
        color: #fff;
@@ -724,7 +695,7 @@ margin-left:-1px;
        -webkit-box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
        box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
 }
-/* .tabContainerDiv .selected {
+/* .teachTab .selected {
        position: relative;
        left: 7px;
        border-radius: 5px 0px 0px 5px;
@@ -782,7 +753,7 @@ margin-left:-1px;
 }
 
 
-.tabContainerDiv button:first-child{
+.teachTab button:first-child{
 	color: #515151;
 	cursor: pointer;
 	padding: 10px 60px;
@@ -796,7 +767,7 @@ margin-left:-1px;
 	border-radius: 5px 0px 0px 5px;
 }
 
-.tabContainerDiv button{
+.teachTab button{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -811,7 +782,7 @@ margin-left:-1px;
 	/* border-radius: 0px 5px 5px 0px; */
 	
 }
-.tabContainerDiv button:last-child{
+.teachTab button:last-child{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -826,7 +797,7 @@ margin-left:-1px;
 	border-radius: 0px 5px 5px 0px;
 	
 }
-.tabContainerDiv button:nth-last-child(2){
+.teachTab button:nth-last-child(2){
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -842,7 +813,7 @@ margin-left:-1px;
 	
 }
 
-.tabContainerDiv > .selected{
+.teachTab > .selected{
     color: #FFF !important;
     background: #1076BB;
     background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0, #579ecf 100%) !important;
@@ -885,7 +856,7 @@ margin-bottom: -10px;
 .assignmentPathContainer{
 	margin-bottom: 10px;
 	/* background-color:rgb(255,255,255); */
-	height:109px;
+	height:70px;
 	/* Firefox v1.0+ */
 	-moz-border-radius:8px;
 	/* Safari v3.0+ and by Chrome v0.2+ */
@@ -896,6 +867,7 @@ margin-bottom: -10px;
 	width: 94%;
 	margin: 0px auto;
 	float: left;
+	margin-top:-20px;
 }
 
 .assignmentProgress{
@@ -904,6 +876,18 @@ margin-bottom: -10px;
 /*	font-weight: bold;	*/
 	margin:15px;
 	margin-bottom: 19px;
+	border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+.assignmentProgressStudent{
+	text-align: center;
+	font-size: 12px; 
+/*	font-weight: bold;	*/
+	margin:15px;
+	margin-bottom: 19px;
+	border-bottom: 1px solid #ccc;
+  padding-top: 15px;
+    padding-bottom: 12px;
 }
 
 .assignmentPath{
@@ -929,50 +913,27 @@ margin-bottom: -10px;
 	border: 1px black solid;
 }
 
-.progressStart{
-	background: url(images/Classpage/userIcon.png) no-repeat;
-	width: 29px;
-	height: 34px;
-	float: left;
-}
-
 .path{
 	margin-top: 15px;
 	margin-left: 8px;
 }
 .classcodeStyles{
-	display: inline-block;
-	width: 70px !important;
-	height: 25px !important;
-	font-size: 12px !important;
-	padding: 0 5px;
-	border: 0px;
-	left: 89%;
-	text-align: center;
-	color: #1076bb;
-	border-left: 1px solid #ccc;
-}
-
-
-.classcodeLabel{
-	width: 77px !important;
+	display: block;
+	width: 75px !important;
 	height: 30px !important;
-	border: 0px solid #ccc;
+	border: 1px solid #ccc;
 	font-size: 12px !important;
-	padding: 7px 5px;
+	/* font-weight: bold; */
+	padding: 0 5px;
+	position: absolute;
+	left: 89%;
+	margin-top: -44px;
 	text-align: center;
-	float: left;
 }
-
-
-
 
 .classcodeContainer{
-	float: right;
-	background: #FFF;
-	height: 33px;
-	margin-right: 20px;
-	padding-top: 6px;
+	float: left;
+	
 }
 
 .containerProgress{
@@ -981,10 +942,18 @@ margin-bottom: -10px;
 }
 
 .next, .previous{
-	margin: 55px auto;
+	margin: 20px auto;
 	width: 2%;
 	float: left;
 	height: 5px;
+	margin-bottom:0px;
+}
+.nextStudent, .previousStudent{
+	margin: 78px auto;
+	width: 2%;
+	float: left;
+	height: 5px;
+	margin-bottom:0px;
 }
 
 .rightArrow {
@@ -997,6 +966,7 @@ margin-bottom: -10px;
 	margin-right: -15px;
 	vertical-align: middle;
 	cursor: pointer;
+	margin-top:-28px;
 }
 
 .leftArrow {
@@ -1009,20 +979,27 @@ margin-bottom: -10px;
 	margin-left: -15px;
 	vertical-align: middle;
 	cursor: pointer;
+	margin-top:-28px;
 }
 
 .dropdowncontainer {
 	width: 130px;
 	float: left;
 	margin-right: 10px;
-	margin-left: 32px;
+	margin-left: 42px;
 	margin-bottom: 15px;
 }
 .dropdowncontainerStudent {
-	width: 140px;
+/* 	width: 140px;
 	margin-right: 10px;
 	margin-left: 13.5%;
-	margin-top: 24px;
+	margin-top: 24px; */
+	width: 1000px;
+	margin: 0 auto;
+	margin-top: -10px;
+	/* top: 24px; */
+	left: 36px;
+	position: relative;
 }
 
 .dropdownPlaceHolder {
@@ -1153,7 +1130,7 @@ margin-bottom: -10px;
 
 .btnContainer{
 	text-align : center;
-	border-top: 1px solid #CCC;	
+	border-bottom: 1px solid #EBEAEA;	
 }
 
 .btnContainerStyle{
@@ -1268,8 +1245,6 @@ margin-bottom: -10px;
 .assignementOrderHeader{
 	margin: 20px auto; 
 	text-align: center; 
-	font-size: 14px; 
-	font-weight: bold;
 }
 .errorMessage{
 	height: 170px;
@@ -1296,106 +1271,33 @@ margin-bottom: -10px;
 	width: 218px;
 	top: 29%;
 }
-
-.frameDiv{
-	width:100%;
-	overflow: hidden;
-	background-color: white;
-	text-align: center;
-}
-#pnlQuestionMark{
-	float: left;
-}
-
-.ccContainer{
-	padding-top: 17px;
-	padding-bottom: 10px;
-	float: right;
-}
-
-
-
-.arrowDropdown{
-	width: 0;
-	height: 0;
-	border: 8px solid;
-	border-color: #999 transparent transparent transparent;
-	float: right;
-	margin-top: -10px;
-	margin-left: 7px;
-	border-bottom: none;
-	cursor: pointer;
-}
-
-.studentList{
-	background: #fff;
-	height: auto;
-	min-height: 24px;
-	max-height: 97px;
-}
-
-.studentListContainer1{
+.switchContainer {
 	position: relative;
-	top: -147px;
-	right: 20px;
-	float: right;
-	padding: 7px;
-	width: 154px;
-}
-
-.studentListContainer {
-	background: #FFF;
-	padding: 7px;
-	border: 1px solid #ccc;
-	height: 28px;
-}
-
-.selectedStudent{
-	float: left;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	width: 115px;
-	cursor: pointer;
-}
-.student:hover{
-	background-color: #cfe3f1;
-	opacity: 1;
-	cursor: pointer;
-}
-
-.student{
-	width: 100% !important;
-	height: 22px !important;
-	font-size: 13px !important;
-	color: #515151 !important;
-	cursor: pointer !important;
-	float: left;
-	text-decoration: none !important;
-	padding: 4px 0;
-	padding-left: 11px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-
-}
-
-.scrollPanel{
+	display: inline-block;
+	vertical-align: top;
+	/* left: 0; */
+	width: 216px;
+	/* height: 21px;
+	padding: 3px;*/
+	vertical-align: middle;
 	background-color: white;
-	z-index: 9;
-	min-height: 24px;
-	max-height: 97px;
-	overflow-x: hidden !important;
-	overflow-y: auto !important;
-	position: absolute !important;
-	width: 140px;
-	border: 1px solid #ccc;
+	cursor: pointer;
+	border: 2px solid #1076BB;
+	border-radius: 4px;
+	right: -94px;
+	float: right;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
-
-#pnlMainContainer{
-	width: 99%;
+.toggleContainer{
+	float: right;
+	/* position: relative; */
+	display: inline-block;
+	top: 0;
 }
-.tabContainerDiv{
-	margin: 0 auto;
-width: 660px;
+.assignementOrderHeaderText{
+  margin: 20px auto;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
 }

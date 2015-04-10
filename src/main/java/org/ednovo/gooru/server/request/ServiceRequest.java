@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class ServiceRequest {
 
-	private static final Logger logger = LoggerFactory.getLogger(ServiceProcessor.class);
+	private static final Logger logger = LoggerFactory.getLogger(ServiceRequest.class);
 
 	private ClientResource clientResource = null;
 
@@ -203,6 +203,7 @@ public abstract class ServiceRequest {
 					}
 				}
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 		}
 		return serverStatus;
@@ -243,7 +244,7 @@ public abstract class ServiceRequest {
 			clientResource = null;
 			representation = null;
 		} catch (Exception e) {
-			getLogger().error(e.getMessage());
+			logger.error("Exception::", e);
 		}
 	}
 
@@ -263,6 +264,7 @@ public abstract class ServiceRequest {
 				clientResource.getClientInfo().setAgent(userAgentValue);
 			}
 		}catch(Exception e){
+			logger.error("Exception::", e);
 		}
 	}
 	

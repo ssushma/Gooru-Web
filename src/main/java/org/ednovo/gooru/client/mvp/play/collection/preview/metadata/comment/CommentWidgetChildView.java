@@ -271,7 +271,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			commentField.getElement().setAttribute("title",commentsDo.getComment());
 			setOptionsButtons();
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 	}
 	

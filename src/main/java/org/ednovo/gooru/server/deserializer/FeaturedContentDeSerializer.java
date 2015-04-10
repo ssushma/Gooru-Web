@@ -32,15 +32,20 @@ import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FeaturedContentDeSerializer extends DeSerializer{
+	
+	private static final Logger logger = LoggerFactory.getLogger(FeaturedContentDeSerializer.class);
 	/**
 	 * Deserialize json object to list of {@link FeaturedCollectionContentDo}
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @return list of featured collections
 	 */
+	
 	public List<FeaturedCollectionContentDo> deSerializer(JsonRepresentation jsonRep){
 		
 		List<FeaturedCollectionContentDo> featuredContents = new ArrayList<FeaturedCollectionContentDo>();
@@ -53,7 +58,7 @@ public class FeaturedContentDeSerializer extends DeSerializer{
 					}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.error("Exception::", e);
 		}
 		return featuredContents;
 	}

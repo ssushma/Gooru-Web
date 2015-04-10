@@ -39,6 +39,8 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -58,6 +60,8 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 	private static final String RESOURCE_COUNT="resourceCount";
 
 	private static final String GOORU_OID = "id";
+	
+	private static final Logger logger = LoggerFactory.getLogger(CollectionSearchResultDeSerializer.class);
 
 	@Override
 	public CollectionSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
@@ -108,6 +112,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 				
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		
 		searchResult.setHasAddedToShelf(stringtoInteger(recordJsonObject, HAS_ADDED_TO_SHELF, 0));
@@ -129,6 +134,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 				}
 			}
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return searchResult;
 	}
