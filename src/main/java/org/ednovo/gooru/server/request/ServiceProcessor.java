@@ -96,6 +96,7 @@ public class ServiceProcessor {
            @Override
            public JsonResponseRepresentation run() throws Exception {
         	   setClientResource(setContext(url, username, password));
+        	   setMediaType(MediaType.TEXT_HTML);
                setEncodings(Encoding.GZIP);
                Representation decodedRep = new DecodeRepresentation(getClientResource().get()); 
                // Get the representation as an JsonRepresentation
