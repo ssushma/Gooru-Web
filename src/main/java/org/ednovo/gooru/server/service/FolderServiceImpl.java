@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.folder.FolderTocDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -256,18 +257,28 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public FolderListDo getChildFolders(int offset, int limit, String parentId,String sharingType, String collectionType,boolean isExcludeAssessment) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = null;
+		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken);
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.OFFSET, String.valueOf(offset));
+		params.put(GooruConstants.LIMIT, String.valueOf(limit));
+		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+		
 		if(sharingType!=null){
-			sessionToken=sessionToken+"&sharing="+sharingType;
+			params.put(GooruConstants.SHARING, sharingType);
+//			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		if(collectionType!=null){
-			sessionToken=sessionToken+"&collectionType="+collectionType;
+			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
+//			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset+"", limit+"");
 		if(isExcludeAssessment){
-			url=url+"&excludeType=assessment/url";
+			params.put(GooruConstants.EXCLUDE_TYPE, "assessment/url");
+//			url=url+"&excludeType=assessment/url";
 		}
+		
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		logger.info("getChildFolders folder service : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

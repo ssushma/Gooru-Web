@@ -72,6 +72,7 @@ public interface ApiKeyParams {
 	String ORDER_BY = "orderBy";
 	String SHARING = "sharing";
 	String COLLECTION_TYPE = "collectionType";
+	String EXCLUDE_TYPE = "excludeType";
 	
 	/**
 	 * Collaborators related parameters.
