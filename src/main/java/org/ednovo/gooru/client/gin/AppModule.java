@@ -143,6 +143,14 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter.IsFolderPopUpFormProxy;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderPopUpUiBinder;
 import org.ednovo.gooru.client.mvp.folders.newfolder.IsFoldersPopupView;
+import org.ednovo.gooru.client.mvp.gsearch.IsSearchMainView;
+import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter.IsSearchMainProxy;
+import org.ednovo.gooru.client.mvp.gsearch.SearchMainView;
+import org.ednovo.gooru.client.mvp.gsearch.collection.IsSearchCollectionView;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter.IsSearchCollectionProxy;
+import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionView;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.client.mvp.home.HomeView;
@@ -464,9 +472,14 @@ public class AppModule extends AppPresenterModule {
 				RegisterView.class, IsRegisterProxy.class);
 		bindPresenter(SearchRootPresenter.class, IsSearchRootView.class,
 				SearchRootView.class, IsSearchRootProxy.class);
+		bindPresenter(SearchMainPresenter.class, IsSearchMainView.class,
+				SearchMainView.class, IsSearchMainProxy.class);
 		bindPresenter(CollectionSearchPresenter.class,
 				IsCollectionSearchView.class, CollectionSearchView.class,
 				IsCollectionSearchProxy.class);
+		bindPresenter(SearchCollectionPresenter.class,
+				IsSearchCollectionView.class, SearchCollectionView.class,
+				IsSearchCollectionProxy.class);
 		bindPresenter(ResourceSearchPresenter.class,
 				IsResourceSearchView.class, ResourceSearchView.class,
 				IsResourceSearchProxy.class);
