@@ -96,6 +96,11 @@
 		for production -->
 	<set-configuration-property name="CssResource.style"
 		value="stable" />
+		
+		<!-- Enable Gss with CssResource -->
+		<set-configuration-property name="CssResource.enableGss" value="true" />
+		<set-configuration-property name="CssResource.legacy" value="true" />
+		<set-configuration-property name="CssResource.conversionMode" value="lenient" />
 
 	<!-- In any real-world application, you will define at least -->
 	<!-- one locale in addition to the default locale. -->

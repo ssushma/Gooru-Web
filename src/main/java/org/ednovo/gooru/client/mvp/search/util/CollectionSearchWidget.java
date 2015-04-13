@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.search.collection;
+package org.ednovo.gooru.client.mvp.search.util;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
