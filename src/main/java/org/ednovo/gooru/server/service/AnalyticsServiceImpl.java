@@ -258,7 +258,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		if(jsonResponseRep.getStatusCode()==200){
 			try {
 				String boolVal="";
-				if(jsonRep.getJsonObject().isNull("message")){
+				if(!jsonRep.getJsonObject().isNull("message")){
 					JSONObject messageArr=jsonRep.getJsonObject().getJSONObject("message");
 					boolVal=messageArr.getString("aggregateData");
 					if(boolVal.equalsIgnoreCase("true")){
@@ -321,7 +321,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		
 		JsonRepresentation jsonRep = null;
 		CollectionSummaryMetaDataDo collectionSummaryMetaDataDo=null;
-		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+GRADEINPERCENTAGE;
+		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+GRADEINPERCENTAGE+","+GOORUOID;
 		
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
 		String  partialUrl= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken());

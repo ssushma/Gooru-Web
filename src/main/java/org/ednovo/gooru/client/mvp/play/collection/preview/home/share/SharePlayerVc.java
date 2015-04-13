@@ -163,6 +163,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 			});
 		}
 		catch(Exception ex){
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
 			@Override
@@ -485,6 +486,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 			ftmPanel.add(socialView);
 			socialSharePanel.add(ftmPanel);
 			} catch (Exception ex) {
+				AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 

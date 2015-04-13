@@ -1604,7 +1604,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		catch(Exception ex)
 		{
-			
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 	public void getdata(){

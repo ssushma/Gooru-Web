@@ -188,7 +188,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		List<FolderItemDo> folderItemDo = folderDo.getCollectionItems();
 		if(!ASSESSMENT_URL.equals(folderDo.getCollectionType()) && folderItemDo!=null&&folderItemDo.size()>0) {
 			for(int i=0;i<folderItemDo.size();i++) {
-				FolderItemDo folderItem = folderItemDo.get(i);
+				final FolderItemDo folderItem = folderItemDo.get(i);
 				Label folderItemLbl = new Label(folderItem.getTitle());
 
 				if(folderItem.getType().equals(FOLDER)) {
@@ -201,7 +201,17 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 					}else{
 						folderItemLbl.addStyleName(folderStyle.collection());
 					}
-					folderItemLbl.addClickHandler(new OpenChildFolderInContent(SCOLLECTION, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
+					if(folderItem.getCollectionType().equals(ASSESSMENT_URL)){
+						folderItemLbl.addClickHandler(new ClickHandler() {
+							@Override
+							public void onClick(ClickEvent event) {
+								Window.open(folderItem.getUrl(), "", "");
+							}
+						});
+					}else{
+						folderItemLbl.addClickHandler(new OpenChildFolderInContent(SCOLLECTION, folderDo.getGooruOid(), folderItem.getGooruOid(), folderItem.getTitle()));
+					}
+					
 					contents.add(folderItemLbl);
 				} else {
 					HTMLEventPanel resourcePanel = new HTMLEventPanel("");
@@ -303,6 +313,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			Window.enableScrolling(false);
 			editAssessmentPopup=new EditAssessmentPopup(folderDo) {
 				@Override
+				public
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					if(result!=null){
 						folderDo.setTitle(result.getTitle());
@@ -316,7 +327,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 					Window.enableScrolling(true);
 				}
 				@Override
-				void clickEventOnCancelAssessmentHandler(ClickEvent event) {
+				public void clickEventOnCancelAssessmentHandler(ClickEvent event) {
 					editAssessmentPopup.hide();
 					Window.enableScrolling(true);
 				}

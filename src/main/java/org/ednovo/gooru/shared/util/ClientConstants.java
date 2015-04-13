@@ -37,6 +37,12 @@ public interface ClientConstants {
 	
 	String GOORU_ANONYMOUS = "ANONYMOUS";
 	
+	String PERMISSIONS = "permissions";
+	
+	String SEQUENCE = "sequence";
+	
+	String POPULAR_LOWER_CASE = "popular";
+	
 	/* ****************** Base service Impl Constants Start ******************** */
 	
 

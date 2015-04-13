@@ -221,6 +221,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 		}
 		catch(Exception ex)
 		{
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
 			@Override
@@ -630,7 +631,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements ClientCo
 			shareDo.setDecodeRawUrl(link);
 			shareDo.setShareType(shareType);
 		} catch (Exception ex) {
-
+			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 	}
 

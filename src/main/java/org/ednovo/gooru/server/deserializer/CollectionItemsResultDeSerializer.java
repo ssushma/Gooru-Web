@@ -46,6 +46,8 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -74,6 +76,8 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 	private static final String VIEWS="views";
 	
 	private static final String RATINGS="ratings";
+	
+	private static final Logger logger = LoggerFactory.getLogger(CollectionItemsResultDeSerializer.class);
 
 	@Override
 	public CollectionItemSearchResultDo deserializeRecord(JSONObject collectionItemJsonObject) {
@@ -104,6 +108,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setResourceSource(resourceSourceDo);
 				}
 			} catch (JSONException e1) {
+				logger.error("Exception::", e1);
 			}
 			try {
 				if (collectionItemSearchResultDo.getResourceTypeString() != null && collectionItemSearchResultDo.getResourceTypeString().equalsIgnoreCase(VIDEO_YOUTUBE)) {
@@ -112,6 +117,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
 				}
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 			collectionItemSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 			collectionItemSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
@@ -164,6 +170,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
 				}
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 			collectionItemSearchResultDo.setAverageTime(getJsonString(recordJsonObject, AVERAGE_TIME));
 			collectionItemSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
@@ -185,10 +192,11 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 				}
 				
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 		}
 		catch(JSONException e){
-			
+			logger.error("Exception::", e);
 		}
 
 		return collectionItemSearchResultDo;

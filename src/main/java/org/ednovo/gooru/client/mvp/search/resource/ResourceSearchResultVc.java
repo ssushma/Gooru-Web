@@ -687,9 +687,36 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 		return wrapperVcr.isTagsDisclosurePanelOpen();
 	}
 	
-	public String stripHtmlRegex(String source) {
+	public String stripHtmlRegex(String html) {
 		 // Replace all tag characters with an empty string.
-		 return source.replaceAll("<.*?>", "");
+		 final StringBuilder sbText = new StringBuilder();
+		    final StringBuilder sbHtml = new StringBuilder();
+
+		    boolean isText = true;
+
+		    for (char ch : html.toCharArray()) {
+		        if (isText) { // outside html
+		            if (ch != '<') {
+		                sbText.append(ch);
+		                continue;
+		            } else {   // switch mode             
+		                isText = false;      
+		                sbHtml.append(ch); 
+		                continue;
+		            }
+		        }else { // inside html
+		            if (ch != '>') {
+		                sbHtml.append(ch);
+		                continue;
+		            } else {      // switch mode    
+		                isText = true;     
+		                sbHtml.append(ch); 
+		                continue;
+		            }
+		        }
+		    }
+
+		    return sbText.toString();
 	    }
 	
 }

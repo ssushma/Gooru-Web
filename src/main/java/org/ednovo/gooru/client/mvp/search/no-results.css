@@ -134,7 +134,7 @@
 .pageTitle {
 	color: rgba(200, 200, 200, 0.8);
 	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
-	filter: alpha(opacity = 100);
+	filter: literal("alpha(opacity = 100)");
 }
 
 .systemMessage {
@@ -248,9 +248,6 @@
 	background: -ms-linear-gradient(top, #FDFDFD, #EDEDED);
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
-	/* IE 6-9 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD',
-		EndColorStr='#EDEDED');
 }
 
 .tabsLi {
@@ -294,9 +291,6 @@
 	background: -ms-linear-gradient(top, #cccccc, #efefef);
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #cccccc, #efefef);
-	/* IE */
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#cccccc',
-		endColorstr='#efefef', GradientType=0); /* IE6-9 */
 }
 
 .resourceTypeIcon {

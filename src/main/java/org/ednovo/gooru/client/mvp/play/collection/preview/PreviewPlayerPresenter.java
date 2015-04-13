@@ -859,7 +859,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionDo.getGooruOid(), "views"));
 		         }
 				catch(Exception ex){
-					
+					AppClientFactory.printSevereLogger(ex.getMessage());
 				}
 			}
 		}
@@ -1015,7 +1015,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		         }
 			}   
 		}catch(Exception e){
-			
+			AppClientFactory.printSevereLogger(e.getMessage());
 		}
 		addToPopupSlot(resourceNarrationPresenter);
 	}

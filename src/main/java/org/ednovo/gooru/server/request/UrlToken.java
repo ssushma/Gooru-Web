@@ -332,7 +332,7 @@ public enum UrlToken {
 	
 	V2_SEND_WELCOME_MAIL("/v2/user/sendmail/{0}?sessionToken={1}"),
 	
-	V2_GET_COLLABORATORS("/v2/collaborator/content/{0}?filterBy={1}&sessionToken={2}&groupByStatus=true"),
+	V2_GET_COLLABORATORS("/v2/collaborator/content/{0}?filterBy={1}&sessionToken={2}"),
 	
 	V2_COLLABORATORS("/v2/collaborator/content/{0}?sessionToken={1}"),
 	
@@ -344,7 +344,7 @@ public enum UrlToken {
 	
 	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&sharing=public"),
 	
-	V2_DELETE_COLLABORATORS("/v2/collaborator/content/{0}?sessionToken={1}&data={2}"),
+	V2_DELETE_COLLABORATORS("/v2/collaborator/content/{0}?sessionToken={1}"),
 	
 	V2_LIST_CLASSPAGES_BY_USER_ID("/v2/classpage/collection/{0}?gooruUId={1}&sessionToken={2}"),
 	

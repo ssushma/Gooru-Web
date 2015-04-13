@@ -39,6 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -72,6 +74,8 @@ public class CollectionDeSerializer extends DeSerializer {
 	public static String SHARES = "shares";
 	public static String THUMBNAIL_URL = "url";
 	public static String RESOURCE = "resource";
+	
+	private static final Logger logger = LoggerFactory.getLogger(CollectionDeSerializer.class);
 
 	/**
 	 * Deserialize json object to list of {@link CollectionSearchResultDo}
@@ -97,6 +101,7 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return collections;
 	}
@@ -115,6 +120,7 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return collection;
 
@@ -131,6 +137,7 @@ public class CollectionDeSerializer extends DeSerializer {
 			JSONObject collectionItemJsonObject = jsonRep.getJsonObject();
 			collectionItemDo = JsonDeserializer.deserialize(collectionItemJsonObject.toString(), CollectionItemDo.class);
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return collectionItemDo;
 	}
@@ -146,6 +153,7 @@ public class CollectionDeSerializer extends DeSerializer {
 			JSONObject collectionJsonObject = jsonRep.getJsonObject();
 			collectionDo = JsonDeserializer.deserialize(collectionJsonObject.toString(), CollectionDo.class);
 		}catch(JSONException exception){
+			logger.error("Exception::", exception);
 		}
 		return collectionDo;
 	}
@@ -169,6 +177,7 @@ public class CollectionDeSerializer extends DeSerializer {
 					collectionItemDo.setNarrationType((String) collectionItemJsonObject.get(NARRATION_TYPE));
 				}
 			} catch (JSONException e) {
+				logger.error("Exception::", e);
 			}
 		}
 		return collectionItemDo;
@@ -188,6 +197,7 @@ public class CollectionDeSerializer extends DeSerializer {
 				collectionItemDos.add(collectionItemDo);
 			}
 		}catch(JSONException ex){
+			logger.error("Exception::", ex);
 		}
 		return collectionItemDos;
 	}
@@ -220,6 +230,7 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 			collectionDo.setCollectionItems(collectionItemDos);
 		}catch(JSONException ex){
+			logger.error("Exception::", ex);
 		}
 		return collectionDo;
 	}
@@ -253,6 +264,7 @@ public class CollectionDeSerializer extends DeSerializer {
 				}
 			}
 		}catch(Exception ex){
+			logger.error("Exception::", ex);
 		}
 		return collections;
 	}
@@ -271,6 +283,7 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 
 		} catch (JSONException e) {
+			logger.error("Exception::", e);
 		}
 		return collectionItem;
 
@@ -314,6 +327,7 @@ public class CollectionDeSerializer extends DeSerializer {
 			}
 			
 		} catch (Exception e) {
+			logger.error("Exception::", e);
 		}
 		
 		return collections;

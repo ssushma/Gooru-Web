@@ -49,7 +49,6 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	public interface AddQuestionAnswerChoiceUiBinder extends UiBinder<Widget, AddQuestionAnswerChoice>{
 		
 	}
-	
 	public static AddQuestionAnswerChoiceUiBinder uiBinder=GWT.create(AddQuestionAnswerChoiceUiBinder.class);
 	
 	@UiField Label labelChoice,optionSelectedButton,errorMessageforAnswerChoice,optionNoButton;
@@ -190,13 +189,4 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	public void setAnswerTextBox(TinyMCE answerTextBox) {
 		this.answerTextBox = answerTextBox;
 	}
-	
-//	@UiHandler("answerTextBox")
-//	public void keyUponAnswerTextBox(KeyUpEvent event){
-//		String textBoxValue=answerTextBox.getText();
-//		if(textBoxValue.length()>0){
-//			errorMessageforAnswerChoice.setText("");
-//		}
-//	}
-
 }
