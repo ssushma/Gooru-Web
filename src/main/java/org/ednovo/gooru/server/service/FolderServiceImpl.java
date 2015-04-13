@@ -101,8 +101,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public CollectionDo createFolder(CollectionDo collectionDo) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.CREATE_FOLDER, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_FOLDER, getLoggedInSessionToken());
 		Iterator it = collectionDo.getTaxonomySet().iterator();
 		String taxonomyId = "";
 		while(it.hasNext()){
@@ -120,8 +119,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 
 		
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
-				getRestPassword(), form);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword(), form);
 		logger.info("CreteFolder Url : "+url);
 		logger.info("form : "+form);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -130,11 +128,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 	
 	@Override
-	public CollectionDo createFolderToParentFolder(CollectionDo collectionDo,
-			String parentId) throws GwtException {
+	public CollectionDo createFolderToParentFolder(CollectionDo collectionDo,String parentId) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.CREATE_FOLDER, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_FOLDER, getLoggedInSessionToken());
 
 		Iterator it = collectionDo.getTaxonomySet().iterator();
 		String taxonomyId = "";
@@ -153,8 +149,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		form.add(PARENT_ID, this.parentId);
 
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
-				getRestPassword(), form);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword(), form);
 		logger.info("createFolderToParentFolder : "+url);
 		logger.info("form : "+form);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -176,7 +171,12 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public List<CollectionItemDo> getAllFolders() throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.LIST_MY_FOLDERS, getLoggedInSessionToken(), WORKSPACE_PAGE_SIZE, ORDER_BY);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.LIST_MY_FOLDERS, getLoggedInSessionToken());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.PAGE_SIZE, WORKSPACE_PAGE_SIZE);
+		params.put(GooruConstants.ORDER_BY, ORDER_BY);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("-- getAllFolders -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		List<CollectionItemDo> collectionItemDo = deserializeWorkspace(jsonRep);
@@ -212,8 +212,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}*/
 
 	@Override
-	public CollectionDo getFolderInformation(String folderId)
-			throws GwtException {
+	public CollectionDo getFolderInformation(String folderId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_A_FOLDER_INFORMATION, folderId, getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -475,15 +474,21 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public FolderListDo getCollectionResources(String parentId,	String sharingType, String collectionType) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = null;
+		String partialUrl = null;
 		String sessionToken=getLoggedInSessionToken();
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_RESOURCE_LIST, parentId, sessionToken);
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+		
 		if(sharingType!=null){
-			sessionToken=sessionToken+"&sharing="+sharingType;
+			params.put(GooruConstants.SHARING, sharingType);
+//			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		if(collectionType!=null){
-			sessionToken=sessionToken+"&collectionType="+collectionType;
+			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
+//			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_RESOURCE_LIST, parentId, sessionToken);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);
@@ -506,10 +511,12 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public FolderTocDo getTocFolders(String folderId,boolean fromPPP) throws GwtException,ServerDownException {
 		FolderTocDo folderTocDo = new FolderTocDo();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
-
-		url=url+"&sharing=public";
-		
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId, getLoggedInSessionToken());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+		params.put(GooruConstants.SHARING, GooruConstants.PUBLIC);
+//		url=url+"&sharing=public";
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("-- Folder toc API - - - - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep!=null && jsonResponseRep.getJsonRepresentation()!=null){
@@ -541,8 +548,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public Map<String,String> getFolderRouteNodes(String folderId)
-			throws GwtException, ServerDownException {
+	public Map<String,String> getFolderRouteNodes(String folderId) throws GwtException, ServerDownException {
 		Map<String,String> folderList=new LinkedHashMap<String, String>();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_FOLDER_ROUTE_NODES, folderId,getLoggedInSessionToken());
 		getLogger().info("getFolderRouteNodes:"+url);
