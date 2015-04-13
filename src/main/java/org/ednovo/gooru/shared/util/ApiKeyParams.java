@@ -81,6 +81,11 @@ public interface ApiKeyParams {
 	String GROUP_BY_STATUS = "groupByStatus";
 	String DATA = "data";
 	
+	/**
+	 * Media service related parameters.
+	 */
+	String MEDIA_FILE_NAME = "mediaFileName";
+	String INCLUDE_ADDITIONAL_INFO = "includeAdditionalInfo";
 	
 	
 	

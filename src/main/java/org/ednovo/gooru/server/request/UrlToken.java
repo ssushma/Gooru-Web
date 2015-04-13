@@ -108,7 +108,7 @@ public enum UrlToken {
 	
 	V2_UPDATE_COLLLECTION_ITEM_METADATA("/v2/collection/item/{0}?sessionToken={1}"),
 			
-	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
+	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?sessionToken={1}"),
 
 	UPDATE_REGISTER_USER("/user/{0}?sessionToken={1}"),
 
@@ -124,7 +124,7 @@ public enum UrlToken {
 
 	MEDIA_FILE_UPLOAD("/v2/media?sessionToken={0}"),
 
-	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}&mediaFileName={2}"),
+	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}"),
 
 	IMAGE_CROP("/media/{0}/crop?sessionToken={1}&height={2}&width={3}&xPosition={4}&yPosition={5}&&cropEngine=bufferImage"),
 
@@ -210,7 +210,7 @@ public enum UrlToken {
 	
 	GENERATE_BITLY_LINK("/v2/share/url/shorten?sessionToken={0}"),
 	
-	UPLOAD_PROFILE_IMAGE("/user/{0}/profile/picture?sessionToken={1}&mediaFileName={2}"),
+	UPLOAD_PROFILE_IMAGE("/user/{0}/profile/picture?sessionToken={1}"),
 	
 	PROFILE_PAGE_EVENT("/activity/log/{0}/profile?sessionToken={1}"), 
 	
