@@ -81,7 +81,7 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="panel-footer no-gutter">
-					<g:HTMLPanel styleName="col-md-6 col-sm-6 col-xs-5 remixButton">
+					<g:HTMLPanel styleName="col-md-12 col-sm-12 remixButton">
 						<g:Button styleName="primary">Remix</g:Button>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
