@@ -277,6 +277,7 @@
 	border-bottom: 1px solid #ddd;
 	background:none;
 	padding:5px 10px;
+	height: 55px;
 	/*background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ededed));
 	background: -webkit-linear-gradient(top, #fdfdfd, #ededed);
 	background: -moz-linear-gradient(top, #fdfdfd, #ededed);

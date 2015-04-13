@@ -40,9 +40,7 @@
 	<div class="container">
 		<div class="SmallWidthContainer">
 			<div class="borderBox">
-		      <div class="less-gutter libraryMainContainerBlock">
-		    	  <g:HTMLPanel ui:field="searchResultPanel"></g:HTMLPanel>
-		      </div>
+		   		<g:HTMLPanel ui:field="searchResultPanel" styleName="less-gutter libraryMainContainerBlock"/>
 		    <div class="clearfix"></div>
 			</div>
 		</div>
