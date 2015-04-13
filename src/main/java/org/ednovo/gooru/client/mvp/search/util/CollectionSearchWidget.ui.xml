@@ -1,321 +1,15 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style gss='true'>
-	/* Add CSS here. See the GWT docs on UI Binder for more details */
-	.no-gutter>[class *='col-md-'] {
-		padding-left: 0px;
-		padding-right: 0px
-	}
-	
-	.less-gutter>[class *='col-md-'] {
-		padding-left: 8px;
-		padding-right: 8px
-	}
-	
-	.libraryMainContainerBlock .topicListEllipsis {
-		font-size: 14px;
-		font-weight: bold;
-	}
-	
-	.libraryMainContainerBlock .viewsBlock {
-		font-size: 12px;
-		color: #999999;
-		text-align: right;
-	}
-	
-	.libraryMainContainerBlock .collectionImg img {
-		width: 160px;
-		height: 120px;
-		padding-right: 0;
-	}
-	
-	.libraryMainContainerBlock .collectionImg a {
-		display: block;
-	}
-	
-	.libraryMainContainerBlock .collectionImg a:hover {
-		opacity: 0.6;
-	}
-	
-	.searchStandard {
-		/* Old browsers */
-		background: #dddddd;
-		
-		border-radius: 3px 3px;
-		font-size: 10px;
-		color: #ffffff;
-		padding: 3px 3px;
-		display: inline-block;
-		margin: 8px 0;
-	}
-	
-	.libraryMainContainerBlock .collectionTitle {
-		font-size: 18px;
-		font-weight: 500;
-		color: #0c74be;
-	}
-	
-	.userDetails img {
-		width: 30px;
-		height: 30px;
-	}
-	
-	.userDetails {
-		font-size: 13px;
-		font-weight: 600;
-		color: #0c74be;
-		padding: 6px 0;
-	}
-	
-	.libraryMainContainerBlock .additionalCount {
-		color: #1076BA;
-	}
-	
-	.libraryMainContainerBlock  .collectionImg img {
-		border-left: 9px solid #1076bb;
-	}
-	
-	.libraryMainContainerBlock .panel {
-		background-color: #fff;
-		border: 1px solid #dddddd;
-		border-radius: 4px;
-		box-shadow: none;
-		margin-bottom: 20px;
-	}
-	
-	.standerdContainer {
-		padding: 5px 10px;
-		border-bottom: 1px solid #dddddd;
-	}
-	
-	.resourcesInside {
-		padding: 8px 10px;
-	}
-	
-	.resourceImage {
-		display: inline-block;
-		height: 60px;
-		margin: 5px 10px;
-		position: relative;
-		width: 80px;
-	}
-	
-	.resourceImage a:hover {
-		opacity: 0.6;
-	}
-	
-	.resourceImage img {
-		height: 60px;
-		width: 80px;
-	}
-	
-	.resourceName {
-		color: #fff;
-		font-size: 12px;
-		height: 61px;
-		position: absolute;
-		text-align: center;
-		top: 0;
-		width: 81px;
-	}
-	
-	.videoSmall {
-		background: url("../images/Video_1.png") no-repeat scroll 0 0
-			transparent;
-	}
-	
-	.questionSmall {
-		background: url("../images/Question_1.png") no-repeat scroll 0 0
-			transparent;
-	}
-	
-	.textSmall {
-		background: url("../images/Text_1.png") no-repeat scroll 0 0 transparent;
-	}
-	
-	.webSmall {
-		background: url("../images/Website_1.png") no-repeat scroll 0 0
-			transparent;
-	}
-	
-	.resourceImage a:hover .videoSmall {
-		display: none;
-	}
-	
-	.resourceImage a:hover .textSmall {
-		display: none;
-	}
-	
-	.resourceImage a:hover .webSmall {
-		display: none;
-	}
-	
-	.libraryMainContainerBlock .panel-default>.panel-heading {
-		border-bottom: 1px solid #ddd;
-		background: none;
-		padding: 5px 10px;
-		
-	}
-	
-	.remixButton button.primary {
-		padding: 7px 30px;
-	}
-	
-	.circleBlocks {
-		padding: 0 10px;
-	}
-	
-	.circleBlocks ul {
-		margin: 0 0;
-		padding: 0 0;
-	}
-	
-	.circleBlocks ul li {
-		margin: 0 0;
-		padding: 0 0;
-		width: 30px;
-		height: 30px;
-		border-radius: 50% 50%;
-		border: 1px solid #6daccf;
-		display: inline-block;
-	}
-	
-	.libraryMainContainerBlock .panel-body {
-		padding: 0 0;
-	}
-	
-	.libraryMainContainerBlock .panel-footer {
-		padding: 10px 10px;
-		background: #dddddd;
-	}
-	
-	.whitebg {
-		background: #ffffff;
-	}
-	
-	.viewContainer {
-		margin: 8px 0;
-	}
-	
-	.viewContainer span {
-		margin-right: 8px;
-	}
-	
-	.remixButton {
-		text-align: right;
-	}
-	
-	.borderBox {
-		padding: 20px 15px;
-		border: 1px solid #dddddd;
-		margin: 20px 15px;
-		border-radius: 5px 5px;
-	}
-	
-	@media screen and (max-width: 319px) {
-		.collectionImg {
-			width: 160px;
-			float: none;
-			margin: 0 auto 20px;
-			text-align: center;
-		}
-		.collectionDesc {
-			text-align: center;
-		}
-		.circleBlocks {
-			text-align: center;
-		}
-		.collectionDescription {
-			padding: 0 15px;
-		}
-		.standerdContainer {
-			text-align: center;
-		}
-		.remixButton button.primary {
-			padding: 7px 10px;
-		}
-	}
-	
-	@media screen and (max-width: 479px) {
-		.collectionImg {
-			width: 160px;
-			float: none;
-			margin: 0 auto 20px;
-			text-align: center;
-		}
-		.collectionDesc {
-			text-align: center;
-		}
-		.circleBlocks {
-			text-align: center;
-		}
-		.collectionDescription {
-			padding: 0 15px;
-		}
-		.standerdContainer {
-			text-align: center;
-		}
-		.remixButton button.primary {
-			padding: 7px 10px;
-		}
-	}
-	
-	@media screen and (max-width: 767px) {
-		.collectionImg {
-			width: 160px;
-			display: block;
-			vertical-align: top;
-			margin: 10px auto;
-		}
-		.collectionDesc {
-			width: auto;
-			display: block;
-			vertical-align: top;
-			text-align: center;
-		}
-		.resourcesInside {
-			text-align: center;
-		}
-		.resourceImage {
-			margin: 5px 1px;
-		}
-		.circleBlocks {
-			text-align: center;
-		}
-		.collectionDescription {
-			padding: 0 15px;
-			text-align: center;
-		}
-		.standerdContainer {
-			text-align: center;
-		}
-		.remixButton button.primary {
-			padding: 7px 10px;
-		}
-	}
-	
-	@media screen and (max-width: 991px) {
-		.resourcesInside {
-			text-align: center;
-		}
-	}
-	
-	@media screen and (max-width: 1199px) {
-	}
-	
-	@media screen and (min-width: 1200px) {
-	}
-	</ui:style>
 	<g:HTMLPanel>
 		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
 			widget names. The ui:field attribute binds an element to a field in the owner 
 			class. See the GWT docs on UI Binder for more details. -->
 		<g:HTMLPanel styleName="col-md-6 col-sm-6">
-			<g:HTMLPanel styleName="{style.panel} {style.panel-default}">
-				<g:HTMLPanel styleName="{style.panel-heading}">
-					<g:HTMLPanel styleName="row {style.less-gutter}">
-						<g:HTMLPanel styleName="{style.circleBlocks}">
+			<g:HTMLPanel styleName="panel panel-default">
+				<g:HTMLPanel styleName="panel-heading">
+					<g:HTMLPanel styleName="row less-gutter">
+						<g:HTMLPanel styleName="circleBlocks">
 							<ul>
 								<li></li>
 								<li></li>
@@ -328,46 +22,46 @@
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.panel-body}">
-					<g:HTMLPanel styleName="{style.no-gutter}">
-						<g:HTMLPanel styleName="col-md-5 col-sm-5 {style.collectionImg}">
+				<g:HTMLPanel styleName="panel-body}">
+					<g:HTMLPanel styleName="no-gutter}">
+						<g:HTMLPanel styleName="col-md-5 col-sm-5 collectionImg}">
 							<a href="#">
 								<g:Image url="images/library-image.png"/>
 							</a>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-7 col-sm-7 {style.collectionDesc}">
-							<g:HTMLPanel styleName="{style.collectionTitle}">Real World Senarios Kit</g:HTMLPanel>
-							<g:HTMLPanel styleName="{style.userDetails}">
+						<g:HTMLPanel styleName="col-md-7 col-sm-7 collectionDesc">
+							<g:HTMLPanel styleName="collectionTitle">Real World Senarios Kit</g:HTMLPanel>
+							<g:HTMLPanel styleName="userDetails">
 								<g:Image url="images/comment-avathar.png"/> austin 
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{style.collectionDescription}">Checkout this collection for quick
+							<g:HTMLPanel styleName="collectionDescription">Checkout this collection for quick
 								guide on Real World...</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 
-						<g:HTMLPanel styleName="{style.standerdContainer}">
-							<g:HTMLPanel styleName="{style.searchStandard}">NGSS-3-ESS2</g:HTMLPanel>
-							<g:HTMLPanel styleName="{style.searchStandard}">NGSS-3-ESS2</g:HTMLPanel>
-							<g:InlineLabel styleName="{style.additionalCount}">+4</g:InlineLabel>
+						<g:HTMLPanel styleName="standerdContainer">
+							<g:HTMLPanel styleName="searchStandard">NGSS-3-ESS2</g:HTMLPanel>
+							<g:HTMLPanel styleName="searchStandard">NGSS-3-ESS2</g:HTMLPanel>
+							<g:InlineLabel styleName="additionalCount">+4</g:InlineLabel>
 
 						</g:HTMLPanel>
 
-						<g:HTMLPanel styleName="{style.resourcesInside}">
+						<g:HTMLPanel styleName="resourcesInside">
 
 							<p>4 of the 8 resources in this collection </p>
 
-							<g:HTMLPanel styleName="{style.resourceImage}">
+							<g:HTMLPanel styleName="resourceImage">
 								<a href="#">
 									<g:Image url="images/auto1.png"/>
-										<g:HTMLPanel styleName="{style.resourceName} {style.videoSmall}"></g:HTMLPanel>
+										<g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
 								</a>
 							</g:HTMLPanel>
 
 
-							<g:HTMLPanel styleName="{style.resourceImage}">
+							<g:HTMLPanel styleName="resourceImage}">
 								<a href="#">
 									<g:Image url="images/auto2.png"/>
-										<g:HTMLPanel styleName="{style.resourceName} {style.videoSmall}"></g:HTMLPanel>
+										<g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
 								</a>
 							</g:HTMLPanel>
 
@@ -414,13 +108,6 @@
 
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-
-
-
-
-
-
-
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>

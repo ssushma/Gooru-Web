@@ -579,6 +579,9 @@
 							<charset>utf-8</charset>
 							<jsEngine>closure</jsEngine>
 							<cssSourceDir>css</cssSourceDir>
+							<cssSourceFiles>
+                   			 	<cssSourceFile>search/newsearch.css</cssSourceFile>
+               				 </cssSourceFiles>
 							<cssSourceIncludes>
 								<cssSourceInclude>*.css</cssSourceInclude>
 							</cssSourceIncludes>
