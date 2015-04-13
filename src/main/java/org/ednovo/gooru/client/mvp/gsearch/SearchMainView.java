@@ -59,11 +59,12 @@ public class SearchMainView extends BaseViewWithHandlers<SearchMainUiHandlers>
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	
-	@UiField HTMLPanel searchResultPanel;
+	@UiField HTMLPanel gooruSearchMainContainer,searchResultPanel;
 	
 	
 	public SearchMainView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		gooruSearchMainContainer.getElement().setId("gooruSearchMainContainer");
 	}
 
 	@Override

@@ -27,15 +27,12 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
-import java.util.Map;
-
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter.IsSearchCollectionProxy;
-import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;

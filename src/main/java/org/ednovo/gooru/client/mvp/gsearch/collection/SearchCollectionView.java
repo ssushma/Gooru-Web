@@ -26,6 +26,7 @@
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -64,6 +65,6 @@ public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionU
 	
 	public SearchCollectionView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		//searchResultPanel.add(new CollectionSearchWidget());
+		searchResultPanel.add(new CollectionSearchWidget());
 	}
 }
