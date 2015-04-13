@@ -1,32 +1,30 @@
 /* CSS Document */
-.subNavigation, .collectionDetails{
+#gooruSearchMainContainer .subNavigation, #gooruSearchMainContainer .collectionDetails{
 	background:#ffffff;
 }
 
-.subNavigation{
+#gooruSearchMainContainer .subNavigation{
 	border-bottom:1px solid #979797;
 }
-.viewContainer{
+#gooruSearchMainContainer .viewContainer{
 	text-align:right;
 }
-.subNavigation .seachLeftNavigation ul{
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 	margin:0 0;
 	padding:0 0;
 }
-.subNavigation .seachLeftNavigation ul li{
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li{
 	margin:0 0;
 	padding:0 0;
 	list-style:none;
 	display:inline-block;
 	margin-left:-3px;
 	margin-bottom:-1px;
-
-
 }
-.seachRightNavigation .dropdown-menu > li > a{
+#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a{
 	text-align:left;
 }
-.subNavigation .seachLeftNavigation ul li a{
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a{
 	display:block;
 	padding:20px 45px;
 	color:#515151;
@@ -34,42 +32,42 @@
 	border-left:1px solid #979797;
 	font-size:13px;
 }
-.subNavigation .seachLeftNavigation ul li a:hover, .subNavigation .seachLeftNavigation ul li a:focus{
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:hover, #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:focus{
 	opacity:0.75;
 	text-decoration:none;
 }
-.subNavigation .seachLeftNavigation ul li.active{
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li.active{
 	border-bottom:1px solid #ffffff;
 }
-.subNavigation .seachLeftNavigation ul li.active a{
+#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li.active a{
 	background:#ffffff;
 	border-bottom:1px solid #ffffff;
 }
 
-.subNavigation .seachRightNavigation{
+#gooruSearchMainContainer .subNavigation .seachRightNavigation{
 	font-size:13px;
 
 }
 
-.collectionDetails .seachLeftNavigation ul{
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 	padding:0 0;
 	margin:25px 0;
 	display:inline-block;
 }
-.collectionDetails .seachLeftNavigation ul li{
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li{
 	padding:0 0;
 	margin:0 0;
 	list-style:none;
 	display:inline-block;
 
 }
-.collectionDetails  .seachRightNavigation  button.primary{
+#gooruSearchMainContainer .collectionDetails  .seachRightNavigation  button.primary{
 	padding:7px 25px;
 }
-.collectionDetails  .seachRightNavigation{
+#gooruSearchMainContainer .collectionDetails  .seachRightNavigation{
 	margin:30px 0;
 }
-.collectionDetails .seachLeftNavigation ul li a{
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a{
 	display:block;
 	padding:10px 25px 10px 60px;
 	color:#515151;
@@ -77,28 +75,28 @@
 	border-radius:3px 3px;
 	font-size:13px;
 }
-.collectionDetails .seachLeftNavigation ul li a:hover{
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a:hover{
 	border:2px solid #87badd;
 	text-decoration:none;
 }
-.collectionDetails .seachLeftNavigation ul li.active a{
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li.active a{
 	border:2px solid #87badd;
 	text-decoration:none;
 }
-.collectionDetails .seachLeftNavigation ul li a.collectionsIcon{
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.collectionsIcon{
 	background:url(../images/folders/panel/collection-icon.png) no-repeat 18px 6px;
 }
-.collectionDetails .seachLeftNavigation ul li a.assessmentIcon{
+#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon{
 	background:url(../images/folders/panel/assessment-type.png) no-repeat 18px 6px;
 }
-.seachRightNavigation{
+#gooruSearchMainContainer .seachRightNavigation{
 	text-align:right;
 	margin:13px 0;
 }
-.collectionDetails{
+#gooruSearchMainContainer .collectionDetails{
 	margin-bottom:10px;
 }
-.authorDetails{
+#gooruSearchMainContainer .authorDetails{
 	display:inline-block;
 	vertical-align:middle;
 	padding:0 20px;
@@ -107,53 +105,53 @@
 	border-right:1px solid #cccccc;
 	font-size:13px;
 }
-.authorDetails .input-group {
+#gooruSearchMainContainer .authorDetails .input-group {
 	margin:12px 0;
 }
-.authorDetails .input-group .form-control{
+#gooruSearchMainContainer .authorDetails .input-group .form-control{
 	display:inline-block;
 	vertical-align:middle;
 	width:auto;
 	float:none;
 }
-.authorDetails .input-group  span{
+#gooruSearchMainContainer .authorDetails .input-group  span{
 	display:inline-block;
 }
-.no-gutter > [class*='col-md-']{
+#gooruSearchMainContainer .no-gutter > [class*='col-md-']{
 	padding-left:0px;
 	padding-right:0px
 }
 
-.less-gutter > [class*='col-md-']{
+#gooruSearchMainContainer .less-gutter > [class*='col-md-']{
 	padding-left:8px;
 	padding-right:8px
 }
 
-.libraryMainContainerBlock .topicListEllipsis{
+#gooruSearchMainContainer .libraryMainContainerBlock .topicListEllipsis{
 	font-size:13px;
 	font-weight:bold;
 }
 
-.libraryMainContainerBlock .viewsBlock{
+#gooruSearchMainContainer .libraryMainContainerBlock .viewsBlock{
 	font-size:12px;
 	color:#999999;
 	text-align:right;
 }
 
-.libraryMainContainerBlock .collectionImg img{
+#gooruSearchMainContainer .libraryMainContainerBlock .collectionImg img{
 	width:160px;
 	height:120px;
 	padding-right:0;
 }
-.libraryMainContainerBlock .collectionImg a{
+#gooruSearchMainContainer .libraryMainContainerBlock .collectionImg a{
 	display:block;
 }
-.libraryMainContainerBlock .collectionImg a:hover {
+#gooruSearchMainContainer .libraryMainContainerBlock .collectionImg a:hover {
     opacity: 0.6;
 }
 
 
-.searchStandard{
+#gooruSearchMainContainer .searchStandard{
 	
 	/* Old browsers */
 	background: #dddddd;
@@ -183,34 +181,34 @@
 }
 
 
-.libraryMainContainerBlock .collectionTitle{
+#gooruSearchMainContainer .libraryMainContainerBlock .collectionTitle{
 	font-size:18px;
 	font-weight:500;
 	color:#0c74be;
 	margin-top:8px;
 }
 
-.userDetails img{
+#gooruSearchMainContainer .userDetails img{
 	width:30px;
 	height:30px;
 }
-.userDetails{
+#gooruSearchMainContainer .userDetails{
 	font-size:13px;
 	font-weight:600;
 	color:#0c74be;
 	padding:6px 0;
 }
 
-.libraryMainContainerBlock .additionalCount{
+#gooruSearchMainContainer .libraryMainContainerBlock .additionalCount{
 	color:#1076BA;
 }
 
-.libraryMainContainerBlock  .collectionImg img {
+#gooruSearchMainContainer .libraryMainContainerBlock  .collectionImg img {
     border-left: 9px solid #1076bb;
 }
 
 
-.libraryMainContainerBlock .panel {
+#gooruSearchMainContainer .libraryMainContainerBlock .panel {
     background-color: #fff;
     border: 1px solid #dddddd;
     border-radius: 4px;
@@ -218,30 +216,30 @@
     margin-bottom: 20px;
 }
 
-.standerdContainer{
+#gooruSearchMainContainer .standerdContainer{
 	padding:5px 10px;
 
 	border-bottom:1px solid #dddddd;
 }
-.resourcesInside {
+#gooruSearchMainContainer .resourcesInside {
  
 	padding:8px 8px;
 }
-.resourceImage {
+#gooruSearchMainContainer .resourceImage {
     display: inline-block;
     height: 60px;
     margin: 5px 4px;
     position: relative;
     width: 80px;
 }
-.resourceImage a:hover {
+#gooruSearchMainContainer .resourceImage a:hover {
     opacity: 0.6;
 }
-.resourceImage img {
+#gooruSearchMainContainer .resourceImage img {
     height: 60px;
     width: 80px;
 }
-.resourceName {
+#gooruSearchMainContainer .resourceName {
     color: #fff;
     font-size: 12px;
     height: 61px;
@@ -250,30 +248,30 @@
     top: 0;
     width: 81px;
 }
-.videoSmall {
+#gooruSearchMainContainer .videoSmall {
     background: url("../images/Video_1.png") no-repeat scroll 0 0 transparent;
 }
-.questionSmall {
+#gooruSearchMainContainer .questionSmall {
     background: url("../images/Question_1.png") no-repeat scroll 0 0 transparent;
 }
 
-.textSmall {
+#gooruSearchMainContainer .textSmall {
     background: url("../images/Text_1.png") no-repeat scroll 0 0 transparent;
 }
-.webSmall {
+#gooruSearchMainContainer .webSmall {
     background: url("../images/Website_1.png") no-repeat scroll 0 0 transparent;
 }
 
-.resourceImage a:hover .videoSmall{
+#gooruSearchMainContainer .resourceImage a:hover .videoSmall{
 		display:none;
 	}
-	.resourceImage a:hover .textSmall{
+	#gooruSearchMainContainer .resourceImage a:hover .textSmall{
 		display:none;
 	}
-	.resourceImage a:hover .webSmall{
+	#gooruSearchMainContainer .resourceImage a:hover .webSmall{
 		display:none;
 	}
-.libraryMainContainerBlock .panel-default > .panel-heading{
+#gooruSearchMainContainer .libraryMainContainerBlock .panel-default > .panel-heading{
 	border-bottom: 1px solid #ddd;
 	background:none;
 	padding:5px 10px;
@@ -284,17 +282,17 @@
 	background: -o-linear-gradient(top, #fdfdfd, #ededed);
 	filter: progid;*/
 }
-.remixButton button.primary{
+#gooruSearchMainContainer .remixButton button.primary{
 	padding:7px 30px;
 }
-.circleBlocks{
+#gooruSearchMainContainer .circleBlocks{
 	padding:0 10px;
 }
-.circleBlocks ul{
+#gooruSearchMainContainer .circleBlocks ul{
 	margin:0 0;
 	padding:0 0;
 }
-.circleBlocks ul li{
+#gooruSearchMainContainer .circleBlocks ul li{
 	margin:0 0;
 	padding:0 0;
 	width:30px;
@@ -304,27 +302,27 @@
 	display:inline-block;
 }
 
-.libraryMainContainerBlock .panel-body{
+#gooruSearchMainContainer .libraryMainContainerBlock .panel-body{
 	padding:0 0;
 }
-.libraryMainContainerBlock .panel-footer{
+#gooruSearchMainContainer .libraryMainContainerBlock .panel-footer{
 	padding:10px 10px;
 	background:#dddddd;
 }
 
-.whitebg{
+#gooruSearchMainContainer .whitebg{
 	background:#ffffff;
 }
 
-.viewContainer{
+#gooruSearchMainContainer .viewContainer{
 	margin:9px 0;
 }
-.viewContainer span{
+#gooruSearchMainContainer .viewContainer span{
 	margin-right:8px;
 	font-size:13px;
 	color:#515151;
 }
-.SmallWidthContainer{
+#gooruSearchMainContainer .SmallWidthContainer{
 	width:855px;
 	margin:0 auto;
 	padding:2px 10px;
@@ -332,31 +330,31 @@
 	border-radius:6px 6px;
 	
 }
-.remixButton{
+#gooruSearchMainContainer .remixButton{
 	text-align:right;
 }
-.ratings{
+#gooruSearchMainContainer .ratings{
 	margin:6px 0;
 }
 
-.borderBox{
+#gooruSearchMainContainer .borderBox{
 	padding:20px 8px;
 	border:1px solid #dddddd;
 	margin:20px 8px;
 	border-radius:5px 5px;
 }
 
-.ratingsBlock .img-responsive{
+#gooruSearchMainContainer .ratingsBlock .img-responsive{
 	display:inline-block;
 }
 
-.collectionImg{
+#gooruSearchMainContainer .collectionImg{
 	width:44% !important;
 }
-.collectionDesc{
+#gooruSearchMainContainer .collectionDesc{
 	width:52% !important;
 }
-.searchQuestionMark {
+#gooruSearchMainContainer .searchQuestionMark {
 	background: url("../images/mos/questionmark.png") no-repeat 4px 4px;
 	width: 19px;
 	height: 24px;
@@ -367,86 +365,86 @@
 	top: 9px;
 }
 @media (min-width: 240px) and (max-width: 319px){
-	.collectionImg{
+	#gooruSearchMainContainer .collectionImg{
 		width:160px;
 		float:none;
 		margin:0 auto 20px;
 		text-align:center;
 	}
 	
-	.collectionDesc{
+	#gooruSearchMainContainer .collectionDesc{
 		text-align:center;
 	}
 	
-	.circleBlocks{
+	#gooruSearchMainContainer .circleBlocks{
 		text-align:center;
 	}
-	.collectionDescription{
+	#gooruSearchMainContainer .collectionDescription{
 		padding:0 15px;
 	}
-	.standerdContainer{
+	#gooruSearchMainContainer .standerdContainer{
 		text-align:center;
 	}
 	
-	.remixButton button.primary{
+	#gooruSearchMainContainer .remixButton button.primary{
 		padding:7px 10px;
 	}
-	.subNavigation .seachLeftNavigation ul li a{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a{
 		padding:20px 40px;
 	}
-	.subNavigation .seachLeftNavigation{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation{
 		border-bottom:1px solid #979797;
 	}
-	.SmallWidthContainer{
+	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 	}
 	
-	.seachRightNavigation .btn{
+	#gooruSearchMainContainer .seachRightNavigation .btn{
 		padding:6px 4px;
 		font-size:12px;
 	}
-	.subNavigation .seachLeftNavigation ul{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 		background:#d8d8d8;
 	}
-	.seachRightNavigation .btn-group > .btn + .dropdown-toggle{
+	#gooruSearchMainContainer .seachRightNavigation .btn-group > .btn + .dropdown-toggle{
 		padding-left:4px;
 		padding-right:4px;
 	}
-	.collectionDetails .seachLeftNavigation ul li a{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a{
 		padding:10px 6px 10px 40px;
 	}
-	.collectionDetails .seachLeftNavigation ul li a.assessmentIcon{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon{
 		background:url("../images/folderIcon-sprite.png") no-repeat scroll 5px -36px rgba(0, 0, 0, 0);
 	}
-	.collectionDetails .seachLeftNavigation ul li a.collectionsIcon{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.collectionsIcon{
 		background:url("../images/folderIcon-sprite.png") no-repeat scroll 5px 9px rgba(0, 0, 0, 0);
 	}
-	.collectionDetails .seachLeftNavigation ul li a{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a{
 		font-size:12px;
 	}
-	.preHeader{
+	#gooruSearchMainContainer .preHeader{
 		display:block;
 		width:100%;
 			margin-bottom:10px;
 	}
-	.remixButton{
+	#gooruSearchMainContainer .remixButton{
 		text-align:center;
 	}
-	.collectionDetails .seachLeftNavigation ul{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
 		text-align:center;
 	}
-	.authorDetails{
+	#gooruSearchMainContainer .authorDetails{
 		width:100%;
 		text-align:center;
 	}
-	.authorDetails .input-group{
+	#gooruSearchMainContainer .authorDetails .input-group{
 		width:100%;
 	}
-	.collectionDetails .seachRightNavigation{
+	#gooruSearchMainContainer .collectionDetails .seachRightNavigation{
 		margin:10px 0;
 	}
-	.subNavigation .seachLeftNavigation ul{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 		background:#d8d8d8;
 	 
 	    text-align: center;
@@ -454,257 +452,257 @@
 }
 
 @media (min-width: 320px) and (max-width: 479px){
-	.collectionImg{
+	#gooruSearchMainContainer .collectionImg{
 		width:160px !important;
 		float:none;
 		margin:0 auto 20px;
 		text-align:center;
 	}
-	.collectionDesc{
+	#gooruSearchMainContainer .collectionDesc{
 		width:auto !important;
 	}
-	.collectionDesc{
+	#gooruSearchMainContainer .collectionDesc{
 		text-align:center;
 	}
 	
-	.circleBlocks{
+	#gooruSearchMainContainer .circleBlocks{
 		text-align:center;
 	}
-	.collectionDescription{
+	#gooruSearchMainContainer .collectionDescription{
 		padding:0 15px;
 	}
-	.standerdContainer{
+	#gooruSearchMainContainer .standerdContainer{
 		text-align:center;
 	}
-	.remixButton button.primary{
+	#gooruSearchMainContainer .remixButton button.primary{
 		padding:7px 10px;
 	}
 	
-	.subNavigation .seachLeftNavigation ul li a{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a{
 		padding:20px 40px;
 	}
-	.subNavigation .seachLeftNavigation{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation{
 		border-bottom:1px solid #979797;
 	}
-	.seachRightNavigation{
+	#gooruSearchMainContainer .seachRightNavigation{
 		text-align:center;
 	}
-	.SmallWidthContainer{
+	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 	}
-	.seachRightNavigation .btn{
+	#gooruSearchMainContainer .seachRightNavigation .btn{
 		padding:6px 4px;
 		font-size:12px;
 	}
-	.seachRightNavigation .dropdown-menu > li > a{
+	#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a{
 		text-align:left;
 		font-size:12px;
 	}
-	.subNavigation .seachLeftNavigation ul{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 		background:#d8d8d8;
 	}
-	.seachRightNavigation .btn-group > .btn + .dropdown-toggle{
+	#gooruSearchMainContainer .seachRightNavigation .btn-group > .btn + .dropdown-toggle{
 		padding-left:4px;
 		padding-right:4px;
 	}
-	.collectionDetails .seachLeftNavigation ul li a{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a{
 		padding:10px 6px 10px 40px;
 	}
-	.collectionDetails .seachLeftNavigation ul li a.assessmentIcon{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon{
 		background:url("../images/folderIcon-sprite.png") no-repeat scroll 5px -36px rgba(0, 0, 0, 0);
 	}
-	.collectionDetails .seachLeftNavigation ul li a.collectionsIcon{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.collectionsIcon{
 		background:url("../images/folderIcon-sprite.png") no-repeat scroll 5px 9px rgba(0, 0, 0, 0);
 	}
-	.collectionDetails .seachLeftNavigation ul li a{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a{
 		font-size:12px;
 	}
-	.preHeader{
+	#gooruSearchMainContainer .preHeader{
 		display:block;
 		width:100%;
 		margin-bottom:10px;
 	}
 	
-	.remixButton{
+	#gooruSearchMainContainer .remixButton{
 		text-align:center;
 	}
-	.collectionDetails .seachLeftNavigation ul{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
 		text-align:center;
 	}
-	.authorDetails{
+	#gooruSearchMainContainer .authorDetails{
 		width:100%;
 		text-align:center;
 	}
-	.authorDetails .input-group{
+	#gooruSearchMainContainer .authorDetails .input-group{
 		width:100%;
 	}
-	.collectionDetails .seachRightNavigation{
+	#gooruSearchMainContainer .collectionDetails .seachRightNavigation{
 		margin:10px 0;
 	}
-	.subNavigation .seachLeftNavigation ul{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 		background:#d8d8d8;
 	 
 	    text-align: center;
 	}
-	.authorDetails{
+	#gooruSearchMainContainer .authorDetails{
 		background:#eaeaea;
 	}
 	
-	.seachRightNavigation{
+	#gooruSearchMainContainer .seachRightNavigation{
 		text-align:center;
 	}
-	.viewContainer{
+	#gooruSearchMainContainer .viewContainer{
 		text-align:right;
 	}
-	.resourcesInside{
+	#gooruSearchMainContainer .resourcesInside{
 		text-align:center;
 	}
 }
 
 @media (min-width: 480px) and (max-width: 767px) {
 	
-	.collectionImg{
+	#gooruSearchMainContainer .collectionImg{
 	  width: 160px !important;
 	  display:block;
 	  vertical-align:top;
 	  margin:10px auto;
 	}
-	.collectionDesc{
+	#gooruSearchMainContainer .collectionDesc{
 		width:auto !important;
 	}
-	.collectionDesc{
+	#gooruSearchMainContainer .collectionDesc{
 		width:auto;
 		display:block;
 		vertical-align:top;
 		text-align:center;
 	}
-	.resourcesInside{
+	#gooruSearchMainContainer .resourcesInside{
 		text-align:center;
 	}
-	.resourceImage{
+	#gooruSearchMainContainer .resourceImage{
 		margin:5px 1px;
 	}
 	
-	.circleBlocks{
+	#gooruSearchMainContainer .circleBlocks{
 		text-align:center;
 	}
-	.collectionDescription{
+	#gooruSearchMainContainer .collectionDescription{
 		padding:0 15px;
 		text-align:center;
 	}
-	.standerdContainer{
+	#gooruSearchMainContainer .standerdContainer{
 		text-align:center;
 	}
 	
-	.remixButton button.primary{
+	#gooruSearchMainContainer .remixButton button.primary{
 		padding:7px 10px;
 	}
 	
-	.SmallWidthContainer{
+	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 	}
-	.remixButton{
+	#gooruSearchMainContainer .remixButton{
 		text-align:center;
 	}
-	.collectionDetails .seachLeftNavigation ul{
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 		width:100%;
 		text-align:center;
 	}
 	
-	.authorDetails{
+	#gooruSearchMainContainer .authorDetails{
 		width:100%;
 		text-align:center;
 	}
-	.authorDetails .input-group{
+	#gooruSearchMainContainer .authorDetails .input-group{
 		width:100%;
 	}
-	.collectionDetails .seachRightNavigation{
+	#gooruSearchMainContainer .collectionDetails .seachRightNavigation{
 		margin:10px 0;
 	}	
-	.subNavigation .seachLeftNavigation ul{
+	#gooruSearchMainContainer .subNavigation .seachLeftNavigation ul{
 		background:#d8d8d8;
 		border-bottom:1px solid #979797;
 	 
 	    text-align: center;
 	}
-	.subNavigation .seachRightNavigation{
+	#gooruSearchMainContainer .subNavigation .seachRightNavigation{
 		text-align:center;
 	}
-	.authorDetails{
+	#gooruSearchMainContainer .authorDetails{
 		background:#eaeaea;
 	}
 	
-	.seachRightNavigation{
+	#gooruSearchMainContainer .seachRightNavigation{
 		text-align:center;
 	}
-	.viewContainer{
+	#gooruSearchMainContainer .viewContainer{
 		text-align:right;
 	}
-	.resourcesInside{
+	#gooruSearchMainContainer .resourcesInside{
 		text-align:center;
 	}
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-	.resourcesInside{
+	#gooruSearchMainContainer .resourcesInside{
 		text-align:center;
 	}
 		
-	.SmallWidthContainer{
+	#gooruSearchMainContainer .SmallWidthContainer{
 		width:auto;
 	}
 		
-	.collectionDesc {
+	#gooruSearchMainContainer .collectionDesc {
 	    width: 45% !important;
 	}	
 	
-	.collectionImg {
+	#gooruSearchMainContainer .collectionImg {
 	    width: 53% !important;
 	}
 	
-	.seachRightNavigation .btn{
+	#gooruSearchMainContainer .seachRightNavigation .btn{
 		font-size:12px;
 	}
-	.authorDetails .input-group .form-control{
+	#gooruSearchMainContainer .authorDetails .input-group .form-control{
 		width:130px;
 	}
-	.authorDetails{
+	#gooruSearchMainContainer .authorDetails{
 		padding:0 10px;
 	}
-	.viewContainer{
+	#gooruSearchMainContainer .viewContainer{
 		text-align:right;
 	}
-	.resourceImage{
+	#gooruSearchMainContainer .resourceImage{
 		width:70px;
 	}
-	.resourceImage img {
+	#gooruSearchMainContainer .resourceImage img {
 	    height: 100%;
 	    width: 100%;
 	}
-	.resourceName{
+	#gooruSearchMainContainer .resourceName{
 		width:70px;
 	}
-	.resourceImage{
+	#gooruSearchMainContainer .resourceImage{
 		margin:5px 1px;
 	}
-	.videoSmall {
+	#gooruSearchMainContainer .videoSmall {
 	    background: url("../images/Video_1.png") no-repeat scroll -6px 0 transparent;
 	}
-	.libraryMainContainerBlock .collectionTitle {
+	#gooruSearchMainContainer .libraryMainContainerBlock .collectionTitle {
 	  
 	    overflow: hidden;
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
 	}
-	.collectionDetails .seachLeftNavigation ul li a.assessmentIcon {
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.assessmentIcon {
 	    background: url("../images/folderIcon-sprite.png") no-repeat scroll 8px -36px rgba(0, 0, 0, 0);
 	}
-	.collectionDetails .seachLeftNavigation ul li a.collectionsIcon {
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a.collectionsIcon {
 	    background: url("../images/folderIcon-sprite.png") no-repeat scroll 8px 9px rgba(0, 0, 0, 0);
 	}
 	
-	.collectionDetails .seachLeftNavigation ul li a {
+	#gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a {
 	 
 	    padding: 10px 25px 10px 44px;
 	}

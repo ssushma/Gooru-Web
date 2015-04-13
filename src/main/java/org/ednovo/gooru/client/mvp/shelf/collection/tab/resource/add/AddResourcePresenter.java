@@ -267,7 +267,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(ExistsResourceDo result) {
 				
-				if (result.getNativeurl()!=null)
+				if (result.getSharing()!=null)
 					getView().setExistingResourceData(result, getCollectionDo());
 			}
 		});

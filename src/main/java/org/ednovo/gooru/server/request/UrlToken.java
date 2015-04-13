@@ -136,7 +136,7 @@ public enum UrlToken {
 	
 	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
 
-	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&sessionToken={1}"),
+	CHECK_RESOURCE_EXISTS("/v2/resource/url/exist?url={0}&checkShortenedUrl=true&sessionToken={1}"),
 
 	CREATE_FOLDER("/folder?sessionToken={0}"),
 

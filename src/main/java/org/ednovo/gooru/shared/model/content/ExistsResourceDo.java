@@ -48,6 +48,8 @@ public class ExistsResourceDo extends ContentDo {
     private String label;        //Some api's give title in label key
     private String nativeurl;    //Some api's give url in nativeUrl key
     private String id;
+    private String sharing;
+    
     
     public ExistsResourceDo(){}
 
@@ -165,4 +167,19 @@ public class ExistsResourceDo extends ContentDo {
 	public void setShortenedUrlStatus(String shortenedUrlStatus) {
 		this.shortenedUrlStatus = shortenedUrlStatus;
 	}
+
+	/**
+	 * @return the sharing
+	 */
+	public String getSharing() {
+		return sharing;
+	}
+
+	/**
+	 * @param sharing the sharing to set
+	 */
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
+	}
+	
 }    
