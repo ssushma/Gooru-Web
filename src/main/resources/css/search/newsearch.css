@@ -86,10 +86,10 @@
 	text-decoration:none;
 }
 .collectionDetails .seachLeftNavigation ul li a.collectionsIcon{
-	background:url(../images/folderIcon-sprite.png) no-repeat 18px 9px;
+	background:url(../images/folders/panel/collection-icon.png) no-repeat 18px 6px;
 }
 .collectionDetails .seachLeftNavigation ul li a.assessmentIcon{
-	background:url(../images/folderIcon-sprite.png) no-repeat 18px -36px;
+	background:url(../images/folders/panel/assessment-type.png) no-repeat 18px 6px;
 }
 .seachRightNavigation{
 	text-align:right;
@@ -356,7 +356,16 @@
 .collectionDesc{
 	width:52% !important;
 }
-
+.searchQuestionMark {
+	background: url("../images/mos/questionmark.png") no-repeat 4px 4px;
+	width: 19px;
+	height: 24px;
+	position: relative;
+	display: inline-block;
+	padding-top: -76px;
+	padding: 0;
+	top: 9px;
+}
 @media (min-width: 240px) and (max-width: 319px){
 	.collectionImg{
 		width:160px;
