@@ -140,7 +140,7 @@ public enum UrlToken {
 
 	CREATE_FOLDER("/folder?sessionToken={0}"),
 
-	LIST_MY_FOLDERS("/folder/my/workspace?sessionToken={0}&pageSize={1}&orderBy={2}"),
+	LIST_MY_FOLDERS("/folder/my/workspace?sessionToken={0}"),
 
 	LIST_MY_FOLDER_LEVELS("/folder/{0}/item?sessionToken={1}"),
 	
@@ -364,7 +364,7 @@ public enum UrlToken {
 	
 	V2_COLLECTION_USED_COUNT("/v2/classpage/collection/{0}/count?sessionToken={1}"),
 	
-	V2_GET_COLLECTION_RESOURCE_LIST("/v2/folder/{0}/item?sessionToken={1}&orderBy=sequence"),
+	V2_GET_COLLECTION_RESOURCE_LIST("/v2/folder/{0}/item?sessionToken={1}"),
 	
 	V2_INVITE_STUDENT_TO_CLASS("/v2/invite/class/{0}?sessionToken={1}"),
 	
@@ -516,7 +516,7 @@ public enum UrlToken {
 	
 	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
 
-	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}&orderBy=sequence"),
+	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}"),
 	
 	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
 	

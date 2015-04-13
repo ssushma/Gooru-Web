@@ -43,6 +43,8 @@ public interface ClientConstants {
 	
 	String POPULAR_LOWER_CASE = "popular";
 	
+	String PUBLIC = "public";
+	
 	/* ****************** Base service Impl Constants Start ******************** */
 	
 
