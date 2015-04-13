@@ -26,11 +26,16 @@
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -55,15 +60,24 @@ public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionU
 
 	interface SearchCollectionViewUiBinder extends UiBinder<Widget, SearchCollectionView> {
 	}
-
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-
 	
 	@UiField HTMLPanel searchResultPanel;
 	
-	
 	public SearchCollectionView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		//searchResultPanel.add(new CollectionSearchWidget());
+		Window.addWindowScrollHandler(new ScrollHandler() {
+			@Override
+			public void onWindowScroll(ScrollEvent event) {
+				if((event.getScrollTop()+Window.getClientHeight())==Document.get().getBody().getClientHeight()){
+					for(int i=0;i<20;i++){
+						searchResultPanel.add(new CollectionSearchWidget());
+					}
+				}
+			}
+		});
+		for(int i=0;i<20;i++){
+			searchResultPanel.add(new CollectionSearchWidget());
+		}
 	}
 }

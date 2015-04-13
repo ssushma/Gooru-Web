@@ -5,6 +5,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
-	 	<g:HTMLPanel ui:field="searchResultPanel">SearchMainPresenter</g:HTMLPanel>
+	 	<g:HTMLPanel ui:field="searchResultPanel"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
