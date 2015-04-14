@@ -18,6 +18,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -40,10 +41,12 @@ public class CollectionSearchWidget extends Composite {
 	@UiField Label collectionTitle,authorName,lblViewCount;
 	@UiField CollectionImageUc imgCollection;
 	@UiField Paragraph pResourceText;
+	@UiField Image imgAuthor;
 	
 	public CollectionSearchWidget(CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set the data
+		imgAuthor.setUrl("images/settings/setting-user-image.png");
 		collectionTitle.setText(collectionSearchResultDo.getResourceTitle());
 		String collectionDesc=collectionSearchResultDo.getDescription();
 		if(!StringUtil.isEmpty(collectionDesc)){
@@ -75,7 +78,7 @@ public class CollectionSearchWidget extends Composite {
 							if(count>=4){
 								break;
 							}
-							pnlResourceWidget.add(new ResourceImageWidget());
+							pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo));
 							count++;
 						}
 					}

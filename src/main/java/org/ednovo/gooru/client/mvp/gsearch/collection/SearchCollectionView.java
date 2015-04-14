@@ -65,6 +65,7 @@ public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionU
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel searchResultPanel;
+	int pageNumber=1;
 	
 	public SearchCollectionView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -72,15 +73,11 @@ public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionU
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				if((event.getScrollTop()+Window.getClientHeight())==Document.get().getBody().getClientHeight()){
-					for(int i=0;i<20;i++){
-						//searchResultPanel.add(new CollectionSearchWidget());
-					}
+					pageNumber++;
+					getUiHandlers().getCollectionSearchResultsOnPageWise("", pageNumber, 8);
 				}
 			}
 		});
-		/*for(int i=0;i<20;i++){
-			searchResultPanel.add(new CollectionSearchWidget());
-		}*/
 	}
 
 	@Override

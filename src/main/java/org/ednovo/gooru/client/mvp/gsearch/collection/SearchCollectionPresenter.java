@@ -67,6 +67,7 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 	@Inject
 	private SearchServiceAsync searchService;
 	SearchDo<CollectionSearchResultDo> searchDo=new SearchDo<CollectionSearchResultDo>();
+	Map<String, String> filterMap = new HashMap<String, String>();
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SEARCH_COLLECTION1)
@@ -111,8 +112,9 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 	}
 	public void searchCollections(){
 		searchDo.setQuery("cells");
-		Map<String, String> filterMap = new HashMap<String, String>();
 		searchDo.setFilters(filterMap);
+		searchDo.setPageNum(1);
+		searchDo.setPageSize(8);
 		getSearchService().getCollectionSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
 			@Override
 			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
@@ -127,5 +129,18 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 
 	public void setSearchService(SearchServiceAsync searchService) {
 		this.searchService = searchService;
+	}
+
+	@Override
+	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
+		searchDo.setQuery("cells");
+		searchDo.setPageNum(pageNumber);
+		searchDo.setPageSize(pageSize);
+		getSearchService().getCollectionSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
+			@Override
+			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
+				getView().setCollectionsData(result);
+			}
+		});
 	}
 }
