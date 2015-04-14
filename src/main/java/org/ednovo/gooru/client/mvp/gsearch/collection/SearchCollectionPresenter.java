@@ -27,12 +27,19 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter.IsSearchCollectionProxy;
+import org.ednovo.gooru.client.service.SearchServiceAsync;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -57,7 +64,9 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
  */
 public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollectionView, IsSearchCollectionProxy> implements SearchCollectionUiHandlers {
 
-	
+	@Inject
+	private SearchServiceAsync searchService;
+	SearchDo<CollectionSearchResultDo> searchDo=new SearchDo<CollectionSearchResultDo>();
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SEARCH_COLLECTION)
@@ -93,11 +102,30 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 	@Override
 	protected void onReset() {
 		super.onReset();
+		searchCollections();
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
 	}
+	public void searchCollections(){
+		searchDo.setQuery("cells");
+		Map<String, String> filterMap = new HashMap<String, String>();
+		searchDo.setFilters(filterMap);
+		getSearchService().getCollectionSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
+			@Override
+			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
+				getView().setCollectionsData(result);
+			}
+		});
+	}
 
+	public SearchServiceAsync getSearchService() {
+		return searchService;
+	}
+
+	public void setSearchService(SearchServiceAsync searchService) {
+		this.searchService = searchService;
+	}
 }

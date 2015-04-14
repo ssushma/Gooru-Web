@@ -28,6 +28,8 @@ package org.ednovo.gooru.client.mvp.gsearch.collection;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -71,13 +73,22 @@ public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionU
 			public void onWindowScroll(ScrollEvent event) {
 				if((event.getScrollTop()+Window.getClientHeight())==Document.get().getBody().getClientHeight()){
 					for(int i=0;i<20;i++){
-						searchResultPanel.add(new CollectionSearchWidget());
+						//searchResultPanel.add(new CollectionSearchWidget());
 					}
 				}
 			}
 		});
-		for(int i=0;i<20;i++){
+		/*for(int i=0;i<20;i++){
 			searchResultPanel.add(new CollectionSearchWidget());
+		}*/
+	}
+
+	@Override
+	public void setCollectionsData(SearchDo<CollectionSearchResultDo> result) {
+		if(result!=null && result.getSearchResults().size()>0){
+			for (CollectionSearchResultDo collectionSearchResultDo : result.getSearchResults()) {
+				searchResultPanel.add(new CollectionSearchWidget(collectionSearchResultDo));
+			}
 		}
 	}
 }
