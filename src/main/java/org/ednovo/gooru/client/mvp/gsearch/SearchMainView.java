@@ -26,11 +26,15 @@
 package org.ednovo.gooru.client.mvp.gsearch;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -61,10 +65,20 @@ public class SearchMainView extends BaseViewWithHandlers<SearchMainUiHandlers>
 	
 	@UiField HTMLPanel gooruSearchMainContainer,searchResultPanel;
 	
+	@UiField LiPanel resourcePanel, collectionPanel;
+	
 	
 	public SearchMainView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		gooruSearchMainContainer.getElement().setId("gooruSearchMainContainer");
+		searchFeildsIds();
+	}
+    /**
+     * To set ids for all fields.
+     */
+	private void searchFeildsIds() {
+		StringUtil.setAttributes(resourcePanel.getElement(), "searchResourcePanel", i18n.GL1755(), i18n.GL1755());
+		StringUtil.setAttributes(collectionPanel.getElement(), "searchCollectionPanel", i18n.GL1754(), i18n.GL1754());
 	}
 
 	@Override
@@ -76,4 +90,17 @@ public class SearchMainView extends BaseViewWithHandlers<SearchMainUiHandlers>
 			} 
 		}
 	}
+	
+	@UiHandler("resourcePanel")
+	public void clickOnResource(ClickEvent clickEvent){
+		collectionPanel.removeStyleName("active");
+		resourcePanel.setStyleName("active");
+	}
+	
+	@UiHandler("collectionPanel")
+	protected void clickOnCollection(ClickEvent clickEvent){
+		collectionPanel.setStyleName("active");
+		resourcePanel.removeStyleName("active");
+	}
+	
 }
