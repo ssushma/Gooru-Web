@@ -94,6 +94,7 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		searchCollections();
 	}
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
@@ -103,7 +104,6 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 	@Override
 	protected void onReset() {
 		super.onReset();
-		searchCollections();
 	}
 	
 	@Override

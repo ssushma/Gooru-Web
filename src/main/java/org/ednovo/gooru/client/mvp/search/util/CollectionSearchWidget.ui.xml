@@ -31,7 +31,7 @@
 				<g:HTMLPanel styleName="panel-body">
 					<g:HTMLPanel styleName="no-gutter">
 						<g:HTMLPanel styleName="col-md-5 col-sm-5 collectionImg">
-							<a href="#">
+							<a>
 								<uc:CollectionImageUc ui:field="imgCollection" />
 							</a>
 						</g:HTMLPanel>
