@@ -22,26 +22,23 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gsearch.collection;
-
-import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 /**
- * @fileName : IsSearchMainView.java
- *
- * @description : 
- *
- * @version : 1.3
- *
- * @date: 10-04-2015
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
+ * 
  */
-public interface IsSearchCollectionView extends IsGooruSearchView<CollectionSearchResultDo> {
-	
-	//void setCollectionsData(SearchDo<CollectionSearchResultDo> result);
+package org.ednovo.gooru.client.mvp.gsearch;
 
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
+
+/**
+ * @author Search Team
+ * 
+ */
+public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
+		IsViewWithHandlers<GooruSearchUiHandlers> {
+
+	void setCollectionsData(SearchDo<CollectionSearchResultDo> result);
+	
 }
