@@ -89,12 +89,15 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -480,8 +483,35 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		super.prepareFromRequest(request);
 		getCollectionDetails();
 	}
+	
+	/**
+     * This method is used to remove cookie values after reading the values.
+     */
+    public void removeCookieValues(){
+        Cookies.removeCookie("sessionId");
+    }
+    /**
+     * This method is used to set cookies values when page is refreshed.
+     */
+    public void setCookieValues(){
+         Cookies.setCookie("sessionId", sessionId);
+    }
+    
+    /**
+     * Checks whether the player is refreshed or not.
+     */
+    private void isPlayerRefreshed(){
+    	//This will handle the refresh event of the browser.
+        Window.addCloseHandler(new CloseHandler<Window>() {
+               @Override
+               public void onClose(CloseEvent<Window> event){
+                 setCookieValues();
+             }
+        });
+    }
 
 	private void getClassPageDetails(String classItemId) {
+		isPlayerRefreshed();
 		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
@@ -492,7 +522,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				if(getPlaceManager().getRequestParameter("view")!=null){
 				}else{
 					String collectionId=getPlaceManager().getRequestParameter("id", null);
-					sessionId=GwtUUIDGenerator.uuid();
+//					sessionId=GwtUUIDGenerator.uuid();
+					String sessionOldId=Cookies.getCookie("sessionId");
+                    if(!StringUtil.isEmpty(sessionOldId)){
+                        sessionId=sessionOldId;
+                        removeCookieValues();
+                    }else{
+                        sessionId=GwtUUIDGenerator.uuid();
+                    }
 					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
 				}
 				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageId));
@@ -983,7 +1020,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void updatCollectionViewsCount(){
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null && !StringUtil.isEmpty(collectionDo.getViews())){
 				String viewsCount=collectionDo.getViews();
-				Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+				Integer viewsCounts=Integer.parseInt(viewsCount);
 				collectionDo.setViews(StringUtil.toString(viewsCounts));
 				metadataPresenter.setViewCount(StringUtil.toString(viewsCounts));
 				try{

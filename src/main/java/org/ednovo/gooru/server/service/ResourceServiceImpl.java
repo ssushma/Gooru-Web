@@ -30,6 +30,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,6 +76,7 @@ import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -268,9 +270,16 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo getCollection(String collectionGooruOid, boolean skipCollectionItem) {
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getLoggedInSessionToken(), skipCollectionItem + "");
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getLoggedInSessionToken());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.SKIP_COLL_ITEM, String.valueOf(skipCollectionItem)); 
+		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );
+		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("get coll res url --- "+url);		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		getLogger().info("get coll res url --- "+url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
@@ -1007,7 +1016,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo getCollection(String collectionGooruOid){
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""));
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.SKIP_COLL_ITEM, GooruConstants.TRUE); 
+		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE);
+		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("getCollection::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1039,7 +1055,16 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo getCollectionFromEmbed(String collectionGooruOid, String restEndPointFromEmbed){
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
-		String url = UrlGenerator.generateUrl(restEndPointFromEmbed, UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(restEndPointFromEmbed), "true");
+		String partialUrl = UrlGenerator.generateUrl(restEndPointFromEmbed, UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(restEndPointFromEmbed));
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.SKIP_COLL_ITEM,GooruConstants.TRUE); 
+		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE);
+		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("--getCollectionFromEmbed --  "+url);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){

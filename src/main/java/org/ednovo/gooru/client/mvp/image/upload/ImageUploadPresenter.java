@@ -332,7 +332,6 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 	@Override
 	public void cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) {
-		Window.enableScrolling(true);
 		this.fileNameWithoutRepository=fileName;
 
 		if(isCollectionImage||isUpdateQuestionImage||isClassPageImage){
