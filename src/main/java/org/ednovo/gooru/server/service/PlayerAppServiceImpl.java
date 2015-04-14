@@ -28,6 +28,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,7 @@ import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.user.CreatorDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -164,8 +166,18 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public CollectionDo getSimpleCollectionDetils(String apiKey,String simpleCollectionId, String resourceId, String tabView, String rootNodeId) {
 		CollectionDo collectionDo = new CollectionDo();
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken(),"true");
-		url+=getStandardId(rootNodeId);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.SKIP_COLL_ITEM, GooruConstants.TRUE); 
+		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );
+		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		if(rootNodeId != null) {
+			params.put(GooruConstants.ROOT_NODE_ID,rootNodeId);
+		}
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+//		url+=getStandardId(rootNodeId);
 
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		getLogger().info("getSimpleCollectionDetils:"+url);
@@ -200,7 +212,18 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ResoruceCollectionDo getResourceCollectionsList(String gooruOid,String pageNum,String pageSize) {
 		JsonRepresentation jsonRep = null;
 
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_COLLECTION_LIST, getLoggedInSessionToken(),gooruOid, pageNum+"",  pageSize+"",gooruOid);
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_RESOURCE_COLLECTION_LIST, getLoggedInSessionToken());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.Q, gooruOid);
+		params.put(GooruConstants.START, String.valueOf(pageNum));
+		params.put(GooruConstants.LENGTH, String.valueOf(pageSize));
+		params.put(GooruConstants.ACCESS_TYPE, "my");
+		params.put(GooruConstants.CATEGORY, "all");
+		params.put(GooruConstants.FILTER_RES_GOORU_OID,gooruOid);
+		params.put(GooruConstants.BOOSTFIELD_HASNO_THUMBNAIL, "0");
+		params.put(GooruConstants.SHOW_CANONICAL_ONLY, "false");
+		
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("urlresourceinfotab getResourceCollectionsList playerAPP::"+url);
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
@@ -302,15 +325,21 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public Map<String, String> getShortenShareUrl(String contentGooruOid) {
 		JsonRepresentation jsonRep = null;
 		Map<String, String> shareUrls=new HashMap<String, String>();
-		String embededShortenUrl= UrlGenerator.generateUrl(getHomeEndPoint()+"/" + UrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl(), contentGooruOid);
-		String collectionShareUrl= UrlGenerator.generateUrl(getHomeEndPoint() +"/" + UrlToken.COLLECTION_PLAY_URL.getUrl()+"%26share=true", contentGooruOid);
-		
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL_PLAY, contentGooruOid, getLoggedInSessionToken(),embededShortenUrl);
+		String embededShortenPartialUrl= UrlGenerator.generateUrl(getHomeEndPoint()+"/" + UrlToken.COLLECTION_PLAY_EMBEDED_URL.getUrl());
+		String embededShortenUrl = AddQueryParameter.constructQueryParams(embededShortenPartialUrl, GooruConstants.ID, contentGooruOid);
+		String collectionSharePartialUrl= UrlGenerator.generateUrl(getHomeEndPoint() +"/" + UrlToken.COLLECTION_PLAY_URL.getUrl());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.ID, contentGooruOid);
+		params.put(GooruConstants.SHARE, GooruConstants.TRUE);
+		String collectionShareUrl = AddQueryParameter.constructQueryParams(collectionSharePartialUrl, params);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL_PLAY, contentGooruOid, getLoggedInSessionToken());
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.REAL_URL, embededShortenUrl);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		String shortenUrl=shareDeSerializer.deserializeShortenUrlFromJson(jsonRep);
 		shareUrls.put("embedbitlyurl", shortenUrl);
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL_PLAY, contentGooruOid, getLoggedInSessionToken(),collectionShareUrl);
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL_PLAY, contentGooruOid, getLoggedInSessionToken());
+		url = AddQueryParameter.constructQueryParams(url, GooruConstants.REAL_URL, collectionShareUrl);
 		getLogger().info("SHARE_SHORTEN_URL_PLAY url:::::"+url);
 	    jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 	    jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -337,8 +366,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 
 	@Override
-	public String startActivityPlayerLog(String activityEventId,String activityParentEventId, String eventName, String gooruOid,
-			String resourceGooruOid, String context, String userAgent) {
+	public String startActivityPlayerLog(String activityEventId,String activityParentEventId, String eventName, String gooruOid,String resourceGooruOid, String context, String userAgent) {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.START_ACTIVITY_LOG,activityEventId, getLoggedInSessionToken());
 		
 		Form form=new Form();
@@ -355,8 +383,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 
 	@Override
-	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId, String eventName, String gooruOid,
-			String resourceGooruOid, String context, String userAgent) {
+	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId, String eventName, String gooruOid,String resourceGooruOid, String context, String userAgent) {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.STOP_ACTIVITY_LOG,activityEventId, getLoggedInSessionToken());
 		
 		Form form=new Form();
@@ -542,7 +569,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			collectionTitle = collectionTitle.trim();
 			collectionTitle=URLEncoder.encode(collectionTitle);
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_RENAME_COLLECTION, collectionId,getLoggedInSessionToken(),"true",collectionTitle);
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_RENAME_COLLECTION, collectionId,getLoggedInSessionToken());
+			Map<String, String> params = new LinkedHashMap<String, String>();
+			params.put(GooruConstants.ADD_TO_SHELF, GooruConstants.TRUE);
+			params.put(GooruConstants.TITLE, collectionTitle);
+			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 			getLogger().info("COPY_RENAME_COLLECTION put url:::::"+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
@@ -585,7 +616,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	@Override
 	public ArrayList<CollectionItemsList> getWorkspaceCollections(String userId,String offset,String limit) {
 		    JsonRepresentation jsonRep =null;
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_WORKSPACE,getLoggedInSessionToken(),offset,limit);
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_WORKSPACE,getLoggedInSessionToken());
+			Map<String, String> params = new LinkedHashMap<String, String>();
+			params.put(GooruConstants.PAGE_NUM, offset);
+			params.put(GooruConstants.PAGE_SIZE, limit);
+			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep= jsonResponseRep.getJsonRepresentation();
 			return deserializeUserCollections(jsonRep);
@@ -624,7 +659,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	
 	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REPORT,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REPORT,associatedGooruOid,getLoggedInSessionToken());
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CREATOR_UID, gooruUid);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
@@ -719,7 +755,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	@Override
 	public ArrayList<ReactionDo> getResourceReaction(String associatedGooruOid, String gooruUid) {
 		JsonRepresentation jsonRep=null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REACTION,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REACTION,associatedGooruOid,getLoggedInSessionToken());
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CREATOR_UID, gooruUid);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		return deserializeGetReaction(jsonRep); 
@@ -810,7 +847,12 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	
 	public CommentsListDo getCollectionCommentsList(String gooruOid,String offset,String pageLimit) {
 		JsonRepresentation jsonRep= null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_COMMENTS, getLoggedInSessionToken(),gooruOid,offset,pageLimit);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_COMMENTS, getLoggedInSessionToken());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.GOORU_OID, gooruOid);
+		params.put(GooruConstants.OFFSET, offset);
+		params.put(GooruConstants.LIMIT, pageLimit);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("---- get comments --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1085,7 +1127,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRep=null;
 		JSONObject jsonObject=null;
 		try {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STAR_RATINGS,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
+			String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STAR_RATINGS,associatedGooruOid,getLoggedInSessionToken());
+			String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CREATOR_UID,gooruUid);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			jsonObject= jsonRep.getJsonObject();
@@ -1317,13 +1360,18 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid,int offSet) {
 		JsonRepresentation jsonRep=null;
 		JSONObject jsonObject = null;
-		String url=null;
+		String url = "";
 		String limit="20"; 
 		try {
 			if(gooruUid!=null&& !gooruUid.equals("")){
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_LOGGED_IN_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken(),gooruUid);
+				String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_LOGGED_IN_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken());
+				url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.CREATOR_UID, gooruUid);
 			}else{
-				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken(),Integer.toString(offSet),limit);
+				String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken());
+				Map<String, String> params = new LinkedHashMap<String, String>();
+				params.put(GooruConstants.OFFSET, String.valueOf(offSet));
+				params.put(GooruConstants.LIMIT, limit);
+				url = AddQueryParameter.constructQueryParams(partialUrl, params);
 			}
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
@@ -1406,8 +1454,12 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			throws GwtException, ServerDownException {
 		Map<String, String> youtubeValues=new HashMap<String, String>();
 		try{
-			String url = "http://gdata.youtube.com/feeds/api/videos/"+utubeId+"?v=2&alt=jsonc&prettyprint=true";
-
+			String partialUrl = "http://gdata.youtube.com/feeds/api/videos/"+utubeId+"?";
+			Map<String, String> params = new LinkedHashMap<String, String>();
+			params.put(GooruConstants.V, "2");
+			params.put(GooruConstants.ALT, "jsonc");
+			params.put(GooruConstants.PRETTY_PRINT, GooruConstants.TRUE);
+			String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 			getLogger().info("getyoutube feed call back url::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 			JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1430,8 +1482,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	
 	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId){
 		String formdata=insightsJsonPayload(collectionId,classpageId,sessionId,getLoggedInUserUid());
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.GET_COLLECTION_SUMMARY,collectionId, getLoggedInSessionToken(),formdata);
-
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.GET_COLLECTION_SUMMARY,collectionId, getLoggedInSessionToken());
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, formdata);
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 		JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1491,6 +1543,4 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 		return new FolderWhatsNextCollectionDo();
 	}
-	
-	
 }

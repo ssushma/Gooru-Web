@@ -72,10 +72,38 @@ public interface ApiKeyParams {
 	String ORDER_BY = "orderBy";
 	String SHARING = "sharing";
 	String COLLECTION_TYPE = "collectionType";
+	String EXCLUDE_TYPE = "excludeType";
 	
+	/**
+	 * Collaborators related parameters.
+	 */
 	
+	String GROUP_BY_STATUS = "groupByStatus";
+	String DATA = "data";
 	
+	/**
+	 * Media service related parameters.
+	 */
+	String MEDIA_FILE_NAME = "mediaFileName";
+	String INCLUDE_ADDITIONAL_INFO = "includeAdditionalInfo";
 	
+	/**
+	 * Player service related parameters.
+	 */
 	
+	String ID = "id";
+	String REAL_URL = "realUrl";
+	String ADD_TO_SHELF = "addToShelf";
+	String TITLE = "title";
+	String CREATOR_UID = "creatorUId";
+	String GOORU_OID = "gooruOid";
+	String V = "v";
+	String ALT = "alt";
+	String PRETTY_PRINT = "prettyprint";
+	
+	/**
+	 * Profile service related parameters.
+	 */
 
+	String PAGE_NO = "pageNo";
 }

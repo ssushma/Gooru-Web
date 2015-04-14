@@ -2064,6 +2064,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 }
 	@UiHandler("addQuestionImg")
 	public void clickOnAddQuestImg(ClickEvent event){
+		Window.enableScrolling(false);
 		uploadQuestionImage();
 	}
 	public void setEditQuestionImage(){

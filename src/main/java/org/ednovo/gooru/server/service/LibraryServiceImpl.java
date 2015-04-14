@@ -748,11 +748,9 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public PartnerConceptListDo getPartnerChildFolders(String gooruUid, int offset, int limit, String parentId,String sharingType, String collectionType) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String paertialUrl = null;
+		String partialUrl = null;
 		String sessionToken = getLoggedInSessionToken();
-		
-		
-		paertialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, String.valueOf(limit));
@@ -765,7 +763,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			params.put(GooruConstants.COLLECTION_TYPE, collectionType);
 //			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
-		String url = AddQueryParameter.constructQueryParams(paertialUrl, params);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("-- getPartnerChildFolders -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

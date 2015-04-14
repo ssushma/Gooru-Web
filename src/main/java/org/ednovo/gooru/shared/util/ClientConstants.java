@@ -43,6 +43,13 @@ public interface ClientConstants {
 	
 	String POPULAR_LOWER_CASE = "popular";
 	
+	String PUBLIC = "public";
+	
+	String GRADE = "grade";
+	
+	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
+	
+	
 	/* ****************** Base service Impl Constants Start ******************** */
 	
 

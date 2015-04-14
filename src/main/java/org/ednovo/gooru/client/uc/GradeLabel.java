@@ -45,8 +45,7 @@ import com.google.gwt.user.client.ui.Label;
  */
 public abstract class GradeLabel extends Label implements ClickHandler {
 	
-	private static final List<String> gradeList = new ArrayList<String>();
-	
+	private List<String> gradeList = new ArrayList<String>();
 	
 	private CollectionDo collection = null;
 	
@@ -77,6 +76,7 @@ public abstract class GradeLabel extends Label implements ClickHandler {
 			}
 			String grade[] = genGrade.split(",");
 			for (int i = 0; i < grade.length; i++) {
+				
 				if (label.equals(grade[i])) {
 					this.getElement().getStyle().setProperty("background", "#0F76BB");
 					this.getElement().getStyle().setColor("#fff");

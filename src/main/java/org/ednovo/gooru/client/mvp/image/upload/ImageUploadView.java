@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.image.upload;
 
 import org.ednovo.gooru.client.GooruCBundle;
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -570,6 +571,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		imageCropPopup.clear();
 		imagUploadFloPanel.setVisible(false);
 		appPopUp.hide();
+		final String placeValue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if (mediaUploadDo != null && mediaUploadDo.getStatusCode() == 200) {
 			ImageCropView imageCropView = new ImageCropView() {
 				@Override
@@ -577,6 +579,12 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 					resetImageUploadWidget();
 					appPopUp.hide();
 					imageCropPopup.hide();
+					Window.scrollTo(0, 0);
+					if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+						Window.enableScrolling(false);
+					}else{
+						Window.enableScrolling(true);
+					}
 //					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
 
@@ -585,6 +593,12 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 					resetImageUploadWidget();
 					imageCropPopup.clear();
 					imageCropPopup.hide();
+					Window.scrollTo(0, 0);
+					if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+						Window.enableScrolling(false);
+					}else{
+						Window.enableScrolling(true);
+					}
 					appPopUp.show();
 //					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
@@ -604,8 +618,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			imageCropView.addCanvasLoadHandler(new LoadHandler() {			
 				@Override
 				public void onLoad(LoadEvent event) {
-					
 					imageCropPopup.center();
+					Window.enableScrolling(true);
 				}
 			});
 			//imageCropFloPanel.add(imageCropView);
@@ -613,10 +627,17 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			imageCropPopup.clear();
 			imageCropPopup.add(imageCropView);
 			imageCropPopup.show();
-//			Window.enableScrolling(true);
+			/*Window.enableScrolling(true);*/
 		} else {
 			appPopUp.hide();
 			imageCropPopup.hide();
+			Window.scrollTo(0, 0);
+			AppClientFactory.printInfoLogger("Name token::::::"+AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
+			if(placeValue.equalsIgnoreCase(PlaceTokens.SHELF)){
+				Window.enableScrolling(false);
+			}else{
+				Window.enableScrolling(true);
+			}
 			resetImageUploadWidget();
 			new AlertContentUc(i18n.GL1089(), mediaUploadDo != null && mediaUploadDo.getImageValidationMsg() != null ? mediaUploadDo.getImageValidationMsg() : i18n.GL1230());
 		}
