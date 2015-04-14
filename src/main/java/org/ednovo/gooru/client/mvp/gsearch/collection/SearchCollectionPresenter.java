@@ -50,13 +50,13 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 /**
- * @fileName : FolderTocPresenter.java
+ * @fileName : SearchCollectionPresenter.java
  *
  * @description : 
  *
  * @version : 1.3
  *
- * @date: 06-02-2015
+ * @date: 10-04-2015
  *
  * @Author Gooru Team
  *
