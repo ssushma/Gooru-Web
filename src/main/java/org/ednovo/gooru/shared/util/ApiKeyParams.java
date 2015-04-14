@@ -72,8 +72,20 @@ public interface ApiKeyParams {
 	String ORDER_BY = "orderBy";
 	String SHARING = "sharing";
 	String COLLECTION_TYPE = "collectionType";
+	String EXCLUDE_TYPE = "excludeType";
 	
+	/**
+	 * Collaborators related parameters.
+	 */
 	
+	String GROUP_BY_STATUS = "groupByStatus";
+	String DATA = "data";
+	
+	/**
+	 * Media service related parameters.
+	 */
+	String MEDIA_FILE_NAME = "mediaFileName";
+	String INCLUDE_ADDITIONAL_INFO = "includeAdditionalInfo";
 	
 	
 	

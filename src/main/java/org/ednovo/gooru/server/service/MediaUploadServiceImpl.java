@@ -28,7 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeSet;
-
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -90,9 +90,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	public MediaUploadDo imageWebUpload(String imageURL) {
 		MediaUploadDo mediaUploadDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator
-				.generateUrl(getRestEndPoint(), UrlToken.MEDIA_FILE_UPLOAD,
-						getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.MEDIA_FILE_UPLOAD,getLoggedInSessionToken());
 		JSONObject jsonObj=new JSONObject();
 		try {
 			jsonObj.put("imageURL", imageURL);
@@ -123,11 +121,9 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	public String saveImageCollection(String gooruOid, String fileName) {
 		String filePath = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),fileName);
-	
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
-				getRestPassword());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken());
+		String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.MEDIA_FILE_NAME,fileName);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			filePath = jsonRep.getText(); 
@@ -175,12 +171,8 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public String cropImage(String fileName, String height, String width,
-			String xPosition, String yPosition, String imageUrl) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),
-				height, width, xPosition, yPosition);
-
+	public String cropImage(String fileName, String height, String width,String xPosition, String yPosition, String imageUrl) {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),height, width, xPosition, yPosition);
 		try
 		{
 		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
@@ -342,8 +334,8 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	public CollectionItemDo getCollectionItem(String collectionItemId) {
 		
 		JsonRepresentation jsonRep = null;		
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
-	
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
+		String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.INCLUDE_ADDITIONAL_INFO,GooruConstants.TRUE); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -351,15 +343,15 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 	@Override
 	public String uploadProfileImage(String fileNameWithOurRespository,String fileName) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPLOAD_PROFILE_IMAGE, getLoggedInUserUid(), getLoggedInSessionToken(),fileNameWithOurRespository);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPLOAD_PROFILE_IMAGE, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = AddQueryParameter.constructQueryParams(partialUrl,GooruConstants.MEDIA_FILE_NAME,fileNameWithOurRespository);
 		Form form = new Form();
 		form.add("sessionToken",getLoggedInSessionToken());
 		ServiceProcessor.post(url, getRestUsername(),getRestPassword(),form);
 		return fileName;
 	}
 	
-	public String fileUploadImage(String data,String webServiceUrl)
-			throws Exception {
+	public String fileUploadImage(String data,String webServiceUrl)throws Exception {
 		String respStr = "";
 		FormData fd = new FormData("data", data);        
 	    FormDataSet fds = new FormDataSet();

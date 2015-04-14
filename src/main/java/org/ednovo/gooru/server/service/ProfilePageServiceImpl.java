@@ -27,7 +27,9 @@ package org.ednovo.gooru.server.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -52,6 +54,7 @@ import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONException;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
@@ -222,13 +225,20 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	public ProfileLibraryListDo getProfilePaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException {
 		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
 		JsonRepresentation jsonRep = null;
-		String url = null;
+		String partialUrl = null;
 		String sessionToken = getLoggedInSessionToken();
-		
+
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken);
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.FETCH_CHILDS,GooruConstants.TRUE);
+		params.put(GooruConstants.ITEM_LIMIT, String.valueOf(limit));
+		params.put(GooruConstants.OFFSET, "0");
+		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
 		if(sharingType!=null){
-			sessionToken=sessionToken+"&sharing="+sharingType;
+			params.put(GooruConstants.SHARING, sharingType);
+//			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"","0");
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("getProfilePaginationWorkspace:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -239,7 +249,14 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	@Override
 	public ProfileLibraryDo getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid, getLoggedInSessionToken(), skipCollectionItems + "");
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid, getLoggedInSessionToken());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.SKIP_COLL_ITEM, String.valueOf(skipCollectionItems)); 
+		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );
+		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		getLogger().info("getProfileLibraryCollection:"+url);
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();

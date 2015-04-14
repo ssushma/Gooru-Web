@@ -28,6 +28,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,7 @@ import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.user.CreatorDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -164,8 +166,19 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public CollectionDo getSimpleCollectionDetils(String apiKey,String simpleCollectionId, String resourceId, String tabView, String rootNodeId) {
 		CollectionDo collectionDo = new CollectionDo();
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken(),"true");
-		url+=getStandardId(rootNodeId);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
+		Map<String, String> params = new LinkedHashMap<String, String>();
+		params.put(GooruConstants.SKIP_COLL_ITEM, GooruConstants.TRUE); 
+		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );
+		params.put(GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		params.put(GooruConstants.INCLUDE_CONTENT_PROVDER, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDE_CUSTOM_FIELDS,GooruConstants.FALSE);
+		if(rootNodeId != null) {
+			params.put(GooruConstants.ROOT_NODE_ID,rootNodeId);
+		}
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("--getConcept --  "+url);
+//		url+=getStandardId(rootNodeId);
 
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		getLogger().info("getSimpleCollectionDetils:"+url);
