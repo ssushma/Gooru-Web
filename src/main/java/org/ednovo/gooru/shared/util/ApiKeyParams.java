@@ -87,7 +87,18 @@ public interface ApiKeyParams {
 	String MEDIA_FILE_NAME = "mediaFileName";
 	String INCLUDE_ADDITIONAL_INFO = "includeAdditionalInfo";
 	
+	/**
+	 * Player service related parameters.
+	 */
 	
-	
+	String ID = "id";
+	String REAL_URL = "realUrl";
+	String ADD_TO_SHELF = "addToShelf";
+	String TITLE = "title";
+	String CREATOR_UID = "creatorUId";
+	String GOORU_OID = "gooruOid";
+	String V = "v";
+	String ALT = "alt";
+	String PRETTY_PRINT = "prettyprint";
 
 }
