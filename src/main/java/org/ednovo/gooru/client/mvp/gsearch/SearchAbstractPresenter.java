@@ -33,7 +33,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SeoTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.RegisterTabDndEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
@@ -43,28 +42,15 @@ import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
-import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
-import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.PostSearchEvent;
-import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
-import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
-import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
-import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
-import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
-import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
-import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
-import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
@@ -180,7 +166,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReset() {
 		super.onReset();
-
+/*
 		String count = Cookies.getCookie("MyCookie");
 		if (count != null && Integer.parseInt(count) == 7) {
 			Window.enableScrolling(false);
@@ -188,10 +174,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		} else {
 			Window.enableScrolling(false);
 			// Window.enableScrolling(true);
-		}
+		}*/
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+		if (getSearchDo().getSearchQuery() != null
+				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
+			getSearchAsyncCallback().execute(getSearchDo());
+		}
+		/*if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			if (setFilter) {
 				searchDo.setPageNum(1);
 				getSearchService().getSearchFilters(getCurrentPlaceToken(),
@@ -206,7 +196,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			} else {
 				// initiateSearch();
 			}
-		}
+		}*/
 		if (getPlaceManager().getRequestParameter("callback") != null
 				&& getPlaceManager().getRequestParameter("callback")
 						.equalsIgnoreCase("signup")) {

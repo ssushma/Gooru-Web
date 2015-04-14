@@ -104,7 +104,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		searchCollections();
 	}
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
@@ -119,18 +118,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	@Override
 	public void onBind() {
 		super.onBind();
-	}
-	public void searchCollections(){
-		searchDo.setQuery("cells");
-		searchDo.setFilters(filterMap);
-		searchDo.setPageNum(1);
-		searchDo.setPageSize(8);
-		getSearchService().getCollectionSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
-			@Override
-			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
-				getView().setCollectionsData(result);
-			}
-		});
 	}
 
 	public SearchServiceAsync getSearchService() {
@@ -149,18 +136,22 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	}
 
 	@Override
-	protected void requestSearch(
-			SearchDo<CollectionSearchResultDo> searchDo,
-			SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
-		
+	protected void requestSearch(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
+		searchDo.setQuery("cells");
+		getSearchService().getCollectionSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
+			@Override
+			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
+				getView().setCollectionsData(result);
+			}
+		});
 	}
 		
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
-		searchDo.setQuery("cells");
-		searchDo.setPageNum(pageNumber);
-		searchDo.setPageSize(pageSize);
-		getSearchService().getCollectionSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
+		getSearchDo().setQuery("cells");
+		getSearchDo().setPageNum(pageNumber);
+		getSearchDo().setPageSize(pageSize);
+		getSearchService().getCollectionSearchResults(getSearchDo(), new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
 			@Override
 			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
 				getView().setCollectionsData(result);
