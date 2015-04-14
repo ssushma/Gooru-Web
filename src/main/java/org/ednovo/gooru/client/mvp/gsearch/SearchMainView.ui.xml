@@ -2,7 +2,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"
 	xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel ui:field="gooruSearchMainContainer">
@@ -12,15 +12,15 @@
 				<g:HTMLPanel styleName="no-gutter">
 					<g:HTMLPanel styleName="col-md-6 col-sm-5">
 						<g:HTMLPanel styleName="seachLeftNavigation">
-							<ul>
-								<li class="active">
-									<a href="">Collection</a>
-								</li>
-								<li>
-									<a href="">Resource</a>
-								</li>
+							<panel:UlPanel>
+								<panel:LiPanel styleName="active" ui:field="collectionPanel">
+									<g:Anchor>Collection</g:Anchor>
+								</panel:LiPanel>
+								<panel:LiPanel ui:field="resourcePanel">
+									<g:Anchor>Resource</g:Anchor>
+								</panel:LiPanel>
 
-							</ul>
+							</panel:UlPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 
@@ -31,10 +31,10 @@
 							<g:InlineLabel styleName="preHeader"> Preference </g:InlineLabel>
 							<g:HTMLPanel styleName="btn-group">
 								<g:Button  styleName="btn btn-primary">Grade 5</g:Button>
-								<g:Button styleName="btn btn-primary dropdown-toggle"></g:Button>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
 									<g:InlineLabel styleName="caret"></g:InlineLabel>
 									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-								
+								</g:HTMLPanel>
 								<ul class="dropdown-menu" role="menu">
 									<li>
 										<a href="#">Action</a>
@@ -57,10 +57,10 @@
 
 							<g:HTMLPanel styleName="btn-group">
 								<g:Button styleName="btn btn-primary">Science</g:Button>
-								<g:Button styleName="btn btn-primary dropdown-toggle"></g:Button>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
 									<g:InlineLabel styleName="caret"></g:InlineLabel>
 									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-								
+								</g:HTMLPanel>
 								<ul class="dropdown-menu" role="menu">
 									<li>
 										<a href="#">Action</a>
@@ -84,10 +84,10 @@
 
 							<g:HTMLPanel styleName="btn-group">
 								<g:Button  styleName="btn btn-primary">Browse Standers</g:Button>
-								<g:Button styleName="btn btn-primary dropdown-toggle"></g:Button>
-									<g:InlineLabel styleName="glyphicon glyphicon-align-justify"
-										></g:InlineLabel>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+									<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
 									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+								</g:HTMLPanel>
 								
 								<ul class="dropdown-menu" role="menu">
 									<li>
