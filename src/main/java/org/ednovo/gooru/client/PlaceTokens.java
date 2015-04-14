@@ -94,6 +94,6 @@ public interface PlaceTokens {
 	String DASHBOARD ="dashboard";
 	String ASPIRE_EPACS =  "AspireEPACS";
 	
-	String SEARCH_COLLECTION1 = "collectionsearch"; 
+	String SEARCH_COLLECTION = "collectionsearch"; 
 
 }

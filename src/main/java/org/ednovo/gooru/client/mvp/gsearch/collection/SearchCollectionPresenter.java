@@ -32,16 +32,20 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
+import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
-import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter.IsSearchCollectionProxy;
+import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
+import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
-import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -62,28 +66,34 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
  *
  * @Reviewer: 
  */
-public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollectionView, IsSearchCollectionProxy> implements SearchCollectionUiHandlers {
+public class SearchCollectionPresenter extends SearchAbstractPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsSearchCollectionView, SearchCollectionPresenter.IsSearchCollectionProxy> implements GooruSearchUiHandlers,RefreshDisclosurePanelForFoldersEventHandler {
 
 	@Inject
 	private SearchServiceAsync searchService;
 	SearchDo<CollectionSearchResultDo> searchDo=new SearchDo<CollectionSearchResultDo>();
 	Map<String, String> filterMap = new HashMap<String, String>();
 	
+	AddStandardsPresenter addStandardsPresenter = null;
+
+	AddCenturyPresenter addCenturyPresenter;
+	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.SEARCH_COLLECTION1)
+	@NameToken(PlaceTokens.SEARCH_COLLECTION)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsSearchCollectionProxy extends ProxyPlace<SearchCollectionPresenter> {
 	}
 
 	@Inject
-	public SearchCollectionPresenter(EventBus eventBus, IsSearchCollectionView view, IsSearchCollectionProxy proxy,SignUpPresenter signUpViewPresenter) {
-		super(view, proxy);
+	public SearchCollectionPresenter(IsSearchCollectionView view, IsSearchCollectionProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter);
+		this.addStandardsPresenter = addStandardsPresenter;
+		this.addCenturyPresenter=addCenturyPresenter;
 		getView().setUiHandlers(this);
 	}
 
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.SEARCH_COLLECTION1;
+		return PlaceTokens.SEARCH_COLLECTION;
 	}
 	
 	@Override
@@ -131,6 +141,20 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 		this.searchService = searchService;
 	}
 
+	
+	@Override
+	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void requestSearch(
+			SearchDo<CollectionSearchResultDo> searchDo,
+			SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
+		
+	}
+		
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
 		searchDo.setQuery("cells");

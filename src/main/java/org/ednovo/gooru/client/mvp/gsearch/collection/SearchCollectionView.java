@@ -25,7 +25,7 @@
 
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -54,8 +54,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionUiHandlers>
-		implements IsSearchCollectionView {
+public class SearchCollectionView extends SearchAbstractView<CollectionSearchResultDo> implements IsSearchCollectionView {
 
 	private static SearchCollectionViewUiBinder uiBinder = GWT
 			.create(SearchCollectionViewUiBinder.class);
@@ -68,6 +67,7 @@ public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionU
 	int pageNumber=1;
 	
 	public SearchCollectionView() {
+		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
@@ -88,4 +88,5 @@ public class SearchCollectionView extends BaseViewWithHandlers<SearchCollectionU
 			}
 		}
 	}
-}
+
+	}
