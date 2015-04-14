@@ -218,15 +218,14 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		filtersMap.put(GooruConstants.ALLOW_DUPLICATES,  "false");
 		filtersMap.put(GooruConstants.FETCH_HITS_IN_MULTI,  TRUE);
 		filtersMap.put(GooruConstants.ALLOW_SCRIPTING,  TRUE);
+		filtersMap.put(GooruConstants.PROTOCOL_SUPPORTED, "http,https");
 		String url = AddQueryParameter.constructQueryParams(partialUrl, filtersMap);
-		if(getHomeEndPoint().contains(HTTPS)){
-			url = appendHttpsURL(url);
-		}
+		
 		getLogger().info("url search resource results:::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
-			resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo);	
+			resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo,"");	
 		}
 		catch(Exception e)
 		{
@@ -276,9 +275,10 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			url = appendHttpsURL(url);
 		}
 		getLogger().info("collection search url::::::"+url);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
-		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
+		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo,getProfileImageUrl());
 		return searchDo;
 		}catch(Exception e){
 			logger.error("Exception::", e);
@@ -318,7 +318,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		getLogger().info("urlresourceinfotab getResourceCollectionsList search::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
-		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
+		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo,"");
 		return searchDo;
 	}
 
@@ -534,7 +534,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			getLogger().info("SEARCH_SUGGEST_NO_RESULT get url::::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
-			resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo);
+			resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo,"");
 			return searchDo;
 			}catch(Exception e){
 				logger.error("Exception::", e);
