@@ -31,7 +31,7 @@
 				<g:HTMLPanel styleName="panel-body">
 					<g:HTMLPanel styleName="no-gutter">
 						<g:HTMLPanel styleName="col-md-5 col-sm-5 collectionImg">
-							<a href="#">
+							<a>
 								<uc:CollectionImageUc ui:field="imgCollection" />
 							</a>
 						</g:HTMLPanel>
@@ -45,9 +45,8 @@
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 
 						<g:HTMLPanel styleName="standerdContainer">
-							<g:HTMLPanel styleName="searchStandard">NGSS-3-ESS2</g:HTMLPanel>
-							<g:HTMLPanel styleName="searchStandard">NGSS-3-ESS2</g:HTMLPanel>
-							<g:InlineLabel styleName="additionalCount">+4</g:InlineLabel>
+							<g:FlowPanel styleName="searchStandard" ui:field="standardsDataPanel"/>
+							<!-- <g:InlineLabel styleName="additionalCount">+4</g:InlineLabel> -->
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="resourcesInside" ui:field="pnlResourceWidget">
 							<ucp:Paragraph ui:field="pResourceText"/>
