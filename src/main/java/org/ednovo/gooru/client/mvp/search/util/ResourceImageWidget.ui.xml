@@ -3,8 +3,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:HTMLPanel styleName="resourceImage">
 		<a href="#">
-			<g:Image url="images/auto3.jpg"/>
-			<g:HTMLPanel styleName="resourceName videoSmall"></g:HTMLPanel>
+			<g:Image ui:field="imgResourceImg"/>
+			<g:HTMLPanel styleName="resourceName" ui:field="imageOverlay"></g:HTMLPanel>
 		</a>
 	</g:HTMLPanel>
 </ui:UiBinder> 

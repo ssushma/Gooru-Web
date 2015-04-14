@@ -42,4 +42,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  */
 public interface SearchCollectionUiHandlers extends BaseUiHandlers{
 	
+	
 }

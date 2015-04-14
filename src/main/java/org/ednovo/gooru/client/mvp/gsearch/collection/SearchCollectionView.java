@@ -64,6 +64,7 @@ public class SearchCollectionView extends SearchAbstractView<CollectionSearchRes
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel searchResultPanel;
+	int pageNumber=1;
 	
 	public SearchCollectionView() {
 		super(false);
@@ -72,15 +73,11 @@ public class SearchCollectionView extends SearchAbstractView<CollectionSearchRes
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				if((event.getScrollTop()+Window.getClientHeight())==Document.get().getBody().getClientHeight()){
-					for(int i=0;i<20;i++){
-						//searchResultPanel.add(new CollectionSearchWidget());
-					}
+					pageNumber++;
+					getUiHandlers().getCollectionSearchResultsOnPageWise("", pageNumber, 8);
 				}
 			}
 		});
-		/*for(int i=0;i<20;i++){
-			searchResultPanel.add(new CollectionSearchWidget());
-		}*/
 	}
 
 	@Override

@@ -34,5 +34,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  * 
  */
 public interface GooruSearchUiHandlers extends BaseUiHandlers{
-	
+	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber,int pageSize);
 }
