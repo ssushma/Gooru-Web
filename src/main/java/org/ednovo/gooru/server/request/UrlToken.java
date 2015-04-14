@@ -70,7 +70,7 @@ public enum UrlToken {
 	
 	V2_REORDER_COLLECTION_ITEM_SEQUENCE("/v2/collection/item/{0}/reorder/{1}?sessionToken={2}"),
 
-	GET_COLLECTION_ITEMS("/scollection/{0}/item?sessionToken={1}&pageSize={2}&pageNo={3}"),
+	GET_COLLECTION_ITEMS("/scollection/{0}/item?sessionToken={1}"),
 
 	V2_GET_COLLECTION("/v2/collection/{0}?sessionToken={1}"),
 					
@@ -378,7 +378,7 @@ public enum UrlToken {
 	
 	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}"),
 	
-	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&orderBy=sequence"),
+	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}"),
 	
 	GET_CLASSPARTY_CUSTOMFIELD("/v2/party/{0}/custom-field/classpage_welcome_popup_is_autoopen?sessionToken={1}"),
 	

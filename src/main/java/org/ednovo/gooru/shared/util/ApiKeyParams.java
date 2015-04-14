@@ -100,5 +100,10 @@ public interface ApiKeyParams {
 	String V = "v";
 	String ALT = "alt";
 	String PRETTY_PRINT = "prettyprint";
+	
+	/**
+	 * Profile service related parameters.
+	 */
 
+	String PAGE_NO = "pageNo";
 }

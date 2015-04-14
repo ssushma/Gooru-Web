@@ -45,6 +45,11 @@ public interface ClientConstants {
 	
 	String PUBLIC = "public";
 	
+	String GRADE = "grade";
+	
+	String USER_META_ACTIVE_FLAG = "userMetaActiveFlag";
+	
+	
 	/* ****************** Base service Impl Constants Start ******************** */
 	
 
