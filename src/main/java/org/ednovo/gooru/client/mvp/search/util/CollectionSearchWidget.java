@@ -5,6 +5,7 @@ package org.ednovo.gooru.client.mvp.search.util;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.CollectionImageUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -17,6 +18,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -42,6 +44,7 @@ public class CollectionSearchWidget extends Composite {
 	@UiField CollectionImageUc imgCollection;
 	@UiField Paragraph pResourceText;
 	@UiField Image imgAuthor;
+	@UiField FlowPanel standardsDataPanel;
 	
 	public CollectionSearchWidget(CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -85,5 +88,6 @@ public class CollectionSearchWidget extends Composite {
 				}
 			});
 		}
+		SearchUiUtil.renderStandards(standardsDataPanel, collectionSearchResultDo);
 	}
 }
