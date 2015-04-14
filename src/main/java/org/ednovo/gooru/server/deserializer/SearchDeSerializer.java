@@ -112,7 +112,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	 * @param searchDo instance of {@link SearchDo}
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(SearchDeSerializer.class);
-	public void deserialize(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
+	public void deserialize(JsonRepresentation jsonRep, SearchDo<T> searchDo, String profileEndPoint) {
 		searchDo.setSearchResults(new ArrayList<T>());
 		try {
 			if (jsonRep != null) {
@@ -132,6 +132,10 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				for (int pointer = 0; pointer < searchResultJsonArray.length(); pointer++) {
 					T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
 					if (record != null) {
+						if(!profileEndPoint.isEmpty())
+						{					
+						record.setAssetURI(profileEndPoint);
+						}
 						collectionSearchResults.add(record);
 					}
 				}

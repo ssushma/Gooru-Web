@@ -15,6 +15,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -49,7 +51,14 @@ public class CollectionSearchWidget extends Composite {
 	public CollectionSearchWidget(CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set the data
-		imgAuthor.setUrl("images/settings/setting-user-image.png");
+		imgAuthor.setUrl(collectionSearchResultDo.getAssetURI()+collectionSearchResultDo.getOwner().getGooruUId()+".png");
+		imgAuthor.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				imgAuthor.setUrl("images/settings/setting-user-image.png");
+			}
+		});
+	
 		collectionTitle.setText(collectionSearchResultDo.getResourceTitle());
 		String collectionDesc=collectionSearchResultDo.getDescription();
 		if(!StringUtil.isEmpty(collectionDesc)){
@@ -76,12 +85,19 @@ public class CollectionSearchWidget extends Composite {
 				public void onSuccess(SearchDo<CollectionItemSearchResultDo> result) {
 					int size=result.getSearchResults().size();
 					int count=0;
-					if(size>0){
+					if(size>0){					
 						for (CollectionItemSearchResultDo collectionItemSearchResultDo : result.getSearchResults()) {
 							if(count>=4){
 								break;
 							}
+							try
+							{
 							pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo));
+							}
+							catch(Exception ex)
+							{
+								ex.printStackTrace();
+							}
 							count++;
 						}
 					}
