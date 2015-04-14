@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 /**
  * @fileName : IsSearchMainView.java
  *
@@ -39,5 +41,10 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
  * @Reviewer: 
  */
 public interface IsSearchCollectionView extends IsViewWithHandlers<SearchCollectionUiHandlers>{
+	/**
+	 * This method is used to set data
+	 * @param result
+	 */
+	void setCollectionsData(SearchDo<CollectionSearchResultDo> result);
 
 }

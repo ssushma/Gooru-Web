@@ -365,6 +365,13 @@
 	padding: 0;
 	top: 9px;
 }
+
+#gooruSearchMainContainer .authorName{
+	display: inline-block;
+}
+#gooruSearchMainContainer .collectionDescription{
+	height: 20px;
+}
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .collectionImg{
 		width:160px;

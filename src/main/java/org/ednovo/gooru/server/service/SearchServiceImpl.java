@@ -292,7 +292,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		JsonRepresentation jsonRep=null;
 		SearchDo<CollectionItemSearchResultDo> searchDo=new SearchDo<CollectionItemSearchResultDo>();
 		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.V2_COLLECTION_ITEMS_LIST, collectionId,getLoggedInSessionToken());
-
+		getLogger().info("getCollectionItems search::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		collectionItemsResultDeSerializer.deserializeV2CollectionItems(jsonRep, searchDo);

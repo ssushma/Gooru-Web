@@ -177,7 +177,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 			collectionItemSearchResultDo.setGrade(getJsonString(recordJsonObject, GRADE));
 			collectionItemSearchResultDo.setTags(getJsonString(recordJsonObject, TAGS));
 			try {
-				JSONObject license = recordJsonObject.getJSONObject(LICENSE);
+				JSONObject license = recordJsonObject.isNull(LICENSE)?new JSONObject():recordJsonObject.getJSONObject(LICENSE);
 				LicenseDo licenseDo=JsonDeserializer.deserialize(license.toString(), LicenseDo.class);
 				collectionItemSearchResultDo.setLicense(licenseDo);
 				if((!recordJsonObject.isNull(TAG_SET))&& recordJsonObject.get(TAG_SET) != null && !recordJsonObject.get(TAG_SET).equals("") && !recordJsonObject.get(TAG_SET).equals(null) ){
