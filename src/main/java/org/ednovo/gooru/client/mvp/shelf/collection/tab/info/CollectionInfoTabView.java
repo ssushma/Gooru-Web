@@ -296,7 +296,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		res = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		
 		GradeUpdate.setText("Grades are updating..");
 		GradeUpdate.setVisible(false);
 		browseBtn.addClickHandler(new ClickHandler() {
@@ -1240,13 +1239,27 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
 		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
-	public GradeLabel frameLabel(String label, CollectionDo collectionDoInternal)
+	public GradeLabel frameLabel(String label,CollectionDo collectionDoInternal)
 	{
-		GradeLabel gradeLblKindergarten = new GradeLabel(label, collectionDoInternal) {			
+		if (collectionDoInternal.getGrade() != null) {
+			String genGrade = collectionDoInternal.getGrade();
+			if (genGrade.indexOf("-")>0){
+				genGrade = generateGrade(genGrade);
+			}
+			String grade[] = genGrade.split(",");
+			for (int i = 0; i < grade.length; i++) {
+				if (label.equals(grade[i])) {
+					if(!gradeList.contains(grade[i].toString())){
+						gradeList.add(grade[i].toString());
+					}
+				}
+			}
+		}
+		GradeLabel gradeLblKindergarten = new GradeLabel(label, collectionDoInternal) {	
+	
 			@Override
 			public void onClick(ClickEvent event) {
 				GradeUpdate.setVisible(true);
-			
 				gradeTopList.setVisible(false);
 				gradeMiddleList.setVisible(false);
 				gradeBottomList.setVisible(false);
@@ -1264,7 +1277,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					}
 					catch(Exception ex)
 					{
-						AppClientFactory.printSevereLogger(ex.getMessage());
+						AppClientFactory.printSevereLogger("grade catch::"+ex.getMessage());
 					}
 				
 				} else {
@@ -1291,19 +1304,67 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					}
 				}
 				updateGrade(gradeList);
-				
 			}
-			
-		
+
 		};
+		//AppClientFactory.printInfoLogger("update grade list1233::::"+gradeList);
 		return gradeLblKindergarten;
+	}
+	private String generateGrade(String gradeTxt){
+		String tmpGradeTxt = "";
+		if (gradeTxt.indexOf("-") > 0){
+			if (gradeTxt.indexOf(",") == -1){
+				tmpGradeTxt = generateGradeIfHypen(gradeTxt);
+			}else{
+				String gradeList[];
+				gradeList = gradeTxt.split(",");
+				for (int k=0; k<gradeList.length;k++){
+					if (gradeList[k].indexOf("-") > 0){
+						if (k==gradeList.length){
+							tmpGradeTxt = tmpGradeTxt + generateGradeIfHypen(gradeList[k]);
+						}else{
+							tmpGradeTxt = tmpGradeTxt + generateGradeIfHypen(gradeList[k]) + ",";
+						}
+					}else{
+						if (k==gradeList.length-1){
+							tmpGradeTxt = tmpGradeTxt + gradeList[k];
+						}else{
+							tmpGradeTxt = tmpGradeTxt + gradeList[k] + ",";
+						}
+					}
+				}
+			}
+		}
+		return tmpGradeTxt;
+	}
+	
+	private String generateGradeIfHypen(String grade){
+		String gradeList[];
+		StringBuilder gradeStr = new StringBuilder();
+		gradeList = grade.split("-");
+		if (gradeList.length>=2){
+			int start = Integer.parseInt(gradeList[0].trim());
+			int end = Integer.parseInt(gradeList[1].trim());
+			if ( start < end){
+				for (int i = start; i<=end; i++){
+					if (i==end){
+						gradeStr.append(i);
+					}else{
+						gradeStr.append(i).append(",");
+					}
+				}
+			}
+		}else{
+			gradeStr.append(Integer.parseInt(gradeList[0]));
+		}
+		return gradeStr.toString();
 	}
 
 	/**
 	 * separate the view according to grade level of the collection
 	 */
 	public void setGradeList() {
-		//gradeList.clear();
+		gradeList.clear();
 		KinderGarten.add(frameLabel("Kindergarten", collectionDo));
 		higherEducation.add(frameLabel("Higher Education", collectionDo));
 		for (int i = 1; i <= 12; i++) {
