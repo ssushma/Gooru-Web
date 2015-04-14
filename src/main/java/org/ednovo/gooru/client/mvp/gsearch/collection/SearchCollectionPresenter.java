@@ -60,7 +60,7 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 	
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.SEARCH_COLLECTION1)
+	@NameToken(PlaceTokens.SEARCH_COLLECTION)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsSearchCollectionProxy extends ProxyPlace<SearchCollectionPresenter> {
 	}
@@ -73,7 +73,7 @@ public class SearchCollectionPresenter extends BasePlacePresenter<IsSearchCollec
 
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.SEARCH_COLLECTION1;
+		return PlaceTokens.SEARCH_COLLECTION;
 	}
 	
 	@Override
