@@ -983,7 +983,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void updatCollectionViewsCount(){
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null && !StringUtil.isEmpty(collectionDo.getViews())){
 				String viewsCount=collectionDo.getViews();
-				Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+				Integer viewsCounts=Integer.parseInt(viewsCount);
 				collectionDo.setViews(StringUtil.toString(viewsCounts));
 				metadataPresenter.setViewCount(StringUtil.toString(viewsCounts));
 				try{
