@@ -1301,3 +1301,93 @@ margin-bottom: -10px;
   font-size: 14px;
   font-weight: bold;
 }
+.student:hover{
+	background-color: #cfe3f1;
+	opacity: 1;
+	cursor: pointer;
+}
+
+.student{
+	width: 93% !important;
+	height: 16px !important;
+	font-size: 13px !important;
+	color: #515151 !important;
+	cursor: pointer !important;
+	float: left;
+	text-decoration: none !important;
+	padding: 4px 0;
+	padding-left: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+.studentListContainer1{
+	position: relative;
+	top: -147px;
+	right: 20px;
+	float: right;
+	padding: 7px;
+	width: 154px;
+}
+.studentListContainer {
+	background: #FFF;
+	padding: 7px;
+	border: 1px solid #ccc;
+	height: 12px;
+}
+.selectedStudent{
+	float: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 115px;
+	cursor: pointer;
+}
+.ccContainer{
+	padding-top: 17px;
+	padding-bottom: 10px;
+	float: right;
+}
+
+.arrowDropdown{
+	width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: #999 transparent transparent transparent;
+	float: right;
+	margin-top: 4px;
+	margin-left: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+.studentList{
+	background: #fff;
+	height: auto;
+	min-height: 24px;
+	max-height: 97px;
+}
+.scrollPanel{
+	background-color: white;
+	z-index: 9;
+	min-height: 24px;
+	max-height: 97px;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+	position: absolute !important;
+	width: 153px;
+	border: 1px solid #ccc;
+}
+.classcodeLabel{
+	width: 70px !important;
+	height: 30px !important;
+	border: 0px solid #ccc;
+	font-size: 12px !important;
+	padding: 7px 5px;
+	text-align: center;
+	float: left;
+}
+.tabContainerDiv{
+	margin: 0 auto;
+width: 660px;
+}
