@@ -25,9 +25,6 @@
 package org.ednovo.gooru.client.mvp.gsearch;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
-import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
-import org.ednovo.gooru.client.mvp.search.SearchFilterVc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -73,7 +70,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageNumber = 1;
 	
 	/**
-	 * Assign new instance for {@link ResourceDragController}, {@link AppMirageDragContainer}, {@link SearchFilterVc}
+	 * Assign new instance for 
 	 * 
 	 * @param resourceSearch
 	 *            whether resource search or not
