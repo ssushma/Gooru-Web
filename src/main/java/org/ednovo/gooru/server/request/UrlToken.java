@@ -82,11 +82,11 @@ public enum UrlToken {
 
 	V2_TAXONOMY_COURSE("/v2/taxonomy/course?"),
 
-	USER_COLLECTION("/myshelf?format={0}&{1}&filterBy=collection&merge=permissions"),
+	USER_COLLECTION("/myshelf?format={0}"),
 
-	SHARABLE_USER_COLLECTION("/myshelf?format={0}&{1}&sharing=public,anyonewithlink&filterBy=collection&merge=permissions"),
+	SHARABLE_USER_COLLECTION("/myshelf?format={0}"),
 	
-	V2_USER_AVAILABILITY("/v2/user/{0}/availability?keyword={1}"),
+	V2_USER_AVAILABILITY("/v2/user/{0}/availability?"),
 			
 	REGISTER_USER("/user?"),
 
@@ -126,15 +126,13 @@ public enum UrlToken {
 
 	MEDIA_FILE_SAVE("/resource/{0}/media?"),
 
-	IMAGE_CROP("/media/{0}/crop?height={1}&width={2}&xPosition={3}&yPosition={4}&cropEngine=bufferImage"),
+	IMAGE_CROP("/media/{0}/crop?"),
 
-	UPDATE_USER_VIEW("/user/{0}/view/flag?viewFlag={1}"),
+	UPDATE_USER_VIEW("/user/{0}/view/flag?"),
 
-	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?title={1}&url={2}&category={3}&description={4}&thumbnailImgSrc={5}&stop={6}"),
+	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?"),
 
-	GET_RESOURCE_INFO("/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"), // Not Used.
-	
-	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?url={0}&title=Nothing&fetchThumbnail=true"),
+	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?"),
 
 	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&"),
 
@@ -154,7 +152,7 @@ public enum UrlToken {
 	
 	ASSIGN_COLLECTION_OR_FOLDER_TO_CLASS_V2("/v2/class/{0}/assign/{1}?sessionToken={2}"), //Not Used.
 	
-	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?offset={1}&limit={2}"),
+	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?"),
 	
 	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?"),
 	
@@ -164,7 +162,7 @@ public enum UrlToken {
 	
 	REMOVE_QUESTION_IMAGE("/quiz-question/{0}/asset?"),
 
-	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?fileNames={1}&assetKey=asset-question"),
+	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?"),
 
 	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?"),
 			
@@ -180,7 +178,7 @@ public enum UrlToken {
 	
 	PERMISSION_COLLECTION("/user/content/{0}/check-access.json?"),
 	
-	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?limit={0}&offset={1}"),
+	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?"),
 	
 	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?&data={%22limit%22:%22{1}%22,%22offset%22:%22{2}%22}"),
 	
@@ -278,7 +276,7 @@ public enum UrlToken {
     
     COPY_RESOURCCE("/scollection/item?"),
     
-    V2_GET_USER_WORKSPACE("/v2/folder/{0}/workspace?offset={1}&limit={2}"),
+    V2_GET_USER_WORKSPACE("/v2/folder/{0}/workspace?"),
     
     GET_USER_WORKSPACE("/myshelf?format=json"),
     
@@ -338,7 +336,7 @@ public enum UrlToken {
 	
 	V2_SUGGEST_COLLAB("/v2/collaborator/suggest?query={0}"),
 	 	
-	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?offset={0}&limit={1}&orderBy=sequence"),
+	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?"),
 	
 	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?"),
 	
@@ -408,7 +406,7 @@ public enum UrlToken {
 	
 	GET_TAGS("/v2/content/{0}/tag?"),
 	
-	DELETE_TAGS("/v2/content/{0}/tag?data={1}"),
+	DELETE_TAGS("/v2/content/{0}/tag?"),
 	
 	TEACH_STUDY("/v2/class/my/teach-study?limit={0}&offset={1}"),
 	
@@ -420,9 +418,9 @@ public enum UrlToken {
 	
 	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?"),
 
-	USER_FOLLOWERS("/v2/user/{0}/followers?offset={1}&limit={2}"),
+	USER_FOLLOWERS("/v2/user/{0}/followers?"),
 	
-	USER_FOLLOWING("/v2/user/{0}/following?offset={1}&limit={2}"),
+	USER_FOLLOWING("/v2/user/{0}/following?"),
 	
 	USER_FOLLOW("/v2/user/follow/{0}?"),
 	
@@ -430,9 +428,9 @@ public enum UrlToken {
 	
 	USER_IS_FOLLOW("/v2/user/{0}/isfollow?"),
 	
-	USER_TAG("/v2/content/tag/{0}?offset={1}&limit={2}"),
+	USER_TAG("/v2/content/tag/{0}?"),
 	
-	USER_TAG_RESOURCE("/v2/tag/{0}/resource?offset={1}&limit={2}&gooruUId={3}"),
+	USER_TAG_RESOURCE("/v2/tag/{0}/resource?"),
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}"),
 	
@@ -472,13 +470,13 @@ public enum UrlToken {
 	
 	GET_COLLECTION_SUMMARY("/insights/api/v1/classpage/{0}.json?"),
 
-	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?resetToken={0}"),
+	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?"),
 
 	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?"),
 
 	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?"),
 
-	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?data={0}"),
+	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?"),
 
 	RESOURCE_TAGS("/v2/content/resource/tag/{0}?"),
 	

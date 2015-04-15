@@ -334,5 +334,8 @@ public interface ClientConstants {
 	String CHILD_REG = "childReg";
 	
 	String FULLSCREEN = "fullscreen";
+	String NOTHING ="Nothing";
+	String ASSETQUESTION ="asset-question";
+	String BUFFERIMAGE ="bufferImage";
 	
 }

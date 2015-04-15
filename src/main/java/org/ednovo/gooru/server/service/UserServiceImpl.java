@@ -62,6 +62,7 @@ import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -157,8 +158,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDo getEmailId(String emailId, String type) {
 	  	UserDo userDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_USER_AVAILABILITY, type, emailId);
-		
+
+		//  /v2/user/{0}/availability?sessionToken={1}&keyword={2}
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_USER_AVAILABILITY, type);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.KEYWORD, emailId);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
@@ -249,11 +253,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 	}
 
-	/*@Override
-	public UserDo getUser(String userUid) {
-		return getUserInfo(userUid);
-	}*/
-
 	@Override
 	public Map<String, Object> forgotPassword(String emailId) {
 		JsonRepresentation jsonRep = null;
@@ -303,7 +302,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException {
 		UserDo userDo = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_VIEW, gooruUid, String.valueOf(viewFlag));
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_VIEW, gooruUid);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.VIEWFLAG, String.valueOf(viewFlag));
+
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		getLogger().info("UPDATE_USER_VIEW updateUserViewFlag get url:::::"+url);
@@ -599,8 +601,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserFollowDo> getFollowedOnUsers(String gooruUid,String offset, String limit) throws GwtException {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,offset,limit);
-		
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.OFFSET, offset);
+		params.put(GooruConstants.LIMIT, limit);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("USER_FOLLOWING url::::"+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFollowingUser(jsonRep);
@@ -611,7 +619,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserFollowDo> getFollowedByUsers(String gooruUid,String offset, String limit) throws GwtException {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,offset,limit);
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.OFFSET, offset);
+		params.put(GooruConstants.LIMIT, limit);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
+
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -710,7 +724,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset, String limit)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,offset,limit);
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.OFFSET, offset);
+		params.put(GooruConstants.LIMIT, limit);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("-- user based tags url -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
@@ -753,7 +772,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit, String userIdVal)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,offset,limit,userIdVal);
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.OFFSET, offset);
+		params.put(GooruConstants.LIMIT, limit);
+		params.put(GooruConstants.GOORUUID, userIdVal);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeResourcesByTag(jsonRep);
@@ -879,7 +905,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException, ServerDownException {
 		// TODO Auto-generated method stub
 		JsonRepresentation jsonRep = null;
-		String url =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_TOKEN_EXPIRE,resetToken);
+		String partialUrl =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_TOKEN_EXPIRE);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.RESETTOKEN, resetToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResetToken(jsonRep);
@@ -901,7 +928,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount() {
 		JsonRepresentation jsonRep = null;
 		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,urlDataParameterValue);
+
+
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, urlDataParameterValue);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDoObj = null;
@@ -998,7 +1029,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		//"1edb25aa-5c5e-4d13-8498-15ef31a93c1f"   sessiontoken hardcoded
 		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfRating5",
 				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
-		String url= UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, urlparameters);
+
+		String partialUrl= UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, urlparameters);
+
+
 		JsonResponseRepresentation jsonRespRep=ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonrep	=jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDOObject = null;
@@ -1017,7 +1052,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfICanExplain",
 				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,urlparameters);
+
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, urlparameters);
+
+
 		JsonResponseRepresentation jsonRespRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep	= jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
@@ -1122,8 +1161,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval) {
 		JsonRepresentation jsonRep = null;
 		String urlparameters = getTopViewedCollectionPayloadObject(offsetval, limitval);
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,urlparameters);
-//		String url = "http://www.goorulearning.org/insights/api/v2/query?sessionToken=419c6c56-5295-11e4-8d6c-123141016e2a&data="+urlparameters;
+
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, urlparameters);
+
+
 		JsonResponseRepresentation jsonRespRep	= ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
@@ -1204,7 +1246,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT);
+		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1334,7 +1377,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,createProfileRatingsJsonPayloadObject());
+
+		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, createProfileRatingsJsonPayloadObject());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		ProfileRatingsReactionsDO profileRatingsReactionsDO = null;

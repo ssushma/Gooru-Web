@@ -25,9 +25,10 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import org.restlet.data.Form;
+import org.restlet.representation.StringRepresentation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,12 +65,11 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.StringRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -329,8 +329,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageListDo v2GetAllClasspages(String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_LIST_MY_CLASSPAGES, limit, offSet);
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_LIST_MY_CLASSPAGES, getLoggedInSessionToken());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.LIMIT, limit);
+		params.put(GooruConstants.OFFSET, offSet);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		
 		getLogger().info("v2GetAllClasspages::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
@@ -702,7 +708,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		ClasspageDo classpageDo=null;
 		ArrayList<ClasspageDo> classPagesList=new ArrayList<ClasspageDo>();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_MY_CLASSPAGES, limit, offset);
+
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_MY_CLASSPAGES);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.LIMIT, limit);
+		params.put(GooruConstants.OFFSET, offset);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -814,9 +826,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId,offset,limit);
 
 		
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.OFFSET, offset);
+		params.put(GooruConstants.LIMIT, limit);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 		if(sortingOrder!=null){
 			if(sortingOrder.equalsIgnoreCase("asce")){
 				sortingOrder="sequence";
@@ -850,12 +866,15 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}else if(sortingOrder.equalsIgnoreCase("latest")){  // getting the assignments in descending order based on due date.
 				sortingOrder="due-date-earliest";
 			}
-			url=url+"&orderBy="+sortingOrder;
+			params.put(GooruConstants.ORDER_BY, sortingOrder);
+			//url=url+"&orderBy="+sortingOrder;
 		}else{
-			url=url+"&orderBy=sequence";
+			params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+			//url=url+"&orderBy=sequence";
 		}
 			if(studyStatus!=null){
-				url=url+"&status="+studyStatus;
+				params.put(GooruConstants.STATUS, studyStatus);
+				//url=url+"&status="+studyStatus;
 			}
 	    logger.info("get class items API==>"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
