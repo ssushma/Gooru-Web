@@ -156,7 +156,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo createClasspage(CollectionDo collectionDo) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.CREATE_CLASSPAGE, getLoggedInSessionToken());
+				UrlToken.CREATE_CLASSPAGE);
 		Form form = ResourceFormFactory.generateDataForm(collectionDo,
 				CLASSPAGE);
 		form.add(ADD_TO_USER_CLASSPAGE, TRUE);
@@ -198,20 +198,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new CollectionDo();
 	}
-//	Version 1 API
-	/*@Override
-	public CollectionDo getClasspageById(String classpageId)
-			throws GwtException {
 
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.GET_CLASSPAGE_BY_ID, classpageId,
-				getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(),
-				getRestPassword());
-		
-		return deserializeClasspage(jsonRep);
-	}*/
 	public CollectionDo deserializeClasspage(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -245,66 +232,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return new ArrayList<CollectionDo>();
 	}
 
-	/*@Override
-	public CollectionDo createAssignment(CollectionDo collectionDo, String gooruContentId, String dueDate) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_ASSIGNMENT, getLoggedInSessionToken(), gooruContentId, dueDate);
-		Form form = ResourceFormFactory.generateDataForm(collectionDo,ASSIGNMENT);
-		form.add(ADD_TO_USER_CLASSPAGE, TRUE);
-
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		
-		return deserializeAssignmentsCollection(jsonRep);
-	}*/
-//	Version 1 API
-	/*@Override
-	public void deleteAssignment(String assignmentId) throws GwtException {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.DELETE_ASSIGNMENT, assignmentId,
-				getLoggedInSessionToken());
-		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
-	}*/
-//	Version 1 API
-	/*@Override
-	public CollectionDo updateAssignment(CollectionDo collectionDo,
-			String updateDueDate) throws GwtException {
-		JsonRepresentation jsonRep = null;
-
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.UPDATE_ASSIGNMENT, collectionDo.getGooruOid(),
-				getLoggedInSessionToken(), updateDueDate);
-		Form form = ResourceFormFactory.generateDataForm(collectionDo,
-				ASSIGNMENT);
-		form.add(ADD_TO_USER_CLASSPAGE, TRUE);
-
-		jsonRep = ServiceProcessor.put(url, getRestUsername(),
-				getRestPassword(), form);
-		return deserializeAssignmentsCollection(jsonRep);
-	}*/
-//	Version 1 API
-	/*@Override
-	public CollectionDo getClasspageByCode(String classpageCode)throws GwtException {
-		
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSPAGE_BY_CODE, classpageCode, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		
-		return deserializeCollection(jsonRep);
-	}
-
-	@Override
-	public CollectionItemDo addCollectionToAssignment(String collectionId,
-			String assignmentId, CollectionDo collectionDo) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ADD_COLLECTIONS_TO_ASSIGNMENT, collectionId, assignmentId, getLoggedInSessionToken());
-
-		Form form = ResourceFormFactory.generateDataForm(collectionDo, COLLECTIONITEM);
-		form.add(ITEMTYPE, "added");
-
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
-		return deserializeCollectionItem(jsonRep);
-	}*/
 	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -329,23 +256,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new AssignmentsListDo();
 	}
-//	Version 1 API
-	/*@Override
-	public CollectionDo updateClassPageByid(String classpageId,
-			String CollectionType, String title) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_CLASSPAGE, classpageId,getLoggedInSessionToken());
-		CollectionDo collectionDo = new CollectionDo();
-		collectionDo.setTitle(title);
-		Form form = ResourceFormFactory.generateDataForm(collectionDo,
-				CLASSPAGE);
-		form.add("CollectionType", CollectionType);
 
-		jsonRep = ServiceProcessor.put(url, getRestUsername(),
-				getRestPassword(), form);
-		return deserializeCollection(jsonRep);
-	}
-	*/
 	/*
 	 * Version 2 Api Implementation...
 	 * 
@@ -355,7 +266,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo v2CreateClasspage(CollectionDo collectionDo) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_CREATE_CLASSPAGE, getLoggedInSessionToken());
+				UrlToken.V2_CREATE_CLASSPAGE);
 		ClasspageDo classpageDo = new ClasspageDo();
 		classpageDo.setCollectionType(collectionDo.getCollectionType());
 		classpageDo.setTitle(collectionDo.getTitle());
@@ -375,7 +286,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo v2UpdateClassPageByid(String classpageId,
 			String CollectionType, String title, String shareType) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_CLASSPAGE, classpageId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_CLASSPAGE, classpageId);
 		ClasspageDo classpageDo = new ClasspageDo();
 		classpageDo.setCollectionType(CollectionType);
 		if(title==null || title.equals("")){
@@ -408,7 +319,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public AssignmentsListDo v2GetAssignemtsByClasspageId(String classpageId,String pageSize, String pageNum)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken(), pageSize, pageNum);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, pageSize, pageNum);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeV2AssignmentsList(jsonRep);
@@ -419,7 +330,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_LIST_MY_CLASSPAGES, getLoggedInSessionToken(), limit, offSet);
+				UrlToken.V2_LIST_MY_CLASSPAGES, limit, offSet);
 		getLogger().info("v2GetAllClasspages::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
@@ -443,7 +354,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_GET_LISTTEACHCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+				UrlToken.V2_GET_LISTTEACHCLASSES, limit, offSet, randomId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -455,7 +366,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_GET_LISTSTUDYCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+				UrlToken.V2_GET_LISTSTUDYCLASSES, limit, offSet, randomId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -465,15 +376,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public void deleteClasspage(String classpageId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_CLASSPAGE_DELETE, classpageId,
-				getLoggedInSessionToken());
+				UrlToken.V2_CLASSPAGE_DELETE, classpageId);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
 	@Override
 	public AssignmentDo v2CreateAssignment(AssignmentDo assignmentDo) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_ASSIGNMENT, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_ASSIGNMENT);
 		String formData = ResourceFormFactory.generateStringDataForm(assignmentDo,null);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
@@ -500,8 +410,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
-				getLoggedInSessionToken());
+				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -514,8 +423,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.SIMPLE_COLL_GETAPI, classpageId,
-				getLoggedInSessionToken());
+				UrlToken.SIMPLE_COLL_GETAPI, classpageId);
 		getLogger().info("--- getSCollIdClasspageById URL -- "+url);
 		
 		try{
@@ -576,7 +484,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public void socialShareEmail(String fromTxt, String toTxt,String cfm, String subTxt,
 		String msgTxt) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SOCIAL_SHARE, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SOCIAL_SHARE);
 		
 		String completeLogoDetails = "<!DOCTYPE html> <html> <head> <meta http-equiv=" +
 		"Content-Type" +
@@ -611,7 +519,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public TaskDo v2UpdateAssignment(AssignmentDo assignmentDo, String assignmentId)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_UPDATE_ASSIGNMENT, assignmentId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_UPDATE_ASSIGNMENT, assignmentId);
 		String formData = ResourceFormFactory.generateStringDataForm(assignmentDo,null);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(), formData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -635,8 +543,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public void v2DeleteAssignment(String assignmentId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_DELETE_ASSIGNMENT, assignmentId,
-				getLoggedInSessionToken());
+				UrlToken.V2_DELETE_ASSIGNMENT, assignmentId);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -644,7 +551,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public TaskResourceAssocDo v2AddCollectionToAssignment(String assignmentId,
 			TaskResourceAssocDo taskResourceAssocDo) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_ADD_COLLECTIONS_TO_ASSIGNMENT, assignmentId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_ADD_COLLECTIONS_TO_ASSIGNMENT, assignmentId);
 		String formData = ResourceFormFactory.generateStringDataForm(taskResourceAssocDo, TASKRESOURCEASSOC);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -668,7 +575,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public List<ResourceDo> v2GetAssignmentCollectionsById(String assignmentId)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_ASSIGNMENT_COLLECTIONS, assignmentId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_ASSIGNMENT_COLLECTIONS, assignmentId);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeTaskResourceSearch(jsonRep);
@@ -690,15 +597,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public void v2RemoveCollectionFromAssignment(String collectionId, String assignmentId)
 			throws GwtException {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_DELETE_ASSIGNMENT_COLLECION_ITEM, assignmentId, collectionId,
-				getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_DELETE_ASSIGNMENT_COLLECION_ITEM, assignmentId, collectionId);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
 	@Override
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonRep!=null && jsonRep.getSize()!=1){	
@@ -711,7 +617,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public List<String> ShotenUrl(String url){
 		
-		String httpUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GENERATE_BITLY_LINK, getLoggedInSessionToken());
+		String httpUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GENERATE_BITLY_LINK);
 		StringRepresentation strRep = null;
 		
 		BitlyUrlDo bitlyUrlDo = new BitlyUrlDo();
@@ -750,17 +656,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new BitlyUrlDo();
 	}
-
-/*	@Override
-	public MetaDO checkPermissionsForClasspage(String classpageId)
-			throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_CLASSPAGE_PERMISSIONS_BY_ID, classpageId, getLoggedInSessionToken());
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep =jsonResponseRep.getJsonRepresentation();
-		return deserializePermissions(jsonRep);
-	}
-*/
 	private MetaDO deserializePermissions(JsonRepresentation jsonRep) {
 		if (jsonRep !=null && jsonRep.getSize() != -1){
 			try{
@@ -777,7 +672,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public List<ClassPageCollectionDo> getCollectionClasspageAssoc(String collectionId)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_TITLES, collectionId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_TITLES, collectionId);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasses(jsonRep);
@@ -799,8 +694,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public void deleteCollectionAssocInAssignment(String collectionId)
 			throws GwtException {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION, collectionId,
-				getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION, collectionId);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 	
@@ -808,7 +702,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		ClasspageDo classpageDo=null;
 		ArrayList<ClasspageDo> classPagesList=new ArrayList<ClasspageDo>();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_MY_CLASSPAGES, getLoggedInSessionToken(), limit, offset);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_MY_CLASSPAGES, limit, offset);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -822,7 +716,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	public CollectionDo createClassPage(String classPageTitle){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_V2, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_V2);
 		JSONObject classPageJsonObject=new JSONObject();
 		JSONObject collectionTypeJsonObject=new JSONObject();
 		try {
@@ -843,7 +737,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageDo classPageDo=new ClasspageDo();
 		if(classpageId != null)
 		{
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -876,7 +770,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction){
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate,null);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		if(jsonResponseRep.getStatusCode()==200){
@@ -909,7 +803,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Exception::", e);
 		}
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_ITEM_TO_CLASS, classpageId,collectionOrFolderId,getLoggedInSessionToken(),direction,dueDate);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_ITEM_TO_CLASS, classpageId,collectionOrFolderId,direction,dueDate);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			classpageItemDoList=deserializeClassItems(jsonResponseRep.getJsonRepresentation());
@@ -920,7 +814,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId,getLoggedInSessionToken(),offset,limit);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId,offset,limit);
 
 		
 		if(sortingOrder!=null){
@@ -975,20 +869,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	
 	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus){
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_CLASSPAGE_ITEMS_V2, classpageItemId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_CLASSPAGE_ITEMS_V2, classpageItemId);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		return jsonResponseRep.getStatusCode().toString();
 	}
 	
 	public String deleteClassPageItem(String collectionId){
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.DELETE_CLASSPAGE_ITEMS_V2, collectionId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.DELETE_CLASSPAGE_ITEMS_V2, collectionId);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		return jsonResponseRep.getStatusCode().toString();
 	}
 	
 	public ArrayList<String> getCollectionParentFolders(String collectionId){
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_COLLECTION_PARENT_FOLDERS, collectionId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_COLLECTION_PARENT_FOLDERS, collectionId);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			JsonRepresentation jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -1011,7 +905,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public ClasspageItemDo getClassPageItem(String classItemId) {
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_COLL_DETAILS, classItemId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_COLL_DETAILS, classItemId);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			try{
@@ -1214,7 +1108,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ArrayList<ClassPageCollectionDo> getClasspagesListByCollectionId(String collectionId, String collabUId){
 		JsonRepresentation jsonRep = null;
 		ArrayList<ClassPageCollectionDo> lstClasspageTitle=new  ArrayList<ClassPageCollectionDo>();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_CLASSPAGES_BY_USER_ID,collectionId, collabUId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_CLASSPAGES_BY_USER_ID,collectionId, collabUId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1247,8 +1141,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonResponseRepresentation jsonResponseRep = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_COLLECTION_USED_COUNT, collectionId,
-				getLoggedInSessionToken());
+				UrlToken.V2_COLLECTION_USED_COUNT, collectionId);
 		jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		
@@ -1272,7 +1165,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ArrayList<CollaboratorsDo> inviteStudentToClass(String classId, List<String> lstEmailId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_INVITE_STUDENT_TO_CLASS, classId, getLoggedInSessionToken());
+				UrlToken.V2_INVITE_STUDENT_TO_CLASS, classId);
 		String formData = lstEmailId.toString();
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), formData);
@@ -1316,7 +1209,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode,statusType, ""+pageSize, offSet+"");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		
@@ -1327,17 +1220,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public void removeStudentFromClass(String classCode, String type, String emailIds)
 			throws GwtException {
 
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_MEMBER_FROM_CLASS_BY_CODE, classCode, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_MEMBER_FROM_CLASS_BY_CODE, classCode);
 		String formData = emailIds;
 		url = url + "&data=" + formData;
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		
-//		JsonRepresentation jsonRepGetClass = null;
-//		String urlGetClass = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken());
-//		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlGetClass, getRestUsername(), getRestPassword());
-//		jsonRepGetClass =jsonResponseRep.getJsonRepresentation();
-		
-//		return deserializeMembersList(jsonRepGetClass);
 	}
 	/**
 	 * 
@@ -1390,7 +1277,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		ClasspageDo classpageDo=null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_JOIN_CLASS, classCode, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_JOIN_CLASS, classCode);
 		ArrayList<String> listOfEmail= new ArrayList<String>();
 		try {
 			listOfEmail.add("\"" + emailId + "\"");
@@ -1406,7 +1293,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public List<String> getSuggestionByName(String emailId){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_SUGGEST_MEMBER, emailId, getLoggedInSessionToken());
+				UrlToken.V2_SUGGEST_MEMBER, emailId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1443,7 +1330,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			String classCode, int offSet, int pageSize, String statusType)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, statusType, ""+pageSize, offSet+"");
 		getLogger().info("--- Active memb assoc students -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1456,7 +1343,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.TEACH_STUDY, getLoggedInSessionToken(), limit, offSet);
+				UrlToken.TEACH_STUDY, limit, offSet);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1466,7 +1353,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_ASSIGNMENT_SEQUENCE, classpageAssignmentId, String.valueOf(sequence), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_ASSIGNMENT_SEQUENCE, classpageAssignmentId, String.valueOf(sequence));
 		
 		try{
 			JSONObject jsonObject=new JSONObject();

@@ -30,9 +30,12 @@ package org.ednovo.gooru.server.request;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.server.AppSessionHolder;
+import org.ednovo.gooru.server.service.BaseServiceImpl;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.user.ResponseStatusDo;
 import org.json.JSONException;
@@ -55,7 +58,12 @@ import org.slf4j.LoggerFactory;
  * @author Search Team
  * 
  */
-public abstract class ServiceRequest {
+public abstract class ServiceRequest extends BaseServiceImpl{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1705532252739972796L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ServiceRequest.class);
 
@@ -78,7 +86,7 @@ public abstract class ServiceRequest {
 	private static final String ERROR = "Error : "; 
 	
 	private static final String UNAUTHORIZED = "Unauthorized";
-
+	
 	protected ServiceRequest() {
 	}
 
@@ -291,7 +299,48 @@ public abstract class ServiceRequest {
 		}
 
 	}
+	/**
+	 * 
+	 * @function setCustomHttpHeader 
+	 * 
+	 * @created_date : 15-Apr-2015
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param headerValues
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setCustomHttpHeader(Map<String, String> headerValues) {
+		 //Setting sessionToken in Headers
+		Series<Header> headers = (Series<Header>)this.clientResource.getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+	    
+		if (headers == null) { 
+			headers = new Series<Header>(Header.class);
+			this.clientResource.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, headers);
+		}
+		
+		Iterator entries = headerValues.entrySet().iterator();
+		while (entries.hasNext()) {
+		    Map.Entry entry = (Map.Entry) entries.next();
+		    String key = (String)entry.getKey();
+		    String value = (String)entry.getValue();
+		    headers.add(key, value);
+		    
+		}		
+		this.clientResource.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, headers);
+	}
+	
 
+	
+	
 	public Representation getRepresentation() {
 		return representation;
 	}

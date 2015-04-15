@@ -157,7 +157,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDo getEmailId(String emailId, String type) {
 	  	UserDo userDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_USER_AVAILABILITY, type,getLoggedInSessionToken(), emailId);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_USER_AVAILABILITY, type, emailId);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -173,7 +173,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDo registerUser(Map<String, String> params) {
 		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.REGISTER_USER, params, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.REGISTER_USER, params);
 		getLogger().info("registerUser api call post::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -188,7 +188,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public UserDo getRegistredUserDetails(String gooruUid) {
 		UserDo userDo = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_REGISTERED_USER_DETAILS, gooruUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_REGISTERED_USER_DETAILS, gooruUid);
 		JsonRepresentation jsonRep = null;
 		getLogger().info("getRegistredUserDetails api call post::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -205,7 +205,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public V2UserDo getV2UserProfileDetails(String gooruUid) {
 		V2UserDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, userUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, userUid);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -221,7 +221,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public ProfileDo updateUserDetails(String gooruUid, String token, Map<String, String> params) {
 		ProfileDo profileDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_REGISTER_USER, gooruUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_REGISTER_USER, gooruUid);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
 		getLogger().info("UPDATE_REGISTER_USER url::::"+url);
 		getLogger().info("form data update user details::::"+generateFormFromParamters(params));
@@ -244,7 +244,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public void resendConfirmationMail(Map<String, String> params) {
 		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SEND_CONFIRMATION_MAIL, params, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SEND_CONFIRMATION_MAIL, params);
 		getLogger().info("resendConfirmationMail url:::::"+url);
 		ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 	}
@@ -259,7 +259,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		String message="";
 		Map<String, String> params = new HashMap<String, String>();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FORGOT_PASSWORD, params, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FORGOT_PASSWORD, params);
 		JSONObject forgotPasswordObject = new JSONObject();
 		try {
 			forgotPasswordObject.put("emailId", emailId);
@@ -288,7 +288,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			formData.put(TOKEN, token);
 			formData.put(PWD, decryptedPwd);
 			formData.put(MAIL_CONFORMATION, mailConfirmationUrl);
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL);
 			getLogger().info("resetCredential url post::::::"+url);
 			getLogger().info("resetCredential form data ::::::"+formData.toString());
 			jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData.toString());
@@ -303,7 +303,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException {
 		UserDo userDo = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_VIEW, gooruUid,getLoggedInSessionToken(), String.valueOf(viewFlag));
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_VIEW, gooruUid, String.valueOf(viewFlag));
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		getLogger().info("UPDATE_USER_VIEW updateUserViewFlag get url:::::"+url);
@@ -340,7 +340,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		profilePageDo.setOptionalValue(optionalValue);
 		profilePageDo.setCategory("user_meta");
 		profilePageDo.setOptionalKey("show_profile_page");
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_PROFILE_VISIBILTY, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_PROFILE_VISIBILTY, getLoggedInUserUid());
 		String formData = ResourceFormFactory.generateStringDataForm(profilePageDo,PARTY_CUSTOM_FIELD);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
@@ -354,7 +354,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public ProfilePageDo getUserProfilePage(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = null;
 		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, userUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, userUid);
 		
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -370,7 +370,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public ProfilePageDo getUserPublicProfilePage(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, gooruUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, gooruUid);
 		
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -390,7 +390,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public BiographyDo updateProfileBiography(String gooruUid,String biography,String role,String firstName,String lastName,String gender) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid());
 		BiographyDo biographyDo = new BiographyDo();
 		biographyDo.setAboutMe(biography);
 		biographyDo.setSubject(role);
@@ -409,7 +409,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException {
 		ProfileDo profileDo = null;
 		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, gooruUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, gooruUid);
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
@@ -470,7 +470,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		
 		
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_USER, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_USER);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),userCreate.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
@@ -483,7 +483,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	public void updateNewEmailStatus(String emailId, boolean isEmailConfirmation) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid());
 		String formData = "";
 		formData = "{\"profile\": {\"user\": {\"emailId\":\""+emailId+"\"}},\"emailConfirmStatus\":"+isEmailConfirmation+"}";
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
@@ -493,7 +493,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail, String userType) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_PROFILE, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_PROFILE, getLoggedInUserUid());
 		//getLogger().info("updateV2ProfileDo:"+url);
 		V2UserDo userv2Do = new V2UserDo();
 		ProfileV2Do profileV2Do = new ProfileV2Do();
@@ -565,25 +565,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		
 	}
 	
-	/*@Override
-	public ProfilePageDo updateProfileBiography(String gooruUid,String biography) throws GwtException {
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
-		ProfilePageDo profilePageDo = new ProfilePageDo();
-		profilePageDo.setAboutMe(biography);
-		String formData = ResourceFormFactory.generateStringDataForm(profilePageDo,PROFILE);
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
-		return profilePageDo;
-	}
-	*/
-	
 	@Override
 	public void sendWelcomeMail(String gooruUId, String emailType) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GOORU_BASE_URL, getHomeEndPoint() + "/#discover");
 		params.put("type", emailType);
 		String formData = ResourceFormFactory.generateStringDataForm(params,null);
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SEND_WELCOME_MAIL, gooruUId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SEND_WELCOME_MAIL, gooruUId);
 		ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
 	}
 
@@ -591,7 +579,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public void updatePartyCustomField(String gooruUid, String optionKey,
 			String optionValue) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_PARTY_CUSTOM_FIELD, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_PARTY_CUSTOM_FIELD, getLoggedInUserUid());
 		try{
 			JSONObject updateCustomFieldObj=new JSONObject();
 			JSONObject optionObject=new JSONObject();
@@ -611,7 +599,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserFollowDo> getFollowedOnUsers(String gooruUid,String offset, String limit) throws GwtException {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,getLoggedInSessionToken(),offset,limit);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,offset,limit);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -623,7 +611,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserFollowDo> getFollowedByUsers(String gooruUid,String offset, String limit) throws GwtException {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,getLoggedInSessionToken(),offset,limit);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,offset,limit);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -678,7 +666,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public void followUser(String gooruUid) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOW, gooruUid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOW, gooruUid);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
@@ -688,7 +676,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public void unFollowUser(String gooruUid) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_UNFOLLOW, gooruUid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_UNFOLLOW, gooruUid);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -700,7 +688,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public IsFollowDo isFollowedUser(String gooruUid) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		IsFollowDo isFollowDo = new IsFollowDo();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_IS_FOLLOW, gooruUid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_IS_FOLLOW, gooruUid);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
@@ -722,7 +710,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset, String limit)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken(),offset,limit);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,offset,limit);
 		getLogger().info("-- user based tags url -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
@@ -765,7 +753,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit, String userIdVal)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,getLoggedInSessionToken(),offset,limit,userIdVal);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,offset,limit,userIdVal);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeResourcesByTag(jsonRep);
@@ -891,7 +879,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException, ServerDownException {
 		// TODO Auto-generated method stub
 		JsonRepresentation jsonRep = null;
-		String url =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_TOKEN_EXPIRE,getLoggedInSessionToken(),resetToken);
+		String url =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_TOKEN_EXPIRE,resetToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResetToken(jsonRep);
@@ -913,8 +901,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount() {
 		JsonRepresentation jsonRep = null;
 		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
-		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlDataParameterValue);
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,urlDataParameterValue);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDoObj = null;
@@ -1011,7 +998,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		//"1edb25aa-5c5e-4d13-8498-15ef31a93c1f"   sessiontoken hardcoded
 		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfRating5",
 				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
-		String url= UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(), urlparameters);
+		String url= UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, urlparameters);
 		JsonResponseRepresentation jsonRespRep=ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonrep	=jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDOObject = null;
@@ -1030,7 +1017,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfICanExplain",
 				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,urlparameters);
 		JsonResponseRepresentation jsonRespRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep	= jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
@@ -1135,8 +1122,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDashBoardCommonInfoDO getTopViewedCollectionsInfo(String offsetval, String limitval) {
 		JsonRepresentation jsonRep = null;
 		String urlparameters = getTopViewedCollectionPayloadObject(offsetval, limitval);
-		/*String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);*/
-		String url = "http://www.goorulearning.org/insights/api/v2/query?sessionToken=419c6c56-5295-11e4-8d6c-123141016e2a&data="+urlparameters;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,urlparameters);
+//		String url = "http://www.goorulearning.org/insights/api/v2/query?sessionToken=419c6c56-5295-11e4-8d6c-123141016e2a&data="+urlparameters;
 		JsonResponseRepresentation jsonRespRep	= ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonRespRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
@@ -1217,8 +1204,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
-		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1348,9 +1334,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileRatingsJsonPayloadObject());
-		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(),createProfileRatingsJsonPayloadObject());
-		//String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileRatingsJsonPayloadObject();
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,createProfileRatingsJsonPayloadObject());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		ProfileRatingsReactionsDO profileRatingsReactionsDO = null;

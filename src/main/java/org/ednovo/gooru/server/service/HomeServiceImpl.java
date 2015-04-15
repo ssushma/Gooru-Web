@@ -56,20 +56,11 @@ private static  Logger logger =LoggerFactory.getLogger(HomeServiceImpl.class);
 	FeaturedContentDeSerializer featuredContentDeSerializer;
 
 	private static final long serialVersionUID = -8562571170804242471L;
-
-//	private static final String FEATURED_COLLECTION_LIMIT = "5";
-	
-	/*@Override
-	public List<FeaturedCollectionContentDo> getFeaturedCollections() {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.FEATURED_COLLECTION, getLoggedInSessionToken(), FEATURED_COLLECTION_LIMIT);
-		JsonRepresentation jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		return featuredContentDeSerializer.deSerializer(jsonRep);
-	}*/
 	
 	@Override
 	public List<FeaturedCollectionContentDo> getFeaturedThemeCollection(String themeType) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FEATURED_THEME_COLLECTIONS, themeType, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FEATURED_THEME_COLLECTIONS, themeType);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return featuredContentDeSerializer.deSerializer(jsonRep);
@@ -78,7 +69,7 @@ private static  Logger logger =LoggerFactory.getLogger(HomeServiceImpl.class);
 	@Override
 	public void updateUserDetails(String userNameValue, String userRoleValue)throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_USER,getLoggedInUserUid(),getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_USER,getLoggedInUserUid());
 		Form form = new Form();
 		form.add("username", userNameValue);
 		form.add("userrole", userRoleValue);

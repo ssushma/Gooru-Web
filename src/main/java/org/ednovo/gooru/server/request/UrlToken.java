@@ -34,495 +34,495 @@ package org.ednovo.gooru.server.request;
  */
 public enum UrlToken {
 
-	GET_USER("/v2/user/{0}?sessionToken={1}"),
+	GET_USER("/v2/user/{0}"),
 
-	V2_RESOURCE_SEARCH("/gooru-search/rest/v2/search/resource?sessionToken={0}"),
+	V2_RESOURCE_SEARCH("/gooru-search/rest/v2/search/resource?"),
 	
-	V2_SIMPLE_COLLECTION_SEARCH("/gooru-search/rest/v2/search/scollection?sessionToken={0}"),
+	V2_SIMPLE_COLLECTION_SEARCH("/gooru-search/rest/v2/search/scollection?"),
 	
-	V2_RESOURCE_COLLECTION_LIST("/gooru-search/rest/v2/search/scollection?sessionToken={0}"),
+	V2_RESOURCE_COLLECTION_LIST("/gooru-search/rest/v2/search/scollection?"),
 	
-	COLLECTION_ITEMS_LIST("/scollection/{0}?sessionToken={1}"),
+	COLLECTION_ITEMS_LIST("/scollection/{0}?"),
 	
-	V2_COLLECTION_ITEMS_LIST("/v2/collection/{0}/item?sessionToken={1}"),
+	V2_COLLECTION_ITEMS_LIST("/v2/collection/{0}/item?"),
 
-	SEARCH_FILTER("/search/index/filters?sessionToken={0}"),
+	SEARCH_FILTER("/search/index/filters?"),
 
-	V2_SEARCH_SUGGEST_STANDARD("/gooru-search/rest/v2/search/{0}?sessionToken={1}"),
+	V2_SEARCH_SUGGEST_STANDARD("/gooru-search/rest/v2/search/{0}?"),
 	
-	SUGGEST_STANDARD_BY_FILTER("/v2/collection/standards?sessionToken={0}"),
+	SUGGEST_STANDARD_BY_FILTER("/v2/collection/standards?"),
 	
-	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?sessionToken={0}"),
+	V2_SEARCH_AUTO_SUGGEST_KEYWORD("/gooru-search/rest/v2/search/searchquery?"),
 
-	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?sessionToken={0}"),
+	v2_SEARCH_SUGGEST_SOURCE("/gooru-search/rest/v2/search/publisher?"),
 
-	UPDATE_V2_COLLLECTION("/v2/collection/{0}?sessionToken={1}"),
+	UPDATE_V2_COLLLECTION("/v2/collection/{0}?"),
 
-	DELETE_COLLECTION("/v2/collection/{0}?sessionToken={1}"),
+	DELETE_COLLECTION("/v2/collection/{0}?"),
 	
-	V2_CREATE_COLLECTION_ITEM("/v2/collection/{0}/item?sessionToken={1}"),
+	V2_CREATE_COLLECTION_ITEM("/v2/collection/{0}/item?"),
 			
-	V2_DELETE_COLLECTION_ITEM("/v2/collection/item/{0}?sessionToken={1}"),
+	V2_DELETE_COLLECTION_ITEM("/v2/collection/item/{0}?"),
 
-	SHARE_SHORTEN_URL("/url/shorten/{0}?sessionToken={1}"),
+	SHARE_SHORTEN_URL("/url/shorten/{0}?"),
 	
-	SHARE_SHORTEN_URL_PLAY("/url/shorten/{0}?sessionToken={1}"),
+	SHARE_SHORTEN_URL_PLAY("/url/shorten/{0}?"),
 	
-	V2_REORDER_COLLECTION_ITEM_SEQUENCE("/v2/collection/item/{0}/reorder/{1}?sessionToken={2}"),
+	V2_REORDER_COLLECTION_ITEM_SEQUENCE("/v2/collection/item/{0}/reorder/{1}?"),
 
-	GET_COLLECTION_ITEMS("/scollection/{0}/item?sessionToken={1}"),
+	GET_COLLECTION_ITEMS("/scollection/{0}/item?"),
 
-	V2_GET_COLLECTION("/v2/collection/{0}?sessionToken={1}"),
+	V2_GET_COLLECTION("/v2/collection/{0}?"),
 					
-	V2_GET_COLLECTIONForStandards("/v2/collection/{0}?sessionToken={1}"),
+	V2_GET_COLLECTIONForStandards("/v2/collection/{0}?"),
 					
-	GET_TREE("/taxonomy/{0}/tree.json?sessionToken={1}"),
+	GET_TREE("/taxonomy/{0}/tree.json?"), // Not used
 
-	LIST_COLLECTION("/scollection/list?sessionToken={0}&pageSize={1}&pageSize={2}&sCollection={3}"),
+	LIST_COLLECTION("/scollection/list?sessionToken={0}&pageSize={1}&pageSize={2}&sCollection={3}"), // Not Used.
 
-	V2_TAXONOMY_COURSE("/v2/taxonomy/course?sessionToken={0}"),
+	V2_TAXONOMY_COURSE("/v2/taxonomy/course?"),
 
-	USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&filterBy=collection&merge=permissions"),
+	USER_COLLECTION("/myshelf?format={0}&{1}&filterBy=collection&merge=permissions"),
 
-	SHARABLE_USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&sharing=public,anyonewithlink&filterBy=collection&merge=permissions"),
+	SHARABLE_USER_COLLECTION("/myshelf?format={0}&{1}&sharing=public,anyonewithlink&filterBy=collection&merge=permissions"),
 	
-	V2_USER_AVAILABILITY("/v2/user/{0}/availability?sessionToken={1}&keyword={2}"),
+	V2_USER_AVAILABILITY("/v2/user/{0}/availability?keyword={1}"),
 			
-	REGISTER_USER("/user?sessionToken={0}"),
+	REGISTER_USER("/user?"),
 
-	GET_REGISTERED_USER_DETAILS("/user/{0}/registration?sessionToken={1}"),
+	GET_REGISTERED_USER_DETAILS("/user/{0}/registration?"),
 
-	GET_USER_PROFILE_V2_DETAILS("/v2/user/{0}?sessionToken={1}"),
+	GET_USER_PROFILE_V2_DETAILS("/v2/user/{0}?"),
 	
-	GET_USER_PROFILE_PAGE("/v2/party/{0}/custom-field/show_profile_page?sessionToken={1}"),
+	GET_USER_PROFILE_PAGE("/v2/party/{0}/custom-field/show_profile_page?"),
 
-	UPDATE_USER_PROFILE_VISIBILTY("/v2/party/{0}/custom-field?sessionToken={1}"),	
+	UPDATE_USER_PROFILE_VISIBILTY("/v2/party/{0}/custom-field?"),	
 	
-	UPDATE_USER_BIOGRAPHY("/v2/user/{0}?sessionToken={1}"),
+	UPDATE_USER_BIOGRAPHY("/v2/user/{0}?"),
 
-	DELETE_USER_BIOGRAPHY("/v2/user/{0}/meta?sessionToken={1}"),
+	DELETE_USER_BIOGRAPHY("/v2/user/{0}/meta?"),
 
-	UPDATE_USER_GRADE_COURSE("/v2/user/{0}?sessionToken={1}"),
+	UPDATE_USER_GRADE_COURSE("/v2/user/{0}?"),
 
-	UPDATE_COLLLECTION_ITEM_METADATA("/scollection/item/{0}/metadata?sessionToken={1}"),
+	UPDATE_COLLLECTION_ITEM_METADATA("/scollection/item/{0}/metadata?"),
 	
-	V2_UPDATE_COLLLECTION_ITEM_METADATA("/v2/collection/item/{0}?sessionToken={1}"),
+	V2_UPDATE_COLLLECTION_ITEM_METADATA("/v2/collection/item/{0}?"),
 			
-	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?sessionToken={1}"),
+	GET_COLLLECTION_ITEM("/v2/collection/item/{0}?"),
 
-	UPDATE_REGISTER_USER("/user/{0}?sessionToken={1}"),
+	UPDATE_REGISTER_USER("/user/{0}?"),
 
-	ADD_COLLABORATOR("/scollection/addCollaborators/{0}?collaborator={1}&sessionToken={2}"),
+	ADD_COLLABORATOR("/scollection/addCollaborators/{0}?collaborator={1}&sessionToken={2}"), //Not Used.
 
-	SEND_CONFIRMATION_MAIL("/user/register/confirm/mail.json?sessionToken={0}"),
+	SEND_CONFIRMATION_MAIL("/user/register/confirm/mail.json?"),
 
-	V2_COPY_COLLLECTION_ITEM("/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
+	V2_COPY_COLLLECTION_ITEM("/v2/collection/item/{0}/copy/{1}?"),
 	
-	V2_FORGOT_PASSWORD("/v2/user/reset-password/request?sessionToken={0}"),
+	V2_FORGOT_PASSWORD("/v2/user/reset-password/request?"),
 
-	V2_RESET_CREDENTIAL("/v2/user/reset-password?sessionToken={0}"),
+	V2_RESET_CREDENTIAL("/v2/user/reset-password?"),
 
-	MEDIA_FILE_UPLOAD("/v2/media?sessionToken={0}"),
+	MEDIA_FILE_UPLOAD("/v2/media?"),
 
-	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}"),
+	MEDIA_FILE_SAVE("/resource/{0}/media?"),
 
-	IMAGE_CROP("/media/{0}/crop?sessionToken={1}&height={2}&width={3}&xPosition={4}&yPosition={5}&&cropEngine=bufferImage"),
+	IMAGE_CROP("/media/{0}/crop?height={1}&width={2}&xPosition={3}&yPosition={4}&cropEngine=bufferImage"),
 
-	UPDATE_USER_VIEW("/user/{0}/view/flag?sessionToken={1}&viewFlag={2}"),
+	UPDATE_USER_VIEW("/user/{0}/view/flag?viewFlag={1}"),
 
-	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?sessionToken={1}&title={2}&url={3}&category={4}&description={5}&thumbnailImgSrc={6}&stop={7}"),
+	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?title={1}&url={2}&category={3}&description={4}&thumbnailImgSrc={5}&stop={6}"),
 
-	GET_RESOURCE_INFO("/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
+	GET_RESOURCE_INFO("/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"), // Not Used.
 	
-	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
+	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?url={0}&title=Nothing&fetchThumbnail=true"),
 
-	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&sessionToken={1}"),
+	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&"),
 
-	CREATE_FOLDER("/folder?sessionToken={0}"),
+	CREATE_FOLDER("/folder"),
 
-	LIST_MY_FOLDERS("/folder/my/workspace?sessionToken={0}"),
+	LIST_MY_FOLDERS("/folder/my/workspace"),
 
-	LIST_MY_FOLDER_LEVELS("/folder/{0}/item?sessionToken={1}"),
+	LIST_MY_FOLDER_LEVELS("/folder/{0}/item?"),
 	
-	GET_A_FOLDER_INFORMATION("/folder/{0}?sessionToken={1}"),
+	GET_A_FOLDER_INFORMATION("/folder/{0}"),
 
-	CREATE_CLASSPAGE("/classpage?sessionToken={0}"),
+	CREATE_CLASSPAGE("/classpage"),
 	
-	CREATE_CLASSPAGE_V2("/v2/class?sessionToken={0}"),
+	CREATE_CLASSPAGE_V2("/v2/class?"),
 	
-	CREATE_CLASSPAGE_ITEM_V2("/v2/classpage/{0}/item?sessionToken={1}"),
+	CREATE_CLASSPAGE_ITEM_V2("/v2/classpage/{0}/item?"),
 	
-	ASSIGN_COLLECTION_OR_FOLDER_TO_CLASS_V2("/v2/class/{0}/assign/{1}?sessionToken={2}"),
+	ASSIGN_COLLECTION_OR_FOLDER_TO_CLASS_V2("/v2/class/{0}/assign/{1}?sessionToken={2}"), //Not Used.
 	
-	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
+	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?offset={1}&limit={2}"),
 	
-	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?sessionToken={1}"),
+	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?"),
 	
-	DELETE_CLASSPAGE_ITEMS_V2("/v2/classpage/item/{0}?sessionToken={1}"),
+	DELETE_CLASSPAGE_ITEMS_V2("/v2/classpage/item/{0}?"),
 	
-	GET_COLLECTION_PARENT_FOLDERS("/v2/collection/{0}/parents?sessionToken={1}"),
+	GET_COLLECTION_PARENT_FOLDERS("/v2/collection/{0}/parents?"),
 	
-	REMOVE_QUESTION_IMAGE("/quiz-question/{0}/asset?sessionToken={1}"),
+	REMOVE_QUESTION_IMAGE("/quiz-question/{0}/asset?"),
 
-	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?sessionToken={1}&fileNames={2}&assetKey=asset-question"),
+	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?fileNames={1}&assetKey=asset-question"),
 
-	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?sessionToken={1}"),
+	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?"),
 			
-	UPDATE_USER("/user/{0}?sessionToken={1}&format=json&username={2}&userrole={3}"),
+	UPDATE_USER("/user/{0}?format=json&username={1}&userrole={2}"),
 
-	V2_GET_CLASSPAGE_TITLES("/v2/classpage/collection/{0}?sessionToken={1}"),
+	V2_GET_CLASSPAGE_TITLES("/v2/classpage/collection/{0}?"),
 	
-	V2_CREATE_CLASSPAGE("/v2/class?sessionToken={0}"),
+	V2_CREATE_CLASSPAGE("/v2/class"),
 	
-	V2_UPDATE_CLASSPAGE("/v2/class/{0}?sessionToken={1}"),
+	V2_UPDATE_CLASSPAGE("/v2/class/{0}"),
 	
-	V2_SOCIAL_SHARE("/v2/share/mail?sessionToken={0}"),
+	V2_SOCIAL_SHARE("/v2/share/mail"),
 	
-	PERMISSION_COLLECTION("/user/content/{0}/check-access.json?sessionToken={1}"),
+	PERMISSION_COLLECTION("/user/content/{0}/check-access.json?"),
 	
-	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?sessionToken={0}&limit={1}&offset={2}"),
+	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?limit={0}&offset={1}"),
 	
-	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?sessionToken={1}&data={%22limit%22:%22{2}%22,%22offset%22:%22{3}%22}"),
+	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?&data={%22limit%22:%22{1}%22,%22offset%22:%22{2}%22}"),
 	
-	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?limit={0}&offset={1}&randomId={2}"),
 	
-	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?limit={0}&offset={1}&randomId={2}"),
 	
-	V2_CLASSPAGE_DELETE("/v2/class/{0}?sessionToken={1}"),
+	V2_CLASSPAGE_DELETE("/v2/class/{0}?"),
 	
-	V2_CREATE_ASSIGNMENT("/v2/assignment?sessionToken={0}"),
+	V2_CREATE_ASSIGNMENT("/v2/assignment"),
 	
-	V2_GET_CLASSPAGE_BY_CODE("/v2/class/code/{0}?sessionToken={1}"),
+	V2_GET_CLASSPAGE_BY_CODE("/v2/class/code/{0}?"),
 	
-	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?sessionToken={1}&merge=permissions"),
+	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?merge=permissions"),
 	
-	V2_UPDATE_ASSIGNMENT("/v2/assignment/{0}?sessionToken={1}"),
+	V2_UPDATE_ASSIGNMENT("/v2/assignment/{0}"),
 	
-	V2_DELETE_ASSIGNMENT("/v2/assignment/{0}?sessionToken={1}"),
+	V2_DELETE_ASSIGNMENT("/v2/assignment/{0}?"),
 	
-	V2_DELETE_COLLECTION("/v2/classpage/collection/{0}?sessionToken={1}"),
+	V2_DELETE_COLLECTION("/v2/classpage/collection/{0}"),
 	
-	V2_ADD_COLLECTIONS_TO_ASSIGNMENT("/v2/assignment/{0}/item?sessionToken={1}"),
+	V2_ADD_COLLECTIONS_TO_ASSIGNMENT("/v2/assignment/{0}/item?"),
 	
-	V2_GET_ASSIGNMENT_COLLECTIONS("/v2/assignment/{0}/item?sessionToken={1}&data={%22skipPagination%22:%22yes%22}&sharing=public,anyonewithlink"),
+	V2_GET_ASSIGNMENT_COLLECTIONS("/v2/assignment/{0}/item?data={%22skipPagination%22:%22yes%22}&sharing=public,anyonewithlink"),
 	
-	V2_DELETE_ASSIGNMENT_COLLECION_ITEM("/v2/assignment/{0}/item/{1}?sessionToken={2}"), 
+	V2_DELETE_ASSIGNMENT_COLLECION_ITEM("/v2/assignment/{0}/item/{1}"), 
 	
-	GENERATE_BITLY_LINK("/v2/share/url/shorten?sessionToken={0}"),
+	GENERATE_BITLY_LINK("/v2/share/url/shorten"),
 	
-	UPLOAD_PROFILE_IMAGE("/user/{0}/profile/picture?sessionToken={1}"),
+	UPLOAD_PROFILE_IMAGE("/user/{0}/profile/picture?"),
 	
-	PROFILE_PAGE_EVENT("/activity/log/{0}/profile?sessionToken={1}"), 
+	PROFILE_PAGE_EVENT("/activity/log/{0}/profile?sessionToken={1}"), //Not Used.
 	
-	CHECK_SHORTEN_URL("/resource/search.json?url={0}&feature=player_embedded&checkShortenedUrl=true&sessionToken={1}"),
+	CHECK_SHORTEN_URL("/resource/search.json?url={0}&feature=player_embedded&checkShortenedUrl=true&"),
 	
-	V2_ADD_QUESTION_ITEM("/v2/collection/{0}/question?sessionToken={1}"),
+	V2_ADD_QUESTION_ITEM("/v2/collection/{0}/question?"),
 	
-	V2_FEATURED_THEME_COLLECTIONS("/v2/theme/{0}?sessionToken={1}"),
+	V2_FEATURED_THEME_COLLECTIONS("/v2/theme/{0}?"),
 	
-	V2_CREATE_USER("/v2/user?sessionToken={0}"),
+	V2_CREATE_USER("/v2/user?"),
 	
 	V2_SIGNIN("/v2/account/login?"),
 	
-	V2_SIGNOUT("/v2/account/logout?sessionToken={0}"),
+	V2_SIGNOUT("/v2/account/logout?"),
 	
-	V2_GUEST_SIGNIN("/v2/account/loginas/anonymous?apiKey={0}"),
+	V2_GUEST_SIGNIN("/v2/account/loginas/anonymous?"),
 	
-	V2_GET_USER_BY_SESSIONTOKEN("/v2/user/token/{0}?sessionToken={1}"),
+	V2_GET_USER_BY_SESSIONTOKEN("/v2/user/token/{0}?"),
 
-	V2_ADD_NEW_USER_RESOURCE("/v2/collection/{0}/resource?sessionToken={1}"),
+	V2_ADD_NEW_USER_RESOURCE("/v2/collection/{0}/resource?"),
 
-	V2_JOIN_CLASS("/v2/class/{0}/member/join?sessionToken={1}"),
+	V2_JOIN_CLASS("/v2/class/{0}/member/join?"),
 	
-	V2_UPDATE_USER_RESOURCE("/v2/collection/resource/{0}?sessionToken={1}"),
+	V2_UPDATE_USER_RESOURCE("/v2/collection/resource/{0}?"),
 	
-	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?sessionToken={0}"),
+	V2_USER_RESOURCE_MEDIA_FILE_SAVE("/v2/media?"),
 	
-	SEARCH_SUGGEST_NO_RESULT("/suggest/resource?sessionToken={0}"),
+	SEARCH_SUGGEST_NO_RESULT("/suggest/resource?"),
 			
-	UPDATE_VIEW_COUNT("/resource/update/views/{0}.json?sessionToken={1}"),
+	UPDATE_VIEW_COUNT("/resource/update/views/{0}.json?"),
 	
-    START_ACTIVITY_LOG("/activity/log/{0}/start?sessionToken={1}"),
+    START_ACTIVITY_LOG("/activity/log/{0}/start?"),
 	
-    STOP_ACTIVITY_LOG("/activity/log/{0}/stop?sessionToken={1}"),
+    STOP_ACTIVITY_LOG("/activity/log/{0}/stop?"),
     
-    CREATE_SESSION("/v2/session?sessionToken={0}"),
+    CREATE_SESSION("/v2/session?"),
     
-    UPDATE_SESSION("/v2/session/{0}?sessionToken={1}"),
+    UPDATE_SESSION("/v2/session/{0}?"),
     
-    GET_SESSION("/v2/session/{0}?sessionToken={1}"),
+    GET_SESSION("/v2/session/{0}?sessionToken={1}"), //Not used.
     
-    CREATE_SESSION_ITEM("/v2/session/{0}/item?sessionToken={1}"),
+    CREATE_SESSION_ITEM("/v2/session/{0}/item?"),
     
-    CREATE_SESSION_ITEM_ATTEMPT("/v2/session/{0}/item/{1}/attempt?sessionToken={2}"),
+    CREATE_SESSION_ITEM_ATTEMPT("/v2/session/{0}/item/{1}/attempt?"),
     
-    V2_SOCIAL_EMAIL("/v2/share/mail?sessionToken={0}"),
+    V2_SOCIAL_EMAIL("/v2/share/mail?"),
     
-    GET_USER_PROFILE("/v2/party/{0}/custom-field/show_profile_page?sessionToken={1}"),
+    GET_USER_PROFILE("/v2/party/{0}/custom-field/show_profile_page?"),
     
-    GET_RESOURCE_DETAILS("/resource/{0}/play.json?sessionToken={1}"),
+    GET_RESOURCE_DETAILS("/resource/{0}/play.json?"),
     
-    V2_GET_RESOURCE_DETAILS("/v2/resource/{0}?sessionToken={1}"),
+    V2_GET_RESOURCE_DETAILS("/v2/resource/{0}?"),
 	
 	COLLECTION_PLAY_EMBEDED_URL("embed/collection.htm?"),
 	
 	COLLECTION_PLAY_URL("%23preview-play"),
 	
-	V2_GET_LIBRARY_FEATURED_USERS("/v2/library/user/contributors?sessionToken={0}"),
+	V2_GET_LIBRARY_FEATURED_USERS("/v2/library/user/contributors?"),
 
-    V2_COPY_COLLECTION("/v2/collection/{0}/copy?sessionToken={1}"),
+    V2_COPY_COLLECTION("/v2/collection/{0}/copy?"),
     
-    COPY_RENAME_COLLECTION("/scollection/{0}/copy?sessionToken={1}"),
+    COPY_RENAME_COLLECTION("/scollection/{0}/copy?"),
     
-    V2_COPY_COLLECTION_ITEM("/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
+    V2_COPY_COLLECTION_ITEM("/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),//Not Used.
     
-    COPY_RESOURCCE("/scollection/item?sessionToken={0}"),
+    COPY_RESOURCCE("/scollection/item?"),
     
-    V2_GET_USER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&offset={2}&limit={3}"),
+    V2_GET_USER_WORKSPACE("/v2/folder/{0}/workspace?offset={1}&limit={2}"),
     
-    GET_USER_WORKSPACE("/myshelf?format=json&sessionToken={0}"),
+    GET_USER_WORKSPACE("/myshelf?format=json"),
     
-	V2_CONTENT_THUMBS_RATING("/v2/rating/{0}?sessionToken={1}"),
+	V2_CONTENT_THUMBS_RATING("/v2/rating/{0}?sessionToken={1}"), //Not Used.
 	
-	CONTENT_THUMBS_RATING("//content/{0}/rating.json?sessionToken={1}"),
+	CONTENT_THUMBS_RATING("//content/{0}/rating.json?sessionToken={1}"), //Not Used.
 	
-	GET_CONTENT_REPORT("/v2/content/{0}/report?sessionToken={1}"),
+	GET_CONTENT_REPORT("/v2/content/{0}/report?"),
 	
-	CREATE_CONTENT_REPORT("/v2/report?sessionToken={0}"),
+	CREATE_CONTENT_REPORT("/v2/report?"),
 	
-	UPDATE_CONTENT_REPORT("/v2/report/{0}?sessionToken={1}"),
+	UPDATE_CONTENT_REPORT("/v2/report/{0}?sessionToken={1}"), //Not Used.
 	
-	DELETE_CONTENT_REPORT("/v2/report/{0}?sessionToken={1}"),
+	DELETE_CONTENT_REPORT("/v2/report/{0}?"),
 	
-	SIMPLE_COLL_GETAPI("/v2/collection/{0}?sessionToken={1}&includeCollectionItem=false&includeMetaInfo=false&includeCollaborator=false&includeRelatedContent=false"),
+	SIMPLE_COLL_GETAPI("/v2/collection/{0}?includeCollectionItem=false&includeMetaInfo=false&includeCollaborator=false&includeRelatedContent=false"),
 	
-	V2_GET_LIBRARY_COURSES("/v2/library/{0}?sessionToken={1}"),
+	V2_GET_LIBRARY_COURSES("/v2/library/{0}?"),
 	
-	V2_GET_LIBRARY_TOPIC_OFFSET("/v2/library/{0}/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_TOPIC_OFFSET("/v2/library/{0}/{1}?"),
 	
-	V2_UPDATE_USER_PROFILE("/v2/user/{0}?sessionToken={1}"),
+	V2_UPDATE_USER_PROFILE("/v2/user/{0}?"),
 		
-	V2_GET_LIBRARY_UNIT_OFFSET("/v2/library/{0}/unit/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_UNIT_OFFSET("/v2/library/{0}/unit/{1}?"),
 	
-	V2_GET_COLLECTION_COMMENTS("/v2/comment?sessionToken={0}"),
+	V2_GET_COLLECTION_COMMENTS("/v2/comment?"),
 	
-	V2_CREATE_COLLECTION_COMMENT("/v2/comment?sessionToken={0}"),
+	V2_CREATE_COLLECTION_COMMENT("/v2/comment?"),
 	
-	V2_DELETE_COLLECTION_COMMENT("/v2/comment/{0}?sessionToken={1}"),
+	V2_DELETE_COLLECTION_COMMENT("/v2/comment/{0}?"),
 	
-	V2_UPDATE_COLLECTION_COMMENT("/v2/comment/{0}?sessionToken={1}"),
+	V2_UPDATE_COLLECTION_COMMENT("/v2/comment/{0}?"),
 	
-	FILE_UPLOAD_GET_URL("/media?uploadFileName={0}&imageURL=&sessionToken={1}"),
+	FILE_UPLOAD_GET_URL("/media?uploadFileName={0}&imageURL=&sessionToken={1}"), //Dont remove
 	
-	CREATE_RECTION("/v2/reaction?sessionToken={0}"),
+	CREATE_RECTION("/v2/reaction?"),
 	
-	GET_CONTENT_REACTION("/v2/content/{0}/reaction?sessionToken={1}"),
+	GET_CONTENT_REACTION("/v2/content/{0}/reaction?"),
 	
-	DELETE_CONTENT_REACTION("/v2/reaction/{0}?sessionToken={1}"),
+	DELETE_CONTENT_REACTION("/v2/reaction/{0}?"),
 			
-	PROFANITY_CHECK("/v2/profanity?sessionToken={0}"),
+	PROFANITY_CHECK("/v2/profanity?"),
 	
-	V2_GENERATE_PDF("/v2/media/htmltopdf?sessionToken={0}"),
+	V2_GENERATE_PDF("/v2/media/htmltopdf?"),
 	
-	V2_SEND_EMAIL_WITH_PDF("/v2/share/mail?sessionToken={0}"),
+	V2_SEND_EMAIL_WITH_PDF("/v2/share/mail?"),
 	
-	GET_FEATURED_COLLECTIONS("/v2/theme/featured?sessionToken={0}"),
+	GET_FEATURED_COLLECTIONS("/v2/theme/featured?"),
 	
-	V2_GET_LIBRARY_COLLECTIONS("/v2/library/{0}/collection/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_COLLECTIONS("/v2/library/{0}/collection/{1}?"),
 	
-	V2_SEND_WELCOME_MAIL("/v2/user/sendmail/{0}?sessionToken={1}"),
+	V2_SEND_WELCOME_MAIL("/v2/user/sendmail/{0}?"),
 	
-	V2_GET_COLLABORATORS("/v2/collaborator/content/{0}?filterBy={1}&sessionToken={2}"),	
+	V2_GET_COLLABORATORS("/v2/collaborator/content/{0}?filterBy={1}"),	
 	
-	V2_COLLABORATORS("/v2/collaborator/content/{0}?sessionToken={1}"),
+	V2_COLLABORATORS("/v2/collaborator/content/{0}"),
 	
-	V2_SUGGEST_COLLAB("/v2/collaborator/suggest?query={0}&sessionToken={1}"),
+	V2_SUGGEST_COLLAB("/v2/collaborator/suggest?query={0}"),
 	 	
-	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}&offset={1}&limit={2}&orderBy=sequence"),
+	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?offset={0}&limit={1}&orderBy=sequence"),
 	
-	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}"),
+	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?"),
 	
-	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?sessionToken={1}"),
+	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?"),
 	
-	V2_DELETE_COLLABORATORS("/v2/collaborator/content/{0}?sessionToken={1}"),
+	V2_DELETE_COLLABORATORS("/v2/collaborator/content/{0}"),
 	
-	V2_LIST_CLASSPAGES_BY_USER_ID("/v2/classpage/collection/{0}?gooruUId={1}&sessionToken={2}"),
+	V2_LIST_CLASSPAGES_BY_USER_ID("/v2/classpage/collection/{0}?gooruUId={1}"),
 	
-	V2_CREATE_FOLDER("/v2/folder?sessionToken={0}"),
+	V2_CREATE_FOLDER("/v2/folder?"),
 
-	V2_DELETE_FOLDER("/v2/folder/{0}?sessionToken={1}"),
+	V2_DELETE_FOLDER("/v2/folder/{0}?"),
 	
-	V2_MOVE_COLLECTION("/v2/folder/move?sessionToken={0}"), 
+	V2_MOVE_COLLECTION("/v2/folder/move?"), 
 	
-	V2_GET_POPULAR_LIBRARY("/v2/library/{0}/collection/popular?sessionToken={1}"),
+	V2_GET_POPULAR_LIBRARY("/v2/library/{0}/collection/popular?"),
 	
-	V2_CREATE_COLLECTION_IN_FOLDER("/v2/collection?sessionToken={0}"),
+	V2_CREATE_COLLECTION_IN_FOLDER("/v2/collection?"),
 	
-	V2_UPDATE_FOLDER_METADATA("/v2/folder/{0}?sessionToken={1}"),
+	V2_UPDATE_FOLDER_METADATA("/v2/folder/{0}?"),
 	
-	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?sessionToken={1}"),
+	V2_COPY_COLLECTION_IN_FOLDER("/v2/collection/{0}/copy?"),
 	
-	V2_COLLECTION_USED_COUNT("/v2/classpage/collection/{0}/count?sessionToken={1}"),
+	V2_COLLECTION_USED_COUNT("/v2/classpage/collection/{0}/count?"),
 	
-	V2_GET_COLLECTION_RESOURCE_LIST("/v2/folder/{0}/item?sessionToken={1}"),
+	V2_GET_COLLECTION_RESOURCE_LIST("/v2/folder/{0}/item?"),
 	
-	V2_INVITE_STUDENT_TO_CLASS("/v2/invite/class/{0}?sessionToken={1}"),
+	V2_INVITE_STUDENT_TO_CLASS("/v2/invite/class/{0}?"),
 	
-	V2_DELETE_MEMBER_FROM_CLASS_BY_CODE("/v2/class/{0}/member/remove?sessionToken={1}"),
+	V2_DELETE_MEMBER_FROM_CLASS_BY_CODE("/v2/class/{0}/member/remove?"),
 	
-	V2_GET_MEMBER_LIST_BY_CODE("/v2/class/{0}/member?sessionToken={1}&filterBy={2}&limit={3}&offset={4}"),
+	V2_GET_MEMBER_LIST_BY_CODE("/v2/class/{0}/member?&filterBy={1}&limit={2}&offset={3}"),
 	
-	V2_SUGGEST_MEMBER("/v2/class/member/suggest?query={0}&sessionToken={1}"),
+	V2_SUGGEST_MEMBER("/v2/class/member/suggest?query={0}"),
 	
-	V2_GET_CLASSPAGE_COLL_DETAILS("/v2/classpage/item/{0}?sessionToken={1}"),
+	V2_GET_CLASSPAGE_COLL_DETAILS("/v2/classpage/item/{0}?"),
 	
-	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}"),
+	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?"),
 	
-	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}"),
+	V2_PROFILE_WORKSPACE("/v2/folder/{0}/workspace?"),
 	
-	GET_CLASSPARTY_CUSTOMFIELD("/v2/party/{0}/custom-field/classpage_welcome_popup_is_autoopen?sessionToken={1}"),
+	GET_CLASSPARTY_CUSTOMFIELD("/v2/party/{0}/custom-field/classpage_welcome_popup_is_autoopen?sessionToken={1}"),//Not used.
 	
-	V2_UPDATE_PARTY_CUSTOM_FIELD("/v2/party/{0}/custom-field?sessionToken={1}"),
+	V2_UPDATE_PARTY_CUSTOM_FIELD("/v2/party/{0}/custom-field?"),
 	
-	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}"),
+	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?"),
 	
-	V2_GET_PARTNERS("/v2/partner?sessionToken={0}"),
+	V2_GET_PARTNERS("/v2/partner?"),
 	
-	CREATE_STAR_RATINGS("/v2/rating?sessionToken={0}"),
+	CREATE_STAR_RATINGS("/v2/rating?"),
 	
-	GET_STAR_RATINGS("/v2/rating/{0}?sessionToken={1}"),
+	GET_STAR_RATINGS("/v2/rating/{0}?"),
 	
-	GET_CONTENT_STAR_RATINGS("/v2/content/{0}/rating/star/count?sessionToken={1}"),
+	GET_CONTENT_STAR_RATINGS("/v2/content/{0}/rating/star/count?"),
 	
-	UPDATE_STAR_RATINGS("/v2/rating/{0}?sessionToken={1}"),
+	UPDATE_STAR_RATINGS("/v2/rating/{0}?"),
 	
-	GET_USER_STAR_RATINGS("/v2/user/{0}/rating/star/count?sessionToken={1}"),
+	GET_USER_STAR_RATINGS("/v2/user/{0}/rating/star/count?"),
 	
-	GET_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}"),
+	GET_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?"),
 	
-	DELETE_TAXONOMY_RESOURCE("/v2/resource/{0}/taxonomy?sessionToken={1}"),
+	DELETE_TAXONOMY_RESOURCE("/v2/resource/{0}/taxonomy?"),
 	
-	UPDATE_TAXONOMY_RESOURCE("/v2/resource/{0}?sessionToken={1}"),
+	UPDATE_TAXONOMY_RESOURCE("/v2/resource/{0}?"),
 	
-	ADD_TAGS("/v2/content/{0}/tag?sessionToken={1}"),
+	ADD_TAGS("/v2/content/{0}/tag?"),
 	
-	GET_TAGS("/v2/content/{0}/tag?sessionToken={1}"),
+	GET_TAGS("/v2/content/{0}/tag?"),
 	
-	DELETE_TAGS("/v2/content/{0}/tag?sessionToken={1}&data={2}"),
+	DELETE_TAGS("/v2/content/{0}/tag?data={1}"),
 	
-	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
+	TEACH_STUDY("/v2/class/my/teach-study?limit={0}&offset={1}"),
 	
-	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?sessionToken={0}"),
+	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?"),
 			
-	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}"),
+	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?"),
 	
-	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"),
+	DELETE_RATINGS("/v2/rating/{0}?"),
 	
-	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?sessionToken={0}"),
+	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?"),
 
-	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}&offset={2}&limit={3}"),
+	USER_FOLLOWERS("/v2/user/{0}/followers?offset={1}&limit={2}"),
 	
-	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}&offset={2}&limit={3}"),
+	USER_FOLLOWING("/v2/user/{0}/following?offset={1}&limit={2}"),
 	
-	USER_FOLLOW("/v2/user/follow/{0}?sessionToken={1}"),
+	USER_FOLLOW("/v2/user/follow/{0}?"),
 	
-	USER_UNFOLLOW("/v2/user/unfollow/{0}?sessionToken={1}"),
+	USER_UNFOLLOW("/v2/user/unfollow/{0}?"),
 	
-	USER_IS_FOLLOW("/v2/user/{0}/isfollow?sessionToken={1}"),
+	USER_IS_FOLLOW("/v2/user/{0}/isfollow?"),
 	
-	USER_TAG("/v2/content/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
+	USER_TAG("/v2/content/tag/{0}?offset={1}&limit={2}"),
 	
-	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}&offset={2}&limit={3}&gooruUId={4}"),
+	USER_TAG_RESOURCE("/v2/tag/{0}/resource?offset={1}&limit={2}&gooruUId={3}"),
 	
-	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
+	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}"),
 	
-	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}"),
+	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?"),
 	
-	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?sessionToken={1}"),
+	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?"),
 	
 	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api"),
 	
 	GET_GOOGLEDRIVE_FIlES("/v2/files?maxResults=20&q={0}"),
 	
-	GET_COURSE_DETAILS_STANDARDS("/v2/library/{0}/item/course/{1}?sessionToken={2}"),
+	GET_COURSE_DETAILS_STANDARDS("/v2/library/{0}/item/course/{1}?sessionToken={2}"),//Not used
 	
 	UPDATE_FILE_PERMISSION("/v2/files/{0}/permissions"),
 	
-	V2_GET_LIBRARY_SUBJECTS_OPTIMIZED("/v2/library?sessionToken={0}"),
+	V2_GET_LIBRARY_SUBJECTS_OPTIMIZED("/v2/library?"),
 	
-	V2_GET_LIBRARY_COURSES_OPTIMIZED("/v2/library/{0}/item?sessionToken={1}"),
+	V2_GET_LIBRARY_COURSES_OPTIMIZED("/v2/library/{0}/item?"),
 	
-	V2_GET_LIBRARY_UNITS_OPTIMIZED("/v2/library/{0}/item/course/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_UNITS_OPTIMIZED("/v2/library/{0}/item/course/{1}?"),
 	
-	V2_GET_LIBRARY_TOPICS_OPTIMIZED("/v2/library/{0}/item/unit/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_TOPICS_OPTIMIZED("/v2/library/{0}/item/unit/{1}?"),
 	
-	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}"),
+	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?"),
 	
-	V2_LevelWiseStandards("/v2/standard/{0}/{1}?sessionToken={2}"),
+	V2_LevelWiseStandards("/v2/standard/{0}/{1}?"),
 	
 	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}"),
 	
-	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?sessionToken={2}&direction={3}&planedEndDate={4}"),
+	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?direction={2}&planedEndDate={3}"),
 	
-	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?sessionToken={0}"),
+	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?"),
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
 	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
 	
-	GET_COLLECTION_SUMMARY("/insights/api/v1/classpage/{0}.json?sessionToken={1}"),
+	GET_COLLECTION_SUMMARY("/insights/api/v1/classpage/{0}.json?"),
 
-	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?sessionToken={0}&resetToken={1}"),
+	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?resetToken={0}"),
 
-	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
+	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?"),
 
-	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}"),
+	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?"),
 
-	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?sessionToken={0}&data={1}"),
+	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?data={0}"),
 
-	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}"),
+	RESOURCE_TAGS("/v2/content/resource/tag/{0}?"),
 	
-	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}"),
+	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?"),
 	
-	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}"),
+	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?"),
 	
-	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?sessionToken={1}"),
+	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?"),
 	
-	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?sessionToken={1}"),
+	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?"),
 	
-	V1_GETSESSIONSDATABYUSER("/v1/classpage/{0}/sessions.json?sessionToken={1}"),
+	V1_GETSESSIONSDATABYUSER("/v1/classpage/{0}/sessions.json?"),
 	
-	V1_GETSESSIONDATABYUSERSESSION("/v1/classpage/{0}/resources.json?sessionToken={1}"),
+	V1_GETSESSIONDATABYUSERSESSION("/v1/classpage/{0}/resources.json?"),
 	
-	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?sessionToken={1}"),
+	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?"),
 	
-	V1_EXPORTSUMMARYATHWAY("/v1/classpage/{0}/summary/export.xls?sessionToken={1}"),
+	V1_EXPORTSUMMARYATHWAY("/v1/classpage/{0}/summary/export.xls?"),
 	
-	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}"),
+	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}"),//Not Used.
 	
-	V2_GET_ASSIGNMENT_PARENT_DETAILS("/v2/class/assignment/{0}?sessionToken={1}"),
+	V2_GET_ASSIGNMENT_PARENT_DETAILS("/v2/class/assignment/{0}?sessionToken={1}"), // Not Used.
 	
-	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?sessionToken={1}"),
+	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?"),
 	
-	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}"),
+	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?"),
 	
-	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?sessionToken={1}"),
+	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?"),
 	
-	V2_DOWNLOADFILE("/v2/media/download?sessionToken={0}&url={1}&filename={2}"),
+	V2_DOWNLOADFILE("/v2/media/download?url={0}&filename={1}"),
 		
-	V2_FOLDER_META_DATA("/v2/folder/{0}?sessionToken={1}"),
+	V2_FOLDER_META_DATA("/v2/folder/{0}?"),
 	
-	V2_FOLDER_ROUTE_NODES("/v2/folder/{0}/node?sessionToken={1}"),
+	V2_FOLDER_ROUTE_NODES("/v2/folder/{0}/node?"),
 	
-	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?sessionToken={2}"),
+	V2_GETNEXTTOCCOLLECTION("/v2/folder/{0}/item/{1}/next?"),
 
-	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?sessionToken={1}"),
+	V2_GETTOCFOLDERSANDCOLLECTIONS("/v2/folder/{0}/item/toc?"),
 	
-	V2_21CENTURYSKILLS("/v2/taxonomy/skills?sessionToken={0}"),
+	V2_21CENTURYSKILLS("/v2/taxonomy/skills?"),
 	
-	SUGGEST_CENTURY_BY_QUERY("/search/skills?sessionToken={0}"),
+	SUGGEST_CENTURY_BY_QUERY("/search/skills?"),
 
-	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?sessionToken={1}");
+	V1_EXPORTPROGRESS("/v1/classpage/{0}/progress/export.xls?");
 
 	
 

@@ -83,6 +83,8 @@ public interface ClientConstants {
 
 	String GOORU_SESSION_TOKEN = "gooru-session-token";
 	
+	String HEADER_GOORU_APIKEY = "Gooru-Apikey";
+	
 	String GOORU_ACCESS_TOKEN = "google-access-token";
 	
 	String SIGNED_USER_UID = "signed-user-uid";

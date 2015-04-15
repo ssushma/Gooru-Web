@@ -56,7 +56,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 			throws GwtException {
 		
 		JsonRepresentation jsonRep = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLABORATORS, contentId, type, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLABORATORS, contentId, type);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.GROUP_BY_STATUS, GooruConstants.TRUE);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -67,7 +67,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	@Override
 	public List<String> getSuggestionByName(String emailId){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_SUGGEST_COLLAB, emailId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_SUGGEST_COLLAB, emailId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -91,7 +91,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	@Override
 	public ArrayList<CollaboratorsDo> addCollaboratorToCollectionById(List<String> lstEmailId, String collectionId){
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_COLLABORATORS, collectionId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_COLLABORATORS, collectionId);
 		String formData = lstEmailId.toString();
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword(), formData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -119,7 +119,7 @@ public class CollaboratorsServiceImpl extends BaseServiceImpl implements Collabo
 	 */
 	@Override
 	public void removeCollaboratorsFromListByEmailIds(String collectionId, String toRemove){
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLABORATORS, collectionId, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLABORATORS, collectionId);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, toRemove);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
