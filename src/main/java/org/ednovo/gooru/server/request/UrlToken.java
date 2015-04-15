@@ -78,15 +78,13 @@ public enum UrlToken {
 					
 	GET_TREE("/taxonomy/{0}/tree.json?sessionToken={1}"),
 
-	LIST_COLLECTION("/scollection/list?sessionToken={0}&pageSize={1}&pageSize={2}&sCollection={3}"),
-
 	V2_TAXONOMY_COURSE("/v2/taxonomy/course?sessionToken={0}"),
 
-	USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&filterBy=collection&merge=permissions"),
+	USER_COLLECTION("/myshelf?format={0}&sessionToken={1}"),
 
-	SHARABLE_USER_COLLECTION("/myshelf?format={0}&sessionToken={1}&sharing=public,anyonewithlink&filterBy=collection&merge=permissions"),
+	SHARABLE_USER_COLLECTION("/myshelf?format={0}&sessionToken={1}"),
 	
-	V2_USER_AVAILABILITY("/v2/user/{0}/availability?sessionToken={1}&keyword={2}"),
+	V2_USER_AVAILABILITY("/v2/user/{0}/availability?sessionToken={1}"),
 			
 	REGISTER_USER("/user?sessionToken={0}"),
 
@@ -126,15 +124,13 @@ public enum UrlToken {
 
 	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}"),
 
-	IMAGE_CROP("/media/{0}/crop?sessionToken={1}&height={2}&width={3}&xPosition={4}&yPosition={5}&&cropEngine=bufferImage"),
+	IMAGE_CROP("/media/{0}/crop?sessionToken={1}"),
 
-	UPDATE_USER_VIEW("/user/{0}/view/flag?sessionToken={1}&viewFlag={2}"),
+	UPDATE_USER_VIEW("/user/{0}/view/flag?sessionToken={1}"),
 
-	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?sessionToken={1}&title={2}&url={3}&category={4}&description={5}&thumbnailImgSrc={6}&stop={7}"),
+	ADD_NEW_RESOURCE("/v2/collection/{0}/resource?sessionToken={1}"),
 
-	GET_RESOURCE_INFO("/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
-	
-	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?sessionToken={0}&url={1}&title=Nothing&fetchThumbnail=true"),
+	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?sessionToken={0}"),
 
 	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&sessionToken={1}"),
 
@@ -154,7 +150,7 @@ public enum UrlToken {
 	
 	ASSIGN_COLLECTION_OR_FOLDER_TO_CLASS_V2("/v2/class/{0}/assign/{1}?sessionToken={2}"),
 	
-	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
+	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}"),
 	
 	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?sessionToken={1}"),
 	
@@ -164,7 +160,7 @@ public enum UrlToken {
 	
 	REMOVE_QUESTION_IMAGE("/quiz-question/{0}/asset?sessionToken={1}"),
 
-	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?sessionToken={1}&fileNames={2}&assetKey=asset-question"),
+	ATTACH_IMAGE_TO_QUESTION("/quiz-question/{0}/asset?sessionToken={1}"),
 
 	UPDATE_RESOURCE_INFO("/v2/collection/resource/{0}?sessionToken={1}"),
 			
@@ -180,7 +176,7 @@ public enum UrlToken {
 	
 	PERMISSION_COLLECTION("/user/content/{0}/check-access.json?sessionToken={1}"),
 	
-	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?sessionToken={0}&limit={1}&offset={2}"),
+	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?sessionToken={0}"),
 	
 	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?sessionToken={1}&data={%22limit%22:%22{2}%22,%22offset%22:%22{3}%22}"),
 	
@@ -278,7 +274,7 @@ public enum UrlToken {
     
     COPY_RESOURCCE("/scollection/item?sessionToken={0}"),
     
-    V2_GET_USER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&offset={2}&limit={3}"),
+    V2_GET_USER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}"),
     
     GET_USER_WORKSPACE("/myshelf?format=json&sessionToken={0}"),
     
@@ -338,7 +334,7 @@ public enum UrlToken {
 	
 	V2_SUGGEST_COLLAB("/v2/collaborator/suggest?query={0}&sessionToken={1}"),
 	 	
-	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}&offset={1}&limit={2}&orderBy=sequence"),
+	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}"),
 	
 	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}"),
 	
@@ -408,7 +404,7 @@ public enum UrlToken {
 	
 	GET_TAGS("/v2/content/{0}/tag?sessionToken={1}"),
 	
-	DELETE_TAGS("/v2/content/{0}/tag?sessionToken={1}&data={2}"),
+	DELETE_TAGS("/v2/content/{0}/tag?sessionToken={1}"),
 	
 	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
 	
@@ -420,9 +416,9 @@ public enum UrlToken {
 	
 	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?sessionToken={0}"),
 
-	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}&offset={2}&limit={3}"),
+	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}"),
 	
-	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}&offset={2}&limit={3}"),
+	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}"),
 	
 	USER_FOLLOW("/v2/user/follow/{0}?sessionToken={1}"),
 	
@@ -430,9 +426,9 @@ public enum UrlToken {
 	
 	USER_IS_FOLLOW("/v2/user/{0}/isfollow?sessionToken={1}"),
 	
-	USER_TAG("/v2/content/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
+	USER_TAG("/v2/content/tag/{0}?sessionToken={1}"),
 	
-	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}&offset={2}&limit={3}&gooruUId={4}"),
+	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}"),
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	
@@ -472,13 +468,13 @@ public enum UrlToken {
 	
 	GET_COLLECTION_SUMMARY("/insights/api/v1/classpage/{0}.json?sessionToken={1}"),
 
-	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?sessionToken={0}&resetToken={1}"),
+	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?sessionToken={0}"),
 
 	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
 
 	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}"),
 
-	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?sessionToken={0}&data={1}"),
+	V2_USER_PUBLISHEDCOLLECTIONS_COUNT("/insights/api/v2/query?sessionToken={0}"),
 
 	RESOURCE_TAGS("/v2/content/resource/tag/{0}?sessionToken={1}"),
 	

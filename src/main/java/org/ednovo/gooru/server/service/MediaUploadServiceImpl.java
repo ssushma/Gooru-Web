@@ -172,7 +172,14 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 	@Override
 	public String cropImage(String fileName, String height, String width,String xPosition, String yPosition, String imageUrl) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),height, width, xPosition, yPosition);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken());
+		Map<String,String> params = new HashMap<String, String>();
+		params.put(GooruConstants.HEIGHT,height);
+		params.put(GooruConstants.WIDTH,width);
+		params.put(GooruConstants.XPOSITION,xPosition);
+		params.put(GooruConstants.YPOSITION,yPosition);
+		params.put(GooruConstants.CROPENGINE,GooruConstants.BUFFERIMAGE);
+		String url=AddQueryParameter.constructQueryParams(partialUrl,params);
 		try
 		{
 		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
@@ -191,6 +198,28 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 
 	}
+	/*@Override
+	public String cropImage(String fileName, String height, String width,String xPosition, String yPosition, String imageUrl) {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),height, width, xPosition, yPosition);
+		getLogger().info("media upload url put:::::"+url);
+		try
+		{
+		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
+				new Form());
+		}
+		catch(Exception ex)
+		{
+			logger.error("Exception::", ex);
+		}
+		
+		if (imageUrl == null) {
+			return fileName;
+		} 
+		else {
+			return imageUrl;
+		}
+
+	}*/
 
 	@Override
 	public MediaUploadDo imageFileUpload(String response) {

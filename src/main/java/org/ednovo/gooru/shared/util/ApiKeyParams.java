@@ -36,6 +36,12 @@ public interface ApiKeyParams {
 	String Q = "q";
 	String START = "start";
 	String LENGTH = "length";
+	String HEIGHT ="height";
+	String WIDTH = "width";
+	String XPOSITION ="xPosition";
+	String YPOSITION ="yPosition";
+	String CROPENGINE="cropEngine";
+	
 	String ACCESS_TYPE = "accessType";
 	String QUERY_TYPE = "queryType";
 	String ALLOW_DUPLICATES = "allowDuplicates";
@@ -106,4 +112,17 @@ public interface ApiKeyParams {
 	 */
 
 	String PAGE_NO = "pageNo";
+	String URL = "url";
+	String DESCRIPTION= "description";
+	String THUMBNAILIMGSRC="thumbnailImgSrc";
+	String STOP="stop";
+	String FETCHTHUMBNAIL= "fetchThumbnail";
+	String FILENAMES="fileNames";
+	String ASSETKEY="assetKey";
+	String FILTERBY="filterBy";
+	String KEYWORD="keyword";
+	String VIEWFLAG="viewFlag";
+	String GOORUUID="gooruUId";
+	String RESETTOKEN="resetToken";
+	String STATUS="status";
 }
