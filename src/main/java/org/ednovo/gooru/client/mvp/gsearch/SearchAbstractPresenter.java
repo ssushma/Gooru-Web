@@ -33,6 +33,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.RegisterTabDndEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
@@ -43,7 +44,6 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
-import org.ednovo.gooru.client.mvp.search.event.PostSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -51,11 +51,11 @@ import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.http.client.URL;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -181,7 +181,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				&& getSearchDo().getSearchQuery().trim().length() >= 0) {
 			getSearchAsyncCallback().execute(getSearchDo());
 		}
-		/*if (AppClientFactory.getPlaceManager().refreshPlace()) {
+		if(AppClientFactory.getPlaceManager().refreshPlace()) {
 			if (setFilter) {
 				searchDo.setPageNum(1);
 				getSearchService().getSearchFilters(getCurrentPlaceToken(),
@@ -189,14 +189,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 							@Override
 							public void onSuccess(SearchFilterDo searchFilterDo) {
-								// getView().setSearchFilter(searchFilterDo);
+								getView().setSearchFilter(searchFilterDo);
 							}
 						});
 				setFilter = false;
 			} else {
 				// initiateSearch();
 			}
-		}*/
+		}
 		if (getPlaceManager().getRequestParameter("callback") != null
 				&& getPlaceManager().getRequestParameter("callback")
 						.equalsIgnoreCase("signup")) {

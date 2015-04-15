@@ -273,7 +273,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 							public void onSuccess(SearchFilterDo searchFilterDo) {
 								getView().setSearchFilter(searchFilterDo);
 							}
-						});
+				});
 				setFilter = false;
 			} else {
 				initiateSearch();
