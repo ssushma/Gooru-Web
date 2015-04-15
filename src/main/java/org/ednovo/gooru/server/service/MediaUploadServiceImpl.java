@@ -25,8 +25,10 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.UnsupportedEncodingException;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.TreeSet;
 import org.ednovo.gooru.shared.util.GooruConstants;
 import org.apache.http.HttpResponse;
@@ -68,6 +70,7 @@ import org.restlet.resource.ClientResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 
 /**
  * @author Search Team
