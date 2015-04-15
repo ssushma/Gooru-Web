@@ -178,11 +178,11 @@ public enum UrlToken {
 	
 	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?sessionToken={0}"),
 	
-	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?sessionToken={1}&data={%22limit%22:%22{2}%22,%22offset%22:%22{3}%22}"),
+	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?sessionToken={1}"),
 	
-	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}"),
 	
-	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}"),
 	
 	V2_CLASSPAGE_DELETE("/v2/class/{0}?sessionToken={1}"),
 	
@@ -190,7 +190,7 @@ public enum UrlToken {
 	
 	V2_GET_CLASSPAGE_BY_CODE("/v2/class/code/{0}?sessionToken={1}"),
 	
-	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?sessionToken={1}&merge=permissions"),
+	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?sessionToken={1}"),
 	
 	V2_UPDATE_ASSIGNMENT("/v2/assignment/{0}?sessionToken={1}"),
 	
@@ -290,7 +290,7 @@ public enum UrlToken {
 	
 	DELETE_CONTENT_REPORT("/v2/report/{0}?sessionToken={1}"),
 	
-	SIMPLE_COLL_GETAPI("/v2/collection/{0}?sessionToken={1}&includeCollectionItem=false&includeMetaInfo=false&includeCollaborator=false&includeRelatedContent=false"),
+	SIMPLE_COLL_GETAPI("/v2/collection/{0}?sessionToken={1}"),
 	
 	V2_GET_LIBRARY_COURSES("/v2/library/{0}?sessionToken={1}"),
 	
@@ -366,7 +366,7 @@ public enum UrlToken {
 	
 	V2_DELETE_MEMBER_FROM_CLASS_BY_CODE("/v2/class/{0}/member/remove?sessionToken={1}"),
 	
-	V2_GET_MEMBER_LIST_BY_CODE("/v2/class/{0}/member?sessionToken={1}&filterBy={2}&limit={3}&offset={4}"),
+	V2_GET_MEMBER_LIST_BY_CODE("/v2/class/{0}/member?sessionToken={1}"),
 	
 	V2_SUGGEST_MEMBER("/v2/class/member/suggest?query={0}&sessionToken={1}"),
 	
@@ -406,7 +406,7 @@ public enum UrlToken {
 	
 	DELETE_TAGS("/v2/content/{0}/tag?sessionToken={1}"),
 	
-	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
+	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}"),
 	
 	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?sessionToken={0}"),
 			
@@ -458,7 +458,7 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}"),
 	
-	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?sessionToken={2}&direction={3}&planedEndDate={4}"),
+	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?sessionToken={2}"),
 	
 	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?sessionToken={0}"),
 	

@@ -69,6 +69,7 @@ import org.ednovo.gooru.shared.util.GooruConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -408,7 +409,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public AssignmentsListDo v2GetAssignemtsByClasspageId(String classpageId,String pageSize, String pageNum)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken(), pageSize, pageNum);
+		JSONObject dataObject = new JSONObject();
+		// /v2/classpage/{0}/item?sessionToken={1}&data={%22limit%22:%22{2}%22,%22offset%22:%22{3}%22}
+		try {
+			dataObject.put(GooruConstants.LIMIT, pageSize);
+			dataObject.put(GooruConstants.OFFSET, pageNum);
+		} catch (Exception e) {
+			getLogger().error("-- "+e.getMessage());
+		}
+		
+		getLogger().info("dataObject here::::"+dataObject.toString());
+		
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken());
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, dataObject.toString());
+		getLogger().info("V2_GET_CLASSPAGE_ASSIGNMENTS  url here::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeV2AssignmentsList(jsonRep);
@@ -447,8 +461,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageListDo v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_GET_LISTTEACHCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_GET_LISTTEACHCLASSES, getLoggedInSessionToken());
+		
+		Map<String,String> params = new HashMap<String, String>();
+		params.put(GooruConstants.LIMIT, limit);
+		params.put(GooruConstants.OFFSET, offSet);
+		params.put(GooruConstants.RANDOMID, randomId);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		
+		getLogger().info("V2_GET_LISTTEACHCLASSES API Call::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -459,8 +481,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageListDo v2GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_GET_LISTSTUDYCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_GET_LISTSTUDYCLASSES, getLoggedInSessionToken());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.LIMIT, limit);
+		params.put(GooruConstants.OFFSET, offSet);
+		params.put(GooruConstants.RANDOMID, randomId);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("V2_GET_LISTSTUDYCLASSES API Call::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -504,9 +532,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+		// /v2/class/{0}?sessionToken={1}&merge=permissions
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		getLogger().info("V2_GET_CLASSPAGE_BY_ID API Call 11::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -518,9 +549,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.SIMPLE_COLL_GETAPI, classpageId,
 				getLoggedInSessionToken());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.INCLUDECOLLECTIONITEM, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDE_META_INFO, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDECOLLABORATOR, GooruConstants.FALSE);
+		params.put(GooruConstants.INCLUDERELATEDCONTENT, GooruConstants.FALSE);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		
 		getLogger().info("--- getSCollIdClasspageById URL -- "+url);
 		
 		try{
@@ -673,7 +711,23 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public List<ResourceDo> v2GetAssignmentCollectionsById(String assignmentId)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_ASSIGNMENT_COLLECTIONS, assignmentId, getLoggedInSessionToken());
+		//  "skipPagination":"yes"
+		//  /v2/assignment/{0}/item?sessionToken={1}&data={%22skipPagination%22:%22yes%22}&sharing=public,anyonewithlink
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_ASSIGNMENT_COLLECTIONS, assignmentId, getLoggedInSessionToken());
+		Map<String, String> params = new HashMap<String, String>();
+		JSONObject dataObject = new JSONObject();
+		try{
+			dataObject.put(GooruConstants.SKIPPAGINATION, GooruConstants.YES);
+		}catch(Exception e){
+			getLogger().error("error:::::"+e.getMessage());
+		}
+		getLogger().info("dataObjec in V2_GET_ASSIGNMENT_COLLECTIONS:::"+dataObject.toString());
+		params.put(GooruConstants.DATA, dataObject.toString());
+		params.put(GooruConstants.SHARING, GooruConstants.ACESSTEXT);
+		
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("V2_GET_ASSIGNMENT_COLLECTIONS API call:::"+url);
+		
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeTaskResourceSearch(jsonRep);
@@ -853,7 +907,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageDo classPageDo=new ClasspageDo();
 		if(classpageId != null)
 		{
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
+		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.MERGE, GooruConstants.PERMISSIONS);
+		getLogger().info("V2_GET_CLASSPAGE_BY_ID API Call 22::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -919,7 +975,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Exception::", e);
 		}
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_ITEM_TO_CLASS, classpageId,collectionOrFolderId,getLoggedInSessionToken(),direction,dueDate);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_ITEM_TO_CLASS, classpageId,collectionOrFolderId,getLoggedInSessionToken());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.DIRECTION, direction);
+		params.put(GooruConstants.PLANNEDENDDATE, dueDate);
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("ASSIGN_ITEM_TO_CLASS post call::::"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			classpageItemDoList=deserializeClassItems(jsonResponseRep.getJsonRepresentation());
@@ -1332,7 +1393,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken());
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GooruConstants.FILTERBY, statusType);
+		params.put(GooruConstants.LIMIT, ""+pageSize);
+		params.put(GooruConstants.OFFSET, offSet+"");
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		
@@ -1459,7 +1526,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			String classCode, int offSet, int pageSize, String statusType)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken());
+		Map<String,String> params = new HashMap<String, String>();
+		params.put(GooruConstants.FILTERBY, statusType);
+		params.put(GooruConstants.LIMIT, ""+pageSize);
+		params.put(GooruConstants.OFFSET, offSet+"");
+		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("--- Active memb assoc students -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1471,8 +1543,13 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageListDo v2GetAllClass(String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.TEACH_STUDY, getLoggedInSessionToken(), limit, offSet);
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.TEACH_STUDY, getLoggedInSessionToken());
+		Map<String,String> params = new HashMap<String, String>();
+		params.put(GooruConstants.LIMIT, limit);
+		params.put(GooruConstants.OFFSET, offSet);
+		String url=	AddQueryParameter.constructQueryParams(partialUrl, params);
+		getLogger().info("TEACH_STUDY API URL:::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
