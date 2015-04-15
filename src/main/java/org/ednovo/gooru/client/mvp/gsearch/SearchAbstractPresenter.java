@@ -104,11 +104,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	AddCenturyPresenter addCenturyPresenter = null;
 
-	private boolean isCCSSAvailable = false;
-	private boolean isNGSSAvailable = false;
-	private boolean isTEKSAvailable = false;
-	private boolean isCAAvailable = false;
-
+	boolean setFilter=true;
 	/**
 	 * Class constructor
 	 * 
