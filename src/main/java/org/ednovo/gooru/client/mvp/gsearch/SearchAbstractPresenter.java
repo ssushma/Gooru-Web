@@ -43,7 +43,6 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
-import org.ednovo.gooru.client.mvp.search.event.PostSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -55,7 +54,6 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.http.client.URL;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -103,10 +101,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	AddStandardsPresenter addStandardsPresenter = null;
 
 	AddCenturyPresenter addCenturyPresenter = null;
-
-	private boolean setFilter = true;
-
-	private static final String USER_META_ACTIVE_FLAG = "0";
 
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;

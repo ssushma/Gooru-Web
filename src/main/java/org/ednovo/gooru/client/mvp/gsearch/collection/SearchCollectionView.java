@@ -52,7 +52,11 @@ public class SearchCollectionView extends
 	public SearchCollectionView() {
 		super(false);
 	}
-
+	/**
+	 * To render Collection search results.
+	 * 
+	 * @return collectionSearchWidget{@link Widget}
+	 */
 	@Override
 	public Widget renderSearchResult(
 			CollectionSearchResultDo collectionSearchResultDo) {

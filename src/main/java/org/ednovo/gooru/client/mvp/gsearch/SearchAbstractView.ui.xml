@@ -5,135 +5,136 @@
 
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
-	    <div class="subNavigation">
-			<g:HTMLPanel styleName="container">
-				<g:HTMLPanel styleName="no-gutter">
-					<g:HTMLPanel styleName="col-md-6 col-sm-5">
-						<g:HTMLPanel styleName="seachLeftNavigation">
-							<panel:UlPanel>
-								<panel:LiPanel styleName="active" ui:field="collectionPanel">
-									<g:Anchor>Collection</g:Anchor>
-								</panel:LiPanel>
-								<panel:LiPanel ui:field="resourcePanel">
-									<g:Anchor>Resource</g:Anchor>
-								</panel:LiPanel>
-	
-							</panel:UlPanel>
-						</g:HTMLPanel>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-6 col-sm-7">
-	
-						<g:HTMLPanel styleName="seachRightNavigation">
-							<g:InlineLabel styleName="preHeader"> Preference </g:InlineLabel>
-							<g:HTMLPanel styleName="btn-group">
-								<g:Button styleName="btn btn-primary">Grade</g:Button>
-								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-									<g:InlineLabel styleName="caret"></g:InlineLabel>
-									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-								</g:HTMLPanel>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#">Action</a>
-									</li>
-									<li>
-										<a href="#">Another action</a>
-									</li>
-									<li>
-										<a href="#">Something else here</a>
-									</li>
-									<li styleName="divider"></li>
-									<li>
-										<a href="#">Separated link</a>
-									</li>
-								</ul>
-							</g:HTMLPanel>
-							<g:HTMLPanel styleName="btn-group">
-								<g:Button styleName="btn btn-primary">Course</g:Button>
-								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-									<g:InlineLabel styleName="caret"></g:InlineLabel>
-									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-								</g:HTMLPanel>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#">Action</a>
-									</li>
-									<li>
-										<a href="#">Another action</a>
-									</li>
-									<li>
-										<a href="#">Something else here</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="#">Separated link</a>
-									</li>
-								</ul>
-							</g:HTMLPanel>
-							<g:HTMLPanel styleName="btn-group">
-								<g:Button styleName="btn btn-primary">Browse Standers</g:Button>
-								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-									<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
-									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-								</g:HTMLPanel>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#">Action</a>
-									</li>
-									<li>
-										<a href="#">Another action</a>
-									</li>
-									<li>
-										<a href="#">Something else here</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="#">Separated link</a>
-									</li>
-								</ul>
+		<g:HTMLPanel styleName="fixedPosition">
+			<div class="subNavigation">
+				<g:HTMLPanel styleName="container">
+					<g:HTMLPanel styleName="no-gutter">
+						<g:HTMLPanel styleName="col-md-6 col-sm-5">
+							<g:HTMLPanel styleName="seachLeftNavigation">
+								<panel:UlPanel>
+									<panel:LiPanel styleName="active" ui:field="collectionPanel">
+										<g:Anchor>Collection</g:Anchor>
+									</panel:LiPanel>
+									<panel:LiPanel ui:field="resourcePanel">
+										<g:Anchor>Resource</g:Anchor>
+									</panel:LiPanel>
+
+								</panel:UlPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-md-6 col-sm-7">
+
+							<g:HTMLPanel styleName="seachRightNavigation">
+								<g:InlineLabel styleName="preHeader"> Preference </g:InlineLabel>
+								<g:HTMLPanel styleName="btn-group">
+									<g:Button styleName="btn btn-primary">Grade</g:Button>
+									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+										<g:InlineLabel styleName="caret"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+									</g:HTMLPanel>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<a href="#">Action</a>
+										</li>
+										<li>
+											<a href="#">Another action</a>
+										</li>
+										<li>
+											<a href="#">Something else here</a>
+										</li>
+										<li styleName="divider"></li>
+										<li>
+											<a href="#">Separated link</a>
+										</li>
+									</ul>
+								</g:HTMLPanel>
+								<g:HTMLPanel styleName="btn-group">
+									<g:Button styleName="btn btn-primary">Subject</g:Button>
+									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+										<g:InlineLabel styleName="caret"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+									</g:HTMLPanel>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<a href="#">Action</a>
+										</li>
+										<li>
+											<a href="#">Another action</a>
+										</li>
+										<li>
+											<a href="#">Something else here</a>
+										</li>
+										<li class="divider"></li>
+										<li>
+											<a href="#">Separated link</a>
+										</li>
+									</ul>
+								</g:HTMLPanel>
+								<g:HTMLPanel styleName="btn-group">
+									<g:Button styleName="btn btn-primary">Browse Standers</g:Button>
+									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+										<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
+										<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+									</g:HTMLPanel>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<a href="#">Action</a>
+										</li>
+										<li>
+											<a href="#">Another action</a>
+										</li>
+										<li>
+											<a href="#">Something else here</a>
+										</li>
+										<li class="divider"></li>
+										<li>
+											<a href="#">Separated link</a>
+										</li>
+									</ul>
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					</g:HTMLPanel>
-					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
-			</g:HTMLPanel>
-		</div>
-		<!-- collection search filters -->
-		<div class="collectionDetails">
-			<div class="container">
-				<div class="no-gutter">
-					<div class="col-md-9 col-sm-10">
-						<div class="seachLeftNavigation">
-							<ul>
-								<li class="active">
-									<a class="collectionsIcon" href="">Collections (5220)</a>
-								</li>
-								<li>
-									<a class="assessmentIcon" href="">Assessments (192)</a>
-								</li>
-							</ul>
-							<div class="authorDetails">
-								<div class="input-group">
-									<span> Author:</span>
-									<input type="text" aria-label="Text input with dropdown button"
-										class="form-control" />
-									<g:Label styleName="searchQuestionMark"></g:Label>
+			</div>
+			<!-- collection search filters -->
+			<div class="collectionDetails">
+				<div class="container">
+					<div class="no-gutter">
+						<div class="col-md-9 col-sm-10">
+							<div class="seachLeftNavigation">
+								<ul>
+									<li class="active">
+										<a class="collectionsIcon" href="">Collections (5220)</a>
+									</li>
+									<li>
+										<a class="assessmentIcon" href="">Assessments (192)</a>
+									</li>
+								</ul>
+								<div class="authorDetails">
+									<div class="input-group">
+										<span> Author:</span>
+										<input type="text" aria-label="Text input with dropdown button"
+											class="form-control" />
+										<g:Label styleName="searchQuestionMark"></g:Label>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-3 col-sm-2">
-						<div class="seachRightNavigation">
-							<button type="button" class="primary">Search</button>
+						<div class="col-md-3 col-sm-2">
+							<div class="seachRightNavigation">
+								<button type="button" class="primary">Search</button>
+							</div>
 						</div>
+						<div class="clearfix"></div>
 					</div>
-					<div class="clearfix"></div>
 				</div>
 			</div>
-		</div>
 
 
-		<!-- collection search filters end -->
-
+			<!-- collection search filters end -->
+		</g:HTMLPanel>
 		<div class="container">
 			<div class="SmallWidthContainer">
 				<div class="borderBox">
