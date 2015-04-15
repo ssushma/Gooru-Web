@@ -180,11 +180,11 @@ public enum UrlToken {
 	
 	V2_LIST_MY_CLASSPAGES("/v2/classpage/my?"),
 	
-	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?&data={%22limit%22:%22{1}%22,%22offset%22:%22{2}%22}"),
+	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?"),
 	
-	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?limit={0}&offset={1}&randomId={2}"),
+	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?"),
 	
-	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?limit={0}&offset={1}&randomId={2}"),
+	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?"),
 	
 	V2_CLASSPAGE_DELETE("/v2/class/{0}?"),
 	
@@ -192,7 +192,7 @@ public enum UrlToken {
 	
 	V2_GET_CLASSPAGE_BY_CODE("/v2/class/code/{0}?"),
 	
-	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?merge=permissions"),
+	V2_GET_CLASSPAGE_BY_ID("/v2/class/{0}?"),
 	
 	V2_UPDATE_ASSIGNMENT("/v2/assignment/{0}"),
 	
@@ -292,7 +292,7 @@ public enum UrlToken {
 	
 	DELETE_CONTENT_REPORT("/v2/report/{0}?"),
 	
-	SIMPLE_COLL_GETAPI("/v2/collection/{0}?includeCollectionItem=false&includeMetaInfo=false&includeCollaborator=false&includeRelatedContent=false"),
+	SIMPLE_COLL_GETAPI("/v2/collection/{0}?"),
 	
 	V2_GET_LIBRARY_COURSES("/v2/library/{0}?"),
 	
@@ -368,7 +368,7 @@ public enum UrlToken {
 	
 	V2_DELETE_MEMBER_FROM_CLASS_BY_CODE("/v2/class/{0}/member/remove?"),
 	
-	V2_GET_MEMBER_LIST_BY_CODE("/v2/class/{0}/member?&filterBy={1}&limit={2}&offset={3}"),
+	V2_GET_MEMBER_LIST_BY_CODE("/v2/class/{0}/member?"),
 	
 	V2_SUGGEST_MEMBER("/v2/class/member/suggest?query={0}"),
 	
@@ -408,7 +408,7 @@ public enum UrlToken {
 	
 	DELETE_TAGS("/v2/content/{0}/tag?"),
 	
-	TEACH_STUDY("/v2/class/my/teach-study?limit={0}&offset={1}"),
+	TEACH_STUDY("/v2/class/my/teach-study?"),
 	
 	V2_SEARCH_SUGGEST_AGGREGATOR("/gooru-search/rest/v2/search/aggregator?"),
 			
@@ -460,7 +460,7 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}"),
 	
-	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?direction={2}&planedEndDate={3}"),
+	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?"),
 	
 	v2_SUGGEST_STANDARD_BY_FILTER_SOURCE_CODEID("/gooru-search/rest/v2/search/standard?"),
 	
@@ -539,3 +539,4 @@ public enum UrlToken {
 	}
 	
 }
+

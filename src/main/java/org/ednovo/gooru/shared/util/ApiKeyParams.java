@@ -125,4 +125,11 @@ public interface ApiKeyParams {
 	String GOORUUID="gooruUId";
 	String RESETTOKEN="resetToken";
 	String STATUS="status";
+	String RANDOMID="randomId";
+	String INCLUDECOLLECTIONITEM="includeCollectionItem";
+	String INCLUDECOLLABORATOR="includeCollaborator";
+	String INCLUDERELATEDCONTENT="includeRelatedContent";
+	String DIRECTION = "direction";
+	String PLANNEDENDDATE="planedEndDate";
+	String SKIPPAGINATION="skipPagination";
 }
