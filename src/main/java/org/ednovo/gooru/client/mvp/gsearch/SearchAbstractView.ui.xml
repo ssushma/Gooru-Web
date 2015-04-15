@@ -1,221 +1,147 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
 
-	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle" field="res" />    
-	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
-	<ui:style type="org.ednovo.gooru.client.mvp.search.AbstractSearchView.Style">
-
-		.searchFilter {
-			float: left;
-			clear: both;
-			width: 185px;
-			overflow:visible !important;
-		}
-		
-		.searchResultContainer {
-			width: 600px;
-			float: left;
-			margin-left: 14px;
-		}
-		
-		.paginationPanel {
-			clear: both;
-			margin-left: 14px;
-			margin-bottom: 46px;
-			padding: 30px 0px;
-			text-align: left;
-		}
-		.secondaryResourceSearchBtn{
-			color: #515151;
-			padding: 7px 9px 9px 34px;
-			border-radius: 4px;
-			background: #efefef;
-			background-image: url(images/resourcesIco.png); /* fallback */
-			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#f0f0f0)); /* Saf4+, Chrome */
-			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #ffffff, #f0f0f0); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #ffffff, #f0f0f0); /* FF3.6+ */
-			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #ffffff, #f0f0f0); /* IE10 */
-			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #ffffff, #f0f0f0); /* Opera 11.10+ */
-			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #ffffff, #f0f0f0); /* W3C */
-			border: 1px solid #ddd;
-			font-size:12px;
-			font-weight: bold;
-			background-repeat:no-repeat;
-			background-position:0 0;
-			font-family:Arial, Helvetica, sans-serif;
-			cursor:pointer;
-			margin-right:10px;
-			margin-bottom:10px;
-		}
-
-		.secondaryResourceSearchBtn:hover{
-			color: #515151;
-			background: #efefef;
-			background-image: url(images/resourcesIco.png); /* fallback */
-			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#efefef)); /* Saf4+, Chrome */
-			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #f0f0f0, #ffffff); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #f0f0f0, #ffffff); /* FF3.6+ */
-			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #f0f0f0, #ffffff); /* IE10 */
-			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #f0f0f0, #ffffff); /* Opera 11.10+ */
-			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
-			background-repeat:no-repeat;
-			margin-right:10px;
-			margin-bottom:10px;
-		}
-
-
-		.secondaryCollectionSearchBtn{
-			color: #515151;
-			padding: 7px 9px 9px 34px;
-			border-radius: 4px;
-			background: #efefef;
-			background-image: url(images/collectionIco.png); /* fallback */
-			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f0f0f0)); /* Saf4+, Chrome */
-			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #ffffff, #f0f0f0); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #ffffff, #f0f0f0); /* FF3.6+ */
-			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #ffffff, #f0f0f0); /* IE10 */
-			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #ffffff, #f0f0f0); /* Opera 11.10+ */
-			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #ffffff, #f0f0f0); /* W3C */
-			border: 1px solid #ddd;
-			font-size:12px;
-			font-weight: bold;
-			background-repeat:no-repeat;
-			background-position:0 0;
-			font-family:Arial, Helvetica, sans-serif;
-			cursor:pointer;
-			
-		}
-
-
-		.secondaryCollectionSearchBtn:hover{
-			color: #515151;
-			background: #efefef;
-			background-image: url(images/collectionIco.png); /* fallback */
-			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#ffffff)); /* Saf4+, Chrome */
-			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #f0f0f0, #ffffff); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #f0f0f0, #ffffff); /* FF3.6+ */
-			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #f0f0f0, #ffffff); /* IE10 */
-			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #f0f0f0, #ffffff); /* Opera 11.10+ */
-			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
-			background-repeat:no-repeat;
-			
-		}
-
-		.secondaryIC img{
-			vertical-align:middle;
-			width:22px;
-			margin-right:5px;
-		}
-		.resourceBtnActive {
-			color: #515151;
-			padding: 7px 9px 9px 34px;
-			border-radius: 4px;
-			background: #efefef;
-			background-image: url(images/resourcesIco.png); /* fallback */
-			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#EFEFEF), to(#FAFAFA)); /* Saf4+, Chrome */
-			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #EFEFEF, #FAFAFA); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #EFEFEF, #FAFAFA); /* FF3.6+ */
-			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #EFEFEF, #FAFAFA); /* IE10 */
-			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #EFEFEF, #FAFAFA); /* Opera 11.10+ */
-			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #EFEFEF, #FAFAFA); /* W3C */
-			background-repeat:no-repeat;
-			border: 1px solid #b0b0ba;
-			font-size:12px;
-			font-weight: bold;
-			background-position:0 0;
-			cursor:pointer;
-			box-shadow:0 1px 3px #d0d0d5 inset;
-			margin-bottom:10px;
-			margin-right:10px
-
-		}
-
-		.collectionBtnActive {
-			color: #515151;
-			padding: 7px 9px 9px 34px;
-			border-radius: 4px;
-			background: #efefef;
-			background-image: url(images/collectionIco.png); /* fallback */
-			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#EFEFEF), to(#FAFAFA)); /* Saf4+, Chrome */
-			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #EFEFEF, #FAFAFA); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #EFEFEF, #FAFAFA); /* FF3.6+ */
-			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #EFEFEF, #FAFAFA); /* IE10 */
-			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #EFEFEF, #FAFAFA); /* Opera 11.10+ */
-			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #EFEFEF, #FAFAFA); /* W3C */
-			background-repeat:no-repeat;
-			border: 1px solid #b0b0ba;
-			font-size:12px;
-			font-weight: bold;
-			background-position:0 0;
-			cursor:pointer;
-			box-shadow:0 1px 3px #d0d0d5 inset;
-		}
-		.searchResult {
-			color: #515151;
-			/* float: left; */
-			margin: 0px 0 0 6px;
-			<!-- float:left; -->
-			padding-bottom: 10px;
-			
-		}
-		.prefilterPanel {
-			margin-left: 5px;
-		   
-		    
-		}
-		.searchResultSpell {
-			color: #515151;
-			/* float: left;*/
-			margin: 0px 0 0 6px;
-			display: inline-block;
-			padding-bottom: 10px;
-			width:100%;
-			font-size: 14px;
-
-			}
-		.searchResultError {
-			color: #515151;
-				margin: 5px 0 0 6px;
-				padding-bottom: 10px;
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+	<g:HTMLPanel>
+	    <div class="subNavigation">
+			<g:HTMLPanel styleName="container">
+				<g:HTMLPanel styleName="no-gutter">
+					<g:HTMLPanel styleName="col-md-6 col-sm-5">
+						<g:HTMLPanel styleName="seachLeftNavigation">
+							<panel:UlPanel>
+								<panel:LiPanel styleName="active" ui:field="collectionPanel">
+									<g:Anchor>Collection</g:Anchor>
+								</panel:LiPanel>
+								<panel:LiPanel ui:field="resourcePanel">
+									<g:Anchor>Resource</g:Anchor>
+								</panel:LiPanel>
 	
-		}
-		.buttonsContainerDiv{
-		width: 100%;
-		display: inline-block;
-		margin-top: 12px;
-		margin-left: 6px;
-		}
-		.wrongSpellLabel{
-			display: inline-block;
-			color: #1076bb;
-			cursor: pointer;
-			font-weight: bold;
-			font-size: 14px;
-		}
-		.wrongSpellLabel:hover{
-			color : #4c98cc;
-		}
-		.wrongSpellcontainer{
-			display: inline-block;
-		}
-		.correctSpellcontainer{
-			display: inline-block;
-			font-size: 14px;
-		}
-		.searchMargin{
-			float:left;
-			margin-bottom: 10px;
-			margin-top: 10px;
-		
-		}
-		.buttonsContainer{
-			float:left;
-			width:100%;
-			margin-top:10px;
-		}
+							</panel:UlPanel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="col-md-6 col-sm-7">
 	
-	</ui:style>
-	<g:FlowPanel>
-	    
-	</g:FlowPanel>
+						<g:HTMLPanel styleName="seachRightNavigation">
+							<g:InlineLabel styleName="preHeader"> Preference </g:InlineLabel>
+							<g:HTMLPanel styleName="btn-group">
+								<g:Button styleName="btn btn-primary">Grade</g:Button>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+									<g:InlineLabel styleName="caret"></g:InlineLabel>
+									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+								</g:HTMLPanel>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Action</a>
+									</li>
+									<li>
+										<a href="#">Another action</a>
+									</li>
+									<li>
+										<a href="#">Something else here</a>
+									</li>
+									<li styleName="divider"></li>
+									<li>
+										<a href="#">Separated link</a>
+									</li>
+								</ul>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="btn-group">
+								<g:Button styleName="btn btn-primary">Course</g:Button>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+									<g:InlineLabel styleName="caret"></g:InlineLabel>
+									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+								</g:HTMLPanel>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Action</a>
+									</li>
+									<li>
+										<a href="#">Another action</a>
+									</li>
+									<li>
+										<a href="#">Something else here</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="#">Separated link</a>
+									</li>
+								</ul>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="btn-group">
+								<g:Button styleName="btn btn-primary">Browse Standers</g:Button>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+									<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
+									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+								</g:HTMLPanel>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Action</a>
+									</li>
+									<li>
+										<a href="#">Another action</a>
+									</li>
+									<li>
+										<a href="#">Something else here</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="#">Separated link</a>
+									</li>
+								</ul>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</div>
+		<!-- collection search filters -->
+		<div class="collectionDetails">
+			<div class="container">
+				<div class="no-gutter">
+					<div class="col-md-9 col-sm-10">
+						<div class="seachLeftNavigation">
+							<ul>
+								<li class="active">
+									<a class="collectionsIcon" href="">Collections (5220)</a>
+								</li>
+								<li>
+									<a class="assessmentIcon" href="">Assessments (192)</a>
+								</li>
+							</ul>
+							<div class="authorDetails">
+								<div class="input-group">
+									<span> Author:</span>
+									<input type="text" aria-label="Text input with dropdown button"
+										class="form-control" />
+									<g:Label styleName="searchQuestionMark"></g:Label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-2">
+						<div class="seachRightNavigation">
+							<button type="button" class="primary">Search</button>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- collection search filters end -->
+
+		<div class="container">
+			<div class="SmallWidthContainer">
+				<div class="borderBox">
+					<g:HTMLPanel ui:field="searchResultPanel"
+						styleName="less-gutter libraryMainContainerBlock" />
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -27,18 +27,8 @@ package org.ednovo.gooru.client.mvp.gsearch.collection;
 
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.ScrollEvent;
-import com.google.gwt.user.client.Window.ScrollHandler;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -54,39 +44,19 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class SearchCollectionView extends SearchAbstractView<CollectionSearchResultDo> implements IsSearchCollectionView {
+public class SearchCollectionView extends
+		SearchAbstractView<CollectionSearchResultDo> implements
+		IsSearchCollectionView {
 
-	private static SearchCollectionViewUiBinder uiBinder = GWT
-			.create(SearchCollectionViewUiBinder.class);
 
-	interface SearchCollectionViewUiBinder extends UiBinder<Widget, SearchCollectionView> {
-	}
-	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	@UiField HTMLPanel searchResultPanel;
-	int pageNumber=1;
-	
 	public SearchCollectionView() {
 		super(false);
-		setWidget(uiBinder.createAndBindUi(this));
-		Window.addWindowScrollHandler(new ScrollHandler() {
-			@Override
-			public void onWindowScroll(ScrollEvent event) {
-				if((event.getScrollTop()+Window.getClientHeight())==Document.get().getBody().getClientHeight()){
-					pageNumber++;
-					getUiHandlers().getCollectionSearchResultsOnPageWise("", pageNumber, 8);
-				}
-			}
-		});
 	}
 
 	@Override
-	public void setCollectionsData(SearchDo<CollectionSearchResultDo> result) {
-		if(result!=null && result.getSearchResults().size()>0){
-			for (CollectionSearchResultDo collectionSearchResultDo : result.getSearchResults()) {
-				searchResultPanel.add(new CollectionSearchWidget(collectionSearchResultDo));
-			}
-		}
+	public Widget renderSearchResult(
+			CollectionSearchResultDo collectionSearchResultDo) {
+		return new CollectionSearchWidget(collectionSearchResultDo);
 	}
 
-	}
+}

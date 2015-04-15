@@ -149,7 +149,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			@Override
 			public void onCallSuccess(SearchDo<T> result) {
 				setSearchDo(result);
-				getEventBus().fireEvent(new PostSearchEvent(result));
+				getView().postSearch(result);
 			}
 		});
 
@@ -382,8 +382,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		this.aggregatorSuggestionAsyncCallback = aggregatorSuggestionAsyncCallback;
 	}
 
-	protected abstract void requestSearch(SearchDo<T> searchDo,
-			SearchAsyncCallback<SearchDo<T>> searchAsyncCallback);
+	protected abstract void requestSearch(SearchDo<T> searchDo,SearchAsyncCallback<SearchDo<T>> searchAsyncCallback);
 
 	/**
 	 * @return the standardSuggestionInfoAsyncCallback

@@ -5,46 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:html5="urn:import:org.ednovo.gooru.client.htmltags"  xmlns:tbp="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
-	<div class="collectionDetails">
-		<div class="container">
-			<div class="no-gutter">
-				<div class="col-md-9 col-sm-10">
-					<div class="seachLeftNavigation">
-						<ul>
-							<li class="active">
-								<a class="collectionsIcon" href="">Collections (5220)</a>
-							</li>
-							<li>
-								<a class="assessmentIcon" href="">Assessments (192)</a>
-							</li>
-						</ul>
-						<div class="authorDetails">
-							<div class="input-group">
-								<span> Author:</span>
-								<input type="text" aria-label="Text input with dropdown button"	class="form-control" />
-								<g:Label styleName="searchQuestionMark"></g:Label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-2">
-					<div class="seachRightNavigation">
-						<button type="button" class="primary">Search</button>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-		</div>
-	</div>
 	
-	<div class="container">
-		<div class="SmallWidthContainer">
-			<div class="borderBox">
-		   		<g:HTMLPanel ui:field="searchResultPanel" styleName="less-gutter libraryMainContainerBlock"/>
-		    <div class="clearfix"></div>
-			</div>
-		</div>
-	</div>
 	 	
 	</g:HTMLPanel>
 </ui:UiBinder>
