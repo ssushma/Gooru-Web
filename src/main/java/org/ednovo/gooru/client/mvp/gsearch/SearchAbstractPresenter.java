@@ -205,7 +205,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 						});
 				setFilter = false;
 			} else {
-				// initiateSearch();
+				 //initiateSearch();
 			}
 		}
 		if (getPlaceManager().getRequestParameter("callback") != null

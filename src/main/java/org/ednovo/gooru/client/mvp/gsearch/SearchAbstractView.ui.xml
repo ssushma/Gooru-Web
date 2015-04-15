@@ -123,7 +123,8 @@
 		<div class="container">
 			<div class="SmallWidthContainer">
 				<div>
-					<g:InlineLabel styleName="searchResultsBox" ui:field="searchResults"/> 		
+					<g:InlineLabel styleName="searchResultsBox" ui:field="searchResults"/> 	
+					<g:FlowPanel ui:field="pnlAddFilters" styleName="searchFilters"></g:FlowPanel>	
 				</div>
 				<div class="borderBox">
 					<g:HTMLPanel ui:field="searchResultPanel" styleName="less-gutter libraryMainContainerBlock" />
