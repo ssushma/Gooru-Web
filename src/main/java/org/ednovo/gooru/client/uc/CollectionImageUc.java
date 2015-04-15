@@ -39,6 +39,8 @@ import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Hidden;
@@ -135,6 +137,9 @@ public class CollectionImageUc extends Composite implements ClickHandler {
 		}
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionGooruOid.getValue());
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
+			Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
+		}
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
