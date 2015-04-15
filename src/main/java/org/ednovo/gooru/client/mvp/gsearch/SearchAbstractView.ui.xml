@@ -2,7 +2,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
-
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="fixedPosition">
@@ -48,51 +47,37 @@
 										</li>
 									</ul>
 								</g:HTMLPanel>
-								<g:HTMLPanel styleName="btn-group">
-									<g:Button styleName="btn btn-primary">Subject</g:Button>
-									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-										<g:InlineLabel styleName="caret"></g:InlineLabel>
-										<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-									</g:HTMLPanel>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="#">Action</a>
-										</li>
-										<li>
-											<a href="#">Another action</a>
-										</li>
-										<li>
-											<a href="#">Something else here</a>
-										</li>
-										<li class="divider"></li>
-										<li>
-											<a href="#">Separated link</a>
-										</li>
-									</ul>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#">Action</a>
+									</li>
+									<li>
+										<a href="#">Another action</a>
+									</li>
+									<li>
+										<a href="#">Something else here</a>
+									</li>
+									<li styleName="divider"></li>
+									<li>
+										<a href="#">Separated link</a>
+									</li>
+								</ul>
+							<g:HTMLPanel styleName="btn-group">
+								<g:Button styleName="btn btn-primary">Course</g:Button>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" ui:field="subjectDropDown">
+									<g:InlineLabel styleName="caret"></g:InlineLabel>
+									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
 								</g:HTMLPanel>
-								<g:HTMLPanel styleName="btn-group">
-									<g:Button styleName="btn btn-primary">Browse Standers</g:Button>
-									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-										<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
-										<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-									</g:HTMLPanel>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="#">Action</a>
-										</li>
-										<li>
-											<a href="#">Another action</a>
-										</li>
-										<li>
-											<a href="#">Something else here</a>
-										</li>
-										<li class="divider"></li>
-										<li>
-											<a href="#">Separated link</a>
-										</li>
-									</ul>
+								<panel:UlPanel ui:field="ulSubjectPanel"/>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="btn-group">
+								<g:Button styleName="btn btn-primary">Browse Standers</g:Button>
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+									<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
+									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
+						</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					</g:HTMLPanel>
@@ -137,6 +122,9 @@
 		</g:HTMLPanel>
 		<div class="container">
 			<div class="SmallWidthContainer">
+				<div>
+					<g:InlineLabel styleName="searchResultsBox" ui:field="searchResults"/> 		
+				</div>
 				<div class="borderBox">
 					<g:HTMLPanel ui:field="searchResultPanel" styleName="less-gutter libraryMainContainerBlock" />
 					<g:Label ui:field="lblLoadingText" styleName="loadingText" text="{i18n.GL3206}" title="{i18n.GL3206}"/>

@@ -29,11 +29,13 @@
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a{
 	display:block;
-	padding:20px 45px;
+	padding:16px 45px;
 	color:#515151;
 	background:#d8d8d8;
 	border-left:1px solid #979797;
 	font-size:13px;
+	height:47px;
+	line-height:15px;
 }
 #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:hover, #gooruSearchMainContainer .subNavigation .seachLeftNavigation ul li a:focus{
 	opacity:0.75;
@@ -54,7 +56,7 @@
 
 #gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul{
 	padding:0 0;
-	margin:25px 0;
+	margin:10px 0;
 	display:inline-block;
 }
 #gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li{
@@ -68,7 +70,7 @@
 	padding:7px 25px;
 }
 #gooruSearchMainContainer .collectionDetails  .seachRightNavigation{
-	margin:30px 0;
+	margin:12px 0;
 }
 #gooruSearchMainContainer .collectionDetails .seachLeftNavigation ul li a{
 	display:block;
@@ -94,7 +96,7 @@
 }
 #gooruSearchMainContainer .seachRightNavigation{
 	text-align:right;
-	margin:13px 0;
+	margin:5px 0;
 }
 #gooruSearchMainContainer .collectionDetails{
 	margin-bottom:10px;
@@ -340,7 +342,7 @@
 	padding:2px 10px;
 	background:#ffffff;
 	border-radius:6px 6px;
-	margin-top: 163px;
+	margin-top: 130px;
 	
 }
 #gooruSearchMainContainer .remixButton{
@@ -434,7 +436,65 @@ Back to top button
 #gooruSearchMainContainer  #back-top a:hover span {
 	background-color: #ffffff;
 }
+#gooruSearchMainContainer .dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 9px;
+  left:auto;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
 
+#gooruSearchMainContainer .dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  left:auto;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+#gooruSearchMainContainer .seachRightNavigation .dropdown-menu {
+	left: auto;
+	right: 0;
+	top: 120%;
+	font-size: 12px;
+	min-width: 245px;
+	margin: 0 0;
+	padding: 0 0;
+}
+#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > span {
+	font-size: 12px;
+	text-align: left;
+	color: #515151;
+	padding: 8px 20px;
+	display: block;
+}
+#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:hover,#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > .active > a:focus {
+	background-color: #87badd;
+	color: #ffffff;
+}
+#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a {
+	padding: 8px 20px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+	color: #515151;
+}
+#gooruSearchMainContainer .seachRightNavigation .dropdown-menu > li > a {
+	text-align: left;
+}
+#gooruSearchMainContainer .searchResultsBox{
+	font-size: 23px;
+	padding: 9px;
+	margin-top: 12px;
+	clear: both;
+	display: inline-block;
+}
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .collectionImg{
 		width:160px;
@@ -638,6 +698,40 @@ Back to top button
 	}
 	#gooruSearchMainContainer .resourcesInside{
 		text-align:center;
+	}
+	#gooruSearchMainContainer .seachRightNavigation .subject .dropdown-menu:before {
+	  position: absolute;
+	  top: -7px;
+	  left: 130px;
+	  right:auto;
+	  display: inline-block;
+	  border-right: 7px solid transparent;
+	  border-bottom: 7px solid #ccc;
+	  border-left: 7px solid transparent;
+	  border-bottom-color: rgba(0, 0, 0, 0.2);
+	  content: '';
+	}
+	
+	#gooruSearchMainContainer .seachRightNavigation .subject .dropdown-menu:after {
+	  position: absolute;
+	  top: -6px;
+	  left: 131px;
+	  right:auto;
+	  display: inline-block;
+	  border-right: 6px solid transparent;
+	  border-bottom: 6px solid #ffffff;
+	  border-left: 6px solid transparent;
+	  content: '';
+	}
+	
+	#gooruSearchMainContainer .seachRightNavigation .subject  .dropdown-menu{
+		left:-75px;
+		right:auto;
+		top:120%;
+		font-size:12px;
+		min-width:282px;
+		margin:0 0;
+		padding:0 0;
 	}
 }
 

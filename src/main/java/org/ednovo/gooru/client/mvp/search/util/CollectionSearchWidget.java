@@ -79,7 +79,6 @@ public class CollectionSearchWidget extends Composite {
 			}
 		});
 		
-		
 		toolTipPopupPanelCustomize.clear();
 		toolTipPopupPanelCustomize.hide();
 		remixBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
@@ -97,6 +96,9 @@ public class CollectionSearchWidget extends Composite {
 		});
 		String collectionDesc=collectionSearchResultDo.getDescription();
 		if(!StringUtil.isEmpty(collectionDesc)){
+			if(collectionDesc.length()>=150){
+				collectionDesc=collectionDesc.substring(0,150)+"...";
+			}
 			collectionDescription.getElement().setInnerText(collectionDesc);
 		}
 		authorName.setText(collectionSearchResultDo.getOwner().getUsername());
@@ -122,12 +124,9 @@ public class CollectionSearchWidget extends Composite {
 							if(count>=4){
 								break;
 							}
-							try
-							{
+							try{
 							pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo));
-							}
-							catch(Exception ex)
-							{
+							}catch(Exception ex){
 								ex.printStackTrace();
 							}
 							count++;
@@ -159,25 +158,18 @@ public class CollectionSearchWidget extends Composite {
 		toolTipPopupPanelCustomize.clear();
 		toolTipPopupPanelCustomize.hide();
 
-		final Map<String, String> params = StringUtil.splitQuery(Window.Location
-				.getHref());
-
-
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 			Boolean loginFlag = false;
 			if (AppClientFactory.isAnonymous()){
 				loginFlag = true;
-			}
-			else
-			{
+			}else{
 				loginFlag = false;
 			}
 			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
-
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
 					this.hide();	
-					//isCustomizePopup = false;
 				}
 			};
 			Window.scrollTo(0, 0);
@@ -195,12 +187,8 @@ public class CollectionSearchWidget extends Composite {
 			params.put("collectionId", collectionId);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			
-		
-
 	}
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelCustomize.clear();
@@ -214,7 +202,6 @@ public class CollectionSearchWidget extends Composite {
 	}
 	
 	public class OncustomizeCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanelCustomize.hide();
