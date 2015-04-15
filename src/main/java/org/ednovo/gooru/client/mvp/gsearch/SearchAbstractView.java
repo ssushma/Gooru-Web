@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -42,6 +43,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -61,7 +63,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel searchResultPanel;
+	@UiField HTMLPanel searchResultPanel,pnlBackToTop;
+	
+	@UiField Label lblLoadingText;
 
 	int pageNumber = 1;
 	
@@ -74,16 +78,32 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public SearchAbstractView(boolean resourceSearch) {
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFeildsIds();
+		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+					lblLoadingText.setVisible(true);
 					pageNumber++;
 					getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
 				}
 			}
 		});
+		pnlBackToTop.getElement().setId("back-top");
+		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 	}
+	/**
+	 * This inner class will handle the click event on the back to top
+	 * @author Gooru
+	 */
+	public class BackToTopClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			//Window.scrollTo(0, 0);
+			callAnimation();
+		}
+	}
+	
 	@Override
 	public void onClick(ClickEvent event) {
 		
@@ -116,8 +136,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				searchDo.getSearchHits();
 				searchResultPanel.add(renderSearchResult(searchResult));
 			}
+			lblLoadingText.setVisible(false);
 		}
 	}
-	
 	public abstract Widget renderSearchResult(T searchDo);
+	
+	/**
+	 * This native method is used to set animation when user clicks on the back to top button
+	 */
+	public static native void callAnimation() /*-{
+		$wnd.$('body,html').animate({scrollTop: 0}, 800);
+	}-*/;
+
 }
