@@ -33,7 +33,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
@@ -138,12 +137,7 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	@Override
 	protected void requestSearch(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
 		searchDo.setQuery("cells");
-		getSearchService().getCollectionSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
-			@Override
-			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
-				getView().setCollectionsData(result);
-			}
-		});
+		getSearchService().getCollectionSearchResults(searchDo, searchAsyncCallback);
 	}
 		
 	@Override
@@ -151,11 +145,6 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 		getSearchDo().setQuery("cells");
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
-		getSearchService().getCollectionSearchResults(getSearchDo(), new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
-			@Override
-			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
-				getView().setCollectionsData(result);
-			}
-		});
+		getSearchService().getCollectionSearchResults(getSearchDo(),getSearchAsyncCallback());
 	}
 }

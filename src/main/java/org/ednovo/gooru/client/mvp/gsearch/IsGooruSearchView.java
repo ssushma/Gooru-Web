@@ -28,7 +28,6 @@
 package org.ednovo.gooru.client.mvp.gsearch;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
@@ -39,6 +38,10 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 		IsViewWithHandlers<GooruSearchUiHandlers> {
 
-	void setCollectionsData(SearchDo<CollectionSearchResultDo> result);
+	/**
+	 * Set post search view
+	 * @param searchDo instance of {@link SearchDo}
+	 */
+	void postSearch(SearchDo<T> searchDo);
 	
 }
