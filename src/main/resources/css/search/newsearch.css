@@ -342,6 +342,7 @@
 	padding:2px 10px;
 	background:#ffffff;
 	border-radius:6px 6px;
+	margin-top: 163px;
 	
 }
 #gooruSearchMainContainer .remixButton{
@@ -350,7 +351,11 @@
 #gooruSearchMainContainer .ratings{
 	margin:6px 0;
 }
-
+#gooruSearchMainContainer .fixedPosition{
+	position: fixed;
+	width: 100%;
+	z-index: 9999;
+}
 #gooruSearchMainContainer .borderBox{
 	padding:20px 8px;
 	border:1px solid #dddddd;
@@ -497,6 +502,11 @@ Back to top button
 		margin:0 auto 20px;
 		text-align:center;
 	}
+	#gooruSearchMainContainer .fixedPosition{
+		position: relative;
+		width: 100%;
+		z-index: 9999;
+    }
 	
 	#gooruSearchMainContainer .collectionDesc{
 		text-align:center;
@@ -587,6 +597,11 @@ Back to top button
 	#gooruSearchMainContainer .collectionDesc{
 		width:auto !important;
 	}
+	#gooruSearchMainContainer .fixedPosition{
+		position: relative;
+		width: 100%;
+		z-index: 9999;
+    }
 	#gooruSearchMainContainer .collectionDesc{
 		text-align:center;
 	}
@@ -728,6 +743,11 @@ Back to top button
 	  vertical-align:top;
 	  margin:10px auto;
 	}
+	#gooruSearchMainContainer .fixedPosition{
+		position: relative;
+		width: 100%;
+		z-index: 9999;
+    }
 	#gooruSearchMainContainer .collectionDesc{
 		width:auto !important;
 	}

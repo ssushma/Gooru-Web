@@ -104,10 +104,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 	AddCenturyPresenter addCenturyPresenter = null;
 
-	private boolean setFilter = true;
-
-	private static final String USER_META_ACTIVE_FLAG = "0";
-
 	private boolean isCCSSAvailable = false;
 	private boolean isNGSSAvailable = false;
 	private boolean isTEKSAvailable = false;
