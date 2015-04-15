@@ -26,18 +26,17 @@ package org.ednovo.gooru.client.mvp.gsearch;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
-import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.search.SearchFilterVc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -47,6 +46,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -67,6 +67,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
 	@UiField HTMLPanel searchResultPanel;
+	
+	@UiField Label lblLoadingText;
 
 	int pageNumber = 1;
 	
@@ -79,10 +81,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public SearchAbstractView(boolean resourceSearch) {
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFeildsIds();
+		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+					lblLoadingText.setVisible(true);
 					pageNumber++;
 					getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
 				}
@@ -121,8 +125,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				searchDo.getSearchHits();
 				searchResultPanel.add(renderSearchResult(searchResult));
 			}
+			lblLoadingText.setVisible(false);
 		}
 	}
-	
 	public abstract Widget renderSearchResult(T searchDo);
 }

@@ -94,5 +94,4 @@ public class SearchMainPresenter extends BasePresenter<IsSearchMainView, SearchM
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, WrapPresenter.TYPE_VIEW, this);
 	}
-
 }
