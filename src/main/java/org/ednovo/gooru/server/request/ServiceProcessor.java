@@ -23,7 +23,10 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.server.request;
-import org.ednovo.gooru.shared.util.StringUtil;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.shared.util.ClientConstants;
 import org.restlet.Context;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Encoding;
@@ -40,7 +43,16 @@ import org.restlet.resource.ClientResource;
  */
 public class ServiceProcessor {
 		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2505869167911321748L;
 	static Context context = null;
+	
+	String apiKey = "";
+	
+	private static final String HEADER_GOORU_APIKEY = "Gooru-Apikey";
+	private static final String HEADER_GOORU_SESSION_TOKEN = "Gooru-Session-Token";
 	
 	protected static ClientResource setContext(String url, String username, String password){
 		
@@ -57,7 +69,7 @@ public class ServiceProcessor {
         	clientRes.setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
         }
         
-		return clientRes;
+        return clientRes;
 	}
 	
    /**
@@ -76,6 +88,15 @@ public class ServiceProcessor {
         	   
         	   setMediaType(type);
                setEncodings(Encoding.GZIP);
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               setCustomHttpHeader(map);
+               
                Representation decodedRep = new DecodeRepresentation(getClientResource().get()); 
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
@@ -99,6 +120,16 @@ public class ServiceProcessor {
         	   
                setMediaType(type);
                setEncodings(Encoding.GZIP);
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+               
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation(getRepresentation().getText());
                Representation decodedRep = new DecodeRepresentation(getClientResource().get());
@@ -142,6 +173,16 @@ public class ServiceProcessor {
         	   setClientResource(setContext(url, username, password));
                
                setEncodings(Encoding.GZIP);
+               
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+               
                Representation decodedRep = new DecodeRepresentation(getClientResource().post(form));
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
@@ -166,6 +207,16 @@ public class ServiceProcessor {
         	   setClientResource(setContext(url, username, password));
         	   
         	   setEncodings(Encoding.GZIP);
+        	   Map<String, String> map = new HashMap<String, String>();
+        	   if (url.contains("login?") || url.contains("anonymous")){
+        		   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+               
         	   Representation resp = null;
         	   resp = getClientResource().post(new JsonRepresentation(formData));
         	   Representation decodedRep = new DecodeRepresentation(resp);
@@ -194,6 +245,16 @@ public class ServiceProcessor {
         	   setClientResource(setContext(url, username, password));
         	   
                setEncodings(Encoding.GZIP);
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+               
                Representation decodedRep = new DecodeRepresentation(getClientResource().post(new JsonRepresentation(formData)));
                return new StringRepresentation(decodedRep.getText());
            }}.executeString();    
@@ -275,6 +336,16 @@ public class ServiceProcessor {
         	   setClientResource(setContext(url, username, password));
                setMediaType(type);
                setEncodings(Encoding.GZIP);
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+
                Representation decodedRep = new DecodeRepresentation(getClientResource().delete());
                
                // Get the representation as an JsonRepresentation
@@ -299,6 +370,16 @@ public class ServiceProcessor {
            public JsonResponseRepresentation run() throws Exception {
         	   setClientResource(setContext(url, username, password));
                setEncodings(Encoding.GZIP);
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+               
                Representation decodedRep = new DecodeRepresentation(getClientResource().put(form.getWebRepresentation()));
                // Get the representation as an JsonRepresentation
                // return new JsonRepresentation(getRepresentation().getText());
@@ -322,6 +403,16 @@ public class ServiceProcessor {
            @Override
            public JsonResponseRepresentation run() throws Exception {
         	   setClientResource(setContext(url, username, password));
+        	   Map<String, String> map = new HashMap<String, String>();
+        	   if (url.contains("login?") || url.contains("anonymous")){
+        		   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+               
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():""));
@@ -343,6 +434,16 @@ public class ServiceProcessor {
            public JsonResponseRepresentation run() throws Exception {
         	   setClientResource(setContext(url, username, password));
                setEncodings(Encoding.GZIP);
+               Map<String, String> map = new HashMap<String, String>();
+               if (url.contains("login?") || url.contains("anonymous")){
+            	   
+            	   map.put(HEADER_GOORU_APIKEY, getApiKey());
+               }else{
+            	   map.put(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+               }
+               
+               setCustomHttpHeader(map);
+               
                Representation decodedRep = null;
                Representation representation=getClientResource().put(formData);
                if(representation!=null){
