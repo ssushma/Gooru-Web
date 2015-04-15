@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
+import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -146,5 +147,18 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
 		getSearchService().getCollectionSearchResults(getSearchDo(),getSearchAsyncCallback());
+	}
+	
+	/**
+	 * @return search filters as Map value
+	 */
+	@Override
+	protected Map<String, String> getSearchFilters() {
+		Map<String, String> filters = super.getSearchFilters();
+		String author = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
+		if (author != null) {
+			filters.put(IsSearchView.OWNER_FLT, author);
+		}
+		return filters;
 	}
 }
