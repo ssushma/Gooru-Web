@@ -42,9 +42,17 @@ import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
+import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
+import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchEvent;
+import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
+import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
+import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
+import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -123,6 +131,17 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.addCenturyPresenter = addCenturyPresenter;
+		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
+		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
+		addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);
+		addRegisteredHandler(SearchEvent.TYPE, this);
+		addRegisteredHandler(StandardsSuggestionEvent.TYPE, this);
+		addRegisteredHandler(StandardsSuggestionInfoEvent.TYPE, this);
+		
+		if (getViewToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			addRegisteredHandler(SourceSuggestionEvent.TYPE, this);
+			addRegisteredHandler(AggregatorSuggestionEvent.TYPE, this);
+		}
 
 	}
 
@@ -227,11 +246,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
-			// if (getPlaceManager().getRequestParameter("callback") != null
-			// && !getPlaceManager().getRequestParameter("callback")
-			// .equalsIgnoreCase("signup")) {
 			initParam();
-			// }
 		}
 	}
 
@@ -325,9 +340,26 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchServiceAsync getSearchService() {
 		return searchService;
 	}
+	
+	@Override
+	public void onSearch(String query) {
+		getSearchDo().setPageNum(null);
+		getSearchDo().setPageSize(null);
+		getSearchDo().setQuery(query);
+		onSearchRequest(null);
+	}
+	
+	@Override
+	public void refreshSearch(String query) {
+		getSearchDo().setQuery(query);
+		getSearchDo().setPageNum(null);
+		getSearchDo().setPageSize(null);
+
+		onSearchRequest(null);
+	}
 
 	/**
-	 * Assign page number and page size for search
+	 * Assign query and filters for search
 	 */
 	private void initParam() {
 		getSearchDo().setSearchResults(null);
@@ -342,11 +374,17 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			AppClientFactory.printSevereLogger(ex.getMessage());
 		}
 		getSearchDo().setQuery(queryVal);
-		getSearchDo().setPageNum(
-				getPlaceManager().getRequestParameterAsInt(PAGE_NUM));
-		getSearchDo().setPageSize(
-				getPlaceManager().getRequestParameterAsInt(PAGE_SIZE));
 		getSearchDo().setFilters(getSearchFilters());
+	}
+	
+	/**
+	 * Set search view token ,assign search query, page number and page size
+	 * 
+	 * @param viewToken
+	 *            is a page view url
+	 */
+	public void onSearchRequest(String viewToken) {
+		
 	}
 
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
