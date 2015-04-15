@@ -27,6 +27,8 @@ package org.ednovo.gooru.client.mvp.gsearch;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.uc.CloseLabelCentury;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -48,6 +50,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -77,6 +80,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField Label lblLoadingText;
 	
 	@UiField InlineLabel searchResults;
+	
+	@UiField FlowPanel pnlAddFilters;
 	
 	LiPanel liPanel;
 
@@ -143,7 +148,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void onClick(ClickEvent event) {
 		
 	}
-
+	/**
+	 * new label is created for the search Filter which needs to be added
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc createFilterLabel(final String filterValue) {
+		CloseLabelCentury closeLabel = new CloseLabelCentury(filterValue) {
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel,"");
+	}
 	/**
      * To set ids for all fields.
      */
@@ -218,6 +237,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				liPanel.removeStyleName("active");
 			}else{
 				liPanel.setStyleName("active");
+				pnlAddFilters.add(createFilterLabel(subjectVal));
 			}
 		}
 	}

@@ -6,6 +6,11 @@
 	text-align: center;
 	font-size: 23px;
 }
+#gooruSearchMainContainer .searchFilters{
+	display: inline-block;
+	width: 76%;
+	margin-top: 20px;
+}
 #gooruSearchMainContainer .subNavigation{
 	border-bottom:1px solid #979797;
 }
@@ -493,6 +498,7 @@ Back to top button
 	margin-top: 12px;
 	clear: both;
 	display: inline-block;
+	vertical-align: top;
 }
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .collectionImg{
