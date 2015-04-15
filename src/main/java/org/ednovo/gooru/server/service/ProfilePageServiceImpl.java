@@ -111,7 +111,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	@Override
 	public List<CollectionItemDo> getFolders(String collectionId) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLECTION_ITEMS, collectionId, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLECTION_ITEMS, collectionId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.PAGE_SIZE, pageNum);
 		params.put(GooruConstants.PAGE_NO, pageSize);
@@ -146,12 +146,12 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	public void addGradeUserProfile(String grade, String userLevel) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String userMetaActiveFlag = "1";
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid());
 		ProfileDo profileDo = new ProfileDo();
 		profileDo.setGrade(grade);
 		String formData = ResourceFormFactory.generateStringDataForm(profileDo,PROFILE);
 		if(userLevel.equalsIgnoreCase("profilePage")) {
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid(), getLoggedInSessionToken());
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid());
 //			formData = "{\"profile\":{\"grade\":\""+grade+"\"}, \"userMetaActiveFlag\" : \"1\"}";
 			formData = getAddGradeUserProfileJsonString(grade,userMetaActiveFlag);
 			getLogger().info("-- json paylooad addGradeUserProfile -- "+formData);
@@ -205,12 +205,12 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		String userMetaActiveFlag = "0";
 		JsonRepresentation jsonRep = null;
 		if(userLevel.equalsIgnoreCase("profilePage")) {
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid(), getLoggedInSessionToken());
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid());
 //			formData = "{\"profile\":{\"grade\":\""+grade+"\"}, \"userMetaActiveFlag\" : \"0\"}";
 			formData = getAddGradeUserProfileJsonString(grade,userMetaActiveFlag);
 			getLogger().info("-- deleteGradeUserProfile in if -- "+formData);
 		} else if(userLevel.equalsIgnoreCase("settings")) {
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_USER_BIOGRAPHY, getLoggedInUserUid());
 //			formData = "{\"grade\":\""+grade+"\"}";
 			formData = getDelGradeUserProfileSettingsJsonStr(grade);
 			getLogger().info("-- deleteGradeUserProfile in else -- "+formData);
@@ -222,7 +222,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	@Override
 	public void addCourseUserProfile(Set<ProfileCodeDo> profileCodeDo, String userLevel) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid());
 		String userMetaActiveFlag = "1";
 		ProfileDo profileDo = new ProfileDo();
 		profileDo.setCourses(profileCodeDo);
@@ -234,7 +234,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 				formData = ResourceFormFactory.generateStringMultiDataForm(codeDoList.next(),COURSES);
 			}
 			
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid(), getLoggedInSessionToken());
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid());
 			formData = "{\"profile\":" +formData+ ", \"userMetaActiveFlag\" : \"1\"}";
 //			formData = getAddCourseUserProfileJsonString(formData,userMetaActiveFlag);
 			getLogger().info("---addCourseUserProfile payload --  "+formData);
@@ -270,9 +270,9 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		ProfileCodeDo profileCodeDo = new ProfileCodeDo();
 		profileCodeDo.setCode(codeDo);
 		String formData = ResourceFormFactory.generateStringMultiDataForm(profileCodeDo,COURSES);
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_USER_BIOGRAPHY, getLoggedInUserUid());
 		if(userLevel.equalsIgnoreCase("profilePage")) {
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid(), getLoggedInSessionToken());
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid());
 			formData = "{\"profile\":" +formData+ ", \"userMetaActiveFlag\" : \"0\"}";
 			
 //			formData = getAddCourseUserProfileJsonString(formData,userMetaActiveFlag);
@@ -288,7 +288,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken = getLoggedInSessionToken();
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.FETCH_CHILDS, GooruConstants.TRUE);
 		params.put(GooruConstants.ITEM_LIMIT, String.valueOf(limit)); 
@@ -320,7 +320,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		String partialUrl = null;
 		String sessionToken = getLoggedInSessionToken();
 
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.FETCH_CHILDS,GooruConstants.TRUE);
 		params.put(GooruConstants.ITEM_LIMIT, String.valueOf(limit));
@@ -341,7 +341,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	@Override
 	public ProfileLibraryDo getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.SKIP_COLL_ITEM, String.valueOf(skipCollectionItems)); 
 		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );

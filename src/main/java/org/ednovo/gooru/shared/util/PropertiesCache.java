@@ -1,5 +1,8 @@
+package org.ednovo.gooru.shared.util;
+
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,41 +25,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.server.service;
 
-import java.util.List;
-
-import org.ednovo.gooru.client.service.TaxonomyService;
-import org.ednovo.gooru.server.annotation.ServiceURL;
-import org.ednovo.gooru.server.deserializer.TaxonomyDeSerializer;
-import org.ednovo.gooru.server.request.JsonResponseRepresentation;
-import org.ednovo.gooru.server.request.ServiceProcessor;
-import org.ednovo.gooru.server.request.UrlToken;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.restlet.ext.json.JsonRepresentation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service("taxonomyService")
-@ServiceURL("/taxonomyService")
-public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyService {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6947235468580822129L;
-	
-	@Autowired
-	private TaxonomyDeSerializer taxonomyDeSerializer;
-	
-
-	@Override
-	public List<LibraryCodeDo> getCourse() {
-		JsonRepresentation jsonRep =null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_TAXONOMY_COURSE);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return taxonomyDeSerializer.getCourse(jsonRep);
-	}
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.Set;
+ 
+public class PropertiesCache
+{
+   private final Properties configProp = new Properties();
+    
+   private PropertiesCache()
+   {
+      //Private constructor to restrict new instances
+      InputStream in = this.getClass().getClassLoader().getResourceAsStream("config/config.properties");
+      try {
+          configProp.load(in);
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+   }
+ 
+   //Bill Pugh Solution for singleton pattern
+   private static class LazyHolder
+   {
+      private static final PropertiesCache INSTANCE = new PropertiesCache();
+   }
+ 
+   public static PropertiesCache getInstance()
+   {
+      return LazyHolder.INSTANCE;
+   }
+    
+   public String getProperty(String key){
+      return configProp.getProperty(key);
+   }
+    
+   public Set<String> getAllPropertyNames(){
+      return configProp.stringPropertyNames();
+   }
+    
+   public boolean containsKey(String key){
+      return configProp.containsKey(key);
+   }
+   
+   
+//   public static void main(String[] args)
+//   {
+//     //Get individual properties
+//      
+//     //All property names
+//   }
 }

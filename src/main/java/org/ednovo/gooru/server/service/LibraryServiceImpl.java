@@ -119,7 +119,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectName, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectName);
 		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
 //		url+=getLibraryName(libraryName);
 		getLogger().info("Get Courses -- "+url);
@@ -134,7 +134,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<LessonDo> getLessonsOnPagination(String subjectName, String topicId, int offset, int limit, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPIC_OFFSET, subjectName, topicId, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPIC_OFFSET, subjectName, topicId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, String.valueOf(limit)); 
@@ -153,7 +153,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<LibraryUserDo> getLibraryFeaturedUsers(String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_FEATURED_USERS, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_FEATURED_USERS);
 		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
 		getLogger().info("-- getLibraryFeaturedUsers -- "+url);
 //		url+=getLibraryName(libraryName);
@@ -168,7 +168,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public HashMap<String, SubjectDo> getSubjects(String subjectId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectId);
 		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
 		getLogger().info("--- getSubjects -- "+url);
 //		url+=getLibraryName(libraryName);
@@ -180,7 +180,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public HashMap<String, StandardsDo> getSubjectsForStandards(String subjectId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectId);
 		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
 		getLogger().info("-- getSubjectsForStandards -- "+url);
 //		url+=getLibraryName(libraryName);
@@ -196,7 +196,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ConceptDo getConcept(String gooruOid, boolean skipCollectionItems) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, gooruOid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.SKIP_COLL_ITEM, String.valueOf(skipCollectionItems)); 
 		params.put(GooruConstants.INCLUDE_META_INFO,GooruConstants.TRUE );
@@ -216,7 +216,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ConceptDo getConceptForStandards(String gooruOid, String roteNodeId, boolean skipCollectionItems) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTIONForStandards, gooruOid, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTIONForStandards, gooruOid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.ROOT_NODE_ID, roteNodeId);
 		params.put(GooruConstants.SKIP_COLL_ITEM, String.valueOf(skipCollectionItems));
@@ -235,7 +235,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<TopicDo> getTopicsOnPagination(String subjectId, String unitId, String libraryName, int offset, String standardsId) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNIT_OFFSET, subjectId, unitId, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNIT_OFFSET, subjectId, unitId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, String.valueOf(TOTAL_LIMIT)); 
@@ -257,7 +257,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<ConceptDo> getLibraryCollections(String courseType, String lessonId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COLLECTIONS, courseType, lessonId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COLLECTIONS, courseType, lessonId);
 		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
 		getLogger().info("--- getLibraryCollections -- "+url);
 //		url+=getLibraryName(libraryName);
@@ -688,7 +688,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<ConceptDo> getPopularCollectionsData(String courseId) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		JsonResponseRepresentation jsonResponseRep = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_POPULAR_LIBRARY, courseId, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_POPULAR_LIBRARY, courseId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.LIBRARY_NAME, GooruConstants.POPULAR_LOWER_CASE);
 		params.put(GooruConstants.PAGE_NUM, "1");
@@ -716,7 +716,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		String sessionToken = getLoggedInSessionToken();
 		
 		
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.FETCH_CHILDS, GooruConstants.TRUE);
 		params.put(GooruConstants.ITEM_LIMIT, String.valueOf(limit));
@@ -750,7 +750,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRep = null;
 		String partialUrl = null;
 		String sessionToken = getLoggedInSessionToken();
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, String.valueOf(limit));
@@ -777,7 +777,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		String sessionToken = getLoggedInSessionToken();
 		
 		
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.FETCH_CHILDS,GooruConstants.TRUE);
 		params.put(GooruConstants.ITEM_LIMIT, String.valueOf(limit));
@@ -959,7 +959,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<LibraryUserDo> getPartners() throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_PARTNERS, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_PARTNERS);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeCollaborators(jsonRepresentation);
@@ -972,7 +972,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		String partialUrl = null;
 		String sessionToken = getLoggedInSessionToken();
 		
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.FETCH_CHILDS, GooruConstants.TRUE);
 		params.put(GooruConstants.ITEM_LIMIT, String.valueOf(limit));
@@ -999,7 +999,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		String partialUrl = null;
 		String sessionToken = getLoggedInSessionToken();
 		
-		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken);
+		partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.FETCH_CHILDS,GooruConstants.TRUE);
 		params.put(GooruConstants.ITEM_LIMIT, String.valueOf(limit));
@@ -1024,7 +1024,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			String partialUrl = null;
 			String sessionToken = getLoggedInSessionToken();
 			
-			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST_PUBLIC, parentId, sessionToken);
+			partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST_PUBLIC, parentId);
 			Map<String, String> params = new LinkedHashMap<String, String>();
 			params.put(GooruConstants.OFFSET, offset);
 			params.put(GooruConstants.LIMIT, "20");
@@ -1041,7 +1041,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<StandardCourseDo> getStandardLibraryMenuList(String subjectCode, String libraryName) throws GwtException,ServerDownException {
 		ArrayList<StandardCourseDo> standardCourseList=new ArrayList<StandardCourseDo>();
 		JsonRepresentation jsonRep = null;
-		String url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STANDARD_LIBRARY_MENUS, subjectCode,getLoggedInSessionToken());
+		String url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STANDARD_LIBRARY_MENUS, subjectCode);
 		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
 //		url=url+getLibraryName(libraryName);
 		getLogger().info("getStandardLibraryMenuList---:::"+url);
@@ -1082,7 +1082,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public HashMap<String, SubjectDo> getLibrarySubjects(String subjectName, String courseId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_SUBJECTS_OPTIMIZED, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_SUBJECTS_OPTIMIZED);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.LIBRARY_NAME, libraryName);
 		getLogger().info("-- getLibrarySubjects -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -1137,7 +1137,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<CourseDo> getLibraryCourses(String subjectName, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES_OPTIMIZED, subjectName, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES_OPTIMIZED, subjectName);
 		String url = AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.LIBRARY_NAME, libraryName);
 		getLogger().info("-- community lib - getLibraryCourses - "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -1193,7 +1193,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<UnitDo> getLibraryUnits(String subjectName, String courseId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId);
 		url = AddQueryParameter.constructQueryParams(url, GooruConstants.LIBRARY_NAME, getLibraryName(libraryName));
 //		url=url+getLibraryName(libraryName);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -1216,7 +1216,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<TopicDo> getLibraryTopics(String subjectName, String unitId, String libraryName, int offset, int limit) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPICS_OPTIMIZED, subjectName, unitId, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPICS_OPTIMIZED, subjectName, unitId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, TOTAL_LIMIT);
@@ -1233,7 +1233,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	@Override
 	public ArrayList<LessonDo> getLibraryLessons(String subjectName, String topicId, String libraryName, int offset, int limit) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
-		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_LESSONS_OPTIMIZED, subjectName, topicId, getLoggedInSessionToken());
+		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_LESSONS_OPTIMIZED, subjectName, topicId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.OFFSET, String.valueOf(offset));
 		params.put(GooruConstants.LIMIT, String.valueOf(limit)); 
