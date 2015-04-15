@@ -66,7 +66,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel searchResultPanel;
+	@UiField HTMLPanel searchResultPanel,pnlBackToTop;
 	
 	@UiField Label lblLoadingText;
 
@@ -92,7 +92,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		});
+		pnlBackToTop.getElement().setId("back-top");
+		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 	}
+	/**
+	 * This inner class will handle the click event on the back to top
+	 * @author Gooru
+	 */
+	public class BackToTopClickHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			//Window.scrollTo(0, 0);
+			callAnimation();
+		}
+	}
+	
 	@Override
 	public void onClick(ClickEvent event) {
 		
@@ -129,4 +143,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	public abstract Widget renderSearchResult(T searchDo);
+	
+	/**
+	 * This native method is used to set animation when user clicks on the back to top button
+	 */
+	public static native void callAnimation() /*-{
+		$wnd.$('body,html').animate({scrollTop: 0}, 800);
+	}-*/;
+
 }

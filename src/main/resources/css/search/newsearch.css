@@ -2,7 +2,10 @@
 #gooruSearchMainContainer .subNavigation, #gooruSearchMainContainer .collectionDetails{
 	background:#ffffff;
 }
-
+#gooruSearchMainContainer .loadingText{
+	text-align: center;
+	font-size: 23px;
+}
 #gooruSearchMainContainer .subNavigation{
 	border-bottom:1px solid #979797;
 }
@@ -381,6 +384,52 @@
 #gooruSearchMainContainer .collectionDescription{
 	height: 20px;
 }
+
+/*
+Back to top button 
+*/
+#gooruSearchMainContainer  #back-top {
+	position: fixed;
+	bottom: 100px;
+	margin-left: 950px;
+}
+#gooruSearchMainContainer  #back-top a {
+	width: 85px;
+	display: block;
+	text-align: center;
+	font: 11px/100% Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #bbb;
+	/* background color transition */
+	-webkit-transition: 1s;
+	-moz-transition: 1s;
+	transition: 1s;
+	
+}
+#gooruSearchMainContainer  #back-top a:hover {
+	color: #000;
+}
+/* arrow icon (span tag) */
+#gooruSearchMainContainer  #back-top span {
+	width: 60px;
+	height: 60px;
+	display: block;
+	margin-bottom: 7px;
+	background: #ffffff url(../images/up-arrow.png) no-repeat center center;
+	/* rounded corners */
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 15px;
+	/* background color transition */
+	-webkit-transition: 1s;
+	-moz-transition: 1s;
+	transition: 1s;
+}
+#gooruSearchMainContainer  #back-top a:hover span {
+	background-color: #ffffff;
+}
+
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .collectionImg{
 		width:160px;
