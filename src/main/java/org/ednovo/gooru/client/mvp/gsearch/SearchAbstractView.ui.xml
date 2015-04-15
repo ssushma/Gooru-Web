@@ -62,7 +62,6 @@
 										<a href="#">Separated link</a>
 									</li>
 								</ul>
-							</g:HTMLPanel>
 							<g:HTMLPanel styleName="btn-group">
 								<g:Button styleName="btn btn-primary">Course</g:Button>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" ui:field="subjectDropDown">
@@ -78,6 +77,7 @@
 									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
+						</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 					</g:HTMLPanel>
