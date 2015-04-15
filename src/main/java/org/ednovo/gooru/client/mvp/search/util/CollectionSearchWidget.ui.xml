@@ -30,7 +30,7 @@
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="panel-body">
 					<g:HTMLPanel styleName="no-gutter">
-						<g:HTMLPanel styleName="col-md-5 col-sm-5 collectionImg">
+						<g:HTMLPanel styleName="col-md-4 col-sm-4 collectionImg">
 							<a>
 								<uc:CollectionImageUc ui:field="imgCollection" />
 							</a>
@@ -56,7 +56,7 @@
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="panel-footer no-gutter">
 					<g:HTMLPanel styleName="col-md-12 col-sm-12 remixButton">
-						<g:Button styleName="primary">Remix</g:Button>
+						<g:Button styleName="primary" ui:field="remixBtn">Remix</g:Button>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
