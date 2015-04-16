@@ -476,7 +476,7 @@ public class CollectionFormView extends
 				if(isAddBtnClicked){
 					isAddBtnClicked=false;
 					if(isAssessmentEditClicked){
-						//Code when edit assessment selected
+						//Code when external assessment selected
 						String assessmentExistingTitle=txtExistingAssessmentTitle.getText();
 						assessmentURL=txtExistingAssessmentURL.getText();
 						if(StringUtil.isEmpty(assessmentExistingTitle)){
