@@ -88,6 +88,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	LiPanel liPanel;
 	
+	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
+	
+	private static final String SUBJECTS_SEPARATOR = "~~";
+	
 	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author,reviewTag;
 
 	int pageNumber = 1,resultCountVal=0;
@@ -233,7 +237,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				liPanel.setStyleName("active");
 				pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
 			}
-			getUiHandlers().refreshSearch(AppClientFactory.getPlaceManager().getRequestParameter("query",null));
+			getUiHandlers().refreshSearch(getSearchText());
 		}
 	}
 	
@@ -268,7 +272,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private void showSubjectsFilter() {
 		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
 		if(subjects!=null){
-			String[] split = subjects.split("~~");
+			String[] split = subjects.split(SUBJECTS_SEPARATOR);
 			for(int i=0; i<split.length; i++){
 				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
 			}
@@ -325,6 +329,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		};
 	}
+	/**
+	 * This method used for deselect/remove the selected filter.
+	 * @param filterName {@link String}
+	 * @param panelName  {@link String}
+	 */
 	public void removeSelectedSubjects(String filterName,String panelName){
 		Iterator<Widget> widgets= ulSubjectPanel.iterator();
 		while(widgets.hasNext()){
@@ -332,11 +341,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(widget instanceof LiPanel){
 				if(filterName.equalsIgnoreCase(widget.getElement().getInnerText())){
 					((LiPanel) widget).removeStyleName("active");
-					getUiHandlers().refreshSearch(AppClientFactory.getPlaceManager().getRequestParameter("query",null));
+					getUiHandlers().refreshSearch(getSearchText());
 				}
 			}
 		}
 	}
+	/**
+	 * To get the selected subjects values with separator
+	 * @return selectedSubjects {@link String}
+	 */
 	public String getSelectedSubjects(){
 		String selectedSubjects="";
 		Iterator<Widget> widgets= ulSubjectPanel.iterator();
@@ -345,7 +358,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(widget instanceof LiPanel){
 				if(widget.getStyleName().equalsIgnoreCase("active")){
 					if (!selectedSubjects.isEmpty()) {
-						selectedSubjects += "~~";
+						selectedSubjects += SUBJECTS_SEPARATOR;
 					}
 					selectedSubjects += widget.getElement().getInnerText();
 				}
@@ -374,5 +387,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void resetData(){
 		searchResultPanel.clear();
 		resultCountVal=0;
+	}
+	/**
+	 * To get the search query.
+	 * @return {@link String}
+	 */
+	public String getSearchText() {
+		return AppClientFactory.getPlaceManager().getRequestParameter("query");
 	}
 }
