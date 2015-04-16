@@ -137,13 +137,13 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 
 	@Override
 	protected void requestSearch(SearchDo<CollectionSearchResultDo> searchDo,SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
-		searchDo.setQuery("cells");
+		//searchDo.setQuery("cells");
 		getSearchService().getCollectionSearchResults(searchDo, searchAsyncCallback);
 	}
 		
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
-		getSearchDo().setQuery("cells");
+		//getSearchDo().setQuery("cells");
 		getSearchDo().setPageNum(pageNumber);
 		getSearchDo().setPageSize(pageSize);
 		getSearchService().getCollectionSearchResults(getSearchDo(),getSearchAsyncCallback());

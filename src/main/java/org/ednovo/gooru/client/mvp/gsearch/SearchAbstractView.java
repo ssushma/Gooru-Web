@@ -26,8 +26,11 @@ package org.ednovo.gooru.client.mvp.gsearch;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
 import org.ednovo.gooru.client.uc.CloseLabelCentury;
+import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -84,6 +87,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField FlowPanel pnlAddFilters;
 	
 	LiPanel liPanel;
+	
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author,reviewTag;
 
 	int pageNumber = 1,resultCountVal=0;
 	
@@ -117,6 +122,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.getElement().setId("back-top");
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
+		showGradesFilter();
+		showCategoryFilter();
+		showSubjectsFilter();
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -147,21 +155,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void onClick(ClickEvent event) {
 		
-	}
-	/**
-	 * new label is created for the search Filter which needs to be added
-	 * @param standardCode
-	 *            update standard code
-	 * @return instance of {@link DownToolTipWidgetUc}
-	 */
-	public DownToolTipWidgetUc createFilterLabel(final String filterValue) {
-		CloseLabelCentury closeLabel = new CloseLabelCentury(filterValue) {
-			@Override
-			public void onCloseLabelClick(ClickEvent event) {
-				this.getParent().removeFromParent();
-			}
-		};
-		return new DownToolTipWidgetUc(closeLabel,"");
 	}
 	/**
      * To set ids for all fields.
@@ -237,12 +230,101 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				liPanel.removeStyleName("active");
 			}else{
 				liPanel.setStyleName("active");
-				pnlAddFilters.add(createFilterLabel(subjectVal));
+				pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
 			}
 		}
 	}
 	
 	public abstract Widget renderSearchResult(T searchDo);
+	
+	
+	/**
+	 * Pre-Selected grades showing in search page
+	 */
+	private void showGradesFilter() {
+	    grades = AppClientFactory.getPlaceManager().getRequestParameter("flt.grade");
+		if(grades!=null){
+			pnlAddFilters.setVisible(true);
+			String[] gradesSplit = grades.split(",");
+			for(int i=0; i<gradesSplit.length; i++){
+				if(gradesSplit[i].equals("12gte")){
+					pnlAddFilters.add(createTagsLabel(i18n.GL3084(),"gradePanel"));
+				}
+				else if(gradesSplit[i].equalsIgnoreCase("pre-k")){
+					pnlAddFilters.add(createTagsLabel(i18n.GL3070(),"gradePanel"));
+				}
+				else{
+					pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
+				}
+				
+			}
+				
+		}
+	}
+	
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showSubjectsFilter() {
+		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+		if(subjects!=null){
+			String[] split = subjects.split("~~");
+			for(int i=0; i<split.length; i++){
+				pnlAddFilters.add(createTagsLabel(split[i],"subjectPanel"));
+			}
+				
+		}
+	}
+	/**
+	 * Pre-Selected Subjects showing in search page
+	 */
+	private void showCategoryFilter() {
+		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
+		
+		if(categories!=null){
+			pnlAddFilters.setVisible(true);
+			String[] split = categories.split(",");
+			for(int i=0; i<split.length; i++){
+				if(!split[i].equalsIgnoreCase("all"))
+				{
+					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
+					pnlAddFilters.add(createTagsLabel(filterName,"categoryPanel"));
+				}
+			} 
+				
+		}
+	}
+	
+	/**
+	 * Show user searched filter 
+	 * 
+	 * @param filterValue
+	 *            search filter of the label widget which is user searched filter value
+	 * @return the label of user search filter.
+	 */
+	protected CloseLabelSetting createTagsLabel(final String filterValue, final String panelName) {
+		return new CloseLabelSetting(filterValue) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				String newFilterVal = filterValue;
+				
+				if (panelName != null && panelName.equalsIgnoreCase("categoryPanel") && !newFilterVal.equalsIgnoreCase("Audio")&& !newFilterVal.equalsIgnoreCase("Webpage")){
+					newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
+				}
+				
+				if(filterValue.contains("Grade"))
+				{
+					newFilterVal = filterValue.replaceAll("Grade ", "");
+				}
+				else if(filterValue.contains("Higher Ed"))
+				{
+					newFilterVal = filterValue.replaceAll("Higher Ed", "12gte");
+				}
+				AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
+			}
+		};
+	}
 	
 	/**
 	 * This native method is used to set animation when user clicks on the back to top button

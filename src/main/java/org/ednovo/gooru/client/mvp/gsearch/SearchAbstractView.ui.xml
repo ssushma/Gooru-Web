@@ -63,7 +63,7 @@
 									</li>
 								</ul>
 							<g:HTMLPanel styleName="btn-group">
-								<g:Button styleName="btn btn-primary">Course</g:Button>
+								<g:Button styleName="btn btn-primary">Subjects</g:Button>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" ui:field="subjectDropDown">
 									<g:InlineLabel styleName="caret"></g:InlineLabel>
 									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>

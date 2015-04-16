@@ -27,8 +27,10 @@
  */
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
+import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -93,5 +95,13 @@ public class SearchMainPresenter extends BasePresenter<IsSearchMainView, SearchM
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, WrapPresenter.TYPE_VIEW, this);
+	}
+	
+	@Override
+	public void getSearchKeyword() {
+		String searchText=getView().getSearchText();
+		if (searchText != null && searchText.length() > 0) {
+			AppClientFactory.fireEvent(new RefreshSearchEvent(searchText));
+		}
 	}
 }

@@ -39,5 +39,10 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
  * @Reviewer: 
  */
 public interface IsSearchMainView extends IsViewWithHandlers<SearchMainUiHandlers>{
+	
+	/**
+	 * @return search query text
+	 */
+	String getSearchText();
 
 }
