@@ -137,9 +137,6 @@ public class CollectionImageUc extends Composite implements ClickHandler {
 		}
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionGooruOid.getValue());
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_COLLECTION)){
-			Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
-		}
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);

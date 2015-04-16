@@ -3,14 +3,15 @@
  */
 package org.ednovo.gooru.client.mvp.search.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.BrowserAgent;
-import org.ednovo.gooru.client.uc.CollectionImageUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -30,6 +31,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -67,6 +69,8 @@ public class CollectionSearchWidget extends Composite {
 	@UiField FlowPanel standardsDataPanel;
 	@UiField Button remixBtn;
 	
+	private static String DEFULT_IMAGE = "images/default-collection-image.png";
+	
 	public CollectionSearchWidget(final CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		//set the data
@@ -95,13 +99,23 @@ public class CollectionSearchWidget extends Composite {
 		});
 		String collectionDesc=collectionSearchResultDo.getDescription();
 		if(!StringUtil.isEmpty(collectionDesc)){
-			if(collectionDesc.length()>=150){
-				collectionDesc=collectionDesc.substring(0,150)+"...";
+			if(collectionDesc.length()>=130){
+				collectionDesc=collectionDesc.substring(0,130)+"...";
 			}
 			collectionDescription.getElement().setInnerText(collectionDesc);
 		}
 		authorName.setText(collectionSearchResultDo.getOwner().getUsername());
-		imgCollection.setUrl(collectionSearchResultDo.getUrl());
+		if(!StringUtil.isEmpty(collectionSearchResultDo.getUrl())){
+			imgCollection.setUrl(StringUtil.formThumbnailName(collectionSearchResultDo.getUrl(), "-160x120."));
+		}
+		imgCollection.addErrorHandler(new ErrorHandler() {
+
+			@Override
+			public void onError(ErrorEvent event) {
+				imgCollection.setUrl(DEFULT_IMAGE);
+			}
+		});
+		imgCollection.addClickHandler(new OnCollectionImageClick(collectionSearchResultDo.getGooruOid()));
 		imgCollection.getElement().getStyle().setZIndex(9999);
 		//imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
 		lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
@@ -204,6 +218,24 @@ public class CollectionSearchWidget extends Composite {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanelCustomize.hide();
+		}
+	}
+	/**
+	 * This inner class will handle the click event on the collection image click
+	 * @author Gooru
+	 */
+	public class OnCollectionImageClick implements ClickHandler{
+		String gooruOid;
+		OnCollectionImageClick(String gooruOid){
+			this.gooruOid=gooruOid;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", gooruOid);
+			Cookies.setCookie("getScrollTop", Window.getScrollTop()+"");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 		}
 	}
 }
