@@ -24,14 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.search.event.SearchFilterEvent;
-import org.ednovo.gooru.client.uc.CloseLabelCentury;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
-import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -227,11 +227,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		@Override
 		public void onClick(ClickEvent event) {
 			if(liPanel.getStyleName().equals("active")){
+				removeSelectedSubjects(subjectVal,"subjectsPanel");
 				liPanel.removeStyleName("active");
 			}else{
 				liPanel.setStyleName("active");
 				pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
 			}
+			getUiHandlers().refreshSearch(AppClientFactory.getPlaceManager().getRequestParameter("query",null));
 		}
 	}
 	
@@ -256,9 +258,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				else{
 					pnlAddFilters.add(createTagsLabel(i18n.GL0325()+" "+gradesSplit[i],"gradePanel"));
 				}
-				
 			}
-				
 		}
 	}
 	
@@ -270,9 +270,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if(subjects!=null){
 			String[] split = subjects.split("~~");
 			for(int i=0; i<split.length; i++){
-				pnlAddFilters.add(createTagsLabel(split[i],"subjectPanel"));
+				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
 			}
-				
 		}
 	}
 	/**
@@ -280,7 +279,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	private void showCategoryFilter() {
 		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
-		
 		if(categories!=null){
 			pnlAddFilters.setVisible(true);
 			String[] split = categories.split(",");
@@ -291,7 +289,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					pnlAddFilters.add(createTagsLabel(filterName,"categoryPanel"));
 				}
 			} 
-				
 		}
 	}
 	
@@ -321,9 +318,49 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				{
 					newFilterVal = filterValue.replaceAll("Higher Ed", "12gte");
 				}
-				AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
+				//AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
+				if(panelName.equals("subjectsPanel")){
+					removeSelectedSubjects(newFilterVal,panelName);
+				}
 			}
 		};
+	}
+	public void removeSelectedSubjects(String filterName,String panelName){
+		Iterator<Widget> widgets= ulSubjectPanel.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				if(filterName.equalsIgnoreCase(widget.getElement().getInnerText())){
+					((LiPanel) widget).removeStyleName("active");
+					getUiHandlers().refreshSearch(AppClientFactory.getPlaceManager().getRequestParameter("query",null));
+				}
+			}
+		}
+	}
+	public String getSelectedSubjects(){
+		String selectedSubjects="";
+		Iterator<Widget> widgets= ulSubjectPanel.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				if(widget.getStyleName().equalsIgnoreCase("active")){
+					if (!selectedSubjects.isEmpty()) {
+						selectedSubjects += "~~";
+					}
+					selectedSubjects += widget.getElement().getInnerText();
+				}
+			}
+		}
+		return selectedSubjects;
+	}
+	
+	@Override
+	public Map<String, String> getSearchFilters() {
+		 Map<String, String> filters = new HashMap<String, String>();
+		 if(!getSelectedSubjects().isEmpty()){
+			 filters.put(IsGooruSearchView.SUBJECT_FLT, getSelectedSubjects());
+		 }
+		 return filters; 
 	}
 	
 	/**
@@ -333,4 +370,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		$wnd.$('body,html').animate({scrollTop: 0}, 800);
 	}-*/;
 
+	@Override
+	public void resetData(){
+		searchResultPanel.clear();
+		resultCountVal=0;
+	}
 }
