@@ -45,14 +45,12 @@ import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
-import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
-import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
@@ -131,10 +129,10 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		this.addCenturyPresenter = addCenturyPresenter;
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
-		addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);
+		//addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);
 		addRegisteredHandler(SearchEvent.TYPE, this);
 		addRegisteredHandler(StandardsSuggestionEvent.TYPE, this);
-		addRegisteredHandler(StandardsSuggestionInfoEvent.TYPE, this);
+		//addRegisteredHandler(StandardsSuggestionInfoEvent.TYPE, this);
 		
 		if (getViewToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
 			addRegisteredHandler(SourceSuggestionEvent.TYPE, this);
@@ -341,10 +339,18 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	
 	@Override
 	public void onSearch(String query) {
-		getSearchDo().setPageNum(null);
-		getSearchDo().setPageSize(null);
 		getSearchDo().setQuery(query);
 		onSearchRequest(null);
+	}
+	
+	@Override
+	public void switchSearch(String viewToken, String searchQuery) {
+		getSearchDo().setNotFriendly(null);
+		getSearchDo().setQuery(searchQuery);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+		getSearchDo().setFilters(params);
+		onSearchRequest(viewToken);
 	}
 	
 	@Override
@@ -383,6 +389,27 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	 */
 	public void onSearchRequest(String viewToken) {
 		
+	}
+	
+	@Override
+	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
+		if (isCurrentView()) {
+			getStandardSuggestionAsyncCallback().execute(searchDo);
+		}
+	}
+
+	@Override
+	public void requestSourceSuggestion(SearchDo<String> searchDo) {
+		if (isCurrentView()) {
+			getSourceSuggestionAsyncCallback().execute(searchDo);
+		}
+	}
+
+	@Override
+	public void requestAggregatorSuggestion(SearchDo<String> searchDo) {
+		if (isCurrentView()) {
+			getAggregatorSuggestionAsyncCallback().execute(searchDo);
+		}
 	}
 
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
