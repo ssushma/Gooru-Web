@@ -134,7 +134,7 @@ public enum UrlToken {
 
 	V2_GET_RESOURCE_INFO("/v2/resource/suggest/meta/info?"),
 
-	CHECK_RESOURCE_EXISTS("/resource/search.json?url={0}&checkShortenedUrl=true&"),
+	CHECK_RESOURCE_EXISTS("/v2/resource/url/exist?url={0}"),
 
 	CREATE_FOLDER("/folder"),
 

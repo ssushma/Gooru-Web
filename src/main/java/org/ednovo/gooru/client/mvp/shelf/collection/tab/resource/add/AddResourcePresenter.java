@@ -267,8 +267,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(ExistsResourceDo result) {
 				
-				if (result.getNativeurl()!=null)
-					getView().setExistingResourceData(result, getCollectionDo());
+				if (result.getSharing()!=null)
+					if("public".equals(result.getSharing())){
+						getView().setExistingResourceData(result, getCollectionDo());
+					}
+					
 			}
 		});
 		setAddQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
