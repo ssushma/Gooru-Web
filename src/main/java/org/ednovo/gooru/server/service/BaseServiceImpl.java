@@ -163,7 +163,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		if (headerApiKey == null){
 			headerApiKey = getPropertyByKey(API_KEY);
 		}
-		getLogger().info("getApiKey : "+headerApiKey);
 		return headerApiKey;
 	}
 
@@ -577,9 +576,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		JsonRepresentation jsonRep = null;
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		logger.info("v2GuestSignIn : "+url);
-		logger.info("jsonResponseRep.getStatusCode() : "+jsonResponseRep.getStatusCode());
-
 		if (jsonResponseRep.getStatusCode() != 200){
 			logger.info("jsonResponseRep.getResponseDo().getErrorMessage() : "+jsonResponseRep.getResponseDo().getErrorMessage());
 		}
