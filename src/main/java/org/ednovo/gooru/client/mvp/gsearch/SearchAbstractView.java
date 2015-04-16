@@ -193,14 +193,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	/**
-	 * This method will set the search Filters
+	 * This method will set the search Filters 
 	 */
 	@Override
 	public void setSearchFilter(SearchFilterDo searchFilterDo) {
 		if(searchFilterDo.getSubjects()!=null && searchFilterDo.getSubjects().size()>=0){
 			renderSubjects(searchFilterDo.getSubjects());
 		}
-		//getUiHandlers().initiateSearch();
 	}
 	/**
 	 * This method is used to render subjects and it will handle the click events on subjects.
@@ -231,13 +230,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		@Override
 		public void onClick(ClickEvent event) {
 			if(liPanel.getStyleName().equals("active")){
-				removeSelectedSubjects(subjectVal,"subjectsPanel");
 				liPanel.removeStyleName("active");
+				removeFilter(subjectVal);
 			}else{
 				liPanel.setStyleName("active");
 				pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
 			}
-			getUiHandlers().refreshSearch(getSearchText());
+			callSearch();
 		}
 	}
 	
@@ -330,9 +329,24 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		};
 	}
 	/**
-	 * This method used for deselect/remove the selected filter.
+	 * This method will remove the filters from the pnlAddFilters
 	 * @param filterName {@link String}
-	 * @param panelName  {@link String}
+	 */
+	public void removeFilter(String filterName){
+		Iterator<Widget> widgets= pnlAddFilters.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof CloseLabelSetting){
+				if(filterName.equalsIgnoreCase(((CloseLabelSetting) widget).getSourceText())){
+					widget.removeFromParent();
+				}
+			}
+		}
+	}
+	/**
+	 * This method is used to remove selected values for Subjects
+	 * @param filterName
+	 * @param panelName
 	 */
 	public void removeSelectedSubjects(String filterName,String panelName){
 		Iterator<Widget> widgets= ulSubjectPanel.iterator();
@@ -341,7 +355,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(widget instanceof LiPanel){
 				if(filterName.equalsIgnoreCase(widget.getElement().getInnerText())){
 					((LiPanel) widget).removeStyleName("active");
-					getUiHandlers().refreshSearch(getSearchText());
+					callSearch();
 				}
 			}
 		}
@@ -387,6 +401,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void resetData(){
 		searchResultPanel.clear();
 		resultCountVal=0;
+		lblLoadingText.setVisible(true);
+	}
+	/**
+	 * This method will call the search function on filters selection chagnes
+	 */
+	public void callSearch(){
+		getUiHandlers().refreshSearch(getSearchText());
 	}
 	/**
 	 * To get the search query.
