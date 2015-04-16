@@ -29,20 +29,18 @@ package org.ednovo.gooru.client.mvp.gsearch;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
-import org.ednovo.gooru.client.mvp.search.event.DisableSpellSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionHandler;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionHandler;
-import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoHandler;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
 
 /**
  * @author Search Team
  * 
  */
-public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler,SwitchSearchHandler,SearchHandler,StandardsSuggestionInfoHandler,
-    DisableSpellSearchHandler,AggregatorSuggestionEventHandler{
+public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler,SwitchSearchHandler,SearchHandler,
+    AggregatorSuggestionEventHandler{
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber,int pageSize);
 
 }
