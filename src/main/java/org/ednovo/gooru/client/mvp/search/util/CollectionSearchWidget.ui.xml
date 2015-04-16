@@ -5,7 +5,7 @@
 			<g:HTMLPanel styleName="panel panel-default">
 				<g:HTMLPanel styleName="panel-heading">
 					<div class="no-gutter">
-						<g:HTMLPanel styleName="col-md-7 col-sm-7 col-xs-5 ratings">
+						<g:HTMLPanel styleName="col-md-7 col-sm-7 col-xs-6 ratings">
 							<g:HTMLPanel styleName="circleBlocks">
 								<ul>
 									<li></li>
@@ -15,27 +15,26 @@
 									<li></li>
 								</ul>
 							</g:HTMLPanel>
-	
-							<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-5 col-sm-5 col-xs-7 viewContainer">
+						<g:HTMLPanel styleName="col-md-5 col-sm-5 col-xs-6 viewContainer">
 							<span>
 								<img src="images/rev-arrows.png"/> 31
 							</span>
 							<span>
 								<img src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
 							</span>
-					</g:HTMLPanel>
+						</g:HTMLPanel>
+						<div class="clearfix"></div>
 					</div>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="panel-body">
 					<g:HTMLPanel styleName="no-gutter">
-						<g:HTMLPanel styleName="col-md-4 col-sm-4 collectionImg">
+						<g:HTMLPanel styleName="col-md-6 col-sm-6 collectionImg">
 							<a>
-								<uc:CollectionImageUc ui:field="imgCollection" />
+								<g:Image ui:field="imgCollection"/>
 							</a>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-7 col-sm-7 collectionDesc">
+						<g:HTMLPanel styleName="col-md-6 col-sm-6 collectionDesc">
 							<g:Label styleName="collectionTitle" ui:field="collectionTitle"/> 
 							<g:HTMLPanel styleName="userDetails">
 								<g:Image ui:field="imgAuthor"/> <g:Label ui:field="authorName" styleName="authorName"></g:Label> 

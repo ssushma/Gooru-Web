@@ -62,9 +62,8 @@ public class CollectionSearchWidget extends Composite {
 
 	@UiField HTMLPanel pnlResourceWidget,collectionDescription;
 	@UiField Label collectionTitle,authorName,lblViewCount;
-	@UiField CollectionImageUc imgCollection;
 	@UiField Paragraph pResourceText;
-	@UiField Image imgAuthor;
+	@UiField Image imgAuthor,imgCollection;
 	@UiField FlowPanel standardsDataPanel;
 	@UiField Button remixBtn;
 	
@@ -102,9 +101,9 @@ public class CollectionSearchWidget extends Composite {
 			collectionDescription.getElement().setInnerText(collectionDesc);
 		}
 		authorName.setText(collectionSearchResultDo.getOwner().getUsername());
-		imgCollection.setUrl(collectionSearchResultDo.getUrl(),collectionSearchResultDo.getResourceTitle());
+		imgCollection.setUrl(collectionSearchResultDo.getUrl());
 		imgCollection.getElement().getStyle().setZIndex(9999);
-		imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
+		//imgCollection.setGooruOid(collectionSearchResultDo.getGooruOid());
 		lblViewCount.setText(collectionSearchResultDo.getTotalViews()+"");
 		String resourceText="";
 		if(collectionSearchResultDo.getResourceCount()>4){
