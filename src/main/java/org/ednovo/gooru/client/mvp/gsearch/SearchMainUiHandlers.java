@@ -26,6 +26,7 @@
 package org.ednovo.gooru.client.mvp.gsearch;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordHandler;
 /**
  * @fileName : SearchMainUiHandlers.java
  *
@@ -40,6 +41,6 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  *
  * @Reviewer: 
  */
-public interface SearchMainUiHandlers extends BaseUiHandlers{
+public interface SearchMainUiHandlers extends BaseUiHandlers,GetSearchKeyWordHandler{
 	
 }
