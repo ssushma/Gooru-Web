@@ -126,9 +126,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.getElement().setId("back-top");
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
-		showGradesFilter();
-		showCategoryFilter();
-		showSubjectsFilter();
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -191,6 +188,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			lblLoadingText.setVisible(false);
 		}
+		showGradesFilter();
+		showCategoryFilter();
+		showSubjectsFilter();
 	}
 	/**
 	 * This method will set the search Filters 

@@ -1321,7 +1321,7 @@ public class HeaderUc extends Composite implements
 				}
 				
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, params);
+						PlaceTokens.SEARCH_COLLECTION, params);
 			}
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 			getEditSearchTxtBox().hideSuggestionList();
@@ -1457,15 +1457,15 @@ public class HeaderUc extends Composite implements
 				}
 			}
 		}
-		params.put("category", "All");
+		
 		params.put("query", getEditSearchText());
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(!currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH))
+		AppClientFactory.printInfoLogger("Header-updateparams::"+currentPlaceToken);
+		if(currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH))
 		{
-		params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+			params.put("category", "All");
 		}
-		params.put("pageNum", "1");
-		params.put("pageSize", "8");
 		
 		return params;
 	}
