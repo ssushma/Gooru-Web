@@ -154,7 +154,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			protected void run(SearchDo<T> searchDo) {
 				requestSearch(searchDo, this);
 			}
-
 			@Override
 			public void onCallSuccess(SearchDo<T> result) {
 				setSearchDo(result);
@@ -175,6 +174,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReset() {
 		super.onReset();
+		getView().resetData();
 /*
 		String count = Cookies.getCookie("MyCookie");
 		if (count != null && Integer.parseInt(count) == 7) {
@@ -355,11 +355,12 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	
 	@Override
 	public void refreshSearch(String query) {
-		getSearchDo().setQuery(query);
-		getSearchDo().setPageNum(null);
-		getSearchDo().setPageSize(null);
-
-		onSearchRequest(null);
+		if(query!=null){
+			getSearchDo().setQuery(query);
+			getSearchDo().setPageNum(null);
+			getSearchDo().setPageSize(null);
+			onSearchRequest(null);
+		}
 	}
 
 	/**
@@ -388,7 +389,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	 *            is a page view url
 	 */
 	public void onSearchRequest(String viewToken) {
-		
+		if (viewToken == null) {
+			viewToken = getCurrentPlaceToken();
+		}
+		if (getViewToken().equalsIgnoreCase(viewToken)) {
+			Map<String, String> params = getView().getSearchFilters();
+			params.put(QUERY, getSearchDo().getUrlQuery());
+			getPlaceManager().revealPlace(viewToken, params, true);
+		}
 	}
 	
 	@Override
