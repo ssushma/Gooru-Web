@@ -208,7 +208,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if (resourceId != null) {
 			createCollectionJsonObject.put("resourceId", resourceId);
 		}
-		
+		getLogger().info("---createCollectionItem--  "+url);
+		getLogger().info("---createCollectionItem paylod - --  "+createCollectionJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}catch(Exception e){
