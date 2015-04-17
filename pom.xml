@@ -624,7 +624,7 @@
 				                    <fileset dir="${basedir}/src/main/resources/config/" includes="*.properties" />
 				                </delete>
 				                
-			                	<echo>Copy requied config file : build/filter-${env}.properties to [project]/resources/config folder</echo>
+			                	<echo>Copy required config file : build/filter-${env}.properties to [project]/resources/config folder</echo>
 			                    <copy file="build/filter-${env}.properties" tofile="${basedir}/src/main/resources/config/config.properties"/>
 			                 </tasks>
 						</configuration>
