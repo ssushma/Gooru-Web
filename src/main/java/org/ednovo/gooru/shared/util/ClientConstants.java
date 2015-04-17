@@ -337,5 +337,6 @@ public interface ClientConstants {
 	String NOTHING ="Nothing";
 	String ASSETQUESTION ="asset-question";
 	String BUFFERIMAGE ="bufferImage";
-	
+
+	String WELCOME = "welcome";
 }

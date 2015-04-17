@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -218,14 +219,10 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	public void senEmail(){
-
-	       //If account type is 2 (student) then call API to send Welcome Email
-//        if (userDo.getAccountTypeId() == 2){
-        	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), "welcome", new SimpleAsyncCallback<Void>() {
-
+        	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), ClientConstants.WELCOME, new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
-					// Do nothing....
+
 				}
 			});
 	}
