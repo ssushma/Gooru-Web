@@ -88,6 +88,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	LiPanel liPanel;
 	
+	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
+	
+	private static final String SUBJECTS_SEPARATOR = "~~";
+	
 	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author,reviewTag;
 
 	int pageNumber = 1,resultCountVal=0;
@@ -122,9 +126,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.getElement().setId("back-top");
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
-		showGradesFilter();
-		showCategoryFilter();
-		showSubjectsFilter();
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -187,6 +188,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			lblLoadingText.setVisible(false);
 		}
+		showGradesFilter();
+		showCategoryFilter();
+		showSubjectsFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -267,7 +271,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	private void showSubjectsFilter() {
 		subjects = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
 		if(subjects!=null){
-			String[] split = subjects.split("~~");
+			String[] split = subjects.split(SUBJECTS_SEPARATOR);
 			for(int i=0; i<split.length; i++){
 				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
 			}
@@ -326,7 +330,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	/**
 	 * This method will remove the filters from the pnlAddFilters
-	 * @param filterName
+	 * @param filterName {@link String}
 	 */
 	public void removeFilter(String filterName){
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
@@ -357,8 +361,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	/**
-	 * This method will return the selected values of subjects
-	 * @return
+	 * To get the selected subjects values with separator
+	 * @return selectedSubjects {@link String}
 	 */
 	public String getSelectedSubjects(){
 		String selectedSubjects="";
@@ -368,7 +372,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(widget instanceof LiPanel){
 				if(widget.getStyleName().equalsIgnoreCase("active")){
 					if (!selectedSubjects.isEmpty()) {
-						selectedSubjects += "~~";
+						selectedSubjects += SUBJECTS_SEPARATOR;
 					}
 					selectedSubjects += widget.getElement().getInnerText();
 				}
@@ -403,6 +407,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * This method will call the search function on filters selection chagnes
 	 */
 	public void callSearch(){
-		getUiHandlers().refreshSearch(AppClientFactory.getPlaceManager().getRequestParameter("query",null));
+		getUiHandlers().refreshSearch(getSearchText());
+	}
+	/**
+	 * To get the search query.
+	 * @return {@link String}
+	 */
+	public String getSearchText() {
+		return AppClientFactory.getPlaceManager().getRequestParameter("query");
 	}
 }
