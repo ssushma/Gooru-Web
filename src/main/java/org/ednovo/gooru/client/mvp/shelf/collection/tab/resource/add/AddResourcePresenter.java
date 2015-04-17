@@ -60,6 +60,7 @@ import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.GooruConstants;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -268,7 +269,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			public void onSuccess(ExistsResourceDo result) {
 				
 				if (result.getSharing()!=null)
-					if("public".equals(result.getSharing())){
+					if(GooruConstants.PUBLIC.equals(result.getSharing())){
 						getView().setExistingResourceData(result, getCollectionDo());
 					}
 					
