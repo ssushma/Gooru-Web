@@ -78,7 +78,6 @@
 	background-color:#fbfbfb;
 	cursor:pointer;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#fffbfbfb,endColorstr=#ffe7e7e7,GradientType=0)";
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#fffbfbfb, endColorstr=#ffe7e7e7, GradientType=0); 
 }
 /* .loginPopupGplusButton:hover {
 	Firefox v3.6+

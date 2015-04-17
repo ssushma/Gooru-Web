@@ -163,7 +163,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		if (headerApiKey == null){
 			headerApiKey = getPropertyByKey(API_KEY);
 		}
-		getLogger().info("getApiKey : "+headerApiKey);
 		return headerApiKey;
 	}
 
@@ -577,9 +576,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		JsonRepresentation jsonRep = null;
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		logger.info("v2GuestSignIn : "+url);
-		logger.info("jsonResponseRep.getStatusCode() : "+jsonResponseRep.getStatusCode());
-
 		if (jsonResponseRep.getStatusCode() != 200){
 			logger.info("jsonResponseRep.getResponseDo().getErrorMessage() : "+jsonResponseRep.getResponseDo().getErrorMessage());
 		}
@@ -621,7 +617,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	protected UserDo v2GetUserInfoByToken(String token) {
 		UserDo userDo = null;
 		try {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_USER_BY_SESSIONTOKEN);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_USER_BY_SESSIONTOKEN, getLoggedInSessionToken());
 			JsonRepresentation jsonRep = null;
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
