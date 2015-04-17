@@ -2,10 +2,7 @@
 	margin: 0;
 	padding: 0;
 }
-.infoSectionAuthor:nth-of-type(2n+2)
-{
-	margin-right:0px;
-}
+
 a:hover {
 	color: #87BADD;
 }

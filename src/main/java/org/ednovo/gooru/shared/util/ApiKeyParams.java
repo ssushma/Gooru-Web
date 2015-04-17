@@ -132,4 +132,8 @@ public interface ApiKeyParams {
 	String DIRECTION = "direction";
 	String PLANNEDENDDATE="planedEndDate";
 	String SKIPPAGINATION="skipPagination";
+	
+	
+	
+	String CHECK_SHORTENED_URL = "checkShortenedUrl";
 }

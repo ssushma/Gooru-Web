@@ -614,14 +614,18 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	        }
 		}
 		String partialUrl = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES);
+		try{
 		filtersMap.put(GooruConstants.SEARCH_TERM, searchDo.getSearchQuery());
 		filtersMap.put(GooruConstants.EVENT, COLLECTION_EDIT_EVENT);
 		filtersMap.put(GooruConstants.CONTENT_GOORU_OID, contentGorruOid);
+		}catch(Exception e){
+			logger.error("Exception query::", e.getMessage());
+		}
 		String url = AddQueryParameter.constructQueryParams(partialUrl, filtersMap);
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-
+		getLogger().info("search suggested resource url:::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{

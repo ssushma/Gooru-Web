@@ -187,9 +187,7 @@ public abstract class AddSearchResourceView extends Composite {
 		if(codeDoSet!=null & codeDoSet.size()>0) {
 			setSubject(collectionDo.getTaxonomySet());
 		} else {
-			if(filterMap.size()>0) {
-				filterSearchDo.setFilters(filterMap);
-			}
+			filterSearchDo.setFilters(filterMap);
 			filterMap.put("fltNot.scollectionGooruOIds", collectionId);
 			getSuggestedResourceSearchResults(filterSearchDo,collectionId);
 		}
@@ -305,9 +303,9 @@ public abstract class AddSearchResourceView extends Composite {
 				});
 			if(filterMap.size()>0) {
 				filterMap.put(IsSearchView.SUBJECT_FLT, subjectDoFilter);
-				filterSearchDo.setFilters(filterMap);
 			}
 		}
+		filterSearchDo.setFilters(filterMap);
 		filterMap.put("fltNot.scollectionGooruOIds", collectionId);
 		getSuggestedResourceSearchResults(filterSearchDo,collectionId);
 	}
