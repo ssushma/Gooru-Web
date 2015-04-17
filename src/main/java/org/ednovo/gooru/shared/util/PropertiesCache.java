@@ -30,8 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Set;
-
-import org.ednovo.gooru.client.gin.AppClientFactory;
  
 public class PropertiesCache
 {
@@ -43,7 +41,6 @@ public class PropertiesCache
       InputStream in = this.getClass().getClassLoader().getResourceAsStream("config/config.properties");
       try {
           configProp.load(in);
-          System.out.println("Loading config file...");
       } catch (IOException e) {
           e.printStackTrace();
       }
@@ -62,7 +59,6 @@ public class PropertiesCache
     
    public String getProperty(String key){
 	   String value = configProp.getProperty(key);
-	   System.out.println("Key : "+key+" -- Value :"+value);
 	   return value;
    }
     
