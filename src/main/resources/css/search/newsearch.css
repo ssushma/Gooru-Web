@@ -496,6 +496,61 @@ Back to top button
 	border-color: #7cb1d5;
 	color: #fff;
 }
+
+
+#gooruSearchMainContainer .grade ul{
+	margin:0 0 15px 0;
+	padding:0 0;
+	text-align:left;
+	display:block;
+}
+#gooruSearchMainContainer .grade ul li{
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	display:inline-block;
+}
+
+#gooruSearchMainContainer .grade ul li a{
+	width:23px;
+	height:23px;
+	border-radius:50% 50%;
+	text-align:center;
+	color:#ffffff;
+	font-size:12px;
+	background:#4099ce;
+	display:block;
+	line-height:22px;
+}
+#gooruSearchMainContainer .grade ul li a:hover, #gooruSearchMainContainer  .grade ul li a:focus{
+	text-decoration:none;
+	outline:none;
+}
+#gooruSearchMainContainer .grade ul li.gradeTypes{
+	width:92px;
+}
+#gooruSearchMainContainer .grade ul li.gradeTypes a{
+	width:auto;
+	height:auto;
+	border-radius:2px 2px;
+	
+}
+#gooruSearchMainContainer .seachRightNavigation .grade .dropdown-menu{
+	min-width:300px;
+}
+#gooruSearchMainContainer .gradeHeader{
+	font-size:12px;
+	color:#515151;
+	text-align:left;
+	padding:10px 20px;
+}
+#gooruSearchMainContainer .gradesContainer{
+	background:#e8e7e7;
+	padding:20px 20px;
+}
+
+
+
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .collectionImg{
 		width:160px;

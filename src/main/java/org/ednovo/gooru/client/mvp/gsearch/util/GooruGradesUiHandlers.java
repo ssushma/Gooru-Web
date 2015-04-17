@@ -22,30 +22,15 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.gsearch;
+package org.ednovo.gooru.client.mvp.gsearch.util;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
-import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
-import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
-import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionHandler;
-import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionHandler;
-import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
 
 /**
  * @author Search Team
- * 
+ *
  */
-public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler,SwitchSearchHandler,SearchHandler,
-    AggregatorSuggestionEventHandler{
-	
-	void getCollectionSearchResultsOnPageWise(String query,int pageNumber,int pageSize);
-	/**
-	 * To add Grades Presenter widget
-	 */
-	void getGradesWidget();
+public interface GooruGradesUiHandlers extends BaseUiHandlers {
 
+	
 }

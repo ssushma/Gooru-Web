@@ -25,43 +25,15 @@
 
 							<g:HTMLPanel styleName="seachRightNavigation">
 								<g:InlineLabel styleName="preHeader"> Preference </g:InlineLabel>
-								<g:HTMLPanel styleName="btn-group">
+								<g:HTMLPanel styleName="btn-group grade">
 									<g:Button styleName="btn btn-primary">Grade</g:Button>
-									<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
+									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="gradesDropDown">
 										<g:InlineLabel styleName="caret"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
-									</g:HTMLPanel>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="#">Action</a>
-										</li>
-										<li>
-											<a href="#">Another action</a>
-										</li>
-										<li>
-											<a href="#">Something else here</a>
-										</li>
-										<li styleName="divider"></li>
-										<li>
-											<a href="#">Separated link</a>
-										</li>
-									</ul>
+									</panel:HTMLEventPanel>
+									<g:HTMLPanel styleName="dropdown-menu" ui:field="gradesPanel"></g:HTMLPanel>
 								</g:HTMLPanel>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#">Action</a>
-									</li>
-									<li>
-										<a href="#">Another action</a>
-									</li>
-									<li>
-										<a href="#">Something else here</a>
-									</li>
-									<li styleName="divider"></li>
-									<li>
-										<a href="#">Separated link</a>
-									</li>
-								</ul>
+								
 							<g:HTMLPanel styleName="btn-group">
 								<g:Button styleName="btn btn-primary">Subjects</g:Button>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" ui:field="subjectDropDown">
