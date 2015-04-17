@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch.util;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
+import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -74,8 +77,6 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	}
 	
 	public void renderGradesLiPanel(UlPanel ulPanel, String[] stringArray) {
-		try{
-		
 		for(int i=0;i<stringArray.length;i++){
 		    LiPanel gradePanel = new LiPanel();
 			if(i==0){
@@ -92,11 +93,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 					}else{
 						lblGrade.getElement().getStyle().setBackgroundColor("#1076bb");
 					}
+					AppClientFactory.fireEvent(new UpdateFilterEvent(lblGrade.getText()));
 				}
 			});
 		}
-	}catch(Exception e){
-				e.printStackTrace();
-	 }
 	}
 }
