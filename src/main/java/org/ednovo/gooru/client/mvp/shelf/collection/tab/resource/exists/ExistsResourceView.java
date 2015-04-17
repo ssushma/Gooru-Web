@@ -183,7 +183,7 @@ public class ExistsResourceView extends AppPopUp {
 		public void onClick(ClickEvent event) {
 			buttonContainer.setVisible(false);
 			loadingTextLbl.setVisible(true);
-			AppClientFactory.getInjector().getResourceService().createCollectionItem(collectionDo.getGooruOid(), existsResourceDo.getId(), new SimpleAsyncCallback<CollectionItemDo>() {
+			AppClientFactory.getInjector().getResourceService().createCollectionItem(collectionDo.getGooruOid(), existsResourceDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
 
 				@Override
 				public void onSuccess(CollectionItemDo result) {
@@ -218,7 +218,7 @@ public class ExistsResourceView extends AppPopUp {
 		
 		idStr = existsResourceDo.getId();
 		url = existsResourceDo.getNativeurl();
-		title = existsResourceDo.getLabel();
+		title = existsResourceDo.getTitle();
 		description = existsResourceDo.getDescription();
 		category = existsResourceDo.getCategory().toLowerCase();
 		thumbnailUrl = existsResourceDo.getThumbnails().getUrl();
