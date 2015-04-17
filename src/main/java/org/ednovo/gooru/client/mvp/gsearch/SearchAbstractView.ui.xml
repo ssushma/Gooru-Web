@@ -100,8 +100,7 @@
 								<div class="authorDetails">
 									<div class="input-group">
 										<span> Author:</span>
-										<input type="text" aria-label="Text input with dropdown button"
-											class="form-control" />
+										<g:TextBox  styleName="form-control" ui:field="authorTxtBox" />
 										<g:Label styleName="searchQuestionMark"></g:Label>
 									</div>
 								</div>
