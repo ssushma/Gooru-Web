@@ -82,8 +82,8 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 	@Override
 	public final void onClick(ClickEvent event) {
 		if (event.getSource().equals(removeLabel)) {
-			onCloseLabelClick(event);
 			this.removeFromParent();
+			onCloseLabelClick(event);
 		}
 	}
 	

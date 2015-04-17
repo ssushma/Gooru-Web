@@ -32,7 +32,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
-import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -104,6 +103,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 	int pageNumber = 1,resultCountVal=0;
 	
+	String selectedSubjects="",selectedAuthors="";
+	
 	/**
 	 * Assign new instance for 
 	 * 
@@ -124,7 +125,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}else{
 					pnlBackToTop.setVisible(false);
 				}
-				if(resultCountVal>0){
+				if(resultCountVal>=8){
 					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
 						lblLoadingText.setVisible(true);
 						pageNumber++;
@@ -272,6 +273,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
 			subjectDropDown.removeStyleName("active");
+			subjectDropDown.getElement().getStyle().clearBackgroundColor();
 			callSearch();
 		}
 	}
@@ -384,12 +386,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				{
 					newFilterVal = filterValue.replaceAll("Higher Ed", "12gte");
 				}
-				//AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
 				if(panelName.equals("subjectsPanel")){
 					removeSelectedSubjects(newFilterVal,panelName);
-				}
-				if(panelName.equals("authorPanel")){
-					removeFilter(newFilterVal);
 				}
 				callSearch();
 			}
@@ -428,31 +426,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	/**
-	 * To get the selected subjects values with separator
-	 * @return selectedSubjects {@link String}
-	 */
-	public String getSelectedSubjects(){
-		String selectedSubjects="";
-		Iterator<Widget> widgets= ulSubjectPanel.iterator();
-		while(widgets.hasNext()){
-			Widget widget = widgets.next();
-			if(widget instanceof LiPanel){
-				if(widget.getStyleName().equalsIgnoreCase("active")){
-					if (!selectedSubjects.isEmpty()) {
-						selectedSubjects += SUBJECTS_SEPARATOR;
-					}
-					selectedSubjects += widget.getElement().getInnerText();
-				}
-			}
-		}
-		return selectedSubjects;
-	}
-	/**
 	 * To get the selected authors values with separator
 	 * @return selectedSubjects {@link String}
 	 */
-	public String getSelectedAuthors(){
-		String selectedAuthors="";
+	public void getSelectedFilters(){
+		selectedAuthors="";
+		selectedSubjects="";
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
@@ -464,18 +443,24 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					selectedAuthors += closeLabelSetting.getSourceText();
 				}
+				if("subjectsPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					if (!selectedSubjects.isEmpty()) {
+						selectedSubjects += SUBJECTS_SEPARATOR;
+					}
+					selectedSubjects += closeLabelSetting.getSourceText();
+				}
 			}
 		}
-		return selectedAuthors;
 	}
 	@Override
 	public Map<String, String> getSearchFilters() {
+		 getSelectedFilters();
 		 Map<String, String> filters = new HashMap<String, String>();
-		 if(!getSelectedSubjects().isEmpty()){
-			 filters.put(IsGooruSearchView.SUBJECT_FLT, getSelectedSubjects());
+		 if(!selectedSubjects.isEmpty()){
+			 filters.put(IsGooruSearchView.SUBJECT_FLT, selectedSubjects);
 		 }
-		 if(!StringUtil.isEmpty(getSelectedAuthors())){
-			 filters.put(IsGooruSearchView.OWNER_FLT, getSelectedAuthors());
+		 if(!selectedAuthors.isEmpty()){
+			 filters.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
 		 }
 		 return filters; 
 	}
@@ -494,7 +479,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		lblLoadingText.setVisible(true);
 	}
 	/**
-	 * This method will call the search function on filters selection chagnes
+	 * This method will call the search function on filters selection changes
 	 */
 	public void callSearch(){
 		getUiHandlers().refreshSearch(getSearchText());
