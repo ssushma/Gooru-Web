@@ -107,16 +107,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-3 col-sm-2">
-							<div class="seachRightNavigation">
-								<button type="button" class="primary">Search</button>
-							</div>
-						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>
-
 
 			<!-- collection search filters end -->
 		</g:HTMLPanel>

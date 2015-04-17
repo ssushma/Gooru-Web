@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -112,19 +113,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}else{
 					pnlBackToTop.setVisible(false);
 				}
-				if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
-					lblLoadingText.setVisible(true);
-					pageNumber++;
-					getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+				if(resultCountVal>0){
+					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+						lblLoadingText.setVisible(true);
+						pageNumber++;
+						getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+					}
 				}
 			}
 		});
 		pnlBackToTop.getElement().setId("back-top");
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
-		showGradesFilter();
-		showCategoryFilter();
-		showSubjectsFilter();
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -136,8 +136,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
 			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
 				ulSubjectPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+				subjectDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
 			}else{
 				ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+				subjectDropDown.getElement().getStyle().clearBackgroundColor();
 			}
 		}
 	}
@@ -179,6 +181,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void postSearch(SearchDo<T> searchDo) {
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
+			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
 			searchResults.setText("Search Results  "+"("+resultCountVal+")");
 			for (T searchResult : searchDo.getSearchResults()) {
@@ -186,7 +189,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				searchResultPanel.add(renderSearchResult(searchResult));
 			}
 			lblLoadingText.setVisible(false);
+		}else{
+			searchResultPanel.add(NoSearchResultWidget.getInstance());
+			lblLoadingText.setVisible(false);
+			searchResults.setVisible(false);
 		}
+		pnlAddFilters.clear();
+		showGradesFilter();
+		showCategoryFilter();
+		showSubjectsFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -232,12 +243,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				liPanel.setStyleName("active");
 				pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
 			}
+			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+			subjectDropDown.removeStyleName("active");
 			callSearch();
 		}
 	}
 	
 	public abstract Widget renderSearchResult(T searchDo);
-	
 	
 	/**
 	 * Pre-Selected grades showing in search page
@@ -270,6 +282,23 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			String[] split = subjects.split("~~");
 			for(int i=0; i<split.length; i++){
 				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
+				setSelectedSubjects(split[i]);
+			}
+		}
+	}
+	/**
+	 * This method is used to highlight selected values for Subjects
+	 * @param filterName
+	 * @param panelName
+	 */
+	public void setSelectedSubjects(String filterName){
+		Iterator<Widget> widgets= ulSubjectPanel.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				if(filterName.equalsIgnoreCase(widget.getElement().getInnerText())){
+					((LiPanel) widget).addStyleName("active");
+				}
 			}
 		}
 	}
