@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
@@ -46,6 +47,9 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -57,6 +61,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -85,6 +90,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField InlineLabel searchResults;
 	
 	@UiField FlowPanel pnlAddFilters;
+	
+	@UiField TextBox authorTxtBox;
 	
 	LiPanel liPanel;
 	
@@ -126,6 +133,23 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.getElement().setId("back-top");
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
+		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					if (authorTxtBox.getText() != null && authorTxtBox.getText().length() > 0) {
+						String text = authorTxtBox.getValue();
+						pnlAddFilters.add(createTagsLabel(text,""));
+						authorTxtBox.setText("");
+						authorTxtBox.getElement().setAttribute("alt","");
+						authorTxtBox.getElement().setAttribute("title","");
+						AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+					}
+				}
+			}
+		});
+	
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -325,6 +349,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if(panelName.equals("subjectsPanel")){
 					removeSelectedSubjects(newFilterVal,panelName);
 				}
+				callSearch();
 			}
 		};
 	}
@@ -387,6 +412,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		 if(!getSelectedSubjects().isEmpty()){
 			 filters.put(IsGooruSearchView.SUBJECT_FLT, getSelectedSubjects());
 		 }
+		 
 		 return filters; 
 	}
 	
