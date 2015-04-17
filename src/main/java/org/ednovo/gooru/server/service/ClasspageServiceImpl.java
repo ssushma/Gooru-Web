@@ -853,10 +853,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String collectionOrFolderId,String dueDate,String direction){
 		ArrayList<ClasspageItemDo> classpageItemDoList=new ArrayList<ClasspageItemDo>();
-		try {
 			if(direction != null)
 			{
-			direction = URLEncoder.encode(direction, "UTF-8");
+			direction = direction;
 			}
 			else
 			{
@@ -867,10 +866,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			{
 				dueDate = "";
 			}
-			
-		} catch (UnsupportedEncodingException e) {
-			logger.error("Exception::", e);
-		}
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_ITEM_TO_CLASS, classpageId,collectionOrFolderId);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.DIRECTION, direction);
