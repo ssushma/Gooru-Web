@@ -38,6 +38,7 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 	private Label label;
 
 	private Label removeLabel;
+	String panelName="";
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	/**
@@ -45,6 +46,9 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 	 * @param text for label
 	 */
 	public CloseLabelSetting(String text) {
+		this(text,"");
+	}
+	public CloseLabelSetting(String text,String panelName){
 		removeLabel = new Label();
 		removeLabel.setStyleName(UcCBundle.INSTANCE.css().closeLabelRemoveInSetting());
 		removeLabel.setText(i18n.GL_GRR_Close()+" ");
@@ -60,8 +64,8 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 		add(label);
 		add(removeLabel);
 		removeLabel.addClickHandler(this);
+		this.panelName=panelName;
 	}
-
 	public abstract void onCloseLabelClick(ClickEvent event);
 
 	public Label getLabelSource() {
@@ -70,6 +74,9 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 
 	public String getSourceText() {
 		return label.getText();
+	}
+	public String getPanelName() {
+		return panelName;
 	}
 
 	@Override
