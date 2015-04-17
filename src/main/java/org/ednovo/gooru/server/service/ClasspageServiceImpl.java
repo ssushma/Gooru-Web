@@ -893,7 +893,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GooruConstants.OFFSET, offset);
 		params.put(GooruConstants.LIMIT, limit);
-		String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 		if(sortingOrder!=null){
 			if(sortingOrder.equalsIgnoreCase("asce")){
 				sortingOrder="sequence";
@@ -937,6 +936,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				params.put(GooruConstants.STATUS, studyStatus);
 				//url=url+"&status="+studyStatus;
 			}
+			String url=AddQueryParameter.constructQueryParams(partialUrl, params);
 	    logger.info("get class items API==>"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
