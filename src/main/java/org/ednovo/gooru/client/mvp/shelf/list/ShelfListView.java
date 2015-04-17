@@ -1227,7 +1227,6 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		String O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o1");
 		String O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o2");
 		String O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter("o3");
-		boolean isAssessment=false;
 		if(params!=null){
 			isFromAddResourcePresenter	=params.containsKey("from");
 		}
@@ -2336,6 +2335,56 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Following method will identify the folder in which assessment/url needs to be removed. 
+	 */
+	@Override
+	public void removeAssessment(HashMap<String, String> params, String assessment,FolderDo folderDo) {
+		
+		if(params.get(O3_LEVEL)!=null) {
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				if(level2Item!=null) {
+					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
+					removeDeletedAssessment(level3Item,assessment);
+				}
+			}
+		}else if(params.get(O2_LEVEL)!=null) {
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null ) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				removeDeletedAssessment(level2Item,assessment);
+			}
+		}else if(params.get(O1_LEVEL)!=null) {
+			TreeItem item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			removeDeletedAssessment(item,assessment);
+		}else{
+			for(int i = 0; i < myShelfVerPanel.getItemCount(); i++) {
+				TreeItem item = myShelfVerPanel.getItem(i);
+				ShelfCollection deletedItem = (ShelfCollection) item.getWidget();
+				if(assessment.equalsIgnoreCase(deletedItem.getCollectionDo().getGooruOid())) {
+					item.remove();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Removes the assessment/url widget.
+	 * @param treeItemWidget
+	 * @param assessmentId
+	 */
+	private void removeDeletedAssessment(TreeItem treeItemWidget, String assessmentId){
+		for(int i = 0; i < treeItemWidget.getChildCount(); i++) {
+			 TreeItem item = treeItemWidget.getChild(i);
+			 ShelfCollection selectedItem = (ShelfCollection) item.getWidget();
+			 if(selectedItem.getCollectionDo().getGooruOid().equalsIgnoreCase(assessmentId)) {
+				 item.remove();
+			 }
+		 }
 	}
 
 }
