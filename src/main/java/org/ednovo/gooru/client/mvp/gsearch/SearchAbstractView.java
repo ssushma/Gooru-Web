@@ -31,7 +31,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
+import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
@@ -102,9 +102,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
 	
-	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author,reviewTag;
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
 
 	int pageNumber = 1,resultCountVal=0;
+	
+	String selectedSubjects="",selectedAuthors="";
 	
 	/**
 	 * Assign new instance for 
@@ -126,10 +128,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}else{
 					pnlBackToTop.setVisible(false);
 				}
-				if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
-					lblLoadingText.setVisible(true);
-					pageNumber++;
-					getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+				if(resultCountVal>=8){
+					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+						lblLoadingText.setVisible(true);
+						pageNumber++;
+						getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+					}
 				}
 			}
 		});
@@ -138,22 +142,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
 		gradesDropDown.addClickHandler(new GradesDropDownHandler());
 		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
-
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					if (authorTxtBox.getText() != null && authorTxtBox.getText().length() > 0) {
 						String text = authorTxtBox.getValue();
-						pnlAddFilters.add(createTagsLabel(text,""));
+						pnlAddFilters.add(createTagsLabel(text,"authorPanel"));
 						authorTxtBox.setText("");
 						authorTxtBox.getElement().setAttribute("alt","");
 						authorTxtBox.getElement().setAttribute("title","");
-						AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+						callSearch();
 					}
 				}
 			}
 		});
-	
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -165,8 +167,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
 			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
 				ulSubjectPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+				subjectDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
 			}else{
 				ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+				subjectDropDown.getElement().getStyle().clearBackgroundColor();
 			}
 		}
 	}
@@ -208,6 +212,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public void postSearch(SearchDo<T> searchDo) {
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
+			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
 			searchResults.setText("Search Results  "+"("+resultCountVal+")");
 			for (T searchResult : searchDo.getSearchResults()) {
@@ -215,10 +220,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				searchResultPanel.add(renderSearchResult(searchResult));
 			}
 			lblLoadingText.setVisible(false);
+		}else{
+			searchResultPanel.add(NoSearchResultWidget.getInstance());
+			lblLoadingText.setVisible(false);
+			searchResults.setVisible(false);
 		}
+		pnlAddFilters.clear();
 		showGradesFilter();
 		showCategoryFilter();
 		showSubjectsFilter();
+		showAuthorFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -263,12 +274,14 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				liPanel.setStyleName("active");
 				pnlAddFilters.add(createTagsLabel(subjectVal,"subjectsPanel"));
 			}
+			ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+			subjectDropDown.removeStyleName("active");
+			subjectDropDown.getElement().getStyle().clearBackgroundColor();
 			callSearch();
 		}
 	}
 	
 	public abstract Widget renderSearchResult(T searchDo);
-	
 	
 	/**
 	 * Pre-Selected grades showing in search page
@@ -291,7 +304,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
-	
+	/**
+	 * Pre-Selected Author showing in search page
+	 */
+	private void showAuthorFilter(){
+		authors = AppClientFactory.getPlaceManager().getRequestParameter("flt.owner");
+		if(authors!=null){
+			String[] split = authors.split(COMMA_SEPARATOR);
+			for(int i=0; i<split.length; i++){
+				pnlAddFilters.add(createTagsLabel(split[i],"authorPanel"));
+			}
+		}
+	}
 	/**
 	 * Pre-Selected Subjects showing in search page
 	 */
@@ -301,6 +325,23 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			String[] split = subjects.split(SUBJECTS_SEPARATOR);
 			for(int i=0; i<split.length; i++){
 				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
+				setSelectedSubjects(split[i]);
+			}
+		}
+	}
+	/**
+	 * This method is used to highlight selected values for Subjects
+	 * @param filterName
+	 * @param panelName
+	 */
+	public void setSelectedSubjects(String filterName){
+		Iterator<Widget> widgets= ulSubjectPanel.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				if(filterName.equalsIgnoreCase(widget.getElement().getInnerText())){
+					((LiPanel) widget).addStyleName("active");
+				}
 			}
 		}
 	}
@@ -330,7 +371,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * @return the label of user search filter.
 	 */
 	protected CloseLabelSetting createTagsLabel(final String filterValue, final String panelName) {
-		return new CloseLabelSetting(filterValue) {
+		return new CloseLabelSetting(filterValue,panelName) {
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
@@ -348,7 +389,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				{
 					newFilterVal = filterValue.replaceAll("Higher Ed", "12gte");
 				}
-				//AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
 				if(panelName.equals("subjectsPanel")){
 					removeSelectedSubjects(newFilterVal,panelName);
 				}
@@ -389,33 +429,42 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	/**
-	 * To get the selected subjects values with separator
+	 * To get the selected authors values with separator
 	 * @return selectedSubjects {@link String}
 	 */
-	public String getSelectedSubjects(){
-		String selectedSubjects="";
-		Iterator<Widget> widgets= ulSubjectPanel.iterator();
+	public void getSelectedFilters(){
+		selectedAuthors="";
+		selectedSubjects="";
+		Iterator<Widget> widgets= pnlAddFilters.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
-			if(widget instanceof LiPanel){
-				if(widget.getStyleName().equalsIgnoreCase("active")){
+			if(widget instanceof CloseLabelSetting){
+				CloseLabelSetting closeLabelSetting=(CloseLabelSetting) widget;
+				if("authorPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					if (!selectedAuthors.isEmpty()) {
+						selectedAuthors += COMMA_SEPARATOR;
+					}
+					selectedAuthors += closeLabelSetting.getSourceText();
+				}
+				if("subjectsPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 					if (!selectedSubjects.isEmpty()) {
 						selectedSubjects += SUBJECTS_SEPARATOR;
 					}
-					selectedSubjects += widget.getElement().getInnerText();
+					selectedSubjects += closeLabelSetting.getSourceText();
 				}
 			}
 		}
-		return selectedSubjects;
 	}
-	
 	@Override
 	public Map<String, String> getSearchFilters() {
+		 getSelectedFilters();
 		 Map<String, String> filters = new HashMap<String, String>();
-		 if(!getSelectedSubjects().isEmpty()){
-			 filters.put(IsGooruSearchView.SUBJECT_FLT, getSelectedSubjects());
+		 if(!selectedSubjects.isEmpty()){
+			 filters.put(IsGooruSearchView.SUBJECT_FLT, selectedSubjects);
 		 }
-		 
+		 if(!selectedAuthors.isEmpty()){
+			 filters.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
+		 }
 		 return filters; 
 	}
 	
@@ -445,7 +494,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		lblLoadingText.setVisible(true);
 	}
 	/**
-	 * This method will call the search function on filters selection chagnes
+	 * This method will call the search function on filters selection changes
 	 */
 	public void callSearch(){
 		getUiHandlers().refreshSearch(getSearchText());
