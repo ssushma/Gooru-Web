@@ -100,7 +100,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
 	
-	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,author,reviewTag;
+	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
 
 	int pageNumber = 1,resultCountVal=0;
 	
@@ -142,11 +142,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					if (authorTxtBox.getText() != null && authorTxtBox.getText().length() > 0) {
 						String text = authorTxtBox.getValue();
-						pnlAddFilters.add(createTagsLabel(text,""));
+						pnlAddFilters.add(createTagsLabel(text,"authorPanel"));
 						authorTxtBox.setText("");
 						authorTxtBox.getElement().setAttribute("alt","");
 						authorTxtBox.getElement().setAttribute("title","");
-						AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+						callSearch();
 					}
 				}
 			}
@@ -224,6 +224,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showGradesFilter();
 		showCategoryFilter();
 		showSubjectsFilter();
+		showAuthorFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -298,7 +299,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
-	
+	/**
+	 * Pre-Selected Author showing in search page
+	 */
+	private void showAuthorFilter(){
+		authors = AppClientFactory.getPlaceManager().getRequestParameter("flt.owner");
+		if(authors!=null){
+			String[] split = authors.split(COMMA_SEPARATOR);
+			for(int i=0; i<split.length; i++){
+				pnlAddFilters.add(createTagsLabel(split[i],"authorPanel"));
+			}
+		}
+	}
 	/**
 	 * Pre-Selected Subjects showing in search page
 	 */
@@ -354,7 +366,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * @return the label of user search filter.
 	 */
 	protected CloseLabelSetting createTagsLabel(final String filterValue, final String panelName) {
-		return new CloseLabelSetting(filterValue) {
+		return new CloseLabelSetting(filterValue,panelName) {
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
@@ -375,6 +387,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				//AppClientFactory.fireEvent(new SearchFilterEvent(newFilterVal,panelName));
 				if(panelName.equals("subjectsPanel")){
 					removeSelectedSubjects(newFilterVal,panelName);
+				}
+				if(panelName.equals("authorPanel")){
+					removeFilter(newFilterVal);
 				}
 				callSearch();
 			}
@@ -432,14 +447,36 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		return selectedSubjects;
 	}
-	
+	/**
+	 * To get the selected authors values with separator
+	 * @return selectedSubjects {@link String}
+	 */
+	public String getSelectedAuthors(){
+		String selectedAuthors="";
+		Iterator<Widget> widgets= pnlAddFilters.iterator();
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof CloseLabelSetting){
+				CloseLabelSetting closeLabelSetting=(CloseLabelSetting) widget;
+				if("authorPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					if (!selectedAuthors.isEmpty()) {
+						selectedAuthors += COMMA_SEPARATOR;
+					}
+					selectedAuthors += closeLabelSetting.getSourceText();
+				}
+			}
+		}
+		return selectedAuthors;
+	}
 	@Override
 	public Map<String, String> getSearchFilters() {
 		 Map<String, String> filters = new HashMap<String, String>();
 		 if(!getSelectedSubjects().isEmpty()){
 			 filters.put(IsGooruSearchView.SUBJECT_FLT, getSelectedSubjects());
 		 }
-		 
+		 if(!StringUtil.isEmpty(getSelectedAuthors())){
+			 filters.put(IsGooruSearchView.OWNER_FLT, getSelectedAuthors());
+		 }
 		 return filters; 
 	}
 	
