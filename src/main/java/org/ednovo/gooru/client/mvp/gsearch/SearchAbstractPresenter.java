@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.event.RegisterTabDndEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -109,6 +110,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	AddStandardsPresenter addStandardsPresenter = null;
 
 	AddCenturyPresenter addCenturyPresenter = null;
+	
+	GooruGradesPresenter gooruGradesPresenter = null;
 
 	boolean setFilter=true;
 	/**
@@ -122,11 +125,12 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchAbstractPresenter(V view, P proxy,
 			SignUpPresenter signUpViewPresenter,
 			AddStandardsPresenter addStandardsPresenterObj,
-			AddCenturyPresenter addCenturyPresenter) {
+			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.addCenturyPresenter = addCenturyPresenter;
+		this.gooruGradesPresenter = gooruGradesPresenter;
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
 		//addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);
@@ -160,6 +164,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 				getView().postSearch(result);
 			}
 		});
+		
+		getView().getGradePanel().add(gooruGradesPresenter.getWidget());
 
 	}
 
@@ -397,6 +403,12 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			params.put(QUERY, getSearchDo().getUrlQuery());
 			getPlaceManager().revealPlace(viewToken, params, true);
 		}
+	}
+	
+	@Override
+	public void getGradesWidget(){
+		//getView().getGradePanel().clear();
+		
 	}
 	
 	@Override

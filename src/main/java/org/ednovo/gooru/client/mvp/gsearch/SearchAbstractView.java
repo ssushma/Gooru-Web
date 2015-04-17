@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -83,7 +84,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel searchResultPanel,pnlBackToTop,subjectDropDown;
+	@UiField HTMLPanel searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel;
+	
+	@UiField HTMLEventPanel gradesDropDown;
 	
 	@UiField Label lblLoadingText;
 	
@@ -133,6 +136,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.getElement().setId("back-top");
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
+		gradesDropDown.addClickHandler(new GradesDropDownHandler());
 		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override
@@ -229,7 +233,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * This method is used to render subjects and it will handle the click events on subjects.
 	 */
 	public void renderSubjects(List<String> list){
-		liPanel = new LiPanel();
 		InlineLabel text=new InlineLabel("Try selecting from this cool subjecs:");
 		ulSubjectPanel.add(text);
 		for (String subject : list) {
@@ -416,6 +419,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		 return filters; 
 	}
 	
+	private class GradesDropDownHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			String displayValue=gradesPanel.getElement().getStyle().getDisplay();
+			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
+				gradesPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+			}else{
+				gradesPanel.getElement().getStyle().setDisplay(Display.NONE);
+			}
+		}
+	}
+	
 	/**
 	 * This native method is used to set animation when user clicks on the back to top button
 	 */
@@ -441,5 +456,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	public String getSearchText() {
 		return AppClientFactory.getPlaceManager().getRequestParameter("query");
+	}
+	
+	@Override
+	public HTMLPanel getGradePanel(){
+		return gradesPanel;
 	}
 }

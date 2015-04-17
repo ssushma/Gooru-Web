@@ -1,0 +1,14 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+		<g:HTMLPanel>
+			<div class="gradeHeader">Select a signgle or multiple grade(s).</div>
+
+			<g:HTMLPanel styleName="gradesContainer">
+				<uc:UlPanel ui:field="elementryPanel"></uc:UlPanel>
+				<uc:UlPanel ui:field="middlePanel"></uc:UlPanel>
+				<uc:UlPanel ui:field="higherPanel"></uc:UlPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+</ui:UiBinder>

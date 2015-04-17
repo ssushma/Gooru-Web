@@ -22,30 +22,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.gsearch;
+package org.ednovo.gooru.client.mvp.gsearch.util;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
-import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
-import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
-import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionHandler;
-import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionHandler;
-import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.Proxy;
 
 /**
  * @author Search Team
- * 
+ *
  */
-public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler,SwitchSearchHandler,SearchHandler,
-    AggregatorSuggestionEventHandler{
+public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> implements GooruGradesUiHandlers {
+
 	
-	void getCollectionSearchResultsOnPageWise(String query,int pageNumber,int pageSize);
 	/**
-	 * To add Grades Presenter widget
+	 * Class constructor
+	 * @param view {@link View}
+	 * @param proxy {@link Proxy}
 	 */
-	void getGradesWidget();
+	@Inject
+	public GooruGradesPresenter( EventBus eventBus,IsGooruGradesView view) {
+		super(eventBus,view);
+		getView().setUiHandlers(this);
+	}
+
+	@Override
+	public void onBind() {
+		super.onBind();
+	}
+
+	@Override
+	protected void onReveal(){
+		super.onReveal();
+	}
+	
 
 }

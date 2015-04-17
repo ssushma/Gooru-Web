@@ -34,6 +34,8 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 /**
  * @author Search Team
  * 
@@ -88,4 +90,8 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
 	 * This method will reset the all the values
 	 */
 	void resetData();
+    /**
+     * @return gradePanel
+     */
+	HTMLPanel getGradePanel();
 }
