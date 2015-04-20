@@ -344,11 +344,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 					@Override
 					public void clickEventOnSaveAssessmentHandler(FolderDo result) {
 						if(result!=null){
-							collectionDo.setTitle(result.getTitle());
-							collectionDo.setUrl(result.getUrl());
-							collectionDo.setGoals(result.getGoals());
-							collectionDo.setSharing(result.getSharing());
-							collectionDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+							showAssessmentUrlInfo(result);
 						}
 						editAssessmentPopup.hide();
 						Window.enableScrolling(true);
@@ -371,6 +367,19 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		
 	}
 	
+	/**
+	 * Displays the updated info.
+	 * @param result {@link FolderDo}
+	 */
+	public void showAssessmentUrlInfo(FolderDo result) {
+		titleLbl.setHTML(result.getTitle());
+		collectionDo.setTitle(result.getTitle());
+		collectionDo.setUrl(result.getUrl());
+		collectionDo.setGoals(result.getGoals());
+		collectionDo.setSharing(result.getSharing());
+		collectionDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+	}
+
 	public void setData(FolderDo collectionDo, int nextLevel) {
 		updateData(collectionDo);
 		if(!collectionDo.getType().equals("folder")) {
