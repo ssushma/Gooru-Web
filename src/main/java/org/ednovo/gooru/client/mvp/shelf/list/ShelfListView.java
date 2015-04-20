@@ -1576,29 +1576,32 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	public void setFolderActiveStatus() { 
 		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
-		if(shelfCollection.getCollectionDo().getType().equals("folder")) {
-			TreeItem parent = treeChildSelectedItem.getParentItem();
-			treeChildSelectedItem.getTree().setSelectedItem(parent, false);
-			if(parent != null)parent.setSelected(false);
-			treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
-			getUiHandlers().getChildFolderItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getFolderOpenedStatus());
-			shelfCollection.setFolderOpenedStatus(true);
-		} else {
-			getUiHandlers().getCollectionItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getCollectionOpenedStatus()); 
-			shelfCollection.setCollectionOpenedStatus(true);
-		}
-		if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF))) {
-			shelfCollection.setActiveStyle(true);
-		}
-		
-		ShelfCollection previousShelfCollection = (ShelfCollection) previousTreeChildSelectedItem.getWidget();
-		if(previousShelfCollection==null) {
+		if(!shelfCollection.getCollectionDo().getCollectionType().equals("assessment/url")){
+			
+			if(shelfCollection.getCollectionDo().getType().equals("folder")) {
+				TreeItem parent = treeChildSelectedItem.getParentItem();
+				treeChildSelectedItem.getTree().setSelectedItem(parent, false);
+				if(parent != null)parent.setSelected(false);
+				treeChildSelectedItem.setState(treeChildSelectedItem.getState(), false);
+				getUiHandlers().getChildFolderItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getFolderOpenedStatus());
+				shelfCollection.setFolderOpenedStatus(true);
+			} else {
+				getUiHandlers().getCollectionItems(shelfCollection.getCollectionDo().getGooruOid(),shelfCollection.getCollectionOpenedStatus()); 
+				shelfCollection.setCollectionOpenedStatus(true);
+			}
+			if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF))) {
+				shelfCollection.setActiveStyle(true);
+			}
+			
+			ShelfCollection previousShelfCollection = (ShelfCollection) previousTreeChildSelectedItem.getWidget();
+			if(previousShelfCollection==null) {
+				previousTreeChildSelectedItem = treeChildSelectedItem;
+			}
+			if(previousShelfCollection!=null&&(shelfCollection.getCollectionDo().getGooruOid()!=previousShelfCollection.getCollectionDo().getGooruOid())) {
+				previousShelfCollection.setActiveStyle(false);
+			}
 			previousTreeChildSelectedItem = treeChildSelectedItem;
 		}
-		if(previousShelfCollection!=null&&(shelfCollection.getCollectionDo().getGooruOid()!=previousShelfCollection.getCollectionDo().getGooruOid())) {
-			previousShelfCollection.setActiveStyle(false);
-		}
-		previousTreeChildSelectedItem = treeChildSelectedItem;
 	}
 	
 	public class CreateNewCollection implements ClickHandler {

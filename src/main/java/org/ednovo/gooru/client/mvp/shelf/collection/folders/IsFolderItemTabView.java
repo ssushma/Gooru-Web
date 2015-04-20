@@ -25,4 +25,10 @@ public interface IsFolderItemTabView extends IsViewWithHandlers<FolderItemTabUiH
 	 * @param folderDo
 	 */
 	void resetCollectionsAfterDeletingAssessment(FolderDo folderDo, String assessmentId);
+	/**
+	 * It forward to view for updating assessment widget
+	 * @param folderDo {@link FolderDo}
+	 */
+	public void updateAssessmentUrl(FolderDo folderDo); 
+	
 }

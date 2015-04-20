@@ -58,6 +58,7 @@ import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -429,6 +430,13 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 		folderDo.setType(collectionDo.getCollectionType());
 		folderDo.setSharing(collectionDo.getSharing());
 		folderDo.setCollectionType(collectionDo.getCollectionType());
+
+		folderDo.setUrl(StringUtil.isEmpty(collectionDo.getUrl())?"":collectionDo.getUrl());
+		folderDo.setGoals(StringUtil.isEmpty(collectionDo.getGoals())?"":collectionDo.getGoals());
+		folderDo.setSharing(StringUtil.isEmpty(collectionDo.getSharing())?"":collectionDo.getSharing());
+		if(collectionDo.getSettings()!=null && collectionDo.getSettings().getIsLoginRequired()!=null){
+			folderDo.getSettings().setIsLoginRequired(StringUtil.isEmpty(collectionDo.getSettings().getIsLoginRequired())?"":collectionDo.getSettings().getIsLoginRequired());
+		}
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
 		folderDo.setThumbnails(thumbnailDo);
