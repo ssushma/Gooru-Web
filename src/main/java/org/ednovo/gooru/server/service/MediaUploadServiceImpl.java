@@ -25,12 +25,11 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.UnsupportedEncodingException;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.TreeSet;
-import org.ednovo.gooru.shared.util.GooruConstants;
+import java.util.HashMap;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -67,9 +66,14 @@ import org.restlet.ext.html.FormDataSet;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
+import org.springframework.stereotype.Service;
+import org.ednovo.gooru.shared.util.GooruConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.restlet.data.Header;
+import org.restlet.util.Series;
+import org.restlet.data.Preference;
+import org.restlet.engine.header.HeaderConstants;
 
 
 /**
@@ -88,7 +92,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	private static final long serialVersionUID = -8673556966040594979L;
 	private static final String ADDED = "added";
 	private static final Logger logger = LoggerFactory.getLogger(MediaUploadServiceImpl.class);
-
+	private static final String HEADER_GOORU_SESSION_TOKEN = "Gooru-Session-Token";
 	@Override
 	public MediaUploadDo imageWebUpload(String imageURL) {
 		MediaUploadDo mediaUploadDo = null;
@@ -103,7 +107,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		} catch (JSONException e1) {
 			getLogger().error(e1.getMessage());
 		}		
-
 		String responseText ="";
 			try {
 				responseText = fileUploadImage(jsonObj.toString(), url);
@@ -202,29 +205,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 
 	}
-	/*@Override
-	public String cropImage(String fileName, String height, String width,String xPosition, String yPosition, String imageUrl) {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),height, width, xPosition, yPosition);
-		getLogger().info("media upload url put:::::"+url);
-		try
-		{
-		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
-				new Form());
-		}
-		catch(Exception ex)
-		{
-			logger.error("Exception::", ex);
-		}
-		
-		if (imageUrl == null) {
-			return fileName;
-		} 
-		else {
-			return imageUrl;
-		}
-
-	}*/
-
 	@Override
 	public MediaUploadDo imageFileUpload(String response) {
 		MediaUploadDo mediaUploadDo = null;
@@ -238,9 +218,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 		return mediaUploadDo;
 	}
-
-	// Request
-	// URL:http://www.goorulearning.org/gooruapi/rest/quiz-question/newQuestion/media?sessionToken=f6ded446-a9a9-11e2-ba82-123141016e2a&mediaFileName=bbda9546-cb15-453e-a107-f073b09eccdc.jpg&assetKey=asset-question
 	public CollectionItemDo saveQuestionImage(String collectionItemId, String fileName) {
 	
 		CollectionItemDo collItemDo = getCollectionItem(collectionItemId);
@@ -388,13 +365,19 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		String respStr = "";
 		FormData fd = new FormData("data", data);        
 	    FormDataSet fds = new FormDataSet();
-	    fds.setMultipart(true);
 	    String boundary = "boundary";
 	    fds.setMediaType(MediaType.MULTIPART_FORM_DATA);
 	    fds.setMultipartBoundary(boundary);
 	    fds.setMultipart(true);
 	    fds.getEntries().add(fd);
 	    ClientResource c = new ClientResource(webServiceUrl);
+	    Series<Header> headers = (Series<Header>)c.getRequestAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
+	    if (headers == null) { 
+			headers = new Series<Header>(Header.class);
+			c.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, headers);
+		}
+	    headers.add(HEADER_GOORU_SESSION_TOKEN, getLoggedInSessionToken());
+	    c.getRequestAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, headers);
 		c.setEntityBuffering(true);
 	    Representation cr = c.post(fds, MediaType.MULTIPART_FORM_DATA);
 		respStr = cr.getText();
