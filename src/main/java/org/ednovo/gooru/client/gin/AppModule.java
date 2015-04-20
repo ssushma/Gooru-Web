@@ -151,6 +151,10 @@ import org.ednovo.gooru.client.mvp.gsearch.collection.IsSearchCollectionView;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter.IsSearchCollectionProxy;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionView;
+import org.ednovo.gooru.client.mvp.gsearch.resource.IsSearchResourceView;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter.IsSearchResourceProxy;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourceView;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesView;
 import org.ednovo.gooru.client.mvp.gsearch.util.IsGooruGradesView;
@@ -483,6 +487,9 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(SearchCollectionPresenter.class,
 				IsSearchCollectionView.class, SearchCollectionView.class,
 				IsSearchCollectionProxy.class);
+		bindPresenter(SearchResourcePresenter.class,
+				IsSearchResourceView.class, SearchResourceView.class,
+				IsSearchResourceProxy.class);
 		bindPresenter(ResourceSearchPresenter.class,
 				IsResourceSearchView.class, ResourceSearchView.class,
 				IsResourceSearchProxy.class);
