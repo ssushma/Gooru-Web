@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.collection.SearchCollectionPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.resource.SearchResourcePresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
@@ -149,6 +150,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<SearchMainPresenter> getSearchMainPresenter();
 	
 	AsyncProvider<SearchCollectionPresenter> getSearchCollectionPresenter();
+	
+	AsyncProvider<SearchResourcePresenter> getSearchResourcePresenter();
 
 	AsyncProvider<CollectionSearchPresenter> getCollectionSearchPresenter();
 
