@@ -543,7 +543,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void resetData(){
 		searchResultPanel.clear();
 		resultCountVal=0;
-		pageNumber=0;
+		pageNumber=1;
 		lblLoadingText.setVisible(true);
 	}
 	/**
