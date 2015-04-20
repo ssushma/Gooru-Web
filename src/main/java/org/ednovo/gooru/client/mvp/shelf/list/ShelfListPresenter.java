@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCo
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveAssessment;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfListItemsEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
@@ -157,6 +158,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(UpdateShelfFolderMetaDataEvent.TYPE, this);
 		addRegisteredHandler(ActivateCollectionStyleEvent.TYPE, this);
 		addRegisteredHandler(ReorderShelfListItemsEvent.TYPE, this);
+		addRegisteredHandler(RemoveAssessment.TYPE, this);
 		
 	}
 
@@ -526,5 +528,13 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void reorderShelfListItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb) {
 		getView().reorderShelfItems(itemId,toBeMovedPos,direction,params,folderDo, itemSeqNumb);
+	}
+
+	/**
+	 * Receives the triggered event and throws to view.
+	 */
+	@Override
+	public void deleteAssessmentWidget(HashMap<String, String> params,String assessment,FolderDo folderDo) {
+		getView().removeAssessment(params,assessment,folderDo);
 	}
 }

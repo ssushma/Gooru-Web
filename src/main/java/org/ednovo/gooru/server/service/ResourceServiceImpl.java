@@ -1658,12 +1658,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public void deleteTagsServiceRequest(String resourceId, String addedTags)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		try {
-			addedTags = URLEncoder.encode(addedTags, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.DELETE_TAGS, resourceId);
 		String url=AddQueryParameter.constructQueryParams(partialUrl, GooruConstants.DATA, addedTags);

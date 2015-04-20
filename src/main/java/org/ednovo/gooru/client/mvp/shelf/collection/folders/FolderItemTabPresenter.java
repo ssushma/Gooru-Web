@@ -168,11 +168,11 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 	}
 
 	@Override
-	public void deletAssessment(String assessmentId,final FolderDo folderDo) {
+	public void deletAssessment(final String assessmentId,final FolderDo folderDo) {
 		AppClientFactory.getInjector().getResourceService().deleteCollection(assessmentId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getView().resetCollectionsAfterDeletingAssessment(folderDo);
+				getView().resetCollectionsAfterDeletingAssessment(folderDo,assessmentId);
 			}
 		});
 	}
