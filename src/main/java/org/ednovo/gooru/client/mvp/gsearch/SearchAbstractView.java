@@ -217,7 +217,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
-			searchResults.setText("Search Results  "+"("+resultCountVal+")");
+			searchResults.setText(i18n.GL3210()+"  "+"("+searchDo.getSearchHits()+")");
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
 				searchResultPanel.add(renderSearchResult(searchResult));
@@ -522,7 +522,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}else{
 				removeFilter(filterValue);
 			}
-			
 			callSearch();
 		}
 	};
