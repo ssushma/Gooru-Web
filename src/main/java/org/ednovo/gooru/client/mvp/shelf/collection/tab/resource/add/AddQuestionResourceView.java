@@ -1398,7 +1398,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     			fieldValidationCheck = false;
 				isAddBtnClicked=true;
 			}
-    	
 			if(!isHintsAdded(hintsContainer)){
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
@@ -1813,7 +1812,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				AddHintsView addHints = (AddHintsView)hintsContainer.getWidget(i);
 				QuestionHintsDo questionHintsDo=new QuestionHintsDo();
 				String hintText=addHints.hintTextBox.getText();
-				if(hintText!=null&&!hintText.trim().equals("")){
+				if(hintText!=null&&!hintText.trim().equals("")&&!hintText.isEmpty()){
 					hintText=addHints.hintTextBox.getRawContent().trim();
 				}
 				questionHintsDo.setHintText(hintText); 
@@ -2038,7 +2037,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        	 
   	        	 String hintText=addHints.hintTextBox.getContent().toString().trim().replaceAll("&nbsp;", " ");
   	        	 hintText=hintText.replaceAll("\\<.*?>","");
-  	        	  if(hintText!=null && !hintText.trim().equals("")){
+  	        	  if(hintText!=null && !hintText.trim().equals("") && !hintText.isEmpty()){
   	        		 String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");	
   	        		  if(hintsText.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
   	        			  Document.get().getElementById(addHints.hintTextBox.getID()+"_message").setInnerText("");
@@ -2056,6 +2055,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS);
 	        		  hintsAdded=true;
             	      isAddBtnClicked=true;
+            	      return false;
   	        	  }
   	        	  hintsListForProfanity.add(profanitymodel);
   	        }
