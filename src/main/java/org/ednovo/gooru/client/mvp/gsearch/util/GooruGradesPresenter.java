@@ -59,7 +59,7 @@ public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> imp
 	}
 	
 	public void updateFilterStyle(String filterName){
-		getView().updateFilterStyle(filterName);
+		getView().updateFilterStyle(filterName, false);
 	}
 	
 
