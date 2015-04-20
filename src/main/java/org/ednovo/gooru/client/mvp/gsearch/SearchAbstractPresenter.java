@@ -507,7 +507,6 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	
 	@Override
 	public void getAddStandards() {
-		
 		if(!AppClientFactory.isAnonymous()){
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
@@ -547,9 +546,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 								}
 							
 					}
-						
 					}
-
 				});
 		}else{
 			isCCSSAvailable = true;
@@ -564,7 +561,16 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		}
 
 	}
-	
-	 
-
+	@Override
+	public void setSearchType(boolean isCollectionSearch) {
+		String viewToken;
+		if(isCollectionSearch){
+			viewToken=PlaceTokens.SEARCH_COLLECTION;
+		}else{
+			viewToken=PlaceTokens.SEARCH_RESOURCE;
+		}
+		Map<String, String> params = getView().getSearchFilters();
+		params.put(QUERY, getSearchDo().getUrlQuery());
+		getPlaceManager().revealPlace(viewToken, params, true);
+	}
 }
