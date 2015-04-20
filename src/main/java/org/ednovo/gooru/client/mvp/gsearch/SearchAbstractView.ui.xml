@@ -54,7 +54,7 @@
 				</g:HTMLPanel>
 			</div>
 			<!-- collection search filters -->
-			<div class="collectionDetails">
+			<g:HTMLPanel styleName="collectionDetails" ui:field="collectionSearchPanel">
 				<div class="container">
 					<div class="no-gutter">
 						<div class="col-md-9 col-sm-10">
@@ -79,8 +79,110 @@
 						<div class="clearfix"></div>
 					</div>
 				</div>
-			</div>
+			</g:HTMLPanel>
 			<!-- collection search filters end -->
+			<!-- Resource search filters Start -->
+	<g:HTMLPanel styleName="resourceDetails" ui:field="resourceSearchPanel">
+
+		<div class="container">
+			<div class="no-gutter">
+				<div class="col-md-11 col-sm-10">
+					<div class="seachLeftNavigation">
+
+						<ul class="resourceTypes">
+							<li class="active">
+								<a class="videos" href="">(234)</a>
+							</li>
+							<li>
+								<a class="interactives" href="">(537)</a>
+							</li>
+							<li>
+								<a class="webpage" href="">(337)</a>
+							</li>
+							<li>
+								<a class="questions" href="">(337)</a>
+							</li>
+							<li>
+								<a class="images" href="">(337)</a>
+							</li>
+							<li>
+								<a class="texts" href="">(337)</a>
+							</li>
+							<li>
+								<a class="audio" href="">(337)</a>
+							</li>
+						</ul>
+						<div class="ratingandGrid">
+							<div class="ratingDetails">
+
+								<img src="images/ratings.png"></img>
+
+							</div>
+							<div class="gridToggle">
+
+								<!-- Split button -->
+								<div class="btn-group">
+									<button type="button" class="btn btn-primary">
+										<span class="glyphicon glyphicon-align-justify"
+											aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-primary dropdown-toggle"
+										data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li>
+											<a href="#">Action</a>
+										</li>
+										<li>
+											<a href="#">Another action</a>
+										</li>
+										<li>
+											<a href="#">Something else here</a>
+										</li>
+										<li class="divider"></li>
+										<li>
+											<a href="#">Separated link</a>
+										</li>
+									</ul>
+								</div>
+
+							</div>
+
+
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="col-md-1 col-sm-2">
+
+					<div class="seachRightNavigation">
+
+						<button type="button" class="primary">Search</button>
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="clearfix"></div>
+
+
+			</div>
+
+
+		</div>
+
+	</g:HTMLPanel>
+			     
+			
+			<!-- Resource search filters End -->
+			
 		</g:HTMLPanel>
 		<div class="container">
 			<div class="SmallWidthContainer">
