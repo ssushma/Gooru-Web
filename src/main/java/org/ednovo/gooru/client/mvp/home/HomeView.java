@@ -542,9 +542,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 					}
 					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 					getEditSearchTxtBox().hideSuggestionList();
-					
-					
-			
 				}
 			}
 		}

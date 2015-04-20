@@ -1336,7 +1336,7 @@ public class HeaderUc extends Composite implements
 				String queryVal = params.get("query");
 				map.put("query", "*");
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 		}
 		
@@ -1882,7 +1882,7 @@ public class HeaderUc extends Composite implements
 				map.put("query", queryVal);
 				editSearchTxtBox.setText(queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.SEARCH_COLLECTION, map);
 			}
 			editSearchTxtBox.setText("");
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
