@@ -16,7 +16,7 @@
 	    		<g:Label  ui:field="hintsTextLblVal" styleName="{addWebResourceStyle.addResourceFormTitle}"/>
 	    		</g:HTMLPanel>  
               <g:Label styleName="{addWebResourceStyle.addResourceFormAlphaText}" ui:field="hintNumLbl"></g:Label>
-              <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormAnswerInputControl} answerChoiceAndHintsTextcontainer">
+              <g:HTMLPanel styleName="hintAnswerInputControl answerChoiceAndHintsTextcontainer">
                 <tinyMce:TinyMCE ui:field="hintTextBox" characterLimit="150"></tinyMce:TinyMCE>
                 <!-- <g:TextBox ui:field="hintTextBox" maxLength="150" styleName="{addWebResourceStyle.addResourceFormAnswerInputText}"/>  -->
                 <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormAnswerDeletebg}" ui:field="deleteButtonContainer">             

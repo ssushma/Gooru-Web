@@ -370,7 +370,6 @@
 	color: #CCCCCC;
 	/* float: right; */
 	font-size: 16px;
-    margin-right: 50px; 
 }
 .shelfVocabulary {
 	color: #cccccc;
@@ -1369,9 +1368,9 @@ position: relative;
 }
 .browseContainer{
 	display: inline-block;
-	width: 16%;
+	width: 13%;
 	position: relative;
-	text-align: center;
+	text-align: right;
 }
 .charLimit{
 	float: right;

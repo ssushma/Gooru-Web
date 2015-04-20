@@ -1,6 +1,16 @@
 .multipleAnswerInputControl {
 	float: left;
-	width: 80%;
+	width: 87%;
+	height: 30px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+	box-sizing:content-box;
+}
+.hintAnswerInputControl {
+	float: left;
+	width: 97%;
 	height: 30px;
 	border-color: rgb(221,221,221);
 	border-width: 1px;
@@ -14,6 +24,16 @@
 	.multipleAnswerInputControl {
 	float: left;
 	width: 80%;
+	height: 30px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+	box-sizing:content-box;
+}
+.hintAnswerInputControl {
+	float: left;
+	width: 95%;
 	height: 30px;
 	border-color: rgb(221,221,221);
 	border-width: 1px;
