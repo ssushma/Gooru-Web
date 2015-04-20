@@ -7,7 +7,7 @@
 			<div class="no-gutter">
 				<div class="col-md-8 col-sm-8 col-xs-8 ratings">
 					<div class="resultRating">
-						<img src="images/ratings1.png" />
+						<g:FlowPanel ui:field="ratingWidgetPanel"/>
 					</div>
 					<div class="addthis">
 						<span>+</span>31
@@ -36,10 +36,9 @@
 				<div class="clearfix"></div>
 				<g:HTMLPanel styleName="resourceDescription" ui:field="resourceDescription"/>
 				<div class="standerdContainer resourcesStanders">
-					<span class="additionalCount">+4</span>
+					<span class="additionalCount"></span>
 					<div class="clearfix"></div>
-					<div class="searchStandard">NGSS-3-ESS2</div>
-					<div class="searchStandard">NGSS-3-ESS2</div>
+					<g:FlowPanel ui:field="standardsDataPanel"/>
 				</div>
 				<div class="usedDetails">
 					User by 4 people

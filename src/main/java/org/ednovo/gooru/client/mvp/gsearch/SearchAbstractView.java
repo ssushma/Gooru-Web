@@ -225,12 +225,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void clickOnResource(ClickEvent clickEvent){
 		collectionPanel.removeStyleName("active");
 		resourcePanel.setStyleName("active");
+		resetData();
+		getUiHandlers().setSearchType(false);
 	}
 	
 	@UiHandler("collectionPanel")
 	protected void clickOnCollection(ClickEvent clickEvent){
 		collectionPanel.setStyleName("active");
 		resourcePanel.removeStyleName("active");
+		resetData();
+		getUiHandlers().setSearchType(true);
 	}
 	
 	@Override
@@ -539,6 +543,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void resetData(){
 		searchResultPanel.clear();
 		resultCountVal=0;
+		pageNumber=1;
 		lblLoadingText.setVisible(true);
 	}
 	/**
@@ -578,7 +583,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			handlerRegistration.removeHandler();
 		}
 		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				getUiHandlers().setUpdatedStandards();
@@ -586,15 +590,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		});
 	}
 	@Override
-	public void setUpdatedStandards(String standardsCode)
-	{
+	public void setUpdatedStandards(String standardsCode){
 		getUiHandlers().closeStandardsPopup();
-		if(!standardsCode.isEmpty())
-		{
+		if(!standardsCode.isEmpty()){
 			pnlAddFilters.add(createTagsLabel(standardsCode,"standardPanel"));
 			callSearch();
 		}
-	
 	}
-
 }

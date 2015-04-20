@@ -1,5 +1,7 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -13,6 +15,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -31,12 +34,15 @@ public class CollectionResourceWidget extends Composite {
 	@UiField Label resourceTitle,lblViewCount;
 	@UiField HTMLPanel resourceDescription,imageOverlay;
 	@UiField Image resoruceImage;
+	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	
 	private boolean failedThumbnailGeneration = false;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 	
 	private static final String NULL = "null";
+	
+	RatingWidgetView ratingWidgetView;
 	
 	public CollectionResourceWidget(ResourceSearchResultDo resourceSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -52,6 +58,10 @@ public class CollectionResourceWidget extends Composite {
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
+		SearchUiUtil.renderStandards(standardsDataPanel, resourceSearchResultDo);
+		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
+		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	/**
 	 * This method will set the thumbnail image
