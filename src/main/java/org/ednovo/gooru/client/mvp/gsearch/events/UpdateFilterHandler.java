@@ -37,7 +37,9 @@ public interface UpdateFilterHandler extends EventHandler {
 
 	/**
 	 * Refresh search view
+	 * @param filterValue {@link String}
+	 * @param addOrRemove {@link String}
 	 */
-	void updateFilters(String filters);
+	void updateFilters(String filterValue, String addOrRemove);
 
 }

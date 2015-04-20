@@ -477,4 +477,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 		this.standardSuggestionInfoAsyncCallback = standardSuggestionInfoAsyncCallback;
 	}
 
+	/**
+	 * @return the gooruGradesPresenter
+	 */
+	@Override
+	public GooruGradesPresenter getGooruGradesPresenter() {
+		return gooruGradesPresenter;
+	}
+	
+	 
+
 }

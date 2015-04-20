@@ -58,5 +58,9 @@ public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> imp
 		super.onReveal();
 	}
 	
+	public void updateFilterStyle(String filterName){
+		getView().updateFilterStyle(filterName);
+	}
+	
 
 }

@@ -26,12 +26,16 @@ package org.ednovo.gooru.client.mvp.gsearch.util;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
-import com.gwtplatform.mvp.client.PopupView;
-
 /**
  * @author Search Team
  *
  */
 public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandlers> {
+	
+	/**
+	 * Update the grade style.
+	 * @param filterName
+	 */
+	void updateFilterStyle(String filterName);
 
 }
