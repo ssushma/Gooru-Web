@@ -55,4 +55,9 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	void getAddStandards();
 	void setUpdatedStandards();
 	void closeStandardsPopup();
+	/**
+	 * This method will set the type of search
+	 * @param isCollectionSearch
+	 */
+	void setSearchType(boolean isCollectionSearch);
 }
