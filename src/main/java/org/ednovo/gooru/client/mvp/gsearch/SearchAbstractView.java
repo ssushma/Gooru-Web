@@ -253,9 +253,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			lblLoadingText.setVisible(false);
 		}else{
-			searchResultPanel.add(NoSearchResultWidget.getInstance());
+			System.out.println(" searchDo.getSearchResults().size() ::" +searchDo.getSearchResults().size() );
 			lblLoadingText.setVisible(false);
-			searchResults.setVisible(false);
+			searchResults.setVisible(true);
+			searchResults.setText(i18n.GL3210()+"  0 ");
+			searchResultPanel.add(NoSearchResultWidget.getInstance());
+			System.out.println("searchResultPanel::"+searchResultPanel.getElement().getStyle().getVisibility());
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 			collectionPanel.setStyleName("active");
