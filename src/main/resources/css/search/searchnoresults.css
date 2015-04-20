@@ -59,7 +59,7 @@
 #pnlNoSearchResults .featuredLibrariesContainer{
 	margin:0 10px;
 }
-#pnlNoSearchResults .featuredLibrariesContainer h4{
+#pnlNoSearchResults .featuredLibrariesContainer .featuredLibraryDiv{
 	margin:10px 10px;
 		font-size:14px;
 }
@@ -77,6 +77,7 @@
 	font-size:18px;
 	float:left;
 	width:68%;
+	height: 84px;
 }
 #pnlNoSearchResults .featuredLibrariesContainer .greyBox img{
 	width:50px;
