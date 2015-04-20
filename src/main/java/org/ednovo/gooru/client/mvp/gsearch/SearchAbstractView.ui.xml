@@ -12,41 +12,39 @@
 							<g:HTMLPanel styleName="seachLeftNavigation">
 								<panel:UlPanel>
 									<panel:LiPanel styleName="active" ui:field="collectionPanel">
-										<g:Anchor>Collection</g:Anchor>
+										<g:Anchor text="{i18n.GL0645}" title="{i18n.GL0645}"/> 
 									</panel:LiPanel>
 									<panel:LiPanel ui:field="resourcePanel">
-										<g:Anchor>Resource</g:Anchor>
+										<g:Anchor text="{i18n.GL1110}" title="{i18n.GL1110}"/>
 									</panel:LiPanel>
-
 								</panel:UlPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-md-6 col-sm-7">
-
 							<g:HTMLPanel styleName="seachRightNavigation">
-								<g:InlineLabel styleName="preHeader"> Preference </g:InlineLabel>
+								<g:InlineLabel styleName="preHeader" text="{i18n.GL3207}" title="{i18n.GL3207}"/>
 								<g:HTMLPanel styleName="btn-group grade">
-									<g:Button styleName="btn btn-primary">Grade</g:Button>
+									<g:Button styleName="btn btn-primary" text="{i18n.GL0325}" title="{i18n.GL0325}"/>
 									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="gradesDropDown">
 										<g:InlineLabel styleName="caret"></g:InlineLabel>
-										<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 									</panel:HTMLEventPanel>
 									<g:HTMLPanel styleName="dropdown-menu" ui:field="gradesPanel"></g:HTMLPanel>
 								</g:HTMLPanel>
 								
 							<g:HTMLPanel styleName="btn-group">
-								<g:Button styleName="btn btn-primary">Subjects</g:Button>
+								<g:Button styleName="btn btn-primary" text="{i18n.GL3208}" title="{i18n.GL3208}"/>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" ui:field="subjectDropDown">
 									<g:InlineLabel styleName="caret"></g:InlineLabel>
-									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+									<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 								</g:HTMLPanel>
 								<panel:UlPanel ui:field="ulSubjectPanel"/>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="btn-group">
-								<g:Button styleName="btn btn-primary">Browse Standers</g:Button>
+								<g:Button styleName="btn btn-primary" text="{i18n.GL3209}" title="{i18n.GL3209}"/>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
 									<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
-									<g:InlineLabel styleName="sr-only">Toggle Dropdown</g:InlineLabel>
+									<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
@@ -63,15 +61,15 @@
 							<div class="seachLeftNavigation">
 								<ul>
 									<li class="active">
-										<a class="collectionsIcon" href="">Collections</a>
+										<g:Anchor styleName="collectionsIcon" text="{i18n.GL0175}" title="{i18n.GL0175}"/>
 									</li>
 									<li>
-										<a class="assessmentIcon" href="">Assessments</a>
+										<g:Anchor styleName="assessmentIcon" text="{i18n.GL1325}" title="{i18n.GL1325}"/>
 									</li>
 								</ul>
 								<div class="authorDetails">
 									<div class="input-group">
-										<span> Author:</span>
+										<g:InlineLabel text="{i18n.GL0573} {i18n.GL_SPL_SEMICOLON}" title="{i18n.GL0573}"></g:InlineLabel>
 										<g:TextBox  styleName="form-control" ui:field="authorTxtBox" />
 										<g:Label styleName="searchQuestionMark"></g:Label>
 									</div>
