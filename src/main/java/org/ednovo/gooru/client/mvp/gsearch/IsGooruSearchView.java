@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 /**
@@ -94,4 +95,8 @@ public interface IsGooruSearchView<T extends ResourceSearchResultDo> extends
      * @return gradePanel
      */
 	HTMLPanel getGradePanel();
+
+	void OnStandardsClickEvent(Button addBtn);
+
+	void setUpdatedStandards(String setStandardsVal);
 }
