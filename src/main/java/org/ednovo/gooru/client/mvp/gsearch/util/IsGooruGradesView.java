@@ -36,6 +36,6 @@ public interface IsGooruGradesView extends IsViewWithHandlers<GooruGradesUiHandl
 	 * Update the grade style.
 	 * @param filterName
 	 */
-	void updateFilterStyle(String filterName);
+	void updateFilterStyle(String filterName,boolean isSelectAll);
 
 }

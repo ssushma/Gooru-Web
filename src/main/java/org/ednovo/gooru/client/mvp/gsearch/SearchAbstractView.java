@@ -89,7 +89,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel;
+	@UiField HTMLPanel searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel;
 	
 	@UiField HTMLEventPanel gradesDropDown;
 	
@@ -225,6 +225,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void clickOnResource(ClickEvent clickEvent){
 		collectionPanel.removeStyleName("active");
 		resourcePanel.setStyleName("active");
+		resourceSearchPanel.setVisible(true);
+		collectionSearchPanel.setVisible(false);
 		resetData();
 		getUiHandlers().setSearchType(false);
 	}
@@ -233,6 +235,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	protected void clickOnCollection(ClickEvent clickEvent){
 		collectionPanel.setStyleName("active");
 		resourcePanel.removeStyleName("active");
+		resourceSearchPanel.setVisible(false);
+		collectionSearchPanel.setVisible(true);
 		resetData();
 		getUiHandlers().setSearchType(true);
 	}
@@ -252,6 +256,17 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(false);
+		}
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
+			collectionPanel.setStyleName("active");
+			resourcePanel.removeStyleName("active");
+			resourceSearchPanel.setVisible(false);
+			collectionSearchPanel.setVisible(true);
+		}else{
+			collectionPanel.removeStyleName("active");
+			resourcePanel.setStyleName("active");
+			resourceSearchPanel.setVisible(true);
+			collectionSearchPanel.setVisible(false);
 		}
 		pnlAddFilters.clear();
 		showGradesFilter();
