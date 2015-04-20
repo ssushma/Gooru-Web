@@ -155,6 +155,7 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallback<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
+		getSearchDo().setPageSize(9);
 		getSearchService().getResourceSearchResults(searchDo, searchAsyncCallback);
 	}
 }

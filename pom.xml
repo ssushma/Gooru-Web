@@ -582,6 +582,7 @@
 							<cssSourceFiles>
                    			 	<cssSourceFile>search/newsearch.css</cssSourceFile>
                    			 	<cssSourceFile>search/searchnoresults.css</cssSourceFile>
+                   			 	<cssSourceFile>search/search-result-resources.css</cssSourceFile>
                				 </cssSourceFiles>
 							<cssSourceIncludes>
 								<cssSourceInclude>*.css</cssSourceInclude>
