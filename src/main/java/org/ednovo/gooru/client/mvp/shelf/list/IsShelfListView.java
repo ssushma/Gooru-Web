@@ -170,5 +170,7 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 
 	void reorderShelfItems(String itemId, int toBeMovedPos,String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);
 
-	void removeAssessment(HashMap<String, String> params, String assessment, FolderDo folderDo);    
+	void removeAssessment(HashMap<String, String> params, String assessment, FolderDo folderDo);
+
+	void updateAssessmentUrlDetails(FolderDo folderDo, HashMap<String, String> params);
 }
