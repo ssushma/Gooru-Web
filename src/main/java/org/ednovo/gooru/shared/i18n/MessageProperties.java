@@ -2991,4 +2991,13 @@ public interface MessageProperties extends Constants {
 	String GL3203();
 	String GL3204();
 	String GL3205();
+	
+	//added for new Question Types
+	
+	String GL3206();
+	String GL3207();
+	String GL3208();
+	String GL3209();
+	String GL3210();
+	String GL3211();
 }

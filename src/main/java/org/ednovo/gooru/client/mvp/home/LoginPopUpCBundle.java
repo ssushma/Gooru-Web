@@ -185,6 +185,7 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String collectionSelected();
 	String PopupMainVVSmall();
 	String PopupMainVSmall();
+	String AssessmentPopupMain();
 	String shareSelection();
 	String sharenEmbedContainer();
 	String addButtonContainer();

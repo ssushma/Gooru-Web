@@ -115,7 +115,7 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		labelChoice.getElement().setId("lblLabelChoice");
 		tinyOrTextBoxConatiner.getElement().setId("pnlTinyOrTextBoxConatiner");
 		answerTextBox.getElement().setId("tinyMCEAnswerTextBox");
-		tinyOrTextBoxConatiner.setStyleName(addWebResourceStyle.addResourceMultipleAnswerInputControl());
+		tinyOrTextBoxConatiner.setStyleName("multipleAnswerInputControl");
 		tinyOrTextBoxConatiner.addStyleName("multiAnswerChoiceContainer");
 		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
 		optionNoButtonContainer.getElement().setId("pnlOptionNoButtonContainer");

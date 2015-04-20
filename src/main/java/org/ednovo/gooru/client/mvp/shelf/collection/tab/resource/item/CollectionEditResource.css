@@ -828,8 +828,8 @@ user agent stylesheetdiv {
 }
 
 .myFolderCollectionUrlContent {
-	float: left;
-	width: 135px;
+	/* float: left;
+	width: 135px; */
 	/*height: 510px;*/
 	border-bottom: none;
 	border-left: none;
@@ -890,9 +890,7 @@ user agent stylesheetdiv {
 }
 
 .myFolderCollectionFormContainer {
-	float: left;
 	padding: 0px 10px 0px 10px;
-	width: 75%;
 	border-left: 1px solid #DDD;
 	/* height: 518px; */
 	background-color: white;
@@ -1254,7 +1252,7 @@ user agent stylesheetdiv {
 
 .myFolderCollectionButtonContainer {
 	float: left;
-	margin: 30px 0px 15px 99px;
+	margin: 30px 0px 15px 280px;
 }
 
 .myFolderEditButtonContainer {
@@ -2204,7 +2202,7 @@ margin-top: 18px; */
 .ownResourceFormInputTextBox {
 	outline: 0;
 	/* width: 308px; */
-	width: 79%;
+	width: 90%;
 	height: 28px;
 	color: rgb(81, 81, 81);
 	padding: 0px 0px 0px 5px;
@@ -2327,14 +2325,14 @@ margin-top: 18px; */
 
 .ownResourceFormRightsContent {
 	position: relative;
-	float: left;
+	display: inline-block;
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
-	margin: 27px 10px 0px 3px;
 	background: url(images/Classpage/sprite-classpage-type.png) no-repeat
 		left top;
 	background-position: 0px -46px;
+	vertical-align: middle;
 }
 
 .ownResourceFormRightsContent:hover {
@@ -2484,7 +2482,7 @@ margin-top: 18px; */
 }
 
 .resourceRightsContainer {
-	margin-left: 79px;
+	margin-left: 220px;
 	width: 100%;
 	float:left;
 }
@@ -3054,7 +3052,7 @@ vertical-align: top;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:11px;
 	color:#999999;
-	width:360px;
+	width:707px;
 	text-align:center;
 	margin-top:15px;
 }

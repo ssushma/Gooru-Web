@@ -97,6 +97,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.Collection
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.addquestion.QuestionTypePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 
@@ -281,5 +282,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EpapaLibraryPresenter> getEpapaPresenter();
 	
 	AddCenturyPresenter getAddCenturyPresenterWidget();
+	
+	AsyncProvider<QuestionTypePresenter> getQuestionTypePresenter();
 
 }

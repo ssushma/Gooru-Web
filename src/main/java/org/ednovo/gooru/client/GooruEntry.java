@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -193,6 +194,10 @@ public class GooruEntry implements EntryPoint {
 		
 		StyleInjector.injectAtEnd("@media (min-width: 480px) and (max-width: 767px){"+FolderContainerCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
 		FolderContainerCBundle.INSTANCE.css().ensureInjected();
+		
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px){"+CollectionCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+		
+		CollectionCBundle.INSTANCE.css().ensureInjected();
 	}
 	
 	

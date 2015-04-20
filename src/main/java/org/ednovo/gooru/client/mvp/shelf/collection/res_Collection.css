@@ -1,0 +1,520 @@
+.shelfItemContentDiv {
+}
+
+.folderItemContentDiv {
+}
+
+.ErrorShow {
+}
+
+.courseMaxMsg {
+}
+
+.coursesContainer {
+}
+
+.contentAlign {
+}
+
+.shelfItemContentInnerDiv {
+}
+
+.folderContentInnerDiv {
+}
+
+.contentAlignInputs {
+}
+
+.errorClass {
+}
+
+.courseMoreInfo {
+}
+
+.newColletionOR input {
+}
+
+.actionField {
+}
+
+.errorValidation {
+}
+
+.validationErrorContainer {
+}
+
+.important {
+}
+
+.collectionThumbnail {
+}
+
+.collectionThumbnails {
+}
+
+.assessmentThumbnails {
+}
+.collectionNotify {
+}
+
+.changeImage {
+}
+.changeImage:hover{
+}
+.shelfGradeInfoTitle {
+}
+
+.infoContainer {
+}
+
+.gradeInfoContainer {
+}
+
+.gradeInfoTitleContainer {
+}
+
+.shelfGradeInfoBottom {
+}
+.addQuestionStandard {
+}
+.shelfGradeTeacherTipTextTitle {
+}
+.shelfGradeTeacherTipError {
+}
+.shelfTeacherTipButtons
+{
+}
+.shelfGradeTeacherTipButtonsContainer
+{
+}
+.shelfTeacherTipButtonsCancel{
+}
+.shelfGradeTeacherTipTextbox{
+}
+
+.shelfGradeSelectResources {
+}
+
+.shelfGradeInfogardenContainer {
+}
+
+.shelfGradeInfogarden {
+}
+
+.shelfGradeInfogarden:hover {
+}
+
+.infoTextBox {
+}
+
+.infoAddButton {
+}
+
+.infoAddButton:HOVER {
+}
+
+.standardsCont {
+}
+.standardsEditResourceCont {
+}
+
+.gradeListCont {
+}
+
+.gradeList {
+}
+
+.standardsListContainer {
+}
+
+.shelfCourseList {
+}
+
+.shelfNameCourse {
+
+}
+.addResourceSuggestedBox {
+}
+.addResourceSuggestedBoxForQuestion {
+	margin-right:  0px;
+}
+.shelfVocabulary {
+}
+.shelfTeacherTip {
+}
+
+.shelfVocabularyStandard {
+}
+
+.shelfCourseSubject {
+}
+
+.shelfCourseAdded {
+}
+
+.subjectBox {
+}
+
+.floatLeft {
+}
+
+.floatLeftCollectionInputBox {
+}
+
+.collectionCourseLstPanel {
+}
+
+.courseTextBox {
+}
+
+.courseAddButton {
+}
+
+.courseAddButton:HOVER {
+}
+
+.courseMaxMsgShow {
+}
+
+.deleteCollection {
+}
+
+.deleteText {
+}
+
+.shelfGradeInfoHigherEd {
+}
+
+.shelfGradeInfoHigherEd:HOVER {
+}
+
+.shelfHigherEd {
+}
+
+.addedCoursesList {
+}
+
+.standardTxtBox {
+}
+
+.standardAddBtn {
+}
+
+.standardMax {
+}
+
+.standardMaxHide {
+}
+
+.floatLeftNeeded {
+}
+
+/**************** Collection Collaborator tab*******************/
+.collaboratorPanel {
+}
+
+.addCollaborator {
+}
+
+.addedCollaborator {
+}
+
+.clear {
+}
+
+.addCollaboratorText {
+}
+
+.collaboratorBox {
+}
+
+.addButton {
+}
+
+.collabData {
+}
+
+.collabList {
+}
+
+.addco {
+}
+
+.addCollabBlueBtn {
+}
+
+.addCollabBlueBtn:HOVER {
+}
+
+.collaboratorPanelRight {
+}
+
+.collaboratorRecent {
+}
+
+.kinderGartenGrade {
+}
+
+.higherEducationGrade {
+}
+
+.collectionStandardsMargin {
+}
+
+.mandatoryLabel {
+}
+.mandatoryLabelError {
+}
+.gwtGlassPanel{
+}
+
+
+/*For share*/
+.showShareInnerDiv {
+}
+
+.showShareCointainer {
+}
+
+.shareLink {
+}
+
+.shareLinkBoxDisabled {
+}
+
+.publicImage {
+	
+}
+
+.privateImage {
+}
+
+.linkImage {
+}
+
+.showShareSubTitles {
+}
+
+.radioButtonPanel {
+}
+
+.publicText {
+}
+
+.imageText {
+}
+
+.visibilityText {
+}
+.dontWorrkText {
+}
+/* end of share collection*/
+
+
+/* Assign Tab in collection Edit */
+.mainContainer{
+}
+.labelText{
+}
+
+.dropdownContainer{
+}
+
+.controlsContainer{
+}
+
+.labelTitleText{
+}
+
+.placeHolderText{
+}
+
+.arrow {
+}
+
+
+.assignmentsContainer{
+}
+
+.buttonAssignContainer{
+}
+
+
+.scrollPanelContainer{
+}
+
+/* End Assign Tab in collection Edit */
+
+
+.profileEditImageButton {
+	
+}
+.profileEditImageButton:hover{
+}
+
+.profileKinderGartenGrade {
+}
+
+.profileHigherEducationGrade {
+}
+
+.userNumber {
+}
+
+.userCourseName {
+}
+
+.profileCourseMaxMsgShow {
+}
+.collectionHelpIcon {
+}
+.playerSummaryPageGlassPanel{
+}
+.settingPageDefaultGrade{
+
+}
+.formViewButtonContainer
+{
+}
+
+/* Mobile support Image div in NewCollection popup */
+
+.shelfInfoMobileSupportedMain{
+}
+
+.mobileSupportPanel{
+}
+
+.mobileSupportImagePanel{
+}
+.classPageEmailCheckBoxBg {
+}
+
+.classPageEmailCheckBoxBg:hover {
+}
+.questionMark{
+}
+
+.classPageEmailCheckBoxBgHoverSprite {
+}
+.classPageEmailCheckBoxBgHover {
+}
+.shelfInfoMobileSupported{
+}
+
+.searchRenameCollProfanityErrLbl {
+}
+.createCollContentAlignInputs {
+}
+.primaryLabel{
+
+
+}
+.infoContainerMargin{
+}
+.primaryLabelContainer{
+}
+.secondaryLabelContainer{
+}
+.primaryToggleArrowBottom {
+
+}
+.primaryToggleArrowBottomrotateRight {
+
+}
+.secondaryInformationContainer
+{
+}
+.secondaryInfoContainer {
+}
+.languageObjectiveContainer{
+}
+.depthOfKnowledgeContainer
+{
+}
+.languageObjectiveTextArea
+{
+}
+.languageObjectiveInfoContainer {
+}
+.questionDepthOfKnoweldgeContainer{
+}
+.checkBoxOuterContiner
+{
+}
+.checkBoxinnerContiner
+{
+}
+.checkBoxinnerContinerlevel2
+{
+}
+.checkBoxinnerContinerlevel3{
+}
+.checkBoxinnerContinerlevel4{
+}
+.checkBoxinnerContinerForQuestion
+{
+}
+.checkBoxlevels{
+}
+.checkBoxinnerContinerlearning{
+}
+.checkBoxinnerContinerlearninglevel2{
+}
+.checkBoxinnerContinerlearninglevel3{
+}
+.dropdownContainerInstructional{
+}
+.arrowInstructional {
+}
+.scrollPanelContainerInstructional{
+}
+
+
+.learningInnovationSkills{
+}
+
+.deptOfKnowledge{
+}
+.languageObjectives{
+}
+.teacherTipLabel {
+}
+.teacherTipPencilHolder{
+}
+.errorLabelColor
+{
+}
+.depthOfKnowledgeSubContainer{
+}
+.btnOuterContainer{
+}
+.gradeInfoLabel{
+}
+.browseContainer{
+}
+.charLimit{
+}
+.learningObjErrStyle{
+}
+.checkBoxlevels input[type="checkbox"]{
+}
+.checkBoxlevels label{
+}
+.centuryContainer{
+}
+.rightCourseContainer{
+}
+.languageTextAreaCont{
+}
+.scrollPanelContainerAudience{
+}
+.dropdownContainerAudience{
+}
+.selecteAssessment{
+}
+.deselecteAssessment{
+}
+.standardsCont input[type="text"] {
+	width:79% !important;
+}

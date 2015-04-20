@@ -1,0 +1,28 @@
+.multipleAnswerInputControl {
+	float: left;
+	width: 80%;
+	height: 30px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+	box-sizing:content-box;
+}
+
+@media only screen and (min-width:768px) and (max-width:991px){
+	
+	.multipleAnswerInputControl {
+	float: left;
+	width: 80%;
+	height: 30px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+	box-sizing:content-box;
+}
+}
+
+@media only screen and (min-width:992px) and (max-width:1024px){
+	
+}

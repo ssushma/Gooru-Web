@@ -3281,3 +3281,8 @@ span.review input[type="checkbox"]{
 div#spnlDisclosureContentSimPanel>div:first-child {
 	/* padding: 15px; */
 }
+
+.colmdPadding {
+	padding-left:0;
+	padding-right:0;
+}

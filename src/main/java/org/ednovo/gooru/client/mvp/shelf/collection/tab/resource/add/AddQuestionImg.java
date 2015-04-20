@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 
@@ -43,6 +44,7 @@ public class AddQuestionImg extends Composite
 	@UiField Label removeImgLbl;
 	@UiField Label displayQuestLbl;
 	@UiField Image questionImageContainer;
+	@UiField HTMLEventPanel eHearderIconImage;
 	
 	private String fileName=null;
 	private static final String DEFAULT_QUESTION_IMAGE="images/default-question.png";
@@ -70,6 +72,7 @@ public class AddQuestionImg extends Composite
 		removeImgLbl.getElement().setId("lblChangeImgLbl");
 		removeImgLbl.getElement().setAttribute("alt", i18n.GL0862());
 		removeImgLbl.getElement().setAttribute("title",i18n.GL0862());
+		eHearderIconImage.getElement().setId("eHearderIconImage");
 	}
 	
 	
