@@ -2322,12 +2322,14 @@ box-shadow: 0px 0px 7px 3px rgba(204,202,202,1);*/
 .getStart .getInnerRight h3 {
 	font-family: 'Arvo', serif !important;
 	margin: 8px 0 20px 0;
+	font-size: 24px;
 }
 
 .getStart .getInnerRight .first {
 	font-family: 'Arvo', serif;
 	float: left;
 	width: 62%;
+	font-size: 24px;
 }
 
 .getStart .getInnerRight img {
