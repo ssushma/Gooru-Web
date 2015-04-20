@@ -22,37 +22,23 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.gsearch;
+package org.ednovo.gooru.client.mvp.gsearch.resource;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
-import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
-import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
-import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionHandler;
-import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionHandler;
-import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
-
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 /**
- * @author Search Team
- * 
+ * @fileName : IsSearchResourceView.java
+ *
+ * @description : 
+ *
+ * @version : 1.3
+ *
+ * @date: 20-04-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
  */
-public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler,SwitchSearchHandler,SearchHandler,
-    AggregatorSuggestionEventHandler{
-	
-	void getCollectionSearchResultsOnPageWise(String query,int pageNumber,int pageSize);
-	/**
-	 * To add Grades Presenter widget
-	 */
-	void getGradesWidget();
-	/**
-	 * @return the gooruGradesPresenter
-	 */
-	GooruGradesPresenter getGooruGradesPresenter();
-	void getAddStandards();
-	void setUpdatedStandards();
-	void closeStandardsPopup();
+public interface IsSearchResourceView extends IsGooruSearchView<ResourceSearchResultDo> {
+
 }

@@ -5,10 +5,12 @@
 #gooruSearchMainContainer .loadingText{
 	text-align: center;
 	font-size: 23px;
+	width: 100%;
+	clear: both;
 }
 #gooruSearchMainContainer .searchFilters{
 	display: inline-block;
-	width: 76%;
+	width: 65%;
 	margin-top: 20px;
 }
 #gooruSearchMainContainer .subNavigation{

@@ -28,13 +28,10 @@ public class ResourceImageWidget extends Composite {
 	public ResourceImageWidget(final CollectionItemSearchResultDo collectionItemSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		final String categoryValue=StringUtil.getCategory(collectionItemSearchResultDo.getCategory()!=null?collectionItemSearchResultDo.getCategory():"");
-		if(collectionItemSearchResultDo.getUrl() != null)
-		{
-		imgResourceImg.setUrl(collectionItemSearchResultDo.getUrl());
-		}
-		else
-		{
-		imgResourceImg.setUrl("../images/default-"+categoryValue.toLowerCase()+".png");
+		if(collectionItemSearchResultDo.getUrl() != null){
+			imgResourceImg.setUrl(collectionItemSearchResultDo.getUrl());
+		}else{
+			imgResourceImg.setUrl("../images/default-"+categoryValue.toLowerCase()+".png");
 		}
 		imgResourceImg.addErrorHandler(new ErrorHandler() {
 			@Override
