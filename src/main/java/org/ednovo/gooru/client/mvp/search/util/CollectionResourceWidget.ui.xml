@@ -1,0 +1,71 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<g:HTMLPanel styleName="col-md-4 col-sm-4">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="no-gutter">
+				<div class="col-md-8 col-sm-8 col-xs-8 ratings">
+					<div class="resultRating">
+						<img src="images/ratings1.png" />
+					</div>
+					<div class="addthis">
+						<span>+</span>31
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-4 viewContainer">
+					<span>
+						<img src="images/eye.png"/> <g:Label ui:field="lblViewCount" styleName="authorName"></g:Label>
+					</span>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="no-gutter">
+				<div class="col-md-6 col-sm-6 resourceImgContainer">
+					<a href="#">
+						<g:Image ui:field="resoruceImage" />
+						<g:HTMLPanel styleName="resourceName" ui:field="imageOverlay"></g:HTMLPanel>
+					</a>
+				</div>
+				<div class="col-md-6 col-sm-6 resourceDesc">
+					<g:Label styleName="collectionTitle" ui:field="resourceTitle"/>
+					<div class="resourceAuthorDetails">NASA</div>
+				</div>
+				<div class="clearfix"></div>
+				<g:HTMLPanel styleName="resourceDescription" ui:field="resourceDescription"/>
+				<div class="standerdContainer resourcesStanders">
+					<span class="additionalCount">+4</span>
+					<div class="clearfix"></div>
+					<div class="searchStandard">NGSS-3-ESS2</div>
+					<div class="searchStandard">NGSS-3-ESS2</div>
+				</div>
+				<div class="usedDetails">
+					User by 4 people
+					<a href="">View More</a>
+				</div>
+				<div class="userDetailsResources no-gutter">
+					<div class="col-md-8 col-xs-8 col-sm-8 user">
+						<img src="images/comment-avathar.png" />
+						austin
+					</div>
+					<div class="col-md-4 col-xs-4 col-sm-4 collectionResources">
+						<a href="#">
+							<img src="images/library-image.png" />
+						</a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="panel-footer no-gutter">
+			<div class="col-md-12 col-sm-12 remixButton">
+				<button class="primary" type="submit">Add</button>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</g:HTMLPanel>
+</ui:UiBinder> 

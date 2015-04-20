@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
@@ -140,7 +141,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
 						lblLoadingText.setVisible(true);
 						pageNumber++;
-						getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 9);
+						}else{
+							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+						}
 					}
 				}
 			}

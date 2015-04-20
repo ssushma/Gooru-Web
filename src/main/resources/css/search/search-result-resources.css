@@ -1,0 +1,292 @@
+@charset "utf-8";
+/* CSS Document */
+
+#gooruSearchMainContainer .resourceDetails{
+    background:#ffffff;
+	margin-bottom:10px;
+}
+
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 0;
+}
+#gooruSearchMainContainer .resourceDetails .seachRightNavigation {
+	text-align: right;
+	margin: 12px 0;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li {
+    display: inline-block;
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a {
+    border: 2px solid #ffffff;
+    border-radius: 3px;
+    color: #515151;
+    display: block;
+    font-size: 13px;
+	padding:8px 8px;
+}
+
+#gooruSearchMainContainer  .resourceDetails .seachLeftNavigation ul.resourceTypes li a.videos {
+    background: url("../images/resource-type-icons.png") no-repeat scroll 4px 7px;
+	    padding: 8px 6px 8px 35px;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a.interactives {
+    background: url("../images/resource-type-icons.png") no-repeat scroll 4px -22px;
+	    padding: 8px 6px 8px 35px;
+}
+
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a.webpage {
+    background: url("../images/resource-type-icons.png") no-repeat scroll 4px -217px;
+	    padding: 8px 6px 8px 35px;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a.questions {
+    background: url("../images/resource-type-icons.png") no-repeat scroll 4px -133px;
+	    padding: 8px 6px 8px 35px;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a.images {
+     background: url("../images/resource-type-icons.png") no-repeat scroll 4px -245px;
+	    padding: 8px 6px 8px 35px;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a.texts {
+    background: url("../images/resource-type-icons.png") no-repeat scroll 4px -49px;
+	    padding: 8px 6px 8px 35px;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a.audio {
+    background: url("../images/resource-type-icons.png") no-repeat scroll 4px -272px;
+	    padding: 8px 6px 8px 35px;
+}
+#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a:hover {
+    border: 2px solid #87badd;
+    text-decoration: none;
+}
+#gooruSearchMainContainer .ratingDetails {
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    display: inline-block;
+    font-size: 13px;
+    min-height: 40px;
+    padding: 0 16px;
+}
+#gooruSearchMainContainer .gridToggle{
+    border-right: 1px solid #cccccc;
+    display: inline-block;
+	min-height: 40px;
+    padding: 0 16px;
+	position:relative;
+}
+#gooruSearchMainContainer .gridToggle .dropdown-menu {
+	left: auto;
+	right: 0;
+	top: 120%;
+	font-size: 12px;
+	min-width: 245px;
+	margin: 0 0;
+	padding: 0 0;
+}
+#gooruSearchMainContainer .gridToggle .btn-primary {
+	color: #fff;
+	background-color: #999999;
+	border-color: #908f8f;
+}
+#gooruSearchMainContainer .gridToggle .btn-primary:hover,#gooruSearchMainContainer  .gridToggle .btn-primary:focus,#gooruSearchMainContainer  .gridToggle .btn-primary:active,#gooruSearchMainContainer  .gridToggle .btn-primary.active,#gooruSearchMainContainer  .gridToggle .open .dropdown-toggle.btn-primary {
+	color: #fff;
+	background-color: #515151;
+	border-color: #434242;
+}
+#gooruSearchMainContainer .noResultsContainer .mainHeadingBlock .h2 {
+    display: inline-block;
+    font-size: 24px;
+    margin: 8px 10px;
+}
+#gooruSearchMainContainer .resultRating,#gooruSearchMainContainer .addthis{
+	display:inline-block;
+	vertical-align:middle;
+}
+#gooruSearchMainContainer .addthis{
+	margin-left:15px;
+}
+#gooruSearchMainContainer .addthis span{
+	font-size: 30px;
+	color: #999999;
+	line-height: 17px;
+	vertical-align: middle;
+}
+#gooruSearchMainContainer .resourceImgContainer{
+    width: 80px !important;
+	margin-right:10px;
+}
+#gooruSearchMainContainer .resourceImgContainer img {
+	height: 60px;
+	width: 80px;
+}
+#gooruSearchMainContainer .resourceImgContainer a:hover {
+	opacity: 0.6;
+}
+#gooruSearchMainContainer .resourceImgContainer a:hover .videoSmall {
+    display: none;
+}
+#gooruSearchMainContainer .resourceDesc {
+    width: 57% !important;
+}
+#gooruSearchMainContainer .resourceDesc .collectionTitle {
+	font-size: 18px;
+	font-weight: 500;
+	color: #0c74be;
+	margin-top: 4px;
+	line-height: 18px;
+}
+#gooruSearchMainContainer .resourceDesc .resourceAuthorDetails{
+	color: #0c74be;
+	margin-top: 4px;
+}
+#gooruSearchMainContainer .resourceDescription{
+	padding:10px 10px;
+	min-height:80px;
+}
+#gooruSearchMainContainer .resourcesStanders{
+	text-align:center;
+	padding:0 0 10px 0;
+}
+#gooruSearchMainContainer .resourcesStanders .searchStandard{
+	width:47%;
+	font-size:12px;
+}
+#gooruSearchMainContainer .resourcesStanders .additionalCount{
+	text-align:right;
+	display:block;
+	margin-right:10px;
+}
+#gooruSearchMainContainer .usedDetails{
+	padding:10px 10px;
+	font-size:13px;
+}
+#gooruSearchMainContainer .usedDetails a:hover{
+	text-decoration:none;
+	opacity:0.75;
+}
+#gooruSearchMainContainer .userDetailsResources{
+	padding:10px 10px;
+	border-top:1px solid #dddddd;
+}
+#gooruSearchMainContainer .userDetailsResources  .user{
+	font-size:13px;
+	color: #0c74be;
+}
+#gooruSearchMainContainer .userDetailsResources  .user img{
+	width:30px;
+}
+#gooruSearchMainContainer .collectionResources {
+	text-align:right;
+}
+#gooruSearchMainContainer .collectionResources img{
+	width:40px;
+	border-left:3px solid #1076bb;
+}
+#gooruSearchMainContainer .collectionResources a{
+	display:block;
+}
+#gooruSearchMainContainer .collectionResources a:hover img{
+	opacity:0.75;
+}
+#gooruSearchMainContainer .ratingandGrid{
+	display:inline-block;
+	vertical-align:middle;
+}
+
+@media (min-width: 240px) and (max-width: 319px){
+	#gooruSearchMainContainer .resourceDetails .seachRightNavigation {
+		text-align: center;
+	}
+	#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes
+		{
+		text-align: center;
+	}
+	#gooruSearchMainContainer .ratingandGrid {
+		text-align: center;
+		background: #eaeaea;
+		border-left: 1px solid #cccccc;
+		border-right: 1px solid #cccccc;
+		padding: 5px 0 0 0;
+		display: block;
+	}
+	#gooruSearchMainContainer .ratingandGrid .dropdown-menu>li>a {
+		text-align: left;
+	}
+	#gooruSearchMainContainer .ratingandGrid .ratingDetails,#gooruSearchMainContainer  .ratingandGrid .gridToggle
+		{
+		border-left: none;
+		border-right: none;
+	}
+	#gooruSearchMainContainer .resourceDesc,.resourceImgContainer {
+		float: left;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 479px){
+#gooruSearchMainContainer .resourceDetails .seachRightNavigation {
+		text-align: center;
+	}
+	#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes
+		{
+		text-align: center;
+	}
+	#gooruSearchMainContainer .ratingandGrid {
+		text-align: center;
+		background: #eaeaea;
+		border-left: 1px solid #cccccc;
+		border-right: 1px solid #cccccc;
+		padding: 5px 0 0 0;
+		display: block;
+	}
+	#gooruSearchMainContainer .ratingandGrid .dropdown-menu>li>a {
+		text-align: left;
+	}
+	#gooruSearchMainContainer .ratingandGrid .ratingDetails,#gooruSearchMainContainer .ratingandGrid .gridToggle
+		{
+		border-left: none;
+		border-right: none;
+	}
+	#gooruSearchMainContainer .resourceDesc,#gooruSearchMainContainer .resourceImgContainer
+		{
+		float: left;
+	}
+}
+
+@media (min-width: 480px) and (max-width: 767px)  {
+		
+		#gooruSearchMainContainer .resourceDetails .seachRightNavigation{
+			text-align:center;
+		}
+		#gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes{
+			text-align:center;
+		}
+		#gooruSearchMainContainer .ratingandGrid{
+			text-align:center;
+			background:#eaeaea;
+			border-left:1px solid #cccccc;
+			border-right:1px solid #cccccc;
+			padding:5px 0 0 0;
+			display:block;
+		}
+		#gooruSearchMainContainer .ratingandGrid .dropdown-menu > li > a{
+			text-align:left;
+		}
+		#gooruSearchMainContainer .ratingandGrid .ratingDetails,#gooruSearchMainContainer .ratingandGrid .gridToggle{
+			border-left:none;
+			border-right:none;
+		}
+		#gooruSearchMainContainer .resourceDesc,#gooruSearchMainContainer .resourceImgContainer{
+			float:left;
+		}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+	
+}

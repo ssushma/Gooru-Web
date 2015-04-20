@@ -26,6 +26,7 @@
 package org.ednovo.gooru.client.mvp.gsearch.resource;
 
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -61,7 +62,7 @@ public class SearchResourceView extends
 	@Override
 	public Widget renderSearchResult(
 			ResourceSearchResultDo resourceSearchResultDo) {
-		return new Widget();
+		return new CollectionResourceWidget(resourceSearchResultDo);
 	}
 
 }
