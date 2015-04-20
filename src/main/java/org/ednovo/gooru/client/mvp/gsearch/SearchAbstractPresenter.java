@@ -570,6 +570,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			viewToken=PlaceTokens.SEARCH_RESOURCE;
 		}
 		Map<String, String> params = getView().getSearchFilters();
+		getSearchDo().setPageNum(1);
 		params.put(QUERY, getSearchDo().getUrlQuery());
 		getPlaceManager().revealPlace(viewToken, params, true);
 	}
