@@ -63,10 +63,10 @@
 							<div class="seachLeftNavigation">
 								<ul>
 									<li class="active">
-										<a class="collectionsIcon" href="">Collections (5220)</a>
+										<a class="collectionsIcon" href="">Collections</a>
 									</li>
 									<li>
-										<a class="assessmentIcon" href="">Assessments (192)</a>
+										<a class="assessmentIcon" href="">Assessments</a>
 									</li>
 								</ul>
 								<div class="authorDetails">
