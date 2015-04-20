@@ -24,21 +24,32 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
+import java.util.HashMap;
+
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+
 import com.google.gwt.event.shared.GwtEvent;
 
-public class ChangeShelfPanelActiveStyleEvent extends GwtEvent<ChangeShelfPanelActiveStyleHandler> {
+public class UpdateAssmntUrlOnShelfListEvent extends GwtEvent<UpdateAssmntUrlOnShelfListEventHandler>{
 
-	public static final Type<ChangeShelfPanelActiveStyleHandler> TYPE = new Type<ChangeShelfPanelActiveStyleHandler>();
+	public static final Type<UpdateAssmntUrlOnShelfListEventHandler> TYPE = new Type<UpdateAssmntUrlOnShelfListEventHandler>();
 	
-	public ChangeShelfPanelActiveStyleEvent(){}
+	private FolderDo folderDo;
+	private HashMap<String, String> params;
+	
+	public UpdateAssmntUrlOnShelfListEvent(FolderDo folderDo, HashMap<String, String> params){
+		this.folderDo = folderDo;
+		this.params = params;
+	}
 	
 	@Override
-	public Type<ChangeShelfPanelActiveStyleHandler> getAssociatedType() {
+	public com.google.gwt.event.shared.GwtEvent.Type<UpdateAssmntUrlOnShelfListEventHandler> getAssociatedType() {
 		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(ChangeShelfPanelActiveStyleHandler handler) {
-		handler.changeShelfPanelActiveStyle();
+	protected void dispatch(UpdateAssmntUrlOnShelfListEventHandler handler) {
+		handler.updateAssmntUrl(folderDo, params);
 	}
+
 }

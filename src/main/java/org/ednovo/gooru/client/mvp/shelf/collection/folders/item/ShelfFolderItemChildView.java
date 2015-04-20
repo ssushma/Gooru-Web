@@ -10,9 +10,11 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveAssessment;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateAssmntUrlOnShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
@@ -322,6 +324,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 						folderDo.setSharing(result.getSharing());
 						folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
 						itemTitle.setText(folderDo.getTitle());
+						triggerUpdateAssessmentUrl(result);
 					}
 					editAssessmentPopup.hide();
 					Window.enableScrolling(true);
@@ -340,6 +343,25 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 		}
 	}
+	protected void triggerUpdateAssessmentUrl(FolderDo result) {
+		HashMap<String,String> params = new HashMap<String,String>();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			params.put("o3",AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}else{
+			AppClientFactory.fireEvent(new UpdateAssmntUrlOnShelfListEvent(result, params));
+		}
+	}
+
 	@UiHandler("collectionImage")
 	public void clickOnCollectionImage(ClickEvent event) {
 		getEditAssessmentPoupOrPlayCollection();
