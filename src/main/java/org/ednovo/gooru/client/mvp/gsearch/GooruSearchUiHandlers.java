@@ -52,5 +52,7 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	 * @return the gooruGradesPresenter
 	 */
 	GooruGradesPresenter getGooruGradesPresenter();
-
+	void getAddStandards();
+	void setUpdatedStandards();
+	void closeStandardsPopup();
 }

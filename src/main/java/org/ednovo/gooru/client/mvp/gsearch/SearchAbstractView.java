@@ -54,6 +54,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -61,6 +62,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -99,17 +101,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField TextBox authorTxtBox;
 	
+	@UiField Button btnStandardsBrowse;
+	
 	LiPanel liPanel;
 	
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
 	
-	String grades,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
+	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
 
 	int pageNumber = 1,resultCountVal=0;
 	
-	String selectedSubjects,selectedAuthors, selectedGrades;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards;
+	
+	private HandlerRegistration handlerRegistration=null;
 	
 	/**
 	 * Assign new instance for 
@@ -147,7 +153,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pnlBackToTop.getElement().setId("back-top");
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
-		subjectDropDown.addDomHandler(new DropDownClickHandler(), ClickEvent.getType());
+		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
+		btnStandardsBrowse.addClickHandler(new DropDownClickHandler(2));
 		gradesDropDown.addClickHandler(new GradesDropDownHandler());
 		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 			@Override
@@ -170,15 +177,24 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 * @author Gooru
 	 */
 	public class DropDownClickHandler implements ClickHandler{
+		int value;
+		DropDownClickHandler(int value){
+			this.value=value;
+		}
 		@Override
 		public void onClick(ClickEvent event) {
-			String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
-			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
-				ulSubjectPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-				subjectDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
-			}else{
-				ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
-				subjectDropDown.getElement().getStyle().clearBackgroundColor();
+			if(value==1){
+				String displayValue=ulSubjectPanel.getElement().getStyle().getDisplay();
+				if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
+					ulSubjectPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+					subjectDropDown.getElement().getStyle().setBackgroundColor("#1076bb");
+				}else{
+					ulSubjectPanel.getElement().getStyle().setDisplay(Display.NONE);
+					subjectDropDown.getElement().getStyle().clearBackgroundColor();
+				}
+			}
+			if(value==2){
+				getUiHandlers().getAddStandards();
 			}
 		}
 	}
@@ -238,6 +254,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showCategoryFilter();
 		showSubjectsFilter();
 		showAuthorFilter();
+		showStandardsFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -304,6 +321,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
+	/**
+	 * Pre-Selected standards showing in search page
+	 */
+	private void showStandardsFilter() {
+		standards = AppClientFactory.getPlaceManager().getRequestParameter("flt.standard");
+		if(standards!=null){
+			pnlAddFilters.setVisible(true);
+			String[] standardsSplit = standards.split(",");
+			for(int i=0; i<standardsSplit.length; i++){
+				pnlAddFilters.add(createTagsLabel(standardsSplit[i],"standardPanel"));
+			}
+		}
+	}
+	
 	/**
 	 * Pre-Selected Author showing in search page
 	 */
@@ -432,6 +463,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedAuthors="";
 		selectedSubjects="";
 		selectedGrades="";
+		selectedStandards="";
 		
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
 		while(widgets.hasNext()){
@@ -456,6 +488,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").trim();
 				}
+				if("standardPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					if (!selectedStandards.isEmpty()) {
+						selectedStandards += COMMA_SEPARATOR;
+					}
+					selectedStandards += closeLabelSetting.getSourceText();
+				}
 			}
 		}
 	}
@@ -471,6 +509,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		 }
 		 if(!selectedGrades.isEmpty()){
 			 filters.put(IsGooruSearchView.GRADE_FLT, selectedGrades);
+		 }
+		 if(!selectedStandards.isEmpty()){
+			 filters.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
 		 }
 		 return filters; 
 	}
@@ -530,4 +571,30 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			callSearch();
 		}
 	};
+	
+	public void OnStandardsClickEvent(Button standardsButtonClicked)
+	{
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedStandards();
+			}
+		});
+	}
+	@Override
+	public void setUpdatedStandards(String standardsCode)
+	{
+		getUiHandlers().closeStandardsPopup();
+		if(!standardsCode.isEmpty())
+		{
+			pnlAddFilters.add(createTagsLabel(standardsCode,"standardPanel"));
+			callSearch();
+		}
+	
+	}
+
 }
