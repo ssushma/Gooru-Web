@@ -22,45 +22,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gsearch.util;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.PresenterWidget;
-import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.proxy.Proxy;
+package org.ednovo.gooru.client.mvp.gsearch.resource;
+
+import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
+import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+
+import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Search Team
- *
+ * @fileName : SearchResourceView.java
+ * 
+ * @description :
+ * 
+ * @version : 1.3
+ * 
+ * @date: 10-04-2015
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
-public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> implements GooruGradesUiHandlers {
+public class SearchResourceView extends
+		SearchAbstractView<ResourceSearchResultDo> implements
+		IsSearchResourceView {
 
-	
+
+	public SearchResourceView() {
+		super(false);
+	}
 	/**
-	 * Class constructor
-	 * @param view {@link View}
-	 * @param proxy {@link Proxy}
+	 * To render Collection search results.
+	 * 
+	 * @return collectionSearchWidget{@link Widget}
 	 */
-	@Inject
-	public GooruGradesPresenter( EventBus eventBus,IsGooruGradesView view) {
-		super(eventBus,view);
-		getView().setUiHandlers(this);
-	}
-
 	@Override
-	public void onBind() {
-		super.onBind();
+	public Widget renderSearchResult(
+			ResourceSearchResultDo resourceSearchResultDo) {
+		return new CollectionResourceWidget(resourceSearchResultDo);
 	}
-
-	@Override
-	protected void onReveal(){
-		super.onReveal();
-	}
-	
-	public void updateFilterStyle(String filterName){
-		getView().updateFilterStyle(filterName, false);
-	}
-	
 
 }

@@ -158,7 +158,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	String collectionQuery;
 	@Override
 	public SearchFilterDo getSearchFilters(String type) {
-		if (type.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {
+		if (type.equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)) {
 			type = RESOURCE;
 		} else {
 			type = SCOLLECTION;

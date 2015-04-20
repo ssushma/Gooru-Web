@@ -22,45 +22,23 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.gsearch.util;
+package org.ednovo.gooru.client.mvp.gsearch.resource;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.PresenterWidget;
-import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.proxy.Proxy;
-
+import org.ednovo.gooru.client.mvp.gsearch.IsGooruSearchView;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 /**
- * @author Search Team
+ * @fileName : IsSearchResourceView.java
  *
+ * @description : 
+ *
+ * @version : 1.3
+ *
+ * @date: 20-04-2015
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
  */
-public class GooruGradesPresenter extends PresenterWidget<IsGooruGradesView> implements GooruGradesUiHandlers {
-
-	
-	/**
-	 * Class constructor
-	 * @param view {@link View}
-	 * @param proxy {@link Proxy}
-	 */
-	@Inject
-	public GooruGradesPresenter( EventBus eventBus,IsGooruGradesView view) {
-		super(eventBus,view);
-		getView().setUiHandlers(this);
-	}
-
-	@Override
-	public void onBind() {
-		super.onBind();
-	}
-
-	@Override
-	protected void onReveal(){
-		super.onReveal();
-	}
-	
-	public void updateFilterStyle(String filterName){
-		getView().updateFilterStyle(filterName, false);
-	}
-	
+public interface IsSearchResourceView extends IsGooruSearchView<ResourceSearchResultDo> {
 
 }
