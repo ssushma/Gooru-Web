@@ -98,9 +98,10 @@ public class CollectionSearchWidget extends Composite {
 			}
 		});
 		String collectionDesc=collectionSearchResultDo.getDescription();
+		collectionDescription.getElement().setAttribute("title", collectionDesc);
 		if(!StringUtil.isEmpty(collectionDesc)){
-			if(collectionDesc.length()>=130){
-				collectionDesc=collectionDesc.substring(0,130)+"...";
+			if(collectionDesc.length()>=120){
+				collectionDesc=collectionDesc.substring(0,120)+"...";
 			}
 			collectionDescription.getElement().setInnerText(collectionDesc);
 		}
@@ -138,7 +139,7 @@ public class CollectionSearchWidget extends Composite {
 								break;
 							}
 							try{
-							pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo));
+								pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo));
 							}catch(Exception ex){
 								ex.printStackTrace();
 							}

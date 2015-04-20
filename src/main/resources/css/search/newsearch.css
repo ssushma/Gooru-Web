@@ -5,6 +5,8 @@
 #gooruSearchMainContainer .loadingText{
 	text-align: center;
 	font-size: 23px;
+	width: 100%;
+	clear: both;
 }
 #gooruSearchMainContainer .searchFilters{
 	display: inline-block;
