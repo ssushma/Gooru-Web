@@ -5,7 +5,7 @@
 		<g:HTMLPanel>
 			<div class="gradeHeader">Select a signgle or multiple grade(s).</div>
 
-			<g:HTMLPanel styleName="gradesContainer">
+			<g:HTMLPanel styleName="gradesContainer" ui:field="gradeContainer">
 				<uc:UlPanel ui:field="elementryPanel"></uc:UlPanel>
 				<uc:UlPanel ui:field="middlePanel"></uc:UlPanel>
 				<uc:UlPanel ui:field="higherPanel"></uc:UlPanel>

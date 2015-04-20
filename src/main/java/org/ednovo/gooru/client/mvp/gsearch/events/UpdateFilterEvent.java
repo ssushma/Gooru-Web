@@ -36,9 +36,10 @@ import com.google.gwt.event.shared.GwtEvent;
 public class UpdateFilterEvent extends GwtEvent<UpdateFilterHandler> {
 
 	public static final Type<UpdateFilterHandler> TYPE = new Type<UpdateFilterHandler>();
-	private String filters;
-	public UpdateFilterEvent(String filters){
-		this.filters=filters;	
+	private String filterValue, addOrRemove;
+	public UpdateFilterEvent(String filterValue, String addOrRemove){
+		this.filterValue=filterValue;
+		this.addOrRemove = addOrRemove;
 	}
 	
 	
@@ -49,7 +50,7 @@ public class UpdateFilterEvent extends GwtEvent<UpdateFilterHandler> {
 
 	@Override
 	protected void dispatch(UpdateFilterHandler handler) {
-		handler.updateFilters(filters);
+		handler.updateFilters(filterValue, addOrRemove);
 	}
 
 }

@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.mvp.gsearch;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.SearchHandler;
@@ -47,5 +48,9 @@ public interface GooruSearchUiHandlers extends BaseUiHandlers,RefreshSearchHandl
 	 * To add Grades Presenter widget
 	 */
 	void getGradesWidget();
+	/**
+	 * @return the gooruGradesPresenter
+	 */
+	GooruGradesPresenter getGooruGradesPresenter();
 
 }

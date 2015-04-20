@@ -375,14 +375,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if (panelName != null && panelName.equalsIgnoreCase("categoryPanel") && !newFilterVal.equalsIgnoreCase("Audio")&& !newFilterVal.equalsIgnoreCase("Webpage")){
 					newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
 				}
-				
 				if(filterValue.contains("Grade"))
 				{
 					newFilterVal = filterValue.replaceAll("Grade ", "");
-				}
-				else if(filterValue.contains("Higher Ed"))
-				{
-					newFilterVal = filterValue.replaceAll("Higher Ed", "12gte");
+					getUiHandlers().getGooruGradesPresenter().updateFilterStyle(newFilterVal);
 				}
 				if(panelName.equals("subjectsPanel")){
 					removeSelectedSubjects(newFilterVal,panelName);
@@ -430,6 +426,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	public void getSelectedFilters(){
 		selectedAuthors="";
 		selectedSubjects="";
+		selectedGrades="";
+		
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
@@ -451,7 +449,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (!selectedGrades.isEmpty()) {
 						selectedGrades += COMMA_SEPARATOR;
 					}
-					selectedGrades += closeLabelSetting.getSourceText().replace(i18n.GL0325(), "").trim();
+					selectedGrades += closeLabelSetting.getSourceText().replaceAll(i18n.GL0325(), "").trim();
 				}
 			}
 		}
@@ -518,8 +516,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	UpdateFilterHandler updatefilter = new UpdateFilterHandler() {
 		@Override
-		public void updateFilters(String filterValue) {
-			pnlAddFilters.add(createTagsLabel(filterValue, "gradePanel"));
+		public void updateFilters(String filterValue, String addOrRemove) {
+			if("add".equals(addOrRemove)){
+				pnlAddFilters.add(createTagsLabel(filterValue, "gradePanel"));
+			}else{
+				removeFilter(filterValue);
+			}
+			
 			callSearch();
 		}
 	};
