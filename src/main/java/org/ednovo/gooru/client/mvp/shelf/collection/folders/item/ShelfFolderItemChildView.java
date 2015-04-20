@@ -318,12 +318,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				public
 				void clickEventOnSaveAssessmentHandler(FolderDo result) {
 					if(result!=null){
-						folderDo.setTitle(result.getTitle());
-						folderDo.setUrl(result.getUrl());
-						folderDo.setGoals(result.getGoals());
-						folderDo.setSharing(result.getSharing());
-						folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
-						itemTitle.setText(folderDo.getTitle());
+						showAssessmentUrlInfo(result);
 						triggerUpdateAssessmentUrl(result);
 					}
 					editAssessmentPopup.hide();
@@ -343,6 +338,20 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent()); 
 		}
 	}
+	
+	/**
+	 * Displays the updated info.
+	 * @param result {@link FolderDo}
+	 */
+	public void showAssessmentUrlInfo(FolderDo result) {
+		folderDo.setTitle(result.getTitle());
+		folderDo.setUrl(result.getUrl());
+		folderDo.setGoals(result.getGoals());
+		folderDo.setSharing(result.getSharing());
+		folderDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+		itemTitle.setText(folderDo.getTitle());
+	}
+
 	protected void triggerUpdateAssessmentUrl(FolderDo result) {
 		HashMap<String,String> params = new HashMap<String,String>();
 		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){

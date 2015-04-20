@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateAssmntUrlOnMycollEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.EditAssessmentPopup;
@@ -227,7 +228,6 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		myShelfEditButton.getElement().setId("btnMyShelfEdit");
 		glassContainer.getElement().setId("GlassContainer");
 		glassContainer.setGlassVisible(false);
-		
 		setData(collectionDo,nextLevel);
 		this.folderDo=collectionDo;
 		this.getElement().setAttribute("style", "min-height: 42px;");
@@ -323,6 +323,9 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 
 		wrapperFocPanel.addClickHandler(new ClickOnFolderItem());
 		AppClientFactory.getEventBus().addHandler(UpdateShelfFolderNameEvent.TYPE,updateShelfFolderName);
+		if(ASSESSMENT_URL.equalsIgnoreCase(collectionDo.getCollectionType())){
+			showAssessmentUrlInfo(collectionDo);
+		}
 	}
 
 	@UiHandler("myShelfEditButton")
@@ -345,6 +348,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 					public void clickEventOnSaveAssessmentHandler(FolderDo result) {
 						if(result!=null){
 							showAssessmentUrlInfo(result);
+							AppClientFactory.fireEvent(new UpdateAssmntUrlOnMycollEvent(result));
+							
 						}
 						editAssessmentPopup.hide();
 						Window.enableScrolling(true);
@@ -372,12 +377,17 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	 * @param result {@link FolderDo}
 	 */
 	public void showAssessmentUrlInfo(FolderDo result) {
-		titleLbl.setHTML(result.getTitle());
-		collectionDo.setTitle(result.getTitle());
-		collectionDo.setUrl(result.getUrl());
-		collectionDo.setGoals(result.getGoals());
-		collectionDo.setSharing(result.getSharing());
-		collectionDo.getSettings().setIsLoginRequired(result.getSettings().getIsLoginRequired());
+		this.collectionDo = result;
+		if(result.getTitle()!=null){
+			titleLbl.setHTML(result.getTitle());	
+		}
+		collectionDo.setTitle(StringUtil.isEmpty(result.getTitle())?"":result.getTitle());
+		collectionDo.setUrl(StringUtil.isEmpty(result.getUrl())?"":result.getUrl());
+		collectionDo.setGoals(StringUtil.isEmpty(result.getGoals())?"":result.getGoals());
+		collectionDo.setSharing(StringUtil.isEmpty(result.getSharing())?"":result.getSharing());
+		if(result.getSettings()!=null){
+			collectionDo.getSettings().setIsLoginRequired(StringUtil.isEmpty(result.getSettings().getIsLoginRequired())?"":result.getSettings().getIsLoginRequired());
+		}
 	}
 
 	public void setData(FolderDo collectionDo, int nextLevel) {
