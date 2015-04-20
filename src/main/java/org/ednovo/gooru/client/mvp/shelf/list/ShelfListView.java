@@ -2374,8 +2374,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	/**
 	 * Removes the assessment/url widget.
-	 * @param treeItemWidget
-	 * @param assessmentId
+	 * @param treeItemWidget {@link TreeItem}
+	 * @param assessmentId {@link String}
 	 */
 	private void removeDeletedAssessment(TreeItem treeItemWidget, String assessmentId){
 		for(int i = 0; i < treeItemWidget.getChildCount(); i++) {
@@ -2383,6 +2383,63 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			 ShelfCollection selectedItem = (ShelfCollection) item.getWidget();
 			 if(selectedItem.getCollectionDo().getGooruOid().equalsIgnoreCase(assessmentId)) {
 				 item.remove();
+			 }
+		 }
+	}
+	
+	
+	/**
+	 *  Updates the Assessment/url widget
+	 */
+	@Override
+	public void updateAssessmentUrlDetails(FolderDo folderDo, HashMap<String, String> params) {
+		if(params.get(O3_LEVEL)!=null) {
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				if(level2Item!=null) {
+					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
+					if(level3Item != null){
+						updateAssessmentUrl(level3Item,folderDo.getGooruOid(),folderDo);
+					}
+				}
+			}
+		}else if(params.get(O2_LEVEL)!=null) {
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null ) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				if(level2Item != null){
+					updateAssessmentUrl(level2Item,folderDo.getGooruOid(),folderDo);
+				}
+			}
+		}else if(params.get(O1_LEVEL)!=null) {
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item != null){
+				updateAssessmentUrl(level1Item,folderDo.getGooruOid(),folderDo);
+			}
+		}else{
+			for(int i = 0; i < myShelfVerPanel.getItemCount(); i++) {
+				TreeItem item = myShelfVerPanel.getItem(i);
+				ShelfCollection selectedItem = (ShelfCollection) item.getWidget();
+				if(folderDo.getGooruOid().equalsIgnoreCase(selectedItem.getCollectionDo().getGooruOid())) {
+					selectedItem.showAssessmentUrlInfo(folderDo);
+				}
+			}
+		}
+	}
+	
+	
+	/**
+	 * Updates the assessment/url widget.
+	 * @param treeItemWidget {@link TreeItem}
+	 * @param assessmentId {@link String}
+	 */
+	private void updateAssessmentUrl(TreeItem treeItemWidget, String assessmentId, FolderDo folderDo){
+		for(int i = 0; i < treeItemWidget.getChildCount(); i++) {
+			 TreeItem item = treeItemWidget.getChild(i);
+			 ShelfCollection selectedItem = (ShelfCollection) item.getWidget();
+			 if(selectedItem.getCollectionDo().getGooruOid().equalsIgnoreCase(assessmentId)) {
+				 selectedItem.showAssessmentUrlInfo(folderDo);
 			 }
 		 }
 	}
