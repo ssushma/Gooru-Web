@@ -3,8 +3,6 @@ package org.ednovo.gooru.client.mvp.search.util;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -21,8 +19,6 @@ public class NoSearchResultWidget extends Composite {
 			UiBinder<Widget, NoSearchResultWidget> {
 	}
 	final static NoSearchResultWidget searchResult=new NoSearchResultWidget();
-	
-	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel pnlNoSearchResults,libraryWidgetsContainer;
 	

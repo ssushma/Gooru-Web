@@ -1,5 +1,10 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.util.ImageUtil;
@@ -9,11 +14,14 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -33,7 +41,7 @@ public class CollectionResourceWidget extends Composite {
 	
 	@UiField Label resourceTitle,lblViewCount;
 	@UiField HTMLPanel resourceDescription,imageOverlay;
-	@UiField Image resoruceImage;
+	@UiField Image resourseImage;
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	
 	private boolean failedThumbnailGeneration = false;
@@ -41,6 +49,8 @@ public class CollectionResourceWidget extends Composite {
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 	
 	private static final String NULL = "null";
+	
+	private static final String PLAYER_NAME = "resource";
 	
 	RatingWidgetView ratingWidgetView;
 	
@@ -54,7 +64,7 @@ public class CollectionResourceWidget extends Composite {
 		}
 		resourceDescription.getElement().setInnerText(resourceDesc);
 		lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
-		resoruceImage.setUrl("");
+		resourseImage.setUrl("");
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
@@ -62,6 +72,25 @@ public class CollectionResourceWidget extends Composite {
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
 		ratingWidgetPanel.add(ratingWidgetView);
+		imageOverlay.addDomHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()),ClickEvent.getType());
+	}
+	/**
+	 * This inner class will handle the click event on the resource image click and it will play that resoruce
+	 * @author Gooru
+	 *
+	 */
+	public class ResourceImageClick implements ClickHandler{
+		String resoruceId;
+		ResourceImageClick(String resoruceId){
+			this.resoruceId=resoruceId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("id", resoruceId);
+			params.put("pn", PLAYER_NAME);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);	
+		}
 	}
 	/**
 	 * This method will set the thumbnail image
@@ -74,7 +103,7 @@ public class CollectionResourceWidget extends Composite {
 	public void setUrl(final String thumbnailUrl, final String realUrl, final String category, final String title, final boolean generateYoutube) {
 		failedThumbnailGeneration = false;
 		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category;
-		resoruceImage.addErrorHandler(new ErrorHandler() {
+		resourseImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
 				setDefaultThumbnail(thumbnailUrl, realUrl, categoryString, generateYoutube);
@@ -84,10 +113,10 @@ public class CollectionResourceWidget extends Composite {
 		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
 			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString.trim(), generateYoutube);
 		} else {
-			resoruceImage.setUrl(thumbnailUrl);
+			resourseImage.setUrl(thumbnailUrl);
 		}
-		resoruceImage.setAltText(title);
-		resoruceImage.setTitle(title);
+		resourseImage.setAltText(title);
+		resourseImage.setTitle(title);
 	}
 	/**
 	 * This method will set the default image
@@ -99,11 +128,11 @@ public class CollectionResourceWidget extends Composite {
 	private void setDefaultThumbnail(String thumbnailUrl, String url, String categoryString, boolean generateYoutube) {
 		categoryString = StringUtil.getCategory(categoryString.trim().replaceAll("gooru_classplan", "webpage"));
 		if(generateYoutube) {
-			resoruceImage.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(url), Window.Location.getProtocol()));
+			resourseImage.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(url), Window.Location.getProtocol()));
 		}else if (!failedThumbnailGeneration && thumbnailUrl!=null && thumbnailUrl.endsWith("/")) {
-			resoruceImage.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
+			resourseImage.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		}else {
-			resoruceImage.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
+			resourseImage.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		}
 	}
 }
