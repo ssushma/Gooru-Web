@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
@@ -144,7 +145,6 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 
 			@Override
 			public void onSuccess(CollectionDo result) {
-		
 				getView().resetAssessmentFields();
 				getView().setDefaultCreate();
 				Map<String, String> params = new HashMap<String, String>();
@@ -166,58 +166,33 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 						}
 					}
 				}else{
-				if(previousNameToken.equalsIgnoreCase(PlaceTokens.EDIT_FOLDERS)||previousNameToken.equalsIgnoreCase(PlaceTokens.FOLDERS)) {
-					if(level!=null||folderId!=null) {
-						params.put("level", level);
-						params.put("folderid", folderId);
-						fireEvent(new RefreshCollectionInFolderLevelListEvent(result,RefreshFolderType.INSERT));
-						if(level.equalsIgnoreCase(FOLDER_LEVEL_ONE)||level.equalsIgnoreCase(FOLDER_LEVEL_TWO)||level.equalsIgnoreCase(FOLDER_LEVEL_THREE)) {
-							CollectionItemDo collectionItemDo = new CollectionItemDo();
-							ResourceDo resourceDo = new ResourceDo();
-							ResourceTypeDo resourceTypeDo = new ResourceTypeDo();
-							resourceDo.setResourceType(resourceTypeDo);
-							collectionItemDo.setResource(resourceDo);
-							
-							collectionItemDo.getResource().setTitle(result.getTitle());
-							collectionItemDo.getResource().setGooruOid(result.getGooruOid());
-							collectionItemDo.getResource().getResourceType().setName(result.getCollectionType());
-							
-							AppClientFactory.fireEvent(new InsertFolderInShelfViewEvent(collectionItemDo, RefreshType.INSERT, level));
-						}
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_FOLDERS, params);
-					} else {
-						fireEvent(new RefreshCollectionInShelfListEvent(result,RefreshType.INSERT));
-						fireEvent(new RefreshCollectionInFolderListEvent(result,RefreshFolderType.INSERT));
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDERS);
-					}
-				} else {
-					String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-					if(nameToken.equals(PlaceTokens.SHELF)) {
-						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
-						Map<String,String> params1 = new HashMap<String,String>();
-						if(result.getCollectionType().equalsIgnoreCase("assessment/url")){
-							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
-							AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
-						}else{
-							params1.put("id", result.getGooruOid());
-							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
-							AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+					if(previousNameToken.equalsIgnoreCase(PlaceTokens.EDIT_FOLDERS)||previousNameToken.equalsIgnoreCase(PlaceTokens.FOLDERS)) {
+						if(level!=null||folderId!=null) {
+							params.put("level", level);
+							params.put("folderid", folderId);
+							fireEvent(new RefreshCollectionInFolderLevelListEvent(result,RefreshFolderType.INSERT));
+							if(level.equalsIgnoreCase(FOLDER_LEVEL_ONE)||level.equalsIgnoreCase(FOLDER_LEVEL_TWO)||level.equalsIgnoreCase(FOLDER_LEVEL_THREE)) {
+								CollectionItemDo collectionItemDo = new CollectionItemDo();
+								ResourceDo resourceDo = new ResourceDo();
+								ResourceTypeDo resourceTypeDo = new ResourceTypeDo();
+								resourceDo.setResourceType(resourceTypeDo);
+								collectionItemDo.setResource(resourceDo);
+
+								collectionItemDo.getResource().setTitle(result.getTitle());
+								collectionItemDo.getResource().setGooruOid(result.getGooruOid());
+								collectionItemDo.getResource().getResourceType().setName(result.getCollectionType());
+
+								AppClientFactory.fireEvent(new InsertFolderInShelfViewEvent(collectionItemDo, RefreshType.INSERT, level));
+							}
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_FOLDERS, params);
+						} else {
+							fireEvent(new RefreshCollectionInShelfListEvent(result,RefreshType.INSERT));
+							fireEvent(new RefreshCollectionInFolderListEvent(result,RefreshFolderType.INSERT));
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDERS);
 						}
 					} else {
-						if(IS_FROM_ADDRESOURCE.equalsIgnoreCase("resourceidfromAddResourcePresenter")){
-							Map<String,String> params1 = new HashMap<String,String>();
-							params1.put("id", result.getGooruOid());
-							//fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
-							AppClientFactory.getInjector().getResourceService().createCollectionItem(result.getGooruOid(), RESOURCE_ID_TO_ADD, new SimpleAsyncCallback<CollectionItemDo>() {
-								@Override
-								public void onSuccess(CollectionItemDo result) {
-								
-								}
-							});
-							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
-						}else if(nameToken.equals(PlaceTokens.COLLECTION_SEARCH)){
-							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
-						}else{
+						String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+						if(nameToken.equals(PlaceTokens.SHELF)) {
 							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
 							Map<String,String> params1 = new HashMap<String,String>();
 							if(result.getCollectionType().equalsIgnoreCase("assessment/url")){
@@ -228,10 +203,35 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 								PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
 								AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 							}
-					 }
-				   }
+						} else {
+							if(IS_FROM_ADDRESOURCE.equalsIgnoreCase("resourceidfromAddResourcePresenter")){
+								Map<String,String> params1 = new HashMap<String,String>();
+								params1.put("id", result.getGooruOid());
+								//fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+								AppClientFactory.getInjector().getResourceService().createCollectionItem(result.getGooruOid(), RESOURCE_ID_TO_ADD, new SimpleAsyncCallback<CollectionItemDo>() {
+									@Override
+									public void onSuccess(CollectionItemDo result) {
+
+									}
+								});
+								fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+							}else if(nameToken.equals(PlaceTokens.COLLECTION_SEARCH)){
+								fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+							}else{
+								fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
+								Map<String,String> params1 = new HashMap<String,String>();
+								if(result.getCollectionType().equalsIgnoreCase("assessment/url")){
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
+									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+								}else{
+									params1.put("id", result.getGooruOid());
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
+									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+								}
+							}
+						}
+					}
 				}
-			  }
 			}
 		});
 		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
@@ -425,17 +425,18 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 	
 	public FolderDo getFolderDo(CollectionDo collectionDo) {
 		FolderDo folderDo = new FolderDo();
+		CollectionSettingsDo collectionSettingsDo = new CollectionSettingsDo();
 		folderDo.setGooruOid(collectionDo.getGooruOid());
 		folderDo.setTitle(collectionDo.getTitle());
 		folderDo.setType(collectionDo.getCollectionType());
 		folderDo.setSharing(collectionDo.getSharing());
 		folderDo.setCollectionType(collectionDo.getCollectionType());
-
+		folderDo.setSettings(collectionSettingsDo);
 		folderDo.setUrl(StringUtil.isEmpty(collectionDo.getUrl())?"":collectionDo.getUrl());
 		folderDo.setGoals(StringUtil.isEmpty(collectionDo.getGoals())?"":collectionDo.getGoals());
 		folderDo.setSharing(StringUtil.isEmpty(collectionDo.getSharing())?"":collectionDo.getSharing());
 		if(collectionDo.getSettings()!=null && collectionDo.getSettings().getIsLoginRequired()!=null){
-			folderDo.getSettings().setIsLoginRequired(StringUtil.isEmpty(collectionDo.getSettings().getIsLoginRequired())?"":collectionDo.getSettings().getIsLoginRequired());
+			collectionSettingsDo.setIsLoginRequired(StringUtil.isEmpty(collectionDo.getSettings().getIsLoginRequired())?"":collectionDo.getSettings().getIsLoginRequired());
 		}
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
