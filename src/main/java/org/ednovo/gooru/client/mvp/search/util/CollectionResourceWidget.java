@@ -24,6 +24,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -47,6 +48,7 @@ public class CollectionResourceWidget extends Composite {
 	@UiField Image resourseImage,relatedCollectionImage,creatorImage;
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	@UiField InlineLabel relatedCollectionTitle;
+	@UiField Button btnAddResource;
 	
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
 	
@@ -174,5 +176,12 @@ public class CollectionResourceWidget extends Composite {
 		}else {
 			resourseImage.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		}
+	}
+	/**
+	 * This method will return the add button
+	 * @return
+	 */
+	public Button getAddResoruce(){
+		return btnAddResource;
 	}
 }
