@@ -234,7 +234,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			if(isClickedOnEmail){
 				downloadUrl=savedFileName;
 			}else{
-				downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,savedFileName,pdfName);
+				downloadUrl=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DOWNLOADFILE,savedFileName,pdfName,getLoggedInSessionToken());
 			}
 		}catch(Exception e){
 			logger.error("Exception::", e);

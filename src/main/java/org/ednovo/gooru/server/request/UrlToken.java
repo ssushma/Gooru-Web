@@ -506,7 +506,7 @@ public enum UrlToken {
 	
 	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?"),
 	
-	V2_DOWNLOADFILE("/v2/media/download?url={0}&filename={1}"),
+	V2_DOWNLOADFILE("/v2/media/download?url={0}&filename={1}&sessionToken={2}"),
 		
 	V2_FOLDER_META_DATA("/v2/folder/{0}?"),
 	
