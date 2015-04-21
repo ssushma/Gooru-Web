@@ -30,7 +30,7 @@ public class NoSearchResultWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		pnlNoSearchResults.getElement().setId("pnlNoSearchResults");
 		for (Map.Entry<String,List<String>> entry : LibraryImagesMap.getInstance().getLibraryMap().entrySet()){
-		   libraryWidgetsContainer.add(new NoResultsLibraryWidget(entry.getValue().get(0),entry.getValue().get(1)));
+		   libraryWidgetsContainer.add(new NoResultsLibraryWidget(entry.getValue().get(0),entry.getValue().get(1),entry.getValue().get(2)));
 		}
 	}
 	public static NoSearchResultWidget getInstance(){
