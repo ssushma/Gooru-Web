@@ -27,6 +27,10 @@
  */
 package org.ednovo.gooru.shared.model.search;
 
+import java.util.List;
+
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 
 /**
  * @author Search Team
@@ -52,6 +56,8 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	
 	private Integer onlyResourceCount;
 	
+	private List<CollectionItemDo> collectionItems;
+ 	
 	public CollectionSearchResultDo() {
 
 	}
@@ -104,4 +110,11 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 		this.onlyResourceCount = onlyResourceCount;
 	}
 
+	public List<CollectionItemDo> getCollectionItems() {
+		return collectionItems;
+	}
+
+	public void setCollectionItems(List<CollectionItemDo> collectionItems) {
+		this.collectionItems = collectionItems;
+	}
 }

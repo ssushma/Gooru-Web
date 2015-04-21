@@ -15,6 +15,7 @@ import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.suggestbox.widget.Paragraph;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -127,27 +128,15 @@ public class CollectionSearchWidget extends Composite {
 			resourceText=collectionSearchResultDo.getResourceCount()+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+collectionSearchResultDo.getResourceCount()+" "+i18n.GL1094();
 		}
 		pResourceText.setText(resourceText);
-		if(collectionSearchResultDo.getGooruOid()!=null){
-			AppClientFactory.getInjector().getSearchService().getCollectionItems(collectionSearchResultDo.getGooruOid(), new SimpleAsyncCallback<SearchDo<CollectionItemSearchResultDo>>() {
-				@Override
-				public void onSuccess(SearchDo<CollectionItemSearchResultDo> result) {
-					int size=result.getSearchResults().size();
-					int count=0;
-					if(size>0){					
-						for (CollectionItemSearchResultDo collectionItemSearchResultDo : result.getSearchResults()) {
-							if(count>=4){
-								break;
-							}
-							try{
-								pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo));
-							}catch(Exception ex){
-								ex.printStackTrace();
-							}
-							count++;
-						}
+		if(collectionSearchResultDo.getCollectionItems().size()>0){
+			int count=0;
+				for (CollectionItemDo collectionItemSearchResultDo :collectionSearchResultDo.getCollectionItems()) {
+					if(count>=4){
+						break;
 					}
+					pnlResourceWidget.add(new ResourceImageWidget(collectionItemSearchResultDo.getResource()));
+					count++;
 				}
-			});
 		}
 		SearchUiUtil.renderStandards(standardsDataPanel, collectionSearchResultDo);
 	}

@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -42,6 +44,8 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * @author Search Team
@@ -69,7 +73,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 		searchResult.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		searchResult.setCreatorName(getJsonString(recordJsonObject, CREATORNAME));
 		searchResult.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
-
+		
 		searchResult.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		searchResult.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		searchResult.setDescription((getJsonString(recordJsonObject, COLLECTION_DESCRIPTION)));
@@ -134,6 +138,9 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 					searchResult.setLicense(licenseDo);
 				}
 			}
+			
+			List<CollectionItemDo> collectionItemDoList= (ArrayList<CollectionItemDo>) JsonDeserializer.deserialize(recordJsonObject.getJSONArray("collectionItems").toString(),new TypeReference<List<CollectionItemDo>>() {});
+			searchResult.setCollectionItems(collectionItemDoList);
 		} catch (JSONException e) {
 			logger.error("Exception::", e);
 		}
