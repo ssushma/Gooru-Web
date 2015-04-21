@@ -213,11 +213,12 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
      */
 	private boolean checkSelectedGrades(String[] stringArray, String selectedValue) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT);
-		if(grades!=null)
-		grades+=selectedValue;
-		for(int i=1;i<stringArray.length;i++){
-			if(!grades.contains(stringArray[i])){
-				return false;
+		if(grades!=null){
+			grades+=selectedValue;
+			for(int i=1;i<stringArray.length;i++){
+				if(!grades.contains(stringArray[i])){
+					return false;
+				}
 			}
 		}
 		return true;

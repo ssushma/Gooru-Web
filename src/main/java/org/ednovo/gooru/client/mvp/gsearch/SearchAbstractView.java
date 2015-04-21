@@ -89,9 +89,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel;
-	
-	@UiField HTMLEventPanel gradesDropDown;
+	@UiField HTMLPanel searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 	
 	@UiField Label lblLoadingText;
 	
@@ -100,8 +98,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField FlowPanel pnlAddFilters;
 	
 	@UiField TextBox authorTxtBox;
-	
-	@UiField Button btnStandardsBrowse;
 	
 	LiPanel liPanel;
 	
@@ -154,8 +150,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		AppClientFactory.getEventBus().addHandler(UpdateFilterEvent.TYPE, updatefilter);
 		pnlBackToTop.addDomHandler(new BackToTopClickHandler(), ClickEvent.getType());
 		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
-		btnStandardsBrowse.addClickHandler(new DropDownClickHandler(2));
-		gradesDropDown.addClickHandler(new GradesDropDownHandler());
+		btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
+		gradesDropDown.addDomHandler(new GradesDropDownHandler(), ClickEvent.getType());
 		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {

@@ -21,6 +21,11 @@
     margin: 0;
     padding: 0;
 }
+#gooruSearchMainContainer .gliphIconImage {
+    background: url("../images/gridicon.png") no-repeat scroll 0 0 transparent;
+    width:11px;
+    height:14px;
+}
 
 #gooruSearchMainContainer .resourceDetails .seachLeftNavigation ul.resourceTypes li a {
     border: 2px solid #ffffff;
