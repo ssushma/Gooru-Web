@@ -324,9 +324,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		myShelfVerPanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
-				treeChildSelectedItem = event.getSelectedItem();
-				((ShelfCollection) treeChildSelectedItem.getWidget()).openFolderItem();
-				setFolderActiveStatus();
+				ShelfCollection shelfCollection = (ShelfCollection) event.getSelectedItem().getWidget();
+				if(!shelfCollection.getCollectionDo().getCollectionType().equals("assessment/url")){
+					treeChildSelectedItem = event.getSelectedItem();
+					((ShelfCollection) treeChildSelectedItem.getWidget()).openFolderItem();
+					setFolderActiveStatus();
+				}
 			}
 		});
 		myShelfVerPanelHolder.add(myShelfVerPanel);
