@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -21,11 +24,11 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,12 +44,16 @@ public class CollectionResourceWidget extends Composite {
 	
 	@UiField Label resourceTitle,lblViewCount;
 	@UiField HTMLPanel resourceDescription,imageOverlay;
-	@UiField Image resourseImage;
+	@UiField Image resourseImage,relatedCollectionImage,creatorImage;
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
+	@UiField InlineLabel relatedCollectionTitle;
+	
+	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
 	
 	private boolean failedThumbnailGeneration = false;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
+	private static String DEFULT_IMAGE = "images/default-collection-image.png";
 	
 	private static final String NULL = "null";
 	
@@ -73,6 +80,34 @@ public class CollectionResourceWidget extends Composite {
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
 		ratingWidgetPanel.add(ratingWidgetView);
 		imageOverlay.addDomHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()),ClickEvent.getType());
+		usedInSearchDo = new SearchDo<CollectionSearchResultDo>();
+		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());  
+		usedInSearchDo.setPageSize(1);
+		AppClientFactory.getInjector().getSearchService().getResourceCollections(usedInSearchDo,new SimpleAsyncCallback<SearchDo<CollectionSearchResultDo>>() {
+			@Override
+			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
+				if(result.getSearchResults().size()>0){
+					if(!StringUtil.isEmpty(result.getSearchResults().get(0).getUrl())){
+						relatedCollectionImage.setUrl(result.getSearchResults().get(0).getUrl());
+						relatedCollectionTitle.setText(result.getSearchResults().get(0).getResourceTitle());
+						creatorImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+result.getSearchResults().get(0).getGooruUId()+".png");
+					}
+				}
+			}
+		});
+		
+		relatedCollectionImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				relatedCollectionImage.setUrl(DEFULT_IMAGE);
+			}
+		});
+		creatorImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				creatorImage.setUrl("images/profilepage/user-profile-pic.png");
+			}
+		});
 	}
 	/**
 	 * This inner class will handle the click event on the resource image click and it will play that resoruce

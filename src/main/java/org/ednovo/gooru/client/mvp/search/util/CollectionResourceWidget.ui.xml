@@ -46,12 +46,12 @@
 				</div>
 				<div class="userDetailsResources no-gutter">
 					<div class="col-md-8 col-xs-8 col-sm-8 user">
-						<img src="images/comment-avathar.png" />
-						austin
+						<g:Image ui:field="creatorImage"/>
+						<g:InlineLabel ui:field="relatedCollectionTitle" styleName="collectionTitle"></g:InlineLabel>
 					</div>
 					<div class="col-md-4 col-xs-4 col-sm-4 collectionResources">
 						<a href="#">
-							<img src="images/library-image.png" />
+							<g:Image ui:field="relatedCollectionImage" />
 						</a>
 					</div>
 					<div class="clearfix"></div>

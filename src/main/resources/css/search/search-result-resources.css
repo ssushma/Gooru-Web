@@ -176,9 +176,23 @@
 #gooruSearchMainContainer .userDetailsResources  .user{
 	font-size:13px;
 	color: #0c74be;
+	width: 58%;
+}
+#gooruSearchMainContainer .userDetailsResources .user .collectionTitle{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-height: 32px;
+	display: inline-block;
+	width: 80%;
+	padding-left: 7px;
 }
 #gooruSearchMainContainer .userDetailsResources  .user img{
-	width:30px;
+	border-radius: 50px;
+	box-shadow: 0 0 0 2px #87badd;
+	width: 30px;
+	height: 30px;
+	float: left;
 }
 #gooruSearchMainContainer .collectionResources {
 	text-align:right;

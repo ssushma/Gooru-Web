@@ -257,7 +257,6 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			searchResults.setVisible(true);
 			searchResults.setText(i18n.GL3210()+"  (0) ");
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
-			System.out.println("searchResultPanel::"+searchResultPanel.getElement().getStyle().getVisibility());
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 			collectionPanel.setStyleName("active");

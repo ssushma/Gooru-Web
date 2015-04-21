@@ -81,7 +81,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
 			resourceSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
 			resourceSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
-			
+			resourceSearchResultDo.setGooruUId(getJsonString(recordJsonObject, "gooruUId"));
 			JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 			ResourceSourceDo resourceSourceDo=JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);
 			resourceSearchResultDo.setResourceSource(resourceSourceDo);
