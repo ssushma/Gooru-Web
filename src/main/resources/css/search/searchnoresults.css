@@ -180,6 +180,100 @@
     padding: 11% 0;
     text-align: center;
 }
+.libSprite{
+	background:url(../images/lib-sprite.png) no-repeat;
+	width:49px;
+	height:49px;
+
+	display:inline-block;
+}
+.overallDiv{
+	cursor:pointer;
+}
+.coreLogo{
+	background-position:-23px -12px;
+}
+.lusdLogo{
+	background-position:-94px -12px;
+
+}
+.lpsLogo{
+	background-position:-167px -12px;
+}
+
+.rusdLogo{
+	background-position:-240px -12px;
+}
+
+.sausdLogo{
+	background-position:-310px -12px;
+}
+
+.susdLogo{
+	background-position:-381px -12px;
+}
+
+.valverdeLogo{
+	background-position:-453px -12px;
+}
+
+.autodeskLogo{
+	background-position:-529px -12px;
+}
+
+.ccstLogo{
+	background-position:-23px -82px;
+}
+
+.epacsLogo{
+	background-position:-94px -82px;
+}
+
+.esypLogo{
+	background-position:-167px -82px;
+}
+
+.fteLogo{
+	background-position:-241px -82px;
+}
+
+.lifeboardLogo{
+	background-position:-310px -82px;
+}
+
+.natgeoLogo{
+	background-position:-381px -82px;
+}
+
+.ngcLogo{
+	background-position:-453px -82px;
+}
+
+.cfciLogo{
+	background-position:-528px -82px;
+}
+
+.onrLogo{
+	background-position:-23px -150px;
+}
+.psdLogo{
+	background-position:-94px -150px;
+}
+.lessonopolyLogo{
+background-position:-167px -150px;
+}
+
+.ticalLogo{
+background-position:-242px -150px;
+}
+
+.wspwhLogo{
+background-position:-309px -150px;
+}
+
+.youthvoicesLogo{
+background-position:-380px -150px;
+}
 
 @media only screen and (max-width: 767px){
 	#pnlNoSearchResults .noResultsContainer .mainHeadingBlock .h2{

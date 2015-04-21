@@ -253,10 +253,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			lblLoadingText.setVisible(false);
 		}else{
-			System.out.println(" searchDo.getSearchResults().size() ::" +searchDo.getSearchResults().size() );
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
-			searchResults.setText(i18n.GL3210()+"  0 ");
+			searchResults.setText(i18n.GL3210()+"  (0) ");
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 			System.out.println("searchResultPanel::"+searchResultPanel.getElement().getStyle().getVisibility());
 		}
