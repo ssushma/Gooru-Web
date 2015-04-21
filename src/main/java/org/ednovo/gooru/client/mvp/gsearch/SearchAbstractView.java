@@ -255,7 +255,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}else{
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
-			searchResults.setText(i18n.GL3210()+"  0 ");
+			searchResults.setText(i18n.GL3210()+"  (0) ");
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
