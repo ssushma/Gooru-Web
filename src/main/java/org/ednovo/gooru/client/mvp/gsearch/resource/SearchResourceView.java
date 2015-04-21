@@ -60,9 +60,7 @@ public class SearchResourceView extends
 	 * @return collectionSearchWidget{@link Widget}
 	 */
 	@Override
-	public Widget renderSearchResult(
-			ResourceSearchResultDo resourceSearchResultDo) {
+	public Widget renderSearchResult(ResourceSearchResultDo resourceSearchResultDo) {
 		return new CollectionResourceWidget(resourceSearchResultDo);
 	}
-
 }

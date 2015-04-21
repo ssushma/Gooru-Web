@@ -79,6 +79,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 		ownerDo.setLastName(getJsonString(recordJsonObject, OWNER_LAST_NAME));
 		ownerDo.setUsername(getJsonString(recordJsonObject, OWNER_NAME_DISPLAY));
 		String userVisibility = getJsonString(recordJsonObject, OWNER_PROFILE_USER_VISIBILITY);
+		searchResult.setGooruUId(getJsonString(recordJsonObject, "gooruUId"));
 		if(userVisibility.equalsIgnoreCase("true")) {
 			ownerDo.setProfileUserVisibility(true);
 		} else {
