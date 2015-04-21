@@ -199,6 +199,7 @@
 }
 #gooruSearchMainContainer .collectionResources img{
 	width:40px;
+	height:28px;
 	border-left:3px solid #1076bb;
 }
 #gooruSearchMainContainer .collectionResources a{
