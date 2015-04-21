@@ -185,6 +185,7 @@
 	max-height: 32px;
 	display: inline-block;
 	width: 80%;
+	font-size: 13px;
 	padding-left: 7px;
 }
 #gooruSearchMainContainer .userDetailsResources  .user img{
