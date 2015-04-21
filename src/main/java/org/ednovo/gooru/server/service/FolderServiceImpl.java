@@ -362,6 +362,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		CollectionDo collectionDo = null;
 		JSONObject collectionDataObject=new JSONObject();
 		JSONObject courseIdObj=new JSONObject();
+		JSONObject settingsObj=new JSONObject();
 		JSONObject FolderDataObject=new JSONObject();
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER);
 		try {
@@ -378,8 +379,16 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				taxonomyArray.add(courseIdObj);
 				collectionDataObject.put("taxonomySet", taxonomyArray);
 			}
+			settingsObj.put("comment", "turn-on");
+			settingsObj.put("isLoginRequired", data.getSettings().getIsLoginRequired());
+			collectionDataObject.put("settings", settingsObj);
+			
 			FolderDataObject.put("collection", collectionDataObject);
 			FolderDataObject.put("parentId", folderId);
+			
+			
+			
+			
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),FolderDataObject.toString());
 			logger.info("FolderDataObject.toString() : "+FolderDataObject.toString());
 			logger.info("createCollectionInParent : "+url);

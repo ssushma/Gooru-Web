@@ -58,6 +58,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -680,6 +681,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				final ShelfCollection shelfCollection = new ShelfCollection(folderDo,1); 
 				SHELF_COLLECTIONS.add(folderDo);
 				myShelfVerPanel.insertItem(0, new TreeItem(shelfCollection.asWidget()));
+				shelfCollection.showAssessmentUrlInfo(folderDo);
 				if(refreshType.equals(RefreshType.INSERT)){
 					/** Changed to new API call for fetching resources in a order **/
 					AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
@@ -1032,11 +1034,20 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 
 	public FolderDo getFolderDo(CollectionDo collectionDo) {
 		FolderDo folderDo = new FolderDo();
+		CollectionSettingsDo collectionSettingsDo = new CollectionSettingsDo();
 		folderDo.setGooruOid(collectionDo.getGooruOid());
 		folderDo.setTitle(collectionDo.getTitle());
 		folderDo.setType(collectionDo.getCollectionType());
 		folderDo.setSharing(collectionDo.getSharing());
 		folderDo.setCollectionType(collectionDo.getCollectionType());
+		folderDo.setSettings(collectionSettingsDo);
+		
+		folderDo.setUrl(StringUtil.isEmpty(collectionDo.getUrl())?"":collectionDo.getUrl());
+		folderDo.setGoals(StringUtil.isEmpty(collectionDo.getGoals())?"":collectionDo.getGoals());
+		folderDo.setSharing(StringUtil.isEmpty(collectionDo.getSharing())?"":collectionDo.getSharing());
+		if(collectionDo.getSettings()!=null && collectionDo.getSettings().getIsLoginRequired()!=null){
+			collectionSettingsDo.setIsLoginRequired(StringUtil.isEmpty(collectionDo.getSettings().getIsLoginRequired())?"":collectionDo.getSettings().getIsLoginRequired());
+		}
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
 		folderDo.setThumbnails(thumbnailDo);
