@@ -253,12 +253,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 			lblLoadingText.setVisible(false);
 		}else{
-			System.out.println(" searchDo.getSearchResults().size() ::" +searchDo.getSearchResults().size() );
 			lblLoadingText.setVisible(false);
 			searchResults.setVisible(true);
 			searchResults.setText(i18n.GL3210()+"  0 ");
 			searchResultPanel.add(NoSearchResultWidget.getInstance());
-			System.out.println("searchResultPanel::"+searchResultPanel.getElement().getStyle().getVisibility());
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SEARCH_COLLECTION)) {
 			collectionPanel.setStyleName("active");
@@ -301,7 +299,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		Anchor lblSubject=new Anchor(value);
 		lblSubject.setStyleName(value.toLowerCase().replaceAll(" ",""));
 		liPanel.add(lblSubject);
-		liPanel.addClickHandler(new categoryClickHandler(key,liPanel));
+		liPanel.addClickHandler(new categoryClickHandler(key,value,liPanel));
 		ulCategoryPanel.add(liPanel);
 		
 	}
@@ -347,21 +345,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	}
 	
 	public class categoryClickHandler implements ClickHandler{
-		String categoryValue;
+		String categoryValue="",categoryKey="";
 		LiPanel liPanel;
-		categoryClickHandler(String categoryValue,LiPanel liPanel){
-			this.categoryValue=categoryValue;
-			this.liPanel=liPanel;
+		categoryClickHandler(String categoryKey,String categoryValue, LiPanel liPanel){
+			this.categoryValue = categoryValue;
+			this.categoryKey = categoryKey;
+			this.liPanel = liPanel;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			if(liPanel.getStyleName().equals("active")){
 				liPanel.removeStyleName("active");
 				removeFilter(categoryValue);
 			}else{
 				liPanel.setStyleName("active");
-				pnlAddFilters.add(createTagsLabel(categoryValue,"categoryPanel"));
+				pnlAddFilters.add(createTagsLabel(categoryKey,"categoryPanel"));
 			}
 			callSearch();
 		}
@@ -418,17 +416,17 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			String[] split = subjects.split(SUBJECTS_SEPARATOR);
 			for(int i=0; i<split.length; i++){
 				pnlAddFilters.add(createTagsLabel(split[i],"subjectsPanel"));
-				setSelectedSubjects(split[i]);
+				setStyleSelectedFilters(split[i],ulSubjectPanel);
 			}
 		}
 	}
 	/**
-	 * This method is used to highlight selected values for Subjects
+	 * This method is used to highlight selected values for Subjects/Categories
 	 * @param filterName
-	 * @param panelName
+	 * @param filterPanel 
 	 */
-	public void setSelectedSubjects(String filterName){
-		Iterator<Widget> widgets= ulSubjectPanel.iterator();
+	public void setStyleSelectedFilters(String filterName, UlPanel filterPanel){
+		Iterator<Widget> widgets= filterPanel.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
 			if(widget instanceof LiPanel){
@@ -451,6 +449,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				{
 					String filterName = !split[i].equalsIgnoreCase("Audio") && !split[i].equalsIgnoreCase("Webpage")  ? split[i] +"s" : split[i];
 					pnlAddFilters.add(createTagsLabel(filterName,"categoryPanel"));
+					setStyleSelectedFilters(filterName,ulCategoryPanel);
 				}
 			} 
 		}
@@ -469,19 +468,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				String newFilterVal = filterValue;
-				
-				if (panelName != null && panelName.equalsIgnoreCase("categoryPanel") && !newFilterVal.equalsIgnoreCase("Audio")&& !newFilterVal.equalsIgnoreCase("Webpage")){
-					newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
+				if(panelName != null ){
+					if (panelName.equalsIgnoreCase("categoryPanel")){
+						//newFilterVal = newFilterVal.substring(0, newFilterVal.length()-1);
+						removeSelectedFilterStyle(newFilterVal,ulCategoryPanel);
+					}
+					if(filterValue.contains("Grade"))
+					{
+						newFilterVal = filterValue.replaceAll("Grade ", "");
+						getUiHandlers().getGooruGradesPresenter().updateFilterStyle(newFilterVal);
+					}
+					if(panelName.equals("subjectsPanel")){
+						removeSelectedFilterStyle(newFilterVal,ulSubjectPanel);
+					}
+					callSearch();
 				}
-				if(filterValue.contains("Grade"))
-				{
-					newFilterVal = filterValue.replaceAll("Grade ", "");
-					getUiHandlers().getGooruGradesPresenter().updateFilterStyle(newFilterVal);
-				}
-				if(panelName.equals("subjectsPanel")){
-					removeSelectedSubjects(newFilterVal,panelName);
-				}
-				callSearch();
 			}
 		};
 	}
@@ -503,10 +504,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	/**
 	 * This method is used to remove selected values for Subjects
 	 * @param filterName
-	 * @param panelName
+	 * @param filterPanel
 	 */
-	public void removeSelectedSubjects(String filterName,String panelName){
-		Iterator<Widget> widgets= ulSubjectPanel.iterator();
+	public void removeSelectedFilterStyle(String filterName,UlPanel filterPanel){
+		Iterator<Widget> widgets= filterPanel.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
 			if(widget instanceof LiPanel){
@@ -561,11 +562,22 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (!selectedCategories.isEmpty()) {
 						selectedCategories += COMMA_SEPARATOR;
 					}
-					selectedCategories += closeLabelSetting.getSourceText();
+					selectedCategories += removeLastChar(closeLabelSetting.getSourceText());
 				}
 
 			}
 		}
+	}
+	/**
+	 * To remove last char from string.
+	 * @param category {@link String}
+	 * @return category {@link String}
+	 */
+	private String removeLastChar(String category) {
+		if (category.length() > 0 && category.charAt(category.length()-1)=='s') {
+			category = category.substring(0, category.length()-1);
+		    }
+		return category;
 	}
 	@Override
 	public Map<String, String> getSearchFilters() {
