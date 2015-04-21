@@ -28,10 +28,10 @@ public class LibraryImagesMap {
 			mapObj.put(PlaceTokens.CCST_Cal_TAC, Arrays.asList(i18n.GL2179_1(),PlaceTokens.CCST_Cal_TAC,"ccstLogo"));
 			mapObj.put(PlaceTokens.NGC, Arrays.asList(i18n.GL2030(),PlaceTokens.NGC,"ngcLogo"));
 			mapObj.put(PlaceTokens.ASPIRE_EPACS, Arrays.asList(i18n.GL3107(),PlaceTokens.ASPIRE_EPACS,"epacsLogo"));
-			mapObj.put(PlaceTokens.ESYP, Arrays.asList(i18n.GL2174(),PlaceTokens.ESYP,"esypLogo"));
+			mapObj.put(PlaceTokens.ESYP, Arrays.asList(i18n.GL2174_1(),PlaceTokens.ESYP,"esypLogo"));
 			mapObj.put(PlaceTokens.FTE, Arrays.asList(i18n.GL2029(),PlaceTokens.FTE,"fteLogo"));
 			mapObj.put(PlaceTokens.LESSONOPOLY, Arrays.asList(i18n.GL2032(),PlaceTokens.LESSONOPOLY,"lessonopolyLogo"));
-			mapObj.put(PlaceTokens.LIFEBOARD, Arrays.asList("",PlaceTokens.LIFEBOARD,"lifeboardLogo"));
+			mapObj.put(PlaceTokens.LIFEBOARD, Arrays.asList("Lifeboard",PlaceTokens.LIFEBOARD,"lifeboardLogo"));
 			mapObj.put(PlaceTokens.FINCAPINC, Arrays.asList(i18n.GL2033(),PlaceTokens.FINCAPINC,"cfciLogo"));
 			mapObj.put(PlaceTokens.GEOEDUCATION, Arrays.asList(i18n.GL2041(),PlaceTokens.GEOEDUCATION,"natgeoLogo"));
 			mapObj.put(PlaceTokens.ONR, Arrays.asList(i18n.GL2028(),PlaceTokens.ONR,"onrLogo"));
