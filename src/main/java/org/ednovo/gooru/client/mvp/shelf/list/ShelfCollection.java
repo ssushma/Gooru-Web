@@ -1179,7 +1179,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		}
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
-		AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),false,new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(collectionDo.getGooruOid(),true,new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo result) {
 				AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaDataTocAPI(result)));

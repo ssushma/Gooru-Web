@@ -1313,7 +1313,7 @@ public class ShelfCollectionResourceChildView extends
 		}	
 		if(!selectedFolderId.isEmpty())
 		{
-		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,false, new SimpleAsyncCallback<FolderTocDo>() {
+		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,true, new SimpleAsyncCallback<FolderTocDo>() {
 			@Override
 			public void onSuccess(FolderTocDo folderListDo) {
 			

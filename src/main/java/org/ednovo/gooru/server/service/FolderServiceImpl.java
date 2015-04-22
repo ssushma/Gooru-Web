@@ -332,6 +332,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	@Override
 	public void deleteCollectionsFolder(String folderId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_FOLDER, folderId);
+		getLogger().info("deleteCollectionsFolder:::::::"+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -516,7 +517,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		String partialUrl = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GETTOCFOLDERSANDCOLLECTIONS, folderId);
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		params.put(GooruConstants.ORDER_BY, GooruConstants.SEQUENCE);
+		if(!fromPPP){
 		params.put(GooruConstants.SHARING, GooruConstants.PUBLIC);
+		}
 //		url=url+"&sharing=public";
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		getLogger().info("-- Folder toc API - - - - "+url);
