@@ -225,6 +225,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
 			//To disable escape sequence enabled this line
 			htmlString=htmlString.replaceAll("max-height: 100%;", "");
+			htmlString = htmlString.replaceAll("[\n\r]", "<br>");
 			String jsonStr="{\"fileName\":\"Mymedia\",\"html\":\""+htmlString+"\"}";
 			//String jsonStr = setHTMLtoPDFJsonStr(htmlString); 
 			logger.info("html to pdf url"+url);
