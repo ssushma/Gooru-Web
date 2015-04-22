@@ -175,7 +175,7 @@ public class CollectionSearchWidget extends Composite {
 					this.hide();	
 				}
 			};
-			Window.scrollTo(0, 0);
+			//Window.scrollTo(0, 0);
 			if (!BrowserAgent.isDevice() && AppClientFactory.isAnonymous()){
 				successPopupVc.setWidth("500px");
 				successPopupVc.setHeight("515px");
@@ -189,7 +189,7 @@ public class CollectionSearchWidget extends Composite {
 			params.put(CUSTOMIZE, "yes");
 			params.put("collectionId", collectionId);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 	}
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
 		@Override
