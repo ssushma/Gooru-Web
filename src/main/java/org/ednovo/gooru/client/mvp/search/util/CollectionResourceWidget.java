@@ -24,6 +24,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -47,6 +48,7 @@ public class CollectionResourceWidget extends Composite {
 	@UiField Image resourseImage,relatedCollectionImage,creatorImage;
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
 	@UiField InlineLabel relatedCollectionTitle;
+	@UiField Button btnAddResource;
 	
 	private SearchDo<CollectionSearchResultDo> usedInSearchDo;
 	
@@ -71,7 +73,6 @@ public class CollectionResourceWidget extends Composite {
 		}
 		resourceDescription.getElement().setInnerText(resourceDesc);
 		lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
-		resourseImage.setUrl("");
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
 		setUrl(resourceSearchResultDo.getUrl(),null,category, resourceTitleText, false);
@@ -79,7 +80,11 @@ public class CollectionResourceWidget extends Composite {
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
 		ratingWidgetPanel.add(ratingWidgetView);
+		
+		resourseImage.addClickHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()));
+		resourceTitle.addClickHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()));
 		imageOverlay.addDomHandler(new ResourceImageClick(resourceSearchResultDo.getGooruOid()),ClickEvent.getType());
+		
 		usedInSearchDo = new SearchDo<CollectionSearchResultDo>();
 		usedInSearchDo.setQuery(resourceSearchResultDo.getGooruOid());  
 		usedInSearchDo.setPageSize(1);
@@ -90,6 +95,7 @@ public class CollectionResourceWidget extends Composite {
 					if(!StringUtil.isEmpty(result.getSearchResults().get(0).getUrl())){
 						relatedCollectionImage.setUrl(result.getSearchResults().get(0).getUrl());
 						relatedCollectionTitle.setText(result.getSearchResults().get(0).getResourceTitle());
+						relatedCollectionTitle.setTitle(result.getSearchResults().get(0).getResourceTitle());
 						creatorImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+result.getSearchResults().get(0).getGooruUId()+".png");
 					}
 				}
@@ -121,6 +127,7 @@ public class CollectionResourceWidget extends Composite {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			System.out.println("in");
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", resoruceId);
 			params.put("pn", PLAYER_NAME);
@@ -169,5 +176,12 @@ public class CollectionResourceWidget extends Composite {
 		}else {
 			resourseImage.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		}
+	}
+	/**
+	 * This method will return the add button
+	 * @return
+	 */
+	public Button getAddResoruce(){
+		return btnAddResource;
 	}
 }

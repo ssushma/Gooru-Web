@@ -43,6 +43,7 @@ public class ResourceDo extends ContentDo {
     private String description;
     private String folder;
     private String category;
+    private String thumbnail;
     private String explanation;
     private ThumbnailDo thumbnails;
     private ResourceTypeDo resourceType;
@@ -574,5 +575,10 @@ public class ResourceDo extends ContentDo {
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
-	
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 }

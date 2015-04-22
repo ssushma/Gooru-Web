@@ -268,7 +268,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		params.put(GooruConstants.LENGTH, String.valueOf(searchDo.getPageSize()));
 		params.put(GooruConstants.START, String.valueOf(searchDo.getPageNum()));
 		params.put(GooruConstants.Q, collectionQuery);
-		
+		params.put(GooruConstants.INCLUDECIMETADATA, "true");
+		params.put(GooruConstants.PRETTY, "1");
 		String url = AddQueryParameter.constructQueryParams(partialUrl, params);
 		
 		if(getHomeEndPoint().contains(HTTPS)){

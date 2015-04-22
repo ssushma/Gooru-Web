@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.search.util;
 
-import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -25,11 +26,11 @@ public class ResourceImageWidget extends Composite {
 	@UiField Image imgResourceImg;
 	@UiField HTMLPanel imageOverlay;
 	
-	public ResourceImageWidget(final CollectionItemSearchResultDo collectionItemSearchResultDo) {
+	public ResourceImageWidget(final ResourceDo resourceDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		final String categoryValue=StringUtil.getCategory(collectionItemSearchResultDo.getCategory()!=null?collectionItemSearchResultDo.getCategory():"");
-		if(collectionItemSearchResultDo.getUrl() != null){
-			imgResourceImg.setUrl(collectionItemSearchResultDo.getUrl());
+		final String categoryValue=StringUtil.getCategory(resourceDo.getCategory()!=null?resourceDo.getCategory():"");
+		if(resourceDo.getThumbnail() != null){
+			imgResourceImg.setUrl(resourceDo.getAssetURI()+resourceDo.getThumbnail());
 		}else{
 			imgResourceImg.setUrl("../images/default-"+categoryValue.toLowerCase()+".png");
 		}

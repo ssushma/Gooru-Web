@@ -23,27 +23,27 @@
 						<g:HTMLPanel styleName="col-md-6 col-sm-7">
 							<g:HTMLPanel styleName="seachRightNavigation">
 								<g:InlineLabel styleName="preHeader" text="{i18n.GL3207}" title="{i18n.GL3207}"/>
-								<g:HTMLPanel styleName="btn-group grade">
+								<g:HTMLPanel styleName="btn-group grade" ui:field="gradesDropDown">
 									<g:Button styleName="btn btn-primary" text="{i18n.GL0325}" title="{i18n.GL0325}"/>
-									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" ui:field="gradesDropDown">
+									<panel:HTMLEventPanel styleName="btn btn-primary dropdown-toggle" >
 										<g:InlineLabel styleName="caret"></g:InlineLabel>
 										<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 									</panel:HTMLEventPanel>
 									<g:HTMLPanel styleName="dropdown-menu" ui:field="gradesPanel"></g:HTMLPanel>
 								</g:HTMLPanel>
 								
-							<g:HTMLPanel styleName="btn-group">
+							<g:HTMLPanel styleName="btn-group" ui:field="subjectDropDown">
 								<g:Button styleName="btn btn-primary" text="{i18n.GL3208}" title="{i18n.GL3208}"/>
-								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" ui:field="subjectDropDown">
+								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle" >
 									<g:InlineLabel styleName="caret"></g:InlineLabel>
 									<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 								</g:HTMLPanel>
 								<panel:UlPanel ui:field="ulSubjectPanel"/>
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="btn-group">
-								<g:Button styleName="btn btn-primary" ui:field="btnStandardsBrowse" text="{i18n.GL3209}" title="{i18n.GL3209}"/>
+							<g:HTMLPanel styleName="btn-group" ui:field="btnStandardsBrowse">
+								<g:Button styleName="btn btn-primary"  text="{i18n.GL3209}" title="{i18n.GL3209}"/>
 								<g:HTMLPanel styleName="btn btn-primary dropdown-toggle">
-									<g:InlineLabel styleName="glyphicon glyphicon-align-justify"></g:InlineLabel>
+									<g:Image styleName="gliphIconImage"></g:Image>
 									<g:InlineLabel styleName="sr-only"></g:InlineLabel>
 								</g:HTMLPanel>
 							</g:HTMLPanel>

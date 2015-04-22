@@ -31,6 +31,9 @@ import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -60,7 +63,15 @@ public class SearchResourceView extends
 	 * @return collectionSearchWidget{@link Widget}
 	 */
 	@Override
-	public Widget renderSearchResult(ResourceSearchResultDo resourceSearchResultDo) {
-		return new CollectionResourceWidget(resourceSearchResultDo);
+	public Widget renderSearchResult(final ResourceSearchResultDo resourceSearchResultDo) {
+		CollectionResourceWidget collectionResourceWidget=new CollectionResourceWidget(resourceSearchResultDo);
+		collectionResourceWidget.getAddResoruce().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.enableScrolling(false);
+				getUiHandlers().displayAddResourcePoup(resourceSearchResultDo);
+			}
+		});
+		return collectionResourceWidget;
 	}
 }
