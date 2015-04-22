@@ -11,6 +11,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -25,6 +26,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -49,7 +51,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	
 	@UiField HTMLPanel floderTreeContainer;
-	@UiField Image cancelResourcePopupBtnLbl;
+	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	
 	private int limit=20;
@@ -76,6 +78,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		appPopUp=new PopupPanel();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		appPopUp.setGlassEnabled(true);
+		appPopUp.getElement().getStyle().setZIndex(999999);
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTreePanel);
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
@@ -324,6 +327,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
 		hide();
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null){
+			element.removeAttribute("style");
+		}
 		Window.enableScrolling(true);
 	}
 	public void getFolderItems(TreeItem item,String parentId){

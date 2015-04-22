@@ -307,7 +307,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			filters.put(IsSearchView.STANDARD_FLT, standard);
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest()
-				.getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {
+				.getNameToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)) {
 			String notFriendly = getPlaceManager().getRequestParameter(
 					IsSearchView.MEDIATYPE_FLT);
 			if (notFriendly != null
@@ -316,6 +316,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 			}
 			String oer = getPlaceManager().getRequestParameter(
 					IsSearchView.OER_FLT);
+			String ratings= getPlaceManager().getRequestParameter(
+					IsSearchView.RATINGS_FLT);
 			String accessMode = getPlaceManager().getRequestParameter(
 					IsSearchView.ACCESS_MODE_FLT);
 			if (oer != null && oer.equalsIgnoreCase("1")) {
@@ -324,6 +326,11 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 
 			if (accessMode != null) {
 				filters.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+			}
+			if(ratings != null){
+				filters.put(IsSearchView.RATINGS_FLT, ratings);
+			}else{
+				filters.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 			}
 
 		}
@@ -569,12 +576,14 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	public void setSearchType(boolean isCollectionSearch) {
 		String viewToken;
+		Map<String, String> params = getView().getSearchFilters();
 		if(isCollectionSearch){
 			viewToken=PlaceTokens.SEARCH_COLLECTION;
 		}else{
 			viewToken=PlaceTokens.SEARCH_RESOURCE;
+			params.put(IsSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 		}
-		Map<String, String> params = getView().getSearchFilters();
+
 		getSearchDo().setPageNum(1);
 		params.put(QUERY, getSearchDo().getUrlQuery());
 		getPlaceManager().revealPlace(viewToken, params, true);

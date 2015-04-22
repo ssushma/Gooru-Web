@@ -4,7 +4,7 @@
 	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
-		<g:HTMLPanel styleName="fixedPosition">
+		<g:HTMLPanel ui:field="fixedFilterSearch" styleName="fixedPosition">
 			<div class="subNavigation">
 				<g:HTMLPanel styleName="container">
 					<g:HTMLPanel styleName="no-gutter">
@@ -54,7 +54,7 @@
 				</g:HTMLPanel>
 			</div>
 			<!-- collection search filters -->
-			<g:HTMLPanel styleName="collectionDetails" ui:field="collectionSearchPanel">
+			<g:HTMLPanel styleName="collectionDetails" ui:field="collectionSearchPanel" visible="false">
 				<div class="container">
 					<div class="no-gutter">
 						<div class="col-md-9 col-sm-10">
@@ -82,7 +82,7 @@
 			</g:HTMLPanel>
 			<!-- collection search filters end -->
 			<!-- Resource search filters Start -->
-	<g:HTMLPanel styleName="resourceDetails" ui:field="resourceSearchPanel">
+	<g:HTMLPanel styleName="resourceDetails" ui:field="resourceSearchPanel" visible="false">
 
 		<div class="container">
 			<div class="no-gutter">
@@ -123,7 +123,7 @@
 		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
 		                			</g:HTMLPanel> -->
 
-
+                                <g:Label ui:field="ratingsLbl" visible="false">and up</g:Label>
 							</div>
 							<div class="gridToggle">
 
