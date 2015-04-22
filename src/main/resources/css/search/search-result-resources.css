@@ -438,5 +438,14 @@
 	z-index: 9999;
 	height: 275px;
 }
-
+#addResourcefolderTreePanel table{
+	width:100%;
+}
+#addResourcefolderTreePanel .open{
+	background-image: url(../images/folder-open-icon.png);
+	background-size: 24px 18px;
+}
+#addResourcefolderTreePanel .selected{
+	background-color: #cfe3f1;
+}
 /*Add Resource to collection popup end*/
