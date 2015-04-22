@@ -227,10 +227,11 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			htmlString=htmlString.replaceAll("max-height: 100%;", "");
 			String jsonStr="{\"fileName\":\"Mymedia\",\"html\":\""+htmlString+"\"}";
 			//String jsonStr = setHTMLtoPDFJsonStr(htmlString); 
-			logger.info("html to pdf url"+url);
+			logger.info("html to pdf url-- "+url);
 			logger.info("html to pdf url json -- "+jsonStr);
 			stringRepresentation = ServiceProcessor.postString(url, getRestUsername(), getRestPassword(),jsonStr);
 			savedFileName=stringRepresentation.getText();
+			
 			if(isClickedOnEmail){
 				downloadUrl=savedFileName;
 			}else{
@@ -281,7 +282,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public String exportPathwayOE(String classpageId, String pathwayId,String timeZone) {
 //		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22session%22:%22FS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22%22,%22collectionGooruOId%22:%22%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22%22,%22sortOrder%22:%22%22}}";
 		String jsonStr = exportPathwayOEJsonStr(pathwayId);
-		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTOEPATHWAY, classpageId);
+		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTOEPATHWAY, classpageId, getLoggedInSessionToken());
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(TIME_ZONE, timeZone);
 		params.put(DATA, jsonStr);
@@ -947,7 +948,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public String exportTeacherSummary(String collectionGooruOId,String pathwayId, String classId,String timeZone) {
 //		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22session%22:%22AS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22"+classId+"%22,%22collectionGooruOId%22:%22"+collectionGooruOId+"%22},%22paginate%22:{%22sortBy%22:%22%22,%22sortOrder%22:%22%22}}";
 		String jsonStr = exportTeacherSummaryJsonStr(collectionGooruOId,classId);
-		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTSUMMARYATHWAY, classId);
+		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTSUMMARYATHWAY, classId,getLoggedInSessionToken());
 		Map<String,String> params = new HashMap<String, String>();
 		params.put(DATA, jsonStr);
 		params.put(TIME_ZONE, timeZone);
@@ -960,7 +961,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public String exportProgress(String collectionId, String classpageId,String timeZone) {
 //		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22session%22:%22FS%22,%22sessionId%22:%22%22,%22userUId%22:%22%22,%22classId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22},%22paginate%22:{%22sortBy%22:%22%22,%22sortOrder%22:%22%22}}";
 		String jsonStr = exportProgressJsonStr(collectionId);
-		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTPROGRESS, classpageId);
+		String partialUrl = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_EXPORTPROGRESS, classpageId,getLoggedInSessionToken());
 		Map<String,String> params = new HashMap<String, String>();
 		params.put(DATA, jsonStr);
 		params.put(TIME_ZONE, timeZone);
