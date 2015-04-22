@@ -380,9 +380,11 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 				taxonomyArray.add(courseIdObj);
 				collectionDataObject.put("taxonomySet", taxonomyArray);
 			}
-			settingsObj.put("comment", "turn-on");
-			settingsObj.put("isLoginRequired", data.getSettings().getIsLoginRequired());
-			collectionDataObject.put("settings", settingsObj);
+			if(data.getSettings()!=null && data.getSettings().getIsLoginRequired()!=null){
+				settingsObj.put("comment", "turn-on");
+				settingsObj.put("isLoginRequired", data.getSettings().getIsLoginRequired());
+				collectionDataObject.put("settings", settingsObj);
+			}
 			
 			FolderDataObject.put("collection", collectionDataObject);
 			FolderDataObject.put("parentId", folderId);
