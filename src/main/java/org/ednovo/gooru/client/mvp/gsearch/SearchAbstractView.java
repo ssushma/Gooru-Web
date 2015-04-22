@@ -360,7 +360,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
 			}else{
 				System.out.println("elsepart");
-				ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;");
+				ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
 				ratingsLbl.setVisible(true);
 				pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
 			}
