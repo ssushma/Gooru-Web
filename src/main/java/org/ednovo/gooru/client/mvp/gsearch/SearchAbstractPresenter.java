@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.event.RegisterTabDndEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.gsearch.addResourcePopup.SearchAddResourceToCollectionPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
 import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -117,7 +118,7 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	
 	GooruGradesPresenter gooruGradesPresenter = null;
 	
-	AddResourceContainerPresenter addResourceContainerPresenter=null;
+	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter=null;
 	
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
@@ -138,13 +139,13 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchAbstractPresenter(V view, P proxy,
 			SignUpPresenter signUpViewPresenter,
 			AddStandardsPresenter addStandardsPresenterObj,
-			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
+			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.addCenturyPresenter = addCenturyPresenter;
 		this.gooruGradesPresenter = gooruGradesPresenter;
-		this.addResourceContainerPresenter=addResourceContainerPresenter;
+		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
 		//addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);

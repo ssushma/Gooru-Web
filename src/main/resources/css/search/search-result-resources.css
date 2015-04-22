@@ -187,11 +187,23 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	max-height: 32px;
+	height: 32px;
 	display: inline-block;
 	width: 80%;
 	font-size: 13px;
 	padding-left: 7px;
+}
+#gooruSearchMainContainer .userDetailsResources .user .collectionTitleNoCollection{
+	overflow: hidden;
+	white-space: nowrap;
+	height: 29px;
+	display: inline-block;
+	font-size: 13px;
+	padding-top: 9px;
+	text-align:center;
+	color:#515151;
+	width:171%;
+	
 }
 #gooruSearchMainContainer .userDetailsResources  .user img{
 	border-radius: 50px;
@@ -311,3 +323,99 @@
 @media (min-width: 992px) and (max-width: 1199px) {
 	
 }
+/*Resource search end*/
+
+
+
+/*Add Resource to collection popup start*/
+
+#addCollectionPopup{
+	width:395px;
+	margin:0 auto;
+	border:1px solid #ddd;
+	background-color: #fff;
+}
+#addCollectionPopup .popFooter{
+	background:#dddddd;
+	padding:8px 10px;
+}
+#addCollectionPopup .popHeader{
+	padding:10px 0;
+}
+#addCollectionPopup .closeButton{
+	text-align:right;
+}
+#addCollectionPopup .foldermenuHeader{
+  	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 14px 8px rgba(0, 0, 0, 0);
+    padding: 10px 50px;
+	border-bottom:1px solid #dddddd;
+}
+
+#addCollectionPopup .foldermenuLevel{
+	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 32px 8px;
+    padding:10px 50px 10px 66px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldermenuLevel:hover{
+	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png")  no-repeat scroll 32px 8px ;
+}
+#addCollectionPopup .foldermenuLevel1{
+	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 50px 8px rgba(0, 0, 0, 0);
+    padding:10px 50px 10px 83px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldermenuLevel1:hover{
+	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 50px 8px;
+}
+#addCollectionPopup .foldermenuLevel2{
+	 background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 71px 8px rgba(0, 0, 0, 0);
+    padding:10px 50px 10px 105px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldermenuLevel2:hover{
+	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 71px 8px;
+}
+#addCollectionPopup .foldermenuLevel3{
+	  background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 126px 8px rgba(0, 0, 0, 0);
+    padding:10px 50px 10px 163px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldermenuLevel3:hover{
+	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 126px 8px;
+}
+
+#addCollectionPopup .foldercollection{
+	 background: url(../images/folders/panel/collection-small-icon.png) no-repeat 32px 8px;
+    padding:10px 50px 10px 66px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldercollection1{
+	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 50px 8px;
+    padding:10px 50px 10px 83px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldercollection2{
+	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 71px 8px;
+    padding:10px 50px 10px 105px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldercollection3{
+	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 96px 8px;
+    padding:10px 50px 10px 133px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .addButton{
+	text-align:right;
+}
+#addCollectionPopup .dropdownListContainerScrollPanel{
+	border: 1px solid #ddd;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	height: 275px;
+	width: 382px;
+	margin-top: 20px;
+}
+
+/*Add Resource to collection popup end*/
