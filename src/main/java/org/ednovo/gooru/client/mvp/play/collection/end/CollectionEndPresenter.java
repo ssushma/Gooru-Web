@@ -576,7 +576,11 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			AppClientFactory.getInjector().getPlayerAppService().getNextCollectionFromToc(folderId, folderItemId, new SimpleAsyncCallback<FolderWhatsNextCollectionDo>() {
 				@Override
 				public void onSuccess(FolderWhatsNextCollectionDo result) {
-					getCollection(result.getGooruOid(),result);
+					if(result.getTitle()!=null){
+						getCollection(result.getGooruOid(),result);
+					}else{
+						getView().hideNextCollectionContainer(true);
+					}
 				}
 			});
 		} else {
