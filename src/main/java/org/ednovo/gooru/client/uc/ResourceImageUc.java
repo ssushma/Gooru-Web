@@ -399,7 +399,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 					params.put("rid", gooruOid);
 					if(!selectedFolderId.isEmpty())
 					{
-					AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,false, new SimpleAsyncCallback<FolderTocDo>() {
+					AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,true, new SimpleAsyncCallback<FolderTocDo>() {
 						@Override
 						public void onSuccess(FolderTocDo folderListDo) {
 							for(int i=0;i<folderListDo.getCollectionItems().size();i++)
