@@ -352,13 +352,11 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 							
 						}
 						editAssessmentPopup.hide();
-						Window.enableScrolling(true);
 					}
 					
 					@Override
 					public void clickEventOnCancelAssessmentHandler(ClickEvent event) {
 						editAssessmentPopup.hide();
-						Window.enableScrolling(true);						
 					}
 				};
 					
