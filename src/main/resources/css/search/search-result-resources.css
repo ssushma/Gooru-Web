@@ -339,38 +339,51 @@
 	border-bottom:1px solid #dddddd;
 }
 
-#addCollectionPopup .foldermenuLevel1{
+#addCollectionPopup .foldermenuLevel{
 	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 32px 8px;
     padding:10px 50px 10px 66px;
 	border-bottom:1px solid #dddddd;
 }
-#addCollectionPopup .foldermenuLevel1:hover{
+#addCollectionPopup .foldermenuLevel:hover{
 	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png")  no-repeat scroll 32px 8px ;
 }
+#addCollectionPopup .foldermenuLevel1{
+	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 50px 8px rgba(0, 0, 0, 0);
+    padding:10px 50px 10px 83px;
+	border-bottom:1px solid #dddddd;
+}
+#addCollectionPopup .foldermenuLevel1:hover{
+	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 50px 8px;
+}
 #addCollectionPopup .foldermenuLevel2{
-	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 68px 8px rgba(0, 0, 0, 0);
+	 background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 71px 8px rgba(0, 0, 0, 0);
     padding:10px 50px 10px 105px;
 	border-bottom:1px solid #dddddd;
 }
 #addCollectionPopup .foldermenuLevel2:hover{
-	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 68px 8px;
+	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 71px 8px;
 }
 #addCollectionPopup .foldermenuLevel3{
-	  background: url("images/folder-icon.png") no-repeat scroll 96px 8px rgba(0, 0, 0, 0);
-    padding:10px 50px 10px 133px;
+	  background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 126px 8px rgba(0, 0, 0, 0);
+    padding:10px 50px 10px 163px;
 	border-bottom:1px solid #dddddd;
 }
 #addCollectionPopup .foldermenuLevel3:hover{
-	background:#e3eff7  url("images/folder-icon.png") no-repeat scroll 96px 8px;
+	background:#e3eff7  url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 126px 8px;
 }
 
-#addCollectionPopup .foldercollection1{
+#addCollectionPopup .foldercollection{
 	 background: url(../images/folders/panel/collection-small-icon.png) no-repeat 32px 8px;
     padding:10px 50px 10px 66px;
 	border-bottom:1px solid #dddddd;
 }
+#addCollectionPopup .foldercollection1{
+	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 50px 8px;
+    padding:10px 50px 10px 83px;
+	border-bottom:1px solid #dddddd;
+}
 #addCollectionPopup .foldercollection2{
-	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 68px 8px;
+	background: url(../images/folders/panel/collection-small-icon.png) no-repeat 71px 8px;
     padding:10px 50px 10px 105px;
 	border-bottom:1px solid #dddddd;
 }
