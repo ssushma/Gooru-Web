@@ -85,7 +85,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	interface SearchAbstractViewUiBinder extends UiBinder<Widget, SearchAbstractView<?>> {
 	}
 	
-	@UiField UlPanel ulSubjectPanel,ulCategoryPanel;
+	@UiField UlPanel ulSubjectPanel,ulCategoryPanel,ulRatingsPanel;
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
@@ -109,14 +109,16 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
 	
+	String FILLED_BLUE = "filled filledBlue";
+	
 	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
 
 	int pageNumber = 1,resultCountVal=0;
 	
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars;
 	
 	private HandlerRegistration handlerRegistration=null;
-	
+
 	/**
 	 * Assign new instance for 
 	 * 
@@ -275,6 +277,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showSubjectsFilter();
 		showAuthorFilter();
 		showStandardsFilter();
+		showRatings();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -293,13 +296,19 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	
+	/**
+	 * To render categories and handle click events for Resource search.
+	 * @param ulCategoryPanel {@link UlPanel}
+	 * @param key {@link String}
+	 * @param value {@link String}
+	 */
 	private void renderCategories(UlPanel ulCategoryPanel, String key,
 			String value) {
 		liPanel = new LiPanel();
 		Anchor lblSubject=new Anchor(value);
 		lblSubject.setStyleName(value.toLowerCase().replaceAll(" ",""));
 		liPanel.add(lblSubject);
-		liPanel.addClickHandler(new categoryClickHandler(key,value,liPanel));
+		liPanel.addClickHandler(new CategoryClickHandler(key,value,liPanel));
 		ulCategoryPanel.add(liPanel);
 		
 	}
@@ -317,6 +326,44 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			ulSubjectPanel.add(liPanel);
 		}
 	}
+	
+	private void showRatings() {
+		for(int i=1;i<=5;i++){
+			liPanel = new LiPanel();
+			liPanel.getElement().setId(i+"star");
+			liPanel.setStyleName("ratingItems star");
+			liPanel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			liPanel.addClickHandler(new RatingClickEvent(liPanel,i));
+			ulRatingsPanel.add(liPanel);
+		}
+	}
+	
+	protected class RatingClickEvent implements ClickHandler{
+		LiPanel ratingPanel;
+		int ratingValue;
+		public RatingClickEvent(LiPanel ratingPanel, int ratingValue) {
+			this.ratingPanel=ratingPanel;
+			this.ratingValue=ratingValue;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			setStyleForRatings(ratingValue+"", ulRatingsPanel);
+			
+			/*if(ratingPanel.getStyleName().contains(FILLED_BLUE)){
+				ratingPanel.removeStyleName(FILLED_BLUE);
+				removeFilter(ratingValue+"");
+			}else{
+				ratingPanel.addStyleName(FILLED_BLUE);
+				pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
+			}*/
+			callSearch();
+
+			
+		}
+		
+	}
+	
 	/**
 	 * This inner class will handle the click event on the subject items
 	 * @author Gooru
@@ -343,11 +390,14 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			callSearch();
 		}
 	}
-	
-	public class categoryClickHandler implements ClickHandler{
+	/**
+	 * This inner class is used to handle category click event.
+	 * @author Gooru
+	 */
+	public class CategoryClickHandler implements ClickHandler{
 		String categoryValue="",categoryKey="";
 		LiPanel liPanel;
-		categoryClickHandler(String categoryKey,String categoryValue, LiPanel liPanel){
+		CategoryClickHandler(String categoryKey,String categoryValue, LiPanel liPanel){
 			this.categoryValue = categoryValue;
 			this.categoryKey = categoryKey;
 			this.liPanel = liPanel;
@@ -433,9 +483,30 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				if(filterName.equalsIgnoreCase(widget.getElement().getInnerText())){
 					((LiPanel) widget).addStyleName("active");
 				}
+				
 			}
 		}
 	}
+	
+	public void setStyleForRatings(String filterName, UlPanel filterPanel){
+		int filterStar=Integer.parseInt(filterName);
+		Iterator<Widget> widgets= filterPanel.iterator();
+		System.out.println("ratings::"+filterPanel.getWidgetCount());
+		while(widgets.hasNext()){
+			Widget widget = widgets.next();
+			if(widget instanceof LiPanel){
+				if(filterPanel.getWidgetIndex(widget)<filterStar){
+					((LiPanel) widget).addStyleName(FILLED_BLUE);
+					removeFilter(filterPanel.getWidgetIndex(widget)+1+"");
+					pnlAddFilters.add(createTagsLabel(filterPanel.getWidgetIndex(widget)+1+"","ratingPanel"));
+				}else{
+					removeFilter(filterPanel.getWidgetIndex(widget)+1+"");
+					((LiPanel) widget).removeStyleName(FILLED_BLUE);
+				}
+			}
+		}
+	}
+
 	/**
 	 * Pre-Selected Subjects showing in search page
 	 */
@@ -502,7 +573,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	/**
-	 * This method is used to remove selected values for Subjects
+	 * This method is used to remove selected values for Subjects/categories
 	 * @param filterName
 	 * @param filterPanel
 	 */
@@ -528,6 +599,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedGrades="";
 		selectedStandards="";
 		selectedCategories="";
+		selectedStars="";
 		
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
 		while(widgets.hasNext()){
@@ -564,6 +636,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					selectedCategories += removeLastChar(closeLabelSetting.getSourceText());
 				}
+				if("ratingPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					if (!selectedStars.isEmpty()) {
+						selectedStars += COMMA_SEPARATOR;
+					}
+					selectedStars += closeLabelSetting.getSourceText().replaceAll("Star", "").trim();
+				}
+
 
 			}
 		}
@@ -598,6 +677,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		 if(!selectedCategories.isEmpty()){
 			 filters.put(IsGooruSearchView.CATEGORY_FLT, selectedCategories);
 		 }
+		 if(!selectedStars.isEmpty()){
+			 filters.put(IsGooruSearchView.RATINGS_FLT, selectedStars);
+		 }
+
 		 return filters; 
 	}
 	

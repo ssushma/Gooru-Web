@@ -86,7 +86,7 @@
 
 		<div class="container">
 			<div class="no-gutter">
-				<div class="col-md-11 col-sm-10">
+				<div class="col-md-12 col-sm-10">
 					<div class="seachLeftNavigation">
   						<panel:UlPanel styleName="resourceTypes" ui:field="ulCategoryPanel"/>
 						<!-- <ul class="resourceTypes">
@@ -114,8 +114,15 @@
 						</ul> -->
 						<div class="ratingandGrid">
 							<div class="ratingDetails">
+								<panel:UlPanel styleName="rating playerrating" ui:field="ulRatingsPanel"/>
+		               			    <!-- <g:HTMLPanel > 
+		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
+		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
+		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
+		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
+		                    			<g:InlineHTML  styleName="ratingItems star"></g:InlineHTML>
+		                			</g:HTMLPanel> -->
 
-								<img src="images/ratings.png"></img>
 
 							</div>
 							<div class="gridToggle">
@@ -157,7 +164,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-1 col-sm-2">
+				<!-- <div class="col-md-1 col-sm-2">
 
 					<div class="seachRightNavigation">
 
@@ -165,7 +172,7 @@
 
 					</div>
 
-				</div>
+				</div> -->
 
 
 
