@@ -91,7 +91,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField HTMLPanel fixedFilterSearch,searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 	
-	@UiField Label lblLoadingText;
+	@UiField Label lblLoadingText,ratingsLbl;
 	
 	@UiField InlineLabel searchResults;
 	
@@ -170,6 +170,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		});
+		
+		/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
+			collectionSearchPanel.setVisible(true);
+		}else{
+			
+		}*/
 		
 		showRatings();
 	}
@@ -348,17 +354,17 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		public void onClick(ClickEvent event) {
 			
 			setStyleForRatings(ratingValue+"", ulRatingsPanel);
-			
-			/*if(ratingPanel.getStyleName().contains(FILLED_BLUE)){
-				ratingPanel.removeStyleName(FILLED_BLUE);
-				removeFilter(ratingValue+"");
-			}else{
-				ratingPanel.addStyleName(FILLED_BLUE);
-				pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
-				
-			}*/
 			removeFilter(ratingValue+"Stars");
-			pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
+			if(ratingValue==5){
+				ratingsLbl.setVisible(false);
+				pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
+			}else{
+				System.out.println("elsepart");
+				ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;");
+				ratingsLbl.setVisible(true);
+				pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
+			}
+			
 			callSearch();
 
 			
@@ -484,15 +490,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			if(ratingTag.equalsIgnoreCase("5,4,3,2,1,0"))
 			{
 				pnlAddFilters.add(createTagsLabel("All Ratings","ratingPanel"));
-				setStyleForRatings("5", ulRatingsPanel);
+				setStyleForRatings("0", ulRatingsPanel);
+				ratingsLbl.setVisible(false);
 			}
 			else 
 			{
 				String[] ratingsSplit = ratingTag.split(",");
 				if((ratingsSplit[ratingsSplit.length-1]).equals("5")){
 					pnlAddFilters.add(createTagsLabel(ratingsSplit[0]+" Stars","ratingPanel"));
+					ratingsLbl.setVisible(false);
 				}else{
 					pnlAddFilters.add(createTagsLabel(ratingsSplit[ratingsSplit.length-1]+"+ Stars","ratingPanel"));
+					ratingsLbl.setVisible(true);
 				}
 				setStyleForRatings(ratingsSplit[ratingsSplit.length-1]+"", ulRatingsPanel);
 			}
