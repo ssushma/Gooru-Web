@@ -554,12 +554,15 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	public String getSelectedRatings(String rating){
 		String star="";
-		for(int i=5;i>=Integer.parseInt(rating);i--){
-			if(!star.isEmpty()){
-				star+=COMMA_SEPARATOR;
-			}
-			star+=i;
-		}	
+		if(!rating.isEmpty()){
+			for(int i=5;i>=Integer.parseInt(rating);i--){
+				if(!star.isEmpty()){
+					star+=COMMA_SEPARATOR;
+				}
+				star+=i;
+			}	
+		}
+		
 		return star.trim();
 	}
 
@@ -699,7 +702,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (!selectedStars.isEmpty()) {
 						selectedStars += COMMA_SEPARATOR;
 					}
-					selectedStars += getSelectedRatings(closeLabelSetting.getSourceText().replaceAll("Stars", "").replace("+", "").trim());
+					selectedStars += getSelectedRatings(closeLabelSetting.getSourceText().replaceAll("[^0-9]", ""));
+					
 				}
 
 
