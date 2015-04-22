@@ -89,7 +89,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
+	@UiField HTMLPanel fixedFilterSearch,searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 	
 	@UiField Label lblLoadingText;
 	
@@ -127,6 +127,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		lblLoadingText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		pnlBackToTop.setVisible(false);
 		ulSubjectPanel.setStyleName("dropdown-menu");
+		fixedFilterSearch.getElement().setAttribute("id", "fixedFilterSearchID");
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {

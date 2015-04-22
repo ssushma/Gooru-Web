@@ -4,7 +4,7 @@
 	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
-		<g:HTMLPanel styleName="fixedPosition">
+		<g:HTMLPanel ui:field="fixedFilterSearch" styleName="fixedPosition">
 			<div class="subNavigation">
 				<g:HTMLPanel styleName="container">
 					<g:HTMLPanel styleName="no-gutter">
