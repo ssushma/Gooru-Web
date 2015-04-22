@@ -50,6 +50,11 @@
          <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="questionTrueOrFalseAnswerChoiceContainer">
          	
         </g:HTMLPanel>
+        
+         
+        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="questionHotTextAnswerChoiceContainer">
+         	
+        </g:HTMLPanel>
         <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice"></g:Anchor>
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
           <g:Label text="" ui:field="errorMessageForAnsCheck" styleName="{addWebResourceStyle.addResourceFormInputBottomText} errorMessage"/>

@@ -94,7 +94,7 @@ filter: progid;
 	background:#f2f2f2;
 }
 
-.AssessmentPopupWrapper  .assessmentContentBlock{
+.assessmentContentBlock{
 	padding:25px 25px;
 }
 .AssessmentPopupWrapper  .assessmentContentBlock label{
@@ -112,7 +112,7 @@ color: #999;
 
 }
 
-.AssessmentPopupWrapper .marginDivBlock{
+.marginDivBlock{
 	margin-bottom:15px;
 }
 

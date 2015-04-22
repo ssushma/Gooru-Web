@@ -2,47 +2,126 @@
 	float: left;
 	width: 87%;
 	height: 30px;
-	border-color: rgb(221,221,221);
+	border-color: rgb(221, 221, 221);
 	border-width: 1px;
 	border-style: solid;
 	position: relative;
-	box-sizing:content-box;
+	box-sizing: content-box;
 }
+
 .hintAnswerInputControl {
 	float: left;
 	width: 97%;
 	height: 30px;
-	border-color: rgb(221,221,221);
+	border-color: rgb(221, 221, 221);
 	border-width: 1px;
 	border-style: solid;
 	position: relative;
-	box-sizing:content-box;
+	box-sizing: content-box;
 }
 
-@media only screen and (min-width:768px) and (max-width:991px){
-	
+.questionRightMain {
+	border-left: 1px solid #ddd;
+	background-color: white;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	max-height: 567px;
+	min-height: 300px;
+}
+
+.answerHeadLbl {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #515151;
+	text-align: left;
+	display: inline-block;
+	padding: 0 0 7px 0;
+}
+
+.htQAnswerHeadings {
+	display: inline-block;
+	color: #999;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 0 4% 0 4%;
+}
+
+.htQAnswerTypeLbl {
+	font-style: italic;
+	padding-left: 0;
+}
+
+.htQAnswerHeadings input[type="radio"] {
+	vertical-align: bottom;
+	margin-right: 1.0ex !important;
+}
+
+.htQAnswerInputControl {
+	float: left;
+	width: 97%;
+	height: 30px;
+	border-color: #ddd;
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+	box-sizing: content-box;
+}
+
+.htQAnswerHeadings label {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.htQhighlightTextArea {
+	width: 100%;
+	background-color: transparent;
+	border-color: #ddd;
+	border-width: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+}
+
+@media only screen and (min-width:768px) and (max-width:991px) {
 	.multipleAnswerInputControl {
-	float: left;
-	width: 80%;
-	height: 30px;
-	border-color: rgb(221,221,221);
-	border-width: 1px;
-	border-style: solid;
-	position: relative;
-	box-sizing:content-box;
-}
-.hintAnswerInputControl {
-	float: left;
-	width: 95%;
-	height: 30px;
-	border-color: rgb(221,221,221);
-	border-width: 1px;
-	border-style: solid;
-	position: relative;
-	box-sizing:content-box;
-}
+		float: left;
+		width: 80%;
+		height: 30px;
+		border-color: rgb(221, 221, 221);
+		border-width: 1px;
+		border-style: solid;
+		position: relative;
+		box-sizing: content-box;
+	}
+	.hintAnswerInputControl {
+		float: left;
+		width: 95%;
+		height: 30px;
+		border-color: rgb(221, 221, 221);
+		border-width: 1px;
+		border-style: solid;
+		position: relative;
+		box-sizing: content-box;
+	}
+	.htQAnswerInputControl {
+		float: left;
+		width: 96%;
+		height: 30px;
+		border-color: #ddd;
+		border-width: 1px;
+		border-style: solid;
+		position: relative;
+		box-sizing: content-box;
+	}
+	.htQAnswerHeadings {
+		display: inline-block;
+		color: #999;
+		font-size: 13px;
+		font-weight: normal;
+		padding: 0 1.5% 0 1.5%;
+	}
 }
 
-@media only screen and (min-width:992px) and (max-width:1024px){
-	
+@media only screen and (min-width:992px) and (max-width:1024px) {
 }

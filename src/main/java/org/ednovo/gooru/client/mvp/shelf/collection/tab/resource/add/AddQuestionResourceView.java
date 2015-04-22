@@ -130,7 +130,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 boolean isAnsweEmpty = false;
 	@UiField Label centuryDefaultText,depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg,advancedLbl,setUpAdvancedLbl; 
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights,eHearderIconExplanation,eHearderIconDepthOfKnowledge,eHearderIconStandards,eHearderIconCentury;
-	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer,advancedContainer;
+	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer,advancedContainer,questionHotTextAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
 	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,questionNameErrorLbl,explainationErrorLbl,depthOfKnowledgeTitle;
 	@UiField Anchor addAnswerChoice,addHintsLabel,addExplanationLabel,addDepthOfKnowledgeLabel,addStandardsLabel,addCenturyLabel;
@@ -228,6 +228,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	boolean isEditResource=false;
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
+	String[] anserChoiceNumArray=new String[]{"1","2","3","4","5"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
 	private boolean isBrowseTooltip =false;
 	
@@ -406,6 +407,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		eHearderIconCentury.addClickHandler(new MinimizePanelsClickHandler());
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
 		advancedContainer.getElement().setId("pnladvancedContainer");
+		questionHotTextAnswerChoiceContainer.getElement().setId("pnlQuestionHotTextAnswerChoiceContainer");
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		//browseStantardContainer.getElement().getStyle().setMarginTop(-2, Unit.PCT);
@@ -495,6 +497,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			});
 		}
 		setTrueOrFalseFields();
+		setHotTextFields();
 		//questionNameTextAreaToolBarButton.addClickHandler(new ShowTinyMceToolBar(questionNameTextArea));
 		setCenturyData();
 		explanationContainer.setVisible(false);
@@ -655,10 +658,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
 		setTrueOrFalseFields();
+		setHotTextFields();
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
+		questionHotTextAnswerChoiceContainer.getElement().setId("pnlQuestionHotTextAnswerChoiceContainer");
 		setCenturyData();
 		explanationContainer.setVisible(false);
     	depthOfKnowledgeContainer.setVisible(false);
@@ -1149,6 +1154,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
+	public void refreshHotTextOptionNames(){
+		for(int i=0;i<questionHotTextAnswerChoiceContainer.getWidgetCount();i++){
+			AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionHotTextAnswerChoiceContainer.getWidget(i);
+			addQuestionAnswerChoice.setLabelName(anserChoiceNumArray[i]);
+		}
+		if(questionHotTextAnswerChoiceContainer.getWidgetCount()<5){
+			addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
+		}
+	}
 	
 	public void selectOrDeselectOption(HTMLPanel questionAnswerChoiceContainer,AddQuestionAnswerChoice addQuestionAnswerChoice){
 
@@ -1321,8 +1335,93 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionAnswerChoiceContainer.add(addQuestionAnswer);
 		}
 	}
+	
+	
+	public void setHotTextFields(){
+		questionHotTextAnswerChoiceContainer.clear();
+		for(int i=0;i<2;i++){
+			int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
+			final AddHotTextQuestionAnswerChoice addQuestionAnswer=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[widgetCount]);
+			
+			if(i==0){
+			addQuestionAnswer.reorderRDButton.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					addQuestionAnswer.reorderRDButtonClick();
+					addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
+				}
+			});
+			
+			addQuestionAnswer.highlightRDButton.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					
+					int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
+					for(int i=0;i<widgetCount;i++){
+						if(i==0){
+						}else{
+						questionHotTextAnswerChoiceContainer.remove(i);
+						widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
+						i--;
+						}
+					}
+					addQuestionAnswer.highlightRDButtonClick();
+					addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
+				}
+			});
+			
+			addQuestionAnswer.wordRDButton.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					addQuestionAnswer.wordRDButtonClick();
+				}
+			});
+			addQuestionAnswer.sentenceRDButton.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					addQuestionAnswer.sentenceRDButtonClick();
+				}
+			});
+			addQuestionAnswer.singleRDButton.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					addQuestionAnswer.singleRDButtonClick();
+				}
+			});
+			addQuestionAnswer.multiRDButton.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					addQuestionAnswer.multiRDButtonClick();
+				}
+			});
+			
+				addQuestionAnswer.setHeadLabelFields(true);
+				addQuestionAnswer.reorderRDButton.setValue(true);
+			}else{
+				addQuestionAnswer.setHeadLabelFields(false);
+			}
+			
+			questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
+		}
+
+	}
+	
 	@UiHandler("addAnswerChoice")
 	public void clickedOnAddChoiceButton(ClickEvent clickEvent){
+		
+		if(questionType.equals("HT")){
+			int widgetCount=questionHotTextAnswerChoiceContainer.getWidgetCount();
+			final AddHotTextQuestionAnswerChoice addHotTextQuestionAnswer=new AddHotTextQuestionAnswerChoice(anserChoiceNumArray[widgetCount]);
+			addHotTextQuestionAnswer.setHeadLabelFields(false);
+			addHotTextQuesetionAnswerOptionTextArea(addHotTextQuestionAnswer,widgetCount);
+		}else{
+		
 		int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 		final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
 		addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
@@ -1333,6 +1432,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			addQuestionAnswer.showAnswerChoicesForOthers();
 		}
 		addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
+		}
 	}
 	private void addQuesetionAnswerOptionTextArea(final AddQuestionAnswerChoice addQuestionAnswer,int widgetCount){
 		
@@ -1395,6 +1495,49 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 	}
 	
+	private void addHotTextQuesetionAnswerOptionTextArea(final AddHotTextQuestionAnswerChoice addQuestionAnswer,int widgetCount){
+		
+		answerChoicesList.add(addQuestionAnswer);
+		if(widgetCount>1){
+			addQuestionAnswer.ansChoiceDeleteButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					if(addQuestionAnswer.getParent().getElement().getChildNodes().getLength()>1)
+					{
+						addQuestionAnswer.removeFromParent();
+						refreshHotTextOptionNames();
+						removeToolTip.hide();
+						isAddBtnClicked=true;
+					}
+				}
+			});
+			addQuestionAnswer.addMouseOverHandler(new MouseOverHandler() {
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					if(addQuestionAnswer.getParent().getElement().getChildNodes().getLength()>1)
+					{
+						addQuestionAnswer.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.BLOCK);
+					}
+					else
+					{
+						addQuestionAnswer.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+					}
+				}
+			});
+			addQuestionAnswer.addMouseOutHandler(new MouseOutHandler() {
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					addQuestionAnswer.ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+				}
+			});
+			showRemoveToolTip(addQuestionAnswer.ansChoiceDeleteButton);	
+		}
+		questionHotTextAnswerChoiceContainer.add(addQuestionAnswer);
+		if(questionHotTextAnswerChoiceContainer.getWidgetCount()>=5){
+			addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
+		}
+	}
+
 	public void showRemoveToolTip(final Label deleteButton){
 		deleteButton.addMouseOverHandler(new MouseOverHandler() {
 			
@@ -1619,6 +1762,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     @UiHandler("addQuestionResourceButton")
 	public void clickedOnAddQuestionButton(ClickEvent event)
 	{
+    	
     	boolean fieldValidationCheck;
     	if(getQuestionType().equalsIgnoreCase("T/F")){
     		if (isAnswerChoiceEmpty(questionTrueOrFalseAnswerChoiceContainer)) {
@@ -1669,6 +1813,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}else{
 					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
+			}
+    	} else if(getQuestionType().equalsIgnoreCase("HT")){
+    		if (isHotTextAnswerChoiceEmpty(questionHotTextAnswerChoiceContainer)) {
+    			fieldValidationCheck = false;
+				isAddBtnClicked=true;
 			}
     	}
     	if(isAddBtnClicked){
@@ -1864,6 +2013,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}
     									
     								}else if(fieldValidationStaus && getQuestionType().equalsIgnoreCase("OE")){
+    									if(!isHintsAdded(hintsContainer)){
+    										profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
+    									}
+    								}
+    								else if(fieldValidationStaus && getQuestionType().equalsIgnoreCase("HT")){
     									if(!isHintsAdded(hintsContainer)){
     										profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
     									}
@@ -2337,6 +2491,43 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	}
         return hintsAdded;
 }
+    
+    
+    public boolean isHotTextAnswerChoiceEmpty(HTMLPanel questionAnswerChoiceContainer){
+  		profanityList=new ArrayList<ProfanityCheckDo>();
+           for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
+                   final AddHotTextQuestionAnswerChoice addQuestionAnswerChoice=(AddHotTextQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
+                   String answerChoiceValue=null;
+                   addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+                   addQuestionAnswerChoice.getAnswerTextBox().getElement().removeClassName("errorBorderMessage");
+                   
+                   answerChoiceValue=addQuestionAnswerChoice.answerTextBox.getContent().replaceAll("\\<.*?>","");
+                  	 
+                   ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
+                   if(answerChoiceValue==null||answerChoiceValue.trim().equalsIgnoreCase("")){
+                  	  	 isAnswerChoiceSelected=true;
+                           addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER);
+                           addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
+                           profanitymodel.setQuestionID(Integer.toString(i));
+                           profanityList.add(profanitymodel);
+                           addQuestionAnswerChoice.errorMessageforAnswerChoice.getElement().setAttribute("style", "display:block");
+                   }else{
+                  	 if(answerChoiceValue.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
+                  		   isAnswerChoiceSelected=true;
+                  		   Document.get().getElementById(addQuestionAnswerChoice.answerTextBox.getID()+"_message").setInnerText("");
+                  		   addQuestionAnswerChoice.errorMessageforAnswerChoice.setText(ERROR_MSG_ANSWER_LENGTH);
+                  		   addQuestionAnswerChoice.getAnswerTextBox().getElement().addClassName("errorBorderMessage");
+                  	 }else{
+                  		 	isAnswerChoiceSelected=false;
+  	                		profanitymodel.setQuestionID(Integer.toString(i));
+  	                     	profanitymodel.setQuestionText(answerChoiceValue);
+  	                     	profanityList.add(profanitymodel);
+                  	 }
+                   }
+           }
+           return isAnswerChoiceSelected;
+   }
+    
      /*public void resetAllErrorFields(){
     		errorMessageForQuestion.setText("");
     		ansChoiceErrMsg.setText("");
@@ -2398,6 +2589,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		questionHotTextAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 	}
 	
 	/**
@@ -2420,6 +2612,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		questionHotTextAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 	}
 	
 	/**
@@ -2434,6 +2627,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		questionHotTextAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 	}
 	
 	/**
@@ -2449,6 +2643,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.NONE);
+		questionHotTextAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		
 	}
 	/**
@@ -2463,6 +2658,24 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		addAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.NONE);
+		questionHotTextAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
+	}
+	
+	/**
+	 * This method sets Open-Ended question type content.
+	 * 
+	 */
+	
+	public void showHotTextQuestion(){ 
+		setHeaderAndBodyText("HT");
+		clearErrorMessageForAnswer();
+		clearErrorQuestionMessage();
+		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
+		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
+		addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
+		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.NONE);
+		questionHotTextAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		
 	}
 	
 	/**
@@ -2511,6 +2724,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.setText(i18n.GL0358());
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0358());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0358());
+			questionNameTextArea.markAsBlankPanel.setVisible(false);
+		}else if(tabType.equals("HT")){
+			questionTypeHeader.setText(i18n.GL3224());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL3224());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL3224());
+			questionTypeText.setText(i18n.GL3213());
+			questionTypeText.getElement().setAttribute("alt", i18n.GL3213());
+			questionTypeText.getElement().setAttribute("title", i18n.GL3213());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}
 	}

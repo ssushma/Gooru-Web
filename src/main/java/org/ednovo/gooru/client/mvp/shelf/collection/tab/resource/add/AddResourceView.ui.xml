@@ -73,6 +73,13 @@
 						
 						
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="hotTextTabButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="hotTextRadioButton"
+								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
+							<g:Anchor  ui:field="hotText" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
+						</uc:HTMLEventPanel>
+						
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="equationTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="equationRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
@@ -131,7 +138,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel ui:field="tabViewContainer" styleName="col-md-10 col-sm-10 colmdPadding">
 					</g:HTMLPanel>
-					<g:SimplePanel ui:field="questionContainerPnl" styleName="col-md-10 col-sm-10 colmdPadding"></g:SimplePanel>
+					<g:SimplePanel ui:field="questionContainerPnl" styleName="col-md-10 col-sm-10 questionRightMain"></g:SimplePanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="clearfix"/>

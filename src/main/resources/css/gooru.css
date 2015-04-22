@@ -35,6 +35,7 @@ blockquote:before,blockquote:after,q:before,q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	width: 100%;
 }
 
 * {
@@ -1517,7 +1518,7 @@ td.datePickerMonth{
 .questionTextcontainer iframe, .questionTextcontainer table.mceLayout {
 	height: 85px!important;
 	min-height: 85px!important;
-	width:302px !important;
+	width:100% !important;
 	border:0 !important;
 }
 
@@ -1525,10 +1526,21 @@ td.datePickerMonth{
 	border:0 !important;
 }
 
+.htQanswerContainer iframe,.htQanswerContainer table.mceLayout {
+	height: 85px !important;
+	min-height: 85px !important;
+	width: 100% !important;
+	border: 0 !important;
+}
+
+.htQanswerContainer table.mceLayout td.mceIframeContainer {
+	border: 0 !important;
+}
+
 .answerChoiceAndHintsTextcontainer iframe, .answerChoiceAndHintsTextcontainer table.mceLayout {
 	height: 30px!important;
 	min-height: 30px!important;
-	width: 269px !important;
+	width: 100% !important;
 	border:0 !important;
 }
 
@@ -1539,7 +1551,7 @@ td.datePickerMonth{
 .multiAnswerChoiceContainer iframe, .multiAnswerChoiceContainer table.mceLayout {
 	height: 30px!important;
 	min-height: 30px!important;
-	width: 216px !important;
+	width: 100% !important;
 	border:0 !important;
 }
 
@@ -1569,7 +1581,7 @@ td.datePickerMonth{
 .editQuestionTextcontainer iframe, .editQuestionTextcontainer table.mceLayout {
 	height: 85px!important;
 	min-height: 85px!important;
-	width:330px !important;
+	width:100% !important;
 	border:0 !important;
 }
 
@@ -1580,7 +1592,7 @@ td.datePickerMonth{
 .editAnswerChoiceAndHintsTextcontainer iframe, .editAnswerChoiceAndHintsTextcontainer table.mceLayout {
 	height: 28px!important;
 	min-height: 28px!important;
-	width: 290px !important;
+	width: 100% !important;
 	border:0 !important;
 }
 

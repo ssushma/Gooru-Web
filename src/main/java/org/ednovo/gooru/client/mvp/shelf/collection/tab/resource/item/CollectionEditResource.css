@@ -2404,7 +2404,6 @@ margin-top: 18px; */
 
 .ownResourceFormDeclarationText {
 	float: left;
-	margin-top: 29px;
 	font-size: 13px;
 }
 
@@ -2478,13 +2477,13 @@ margin-top: 18px; */
 .resourceRightsCheckBox {
 	float: left;
 	margin-left: -3px;
-	margin-top: 30px;
 }
 
 .resourceRightsContainer {
 	margin-left: 220px;
 	width: 100%;
 	float:left;
+	margin-top: 40px;
 }
 
 .resourceRightsContainerWeb {
