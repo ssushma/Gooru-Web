@@ -37,15 +37,18 @@ import org.ednovo.gooru.client.mvp.gsearch.GooruSearchUiHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.SearchMainPresenter;
 import org.ednovo.gooru.client.mvp.gsearch.util.GooruGradesPresenter;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
+import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -77,6 +80,10 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	
 	GooruGradesPresenter gooruGradesPresenter;
 	
+	AddResourceContainerPresenter addResourceContainerPresenter;
+	
+	AppPopUp appPopUp=new AppPopUp();
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SEARCH_RESOURCE)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -84,11 +91,12 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Inject
-	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter) {
-		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter);
+	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,addResourceContainerPresenter);
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.addCenturyPresenter=addCenturyPresenter;
 		this.gooruGradesPresenter=gooruGradesPresenter;
+		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -132,7 +140,6 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
 		
 	}
-
 		
 	@Override
 	public void getCollectionSearchResultsOnPageWise(String query,int pageNumber, int pageSize) {
@@ -157,5 +164,18 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo,SearchAsyncCallback<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
 		getSearchDo().setPageSize(9);
 		getSearchService().getResourceSearchResults(searchDo, searchAsyncCallback);
+	}
+
+	@Override
+	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo) {
+		/*addResourceContainerPresenter.removePlayerStyle();
+		addResourceContainerPresenter.getUserShelfData(resourceSearchResultDo,"resource");
+		addResourceContainerPresenter.cleartheSelecteGooruOid();
+		addResourceContainerPresenter.SetDefaultMyCollections();
+		appPopUp.setContent(addResourceContainerPresenter.getWidget());
+		appPopUp.setGlassEnabled(true);
+		appPopUp.setStyleName("resoruceSearchAddResourceContainerPopup");
+		appPopUp.show();
+		appPopUp.center();*/
 	}
 }

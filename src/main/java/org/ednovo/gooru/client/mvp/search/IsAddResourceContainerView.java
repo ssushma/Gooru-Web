@@ -48,6 +48,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
+import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResourceContainerUiHandlers>{
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType);

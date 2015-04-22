@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
@@ -116,6 +117,8 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	
 	GooruGradesPresenter gooruGradesPresenter = null;
 	
+	AddResourceContainerPresenter addResourceContainerPresenter=null;
+	
 	private boolean isCCSSAvailable =false;
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
@@ -135,12 +138,13 @@ public abstract class SearchAbstractPresenter<T extends ResourceSearchResultDo, 
 	public SearchAbstractPresenter(V view, P proxy,
 			SignUpPresenter signUpViewPresenter,
 			AddStandardsPresenter addStandardsPresenterObj,
-			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter) {
+			AddCenturyPresenter addCenturyPresenter, GooruGradesPresenter gooruGradesPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.addCenturyPresenter = addCenturyPresenter;
 		this.gooruGradesPresenter = gooruGradesPresenter;
+		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
 		//addRegisteredHandler(DisableSpellSearchEvent.TYPE, this);

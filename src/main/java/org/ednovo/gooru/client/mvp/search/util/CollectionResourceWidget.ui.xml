@@ -61,7 +61,7 @@
 		</div>
 		<div class="panel-footer no-gutter">
 			<div class="col-md-12 col-sm-12 remixButton">
-				<button class="primary" type="submit">Add</button>
+				<g:Button styleName="primary" ui:field="btnAddResource">Add</g:Button>
 			</div>
 			<div class="clearfix"></div>
 		</div>
