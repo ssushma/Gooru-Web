@@ -187,11 +187,23 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	max-height: 32px;
+	height: 32px;
 	display: inline-block;
 	width: 80%;
 	font-size: 13px;
 	padding-left: 7px;
+}
+#gooruSearchMainContainer .userDetailsResources .user .collectionTitleNoCollection{
+	overflow: hidden;
+	white-space: nowrap;
+	height: 29px;
+	display: inline-block;
+	font-size: 13px;
+	padding-top: 9px;
+	text-align:center;
+	color:#515151;
+	width:171%;
+	
 }
 #gooruSearchMainContainer .userDetailsResources  .user img{
 	border-radius: 50px;

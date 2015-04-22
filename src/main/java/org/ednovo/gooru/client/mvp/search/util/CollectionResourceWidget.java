@@ -92,12 +92,22 @@ public class CollectionResourceWidget extends Composite {
 			@Override
 			public void onSuccess(SearchDo<CollectionSearchResultDo> result) {
 				if(result.getSearchResults().size()>0){
+					relatedCollectionImage.setVisible(true);
+					creatorImage.setVisible(true);
 					if(!StringUtil.isEmpty(result.getSearchResults().get(0).getUrl())){
 						relatedCollectionImage.setUrl(result.getSearchResults().get(0).getUrl());
+						relatedCollectionTitle.setStyleName("collectionTitle");
 						relatedCollectionTitle.setText(result.getSearchResults().get(0).getResourceTitle());
 						relatedCollectionTitle.setTitle(result.getSearchResults().get(0).getResourceTitle());
 						creatorImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+result.getSearchResults().get(0).getGooruUId()+".png");
 					}
+				}
+				else
+				{
+					relatedCollectionImage.setVisible(false);
+					creatorImage.setVisible(false);
+					relatedCollectionTitle.setStyleName("collectionTitleNoCollection");
+					relatedCollectionTitle.setText(i18n.GL3212());
 				}
 			}
 		});
