@@ -131,6 +131,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel) {
+		totalHitCount = folderListDo.getCount();
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
