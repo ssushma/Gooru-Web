@@ -23,6 +23,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -47,7 +48,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	
 	@UiField HTMLPanel floderTreeContainer;
-	@UiField Image cancelResourcePopupBtnLbl;
+	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	
 	private int limit=20;
