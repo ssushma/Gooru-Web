@@ -7,8 +7,8 @@
 		<g:HTMLPanel>
 	<div id="addCollectionPopup">
 		<div class="popHeader">
-		<div class="col-md-10 popHeading">Add this collection to one of your existing folder</div>
-		<div class="col-md-2 closeButton"><a><g:Image url="images/resource-add-close.png" ui:field="cancelResourcePopupBtnLbl"/></a></div>
+		<div class="col-md-10 popHeading">Add this resource to one of your existing or new collection</div>
+		<div class="col-md-2"><g:Anchor ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Anchor></div>
 		<div class="clearfix"></div>
 		</div>
 		<div class="popBody">
