@@ -136,7 +136,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					pnlBackToTop.setVisible(false);
 				}
 				if(resultCountVal>=8){
-					if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+					if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
 						lblLoadingText.setVisible(true);
 						pageNumber++;
 						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
