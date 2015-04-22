@@ -220,8 +220,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 					return false;
 				}
 			}
+			return false;
 		}
-		return true;
+		return false;
 	}
 	
 }
