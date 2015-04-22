@@ -105,7 +105,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
 	
-	String FILLED_BLUE = "filled filledBlue";
+	String FILLED_GREEN = "filled";
 	
 	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
 
@@ -169,6 +169,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		});
+		
+		showRatings();
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -273,7 +275,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showSubjectsFilter();
 		showAuthorFilter();
 		showStandardsFilter();
-		showRatings();
+		showRatingsFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -352,7 +354,10 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}else{
 				ratingPanel.addStyleName(FILLED_BLUE);
 				pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
+				
 			}*/
+			removeFilter(ratingValue+"Stars");
+			pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
 			callSearch();
 
 			
@@ -466,6 +471,32 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
+	
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showRatingsFilter() {
+
+		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+		if(ratingTag!=null){
+			pnlAddFilters.setVisible(true);
+			if(ratingTag.equalsIgnoreCase("5,4,3,2,1,0"))
+			{
+				pnlAddFilters.add(createTagsLabel("All Ratings","ratingPanel"));
+				setStyleForRatings("5", ulRatingsPanel);
+			}
+			else 
+			{
+				String[] ratingsSplit = ratingTag.split(",");
+				if((ratingsSplit[ratingsSplit.length-1]).equals("5")){
+					pnlAddFilters.add(createTagsLabel(ratingsSplit[0]+" Stars","ratingPanel"));
+				}else{
+					pnlAddFilters.add(createTagsLabel(ratingsSplit[ratingsSplit.length-1]+"+ Stars","ratingPanel"));
+				}
+				setStyleForRatings(ratingsSplit[ratingsSplit.length-1]+"", ulRatingsPanel);
+			}
+		}
+	}
 	/**
 	 * This method is used to highlight selected values for Subjects/Categories
 	 * @param filterName
@@ -486,25 +517,39 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	public void setStyleForRatings(String filterName, UlPanel filterPanel){
 		int filterStar=Integer.parseInt(filterName);
+		int countStar;
 		Iterator<Widget> widgets= filterPanel.iterator();
-		System.out.println("ratings::"+filterPanel.getWidgetCount());
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
 			if(widget instanceof LiPanel){
-				if(filterPanel.getWidgetIndex(widget)<filterStar){
-					((LiPanel) widget).addStyleName(FILLED_BLUE);
-					removeFilter(filterPanel.getWidgetIndex(widget)+1+"");
-					pnlAddFilters.add(createTagsLabel(filterPanel.getWidgetIndex(widget)+1+"","ratingPanel"));
+				countStar=filterPanel.getWidgetIndex(widget)+1;
+				if(countStar<=filterStar){
+					((LiPanel) widget).addStyleName(FILLED_GREEN);
+					
 				}else{
-					removeFilter(filterPanel.getWidgetIndex(widget)+1+"");
-					((LiPanel) widget).removeStyleName(FILLED_BLUE);
+					((LiPanel) widget).removeStyleName(FILLED_GREEN);
 				}
 			}
 		}
 	}
+	/**
+	 * To get list of selected ratings
+	 * @param rating {@link String}
+	 * @return star {@link String}
+	 */
+	public String getSelectedRatings(String rating){
+		String star="";
+		for(int i=5;i>=Integer.parseInt(rating);i--){
+			if(!star.isEmpty()){
+				star+=COMMA_SEPARATOR;
+			}
+			star+=i;
+		}	
+		return star.trim();
+	}
 
 	/**
-	 * Pre-Selected Subjects showing in search page
+	 * Pre-Selected categories showing in search page
 	 */
 	private void showCategoryFilter() {
 		categories = AppClientFactory.getPlaceManager().getRequestParameter("category");
@@ -563,6 +608,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			Widget widget = widgets.next();
 			if(widget instanceof CloseLabelSetting){
 				if(filterName.equalsIgnoreCase(((CloseLabelSetting) widget).getSourceText())){
+					widget.removeFromParent();
+				}
+				if(((CloseLabelSetting) widget).getSourceText().contains("Stars") || ((CloseLabelSetting) widget).getSourceText().contains("Ratings")){
 					widget.removeFromParent();
 				}
 			}
@@ -636,7 +684,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if (!selectedStars.isEmpty()) {
 						selectedStars += COMMA_SEPARATOR;
 					}
-					selectedStars += closeLabelSetting.getSourceText().replaceAll("Star", "").trim();
+					selectedStars += getSelectedRatings(closeLabelSetting.getSourceText().replaceAll("Stars", "").replace("+", "").trim());
 				}
 
 
@@ -673,8 +721,12 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		 if(!selectedCategories.isEmpty()){
 			 filters.put(IsGooruSearchView.CATEGORY_FLT, selectedCategories);
 		 }
-		 if(!selectedStars.isEmpty()){
-			 filters.put(IsGooruSearchView.RATINGS_FLT, selectedStars);
+		 if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+			 if(!selectedStars.isEmpty()){
+				 filters.put(IsGooruSearchView.RATINGS_FLT, selectedStars);
+			 }else{
+				 filters.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+			 }
 		 }
 
 		 return filters; 
