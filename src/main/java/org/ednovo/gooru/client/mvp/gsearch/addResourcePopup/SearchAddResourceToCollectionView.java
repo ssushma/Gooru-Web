@@ -88,13 +88,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			    		folderTreeItemWidget.setOpen(true);
 			    	}
 				    TreeItem parent = item.getParentItem();
-				    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
+				    item.getTree().setSelectedItem(parent, false); 
 				    if(!folderTreeItemWidget.isApiCalled()){
 				    	folderTreeItemWidget.setApiCalled(true);
 				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
 				    }
 				    if(parent != null)
-				    	parent.setSelected(false);   // TODO FIX ME
+				    	parent.setSelected(false);   
 				    item.setState(!item.getState(), false);
 			    }else if(folderWidget instanceof CollectionTreeItem){
 			    }
@@ -162,8 +162,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				 for(int i=0;i<foldersArrayList.size();i++){
 					 FolderDo floderDo=foldersArrayList.get(i);
 					 if(floderDo.getType().equals("folder")){
-						 String styleName=folderLevel==1?AddAssignmentContainerCBundle.INSTANCE.css().parent():AddAssignmentContainerCBundle.INSTANCE.css().child();
-						 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(styleName,floderDo.getTitle(),floderDo.getGooruOid());
+						 FolderTreeItem innerFolderTreeItem=new FolderTreeItem(folderLevel+"",floderDo.getTitle(),floderDo.getGooruOid());
 						 innerFolderTreeItem.setFolerLevel(folderLevel+1);
 						 TreeItem folderItem=new TreeItem(innerFolderTreeItem);
 						 item.addItem(folderItem);
@@ -206,11 +205,11 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	private String  getTreeItemStyleName(int folderLevel){
 		if(folderLevel==1){
-			return "foldercollection2";
+			return "foldercollection1";
 		}else if(folderLevel==2){
-			return "foldercollection3";
+			return "foldercollection2";
 		}else{
-			return AddAssignmentContainerCBundle.INSTANCE.css().innerchild();
+			return "foldercollection3";
 		}
 	}
 	public class FolderTreeItem extends Composite{
@@ -223,12 +222,12 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		private int folerLevel=1;
 		public FolderTreeItem(){
 			initWidget(folderContainer=new FlowPanel());
-			folderContainer.setStyleName("foldermenuLevel1");
+			folderContainer.setStyleName("foldermenuLevel");
 		}
 		public FolderTreeItem(String levelStyleName,String folderTitle,String gooruOid){
 			this();
 			if(levelStyleName!=null){
-				folderContainer.addStyleName(levelStyleName);
+				folderContainer.addStyleName("foldermenuLevel"+levelStyleName);
 			}
 			this.gooruOid=gooruOid;
 			folderContainer.getElement().setInnerText(folderTitle);
@@ -263,7 +262,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		private boolean isOpen=false;
 		public CollectionTreeItem(){
 			initWidget(folderContainer=new FlowPanel());
-			folderContainer.setStyleName("foldercollection1");
+			folderContainer.setStyleName("foldercollection");
 		}
 		public CollectionTreeItem(String levelStyleName){
 			this();
