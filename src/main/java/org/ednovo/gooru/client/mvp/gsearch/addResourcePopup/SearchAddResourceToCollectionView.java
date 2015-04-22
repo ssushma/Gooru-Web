@@ -3,6 +3,9 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.List;
 
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerCBundle;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.FolderTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
@@ -52,6 +55,10 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private int limit=20;
 	private int totalHitCount=0;
 	private int pageNum=1;
+	private FolderTreeItem previousFolderSelectedTreeItem = null;
+	private CollectionTreeItem previousSelectedItem = null;
+	private FolderTreeItem currentFolderSelectedTreeItem = null;
+	private CollectionTreeItem cureentcollectionTreeItem = null;
 	
 	PopupPanel appPopUp;
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
@@ -63,7 +70,6 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			    }
 		 }
 	};
-	
 	@Inject
 	public SearchAddResourceToCollectionView(EventBus eventBus) {
 		super(eventBus);
@@ -74,6 +80,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		floderTreeContainer.add(folderTreePanel);
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
+		folderTreePanel.getElement().setId("addResourcefolderTreePanel");
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
@@ -81,10 +88,17 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 			    Widget folderWidget= item.getWidget();
 			    FolderTreeItem folderTreeItemWidget=null;
 			    if(folderWidget instanceof FolderTreeItem){
+			    	removePreviousSelectedItem();
 			    	folderTreeItemWidget=(FolderTreeItem)folderWidget;
+			    	currentFolderSelectedTreeItem = folderTreeItemWidget;
+			    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
+			    	previousSelectedItem = cureentcollectionTreeItem = null;
+			    	currentFolderSelectedTreeItem.addStyleName("selected");
 			    	if(folderTreeItemWidget.isOpen()){
 			    		folderTreeItemWidget.setOpen(false);
+			    		folderTreeItemWidget.removeStyleName("open");
 			    	}else{
+			    		folderTreeItemWidget.addStyleName("open");
 			    		folderTreeItemWidget.setOpen(true);
 			    	}
 				    TreeItem parent = item.getParentItem();
@@ -97,10 +111,27 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 				    	parent.setSelected(false);   
 				    item.setState(!item.getState(), false);
 			    }else if(folderWidget instanceof CollectionTreeItem){
+			    	removePreviousSelectedItem();
+			    	cureentcollectionTreeItem=(CollectionTreeItem) folderWidget;
+			    	previousSelectedItem = cureentcollectionTreeItem;
+			    	cureentcollectionTreeItem.addStyleName("selected");
+			    	previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
 			    }
 			  }
 		});
 	}
+
+	private void removePreviousSelectedItem() {
+		if (previousFolderSelectedTreeItem != null) {
+			previousFolderSelectedTreeItem
+					.removeStyleName("selected");
+		}
+		if (previousSelectedItem != null) {
+			previousSelectedItem
+					.removeStyleName("selected");
+		}
+	}
+
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
