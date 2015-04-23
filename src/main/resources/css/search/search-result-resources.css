@@ -431,11 +431,11 @@
 	display: inline-block;
 }
 #addCollectionPopup .leftAlign{
-	text-align:left;
+	text-align:left !important;
 	width: 50%
 }
 #addCollectionPopup .rightAlign{
-	text-align:right;
+	text-align:right !important;
 	width: 49%;
 }
 #addCollectionPopup .dropdownListContainerScrollPanel{

@@ -12,6 +12,9 @@
 		<div class="clearfix"></div>
 		</div>
 		<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListContainerScrollPanel">
+			<g:HTMLPanel ui:field="myCollDefault" styleName="foldermenuHeader">
+			My Collections (default)
+			</g:HTMLPanel>
 	          <g:HTMLPanel ui:field="floderTreeContainer" styleName="popBody"/>
 		</g:ScrollPanel>
 			<div class="clearfix"></div>

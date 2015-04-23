@@ -26,11 +26,19 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 
 
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.util.ClientConstants;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Button;
@@ -53,10 +61,14 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  *
  * @Reviewer: Gooru Team
  */
-public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSearchAddResourceToCollectionView> implements SearchAddResourceToCollectionUiHandlers{
+public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSearchAddResourceToCollectionView> implements SearchAddResourceToCollectionUiHandlers,ClientConstants{
 
 
 	ResourceSearchResultDo searchResultDo =null;
+	String type =null;
+	String accessType =null;
+	private String parentId=null;
+	 private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	
 	@Inject
 	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view) {
@@ -71,10 +83,25 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType) {
 		this.searchResultDo =searchResultDo;
+		getView().setDefaultPanelVisibility(false);
 		getWorkspaceData(0,20,true,searchType);
 	}
+	@Override
+	public void getUserShelfCollectionsData(CollectionSearchResultDo collectionsearchResultDo,String searchType) {
+		this.searchResultDo =collectionsearchResultDo;
+		getView().setDefaultPanelVisibility(true);
+		getWorkspaceData(0,20,true,searchType);
+		//getView().setCollectionSearchResultDo(this.collectionsearchResultDo);
+	}
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
+		if(COLLECTION.equalsIgnoreCase(searchType)){
+			type= FOLDER;
+			accessType = ACESSTEXT;
+		}else{
+			type=null;
+			accessType = ACESSTEXT;
+		}
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo.getCount()==0){
@@ -87,7 +114,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	}
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, type,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
@@ -114,6 +141,53 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 			});
 		}
 	}
+	@Override
+	public void addCollectionToFolder(final String selectedFolderOrCollectionid,String searchType, final String title, final int folerLevel,HashMap<String, String> urlparams) {
+		this.urlParameters=urlparams;
+		final CollectionDo collection = new CollectionDo();
+		if(searchType.equalsIgnoreCase("collection")){
+		collection.setGooruOid(searchResultDo.getGooruOid());
+		collection.setSharing("anyonewithlink");
+		if(selectedFolderOrCollectionid!=null){
+			successparams.put("o1", selectedFolderOrCollectionid);
+			O1_LEVEL_VALUE = urlparams.get("o1");
+			O2_LEVEL_VALUE = urlparams.get("o2");
+			O3_LEVEL_VALUE = urlparams.get("o3");
+			
+			if(O3_LEVEL_VALUE!=null){
+				parentId=O3_LEVEL_VALUE;
+			}else if(O2_LEVEL_VALUE!=null){
+				parentId=O2_LEVEL_VALUE;
+			}else if(O1_LEVEL_VALUE!=null){
+				parentId=O1_LEVEL_VALUE;
+			}
+			AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
+				@Override
+				public void onSuccess(CollectionDo result) {
+					FolderDo folderDo=getFolderDo(result);
+					HashMap<String,String> params = new HashMap<String,String>();
+					if(O3_LEVEL_VALUE!=null) {
+						params.put("o3", O3_LEVEL_VALUE);
+					}
+					if(O2_LEVEL_VALUE!=null) {
+						params.put("o2", O2_LEVEL_VALUE);
+					}
+					if(O1_LEVEL_VALUE!=null) {
+						params.put("o1", O1_LEVEL_VALUE);
+					}
+					AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+					getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
+				}
+			});
+			
+		}else{
+			getView().restrictionToAddResourcesData("Please select a folder to add collection");
+			getView().getButtonVisiblity();
+		}
+	}
+		
+	}
+	
 	@Override
 	public Button getAddButton() {
 		return getView().getAddButton();

@@ -51,4 +51,5 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	public void displayNoCollectionsMsg();
 	public Button getAddButton();
 	public void hidePopup();
+	void setDefaultPanelVisibility(Boolean blnVal);
 }
