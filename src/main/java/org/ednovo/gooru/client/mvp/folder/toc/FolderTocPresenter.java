@@ -170,9 +170,9 @@ public class FolderTocPresenter extends BasePlacePresenter<IsFolderTocView, IsFo
     	//This lines is used to check the values exists are not and based on that it will pass sharing value.
     	boolean value=false;
 		if(params.containsKey(USER_ID)){
-			value=true;
+			value=false;
 		}else if(params.containsKey(LIBRARY_NAME)){
-			value=true;
+			value=false;
 		}
 		return value;
     }
