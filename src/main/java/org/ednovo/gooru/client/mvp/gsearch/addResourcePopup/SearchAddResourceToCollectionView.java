@@ -404,9 +404,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params) {
+	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params,String searchType) {
 		hide();
-		successPopup.setData(collectionName, selectedGooruOid,params);
+		successPopup.setData(collectionName, selectedGooruOid,params,searchType);
 		successPopup.setGlassEnabled(true);
 		successPopup.getCloseButton().addClickHandler(new ClickHandler() {
 			@Override

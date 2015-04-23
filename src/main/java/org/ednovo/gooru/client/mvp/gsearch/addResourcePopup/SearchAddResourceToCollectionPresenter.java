@@ -137,7 +137,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 		});
 	}
 	@Override
-	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title) {
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,final String searchType,final String title) {
 		if(selectedFolderOrCollectionid!=null){
 			//This will check the resource count
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
@@ -149,7 +149,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 							@Override
 							public void onSuccess(CollectionItemDo result) {
 								successparams.put("id", selectedFolderOrCollectionid);
-								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams);
+								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams,searchType);
 							}
 						});
 					}
@@ -192,6 +192,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						params.put("o1", O1_LEVEL_VALUE);
 					}
 					AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
+					getView().displaySuccessPopup(folderDo.getTitle(), result.getGooruOid(), successparams,"collection");
 			
 				}
 			});
@@ -254,7 +255,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				@Override
 				public void onSuccess(CollectionDo result) {
 					//success msg
-					getView().displaySuccessPopup(result.getTitle(), result.getGooruOid(), successparams);
+					getView().displaySuccessPopup("My Collections", result.getGooruOid(), successparams,"collection");
 					//hidePopup();
 
 				}

@@ -54,6 +54,6 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	public Button getAddButton();
 	public void hidePopup();
 	void setDefaultPanelVisibility(Boolean blnVal);
-	public void displaySuccessPopup(String title,String selectedGooruOid,HashMap<String, String> params);
+	public void displaySuccessPopup(String title,String selectedGooruOid,HashMap<String, String> params,String searchType);
 	void restrictionToAddResourcesData(String message);
 }

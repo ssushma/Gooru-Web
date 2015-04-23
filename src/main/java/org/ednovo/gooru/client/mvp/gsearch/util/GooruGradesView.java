@@ -199,11 +199,9 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 */
 	private void selectAllGrades(String[] gradeArray, String addOrRemove) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT, null);
-		System.out.println("grades:"+grades);
 		for(int i=1; i<gradeArray.length; i++){
 			if(grades!=null && !grades.contains(gradeArray[i])){
 				updateFilterStyle(gradeArray[i],addOrRemove);
-				System.out.println("gradeArray[i]::"+gradeArray[i]);
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove));
 			}else if(addOrRemove.equals(REMOVE)){
 				updateFilterStyle(gradeArray[i],addOrRemove);
