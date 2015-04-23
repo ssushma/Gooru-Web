@@ -1455,7 +1455,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
 			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
-		}	
+		}else{	
+			selectedFolderId="";
+		}
 		params.put("id", collectionDo.getGooruOid());
 		if(!selectedFolderId.isEmpty())
 		{
