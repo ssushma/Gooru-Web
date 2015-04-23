@@ -760,7 +760,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public ExistsResourceDo deserializeResourceItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
+				if(!jsonRep.getJsonObject().isNull("resource")){
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resource").toString(), ExistsResourceDo.class);
+				}
 				} catch (JSONException e) {
 					logger.error("Exception::", e);
 			}
