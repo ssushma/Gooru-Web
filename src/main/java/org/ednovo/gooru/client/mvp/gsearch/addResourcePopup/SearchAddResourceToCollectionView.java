@@ -2,10 +2,6 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 import java.util.List;
 
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerCBundle;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.CollectionTreeItem;
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerView.FolderTreeItem;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
@@ -27,10 +23,10 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -53,6 +49,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField HTMLPanel floderTreeContainer;
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
+	@UiField Button btnAddNew,btnAddExisting;
 	
 	private int limit=20;
 	private int totalHitCount=0;
@@ -335,5 +332,9 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	public void getFolderItems(TreeItem item,String parentId){
 		getUiHandlers().getFolderItems(item,parentId);
+	}
+	@UiHandler("btnAddExisting")
+	public void addResourceToCollection(ClickEvent event){
+		getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
 	}
 }

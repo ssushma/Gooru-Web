@@ -16,7 +16,8 @@
 		</g:ScrollPanel>
 			<div class="clearfix"></div>
 			<div class="popFooter">
-				<div class="addButton"><button type="button" class="primary" >Search</button></div>
+				<div class="addButton"><g:Button styleName="primary" ui:field="btnAddNew">Add to New</g:Button></div>
+				<div class="addButton"><g:Button styleName="primary" ui:field="btnAddExisting">Add to Existing</g:Button></div>
 			</div>
 		<div class="clearfix"></div>
 	</div>

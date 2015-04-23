@@ -45,4 +45,5 @@ import com.google.gwt.user.client.ui.TreeItem;
 public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers, EventHandler{
 	public void getFolderItems(final TreeItem item,String parentId);
 	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel);
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title);
 }

@@ -28,9 +28,12 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -85,5 +88,18 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 				getView().setFolderItems(item,folderListDo);
 			}
 		});
+	}
+	@Override
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title) {
+		if(selectedFolderOrCollectionid!=null){
+			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
+				@Override
+				public void onSuccess(FolderListDo result) {
+					if (result.getCount()<25){
+						
+					}
+				}
+			});
+		}
 	}
 }
