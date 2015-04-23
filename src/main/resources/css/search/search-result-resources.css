@@ -458,10 +458,12 @@
 }
 #addCollectionPopup .lblSuccessText{
 	text-align: center;
-	min-height: 250px;
+	height: 83px;
+	font-size: 18px;
 }
 #addCollectionPopup .lblSuccessImage{
 	background: url(../images/folders/panel/checkmark.png) no-repeat center;
+	height: 152px;
 }
 
 /*Add Resource to collection popup end*/

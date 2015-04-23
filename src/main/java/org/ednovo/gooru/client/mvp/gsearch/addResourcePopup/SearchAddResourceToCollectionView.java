@@ -360,11 +360,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
 		hide();
-		Element element = Document.get().getElementById("fixedFilterSearchID");
-		if(element!=null){
-			element.removeAttribute("style");
-		}
-		Window.enableScrolling(true);
+		enableTopFilters();
 	}
 	public void getFolderItems(TreeItem item,String parentId){
 		getUiHandlers().getFolderItems(item,parentId);
@@ -398,6 +394,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		element.removeAttribute("style");
 		}
 		hide();
+		enableTopFilters();
 	}
 
 	@Override
@@ -408,15 +405,25 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 
 	@Override
 	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params) {
-		appPopUp.clear();
+		hide();
 		successPopup.setData(collectionName, selectedGooruOid,params);
-		appPopUp.add(successPopup);
+		successPopup.setGlassEnabled(true);
 		successPopup.getCloseButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				hidePopup();
+				successPopup.hide();
+				enableTopFilters();
 			}
 		});
+		successPopup.show();
+		successPopup.center();
+	}
+	public void enableTopFilters(){
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null){
+			element.removeAttribute("style");
+		}
+		Window.enableScrolling(true);
 	}
 	
 	@Override
