@@ -362,11 +362,11 @@
 }
 #addCollectionPopup .closeButton{
 	text-align:right;
-	  background: url(../images/login/close-button.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-  height: 17px;
-  width: 17px;
-  display: inline-block;
-  cursor: pointer;
+ 	background: url(../images/login/close-button.png) no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+ 	height: 17px;
+ 	width: 17px;
+ 	display: inline-block;
+    cursor: pointer;
 }
 #addCollectionPopup .foldermenuHeader{
   	background: url("../images/folders/panel/folder-small-icon.png") no-repeat scroll 14px 8px rgba(0, 0, 0, 0);
@@ -428,7 +428,15 @@
 	border-bottom:1px solid #dddddd;
 }
 #addCollectionPopup .addButton{
+	display: inline-block;
+}
+#addCollectionPopup .leftAlign{
+	text-align:left;
+	width: 50%
+}
+#addCollectionPopup .rightAlign{
 	text-align:right;
+	width: 49%;
 }
 #addCollectionPopup .dropdownListContainerScrollPanel{
 	border: 1px solid #ddd;
