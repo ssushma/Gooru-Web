@@ -109,7 +109,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
 
-	int pageNumber = 1,resultCountVal=0;
+	int pageNumber = 1,resultCountVal=0,previousValue;
+	
 	
 	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars;
 	
@@ -352,24 +353,26 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			
-			setStyleForRatings(ratingValue+"", ulRatingsPanel);
-			removeFilter(ratingValue+"Stars");
-			if(ratingValue==5){
-				ratingsLbl.setVisible(false);
-				pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
+			if(previousValue!=0 && previousValue==ratingValue){
+				setStyleForRatings(0+"", ulRatingsPanel);
+				removeFilter(ratingValue+"Stars");
+				previousValue=0;
 			}else{
-				System.out.println("elsepart");
-				ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;");
-				ratingsLbl.setVisible(true);
-				pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
+				setStyleForRatings(ratingValue+"", ulRatingsPanel);
+				removeFilter(ratingValue+"Stars");
+				if(ratingValue==5){
+					ratingsLbl.setVisible(false);
+					pnlAddFilters.add(createTagsLabel(ratingValue+" Stars","ratingPanel"));
+				}else{
+					ratingsLbl.getElement().setAttribute("style", "display: block;text-align: center;position:absolute;margin-left:4%;");
+					ratingsLbl.setVisible(true);
+					pnlAddFilters.add(createTagsLabel(ratingValue+"+ Stars","ratingPanel"));
+				}
+				previousValue=ratingValue;
 			}
 			
 			callSearch();
-
-			
 		}
-		
 	}
 	
 	/**
@@ -498,9 +501,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				String[] ratingsSplit = ratingTag.split(",");
 				if((ratingsSplit[ratingsSplit.length-1]).equals("5")){
 					pnlAddFilters.add(createTagsLabel(ratingsSplit[0]+" Stars","ratingPanel"));
+					previousValue=5;
 					ratingsLbl.setVisible(false);
 				}else{
 					pnlAddFilters.add(createTagsLabel(ratingsSplit[ratingsSplit.length-1]+"+ Stars","ratingPanel"));
+					previousValue=Integer.parseInt(ratingsSplit[ratingsSplit.length-1]);
 					ratingsLbl.setVisible(true);
 				}
 				setStyleForRatings(ratingsSplit[ratingsSplit.length-1]+"", ulRatingsPanel);
