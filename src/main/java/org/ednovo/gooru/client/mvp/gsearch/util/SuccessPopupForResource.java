@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CloseCollectionPlayerEvent;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -26,7 +27,8 @@ public class SuccessPopupForResource extends PopupPanel {
 	interface SuccessPopupForResourceUiBinder extends
 			UiBinder<Widget, SuccessPopupForResource> {
 	}
-
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField Button btnContinueSearching,btnViewInMyCollections;
 	@UiField Label lblSuccessText;
 	
@@ -34,7 +36,7 @@ public class SuccessPopupForResource extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 	}
 	public void setData(String collectionName,String selectedGooruOid,final HashMap<String, String> params){
-		lblSuccessText.setText("This resource has been added to "+collectionName);
+		lblSuccessText.setText(i18n.GL3192()+collectionName);
 		btnViewInMyCollections.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
