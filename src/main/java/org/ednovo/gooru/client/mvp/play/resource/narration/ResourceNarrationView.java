@@ -120,8 +120,8 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 			narrationText.getElement().setAttribute("alt",narration !=null ? narration : "");
 			narrationText.getElement().setAttribute("title",narration !=null ? narration : "");
 			resourceTitle.setHTML(collectionItemDo.getItemSequence()+". "+removeHtmlTags((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
-			resourceTitle.getElement().setAttribute("alt",collectionItemDo.getItemSequence()+". "+removeHtmlTags((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
-			resourceTitle.getElement().setAttribute("title",collectionItemDo.getItemSequence()+". "+removeHtmlTags((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
+			resourceTitle.getElement().setAttribute("alt",collectionItemDo.getItemSequence()+". "+StringUtil.removeAllHtmlCss((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
+			resourceTitle.getElement().setAttribute("title",collectionItemDo.getItemSequence()+". "+StringUtil.removeAllHtmlCss((collectionItemDo.getResource()!=null && collectionItemDo.getResource().getTitle()!=null)?collectionItemDo.getResource().getTitle():""));
 			
 			setUserProfileImage(gooruUid);
 			authorName.setText(userName);
