@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
@@ -13,6 +14,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -52,6 +54,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
+	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
 	private int totalHitCount=0;
@@ -66,6 +69,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private static final String O1_LEVEL = "o1";
 	private static final String O2_LEVEL = "o2";
 	private static final String O3_LEVEL = "o3";
+	
+	boolean isTopMostSelected =true;
 	
 	PopupPanel appPopUp;
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
@@ -93,6 +98,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
+			   isTopMostSelected = false;
 			   final TreeItem item = (TreeItem) event.getSelectedItem();
 			    Widget folderWidget= item.getWidget();
 			    FolderTreeItem folderTreeItemWidget=null;
@@ -371,7 +377,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		}
 		else
 		{
-			getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+			if(isTopMostSelected) {
+				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
+			}
+			else
+			{
+			getUiHandlers().addCollectionToFolder(currentFolderSelectedTreeItem.getGooruOid(),currentsearchType,currentFolderSelectedTreeItem.getTitle(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+			}
 		}
 	}
 	@Override
@@ -380,11 +392,36 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 	@Override
 	public void hidePopup(){
+		Element element = Document.get().getElementById("fixedFilterSearchID");
+		if(element!=null)
+		{
+		element.removeAttribute("style");
+		}
 		hide();
 	}
+
 	@Override
 	public void setDefaultPanelVisibility(Boolean blnVal){
 		myCollDefault.setVisible(blnVal);
 		btnAddNew.setVisible(!blnVal);
+	}
+
+	@Override
+	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params) {
+		appPopUp.clear();
+		successPopup.setData(collectionName, selectedGooruOid,params);
+		appPopUp.add(successPopup);
+		successPopup.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hidePopup();
+			}
+		});
+	}
+	
+	@Override
+	public void restrictionToAddResourcesData(String message) {
+		// TODO Auto-generated method stub
+		//displayErrorLabel.setText(message);
 	}
 }

@@ -38,6 +38,8 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 * @Reviewer 
 *
 */
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
@@ -52,4 +54,6 @@ public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWi
 	public Button getAddButton();
 	public void hidePopup();
 	void setDefaultPanelVisibility(Boolean blnVal);
+	public void displaySuccessPopup(String title,String selectedGooruOid,HashMap<String, String> params);
+	void restrictionToAddResourcesData(String message);
 }

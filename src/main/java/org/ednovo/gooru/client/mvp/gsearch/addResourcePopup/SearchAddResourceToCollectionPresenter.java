@@ -26,15 +26,23 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
+import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -68,12 +76,19 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	String type =null;
 	String accessType =null;
 	private String parentId=null;
+	HashMap<String, String>  urlParameters;
 	 private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
+	CollectionFormPresenter collectionFormPresenter;
+
+	HashMap<String,String> successparams = new HashMap<String, String>();
+	
+	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
 	
 	@Inject
-	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view) {
+	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view, CollectionFormPresenter collectionFormPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);	
+		this.collectionFormPresenter = collectionFormPresenter;
 	}
 
 	@Override
@@ -133,7 +148,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						AppClientFactory.getInjector().getResourceService().createCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
 							@Override
 							public void onSuccess(CollectionItemDo result) {
-								
+								successparams.put("id", selectedFolderOrCollectionid);
+								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams);
 							}
 						});
 					}
@@ -176,16 +192,75 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						params.put("o1", O1_LEVEL_VALUE);
 					}
 					AppClientFactory.fireEvent(new RefreshFolderItemForSearchInAddResourceEvent(folderDo, RefreshFolderType.INSERT, params));
-					getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
+			
 				}
 			});
 			
 		}else{
 			getView().restrictionToAddResourcesData("Please select a folder to add collection");
-			getView().getButtonVisiblity();
+			//getView().getButtonVisiblity();
 		}
 	}
 		
+	}
+	public FolderDo getFolderDo(CollectionDo collectionDo) {
+		FolderDo folderDo = new FolderDo();
+		folderDo.setGooruOid(collectionDo.getGooruOid());
+		folderDo.setTitle(collectionDo.getTitle());
+		folderDo.setType(collectionDo.getCollectionType());
+		folderDo.setSharing(collectionDo.getSharing());
+		folderDo.setCollectionType(collectionDo.getCollectionType());
+		ThumbnailDo thumbnailDo = new ThumbnailDo();
+		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
+		folderDo.setThumbnails(thumbnailDo);
+		List<FolderItemDo> folderItems = new ArrayList<FolderItemDo>();
+		if(collectionDo.getCollectionItems()!=null) {
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++) {
+				CollectionItemDo collectionItemDo = collectionDo.getCollectionItems().get(i);
+				FolderItemDo folderItemDo = new FolderItemDo();
+				folderItemDo.setGooruOid(collectionItemDo.getGooruOid());
+				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
+				folderItemDo.setType(collectionItemDo.getItemType());
+				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
+				resourceFormatDo.setValue(collectionItemDo.getCategory());
+				folderItems.add(folderItemDo);
+			}
+			folderDo.setCollectionItems(folderItems);
+		}
+		return folderDo;
+	}
+	
+	@Override
+	public void addCollectionToMyCollections(String object,
+			String currentsearchType) {
+		final CollectionDo collection = new CollectionDo();
+		if(currentsearchType.equalsIgnoreCase("collection")){
+			collection.setGooruOid(searchResultDo.getGooruOid());
+			AppClientFactory
+			.getInjector()
+			.getResourceService()
+			.copyCollection(collection, "true", null,
+					getSaveCollectionAsyncCallback());			
+	}
+		
+}
+	/**
+	 * @return instance of collectionDo after collection save
+	 */
+	public SimpleAsyncCallback<CollectionDo> getSaveCollectionAsyncCallback() {
+		if (saveCollectionAsyncCallback == null) {
+			saveCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
+
+				@Override
+				public void onSuccess(CollectionDo result) {
+					//success msg
+					getView().displaySuccessPopup(result.getTitle(), result.getGooruOid(), successparams);
+					//hidePopup();
+
+				}
+			};
+		}
+		return saveCollectionAsyncCallback;
 	}
 	
 	@Override

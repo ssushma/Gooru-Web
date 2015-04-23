@@ -327,6 +327,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 
 				@Override
 				public void onSuccess(CollectionDo result) {
+					System.out.println("result::"+result);
 					getView().refreshCollectionInShelfList(result, RefreshType.INSERT);
 				}
 			};

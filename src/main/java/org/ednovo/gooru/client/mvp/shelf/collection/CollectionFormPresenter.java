@@ -405,7 +405,10 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 
 	@Override
 	public void copyCollection(String collectionTitle, String collectionId) {  
+		System.out.println("collectionTitle::"+collectionTitle);
+		System.out.println("collectionId::"+collectionId);
 		CollectionDo collectionDo = getView().getData();
+		System.out.println("collectionDo::"+collectionDo);
 		collectionDo.setTitle(collectionTitle);
 		collectionDo.setGooruOid(collectionId);
 		AppClientFactory.fireEvent(new CopyCollectionEvent(collectionDo,getView().getCourseCodeId()));   
