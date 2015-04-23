@@ -1310,7 +1310,9 @@ public class ShelfCollectionResourceChildView extends
 			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o2");
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
 			selectedFolderId=AppClientFactory.getPlaceManager().getRequestParameter("o1");
-		}	
+		}else{
+			selectedFolderId="";
+		}
 		if(!selectedFolderId.isEmpty())
 		{
 		AppClientFactory.getInjector().getfolderService().getTocFolders(selectedFolderId,true, new SimpleAsyncCallback<FolderTocDo>() {
