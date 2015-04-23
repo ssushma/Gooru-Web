@@ -170,6 +170,8 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
+		resourceSearchResultDo.setResourceAddedCount(getJsonInteger(recordJsonObject, ADD_COUNT));
+		resourceSearchResultDo.setResourceUsedUserCount(getJsonInteger(recordJsonObject, USER_COUNT));
 
 		try {
 			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {

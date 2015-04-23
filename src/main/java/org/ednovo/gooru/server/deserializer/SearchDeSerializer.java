@@ -38,6 +38,8 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sun.security.action.GetLongAction;
+
 /**
  * @author Search Team
  * 
@@ -94,6 +96,10 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String COLLECTION_ITEMS="collectionItems";
 	
 	public static final String MEDIA_TYPE = "mediaType";
+	
+	public static final String USER_COUNT = "resourceUsedUserCount";
+	
+	public static final String ADD_COUNT = "resourceAddedCount";
 
 	public static final String RESOURCE_FORMAT = "resourceFormat";
 	
@@ -136,6 +142,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 						{					
 						record.setAssetURI(profileEndPoint);
 						}
+						logger.info("record.getResourceAddedCount()::"+record.getResourceAddedCount());
 						collectionSearchResults.add(record);
 					}
 				}
