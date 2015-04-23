@@ -109,7 +109,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@UiField TextBox authorTxtBox;
 	
 	@UiField
-	PPanel panelNotMobileFriendly,accessModeLeftPanel,accessModeRightPanel;
+	PPanel panelNotMobileFriendly,accessModePanel;
 	
 	@UiField HTMLEventPanel resourceFiltersPnl;
 	
@@ -119,9 +119,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
 	
-	String[] accessModeLeftStr = new String[]{i18n.GL2094(),i18n.GL2095(),i18n.GL2096()};
-	
-	String[] accessModeRightStr = new String[]{i18n.GL2097(),i18n.GL2098(),i18n.GL2099()};
+	String[] accessModeArray = new String[]{i18n.GL2094(),i18n.GL2097(),i18n.GL2095(),i18n.GL2098(),i18n.GL2099(),i18n.GL2096()};
 	
 	CheckBox chkAccessMode = null;
 	
@@ -217,12 +215,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	 */
 	private void renderAccessModeValues() {
 		// TODO Auto-generated method stub
-		for(int i=0;i<6;i++){
-			if(i<3){
-				renderAccessModeCheckBox(accessModeLeftPanel,accessModeLeftStr[i].toLowerCase(),accessModeLeftStr[i]);
-			}else{
-				renderAccessModeCheckBox(accessModeRightPanel,accessModeRightStr[i-3].toLowerCase(),accessModeRightStr[i-3]);
-			}
+		for(int i=0;i<accessModeArray.length;i++){
+			renderAccessModeCheckBox(accessModePanel,accessModeArray[i].toLowerCase(),accessModeArray[i]);
 		}
 	}
 	
@@ -237,11 +231,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				if(chkAccessMode.getValue()){
+				/*if(chkAccessMode.getValue()){
 					removeFilter(key);
 				}else{
 					pnlAddFilters.add(createTagsLabel(key,"accessModePanel"));
-				}
+				}*/
 				callSearch();  
 			}
 			
@@ -417,11 +411,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				if(categoryChk.getValue()){
+				/*if(categoryChk.getValue()){
 					removeFilter(value);
 				}else{
 					pnlAddFilters.add(createTagsLabel(value,"mobileFriendlyPanel"));
-				}
+				}*/
 				
 				callSearch();  
 			}
@@ -439,27 +433,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			String[] split = accessMode.split(",");
 			for(int i=0; i<split.length; i++){
 				pnlAddFilters.add(createTagsLabel(split[i],"accessModePanel"));
-				if(isContainsLeftPanel(split[i])){
-					setSelectedFilter(accessModeLeftPanel,accessMode,COMMA_SEPARATOR);
-				}else{
-					setSelectedFilter(accessModeRightPanel,accessMode,COMMA_SEPARATOR);
-				}
+				setSelectedFilter(accessModePanel,accessMode,COMMA_SEPARATOR);
 			}
 		}
 	}
-	/**
-	 * To check accessMode filter contains in accessModeLeftStr array
-	 * @param accessFilter {@link String}
-	 * @return 
-	 */
-	private boolean isContainsLeftPanel(String accessFilter) {
-		// TODO Auto-generated method stub
-		List valid = Arrays.asList(accessModeLeftStr);
-		if(valid.contains(accessFilter)){
-			return true;
-		}
-		return false;
-	}
+	
 	/**
 	 * To render star ratings and handle the click events
 	 */
@@ -791,11 +769,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 						removeSelectedFilterStyle(newFilterVal,ulSubjectPanel);
 					}
 					if(panelName.equals("accessModePanel")){
-						if(isContainsLeftPanel(newFilterVal)){
-							removeSelectedFilter(accessModeLeftPanel,newFilterVal);
-						}else{
-							removeSelectedFilter(accessModeRightPanel,newFilterVal);
-						}
+						removeSelectedFilter(accessModePanel,newFilterVal);
 					}
 					if(panelName.equals("mobileFriendlyPanel")){
 						removeSelectedFilter(panelNotMobileFriendly,newFilterVal);
@@ -858,7 +832,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		}
-		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+		callSearch();
 	}
 
 	/**
@@ -916,13 +890,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					selectedStars += getSelectedRatings(closeLabelSetting.getSourceText().replaceAll("[^0-9]", ""));
 					
 				}
-				if("accessModePanel".equalsIgnoreCase(closeLabelSetting.getSourceText())){
+				if("accessModePanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
 					if (!selectedAccessMode.isEmpty()) {
 						selectedAccessMode += COMMA_SEPARATOR;
 					}
 					selectedAccessMode +=closeLabelSetting.getSourceText();
 				}
-			   selectedAccessMode = getSelectedFilter(accessModeLeftPanel);
+				
 			}
 		}
 	}
@@ -969,9 +943,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							filtersMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 					}
 				}
-			 if (!selectedAccessMode.isEmpty()) {
-				 filtersMap.put(IsSearchView.ACCESS_MODE_FLT, selectedAccessMode);
+			 String selectedAccessMode = getSelectedFilter(accessModePanel);
+				if (!selectedAccessMode.isEmpty()) {
+					filtersMap.put(IsSearchView.ACCESS_MODE_FLT, selectedAccessMode);
 				}
+			 
 		 }
 
 		 return filtersMap; 
@@ -993,7 +969,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 
 		@Override
 		public void onClick(ClickEvent event) {
-			String displayValue=gradesPanel.getElement().getStyle().getDisplay();
+			String displayValue=moreFilterPanel.getElement().getStyle().getDisplay();
 			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
 				moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 			}else{
