@@ -28,12 +28,12 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -54,6 +54,9 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  * @Reviewer: Gooru Team
  */
 public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSearchAddResourceToCollectionView> implements SearchAddResourceToCollectionUiHandlers{
+
+
+	ResourceSearchResultDo searchResultDo =null;
 	
 	@Inject
 	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view) {
@@ -65,17 +68,19 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	protected void onBind() {
 		super.onBind();
 	}
-	public void getUserShelfData(){
-		getWorkspaceData(0,20,true);
+	@Override
+	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType) {
+		this.searchResultDo =searchResultDo;
+		getWorkspaceData(0,20,true,searchType);
 	}
-	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel){
+	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null,true, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo.getCount()==0){
 					getView().displayNoCollectionsMsg();
 				}else{
-					getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 				}
 			}
 		});
@@ -92,14 +97,30 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 	@Override
 	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title) {
 		if(selectedFolderOrCollectionid!=null){
+			//This will check the resource count
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
 					if (result.getCount()<25){
-						
+						//If the resource length is less than 25 then we need to create the collection item
+						AppClientFactory.getInjector().getResourceService().createCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
+							@Override
+							public void onSuccess(CollectionItemDo result) {
+								
+							}
+						});
 					}
 				}
 			});
 		}
+	}
+	@Override
+	public Button getAddButton() {
+		return getView().getAddButton();
+	}
+
+	@Override
+	public void hidePopup() {
+		getView().hidePopup();
 	}
 }

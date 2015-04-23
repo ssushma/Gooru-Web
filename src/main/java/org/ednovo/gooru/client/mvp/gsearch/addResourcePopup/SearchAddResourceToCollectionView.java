@@ -58,6 +58,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	private CollectionTreeItem previousSelectedItem = null;
 	private FolderTreeItem currentFolderSelectedTreeItem = null;
 	private CollectionTreeItem cureentcollectionTreeItem = null;
+	String currentsearchType;
 	
 	PopupPanel appPopUp;
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
@@ -136,7 +137,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 		@Override
 		public void onScroll(ScrollEvent event) {
 			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalHitCount>pageNum*limit)){
-				getUiHandlers().getWorkspaceData(pageNum*limit, limit,false);
+				getUiHandlers().getWorkspaceData(pageNum*limit, limit,false,currentsearchType);
 				pageNum++;
 			}
 		}
@@ -161,7 +162,8 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	}
 
 	@Override
-	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel) {
+	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
+		currentsearchType=searchType;
 		totalHitCount = folderListDo.getCount();
 		if(clearShelfPanel){
 			folderTreePanel.clear();
@@ -336,5 +338,13 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiHandler("btnAddExisting")
 	public void addResourceToCollection(ClickEvent event){
 		getUiHandlers().addResourceToCollection(cureentcollectionTreeItem.getGooruOid(), "resource",cureentcollectionTreeItem.getCollectionName());
+	}
+	@Override
+	public Button getAddButton(){
+		return btnAddNew;
+	}
+	@Override
+	public void hidePopup(){
+		hide();
 	}
 }
