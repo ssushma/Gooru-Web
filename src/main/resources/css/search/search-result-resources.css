@@ -456,4 +456,12 @@
 #addResourcefolderTreePanel .selected{
 	background-color: #cfe3f1;
 }
+#addCollectionPopup .lblSuccessText{
+	text-align: center;
+	min-height: 250px;
+}
+#addCollectionPopup .lblSuccessImage{
+	background: url(../images/folders/panel/checkmark.png) no-repeat center;
+}
+
 /*Add Resource to collection popup end*/

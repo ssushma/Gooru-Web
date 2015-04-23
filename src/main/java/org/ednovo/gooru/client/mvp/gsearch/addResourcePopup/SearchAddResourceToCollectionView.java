@@ -1,7 +1,9 @@
 package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.ednovo.gooru.client.mvp.gsearch.util.SuccessPopupForResource;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
@@ -11,6 +13,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -50,6 +53,7 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@UiField Anchor cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Button btnAddNew,btnAddExisting;
+	SuccessPopupForResource successPopup=new SuccessPopupForResource();
 	
 	private int limit=20;
 	private int totalHitCount=0;
@@ -346,5 +350,18 @@ public class SearchAddResourceToCollectionView extends PopupViewWithUiHandlers<S
 	@Override
 	public void hidePopup(){
 		hide();
+	}
+
+	@Override
+	public void displaySuccessPopup(String collectionName,String selectedGooruOid,HashMap<String, String> params) {
+		appPopUp.clear();
+		successPopup.setData(collectionName, selectedGooruOid,params);
+		appPopUp.add(successPopup);
+		successPopup.getCloseButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				hidePopup();
+			}
+		});
 	}
 }

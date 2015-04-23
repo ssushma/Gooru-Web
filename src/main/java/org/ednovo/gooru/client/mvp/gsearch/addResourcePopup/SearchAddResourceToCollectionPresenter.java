@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 
 
 
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -57,6 +59,7 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 
 
 	ResourceSearchResultDo searchResultDo =null;
+	HashMap<String,String> successparams = new HashMap<String, String>();
 	
 	@Inject
 	public SearchAddResourceToCollectionPresenter(EventBus eventBus, IsSearchAddResourceToCollectionView view) {
@@ -106,7 +109,8 @@ public class SearchAddResourceToCollectionPresenter extends PresenterWidget<IsSe
 						AppClientFactory.getInjector().getResourceService().createCollectionItem(selectedFolderOrCollectionid, searchResultDo.getGooruOid(), new SimpleAsyncCallback<CollectionItemDo>() {
 							@Override
 							public void onSuccess(CollectionItemDo result) {
-								
+								successparams.put("id", selectedFolderOrCollectionid);
+								getView().displaySuccessPopup(title,selectedFolderOrCollectionid,successparams);
 							}
 						});
 					}
