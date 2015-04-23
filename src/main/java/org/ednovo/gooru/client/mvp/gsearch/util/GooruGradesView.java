@@ -147,7 +147,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 		if(grades!=null){
 			String[] gradesSplit = grades.split(",");
 			for(int i=0; i<gradesSplit.length; i++){
-				updateFilterStyle(gradesSplit[i], false);
+				updateFilterStyle(gradesSplit[i], "add");
 			}
 		}
 	}
@@ -157,7 +157,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 * @param filterName {@link String}
 	 */
 	@Override
-	public void updateFilterStyle(String filterName, boolean isSelectAll){
+	public void updateFilterStyle(String filterName, String addOrRemove){
 		Iterator<Widget> widgets= gradeContainer.iterator();
 		while(widgets.hasNext()){
 			Widget widget = widgets.next();
@@ -168,14 +168,23 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 					Widget liwidget = liwidgets.next();
 					if(liwidget instanceof LiPanel){
 						if(filterName.equals(((LiPanel) liwidget).getElement().getInnerText())){
-							if(((LiPanel) liwidget).getWidget(0).getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
+							if(addOrRemove.equals("add")){
+								((LiPanel) liwidget).getWidget(0).getElement().getStyle().setBackgroundColor(backgroundColor);
+							}else{
 								((LiPanel) liwidget).getWidget(0).getElement().getStyle().clearBackgroundColor();
-								if(isSelectAll){
+							}
+							/*if(((LiPanel) liwidget).getWidget(0).getElement().getStyle().getBackgroundColor().equalsIgnoreCase(backgroundColor)){
+								((LiPanel) liwidget).getWidget(0).getElement().getStyle().clearBackgroundColor();
+								if(addOrRemove){
 									((LiPanel) liwidget).getWidget(0).getElement().getStyle().setBackgroundColor(backgroundColor);
 								}
 							}else{
-								((LiPanel) liwidget).getWidget(0).getElement().getStyle().setBackgroundColor(backgroundColor);							
-							}
+								((LiPanel) liwidget).getWidget(0).getElement().getStyle().setBackgroundColor(backgroundColor);		
+								
+								if(addOrRemove){
+									((LiPanel) liwidget).getWidget(0).getElement().getStyle().clearBackgroundColor();
+								}
+							}*/
 						}
 					}
 				}
@@ -190,15 +199,17 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 	 */
 	private void selectAllGrades(String[] gradeArray, String addOrRemove) {
 		String grades = AppClientFactory.getPlaceManager().getRequestParameter(GRADE_FLT, null);
+		System.out.println("grades:"+grades);
 		for(int i=1; i<gradeArray.length; i++){
 			if(grades!=null && !grades.contains(gradeArray[i])){
-				updateFilterStyle(gradeArray[i],true);
+				updateFilterStyle(gradeArray[i],addOrRemove);
+				System.out.println("gradeArray[i]::"+gradeArray[i]);
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove));
 			}else if(addOrRemove.equals(REMOVE)){
-				updateFilterStyle(gradeArray[i],false);
+				updateFilterStyle(gradeArray[i],addOrRemove);
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove));
 			}else if(grades==null){
-				updateFilterStyle(gradeArray[i],true);
+				updateFilterStyle(gradeArray[i],addOrRemove);
 				AppClientFactory.fireEvent(new UpdateFilterEvent(i18n.GL0325()+" "+gradeArray[i], addOrRemove));
 			}
 		}
@@ -220,7 +231,7 @@ public class GooruGradesView extends BaseViewWithHandlers<GooruGradesUiHandlers>
 					return false;
 				}
 			}
-			return false;
+			return true;
 		}
 		return false;
 	}
