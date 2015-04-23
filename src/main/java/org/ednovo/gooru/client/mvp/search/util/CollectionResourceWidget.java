@@ -137,7 +137,6 @@ public class CollectionResourceWidget extends Composite {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			System.out.println("in");
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("id", resoruceId);
 			params.put("pn", PLAYER_NAME);

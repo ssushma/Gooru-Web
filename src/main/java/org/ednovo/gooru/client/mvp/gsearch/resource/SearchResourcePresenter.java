@@ -189,4 +189,11 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 			collectionFormInPlayPresenter.setResourceUid(resourceId);
 		}
 	}
+
+	@Override
+	public void displayRemixForCollectionsPoup(
+			CollectionSearchResultDo collectionsearchResultDo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

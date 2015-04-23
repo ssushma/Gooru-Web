@@ -37,7 +37,10 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 * @Reviewer 
 *
 */
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
@@ -56,4 +59,10 @@ public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers,
 	void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType);
 	public Button getAddButton();
 	public void hidePopup();
+	void getUserShelfCollectionsData(
+			CollectionSearchResultDo collectionsearchResultDo, String searchType);
+	void addCollectionToFolder(String selectedFolderOrCollectionid,
+			String searchType, String title, int folerLevel,
+			HashMap<String, String> urlparams);
+	void addCollectionToMyCollections(String object, String currentsearchType);
 }

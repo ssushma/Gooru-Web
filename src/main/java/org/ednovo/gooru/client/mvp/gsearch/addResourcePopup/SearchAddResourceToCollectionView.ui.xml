@@ -11,6 +11,9 @@
 		<div class="col-md-2"><g:Anchor ui:field="cancelResourcePopupBtnLbl" styleName="closeButton"></g:Anchor></div>
 		<div class="clearfix"></div>
 		</div>
+		<g:HTMLPanel ui:field="myCollDefault" styleName="foldermenuHeader">
+			My Collections (default)
+		</g:HTMLPanel>
 		<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="dropdownListContainerScrollPanel">
 	          <g:HTMLPanel ui:field="floderTreeContainer" styleName="popBody"/>
 		</g:ScrollPanel>

@@ -35,8 +35,15 @@ public class SuccessPopupForResource extends PopupPanel {
 	public SuccessPopupForResource() {
 		setWidget(uiBinder.createAndBindUi(this));
 	}
-	public void setData(String collectionName,String selectedGooruOid,final HashMap<String, String> params){
+	public void setData(String collectionName,String selectedGooruOid,final HashMap<String, String> params,String type){
+		if(type.equalsIgnoreCase("resource"))
+		{
 		lblSuccessText.setText(i18n.GL3192()+collectionName);
+		}
+		else
+		{
+		lblSuccessText.setText(i18n.GL3193()+collectionName);
+		}
 		btnViewInMyCollections.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
