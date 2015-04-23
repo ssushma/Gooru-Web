@@ -230,6 +230,23 @@
 	display:inline-block;
 	vertical-align:middle;
 }
+#gooruSearchMainContainer .gridToggle .dropdown-menu {
+    min-width: 300px;
+}
+#gooruSearchMainContainer .resourceDropdown{
+	padding:0 20px 20px 20px;
+}
+#gooruSearchMainContainer .paddingBlock{
+	padding:20px 0 0 0;
+}
+#gooruSearchMainContainer .resourceDropdown P{
+	margin-bottom:8px;
+}
+
+#gooruSearchMainContainer .resourceDropdown .form-control{
+	height:26px;
+	border-radius:0 0;
+}
 
 @media (min-width: 240px) and (max-width: 319px){
 	#gooruSearchMainContainer .resourceDetails .seachRightNavigation {

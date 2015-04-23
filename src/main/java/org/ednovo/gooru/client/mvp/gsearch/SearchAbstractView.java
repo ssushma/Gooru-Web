@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -34,11 +35,16 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
+import org.ednovo.gooru.client.mvp.search.IsSearchView;
+import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
+import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -54,6 +60,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -63,6 +71,7 @@ import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -89,7 +98,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel fixedFilterSearch,searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
+	@UiField HTMLPanel fixedFilterSearch,searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown,moreFilterPanel;
 	
 	@UiField Label lblLoadingText,ratingsLbl;
 	
@@ -99,11 +108,22 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField TextBox authorTxtBox;
 	
+	@UiField
+	PPanel panelNotMobileFriendly,accessModeLeftPanel,accessModeRightPanel;
+	
+	@UiField HTMLEventPanel resourceFiltersPnl;
+	
 	LiPanel liPanel;
 	
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
 	
 	private static final String SUBJECTS_SEPARATOR = "~~";
+	
+	String[] accessModeLeftStr = new String[]{i18n.GL2094(),i18n.GL2095(),i18n.GL2096()};
+	
+	String[] accessModeRightStr = new String[]{i18n.GL2097(),i18n.GL2098(),i18n.GL2099()};
+	
+	CheckBox chkAccessMode = null;
 	
 	String FILLED_GREEN = "filled";
 	
@@ -112,7 +132,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageNumber = 1,resultCountVal=0,previousValue;
 	
 	
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,selectedAccessMode;
 	
 	private HandlerRegistration handlerRegistration=null;
 
@@ -159,6 +179,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
 		btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
 		gradesDropDown.addDomHandler(new GradesDropDownHandler(), ClickEvent.getType());
+		resourceFiltersPnl.addClickHandler(new ResourceFiltersDropDown());
 		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
@@ -180,8 +201,51 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}else{
 			
 		}*/
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
+	    	showRatingsFilter();
+	    	renderStarRatings();
+	    	renderAccessModeValues();
+	    	
+	    }
+
 		
-		showRatings();
+		
+	}
+	/**
+	 * To render the Access Mode values
+	 */
+	private void renderAccessModeValues() {
+		// TODO Auto-generated method stub
+		for(int i=0;i<6;i++){
+			if(i<3){
+				renderAccessModeCheckBox(accessModeLeftPanel,accessModeLeftStr[i].toLowerCase(),accessModeLeftStr[i]);
+			}else{
+				renderAccessModeCheckBox(accessModeRightPanel,accessModeRightStr[i-3].toLowerCase(),accessModeRightStr[i-3]);
+			}
+		}
+	}
+	
+	private void renderAccessModeCheckBox(PPanel accessModePanel,final String key,final String value) {
+		chkAccessMode = new CheckBox();
+		chkAccessMode.setText(value);
+		chkAccessMode.setName(key);
+		chkAccessMode.setStyleName("checkbox");
+		chkAccessMode.addStyleName(value.toLowerCase());
+		accessModePanel.add(chkAccessMode);
+		chkAccessMode.addValueChangeHandler(new ValueChangeHandler<Boolean>(){
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if(chkAccessMode.getValue()){
+					removeFilter(key);
+				}else{
+					pnlAddFilters.add(createTagsLabel(key,"accessModePanel"));
+				}
+				callSearch();  
+			}
+			
+		});
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -286,7 +350,8 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showSubjectsFilter();
 		showAuthorFilter();
 		showStandardsFilter();
-		showRatingsFilter();
+		showMobileFriendlyFilter();
+		showAccessModeFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -336,7 +401,69 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 	}
 	
-	private void showRatings() {
+	/**
+	 * @param filterPanel instance of DisclosurePanelUc which gets added widget
+	 * @param key check box name
+	 * @param value check box value
+	 */
+	public void renderCheckBox(PPanel filterPanel, String key, final String value) {
+		final CheckBox categoryChk = new CheckBox();
+		categoryChk.setText(value);
+		categoryChk.setName(key);
+		categoryChk.setStyleName("checkbox");
+		//categoryChk.addStyleName(value.toLowerCase());
+		filterPanel.add(categoryChk);
+		categoryChk.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if(categoryChk.getValue()){
+					removeFilter(value);
+				}else{
+					pnlAddFilters.add(createTagsLabel(value,"mobileFriendlyPanel"));
+				}
+				
+				callSearch();  
+			}
+		});
+
+	}
+	
+	/**
+	 * To show the Access mode values in search page
+	 */
+	private void showAccessModeFilter() {
+		accessMode = AppClientFactory.getPlaceManager().getRequestParameter("flt.cfAccessMode");
+		if(accessMode!=null){
+			pnlAddFilters.setVisible(true);
+			String[] split = accessMode.split(",");
+			for(int i=0; i<split.length; i++){
+				pnlAddFilters.add(createTagsLabel(split[i],"accessModePanel"));
+				if(isContainsLeftPanel(split[i])){
+					setSelectedFilter(accessModeLeftPanel,accessMode,COMMA_SEPARATOR);
+				}else{
+					setSelectedFilter(accessModeRightPanel,accessMode,COMMA_SEPARATOR);
+				}
+			}
+		}
+	}
+	/**
+	 * To check accessMode filter contains in accessModeLeftStr array
+	 * @param accessFilter {@link String}
+	 * @return 
+	 */
+	private boolean isContainsLeftPanel(String accessFilter) {
+		// TODO Auto-generated method stub
+		List valid = Arrays.asList(accessModeLeftStr);
+		if(valid.contains(accessFilter)){
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * To render star ratings and handle the click events
+	 */
+	private void renderStarRatings() {
 		for(int i=1;i<=5;i++){
 			liPanel = new LiPanel();
 			liPanel.getElement().setId(i+"star");
@@ -471,6 +598,22 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
+	
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
+	private void showMobileFriendlyFilter() {
+		mobileFirendlyTag = AppClientFactory.getPlaceManager().getRequestParameter("fltNot.mediaType");
+		if(mobileFirendlyTag!=null){
+			if(mobileFirendlyTag.equalsIgnoreCase("not_ipad_friendly"))
+			{
+				pnlAddFilters.add(createTagsLabel("Mobile Friendly","mobileFirendlyPanel"));
+				setSelectedFilter(panelNotMobileFriendly,mobileFirendlyTag,COMMA_SEPARATOR);
+			}
+
+		}
+	}
+
 	/**
 	 * Pre-Selected Subjects showing in search page
 	 */
@@ -532,7 +675,40 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
-	
+	/**
+	 * Set filter value for search with separator
+	 * @param filterFlowPanel instance of {@link DisclosurePanelUc} which has filter values
+	 * @param checkedValues selected filter value
+	 * @param separator concatenation of the filter value by separator 
+	 */
+	private void setSelectedFilter(PPanel filterHtmlPanel, String checkedValues, String separator) {
+		List<String> items = null;
+		if (checkedValues != null) {
+			items = Arrays.asList(checkedValues.split("\\s*" + separator + "\\s*"));
+		}
+		
+		if (items != null) {
+			//if(resourceSearch){
+			for(int i=0;i<filterHtmlPanel.getWidgetCount();i++){
+				Widget filterWidget = filterHtmlPanel.getWidget(i);
+				if (filterWidget instanceof CheckBox) {
+					CheckBox filterCheckBox = (CheckBox) filterWidget;
+					filterCheckBox.setValue(false);
+					for (String item : items) {
+						if ((filterCheckBox.getName().equals(item))) {	
+							filterCheckBox.setValue(true);
+						}
+					}
+				}
+			}
+		}
+		
+	}	
+	/**
+	 * This method is used to highlight selected values for Ratings
+	 * @param filterName {@link String}
+	 * @param filterPanel {@link UlPanel}
+	 */
 	public void setStyleForRatings(String filterName, UlPanel filterPanel){
 		int filterStar=Integer.parseInt(filterName);
 		int countStar;
@@ -614,6 +790,17 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if(panelName.equals("subjectsPanel")){
 						removeSelectedFilterStyle(newFilterVal,ulSubjectPanel);
 					}
+					if(panelName.equals("accessModePanel")){
+						if(isContainsLeftPanel(newFilterVal)){
+							removeSelectedFilter(accessModeLeftPanel,newFilterVal);
+						}else{
+							removeSelectedFilter(accessModeRightPanel,newFilterVal);
+						}
+					}
+					if(panelName.equals("mobileFriendlyPanel")){
+						removeSelectedFilter(panelNotMobileFriendly,newFilterVal);
+					}
+						
 					callSearch();
 				}
 			}
@@ -654,6 +841,26 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			}
 		}
 	}
+	
+	/**
+     * Remove the selected search filter and search results when user click on 'X'.
+     * @param filterNamePanel {@link HTMLPanel} 
+     * @param filterName {@link String} grade/subject search filter name 
+     */
+	private void removeSelectedFilter(PPanel filterNamePanel,
+			String filterName) {
+		for(int i=0;i<filterNamePanel.getWidgetCount();i++){
+			Widget filterWidget = filterNamePanel.getWidget(i);
+			if (filterWidget instanceof CheckBox) {
+				CheckBox filterCheckBox = (CheckBox) filterWidget;
+				if ((filterCheckBox.getName().equals(filterName))) {	
+					filterCheckBox.setValue(false);
+				}
+			}
+		}
+		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+	}
+
 	/**
 	 * To get the selected authors values with separator
 	 * @return selectedSubjects {@link String}
@@ -665,6 +872,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedStandards="";
 		selectedCategories="";
 		selectedStars="";
+		selectedAccessMode="";
 		
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
 		while(widgets.hasNext()){
@@ -708,8 +916,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					selectedStars += getSelectedRatings(closeLabelSetting.getSourceText().replaceAll("[^0-9]", ""));
 					
 				}
-
-
+				if("accessModePanel".equalsIgnoreCase(closeLabelSetting.getSourceText())){
+					if (!selectedAccessMode.isEmpty()) {
+						selectedAccessMode += COMMA_SEPARATOR;
+					}
+					selectedAccessMode +=closeLabelSetting.getSourceText();
+				}
+			   selectedAccessMode = getSelectedFilter(accessModeLeftPanel);
 			}
 		}
 	}
@@ -727,31 +940,41 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	@Override
 	public Map<String, String> getSearchFilters() {
 		 getSelectedFilters();
-		 Map<String, String> filters = new HashMap<String, String>();
+		 Map<String, String> filtersMap = new HashMap<String, String>();
 		 if(!selectedSubjects.isEmpty()){
-			 filters.put(IsGooruSearchView.SUBJECT_FLT, selectedSubjects);
+			 filtersMap.put(IsGooruSearchView.SUBJECT_FLT, selectedSubjects);
 		 }
 		 if(!selectedAuthors.isEmpty()){
-			 filters.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
+			 filtersMap.put(IsGooruSearchView.OWNER_FLT, selectedAuthors);
 		 }
 		 if(!selectedGrades.isEmpty()){
-			 filters.put(IsGooruSearchView.GRADE_FLT, selectedGrades);
+			 filtersMap.put(IsGooruSearchView.GRADE_FLT, selectedGrades);
 		 }
 		 if(!selectedStandards.isEmpty()){
-			 filters.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
+			 filtersMap.put(IsGooruSearchView.STANDARD_FLT, selectedStandards);
 		 }
 		 if(!selectedCategories.isEmpty()){
-			 filters.put(IsGooruSearchView.CATEGORY_FLT, selectedCategories);
+			 filtersMap.put(IsGooruSearchView.CATEGORY_FLT, selectedCategories);
 		 }
 		 if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			 if(!selectedStars.isEmpty()){
-				 filters.put(IsGooruSearchView.RATINGS_FLT, selectedStars);
+				 filtersMap.put(IsGooruSearchView.RATINGS_FLT, selectedStars);
 			 }else{
-				 filters.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
+				 filtersMap.put(IsGooruSearchView.RATINGS_FLT, "5,4,3,2,1,0");
 			 }
+			 
+			 if(getSelectedFilter(panelNotMobileFriendly) != null)
+				{
+					if (getSelectedFilter(panelNotMobileFriendly).equalsIgnoreCase("not_ipad_friendly")){
+							filtersMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
+					}
+				}
+			 if (!selectedAccessMode.isEmpty()) {
+				 filtersMap.put(IsSearchView.ACCESS_MODE_FLT, selectedAccessMode);
+				}
 		 }
 
-		 return filters; 
+		 return filtersMap; 
 	}
 	
 	private class GradesDropDownHandler implements ClickHandler{
@@ -764,6 +987,20 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				gradesPanel.getElement().getStyle().setDisplay(Display.NONE);
 			}
 		}
+	} 
+	
+	private class ResourceFiltersDropDown implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			String displayValue=gradesPanel.getElement().getStyle().getDisplay();
+			if(StringUtil.isEmpty(displayValue) || "none".equalsIgnoreCase(displayValue)){
+				moreFilterPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+			}else{
+				moreFilterPanel.getElement().getStyle().setDisplay(Display.NONE);
+			}
+		}
+		
 	}
 	
 	/**
@@ -780,6 +1017,40 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		pageNumber=1;
 		lblLoadingText.setVisible(true);
 	}
+	
+	/**
+	 * @param filterPanel instance of {@link DisclosurePanelUc}
+	 * @return selected filterDisclosurePanell name
+	 */
+	private String getSelectedFilter(PPanel filterPanel) {
+		return getSelectedFilter(filterPanel, COMMA_SEPARATOR);
+	}
+
+	
+	/**
+	 * Get filters for search
+	 * @param filterPanel instance of {@link DisclosurePanelUc} which has filters widget
+	 * @param separator concatenation of the filters with separator
+	 * @return concatenation of selected filters
+	 */
+	private String getSelectedFilter(PPanel filterPanel, String separator) {
+		String selectedFilter = "";
+		for(int i =0;i<filterPanel.getWidgetCount();i++){
+			Widget filterWidget = filterPanel.getWidget(i);
+			if (filterWidget instanceof CheckBox) {
+				CheckBox filterCheckBox = (CheckBox) filterWidget;
+				if (filterCheckBox != null && filterCheckBox.getValue()) {
+					if (!selectedFilter.isEmpty()) {
+						selectedFilter += separator;
+					}
+					selectedFilter += filterCheckBox.getName();
+					MixpanelUtil.mixpanelEvent("search_"+selectedFilter+"_filter_selected");
+				}
+			}
+		}
+		return selectedFilter;
+	}
+
 	/**
 	 * This method will call the search function on filters selection changes
 	 */
