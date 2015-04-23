@@ -259,6 +259,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     
     private String isRefreshed = null;
     
+    private String isItem_lodRefreshed = null;
+    
     int count=0;
     
     /**
@@ -556,11 +558,17 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
                         collectionDataLogEventId = oldCollectionDataLogEventId;
                         collectionStartTime = collectionStartTime.valueOf(oldCollectionStartTime);
                         isRefreshed = refreshed;
+                        isItem_lodRefreshed = refreshed;
                         removeCookieValues();
                     }else{
                         sessionId=GwtUUIDGenerator.uuid();
                     }
-					triggerItemLoadDataLogEvent(PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.COLLECTION,collectionId);
+                    if(GooruConstants.TRUE.equals(isItem_lodRefreshed)){
+                    	isItem_lodRefreshed = null;
+    				}else{
+    					triggerCollectionNewDataLogStartStopEvent(collectionStartTime,collectionStartTime,PlayerDataLogEvents.START_EVENT_TYPE,0);
+    					
+    				}
 				}
 				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
 			}
@@ -1284,6 +1292,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				createSession(collectionDo.getGooruOid());
 				sessionIdCreationCount=1;
 			}	
+			
 		}
 	}
 
@@ -1777,6 +1786,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			collectionMetadataId=null;
 			collectionSummaryId=null;
 			isRefreshed = null;
+			isItem_lodRefreshed = null;
 			collectionActivityEventId=null;
 			collectionEndTime=0L;
 			newCollectionStartTime=0L;
