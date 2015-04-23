@@ -37,12 +37,32 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 * @Reviewer 
 *
 */
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 
 public interface SearchAddResourceToCollectionUiHandlers extends BaseUiHandlers, EventHandler{
+	/**
+	 * This method is used to get sub folder tree items
+	 * @param item
+	 * @param parentId
+	 */
 	public void getFolderItems(final TreeItem item,String parentId);
-	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel);
+	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel,String searchType);
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title);
+	void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType);
+	public Button getAddButton();
+	public void hidePopup();
+	void getUserShelfCollectionsData(
+			CollectionSearchResultDo collectionsearchResultDo, String searchType);
+	void addCollectionToFolder(String selectedFolderOrCollectionid,
+			String searchType, String title, int folerLevel,
+			HashMap<String, String> urlparams);
+	void addCollectionToMyCollections(String object, String currentsearchType);
 }

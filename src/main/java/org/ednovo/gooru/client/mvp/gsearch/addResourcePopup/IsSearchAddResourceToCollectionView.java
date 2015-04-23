@@ -38,14 +38,22 @@ package org.ednovo.gooru.client.mvp.gsearch.addResourcePopup;
 * @Reviewer 
 *
 */
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsSearchAddResourceToCollectionView extends PopupView, IsViewWithHandlers<SearchAddResourceToCollectionUiHandlers>{
-	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel);
+	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType);
 	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
 	public void displayNoCollectionsMsg();
+	public Button getAddButton();
+	public void hidePopup();
+	void setDefaultPanelVisibility(Boolean blnVal);
+	public void displaySuccessPopup(String title,String selectedGooruOid,HashMap<String, String> params,String searchType);
+	void restrictionToAddResourcesData(String message);
 }

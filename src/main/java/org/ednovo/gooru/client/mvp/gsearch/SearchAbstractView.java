@@ -152,19 +152,22 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
-				if(event.getScrollTop()>=200){
-					pnlBackToTop.setVisible(true);
-				}else{
-					pnlBackToTop.setVisible(false);
-				}
-				if(resultCountVal>=8){
-					if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
-						lblLoadingText.setVisible(true);
-						pageNumber++;
-						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
-							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 9);
-						}else{
-							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+				String placeToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+				if(placeToken.equals(PlaceTokens.SEARCH_RESOURCE) || placeToken.equals(PlaceTokens.SEARCH_COLLECTION)){
+					if(event.getScrollTop()>=200){
+						pnlBackToTop.setVisible(true);
+					}else{
+						pnlBackToTop.setVisible(false);
+					}
+					if(resultCountVal>=8){
+						if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
+							lblLoadingText.setVisible(true);
+							pageNumber++;
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 9);
+							}else{
+								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
+							}
 						}
 					}
 				}

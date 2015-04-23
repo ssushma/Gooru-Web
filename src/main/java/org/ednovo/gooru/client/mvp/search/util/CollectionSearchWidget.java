@@ -90,14 +90,14 @@ public class CollectionSearchWidget extends Composite {
 	
 		collectionTitle.setText(collectionSearchResultDo.getResourceTitle());
 		
-		remixBtn.addClickHandler(new ClickHandler() {
+/*		remixBtn.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				onremixBtnClicked(collectionSearchResultDo.getGooruOid(), collectionSearchResultDo.getResourceTitle());
 				
 			}
-		});
+		});*/
 		String collectionDesc=collectionSearchResultDo.getDescription();
 		collectionDescription.getElement().setAttribute("title", collectionDesc);
 		if(!StringUtil.isEmpty(collectionDesc)){
@@ -228,4 +228,9 @@ public class CollectionSearchWidget extends Composite {
 			AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 		}
 	}
+	public Button getRemixBtn() {
+		return remixBtn;
+	}
+
+	
 }

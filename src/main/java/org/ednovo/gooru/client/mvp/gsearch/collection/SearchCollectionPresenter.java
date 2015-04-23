@@ -174,4 +174,11 @@ public class SearchCollectionPresenter extends SearchAbstractPresenter<Collectio
 	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo) {
 		
 	}
+
+	@Override
+	public void displayRemixForCollectionsPoup(CollectionSearchResultDo collectionsearchResultDo) {
+		searchAddResourceToCollectionPresenter.getUserShelfCollectionsData(collectionsearchResultDo, "collection");
+		addToPopupSlot(searchAddResourceToCollectionPresenter);
+		
+	}
 }

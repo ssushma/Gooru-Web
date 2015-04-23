@@ -102,7 +102,7 @@ public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extend
 	@Override
 	public void onUnload() {
 		if(isHideFromCloseButton){
-			if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.HOME)&& !AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SEARCH_RESOURCE)){
+			if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.HOME)){
 				AppClientFactory.getPlaceManager().revealClosePlayer();
 				setSeoToken();
 			}

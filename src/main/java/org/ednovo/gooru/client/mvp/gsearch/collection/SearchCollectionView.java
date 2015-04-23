@@ -26,9 +26,15 @@
 package org.ednovo.gooru.client.mvp.gsearch.collection;
 
 import org.ednovo.gooru.client.mvp.gsearch.SearchAbstractView;
+import org.ednovo.gooru.client.mvp.search.util.CollectionResourceWidget;
 import org.ednovo.gooru.client.mvp.search.util.CollectionSearchWidget;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -58,9 +64,22 @@ public class SearchCollectionView extends
 	 * @return collectionSearchWidget{@link Widget}
 	 */
 	@Override
-	public Widget renderSearchResult(
-			CollectionSearchResultDo collectionSearchResultDo) {
-		return new CollectionSearchWidget(collectionSearchResultDo);
+	public Widget renderSearchResult(final CollectionSearchResultDo collectionSearchResultDo) {
+		
+		CollectionSearchWidget collectionSearchWidget=new CollectionSearchWidget(collectionSearchResultDo);
+		collectionSearchWidget.getRemixBtn().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Element element = Document.get().getElementById("fixedFilterSearchID");
+				if(element!=null)
+				{
+				element.setAttribute("style", "opacity:0.1;");
+				}
+				Window.enableScrolling(false);
+				getUiHandlers().displayRemixForCollectionsPoup(collectionSearchResultDo);
+			}
+		});
+		return collectionSearchWidget;
 	}
 
 }

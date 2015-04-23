@@ -42,12 +42,15 @@ import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.CenturySkills.AddCenturyPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEventHandler;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -81,6 +84,8 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	
 	SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter;
 	
+	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
+	
 	AppPopUp appPopUp=new AppPopUp();
 	
 	@ProxyCodeSplit
@@ -90,12 +95,13 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 	}
 
 	@Inject
-	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter) {
+	public SearchResourcePresenter(IsSearchResourceView view, IsSearchResourceProxy proxy,SignUpPresenter signUpViewPresenter,AddStandardsPresenter addStandardsPresenter,AddCenturyPresenter addCenturyPresenter,GooruGradesPresenter gooruGradesPresenter,SearchAddResourceToCollectionPresenter searchAddResourceToCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter,addCenturyPresenter,gooruGradesPresenter,searchAddResourceToCollectionPresenter);
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.addCenturyPresenter=addCenturyPresenter;
 		this.gooruGradesPresenter=gooruGradesPresenter;
 		this.searchAddResourceToCollectionPresenter=searchAddResourceToCollectionPresenter;
+		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -167,16 +173,27 @@ public class SearchResourcePresenter extends SearchAbstractPresenter<ResourceSea
 
 	@Override
 	public void displayAddResourcePoup(ResourceSearchResultDo resourceSearchResultDo) {
-		searchAddResourceToCollectionPresenter.getUserShelfData();
+		searchAddResourceToCollectionPresenter.getUserShelfData(resourceSearchResultDo,"resoruce");
+		searchAddResourceToCollectionPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(resourceSearchResultDo.getGooruOid()));
 		addToPopupSlot(searchAddResourceToCollectionPresenter);
-		/*addResourceContainerPresenter.removePlayerStyle();
-		addResourceContainerPresenter.getUserShelfData(resourceSearchResultDo,"resource");
-		addResourceContainerPresenter.cleartheSelecteGooruOid();
-		addResourceContainerPresenter.SetDefaultMyCollections();
-		appPopUp.setContent(addResourceContainerPresenter.getWidget());
-		appPopUp.setGlassEnabled(true);
-		appPopUp.setStyleName("resoruceSearchAddResourceContainerPopup");
-		appPopUp.show();
-		appPopUp.center();*/
+	}
+	public class ShowNewCollectionWidget implements ClickHandler{
+		private String resourceId;
+		public ShowNewCollectionWidget(String resourceId){
+			this.resourceId=resourceId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			searchAddResourceToCollectionPresenter.hidePopup();
+			addToPopupSlot(collectionFormInPlayPresenter);
+			collectionFormInPlayPresenter.setResourceUid(resourceId);
+		}
+	}
+
+	@Override
+	public void displayRemixForCollectionsPoup(
+			CollectionSearchResultDo collectionsearchResultDo) {
+		// TODO Auto-generated method stub
+		
 	}
 }
