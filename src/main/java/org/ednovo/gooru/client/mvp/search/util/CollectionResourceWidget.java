@@ -43,7 +43,8 @@ public class CollectionResourceWidget extends Composite {
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField Label resourceTitle,lblViewCount;
+	@UiField Label resourceTitle,lblViewCount,lbladdCount;
+	@UiField InlineLabel lblUserCount;
 	@UiField HTMLPanel resourceDescription,imageOverlay;
 	@UiField Image resourseImage,relatedCollectionImage,creatorImage;
 	@UiField FlowPanel standardsDataPanel,ratingWidgetPanel;
@@ -72,6 +73,8 @@ public class CollectionResourceWidget extends Composite {
 			resourceDesc=resourceDesc.substring(0, 120)+"...";
 		}
 		resourceDescription.getElement().setInnerText(resourceDesc);
+		lblUserCount.setText("Used by "+ resourceSearchResultDo.getResourceUsedUserCount()+" poeple");
+		lbladdCount.setText(resourceSearchResultDo.getResourceAddedCount()+"");
 		lblViewCount.setText(resourceSearchResultDo.getTotalViews()+"");
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		imageOverlay.addStyleName(category.toLowerCase()+"Small");
