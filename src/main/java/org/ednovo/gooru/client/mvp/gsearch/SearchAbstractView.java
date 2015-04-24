@@ -118,7 +118,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField HTMLPanel fixedFilterSearch,searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown,moreFilterPanel;
 	
-	@UiField Label lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl;
+	@UiField Label lblLoadingText,ratingsLbl,sourcesNotFoundLbl,aggregatorNotFoundLbl,oerLbl;
 	
 	@UiField InlineLabel searchResults;
 	
@@ -172,7 +172,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	int pageNumber = 1,resultCountVal=0,previousValue;
 	
 	
-	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
+	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars,oerValue,selectedAccessMode,selectedPublisheValues,selectedAuggreValues;
 	
 	private HandlerRegistration handlerRegistration=null;
 
@@ -254,6 +254,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		subjectDropDown.addDomHandler(new DropDownClickHandler(1), ClickEvent.getType());
 		btnStandardsBrowse.addDomHandler(new DropDownClickHandler(2), ClickEvent.getType());
 		gradesDropDown.addDomHandler(new GradesDropDownHandler(), ClickEvent.getType());
+		oerLbl.addClickHandler(new ClickOnOER());
 		resourceFiltersDropDwn.addClickHandler(new ResourceFiltersDropDown());
 		authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 			@Override
@@ -292,6 +293,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
+			
 	    	showRatingsFilter();
 	    	renderStarRatings();
 	    	renderAccessModeValues();
@@ -448,6 +450,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		showAccessModeFilter();
 		showPublisherFilter();
 		showAggregatorFilter();
+		showOERFilter();
 	}
 	/**
 	 * This method will set the search Filters 
@@ -719,6 +722,21 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	/**
 	 * Pre-Selected Standards showing in search page
 	 */
+	private void showOERFilter() {
+		oerTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.isOer");
+		if(oerTag!=null){
+			if(oerTag.equalsIgnoreCase("1"))
+			{
+				pnlAddFilters.add(createTagsLabel("OER","oerPanel"));
+			}
+
+		}
+	}
+
+	
+	/**
+	 * Pre-Selected Standards showing in search page
+	 */
 	private void showRatingsFilter() {
 
 		ratingTag = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
@@ -900,6 +918,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					if(panelName.equals("mobileFirendlyPanel")){
 						removeSelectedFilter(panelNotMobileFriendly,newFilterVal);
 					}
+					if(panelName.equals("oerPanel")){
+						oerLbl.removeStyleName("active");
+					}
 						
 					callSearch();
 				}
@@ -960,6 +981,23 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		}
 		callSearch();
 	}
+	
+	public class ClickOnOER implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if(oerLbl.getElement().getStyle().equals("active")){
+				removeFilter("OER");
+				oerLbl.removeStyleName("active");
+			}else{
+				oerLbl.setStyleName("active");
+				pnlAddFilters.add(createTagsLabel("OER", "oerPanel"));
+			}
+			
+			callSearch();
+		}
+		
+	}
 
 	/**
 	 * To get the selected authors values with separator
@@ -975,6 +1013,7 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		selectedAccessMode="";
 		selectedPublisheValues="";
 		selectedAuggreValues="";
+	    oerValue="";
 		
 		Iterator<Widget> widgets= pnlAddFilters.iterator();
 		while(widgets.hasNext()){
@@ -1030,6 +1069,11 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}
 					selectedAuggreValues +=closeLabelSetting.getSourceText();
 				}
+				if("oerPanel".equalsIgnoreCase(closeLabelSetting.getPanelName())){
+					
+					oerValue="1";
+				}
+
 			}
 		}
 	}
@@ -1086,6 +1130,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			 
 			 if(!selectedAuggreValues.isEmpty()){
 				 filtersMap.put(IsGooruSearchView.AGGREGATOR_FLT, selectedAuggreValues);
+			 }
+			 if(!oerValue.isEmpty()){
+				 filtersMap.put(IsGooruSearchView.OER_FLT, oerValue);
 			 }
 
 		 }

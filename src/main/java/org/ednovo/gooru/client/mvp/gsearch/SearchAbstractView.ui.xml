@@ -89,6 +89,9 @@
 					<div class="seachLeftNavigation">
   						<panel:UlPanel styleName="resourceTypes" ui:field="ulCategoryPanel"/>
    						 <div class="ratingandGrid">
+   						    <g:HTMLPanel styleName="oerStyle" >
+   						        <g:Label ui:field="oerLbl">OER</g:Label>
+   						    </g:HTMLPanel>
 							<div class="ratingDetails">
 								<panel:UlPanel styleName="rating playerrating" ui:field="ulRatingsPanel"/>
                                 <g:Label ui:field="ratingsLbl" visible="false">and up</g:Label>
@@ -115,15 +118,15 @@
 									 	 </div>
 									    <div class="paddingBlock">
 											<p>Publisher <g:Image url="images/mos/questionmark.png" ui:field="publisherTooltip"/></p>
-+								 			<p><panel:AppSuggestBox styleName="form-control" ui:field="publisherSgstBox"/></p>
-+											<g:Label ui:field="sourcesNotFoundLbl"/>
-+											<g:FlowPanel ui:field="sourceContainerFloPanel" />
+								 			<p><panel:AppSuggestBox styleName="form-control" ui:field="publisherSgstBox"/></p>
+											<g:Label ui:field="sourcesNotFoundLbl"/>
+											<g:FlowPanel ui:field="sourceContainerFloPanel" />
 										 </div>
 									  
 									    <div class="paddingBlock">
 											<p>Aggregator <g:Image url="images/mos/questionmark.png" ui:field="aggregatorTooltip"/></p>
-+											<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
-+											<g:Label ui:field="aggregatorNotFoundLbl"/>
+											<p><panel:AppSuggestBox styleName="form-control" ui:field="aggregatorSgstBox"/></p>
+											<g:Label ui:field="aggregatorNotFoundLbl"/>
 									   </div>
 									  
 									    <div class="paddingBlock no-gutter">
@@ -138,8 +141,7 @@
 												<p><input name="" type="checkbox" value="" /> Text on Image</p>
 												<p><input name="" type="checkbox" value="" /> Textural</p>
 											</div>
- -->											<panel:PPanel styleName="col-md-6" ui:field="accessModeLeftPanel" />
- 												<panel:PPanel styleName="col-md-6" ui:field="accessModeRightPanel" />
+ -->											<panel:PPanel styleName="col-md-6" ui:field="accessModePanel" />
 										</div>
 
 									</div>
