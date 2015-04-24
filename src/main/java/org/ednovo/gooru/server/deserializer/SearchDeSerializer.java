@@ -138,11 +138,9 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 				for (int pointer = 0; pointer < searchResultJsonArray.length(); pointer++) {
 					T record = deserializeRecord(searchResultJsonArray.getJSONObject(pointer));
 					if (record != null) {
-						if(!profileEndPoint.isEmpty())
-						{					
-						record.setAssetURI(profileEndPoint);
+						if(!profileEndPoint.isEmpty()){					
+							record.setAssetURI(profileEndPoint);
 						}
-						logger.info("record.getResourceAddedCount()::"+record.getResourceAddedCount());
 						collectionSearchResults.add(record);
 					}
 				}
