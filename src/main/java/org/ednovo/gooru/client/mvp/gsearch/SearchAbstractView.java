@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.gsearch;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +37,6 @@ import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterEvent;
 import org.ednovo.gooru.client.mvp.gsearch.events.UpdateFilterHandler;
 import org.ednovo.gooru.client.mvp.search.util.NoSearchResultWidget;
 import org.ednovo.gooru.client.uc.CloseLabelSetting;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -49,6 +49,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -89,13 +90,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	@UiField LiPanel resourcePanel, collectionPanel;
 	
-	@UiField HTMLPanel fixedFilterSearch,searchResultPanel,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
+	@UiField HTMLPanel hideScrollDiv,fixedFilterSearch,pnlBackToTop,subjectDropDown,gradesPanel,resourceSearchPanel,collectionSearchPanel,btnStandardsBrowse,gradesDropDown;
 	
 	@UiField Label lblLoadingText,ratingsLbl;
 	
 	@UiField InlineLabel searchResults;
 	
-	@UiField FlowPanel pnlAddFilters;
+	@UiField FlowPanel pnlAddFilters,searchResultPanel;
 	
 	@UiField TextBox authorTxtBox;
 	
@@ -109,7 +110,9 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 	
 	String grades,standards,stdCode,subjects,categories,oerTag,mobileFirendlyTag,ratingTag,publisher,aggregator,accessMode,authors,reviewTag;
 
-	int pageNumber = 1,resultCountVal=0,previousValue;
+	int pageNumber = 1,resultCountVal=0,previousValue,scrollTop=0,previousCount=4,previousScrollValue=0;
+	
+	boolean isInsertTems=false;
 	
 	
 	String selectedSubjects,selectedAuthors, selectedGrades,selectedStandards,selectedCategories,selectedStars;
@@ -139,8 +142,29 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 					}else{
 						pnlBackToTop.setVisible(false);
 					}
+					//This condition is used when user navigate scroll bottom to top at that time it will check the visible items,main panel count,pagenumber and checking the scroll is scrolling to top 
+					if (getVisibleItems()<=2 && searchResultPanel.getWidgetCount()>30 && (pageNumber-2)>=2 && (previousScrollValue>=event.getScrollTop())) {
+						isInsertTems=true;
+						pageNumber--;
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
+							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 9);
+						}else{
+							getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber-2, 8);
+						}
+						if(getWidgetHeight()!=0){
+							int getTotalScrolltop=getWidgetHeight()*4;
+							hideScrollDiv.getElement().getStyle().setHeight((hideScrollDiv.getOffsetHeight()-getTotalScrolltop), Unit.PX);
+						}
+						previousCount=previousCount-4;
+						if((pageNumber-2)==1){
+							hideScrollDiv.getElement().getStyle().setHeight(0, Unit.PX);
+							previousCount=0;
+						}
+					}
+					//This condition is used to check that the user is scrolling top to bottom
 					if(resultCountVal>=8){
-						if ((event.getScrollTop() + Window.getClientHeight()) >= Document.get().getBody().getClientHeight()) {
+						if ((event.getScrollTop() + Window.getClientHeight()) == Document.get().getBody().getClientHeight()) {
+							isInsertTems=false;
 							lblLoadingText.setVisible(true);
 							pageNumber++;
 							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_RESOURCE)){
@@ -148,8 +172,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 							}else{
 								getUiHandlers().getCollectionSearchResultsOnPageWise("",pageNumber, 8);
 							}
+							if(getWidgetHeight()!=0){
+								hideScrollDiv.getElement().getStyle().setHeight(getWidgetHeight()*(previousCount), Unit.PX);
+								previousCount=previousCount+4;
+							}
 						}
 					}
+					previousScrollValue=event.getScrollTop();
 				}
 			}
 		});
@@ -174,14 +203,13 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 				}
 			}
 		});
-		
-		/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SEARCH_COLLECTION)){
-			collectionSearchPanel.setVisible(true);
-		}else{
-			
-		}*/
-		
 		showRatings();
+	}
+	public int getWidgetHeight(){
+		if(searchResultPanel.iterator().hasNext()){
+			return searchResultPanel.iterator().next().getElement().getOffsetHeight();
+		}
+		return 0;
 	}
 	/**
 	 * This inner class will handle the click event on the subject dropdown click
@@ -251,16 +279,59 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 		resetData();
 		getUiHandlers().setSearchType(true);
 	}
+	public void removeTopWidgets(boolean isBottomOrTop){
+		try{
+			if(isBottomOrTop){
+				int widgetCount=searchResultPanel.getWidgetCount()-8;
+				int totalWidgetCount=searchResultPanel.getWidgetCount();
+				int removeWidgetCount=searchResultPanel.getWidgetCount();
+				if(searchResultPanel.getWidgetCount()>24){
+					Iterator<Widget> widgets=searchResultPanel.iterator();
+					while (widgets.hasNext()){
+						if(widgetCount==totalWidgetCount){
+							break;
+						}
+						searchResultPanel.remove(removeWidgetCount-1);
+						widgetCount++;
+						removeWidgetCount--;
+					}
+				}
+			}else{
+				int widgetCount=1;
+				if(searchResultPanel.getWidgetCount()>24){
+					Iterator<Widget> widgets=searchResultPanel.iterator();
+					while (widgets.hasNext()){
+						if(widgetCount>8){
+							break;
+						}
+						final Widget widget = widgets.next();
+						searchResultPanel.remove(widget);
+						widgetCount++;
+					}
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public void postSearch(SearchDo<T> searchDo) {
+		removeTopWidgets(isInsertTems);
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			searchResults.setVisible(true);
 			resultCountVal=searchDo.getSearchResults().size()+resultCountVal;
 			searchResults.setText(i18n.GL3210()+"  "+"("+searchDo.getSearchHits()+")");
-			for (T searchResult : searchDo.getSearchResults()) {
-				searchDo.getSearchHits();
-				searchResultPanel.add(renderSearchResult(searchResult));
+			searchDo.getSearchHits();
+			if(isInsertTems){
+				Collections.reverse(searchDo.getSearchResults());
+				for (T searchResult : searchDo.getSearchResults()) {
+					searchResultPanel.insert(renderSearchResult(searchResult),0);
+				}
+			}else{
+				for (T searchResult : searchDo.getSearchResults()) {
+					searchResultPanel.add(renderSearchResult(searchResult));
+				}
 			}
 			lblLoadingText.setVisible(false);
 		}else{
@@ -831,4 +902,18 @@ public abstract class SearchAbstractView<T extends ResourceSearchResultDo> exten
 			callSearch();
 		}
 	}
+	/**
+	 * This native method is used to get the number of visible items on the screen, based on this we are calling the top scroll functionality
+	 */
+	public static native int getVisibleItems() /*-{
+		var detectPartial = 'complete';
+		var count=0;
+		$wnd.$('.libraryMainContainerBlock .visibleElement').each(function(){
+			var visible = $wnd.$(this).visible(true, false, 'vertical');
+			if(visible){
+				count++;
+			}
+		});
+		return count;
+	}-*/;
 }
